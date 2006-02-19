@@ -166,13 +166,13 @@
 			name="beginExecutionPeriodContexts"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context"
 			>
-		<inverse-foreignkey field-ref="beginExecutionPeriodKey"/>
+		<inverse-foreignkey field-ref="keyBeginExecutionPeriod"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="endExecutionPeriodContexts"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context"
 			>
-		<inverse-foreignkey field-ref="endExecutionPeriodKey"/>
+		<inverse-foreignkey field-ref="keyEndExecutionPeriod"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedStartadvises" 

@@ -75,7 +75,7 @@ public class Lesson extends Lesson_Base {
             result += ", fim=" + getFim().get(Calendar.HOUR_OF_DAY) + ":"
                     + getFim().get(Calendar.MINUTE);
         result += ", tipo=" + getTipo();
-        result += ", chaveSala=" + getChaveSala();
+        result += ", keySala=" + getKeySala();
         result += "]";
         return result;
     }

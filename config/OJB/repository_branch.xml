@@ -68,7 +68,7 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
             
 			>
-		<inverse-foreignkey field-ref="branchKey"/>
+		<inverse-foreignkey field-ref="keyBranch"/>
 	</collection-descriptor>    
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularCourseGroups"
@@ -79,19 +79,19 @@
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="studentCurricularPlans"
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan">
-		<inverse-foreignkey field-ref="branchKey"/>
+		<inverse-foreignkey field-ref="keyBranch"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="secundaryStudentCurricularPlansLEIC"
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC">
-		<inverse-foreignkey field-ref="secundaryBranchKey"/>
+		<inverse-foreignkey field-ref="keySecundaryBranch"/>
 	</collection-descriptor>
 	
 	    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="secundaryStudentCurricularPlansLEEC"
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC">
-		<inverse-foreignkey field-ref="secundaryBranchKey"/>
+		<inverse-foreignkey field-ref="keySecundaryBranch"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"

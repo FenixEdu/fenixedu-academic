@@ -77,13 +77,13 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			
 			>
-		<inverse-foreignkey field-ref="degreeKey"/>
+		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="degreeInfos"
 			element-class-ref="net.sourceforge.fenixedu.domain.DegreeInfo"
 			>
-		<inverse-foreignkey field-ref="degreeKey"/>
+		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"

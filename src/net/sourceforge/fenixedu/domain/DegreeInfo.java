@@ -11,7 +11,7 @@ public class DegreeInfo extends DegreeInfo_Base {
     public String toString() {
         String result = "[DEGREE_INFO:";
         result += " codigo interno= " + getIdInternal();
-        result += " degree= " + getDegreeKey();
+        result += " degree= " + getKeyDegree();
         result += " descri��o= " + getDescription();
         result += " objectivos= " + getObjectives();
         result += " historial= " + getHistory();

@@ -37,15 +37,15 @@ public class EditGrantContractRegime extends EditDomainObjectService {
         grantContractRegime.setDateEndContract(infoGrantContractRegime.getDateEndContract());
         grantContractRegime.setDateSendDispatchCC(infoGrantContractRegime.getDateSendDispatchCC());
         grantContractRegime.setDateSendDispatchCD(infoGrantContractRegime.getDateSendDispatchCD());
-        grantContractRegime.setCostCenterKey(infoGrantContractRegime.getCostCenterKey());
+        grantContractRegime.setKeyGrantCostCenter(infoGrantContractRegime.getCostCenterKey());
         grantContractRegime.setState(infoGrantContractRegime.getState());
 
         GrantContract grantContract = (GrantContract) persistentObject.readByOID(
                 GrantContract.class, infoGrantContractRegime.getInfoGrantContract().getIdInternal());
         grantContractRegime.setGrantContract(grantContract);
 
-        if (grantContract.getCostCenterKey() != null
-                && grantContract.getCostCenterKey() != new Integer(0)) {
+        if (grantContract.getKeyGrantCostCenter() != null
+                && grantContract.getKeyGrantCostCenter() != new Integer(0)) {
             GrantCostCenter grantCostCenter = (GrantCostCenter) persistentObject.readByOID(
                     GrantCostCenter.class, infoGrantContractRegime.getIdInternal());
             grantContractRegime.setGrantCostCenter(grantCostCenter);

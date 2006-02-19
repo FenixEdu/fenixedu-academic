@@ -168,7 +168,7 @@
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="chavePais"
+        name="keyPais"
         column="KEY_COUNTRY"
         jdbc-type="INTEGER"
     />
@@ -266,7 +266,7 @@
          class-ref="net.sourceforge.fenixedu.domain.Country"
          
     >
-         <foreignkey field-ref="chavePais"/>
+         <foreignkey field-ref="keyPais"/>
     </reference-descriptor>
     <reference-descriptor auto-retrieve="false"
          name="employee"
@@ -321,19 +321,19 @@
 		name="enrolmentEvaluations" 
 		element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation"
 		>
-		<inverse-foreignkey field-ref="personResponsibleForGradeKey"/>
+		<inverse-foreignkey field-ref="keyPersonResponsibleForGrade"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="enrolmentEvaluations" 
 		element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation"
 		
 		>
-		<inverse-foreignkey field-ref="personResponsibleForGradeKey"/>
+		<inverse-foreignkey field-ref="keyPersonResponsibleForGrade"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="students" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Student">
-			<inverse-foreignkey field-ref="personKey"/>
+			<inverse-foreignkey field-ref="keyPerson"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="personAuthorships"
@@ -381,7 +381,7 @@
 			name="masterDegreeCandidates"
 			element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeCandidate"
 			refresh="true" >
-		<inverse-foreignkey field-ref="personKey"/>
+		<inverse-foreignkey field-ref="keyPerson"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="exportGroupingReceivers"
@@ -419,7 +419,7 @@
 			name="associatedQualifications"
 			element-class-ref="net.sourceforge.fenixedu.domain.Qualification"
 			refresh="true" >
-		<inverse-foreignkey field-ref="personKey"/>
+		<inverse-foreignkey field-ref="keyPerson"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="personFunctions"

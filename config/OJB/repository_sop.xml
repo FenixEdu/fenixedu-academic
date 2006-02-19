@@ -103,7 +103,7 @@
 		element-class-ref="net.sourceforge.fenixedu.domain.Lesson"
 		
 		>
-		<inverse-foreignkey field-ref="chaveSala"/>
+		<inverse-foreignkey field-ref="keySala"/>
 	  </collection-descriptor>
 
       <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
@@ -202,7 +202,7 @@
 			name="associatedInquiriesCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse"
 			>
-		<inverse-foreignkey field-ref="keySchoolClass"/>
+		<inverse-foreignkey field-ref="keyStudentSchoolClass"/>
 	</collection-descriptor>
 	
 </class-descriptor>
@@ -224,7 +224,7 @@
          jdbc-type="VARCHAR"
       />
       <field-descriptor id="3"
-         name="chaveDisciplinaExecucao"
+         name="keyDisciplinaExecucao"
          column="KEY_EXECUTION_COURSE"
          jdbc-type="INTEGER"
          nullable="false"
@@ -257,7 +257,7 @@
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 		 
 		 >
-         <foreignkey field-ref="chaveDisciplinaExecucao"/>
+         <foreignkey field-ref="keyDisciplinaExecucao"/>
       </reference-descriptor>
      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedShiftProfessorship"
@@ -338,7 +338,7 @@
 		 conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />
       <field-descriptor id="5"
-         name="chaveSala"
+         name="keySala"
          column="KEY_ROOM"
          jdbc-type="INTEGER"
       />
@@ -379,7 +379,7 @@
          name="sala"
          class-ref="net.sourceforge.fenixedu.domain.space.OldRoom"
       >
-         <foreignkey field-ref="chaveSala"/>
+         <foreignkey field-ref="keySala"/>
       </reference-descriptor>
       <reference-descriptor auto-retrieve="false"
          name="shift"
@@ -416,12 +416,12 @@
          autoincrement="true"
       />
       <field-descriptor id="2"
-         name="chaveAluno"
+         name="keyAluno"
          column="KEY_STUDENT"
          jdbc-type="INTEGER"
       />
       <field-descriptor id="3"
-         name="chaveDisciplinaExecucao"
+         name="keyDisciplinaExecucao"
          column="KEY_EXECUTION_COURSE"
          jdbc-type="INTEGER"
       />
@@ -441,13 +441,13 @@
          class-ref="net.sourceforge.fenixedu.domain.Student"
          
       >
-         <foreignkey field-ref="chaveAluno"/>
+         <foreignkey field-ref="keyAluno"/>
       </reference-descriptor> 
       <reference-descriptor auto-retrieve="false"
          name="disciplinaExecucao"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
       >
-         <foreignkey field-ref="chaveDisciplinaExecucao"/>
+         <foreignkey field-ref="keyDisciplinaExecucao"/>
       </reference-descriptor> 
       <reference-descriptor auto-retrieve="false"
          name="enrolment"
@@ -881,7 +881,7 @@
          jdbc-type="DATE"
       />
       <field-descriptor id="4"
-         name="keyPeriod"
+         name="keyNextPeriod"
          column="KEY_PERIOD"
          jdbc-type="INTEGER"
       />
@@ -900,7 +900,7 @@
          name="nextPeriod"
          class-ref="net.sourceforge.fenixedu.domain.OccupationPeriod"
       >
-         <foreignkey field-ref="keyPeriod"/>
+         <foreignkey field-ref="keyNextPeriod"/>
       </reference-descriptor>
       <reference-descriptor auto-retrieve="false"
          name="previousPeriod"

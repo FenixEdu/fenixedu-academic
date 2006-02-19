@@ -23,12 +23,12 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="keyBeginExecutionPeriod"
+		name="keyBegin"
 		column="KEY_BEGIN_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyEndExecutionPeriod"
+		name="keyEnd"
 		column="KEY_END_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
@@ -56,12 +56,12 @@
 	<reference-descriptor auto-retrieve="false"
 			name="begin"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyBeginExecutionPeriod"/>
+		<foreignkey field-ref="keyBegin"/>
 	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="end"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyEndExecutionPeriod"/>
+		<foreignkey field-ref="keyEnd"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="parentCompositeRule"
@@ -98,12 +98,12 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="keyBeginExecutionPeriod"
+		name="keyBegin"
 		column="KEY_BEGIN_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyEndExecutionPeriod"
+		name="keyEnd"
 		column="KEY_END_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
@@ -137,12 +137,12 @@
 	<reference-descriptor auto-retrieve="false"
 			name="begin"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyBeginExecutionPeriod"/>
+		<foreignkey field-ref="keyBegin"/>
 	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="end"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyEndExecutionPeriod"/>
+		<foreignkey field-ref="keyEnd"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="parentCompositeRule"
@@ -189,12 +189,12 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="keyBeginExecutionPeriod"
+		name="keyBegin"
 		column="KEY_BEGIN_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyEndExecutionPeriod"
+		name="keyEnd"
 		column="KEY_END_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
@@ -222,12 +222,12 @@
 	<reference-descriptor auto-retrieve="false"
 			name="begin"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyBeginExecutionPeriod"/>
+		<foreignkey field-ref="keyBegin"/>
 	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="end"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyEndExecutionPeriod"/>
+		<foreignkey field-ref="keyEnd"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="parentCompositeRule"
@@ -269,12 +269,12 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="keyBeginExecutionPeriod"
+		name="keyBegin"
 		column="KEY_BEGIN_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyEndExecutionPeriod"
+		name="keyEnd"
 		column="KEY_END_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
@@ -318,12 +318,12 @@
 	<reference-descriptor auto-retrieve="false"
 			name="begin"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyBeginExecutionPeriod"/>
+		<foreignkey field-ref="keyBegin"/>
 	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="end"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyEndExecutionPeriod"/>
+		<foreignkey field-ref="keyEnd"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="parentCompositeRule"
@@ -365,12 +365,12 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="keyBeginExecutionPeriod"
+		name="keyBegin"
 		column="KEY_BEGIN_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyEndExecutionPeriod"
+		name="keyEnd"
 		column="KEY_END_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
@@ -414,12 +414,12 @@
 	<reference-descriptor auto-retrieve="false"
 			name="begin"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyBeginExecutionPeriod"/>
+		<foreignkey field-ref="keyBegin"/>
 	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="end"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyEndExecutionPeriod"/>
+		<foreignkey field-ref="keyEnd"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="parentCompositeRule"
@@ -460,12 +460,12 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="keyBeginExecutionPeriod"
+		name="keyBegin"
 		column="KEY_BEGIN_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyEndExecutionPeriod"
+		name="keyEnd"
 		column="KEY_END_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
@@ -509,12 +509,12 @@
 	<reference-descriptor auto-retrieve="false"
 			name="begin"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyBeginExecutionPeriod"/>
+		<foreignkey field-ref="keyBegin"/>
 	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="end"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyEndExecutionPeriod"/>
+		<foreignkey field-ref="keyEnd"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="parentCompositeRule"
@@ -556,12 +556,12 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="keyBeginExecutionPeriod"
+		name="keyBegin"
 		column="KEY_BEGIN_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyEndExecutionPeriod"
+		name="keyEnd"
 		column="KEY_END_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
@@ -610,12 +610,12 @@
 	<reference-descriptor auto-retrieve="false"
 			name="begin"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyBeginExecutionPeriod"/>
+		<foreignkey field-ref="keyBegin"/>
 	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="end"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyEndExecutionPeriod"/>
+		<foreignkey field-ref="keyEnd"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="parentCompositeRule"
@@ -658,12 +658,12 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="keyBeginExecutionPeriod"
+		name="keyBegin"
 		column="KEY_BEGIN_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyEndExecutionPeriod"
+		name="keyEnd"
 		column="KEY_END_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
@@ -701,12 +701,12 @@
 	<reference-descriptor auto-retrieve="false"
 			name="begin"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyBeginExecutionPeriod"/>
+		<foreignkey field-ref="keyBegin"/>
 	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="end"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyEndExecutionPeriod"/>
+		<foreignkey field-ref="keyEnd"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="parentCompositeRule"
@@ -744,12 +744,12 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="keyBeginExecutionPeriod"
+		name="keyBegin"
 		column="KEY_BEGIN_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyEndExecutionPeriod"
+		name="keyEnd"
 		column="KEY_END_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
@@ -787,12 +787,12 @@
 	<reference-descriptor auto-retrieve="false"
 			name="begin"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyBeginExecutionPeriod"/>
+		<foreignkey field-ref="keyBegin"/>
 	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="end"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyEndExecutionPeriod"/>
+		<foreignkey field-ref="keyEnd"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="parentCompositeRule"
@@ -830,12 +830,12 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="keyBeginExecutionPeriod"
+		name="keyBegin"
 		column="KEY_BEGIN_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyEndExecutionPeriod"
+		name="keyEnd"
 		column="KEY_END_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
@@ -863,12 +863,12 @@
 	<reference-descriptor auto-retrieve="false"
 			name="begin"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyBeginExecutionPeriod"/>
+		<foreignkey field-ref="keyBegin"/>
 	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="end"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-		<foreignkey field-ref="keyEndExecutionPeriod"/>
+		<foreignkey field-ref="keyEnd"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="parentCompositeRule"

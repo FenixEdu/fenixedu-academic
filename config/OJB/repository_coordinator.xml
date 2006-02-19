@@ -65,7 +65,7 @@
       	locking="false"
       />
 			<field-descriptor
-				name="degreeKey"
+				name="keyDegree"
 				column="KEY_DEGREE"
 				jdbc-type="INTEGER"
 			/>
@@ -208,7 +208,7 @@
 				name="degree"
 				class-ref="net.sourceforge.fenixedu.domain.Degree"
 				>
-			<foreignkey field-ref="degreeKey"/>
+			<foreignkey field-ref="keyDegree"/>
 		</reference-descriptor>     	   	
    </class-descriptor>	
    
@@ -229,12 +229,12 @@
       		locking="false"
       	/>
 		<field-descriptor
-			name="teacherKey"
+			name="keyTeacher"
 			column="KEY_TEACHER"
 			jdbc-type="INTEGER"
 		/>
 		<field-descriptor
-			name="studentKey"
+			name="keyStudent"
 			column="KEY_STUDENT"
 			jdbc-type="INTEGER"
 		/>
@@ -242,13 +242,13 @@
 				name="teacher"
 				class-ref="net.sourceforge.fenixedu.domain.Teacher"
 				>
-			<foreignkey field-ref="teacherKey"/>
+			<foreignkey field-ref="keyTeacher"/>
 		</reference-descriptor> 
 	    <reference-descriptor auto-retrieve="false"
 				name="student"
 				class-ref="net.sourceforge.fenixedu.domain.Student"
 				>
-			<foreignkey field-ref="studentKey"/>
+			<foreignkey field-ref="keyStudent"/>
 		</reference-descriptor> 
    </class-descriptor>
 <!-- Mapping of User defined classses ends here -->

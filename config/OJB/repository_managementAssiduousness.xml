@@ -36,12 +36,12 @@
 	    jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-	   	name="costCenterKey"
+	   	name="keyCostCenter"
 	   	column="KEY_COST_CENTER"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-	   	name="who"
+	   	name="keyWhoEmployee"
 	   	column="KEY_EMPLOYEE"
 		jdbc-type="INTEGER"
 	/>   	   	
@@ -55,14 +55,14 @@
          name="costCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          >
-         <foreignkey field-ref="costCenterKey"/>
+         <foreignkey field-ref="keyCostCenter"/>
   	</reference-descriptor>
     <reference-descriptor auto-retrieve="false"
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
 		>
-        <foreignkey field-ref="who"/>
+        <foreignkey field-ref="keyWhoEmployee"/>
     </reference-descriptor>  
 </class-descriptor>
 
@@ -174,12 +174,12 @@
   		jdbc-type="BIT"
 	/> 	 
 	<field-descriptor
-	   	name="employeeKey"
+	   	name="keyEmployee"
 	   	column="KEY_EMPLOYEE"
 		jdbc-type="INTEGER"
 	/>  
 	<field-descriptor
-	   	name="who"
+	   	name="keyWhoEmployee"
 	   	column="KEY_EMPLOYEE_DB"
 		jdbc-type="INTEGER"
 	/>   	   	
@@ -194,14 +194,14 @@
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
 		>
-        <foreignkey field-ref="employeeKey"/>
+        <foreignkey field-ref="keyEmployee"/>
     </reference-descriptor> 
     <reference-descriptor auto-retrieve="false"
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
 		>
-        <foreignkey field-ref="who"/>
+        <foreignkey field-ref="keyWhoEmployee"/>
     </reference-descriptor> 
 </class-descriptor>
 
@@ -292,22 +292,22 @@
   		jdbc-type="BIT"
 	/> 
 	<field-descriptor
-	   	name="employeeKey"
+	   	name="keyEmployee"
 	   	column="KEY_EMPLOYEE"
 		jdbc-type="INTEGER"
 	/> 
 	<field-descriptor
-	   	name="costCenterExtraWorkKey"
+	   	name="keyCostCenterExtraWork"
 	   	column="KEY_COST_CENTER_EXTRA_WORK"
 		jdbc-type="INTEGER"
 	/>  
 	<field-descriptor
-	   	name="costCenterMoneyKey"
+	   	name="keyCostCenterMoney"
 	   	column="KEY_COST_CENTER_MONEY"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-	   	name="who"
+	   	name="keyWhoEmployee"
 	   	column="KEY_EMPLOYEE_DB"
 		jdbc-type="INTEGER"
 	/>   	   	
@@ -321,25 +321,25 @@
       	name="employee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	>
-        <foreignkey field-ref="employeeKey"/>
+        <foreignkey field-ref="keyEmployee"/>
     </reference-descriptor> 
   	<reference-descriptor auto-retrieve="false"
          name="costCenterExtraWork"
 		 class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          >
-         <foreignkey field-ref="costCenterExtraWorkKey"/>
+         <foreignkey field-ref="keyCostCenterExtraWork"/>
   	</reference-descriptor>
   	<reference-descriptor auto-retrieve="false"
          name="costCenterMoney"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          >
-         <foreignkey field-ref="costCenterMoneyKey"/>
+         <foreignkey field-ref="keyCostCenterMoney"/>
   	</reference-descriptor>
     <reference-descriptor auto-retrieve="false"
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	>
-        <foreignkey field-ref="who"/>
+        <foreignkey field-ref="keyWhoEmployee"/>
     </reference-descriptor> 
 </class-descriptor>
 
@@ -385,12 +385,12 @@
   		jdbc-type="BIT"
 	/> 		
 	<field-descriptor
-	   	name="employeeKey"
+	   	name="keyEmployee"
 	   	column="KEY_EMPLOYEE"
 		jdbc-type="INTEGER"
 	/>  
 	<field-descriptor
-	   	name="who"
+	   	name="keyWhoEmployee"
 	   	column="KEY_EMPLOYEE_DB"
 		jdbc-type="INTEGER"
 	/>   	   	
@@ -405,14 +405,14 @@
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
 		>
-        <foreignkey field-ref="employeeKey"/>
+        <foreignkey field-ref="keyEmployee"/>
     </reference-descriptor> 
     <reference-descriptor auto-retrieve="false"
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
 		>
-        <foreignkey field-ref="who"/>
+        <foreignkey field-ref="keyWhoEmployee"/>
     </reference-descriptor> 
 </class-descriptor>
 
@@ -461,12 +461,12 @@
     	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/> 
 	<field-descriptor
-	   	name="employeeKey"
+	   	name="keyEmployee"
 	   	column="KEY_EMPLOYEE"
 		jdbc-type="INTEGER"
 	/>  
 	<field-descriptor
-	   	name="who"
+	   	name="keyWhoEmployee"
 	   	column="KEY_EMPLOYEE_DB"
 		jdbc-type="INTEGER"
 	/>   	   	
@@ -481,13 +481,13 @@
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
 		>
-        <foreignkey field-ref="employeeKey"/>
+        <foreignkey field-ref="keyEmployee"/>
     </reference-descriptor> 
     <reference-descriptor auto-retrieve="false"
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	
 		>
-        <foreignkey field-ref="who"/>
+        <foreignkey field-ref="keyWhoEmployee"/>
     </reference-descriptor> 
 </class-descriptor>

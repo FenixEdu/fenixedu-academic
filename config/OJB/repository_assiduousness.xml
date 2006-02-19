@@ -59,7 +59,7 @@
 	element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation"
 	auto_retrieve="true"
 	>
-	<inverse-foreignkey field-ref="enrolmentKey"/>
+	<inverse-foreignkey field-ref="keyEnrolment"/>
   </collection-descriptor> 
   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 	name="reimbursementGuideSituations"
@@ -84,13 +84,13 @@
 		name="masterDegreeProofVersions"
 		element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion"
 		>
-		<inverse-foreignkey field-ref="keyEmployee"/>
+		<inverse-foreignkey field-ref="keyResponsibleEmployee"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="masterDegreeThesisDataVersions"
 		element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
 		>
-		<inverse-foreignkey field-ref="keyEmployee"/>
+		<inverse-foreignkey field-ref="keyResponsibleEmployee"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="responsibleEmployeeAssociatedEmployeeHistorics"
@@ -102,7 +102,7 @@
 		name="studentCurricularPlans"
 		element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 		>
-		<inverse-foreignkey field-ref="employeeKey"/>
+		<inverse-foreignkey field-ref="keyEmployee"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="contracts"

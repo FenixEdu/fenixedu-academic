@@ -12,7 +12,7 @@
 	/>
 	
 	<field-descriptor
-		name="keyProjectTitle"
+		name="keyTitle"
 		column="KEY_PROJECT_TITLE"
 		jdbc-type="INTEGER"
 	/>
@@ -48,7 +48,7 @@
 			name="title"
 			class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectTitle"
 			>
-		<foreignkey field-ref="keyProjectTitle"/>
+		<foreignkey field-ref="keyTitle"/>
 	</reference-descriptor>
 	
 	<reference-descriptor auto-retrieve="false"

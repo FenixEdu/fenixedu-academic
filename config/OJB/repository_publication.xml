@@ -38,7 +38,7 @@
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          	name="publications"
          	element-class-ref="net.sourceforge.fenixedu.domain.publication.Publication">
-         <inverse-foreignkey field-ref="keyPublicationType"/>
+         <inverse-foreignkey field-ref="keyType"/>
     </collection-descriptor>
 </class-descriptor>
 
@@ -57,7 +57,7 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.publication.Publication" table="PUBLICATION_DATA">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-    <field-descriptor name="keyPublicationType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER" nullable="false"/>
+    <field-descriptor name="keyType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER" nullable="false"/>
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
 	<field-descriptor name="subType" column="SUB_TYPE" jdbc-type="VARCHAR"/>
 	<field-descriptor name="journalName" column="JOURNAL_NAME" jdbc-type="VARCHAR"/>
@@ -94,7 +94,7 @@
 	<field-descriptor name="number" column="NUMBER" jdbc-type="INTEGER"/>
 	
 	<reference-descriptor auto-retrieve="false" name="type" class-ref="net.sourceforge.fenixedu.domain.publication.PublicationType" >
-	    <foreignkey field-ref="keyPublicationType"/>
+	    <foreignkey field-ref="keyType"/>
     </reference-descriptor>
     
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"

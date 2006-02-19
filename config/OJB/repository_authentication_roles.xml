@@ -311,7 +311,7 @@
 		element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher"
 		
 		>
-		<inverse-foreignkey field-ref="keyTeacher"/>
+		<inverse-foreignkey field-ref="keyOrientationTeacher"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedProposalsByCoorientator" 
@@ -332,14 +332,14 @@
 		element-class-ref="net.sourceforge.fenixedu.domain.Tutor"
 		
 		>
-		<inverse-foreignkey field-ref="teacherKey"/>
+		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="masterDegreeCandidates" 
 		element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeCandidate"
 		
 		>
-		<inverse-foreignkey field-ref="guiderKey"/>
+		<inverse-foreignkey field-ref="keyGuider"/>
 	</collection-descriptor>	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedInquiriesTeacher" 

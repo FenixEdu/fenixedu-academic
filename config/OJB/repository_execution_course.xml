@@ -134,7 +134,7 @@
 		auto-update="false"
 		auto-delete="false"
 		>
-		<inverse-foreignkey field-ref="chaveDisciplinaExecucao"/>
+		<inverse-foreignkey field-ref="keyDisciplinaExecucao"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="executionCourseProperties"
@@ -191,7 +191,7 @@
 		element-class-ref="net.sourceforge.fenixedu.domain.Shift"
 		
 		>
-		<inverse-foreignkey field-ref="chaveDisciplinaExecucao"/>
+		<inverse-foreignkey field-ref="keyDisciplinaExecucao"/>
 	</collection-descriptor>
 	
 

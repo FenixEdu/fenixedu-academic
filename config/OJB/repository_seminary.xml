@@ -79,7 +79,7 @@
          
          
       >
-        <inverse-foreignkey field-ref="seminaryIdInternal"/>
+        <inverse-foreignkey field-ref="keySeminary"/>
      </collection-descriptor>
      
      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -88,7 +88,7 @@
          
          
       >
-        <inverse-foreignkey field-ref="seminaryIdInternal"/>
+        <inverse-foreignkey field-ref="keySeminary"/>
      </collection-descriptor>
      
 	  
@@ -106,19 +106,19 @@
     />
 
     <field-descriptor 
-        name="seminaryIdInternal"
+        name="keySeminary"
         column="SEMINARY_ID_INTERNAL"
         jdbc-type="INTEGER"
     />
 
     <field-descriptor 
-        name="curricularCourseIdInternal"
+        name="keyCurricularCourse"
         column="CURRICULAR_COURSE_ID_INTERNAL"
         jdbc-type="INTEGER"
     />
 
 	 <field-descriptor 
-        name="modalityIdInternal"
+        name="keyModality"
         column="MODALITY_ID_INTERNAL"
         jdbc-type="INTEGER"
     />
@@ -135,7 +135,7 @@
          
          
       >
-	      <foreignkey field-ref="seminaryIdInternal"/>
+	      <foreignkey field-ref="keySeminary"/>
      </reference-descriptor>
 
 	 <reference-descriptor auto-retrieve="false"
@@ -144,7 +144,7 @@
          
          
       >
-	    <foreignkey field-ref="curricularCourseIdInternal"/>
+	    <foreignkey field-ref="keyCurricularCourse"/>
 	 </reference-descriptor>
 
       <reference-descriptor auto-retrieve="false"
@@ -153,7 +153,7 @@
          
          
       >
-	      <foreignkey field-ref="modalityIdInternal"/>
+	      <foreignkey field-ref="keyModality"/>
      </reference-descriptor>
     
      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -238,7 +238,7 @@
         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
 		       
      >
-        <inverse-foreignkey field-ref="seminaryThemeIdInternal"/>
+        <inverse-foreignkey field-ref="keySeminaryTheme"/>
      </collection-descriptor>
     	 
 </class-descriptor>
@@ -273,7 +273,7 @@
     />
 
 	<field-descriptor 
-         name="seminaryThemeIdInternal"
+         name="keySeminaryTheme"
          column="seminary_theme_id_internal"
     	  jdbc-type="INTEGER"
     />
@@ -290,14 +290,14 @@
          
          
       >
-	      <foreignkey field-ref="seminaryThemeIdInternal"/>
+	      <foreignkey field-ref="keySeminaryTheme"/>
      </reference-descriptor>
 
 	 	<!-- Choices made to this case study -->
       <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="seminaryCandidacies"
          element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice">
-       <inverse-foreignkey field-ref="caseStudyIdInternal"/>
+       <inverse-foreignkey field-ref="keyCaseStudy"/>
       </collection-descriptor> 
     	 
 </class-descriptor>
@@ -315,31 +315,31 @@
     />
 
 	<field-descriptor 
-         name="themeIdInternal"
+         name="keyTheme"
          column="seminary_theme_id_internal"
     	  jdbc-type="INTEGER"
     />
 
 	<field-descriptor 
-         name="modalityIdInternal"
+         name="keyModality"
          column="seminary_modality_id_internal"
     	  jdbc-type="INTEGER"
     />
 
 	<field-descriptor 
-         name="seminaryIdInternal"
+         name="keySeminary"
          column="seminary_id_internal"
     	  jdbc-type="INTEGER"
     />
 
 	<field-descriptor 
-         name="studentIdInternal"
+         name="keyStudent"
          column="student_id_internal"
     	  jdbc-type="INTEGER"
     />
 
 	<field-descriptor 
-         name="curricularCourseIdInternal"
+         name="keyCurricularCourse"
          column="curricular_course_id_internal"
     	  jdbc-type="INTEGER"
     />
@@ -367,7 +367,7 @@
          
          
       >
-	      <foreignkey field-ref="seminaryIdInternal"/>
+	      <foreignkey field-ref="keySeminary"/>
      </reference-descriptor>
 	 <reference-descriptor auto-retrieve="false"
          name="student"
@@ -375,7 +375,7 @@
          
          
       >
-	      <foreignkey field-ref="studentIdInternal"/>
+	      <foreignkey field-ref="keyStudent"/>
      </reference-descriptor>
       <reference-descriptor auto-retrieve="false"
          name="modality"
@@ -383,7 +383,7 @@
          
          
       >
-	      <foreignkey field-ref="modalityIdInternal"/>
+	      <foreignkey field-ref="keyModality"/>
      </reference-descriptor>
      <reference-descriptor auto-retrieve="false"
          name="curricularCourse"
@@ -391,7 +391,7 @@
          
          
       >
-	      <foreignkey field-ref="curricularCourseIdInternal"/>
+	      <foreignkey field-ref="keyCurricularCourse"/>
      </reference-descriptor>
      <reference-descriptor auto-retrieve="false"
          name="theme"
@@ -399,13 +399,13 @@
          
          
       >
-	      <foreignkey field-ref="themeIdInternal"/>
+	      <foreignkey field-ref="keyTheme"/>
      </reference-descriptor>
 	<!-- Choosen case studies -->
       <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="caseStudyChoices"
          element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice">
-       <inverse-foreignkey field-ref="candidacyIdInternal"/>
+       <inverse-foreignkey field-ref="keyCandidacy"/>
       </collection-descriptor>    	 
 </class-descriptor>
 
@@ -413,14 +413,14 @@
                   table="SEMINARYCANDIDACY_SEMINARYCASESTUDY">
   
    <field-descriptor 
-         name="candidacyIdInternal"
+         name="keyCandidacy"
          column="CANDIDACY_ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
       />
 
       <field-descriptor 
-         name="caseStudyIdInternal"
+         name="keyCaseStudy"
          column="CASESTUDY_ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
@@ -443,7 +443,7 @@
          
          
       >
-	      <foreignkey field-ref="caseStudyIdInternal"/>
+	      <foreignkey field-ref="keyCaseStudy"/>
      </reference-descriptor>
      <reference-descriptor auto-retrieve="false"
          name="candidacy"
@@ -451,7 +451,7 @@
          
          
       >
-	      <foreignkey field-ref="candidacyIdInternal"/>
+	      <foreignkey field-ref="keyCandidacy"/>
      </reference-descriptor>
       
 </class-descriptor>

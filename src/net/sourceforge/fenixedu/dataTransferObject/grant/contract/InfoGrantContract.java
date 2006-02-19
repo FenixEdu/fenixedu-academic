@@ -189,7 +189,7 @@ public class InfoGrantContract extends InfoObject {
         grantContract.setDateAcceptTerm(infoGrantContract.getDateAcceptTerm());
         grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
         if (infoGrantContract.getGrantCostCenterInfo() != null) {
-            grantContract.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
+            grantContract.setKeyGrantCostCenter(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
         }
     }
 

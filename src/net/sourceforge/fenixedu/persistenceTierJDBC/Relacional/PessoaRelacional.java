@@ -85,8 +85,8 @@ public class PessoaRelacional implements IPessoaPersistente {
             sql.setString(26, pessoa.getProfissao());
             sql.setString(27, pessoa.getUsername());
             sql.setString(28, pessoa.getPassword());
-            if (pessoa.getChavePais() != null) {
-                sql.setInt(29, pessoa.getChavePais().intValue());
+            if (pessoa.getKeyPais() != null) {
+                sql.setInt(29, pessoa.getKeyPais().intValue());
             } else {
                 sql.setInt(29, 0);
             }
@@ -209,8 +209,8 @@ public class PessoaRelacional implements IPessoaPersistente {
             sql.setString(26, pessoa.getProfissao());
             sql.setString(27, pessoa.getUsername());
             sql.setString(28, pessoa.getPassword());
-            if (pessoa.getChavePais() != null) {
-                sql.setInt(29, pessoa.getChavePais().intValue());
+            if (pessoa.getKeyPais() != null) {
+                sql.setInt(29, pessoa.getKeyPais().intValue());
             } else {
                 sql.setInt(29, 0);
             }

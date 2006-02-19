@@ -56,14 +56,14 @@
    </reference-descriptor>
    
    <field-descriptor
-        name="keySchoolClass"
+        name="keyStudentSchoolClass"
         column="KEY_SCHOOL_CLASS"
         jdbc-type="INTEGER"
 	/>
 	<reference-descriptor auto-retrieve="false"
 	  name="studentSchoolClass"
 	  class-ref="net.sourceforge.fenixedu.domain.SchoolClass">
-	  <foreignkey field-ref="keySchoolClass"/>
+	  <foreignkey field-ref="keyStudentSchoolClass"/>
    </reference-descriptor>
    
    <field-descriptor

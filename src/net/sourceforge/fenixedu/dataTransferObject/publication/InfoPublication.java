@@ -54,7 +54,7 @@ public class InfoPublication extends PublicationDTO {
             setIsbn(publication.getIsbn());
             setIssn(publication.getIssn());
             setJournalName(publication.getJournalName());
-            setKeyPublicationType(publication.getKeyPublicationType());
+            setKeyPublicationType(publication.getKeyType());
             setLanguage(publication.getLanguage());
             setLastPage(publication.getLastPage());
             setLocal(publication.getLocal());

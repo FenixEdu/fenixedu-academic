@@ -88,7 +88,7 @@ public class Publication extends Publication_Base {
         setIsbn(publicationDTO.getIsbn());
         setIssn(publicationDTO.getIssn());
         setJournalName(publicationDTO.getJournalName());
-        setKeyPublicationType(publicationDTO.getKeyPublicationType());
+        setKeyType(publicationDTO.getKeyPublicationType());
         setLanguage(publicationDTO.getLanguage());
         setLastPage(publicationDTO.getLastPage());
         setLocal(publicationDTO.getLocal());

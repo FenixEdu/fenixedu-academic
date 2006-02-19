@@ -72,7 +72,7 @@ public class WriteExtraWork extends Service {
 
             extraWork.setEmployee(employee);
 
-            extraWork.setWho(employeeWho.getIdInternal().intValue());
+            extraWork.setKeyWhoEmployee(employeeWho.getIdInternal());
             extraWork.setWhoEmployee(employeeWho);
             extraWork.setWhen(Calendar.getInstance().getTime());
             extraWorkList.add(extraWork);

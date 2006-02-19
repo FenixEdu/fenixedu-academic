@@ -21,7 +21,7 @@
 	   jdbc-type="INTEGER"
     />
 	<field-descriptor id="4" 
-	   name="keyInherentParentFunction"    
+	   name="keyParentInherentFunction"    
 	   column="KEY_INHERENT_PARENT_FUNCTION"  
 	   jdbc-type="INTEGER"
     />
@@ -51,13 +51,13 @@
 	<reference-descriptor auto-retrieve="false"
     	name="parentInherentFunction"
         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
-	    <foreignkey field-ref="keyInherentParentFunction"/>
+	    <foreignkey field-ref="keyParentInherentFunction"/>
 	</reference-descriptor>
 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="inherentFunctions"
         element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
-		<inverse-foreignkey field-ref="keyInherentParentFunction"/>
+		<inverse-foreignkey field-ref="keyParentInherentFunction"/>
     </collection-descriptor>	
 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"

@@ -10,17 +10,17 @@
 		autoincrement="true"
 	/>
 	<field-descriptor
-		name="oldCurricularCourseKey"
+		name="keyOldCurricularCourse"
 		column="KEY_OLD_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="equivalentCurricularCourseKey"
+		name="keyEquivalentCurricularCourse"
 		column="KEY_EQUIVALENT_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="degreeCurricularPlanKey"
+		name="keyDegreeCurricularPlan"
 		column="KEY_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
@@ -34,18 +34,18 @@
 			name="oldCurricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			>
-		<foreignkey field-ref="oldCurricularCourseKey"/>
+		<foreignkey field-ref="keyOldCurricularCourse"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="equivalentCurricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			>
-		<foreignkey field-ref="equivalentCurricularCourseKey"/>
+		<foreignkey field-ref="keyEquivalentCurricularCourse"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="degreeCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			>
-		<foreignkey field-ref="degreeCurricularPlanKey"/>
+		<foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</reference-descriptor>
 </class-descriptor>

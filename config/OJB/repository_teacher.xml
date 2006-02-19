@@ -216,7 +216,7 @@
 		jdbc-type="VARCHAR"
 	/>    
     <field-descriptor
-    	name="keyUnit" 
+    	name="keyInstitutionUnit" 
     	column="KEY_UNIT" 
     	jdbc-type="INTEGER"
     /> 
@@ -230,7 +230,7 @@
 	<reference-descriptor auto-retrieve="false"
     	name="institutionUnit"
     	class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" >
-		<foreignkey field-ref="keyUnit"/>
+		<foreignkey field-ref="keyInstitutionUnit"/>
 	</reference-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"

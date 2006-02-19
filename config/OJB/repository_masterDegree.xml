@@ -17,13 +17,13 @@
 	   />
 
 	  <field-descriptor id="2"
-	     name="personKey"
+	     name="keyPerson"
 	     column="PERSON_KEY"
 	     jdbc-type="INTEGER"
 	  />
 
 	  <field-descriptor id="3"
-	     name="executionDegreeKey"
+	     name="keyExecutionDegree"
 	     column="EXECUTION_DEGREE_KEY"
 	     jdbc-type="INTEGER"
 	  />
@@ -87,7 +87,7 @@
          column="COURSES_TO_ASSIST"
          jdbc-type="LONGVARCHAR"/>
      <field-descriptor id="15"
-         name="guiderKey"
+         name="keyGuider"
          column="TEACHER_KEY"
          jdbc-type="INTEGER"/>
      <field-descriptor id="16"
@@ -106,7 +106,7 @@
          	class-ref="net.sourceforge.fenixedu.domain.Person"
 			
       	  >
-          <foreignkey field-ref="personKey"/>
+          <foreignkey field-ref="keyPerson"/>
           </reference-descriptor>
 	  
 	  
@@ -115,7 +115,7 @@
          	class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
          	
       	  >
-          <foreignkey field-ref="executionDegreeKey"/>
+          <foreignkey field-ref="keyExecutionDegree"/>
           </reference-descriptor>
           
 	    <reference-descriptor auto-retrieve="false"
@@ -123,14 +123,14 @@
 	        class-ref="net.sourceforge.fenixedu.domain.Teacher"
 	        refresh="true"
 	    >
-	        <foreignkey field-ref="guiderKey"/> 
+	        <foreignkey field-ref="keyGuider"/> 
 	    </reference-descriptor>
           
          <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 	         name="situations"
 	         element-class-ref="net.sourceforge.fenixedu.domain.CandidateSituation"
 			>
-           <inverse-foreignkey field-ref="candidateKey"/>
+           <inverse-foreignkey field-ref="keyMasterDegreeCandidate"/>
 	         <!---->
          </collection-descriptor>
 
@@ -138,7 +138,7 @@
 	         name="candidateEnrolments"
 	         element-class-ref="net.sourceforge.fenixedu.domain.CandidateEnrolment"
 			>
-           <inverse-foreignkey field-ref="masterDegreeCandidateKey"/>
+           <inverse-foreignkey field-ref="keyMasterDegreeCandidate"/>
 	         <!---->
          </collection-descriptor>
      	
@@ -179,7 +179,7 @@
 	  />
 	  
 	  <field-descriptor
-	     name="candidateKey"
+	     name="keyMasterDegreeCandidate"
 	     column="CANDIDATE_KEY"
 	     jdbc-type="INTEGER"
 	  />
@@ -202,7 +202,7 @@
          	class-ref="net.sourceforge.fenixedu.domain.MasterDegreeCandidate"
          	
 			>
-          <foreignkey field-ref="candidateKey"/>
+          <foreignkey field-ref="keyMasterDegreeCandidate"/>
       </reference-descriptor>
 		
 	</class-descriptor>
@@ -612,7 +612,7 @@
         />
         
         <field-descriptor 
-           name="masterDegreeCandidateKey"
+           name="keyMasterDegreeCandidate"
            column="KEY_MASTER_DEGREE_CANDIDATE"
            jdbc-type="INTEGER"
         />
@@ -624,7 +624,7 @@
         />-->
 
 		<field-descriptor 
-           name="curricularCourseKey"
+           name="keyCurricularCourse"
            column="KEY_CURRICULAR_COURSE"
            jdbc-type="INTEGER"
         />
@@ -640,7 +640,7 @@
          	name="masterDegreeCandidate"
          	class-ref="net.sourceforge.fenixedu.domain.MasterDegreeCandidate"
       	  >
-          <foreignkey field-ref="masterDegreeCandidateKey"/>
+          <foreignkey field-ref="keyMasterDegreeCandidate"/>
        </reference-descriptor>
 		
        <!-- <reference-descriptor auto-retrieve="false"
@@ -654,7 +654,7 @@
          	name="curricularCourse"
          	class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
       	  >
-          <foreignkey field-ref="curricularCourseKey"/>
+          <foreignkey field-ref="keyCurricularCourse"/>
          </reference-descriptor>
 
    		<attribute
@@ -744,7 +744,7 @@
         />
         
         <field-descriptor 
-           name="keyEmployee"    
+           name="keyResponsibleEmployee"    
            column="KEY_EMPLOYEE"  
            jdbc-type="INTEGER"
         />
@@ -841,7 +841,7 @@
    		    name="responsibleEmployee"
         	class-ref="net.sourceforge.fenixedu.domain.Employee"
       	>
-	        <foreignkey field-ref="keyEmployee"/>
+	        <foreignkey field-ref="keyResponsibleEmployee"/>
 		</reference-descriptor> 	
 		      	  
    </class-descriptor>       
@@ -869,7 +869,7 @@
         />
         
         <field-descriptor 
-           name="keyEmployee"    
+           name="keyResponsibleEmployee"    
            column="KEY_EMPLOYEE"  
            jdbc-type="INTEGER"
         />
@@ -929,7 +929,7 @@
    		    name="responsibleEmployee"
         	class-ref="net.sourceforge.fenixedu.domain.Employee"
       	>
-	        <foreignkey field-ref="keyEmployee"/>
+	        <foreignkey field-ref="keyResponsibleEmployee"/>
 		</reference-descriptor>
 		
 		<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -986,7 +986,7 @@
         />     
         
         <field-descriptor 
-           name="keyUnit"    
+           name="keyInstitutionUnit"    
            column="KEY_UNIT"  
            jdbc-type="INTEGER"
         /> 
@@ -1008,7 +1008,7 @@
 	 	<reference-descriptor auto-retrieve="false"
         	name="institutionUnit"
 	        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-    	    <foreignkey field-ref="keyUnit"/>
+    	    <foreignkey field-ref="keyInstitutionUnit"/>
 		</reference-descriptor>			  
 	  	  
 	   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"

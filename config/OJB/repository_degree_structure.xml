@@ -51,7 +51,7 @@
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="degreeModuleContexts"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-		<inverse-foreignkey field-ref="degreeModuleKey"/>
+		<inverse-foreignkey field-ref="keyDegreeModule"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularRules"
@@ -110,7 +110,7 @@
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="degreeModuleContexts"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-		<inverse-foreignkey field-ref="degreeModuleKey"/>
+		<inverse-foreignkey field-ref="keyDegreeModule"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularRules"
@@ -120,7 +120,7 @@
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="courseGroupContexts"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-		<inverse-foreignkey field-ref="courseGroupKey"/>
+		<inverse-foreignkey field-ref="keyCourseGroup"/>
 	</collection-descriptor>
 </class-descriptor>
 
@@ -137,23 +137,23 @@
 		autoincrement="true"
 	/>
 	<field-descriptor
-		name="degreeModuleKey"
+		name="keyDegreeModule"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="courseGroupKey"
+		name="keyCourseGroup"
 		column="KEY_COURSE_GROUP"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="beginExecutionPeriodKey"
+		name="keyBeginExecutionPeriod"
 		column="KEY_BEGIN_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
 
 	<field-descriptor
-		name="endExecutionPeriodKey"
+		name="keyEndExecutionPeriod"
 		column="KEY_END_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
@@ -175,28 +175,28 @@
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
             >
-		<foreignkey field-ref="degreeModuleKey"/>
+		<foreignkey field-ref="keyDegreeModule"/>
 	</reference-descriptor>	
 	
 	<reference-descriptor auto-retrieve="false"
 			name="courseGroup"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup"
             >
-		<foreignkey field-ref="courseGroupKey"/>
+		<foreignkey field-ref="keyCourseGroup"/>
 	</reference-descriptor>
 
 	<reference-descriptor auto-retrieve="false"
 			name="beginExecutionPeriod"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
             >
-		<foreignkey field-ref="beginExecutionPeriodKey"/>
+		<foreignkey field-ref="keyBeginExecutionPeriod"/>
 	</reference-descriptor>
 	
 	<reference-descriptor auto-retrieve="false"
 			name="endExecutionPeriod"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
             >
-		<foreignkey field-ref="endExecutionPeriodKey"/>
+		<foreignkey field-ref="keyEndExecutionPeriod"/>
 	</reference-descriptor>				
 </class-descriptor>
 

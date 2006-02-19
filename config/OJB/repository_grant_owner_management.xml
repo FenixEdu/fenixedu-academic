@@ -103,7 +103,7 @@
 		jdbc-type="INTEGER"
 	/>
  	<field-descriptor
-		name="costCenterKey"
+		name="keyGrantCostCenter"
 		column="KEY_COST_CENTER"
 		jdbc-type="INTEGER"
 	/>
@@ -123,7 +123,7 @@
 		name="grantCostCenter"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
 		>
-		<foreignkey field-ref="costCenterKey"/>
+		<foreignkey field-ref="keyGrantCostCenter"/>
 	</reference-descriptor> 		
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="contractRegimes"
@@ -267,7 +267,7 @@
 	/>
 
 	<field-descriptor
-			name="costCenterKey"
+			name="keyGrantCostCenter"
 			column="KEY_COST_CENTER"
 			jdbc-type="INTEGER"
 		/>
@@ -287,7 +287,7 @@
 		name="grantCostCenter"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
 		>
-		<foreignkey field-ref="costCenterKey"/>
+		<foreignkey field-ref="keyGrantCostCenter"/>
 	</reference-descriptor> 		
    </class-descriptor>
 
@@ -385,12 +385,12 @@
 		jdbc-type="DATE"
 	/>
 	 <field-descriptor
-		name="keyTeacher"
+		name="keyOrientationTeacher"
 		column="KEY_GRANT_TEACHER"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyContract"
+		name="keyGrantContract"
 		column="KEY_GRANT_CONTRACT"
 		jdbc-type="INTEGER"
 	/>
@@ -398,13 +398,13 @@
 		name="orientationTeacher"
 		class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		>
-		<foreignkey field-ref="keyTeacher"/>
+		<foreignkey field-ref="keyOrientationTeacher"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 		name="grantContract"
 		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 		>
-		<foreignkey field-ref="keyContract"/>
+		<foreignkey field-ref="keyGrantContract"/>
 	</reference-descriptor> 
    </class-descriptor>
    
@@ -559,13 +559,13 @@
 			name="associatedGrantContracts"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
              >
-		<inverse-foreignkey field-ref="costCenterKey"/>
+		<inverse-foreignkey field-ref="keyGrantCostCenter"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantContractRegimes"
 			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime"
              >
-		<inverse-foreignkey field-ref="costCenterKey"/>
+		<inverse-foreignkey field-ref="keyGrantCostCenter"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedGrantInsurances"

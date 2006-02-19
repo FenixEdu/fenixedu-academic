@@ -163,8 +163,8 @@ class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenix
 }
 
 class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer chaveDisciplinaExecucao;
-	Integer chaveAluno;
+	Integer keyDisciplinaExecucao;
+	Integer keyAluno;
 	Integer keyEnrolment;
 }
 
@@ -215,23 +215,23 @@ class net.sourceforge.fenixedu.domain.CostCenter extends net.sourceforge.fenixed
 
 class net.sourceforge.fenixedu.domain.Seminaries.Candidacy extends net.sourceforge.fenixedu.domain.DomainObject {
     Boolean approved;
-    Integer studentIdInternal;
-    Integer curricularCourseIdInternal;
-    Integer seminaryIdInternal;
-    Integer themeIdInternal;
+    Integer keyStudent;
+    Integer keyCurricularCourse;
+    Integer keySeminary;
+    Integer keyTheme;
     String motivation;
-    Integer modalityIdInternal;
+    Integer keyModality;
 }
 
 
 class net.sourceforge.fenixedu.domain.CandidateEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer curricularCourseKey;
-	Integer masterDegreeCandidateKey;
+	Integer keyCurricularCourse;
+	Integer keyMasterDegreeCandidate;
 }
 
 class net.sourceforge.fenixedu.domain.CandidateSituation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String remarks;
-	Integer candidateKey;
+	Integer keyMasterDegreeCandidate;
 	Date date;
     State validation;
     SituationName situation;
@@ -261,15 +261,15 @@ class net.sourceforge.fenixedu.domain.teacher.Career extends net.sourceforge.fen
 class net.sourceforge.fenixedu.domain.Seminaries.CaseStudy extends net.sourceforge.fenixedu.domain.DomainObject {
     String code;
     String description;
-    Integer seminaryThemeIdInternal;
+    Integer keySeminaryTheme;
     String name;
 }
 
 
 class net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer caseStudyIdInternal;
+    Integer keyCaseStudy;
     Integer order;
-    Integer candidacyIdInternal;
+    Integer keyCandidacy;
 }
 
 
@@ -375,11 +375,11 @@ class net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias extend
 
 
 class net.sourceforge.fenixedu.domain.degreeStructure.Context extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer curricularSemesterKey;
-	Integer degreeModuleKey;
-	Integer courseGroupKey;
-	Integer beginExecutionPeriodKey;
-	Integer endExecutionPeriodKey;
+	Integer keyCurricularSemester;
+	Integer keyDegreeModule;
+	Integer keyCourseGroup;
+	Integer keyBeginExecutionPeriod;
+	Integer keyEndExecutionPeriod;
 	Integer keyCurricularPeriod;
 }
 
@@ -403,9 +403,9 @@ class net.sourceforge.fenixedu.domain.Country extends net.sourceforge.fenixedu.d
 }
 
 class net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer curricularCourseIdInternal;
-    Integer seminaryIdInternal;
-    Integer modalityIdInternal;
+    Integer keyCurricularCourse;
+    Integer keySeminary;
+    Integer keyModality;
 }
 
 class net.sourceforge.fenixedu.domain.gesdis.CourseHistoric extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -449,23 +449,23 @@ class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge
 
 class net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer givenCredits;
-    Integer studentCurricularPlanKey;
-    Integer enrolmentKey;
+    Integer keyStudentCurricularPlan;
+    Integer keyEnrolment;
 }
     
     
 class net.sourceforge.fenixedu.domain.CreditsInScientificArea extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer givenCredits;
-	Integer studentCurricularPlanKey;
-	Integer enrolmentKey;
-	Integer scientificAreaKey;
+	Integer keyStudentCurricularPlan;
+	Integer keyEnrolment;
+	Integer keyScientificArea;
 }
 
 
 class net.sourceforge.fenixedu.domain.CurricularCourseEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer oldCurricularCourseKey;
-	Integer equivalentCurricularCourseKey;
-	Integer degreeCurricularPlanKey;
+	Integer keyOldCurricularCourse;
+	Integer keyEquivalentCurricularCourse;
+	Integer keyDegreeCurricularPlan;
 }
 
 class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -484,9 +484,9 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     }
 
 class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer branchKey;
-    Integer curricularCourseKey;
-    Integer curricularSemesterKey;
+    Integer keyBranch;
+    Integer keyCurricularCourse;
+    Integer keyCurricularSemester;
     String anotation;
     Date begin;
     Date end;
@@ -501,7 +501,7 @@ class net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod extends 
 }
 
 class net.sourceforge.fenixedu.domain.CurricularSemester extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer curricularYearKey;
+    Integer keyCurricularYear;
     Integer semester;
 }
 
@@ -540,7 +540,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourceforge.fenixedu.domain.DomainObject {
     String concreteClassForStudentCurricularPlans;
     Integer degreeDuration;
-    Integer degreeKey;
+    Integer keyDegree;
     String description;
     String descriptionEn;
     Date endDate;
@@ -555,9 +555,9 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     MarkType markType;
     GradeScale gradeScale;
     CurricularStage curricularStage;
-    Integer degreeModuleKey;
+    Integer keyDegreeModule;
    	Group curricularPlanMembersGroup;
-   	Integer keyCurricularPeriod;
+   	Integer keyDegreeStructure;
 }
 
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
@@ -605,7 +605,7 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     Double markAverage;
     Integer driftsSecond;
     String history;
-    Integer degreeKey;
+    Integer keyDegree;
     Date lastModificationDate;
     String qualificationLevel;
     String qualificationLevelEn;
@@ -646,11 +646,11 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		CurricularCourseExecutionScope curricularCourseExecutionScope; 
 	    CurricularStage curricularStage;
 	
-		Integer universityKey;
+		Integer keyUniversity;
 		Integer keyScientificArea;
 		Integer keyCompetenceCourse;
 		Integer keyStudentCourseReport;
-		Integer degreeCurricularPlanKey;
+		Integer keyDegreeCurricularPlan;
 		
 	    GradeScale gradeScale;
 	}
@@ -661,8 +661,8 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
     Integer keyDegreeModuleToApplyRule;
-    Integer keyBeginExecutionPeriod;
-    Integer keyEndExecutionPeriod;
+    Integer keyBegin;
+    Integer keyEnd;
     Integer keyParentCompositeRule;
     CurricularRuleType curricularRuleType;
     Integer keyContextCourseGroup;
@@ -817,10 +817,10 @@ class net.sourceforge.fenixedu.domain.EmployeeHistoric extends net.sourceforge.f
 class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject {
     String createdBy;
     Date creationDate;
-    Integer curricularCourseKey;
+    Integer keyCurricularCourse;
     Integer keyExecutionPeriod;
     String ojbConcreteClass;
-    Integer studentCurricularPlanKey;
+    Integer keyStudentCurricularPlan;
     EnrollmentState enrollmentState;
     EnrollmentCondition condition;
     EnrolmentEvaluationType enrolmentEvaluationType;
@@ -833,17 +833,17 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
     }
 
 class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer enrolmentKey;
+    Integer keyEnrolment;
 }
 
 
 class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforge.fenixedu.domain.DomainObject {
     String checkSum;
     Date when;
-    Integer personResponsibleForGradeKey;
+    Integer keyPersonResponsibleForGrade;
     String observation;
-    Integer employeeKey;
-    Integer enrolmentKey;
+    Integer keyEmployee;
+    Integer keyEnrolment;
     Date gradeAvailableDate;
     Date examDate;
     String grade;
@@ -880,8 +880,8 @@ class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fe
 	}	
     	
 class net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer enrolmentEquivalenceKey;
-    Integer equivalentEnrolmentKey;
+    Integer keyEnrolmentEquivalence;
+    Integer keyEquivalentEnrolment;
 }
 
 class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -962,11 +962,11 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	Boolean temporaryExamMap;
 	Integer keyPeriodExamsFirstSemester;
 	Integer keyPeriodLessonsFirstSemester;
-	Integer academicYear;
-	Integer keyCurricularPlan;
+	Integer keyExecutionYear;
+	Integer keyDegreeCurricularPlan;
 	Integer keyCampus;
 	Integer keyGratuityValues;
-	Integer keyFinalDegreeWorkScheduling;
+	Integer keyScheduling;
 }
 
 
@@ -1003,11 +1003,11 @@ class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourc
 class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyInstitution;
 	Integer keyPerson;
-	Integer keyUnit;
+	Integer keyInstitutionUnit;
 }
 
 class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer employeeKey;
+    Integer keyEmployee;
     Integer costCenterKey;
     Date day;
     Date beginHour;
@@ -1027,25 +1027,25 @@ class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork extends 
     Boolean dayPerWeek;
     Boolean holiday;
     Boolean remuneration;
-    int who;
+    Integer keyWhoEmployee;
     Date when;
     Date totalExtraWork;
     String observation;
 }
 
 class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer employeeKey;
+    Integer keyEmployee;
     Date beginDate;
     Date endDate;
     Boolean dayPerWeek;
     Boolean holiday;
     Boolean remuneration;
-    int who;
+    Integer keyWhoEmployee;
     Date when;
 }
 
 class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer employeeKey;
+    Integer keyEmployee;
     Integer year;
     Integer serviceDismissalPerYear;
     Integer holidaysNumberPerYear;
@@ -1053,14 +1053,14 @@ class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric 
     Date timeForHoliday;
     Date hoursExtraWorkPerYear;
     Date hoursExtraWorkPerDay;
-    int who;
+    Integer keyWhoEmployee;
     Date when;
 }
 
 class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer employeeKey;
-    Integer costCenterExtraWorkKey;
-    Integer costCenterMoneyKey;
+    Integer keyEmployee;
+    Integer keyCostCenterExtraWork;
+    Integer keyCostCenterMoney;
     Date beginDate;
     Date endDate;
     Boolean option1;
@@ -1075,7 +1075,7 @@ class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests 
     Boolean option10;
     Boolean option11;
     Boolean option12;
-    int who;
+    Integer keyWhoEmployee;
     Date when;
 }
 
@@ -1149,7 +1149,7 @@ class net.sourceforge.fenixedu.domain.support.GlossaryEntry extends net.sourcefo
 
 
 class net.sourceforge.fenixedu.domain.grant.contract.GrantContract extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer costCenterKey;
+	Integer keyGrantCostCenter;
 	String endContractMotive;
 	Integer keyGrantOwner;
 	Integer contractNumber;
@@ -1169,7 +1169,7 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement exten
 class net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyGrantContract;
-	Integer costCenterKey;
+	Integer keyGrantCostCenter;
 	Date dateBeginContract;
 	Integer state;
 	Date dateDispatchCC;
@@ -1190,10 +1190,10 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance extends net.
 
 
 class net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyTeacher;
+	Integer keyOrientationTeacher;
 	Date beginDate;
 	Date endDate;
-	Integer keyContract;
+	Integer keyGrantContract;
 }
 
 
@@ -1283,7 +1283,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends n
 	Date endDate;
 	FunctionType type;
 	Integer keyUnit;
-	Integer keyInherentParentFunction;
+	Integer keyParentInherentFunction;
 }
 
 class net.sourceforge.fenixedu.domain.finalDegreeWork.Group extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1373,7 +1373,7 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sour
     Integer keyExecutionCourse;
     Integer keyExecutionDegreeCourse;
     Integer keyExecutionDegreeStudent;
-    Integer keySchoolClass;
+    Integer keyStudentSchoolClass;
     Integer studentCurricularYear;
     Integer studentFirstEnrollment;
     Double classCoordination;
@@ -1436,7 +1436,7 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	Integer keyExecutionPeriod;
 	Integer keyShift;
 	Integer keyRoomOccupation;
-	Integer chaveSala;
+	Integer keySala;
     DiaSemana diaSemana;
     ShiftType tipo;
     Date begin;
@@ -1466,8 +1466,8 @@ class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourcefo
 	String specializationArea;
 	Integer majorDegreeYear;
 	String majorDegreeSchool;
-	Integer executionDegreeKey;
-	Integer personKey;
+	Integer keyExecutionDegree;
+	Integer keyPerson;
 	Integer substituteOrder;
 	Double givenCredits;
 	String givenCreditsRemarks;
@@ -1476,14 +1476,14 @@ class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourcefo
     Specialization specialization;
 	Boolean courseAssistant;
 	String coursesToAssist;
-	Integer guiderKey;
+	Integer keyGuider;
 	Boolean hasGuider;
 }
 
 class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyMasterDegreeThesis;
 	Integer attachedCopiesNumber;
-	Integer keyEmployee;
+	Integer keyResponsibleEmployee;
     Date thesisDeliveryDate;
     Date proofDate;
     State currentState;
@@ -1498,7 +1498,7 @@ class net.sourceforge.fenixedu.domain.MasterDegreeThesis extends net.sourceforge
 class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyMasterDegreeThesis;
 	String dissertationTitle;
-	Integer keyEmployee;
+	Integer keyResponsibleEmployee;
 	State currentState;
     Date lastModification;
 }
@@ -1522,24 +1522,24 @@ class net.sourceforge.fenixedu.domain.Seminaries.Modality extends net.sourceforg
 }
 
 class net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer costCenterKey;
+    Integer keyCostCenter;
     Integer year;
     Double initialValue;
     Double totalValue;
     Double spentValue;
-    int who;
+    Integer keyWhoEmployee;
     Date when;
 }
 
 class net.sourceforge.fenixedu.domain.NonAffiliatedTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
     String name;
     Integer keyInstitution;
-    Integer keyUnit;
+    Integer keyInstitutionUnit;
 }    
 
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer studentCurricularPlanKey;
-    Integer curricularCourseKey;
+    Integer keyStudentCurricularPlan;
+    Integer keyCurricularCourse;
 }
 
 
@@ -1719,7 +1719,7 @@ class net.sourceforge.fenixedu.domain.PaymentPhase extends net.sourceforge.fenix
 }
 
 class net.sourceforge.fenixedu.domain.OccupationPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyPeriod;
+	Integer keyNextPeriod;
     Date start;
     Date end;
     Integer keyPreviousPeriod;
@@ -1747,7 +1747,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	Date dataValidadeDocumentoIdentificacao;
 	String distritoMorada;
 	String numeroDocumentoIdentificacao;
-	Integer chavePais;
+	Integer keyPais;
 	String profissao;
 	String concelhoNaturalidade;
 	Date dataEmissaoDocumentoIdentificacao;
@@ -1870,11 +1870,11 @@ class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.feni
     String title;
     String specializationArea;
     Date date;
-    Integer personKey;
+    Integer keyPerson;
     String branch;
     Date equivalenceDate;
     String degree;
-    Integer countryKey;
+    Integer keyCountry;
     String school;
     
     String year;	
@@ -2174,7 +2174,7 @@ class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.
 
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
-	Integer chaveDisciplinaExecucao;
+	Integer keyDisciplinaExecucao;
 	String nome;
 	Integer lotacao;
     ShiftType tipo;
@@ -2223,13 +2223,13 @@ class net.sourceforge.fenixedu.domain.StatusAssiduidade extends net.sourceforge.
 
 
 class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer studentKindKey;
+	Integer keyStudentKind;
 	Double entryGrade;
 	String istUniversity;
 	Boolean enrollmentForbidden;
 	String ingression;
 	String contigent;
-	Integer personKey;
+	Integer keyPerson;
 	Boolean payedTuition;
 	Boolean specialSeason;
 	Integer keyRegistrationYear;
@@ -2259,18 +2259,18 @@ class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sou
 }
 
 class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer branchKey;
+    Integer keyBranch;
     Double  classification;
     Integer completedCourses;
-    Integer degreeCurricularPlanKey;
-    Integer employeeKey;
-    Integer masterDegreeThesisKey;
+    Integer keyDegreeCurricularPlan;
+    Integer keyEmployee;
+    Integer keyMasterDegreeThesis;
     Integer enrolledCourses;
     Double givenCredits;
     String observations;
     String ojbConcreteClass;
     Date startDate;
-    Integer studentKey;
+    Integer keyStudent;
     Date when;
     StudentCurricularPlanState currentState;
     Specialization specialization;
@@ -2278,12 +2278,12 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
 
 
     class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
-		Integer secundaryBranchKey;
+		Integer keySecundaryBranch;
     }
 
     
     class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
-		Integer secundaryBranchKey;
+		Integer keySecundaryBranch;
     }
 
     
@@ -2503,7 +2503,7 @@ class net.sourceforge.fenixedu.domain.publication.Publication extends net.source
 	String country;
 	Integer year;
 	String format;
-	Integer keyPublicationType;
+	Integer keyType;
 	String publicationString;
 }
 
@@ -2536,8 +2536,8 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
 
 
 class net.sourceforge.fenixedu.domain.Tutor extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer teacherKey;
-    Integer studentKey;
+    Integer keyTeacher;
+    Integer keyStudent;
 }
 
 
@@ -2807,7 +2807,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.Balance extends net.sourcefo
 
 
 class net.sourceforge.fenixedu.domain.research.project.Project extends net.sourceforge.fenixedu.domain.DomainObject{
-	Integer keyProjectTitle;
+	Integer keyTitle;
 	Integer keyProjectAbstract;
 	Partial startDate;
 	Partial endDate;
@@ -3262,13 +3262,13 @@ relation CurricularPeriodParentChilds {
 	net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod playsRole parent;
 }
 
-relation CurricularSemesterContext {
-	net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemester;
-	
-	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole contexts{
-		multiplicity *;
-	}
-}
+//relation CurricularSemesterContext {
+//        net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemester;
+//        
+//        net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole contexts{
+//                multiplicity *;
+//        }
+//}
 
 relation CurricularSemesterCurricularYear {
     net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemesters {

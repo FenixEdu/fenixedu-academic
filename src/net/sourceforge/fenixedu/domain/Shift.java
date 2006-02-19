@@ -17,7 +17,7 @@ public class Shift extends Shift_Base {
         result += ", nome=" + getNome();
         result += ", tipo=" + getTipo();
         result += ", lotacao=" + getLotacao();
-        result += ", chaveDisciplinaExecucao=" + getChaveDisciplinaExecucao();
+        result += ", keyDisciplinaExecucao=" + getKeyDisciplinaExecucao();
         result += "]";
         return result;
     }

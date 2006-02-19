@@ -17,7 +17,7 @@ public class GrantOrientationTeacherVO extends VersionedObjectsBase implements
         GrantOrientationTeacher result = null;
 
         for (GrantOrientationTeacher teacher : grantOrientationTeachers) {
-            if (teacher.getKeyContract().equals(contractId)
+            if (teacher.getKeyGrantContract().equals(contractId)
                     && !teacher.getIdInternal().equals(idInternal)
                     && (result == null || result.getBeginDate().getTime() < teacher.getBeginDate()
                             .getTime())) {

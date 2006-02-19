@@ -10,12 +10,12 @@
 		autoincrement="true"
 	/>
 	<field-descriptor
-		name="studentCurricularPlanKey"
+		name="keyStudentCurricularPlan"
 		column="KEY_STUDENT_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="curricularCourseKey"
+		name="keyCurricularCourse"
 		column="KEY_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>
@@ -64,14 +64,14 @@
 			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			
             >
-		<foreignkey field-ref="studentCurricularPlanKey"/>
+		<foreignkey field-ref="keyStudentCurricularPlan"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="curricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			
             >
-		<foreignkey field-ref="curricularCourseKey"/>
+		<foreignkey field-ref="keyCurricularCourse"/>
 	</reference-descriptor>      
 	<reference-descriptor auto-retrieve="false" 
 			name="executionPeriod"
@@ -84,7 +84,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -92,7 +92,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence">
-		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEquivalentEnrolment"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -100,7 +100,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEquivalence">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -116,7 +116,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -124,7 +124,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
@@ -144,12 +144,12 @@
 		autoincrement="true"
 	/>
 	<field-descriptor
-		name="studentCurricularPlanKey"
+		name="keyStudentCurricularPlan"
 		column="KEY_STUDENT_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="curricularCourseKey"
+		name="keyCurricularCourse"
 		column="KEY_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>
@@ -197,13 +197,13 @@
 			name="studentCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			>
-		<foreignkey field-ref="studentCurricularPlanKey"/>
+		<foreignkey field-ref="keyStudentCurricularPlan"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="curricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			>
-		<foreignkey field-ref="curricularCourseKey"/>
+		<foreignkey field-ref="keyCurricularCourse"/>
 	</reference-descriptor>      
 	<reference-descriptor auto-retrieve="false" 
 			name="executionPeriod"
@@ -216,7 +216,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 	
@@ -225,7 +225,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence">
-		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEquivalentEnrolment"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -233,7 +233,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEquivalence">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -249,7 +249,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -257,7 +257,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>	
 </class-descriptor>
 
@@ -273,12 +273,12 @@
 		autoincrement="true"
 	/>
 	<field-descriptor
-		name="studentCurricularPlanKey"
+		name="keyStudentCurricularPlan"
 		column="KEY_STUDENT_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="curricularCourseKey"
+		name="keyCurricularCourse"
 		column="KEY_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>
@@ -326,13 +326,13 @@
 			name="studentCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			>
-		<foreignkey field-ref="studentCurricularPlanKey"/>
+		<foreignkey field-ref="keyStudentCurricularPlan"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="curricularCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			>
-		<foreignkey field-ref="curricularCourseKey"/>
+		<foreignkey field-ref="keyCurricularCourse"/>
 	</reference-descriptor>      
 	<reference-descriptor auto-retrieve="false" 
 			name="executionPeriod"
@@ -345,7 +345,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 	
@@ -354,7 +354,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence">
-		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEquivalentEnrolment"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -362,7 +362,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEquivalence">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -378,7 +378,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -386,7 +386,7 @@
 			
 			
 			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea">
-		<inverse-foreignkey field-ref="enrolmentKey"/>
+		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
 </class-descriptor>

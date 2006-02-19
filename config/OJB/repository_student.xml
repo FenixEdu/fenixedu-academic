@@ -15,7 +15,7 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="personKey"
+		name="keyPerson"
 		column="KEY_PERSON"
 		jdbc-type="INTEGER"
 	/>
@@ -32,7 +32,7 @@
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"         
 	/>
 	<field-descriptor
-		name="studentKindKey"
+		name="keyStudentKind"
 		column="KEY_STUDENT_KIND"
 		jdbc-type="INTEGER"
 	/>
@@ -141,13 +141,13 @@
 			class-ref="net.sourceforge.fenixedu.domain.Person"
 			
 			>
-		<foreignkey field-ref="personKey"/>
+		<foreignkey field-ref="keyPerson"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="studentKind"
 			class-ref="net.sourceforge.fenixedu.domain.StudentKind"
 			>
-		<foreignkey field-ref="studentKindKey"/>
+		<foreignkey field-ref="keyStudentKind"/>
 	</reference-descriptor>
 	<reference-descriptor auto-retrieve="false"
 			name="registrationYear"
@@ -171,14 +171,14 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			
 			>
-		<inverse-foreignkey field-ref="studentKey"/>
+		<inverse-foreignkey field-ref="keyStudent"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCandidancies"
 			element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
 			
 			>
-		<inverse-foreignkey field-ref="studentIdInternal"/>
+		<inverse-foreignkey field-ref="keyStudent"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedInquiriesRegistries"
@@ -189,7 +189,7 @@
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="associatedAttends"
 			element-class-ref="net.sourceforge.fenixedu.domain.Attends">
-		<inverse-foreignkey field-ref="chaveAluno"/>
+		<inverse-foreignkey field-ref="keyAluno"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="writtenEvaluationEnrolments"

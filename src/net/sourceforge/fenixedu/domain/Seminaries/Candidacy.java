@@ -17,13 +17,13 @@ public class Candidacy extends Candidacy_Base {
 
     public String toString() {
         String result = "[Candidacy:";
-        result += "Theme=" + getThemeIdInternal() + ";";
+        result += "Theme=" + getKeyTheme() + ";";
         result += "Motivation=" + getMotivation() + ";";
-        result += "Student=" + getStudentIdInternal() + ";";
+        result += "Student=" + getKeyStudent() + ";";
         result += "CaseStudyChoices" + getCaseStudyChoices() + ";";
-        result += "CurricularCourse=" + getCurricularCourseIdInternal() + ";";
-        result += "Seminary:=" + getSeminaryIdInternal() + ";";
-        result += "Modality=" + getModalityIdInternal() + "]";
+        result += "CurricularCourse=" + getKeyCurricularCourse() + ";";
+        result += "Seminary:=" + getKeySeminary() + ";";
+        result += "Modality=" + getKeyModality() + "]";
 
         return result;
     }

@@ -48,7 +48,7 @@ public class ReadAndDeleteExtraWorkRequests extends Service {
 				}
 
 				Employee employee = (Employee) persistentObject.readByOID(Employee.class, extraWorkRequests
-						.getEmployeeKey());
+						.getKeyEmployee());
 				if (employee == null) {
 					// TODO
 					continue;
@@ -56,7 +56,7 @@ public class ReadAndDeleteExtraWorkRequests extends Service {
 				extraWorkRequests.setEmployee(employee);
 
 				CostCenter costCenter = (CostCenter) persistentObject.readByOID(CostCenter.class,
-						extraWorkRequests.getCostCenterExtraWorkKey());
+						extraWorkRequests.getKeyCostCenterExtraWork());
 				if (costCenter == null) {
 					// TODO
 					continue;
@@ -64,7 +64,7 @@ public class ReadAndDeleteExtraWorkRequests extends Service {
 				extraWorkRequests.setCostCenterExtraWork(costCenter);
 
 				CostCenter costCenterMoney = (CostCenter) persistentObject.readByOID(CostCenter.class,
-						extraWorkRequests.getCostCenterMoneyKey());
+						extraWorkRequests.getKeyCostCenterMoney());
 				if (costCenterMoney == null) {
 					// TODO
 					continue;
