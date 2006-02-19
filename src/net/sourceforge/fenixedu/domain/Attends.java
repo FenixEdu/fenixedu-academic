@@ -9,6 +9,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -140,6 +142,10 @@ public class Attends extends Attends_Base {
     private YearMonthDay getEndOfSemester() {
         final ExecutionPeriod executionPeriod = getDisciplinaExecucao().getExecutionPeriod();
         return new YearMonthDay(executionPeriod.getEndDate());
+    }
+
+    public Set<WeeklyWorkLoad> getSortedWeeklyWorkLoads() {
+    	return new TreeSet<WeeklyWorkLoad>(getWeeklyWorkLoads());
     }
 
 }

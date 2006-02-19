@@ -1,8 +1,10 @@
 <%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %> 
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/joda.tld" prefix="joda" %>
 
 <h2><bean:message key="link.weekly.work.load"/></h2>
 
@@ -49,10 +51,14 @@
 		<td>
 		</td>
 	</tr>
-	<logic:iterate id="weeklyWorkLoad" name="attend" property="weeklyWorkLoads">
+	<logic:iterate id="weeklyWorkLoad" name="attend" property="sortedWeeklyWorkLoads">
 		<tr>
 			<td class="listClasses">
-				<bean:write name="weeklyWorkLoad" property="weekOffset"/>
+				<bean:define id="interval" type="org.joda.time.Interval" name="weeklyWorkLoad" property="interval"/>
+				<bean:define id="start" type="org.joda.time.DateTime" name="interval" property="start"/>
+				<bean:define id="end" type="org.joda.time.DateTime" name="interval" property="end"/>				
+				[<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>,
+				 <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>[
 			</td>
 			<td class="listClasses">
 				<bean:write name="weeklyWorkLoad" property="contact"/>

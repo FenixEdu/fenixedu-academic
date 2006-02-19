@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -26,6 +26,13 @@ import org.apache.struts.action.DynaActionForm;
 
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
+	private static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>(){
+		public int compare(final Attends attends1, final Attends attends2) {
+			final ExecutionCourse executionCourse1 = attends1.getDisciplinaExecucao();
+			final ExecutionCourse executionCourse2 = attends2.getDisciplinaExecucao();
+			return executionCourse1.getNome().compareTo(executionCourse2.getNome());
+		}};
+
     public ActionForward prepare(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
@@ -41,7 +48,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final ExecutionPeriod selectedExecutionPeriod = findExecutionPeriod(executionPeriods, executionPeriodID);
         dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
 
-        final List<Attends> attends = new ArrayList<Attends>();
+        final Set<Attends> attends = new TreeSet<Attends>(ATTENDS_COMPARATOR);
         for (final Student student : getUserView(request).getPerson().getStudents()) {
             for (final Attends attend : student.getAssociatedAttends()) {
                 final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();

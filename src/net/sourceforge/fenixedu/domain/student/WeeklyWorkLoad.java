@@ -1,6 +1,12 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.DurationFieldType;
+import org.joda.time.Interval;
 
 public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<WeeklyWorkLoad> {
 
@@ -28,6 +34,15 @@ public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<We
         }
 
         return getWeekOffset().compareTo(weeklyWorkLoad.getWeekOffset());
+    }
+
+    public Interval getInterval() {
+   		final ExecutionPeriod executionPeriod = getAttends().getDisciplinaExecucao().getExecutionPeriod();
+   		final DateTime beginningOfSemester = new DateTime(executionPeriod.getBeginDate());
+   		final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
+   		final DateTime start = firstMonday.withFieldAdded(DurationFieldType.weeks(), getWeekOffset().intValue());
+   		final DateTime end = start.plusWeeks(1);
+   		return new Interval(start, end);
     }
 
 }
