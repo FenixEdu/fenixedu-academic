@@ -15,10 +15,10 @@
 	</renderer>
 	
     <renderer mode="input" type="java.lang.Integer"
-              class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
+              class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
 
     <renderer mode="input" type="java.lang.Integer" layout="base-16" 
-              class="net.sourceforge.fenixedu.renderers.NumberInputRenderer">
+              class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer">
         <property name="base" layout="16"/>
     </renderer>
 
@@ -49,10 +49,11 @@
   
     <renderer type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringRenderer"/>
     
-    <renderer type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
-    <renderer type="int" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
-    <renderer type="long" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
-    <renderer type="short" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
+    <renderer type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
+    <renderer type="int" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
+    <renderer type="long" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
+    <renderer type="short" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
+    
     <renderer type="double" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
     <renderer type="float" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
     
@@ -94,12 +95,13 @@
     <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
     <renderer mode="input" type="java.lang.String" layout="htmlEditor" class="net.sourceforge.fenixedu.presentationTier.renderers.HtmlEditorRenderer"/>
     
-    <renderer mode="input" type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
-    <renderer mode="input" type="int" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
-    <renderer mode="input" type="long" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
-    <renderer mode="input" type="short" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
-    <renderer mode="input" type="double" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
-    <renderer mode="input" type="float" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
+    <renderer mode="input" type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
+    <renderer mode="input" type="int" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
+    <renderer mode="input" type="long" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
+    <renderer mode="input" type="short" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
+    
+    <renderer mode="input" type="double" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
+    <renderer mode="input" type="float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
 	
     <renderer mode="input" type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
     <renderer mode="input" type="boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>

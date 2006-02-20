@@ -5,18 +5,8 @@ import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
-public class NumberInputRenderer extends StringInputRenderer {
+public class FloatInputRenderer extends StringInputRenderer {
 
-    private int base = 10;
-    
-    public void setBase(int base) {
-        this.base = base;
-    }
-    
-    public int getBase() {
-        return this.base;
-    }
-    
     @Override
     public HtmlComponent render(Object targetObject, Class type) {
         Number number = (Number) targetObject;
@@ -36,37 +26,23 @@ public class NumberInputRenderer extends StringInputRenderer {
     protected HtmlComponent createTextField(Object object, Class type) {
         HtmlFormComponent formComponent = (HtmlFormComponent) super.createTextField(object, type);
         
-        formComponent.setConverter(new NumberConverter(getBase()));
+        formComponent.setConverter(new FloatNumberConverter());
         
         return formComponent;
     }
-}
-
-class NumberConverter extends Converter {
-
-    private int base;
     
-    public NumberConverter(int base) {
-        this.base = base;
-    }
+    private class FloatNumberConverter extends Converter {
 
-    public int getBase() {
-        return this.base;
-    }
+        @Override
+        public Object convert(Class type, Object value) {
+            String numberText = (String) value;
 
-    public void setBase(int base) {
-        this.base = base;
-    }
-
-    @Override
-    public Object convert(Class type, Object value) {
-        String numberText = (String) value;
-        
-        try {
-            return Integer.parseInt(numberText, getBase());
-        } catch (NumberFormatException e) {
-            throw new ConversionException("Could not convert input " + value, e);
+            try {
+                return Float.parseFloat(numberText);
+            } catch (NumberFormatException e) {
+                throw new ConversionException("could not convert '" + value + "' to a float", e);
+            }
         }
+        
     }
-    
 }
