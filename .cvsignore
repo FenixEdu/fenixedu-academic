@@ -73,3 +73,4 @@ check-build-properties.sh
 build-clean.sh
 jcoverage.ser
 run-db-operations.sh
+build.properties.iseg
