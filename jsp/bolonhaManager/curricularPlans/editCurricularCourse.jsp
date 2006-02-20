@@ -85,7 +85,7 @@
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
 			<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
 		</h:outputLink>
-		</p><br/>
+		</p>
 
 		<h:panelGroup rendered="#{empty CurricularCourseManagement.contextID}">
 			<h:outputText value="<fieldset class='lfloat'>" escape="false"/>

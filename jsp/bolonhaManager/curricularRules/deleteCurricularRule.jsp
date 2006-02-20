@@ -28,7 +28,7 @@
 		<h:outputText value="#{bolonhaBundle['confirmDeleteMessage']}" escape="false" styleClass="error0"/>
 		<h:outputText value="</p>" escape="false"/>
 		
-		<h:outputText value="<p>" escape="false"/>
+		<h:outputText value="<p class='mtop2'>" escape="false"/>
 		<h:commandButton value="#{bolonhaBundle['yes']}" styleClass="inputbutton" action="#{CurricularRulesManagement.deleteCurricularRule}"/>
 		<h:commandButton immediate="true" value="#{bolonhaBundle['no']}" styleClass="inputbutton" action="setCurricularRules"/>
 		<h:outputText value="</p>" escape="false"/>
