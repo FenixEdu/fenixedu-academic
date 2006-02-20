@@ -171,7 +171,7 @@ public class PublicationTest extends DomainTestBase {
         existentPublication.setIsbn(isbn+1);
         existentPublication.setIssn(issn+1);
         existentPublication.setJournalName(journal_name+1);
-        existentPublication.setKeyPublicationType(key_publication_type+1);
+        existentPublication.setKeyType(key_publication_type+1);
         existentPublication.setLanguage(language+1);
         existentPublication.setLastPage(last_page+1);
         existentPublication.setLocal(local+1);
@@ -220,7 +220,7 @@ public class PublicationTest extends DomainTestBase {
         assertEquals(publication.getIsbn(),isbn);
         assertEquals(publication.getIssn(),issn);
         assertEquals(publication.getJournalName(),journal_name);
-        assertEquals(publication.getKeyPublicationType(),key_publication_type);
+        assertEquals(publication.getKeyType(),key_publication_type);
         assertEquals(publication.getLanguage(),language);
         assertEquals(publication.getLastPage(),last_page);
         assertEquals(publication.getLocal(),local);
