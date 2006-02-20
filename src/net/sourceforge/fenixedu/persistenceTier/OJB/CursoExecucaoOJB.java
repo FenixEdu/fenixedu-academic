@@ -83,7 +83,7 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", year);
         criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", degreeType);
-        return queryList(ExecutionDegree.class, criteria, "keyCurricularPlan", true);
+        return queryList(ExecutionDegree.class, criteria, "keyDegreeCurricularPlan", true);
     }
 
     public List readByDegreeCurricularPlan(Integer degreeCurricularPlanOID) throws ExcepcaoPersistencia {
