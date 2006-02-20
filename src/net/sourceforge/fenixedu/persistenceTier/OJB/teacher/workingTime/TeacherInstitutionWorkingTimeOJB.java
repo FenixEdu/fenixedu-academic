@@ -32,7 +32,7 @@ public class TeacherInstitutionWorkingTimeOJB extends PersistentObjectOJB implem
             TeacherInstitutionWorkTime teacherInstitutionWorkTime) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("startTime", teacherInstitutionWorkTime.getStartTime());
-        criteria.addEqualTo("keyOrientationTeacher", teacherInstitutionWorkTime.getTeacher().getIdInternal());
+        criteria.addEqualTo("keyTeacher", teacherInstitutionWorkTime.getTeacher().getIdInternal());
         criteria.addEqualTo("keyExecutionPeriod", teacherInstitutionWorkTime.getExecutionPeriod()
                 .getIdInternal());
         criteria.addEqualTo("weekDay", teacherInstitutionWorkTime.getWeekDay());

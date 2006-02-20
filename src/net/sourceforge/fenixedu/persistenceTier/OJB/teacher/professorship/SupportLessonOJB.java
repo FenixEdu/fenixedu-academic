@@ -39,7 +39,7 @@ public class SupportLessonOJB extends PersistentObjectOJB implements IPersistent
             DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriodID);
-        criteria.addEqualTo("professorship.keyOrientationTeacher", teacherID);
+        criteria.addEqualTo("professorship.keyTeacher", teacherID);
         criteria.addEqualTo("weekDay", weekDay);
 
         Criteria startCriteria = new Criteria();

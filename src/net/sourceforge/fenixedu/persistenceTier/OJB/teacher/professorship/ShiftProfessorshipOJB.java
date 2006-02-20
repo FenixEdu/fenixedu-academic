@@ -67,7 +67,7 @@ public class ShiftProfessorshipOJB extends PersistentObjectOJB implements IPersi
             DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriodId);
-        criteria.addEqualTo("professorship.keyOrientationTeacher", teacherId);
+        criteria.addEqualTo("professorship.keyTeacher", teacherId);
         criteria.addEqualTo("shift.associatedLessons.diaSemana", weekDay);
         criteria.addEqualTo("percentage", new Double(100));
 

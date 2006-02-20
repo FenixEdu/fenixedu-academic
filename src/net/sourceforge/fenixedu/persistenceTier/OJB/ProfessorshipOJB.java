@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import org.apache.ojb.broker.query.Criteria;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  *  
  */
@@ -23,8 +23,8 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
     public Professorship readByTeacherAndExecutionCourse(Integer teacherID, Integer executionCourseID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyOrientationTeacher", teacherID);
-        criteria.addEqualTo("keyExecutionCourse", executionCourseID);
+        criteria.addEqualTo("teacher.idInternal", teacherID);
+        criteria.addEqualTo("executionCourse.idInternal", executionCourseID);
         return (Professorship) queryObject(Professorship.class, criteria);
     }
 
