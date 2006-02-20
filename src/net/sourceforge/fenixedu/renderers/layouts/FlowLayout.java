@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers.layouts;
 
+import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
@@ -75,7 +76,12 @@ public abstract class FlowLayout extends Layout {
     }
 
     protected HtmlComponent getContainer() {
-        return new HtmlInlineContainer();
+        if (isEachInline()) {
+            return new HtmlInlineContainer();
+        }
+        else {
+            return new HtmlBlockContainer();
+        }
     }
 
     protected abstract boolean hasMoreComponents();

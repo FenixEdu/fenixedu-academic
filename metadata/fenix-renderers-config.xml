@@ -85,8 +85,8 @@
     <renderer mode="input" type="java.util.List" layout="external-add" class="net.sourceforge.fenixedu.renderers.ManageableListRenderer"/>
 
     <renderer mode="input" type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowInputRenderer"/>
 
     <!-- Can be used to fill a slot with one of many possible objects  -->
     <renderer mode="input" type="java.lang.Object" layout="menu-select" class="net.sourceforge.fenixedu.renderers.MenuOptionListRenderer"/>

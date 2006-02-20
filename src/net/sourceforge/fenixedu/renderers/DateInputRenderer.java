@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
+import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.HtmlTextInput;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
@@ -51,7 +52,7 @@ public class DateInputRenderer extends TextFieldRenderer {
         
         dateInput.setConverter(new DateConverter(dateFormat));
         
-        HtmlContainer container = new HtmlBlockContainer();
+        HtmlContainer container = new HtmlInlineContainer();
         container.addChild(dateInput);
         container.addChild(new HtmlText(getFormat()));
         

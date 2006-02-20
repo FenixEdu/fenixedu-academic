@@ -1,17 +1,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.renderers;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadDomainObject;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.PropertyUtils;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class UpdateObjects extends Service {
     
@@ -29,7 +28,7 @@ public class UpdateObjects extends Service {
         }
     }
 
-    public void run(List<ObjectChange> changes) throws ExcepcaoPersistencia, ClassNotFoundException,
+    public Collection run(List<ObjectChange> changes) throws ExcepcaoPersistencia, ClassNotFoundException,
             IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         Hashtable<ObjectKey, Object> objects = new Hashtable<ObjectKey, Object>();
 
@@ -38,6 +37,8 @@ public class UpdateObjects extends Service {
 
             setProperty(object, change.slot, change.value);
         }
+        
+        return objects.values();
     }
 
     private void setProperty(Object object, String slot, Object value) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {

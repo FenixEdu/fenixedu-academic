@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
+import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -253,7 +254,13 @@ public class CollectionRenderer extends OutputRenderer {
             if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
                 getContext().setMetaObject(object);
             
-                HtmlComponent component = renderSlot(object.getSlots().get(columnIndex));
+                MetaSlot slot = getSlotUsingName(object, columnIndex);
+                
+                if (slot == null) {
+                    return new HtmlText();
+                }
+                
+                HtmlComponent component = renderSlot(slot);
                 component = wrapPrefixAndSuffix(component, columnIndex);
             
                 return component;
@@ -263,6 +270,33 @@ public class CollectionRenderer extends OutputRenderer {
             }
         }
         
+        /**
+         * As the renderer uses the first object as a reference to build the header and
+         * fecth the information from all the objects in the collection we can have troubles
+         * when the collection contains objects of different types.
+         * 
+         * In this case we can't assume that all objects have the same slots (because of 
+         * an unspecified schema). So we have to search slots by name and hope that it makes
+         * sense in the table.  
+         */
+        private MetaSlot getSlotUsingName(MetaObject object, int columnIndex) {
+            MetaObject referenceObject = getObject(0);
+            MetaSlot referenceSlot = referenceObject.getSlots().get(columnIndex);
+            
+            MetaSlot directSlot = object.getSlots().get(columnIndex); // common case
+            if (directSlot.getName().equals(referenceSlot.getName())) {
+                return directSlot;
+            }
+            
+            for (MetaSlot slot : object.getSlots()) {
+                if (slot.getName().equals(referenceSlot.getName())) {
+                    return slot;
+                }
+            }
+            
+            return null;
+        }
+
         private HtmlComponent generateLinkComponent(MetaObject object, int number) {
             TableLink tableLink = getTableLink(number);
             

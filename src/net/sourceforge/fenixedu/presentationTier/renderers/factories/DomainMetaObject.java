@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectKey;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.UpdateObjects.ObjectChange;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
@@ -140,13 +141,15 @@ public class DomainMetaObject implements MetaObject {
             }
         }
  
-        // TODO: do something with the exception
+        callService(changes);
+    }
+
+    protected Object callService(List<ObjectChange> changes) {
         try {
-            ServiceUtils.executeService(getUserView(), getServiceName(), new Object[] { changes });
-        } catch (FenixFilterException e) {
-            e.printStackTrace();
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
+            return ServiceUtils.executeService(getUserView(), getServiceName(), new Object[] { changes });
+        } catch (Exception e) {
+            // TODO: do something with the exception
+            throw new DomainException("domain.metaobject.service.failed", e);
         }
     }
 

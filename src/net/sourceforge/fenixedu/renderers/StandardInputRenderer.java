@@ -103,23 +103,8 @@ public class StandardInputRenderer extends InputRenderer {
                 break;
             case 1:
                 component = renderSlot(this.object.getSlots().get(rowIndex));
+                inputComponents.put(rowIndex, findValidatableComponent(component));
 
-                // find first input component to be validated
-                if (component instanceof HtmlSimpleValueComponent) {
-                    inputComponents.put(rowIndex, (HtmlSimpleValueComponent) component);
-                } else {
-                    List<HtmlComponent> children = component.getChildren(new Predicate() {
-
-                        public boolean evaluate(Object component) {
-                            return component instanceof HtmlSimpleValueComponent;
-                        }
-
-                    });
-
-                    if (children.size() > 0) {
-                        inputComponents.put(rowIndex, (HtmlSimpleValueComponent) children.get(0));
-                    }
-                }
                 break;
             case 2:
                 HtmlSimpleValueComponent inputComponent = inputComponents.get(rowIndex);
