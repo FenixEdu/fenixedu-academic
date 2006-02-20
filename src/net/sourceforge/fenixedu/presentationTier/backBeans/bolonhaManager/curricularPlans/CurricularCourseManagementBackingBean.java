@@ -475,12 +475,17 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         }
     }
     
-    public String editCurricularCourseReturnPath() throws FenixFilterException, FenixServiceException {
+    public String editCurricularCourseReturnPath() {
         return confirmDelete ? "confirmDeleteCurricularCourse" : "";
     }
     
-    public String deleteCurricularCourseContextReturnPath() throws FenixFilterException, FenixServiceException {
+    public String deleteCurricularCourseContextReturnPath() {
         return confirmDelete ? "confirmDeleteCurricularCourse" : "buildCurricularPlan";
+    }
+    
+    public String cancel() {
+        setContextID(0);
+        return "";
     }
 
     private List<SelectItem> readDepartmentUnits() throws FenixFilterException {
