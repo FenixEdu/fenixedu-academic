@@ -7822,28 +7822,6 @@
 		<isTransactional>true</isTransactional>
 	</service>
 	<service>
-		<name>ReadAllMoneyCostCenterByYear</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness.ReadAllMoneyCostCenterByYear
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>UpdateAllMoneyCostCenterByYear</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness.UpdateAllMoneyCostCenterByYear
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadInfoRegistrationDeclaration</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.student.ReadInfoRegistrationDeclaration
@@ -8152,61 +8130,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>WriteExtraWorkRequests</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness.WriteExtraWorkRequests
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadAndDeleteExtraWorkRequests</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness.ReadAndDeleteExtraWorkRequests
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadExtraWorkRequests</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness.ReadExtraWorkRequests
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ExtraWorkSheet</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness.ExtraWorkSheet
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>WriteExtraWork</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness.WriteExtraWork
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadLessonStartDate</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.CalculateFirstDayOfLesson
@@ -8339,17 +8262,6 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ExtraWorkSheet</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness.ExtraWorkSheet
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
 		</filterChains>
 	</service>
 	<service>
