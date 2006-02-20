@@ -482,7 +482,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
     
     private void checkIfAnualBeginsInFirstPeriod(final CompetenceCourse competenceCourse, final CurricularPeriod curricularPeriod) {
-        if (competenceCourse.getRegime().equals(RegimeType.ANUAL) && curricularPeriod.getChildByOrder(1) == null) {
+        if (competenceCourse.getRegime().equals(RegimeType.ANUAL) && (curricularPeriod.getOrder() == null || curricularPeriod.getOrder() != 1)) {
             throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
         }
     }
