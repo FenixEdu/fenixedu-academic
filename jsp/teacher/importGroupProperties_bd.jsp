@@ -11,7 +11,7 @@
 <h2><bean:message key="title.importGroupProperties"/></h2>
 
 <bean:define id="infoSiteGroupProperties" name="siteView" property="component"/>
-<bean:define id="groupProperties" name="infoSiteGroupProperties" property="infoGroupProperties"/>
+<bean:define id="infoGrouping" name="infoSiteGroupProperties" property="infoGrouping"/>
 
 <br>
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -40,7 +40,7 @@
          	</td>
                     
 			<td class="listClasses" align="left">
-			<bean:write name="groupProperties" property="name" />
+			<bean:write name="infoGrouping" property="name" />
     		</td>
 		</tr>
 		
@@ -51,11 +51,11 @@
          	
          	
          	<td class="listClasses">
-             <logic:notEmpty name="groupProperties" property="projectDescription">
-            	  <bean:write name="groupProperties" property="projectDescription" filter="false"/>
+             <logic:notEmpty name="infoGrouping" property="projectDescription">
+            	  <bean:write name="infoGrouping" property="projectDescription" filter="false"/>
              </logic:notEmpty>
                 	
-             <logic:empty name="groupProperties" property="projectDescription">
+             <logic:empty name="infoGrouping" property="projectDescription">
                 	<bean:message key="message.project.wihtout.description"/>
              </logic:empty>
                 	</td>
@@ -69,13 +69,13 @@
 	    
 			
 			<td class="listClasses" align="left">
-			<logic:empty name="groupProperties" property="enrolmentBeginDayFormatted"><br />
+			<logic:empty name="infoGrouping" property="enrolmentBeginDayFormatted"><br />
 			</logic:empty>
 			
-			<logic:notEmpty name="groupProperties" property="enrolmentBeginDayFormatted">
-				<bean:write name="groupProperties" property="enrolmentBeginDayFormatted" />
+			<logic:notEmpty name="infoGrouping" property="enrolmentBeginDayFormatted">
+				<bean:write name="infoGrouping" property="enrolmentBeginDayFormatted" />
 				<i><bean:message key="label.at" /></i>
-				<bean:write name="groupProperties" property="enrolmentBeginHourFormatted"/>
+				<bean:write name="infoGrouping" property="enrolmentBeginHourFormatted"/>
 				<br />
 			</logic:notEmpty>
 			</td>
@@ -91,14 +91,14 @@
 
 			
 			<td class="listClasses" align="left">
-			<logic:empty name="groupProperties" property="enrolmentEndDayFormatted">
+			<logic:empty name="infoGrouping" property="enrolmentEndDayFormatted">
 			<br />				
 			</logic:empty>
 			
-			<logic:notEmpty name="groupProperties" property="enrolmentEndDayFormatted">
-				<bean:write name="groupProperties" property="enrolmentEndDayFormatted" />
+			<logic:notEmpty name="infoGrouping" property="enrolmentEndDayFormatted">
+				<bean:write name="infoGrouping" property="enrolmentEndDayFormatted" />
 				<i><bean:message key="label.at" /></i>
-				<bean:write name="groupProperties" property="enrolmentEndHourFormatted"/>
+				<bean:write name="infoGrouping" property="enrolmentEndHourFormatted"/>
 				<br />			
 			</logic:notEmpty>
 			</td>
@@ -133,11 +133,11 @@
          	</td>
 			
 			<td class="listClasses" align="left">
-			<logic:empty name="groupProperties" property="maximumCapacity">
+			<logic:empty name="infoGrouping" property="maximumCapacity">
 			<br>
 			</logic:empty>
-			<logic:notEmpty name="groupProperties" property="maximumCapacity">
-			<bean:write name="groupProperties" property="maximumCapacity" />
+			<logic:notEmpty name="infoGrouping" property="maximumCapacity">
+			<bean:write name="infoGrouping" property="maximumCapacity" />
 			</logic:notEmpty>
 			</td>
 			
@@ -151,11 +151,11 @@
          	</td>
     	
 			<td class="listClasses" align="left">
-			<logic:empty name="groupProperties" property="minimumCapacity">
+			<logic:empty name="infoGrouping" property="minimumCapacity">
 			<br>
 			</logic:empty>
-			<logic:notEmpty name="groupProperties" property="minimumCapacity">
-			<bean:write name="groupProperties" property="minimumCapacity" />
+			<logic:notEmpty name="infoGrouping" property="minimumCapacity">
+			<bean:write name="infoGrouping" property="minimumCapacity" />
 			</logic:notEmpty>
 			</td>
 			
@@ -169,11 +169,11 @@
          	</td>
 		
 			<td class="listClasses" align="left">
-			<logic:empty name="groupProperties" property="idealCapacity">
+			<logic:empty name="infoGrouping" property="idealCapacity">
 			<br>
 			</logic:empty>
-			<logic:notEmpty name="groupProperties" property="idealCapacity">
-			<bean:write name="groupProperties" property="idealCapacity" />
+			<logic:notEmpty name="infoGrouping" property="idealCapacity">
+			<bean:write name="infoGrouping" property="idealCapacity" />
 			</logic:notEmpty>
 			</td>
 			
@@ -185,11 +185,11 @@
 		
 			
 			<td class="listClasses" align="left">
-			<logic:empty name="groupProperties" property="groupMaximumNumber">
+			<logic:empty name="infoGrouping" property="groupMaximumNumber">
 			<br>
 			</logic:empty>
-			<logic:notEmpty name="groupProperties" property="groupMaximumNumber">
-			<bean:write name="groupProperties" property="groupMaximumNumber" />
+			<logic:notEmpty name="infoGrouping" property="groupMaximumNumber">
+			<bean:write name="infoGrouping" property="groupMaximumNumber" />
 			</logic:notEmpty>
 			</td>
 			

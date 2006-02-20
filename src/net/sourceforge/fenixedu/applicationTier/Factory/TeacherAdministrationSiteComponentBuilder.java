@@ -1007,7 +1007,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 			groupProperties = (Grouping) iterator.next();
 
-			InfoGrouping infoGroupProperties = InfoGrouping.newInfoFromDomain(groupProperties);
+			InfoGrouping infoGroupProperties = InfoGroupingWithExportGrouping.newInfoFromDomain(groupProperties);
 
 			projects.add(infoGroupProperties);
 		}
