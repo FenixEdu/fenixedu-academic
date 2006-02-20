@@ -52,7 +52,7 @@
 	</reference-descriptor>
 	
 	<reference-descriptor auto-retrieve="false"
-			name="abstract"
+			name="projectAbstract"
 			class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectAbstract"
 			>
 		<foreignkey field-ref="keyProjectAbstract"/>
