@@ -71,7 +71,9 @@ public enum RoleType {
 
     CMS_MANAGER,
 
-    SPACE_MANAGER;
+    SPACE_MANAGER,
+    
+    RESEARCHER;
 
     public String getName() {
         return name();    

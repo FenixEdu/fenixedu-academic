@@ -693,6 +693,9 @@ public class Person extends Person_Base {
 
         @Override
         public void afterAdd(Role role, Person person) {
+            if (role.getRoleType().equals(RoleType.TEACHER)){
+                person.addPersonRoles(Role.getRoleByRoleType(RoleType.RESEARCHER));
+            }
             person.updateUsername();
             person.updateIstUsername();
         }
@@ -726,6 +729,7 @@ public class Person extends Person_Base {
             case COORDINATOR:
             case DIRECTIVE_COUNCIL:
             case SEMINARIES_COORDINATOR:
+            case RESEARCHER:
                 return person.hasRole(RoleType.TEACHER);
             case DEGREE_ADMINISTRATIVE_OFFICE:
             case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
@@ -764,6 +768,7 @@ public class Person extends Person_Base {
                 removeRoleIfPresent(person, RoleType.COORDINATOR);
                 removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
                 removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
+                removeRoleIfPresent(person, RoleType.RESEARCHER);
                 // removeRoleIfPresent(person, RoleType.EMPLOYEE);
                 break;
 

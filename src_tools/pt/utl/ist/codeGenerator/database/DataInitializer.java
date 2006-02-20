@@ -70,6 +70,7 @@ public class DataInitializer {
         new Role(RoleType.BOLONHA_MANAGER, "/bolonhaManager", "/index.do", "portal.bolonhaManager");
         new Role(RoleType.SCIENTIFIC_COUNCIL, "/scientificCouncil", "/index.do", "portal.scientificCouncil");
         new Role(RoleType.SPACE_MANAGER, "/SpaceManager", "/index.do", "portal.SpaceManager");
+        new Role(RoleType.RESEARCHER, "/researcher", "/index.do", "portal.researcher");
     }
 
     private static void createCurricularYearsAndSemesters() {

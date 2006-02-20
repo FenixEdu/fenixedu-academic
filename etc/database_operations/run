@@ -20,3 +20,10 @@ function execute() {
 }
 
 execute "Create table weekly work load" createTableWeeklyWorkLoad.sql
+execute "Create researcher role" createResearcherRole.sql
+
+echo ---------------------------------------- Altering table Person_Role
+mysql -u$2 -f -p$password $1 < setResearcherRole2Teachers.sql > res.sql
+mysql -u$2 -f -p$password $1 < res.sql
+rm res.sql
+echo done
