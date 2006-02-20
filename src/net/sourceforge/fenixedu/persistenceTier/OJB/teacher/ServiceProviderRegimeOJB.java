@@ -16,7 +16,7 @@ public class ServiceProviderRegimeOJB extends PersistentObjectOJB implements
 
     public ServiceProviderRegime readByTeacherId(Integer teacherId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacherId);
+        criteria.addEqualTo("keyOrientationTeacher", teacherId);
         return (ServiceProviderRegime) queryObject(ServiceProviderRegime.class, criteria);
     }
 

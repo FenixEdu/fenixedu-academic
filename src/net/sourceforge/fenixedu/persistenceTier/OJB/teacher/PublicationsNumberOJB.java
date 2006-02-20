@@ -35,7 +35,7 @@ public class PublicationsNumberOJB extends PersistentObjectOJB implements IPersi
     public PublicationsNumber readByTeacherIdAndPublicationType(Integer teacherId,
             PublicationType publicationType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacherId);
+        criteria.addEqualTo("keyOrientationTeacher", teacherId);
         criteria.addEqualTo("publicationType", new Integer(publicationType.getValue()));
         return (PublicationsNumber) queryObject(PublicationsNumber.class, criteria);
     }

@@ -22,7 +22,7 @@ public class GrantOrientationTeacherOJB extends PersistentObjectOJB implements
         List grantOrientationTeacher = null;
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyContract", contractId);
+        criteria.addEqualTo("keyGrantContract", contractId);
        // criteria.addNotEqualTo("idInternal", idInternal);
         grantOrientationTeacher = queryList(GrantOrientationTeacher.class, criteria, "beginDate", false);
 

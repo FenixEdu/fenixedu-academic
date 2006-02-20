@@ -34,7 +34,7 @@ public class OrientationOJB extends PersistentObjectOJB implements IPersistentOr
     public Orientation readByTeacherIdAndOrientationType(Integer teacherId, OrientationType orientationType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacherId);
+        criteria.addEqualTo("keyOrientationTeacher", teacherId);
         criteria.addEqualTo("orientationType", new Integer(orientationType.getValue()));
         return (Orientation) queryObject(Orientation.class, criteria);
     }

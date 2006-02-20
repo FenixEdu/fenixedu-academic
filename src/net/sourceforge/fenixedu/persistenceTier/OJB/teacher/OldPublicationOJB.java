@@ -37,7 +37,7 @@ public class OldPublicationOJB extends PersistentObjectOJB implements IPersisten
     public List readAllByTeacherIdAndOldPublicationType(final Integer teacherId,
             final OldPublicationType oldPublicationType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacherId);
+        criteria.addEqualTo("keyOrientationTeacher", teacherId);
         criteria.addEqualTo("oldPublicationType", new Integer(oldPublicationType.getValue()));
         return queryList(OldPublication.class, criteria);
     }

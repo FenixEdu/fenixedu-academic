@@ -17,7 +17,7 @@ public class ExternalActivityOJB extends PersistentObjectOJB implements IPersist
 
     public List readByTeacherId(Integer teacherId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacherId);
+        criteria.addEqualTo("keyOrientationTeacher", teacherId);
         List externalActivities = queryList(ExternalActivity.class, criteria);
 
         return externalActivities;

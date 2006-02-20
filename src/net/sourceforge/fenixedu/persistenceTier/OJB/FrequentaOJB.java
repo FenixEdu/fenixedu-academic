@@ -40,7 +40,7 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
 
         Criteria crit = new Criteria();
         crit.addEqualTo("aluno.idInternal", studentID);
-        crit.addEqualTo("chaveDisciplinaExecucao", executionCourseID);
+        crit.addEqualTo("keyDisciplinaExecucao", executionCourseID);
         return (Attends) queryObject(Attends.class, crit);
 
     }

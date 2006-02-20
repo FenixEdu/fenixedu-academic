@@ -84,7 +84,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 
 		if (executionDegreeID == null && degreeType == null && candidateSituation == null
 				&& candidateNumber == null) {
-			criteria.addEqualTo("executionDegree.academicYear", executionYearID);
+			criteria.addEqualTo("executionDegree.keyExecutionYear", executionYearID);
 			return queryList(MasterDegreeCandidate.class, criteria);
 		}
 

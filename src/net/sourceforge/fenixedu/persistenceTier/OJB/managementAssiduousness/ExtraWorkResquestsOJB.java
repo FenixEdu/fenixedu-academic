@@ -22,7 +22,7 @@ public class ExtraWorkResquestsOJB extends PersistentObjectOJB implements IPersi
         Criteria criteria = new Criteria();
         criteria.addLessOrEqualThan("beginDate", day);
         criteria.addGreaterOrEqualThan("endDate", day);
-        criteria.addEqualTo("employeeKey", employeeID);        
+        criteria.addEqualTo("keyEmployee", employeeID);        
         
         return (ExtraWorkRequests) queryObject(ExtraWorkRequests.class, criteria);
     }
@@ -39,8 +39,8 @@ public class ExtraWorkResquestsOJB extends PersistentObjectOJB implements IPersi
         Criteria criteria = new Criteria();
         criteria.addBetween("beginDate", beginDay, lastDay);
         criteria.addBetween("endDate", beginDay, lastDay);
-        criteria.addEqualTo("costCenterExtraWorkKey", costCenterId);
-        criteria.addEqualTo("costCenterMoneyKey", costCenterMoneyId);
+        criteria.addEqualTo("keyCostCenterExtraWork", costCenterId);
+        criteria.addEqualTo("keyCostCenterMoney", costCenterMoneyId);
         
         
         return queryList(ExtraWorkRequests.class, criteria);

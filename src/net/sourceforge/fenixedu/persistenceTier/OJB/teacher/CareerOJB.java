@@ -30,7 +30,7 @@ public class CareerOJB extends PersistentObjectOJB implements IPersistentCareer 
     public List readAllByTeacherIdAndCareerType(Integer teacherId, CareerType careerType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacherId);
+        criteria.addEqualTo("keyOrientationTeacher", teacherId);
         if (careerType != null) {
             if (careerType.equals(CareerType.PROFESSIONAL)) {
                 criteria.addEqualTo("ojbConcreteClass", ProfessionalCareer.class.getName());

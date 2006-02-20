@@ -16,7 +16,7 @@ public class WeeklyOcupationOJB extends PersistentObjectOJB implements IPersiste
 
     public WeeklyOcupation readByTeacherId(Integer teacherId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacherId);
+        criteria.addEqualTo("keyOrientationTeacher", teacherId);
         return (WeeklyOcupation) queryObject(WeeklyOcupation.class, criteria);
     }
 

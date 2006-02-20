@@ -24,9 +24,9 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
     		throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("curricularCourseKey", curricularCourseId);
-        criteria.addEqualTo("curricularSemesterKey", curricularSemesterId);
-        criteria.addEqualTo("branchKey", branchId);
+        criteria.addEqualTo("keyCurricularCourse", curricularCourseId);
+        criteria.addEqualTo("keyCurricularSemester", curricularSemesterId);
+        criteria.addEqualTo("keyBranch", branchId);
         return (CurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
 
     }
@@ -36,9 +36,9 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
 			Calendar endDate) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("curricularCourseKey", curricularCourseId);
-        criteria.addEqualTo("curricularSemesterKey", curricularSemesterId);
-        criteria.addEqualTo("branchKey", branchId);
+        criteria.addEqualTo("keyCurricularCourse", curricularCourseId);
+        criteria.addEqualTo("keyCurricularSemester", curricularSemesterId);
+        criteria.addEqualTo("keyBranch", branchId);
         if (endDate == null) {
             criteria.addIsNull("end");
         } else {
@@ -51,7 +51,7 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
     public List readActiveCurricularCourseScopesByCurricularCourse(Integer curricularCourseId)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("curricularCourseKey", curricularCourseId);
+        crit.addEqualTo("keyCurricularCourse", curricularCourseId);
         crit.addIsNull("end");
         List result = queryList(CurricularCourseScope.class, crit);
         return result;
@@ -60,7 +60,7 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
     public List readActiveCurricularCourseScopesByDegreeCurricularPlanId(
             final Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
         final Criteria crit = new Criteria();
-        crit.addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlanId);
+        crit.addEqualTo("curricularCourse.keyDegreeCurricularPlan", degreeCurricularPlanId);
         crit.addIsNull("end");
         final List result = queryList(CurricularCourseScope.class, crit);
         return result;
@@ -70,7 +70,7 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
             Integer curricularCourseId, Date beginDate, Date endDate)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("curricularCourseKey", curricularCourseId);
+        crit.addEqualTo("keyCurricularCourse", curricularCourseId);
         crit.addLessThan("begin", endDate);
 
         Criteria crit3 = new Criteria();
@@ -91,7 +91,7 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
 
-        crit.addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlanId);
+        crit.addEqualTo("curricularCourse.keyDegreeCurricularPlan", degreeCurricularPlanId);
         crit.addLessThan("begin", endDate);
 
         Criteria crit3 = new Criteria();
@@ -131,7 +131,7 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
     public List readActiveCurricularCourseScopesByDegreeCurricularPlanAndCurricularYear(
 			Integer degreeCurricularPlanId, Integer curricularYear, Date beginDate, Date endDate) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlanId);
+        crit.addEqualTo("curricularCourse.keyDegreeCurricularPlan", degreeCurricularPlanId);
         crit.addEqualTo("curricularSemester.curricularYear.year", curricularYear);
         crit.addLessThan("begin", endDate);
 

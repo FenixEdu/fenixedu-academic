@@ -22,7 +22,7 @@ public class MoneyCostCenterOJB extends PersistentObjectOJB implements IPersiste
     public MoneyCostCenter readByCostCenterAndYear(CostCenter costCenter, Integer year)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("costCenterKey", costCenter.getIdInternal());
+        criteria.addEqualTo("keyCostCenter", costCenter.getIdInternal());
         criteria.addEqualTo("year", year);
 
         return (MoneyCostCenter) queryObject(MoneyCostCenter.class, criteria);

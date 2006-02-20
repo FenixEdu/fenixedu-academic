@@ -25,7 +25,7 @@ public class DegreeInfoOJB extends PersistentObjectOJB implements IPersistentDeg
     public List readDegreeInfoByDegreeAndExecutionYear(Integer degreeId, Date beginDate, Date endDate)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("degreeKey", degreeId);
+        criteria.addEqualTo("keyDegree", degreeId);
         criteria.addBetween("lastModificationDate", beginDate, endDate);
 
         return queryList(DegreeInfo.class, criteria);

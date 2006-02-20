@@ -32,7 +32,7 @@ public class TeacherInstitutionWorkingTimeOJB extends PersistentObjectOJB implem
             TeacherInstitutionWorkTime teacherInstitutionWorkTime) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("startTime", teacherInstitutionWorkTime.getStartTime());
-        criteria.addEqualTo("keyTeacher", teacherInstitutionWorkTime.getTeacher().getIdInternal());
+        criteria.addEqualTo("keyOrientationTeacher", teacherInstitutionWorkTime.getTeacher().getIdInternal());
         criteria.addEqualTo("keyExecutionPeriod", teacherInstitutionWorkTime.getExecutionPeriod()
                 .getIdInternal());
         criteria.addEqualTo("weekDay", teacherInstitutionWorkTime.getWeekDay());
@@ -48,7 +48,7 @@ public class TeacherInstitutionWorkingTimeOJB extends PersistentObjectOJB implem
     public List readByTeacherAndExecutionPeriod(Teacher teacher, ExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+        criteria.addEqualTo("keyOrientationTeacher", teacher.getIdInternal());
         criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
         return queryList(TeacherInstitutionWorkTime.class, criteria);
     }
@@ -64,7 +64,7 @@ public class TeacherInstitutionWorkingTimeOJB extends PersistentObjectOJB implem
             DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExecutionPeriod", executionPeriodId);
-        criteria.addEqualTo("keyTeacher", teacherId);
+        criteria.addEqualTo("keyOrientationTeacher", teacherId);
         criteria.addEqualTo("weekDay", weekDay);
 
         Criteria startCriteria = new Criteria();

@@ -25,7 +25,7 @@ public class PublicationTeacherOJB extends ObjectFenixOJB implements IPersistent
     public PublicationTeacher readByTeacherAndPublication(Teacher teacher,
 			Publication publication) throws ExcepcaoPersistencia{
     	Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher",teacher.getIdInternal());
+        criteria.addEqualTo("keyOrientationTeacher",teacher.getIdInternal());
         criteria.addEqualTo("keyPublication",publication.getIdInternal());
     	return (PublicationTeacher) queryObject(PublicationTeacher.class, criteria);
     }
@@ -33,7 +33,7 @@ public class PublicationTeacherOJB extends ObjectFenixOJB implements IPersistent
     public List readByTeacherAndPublicationArea(Teacher teacher, PublicationArea publicationArea)
             throws ExcepcaoPersistencia{
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher",teacher.getIdInternal());
+        criteria.addEqualTo("keyOrientationTeacher",teacher.getIdInternal());
         criteria.addEqualTo("publicationArea",publicationArea);
         return queryList(PublicationTeacher.class,criteria);
     }

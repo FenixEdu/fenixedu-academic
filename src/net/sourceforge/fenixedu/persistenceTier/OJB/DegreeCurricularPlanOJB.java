@@ -43,7 +43,7 @@ public class DegreeCurricularPlanOJB extends PersistentObjectOJB implements
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
-        criteria.addEqualTo("degreeKey", degreeId);
+        criteria.addEqualTo("keyDegree", degreeId);
         criteria.addEqualTo("curricularStage", curricularStage);
 
         return (DegreeCurricularPlan) queryObject(DegreeCurricularPlan.class, criteria);

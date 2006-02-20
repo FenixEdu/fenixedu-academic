@@ -50,7 +50,7 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
 			Integer degreeCurricularPlanKey, Boolean basic) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlanKey);
+        criteria.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlanKey);
         criteria.addEqualTo("basic", basic);
         criteria.addEqualTo("curricularStage", CurricularStage.OLD);
         return queryList(CurricularCourse.class, criteria);

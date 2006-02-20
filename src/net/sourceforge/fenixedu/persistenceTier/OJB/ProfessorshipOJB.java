@@ -23,7 +23,7 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
     public Professorship readByTeacherAndExecutionCourse(Integer teacherID, Integer executionCourseID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher", teacherID);
+        criteria.addEqualTo("keyOrientationTeacher", teacherID);
         criteria.addEqualTo("keyExecutionCourse", executionCourseID);
         return (Professorship) queryObject(Professorship.class, criteria);
     }
