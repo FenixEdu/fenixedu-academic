@@ -339,6 +339,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			  				   property="cas.serviceUrl"/>
 				<replacefilter token="@password.generator@"
 		    			   property="password.generator"/>	
+				<replacefilter token="@checkPasswordKerberos.authorizedHosts@"
+							property="checkPasswordKerberos.authorizedHosts"/>
 			</replace>
 
 			<replace dir="${build.home.webinf.classes}"
@@ -402,9 +404,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter 
 				    token="@manager.filter.pattern@"
 				    property="manager.filter.pattern"/>
-				<replacefilter 
-				    token="@checkPasswordKerberos.authorizedHosts@"
-				    property="checkPasswordKerberos.authorizedHosts"/>
 			</replace>
 
 			<replace dir="${build.home.webinf}/conf" propertyFile="build.properties">

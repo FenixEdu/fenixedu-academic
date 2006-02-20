@@ -142,6 +142,13 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.CheckIsAliveAction">
             <forward name="Success" path="/ok.jsp"/>
         </action>
+        <action path="/checkPasswordKerberos"
+				type="net.sourceforge.fenixedu.presentationTier.Action.CheckPasswordKerberosAction"
+				scope="request">
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException"
+				key="error.NotAuthorized"
+				path="/publicNotAuthorized.do"/>	
+        </action>
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

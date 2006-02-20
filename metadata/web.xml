@@ -434,21 +434,8 @@
         <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.ajax.AutoCompleteServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>CheckKerberosPasswordServlet</servlet-name>
-        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.authentication.CheckKerberosPasswordServlet</servlet-class>
-        <init-param>
-        	<param-name>authorizedHosts</param-name>
-        	<param-value>@checkPasswordKerberos.authorizedHosts@</param-value>
-        </init-param>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
     
     <!-- Servlet Mapping -->
-   	<servlet-mapping>
-		<servlet-name>CheckKerberosPasswordServlet</servlet-name>
-		<url-pattern>/authentication/CheckKerberosPasswordServlet</url-pattern>
-	</servlet-mapping>
    	<servlet-mapping>
 		<servlet-name>AutoCompleteServlet</servlet-name>
 		<url-pattern>/ajax/AutoCompleteServlet</url-pattern>
@@ -485,10 +472,6 @@
 	<error-page>
 	    <exception-type>net.sourceforge.fenixedu.accessControl.IllegalDataAccessException</exception-type>
 	    <location>/exception/notAuthorizedForward.jsp</location>
-	</error-page>
-	<error-page>
-	    <exception-type>net.sourceforge.fenixedu.presentationTier.servlets.NotAuthorizedException</exception-type>
-	    <location>/publicNotAuthorized.do</location>
 	</error-page>
 	<error-page>
 	    <exception-type>java.lang.Exception</exception-type>
@@ -544,7 +527,7 @@
 		<web-resource-collection>
 	          <web-resource-name>KerberosPasswordCheck</web-resource-name>
 	          <description />
-	          <url-pattern>/authentication/CheckKerberosPasswordServlet</url-pattern>
+	          <url-pattern>/checkKerberosPassword.do</url-pattern>
 	          <http-method>POST</http-method>
 	          <http-method>GET</http-method>
 	     </web-resource-collection>

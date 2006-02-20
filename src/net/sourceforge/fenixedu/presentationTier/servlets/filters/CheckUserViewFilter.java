@@ -95,7 +95,7 @@ public class CheckUserViewFilter implements Filter {
                 && (uri.indexOf("publico/") == -1)
                 && (uri.indexOf("showErrorPage.do") == -1)
                 && (uri.indexOf("manager/manageCache.do") == -1)
-                && (uri.indexOf("authentication/CheckKerberosPasswordServlet") == -1)
+                && (uri.indexOf("checkPasswordKerberos.do") == -1)
                 && (uri.indexOf("siteMap.do") == -1)
                 && (uri.indexOf("changeLocaleTo.do") == -1)
                 && (uri.indexOf("isAlive.do") == -1));
