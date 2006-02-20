@@ -178,6 +178,12 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
             return mapping.getInputForward();
         }
 
+        //check if student payed his tuition
+        if(infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoStudent().getPayedTuition().equals(Boolean.FALSE)) {
+        	errors.add("noTuition", new ActionError("error.message.noTuitonPayed"));
+        	saveErrors(request, errors);
+        }
+        
         request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
         return mapping.findForward("curricularCourseEnrollmentList");
@@ -412,6 +418,13 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
+        
+        //check if student payed his tuition
+        if(infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoStudent().getPayedTuition().equals(Boolean.FALSE)) {
+        	errors.add("noTuition", new ActionError("error.message.noTuitonPayed"));
+        	saveErrors(request, errors);
+        }
+
         request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
         enrollForm.set("enrollmentTypes", getInitializedMap(infoStudentEnrolmentContext
                 .getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled()));
