@@ -12,7 +12,9 @@
 	<li><html:link page="/studentTests.do?method=viewStudentExecutionCoursesWithTests" ><bean:message key="link.tests"/></html:link></li>
 	<li><html:link page="/studentGaugingTestResults.do" titleKey="link.title.results.test"><bean:message key="link.results.test"/></html:link></li>
 	<li><html:link page="/fillInquiries.do?method=prepareCourses&amp;page=0" titleKey="link.title.inquiry.students.courses"><bean:message key="link.inquiries" bundle="INQUIRIES_RESOURCES"/></html:link></li>
+<!--
 	<li><html:link page="/weeklyWorkLoad.do?method=prepare" titleKey="link.weekly.work.load"><bean:message key="link.weekly.work.load"/></html:link></li>
+-->
 	<li class="navheader"><bean:message key="link.student.enrollmentTitle"/></li>
 	<li><html:link page="/warningFirst.do" titleKey="link.title.student.enrollment"><bean:message key="link.student.enrollment"/></html:link></li>
 	<li><html:link page="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link></li>
