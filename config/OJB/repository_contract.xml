@@ -34,6 +34,16 @@
 	   name="keyWorkingUnit"    
 	   column="KEY_WORKING_UNIT"  
 	   jdbc-type="INTEGER"
+    />    
+    <field-descriptor id="9" 
+	   name="keyMailingOldUnit"    
+	   column="KEY_MAILING_OLD_UNIT"  
+	   jdbc-type="INTEGER"
+    />
+	<field-descriptor id="10" 
+	   name="keyWorkingOldUnit"    
+	   column="KEY_WORKING_OLD_UNIT"  
+	   jdbc-type="INTEGER"
     />
 	<field-descriptor id="7" 
 	   name="keyEmployee"    
@@ -62,6 +72,18 @@
     	name="workingUnit"
         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 	    <foreignkey field-ref="keyWorkingUnit"/>
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+    	name="mailingOldUnit"
+        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit">
+	    <foreignkey field-ref="keyMailingOldUnit"/>
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+    	name="workingOldUnit"
+        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit">
+	    <foreignkey field-ref="keyWorkingOldUnit"/>
 	</reference-descriptor>
 	
 	<reference-descriptor auto-retrieve="false"

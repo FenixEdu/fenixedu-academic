@@ -111,6 +111,7 @@ public class InsertExternalPersonDispatchAction extends DispatchAction {
         if (institutionID == 0) {
             request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
                     .getAttribute(Globals.LOCALE_KEY)));
+            
             getInstitutions(request);
 
             ActionErrors actionErrors = new ActionErrors();

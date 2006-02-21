@@ -156,7 +156,7 @@ public class ListGrantContractByCriteria extends Service {
 		} else if (orderBy.equals("orderByGrantContractNumber")) {
 			result = "contractNumber";
 		} else if (orderBy.equals("orderByFirstName")) {
-			result = "grantOwner.person.nome";
+			result = "grantOwner.person.name";
 		} else if (orderBy.equals("orderByGrantType")) {
 			result = "grantType.sigla";
 		} else if (orderBy.equals("orderByDateBeginContract")) {

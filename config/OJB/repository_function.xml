@@ -3,40 +3,45 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Function" 
 	table="FUNCTION">
 	
-	<field-descriptor id="1"
+	<field-descriptor 
          name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
 	/>
-	<field-descriptor id="2" 
+	<field-descriptor 
 	   name="name"    
 	   column="NAME"  
 	   jdbc-type="VARCHAR"
     />
-	<field-descriptor id="3" 
+	<field-descriptor 
 	   name="keyUnit"    
 	   column="KEY_UNIT"  
 	   jdbc-type="INTEGER"
     />
-	<field-descriptor id="4" 
+    <field-descriptor 
+	   name="keyOldUnit"    
+	   column="KEY_OLD_UNIT"  
+	   jdbc-type="INTEGER"
+    />
+	<field-descriptor 
 	   name="keyParentInherentFunction"    
 	   column="KEY_INHERENT_PARENT_FUNCTION"  
 	   jdbc-type="INTEGER"
     />
-	<field-descriptor id="5" 
+	<field-descriptor 
 	   name="type"    
 	   column="TYPE"  
 	   jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.FunctionType2SqlFunctionTypeConversion"
     />
-	<field-descriptor id="6"
+	<field-descriptor 
 	   name="beginDate"    
 	   column="BEGIN_DATE"  
 	   jdbc-type="DATE"
     />
-	<field-descriptor id="7"	
+	<field-descriptor 	
 	   name="endDate"    
 	   column="END_DATE"  
 	   jdbc-type="DATE"
@@ -46,6 +51,12 @@
     	name="unit"
         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 	    <foreignkey field-ref="keyUnit"/>
+	</reference-descriptor>
+
+	<reference-descriptor auto-retrieve="false"
+    	name="oldUnit"
+        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit">
+	    <foreignkey field-ref="keyOldUnit"/>
 	</reference-descriptor>
 
 	<reference-descriptor auto-retrieve="false"

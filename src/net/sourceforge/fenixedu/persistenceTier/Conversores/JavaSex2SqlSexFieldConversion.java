@@ -15,6 +15,9 @@ public class JavaSex2SqlSexFieldConversion implements FieldConversion {
     }
 
     public Object sqlToJava(Object source) {
+        if(source == null || source.equals("")){
+            return null;
+        } 
         if (source instanceof String) {
 			final String sexString = (String) source;
 			return Gender.valueOf(sexString);

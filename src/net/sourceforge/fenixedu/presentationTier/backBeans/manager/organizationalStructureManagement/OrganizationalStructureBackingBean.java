@@ -21,13 +21,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -120,7 +121,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }    
 
     private List<Unit> readAllUnits() throws FenixServiceException, FenixFilterException {
-        return readAllDomainObjects(Unit.class);
+        return RootDomainObject.readAllUnits();
     }
 
     public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
@@ -292,7 +293,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 
         SelectItem selectItem = null;
-        for (UnitType type : UnitType.values()) {
+        for (PartyType type : PartyType.values()) {
             selectItem = new SelectItem();
             selectItem.setLabel(bundle.getString(type.getName()));
             selectItem.setValue(type.getName());
@@ -428,7 +429,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
-        UnitType type = getUnitType();
+        PartyType type = getUnitType();
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { null, null, this.getUnitName(), this.getUnitCostCenter(),
@@ -449,7 +450,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
-        UnitType type = getUnitType();
+        PartyType type = getUnitType();
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { null, this.getUnit().getIdInternal(), this.getUnitName(),
@@ -470,7 +471,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
-        UnitType type = getUnitType();
+        PartyType type = getUnitType();
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), null, this.getUnitName(),
@@ -480,10 +481,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
 
-    private UnitType getUnitType() throws FenixFilterException, FenixServiceException {
-        UnitType type = null;
+    private PartyType getUnitType() throws FenixFilterException, FenixServiceException {
+        PartyType type = null;
         if (!this.getUnitTypeName().equals("#")) {
-            type = UnitType.valueOf(this.getUnitTypeName());
+            type = PartyType.valueOf(this.getUnitTypeName());
         }
         return type;
     }

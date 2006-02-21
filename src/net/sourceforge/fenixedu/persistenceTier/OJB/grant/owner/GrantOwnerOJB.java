@@ -42,7 +42,7 @@ public class GrantOwnerOJB extends PersistentObjectOJB implements IPersistentGra
             Integer numberOfElementsInSpan) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
-        criteria.addLike("person.nome", personName);
+        criteria.addLike("person.name", personName);
         if (startIndex != null && numberOfElementsInSpan != null) {
             return readInterval(GrantOwner.class, criteria, numberOfElementsInSpan, startIndex);
         }
@@ -51,7 +51,7 @@ public class GrantOwnerOJB extends PersistentObjectOJB implements IPersistentGra
 
     public Integer countAllGrantOwnerByName(String personName) {
         Criteria criteria = new Criteria();
-        criteria.addLike("person.nome", personName);
+        criteria.addLike("person.name", personName);
         return new Integer(count(GrantOwner.class, criteria));
     }
 

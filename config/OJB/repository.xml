@@ -62,7 +62,6 @@
 <!ENTITY inquiries SYSTEM "repository_inquiries.xml">
 <!ENTITY managementAssiduousness SYSTEM "repository_managementAssiduousness.xml">
 <!ENTITY projectsManagement SYSTEM "repository_projectsManagement.xml">
-<!ENTITY unit SYSTEM "repository_unit.xml">
 <!ENTITY cms SYSTEM "cms/repository_cms.xml">
 <!ENTITY cmsBasic SYSTEM "cms/repository_cms_basic.xml">
 <!ENTITY cmsMessaging SYSTEM "cms/repository_cms_messaging.xml">
@@ -80,6 +79,8 @@
 <!ENTITY research SYSTEM "repository_research.xml">
 <!ENTITY space SYSTEM "repository_space.xml">
 <!ENTITY curricularRules SYSTEM "repository_curricular_rules.xml">
+<!ENTITY party SYSTEM "repository_organizational_structure.xml">
+<!ENTITY unit SYSTEM "repository_unit.xml">
 <!ENTITY weeklyWorkLoad SYSTEM "repository_weeklyWorkLoad.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
@@ -147,7 +148,6 @@
 	&inquiries;
 	&managementAssiduousness;
 	&projectsManagement;
-	&unit;
 	&cms;
 	&contract;
 	&function;
@@ -165,6 +165,8 @@
     &research;
     &space;
     &curricularRules;
+    &party;
+    &unit;
     &weeklyWorkLoad;
 	
 </descriptor-repository>

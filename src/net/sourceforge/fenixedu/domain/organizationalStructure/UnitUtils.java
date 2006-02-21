@@ -7,27 +7,20 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class UnitUtils {
 
     public static final String IST_UNIT_NAME = "Instituto Superior Técnico (IST)";
-    public static final String EXTERNAL_INSTITUTION_UNIT_NAME = "Instituições Externas";
-    
-    private static List<Unit> readAllUnits() throws ExcepcaoPersistencia{
-        IPersistentObject persistentObject = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentObject();
-        List<Unit> allUnits = (List<Unit>) persistentObject.readAll(Unit.class);
-        return allUnits;
-    }
+    public static final String EXTERNAL_INSTITUTION_UNIT_NAME = "Instituições Externas";          
     
     public static List<Unit> readAllExternalInstitutionUnits() throws ExcepcaoPersistencia {        
-        List<Unit> allUnits = readAllUnits(); 
+        List<Unit> allUnits = RootDomainObject.readAllUnits(); 
         List<Unit> allExternalUnits = new ArrayList<Unit>();
 
         for (Unit unit : allUnits) {
-            if (unit.getType() != null && unit.getType().equals(UnitType.EXTERNAL_INSTITUTION)) {
+            if (unit.getType() != null && unit.getType().equals(PartyType.EXTERNAL_INSTITUTION)) {
                 allExternalUnits.add(unit);
             }
         }
@@ -35,11 +28,11 @@ public class UnitUtils {
     }
 
     public static Unit readExternalInstitutionUnitByName(String name) throws ExcepcaoPersistencia{
-        List<Unit> allUnits = readAllUnits();        
+        List<Unit> allUnits = RootDomainObject.readAllUnits();        
         Unit externalUnit = null;
         
         for (Unit unit : allUnits) {
-            if (unit.getType() != null && unit.getType().equals(UnitType.EXTERNAL_INSTITUTION)
+            if (unit.getType() != null && unit.getType().equals(PartyType.EXTERNAL_INSTITUTION)
                     && unit.getName().equals(name)) {
                 externalUnit = unit;
             }
@@ -59,7 +52,7 @@ public class UnitUtils {
     }           
     
     public static List<Unit> readAllUnitsWithoutParents() throws ExcepcaoPersistencia {
-        List<Unit> allUnits = readAllUnits();        
+        List<Unit> allUnits = RootDomainObject.readAllUnits();        
         List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
         
         for (Unit unit : allUnits) {

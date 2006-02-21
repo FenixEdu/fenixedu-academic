@@ -1,6 +1,6 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Unit -->
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" 
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit" 
 	table="UNIT">
 	
 	<field-descriptor id="1"
@@ -60,16 +60,16 @@
 	</reference-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="parentUnits"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"
+			name="parentOldUnits"
+			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit"
 			indirection-table="UNIT_UNIT">
 		<fk-pointing-to-element-class column="KEY_PARENT_UNIT" />
 		<fk-pointing-to-this-class column="KEY_SUB_UNIT" />
 	</collection-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="subUnits"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"
+			name="subOldUnits"
+			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit"
 			indirection-table="UNIT_UNIT">
 		<fk-pointing-to-element-class column="KEY_SUB_UNIT" />
 		<fk-pointing-to-this-class column="KEY_PARENT_UNIT" />
@@ -84,37 +84,37 @@
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="mailingContracts"
         element-class-ref="net.sourceforge.fenixedu.domain.Contract">
-		<inverse-foreignkey field-ref="keyMailingUnit"/>
+		<inverse-foreignkey field-ref="keyMailingOldUnit"/>
      </collection-descriptor>
 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="workingContracts"
         element-class-ref="net.sourceforge.fenixedu.domain.Contract">
-		<inverse-foreignkey field-ref="keyWorkingUnit"/>
+		<inverse-foreignkey field-ref="keyWorkingOldUnit"/>
     </collection-descriptor>
 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="functions"
         element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
-		<inverse-foreignkey field-ref="keyUnit"/>
+		<inverse-foreignkey field-ref="keyOldUnit"/>
     </collection-descriptor>
     
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="competenceCourses"
         element-class-ref="net.sourceforge.fenixedu.domain.CompetenceCourse">
-		<inverse-foreignkey field-ref="keyUnit"/>
+		<inverse-foreignkey field-ref="keyOldUnit"/>
     </collection-descriptor>
 
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="externalPersons"
         element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson">
-		<inverse-foreignkey field-ref="keyInstitutionUnit"/>
+		<inverse-foreignkey field-ref="keyOldUnit"/>
     </collection-descriptor>
     
      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="associatedNonAffiliatedTeachers"
         element-class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher">
-		<inverse-foreignkey field-ref="keyInstitutionUnit"/>
+		<inverse-foreignkey field-ref="keyOldUnit"/>
     </collection-descriptor>
     
 </class-descriptor>

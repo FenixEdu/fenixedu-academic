@@ -26,8 +26,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -495,7 +495,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             Date now = Calendar.getInstance().getTime();
             for (final Unit unit : (List<Unit>) readAllDomainObjects(Unit.class)) {
                 if (unit.isActive(now) && unit.getType() != null
-                        && unit.getType().equals(UnitType.DEPARTMENT)) {
+                        && unit.getType().equals(PartyType.DEPARTMENT)) {
                     result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
                 }
             }

@@ -91,7 +91,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         Criteria criteria = new Criteria();
 
         if (studentName != null) {
-            criteria.addLike("person.nome", studentName);
+            criteria.addLike("person.name", studentName);
         }
 
         if (idNumber != null) {

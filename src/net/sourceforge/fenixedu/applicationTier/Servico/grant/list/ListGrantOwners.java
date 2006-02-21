@@ -72,7 +72,7 @@ public class ListGrantOwners extends Service {
 		if (orderBy.equals("orderByNumber")) {
 			result = "number";
 		} else if (orderBy.equals("orderByFirstName")) {
-			result = "person.nome";
+			result = "person.name";
 		}
 		return result;
 	}

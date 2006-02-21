@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -23,6 +22,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 /**
@@ -89,6 +90,14 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
         String nonAffiliatedTeacherNameToInsert = (String) dynaForm
                 .get("nonAffiliatedTeacherNameToInsert");
 
+        
+        if(nonAffiliatedTeacherNameToInsert == null || nonAffiliatedTeacherNameToInsert.equals("")){
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("fileRequired", new ActionMessage("errors.required", "Nome do Docente"));
+            saveMessages(request, actionMessages);
+            return mapping.getInputForward();
+        }
+        
         Object[] args = { nonAffiliatedTeacherNameToInsert, institutionID };
 
         ServiceUtils.executeService(userView, "InsertNonAffiliatedTeacher", args);

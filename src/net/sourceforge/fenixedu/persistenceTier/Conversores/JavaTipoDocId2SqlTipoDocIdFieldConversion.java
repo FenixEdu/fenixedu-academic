@@ -34,6 +34,9 @@ public class JavaTipoDocId2SqlTipoDocIdFieldConversion implements FieldConversio
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
+        if(source == null || source.equals("")){
+            return null;
+        }
         if (source instanceof String) {
             String src = (String) source;
             return IDDocumentType.valueOf(src);

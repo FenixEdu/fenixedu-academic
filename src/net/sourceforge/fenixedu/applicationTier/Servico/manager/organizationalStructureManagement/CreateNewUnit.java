@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateNewUnit extends Service {
 
     public void run(Integer unitID, Integer parentUnitID, String unitName, String unitCostCenter,
-            Date beginDate, Date endDate, UnitType type, Integer departmentID, Integer degreeID)
+            Date beginDate, Date endDate, PartyType type, Integer departmentID, Integer degreeID)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
         Unit unit = null;
@@ -52,16 +52,16 @@ public class CreateNewUnit extends Service {
         Degree degree = null;
         if (degreeID != null
                 && unit.getType() != null
-                && (unit.getType().equals(UnitType.DEGREE) || unit.getType().equals(
-                        UnitType.MASTER_DEGREE))) {
+                && (unit.getType().equals(PartyType.DEGREE) || unit.getType().equals(
+                        PartyType.MASTER_DEGREE))) {
 
             degree = (Degree) persistentObject.readByOID(Degree.class,
                     degreeID);
 
             if ((degree.getTipoCurso().equals(DegreeType.DEGREE) && unit.getType().equals(
-                    UnitType.DEGREE))
+                    PartyType.DEGREE))
                     || (degree.getTipoCurso().equals(DegreeType.MASTER_DEGREE) && unit.getType().equals(
-                            UnitType.MASTER_DEGREE))){
+                            PartyType.MASTER_DEGREE))){
                 unit.setDegree(degree);   
             }                
             else if(unit.getDegree() != null){
@@ -78,7 +78,7 @@ public class CreateNewUnit extends Service {
             throws ExcepcaoPersistencia {
 
         Department department = null;
-        if (departmentID != null && unit.getType() != null && unit.getType().equals(UnitType.DEPARTMENT)) {
+        if (departmentID != null && unit.getType() != null && unit.getType().equals(PartyType.DEPARTMENT)) {
             department = (Department) persistentObject.readByOID(
                     Department.class, departmentID);
             unit.setDepartment(department);
@@ -94,8 +94,8 @@ public class CreateNewUnit extends Service {
         if (parentUnitID != null) {
             parentUnit = (Unit) persistentObject.readByOID(Unit.class,
                     parentUnitID);
-            if (unit.getParentUnits().contains(parentUnit)) {
-                unit.removeParentUnits(parentUnit);
+            if (unit.getParents().contains(parentUnit)) {
+                unit.removeParents(parentUnit);
                 parentUnit = null;
             }
         }

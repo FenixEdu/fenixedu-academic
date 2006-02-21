@@ -23,6 +23,7 @@ public class ExternalPerson extends ExternalPerson_Base {
 
         Person person = new Person(username, name, gender, address, phone, mobile, homepage, email,
                 documentIdNumber, IDDocumentType.EXTERNAL);
+        
         setPerson(person);
         setInstitutionUnit(institution);
     }

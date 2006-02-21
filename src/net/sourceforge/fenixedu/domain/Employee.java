@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 
 /**
  * 
@@ -96,7 +96,7 @@ public class Employee extends Employee_Base {
     
     private boolean unitDepartment(Unit unit, boolean onlyActiveEmployees){
         if (unit.getType() != null
-                && unit.getType().equals(UnitType.DEPARTMENT)
+                && unit.getType().equals(PartyType.DEPARTMENT)
                 && unit.getDepartment() != null
                 && (!onlyActiveEmployees || unit.getDepartment()
                         .getCurrentActiveWorkingEmployees().contains(this))){

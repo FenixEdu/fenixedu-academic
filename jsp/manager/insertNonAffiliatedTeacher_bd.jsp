@@ -17,7 +17,14 @@
       		<h2><bean:message bundle="MANAGER_RESOURCES" key="message.insert.professorShip.nonAffiliatedTeacher" /></h2>
 	</tr>
 </table>
+
 <span class="error"><html:errors/></span>
+<html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
+	<span class="error">
+		<bean:write name="message"/>
+	</span>
+</html:messages>
+
 
 <html:form action="/insertProfessorShipNonAffiliatedTeacher" method="get"> 
 	<html:hidden property="method" value="insertNonAffiliatedTeacher" /> 

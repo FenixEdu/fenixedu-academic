@@ -40,6 +40,11 @@
 		column="KEY_UNIT"
 		jdbc-type="INTEGER"
 	 />
+	 <field-descriptor
+		name="keyOldUnit"
+		column="KEY_OLD_UNIT"
+		jdbc-type="INTEGER"
+	 />
 	<field-descriptor
 		name="bolonhaDegreeType"
 		column="BOLONHA_DEGREE_TYPE"
@@ -71,6 +76,11 @@
          name="unit"
          class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
          <foreignkey field-ref="keyUnit"/>
+    </reference-descriptor>
+    <reference-descriptor auto-retrieve="false"
+         name="oldUnit"
+         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit">
+         <foreignkey field-ref="keyOldUnit"/>
     </reference-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="degreeCurricularPlans"

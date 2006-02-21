@@ -1106,7 +1106,7 @@
 	<action
 	    path="/insertProfessorShipNonAffiliatedTeacher"
 	    name="nonAffiliatedTeacherForm"
-	    input="/insertProfessorShipNonAffiliatedTeacher.do?method=prepareInsert&amp;page=0"
+	    input="/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&amp;page=0"
 		scope="request"
 		parameter="method"
 		type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertProfessorShipNonAffiliatedTeacherAction"

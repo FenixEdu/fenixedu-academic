@@ -1,0 +1,2 @@
+update DEPARTMENT set REAL_NAME = 'Departamento de Engenharia Química e Biológica (DEQB)' where REAL_NAME = 'Departamento de Engenharia Química (DQ)';
+update DEPARTMENT set NAME = 'DEPARTAMENTO DE ENGENHARIA QUIMICA e BIOLOGICA' where NAME = 'DEPARTAMENTO DE ENGENHARIA QUIMICA';

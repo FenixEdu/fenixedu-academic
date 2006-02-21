@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-//import relations.PersonRole;
-
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -32,21 +30,39 @@ public class Person extends Person_Base {
      * BUSINESS SERVICES *
      **************************************************************************/
 
+    public String getNome() {
+        return super.getName();
+    }
+
+    public void setNome(String name) {
+        super.setName(name);
+    }
+
     public Person(InfoPerson personToCreate, Country country) {
 
+        super();        
         if (personToCreate.getIdInternal() != null) {
             throw new DomainException("error.person.existentPerson");
         }
 
+        List<Person> allPersons = RootDomainObject.readAllPersons();
+        checkConditionsToCreateNewPerson(null, personToCreate.getNumeroDocumentoIdentificacao(),
+                personToCreate.getTipoDocumentoIdentificacao(), allPersons, this);
+
         setProperties(personToCreate);
         setUsername(personToCreate.getUsername());
         setPais(country);
-        setIsPassInKerberos(Boolean.FALSE);
-        setKeyRootDomainObject(1);
+        setIsPassInKerberos(Boolean.FALSE);        
     }
 
     public Person(String name, String identificationDocumentNumber,
             IDDocumentType identificationDocumentType, Gender gender) {
+
+        super();                
+        List<Person> allPersons = RootDomainObject.readAllPersons();                
+        checkConditionsToCreateNewPerson(null, identificationDocumentNumber, identificationDocumentType,
+                allPersons, this);
+
         setNome(name);
         setNumeroDocumentoIdentificacao(identificationDocumentNumber);
         setIdDocumentType(identificationDocumentType);
@@ -55,13 +71,17 @@ public class Person extends Person_Base {
         setAvailableWebSite(Boolean.FALSE);
         setAvailablePhoto(Boolean.FALSE);
         setMaritalStatus(MaritalStatus.SINGLE);
-        setIsPassInKerberos(Boolean.FALSE);
-        setKeyRootDomainObject(1);
+        setIsPassInKerberos(Boolean.FALSE);        
     }
-
+  
     public Person(String username, String name, Gender gender, String address, String phone,
             String mobile, String homepage, String email, String documentIDNumber,
             IDDocumentType documentType) {
+        
+        super();
+        List<Person> allPersons = RootDomainObject.readAllPersons();
+        checkConditionsToCreateNewPerson(username, documentIDNumber, documentType, allPersons, this);
+
         setUsername(username);
         setNome(name);
         setGender(gender);
@@ -76,8 +96,7 @@ public class Person extends Person_Base {
         setAvailableWebSite(Boolean.FALSE);
         setAvailablePhoto(Boolean.FALSE);
         setMaritalStatus(MaritalStatus.SINGLE);
-        setIsPassInKerberos(Boolean.FALSE);
-        setKeyRootDomainObject(1);
+        setIsPassInKerberos(Boolean.FALSE);        
     }
 
     public void edit(InfoPerson personToEdit, Country country) {
@@ -112,9 +131,30 @@ public class Person extends Person_Base {
         setEmail(email);
     }
 
-    public static boolean checkIfUsernameExists(String username, List<Person> persons) {
+    private void checkConditionsToCreateNewPerson(final String username,
+            final String documentIDNumber, final IDDocumentType documentType, List<Person> persons, Person thisPerson) {
+
+        if ((documentIDNumber != null && documentType != null && checkIfDocumentNumberIdAndDocumentIdTypeExists(
+                documentIDNumber, documentType, persons, thisPerson))
+                || (username != null && checkIfUsernameExists(username, persons, thisPerson))) {
+            throw new DomainException("error.person.existentPerson");
+        }
+    }
+
+    public static boolean checkIfUsernameExists(String username, List<Person> persons, Person thisPerson) {
         for (Person person : persons) {
-            if (username.equals(person.getUsername())) {
+            if (!person.equals(thisPerson) && username.equals(person.getUsername())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
+            final IDDocumentType documentType, List<Person> persons, Person thisPerson) {
+        for (final Person person : persons) {
+            if (!person.equals(thisPerson) && person.getNumeroDocumentoIdentificacao().equals(documentIDNumber)
+                    && person.getIdDocumentType().equals(documentType)) {
                 return true;
             }
         }
@@ -126,7 +166,7 @@ public class Person extends Person_Base {
             throw new DomainException("error.person.nullOrEmptyUsername");
         }
 
-        if (checkIfUsernameExists(newUsername, persons)) {
+        if (checkIfUsernameExists(newUsername, persons, this)) {
             throw new DomainException("error.person.existingUsername");
         }
 
@@ -353,19 +393,18 @@ public class Person extends Person_Base {
         }
         return newValue;
 
-    }
+    }       
 
     /***************************************************************************
      * OTHER METHODS *
      **************************************************************************/
 
     public Person() {
-        super();
+        super();        
         this.setMaritalStatus(MaritalStatus.UNKNOWN);
         this.setAvailableEmail(Boolean.FALSE);
         this.setAvailableWebSite(Boolean.FALSE);
-        this.setAvailablePhoto(Boolean.FALSE);
-        this.setKeyRootDomainObject(1);
+        this.setAvailablePhoto(Boolean.FALSE);        
     }
 
     /*
@@ -382,6 +421,11 @@ public class Person extends Person_Base {
             String concelhoMorada, String distritoMorada, String telefone, String telemovel,
             String email, String enderecoWeb, String numContribuinte, String profissao, String username,
             String password, String codigoFiscal) {
+        
+        super();
+        List<Person> allPersons = RootDomainObject.readAllPersons();
+        checkConditionsToCreateNewPerson(username, numeroDocumentoIdentificacao, iDDocumentType, allPersons, this);
+        
         this.setIdInternal(codigoInterno);
         this.setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
         this.setIdDocumentType(iDDocumentType);
@@ -415,9 +459,7 @@ public class Person extends Person_Base {
         this.setCodigoFiscal(codigoFiscal);
         this.setAvailableEmail(Boolean.FALSE);
         this.setAvailableWebSite(Boolean.FALSE);
-        this.setAvailablePhoto(Boolean.FALSE);
-        this.setKeyRootDomainObject(1);
-
+        this.setAvailablePhoto(Boolean.FALSE);        
     }
 
     public Person(String numeroDocumentoIdentificacao, IDDocumentType tipoDocumentoIdentificacao,
@@ -429,6 +471,11 @@ public class Person extends Person_Base {
             String freguesiaMorada, String concelhoMorada, String distritoMorada, String telefone,
             String telemovel, String email, String enderecoWeb, String numContribuinte,
             String profissao, String username, String password, Country pais, String codigoFiscal) {
+        
+        super();
+        List<Person> allPersons = RootDomainObject.readAllPersons();
+        checkConditionsToCreateNewPerson(username, numeroDocumentoIdentificacao, tipoDocumentoIdentificacao, allPersons, this);
+        
         this.setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
         this.setIdDocumentType(tipoDocumentoIdentificacao);
         this.setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
@@ -462,8 +509,7 @@ public class Person extends Person_Base {
         this.setCodigoFiscal(codigoFiscal);
         this.setAvailableEmail(Boolean.FALSE);
         this.setAvailableWebSite(Boolean.FALSE);
-        this.setAvailablePhoto(Boolean.FALSE);
-        this.setKeyRootDomainObject(1);
+        this.setAvailablePhoto(Boolean.FALSE);        
     }
 
     public String toString() {
@@ -582,7 +628,7 @@ public class Person extends Person_Base {
             getAdvisories().clear();
             removeCms();
             removePais();
-
+            RootDomainObject.instance.removeParties(this);
             deleteDomainObject();
             return true;
         }
@@ -660,7 +706,8 @@ public class Person extends Person_Base {
     }
 
     public static Person readPersonByUsername(final String username) throws ExcepcaoPersistencia {
-        for (final Person person : RootDomainObject.instance.getPersons()) {
+        List<Person> allPersons = RootDomainObject.readAllPersons();
+        for (final Person person : allPersons) {
             if (person.getUsername().equalsIgnoreCase(username)) {
                 return person;
             }

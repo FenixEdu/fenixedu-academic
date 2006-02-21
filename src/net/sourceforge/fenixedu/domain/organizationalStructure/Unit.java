@@ -12,12 +12,17 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class Unit extends Unit_Base {
 
+    public Unit() {
+        super();
+    }
+    
     public List<Unit> getTopUnits() {
         Unit unit = this;
         List<Unit> allTopUnits = new ArrayList<Unit>();
@@ -59,7 +64,7 @@ public class Unit extends Unit_Base {
     }
 
     private boolean unitDepartment(Unit unit) {
-        if (unit.getType() != null && unit.getType().equals(UnitType.DEPARTMENT)
+        if (unit.getType() != null && unit.getType().equals(PartyType.DEPARTMENT)
                 && unit.getDepartment() != null) {
             return true;
         }
@@ -123,7 +128,7 @@ public class Unit extends Unit_Base {
     }
 
     public void edit(String unitName, Integer unitCostCenter, Date beginDate, Date endDate,
-            UnitType type, Unit parentUnit) {
+            PartyType type, Unit parentUnit) {
 
         this.setName(unitName);
         this.setBeginDate(beginDate);
@@ -131,7 +136,7 @@ public class Unit extends Unit_Base {
         this.setType(type);
         this.setCostCenterCode(unitCostCenter);
         if (parentUnit != null) {
-            this.addParentUnits(parentUnit);
+            this.addParents(parentUnit);
         }
         if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.endDateBeforeBeginDate");
@@ -148,17 +153,17 @@ public class Unit extends Unit_Base {
     }
 
     public void delete() {
-        if (!hasAnySubUnits() && (!hasAnyParentUnits() || this.getParentUnits().size() == 1)
+        if (!hasAnyChilds() && (!hasAnyParents() || (this.getParentUnits().size() == 1 && this.getParents().size() == 1))
                 && !hasAnyFunctions() && !hasAnyWorkingContracts() && !hasAnyMailingContracts()
                 && !hasAnySalaryContracts() && !hasAnyCompetenceCourses() && !hasAnyExternalPersons()
-                && !hasAnyAssociatedNonAffiliatedTeachers()) {
-            //TODO add the !hasParties when the Party is inserted
+                && !hasAnyAssociatedNonAffiliatedTeachers()) {                      
 
             if (hasAnyParentUnits()) {
-                this.removeParentUnits(this.getParentUnits().get(0));
+                this.removeParents(this.getParentUnits().get(0));
             }
             removeDepartment();
-            removeDegree();            
+            removeDegree();
+            RootDomainObject.instance.removeParties(this);
             deleteDomainObject();
         } else {
             throw new DomainException("error.delete.unit");
@@ -178,7 +183,7 @@ public class Unit extends Unit_Base {
     public List<Unit> getScientificAreaUnits() {
         List<Unit> result = new ArrayList<Unit>();
         for (Unit unit : this.getSubUnits()) {
-            if (unit.getType() != null && unit.getType().equals(UnitType.SCIENTIFIC_AREA)) {
+            if (unit.getType() != null && unit.getType().equals(PartyType.SCIENTIFIC_AREA)) {
                 result.add(unit);
             }
         }
@@ -188,7 +193,7 @@ public class Unit extends Unit_Base {
     public List<Unit> getCompetenceCourseGroupUnits() {
         List<Unit> result = new ArrayList<Unit>();
         for (Unit unit : this.getSubUnits()) {
-            if (unit.getType() != null && unit.getType().equals(UnitType.COMPETENCE_COURSE_GROUP)) {
+            if (unit.getType() != null && unit.getType().equals(PartyType.COMPETENCE_COURSE_GROUP)) {
                 result.add(unit);
             }
         }
@@ -198,7 +203,7 @@ public class Unit extends Unit_Base {
     public List<Unit> getDegreeUnits() {
         List<Unit> result = new ArrayList<Unit>();
         for (Unit unit : this.getSubUnits()) {
-            if (unit.getType() != null && unit.getType().equals(UnitType.DEGREE)) {
+            if (unit.getType() != null && unit.getType().equals(PartyType.DEGREE)) {
                 result.add(unit);
             }
         }
@@ -245,5 +250,47 @@ public class Unit extends Unit_Base {
         for (Unit subUnit : unit.getSubUnits()) {
             readAndSaveEmployees(subUnit, employees, begin, end);
         }
+    }
+    
+    public List<Unit> getParentUnits() {
+        Set<Unit> allParentUnits = new HashSet<Unit>();
+        List<Party> allParents = this.getParents();
+        for (Party parent : allParents) {
+            if (parent instanceof Unit) {
+                allParentUnits.add((Unit) parent);
+            }
+        }
+        return new ArrayList<Unit>(allParentUnits);
+    }
+    
+    public List<Unit> getSubUnits() {
+        Set<Unit> allChildsUnits = new HashSet<Unit>();
+        List<Party> allChilds = this.getChilds();
+        for (Party child : allChilds) {
+            if (child instanceof Unit) {
+                allChildsUnits.add((Unit) child);
+            }
+        }
+        return new ArrayList<Unit>(allChildsUnits);
+    }
+
+    public boolean hasAnyParentUnits() {
+        List<Party> allParents = this.getParents();
+        for (Party parent : allParents) {
+            if (parent instanceof Unit) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean hasAnySubUnits() {
+        List<Party> allChilds = this.getChilds();
+        for (Party parent : allChilds) {
+            if (parent instanceof Unit) {
+                return true;
+            }
+        }
+        return false;
     }
 }

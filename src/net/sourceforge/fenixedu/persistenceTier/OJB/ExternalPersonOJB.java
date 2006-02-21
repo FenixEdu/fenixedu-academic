@@ -55,7 +55,7 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
         Criteria criteria = new Criteria();
         ExternalPerson externalPerson = null;
 
-        criteria.addEqualTo("person.nome", name);
+        criteria.addEqualTo("person.name", name);
         criteria.addEqualTo("person.address", address);
         criteria.addEqualTo("institutionUnit.idInternal", institutionID);
         externalPerson = (ExternalPerson) queryObject(ExternalPerson.class, criteria);

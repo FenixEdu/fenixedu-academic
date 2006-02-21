@@ -3,34 +3,34 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" 
 	table="PERSON_FUNCTION">
 	
-	<field-descriptor id="1"
+	<field-descriptor 
          name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
 	/>
-	<field-descriptor id="2"
+	<field-descriptor 
 	   name="beginDate"    
 	   column="BEGIN_DATE"  
 	   jdbc-type="DATE"
     />
-	<field-descriptor id="3"	
+	<field-descriptor 
 	   name="endDate"    
 	   column="END_DATE"  
 	   jdbc-type="DATE"
     />
-	<field-descriptor id="4" 
+	<field-descriptor 
 	   name="keyPerson"    
 	   column="KEY_PERSON"  
 	   jdbc-type="INTEGER"
     />
-	<field-descriptor id="5" 
+	<field-descriptor 
 	   name="keyFunction"    
 	   column="KEY_FUNCTION"  
 	   jdbc-type="INTEGER"
     />
-	<field-descriptor id="6" 
+	<field-descriptor  
 	   name="credits"    
 	   column="CREDITS"  
 	   jdbc-type="DOUBLE"

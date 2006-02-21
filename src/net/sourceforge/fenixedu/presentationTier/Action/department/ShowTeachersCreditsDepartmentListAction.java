@@ -88,7 +88,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
     private Iterator orderList(String sortBy, Iterator<TeacherWithCreditsDTO> iterator) {
         Iterator orderedIterator = null;
         if (sortBy == null || sortBy.length() == 0 || sortBy.equals("name")) {
-            orderedIterator = new OrderedIterator(iterator, new BeanComparator("teacher.person.nome"));
+            orderedIterator = new OrderedIterator(iterator, new BeanComparator("teacher.person.name"));
         } else {
             orderedIterator = new OrderedIterator(iterator, new BeanComparator("teacher.teacherNumber"));
         }

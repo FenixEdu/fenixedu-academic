@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -88,8 +88,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
         StringBuffer buffer = new StringBuffer();
         Date currentDate = Calendar.getInstance().getTime();
-        final Object[] argsToRead = { Unit.class };
-
+        
         List<Unit> allUnits = getAllUnitsWithoutParent();
         Collections.sort(allUnits, new Comparator(){
         	
@@ -110,7 +109,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         });
     
             
-        UnitType unitType = null;
+        PartyType partyType = null;
         boolean flag = false;
         boolean flag1 = false;
        
@@ -118,7 +117,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         	if (unit.isActive(currentDate)){
 	        	if (unit.getType() != null && unit.getType().name().length() > 0){     
-		        	unitType = unit.getType();
+		        	partyType = unit.getType();
 		        	break;
 	        	}
         	}
@@ -129,13 +128,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     		if (unit.isActive(currentDate)){
 	    		if (unit.getType() != null && unit.getType().name().length() > 0){
-				    if (!unitType.equals(unit.getType())){	    	
-				    	unitType = unit.getType();
-	    				buffer.append("<h3 class='mtop2'>").append(this.bundle.getString(unitType.getName()));	
+				    if (!partyType.equals(unit.getType())){	    	
+				    	partyType = unit.getType();
+	    				buffer.append("<h3 class='mtop2'>").append(this.bundle.getString(partyType.getName()));	
 	    				buffer.append("</h3>\r\n");   
 	    				
 				    }else if (flag == false){
-				    	buffer.append("<h3 class='mtop2'>").append(this.bundle.getString(unitType.getName()));	
+				    	buffer.append("<h3 class='mtop2'>").append(this.bundle.getString(partyType.getName()));	
 	    				buffer.append("</h3>\r\n");   
 	    				flag = true;
 				    }
@@ -155,7 +154,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	            	
 					if(unit.getActiveSubUnits(currentDate).size() != 0){
 						if(unit.getType() != null ){
-							 if(!unit.getType().equals(UnitType.ACADEMIC_UNIT)){
+							 if(!unit.getType().equals(PartyType.ACADEMIC_UNIT)){
 	
 								 buffer.append("\t<li><img ").append("src='").append(getContextPath()).append("/images/toggle_plus10.gif' id=\"").append(unit.getIdInternal()).append("\" ").append("indexed='true' onClick=\"").append("check(document.getElementById('")
 					                .append("aa").append(unit.getIdInternal()).append("'),document.getElementById('").append(unit.getIdInternal()).append("'));return false;").append("\"> ");
@@ -223,21 +222,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     		
     	}
     }
-    
-    private List<Unit> readAllUnits() throws FenixServiceException, FenixFilterException {
-        List<Unit> allUnits = readAllDomainObjects(Unit.class);
-   
-        List<Unit> unitsIst = new ArrayList();
-        for(Unit unitList : allUnits){
-        	if (!(unitList.getType() != null && unitList.getType().equals(UnitType.EXTERNAL_INSTITUTION))){
-        		unitsIst.add(unitList);
-        	}
-        }
-  
-        return unitsIst;
-        
-    }
-    
+     
     public void getUnitTree(StringBuffer buffer, Unit parentUnit) {
     	Date currentDate = Calendar.getInstance().getTime();
     	int parentUnitId=0;
@@ -281,8 +266,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     	buffer.append(getInstituitionName());
     	if (this.getUnit().getType() != null){
 			 buffer.append(" - ");
-			 if (this.getUnit().getType().equals(UnitType.DEPARTMENT)){
-				 buffer.append(this.bundle.getString(UnitType.ACADEMIC_UNIT.getName() ));  
+			 if (this.getUnit().getType().equals(PartyType.DEPARTMENT)){
+				 buffer.append(this.bundle.getString(PartyType.ACADEMIC_UNIT.getName() ));  
 			 }else{
 				 buffer.append(this.bundle.getString(this.getUnit().getType().getName())); 
 			 }

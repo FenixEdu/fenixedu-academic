@@ -151,7 +151,7 @@ public class ViewDepartmentTeachersExpectationsAction extends FenixDispatchActio
                         new Object[] { getDepartment(userView).getIdInternal(), executionYearID }));
 
         ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("person.nome"));
+        comparatorChain.addComparator(new BeanComparator("person.name"));
 
         Collections.sort(departmentTeachers, comparatorChain);
 
@@ -184,7 +184,7 @@ public class ViewDepartmentTeachersExpectationsAction extends FenixDispatchActio
                                 teacherID }));
 
         ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("teacher.person.nome"));
+        comparatorChain.addComparator(new BeanComparator("teacher.person.name"));
 
         Collections.sort(result, comparatorChain);
 

@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -79,8 +79,8 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
 
     private void setAllTopDisplayUnits(Unit unit, Set displayUnits) {
         if (unit.getType() != null
-                && (unit.getType().equals(UnitType.SCIENTIFIC_AREA) || unit.getType().equals(
-                        UnitType.SECTION)) && unit.getCostCenterCode() != null) {
+                && (unit.getType().equals(PartyType.SCIENTIFIC_AREA) || unit.getType().equals(
+                        PartyType.SECTION)) && unit.getCostCenterCode() != null) {
             displayUnits.add(unit);
         }
         for (Unit displayUnit : unit.getTopUnits()) {

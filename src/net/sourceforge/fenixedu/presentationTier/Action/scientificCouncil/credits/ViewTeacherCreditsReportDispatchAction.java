@@ -27,8 +27,8 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -81,8 +81,8 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                 public boolean evaluate(Object object) {
                     Unit unit = (Unit) object;
                     return unit.getType() != null
-                            && (unit.getType().equals(UnitType.SECTION) || unit.getType().equals(
-                                    UnitType.SCIENTIFIC_AREA));
+                            && (unit.getType().equals(PartyType.SECTION) || unit.getType().equals(
+                                    PartyType.SCIENTIFIC_AREA));
                 }
             });
             Iterator unitsOrderedIter = new OrderedIterator(filteredUnits.iterator(),
@@ -201,9 +201,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException {
-
-        DynaActionForm dynaForm = (DynaActionForm) actionForm;
-
+        
         Map<Department, Map<Unit, List>> teachersCreditsByDepartment = getTeachersCreditsMap(request);
 
         try {

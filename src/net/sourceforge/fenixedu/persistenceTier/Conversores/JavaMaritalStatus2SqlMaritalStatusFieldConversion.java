@@ -31,7 +31,10 @@ public class JavaMaritalStatus2SqlMaritalStatusFieldConversion implements FieldC
     /*
      * @see FieldConversion#sqlToJava(Object)
      */
-    public Object sqlToJava(Object source) {
+    public Object sqlToJava(Object source) {     
+        if(source == null || source.equals("")){
+            return null;
+        } 
         if (source instanceof String) {
             String src = (String) source;
             return MaritalStatus.valueOf(src);

@@ -121,6 +121,7 @@ valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReference
 valueType net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType    				as CurricularRuleType;
 valueType net.sourceforge.fenixedu.domain.util.LogicOperators   								as LogicOperators;
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectType							as ProjectType;
+valueType net.sourceforge.fenixedu.domain.organizationalStructure.PartyType						as PartyType;
 
 /*
 *
@@ -200,6 +201,8 @@ class net.sourceforge.fenixedu.domain.Contract extends net.sourceforge.fenixedu.
 	Integer keySalaryUnit;
 	Integer keyMailingUnit;
 	Integer keyWorkingUnit;
+	Integer keyMailingOldUnit;
+	Integer keyWorkingOldUnit;
 	ContractType contractType;
 	Date beginDate;
 	Date endDate;
@@ -531,6 +534,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
     DegreeType tipoCurso;
     BolonhaDegreeType bolonhaDegreeType;
     Integer keyUnit;
+   	Integer keyOldUnit;
     GradeScale gradeScale;
     Double ectsCredits;
     String prevailingScientificArea;
@@ -694,7 +698,7 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
         }
         class net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
         }
-        class net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
+		class net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
             Integer keyExclusiveDegreeModule;
         }
         class net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
@@ -721,6 +725,7 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	String realName;
 	String name;
 	Integer keyUnit;
+	Integer keyOldUnit;
 	Group competenceCourseMembersGroup;
 }
 
@@ -729,6 +734,7 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 	String name;
 	String code;
 	Integer keyUnit;
+	Integer keyOldUnit;
 	CurricularStage curricularStage;
 	Date creationDate;
 }
@@ -1016,6 +1022,7 @@ class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fen
 	Integer keyInstitution;
 	Integer keyPerson;
 	Integer keyInstitutionUnit;
+	Integer keyOldUnit;
 }
 
 class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1295,6 +1302,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends n
 	Date endDate;
 	FunctionType type;
 	Integer keyUnit;
+	Integer keyOldUnit;
 	Integer keyParentInherentFunction;
 }
 
@@ -1547,6 +1555,7 @@ class net.sourceforge.fenixedu.domain.NonAffiliatedTeacher extends net.sourcefor
     String name;
     Integer keyInstitution;
     Integer keyInstitutionUnit;
+   	Integer keyOldUnit;
 }    
 
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1745,57 +1754,10 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction ext
 	Date endDate;
 }
 
-class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyCms;
-	Integer keyEmployee;
-	Integer keyTeacher;
-	Integer keyExternalPerson;	
-	Integer keyGrantOwner;
-	Integer keyPersonalPhoto;
-	String localidade;
-	String codigoFiscal;
-	String telemovel;
-	String enderecoWeb;
-	Date dataValidadeDocumentoIdentificacao;
-	String distritoMorada;
-	String numeroDocumentoIdentificacao;
-	Integer keyPais;
-	String profissao;
-	String concelhoNaturalidade;
-	Date dataEmissaoDocumentoIdentificacao;
-	String morada;
-	Boolean availableWebSite;
-	String numContribuinte;
-	String localidadeCodigoPostal;
-	String username;
-	String telefone;
-	String localEmissaoDocumentoIdentificacao;
-	String distritoNaturalidade;
-	String password;
-	Boolean availableEmail;
-	String workPhone;
-	String nome;
-	String freguesiaNaturalidade;
-	String codigoPostal;
-	String nomePai;
-	String nomeMae;
-	Boolean availablePhoto;
-	String email;
-	String concelhoMorada;
-	Date nascimento;
-	String freguesiaMorada;
-    MaritalStatus maritalStatus;
-    Gender gender;
-    IDDocumentType idDocumentType; 
-	Boolean isPassInKerberos;
-	String istUsername;
-}
-
 class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double balance;
 	Integer keyPerson;
 }
-
 
 class net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers extends net.sourceforge.fenixedu.domain.DomainObject {
     Boolean answer5;
@@ -2436,16 +2398,72 @@ class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.f
     String name;
 }
 
-class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
 	String name;
-	Date beginDate;
-	Date endDate;
-	UnitType type;
-	Integer costCenterCode;
-	Integer keyDepartment;	
-	Integer keyDegree;
+	PartyType type;
+	Integer keyRootDomainObject;
 }
-
+	  class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
+		Integer costCenterCode;
+		Integer keyDepartment;	
+		Integer keyDegree;				
+		Date beginDate;
+		Date endDate;		
+	  }
+	  
+	  class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
+		Integer keyCms;
+		Integer keyEmployee;
+		Integer keyTeacher;
+		Integer keyExternalPerson;	
+		Integer keyGrantOwner;
+		Integer keyPersonalPhoto;
+		String localidade;
+		String codigoFiscal;
+		String telemovel;
+		String enderecoWeb;
+		Date dataValidadeDocumentoIdentificacao;
+		String distritoMorada;
+		String numeroDocumentoIdentificacao;
+		Integer keyPais;
+		String profissao;
+		String concelhoNaturalidade;
+		Date dataEmissaoDocumentoIdentificacao;
+		String morada;
+		Boolean availableWebSite;
+		String numContribuinte;
+		String localidadeCodigoPostal;
+		String username;
+		String telefone;
+		String localEmissaoDocumentoIdentificacao;
+		String distritoNaturalidade;
+		String password;
+		Boolean availableEmail;
+		String workPhone;
+		String name;
+		String freguesiaNaturalidade;
+		String codigoPostal;
+		String nomePai;
+		String nomeMae;
+		Boolean availablePhoto;
+		String email;
+		String concelhoMorada;
+		Date nascimento;
+		String freguesiaMorada;
+	    MaritalStatus maritalStatus;
+	    Gender gender;
+	    IDDocumentType idDocumentType; 
+		Boolean isPassInKerberos;
+		String istUsername;
+		Integer keyResearcher;
+	 }
+	 
+class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyParentParty;
+	Integer keyChildParty;
+}
+	  	  
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String name;
@@ -5536,7 +5554,7 @@ relation TeacherPersonalExpectationExecutionYear {
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
- relation ContentOwnership {
+relation ContentOwnership {
  	net.sourceforge.fenixedu.domain.Person playsRole owners
  	{
  		multiplicity *;
@@ -5544,9 +5562,9 @@ relation TeacherPersonalExpectationExecutionYear {
  	net.sourceforge.fenixedu.domain.cms.Content playsRole ownedContents
  	{
  		multiplicity *;
- 	}
- }
- 
+	}
+}
+
 relation ContentCreation
 {
 	net.sourceforge.fenixedu.domain.Person playsRole creator;
@@ -5588,13 +5606,134 @@ relation ContractWorkingUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole workingUnit;
 }
 
-relation UnitUnit {
-    net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole subUnits{
+
+
+
+
+
+
+class net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+	Date beginDate;
+	Date endDate;
+	UnitType type;
+	Integer costCenterCode;
+	Integer keyDepartment;	
+	Integer keyDegree;
+}
+
+relation OldUnitNonAffiliatedTeacher {
+    net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole institutionOldUnit;
+    net.sourceforge.fenixedu.domain.NonAffiliatedTeacher playsRole associatedNonAffiliatedTeachers {
+        multiplicity *;
+    }
+}
+
+relation CompetenceCourseOldUnit {
+	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnit;
+}
+
+relation ExternalPersonOldUnit {
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole institutionOldUnit;
+}
+
+relation ContractSalaryOldUnit {
+    net.sourceforge.fenixedu.domain.Contract playsRole salaryContracts{
     	multiplicity *;
     }
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole parentUnits{
-		multiplicity *;
+	
+	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole salaryOldUnit;
 }
+
+relation ContractMailingOldUnit {
+    net.sourceforge.fenixedu.domain.Contract playsRole mailingContracts{
+    	multiplicity *;
+    }
+	
+	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole mailingOldUnit;
+}
+
+relation ContractWorkingOldUnit {
+    net.sourceforge.fenixedu.domain.Contract playsRole workingContracts{
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole workingOldUnit;
+}
+
+relation DepartmentOldUnit {
+    net.sourceforge.fenixedu.domain.Department playsRole department;    
+	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnit;
+}
+
+relation DegreetOldUnit {
+    net.sourceforge.fenixedu.domain.Degree playsRole degree;    
+	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnit;
+}
+
+relation OldUnitFunction {
+    net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole functions  {
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnit;
+}
+
+relation ProjectOldUnit {
+	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
+		multiplicity *;
+	}
+    net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnits {
+    	multiplicity *;
+    }
+}
+
+relation OldUnitEvent {
+    net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
+    	multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnits {
+    	multiplicity *;
+    }
+}
+
+relation EmployeeWorksForOldUnit {
+	net.sourceforge.fenixedu.domain.Employee playsRole employees {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnit {
+		multiplicity 1;
+	}
+}
+
+relation UnitUnit {
+    net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole subOldUnits{
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole parentOldUnits{
+		multiplicity *;
+	}
+}
+
+
+
+
+
+
+
+
+
+relation PartyParty {
+    net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole childs{
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parents{
+		multiplicity *;
+	}
 }
 
 relation DepartmentUnit {
@@ -5627,6 +5766,7 @@ relation EmployeeContract {
     }
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 }
+
 relation UnitFunction {
     net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole functions  {
     	multiplicity *;
@@ -5984,9 +6124,9 @@ relation RootDomainObjectRole {
     }
 }
 
-relation RootDomainObjectPerson {
+relation RootDomainObjectParty {
     net.sourceforge.fenixedu.domain.RootDomainObject playsRole;
-    net.sourceforge.fenixedu.domain.Person playsRole persons {
+    net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parties {
     	multiplicity *;
     }
 }
