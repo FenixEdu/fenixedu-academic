@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -76,9 +78,19 @@ public class CheckPasswordKerberosAction extends FenixAction {
 
     private void checkAuthorizationForRequestHost(HttpServletRequest request)
             throws NotAuthorizedActionException {
+
+        String remoteHostName = null;
+
+        try {
+            remoteHostName = InetAddress.getByName(request.getRemoteAddr()).getHostName();
+        } catch (UnknownHostException e) {
+            logger.warn(String.format("Problems solving IP %s to Hostname ", request.getRemoteAddr()));
+            throw new NotAuthorizedActionException("error.NotAuthorized");
+        }
+
         if (!authorizedHosts.contains(request.getRemoteAddr())
-                && !authorizedHosts.contains(request.getRemoteHost())) {
-            logger.warn("Host " + request.getRemoteHost() + "(" + request.getRemoteAddr() + ")");
+                && !authorizedHosts.contains(remoteHostName)) {
+            logger.warn("Host " + remoteHostName + "(" + request.getRemoteAddr() + ")");
 
             throw new NotAuthorizedActionException("error.NotAuthorized");
         }
