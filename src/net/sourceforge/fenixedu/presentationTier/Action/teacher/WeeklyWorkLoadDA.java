@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +31,19 @@ import org.joda.time.Period;
 
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
+    private static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>() {
+		public int compare(final Attends attends1, final Attends attends2) {
+            final Student student1 = attends1.getAluno();
+            final Student student2 = attends2.getAluno();
+            return student1.getNumber().compareTo(student2.getNumber());
+		}
+    };
+
 	public class WeeklyWorkLoadView {
         final Interval executionPeriodInterval;
         final int numberOfWeeks;
 
-        final Collection<WeeklyWorkLoad[]> weeklyWorkLoadArrays = new ArrayList<WeeklyWorkLoad[]>();
+        final Map<Attends, WeeklyWorkLoad[]> weeklyWorkLoadMap = new TreeMap<Attends, WeeklyWorkLoad[]>(ATTENDS_COMPARATOR);
         final Interval[] intervals;
 
         public WeeklyWorkLoadView(final Interval executionPeriodInterval) {
@@ -56,11 +64,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             for (final WeeklyWorkLoad weeklyWorkLoad : attends.getWeeklyWorkLoads()) {
                 weeklyWorkLoadArray[weeklyWorkLoad.getWeekOffset()] = weeklyWorkLoad;
             }
-            weeklyWorkLoadArrays.add(weeklyWorkLoadArray);
-        }
-
-        public Collection<WeeklyWorkLoad[]> getWeeklyWorkLoadArrays() {
-            return weeklyWorkLoadArrays;
+            weeklyWorkLoadMap.put(attends, weeklyWorkLoadArray);
         }
 
         public Interval[] getIntervals() {
@@ -71,15 +75,10 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             return executionPeriodInterval;
         }
 
-    }
-
-    private static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>() {
-		public int compare(final Attends attends1, final Attends attends2) {
-            final Student student1 = attends1.getAluno();
-            final Student student2 = attends2.getAluno();
-            return student1.getNumber().compareTo(student2.getNumber());
+		public Map<Attends, WeeklyWorkLoad[]> getWeeklyWorkLoadMap() {
+			return weeklyWorkLoadMap;
 		}
-    };
+    }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixFilterException, FenixServiceException {
@@ -117,9 +116,6 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
         final DateTime endOfSemester = new DateTime(executionPeriod.getEndDate());
         final DateTime nextLastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1).plusWeeks(1);
-        System.out.println("   -----> " + new Interval(firstMonday, nextLastMonday));
-        System.out.println("   -----> " + new Interval(firstMonday, nextLastMonday).toPeriod());
-        System.out.println("   -----> " + new Interval(firstMonday, nextLastMonday).toPeriod().getWeeks());
         return new Interval(firstMonday, nextLastMonday);
     }
 

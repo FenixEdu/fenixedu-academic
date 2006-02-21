@@ -16,34 +16,69 @@
 <logic:present name="weeklyWorkLoadView">
 	<table class="style1">
 		<tr>
-			<logic:iterate id="interval" type="org.joda.time.Interval" name="weeklyWorkLoadView" property="intervals">
-				<td class="listClasses-header">
+			<td class="listClasses-header" rowspan="2">
+				<bean:message key="title.student.number"/>
+			</td>
+			<td class="listClasses-header" rowspan="2">
+			</td>
+			<bean:size id="numberOfIntervals" name="weeklyWorkLoadView" property="intervals"/>
+			<td class="listClasses-header" colspan="<%= numberOfIntervals %>">
+				<bean:message key="title.weekly.work.load.week"/>
+			</td>
+		</tr>
+		<tr>
+			<logic:iterate id="interval" indexId="i" type="org.joda.time.Interval" name="weeklyWorkLoadView" property="intervals">
+				<bean:define id="intervalString" type="java.lang.String">
 					<bean:define id="start" type="org.joda.time.DateTime" name="interval" property="start"/>
 					<bean:define id="end" type="org.joda.time.DateTime" name="interval" property="end"/>				
-					[<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>,
-					 <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>[
+					[<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>, <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>[
+				</bean:define>
+				<td class="listClasses-header" title="<%= intervalString %>">
+					<%= i.intValue() + 1 %>
 				</td>
 			</logic:iterate>
 		</tr>
 
-		<logic:iterate id="weeklyWorkLoadArray" name="weeklyWorkLoadView" property="weeklyWorkLoadArrays">
-			<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadArray">
-				<tr>
-					<td rowspan="3">
-						1
+		<logic:iterate id="weeklyWorkLoadEntry" name="weeklyWorkLoadView" property="weeklyWorkLoadMap">
+			<tr>
+				<td class="listClasses-header" rowspan="3">
+					<bean:write name="weeklyWorkLoadEntry" property="key.aluno.number"/>
+				</td>
+				<td class="courses">
+					<bean:message key="title.weekly.work.load.contact"/>
+				</td>
+				<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
+					<td class="listClasses">
+						<logic:present name="weeklyWorkLoad">
+							<bean:write name="weeklyWorkLoad" property="contact"/>
+						</logic:present>
 					</td>
-					<td>
+				</logic:iterate>
+			</tr>
+			<tr>
+				<td class="courses">
+					<bean:message key="title.weekly.work.load.autonomousStudy"/>
+				</td>
+				<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
+					<td class="listClasses">
+						<logic:present name="weeklyWorkLoad">
+							<bean:write name="weeklyWorkLoad" property="autonomousStudy"/>
+						</logic:present>
 					</td>
-				</tr>
-				<tr>
-					<td>
+				</logic:iterate>
+			</tr>
+			<tr>
+				<td class="courses">
+					<bean:message key="title.weekly.work.load.other"/>
+				</td>
+				<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
+					<td class="listClasses">
+						<logic:present name="weeklyWorkLoad">
+							<bean:write name="weeklyWorkLoad" property="other"/>
+						</logic:present>
 					</td>
-				</tr>
-				<tr>
-					<td>
-					</td>
-				</tr>
-			</logic:iterate>		
+				</logic:iterate>
+			</tr>
 		</logic:iterate>
 	</table>
 </logic:present>
