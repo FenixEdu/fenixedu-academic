@@ -20,7 +20,7 @@ public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByC
         setCurricularRuleType(CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR);
     }
 
-    public EnrolmentToBeApprovedByCoordinator(DegreeModule degreeModuleToApplyRule, CourseGroup contextCourseGroup,
+    protected EnrolmentToBeApprovedByCoordinator(DegreeModule degreeModuleToApplyRule, CourseGroup contextCourseGroup,
             ExecutionPeriod begin, ExecutionPeriod end) {
 
         this();
@@ -35,7 +35,7 @@ public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByC
         setEnd(end);
     }
     
-    public void edit(CourseGroup contextCourseGroup) {
+    protected void edit(CourseGroup contextCourseGroup) {
         setContextCourseGroup(contextCourseGroup);
     }
 

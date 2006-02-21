@@ -23,7 +23,7 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
         setCurricularRuleType(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT);
     }
 
-    public DegreeModulesSelectionLimit(DegreeModule degreeModuleToApplyRule,
+    protected DegreeModulesSelectionLimit(DegreeModule degreeModuleToApplyRule,
             CourseGroup contextCourseGroup, ExecutionPeriod begin, ExecutionPeriod end, Integer minimum,
             Integer maximum) {
 
@@ -38,7 +38,7 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
         setEnd(end);
     }
     
-    public void edit(CourseGroup contextCourseGroup, Integer minimumLimit, Integer maximumLimit) {
+    protected void edit(CourseGroup contextCourseGroup, Integer minimumLimit, Integer maximumLimit) {
         checkLimits(minimumLimit, maximumLimit);
         setContextCourseGroup(contextCourseGroup);
         setMinimum(minimumLimit);

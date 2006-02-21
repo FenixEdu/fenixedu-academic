@@ -27,7 +27,7 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         setCurricularRuleType(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE);
     }
 
-    public RestrictionEnroledDegreeModule(CurricularCourse degreeModuleToApplyRule,
+    protected RestrictionEnroledDegreeModule(CurricularCourse degreeModuleToApplyRule,
             DegreeModule enroledDegreeModule, CourseGroup contextCourseGroup,
             CurricularPeriodInfoDTO curricularPeriodInfoDTO, ExecutionPeriod begin, ExecutionPeriod end) {
 
@@ -44,7 +44,7 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
     }
     
-    public void edit(DegreeModule enroledDegreeModule, CourseGroup contextCourseGroup, CurricularPeriodInfoDTO curricularPeriodInfoDTO) {
+    protected void edit(DegreeModule enroledDegreeModule, CourseGroup contextCourseGroup, CurricularPeriodInfoDTO curricularPeriodInfoDTO) {
         setPrecedenceDegreeModule(enroledDegreeModule);
         setContextCourseGroup(contextCourseGroup);
         setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());

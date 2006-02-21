@@ -12,7 +12,6 @@ public class JavaBolonhaDegreeType2SqlBolonhaDegreeTypeFieldConversion implement
             return s.toString();
         }
         return source;
-
     }
 
     public Object sqlToJava(Object source) {
@@ -21,7 +20,5 @@ public class JavaBolonhaDegreeType2SqlBolonhaDegreeTypeFieldConversion implement
             return BolonhaDegreeType.valueOf(src);
         }
         return source;
-
     }
-
 }

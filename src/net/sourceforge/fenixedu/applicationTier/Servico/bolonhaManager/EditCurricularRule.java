@@ -11,10 +11,12 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditCurricularRule extends Service {
-    
-    public void run(Integer curricularRuleID, CurricularRuleParametersDTO parametersDTO) throws FenixServiceException, ExcepcaoPersistencia {
-        
-        final CurricularRule curricularRule = (CurricularRule) persistentObject.readByOID(CurricularRule.class, curricularRuleID);
+
+    public void run(Integer curricularRuleID, CurricularRuleParametersDTO parametersDTO)
+            throws FenixServiceException, ExcepcaoPersistencia {
+
+        final CurricularRule curricularRule = (CurricularRule) persistentObject.readByOID(
+                CurricularRule.class, curricularRuleID);
         if (curricularRule == null) {
             throw new FenixServiceException("error.noCurricularRule");
         }

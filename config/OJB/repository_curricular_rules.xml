@@ -170,6 +170,8 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse" />
 	
 	<field-descriptor
 		name="idInternal"
@@ -880,4 +882,212 @@
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup">
 		<foreignkey field-ref="keyContextCourseGroup"/>
 	</reference-descriptor>	
+</class-descriptor>
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness" table="CURRICULAR_RULE">	
+
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+		name="keyDegreeModuleToApplyRule"
+		column="KEY_DEGREE_MODULE_TO_APPLY_RULE"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
+		name="keyBegin"
+		column="KEY_BEGIN_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyEnd"
+		column="KEY_END_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyParentCompositeRule"
+		column="KEY_PARENT_COMPOSITE_RULE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="curricularRuleType"
+		column="CURRICULAR_RULE_TYPE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularRuleType2SqlCurricularRuleTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="keyContextCourseGroup"
+		column="KEY_CONTEXT_COURSE_GROUP"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyExclusiveDegreeModule"
+		column="KEY_EXCLUSIVE_DEGREE_MODULE"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModuleToApplyRule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule">
+		<foreignkey field-ref="keyDegreeModuleToApplyRule"/>
+	</reference-descriptor>	
+	<reference-descriptor auto-retrieve="false"
+			name="begin"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+		<foreignkey field-ref="keyBegin"/>
+	</reference-descriptor>	
+	<reference-descriptor auto-retrieve="false"
+			name="end"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+		<foreignkey field-ref="keyEnd"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="parentCompositeRule"
+			class-ref="net.sourceforge.fenixedu.domain.curricularRules.CompositeRule">
+		<foreignkey field-ref="keyParentCompositeRule"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="contextCourseGroup"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup">
+		<foreignkey field-ref="keyContextCourseGroup"/>
+	</reference-descriptor>	
+	<reference-descriptor auto-retrieve="false"
+			name="exclusiveDegreeModule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule">
+		<foreignkey field-ref="keyExclusiveDegreeModule"/>
+	</reference-descriptor>
+</class-descriptor>
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse" table="CURRICULAR_RULE">	
+
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+		name="keyDegreeModuleToApplyRule"
+		column="KEY_DEGREE_MODULE_TO_APPLY_RULE"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
+		name="keyBegin"
+		column="KEY_BEGIN_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyEnd"
+		column="KEY_END_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyParentCompositeRule"
+		column="KEY_PARENT_COMPOSITE_RULE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="curricularRuleType"
+		column="CURRICULAR_RULE_TYPE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularRuleType2SqlCurricularRuleTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="keyContextCourseGroup"
+		column="KEY_CONTEXT_COURSE_GROUP"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="credits"
+		column="CREDITS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="curricularPeriodOrder"
+		column="CURRICULAR_PERIOD_ORDER"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="minimumYear"
+		column="MINIMUM_YEAR"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="maximumYear"
+		column="MAXIMUM_YEAR"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="bolonhaDegreeType"
+		column="BOLONHA_DEGREE_TYPE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaBolonhaDegreeType2SqlBolonhaDegreeTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="keyDegree"
+		column="KEY_DEGREE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyDepartmentUnit"
+		column="KEY_DEPARTMENT_UNIT"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModuleToApplyRule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule">
+		<foreignkey field-ref="keyDegreeModuleToApplyRule"/>
+	</reference-descriptor>	
+	<reference-descriptor auto-retrieve="false"
+			name="begin"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+		<foreignkey field-ref="keyBegin"/>
+	</reference-descriptor>	
+	<reference-descriptor auto-retrieve="false"
+			name="end"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+		<foreignkey field-ref="keyEnd"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="parentCompositeRule"
+			class-ref="net.sourceforge.fenixedu.domain.curricularRules.CompositeRule">
+		<foreignkey field-ref="keyParentCompositeRule"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="contextCourseGroup"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup">
+		<foreignkey field-ref="keyContextCourseGroup"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="degree"
+			class-ref="net.sourceforge.fenixedu.domain.Degree">
+		<foreignkey field-ref="keyDegree"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="departmentUnit"
+			class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+		<foreignkey field-ref="keyDepartmentUnit"/>
+	</reference-descriptor>
 </class-descriptor>

@@ -18,22 +18,23 @@ public class CompositeRule extends CompositeRule_Base {
      * This constructor should be used inside Composite Rule
      */
     protected CompositeRule(DegreeModule degreeModuleToApplyRule, LogicOperators compositeRuleType, CurricularRule... curricularRules) {
+        super();
         checkCompositeRuleType(compositeRuleType, curricularRules);
-        init(degreeModuleToApplyRule, null, null, null, compositeRuleType, curricularRules);
+        init(degreeModuleToApplyRule, null, null, compositeRuleType, curricularRules);
     }
 
-    public CompositeRule(DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin,
-            ExecutionPeriod end, CurricularRuleType ruleType, LogicOperators compositeRuleType,
+    protected CompositeRule(DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin,
+            ExecutionPeriod end, LogicOperators compositeRuleType,
             CurricularRule... curricularRules) {
 
         super();
 
-        if (degreeModuleToApplyRule == null || begin == null || ruleType == null) {
+        if (degreeModuleToApplyRule == null || begin == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
 
         checkCompositeRuleType(compositeRuleType, curricularRules);
-        init(degreeModuleToApplyRule, begin, end, ruleType, compositeRuleType, curricularRules);
+        init(degreeModuleToApplyRule, begin, end, compositeRuleType, curricularRules);
     }
 
     private void checkCompositeRuleType(LogicOperators compositeRuleType, CurricularRule... curricularRules) throws DomainException {
@@ -51,13 +52,12 @@ public class CompositeRule extends CompositeRule_Base {
     }
 
     private void init(DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin,
-            ExecutionPeriod end, CurricularRuleType ruleType, LogicOperators compositeRuleType,
+            ExecutionPeriod end, LogicOperators compositeRuleType,
             CurricularRule... curricularRules) {
 
         setDegreeModuleToApplyRule(degreeModuleToApplyRule);
         setBegin(begin);
         setEnd(end);
-        setCurricularRuleType(ruleType);
         setCompositeRuleType(compositeRuleType);
 
         for (final CurricularRule curricularRule : curricularRules) {

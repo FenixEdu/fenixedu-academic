@@ -694,6 +694,18 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
         }
         class net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
         }
+        class net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
+            Integer keyExclusiveDegreeModule;
+        }
+        class net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
+            Double credits;
+            Integer curricularPeriodOrder;
+            Integer minimumYear;
+            Integer maximumYear;
+            BolonhaDegreeType bolonhaDegreeType;
+            Integer keyDegree;
+            Integer keyDepartmentUnit;
+        }
 
 class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
@@ -5920,6 +5932,21 @@ relation DegreeModulePrecedenceRule {
 relation CourseGroupCurricularRule {
 	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole;
 	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole contextCourseGroup;
+}
+
+relation ExclusivenessDegreeModule {
+	net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness playsRole;
+	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole exclusiveDegreeModule;
+}
+
+relation AnyCurricularCourseDegree {
+	net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse playsRole;
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+}
+
+relation AnyCurricularCourseDepartmentUnit {
+	net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse playsRole;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole departmentUnit;
 }
 
 relation ProjectEvent {

@@ -16,7 +16,11 @@ public enum CurricularRuleType {
     
     DEGREE_MODULES_SELECTION_LIMIT,
     
-    ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR;
+    ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR,
+    
+    EXCLUSIVENESS,
+    
+    ANY_CURRICULAR_COURSE;
 
     public String getName() {
         return name();

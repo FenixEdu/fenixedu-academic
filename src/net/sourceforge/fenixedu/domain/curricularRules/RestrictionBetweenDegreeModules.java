@@ -30,7 +30,7 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
         }
     }
     
-    public RestrictionBetweenDegreeModules(DegreeModule degreeModuleToApplyRule, DegreeModule precedenceDegreeModule,
+    protected RestrictionBetweenDegreeModules(DegreeModule degreeModuleToApplyRule, DegreeModule precedenceDegreeModule,
             Double minimumCredits, CourseGroup contextCourseGroup, ExecutionPeriod begin, ExecutionPeriod end) {
         
         this(precedenceDegreeModule, minimumCredits);
@@ -45,7 +45,7 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
         setContextCourseGroup(contextCourseGroup);
     }
     
-    public void edit(DegreeModule precedenceDegreeModule, Double minimumCredits, CourseGroup contextCourseGroup) {
+    protected void edit(DegreeModule precedenceDegreeModule, Double minimumCredits, CourseGroup contextCourseGroup) {
         checkParameters(precedenceDegreeModule, minimumCredits);
         setPrecedenceDegreeModule(precedenceDegreeModule);
         setMinimum(minimumCredits);

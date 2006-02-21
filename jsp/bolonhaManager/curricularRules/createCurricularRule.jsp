@@ -43,7 +43,10 @@
 		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 		
-		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' || CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE' || CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_BETWEEN_DEGREE_MODULES'}">
+		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' 
+					|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE' 
+					|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_BETWEEN_DEGREE_MODULES' 
+					|| CurricularRulesManagement.selectedCurricularRuleType == 'EXCLUSIVENESS'}">
 			<h:outputText value="<p><label>#{bolonhaBundle['curricularCourse']}:</label>" escape="false"/>
 			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeModuleID}">
 				<f:selectItems binding="#{CurricularRulesManagement.degreeModuleItems}"/>
@@ -76,6 +79,45 @@
 			<h:inputText id="minimumCreditsForPrecedencyBetweenDegreeModules" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumCredits}"/>
 			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
+ 
+		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'ANY_CURRICULAR_COURSE'}">
+			<h:outputText value="<p><label>#{bolonhaBundle['credits']}:</label>" escape="false"/>
+			<h:inputText id="creditsForAnyCurricularCourseRule" maxlength="8" size="4" value="#{CurricularRulesManagement.credits}"/>
+			<h:outputText value="</p>" escape="false"/>
+			<h:outputText value="<p><label>#{bolonhaBundle['years']}:</label>" escape="false"/>
+			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
+			<h:inputText id="minimumYear" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumYear}"/>
+			<h:outputText value=" " escape="false"/>
+			<h:outputText value="#{bolonhaBundle['maximum']}: " escape="false"/>
+			<h:inputText id="maximumYear" maxlength="8" size="4" value="#{CurricularRulesManagement.maximumYear}"/>
+			<h:outputText value="</p>" escape="false"/>
+			<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['semester']}:</label>" escape="false"/>
+			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedSemester}">
+				<f:selectItem itemLabel="#{bolonhaBundle['both']}" itemValue="0"/>
+				<f:selectItem itemLabel="1" itemValue="1"/>
+				<f:selectItem itemLabel="2" itemValue="2"/>
+			</fc:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
+			<h:outputText value="<p><label>#{bolonhaBundle['degreeType']}:</label>" escape="false"/>
+			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeType}" onchange="this.form.submit();"
+					valueChangeListener="#{CurricularRulesManagement.onChangeDegreeTypeDropDown}">
+				<f:selectItem itemLabel="IST" itemValue="no_selection"/>
+				<f:selectItem itemLabel="#{enumerationBundle['DEGREE']}" itemValue="DEGREE"/>
+				<f:selectItem itemLabel="#{enumerationBundle['MASTER_DEGREE']}" itemValue="MASTER_DEGREE"/>
+				<f:selectItem itemLabel="#{enumerationBundle['INTEGRATED_MASTER_DEGREE']}" itemValue="INTEGRATED_MASTER_DEGREE"/>
+			</fc:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
+			<h:outputText value="<p><label>#{bolonhaBundle['degree']}:</label>" escape="false"/>
+			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeID}">
+				<f:selectItems binding="#{CurricularRulesManagement.degreeItems}"/>
+			</fc:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
+			<h:outputText value="<p><label>#{bolonhaBundle['department']}:</label>" escape="false"/>
+			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDepartmentUnitID}">
+				<f:selectItems binding="#{CurricularRulesManagement.departmentUnitItems}"/>
+			</fc:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
+		</h:panelGroup>
 		
 		<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['group']}:</label>" escape="false"/>
 		<fc:selectOneMenu value="#{CurricularRulesManagement.selectedContextCourseGroupID}">
@@ -83,7 +125,8 @@
 		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 		
-		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' || CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE'}">
+		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' 
+					|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE'}">
 			<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['semester']}:</label>" escape="false"/>
 			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedSemester}">
 				<f:selectItem itemLabel="#{bolonhaBundle['both']}" itemValue="0"/>
