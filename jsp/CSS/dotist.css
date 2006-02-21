@@ -1,13 +1,7 @@
 /* dotist CSS - 27.08.2003 
-<<<<<<< dotist.css
-   by Bruno Monteiro @ GAEL
-*/
-
-=======
    by Bruno Monteiro @ GAEL
 */
 	
->>>>>>> 1.53
 /**************************************** 
 	Global Text Proprieties 
 *****************************************/
@@ -42,21 +36,12 @@ h2	{
 	}
 
 h3 {
-<<<<<<< dotist.css
-	font-size: 1.25em;
-	color: #223d4a;
-	}	
-	
-	
-	
-=======
 	font-size: 1.25em;
 	color: #223d4a;
 	}
 
 
 
->>>>>>> 1.53
 /******************************************
 	Global Links Proprieties
 *******************************************/
@@ -189,13 +174,8 @@ a:hover {
 	padding: 0;
 	}
 
-<<<<<<< dotist.css
-#bodycontent {
-	}
-=======
 #bodycontent {
 }
->>>>>>> 1.53
 
 #bodycontent {
 	/*font-size: 11px; line-height: 16px; */
@@ -229,24 +209,6 @@ a:hover {
 	clear: both;
 	background: #fff;
 	}
-	
-	
-div.autoComplete {
-      position:absolute;
-      width:250px;
-      background-color:white;
-      border:1px solid #888;
-      margin:0px;
-      padding:0px;
-     
-    }
-ul.autoCompleteItems  {
-      list-style-type: none;
-      margin:0px;
-      padding:0px;
-   }
-
-ul.autoCompleteItems li.selected { background-color:  #cef; }
 	
 /**********************************************
 	 navlateral list & links
@@ -317,17 +279,10 @@ ul.autoCompleteItems li.selected { background-color:  #cef; }
 	TABLE Classes: Info TD + Info TD with Icons + ListClasses
 ******************************************************************/
 
-<<<<<<< dotist.css
-table { line-height: 1.45em; }
-table { font-size: 100%; }
-table table { font-size: 100%; }
-	
-=======
 table { line-height: 1.45em; }
 table { font-size: 100%; }
 table table { font-size: 100%; }
 
->>>>>>> 1.53
 .infoop {
 	background-color: #EBECED;
 	vertical-align: middle;
@@ -549,15 +504,6 @@ table.registration {
 	page-break-before:always;
 	}	
 		
-<<<<<<< dotist.css
-#pagewrapper_registration {
-width: 800px;
-margin-right:auto;
-margin-left:auto;
-margin-top:30px;
-padding:0px;
-text-align: left;
-=======
 #pagewrapper_registration {
 	width: 800px;
 	margin-right:auto;
@@ -684,212 +630,6 @@ select.degrees {
 	background:#999; 
 	padding:5px;
 	font-weight:bold;
->>>>>>> 1.53
-}
-
-<<<<<<< dotist.css
-     
-
-	
-/* Less used classes: */	
-	
-/**************************************** 
-	Global Text Proprieties 
-*****************************************/
-
-h2.diploma_posGrad	{
-	font: bold 28px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #223d4a;
-	/*color: #036;*/
-    }
-	
-h3.diploma_posGrad {
-	font: bold 18px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #223d4a;
-   }
-=======
-.listClasses-supheader{
-	color:#FFF;
-	background:#4F82B5; 
-	padding:5px;
-	font-weight:bold;
-	text-align: center;
-}
-
-.listClasses-subheader a:link, .listClasses-subheader a:visited{
-	color:#FFF;
-	text-decoration:underline;
-	font-weight:normal;	
-}
-
-.listClasses-subheader a:hover{
-	color:#FFF;
-	text-decoration:none;
-	font-weight:normal;
-}
-
-.tall-td {
-	height: 50px;
-	}
-
-.ects_headertable {
-	border: 1px solid #000;
-	}
-
-.ects_headertable td {
-	color: #333;
-	padding: 5px;
-	background:#EBECED;
-	}
-	
-table#ects {
-	page-break-after: always;
-	}
-
-	
-/*****************************************************************
-	Assiduidade - layout verbete
-******************************************************************/
-
-.verb-table {
-	border: 1px solid #333;
-	}
-
-.verb-hdr {
-	padding: 5px;
-	font-weight: bold;
-	text-align: center;
-	background: #ccc;
-	border-right: 1px solid #333;
-	border-bottom: 1px solid #333;
-	}
-
-.verb-hrd-last {
-	padding: 5px;
-	font-weight: bold;
-	text-align: center;
-	background: #ccc;
-	border-bottom: 1px solid #333;
-	}
-	
-.verb-td {
-	padding: 5px;
-	background: #ebeced;
-	border-right: 1px solid #333;   
-	border-bottom: 1px solid #ccc;                               
-	}
-	
-.verb-td-last {
-	padding: 5px;
-	background: #ebeced;  
-	border-bottom: 1px solid #ccc;                               
-	}
-
-.verb-finalrow {
-	padding: 5px;
-	background: #ebeced;
-	border-right: 1px solid #333;
-	}
->>>>>>> 1.53
-
-<<<<<<< dotist.css
-h4.diploma_posGrad {
-	font: 18px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #223d4a;
-	}	
-	
-h2.registration	{
-	font: 20px Courier;
-	color: #000;
-	}
-
-h3.registration	{
-	font: 16px Courier;
-	color: #000;
-	}
-	
-h4.registration {
-	font: bold 18px "Trebuchet MS", Arial, Helvetica, sans-serif;		
-	color: #000;
-	}
-	
-/**********************************************
-	 FORMS Classes: inputs
-***********************************************/
-
-/*not used*/
-.sucessfulOperarion {
-	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
-	color: darkblue;
-	}
-
-/*not used*/
-.inputlist {
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333;
-	}
-	
-select.courseEnroll {
-	font: 9px Verdana, Arial, Helvetica, sans-serif;
-	width: 100%;
-	}
-select.degrees {
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
-	width: 100%;
-	}
-	
-/*****************************************************************
-	TABLE Classes: Info TD + Info TD with Icons + ListClasses
-******************************************************************/
-
-
-.infoIcons {
-	background-color: #EBECED;
-	vertical-align: middle;
-	padding-left: 10px;
-	border-bottom: 1px solid #ccc;
-	width: 15px;
-	}
-
-.infoop2 {
-	background-color: #fafade;
-	vertical-align: middle;
-	padding: 10px 10px;
-	border-bottom: 1px solid #f2f2a6;
-	}
-.infoop3 {
-	background-color: #fafade;
-	padding: 2px 4px;
-	border-bottom: 1px solid #f2f2a6;
-	}
-.infoop4 {
-	background-color: #ffc;
-	padding: 2px 4px;
-	}
-	
-.infoop-blue {
-	background-color: #9CF;
-	vertical-align: middle;
-	padding: 10px 10px;
-	border-bottom: 1px solid #ccc;
-	}
-	
-.bottomborder {
-	border-bottom: 1px solid #ccc;
-	}
-	
-.listClassesWhite	{
-	border: 1px solid #ccc;
-	text-align: center;
-	height: 30px;
-	}
-
-.listClasses-subheader{
-	color:#FFF;
-	background:#999; 
-	padding:5px;
-	font-weight:bold;
 }
 
 .listClasses-supheader{
@@ -978,27 +718,4 @@ table#ects {
 .verb-finalrow-last {
 	padding: 5px;
 	background: #ebeced;
-	}=======
-.verb-finalrow-last {
-	padding: 5px;
-	background: #ebeced;
-	}>>>>>>> 1.53
-
-	
-	
-div.autoComplete {
-      position:absolute;
-      width:250px;
-      background-color:white;
-      border:1px solid #888;
-      margin:0px;
-      padding:0px;
-     
-    }
-ul.autoCompleteItems  {
-      list-style-type: none;
-      margin:0px;
-      padding:0px;
-   }
-
-ul.autoCompleteItems li.selected { background-color:  #cef; }
+	}
