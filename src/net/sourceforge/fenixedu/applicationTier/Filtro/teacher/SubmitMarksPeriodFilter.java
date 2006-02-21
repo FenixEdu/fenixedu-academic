@@ -15,7 +15,7 @@ public class SubmitMarksPeriodFilter extends Filtro {
 	public void execute(ServiceRequest request, ServiceResponse response)
 			throws Exception {
 		String startString = "2006-01-04";
-		String endString = "2006-02-20";
+		String endString = "2006-02-25";
 		Date start = DateFormatUtil.parse("yyyy-MM-dd", startString);
 		Date end = DateFormatUtil.parse("yyyy-MM-dd", endString);
 		Date now = new Date();
