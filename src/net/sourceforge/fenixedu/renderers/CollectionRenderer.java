@@ -179,7 +179,7 @@ public class CollectionRenderer extends OutputRenderer {
         getTableLink(name).setOrder(value);
     }
 
-    private int getNumberOfLinks() {
+    protected int getNumberOfLinks() {
         return this.links.size();
     }
     
@@ -250,24 +250,27 @@ public class CollectionRenderer extends OutputRenderer {
         @Override
         protected HtmlComponent getComponent(int rowIndex, int columnIndex) {
             MetaObject object = getObject(rowIndex);
+            getContext().setMetaObject(object);
 
             if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
-                getContext().setMetaObject(object);
-            
-                MetaSlot slot = getSlotUsingName(object, columnIndex);
-                
-                if (slot == null) {
-                    return new HtmlText();
-                }
-                
-                HtmlComponent component = renderSlot(slot);
-                component = wrapPrefixAndSuffix(component, columnIndex);
-            
-                return component;
+                return generateObjectComponent(columnIndex, object);
             }
             else {
                 return generateLinkComponent(object, columnIndex - (getNumberOfColumns() - getNumberOfLinks()));
             }
+        }
+
+        protected HtmlComponent generateObjectComponent(int columnIndex, MetaObject object) {
+            MetaSlot slot = getSlotUsingName(object, columnIndex);
+            
+            if (slot == null) {
+                return new HtmlText();
+            }
+            
+            HtmlComponent component = renderSlot(slot);
+            component = wrapPrefixAndSuffix(component, columnIndex);
+         
+            return component;
         }
         
         /**
@@ -279,7 +282,7 @@ public class CollectionRenderer extends OutputRenderer {
          * an unspecified schema). So we have to search slots by name and hope that it makes
          * sense in the table.  
          */
-        private MetaSlot getSlotUsingName(MetaObject object, int columnIndex) {
+        protected MetaSlot getSlotUsingName(MetaObject object, int columnIndex) {
             MetaObject referenceObject = getObject(0);
             MetaSlot referenceSlot = referenceObject.getSlots().get(columnIndex);
             
@@ -297,7 +300,7 @@ public class CollectionRenderer extends OutputRenderer {
             return null;
         }
 
-        private HtmlComponent generateLinkComponent(MetaObject object, int number) {
+        protected HtmlComponent generateLinkComponent(MetaObject object, int number) {
             TableLink tableLink = getTableLink(number);
             
             HtmlLink link = new HtmlLink();
@@ -309,7 +312,7 @@ public class CollectionRenderer extends OutputRenderer {
             return link;
         }
 
-        private String getLinkText(TableLink tableLink) {
+        protected String getLinkText(TableLink tableLink) {
             String text = tableLink.getText();
             
             if (text != null) {
@@ -332,7 +335,7 @@ public class CollectionRenderer extends OutputRenderer {
             return tableLink.getName();
         }
 
-        private void setLinkParameters(MetaObject metaObject, HtmlLink link, TableLink tableLink) {
+        protected void setLinkParameters(MetaObject metaObject, HtmlLink link, TableLink tableLink) {
             String linkParam = tableLink.getParam();
             
             if (linkParam == null) {
@@ -412,7 +415,7 @@ public class CollectionRenderer extends OutputRenderer {
 
     }
     
-    private class TableLink implements Comparable<TableLink> {
+    protected class TableLink implements Comparable<TableLink> {
 
         private String name;
         private String link;
