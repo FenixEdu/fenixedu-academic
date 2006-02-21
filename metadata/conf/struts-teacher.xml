@@ -2200,7 +2200,13 @@
 			<forward name="chooseExecutionPeriodAndCourse" path="inquiry-choose-execution-period-and-course"/>
 			<forward name="showOldInquiriesTeacherRes" path="show-old-inquiries-teacher-res"/>
 		</action>
-	    
+
+		<action path="/weeklyWorkLoad"
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.WeeklyWorkLoadDA"
+				input="/weeklyWorkLoad.do?method=prepare"
+				parameter="method">
+			<forward name="showWeeklyWorkLoad" path="weekly-work-load" />
+		</action>
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
