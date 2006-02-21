@@ -150,6 +150,12 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     @Override
     public boolean evaluate(Class< ? extends DomainObject> object) {
         // TODO Auto-generated method stub
+        /**
+         * ? getDegree() == null 
+         *      ? getBolonhaDegreeType() == null ? any degree from IST
+         *      ? getBolonhaDegreeType() == null ? any degree from DEGREE / MASTER_DEGREE / INTEGRATED_MASTER_DEGREE
+         *       
+         */
         return false;
     }
     
