@@ -21,5 +21,9 @@ public enum CurricularPeriodType {
     public float getWeight() {
         return weight;
     }
+    
+    public String getAbbreviatedName() {
+        return name() + ".ABBREVIATION";
+    }
 
 }
