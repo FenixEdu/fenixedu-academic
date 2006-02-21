@@ -46,7 +46,7 @@ public class Person extends Person_Base {
         }
 
         List<Person> allPersons = RootDomainObject.readAllPersons();
-        checkConditionsToCreateNewPerson(null, personToCreate.getNumeroDocumentoIdentificacao(),
+        checkConditionsToCreateNewPerson(personToCreate.getUsername(), personToCreate.getNumeroDocumentoIdentificacao(),
                 personToCreate.getTipoDocumentoIdentificacao(), allPersons, this);
 
         setProperties(personToCreate);
