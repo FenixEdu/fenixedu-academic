@@ -28,8 +28,22 @@
 
 		<logic:iterate id="weeklyWorkLoadArray" name="weeklyWorkLoadView" property="weeklyWorkLoadArrays">
 			<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadArray">
+				<tr>
+					<td rowspan="3">
+						1
+					</td>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+				</tr>
 			</logic:iterate>		
 		</logic:iterate>
-
 	</table>
 </logic:present>

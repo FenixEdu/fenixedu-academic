@@ -27,6 +27,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
+import org.joda.time.Period;
 
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
@@ -39,7 +40,9 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
         public WeeklyWorkLoadView(final Interval executionPeriodInterval) {
             this.executionPeriodInterval = executionPeriodInterval;
-            numberOfWeeks = executionPeriodInterval.toPeriod().getWeeks();
+            final Period period = executionPeriodInterval.toPeriod();
+            int extraWeek = period.getDays() > 0 ? 1 : 0;
+            numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek;
             intervals = new Interval[numberOfWeeks];
             for (int i = 0; i < numberOfWeeks; i++) {
                 final DateTime start = executionPeriodInterval.getStart().plusWeeks(i);
