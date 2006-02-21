@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -43,6 +46,21 @@ public abstract class DegreeModule extends DegreeModule_Base {
             return getNewDegreeCurricularPlan();
         }
         return getDegreeModuleContexts().get(0).getCourseGroup().getParentDegreeCurricularPlan();
+    }
+    
+    public Set<CourseGroup> getAllParentCourseGroups() {
+        Set<CourseGroup> result = new HashSet<CourseGroup>();
+        collectParentCourseGroups(result, this);
+        return result;
+    }
+
+    private void collectParentCourseGroups(Set<CourseGroup> result, DegreeModule module) {
+        for (Context parent : module.getDegreeModuleContexts()) {
+            if (!parent.getCourseGroup().isRoot()) {
+                result.add(parent.getCourseGroup());
+                collectParentCourseGroups(result, parent.getCourseGroup());
+            }
+        }
     }
 
     public abstract Double getEctsCredits();
