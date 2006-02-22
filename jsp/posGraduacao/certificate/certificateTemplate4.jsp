@@ -49,3 +49,8 @@
 		 valores
 	</logic:iterate>
 		</logic:present>
+	<bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>"/>
+	<logic:notEmpty name="infoStudentCurricularPlan"  property="givenCredits" >
+		<br/>
+		Atribuição de Créditos:  <bean:write name="infoStudentCurricularPlan"  property="givenCredits" /> Créditos
+	</logic:notEmpty>
