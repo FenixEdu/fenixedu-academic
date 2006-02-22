@@ -9,6 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -110,7 +111,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     
     /**
      * - This method is used to edit a 'special' curricular course 
-     *   that will represent any curricular course accordding to a rule 
+     *   that will represent any curricular course according to a rule 
      */
     public void edit(String name, String nameEn, CurricularStage curricularStage) {
         setName(name);
@@ -568,4 +569,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 		}
         return null;
     }
+
+    @Override
+    protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
+        // none rules to add
+    }
+
 }

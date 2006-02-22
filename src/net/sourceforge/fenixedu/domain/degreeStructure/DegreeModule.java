@@ -1,11 +1,14 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 
 
 public abstract class DegreeModule extends DegreeModule_Base {
@@ -18,8 +21,6 @@ public abstract class DegreeModule extends DegreeModule_Base {
     
     public abstract Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
             ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod);
-    
-    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
     
     public void editContext(Context context, CourseGroup courseGroup, CurricularPeriod curricularPeriod) {
         if (context.getCourseGroup() != courseGroup || context.getCurricularPeriod() != curricularPeriod) {
@@ -62,13 +63,19 @@ public abstract class DegreeModule extends DegreeModule_Base {
             }
         }
     }
+    
+    public List<CurricularRule> getParticipatingCurricularRules() {
+        List<CurricularRule> result = new ArrayList<CurricularRule>();
+        result.addAll(getParticipatingPrecedenceCurricularRules());
+        result.addAll(getParticipatingExclusivenessCurricularRules());
+        addOwnPartipatingCurricularRules(result);
+        return result;
+    }
 
     public abstract Double getEctsCredits();
-
     public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
-
 	public abstract Boolean getCanBeDeleted();
-
 	public abstract boolean isLeaf();
-
+    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
+    protected abstract void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
 }

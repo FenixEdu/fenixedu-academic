@@ -161,6 +161,10 @@ public class Unit extends Unit_Base {
             if (hasAnyParentUnits()) {
                 this.removeParents(this.getParentUnits().get(0));
             }
+            
+            for (;!getParticipatingAnyCurricularCourseCurricularRules().isEmpty()
+                 ;getParticipatingAnyCurricularCourseCurricularRules().get(0).delete());
+            
             removeDepartment();
             removeDegree();
             RootDomainObject.instance.removeParties(this);

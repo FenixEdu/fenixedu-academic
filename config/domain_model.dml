@@ -5606,12 +5606,6 @@ relation ContractWorkingUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole workingUnit;
 }
 
-
-
-
-
-
-
 class net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 	Date beginDate;
@@ -5718,14 +5712,6 @@ relation UnitUnit {
 		multiplicity *;
 	}
 }
-
-
-
-
-
-
-
-
 
 relation PartyParty {
     net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole childs{
@@ -6043,49 +6029,63 @@ relation ProjectProjectKeyword {
 relation CurricularRuleDegreeModule {
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModuleToApplyRule;
 	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole curricularRules {
-		multiplicity*;
+		multiplicity *;
 	}	
 }
 
 relation CurricularRuleBeginExecutionPeriod {
-	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole;
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole participatingBeginCurricularRules {
+    	multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole begin;
 }
 
 relation CurricularRuleEndExecutionPeriod {
-	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole;
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole participatingEndCurricularRules {
+    	multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole end;
 }
 
 relation CurricularRuleCompositeRule {
 	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole curricularRules {
-		multiplicity*;
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.curricularRules.CompositeRule playsRole parentCompositeRule;
 }
 
 relation DegreeModulePrecedenceRule {
-	net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule playsRole;
+	net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule playsRole participatingPrecedenceCurricularRules {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole precedenceDegreeModule;
 }
 
 relation CourseGroupCurricularRule {
-	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole;
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole participatingContextCurricularRules {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole contextCourseGroup;
 }
 
 relation ExclusivenessDegreeModule {
-	net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness playsRole;
+	net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness playsRole participatingExclusivenessCurricularRules {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole exclusiveDegreeModule;
 }
 
 relation AnyCurricularCourseDegree {
-	net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse playsRole;
+	net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
 }
 
 relation AnyCurricularCourseDepartmentUnit {
-	net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse playsRole;
+	net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole departmentUnit;
 }
 

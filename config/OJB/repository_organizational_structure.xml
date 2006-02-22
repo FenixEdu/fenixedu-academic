@@ -201,6 +201,12 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability">
 		<inverse-foreignkey field-ref="keyParentParty"/>
 	</collection-descriptor>
+	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+        name="participatingAnyCurricularCourseCurricularRules"
+        element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse">
+		<inverse-foreignkey field-ref="keyDepartmentUnit"/>
+    </collection-descriptor>
 
 </class-descriptor>
 

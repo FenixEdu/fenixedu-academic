@@ -12,6 +12,7 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 public class CourseGroupManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -81,6 +83,14 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getCourseGroups() throws FenixFilterException, FenixServiceException {
         return (courseGroups == null) ? (courseGroups = readCourseGroups()) : courseGroups;
+    }
+    
+    public List<String> getRulesLabels() throws FenixFilterException, FenixServiceException {
+        final List<String> resultLabels = new ArrayList<String>();
+        for (final CurricularRule curricularRule : getCourseGroup(getCourseGroupID()).getParticipatingCurricularRules()) {
+            resultLabels.add(CurricularRuleLabelFormatter.getLabel(curricularRule));
+        }
+        return resultLabels;
     }
 
     public String createCourseGroup() throws FenixFilterException {

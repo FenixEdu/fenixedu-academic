@@ -86,4 +86,9 @@ public class CreditsLimit extends CreditsLimit_Base {
         return false;
     }
 
+    @Override
+    protected void removeOwnParameters() {
+        // no domain parameters
+    }
+
 }

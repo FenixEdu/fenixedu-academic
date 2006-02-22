@@ -49,11 +49,11 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class CurricularRulesManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
-    private final ResourceBundle enumerationResources = getResourceBundle("resources/EnumerationResources");
-    private final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
-    private final String NO_SELECTION_STRING = "no_selection";
-    private final Integer NO_SELECTION_INTEGER = Integer.valueOf(0);
+    protected final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
+    protected final ResourceBundle enumerationResources = getResourceBundle("resources/EnumerationResources");
+    protected final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
+    protected final String NO_SELECTION_STRING = "no_selection";
+    protected final Integer NO_SELECTION_INTEGER = Integer.valueOf(0);
     
     private Integer degreeModuleID = null;
     private DegreeModule degreeModule = null;
@@ -465,7 +465,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
             final SortedSet<Degree> sortedDegrees = new TreeSet<Degree>(chainComparator);
             final BolonhaDegreeType bolonhaDegreeType = (selectedDegreeType == null || selectedDegreeType.equals(NO_SELECTION_STRING)) ? null : BolonhaDegreeType.valueOf(selectedDegreeType);
-            for (Degree degree : allDegrees) {
+            for (final Degree degree : allDegrees) {
                 if (degree.getBolonhaDegreeType() != null 
                         && (bolonhaDegreeType == null || degree.getBolonhaDegreeType() == bolonhaDegreeType)) {
                     sortedDegrees.add(degree);

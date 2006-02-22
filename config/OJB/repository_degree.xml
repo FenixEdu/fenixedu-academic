@@ -123,5 +123,12 @@
 			>
 		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
+	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="participatingAnyCurricularCourseCurricularRules"
+			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse"
+			>
+		<inverse-foreignkey field-ref="keyDegree"/>
+	</collection-descriptor>
 		
 </class-descriptor>

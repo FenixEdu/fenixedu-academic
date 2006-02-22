@@ -65,7 +65,11 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
             labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>("label.module", true));
+            if (getMinimum().intValue() == 1) {
+                labelList.add(new GenericPair<Object, Boolean>("label.module", true));
+            } else {
+                labelList.add(new GenericPair<Object, Boolean>("label.modules", true));
+            }
         } else {
             labelList.add(new GenericPair<Object, Boolean>("label.chooseFrom", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
@@ -90,6 +94,11 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
     public boolean evaluate(Class<? extends DomainObject> object) {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    protected void removeOwnParameters() {
+        // no domain parameters 
     }
 
 }

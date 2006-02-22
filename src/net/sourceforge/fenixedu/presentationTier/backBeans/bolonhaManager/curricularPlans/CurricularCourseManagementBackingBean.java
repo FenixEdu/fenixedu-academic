@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -31,6 +32,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -300,6 +302,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     
     public void setNameEn(String nameEn) {
         getViewState().setAttribute("nameEn", nameEn);
+    }
+    
+    public List<String> getRulesLabels() throws FenixFilterException, FenixServiceException {
+        final List<String> resultLabels = new ArrayList<String>();
+        for (final CurricularRule curricularRule : getCurricularCourse().getParticipatingCurricularRules()) {
+            resultLabels.add(CurricularRuleLabelFormatter.getLabel(curricularRule));
+        }
+        return resultLabels;
     }
     
     public String createCurricularCourse() throws FenixFilterException {        

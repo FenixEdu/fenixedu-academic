@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.util.LogicOperators;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -58,6 +59,58 @@ public class CurricularRulesManager {
             break;
         }
         return null;
+    }
+    
+    public static CurricularRule createCompositeRule(DegreeModule degreeModuleToApplyRule, LogicOperators logicOperator,
+            ExecutionPeriod begin, ExecutionPeriod end, CurricularRule ... curricularRules) {
+
+        for (final CurricularRule curricularRule : curricularRules) {
+            curricularRule.removeDegreeModuleToApplyRule();
+        }
+        return new CompositeRule(degreeModuleToApplyRule, begin, end, logicOperator, curricularRules);
+    }
+    
+    public static void editCurricularRule(CurricularRule curricularRule,
+            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            throws ExcepcaoPersistencia {
+        final CurricularRuleType curricularRuleTypeToEdit = curricularRule.getCurricularRuleType();
+
+        switch (curricularRuleTypeToEdit) {
+        case PRECEDENCY_APPROVED_DEGREE_MODULE:
+            editRestrictionDoneDegreeModule(curricularRule, parametersDTO, persistentObject);
+            break;
+
+        case PRECEDENCY_ENROLED_DEGREE_MODULE:
+            editRestrictionEnroledDegreeModule(curricularRule, parametersDTO, persistentObject);
+            break;
+
+        case CREDITS_LIMIT:
+            editCreditsLimit(curricularRule, parametersDTO, persistentObject);
+            break;
+
+        case DEGREE_MODULES_SELECTION_LIMIT:
+            editDegreeModulesSelectionLimit(curricularRule, parametersDTO, persistentObject);
+            break;
+
+        case ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR:
+            editEnrolmentToBeApprovedByCoordinator(curricularRule, parametersDTO, persistentObject);
+            break;
+
+        case PRECEDENCY_BETWEEN_DEGREE_MODULES:
+            editResctrictionBetweenDegreeModules(curricularRule, parametersDTO, persistentObject);
+            break;
+
+        case EXCLUSIVENESS:
+            editExclusiveness(curricularRule, parametersDTO, persistentObject);
+            break;
+
+        case ANY_CURRICULAR_COURSE:
+            editAnyCurricularCourse(curricularRule, parametersDTO, persistentObject);
+            break;
+
+        default:
+            break;
+        }
     }
 
     private static CurricularRule createAnyCurricularCourse(DegreeModule degreeModuleToApplyRule,
@@ -175,49 +228,6 @@ public class CurricularRulesManager {
         return new RestrictionDoneDegreeModule((CurricularCourse) degreeModuleToApplyRule,
                 doneDegreeModule, contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO(), begin,
                 end);
-    }
-
-    public static void editCurricularRule(CurricularRule curricularRule,
-            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
-            throws ExcepcaoPersistencia {
-        final CurricularRuleType curricularRuleTypeToEdit = curricularRule.getCurricularRuleType();
-
-        switch (curricularRuleTypeToEdit) {
-        case PRECEDENCY_APPROVED_DEGREE_MODULE:
-            editRestrictionDoneDegreeModule(curricularRule, parametersDTO, persistentObject);
-            break;
-
-        case PRECEDENCY_ENROLED_DEGREE_MODULE:
-            editRestrictionEnroledDegreeModule(curricularRule, parametersDTO, persistentObject);
-            break;
-
-        case CREDITS_LIMIT:
-            editCreditsLimit(curricularRule, parametersDTO, persistentObject);
-            break;
-
-        case DEGREE_MODULES_SELECTION_LIMIT:
-            editDegreeModulesSelectionLimit(curricularRule, parametersDTO, persistentObject);
-            break;
-
-        case ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR:
-            editEnrolmentToBeApprovedByCoordinator(curricularRule, parametersDTO, persistentObject);
-            break;
-
-        case PRECEDENCY_BETWEEN_DEGREE_MODULES:
-            editResctrictionBetweenDegreeModules(curricularRule, parametersDTO, persistentObject);
-            break;
-
-        case EXCLUSIVENESS:
-            editExclusiveness(curricularRule, parametersDTO, persistentObject);
-            break;
-
-        case ANY_CURRICULAR_COURSE:
-            editAnyCurricularCourse(curricularRule, parametersDTO, persistentObject);
-            break;
-
-        default:
-            break;
-        }
     }
 
     private static void editAnyCurricularCourse(CurricularRule curricularRule,

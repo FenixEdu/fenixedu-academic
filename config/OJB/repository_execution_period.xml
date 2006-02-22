@@ -193,5 +193,15 @@
 		name="enrolmentLogs" 
 		element-class-ref="net.sourceforge.fenixedu.domain.log.EnrolmentLog">
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>			
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="participatingBeginCurricularRules" 
+		element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule">
+		<inverse-foreignkey field-ref="keyBegin"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="participatingEndCurricularRules" 
+		element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule">
+		<inverse-foreignkey field-ref="keyEnd"/>
+	</collection-descriptor>
 </class-descriptor> 

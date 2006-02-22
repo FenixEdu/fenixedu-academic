@@ -15,11 +15,22 @@ public abstract class CurricularRule extends CurricularRule_Base {
         super();
         setOjbConcreteClass(getClass().getName());        
     }
-
+    
     public void delete() {
-        removeDegreeModuleToApplyRule();
+        removeOwnParameters();
+        removeCommonParameters();
         super.deleteDomainObject();
     }
+    
+    protected void removeCommonParameters() {
+        removeDegreeModuleToApplyRule();
+        removeBegin();
+        removeEnd();
+        removeParentCompositeRule();
+        removeContextCourseGroup();
+    }
+
+    protected abstract void removeOwnParameters();
 
     public boolean appliesToContext(Context context) {
         return this.appliesToCourseGroup(context);
@@ -27,6 +38,10 @@ public abstract class CurricularRule extends CurricularRule_Base {
     
     private boolean appliesToCourseGroup(Context context) {
         return (this.getContextCourseGroup() == null || this.getContextCourseGroup().equals(context.getCourseGroup()));
+    }
+    
+    public boolean isCompositeRule() {
+        return getCurricularRuleType() == null;
     }
     
     public abstract List<GenericPair<Object, Boolean>> getLabel();

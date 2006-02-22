@@ -57,5 +57,10 @@ public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByC
         // TODO Auto-generated method stub
         return false;
     }
+
+    @Override
+    protected void removeOwnParameters() {
+        // no domain parameters
+    }
     
 }

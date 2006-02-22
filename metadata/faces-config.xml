@@ -319,6 +319,12 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularRules.CurricularRulesManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
+	<managed-bean>
+		<description>CompositeRulesManagementBackingBean</description>
+		<managed-bean-name>CompositeRulesManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularRules.CompositeRulesManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	<!-- END: CurricularRules Management Beans -->
 	
 	<!-- BEGIN: OrganizationalStructure Managed Beans -->
@@ -1744,6 +1750,13 @@
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularRules/deleteCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularRules/createCompositeRule.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>setCurricularRules</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</to-view-id>

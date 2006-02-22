@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.curricularRules;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
@@ -41,27 +42,6 @@ public class Exclusiveness extends Exclusiveness_Base {
         setExclusiveDegreeModule(exclusiveDegreeModule);
         setContextCourseGroup(contextCourseGroup);
     }
-        
-    protected void deleteFromSuper() {
-        super.delete();
-    }
-    
-    @Override
-    public void delete() {
-        removeRuleFromCurrentExclusiveDegreeModule();
-        deleteFromSuper();
-    }
-
-    private void removeRuleFromCurrentExclusiveDegreeModule() {
-        for (final CurricularRule curricularRule : this.getExclusiveDegreeModule().getCurricularRules()) {
-            if (curricularRule.getCurricularRuleType() == this.getCurricularRuleType()) {
-                final Exclusiveness exclusiveness = (Exclusiveness) curricularRule;
-                if (exclusiveness.getExclusiveDegreeModule() == this.getDegreeModuleToApplyRule()) {
-                    exclusiveness.deleteFromSuper();
-                }
-            }
-        }
-    }
 
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
@@ -92,5 +72,24 @@ public class Exclusiveness extends Exclusiveness_Base {
         // TODO Auto-generated method stub
         return false;
     }
-    
+
+    @Override
+    protected void removeOwnParameters() {
+        removeRuleFromCurrentExclusiveDegreeModule();
+        removeExclusiveDegreeModule();
+    }
+
+    private void removeRuleFromCurrentExclusiveDegreeModule() {
+        final Iterator<CurricularRule> curricularRulesIterator = this.getExclusiveDegreeModule().getCurricularRulesIterator();
+        while (curricularRulesIterator.hasNext()) {
+            final CurricularRule curricularRule = curricularRulesIterator.next();
+            if (curricularRule.getCurricularRuleType() == this.getCurricularRuleType()) {
+                final Exclusiveness exclusiveness = (Exclusiveness) curricularRule;
+                curricularRulesIterator.remove();
+                exclusiveness.removeExclusiveDegreeModule();
+                exclusiveness.removeCommonParameters();
+                exclusiveness.deleteDomainObject();
+            }
+        }
+    }
 }

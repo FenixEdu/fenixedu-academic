@@ -9252,7 +9252,15 @@
         	<chain name="BolonhaManagerAuthorization"></chain>
         </filterChains>     
     </service>
-    
+    <service>
+    	<name>CreateCompositeRule</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompositeRule</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
     <service>
     	<name>ComputeCompetenceCourseStatistics</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCompetenceCourseStatistics</implementationClass>

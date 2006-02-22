@@ -27,4 +27,8 @@ public abstract class PrecedenceRule extends PrecedenceRule_Base {
                         && this.getCurricularPeriodOrder().equals(0)));
     }
 
+    @Override
+    protected void removeOwnParameters() {
+        removePrecedenceDegreeModule();
+    }
 }

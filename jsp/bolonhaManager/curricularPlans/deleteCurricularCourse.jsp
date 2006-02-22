@@ -24,6 +24,7 @@
 		<br/><br/>
 		<h:outputText style="font-weight: bold" value="#{bolonhaBundle['context']}: <br/>" escape="false"/>
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+		
 		<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">
 			<h:panelGroup rendered="#{context.idInternal == CurricularCourseManagement.contextIDToDelete}">								
 				<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
@@ -33,10 +34,24 @@
 				<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
 			</h:panelGroup>
 		</fc:dataRepeater>
-		<h:outputText value="</fieldset><br/>" escape="false"/>
 		
-		<h:outputText styleClass="success0" value="#{bolonhaBundle['deleteLastCurricularCourseContext']}<br/><br/>" escape="false"/>
-		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}<br/><hr>" escape="false"/>
+		<h:panelGroup rendered="#{!empty CurricularCourseManagement.rulesLabels}">
+			<h:outputText value="<br/><strong>#{bolonhaBundle['participating.curricularRules']}: </strong>" escape="false"/>
+			<h:outputText value="<ul>" escape="false"/>
+			<fc:dataRepeater value="#{CurricularCourseManagement.rulesLabels}" var="curricularRule">
+				<h:outputText value="<li>#{curricularRule}</li>" escape="false"/>
+			</fc:dataRepeater>
+			<h:outputText value="</ul>" escape="false"/>
+			<h:outputText value="<strong>#{bolonhaBundle['note']}:</strong> " escape="false"/>
+			<h:outputText value="#{bolonhaBundle['confirm.delete.participating.curricularRules']}" escape="false"/>
+		</h:panelGroup>
+		<h:outputText value="</fieldset><br/>" escape="false"/>
+
+		<h:outputText styleClass="success0" value="#{bolonhaBundle['deleteLastCurricularCourseContext']}<br/>" escape="false"/>
+		<h:outputText value="<br/>" escape="false"/>
+		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}<br/>" escape="false"/>
+		<h:outputText value="<br/><hr>" escape="false"/>
+		
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['yes']}"
 			 action="buildCurricularPlan" actionListener="#{CurricularCourseManagement.forceDeleteContext}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['no']}"

@@ -512,7 +512,16 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule">
 		<inverse-foreignkey field-ref="keyDegreeModuleToApplyRule"/>
 	</collection-descriptor>
-	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="participatingPrecedenceCurricularRules"
+			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule">
+		<inverse-foreignkey field-ref="keyPrecedenceDegreeModule"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="participatingExclusivenessCurricularRules"
+			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness">
+		<inverse-foreignkey field-ref="keyExclusiveDegreeModule"/>
+	</collection-descriptor>	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->

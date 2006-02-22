@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.util.StringFormatter;
@@ -152,6 +153,11 @@ public class CourseGroup extends CourseGroup_Base {
             }
         }
         return true;
+    }
+
+    @Override
+    protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
+        result.addAll(getParticipatingContextCurricularRules());
     }
 
 }

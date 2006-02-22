@@ -14,15 +14,6 @@ import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
 public class CompositeRule extends CompositeRule_Base {
     
-    /**
-     * This constructor should be used inside Composite Rule
-     */
-    protected CompositeRule(DegreeModule degreeModuleToApplyRule, LogicOperators compositeRuleType, CurricularRule... curricularRules) {
-        super();
-        checkCompositeRuleType(compositeRuleType, curricularRules);
-        init(degreeModuleToApplyRule, null, null, compositeRuleType, curricularRules);
-    }
-
     protected CompositeRule(DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin,
             ExecutionPeriod end, LogicOperators compositeRuleType,
             CurricularRule... curricularRules) {
@@ -64,22 +55,13 @@ public class CompositeRule extends CompositeRule_Base {
             curricularRule.setParentCompositeRule(this);
         }
     }
-
-    @Override
-    public void delete() {
-        removeDegreeModuleToApplyRule();
-        for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
-        super.deleteDomainObject();
-    }
-
+    
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
-
         if (getCompositeRuleType().equals(LogicOperators.NOT)) {
             return getCurricularRules().get(0).getLabel();
         } else {
-
-            String operator = "";
+            final String operator;
             if (getCompositeRuleType().equals(LogicOperators.AND)) {
                 operator = "label.and";
             } else if (getCompositeRuleType().equals(LogicOperators.OR)) {
@@ -87,8 +69,7 @@ public class CompositeRule extends CompositeRule_Base {
             } else {
                 throw new DomainException("unsupported.composite.rule");
             }
-
-            List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
+            final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
             final Iterator<CurricularRule> curricularRulesIterator = getCurricularRules().listIterator();
             while (curricularRulesIterator.hasNext()) {
                 labelList.addAll(curricularRulesIterator.next().getLabel());
@@ -98,7 +79,6 @@ public class CompositeRule extends CompositeRule_Base {
                     labelList.add(new GenericPair<Object, Boolean>(" ", false));
                 }
             }
-
             return labelList;
         }
     }
@@ -106,27 +86,29 @@ public class CompositeRule extends CompositeRule_Base {
     @Override
     public boolean evaluate(Class<? extends DomainObject> object) {
         boolean result = true;
-        if (getCompositeRuleType().equals(LogicOperators.NOT)) {
-            result = !getCurricularRules().get(0).evaluate(object);
-        } else if (getCompositeRuleType().equals(LogicOperators.AND)) {
+        switch (getCompositeRuleType()) {
+
+        case NOT:
+            return !getCurricularRules().get(0).evaluate(object);
+        
+        case AND:
             for (final CurricularRule curricularRule : getCurricularRules()) {
                 result &= curricularRule.evaluate(object);
-                if (!result) {
-                    return false;
-                }
+                if (!result) { break; }
             }
-        } else if (getCompositeRuleType().equals(LogicOperators.OR)) {
+            return result;
+        
+        case OR:
             for (final CurricularRule curricularRule : getCurricularRules()) {
                 result |= curricularRule.evaluate(object);
-                if (result) {
-                    return true;
-                }
+                if (result) { break; }
             }
-        } else {
+            return result;
+
+        default:
             throw new DomainException("unsupported.composite.rule");
         }
-        return result;
-    }
+    }        
 
     @Override
     public boolean appliesToContext(Context context) {
@@ -138,4 +120,8 @@ public class CompositeRule extends CompositeRule_Base {
         return true;
     }
 
+    @Override
+    protected void removeOwnParameters() {
+        for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
+    }
 }

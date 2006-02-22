@@ -146,6 +146,12 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         }
         return labelList;
     }
+    
+    @Override
+    protected void removeOwnParameters() {
+        removeDegree();
+        removeDepartmentUnit();
+    }
 
     @Override
     public boolean evaluate(Class< ? extends DomainObject> object) {
@@ -158,5 +164,4 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
          */
         return false;
     }
-    
 }
