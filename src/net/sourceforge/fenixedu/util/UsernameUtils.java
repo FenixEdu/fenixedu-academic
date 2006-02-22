@@ -105,7 +105,7 @@ public class UsernameUtils extends FenixUtil {
                 return "B" + person.getGrantOwner().getNumber();
             }
         } else if (roleType.equals(RoleType.PROJECTS_MANAGER) || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
-            return "G" + person.getNumeroDocumentoIdentificacao();
+            return "G" + person.getIdInternal();
         } else if (roleType.equals(RoleType.PERSON)) {
             return "P" + person.getIdInternal();
         }
