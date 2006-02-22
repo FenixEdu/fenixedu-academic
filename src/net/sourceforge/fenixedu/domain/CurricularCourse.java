@@ -403,7 +403,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return curriculum;
     }
 	
-	public List getExecutionCoursesByExecutionPeriod (final ExecutionPeriod executionPeriod) {
+	public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod (final ExecutionPeriod executionPeriod) {
 
 		return (List)CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
 
