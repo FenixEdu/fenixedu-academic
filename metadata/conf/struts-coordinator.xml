@@ -315,7 +315,15 @@
                  dynamic="true">
         	<form-property name="filterBy" type="java.lang.String" />
 			<form-property name="filterWithValue" type="java.lang.String" />
-		</form-bean>	
+		</form-bean>
+
+		<form-bean name="weeklyWorkLoadForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">	
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionPeriodID" type="java.lang.String" />
+			<form-property name="executionCourseID" type="java.lang.String" />
+			<form-property name="degreeCurricularPlanID" type="java.lang.String" />
+		</form-bean>
+
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -810,6 +818,16 @@
 			<forward name="Prepare" path="/printAllCandidatesList.jsp"/>
 			<forward name="PrintList" path="/candidateListTemplate.jsp"/>
 		</action>
+
+  		<action path="/weeklyWorkLoad"
+  			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.WeeklyWorkLoadDA"
+  			name="weeklyWorkLoadForm"
+  			scope="request"
+  			input="/weeklyWorkLoad.do?method=prepare"
+  			parameter="method"
+  			>
+  			<forward name="showWeeklyWorkLoad" path="show-weekly-work-load"/>
+  		</action>
 
     </action-mappings>
     

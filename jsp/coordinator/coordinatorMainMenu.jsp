@@ -117,7 +117,14 @@
 			<li>
 				<html:link page="<%= "/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent&amp;degreeCurricularPlanID=" + degreeCurricularPlanID + "&amp;executionDegreeId=" + executionDegreeID %>">
 			    <bean:message key="link.student.enrollment" /></html:link>
-			</li>			
+			</li>
+<%--
+			<li>
+				<html:link page="<%= "/weeklyWorkLoad.do?method=prepare&amp;page=0&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+				    <bean:message key="link.weekly.work.load"/>
+				</html:link>			
+			</li>
+--%>
 		</ul>
 		<br /><br />
 	</logic:notEqual> 
