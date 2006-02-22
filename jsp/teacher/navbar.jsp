@@ -34,6 +34,7 @@
 		<li><html:link page="/evaluation/evaluationIndex.faces" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.evaluation"/></html:link></li>
 		<li><html:link page="/testsManagement.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.testsManagement"/></html:link></li>
 		<li><html:link page="/viewExecutionCourseProjects.do?method=prepareViewExecutionCourseProjects" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.groupsManagement"/></html:link></li>
+		<br/>
 <!--
 		<li>
 			<html:link page='<%= "/weeklyWorkLoad.do?method=prepare&amp;executionCourseID=" + executionCourseID.toString() %>'>
