@@ -5910,7 +5910,7 @@
             net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ShowAvailableCurricularCourses</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
-			<chain name="EnrollmentOrCoordinatorAuthorization" />
+			<chain name="EnrollmentAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -6076,7 +6076,9 @@
 		<implementationClass>
             net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</implementationClass>
 		<isTransactional>True</isTransactional>
-		<filterChains />
+		<filterChains>
+			<chain name="EnrolmentAuthorizationWithoutEnrollmentPeriod" />
+		</filterChains>
 	</service>
 	<service>
 		<name>UnEnrollStudentFromShift</name>
