@@ -26,6 +26,7 @@ width: auto;
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularYearID' name='curricularYearID' type='hidden' value='#{CurricularCourseManagement.curricularYearID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularSemesterID' name='curricularSemesterID' type='hidden' value='#{CurricularCourseManagement.curricularSemesterID}'/>"/>
+		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
 		
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 		

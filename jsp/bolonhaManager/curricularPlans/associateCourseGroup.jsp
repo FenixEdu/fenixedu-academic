@@ -20,7 +20,7 @@
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'/>"/>		
 		<h:outputText escape="false" value="<input id='parentCourseGroupID' name='parentCourseGroupID' type='hidden' value='#{CourseGroupManagement.parentCourseGroupID}'/>"/>
-
+		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
 
 		<h:outputText value="<p>#{bolonhaBundle['courseGroupAssociateTo']}:" escape="false"/>
 		<h:outputText value="<strong>#{CourseGroupManagement.parentName}</strong>" escape="false"/>

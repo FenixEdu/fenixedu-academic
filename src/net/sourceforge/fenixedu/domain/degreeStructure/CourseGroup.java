@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
@@ -53,23 +54,27 @@ public class CourseGroup extends CourseGroup_Base {
         dcp.append(tab);
         dcp.append("[CG ").append(this.getIdInternal()).append("] ").append(this.getName()).append("\n");
 
-        for (Context context : this.getCourseGroupContexts()) {
+        for (Context context : this.getSortedContextsWithCurricularCourses()) {
+            context.getDegreeModule().print(dcp, tab, context);
+        }
+        for (Context context : this.getSortedContextsWithCourseGroups()) {
             context.getDegreeModule().print(dcp, tab, context);
         }
     }
 
-    public List<Context> getContextsWithCurricularCourses() {
+    public List<Context> getSortedContextsWithCurricularCourses() {
         List<Context> result = new ArrayList<Context>();
         for (Context context : this.getCourseGroupContexts()) {
             if (context.getDegreeModule() instanceof CurricularCourse) {
                 result.add(context);
             }
         }
-
+        
+        Collections.sort(result);        
         return result;
     }
-
-    public List<Context> getContextsWithCourseGroups() {
+    
+    public List<Context> getSortedContextsWithCourseGroups() {
         List<Context> result = new ArrayList<Context>();
         for (Context context : this.getCourseGroupContexts()) {
             if (context.getDegreeModule() instanceof CourseGroup) {
@@ -77,6 +82,7 @@ public class CourseGroup extends CourseGroup_Base {
             }
         }
 
+        Collections.sort(result);        
         return result;
     }
 
@@ -153,6 +159,31 @@ public class CourseGroup extends CourseGroup_Base {
             }
         }
         return true;
+    }
+    
+    public void orderChild(Context contextToOrder, int position) {
+        List<Context> newSort = null;
+        if (contextToOrder.getDegreeModule() instanceof CurricularCourse) {
+            newSort = this.getSortedContextsWithCurricularCourses(); 
+        } else {
+            newSort = this.getSortedContextsWithCourseGroups();
+        }
+        
+        if (newSort.size() <= 1 || position < 0 || position > newSort.size()) {
+            return;
+        }
+        
+        newSort.remove(contextToOrder);
+        newSort.add(position, contextToOrder);    
+        
+        for (int newOrder = 0; newOrder < newSort.size() ; newOrder++) {
+            Context context = newSort.get(newOrder);
+            
+            if (context == contextToOrder && newOrder != position) {
+                throw new DomainException("wrong.order.algorithm");
+            }
+            context.setOrder(newOrder);
+        }
     }
 
     @Override

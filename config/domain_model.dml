@@ -378,6 +378,7 @@ class net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias extend
 
 
 class net.sourceforge.fenixedu.domain.degreeStructure.Context extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer order;
 	Integer keyCurricularSemester;
 	Integer keyDegreeModule;
 	Integer keyCourseGroup;

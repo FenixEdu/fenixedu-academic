@@ -14,38 +14,36 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
  */
 public class CurricularPeriodLabelFormatter {
 
-    public static String getLabel(CurricularPeriod curricularPeriod) {
+    public static String getLabel(CurricularPeriod curricularPeriod, boolean abbreviated) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources");
-        return getLabel(curricularPeriod, bundle);
+        return getLabel(curricularPeriod, bundle, abbreviated);
     }
 
-    public static String getLabel(CurricularPeriod curricularPeriod, Locale locale) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources",
-                locale);
-        return getLabel(curricularPeriod, bundle);
+    public static String getLabel(CurricularPeriod curricularPeriod, Locale locale, boolean abbreviated) {
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources", locale);
+        return getLabel(curricularPeriod, bundle, abbreviated);
     }
 
-    public static String getFullLabel(CurricularPeriod curricularPeriod) {
+    public static String getFullLabel(CurricularPeriod curricularPeriod, boolean abbreviated) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources");
-        return getFullLabel(curricularPeriod, bundle);
+        return getFullLabel(curricularPeriod, bundle, abbreviated);
     }
 
-    public static String getFullLabel(CurricularPeriod curricularPeriod, Locale locale) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources",
-                locale);
-        return getFullLabel(curricularPeriod, bundle);
+    public static String getFullLabel(CurricularPeriod curricularPeriod, Locale locale, boolean abbreviated) {
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources", locale);
+        return getFullLabel(curricularPeriod, bundle, abbreviated);
     }
 
-    private static String getLabel(CurricularPeriod curricularPeriod, ResourceBundle bundle) {
+    private static String getLabel(CurricularPeriod curricularPeriod, ResourceBundle bundle, boolean abbreviated) {
         StringBuilder result = new StringBuilder();
-        buildLabel(curricularPeriod, bundle, result);
+        buildLabel(curricularPeriod, bundle, result, abbreviated);
         return result.toString();
     }
 
-    private static String getFullLabel(CurricularPeriod curricularPeriod, final ResourceBundle bundle) {
+    private static String getFullLabel(CurricularPeriod curricularPeriod, final ResourceBundle bundle, boolean abbreviated) {
         StringBuilder result = new StringBuilder();
         while (curricularPeriod.hasParent()) {
-            buildLabel(curricularPeriod, bundle, result);
+            buildLabel(curricularPeriod, bundle, result, abbreviated);
             
             curricularPeriod = (CurricularPeriod) curricularPeriod.getParent();
             if (curricularPeriod.hasParent()) {
@@ -55,11 +53,10 @@ public class CurricularPeriodLabelFormatter {
         return result.toString();
     }
 
-    private static void buildLabel(CurricularPeriod curricularPeriod, ResourceBundle bundle,
-            StringBuilder result) {
-        result.insert(0, curricularPeriod.getOrder());
+    private static void buildLabel(CurricularPeriod curricularPeriod, ResourceBundle bundle, StringBuilder result, boolean abbreviated) {
+        result.insert(0, bundle.getString((abbreviated) ? curricularPeriod.getPeriodType().getAbbreviatedName() : curricularPeriod.getPeriodType().name()));
         result.insert(0, " ");
-        result.insert(0, bundle.getString(curricularPeriod.getPeriodType().name()));        
+        result.insert(0, curricularPeriod.getOrder());        
     }
 
 }

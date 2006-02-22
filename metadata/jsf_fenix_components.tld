@@ -1367,29 +1367,35 @@
 			<description>Degree Curricular Plan to be rendered. Type: net.sourceforge.fenixedu.domain.DegreeCurricularPlan</description>
 		</attribute>
 		<attribute>
-			<name>onlyStructure</name>
-			<required>true</required>
-			<rtexprvalue>false</rtexprvalue>
-			<description>Indicates if only course groups should be rendered. Type: java.lang.Boolean</description>
-		</attribute>
-		<attribute>
 			<name>toEdit</name>
-			<required>true</required>
-			<rtexprvalue>false</rtexprvalue>
-			<description>Indicates if edit option is to be available. Type: java.lang.Boolean</description>
-		</attribute>
-		<attribute>
-			<name>organizeBy</name>
 			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<description>Groups or Years. Type: java.lang.String</description>
+			<rtexprvalue>false</rtexprvalue>
+			<description>Indicates if edit options are to be available. Type: java.lang.Boolean. Default: false</description>
 		</attribute>
 		<attribute>
 			<name>showRules</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<description>Render rules and corresponding options. Type: java.lang.String</description>
+			<description>Render rules and corresponding options. Type: java.lang.Boolean. Default: false</description>
 		</attribute>		
+		<attribute>
+			<name>organizeBy</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>Groups or Years. Type: java.lang.String. Default: groups</description>
+		</attribute>
+		<attribute>
+			<name>onlyStructure</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>Indicates if only course groups should be rendered. Type: java.lang.Boolean. Default: false</description>
+		</attribute>
+		<attribute>
+			<name>toOrder</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>Indicates if order options are to be available. Valid if onlyStructure is true. Type: java.lang.Boolean. Default: false</description>
+		</attribute>
 	</tag>
   <tag>
 		<name>breadCrumbs</name>

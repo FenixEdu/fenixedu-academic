@@ -63,7 +63,7 @@ public class UIDegreeModule extends UIInput {
         if (this.degreeModule instanceof CurricularCourse) {
             new UICurricularCourse(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs).encodeBegin(facesContext);
         } else if (this.degreeModule instanceof CourseGroup) {
-            new UICourseGroup(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, Boolean.FALSE).encodeBegin(facesContext);
+            new UICourseGroup(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, Boolean.FALSE, Boolean.FALSE).encodeBegin(facesContext);
         }
     }
     
@@ -89,10 +89,12 @@ public class UIDegreeModule extends UIInput {
         return facesContext.getViewRoot().getLocale();
     }
 
-    protected void encodeLink(String href, String bundleKey) throws IOException {
+    protected void encodeLink(String href, String ... bundleKeys) throws IOException {
         writer.startElement("a", this);
         writer.writeAttribute("href", href, null);
-        writer.write(this.getBundleValue("BolonhaManagerResources", bundleKey));
+        for (String bundleKey : bundleKeys) {
+            writer.write(this.getBundleValue("BolonhaManagerResources", bundleKey));    
+        }
         writer.endElement("a");
     }
 

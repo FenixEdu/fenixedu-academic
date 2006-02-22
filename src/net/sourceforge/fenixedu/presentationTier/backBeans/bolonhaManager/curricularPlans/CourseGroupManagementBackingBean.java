@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curri
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
@@ -166,24 +167,50 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readCourseGroups() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
         final DegreeModule degreeModule = getDegreeCurricularPlan().getDegreeModule();
         if (degreeModule instanceof CourseGroup) {
-            collectChildCourseGroups(result, (CourseGroup) degreeModule, "");
-}
+            Set<CourseGroup> allParents = getCourseGroup(getParentCourseGroupID()).getAllParentCourseGroups();
+            collectChildCourseGroups(result, (CourseGroup) degreeModule, "", allParents);
+        }
+        
+        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
+
         return result;
     }
-    private void collectChildCourseGroups(final List<SelectItem> result, final CourseGroup courseGroup,
-            final String previousCourseGroupName) throws FenixFilterException, FenixServiceException {
+    
+    private void collectChildCourseGroups(final List<SelectItem> result, final CourseGroup courseGroup, final String previousCourseGroupName, Set<CourseGroup> allParents) throws FenixFilterException, FenixServiceException {
         String currentCourseGroupName = "";
-        if (!courseGroup.isRoot() && getCourseGroup(getParentCourseGroupID()) != courseGroup) {
-            currentCourseGroupName = ((previousCourseGroupName.length() == 0) ? "" : (previousCourseGroupName + " > "))
-                    + courseGroup.getName();
-            result.add(new SelectItem(courseGroup.getIdInternal(), currentCourseGroupName));
+        if (!courseGroup.isRoot()) {
+            currentCourseGroupName = previousCourseGroupName + courseGroup.getName();
+            if (getCourseGroup(getParentCourseGroupID()) != courseGroup && !allParents.contains(courseGroup)) {
+                result.add(new SelectItem(courseGroup.getIdInternal(), currentCourseGroupName));
+            }
         }
-        for (final Context context : courseGroup.getContextsWithCourseGroups()) {
-            collectChildCourseGroups(result, (CourseGroup) context.getDegreeModule(),
-                    currentCourseGroupName);
+        for (final Context context : courseGroup.getSortedContextsWithCourseGroups()) {
+            collectChildCourseGroups(result, (CourseGroup) context.getDegreeModule(), currentCourseGroupName + ((courseGroup.isRoot()) ? "" : " > "), allParents);
         }
     }
+    
+    public Integer getPosition() {
+        return getAndHoldIntegerParameter("position");
+    }
+
+    public String orderCourseGroup() {
+        try {
+            Object args[] = { getContextID(), getPosition() };
+            ServiceUtils.executeService(getUserView(), "OrderDegreeModule", args);
+            addInfoMessage(bolonhaResources.getString("courseGroupMoved"));
+            return "editCurricularPlanStructure";
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+            return "editCurricularPlanStructure";
+        } catch (DomainException e) {
+            this.addErrorMessage(domainResources.getString(e.getMessage()));
+        } catch (Exception e) {
+            this.addErrorMessage(bolonhaResources.getString("general.error"));
+            return "editCurricularPlanStructure";
+        }        
+        return "";
+    }
+    
 }

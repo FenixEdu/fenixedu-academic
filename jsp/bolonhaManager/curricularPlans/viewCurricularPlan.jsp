@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/ScientificCouncilResources" var="bolonhaBundle"/>
+	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
 	<h:outputText value="<i>#{CurricularCourseManagement.degreeCurricularPlan.name}" escape="false"/>
@@ -25,23 +25,58 @@
 		<h:outputText value="<br/><i>#{bolonhaBundle['label.empty.curricularPlanGroup.members']}</i><br/>" escape="false" />
 	</h:panelGroup>
 
-	<h:outputText value="<br/><br/>#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
-	<h:outputLink value="viewCurricularPlan.faces">
+	<h:outputLink value="viewCurricularPlanStructure.faces">
+		<h:outputFormat value="<br/><br/>#{bolonhaBundle['view.param']}" escape="false">
+			<f:param value="#{bolonhaBundle['curricularPlan.structure']}"/>
+		</h:outputFormat>
+		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
+		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>		
+	</h:outputLink>
+
+	<h:outputText value="<br/>#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
+	<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'years'}">
 		<h:outputText value="#{bolonhaBundle['groups']}" />
 		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 		<f:param name="organizeBy" value="groups"/>
-		<f:param name="action" value="view"/>		
+		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+		<f:param name="action" value="view"/>
 	</h:outputLink>
+	<h:outputText value="#{bolonhaBundle['groups']}" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}"/>
 	<h:outputText value=" , " escape="false"/>
-	<h:outputLink value="viewCurricularPlan.faces">
+	<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}">
 		<h:outputText value="#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}" />
 		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 		<f:param name="organizeBy" value="years"/>
+		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 		<f:param name="action" value="view"/>
 	</h:outputLink>
+	<h:outputText value="#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}" rendered="#{CurricularCourseManagement.organizeBy == 'years'}"/>
+
+	<h:outputText value="<br/>#{bolonhaBundle['curricularRules']}: " escape="false"/>
+	<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.showRules == 'false'}">
+		<h:outputText value="#{bolonhaBundle['show']}" />
+		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
+		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+		<f:param name="showRules" value="true"/>
+		<f:param name="action" value="view"/>		
+	</h:outputLink>
+	<h:outputText value="#{bolonhaBundle['show']}" rendered="#{CurricularCourseManagement.showRules == 'true'}"/>
+	<h:outputText value=" , " escape="false"/>
+	<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.showRules == 'true'}">
+		<h:outputText value="#{bolonhaBundle['hide']}" />
+		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
+		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+		<f:param name="showRules" value="false"/>
+		<f:param name="action" value="view"/>		
+	</h:outputLink>
+	<h:outputText value="#{bolonhaBundle['hide']}" rendered="#{CurricularCourseManagement.showRules == 'false'}"/>
 
 	<h:outputText value="<br/><br/>" escape="false"/>
-	<fc:degreeCurricularPlanRender dcp="#{CurricularCourseManagement.degreeCurricularPlan}" onlyStructure="false" toEdit="false" organizeBy="<%=request.getParameter("organizeBy")%>"/>
+	<fc:degreeCurricularPlanRender 
+		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
+		organizeBy="<%=request.getParameter("organizeBy")%>"
+		showRules="<%=request.getParameter("showRules")%>"/>
 
 	<h:outputText value="<p>" escape="false"/>
 	<h:form>

@@ -148,15 +148,35 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     }
 
     public String getLabel() {
-        return CurricularPeriodLabelFormatter.getLabel(this);
+        return CurricularPeriodLabelFormatter.getLabel(this, false);
     }
     
     public String getFullLabel() {
-        return CurricularPeriodLabelFormatter.getFullLabel(this);
+        return CurricularPeriodLabelFormatter.getFullLabel(this, false);
     }
 
     public int compareTo(CurricularPeriod o) {
-        return this.getOrder().compareTo(o.getOrder());
+        return this.getFullWeight().compareTo(o.getFullWeight());
+    }
+
+    private Float getWeight() {
+        float periodTypeWeight = (this.getPeriodType() == null) ? 0 : this.getPeriodType().getWeight();
+        float periodOrder = (this.getOrder() == null) ? 0 : this.getOrder();
+        return periodTypeWeight * periodOrder;
+    }
+
+    private Float getFullWeight() {
+        return this.getWeight() + this.collectParentsWeight(this);
+    }
+
+    private Float collectParentsWeight(CurricularPeriod period) {
+        Float result = Float.valueOf(0);
+        
+        if (period.hasParent()) {
+            result = period.getParent().getWeight() + collectParentsWeight(period.getParent());
+        }
+        
+        return result;
     }
 
     private static class CurricularPeriodParentChildsListener extends dml.runtime.RelationAdapter<CurricularPeriod,CurricularPeriod> {

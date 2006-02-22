@@ -9,34 +9,22 @@
 	
 	<h:outputText value="<em>#{CurricularCourseManagement.degreeCurricularPlan.name}" escape="false"/>
 	<h:outputText value=" (#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</em>" escape="false"/>
-	<h:outputFormat value="<h2>#{bolonhaBundle['edit.curricularPlan.structure']}</h2>" escape="false"/>
+	<h:outputFormat value="<h2>#{bolonhaBundle['view.param']}</h2>" escape="false">
+		<f:param value="#{bolonhaBundle['curricularPlan.structure']}"/>
+	</h:outputFormat>
 
-<%-- 
-	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeModule.courseGroupContexts}">
-		<h:outputText value="#{bolonhaBundle['manage.groups']}" />
-		<h:outputText value=" , " escape="false"/>
-		<h:outputLink value="orderCurricularPlanStructure.faces">
-			<h:outputText value="#{bolonhaBundle['order.groups']}" />
-			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
-		</h:outputLink>
-	</h:panelGroup>
---%>
-	<h:outputText value="<p>" escape="false"/>
-	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
-	<h:outputText value="</p><br/>" escape="false"/>
-	
 	<fc:degreeCurricularPlanRender 
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
-		onlyStructure="true" 
-		toEdit="true" 
-		toOrder="false"/>
+		onlyStructure="true"/>
 	
 	<h:outputText value="<br/><p>" escape="false"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
+		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularCourseManagement.showRules}'/>"/>
+
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['return']}"
-			action="buildCurricularPlan"/>
+			action="viewCurricularPlan"/>
 	</h:form>
 	<h:outputText value="</p>" escape="false"/>
 </ft:tilesView>

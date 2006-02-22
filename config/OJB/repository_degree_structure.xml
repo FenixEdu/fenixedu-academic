@@ -162,6 +162,11 @@
 		autoincrement="true"
 	/>
 	<field-descriptor
+		name="order"
+		column="CHILD_ORDER"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
 		name="keyDegreeModule"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"

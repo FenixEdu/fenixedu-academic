@@ -72,6 +72,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public String getAction() {
         return getAndHoldStringParameter("action");
     }
+
+    public String getShowRules() {
+        return getAndHoldStringParameter("showRules");
+    }
+    
+    public String getOrganizeBy() {
+        return getAndHoldStringParameter("organizeBy");
+    }
     
     public Integer getContextID() {
         return (contextID == null) ? (contextID = getAndHoldIntegerParameter("contextID")) : contextID;
@@ -555,7 +563,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                     + courseGroup.getName();
             result.add(new SelectItem(courseGroup.getIdInternal(), currentCourseGroupName));
         }
-        for (final Context context : courseGroup.getContextsWithCourseGroups()) {
+        for (final Context context : courseGroup.getSortedContextsWithCourseGroups()) {
             collectChildCourseGroups(result, (CourseGroup) context.getDegreeModule(),
                     currentCourseGroupName);
         }

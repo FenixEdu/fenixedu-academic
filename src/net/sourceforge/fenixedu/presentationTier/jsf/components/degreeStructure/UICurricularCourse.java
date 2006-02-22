@@ -51,7 +51,7 @@ public class UICurricularCourse extends UIDegreeModule {
         buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
         buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S] ");
         buffer.append(this.degreeModule.getName());
-        //System.out.println(buffer.toString());
+        System.out.println(buffer.toString());
 
         this.facesContext = facesContext;
         this.writer = facesContext.getResponseWriter();
@@ -67,7 +67,9 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
         writer.startElement("a", this);
         String action = "&action=" + ((this.toEdit) ? "build" : (String) this.facesContext.getExternalContext().getRequestParameterMap().get("action")); 
-        writer.writeAttribute("href", "viewCurricularCourse.faces?curricularCourseID=" + this.degreeModule.getIdInternal() + action, null);
+        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
+        String showRules = "&showRules=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("showRules");        
+        writer.writeAttribute("href", "viewCurricularCourse.faces?curricularCourseID=" + this.degreeModule.getIdInternal() + action + organizeBy + showRules, null);
         if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
             writer.append(this.degreeModule.getName());    
         } else {
@@ -78,10 +80,10 @@ public class UICurricularCourse extends UIDegreeModule {
         
         writer.startElement("td", this);
         writer.writeAttribute("class", "smalltxt", null);
-        writer.writeAttribute("align", "center", null);
         if (!byYears) {
             //writer.writeAttribute("style", "width: 10em;", null);
-            writer.append(CurricularPeriodLabelFormatter.getFullLabel((CurricularPeriod)previousContext.getCurricularPeriod(), getLocale()));
+            writer.writeAttribute("align", "center", null);
+            writer.append(CurricularPeriodLabelFormatter.getFullLabel((CurricularPeriod)previousContext.getCurricularPeriod(), getLocale(), true));
         } else {
             writer.append(previousContext.getCourseGroup().getName());
         }
@@ -122,9 +124,10 @@ public class UICurricularCourse extends UIDegreeModule {
             writer.endElement("td");
 
             writer.startElement("td", this);
+            writer.writeAttribute("class", "smalltxt", null);
             writer.writeAttribute("class", "aright", null);
             //writer.writeAttribute("style", "width: 7em;", null);
-            writer.append(this.getBundleValue("BolonhaManagerResources", "credits")).append(" ");
+            writer.append(this.getBundleValue("BolonhaManagerResources", "credits.abbreviation")).append(" ");
             writer.append(((CurricularCourse)this.degreeModule).getEctsCredits().toString());
         } else {
             writer.append("&nbsp;");
@@ -148,11 +151,12 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
         writer.writeAttribute("align", "right", null);
         writer.writeAttribute("style", "width: 9em;", null);
+        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
         encodeLink("editCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal(), "edit");
+                .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal() + organizeBy, "edit");
         writer.append(" , ");
         encodeLink("deleteCurricularCourseContext.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal(), "delete");
+                .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal() + organizeBy, "delete");
         writer.endElement("td");
     }
 
@@ -160,8 +164,9 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
         writer.writeAttribute("align", "right", null);
         writer.writeAttribute("style", "width: 9em;", null);
+        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
         encodeLink("../curricularRules/createCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&degreeModuleID=" + this.degreeModule.getIdInternal(), "setCurricularRule");
+                .get("degreeCurricularPlanID") + "&degreeModuleID=" + this.degreeModule.getIdInternal() + organizeBy, "setCurricularRule");
         writer.endElement("td");
     }
 

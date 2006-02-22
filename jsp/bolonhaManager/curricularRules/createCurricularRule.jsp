@@ -19,6 +19,7 @@
 		<fc:viewState binding="#{CurricularRulesManagement.viewState}"/>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularRulesManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='degreeModuleID' name='degreeModuleID' type='hidden' value='#{CurricularRulesManagement.degreeModuleID}'/>"/>
+		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
 		
 		<h:outputText value="<p><strong>#{bolonhaBundle['degreeModule.to.apply.rule']}:</strong> " escape="false"/>
 		<h:outputText value="<span class='attention'>#{CurricularRulesManagement.degreeModule.name}</span><p/>" escape="false"/>

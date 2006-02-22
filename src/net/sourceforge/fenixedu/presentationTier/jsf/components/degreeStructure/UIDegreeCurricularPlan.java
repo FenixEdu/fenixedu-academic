@@ -25,11 +25,10 @@ public class UIDegreeCurricularPlan extends UIInput {
 
     protected static final int ROOT_DEPTH = -1;
 
-    private Boolean toEdit;
-    private Boolean showRules;
+    private boolean toEdit;
+    private boolean showRules;
 
     private FacesContext facesContext;
-
     private ResponseWriter writer;
 
     public UIDegreeCurricularPlan() {
@@ -48,21 +47,33 @@ public class UIDegreeCurricularPlan extends UIInput {
 
         final DegreeCurricularPlan dcp = (DegreeCurricularPlan) this.getAttributes().get("dcp");
         if (!dcp.getCurricularStage().equals(CurricularStage.OLD)) {
-            final Boolean onlyStructure = this.getBooleanAttribute("onlyStructure");
-            this.toEdit = this.getBooleanAttribute("toEdit");
-            final String organizeBy = (String) this.getAttributes().get("organizeBy");
+            this.toEdit = (this.getBooleanAttribute("toEdit") != null) ? (Boolean) this.getBooleanAttribute("toEdit") : Boolean.FALSE;
             this.showRules = (this.getBooleanAttribute("showRules") != null) ? (Boolean) this.getBooleanAttribute("showRules") : Boolean.FALSE;
+            final String organizeBy = (this.getAttributes().get("organizeBy") != null) ? (String) this.getAttributes().get("organizeBy") : "groups";
+            final Boolean onlyStructure = (this.getBooleanAttribute("onlyStructure") != null) ? (Boolean) this.getBooleanAttribute("onlyStructure") : Boolean.FALSE;
+            final Boolean toOrder = (this.getBooleanAttribute("toOrder") != null) ? (Boolean) this.getBooleanAttribute("toOrder") : Boolean.FALSE;
 
-            if (organizeBy != null && organizeBy.equalsIgnoreCase("years")) {
+            if (incorrectUseOfComponent(organizeBy, onlyStructure, toOrder)) {
+                throw new IOException("incorrect.component.usage");
+            }
+            
+            if (organizeBy.equalsIgnoreCase("years")) {
                 encodeByYears(facesContext, dcp);
             } else {
                 StringBuilder dcpBuffer = new StringBuilder();
                 dcpBuffer.append("[DCP ").append(dcp.getIdInternal()).append("] ").append(dcp.getName());
-                //System.out.println(dcpBuffer);
+                System.out.println(dcpBuffer);
 
-                new UICourseGroup(dcp.getDegreeModule(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure).encodeBegin(facesContext);
+                new UICourseGroup(dcp.getDegreeModule(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder).encodeBegin(facesContext);
             }
         }
+    }
+
+    private boolean incorrectUseOfComponent(String organizeBy, Boolean onlyStructure, Boolean toOrder) {
+        return (
+                (onlyStructure && (showRules || organizeBy.equals("years")))
+                || (toOrder && (!onlyStructure || !toEdit))
+                );
     }
 
     private Boolean getBooleanAttribute(String attributeName) {
@@ -93,31 +104,26 @@ public class UIDegreeCurricularPlan extends UIInput {
     }
 
     private void encodeEmptyCurricularPlanInfo() throws IOException {
+        encodeInfoTable("empty.curricularPlan");
+    }
+
+    private void encodeEmptyDegreeStructureInfo() throws IOException {
+        encodeInfoTable("empty.degreeStructure");
+    }
+    
+    private void encodeInfoTable(String info) throws IOException {
         writer.startElement("table", this);
         writer.startElement("tr", this);
         writer.startElement("td", this);
         writer.writeAttribute("align", "center", null);
         writer.startElement("i", this);
-        writer.append(this.getBundleValue("BolonhaManagerResources", "empty.curricularPlan"));
+        writer.append(this.getBundleValue("BolonhaManagerResources", info));
         writer.endElement("i");
         writer.endElement("td");
         writer.endElement("tr");
         writer.endElement("table");
     }
 
-    private void encodeEmptyDegreeStructureInfo() throws IOException {
-        writer.startElement("table", this);
-        writer.startElement("tr", this);
-        writer.startElement("td", this);
-        writer.writeAttribute("align", "center", null);
-        writer.startElement("i", this);
-        writer.append(this.getBundleValue("BolonhaManagerResources", "empty.degreeStructure"));
-        writer.endElement("i");
-        writer.endElement("td");
-        writer.endElement("tr");
-        writer.endElement("table");
-    }
-    
     private void encodeSubtitles() throws IOException {
         writer.startElement("br", this);
         writer.append("&nbsp;");
@@ -125,7 +131,7 @@ public class UIDegreeCurricularPlan extends UIInput {
 
         writer.startElement("ul", this);
         writer.writeAttribute("class", "nobullet", null);
-        writer.writeAttribute("style", "padding-left: 0pt;", null);
+        writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
         writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
 
         encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(), null);
@@ -202,15 +208,16 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
         if (!this.showRules) {
+            String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
             encodeLink("createCurricularCourse.faces?degreeCurricularPlanID="
                     + this.facesContext.getExternalContext().getRequestParameterMap().get(
                             "degreeCurricularPlanID") + "&curricularYearID=" + curricularPeriod.getParent().getOrder()
-                    + "&curricularSemesterID=" + curricularPeriod.getOrder(), "create.curricular.course");
+                    + "&curricularSemesterID=" + curricularPeriod.getOrder() + organizeBy, "create.curricular.course");
             writer.append(" , ");
             encodeLink("associateCurricularCourse.faces?degreeCurricularPlanID=" 
                     + this.facesContext.getExternalContext().getRequestParameterMap().get(
                             "degreeCurricularPlanID") + "&curricularYearID=" + curricularPeriod.getParent().getOrder()
-                    + "&curricularSemesterID=" + curricularPeriod.getOrder(), "associate.curricular.course");
+                    + "&curricularSemesterID=" + curricularPeriod.getOrder() + organizeBy, "associate.curricular.course");
         }
         writer.endElement("th");
     }

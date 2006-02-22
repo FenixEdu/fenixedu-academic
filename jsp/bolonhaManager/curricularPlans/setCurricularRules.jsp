@@ -14,20 +14,21 @@
 
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeStructure.childs}">
 		<h:outputText value="<br/>#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
-		<h:outputLink value="../curricularPlans/setCurricularRules.faces">
+		<h:outputLink value="../curricularPlans/setCurricularRules.faces" rendered="#{CurricularCourseManagement.organizeBy == 'years'}">
 			<h:outputText value="#{bolonhaBundle['groups']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="organizeBy" value="groups"/>
 		</h:outputLink>
+		<h:outputText value="#{bolonhaBundle['groups']}" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}"/>
 		<h:outputText value=" , " escape="false"/>
-		<h:outputLink value="../curricularPlans/setCurricularRules.faces">
+		<h:outputLink value="../curricularPlans/setCurricularRules.faces" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}">
 			<h:outputText value="#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="organizeBy" value="years"/>		
 		</h:outputLink>
+		<h:outputText value="#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}" rendered="#{CurricularCourseManagement.organizeBy == 'years'}"/>		
 	</h:panelGroup>
 
-	<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 	<h:messages styleClass="error0" infoClass="success0" layout="table" globalOnly="true"/>
 	<h:outputText value="<br/>" escape="false"/>
 	<fc:degreeCurricularPlanRender 
@@ -39,6 +40,7 @@
 
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
+		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>		
 
 		<h:outputText value="<br/><p>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['return']}"
