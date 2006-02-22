@@ -677,9 +677,16 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
-    	<filterChain>
+   	<filterChain>
         <name>EnrollmentOrCoordinatorAuthorization</name>
         <expression>EnrollmentAuthorization || CoordinatorAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+   	<filterChain>
+        <name>EnrolmentAuthorizationWithoutEnrollmentPeriod</name>
+        <expression>DegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization || CoordinatorEnrolmentAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
