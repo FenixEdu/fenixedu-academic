@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -64,8 +65,10 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
         Set<Degree> result = new HashSet<Degree>();
         for (Degree degree : allDegrees) {
             if (degree.getBolonhaDegreeType() != null) {
-                for (DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
-                    if (degreeCurricularPlan.getCurricularPlanMembersGroup().isMember(this.getUserView().getPerson())) {
+                for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+                    if (dcp.getCurricularStage().equals(CurricularStage.PUBLISHED) 
+                            || dcp.getCurricularStage().equals(CurricularStage.APPROVED) 
+                            || dcp.getCurricularPlanMembersGroup().isMember(this.getUserView().getPerson())) {
                         result.add(degree);    
                     }
                 }
