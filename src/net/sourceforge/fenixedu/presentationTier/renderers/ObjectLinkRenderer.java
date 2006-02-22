@@ -21,6 +21,8 @@ public class ObjectLinkRenderer extends OutputRenderer {
     private String destinySchema;
     private String destinyLayout;
     
+    private String viewPage;
+    
     public ObjectLinkRenderer() {
         super();
         
@@ -75,6 +77,14 @@ public class ObjectLinkRenderer extends OutputRenderer {
         this.text = text;
     }
 
+    public String getViewPage() {
+        return this.viewPage;
+    }
+
+    public void setViewPage(String viewPage) {
+        this.viewPage = viewPage;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new Layout() {
@@ -124,8 +134,13 @@ public class ObjectLinkRenderer extends OutputRenderer {
     }
 
     private String getViewUrl() {
-        // TODO: remove constant action path
-        return "/domain/view.do";
+        if (getViewPage() == null) {
+            return getViewPage();
+        }
+        else {
+            // TODO: remove constant action path
+            return "/domain/view.do";
+        }
     }
 
     private String getLinkText() {
