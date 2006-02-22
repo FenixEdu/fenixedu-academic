@@ -106,8 +106,9 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
         String currentState = (String) editStudentCurricularPlanForm.get("currentState");
         String specialization = (String) editStudentCurricularPlanForm.get("specialization");
         Integer branch = (Integer) editStudentCurricularPlanForm.get("branch");
-        Double credits = (editStudentCurricularPlanForm.get("credits") != null) ? (Double
-                .valueOf((String) editStudentCurricularPlanForm.get("credits"))) : 0.0;
+        Object creditsObj = editStudentCurricularPlanForm.get("credits");
+        Double credits = (creditsObj != null && ((String)creditsObj).length() > 0) ? (Double
+                .valueOf((String) creditsObj)) : null;
         String startDate = (String) editStudentCurricularPlanForm.get("startDate");
 
         Integer studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
