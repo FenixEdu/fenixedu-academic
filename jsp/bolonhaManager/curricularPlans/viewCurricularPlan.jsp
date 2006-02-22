@@ -32,6 +32,7 @@
 		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>		
+		<f:param name="action" value="view"/>
 	</h:outputLink>
 
 	<h:outputText value="<br/>#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
