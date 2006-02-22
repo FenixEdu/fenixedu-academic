@@ -54,7 +54,7 @@ public class ScheduleExemption extends ScheduleExemption_Base {
     
     // Returns the schedule Attributes
     public Attributes getAttributes() {
-        EnumSet<AttributeType> attributes = EnumSet.of(AttributeType.NWP1, AttributeType.NWP2, AttributeType.MEAL);
+        EnumSet<AttributeType> attributes = EnumSet.of(AttributeType.NORMAL_WORK_PERIOD_1, AttributeType.NORMAL_WORK_PERIOD_2, AttributeType.MEAL);
         return new Attributes(attributes);
     }
 

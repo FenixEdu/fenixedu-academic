@@ -74,11 +74,11 @@ public class NormalWorkPeriod extends NormalWorkPeriod_Base {
     }
     
     public AttributeType getNormalWorkPeriod1Attribute() {
-        return AttributeType.NWP1;
+        return AttributeType.NORMAL_WORK_PERIOD_1;
     }
 
     public AttributeType getNormalWorkPeriod2Attribute() {
-        return AttributeType.NWP2;
+        return AttributeType.NORMAL_WORK_PERIOD_2;
     }
     
     public String getName() {

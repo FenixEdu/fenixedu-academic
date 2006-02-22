@@ -86,7 +86,7 @@ public class Timeline {
                 // caso em q o intervalo ja esta' aberto
                 for (AttributeType attribute: currentPoint.getPointAttributes().getAttributes()) {
                     if (insideIntervals.contains(attribute)) { 
-                        newPoint.getIntervalAttributes().removeAttribute(attribute); // adds the current point attribute to new point interval attributes
+                        newPoint.getIntervalAttributes().removeAttribute(attribute); // removes the current point attribute to new point interval attributes
                         insideIntervals.removeAttribute(attribute);
                     } else {
                         newPoint.getIntervalAttributes().addAttribute(attribute); // adds the current point attribute to new point interval attributes

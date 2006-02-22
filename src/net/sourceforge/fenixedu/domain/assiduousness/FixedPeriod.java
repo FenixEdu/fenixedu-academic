@@ -69,12 +69,12 @@ public class FixedPeriod extends FixedPeriod_Base {
     public List<TimePoint> toTimePoints() {
         List<TimePoint> pointList = new ArrayList();
         if (definedFixedPeriod1()) {
-            pointList.add(getFixedPeriod1().startPointToTimePoint(AttributeType.FP1));
-            pointList.add(getFixedPeriod1().endPointToTimePoint(AttributeType.FP1));
+            pointList.add(getFixedPeriod1().startPointToTimePoint(AttributeType.FIXED_PERIOD_1));
+            pointList.add(getFixedPeriod1().endPointToTimePoint(AttributeType.FIXED_PERIOD_1));
         }
         if (definedFixedPeriod2()) {
-            pointList.add(getFixedPeriod2().startPointToTimePoint(AttributeType.FP2));
-            pointList.add(getFixedPeriod2().endPointToTimePoint(AttributeType.FP2));
+            pointList.add(getFixedPeriod2().startPointToTimePoint(AttributeType.FIXED_PERIOD_2));
+            pointList.add(getFixedPeriod2().endPointToTimePoint(AttributeType.FIXED_PERIOD_2));
         }
         return pointList;
     }

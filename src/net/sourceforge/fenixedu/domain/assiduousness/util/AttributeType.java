@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain.assiduousness.util;
 
 public enum AttributeType {
     NULL, // 0
-    NWP1, 
-    NWP2, 
-    FP1, 
-    FP2, 
+    NORMAL_WORK_PERIOD_1, 
+    NORMAL_WORK_PERIOD_2, 
+    FIXED_PERIOD_1, 
+    FIXED_PERIOD_2, 
     MEAL,
     //TODO um bocado foleiro...
     WORKED1,

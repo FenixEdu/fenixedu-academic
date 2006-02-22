@@ -70,7 +70,7 @@ public class TwoHoursExemptionSchedule extends TwoHoursExemptionSchedule_Base {
 
     // Returns the schedule Attributes
     public Attributes getAttributes() {
-        EnumSet<AttributeType> attributeSet = EnumSet.of(AttributeType.NWP1, AttributeType.NWP2, AttributeType.MEAL);
+        EnumSet<AttributeType> attributeSet = EnumSet.of(AttributeType.NORMAL_WORK_PERIOD_1, AttributeType.NORMAL_WORK_PERIOD_2, AttributeType.MEAL);
         Attributes attributes = new Attributes(attributeSet);
         return attributes;
     }

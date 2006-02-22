@@ -50,9 +50,9 @@ public class HalfTimeSchedule extends HalfTimeSchedule_Base {
     
     // Returns the schedule Attributes
     public Attributes getAttributes() {
-        Attributes attributes = new Attributes(AttributeType.NWP1);
+        Attributes attributes = new Attributes(AttributeType.NORMAL_WORK_PERIOD_1);
         if (definedFixedPeriod()) {
-            attributes.addAttribute(AttributeType.FP1);
+            attributes.addAttribute(AttributeType.FIXED_PERIOD_1);
         }
         return attributes;
     }

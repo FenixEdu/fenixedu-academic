@@ -76,14 +76,14 @@ public class WorkSchedule extends WorkSchedule_Base {
 
     // Returns the schedule Attributes
     public Attributes getAttributes() {
-        Attributes attributes = new Attributes(AttributeType.NWP1);
+        Attributes attributes = new Attributes(AttributeType.NORMAL_WORK_PERIOD_1);
         if (((NormalWorkPeriod)getNormalWorkPeriod()).definedNormalWorkPeriod2()) {
-            attributes.addAttribute(AttributeType.NWP2);
+            attributes.addAttribute(AttributeType.NORMAL_WORK_PERIOD_2);
         }
         if (definedFixedPeriod()) {
-            attributes.addAttribute(AttributeType.FP1);
+            attributes.addAttribute(AttributeType.FIXED_PERIOD_1);
             if (((FixedPeriod)getFixedPeriod()).definedFixedPeriod2()) {
-                attributes.addAttribute(AttributeType.FP2);
+                attributes.addAttribute(AttributeType.FIXED_PERIOD_2);
             }
         }
         if (((Meal)getMeal()).definedMealBreak()) {
@@ -216,9 +216,9 @@ public class WorkSchedule extends WorkSchedule_Base {
         
     public void calculateFixedPeriodDuration(DailyBalance dailyBalance, Timeline timeline) {
       if (definedFixedPeriod()) {
-            dailyBalance.setFixedPeriodAbsence(timeline.calculateFixedPeriod(AttributeType.FP1));
+            dailyBalance.setFixedPeriodAbsence(timeline.calculateFixedPeriod(AttributeType.FIXED_PERIOD_1));
             if (((FixedPeriod)getFixedPeriod()).definedFixedPeriod2()) {
-                Duration fixedPeriod2Duration = timeline.calculateFixedPeriod(AttributeType.FP2);
+                Duration fixedPeriod2Duration = timeline.calculateFixedPeriod(AttributeType.FIXED_PERIOD_2);
                 dailyBalance.setFixedPeriodAbsence(dailyBalance.getFixedPeriodAbsence().plus(fixedPeriod2Duration));
             }
             dailyBalance.setFixedPeriodAbsence(((FixedPeriod)getFixedPeriod()).getTotalFixedPeriodDuration().minus(dailyBalance.getFixedPeriodAbsence()));

@@ -122,7 +122,7 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
 
     // Returns the schedule Attributes
     public Attributes getAttributes() {
-        EnumSet<AttributeType> attributes = EnumSet.of(AttributeType.NWP1, AttributeType.NWP2, AttributeType.FP1, AttributeType.FP2, AttributeType.MEAL);
+        EnumSet<AttributeType> attributes = EnumSet.of(AttributeType.NORMAL_WORK_PERIOD_1, AttributeType.NORMAL_WORK_PERIOD_2, AttributeType.FIXED_PERIOD_1, AttributeType.FIXED_PERIOD_2, AttributeType.MEAL);
         return new Attributes(attributes);
     }
     

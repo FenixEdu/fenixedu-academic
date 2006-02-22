@@ -46,19 +46,19 @@ public class Attributes {
     }
 
     public void addNormalWorkPeriod1Time() {
-        addAttribute(AttributeType.NWP1);
+        addAttribute(AttributeType.NORMAL_WORK_PERIOD_1);
     }
 
     public void addNormalWorkPeriod2Time() {
-        addAttribute(AttributeType.NWP2);
+        addAttribute(AttributeType.NORMAL_WORK_PERIOD_2);
     }
 
     public void addFixedPeriod1Time() {
-        addAttribute(AttributeType.FP1);
+        addAttribute(AttributeType.FIXED_PERIOD_1);
     }
 
     public void addFixedPeriod2Time() {
-        addAttribute(AttributeType.FP2);
+        addAttribute(AttributeType.FIXED_PERIOD_2);
     }
 
     public void addMealTime() {
@@ -82,19 +82,19 @@ public class Attributes {
     }
 
     public void removeNormalWorkPeriod1Time() {
-        removeAttribute(AttributeType.NWP1);
+        removeAttribute(AttributeType.NORMAL_WORK_PERIOD_1);
     }
 
     public void removeNormalWorkPeriod2Time() {
-        removeAttribute(AttributeType.NWP2);
+        removeAttribute(AttributeType.NORMAL_WORK_PERIOD_2);
     }
 
     public void removeFixedPeriod1Time() {
-        removeAttribute(AttributeType.FP1);
+        removeAttribute(AttributeType.FIXED_PERIOD_1);
     }
 
     public void removeFixedPeriod2Time() {
-        removeAttribute(AttributeType.FP2);
+        removeAttribute(AttributeType.FIXED_PERIOD_2);
     }
 
     public void removeMealTime() {

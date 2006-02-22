@@ -73,7 +73,7 @@ public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
 
     // Returns the schedule Attributes
     public Attributes getAttributes() {
-        EnumSet<AttributeType> attributeSet = EnumSet.of(AttributeType.NWP1, AttributeType.NWP2, AttributeType.FP1, AttributeType.FP2);
+        EnumSet<AttributeType> attributeSet = EnumSet.of(AttributeType.NORMAL_WORK_PERIOD_1, AttributeType.NORMAL_WORK_PERIOD_2, AttributeType.FIXED_PERIOD_1, AttributeType.FIXED_PERIOD_2);
         Attributes attributes = new Attributes(attributeSet);
         if (((Meal)getMeal()).definedMealBreak()) {
             attributes.addAttribute(AttributeType.MEAL);
