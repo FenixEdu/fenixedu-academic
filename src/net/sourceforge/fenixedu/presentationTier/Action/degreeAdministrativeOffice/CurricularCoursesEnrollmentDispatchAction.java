@@ -106,7 +106,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         try {
             if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)) || userView
                     .getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) || userView
-                    .getRoles().contains(new InfoRole(RoleType.COORDINATOR)))) {
+                    .getRoles().contains(new InfoRole(RoleType.COORDINATOR)) || userView
+                    .getRoles().contains(new InfoRole(RoleType.TEACHER)))) {
                 infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
                         .executeService(userView, "ShowAvailableCurricularCoursesNew", args);
             } else {
