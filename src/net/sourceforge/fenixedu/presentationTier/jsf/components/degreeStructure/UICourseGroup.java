@@ -48,7 +48,7 @@ public class UICourseGroup extends UIDegreeModule {
         buffer.append(tabs);
         buffer.append("[LEVEL ").append(Integer.valueOf(this.depth)).append("]");
         buffer.append("[CG ").append(this.degreeModule.getIdInternal()).append("] ").append(this.degreeModule.getName());
-        System.out.println(buffer);
+        //System.out.println(buffer);
 
         this.facesContext = facesContext;
         this.writer = facesContext.getResponseWriter();

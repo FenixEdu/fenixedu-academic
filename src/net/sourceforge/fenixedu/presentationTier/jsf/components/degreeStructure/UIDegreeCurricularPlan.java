@@ -62,7 +62,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             } else {
                 StringBuilder dcpBuffer = new StringBuilder();
                 dcpBuffer.append("[DCP ").append(dcp.getIdInternal()).append("] ").append(dcp.getName());
-                System.out.println(dcpBuffer);
+                //System.out.println(dcpBuffer);
 
                 new UICourseGroup(dcp.getDegreeModule(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder).encodeBegin(facesContext);
             }

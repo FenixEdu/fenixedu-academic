@@ -51,7 +51,7 @@ public class UICurricularCourse extends UIDegreeModule {
         buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
         buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S] ");
         buffer.append(this.degreeModule.getName());
-        System.out.println(buffer.toString());
+        //System.out.println(buffer.toString());
 
         this.facesContext = facesContext;
         this.writer = facesContext.getResponseWriter();
