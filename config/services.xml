@@ -9263,6 +9263,7 @@
         	<chain name="BolonhaManagerAuthorization"></chain>
         </filterChains>     
     </service>
+    
     <service>
     	<name>CreateCompositeRule</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompositeRule</implementationClass>
@@ -9677,4 +9678,13 @@
         	<chain name="StudentAuthorization"></chain>
         </filterChains>     
     </service>           
+	<service>
+   	 	<name>ReadActiveMasterDegreeThesis</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesis</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="MasterDegreeAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>               
 </serviceDefinitions>    
