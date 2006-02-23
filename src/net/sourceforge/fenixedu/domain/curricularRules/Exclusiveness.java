@@ -83,9 +83,14 @@ public class Exclusiveness extends Exclusiveness_Base {
         final Iterator<CurricularRule> curricularRulesIterator = this.getExclusiveDegreeModule().getCurricularRulesIterator();
         while (curricularRulesIterator.hasNext()) {
             final CurricularRule curricularRule = curricularRulesIterator.next();
-            if (curricularRule.getCurricularRuleType() == this.getCurricularRuleType()) {
+            if (curricularRule.getCurricularRuleType() == CurricularRuleType.EXCLUSIVENESS) {
                 final Exclusiveness exclusiveness = (Exclusiveness) curricularRule;
                 if (exclusiveness.getExclusiveDegreeModule() == getDegreeModuleToApplyRule()) {
+                    
+                    if (exclusiveness.belongsToCompositeRule()) {
+                        throw new DomainException("error.cannot.delete.rule.because.belongs.to.composite.rule",
+                                exclusiveness.getDegreeModuleToApplyRule().getName());
+                    }
                     curricularRulesIterator.remove();
                     exclusiveness.removeExclusiveDegreeModule();
                     exclusiveness.removeCommonParameters();
