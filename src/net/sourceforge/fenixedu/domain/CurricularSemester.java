@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain;
  * 19/Mar/2003
  */
 
-public class CurricularSemester extends CurricularSemester_Base {
+public class CurricularSemester extends CurricularSemester_Base implements Comparable<CurricularSemester> {
 
     public CurricularSemester() {
         super();
@@ -25,5 +25,11 @@ public class CurricularSemester extends CurricularSemester_Base {
         result += "curricularYear = " + this.getCurricularYear() + "]\n";
         return result;
     }
+
+	public int compareTo(final CurricularSemester curricularSemester) {
+		return getCurricularYear() == curricularSemester.getCurricularYear() ?
+				getSemester().compareTo(curricularSemester.getSemester()) :
+				getCurricularYear().compareTo(curricularSemester.getCurricularYear());
+	}
     
 }
