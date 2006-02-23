@@ -714,6 +714,16 @@ public class Person extends Person_Base {
         }
         return null;
     }
+    
+    public static Person readPersonByIstUsername(final String istUsername) throws ExcepcaoPersistencia {
+        List<Person> allPersons = RootDomainObject.readAllPersons();
+        for (final Person person : allPersons) {
+            if (person.getIstUsername() != null && person.getIstUsername().equalsIgnoreCase(istUsername)) {
+                return person;
+            }
+        }
+        return null;
+    }
 
     private static class PersonRoleListener extends dml.runtime.RelationAdapter<Role, Person> {
         /**

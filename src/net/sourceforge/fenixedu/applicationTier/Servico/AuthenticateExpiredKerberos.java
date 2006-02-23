@@ -15,7 +15,12 @@ public class AuthenticateExpiredKerberos extends Authenticate {
     public IUserView run(final String username, final String password, final String newPassword,
             final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao,
             FenixServiceException {
-        final Person person = Person.readPersonByUsername(username);
+
+        Person person = Person.readPersonByUsername(username);
+
+        if (person == null) {
+            person = Person.readPersonByIstUsername(username);
+        }
 
         if (person == null) {
             throw new ExcepcaoAutenticacao("bad.authentication");

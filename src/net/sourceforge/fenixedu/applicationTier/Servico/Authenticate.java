@@ -76,7 +76,7 @@ public class Authenticate extends Service implements Serializable {
 
     protected class UserView implements IUserView {
 
-    	final private DomainReference<Person> personRef;
+        final private DomainReference<Person> personRef;
 
         final private Collection roles;
 
@@ -102,7 +102,7 @@ public class Authenticate extends Service implements Serializable {
         }
 
         public Person getPerson() {
-			return personRef.getObject();
+            return personRef.getObject();
         }
 
         public String getUtilizador() {
@@ -129,15 +129,19 @@ public class Authenticate extends Service implements Serializable {
     public IUserView run(final String username, final String password, final String requestURL)
             throws ExcepcaoAutenticacao, ExcepcaoPersistencia, FenixServiceException {
 
-        final Person person = Person.readPersonByUsername(username);;
+        Person person = Person.readPersonByUsername(username);
+
+        if (person == null) {
+            person = Person.readPersonByIstUsername(username);
+        }
+
         if (person == null || !PasswordEncryptor.areEquals(person.getPassword(), password)) {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }
 
         return getUserView(person, requestURL);
     }
-   
-    
+
     protected IUserView getUserView(final Person person, final String requestURL) {
         final Set allowedRoles = getAllowedRolesByHostname(requestURL);
         return new UserView(person, allowedRoles);
@@ -169,7 +173,8 @@ public class Authenticate extends Service implements Serializable {
 
         try {
             final String casValidateUrl = PropertiesManager.getProperty("cas.validateUrl");
-            final String casServiceUrl = URLEncoder.encode(PropertiesManager.getProperty("cas.serviceUrl"), URL_ENCODING);
+            final String casServiceUrl = URLEncoder.encode(PropertiesManager
+                    .getProperty("cas.serviceUrl"), URL_ENCODING);
 
             ProxyTicketValidator pv = new ProxyTicketValidator();
             pv.setCasValidateUrl(casValidateUrl);
