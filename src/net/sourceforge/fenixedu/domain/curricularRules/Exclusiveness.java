@@ -36,7 +36,7 @@ public class Exclusiveness extends Exclusiveness_Base {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
         if (exclusiveDegreeModule != this.getExclusiveDegreeModule()) {
-            removeRuleFromCurrentExclusiveDegreeModule();
+            removeRuleFromCurrentExclusiveDegreeModule(this.getExclusiveDegreeModule().getCurricularRulesIterator());
             new Exclusiveness(exclusiveDegreeModule, getDegreeModuleToApplyRule(), contextCourseGroup, getBegin(), getEnd());
         }
         setExclusiveDegreeModule(exclusiveDegreeModule);
@@ -75,28 +75,35 @@ public class Exclusiveness extends Exclusiveness_Base {
 
     @Override
     protected void removeOwnParameters() {
-        removeRuleFromCurrentExclusiveDegreeModule();
+        removeRuleFromCurrentExclusiveDegreeModule(this.getExclusiveDegreeModule().getCurricularRulesIterator());
         removeExclusiveDegreeModule();
     }
 
-    private void removeRuleFromCurrentExclusiveDegreeModule() {
-        final Iterator<CurricularRule> curricularRulesIterator = this.getExclusiveDegreeModule().getCurricularRulesIterator();
+    private void removeRuleFromCurrentExclusiveDegreeModule(final Iterator<CurricularRule> curricularRulesIterator) {
         while (curricularRulesIterator.hasNext()) {
             final CurricularRule curricularRule = curricularRulesIterator.next();
-            if (curricularRule.getCurricularRuleType() == CurricularRuleType.EXCLUSIVENESS) {
-                final Exclusiveness exclusiveness = (Exclusiveness) curricularRule;
-                if (exclusiveness.getExclusiveDegreeModule() == getDegreeModuleToApplyRule()) {
-                    
-                    if (exclusiveness.belongsToCompositeRule()) {
-                        throw new DomainException("error.cannot.delete.rule.because.belongs.to.composite.rule",
-                                exclusiveness.getDegreeModuleToApplyRule().getName());
-                    }
-                    curricularRulesIterator.remove();
-                    exclusiveness.removeExclusiveDegreeModule();
-                    exclusiveness.removeCommonParameters();
-                    exclusiveness.deleteDomainObject();
-                }
+            if (curricularRule.getCurricularRuleType() == null) { // (composite rule)
+                final CompositeRule compositeRule = (CompositeRule) curricularRule;
+                removeRuleFromCurrentExclusiveDegreeModule(compositeRule.getCurricularRulesIterator());
+            } else if (curricularRule.getCurricularRuleType() == this.getCurricularRuleType()) {
+                removeExclusivenessRule(curricularRulesIterator, (Exclusiveness) curricularRule);
             }
+        }
+    }
+
+    private void removeExclusivenessRule(final Iterator<CurricularRule> curricularRulesIterator,
+            final Exclusiveness exclusiveness) throws DomainException {
+        
+        if (exclusiveness.getExclusiveDegreeModule() == getDegreeModuleToApplyRule()) {
+            if (exclusiveness.belongsToCompositeRule()) {
+                throw new DomainException(
+                        "error.cannot.delete.rule.because.belongs.to.composite.rule",
+                        exclusiveness.getDegreeModuleToApplyRule().getName());
+            }
+            curricularRulesIterator.remove();
+            exclusiveness.removeExclusiveDegreeModule();
+            exclusiveness.removeCommonParameters();
+            exclusiveness.deleteDomainObject();
         }
     }
 }
