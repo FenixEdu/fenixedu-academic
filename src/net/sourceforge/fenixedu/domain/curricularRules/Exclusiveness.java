@@ -85,10 +85,12 @@ public class Exclusiveness extends Exclusiveness_Base {
             final CurricularRule curricularRule = curricularRulesIterator.next();
             if (curricularRule.getCurricularRuleType() == this.getCurricularRuleType()) {
                 final Exclusiveness exclusiveness = (Exclusiveness) curricularRule;
-                curricularRulesIterator.remove();
-                exclusiveness.removeExclusiveDegreeModule();
-                exclusiveness.removeCommonParameters();
-                exclusiveness.deleteDomainObject();
+                if (exclusiveness.getExclusiveDegreeModule() == getDegreeModuleToApplyRule()) {
+                    curricularRulesIterator.remove();
+                    exclusiveness.removeExclusiveDegreeModule();
+                    exclusiveness.removeCommonParameters();
+                    exclusiveness.deleteDomainObject();
+                }
             }
         }
     }
