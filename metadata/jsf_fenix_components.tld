@@ -1393,7 +1393,7 @@
 		<attribute>
 			<name>toOrder</name>
 			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
+			<rtexprvalue>true</rtexprvalue>
 			<description>Indicates if order options are to be available. Valid if onlyStructure is true. Type: java.lang.Boolean. Default: false</description>
 		</attribute>
 	</tag>
