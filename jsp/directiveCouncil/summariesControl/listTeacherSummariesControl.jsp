@@ -5,6 +5,11 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <span class="error"><html:errors/></span>
+<html:messages id="message" message="true" bundle="DEFAULT">
+	<span class="error">
+		<bean:write name="message"/>
+	</span>
+</html:messages>
 
 <html:form action="/summariesControl">
 

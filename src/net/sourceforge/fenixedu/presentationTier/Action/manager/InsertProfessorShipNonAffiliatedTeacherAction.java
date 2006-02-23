@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -64,7 +65,14 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
         DynaActionForm dynaForm = (DynaActionForm) form;
         String institutionName = (String) dynaForm.get("institutionName");
 
-        ServiceUtils.executeService(userView, "InsertInstitution", new Object[] { institutionName });
+        try{
+            ServiceUtils.executeService(userView, "InsertInstitution", new Object[] { institutionName });
+        }catch(FenixServiceException e){
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("", new ActionMessage(e.getMessage()));
+            saveMessages(request, actionMessages);
+            return mapping.getInputForward();
+        }
 
         List institutions = null;
         try {
@@ -93,14 +101,21 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
         
         if(nonAffiliatedTeacherNameToInsert == null || nonAffiliatedTeacherNameToInsert.equals("")){
             ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add("fileRequired", new ActionMessage("errors.required", "Nome do Docente"));
+            actionMessages.add("", new ActionMessage("errors.required", "Nome do Docente"));
             saveMessages(request, actionMessages);
             return mapping.getInputForward();
         }
         
         Object[] args = { nonAffiliatedTeacherNameToInsert, institutionID };
 
-        ServiceUtils.executeService(userView, "InsertNonAffiliatedTeacher", args);
+        try {
+            ServiceUtils.executeService(userView, "InsertNonAffiliatedTeacher", args);
+        } catch (NotExistingServiceException e) {
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("", new ActionMessage(e.getMessage()));
+            saveMessages(request, actionMessages);
+            return mapping.getInputForward();
+        }        
 
         if (request.getAttribute("insertInstitution") != null) {
             request.setAttribute("insertInstitution", "true");

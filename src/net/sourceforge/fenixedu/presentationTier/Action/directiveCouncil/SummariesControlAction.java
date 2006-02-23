@@ -40,11 +40,11 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
@@ -75,13 +75,13 @@ public class SummariesControlAction extends DispatchAction {
                 request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);
             }
         } else if (departmentID == null || departmentID.equals("")) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error", new ActionError("error.no.deparment"));
-            saveErrors(request, actionErrors);
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("", new ActionMessage("error.no.deparment"));
+            saveMessages(request, actionMessages);   
         } else if (executionPeriodID == null || executionPeriodID.equals("")) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error", new ActionError("error.no.execution.period"));
-            saveErrors(request, actionErrors);
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("", new ActionMessage("error.no.execution.period"));
+            saveMessages(request, actionMessages);                     
         }
 
         return prepareSummariesControl(mapping, actionForm, request, response);
@@ -96,16 +96,16 @@ public class SummariesControlAction extends DispatchAction {
         boolean runProcess = true;
 
         if (departmentID == null || departmentID.equals("")) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error", new ActionError("error.no.deparment"));
-            saveErrors(request, actionErrors);
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("", new ActionMessage("error.no.deparment"));
+            saveMessages(request, actionMessages);            
             dynaActionForm.set("executionPeriod", "");
             runProcess = false;
         }
         if (executionPeriodID == null || executionPeriodID.equals("")) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error", new ActionError("error.no.execution.period"));
-            saveErrors(request, actionErrors);
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("", new ActionMessage("error.no.execution.period"));
+            saveMessages(request, actionMessages);  
             runProcess = false;
         }
 

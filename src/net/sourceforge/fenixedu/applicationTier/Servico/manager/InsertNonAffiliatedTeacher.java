@@ -29,14 +29,14 @@ public class InsertNonAffiliatedTeacher extends Service {
                 institutionID);
 
         if (institution == null) {
-            throw new NotExistingServiceException("Non Existing Institution");
+            throw new NotExistingServiceException("no.institution");
         }
 
         NonAffiliatedTeacher nonAffiliatedTeacher = persistentNonAffiliatedTeacher
                 .readByNameAndInstitution(nonAffiliatedTeacherName, institution);
 
         if (nonAffiliatedTeacher != null) {
-            throw new NotExistingServiceException("teacher Already Exists");
+            throw new NotExistingServiceException("teacher.already.exists");
         }
 
         nonAffiliatedTeacher = DomainFactory.makeNonAffiliatedTeacher();
