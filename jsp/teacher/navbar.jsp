@@ -35,17 +35,19 @@
 		<li><html:link page="/testsManagement.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.testsManagement"/></html:link></li>
 		<li><html:link page="/viewExecutionCourseProjects.do?method=prepareViewExecutionCourseProjects" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.groupsManagement"/></html:link></li>
 		<br/>
+<!--
 		<li>
 			<html:link page='<%= "/weeklyWorkLoad.do?method=prepare&amp;executionCourseID=" + executionCourseID.toString() %>'>
 				<bean:message key="link.weekly.work.load"/>
 			</html:link>
 		</li>
+-->
 		<br/>
 		<li><html:link page="/viewCourseInformation.do" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.courseInformationManagement"/></html:link></li>
 		<%-- <logic:notEqual name="executionCourse" property="infoExecutionPeriod.state.stateCode" value="C"> --%>
 		<li><html:link page="/teachingReport.do?method=prepareEdit&amp;page=0" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.teachingReportManagement"/></html:link></li>
 		<%-- </logic:notEqual> --%>
 		<br/>
-		<li><html:link href="<%= request.getContextPath()+"/publico/viewSiteExecutionCourse.do?method=firstPage" %>" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal" target="_blank">Ver Pï¿½gina da Disciplina</html:link>
+		<li><html:link href="<%= request.getContextPath()+"/publico/viewSiteExecutionCourse.do?method=firstPage" %>" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal" target="_blank">Ver Página da Disciplina</html:link>
 	</ul>
 </logic:present>
