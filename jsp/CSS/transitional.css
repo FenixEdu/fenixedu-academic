@@ -338,3 +338,16 @@ td.pleft3 { padding-left: 3em; }
 td.pleft4 { padding-left: 4em; }
 td.pleft5 { padding-left: 5em; }
 td.pleft6 { padding-left: 6em; }
+
+
+table.noborder {
+padding-left: 1em;
+padding-bottom: 1em;
+}
+table.noborder tr td {
+border: none;
+}
+table.noborder tr td {
+padding: 0;
+margin: 0;
+}
