@@ -109,53 +109,50 @@ public class UIDegreeModule extends UIInput {
 
         if (!curricularRulesToEncode.isEmpty()) {
             writer.startElement("tr", this);
-            writer.writeAttribute("class", "smalltxt", null);
         
             writer.startElement("td", this);
-            writer.writeAttribute("class", "p_mvert015", null);
-            writer.writeAttribute("colspan", (this.toEdit) ? 5 : 6, null);
-            writer.writeAttribute("style", "color: #888; padding-top:0; padding-bottom: 1em;", null);
-            writer.writeAttribute("rowspan", curricularRulesToEncode.size(), null);
-            for (CurricularRule curricularRule : curricularRulesToEncode) {
-                encodeCurricularRule(curricularRule);    
-            }
-            writer.endElement("td");
-
-            writer.startElement("td", this);
-            writer.writeAttribute("class", "p_mvert015", null);
-            writer.writeAttribute("align", "right", null);
-            writer.writeAttribute("style", "width: 9em; padding-top:0; padding-bottom: 1em;", null);
-            writer.writeAttribute("rowspan", curricularRulesToEncode.size(), null);
             if (this.toEdit) {
-                for (CurricularRule curricularRule : curricularRulesToEncode) {
-                    encodeCurricularRuleOptions(curricularRule);    
-                }
+                writer.writeAttribute("colspan", "6", null);    
             }
+            writer.writeAttribute("style", "padding:0; margin: 0;", null);
+            
+            writer.startElement("table", this);
+            writer.writeAttribute("class", "smalltxt noborder", null);
+            writer.writeAttribute("style", "width: 100%;", null);
+            for (CurricularRule curricularRule : curricularRulesToEncode) {
+                writer.startElement("tr", this);
+                encodeCurricularRule(curricularRule);
+                if(this.toEdit) {
+                    encodeCurricularRuleOptions(curricularRule);
+                }
+                writer.endElement("tr");
+            }
+            writer.endElement("table");
             writer.endElement("td");
             
             writer.endElement("tr");
-            
-            for (int i = 0; i < curricularRulesToEncode.size(); i++) {
-                writer.startElement("tr", this);
-                writer.endElement("tr");
-            }
         }
     }
     
     private void encodeCurricularRule(CurricularRule curricularRule) throws IOException {
-        writer.startElement("p", this);
+        writer.startElement("td", this);
+        if (!this.toEdit) {
+            writer.writeAttribute("colspan", "2", null);    
+        }
+        writer.writeAttribute("style", "color: #888;", null);
         writer.append(CurricularRuleLabelFormatter.getLabel(curricularRule));
-        writer.endElement("p");
+        writer.endElement("td");
     }
 
     private void encodeCurricularRuleOptions(CurricularRule curricularRule) throws IOException {
-        writer.startElement("p", this);
-        encodeLink("../curricularRules/editCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&curricularRuleID=" + curricularRule.getIdInternal(), "edit");
-        writer.append(" , ");
+        writer.startElement("td", this);
+        writer.writeAttribute("class", "aright", null);
+        //encodeLink("../curricularRules/editCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
+        //        .get("degreeCurricularPlanID") + "&curricularRuleID=" + curricularRule.getIdInternal(), "edit");
+        //writer.append(" , ");
         encodeLink("../curricularRules/deleteCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                 .get("degreeCurricularPlanID") + "&curricularRuleID=" + curricularRule.getIdInternal(), "delete");
-        writer.endElement("p");
+        writer.endElement("td");
     }
 
 }
