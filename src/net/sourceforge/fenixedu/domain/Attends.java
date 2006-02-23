@@ -8,26 +8,44 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.joda.time.DateMidnight;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.Duration;
-import org.joda.time.Instant;
-import org.joda.time.Period;
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
+
+import org.joda.time.DateMidnight;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Period;
+import org.joda.time.YearMonthDay;
 
 /**
  * 
  * @author tfc130
  */
 public class Attends extends Attends_Base {
+
+	public static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>() {
+		public int compare(final Attends attends1, final Attends attends2) {
+			final ExecutionCourse executionCourse1 = attends1.getDisciplinaExecucao();
+			final ExecutionCourse executionCourse2 = attends2.getDisciplinaExecucao();
+			if (executionCourse1 == executionCourse2) {
+				final Student student1 = attends1.getAluno();
+				final Student student2 = attends2.getAluno();
+				return student1.getNumber().compareTo(student2.getNumber());
+			} else {
+				final ExecutionPeriod executionPeriod1 = executionCourse1.getExecutionPeriod();
+				final ExecutionPeriod executionPeriod2 = executionCourse2.getExecutionPeriod();
+				if (executionPeriod1 == executionPeriod2) {
+					return executionCourse1.getNome().compareTo(executionCourse2.getNome());
+				} else {
+					return executionPeriod1.compareTo(executionPeriod2);
+				}
+			}
+		}
+	};
 
     public Attends() {}
 	
@@ -103,35 +121,44 @@ public class Attends extends Attends_Base {
             throw new DomainException("weekly.work.load.creation.requires.enrolment");
         }
 
-//        final int currentWeekOffset = calculateCurrentWeekOffset();
-//        if (currentWeekOffset < 1 || getEndOfSemester().plusDays(7).isBefore(new YearMonthDay())) {
-//            throw new DomainException("outside.weekly.work.load.response.period");
-//        }
-//
-//        final int previousWeekOffset = currentWeekOffset - 1;
+        final int currentWeekOffset = calculateCurrentWeekOffset();
+        if (currentWeekOffset < 1 || getEndOfSemester().plusDays(7).isBefore(new YearMonthDay())) {
+            throw new DomainException("outside.weekly.work.load.response.period");
+        }
+
+        final int previousWeekOffset = currentWeekOffset - 1;
 
         final WeeklyWorkLoad lastExistentWeeklyWorkLoad = getWeeklyWorkLoads().isEmpty() ?
                 null : Collections.max(getWeeklyWorkLoads());
-//        if (lastExistentWeeklyWorkLoad != null && lastExistentWeeklyWorkLoad.getWeekOffset().intValue() == previousWeekOffset) {
-//            throw new DomainException("weekly.work.load.for.previous.week.already.exists");
-//        }
-
-        final int previousWeekOffset;
-        if (lastExistentWeeklyWorkLoad == null) {
-            previousWeekOffset = 0;
-        } else {
-            previousWeekOffset = lastExistentWeeklyWorkLoad.getWeekOffset().intValue() + 1;
+        if (lastExistentWeeklyWorkLoad != null && lastExistentWeeklyWorkLoad.getWeekOffset().intValue() == previousWeekOffset) {
+            throw new DomainException("weekly.work.load.for.previous.week.already.exists");
         }
 
         return new WeeklyWorkLoad(this, Integer.valueOf(previousWeekOffset), contact, autonomousStudy, other);
     }
 
+    public WeeklyWorkLoad getWeeklyWorkLoadOfPreviousWeek() {
+        final int currentWeekOffset = calculateCurrentWeekOffset();
+        if (currentWeekOffset < 1 || getEndOfSemester().plusDays(7).isBefore(new YearMonthDay())) {
+            throw new DomainException("outside.weekly.work.load.response.period");
+        }
+        final int previousWeekOffset = currentWeekOffset - 1;
+        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
+        	if (weeklyWorkLoad.getWeekOffset().intValue() == previousWeekOffset) {
+        		return weeklyWorkLoad;
+        	}
+        }
+        return null;
+    }
+
     private int calculateCurrentWeekOffset() {
-        final YearMonthDay beginningOfSemester = getBeginningOfSemester();
-        final YearMonthDay firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
-        final YearMonthDay now = new YearMonthDay();
+        final DateMidnight beginningOfSemester = getBeginningOfSemester().toDateMidnight();
+        final DateMidnight firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
+        final DateMidnight now = new DateMidnight();
         final Period period = new Period(firstMonday, now);
-        return period.getWeeks();
+
+        int extraWeek = period.getDays() > 0 ? 1 : 0;
+        return (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek;
     }
 
     private YearMonthDay getBeginningOfSemester() {

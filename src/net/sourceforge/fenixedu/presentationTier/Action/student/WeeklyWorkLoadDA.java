@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
@@ -23,6 +28,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Interval;
+import org.joda.time.Period;
 
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
@@ -32,6 +41,47 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 			final ExecutionCourse executionCourse2 = attends2.getDisciplinaExecucao();
 			return executionCourse1.getNome().compareTo(executionCourse2.getNome());
 		}};
+
+	public class WeeklyWorkLoadView {
+        final Interval executionPeriodInterval;
+        final int numberOfWeeks;
+
+        final Map<Attends, WeeklyWorkLoad[]> weeklyWorkLoadMap = new TreeMap<Attends, WeeklyWorkLoad[]>(ATTENDS_COMPARATOR);
+        final Interval[] intervals;
+
+        public WeeklyWorkLoadView(final Interval executionPeriodInterval) {
+            this.executionPeriodInterval = executionPeriodInterval;
+            final Period period = executionPeriodInterval.toPeriod();
+            int extraWeek = period.getDays() > 0 ? 1 : 0;
+            numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek;
+            intervals = new Interval[numberOfWeeks];
+            for (int i = 0; i < numberOfWeeks; i++) {
+                final DateTime start = executionPeriodInterval.getStart().plusWeeks(i);
+                final DateTime end = start.plusWeeks(1);
+                intervals[i] = new Interval(start, end);
+            }
+        }
+
+        public void add(final Attends attends) {
+            final WeeklyWorkLoad[] weeklyWorkLoadArray = new WeeklyWorkLoad[numberOfWeeks];
+            for (final WeeklyWorkLoad weeklyWorkLoad : attends.getWeeklyWorkLoads()) {
+                weeklyWorkLoadArray[weeklyWorkLoad.getWeekOffset()] = weeklyWorkLoad;
+            }
+            weeklyWorkLoadMap.put(attends, weeklyWorkLoadArray);
+        }
+
+        public Interval[] getIntervals() {
+            return intervals;
+        }
+
+        public Interval getExecutionPeriodInterval() {
+            return executionPeriodInterval;
+        }
+
+		public Map<Attends, WeeklyWorkLoad[]> getWeeklyWorkLoadMap() {
+			return weeklyWorkLoadMap;
+		}
+    }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
@@ -46,22 +96,39 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
         final Integer executionPeriodID = getExecutionPeriodID(dynaActionForm);
         final ExecutionPeriod selectedExecutionPeriod = findExecutionPeriod(executionPeriods, executionPeriodID);
-        dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+        request.setAttribute("selectedExecutionPeriod", selectedExecutionPeriod);
 
-        final Set<Attends> attends = new TreeSet<Attends>(ATTENDS_COMPARATOR);
+        dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+        
+
+        final Interval executionPeriodInterval = getExecutionPeriodInterval(selectedExecutionPeriod);
+        final WeeklyWorkLoadView weeklyWorkLoadView = new WeeklyWorkLoadView(executionPeriodInterval);
+        request.setAttribute("weeklyWorkLoadView", weeklyWorkLoadView);
+
+        final Collection<Attends> attends = new ArrayList<Attends>();
+        request.setAttribute("attends", attends);
+
         for (final Student student : getUserView(request).getPerson().getStudents()) {
-            for (final Attends attend : student.getAssociatedAttends()) {
+            for (final Attends attend : student.getOrderedAttends()) {
                 final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
                 if (executionCourse.getExecutionPeriod() == selectedExecutionPeriod) {
+                	weeklyWorkLoadView.add(attend);
                     attends.add(attend);
                 }
             }
         }
-        request.setAttribute("attends", attends);
 
         request.setAttribute("weeklyWorkLoadBean", new WeeklyWorkLoadBean());
 
         return mapping.findForward("showWeeklyWorkLoad");
+    }
+
+    private Interval getExecutionPeriodInterval(final ExecutionPeriod executionPeriod) {
+        final DateTime beginningOfSemester = new DateTime(executionPeriod.getBeginDate());
+        final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
+        final DateTime endOfSemester = new DateTime(executionPeriod.getEndDate());
+        final DateTime nextLastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1).plusWeeks(1);
+        return new Interval(firstMonday, nextLastMonday);
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form,
@@ -90,6 +157,10 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final Integer other = getInteger(dynaActionForm, "other");
 
         create(request, attendsID, contact, autonomousStudy, other);
+
+        dynaActionForm.set("contact", null);
+        dynaActionForm.set("autonomousStudy", null);
+        dynaActionForm.set("other", null);
 
         return prepare(mapping, form, request, response);
     }

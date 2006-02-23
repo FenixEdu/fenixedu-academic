@@ -4,10 +4,15 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.fileSuport.INode;
 
+import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Interval;
+
 /**
  * Created on 11/Fev/2003
  * 
- * @author João Mota
+ * @author Joï¿½o Mota
  * @author jpvl
  * 
  */
@@ -54,4 +59,27 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
     public boolean containsDay(Date day) {
         return !(this.getBeginDate().after(day) || this.getEndDate().before(day));
     }
+
+    public DateMidnight getThisMonday() {
+   		final DateTime beginningOfSemester = new DateTime(this.getBeginDate());
+   		final DateTime endOfSemester = new DateTime(this.getEndDate());
+
+   		if (beginningOfSemester.isAfterNow() || endOfSemester.isBeforeNow()) {
+   			return null;
+   		}
+
+   		final DateMidnight now = new DateMidnight();
+   		return now.withField(DateTimeFieldType.dayOfWeek(), 1);
+    }
+
+    public Interval getCurrentWeek() {
+   		final DateMidnight thisMonday = getThisMonday();
+   		return thisMonday == null ? null : new Interval(thisMonday, thisMonday.plusWeeks(1));
+    }
+
+    public Interval getPreviousWeek() {
+   		final DateMidnight thisMonday = getThisMonday();
+   		return thisMonday == null ? null : new Interval(thisMonday.minusWeeks(1), thisMonday);
+    }
+
 }

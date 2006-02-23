@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -271,5 +273,11 @@ public class Student extends Student_Base {
                 Advise advise = (Advise) arg0;                
                 return advise.getAdviseType().equals(adviseType);
             }});
+    }
+
+    public Set<Attends> getOrderedAttends() {
+    	final Set<Attends> result = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR);
+    	result.addAll(getAssociatedAttends());
+    	return result;
     }
 }

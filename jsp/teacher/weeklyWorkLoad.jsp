@@ -17,13 +17,13 @@
 	<table class="style1">
 		<tr>
 			<td class="listClasses-header" rowspan="2">
-				<bean:message key="title.student.number"/>
-			</td>
-			<td class="listClasses-header" rowspan="2">
 			</td>
 			<bean:size id="numberOfIntervals" name="weeklyWorkLoadView" property="intervals"/>
 			<td class="listClasses-header" colspan="<%= numberOfIntervals %>">
 				<bean:message key="title.weekly.work.load.week"/>
+			</td>
+			<td class="listClasses-header" rowspan="2">
+				<bean:message key="title.weekly.work.load.total"/>
 			</td>
 		</tr>
 		<tr>
@@ -38,47 +38,70 @@
 				</td>
 			</logic:iterate>
 		</tr>
-
-		<logic:iterate id="weeklyWorkLoadEntry" name="weeklyWorkLoadView" property="weeklyWorkLoadMap">
-			<tr>
-				<td class="listClasses-header" rowspan="3">
-					<bean:write name="weeklyWorkLoadEntry" property="key.aluno.number"/>
+		<tr>
+			<td class="courses">
+				<bean:message key="title.weekly.work.load.number.responses"/>
+			</td>
+			<logic:iterate id="responses" name="weeklyWorkLoadView" property="numberResponses">
+				<td class="listClasses">
+					<bean:write name="responses"/>
 				</td>
-				<td class="courses">
-					<bean:message key="title.weekly.work.load.contact"/>
+			</logic:iterate>
+			<td class="listClasses">
+				<bean:write name="weeklyWorkLoadView" property="numberResponsesTotal"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="courses">
+				<bean:message key="title.weekly.work.load.contact"/>
+			</td>
+			<logic:iterate id="contact" name="weeklyWorkLoadView" property="contactSum">
+				<td class="listClasses">
+					<bean:write name="contact"/>
 				</td>
-				<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
-					<td class="listClasses">
-						<logic:present name="weeklyWorkLoad">
-							<bean:write name="weeklyWorkLoad" property="contact"/>
-						</logic:present>
-					</td>
-				</logic:iterate>
-			</tr>
-			<tr>
-				<td class="courses">
-					<bean:message key="title.weekly.work.load.autonomousStudy"/>
+			</logic:iterate>
+			<td class="listClasses">
+				<bean:write name="weeklyWorkLoadView" property="contactTotal"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="courses">
+				<bean:message key="title.weekly.work.load.autonomousStudy"/>
+			</td>
+			<logic:iterate id="autonomousStudy" name="weeklyWorkLoadView" property="autonomousStudySum">
+				<td class="listClasses">
+					<bean:write name="autonomousStudy"/>
 				</td>
-				<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
-					<td class="listClasses">
-						<logic:present name="weeklyWorkLoad">
-							<bean:write name="weeklyWorkLoad" property="autonomousStudy"/>
-						</logic:present>
-					</td>
-				</logic:iterate>
-			</tr>
-			<tr>
-				<td class="courses">
-					<bean:message key="title.weekly.work.load.other"/>
+			</logic:iterate>
+			<td class="listClasses">
+				<bean:write name="weeklyWorkLoadView" property="autonomousStudyTotal"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="courses">
+				<bean:message key="title.weekly.work.load.other"/>
+			</td>
+			<logic:iterate id="other" name="weeklyWorkLoadView" property="otherSum">
+				<td class="listClasses">
+					<bean:write name="other"/>
 				</td>
-				<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
-					<td class="listClasses">
-						<logic:present name="weeklyWorkLoad">
-							<bean:write name="weeklyWorkLoad" property="other"/>
-						</logic:present>
-					</td>
-				</logic:iterate>
-			</tr>
-		</logic:iterate>
+			</logic:iterate>
+			<td class="listClasses">
+				<bean:write name="weeklyWorkLoadView" property="otherSumTotal"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="courses">
+				<bean:message key="title.weekly.work.load.total"/>
+			</td>
+			<logic:iterate id="total" name="weeklyWorkLoadView" property="totalSum">
+				<td class="listClasses">
+					<bean:write name="total"/>
+				</td>
+			</logic:iterate>
+			<td class="listClasses">
+				<bean:write name="weeklyWorkLoadView" property="totalSumTotal"/>
+			</td>
+		</tr>
 	</table>
 </logic:present>
