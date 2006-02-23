@@ -2510,6 +2510,14 @@
 	         <forward name="DisplayExecutionDegreeList" path="/guide/chooseExecutionDegreeToCreateGuide.jsp"/>
 	  </action>
 	
+	<!-- List Master Degree Thesis -->
+	  <action path="/listMasterDegreeThesis"
+		      parameter="method"
+		      scope="request"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.ListMasterDegreeThesisDispatchAction"
+			  >		  
+	         <forward name="showList" path="showMasterDegreeThesisList"/>
+	  </action>
 	
     </action-mappings>
     
