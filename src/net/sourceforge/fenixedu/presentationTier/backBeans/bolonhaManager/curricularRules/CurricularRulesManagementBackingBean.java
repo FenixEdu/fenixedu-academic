@@ -70,6 +70,14 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public Integer getDegreeCurricularPlanID() {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
     }
+    
+    public String getOrganizeBy() {
+        return getAndHoldStringParameter("organizeBy");
+    }
+    
+    public String getType() {
+        return getAndHoldStringParameter("type");
+    }
 
     public Integer getDegreeModuleID() throws FenixFilterException, FenixServiceException {
         if (degreeModuleID == null) {
@@ -623,7 +631,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(getFormatedMessage(domainResources, e.getKey(), e.getArgs()));
         }
         return "";
     }

@@ -44,8 +44,8 @@ public abstract class CurricularRule extends CurricularRule_Base {
         return getCurricularRuleType() == null;
     }
     
+    public abstract boolean isLeaf();    
     public abstract List<GenericPair<Object, Boolean>> getLabel();
-
     public abstract boolean evaluate(Class<? extends DomainObject> object);
     
     @Override
@@ -56,12 +56,6 @@ public abstract class CurricularRule extends CurricularRule_Base {
     @Override
     public ExecutionPeriod getEnd() {
         return (getParentCompositeRule() != null) ? getParentCompositeRule().getEnd() : super.getEnd();
-    }
-
-    @Override
-    public CurricularRuleType getCurricularRuleType() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getCurricularRuleType()
-                : super.getCurricularRuleType();
     }
 
     @Override

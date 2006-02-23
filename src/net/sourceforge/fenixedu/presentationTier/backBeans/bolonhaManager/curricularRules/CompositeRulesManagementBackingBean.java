@@ -12,6 +12,7 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperators;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
@@ -27,8 +28,15 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
     public void setSelectedCurricularRuleIDs(Integer[] selectedCurricularRuleIDs) {
         getViewState().setAttribute("selectedCurricularRuleIDs", selectedCurricularRuleIDs);
     }
+    
+    private void removeSelectedCurricularRuleIDs() {
+        getViewState().removeAttribute("selectedCurricularRuleIDs");
+    }
 
     public String getSelectedLogicOperator() {
+        if (getViewState().getAttribute("selectedLogicOperator") == null) {
+            setSelectedLogicOperator("AND");
+        }
         return (String) getViewState().getAttribute("selectedLogicOperator");
     }
     
@@ -61,8 +69,12 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
         try {
             final Object args[] = {getDegreeModuleID(), LogicOperators.valueOf(getSelectedLogicOperator()), getSelectedCurricularRuleIDs() };
             ServiceUtils.executeService(getUserView(), "CreateCompositeRule", args);
+            removeSelectedCurricularRuleIDs();
+            getCurricularRuleItems().setValue(readCurricularRulesLabels());
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));  
+        } catch (DomainException e) {
+            addErrorMessage(domainResources.getString(e.getMessage()));
         }
         return "";
     }

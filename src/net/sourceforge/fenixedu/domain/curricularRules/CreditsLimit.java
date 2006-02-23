@@ -12,10 +12,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CreditsLimit extends CreditsLimit_Base {
 
-    /**
-     * This constructor should be used in context of Composite Rule
-     */
-    protected CreditsLimit(Double minimum, Double maximum) {
+    private CreditsLimit(Double minimum, Double maximum) {
         super();
         checkCredits(minimum, maximum);
         setMinimum(minimum);

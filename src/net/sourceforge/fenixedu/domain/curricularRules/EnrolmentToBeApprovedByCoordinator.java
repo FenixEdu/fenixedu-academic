@@ -11,11 +11,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByCoordinator_Base {
-    
-    /**
-     * This constructor should be used in context of Composite Rule
-     */
-    protected EnrolmentToBeApprovedByCoordinator() {
+
+    private EnrolmentToBeApprovedByCoordinator() {
         super();
         setCurricularRuleType(CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR);
     }

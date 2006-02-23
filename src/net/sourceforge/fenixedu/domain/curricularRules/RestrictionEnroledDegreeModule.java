@@ -15,10 +15,7 @@ import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
 public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModule_Base {
 
-    /**
-     * This constructor should be used in context of Composite Rule
-     */
-    protected RestrictionEnroledDegreeModule(DegreeModule enroledDegreeModule) {
+    private RestrictionEnroledDegreeModule(DegreeModule enroledDegreeModule) {
         super();
         if (enroledDegreeModule == null) {
             throw new DomainException("curricular.rule.invalid.parameters");

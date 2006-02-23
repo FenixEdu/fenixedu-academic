@@ -29,15 +29,13 @@ public class CompositeRule extends CompositeRule_Base {
     }
 
     private void checkCompositeRuleType(LogicOperators compositeRuleType, CurricularRule... curricularRules) throws DomainException {
-        if (compositeRuleType.equals(LogicOperators.NOT) && curricularRules.length > 1) {
+        if (compositeRuleType == LogicOperators.NOT && curricularRules.length > 1) {
             throw new DomainException("incorrect.NOT.composite.rule.use");
-        } else if ((compositeRuleType.equals(LogicOperators.AND) || compositeRuleType
-                .equals(LogicOperators.OR))
-                && curricularRules.length < 2) {
+        } else if ((compositeRuleType == LogicOperators.AND || compositeRuleType == LogicOperators.OR) && curricularRules.length < 2) {
             throw new DomainException("incorrect.composite.rule.use");
-        } else if (!compositeRuleType.equals(LogicOperators.AND)
-                && !compositeRuleType.equals(LogicOperators.OR)
-                && !compositeRuleType.equals(LogicOperators.NOT)) {
+        } else if (compositeRuleType != LogicOperators.AND
+                && compositeRuleType != LogicOperators.OR
+                && compositeRuleType != LogicOperators.NOT) {
             throw new DomainException("unsupported.composite.rule");
         }
     }
@@ -63,13 +61,14 @@ public class CompositeRule extends CompositeRule_Base {
         } else {
             final String operator;
             if (getCompositeRuleType().equals(LogicOperators.AND)) {
-                operator = "label.and";
+                operator = "label.operator.and";
             } else if (getCompositeRuleType().equals(LogicOperators.OR)) {
-                operator = "label.or";
+                operator = "label.operator.or";
             } else {
                 throw new DomainException("unsupported.composite.rule");
             }
             final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
+            labelList.add(new GenericPair<Object, Boolean>("( ", false));
             final Iterator<CurricularRule> curricularRulesIterator = getCurricularRules().listIterator();
             while (curricularRulesIterator.hasNext()) {
                 labelList.addAll(curricularRulesIterator.next().getLabel());
@@ -79,6 +78,7 @@ public class CompositeRule extends CompositeRule_Base {
                     labelList.add(new GenericPair<Object, Boolean>(" ", false));
                 }
             }
+            labelList.add(new GenericPair<Object, Boolean>(" )", false));
             return labelList;
         }
     }
@@ -123,5 +123,10 @@ public class CompositeRule extends CompositeRule_Base {
     @Override
     protected void removeOwnParameters() {
         for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return false;
     }
 }

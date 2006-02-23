@@ -12,11 +12,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
 public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeModules_Base {
-    
-    /**
-     * This constructor should be used in context of Composite Rule
-     */
-    protected  RestrictionBetweenDegreeModules(DegreeModule precedenceDegreeModule, Double minimumCredits) {
+
+    private RestrictionBetweenDegreeModules(DegreeModule precedenceDegreeModule, Double minimumCredits) {
         super();
         checkParameters(precedenceDegreeModule, minimumCredits);
         setPrecedenceDegreeModule(precedenceDegreeModule);

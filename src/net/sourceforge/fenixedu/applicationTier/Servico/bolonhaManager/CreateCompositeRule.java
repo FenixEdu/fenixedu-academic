@@ -15,27 +15,34 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateCompositeRule extends Service {
 
-    public void run(Integer degreeModuleToApplyRuleID, LogicOperators logicOperator, Integer[] selectedCurricularRuleIDs) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public void run(Integer degreeModuleToApplyRuleID, LogicOperators logicOperator,
+            Integer[] selectedCurricularRuleIDs) throws FenixServiceException, ExcepcaoPersistencia {
 
-        final DegreeModule degreeModuleToApplyRule = (DegreeModule) persistentObject.readByOID(DegreeModule.class, degreeModuleToApplyRuleID);
+        final DegreeModule degreeModuleToApplyRule = (DegreeModule) persistentObject.readByOID(
+                DegreeModule.class, degreeModuleToApplyRuleID);
         if (degreeModuleToApplyRule == null) {
             throw new FenixServiceException("error.noDegreeModule");
         }
-        
-        final CurricularRule[] curricularRules = new CurricularRule[selectedCurricularRuleIDs.length];
-        for (int i=0; i < selectedCurricularRuleIDs.length; i++) {
-            final CurricularRule curricularRule = (CurricularRule) persistentObject.readByOID(CurricularRule.class, selectedCurricularRuleIDs[i]);
-            if (curricularRule == null) {
-                throw new FenixServiceException("error.invalidCurricularRule");
+
+        if (selectedCurricularRuleIDs != null) {
+            final CurricularRule[] curricularRules = new CurricularRule[selectedCurricularRuleIDs.length];
+            for (int i = 0; i < selectedCurricularRuleIDs.length; i++) {
+                final CurricularRule curricularRule = (CurricularRule) persistentObject.readByOID(
+                        CurricularRule.class, selectedCurricularRuleIDs[i]);
+                if (curricularRule == null) {
+                    throw new FenixServiceException("error.invalidCurricularRule");
+                }
+                curricularRules[i] = curricularRule;
             }
-            curricularRules[i] = curricularRule;
+
+            // TODO: this should be modified to receive ExecutionYear, but for
+            // now we just read the '2006/2007'
+            ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
+                    .readExecutionYearByName("2006/2007");
+            ExecutionPeriod begin = executionYear.getExecutionPeriodForSemester(Integer.valueOf(1));
+
+            CurricularRulesManager.createCompositeRule(degreeModuleToApplyRule, logicOperator, begin,
+                    null, curricularRules);
         }
-
-        // TODO: this should be modified to receive ExecutionYear, but for now we just read the '2006/2007'
-        ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName("2006/2007");
-        ExecutionPeriod begin = executionYear.getExecutionPeriodForSemester(Integer.valueOf(1));
-
-        CurricularRulesManager.createCompositeRule(degreeModuleToApplyRule, logicOperator, begin, null, curricularRules);        
     }
 }

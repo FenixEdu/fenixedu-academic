@@ -12,10 +12,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Base {
 
-    /**
-     * This constructor should be used in context of Composite Rule
-     */
-    protected DegreeModulesSelectionLimit(Integer minimum, Integer maximum) {
+    private DegreeModulesSelectionLimit(Integer minimum, Integer maximum) {
         super();
         checkLimits(minimum, maximum);
         setMinimum(minimum);

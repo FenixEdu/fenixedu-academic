@@ -164,7 +164,7 @@ public class FenixBackingBean {
     
     private String formatMessage(final String key, ResourceBundle bundle, final String... args) {
         String message = bundle.getString(key);
-        if(message != null) {
+        if(message != null && args != null) {
             for(int i = 0; args.length > i; i++) {
                 String substring = "{" + i + "}";
                 message = StringUtils.replace(message, substring, args[i]);
