@@ -25,6 +25,17 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
         return result;
     }
 
+    public MasterDegreeThesisDataVersion getActiveMasterDegreeThesisDataVersion(){
+        
+        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : getMasterDegreeThesisDataVersions()) {
+            if(masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)){
+                return masterDegreeThesisDataVersion;
+            }
+        }
+        
+        return null;
+    }
+    
     public MasterDegreeProofVersion getActiveMasterDegreeProofVersion() {
         MasterDegreeProofVersion activeMasterDegreeProofVersion = null;
 
@@ -38,5 +49,6 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 
         return activeMasterDegreeProofVersion;
     }
+        
 
 }
