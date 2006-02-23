@@ -16,7 +16,7 @@ width: 100px;
 padding-right: 10px;
 }
 </style>
-	<fc:dataRepeater rendered="#{!empty CompetenceCourseManagement.departmentApprovedCompetenceCourses}" value="#{CompetenceCourseManagement.departmentApprovedCompetenceCourses}" var="competenceCourse">
+	<fc:dataRepeater rendered="#{!empty CompetenceCourseManagement.departmentCompetenceCourses}" value="#{CompetenceCourseManagement.departmentCompetenceCourses}" var="competenceCourse">
 
 		<h:outputText value="<em>#{scouncilBundle['competenceCourse']}</em>" escape="false" />
 		<h:outputText value="<h2>#{competenceCourse.name}</h2>" escape="false"/>
@@ -201,12 +201,12 @@ padding-right: 10px;
 		</fc:dataRepeater>
 
 		<h:outputText value="</div>" escape="false"/>
-
+		<h:outputText value="<br/><br/><hr/>" escape="false"/>
 	</fc:dataRepeater>
 
-	<h:panelGroup rendered="#{empty CompetenceCourseManagement.departmentApprovedCompetenceCourses}" >
+	<h:panelGroup rendered="#{empty CompetenceCourseManagement.departmentCompetenceCourses}" >
 		<h:outputText value="<h2>#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}</h2>" escape="false"/>
-		<h:outputText value="<em>#{scouncilBundle['no.approved.competence.courses']}</em>" escape="false" />
+		<h:outputText value="<em>#{scouncilBundle['no.competence.courses']}</em>" escape="false" />
 	</h:panelGroup>
 
 </ft:tilesView>

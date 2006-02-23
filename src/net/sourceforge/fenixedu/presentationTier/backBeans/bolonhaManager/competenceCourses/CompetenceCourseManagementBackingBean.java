@@ -68,6 +68,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return getAndHoldStringParameter("action");
     }
     
+    public String getCompetenceCoursesToList() {
+        return getAndHoldStringParameter("competenceCoursesToList");
+    }
+    
     public Boolean getCanView() throws FenixFilterException, FenixServiceException {
         return (this.getPersonDepartment() != null) ? this.getPersonDepartment().getCompetenceCourseMembersGroup().isMember(this.getUserView().getPerson()) : false;
     }
@@ -95,13 +99,13 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return (departmentUnit != null) ? departmentUnit.getScientificAreaUnits() : null;
     }
 
-    public List<CompetenceCourse> getDepartmentApprovedCompetenceCourses() throws FenixFilterException, FenixServiceException {
+    public List<CompetenceCourse> getDepartmentCompetenceCourses(CurricularStage curricularStage) throws FenixFilterException, FenixServiceException {
         List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
         if (getSelectedDepartmentUnit() != null) {
             for (Unit scientificAreaUnit : getSelectedDepartmentUnit().getScientificAreaUnits()) {
                 for (Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
                     for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
-                        if (competenceCourse.getCurricularStage().equals(CurricularStage.APPROVED)) {
+                        if (competenceCourse.getCurricularStage().equals(curricularStage)) {
                             result.add(competenceCourse);                        
                         }
                     }
@@ -109,6 +113,22 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             }
         }
         return result;
+    }
+    
+    public List<CompetenceCourse> getDepartmentCompetenceCourses() throws FenixFilterException, FenixServiceException {
+        return getDepartmentCompetenceCourses(CurricularStage.valueOf(getCompetenceCoursesToList()));
+    }
+    
+    public List<CompetenceCourse> getDepartmentDraftCompetenceCourses() throws FenixFilterException, FenixServiceException {
+        return getDepartmentCompetenceCourses(CurricularStage.DRAFT);
+    }
+    
+    public List<CompetenceCourse> getDepartmentPublishedCompetenceCourses() throws FenixFilterException, FenixServiceException {
+        return getDepartmentCompetenceCourses(CurricularStage.PUBLISHED);
+    }
+    
+    public List<CompetenceCourse> getDepartmentApprovedCompetenceCourses() throws FenixFilterException, FenixServiceException {
+        return getDepartmentCompetenceCourses(CurricularStage.APPROVED);
     }
     
     public List<String> getGroupMembersLabels() throws FenixFilterException, FenixServiceException {

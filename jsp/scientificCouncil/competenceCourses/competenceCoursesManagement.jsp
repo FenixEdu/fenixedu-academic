@@ -38,9 +38,19 @@
 		</h:panelGroup>
 		
 
-		<br/>
+		<h:outputLink rendered="#{!empty CompetenceCourseManagement.departmentDraftCompetenceCourses}" value="showAllCompetenceCourses.faces" target="_blank">
+			<h:outputText value="<br/>#{scouncilBundle['showDraftCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
+			<f:param name="competenceCoursesToList" value="DRAFT"/>
+			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+		</h:outputLink>
+		<h:outputLink rendered="#{!empty CompetenceCourseManagement.departmentPublishedCompetenceCourses}" value="showAllCompetenceCourses.faces" target="_blank">
+			<h:outputText value="<br/>#{scouncilBundle['showPublishedCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
+			<f:param name="competenceCoursesToList" value="PUBLISHED"/>
+			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+		</h:outputLink>
 		<h:outputLink rendered="#{!empty CompetenceCourseManagement.departmentApprovedCompetenceCourses}" value="showAllCompetenceCourses.faces" target="_blank">
-			<h:outputText value="#{scouncilBundle['showAllCompetenceCourses']} (#{scouncilBundle['newPage']})"/>
+			<h:outputText value="<br/>#{scouncilBundle['showApprovedCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
+			<f:param name="competenceCoursesToList" value="APPROVED"/>
 			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 		</h:outputLink>
 
