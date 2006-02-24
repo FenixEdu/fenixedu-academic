@@ -63,6 +63,8 @@
     <!--  ================================================ -->      
     
        <form-bean name="voidForm" type="org.apache.struts.action.DynaActionForm" dynamic="false"/>
+       
+       <form-bean name="sendMailForm" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm" dynamic="false"/>
     </form-beans>
 
 
@@ -278,7 +280,15 @@
         <action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">
             <forward name="show" path="domain.view"/>
         </action>
-
+        
+		<action path="/mailSender"
+            type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.PersonalGroupsMailSender"
+            parameter="method"
+            name="sendMailForm"
+            scope="request">
+            
+            <forward name="sendMail" path="sendMail"/>
+        </action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

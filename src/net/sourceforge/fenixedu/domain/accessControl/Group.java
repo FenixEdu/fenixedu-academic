@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 
@@ -36,7 +37,7 @@ import net.sourceforge.fenixedu.domain.Person;
  * format. Each sub group must ensure that any changes mantain the compatibility with the persisted
  * format or that the persisted groups are migrated correctly.
  */
-public abstract class Group implements Serializable {
+public abstract class Group implements Serializable,IGroup {
     
     private static final long serialVersionUID = 1L;
 

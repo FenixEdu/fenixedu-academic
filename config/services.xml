@@ -9679,6 +9679,12 @@
         </filterChains>     
     </service>           
 	<service>
+   	 	<name>SendEMail</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.email.SendEMail</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+    </service>               
+	<service>
    	 	<name>ReadActiveMasterDegreeThesis</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesis</implementationClass>
         <description></description>
@@ -9686,5 +9692,5 @@
         <filterChains>
         	<chain name="MasterDegreeAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>               
+    </service>   
 </serviceDefinitions>    

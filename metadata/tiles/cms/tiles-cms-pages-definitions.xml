@@ -152,4 +152,8 @@
     <definition name="editWebsiteItem" extends="cms.masterPage" >
         <put name="body" value="/cms/website/editWebsiteItem.jsp"/>
     </definition>
+    
+    <definition name="sendMail" extends="cms.masterPage" >
+        <put name="body" value="/cms/messaging/sendMail.jsp"/>
+    </definition>
 </tiles-definitions>

@@ -29,5 +29,10 @@
         <bean:message bundle="CMS_RESOURCES" key="cms.functionalityLinkManagement.label" />
     </html:link>    
 </strong></p>
+<p><strong>&raquo;
+    <html:link module="/cms" action="/mailSender?method=start" >
+        <bean:message bundle="CMS_RESOURCES" key="cms.mailSender.label" />
+    </html:link>    
+</strong></p>
 
 </div>

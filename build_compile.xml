@@ -196,6 +196,15 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			    			   property="cms.mailer.password"/>
 			</replace>
 
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="SMTPConfiguration.properties"/>
+				<replacefilter token="@mailSender.server.url@" 
+			    			   property="mailSender.server.url"/>
+				<replacefilter token="@mailSender.server.name@" 
+			    			   property="mailSender.server.name"/>
+			</replace>
+
 
 
 			<replace dir="${build.home.webinf.classes}"
