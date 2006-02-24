@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 
-public class CompetenceCourseLoad extends CompetenceCourseLoad_Base {
+public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements Comparable {
     
     protected CompetenceCourseLoad() {
         super();
@@ -59,5 +59,8 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base {
     public double getTotalLoad() {
         return getAutonomousWorkHours() + getContactLoad();
     }
-    
+
+    public int compareTo(Object o) {
+        return getOrder().compareTo(((CompetenceCourseLoad) o).getOrder());
+    }
 }

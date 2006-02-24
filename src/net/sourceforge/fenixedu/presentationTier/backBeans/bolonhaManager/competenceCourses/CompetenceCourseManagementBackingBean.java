@@ -521,7 +521,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
     
     public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads() throws FenixFilterException, FenixServiceException {
-        return new ArrayList(getCompetenceCourse().getSortedCompetenceCourseLoads());
+        return getCompetenceCourse().getSortedCompetenceCourseLoads();
     }
     
     public List<BibliographicReference> getMainBibliographicReferences() throws FenixFilterException, FenixServiceException {

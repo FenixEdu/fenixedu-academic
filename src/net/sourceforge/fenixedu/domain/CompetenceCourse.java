@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -319,14 +320,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return this.getUnit().getDepartmentUnit();
     }
     
-    private static final Comparator<CompetenceCourseLoad> COMPETENCE_COURSE_LOAD_ORDER = new Comparator<CompetenceCourseLoad>() {
-        public int compare(CompetenceCourseLoad ccl1, CompetenceCourseLoad ccl2) {
-            return ccl2.getOrder().compareTo(ccl1.getOrder());
-        }
-    };
-    public Set<CompetenceCourseLoad> getSortedCompetenceCourseLoads() {
-        final SortedSet<CompetenceCourseLoad> result = new TreeSet<CompetenceCourseLoad>(COMPETENCE_COURSE_LOAD_ORDER);
+    public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads() {
+        final List<CompetenceCourseLoad> result = new ArrayList<CompetenceCourseLoad>(getCompetenceCourseLoadsCount());
         result.addAll(getCompetenceCourseLoads());
+        Collections.sort(result);
         return result;
     }
 
