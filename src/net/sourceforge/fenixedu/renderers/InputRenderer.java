@@ -7,7 +7,10 @@ import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.contexts.InputContext;
+import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
+import net.sourceforge.fenixedu.renderers.utils.RenderKit;
+import net.sourceforge.fenixedu.renderers.utils.RenderMode;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
@@ -61,5 +64,22 @@ public abstract class InputRenderer extends Renderer {
                     + slot.getName() + "': " + e);
             return null;
         }
+    }
+
+    @Override
+    protected HtmlComponent renderSlot(MetaSlot slot) {
+        PresentationContext newContext = getContext().createSubContext(slot);
+        newContext.setLayout(slot.getLayout());
+        newContext.setProperties(slot.getProperties());
+        
+        if (slot.isReadOnly()) {
+            newContext.setRenderMode(RenderMode.getMode("output"));
+        }
+        
+        Object value = slot.getObject();
+        Class type = slot.getType();
+        
+        RenderKit kit = RenderKit.getInstance(); 
+        return kit.render(newContext, value, type);
     }
 }

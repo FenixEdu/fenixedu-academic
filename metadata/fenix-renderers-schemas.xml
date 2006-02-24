@@ -288,10 +288,4 @@
     <slot name="autonomousStudy"/>
     <slot name="other"/>
   </schema>
-
-  <schema name="role.edit.tabular" type="net.sourceforge.fenixedu.domain.PersonRole">
-    <slot name="pageNameProperty"/>
-    <slot name="portalSubApplication"/>
-    <slot name="roleType" read-only="true"/> 
-  </schema>
 </schemas>

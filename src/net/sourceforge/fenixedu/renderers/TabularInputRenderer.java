@@ -3,20 +3,22 @@ package net.sourceforge.fenixedu.renderers;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.utils.RenderKit;
-import net.sourceforge.fenixedu.renderers.utils.RenderMode;
 
 public class TabularInputRenderer extends InputRenderer {
 
     private CollectionRenderer collectionRenderer;
     
     public TabularInputRenderer() {
-        this.collectionRenderer = new CollectionRenderer();
+        this.collectionRenderer = new CollectionRenderer() {
+
+            @Override
+            protected HtmlComponent renderSlot(MetaSlot slot) {
+                return TabularInputRenderer.this.renderSlot(slot);
+            }
+            
+        };
     }
     
     public String getBundle(String name) {
@@ -151,37 +153,6 @@ public class TabularInputRenderer extends InputRenderer {
     protected Layout getLayout(Object object, Class type) {
         this.collectionRenderer.setContext(getContext());
 
-        return this.collectionRenderer.new CollectionTabularLayout((Collection) object) {
-            @Override
-            protected HtmlComponent generateObjectComponent(int columnIndex, MetaObject object) {
-                MetaSlot slot = getSlotUsingName(object, columnIndex);
-                
-                if (slot == null) {
-                    return new HtmlText();
-                }
-                
-                HtmlComponent component = renderSlot(slot);
-                component = wrapPrefixAndSuffix(component, columnIndex);
-             
-                return component;
-            }
-        };
-    }
-
-    @Override
-    protected HtmlComponent renderSlot(MetaSlot slot) {
-        PresentationContext newContext = getContext().createSubContext(slot);
-        newContext.setLayout(slot.getLayout());
-        newContext.setProperties(slot.getProperties());
-        
-        if (slot.isReadOnly()) {
-            newContext.setRenderMode(RenderMode.getMode("output"));
-        }
-        
-        Object value = slot.getObject();
-        Class type = slot.getType();
-        
-        RenderKit kit = RenderKit.getInstance(); 
-        return kit.render(newContext, value, type);
+        return this.collectionRenderer.new CollectionTabularLayout((Collection) object);
     }
 }
