@@ -251,15 +251,12 @@ public class Teacher extends Teacher_Base {
         TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionCourse
                 .getExecutionPeriod());
         if (teacherService != null) {
-            for (ShiftProfessorship shiftProfessorShiftEntry : professorship
-                    .getAssociatedShiftProfessorship()) {
-                Shift shift = shiftProfessorShiftEntry.getShift();
-                DegreeTeachingService degreeTeachingService = teacherService
-                        .getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
-                if (degreeTeachingService != null) {
-                    returnValue += ((degreeTeachingService.getPercentage() / 100) * shift.hours());
-                }
-            }
+            List<DegreeTeachingService> teachingServices = teacherService
+                    .getDegreeTeachingServiceByProfessorship(professorship);
+            for (DegreeTeachingService teachingService : teachingServices) {
+                returnValue += ((teachingService.getPercentage() / 100) * teachingService.getShift()
+                        .hours());
+            }            
         }
         return returnValue;
     }
@@ -537,7 +534,7 @@ public class Teacher extends Teacher_Base {
 
     private int calculateServiceExemptionsCredits(List<TeacherServiceExemption> list,
             OccupationPeriod occupationPeriod, ExecutionPeriod executionPeriod) {
-        
+
         TeacherServiceExemption teacherServiceExemption = getTeacherServiceExemption(list,
                 occupationPeriod);
 
@@ -578,9 +575,9 @@ public class Teacher extends Teacher_Base {
                         } else {
                             return getHoursByCategory(executionPeriod);
                         }
-                    }
-                    else if (executionPeriod.getPreviousExecutionPeriod().containsDay(
-                            teacherServiceExemption.getStart()) && daysBetween > 185) { // more than 6 months
+                    } else if (executionPeriod.getPreviousExecutionPeriod().containsDay(
+                            teacherServiceExemption.getStart())
+                            && daysBetween > 185) { // more than 6 months
                         if (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)) {
                             return 6;
                         } else {
