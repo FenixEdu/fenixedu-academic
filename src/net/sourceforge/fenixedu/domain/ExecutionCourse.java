@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -28,6 +29,8 @@ import org.joda.time.Interval;
 import org.joda.time.Period;
 
 public class ExecutionCourse extends ExecutionCourse_Base implements INode {
+
+	public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new BeanComparator("nome", Collator.getInstance());
 
     static {
         CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
@@ -650,21 +653,41 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
             return executionPeriodInterval;
         }
 
+        public int[] getContactSum() {
+            return contactSum;
+        }
+
 		public int[] getAutonomousStudySum() {
 			return autonomousStudySum;
 		}
 
-		public int[] getContactSum() {
-			return contactSum;
-		}
+        public int[] getOtherSum() {
+            return otherSum;
+        }
 
 		public int[] getNumberResponses() {
 			return numberResponses;
 		}
 
-		public int[] getOtherSum() {
-			return otherSum;
-		}
+        public double[] getContactAverage() {
+            return average(getContactSum(), getNumberResponsesTotal());
+        }
+
+        public double[] getAutonomousStudyAverage() {
+            return average(getAutonomousStudySum(), getNumberResponsesTotal());
+        }
+
+        public double[] getOtherAverage() {
+            return average(getOtherSum(), getNumberResponsesTotal());
+        }
+
+        private double[] average(final int[] values, final int divisor) {
+            final double[] valuesAverage = new double[numberOfWeeks];
+            for (int i = 0; i < numberOfWeeks; i++) {
+                valuesAverage[i] = (0.0 + values[i]) / divisor;
+            }
+            return valuesAverage;
+        }
 
 		private int add(final int[] values) {
 			int total = 0;
@@ -690,13 +713,33 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 			return add(otherSum);
 		}
 
+        public double getAutonomousStudyTotalAverage() {
+            return (0.0 + add(autonomousStudySum) / numberOfWeeks);
+        }
+
+        public double getContactTotalAverage() {
+            return (0.0 + add(contactSum) / numberOfWeeks);
+        }
+
+        public double getNumberResponsesTotalAverage() {
+            return (0.0 + add(numberResponses) / numberOfWeeks);
+        }
+
+        public double getOtherSumTotalAverage() {
+            return (0.0 + add(otherSum) / numberOfWeeks);
+        }
+
 		public int[] getTotalSum() {
 			return totalSum;
 		}
 
 		public int getTotalSumTotal() {
 			return add(totalSum);
-		}		
+		}
+
+        public double getTotalAverage() {
+            return (0.0 + getTotalSumTotal() / numberOfWeeks);
+        }
 	}
 
     private Interval getExecutionPeriodInterval() {

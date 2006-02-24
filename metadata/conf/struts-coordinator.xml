@@ -319,9 +319,10 @@
 
 		<form-bean name="weeklyWorkLoadForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">	
 			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="executionPeriodID" type="java.lang.String" />
-			<form-property name="executionCourseID" type="java.lang.String" />
 			<form-property name="degreeCurricularPlanID" type="java.lang.String" />
+			<form-property name="executionPeriodID" type="java.lang.String" />
+			<form-property name="curricularYearID" type="java.lang.String" />
+			<form-property name="executionCourseID" type="java.lang.String" />
 		</form-bean>
 
     </form-beans>

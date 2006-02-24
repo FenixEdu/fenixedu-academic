@@ -18,12 +18,23 @@
 	<html:select property="executionPeriodID" onchange="this.form.submit();">
 		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
 	</html:select>
+	<br/>
+	<html:select property="curricularYearID" onchange="this.form.submit();">
+		<html:option value=""/>
+		<html:options collection="curricularYears" property="idInternal" labelProperty="year"/>
+	</html:select>
+	<br/>
+	<html:select property="executionCourseID" onchange="this.form.submit();">
+		<html:option value=""/>
+		<html:options collection="executionCourses" property="idInternal" labelProperty="nome"/>
+	</html:select>
 </html:form>
 
 <br/>
 <br/>
 
 <logic:present name="executionCoursesMap">
+
 	<logic:iterate id="entry" name="executionCoursesMap">
 
 		<bean:write name="entry" property="key.curricularYear.year"/>

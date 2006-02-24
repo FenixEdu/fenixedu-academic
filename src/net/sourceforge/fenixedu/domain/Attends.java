@@ -158,7 +158,7 @@ public class Attends extends Attends_Base {
         final Period period = new Period(firstMonday, now);
 
         int extraWeek = period.getDays() > 0 ? 1 : 0;
-        return (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek;
+        return (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek - 1;
     }
 
     private YearMonthDay getBeginningOfSemester() {
@@ -173,6 +173,42 @@ public class Attends extends Attends_Base {
 
     public Set<WeeklyWorkLoad> getSortedWeeklyWorkLoads() {
     	return new TreeSet<WeeklyWorkLoad>(getWeeklyWorkLoads());
+    }
+
+    public int getWeeklyWorkLoadContact() {
+    	int result = 0;
+    	for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
+    		final int contact = weeklyWorkLoad.getContact() != null ? weeklyWorkLoad.getContact() : 0;
+    		result += contact;
+    	}
+    	return result;
+    }
+
+    public int getWeeklyWorkLoadAutonomousStudy() {
+    	int result = 0;
+    	for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
+    		final int contact = weeklyWorkLoad.getAutonomousStudy() != null ? weeklyWorkLoad.getAutonomousStudy() : 0;
+    		result += contact;
+    	}
+    	return result;    	
+    }
+
+    public int getWeeklyWorkLoadOther() {
+    	int result = 0;
+    	for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
+    		final int contact = weeklyWorkLoad.getOther() != null ? weeklyWorkLoad.getOther() : 0;
+    		result += contact;
+    	}
+    	return result;
+    }
+
+    public int getWeeklyWorkLoadTotal() {
+    	int result = 0;
+    	for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
+    		final int contact = weeklyWorkLoad.getTotal();
+    		result += contact;
+    	}
+    	return result;
     }
 
 }

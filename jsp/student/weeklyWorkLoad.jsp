@@ -8,9 +8,11 @@
 
 <br/>
 
+<p><span class="error"><html:errors/></span></p>
+
 <html:form action="/weeklyWorkLoad.do">
 	<html:hidden property="method" value="prepare"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden property="page" value="0"/>
 
 	<html:select property="executionPeriodID" onchange="this.form.submit();">
 		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
@@ -93,6 +95,9 @@
 			<td class="listClasses-header" colspan="<%= numberOfIntervals %>">
 				<bean:message key="title.weekly.work.load.week"/>
 			</td>
+			<td class="listClasses-header" rowspan="2">
+				<bean:message key="title.weekly.work.load.total"/>
+			</td>
 		</tr>
 		<tr>
 			<logic:iterate id="interval" indexId="i" type="org.joda.time.Interval" name="weeklyWorkLoadView" property="intervals">
@@ -109,7 +114,7 @@
 
 		<logic:iterate id="weeklyWorkLoadEntry" name="weeklyWorkLoadView" property="weeklyWorkLoadMap">
 			<tr>
-				<td class="listClasses-header" rowspan="3">
+				<td class="listClasses-header" rowspan="4">
 					<bean:write name="weeklyWorkLoadEntry" property="key.disciplinaExecucao.nome"/>
 				</td>
 				<td class="courses">
@@ -122,6 +127,15 @@
 						</logic:present>
 					</td>
 				</logic:iterate>
+				<td class="listClasses">
+					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
+						<logic:present name="weeklyWorkLoad">
+							<strong>
+								<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadContact"/>
+							</strong>
+						</logic:present>
+					</logic:iterate>
+				</td>
 			</tr>
 			<tr>
 				<td class="courses">
@@ -134,6 +148,15 @@
 						</logic:present>
 					</td>
 				</logic:iterate>
+				<td class="listClasses">
+					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
+						<logic:present name="weeklyWorkLoad">
+							<strong>
+								<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadAutonomousStudy"/>
+							</strong>
+						</logic:present>
+					</logic:iterate>
+				</td>
 			</tr>
 			<tr>
 				<td class="courses">
@@ -146,6 +169,40 @@
 						</logic:present>
 					</td>
 				</logic:iterate>
+				<td class="listClasses">
+					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
+						<logic:present name="weeklyWorkLoad">
+							<strong>
+								<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadOther"/>
+							</strong>
+						</logic:present>
+					</logic:iterate>
+				</td>
+			</tr>
+			<tr>
+				<td class="courses">
+					<strong>
+						<bean:message key="title.weekly.work.load.total"/>
+					</strong>
+				</td>
+				<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
+					<td class="listClasses">
+						<logic:present name="weeklyWorkLoad">
+							<strong>
+								<bean:write name="weeklyWorkLoad" property="total"/>
+							</strong>
+						</logic:present>
+					</td>
+				</logic:iterate>
+				<td class="listClasses">
+					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
+						<logic:present name="weeklyWorkLoad">
+							<strong>
+								<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadTotal"/>
+							</strong>
+						</logic:present>
+					</logic:iterate>
+				</td>
 			</tr>
 		</logic:iterate>
 	</table>

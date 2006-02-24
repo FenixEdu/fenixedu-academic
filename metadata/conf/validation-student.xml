@@ -117,7 +117,18 @@
 		    </var>
 		</field>
 	</form>
-   	   
- 
+
+    <form name="weeklyWorkLoadForm">
+      <field property="contact" depends="required, integer" page="1">
+        <arg0 key="title.weekly.work.load.contact"/>
+      </field>
+      <field property="autonomousStudy" depends="required, integer" page="1">
+        <arg0 key="title.weekly.work.load.autonomousStudy"/>
+      </field>
+      <field property="other" depends="required, integer" page="1">
+        <arg0 key="title.weekly.work.load.other"/>
+      </field>
+    </form>
+
   </formset>
 </form-validation>

@@ -48,7 +48,7 @@
 				</td>
 			</logic:iterate>
 			<td class="listClasses">
-				<bean:write name="weeklyWorkLoadView" property="numberResponsesTotal"/>
+				<bean:write name="weeklyWorkLoadView" property="numberResponsesTotalAverage"/>
 			</td>
 		</tr>
 		<tr>
@@ -61,7 +61,7 @@
 				</td>
 			</logic:iterate>
 			<td class="listClasses">
-				<bean:write name="weeklyWorkLoadView" property="contactTotal"/>
+				<bean:write name="weeklyWorkLoadView" property="contactTotalAverage"/>
 			</td>
 		</tr>
 		<tr>
@@ -74,7 +74,7 @@
 				</td>
 			</logic:iterate>
 			<td class="listClasses">
-				<bean:write name="weeklyWorkLoadView" property="autonomousStudyTotal"/>
+				<bean:write name="weeklyWorkLoadView" property="autonomousStudyTotalAverage"/>
 			</td>
 		</tr>
 		<tr>
@@ -87,7 +87,7 @@
 				</td>
 			</logic:iterate>
 			<td class="listClasses">
-				<bean:write name="weeklyWorkLoadView" property="otherSumTotal"/>
+				<bean:write name="weeklyWorkLoadView" property="otherSumTotalAverage"/>
 			</td>
 		</tr>
 		<tr>
@@ -101,6 +101,7 @@
 			</logic:iterate>
 			<td class="listClasses">
 				<bean:write name="weeklyWorkLoadView" property="totalSumTotal"/>
+				<bean:write name="weeklyWorkLoadView" property="totalAverage"/>
 			</td>
 		</tr>
 	</table>

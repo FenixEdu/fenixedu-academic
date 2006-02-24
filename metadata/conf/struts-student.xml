@@ -776,7 +776,7 @@
   			type="net.sourceforge.fenixedu.presentationTier.Action.student.WeeklyWorkLoadDA"
   			name="weeklyWorkLoadForm"
   			scope="request"
-  			input="/weeklyWorkLoad.do?method=prepare"
+  			input="/weeklyWorkLoad.do?method=prepare&amp;page=0"
   			parameter="method"
   			>
   			<forward name="showWeeklyWorkLoad" path="show-weekly-work-load"/>

@@ -25,6 +25,13 @@ public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<We
         setWeekOffset(weekOffset);
     }
 
+    public int getTotal() {
+    	final int contact = getContact() != null ? getContact() : 0;
+    	final int autonomousStudy = getAutonomousStudy() != null ? getAutonomousStudy() : 0;
+    	final int other = getOther() != null ? getOther() : 0;
+    	return contact + autonomousStudy + other;
+    }
+
     public int compareTo(final WeeklyWorkLoad weeklyWorkLoad) {
         if (weeklyWorkLoad == null) {
             throw new NullPointerException("Cannot compare weekly work load with null");
