@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.util.ProposalState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
@@ -714,19 +715,19 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 		}
 
         public double getAutonomousStudyTotalAverage() {
-            return (0.0 + add(autonomousStudySum) / numberOfWeeks);
+            return (0.0 + Math.round((0.0 + add(autonomousStudySum)) / numberOfWeeks)) / 100;
         }
 
         public double getContactTotalAverage() {
-            return (0.0 + add(contactSum) / numberOfWeeks);
+            return (0.0 + Math.round((0.0 + add(contactSum)) / numberOfWeeks)) / 100;
         }
 
         public double getNumberResponsesTotalAverage() {
-            return (0.0 + add(numberResponses) / numberOfWeeks);
+            return (0.0 + Math.round((0.0 + add(numberResponses)) / numberOfWeeks)) / 100;
         }
 
         public double getOtherSumTotalAverage() {
-            return (0.0 + add(otherSum) / numberOfWeeks);
+            return (0.0 + Math.round((0.0 + add(otherSum)) / numberOfWeeks)) / 100;
         }
 
 		public int[] getTotalSum() {
@@ -738,11 +739,13 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 		}
 
         public double getTotalAverage() {
-            return (0.0 + getTotalSumTotal() / numberOfWeeks);
+            System.out.println("getTotalSumTotal(): " + getTotalSumTotal());
+            System.out.println("numberOfWeeks: " + numberOfWeeks);
+            return (0.0 + Math.round((0.0 + getTotalSumTotal()) * 100 / numberOfWeeks)) / 100;
         }
 	}
 
-    private Interval getExecutionPeriodInterval() {
+    public Interval getInterval() {
     	final ExecutionPeriod executionPeriod = getExecutionPeriod();
         final DateTime beginningOfSemester = new DateTime(executionPeriod.getBeginDate());
         final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
@@ -752,12 +755,16 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
     }
 
 	public WeeklyWorkLoadView getWeeklyWorkLoadView() {
-		final Interval interval = getExecutionPeriodInterval();
-		final WeeklyWorkLoadView weeklyWorkLoadView = new WeeklyWorkLoadView(interval);
-        for (final Attends attend : getAttends()) {
-            weeklyWorkLoadView.add(attend);
+        if (!getAttends().isEmpty()) {
+            final Interval interval = getAttends().get(0).getWeeklyWorkLoadInterval();
+            final WeeklyWorkLoadView weeklyWorkLoadView = new WeeklyWorkLoadView(interval);
+            for (final Attends attend : getAttends()) {
+                weeklyWorkLoadView.add(attend);
+            }
+            return weeklyWorkLoadView;
+        } else {
+            return null;
         }
-		return weeklyWorkLoadView;
 	}
 
 }

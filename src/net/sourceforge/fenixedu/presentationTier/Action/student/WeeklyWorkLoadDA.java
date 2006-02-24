@@ -35,7 +35,11 @@ import org.joda.time.Period;
 
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
-	private static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>(){
+	public enum IntervalType {
+        LESSON_INTERVAL, EXAM_INTERVAL;
+    }
+
+    private static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>(){
 		public int compare(final Attends attends1, final Attends attends2) {
 			final ExecutionCourse executionCourse1 = attends1.getDisciplinaExecucao();
 			final ExecutionCourse executionCourse2 = attends2.getDisciplinaExecucao();
@@ -48,6 +52,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
         final Map<Attends, WeeklyWorkLoad[]> weeklyWorkLoadMap = new TreeMap<Attends, WeeklyWorkLoad[]>(ATTENDS_COMPARATOR);
         final Interval[] intervals;
+        final IntervalType[] intervalTypes;
 
         public WeeklyWorkLoadView(final Interval executionPeriodInterval) {
             this.executionPeriodInterval = executionPeriodInterval;
@@ -55,6 +60,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             int extraWeek = period.getDays() > 0 ? 1 : 0;
             numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek;
             intervals = new Interval[numberOfWeeks];
+            intervalTypes = new IntervalType[numberOfWeeks];
             for (int i = 0; i < numberOfWeeks; i++) {
                 final DateTime start = executionPeriodInterval.getStart().plusWeeks(i);
                 final DateTime end = start.plusWeeks(1);
@@ -99,36 +105,42 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         request.setAttribute("selectedExecutionPeriod", selectedExecutionPeriod);
 
         dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
-        
 
-        final Interval executionPeriodInterval = getExecutionPeriodInterval(selectedExecutionPeriod);
-        final WeeklyWorkLoadView weeklyWorkLoadView = new WeeklyWorkLoadView(executionPeriodInterval);
-        request.setAttribute("weeklyWorkLoadView", weeklyWorkLoadView);
+        final Attends firstAttends = findFirstAttends(request, selectedExecutionPeriod);
+        if (firstAttends != null) {
+            final Interval executionPeriodInterval = firstAttends.getWeeklyWorkLoadInterval();
+            final WeeklyWorkLoadView weeklyWorkLoadView = new WeeklyWorkLoadView(executionPeriodInterval);
+            request.setAttribute("weeklyWorkLoadView", weeklyWorkLoadView);
 
-        final Collection<Attends> attends = new ArrayList<Attends>();
-        request.setAttribute("attends", attends);
+            final Collection<Attends> attends = new ArrayList<Attends>();
+            request.setAttribute("attends", attends);
 
-        for (final Student student : getUserView(request).getPerson().getStudents()) {
-            for (final Attends attend : student.getOrderedAttends()) {
-                final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
-                if (executionCourse.getExecutionPeriod() == selectedExecutionPeriod) {
-                	weeklyWorkLoadView.add(attend);
-                    attends.add(attend);
+            for (final Student student : getUserView(request).getPerson().getStudents()) {
+                for (final Attends attend : student.getOrderedAttends()) {
+                    final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+                    if (executionCourse.getExecutionPeriod() == selectedExecutionPeriod) {
+                        weeklyWorkLoadView.add(attend);
+                        attends.add(attend);
+                    }
                 }
             }
-        }
 
-        request.setAttribute("weeklyWorkLoadBean", new WeeklyWorkLoadBean());
+            request.setAttribute("weeklyWorkLoadBean", new WeeklyWorkLoadBean());
+        }
 
         return mapping.findForward("showWeeklyWorkLoad");
     }
 
-    private Interval getExecutionPeriodInterval(final ExecutionPeriod executionPeriod) {
-        final DateTime beginningOfSemester = new DateTime(executionPeriod.getBeginDate());
-        final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
-        final DateTime endOfSemester = new DateTime(executionPeriod.getEndDate());
-        final DateTime nextLastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1).plusWeeks(1);
-        return new Interval(firstMonday, nextLastMonday);
+    private Attends findFirstAttends(final HttpServletRequest request, final ExecutionPeriod selectedExecutionPeriod) throws FenixFilterException, FenixServiceException {
+        for (final Student student : getUserView(request).getPerson().getStudents()) {
+            for (final Attends attend : student.getOrderedAttends()) {
+                final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+                if (executionCourse.getExecutionPeriod() == selectedExecutionPeriod) {
+                    return attend;
+                }
+            }
+        }
+        return null;
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form,

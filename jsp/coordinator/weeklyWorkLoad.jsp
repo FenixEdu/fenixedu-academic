@@ -33,15 +33,103 @@
 <br/>
 <br/>
 
-<logic:present name="executionCoursesMap">
+<logic:notPresent name="selectedExecutionCourse">
+<logic:present name="curricularYearWeeklyWorkLoadView">
+	<table class="style1">
+		<tr>
+			<td class="listClasses-header" rowspan="2">
+			</td>
+			<bean:size id="numberOfIntervals" name="curricularYearWeeklyWorkLoadView" property="intervals"/>
+			<td class="listClasses-header" colspan="<%= numberOfIntervals %>">
+				<bean:message key="title.weekly.work.load.week"/>
+			</td>
+			<td class="listClasses-header" rowspan="2">
+				<bean:message key="title.weekly.work.load.total"/>
+			</td>
+		</tr>
+		<tr>
+			<logic:iterate id="interval" indexId="i" type="org.joda.time.Interval" name="curricularYearWeeklyWorkLoadView" property="intervals">
+				<bean:define id="intervalString" type="java.lang.String">
+					<bean:define id="start" type="org.joda.time.DateTime" name="interval" property="start"/>
+					<bean:define id="end" type="org.joda.time.DateTime" name="interval" property="end"/>				
+					[<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>, <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>[
+				</bean:define>
+				<td class="listClasses-header" title="<%= intervalString %>">
+					<%= i.intValue() + 1 %>
+				</td>
+			</logic:iterate>
+		</tr>
+		<tr>
+			<td class="courses">
+				<bean:message key="title.weekly.work.load.number.responses"/>
+			</td>
+			<logic:iterate id="responses" name="curricularYearWeeklyWorkLoadView" property="numberResponses">
+				<td class="listClasses">
+					<bean:write name="responses"/>
+				</td>
+			</logic:iterate>
+			<td class="listClasses">
+				<bean:write name="curricularYearWeeklyWorkLoadView" property="numberResponsesTotalAverage"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="courses">
+				<bean:message key="title.weekly.work.load.contact"/>
+			</td>
+			<logic:iterate id="contact" name="curricularYearWeeklyWorkLoadView" property="contactSum">
+				<td class="listClasses">
+					<bean:write name="contact"/>
+				</td>
+			</logic:iterate>
+			<td class="listClasses">
+				<bean:write name="curricularYearWeeklyWorkLoadView" property="contactTotalAverage"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="courses">
+				<bean:message key="title.weekly.work.load.autonomousStudy"/>
+			</td>
+			<logic:iterate id="autonomousStudy" name="curricularYearWeeklyWorkLoadView" property="autonomousStudySum">
+				<td class="listClasses">
+					<bean:write name="autonomousStudy"/>
+				</td>
+			</logic:iterate>
+			<td class="listClasses">
+				<bean:write name="curricularYearWeeklyWorkLoadView" property="autonomousStudyTotalAverage"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="courses">
+				<bean:message key="title.weekly.work.load.other"/>
+			</td>
+			<logic:iterate id="other" name="curricularYearWeeklyWorkLoadView" property="otherSum">
+				<td class="listClasses">
+					<bean:write name="other"/>
+				</td>
+			</logic:iterate>
+			<td class="listClasses">
+				<bean:write name="curricularYearWeeklyWorkLoadView" property="otherSumTotalAverage"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="courses">
+				<bean:message key="title.weekly.work.load.total"/>
+			</td>
+			<logic:iterate id="total" name="curricularYearWeeklyWorkLoadView" property="totalSum">
+				<td class="listClasses">
+					<bean:write name="total"/>
+				</td>
+			</logic:iterate>
+			<td class="listClasses">
+				<bean:write name="curricularYearWeeklyWorkLoadView" property="totalAverage"/>
+			</td>
+		</tr>
+	</table>
+</logic:present>
+</logic:notPresent>
 
-	<logic:iterate id="entry" name="executionCoursesMap">
-
-		<bean:write name="entry" property="key.curricularYear.year"/>
-		<br/>
-		<logic:iterate id="executionCourse" name="entry" property="value">
-			<bean:define id="weeklyWorkLoadView" name="executionCourse" property="weeklyWorkLoadView"/>
-
+<logic:present name="selectedExecutionCourse">
+	<bean:define id="weeklyWorkLoadView" name="selectedExecutionCourse" property="weeklyWorkLoadView"/>
 	<table class="style1">
 		<tr>
 			<td class="listClasses-header" rowspan="2">
@@ -76,7 +164,7 @@
 				</td>
 			</logic:iterate>
 			<td class="listClasses">
-				<bean:write name="weeklyWorkLoadView" property="numberResponsesTotal"/>
+				<bean:write name="weeklyWorkLoadView" property="numberResponsesTotalAverage"/>
 			</td>
 		</tr>
 		<tr>
@@ -89,7 +177,7 @@
 				</td>
 			</logic:iterate>
 			<td class="listClasses">
-				<bean:write name="weeklyWorkLoadView" property="contactTotal"/>
+				<bean:write name="weeklyWorkLoadView" property="contactTotalAverage"/>
 			</td>
 		</tr>
 		<tr>
@@ -102,7 +190,7 @@
 				</td>
 			</logic:iterate>
 			<td class="listClasses">
-				<bean:write name="weeklyWorkLoadView" property="autonomousStudyTotal"/>
+				<bean:write name="weeklyWorkLoadView" property="autonomousStudyTotalAverage"/>
 			</td>
 		</tr>
 		<tr>
@@ -115,7 +203,7 @@
 				</td>
 			</logic:iterate>
 			<td class="listClasses">
-				<bean:write name="weeklyWorkLoadView" property="otherSumTotal"/>
+				<bean:write name="weeklyWorkLoadView" property="otherSumTotalAverage"/>
 			</td>
 		</tr>
 		<tr>
@@ -128,11 +216,8 @@
 				</td>
 			</logic:iterate>
 			<td class="listClasses">
-				<bean:write name="weeklyWorkLoadView" property="totalSumTotal"/>
+				<bean:write name="weeklyWorkLoadView" property="totalAverage"/>
 			</td>
 		</tr>
 	</table>
-
-		</logic:iterate>
-	</logic:iterate>
 </logic:present>

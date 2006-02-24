@@ -21,6 +21,7 @@
 
 <br/>
 
+<logic:present name="weeklyWorkLoadView">
 <logic:present name="selectedExecutionPeriod" property="previousWeek">
 	<bean:define id="previousWeek" name="selectedExecutionPeriod" property="previousWeek"/>
 	<table class="style1">
@@ -79,6 +80,7 @@
 			</logic:notPresent>
 		</logic:iterate>
 	</table>
+</logic:present>
 </logic:present>
 
 <br/>

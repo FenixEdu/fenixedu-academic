@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -44,8 +47,7 @@ public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<We
     }
 
     public Interval getInterval() {
-   		final ExecutionPeriod executionPeriod = getAttends().getDisciplinaExecucao().getExecutionPeriod();
-   		final DateTime beginningOfSemester = new DateTime(executionPeriod.getBeginDate());
+   		final DateTime beginningOfSemester = new DateTime(getAttends().getBegginingOfLessonPeriod());
    		final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
    		final DateTime start = firstMonday.withFieldAdded(DurationFieldType.weeks(), getWeekOffset().intValue());
    		final DateTime end = start.plusWeeks(1);

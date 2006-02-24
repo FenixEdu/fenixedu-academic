@@ -9,6 +9,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -17,7 +18,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 
 import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
@@ -122,7 +125,7 @@ public class Attends extends Attends_Base {
         }
 
         final int currentWeekOffset = calculateCurrentWeekOffset();
-        if (currentWeekOffset < 1 || getEndOfSemester().plusDays(7).isBefore(new YearMonthDay())) {
+        if (currentWeekOffset < 1 || new YearMonthDay(getEndOfExamsPeriod()).plusDays(7).isBefore(new YearMonthDay())) {
             throw new DomainException("outside.weekly.work.load.response.period");
         }
 
@@ -137,9 +140,17 @@ public class Attends extends Attends_Base {
         return new WeeklyWorkLoad(this, Integer.valueOf(previousWeekOffset), contact, autonomousStudy, other);
     }
 
+    public Interval getWeeklyWorkLoadInterval() {
+        final DateTime beginningOfSemester = new DateTime(getBegginingOfLessonPeriod());
+        final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
+        final DateTime endOfSemester = new DateTime(getEndOfExamsPeriod());
+        final DateTime nextLastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1).plusWeeks(1);
+        return new Interval(firstMonday, nextLastMonday);
+    }
+
     public WeeklyWorkLoad getWeeklyWorkLoadOfPreviousWeek() {
         final int currentWeekOffset = calculateCurrentWeekOffset();
-        if (currentWeekOffset < 1 || getEndOfSemester().plusDays(7).isBefore(new YearMonthDay())) {
+        if (currentWeekOffset < 1 || new YearMonthDay(getEndOfExamsPeriod()).plusDays(7).isBefore(new YearMonthDay())) {
             throw new DomainException("outside.weekly.work.load.response.period");
         }
         final int previousWeekOffset = currentWeekOffset - 1;
@@ -152,23 +163,13 @@ public class Attends extends Attends_Base {
     }
 
     private int calculateCurrentWeekOffset() {
-        final DateMidnight beginningOfSemester = getBeginningOfSemester().toDateMidnight();
+        final DateMidnight beginningOfSemester = new DateMidnight(getBegginingOfLessonPeriod());
         final DateMidnight firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
         final DateMidnight now = new DateMidnight();
         final Period period = new Period(firstMonday, now);
 
         int extraWeek = period.getDays() > 0 ? 1 : 0;
         return (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek - 1;
-    }
-
-    private YearMonthDay getBeginningOfSemester() {
-        final ExecutionPeriod executionPeriod = getDisciplinaExecucao().getExecutionPeriod();
-        return new YearMonthDay(executionPeriod.getBeginDate());
-    }
-
-    private YearMonthDay getEndOfSemester() {
-        final ExecutionPeriod executionPeriod = getDisciplinaExecucao().getExecutionPeriod();
-        return new YearMonthDay(executionPeriod.getEndDate());
     }
 
     public Set<WeeklyWorkLoad> getSortedWeeklyWorkLoads() {
@@ -211,4 +212,29 @@ public class Attends extends Attends_Base {
     	return result;
     }
 
+    public Date getBegginingOfLessonPeriod() {
+        final ExecutionPeriod executionPeriod = getDisciplinaExecucao().getExecutionPeriod();
+        final StudentCurricularPlan studentCurricularPlan = getEnrolment().getStudentCurricularPlan();
+        final ExecutionDegree executionDegree = studentCurricularPlan.getDegreeCurricularPlan().getExecutionDegreeByYear(executionPeriod.getExecutionYear());
+        if (executionPeriod.getSemester().intValue() == 1) {
+            return executionDegree.getPeriodLessonsFirstSemester().getStart();
+        } else if (executionPeriod.getSemester().intValue() == 2) {
+            return executionDegree.getPeriodLessonsSecondSemester().getStart();
+        } else {
+            throw new DomainException("unsupported.execution.period.semester");
+        }
+    }
+
+    public Date getEndOfExamsPeriod() {
+        final ExecutionPeriod executionPeriod = getDisciplinaExecucao().getExecutionPeriod();
+        final StudentCurricularPlan studentCurricularPlan = getEnrolment().getStudentCurricularPlan();
+        final ExecutionDegree executionDegree = studentCurricularPlan.getDegreeCurricularPlan().getExecutionDegreeByYear(executionPeriod.getExecutionYear());
+        if (executionPeriod.getSemester().intValue() == 1) {
+            return executionDegree.getPeriodExamsFirstSemester().getEnd();
+        } else if (executionPeriod.getSemester().intValue() == 2) {
+            return executionDegree.getPeriodExamsSecondSemester().getEnd();
+        } else {
+            throw new DomainException("unsupported.execution.period.semester");
+        }
+    }
 }

@@ -100,7 +100,6 @@
 				</td>
 			</logic:iterate>
 			<td class="listClasses">
-				<bean:write name="weeklyWorkLoadView" property="totalSumTotal"/>
 				<bean:write name="weeklyWorkLoadView" property="totalAverage"/>
 			</td>
 		</tr>
