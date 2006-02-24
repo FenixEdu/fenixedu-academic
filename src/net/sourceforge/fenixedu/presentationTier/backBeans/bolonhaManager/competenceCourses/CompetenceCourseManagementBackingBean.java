@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.competenceCourses;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -30,8 +29,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -269,14 +266,13 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
     
     private List<CourseLoad> getExistingCourseLoads() throws FenixFilterException, FenixServiceException {
-        final List<CourseLoad> courseLoads = new ArrayList<CourseLoad>(getCompetenceCourse().getCompetenceCourseLoads().size());        
-        for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourse().getCompetenceCourseLoads()) {
+        final List<CourseLoad> courseLoads = new ArrayList<CourseLoad>(getCompetenceCourse().getCompetenceCourseLoadsCount());        
+        for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourse().getSortedCompetenceCourseLoads()) {
             courseLoads.add(new CourseLoad("edit", competenceCourseLoad));
         }
         if (courseLoads.isEmpty()) {
             courseLoads.add(new CourseLoad(1));
         }
-        Collections.sort(courseLoads, new BeanComparator("order"));
         return courseLoads;
     }
     
