@@ -32,6 +32,28 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
         return metaObject;
     }
 
+    @Override
+    public MetaObject createMetaObject(Class type, Schema schema) {
+        SimpleCreationMetaObject metaObject;
+        
+        try {
+            metaObject = new SimpleCreationMetaObject(type.newInstance());
+        } catch (Exception e) {
+            throw new RuntimeException("could not create a new instance of " + type, e);
+        } 
+        
+        metaObject.setSchema(schema.getName());
+        
+        List<SchemaSlotDescription> slotDescriptions = schema.getSlotDescriptions(); 
+        for (SchemaSlotDescription description : slotDescriptions) {
+            SimpleMetaSlot metaSlot = (SimpleMetaSlot) createMetaSlot(metaObject, description);
+            
+            metaObject.addSlot(metaSlot);
+        }
+        
+        return metaObject;
+    }
+
     protected MetaObject createOneMetaObject(Object object, Schema schema) {
         SimpleMetaObject metaObject = new SimpleMetaObject(object);
         metaObject.setSchema(schema.getName());
@@ -48,7 +70,14 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
 
     @Override
     public MetaSlot createMetaSlot(MetaObject metaObject, SchemaSlotDescription slotDescription) {
-        SimpleMetaSlot metaSlot = new SimpleMetaSlot((SimpleMetaObject) metaObject, slotDescription.getSlotName());
+        SimpleMetaSlot metaSlot;
+        
+        if (metaObject instanceof CreationMetaObject) {
+            metaSlot = new SimpleMetaSlotWithDefault((SimpleMetaObject) metaObject, slotDescription.getSlotName());
+        }
+        else {
+            metaSlot = new SimpleMetaSlot((SimpleMetaObject) metaObject, slotDescription.getSlotName());
+        }
         
         metaSlot.setLabelKey(slotDescription.getKey());
         metaSlot.setSchema(slotDescription.getSchema());
@@ -57,6 +86,8 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
         metaSlot.setValidatorProperties(slotDescription.getValidatorProperties());
         metaSlot.setDefaultValue(slotDescription.getDefaultValue());
         metaSlot.setProperties(slotDescription.getProperties());
+        metaSlot.setConverter(slotDescription.getConverter());
+        metaSlot.setReadOnly(slotDescription.isReadOnly());
         
         return metaSlot;
     }

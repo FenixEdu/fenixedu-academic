@@ -52,7 +52,13 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
     }
 
     public List<MetaSlot> getSlots() {
-        return new ArrayList<MetaSlot>();
+        List<MetaSlot> slots = new ArrayList<MetaSlot>();
+        
+        for (MetaObject metaObject : getAllMetaObjects()) {
+            slots.addAll(metaObject.getSlots());
+        }
+        
+        return slots;
     }
 
     public MetaObjectKey getKey() {

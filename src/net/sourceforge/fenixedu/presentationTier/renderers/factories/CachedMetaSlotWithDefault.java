@@ -19,7 +19,7 @@ public class CachedMetaSlotWithDefault extends CachedMetaSlot {
     @Override
     public Object getObject() {
         if (createValue) {
-            setObject(DefaultValues.createValue(getType(), getDefaultValue()));
+            setObject(FenixDefaultValues.getInstance().createValue(getType(), getDefaultValue()));
             
             createValue = false;
         }

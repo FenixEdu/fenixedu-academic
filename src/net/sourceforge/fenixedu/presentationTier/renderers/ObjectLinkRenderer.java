@@ -134,7 +134,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
     }
 
     private String getViewUrl() {
-        if (getViewPage() == null) {
+        if (getViewPage() != null) {
             return getViewPage();
         }
         else {

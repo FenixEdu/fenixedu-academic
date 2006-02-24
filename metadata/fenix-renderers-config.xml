@@ -42,7 +42,7 @@
     <renderer type="java.lang.Object" layout="values" class="net.sourceforge.fenixedu.renderers.ValuesRenderer"/>
     <renderer type="java.lang.Object" layout="format" class="net.sourceforge.fenixedu.renderers.FormatRenderer"/>
     
-    <!-- NOTE: to be used as a layout for a slot fo a DomainObject only. It's a link to the whole object details -->
+    <!-- NOTE: to be used as a layout for a slot of a DomainObject only. It's a link to the whole object details -->
     <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer">
         <property name="destinyLayout" value="tabular"/>
     </renderer>
@@ -83,6 +83,7 @@
     <!-- input -->
   
     <renderer mode="input" type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer"/>
+    <renderer mode="input" type="java.util.Collection" layout="tabular-editable" class="net.sourceforge.fenixedu.renderers.TabularInputRenderer"/>
     <renderer mode="input" type="java.util.List" layout="option-select" class="net.sourceforge.fenixedu.presentationTier.renderers.InputCheckBoxListRenderer"/>
     <renderer mode="input" type="java.util.List" layout="external-add" class="net.sourceforge.fenixedu.renderers.ManageableListRenderer"/>
 
@@ -115,7 +116,6 @@
     <!-- NOTE: needed by the create tag. The tag selects a DomainClass but the input can proceed as with a standard domain object -->
     <renderer mode="input" type="dml.DomainClass" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
     <renderer mode="input" type="dml.DomainClass" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
-
 
     <!-- FIXME: this should be removed, used for renderers examples only -->
     <renderer type="java.lang.Object" layout="nice-details-table" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">

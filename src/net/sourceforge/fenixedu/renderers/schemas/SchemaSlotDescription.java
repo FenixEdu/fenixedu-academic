@@ -25,6 +25,8 @@ public class SchemaSlotDescription {
     
     private Class<Converter> converter;
     
+    private boolean readOnly;
+    
     public SchemaSlotDescription(String slotName) {
         this.slotName = slotName;
     }
@@ -99,5 +101,13 @@ public class SchemaSlotDescription {
 
     public void setConverter(Class<Converter> converter) {
         this.converter = converter;
+    }
+
+    public boolean isReadOnly() {
+        return this.readOnly;
+    }
+
+    public void setReadonly(boolean readOnly) {
+        this.readOnly = readOnly;
     }
 }

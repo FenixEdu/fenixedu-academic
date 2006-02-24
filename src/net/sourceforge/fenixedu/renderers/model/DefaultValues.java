@@ -1,11 +1,10 @@
-package net.sourceforge.fenixedu.presentationTier.renderers.factories;
+package net.sourceforge.fenixedu.renderers.model;
 
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.renderers.utils.ClassHierarchyTable;
 
 import org.apache.log4j.Logger;
@@ -15,13 +14,15 @@ public class DefaultValues {
     
     private static Logger logger = Logger.getLogger(DefaultValues.class);
     
+    protected static DefaultValues instance;
+
     public static abstract class ValueCreator {
         public abstract Object createValue(Class type, String defaultValue);
     }
     
     private static ClassHierarchyTable<ValueCreator> defaultValues = new ClassHierarchyTable<ValueCreator>();
     
-    private DefaultValues() {
+    protected DefaultValues() {
         Method[] methods = getClass().getMethods();
         
         for (int i = 0; i < methods.length; i++) {
@@ -34,7 +35,7 @@ public class DefaultValues {
                     Class type = parameters[0];
                     
                     try {
-                        DefaultValues.registerCreator(type, new ValueCreator() {
+                        registerCreator(type, new ValueCreator() {
                             @Override
                             public Object createValue(Class type, String defaultValue) {
                                 try {
@@ -54,33 +55,40 @@ public class DefaultValues {
         }
     }
     
-    static {
-        new DefaultValues();
-    }
-    
     //
     // public interface
     //
     
-    public static void registerCreator(Class type, ValueCreator creator) {
+    public void registerCreator(Class type, ValueCreator creator) {
         defaultValues.put(type, creator);
         logger.info("adding default value for type: " + type.getName());
     }
 
-    public static Object createValue(Class type) {
+    public Object createValue(Class type) {
         return defaultValues.get(type).createValue(type, null);
     }
 
-    public static Object createValue(Class type, String defaultValue) {
+    public Object createValue(Class type, String defaultValue) {
         return defaultValues.get(type).createValue(type, defaultValue);
+    }
+    
+    public static DefaultValues getInstance() {
+        if (DefaultValues.instance == null) {
+            DefaultValues.instance = new DefaultValues();
+        }
+        
+        return DefaultValues.instance;
     }
     
     //
     // Default creators
     //
-    // Add a new default value: create a public method named createValue that takes 2 arguments. The first 
-    // is an argument of the type that will be created. The second is the class of the actual type for wich 
-    // the value is required. The first argument will always have the null value when the method is called. 
+    // Add a new default value: create a public method named createValue that takes 3 arguments. The first 
+    // is an argument of the type that will be created. The second is the class of the actual type for which 
+    // the value is required. The third argument is a string representing the default that should be used
+    // when creating the new value.
+    //
+    //The first argument will always have the null value when the method is called. 
     
     public Object createValue(Object o, Class type, String defaultValue) throws InstantiationException, IllegalAccessException {
         return null;//type.newInstance();
@@ -105,6 +113,26 @@ public class DefaultValues {
         return new Integer(0);
     }
     
+    public Integer createValue(Integer i, Class type, String defaultValue) {
+        try {
+            return new Integer(defaultValue != null ? defaultValue : "0");
+        } catch (NumberFormatException e) {
+            logger.warn("could not create integer from default value '" + defaultValue + "': " + e);
+        }
+        
+        return new Integer(0);
+    }
+
+    public Float createValue(Float n, Class type, String defaultValue) {
+        try {
+            return new Float(defaultValue != null ? defaultValue : "0.0");
+        } catch (NumberFormatException e) {
+            logger.warn("could not create float from default value '" + defaultValue + "': " + e);
+        }
+        
+        return new Float(0.0f);
+    }
+
     public Boolean createValue(Boolean b, Class type, String defaultValue) {
         return new Boolean(defaultValue != null ? defaultValue : "false");
     }
@@ -133,10 +161,6 @@ public class DefaultValues {
             }
         }
 
-        return null;
-    }
-    
-    public DomainObject createValue(DomainObject o, Class type, String defaultValue) {
         return null;
     }
 }

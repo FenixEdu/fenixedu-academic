@@ -15,19 +15,20 @@ public class DefaultSchemaFactory extends SchemaFactory {
 
     @Override
     public Schema createSchema(Object object) {
-        Schema schema = new Schema(object == null ? Object.class : object.getClass());
+        return createSchema(object == null ? Object.class : object.getClass());
+    }
+
+    @Override
+    public Schema createSchema(Class type) {
+        Schema schema = new Schema(type);
         
-        if (object == null) {
-            return schema;
-        }
-        
-        if (object instanceof Collection) {
+        if (Collection.class.isAssignableFrom(type)) {
             return schema;
         }
         
         List<String> filteredSlots = Arrays.asList(new String[] { "class" });
         List<PropertyDescriptor> descriptors = new ArrayList<PropertyDescriptor>(Arrays
-                .asList(PropertyUtils.getPropertyDescriptors(object)));
+                .asList(PropertyUtils.getPropertyDescriptors(type)));
     
         for (PropertyDescriptor descriptor : descriptors) {
             if (!filteredSlots.contains(descriptor.getName())) {
@@ -37,5 +38,4 @@ public class DefaultSchemaFactory extends SchemaFactory {
     
         return schema;
     }
-
 }

@@ -26,6 +26,7 @@ public class SimpleMetaSlot implements MetaSlot {
     private Class<Converter> converter;
     
     private transient UserIdentity user;
+    private boolean readOnly;
 
     public SimpleMetaSlot(MetaObject metaObject, String name) {
         super();
@@ -180,6 +181,14 @@ public class SimpleMetaSlot implements MetaSlot {
 
     public String getDefaultValue() {
         return defaultValue;
+    }
+    
+    public boolean isReadOnly() {
+        return this.readOnly;
+    }
+    
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
     }
 
     public void commit() {

@@ -5,15 +5,16 @@ import java.util.List;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.UpdateObjects.ObjectChange;
+import net.sourceforge.fenixedu.renderers.model.CreationMetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
 import dml.DomainClass;
 
-public class CreationMetaObject extends DomainMetaObject {
+public class CreationDomainMetaObject extends DomainMetaObject implements CreationMetaObject {
 
     private Class type;
     private transient Object createdObject;
 
-    public CreationMetaObject(DomainClass domainClass) {
+    public CreationDomainMetaObject(DomainClass domainClass) {
         super();
 
         try {
@@ -23,6 +24,7 @@ public class CreationMetaObject extends DomainMetaObject {
         }
     }
 
+    @Override
     public Object getObject() {
         return MetadataManager.getDomainModel().findClass(getType().getName());
     }

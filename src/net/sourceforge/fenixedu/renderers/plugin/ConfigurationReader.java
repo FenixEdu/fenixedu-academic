@@ -95,6 +95,7 @@ public class ConfigurationReader {
                         String validatorName = slotElement.getAttributeValue("validator");
                         String defaultValue  = slotElement.getAttributeValue("default");
                         String converterName = slotElement.getAttributeValue("converter");
+                        String readOnlyValue = slotElement.getAttributeValue("read-only");
 
                         Properties properties = getPropertiesFromElement(slotElement);
                         
@@ -127,6 +128,8 @@ public class ConfigurationReader {
                             }
                         }
                         
+                        boolean readOnly = readOnlyValue == null ? false : Boolean.parseBoolean(readOnlyValue);
+                        
                         SchemaSlotDescription slotDescription = new SchemaSlotDescription(slotName);
 
                         slotDescription.setLayout(layout);
@@ -137,6 +140,7 @@ public class ConfigurationReader {
                         slotDescription.setConverter(converter);
                         slotDescription.setValidatorProperties(validatorProperties);
                         slotDescription.setDefaultValue(defaultValue);
+                        slotDescription.setReadonly(readOnly);
                         
                         schema.addSlotDescription(slotDescription);
                     }

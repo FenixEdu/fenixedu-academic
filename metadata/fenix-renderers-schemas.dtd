@@ -41,6 +41,8 @@
   
   If no value is associated with the slot, a default value can be given. The value is
   converted from the given string to the type of the slot.
+  
+  TODO: cfgi, converter, read-only
 -->
 <!ELEMENT slot (property*)>
 
@@ -52,6 +54,7 @@
 	validator NMTOKEN #IMPLIED
 	converter NMTOKEN #IMPLIED
 	default CDATA #IMPLIED
+	read-only CDATA #IMPLIED
 >
 
 <!--

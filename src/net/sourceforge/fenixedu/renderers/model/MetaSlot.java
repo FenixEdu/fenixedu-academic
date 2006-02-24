@@ -18,6 +18,7 @@ public interface MetaSlot extends MetaObject {
     public boolean hasConverter();
     public Class<Converter> getConverter();
     public Properties getValidatorProperties();
+    public boolean isReadOnly();
     
     public void setObject(Object object);
 }

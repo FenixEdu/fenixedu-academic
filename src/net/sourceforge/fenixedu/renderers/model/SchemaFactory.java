@@ -19,5 +19,11 @@ public abstract class SchemaFactory {
         return currentFactory.createSchema(object);
     }
 
+    public static Schema create(Class type) {
+        return currentFactory.createSchema(type);
+    }
+
     public abstract Schema createSchema(Object object);
+
+    public abstract Schema createSchema(Class type);
 }

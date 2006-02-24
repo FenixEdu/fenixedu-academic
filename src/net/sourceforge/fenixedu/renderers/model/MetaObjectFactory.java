@@ -26,11 +26,23 @@ public abstract class MetaObjectFactory {
         return currentFactory.createMetaObject(object, usedSchema);
     }
     
+    public static MetaObject createObject(Class type, Schema schema) {
+        Schema usedSchema = schema;
+        
+        if (usedSchema == null) {
+            usedSchema = SchemaFactory.create(type);
+        }
+        
+        return currentFactory.createMetaObject(type, usedSchema);
+    }
+    
     public static MetaSlot createSlot(MetaObject metaObject, SchemaSlotDescription slotDescription) {
         return currentFactory.createMetaSlot(metaObject, slotDescription);
     }
 
     public abstract MetaObject createMetaObject(Object object, Schema schema);
     
+    public abstract MetaObject createMetaObject(Class type, Schema schema);
+
     public abstract MetaSlot createMetaSlot(MetaObject metaObject, SchemaSlotDescription slotDescription);
 }

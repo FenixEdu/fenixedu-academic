@@ -169,27 +169,27 @@ public class HtmlLink extends HtmlComponent {
         
         if (getUrl() != null) {
             buffer.append(getUrl());
-        }
         
-        if (! getParameters().isEmpty()) {
-            if (getUrl().indexOf('?') == -1) {
-                buffer.append("?");
-            }
-            else {
-                buffer.append("&");
-            }
-            
-            Set<String> keys = getParameters().keySet();
-            
-            int count = keys.size();
-            for (String key : keys) {
-                buffer.append(key);
-                buffer.append("=");
-                buffer.append(getParameters().get(key));
-               
-                count--;
-                if (count > 0) {
+            if (! getParameters().isEmpty()) {
+                if (getUrl().indexOf('?') == -1) {
+                    buffer.append("?");
+                }
+                else {
                     buffer.append("&");
+                }
+                
+                Set<String> keys = getParameters().keySet();
+                
+                int count = keys.size();
+                for (String key : keys) {
+                    buffer.append(key);
+                    buffer.append("=");
+                    buffer.append(getParameters().get(key));
+                   
+                    count--;
+                    if (count > 0) {
+                        buffer.append("&");
+                    }
                 }
             }
         }

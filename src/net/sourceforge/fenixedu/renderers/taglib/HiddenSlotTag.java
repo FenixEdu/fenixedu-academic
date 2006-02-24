@@ -3,11 +3,10 @@ package net.sourceforge.fenixedu.renderers.taglib;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.struts.taglib.TagUtils;
-
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class HiddenSlotTag extends TagSupport {
 
@@ -118,7 +117,7 @@ public class HiddenSlotTag extends TagSupport {
         return TagUtils.getInstance().lookup(pageContext, getName(), getProperty(), getScope());
     }
 	
-    private void addHiddenSlot(String slot, Object value, String converterName) throws JspException {
+    protected void addHiddenSlot(String slot, Object value, String converterName) throws JspException {
         Class<Converter> converter = null;
         
         if (converterName != null) {

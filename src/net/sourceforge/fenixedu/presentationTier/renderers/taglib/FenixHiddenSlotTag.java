@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.taglib;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import javax.servlet.jsp.JspException;
 
 import org.apache.struts.taglib.TagUtils;
@@ -9,6 +12,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.taglib.HiddenSlotTag;
 
 public class FenixHiddenSlotTag extends HiddenSlotTag {
@@ -38,15 +42,16 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
             Object object = super.findObject();
             
             // HACK: to ease the use of hidden slots
-            if (object instanceof DomainObject && getConverter() == null) {
-                setConverter(isMultiple() ? DomainObjectKeyArrayConverter.class.getName() : DomainObjectKeyConverter.class.getName());
+            if (object instanceof DomainObject) {
+                if (getConverter() == null) {
+                    setConverter(isMultiple() ? DomainObjectKeyArrayConverter.class.getName() : DomainObjectKeyConverter.class.getName());
+                }
 
                 DomainObject domainObject = (DomainObject) object;
-                return domainObject.getClass().getName() + ":" + domainObject.getIdInternal();
+                return MetaObjectFactory.createObject(domainObject, null).getKey().toString();
             }
             
             return object;
-            
         }
         else {
             if (getOid() == null || getType() == null) {
@@ -63,6 +68,30 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
         }
     }
     
+    @Override
+    protected void addHiddenSlot(String slot, Object value, String converterName) throws JspException {
+        if (value instanceof Collection) {
+            Collection collection = (Collection) value;
+
+            for (Object object : collection) {
+                if (object instanceof DomainObject) {
+                    String usedConverterName = isMultiple() ? DomainObjectKeyArrayConverter.class.getName() : DomainObjectKeyConverter.class.getName();
+                    
+                    DomainObject domainObject = (DomainObject) object;
+                    String objectValue = MetaObjectFactory.createObject(domainObject, null).getKey().toString();
+                    
+                    addHiddenSlot(slot, objectValue, usedConverterName);
+                }
+                else {
+                    addHiddenSlot(slot, object, converterName);
+                }
+            }
+        }
+        else {
+            super.addHiddenSlot(slot, value, converterName);
+        }
+    }
+
     protected Object getPersistentObject() throws JspException {
         IUserView userView = (IUserView) pageContext.getAttribute("UserView", getScopeByName("Session"));
 

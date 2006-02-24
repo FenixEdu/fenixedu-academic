@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.renderers.components.state;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -290,6 +289,10 @@ public class ComponentLifeCycle {
             
             MetaSlot metaSlot = getMetaSlot(editRequest.getViewState().getMetaObject(), targetSlot);
 
+            if (metaSlot == null) {
+                continue;
+            }
+            
             try {
                 Object finalValue = formComponent.getConvertedValue(metaSlot);
                 metaSlot.setObject(finalValue);
@@ -301,7 +304,7 @@ public class ComponentLifeCycle {
             }
         }
         
-        // TODO: this is confuse, it means it's valid if it does not have a convertion error
+        // TODO: this is confuse, it means it's valid if it does not have a conversion error
         return !hasConvertError;
     }
 

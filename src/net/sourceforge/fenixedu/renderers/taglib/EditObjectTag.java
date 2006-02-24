@@ -255,8 +255,8 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
     }
 
-    private MetaObject createMetaObject(Object targetObject, Schema schema) {
-        MetaObject metaObject = MetaObjectFactory.createObject(targetObject, schema);
+    protected MetaObject createMetaObject(Object targetObject, Schema schema) {
+        MetaObject metaObject = getNewMetaObject(targetObject, schema);
         
         for (HiddenSlot slot : this.hiddenSlots.values()) {
             SchemaSlotDescription slotDescription = new SchemaSlotDescription(slot.getName());
@@ -269,6 +269,10 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
         
         return metaObject;
+    }
+
+    protected MetaObject getNewMetaObject(Object targetObject, Schema schema) {
+        return MetaObjectFactory.createObject(targetObject, schema);
     }
 
     protected ViewDestination getInputDestination() {
