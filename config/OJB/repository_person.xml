@@ -248,8 +248,17 @@
         name="keyPersonalPhoto"
         column="KEY_PERSONAL_PHOTO"
         jdbc-type="INTEGER"
-    />  
-
+    />      
+    <field-descriptor 
+	    name="keyPartyType"
+	    column="KEY_PARTY_TYPE"
+	    jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+    	name="partyType"
+        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType">
+	    <foreignkey field-ref="keyPartyType"/>
+	</reference-descriptor>
     <reference-descriptor auto-retrieve="false"
     	name="personalPhoto"
         class-ref="net.sourceforge.fenixedu.domain.FileEntry">
@@ -466,12 +475,12 @@
 		<fk-pointing-to-this-class column="KEY_PARENT_PARTY" />
 	</collection-descriptor>	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="accountabilityChilds"
+			name="childAccountabilities"
 			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability">
 		<inverse-foreignkey field-ref="keyChildParty"/>
 	</collection-descriptor>	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="accountabilityParents"
+			name="parentAccountabilities"
 			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability">
 		<inverse-foreignkey field-ref="keyParentParty"/>
 	</collection-descriptor>	

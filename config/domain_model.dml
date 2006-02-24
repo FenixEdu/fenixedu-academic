@@ -121,7 +121,8 @@ valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReference
 valueType net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType    				as CurricularRuleType;
 valueType net.sourceforge.fenixedu.domain.util.LogicOperators   								as LogicOperators;
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectType							as ProjectType;
-valueType net.sourceforge.fenixedu.domain.organizationalStructure.PartyType						as PartyType;
+valueType net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum					as PartyType;
+valueType net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum		as AccountabilityType;
 
 /*
 *
@@ -535,7 +536,6 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
     DegreeType tipoCurso;
     BolonhaDegreeType bolonhaDegreeType;
     Integer keyUnit;
-   	Integer keyOldUnit;
     GradeScale gradeScale;
     Double ectsCredits;
     String prevailingScientificArea;
@@ -726,7 +726,6 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	String realName;
 	String name;
 	Integer keyUnit;
-	Integer keyOldUnit;
 	Group competenceCourseMembersGroup;
 }
 
@@ -735,7 +734,6 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 	String name;
 	String code;
 	Integer keyUnit;
-	Integer keyOldUnit;
 	CurricularStage curricularStage;
 	Date creationDate;
 }
@@ -1020,10 +1018,8 @@ class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourc
 
 
 class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyInstitution;
 	Integer keyPerson;
 	Integer keyInstitutionUnit;
-	Integer keyOldUnit;
 }
 
 class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1303,7 +1299,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends n
 	Date endDate;
 	FunctionType type;
 	Integer keyUnit;
-	Integer keyOldUnit;
 	Integer keyParentInherentFunction;
 }
 
@@ -1554,9 +1549,7 @@ class net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter ex
 
 class net.sourceforge.fenixedu.domain.NonAffiliatedTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
     String name;
-    Integer keyInstitution;
     Integer keyInstitutionUnit;
-   	Integer keyOldUnit;
 }    
 
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2404,6 +2397,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	String name;
 	PartyType type;
 	Integer keyRootDomainObject;
+	Integer keyPartyType;
 }
 	  class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer costCenterCode;
@@ -2459,17 +2453,31 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		String istUsername;
 		Integer keyResearcher;
 	 }
+
+class net.sourceforge.fenixedu.domain.organizationalStructure.PartyType extends net.sourceforge.fenixedu.domain.DomainObject {	
+	PartyType type;
+}	 
 	 
+class net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType extends net.sourceforge.fenixedu.domain.DomainObject {	
+	AccountabilityType type;
+}	 
+
+class net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule extends net.sourceforge.fenixedu.domain.DomainObject {	
+	Integer keyAccountabilityType;
+	Integer keyAllowedParentPartyType;
+	Integer keyAllowedChildPartyType;
+}	 
+ 
 class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyParentParty;
 	Integer keyChildParty;
+	Integer keyAccountabilityType;
 }
 	  	  
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String name;
 }
-
 
 class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -5607,122 +5615,6 @@ relation ContractWorkingUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole workingUnit;
 }
 
-class net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit extends net.sourceforge.fenixedu.domain.DomainObject {
-	String name;
-	Date beginDate;
-	Date endDate;
-	UnitType type;
-	Integer costCenterCode;
-	Integer keyDepartment;	
-	Integer keyDegree;
-}
-
-relation OldUnitNonAffiliatedTeacher {
-    net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole institutionOldUnit;
-    net.sourceforge.fenixedu.domain.NonAffiliatedTeacher playsRole associatedNonAffiliatedTeachers {
-        multiplicity *;
-    }
-}
-
-relation CompetenceCourseOldUnit {
-	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourses {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnit;
-}
-
-relation ExternalPersonOldUnit {
-	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPersons {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole institutionOldUnit;
-}
-
-relation ContractSalaryOldUnit {
-    net.sourceforge.fenixedu.domain.Contract playsRole salaryContracts{
-    	multiplicity *;
-    }
-	
-	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole salaryOldUnit;
-}
-
-relation ContractMailingOldUnit {
-    net.sourceforge.fenixedu.domain.Contract playsRole mailingContracts{
-    	multiplicity *;
-    }
-	
-	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole mailingOldUnit;
-}
-
-relation ContractWorkingOldUnit {
-    net.sourceforge.fenixedu.domain.Contract playsRole workingContracts{
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole workingOldUnit;
-}
-
-relation DepartmentOldUnit {
-    net.sourceforge.fenixedu.domain.Department playsRole department;    
-	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnit;
-}
-
-relation DegreetOldUnit {
-    net.sourceforge.fenixedu.domain.Degree playsRole degree;    
-	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnit;
-}
-
-relation OldUnitFunction {
-    net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole functions  {
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnit;
-}
-
-relation ProjectOldUnit {
-	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
-		multiplicity *;
-	}
-    net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnits {
-    	multiplicity *;
-    }
-}
-
-relation OldUnitEvent {
-    net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
-    	multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnits {
-    	multiplicity *;
-    }
-}
-
-relation EmployeeWorksForOldUnit {
-	net.sourceforge.fenixedu.domain.Employee playsRole employees {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole oldUnit {
-		multiplicity 1;
-	}
-}
-
-relation UnitUnit {
-    net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole subOldUnits{
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit playsRole parentOldUnits{
-		multiplicity *;
-	}
-}
-
-relation PartyParty {
-    net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole childs{
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parents{
-		multiplicity *;
-	}
-}
-
 relation DepartmentUnit {
     net.sourceforge.fenixedu.domain.Department playsRole department;    
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
@@ -6111,7 +6003,63 @@ relation EventEventName{
     net.sourceforge.fenixedu.domain.research.event.EventName playsRole name;
 }
 
+relation AccountabilityAccountabilityType {
+	net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType playsRole accountabilityType;	 
+	net.sourceforge.fenixedu.domain.organizationalStructure.Accountability playsRole accountabilities {
+	   multiplicity *;
+	}
+}
 
+relation PartyPartyType {
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole partyType;	 
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parties {
+	   multiplicity *;
+	}
+}
+
+relation PartyTypeParentConnectionRule {
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole parentPartyType;
+	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole allowedParentConnectionRules {
+	   multiplicity *;
+	}	 
+}
+
+relation PartyTypeChildConnectionRule {
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole childPartyType;
+	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole allowedChildConnectionRules {
+	   multiplicity *;
+	}	 
+}
+
+relation ConnectionRuleAccountabilityType {
+	net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType playsRole accountabilityType;
+	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole connectionRules {
+	   multiplicity *;
+	}	 
+}
+
+relation PartyParty {
+    net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole childs{
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parents{
+		multiplicity *;
+	}
+}
+
+relation AccountabilityParentParty {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parentParty;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Accountability playsRole parentAccountabilities {
+	   multiplicity *;
+	}	 
+}
+
+relation AccountabilityChildParty {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole childParty;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Accountability playsRole childAccountabilities {
+	   multiplicity *;
+	}	 
+}
 
 /*
  * Relations definitions of relations to RootDomainObject

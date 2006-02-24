@@ -22,7 +22,7 @@ public class UnitUtils {
         List<Unit> allExternalUnits = new ArrayList<Unit>();
 
         for (Unit unit : allUnits) {
-            if (unit.getType() != null && unit.getType().equals(PartyType.EXTERNAL_INSTITUTION)) {
+            if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
                 allExternalUnits.add(unit);
             }
         }
@@ -34,7 +34,7 @@ public class UnitUtils {
         Unit externalUnit = null;
         
         for (Unit unit : allUnits) {
-            if (unit.getType() != null && unit.getType().equals(PartyType.EXTERNAL_INSTITUTION)
+            if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)
                     && unit.getName().equals(name)) {
                 externalUnit = unit;
             }
@@ -69,7 +69,7 @@ public class UnitUtils {
         final List<Unit> result = new ArrayList<Unit>();
         final Date now = Calendar.getInstance().getTime();
         for (final Unit unit : RootDomainObject.readAllUnits()) {
-            if (unit.isActive(now) && unit.getType() == PartyType.DEPARTMENT) {
+            if (unit.isActive(now) && unit.getType() == PartyTypeEnum.DEPARTMENT) {
                 result.add(unit);
             }
         }

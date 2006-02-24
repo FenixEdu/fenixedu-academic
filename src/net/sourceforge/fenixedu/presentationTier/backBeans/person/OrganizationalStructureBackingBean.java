@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -109,7 +109,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         });
     
             
-        PartyType partyType = null;
+        PartyTypeEnum partyType = null;
         boolean flag = false;
         boolean flag1 = false;
        
@@ -154,7 +154,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	            	
 					if(unit.getActiveSubUnits(currentDate).size() != 0){
 						if(unit.getType() != null ){
-							 if(!unit.getType().equals(PartyType.ACADEMIC_UNIT)){
+							 if(!unit.getType().equals(PartyTypeEnum.ACADEMIC_UNIT)){
 	
 								 buffer.append("\t<li><img ").append("src='").append(getContextPath()).append("/images/toggle_plus10.gif' id=\"").append(unit.getIdInternal()).append("\" ").append("indexed='true' onClick=\"").append("check(document.getElementById('")
 					                .append("aa").append(unit.getIdInternal()).append("'),document.getElementById('").append(unit.getIdInternal()).append("'));return false;").append("\"> ");
@@ -266,8 +266,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     	buffer.append(getInstituitionName());
     	if (this.getUnit().getType() != null){
 			 buffer.append(" - ");
-			 if (this.getUnit().getType().equals(PartyType.DEPARTMENT)){
-				 buffer.append(this.bundle.getString(PartyType.ACADEMIC_UNIT.getName() ));  
+			 if (this.getUnit().getType().equals(PartyTypeEnum.DEPARTMENT)){
+				 buffer.append(this.bundle.getString(PartyTypeEnum.ACADEMIC_UNIT.getName() ));  
 			 }else{
 				 buffer.append(this.bundle.getString(this.getUnit().getType().getName())); 
 			 }

@@ -3,54 +3,44 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.Contract" 
 	table="CONTRACT">
 	
-	<field-descriptor id="1"
+	<field-descriptor 
          name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
 	/>
-	<field-descriptor id="2"
+	<field-descriptor 
 	   name="beginDate"    
 	   column="BEGIN_DATE"  
 	   jdbc-type="DATE"
     />
-	<field-descriptor id="3"	
+	<field-descriptor 	
 	   name="endDate"    
 	   column="END_DATE"  
 	   jdbc-type="DATE"
     />
-	<field-descriptor id="4" 
+	<field-descriptor  
 	   name="keySalaryUnit"    
 	   column="KEY_SALARY_UNIT"  
 	   jdbc-type="INTEGER"
     />
-	<field-descriptor id="5" 
+	<field-descriptor 
 	   name="keyMailingUnit"    
 	   column="KEY_MAILING_UNIT"  
 	   jdbc-type="INTEGER"
     />
-	<field-descriptor id="6" 
+	<field-descriptor  
 	   name="keyWorkingUnit"    
 	   column="KEY_WORKING_UNIT"  
 	   jdbc-type="INTEGER"
     />    
-    <field-descriptor id="9" 
-	   name="keyMailingOldUnit"    
-	   column="KEY_MAILING_OLD_UNIT"  
-	   jdbc-type="INTEGER"
-    />
-	<field-descriptor id="10" 
-	   name="keyWorkingOldUnit"    
-	   column="KEY_WORKING_OLD_UNIT"  
-	   jdbc-type="INTEGER"
-    />
-	<field-descriptor id="7" 
+	<field-descriptor  
 	   name="keyEmployee"    
 	   column="KEY_EMPLOYEE"  
 	   jdbc-type="INTEGER"
     />
-	<field-descriptor id="8" 
+	<field-descriptor 
 	   name="contractType"    
 	   column="CONTRACT_TYPE"  
 	   jdbc-type="VARCHAR"
@@ -72,18 +62,6 @@
     	name="workingUnit"
         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 	    <foreignkey field-ref="keyWorkingUnit"/>
-	</reference-descriptor>
-	
-	<reference-descriptor auto-retrieve="false"
-    	name="mailingOldUnit"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit">
-	    <foreignkey field-ref="keyMailingOldUnit"/>
-	</reference-descriptor>
-	
-	<reference-descriptor auto-retrieve="false"
-    	name="workingOldUnit"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit">
-	    <foreignkey field-ref="keyWorkingOldUnit"/>
 	</reference-descriptor>
 	
 	<reference-descriptor auto-retrieve="false"

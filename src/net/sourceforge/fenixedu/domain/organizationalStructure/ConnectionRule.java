@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-public class PartyType extends PartyType_Base {
+public class ConnectionRule extends ConnectionRule_Base {
     
-    public PartyType() {
+    public  ConnectionRule() {
         super();
     }
     

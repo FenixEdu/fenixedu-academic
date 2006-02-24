@@ -82,7 +82,7 @@
 			<h:outputText value="<b>#{bundle['label.begin.date']}</b>" escape="false"/>
 			<h:panelGroup>
 				<h:inputText disabled="#{functionsManagementBackingBean.disabledVar == 0}" id="beginDate"  size="10" value="#{functionsManagementBackingBean.beginDate}">							
-					<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
+					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>	
 				<h:outputText value="#{bundle['label.date.format']}"/>
 				<h:message for="beginDate" styleClass="error"/>				
@@ -93,7 +93,7 @@
 			<h:outputText value="<b>#{bundle['label.end.date']}</b>" escape="false"/>
 			<h:panelGroup>
 				<h:inputText disabled="#{functionsManagementBackingBean.disabledVar == 0}" id="endDate" size="10" value="#{functionsManagementBackingBean.endDate}">
-					<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
+					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>				
 				<h:outputText value="#{bundle['label.date.format']}"/>
 				<h:message for="endDate" styleClass="error"/>

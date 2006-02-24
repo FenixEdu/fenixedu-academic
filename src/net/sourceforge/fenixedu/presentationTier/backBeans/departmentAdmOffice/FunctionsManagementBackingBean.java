@@ -156,43 +156,45 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public String editFunction() throws FenixFilterException, FenixServiceException {
 
-        if (this.getPerson().getInactiveFunctions().contains(this.getPersonFunction())
-                && this.getPerson().containsActiveFunction(this.getFunction())) {
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Double credits = Double.valueOf(this.getCredits());
+        Date beginDate_ = null, endDate_ = null;
 
-            setErrorMessage("error.duplicate.function");
-        } else {
+        try {
+            if (this.getBeginDate() != null) {
+                beginDate_ = format.parse(this.getBeginDate());
+            } else {
+                setErrorMessage("error.notBeginDate");
+                return "";
+            }
+            if (this.getEndDate() != null) {
+                endDate_ = format.parse(this.getEndDate());
+            } else {
+                setErrorMessage("error.notEndDate");
+                return "";
+            }
 
-            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            Double credits = Double.valueOf(this.getCredits());
-            Date beginDate_ = null, endDate_ = null;
+            if (this.getPerson().getInactiveFunctions().contains(this.getPersonFunction())
+                    && this.getPerson().containsActiveFunction(this.getFunction()) && 
+                    (DateFormatUtil.isAfter("yyyyMMdd", endDate_, Calendar.getInstance().getTime()) || 
+                            DateFormatUtil.equalDates("yyyyMMdd", endDate_, Calendar.getInstance().getTime()))) {
 
-            try {
-                if (this.getBeginDate() != null) {
-                    beginDate_ = format.parse(this.getBeginDate());
-                } else {
-                    setErrorMessage("error.notBeginDate");
-                    return "";
-                }
-                if (this.getEndDate() != null) {
-                    endDate_ = format.parse(this.getEndDate());
-                } else {
-                    setErrorMessage("error.notEndDate");
-                    return "";
-                }
+                setErrorMessage("error.duplicate.function");
+            } else {
 
                 final Object[] argsToRead = { this.getPersonFunctionID(), this.getFunctionID(),
                         beginDate_, endDate_, credits };
                 ServiceUtils.executeService(getUserView(), "EditPersonFunction", argsToRead);
                 setErrorMessage("message.success");
                 return "alterFunction";
-
-            } catch (ParseException e) {
-                setErrorMessage("error.date1.format");
-            } catch (FenixServiceException e) {
-                setErrorMessage(e.getMessage());
-            } catch (DomainException e) {
-                setErrorMessage(e.getMessage());
             }
+
+        } catch (ParseException e) {
+            setErrorMessage("error.date1.format");
+        } catch (FenixServiceException e) {
+            setErrorMessage(e.getMessage());
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());
         }
         return "";
     }
@@ -562,7 +564,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
 
         if (parentUnit.hasAnySubUnits()) {
-           closeULTag(buffer);
+            closeULTag(buffer);
         }
     }
 
@@ -1082,21 +1084,20 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public void setPersonType(String personType) {
         this.personType = personType;
     }
-    
+
     protected void openULTag(Unit parentUnit, StringBuilder buffer) {
-        buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
-                .append("style='display:none'>\r\n");
+        buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal())
+                .append("\" ").append("style='display:none'>\r\n");
     }
 
     protected void putImage(Unit parentUnit, StringBuilder buffer) {
         buffer.append("<img ").append("src='").append(getContextPath()).append(
                 "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
-                .append("indexed='true' onClick=\"").append("check(document.getElementById('")
-                .append("aa").append(parentUnit.getIdInternal()).append(
-                        "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
-                        "'));return false;").append("\"> ");
+                .append("indexed='true' onClick=\"").append("check(document.getElementById('").append(
+                        "aa").append(parentUnit.getIdInternal()).append("'),document.getElementById('")
+                .append(parentUnit.getIdInternal()).append("'));return false;").append("\"> ");
     }
-    
+
     protected void closeULTag(StringBuilder buffer) {
         buffer.append("</ul>");
     }

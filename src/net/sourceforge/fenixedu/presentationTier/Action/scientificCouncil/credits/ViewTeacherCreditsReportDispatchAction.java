@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -81,8 +81,8 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                 public boolean evaluate(Object object) {
                     Unit unit = (Unit) object;
                     return unit.getType() != null
-                            && (unit.getType().equals(PartyType.SECTION) || unit.getType().equals(
-                                    PartyType.SCIENTIFIC_AREA));
+                            && (unit.getType().equals(PartyTypeEnum.SECTION) || unit.getType().equals(
+                                    PartyTypeEnum.SCIENTIFIC_AREA));
                 }
             });
             Iterator unitsOrderedIter = new OrderedIterator(filteredUnits.iterator(),

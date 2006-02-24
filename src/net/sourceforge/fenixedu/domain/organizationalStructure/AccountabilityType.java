@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-public class PartyType extends PartyType_Base {
+public class AccountabilityType extends AccountabilityType_Base {
     
-    public PartyType() {
+    public  AccountabilityType() {
         super();
     }
     

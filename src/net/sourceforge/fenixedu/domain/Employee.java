@@ -3,13 +3,13 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
 
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 
 /**
  * 
@@ -96,7 +96,7 @@ public class Employee extends Employee_Base {
     
     private boolean unitDepartment(Unit unit, boolean onlyActiveEmployees){
         if (unit.getType() != null
-                && unit.getType().equals(PartyType.DEPARTMENT)
+                && unit.getType().equals(PartyTypeEnum.DEPARTMENT)
                 && unit.getDepartment() != null
                 && (!onlyActiveEmployees || unit.getDepartment()
                         .getCurrentActiveWorkingEmployees().contains(this))){

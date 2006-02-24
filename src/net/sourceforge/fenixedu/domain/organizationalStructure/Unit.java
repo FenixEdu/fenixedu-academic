@@ -64,7 +64,7 @@ public class Unit extends Unit_Base {
     }
 
     private boolean unitDepartment(Unit unit) {
-        if (unit.getType() != null && unit.getType().equals(PartyType.DEPARTMENT)
+        if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT)
                 && unit.getDepartment() != null) {
             return true;
         }
@@ -128,7 +128,7 @@ public class Unit extends Unit_Base {
     }
 
     public void edit(String unitName, Integer unitCostCenter, Date beginDate, Date endDate,
-            PartyType type, Unit parentUnit) {
+            PartyTypeEnum type, Unit parentUnit) {
 
         this.setName(unitName);
         this.setBeginDate(beginDate);
@@ -187,7 +187,7 @@ public class Unit extends Unit_Base {
     public List<Unit> getScientificAreaUnits() {
         List<Unit> result = new ArrayList<Unit>();
         for (Unit unit : this.getSubUnits()) {
-            if (unit.getType() != null && unit.getType().equals(PartyType.SCIENTIFIC_AREA)) {
+            if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.SCIENTIFIC_AREA)) {
                 result.add(unit);
             }
         }
@@ -197,7 +197,7 @@ public class Unit extends Unit_Base {
     public List<Unit> getCompetenceCourseGroupUnits() {
         List<Unit> result = new ArrayList<Unit>();
         for (Unit unit : this.getSubUnits()) {
-            if (unit.getType() != null && unit.getType().equals(PartyType.COMPETENCE_COURSE_GROUP)) {
+            if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.COMPETENCE_COURSE_GROUP)) {
                 result.add(unit);
             }
         }
@@ -207,7 +207,7 @@ public class Unit extends Unit_Base {
     public List<Unit> getDegreeUnits() {
         List<Unit> result = new ArrayList<Unit>();
         for (Unit unit : this.getSubUnits()) {
-            if (unit.getType() != null && unit.getType().equals(PartyType.DEGREE)) {
+            if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEGREE)) {
                 result.add(unit);
             }
         }

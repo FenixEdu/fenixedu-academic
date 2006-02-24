@@ -34,7 +34,7 @@
 			<h:outputText value="<b>#{bundle['message.initialDate']}:</b>" escape="false"/>
 			<h:panelGroup>
 				<h:inputText id="beginDate" required="true" size="10" value="#{organizationalStructureBackingBean.functionBeginDate}">
-					<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
+					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>
 				<h:outputText value="#{bundle['date.format']}"/>
 				<h:message for="beginDate" styleClass="error"/>

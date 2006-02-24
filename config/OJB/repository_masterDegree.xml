@@ -990,13 +990,7 @@
            column="KEY_UNIT"  
            jdbc-type="INTEGER" 
         /> 
-             
-        <field-descriptor 
-           name="keyOldUnit"    
-           column="KEY_OLD_UNIT"  
-           jdbc-type="INTEGER"
-        /> 
-                     
+          
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -1015,13 +1009,7 @@
         	name="institutionUnit"
 	        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
     	    <foreignkey field-ref="keyInstitutionUnit"/>
-		</reference-descriptor>			  
-	 
-	 	<reference-descriptor auto-retrieve="false"
-        	name="institutionOldUnit"
-	        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.newStructure.OldUnit">
-    	    <foreignkey field-ref="keyOldUnit"/>
-		</reference-descriptor>			  
+		</reference-descriptor>			  	  
 	  	   	  
 	   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         	name="masterDegreeThesisExternalGuider"

@@ -50,7 +50,7 @@
 			<h:outputText value="<b>#{bundle['label.begin.date']}</b>" escape="false"/>
 			<h:panelGroup>
 				<h:inputText id="beginDate" required="true" size="10" value="#{managerFunctionsManagementBackingBean.beginDate}">							
-					<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
+					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>	
 				<h:outputText value="#{bundle['label.date.format']}"/>
 				<h:message for="beginDate" styleClass="error"/>				
@@ -59,7 +59,7 @@
 			<h:outputText value="<b>#{bundle['label.end.date']}</b>" escape="false"/>
 			<h:panelGroup>
 				<h:inputText id="endDate" required="true" size="10" value="#{managerFunctionsManagementBackingBean.endDate}">
-					<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
+					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>				
 				<h:outputText value="#{bundle['label.date.format']}"/>
 				<h:message for="endDate" styleClass="error"/>

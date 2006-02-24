@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -293,7 +293,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 
         SelectItem selectItem = null;
-        for (PartyType type : PartyType.values()) {
+        for (PartyTypeEnum type : PartyTypeEnum.values()) {
             selectItem = new SelectItem();
             selectItem.setLabel(bundle.getString(type.getName()));
             selectItem.setValue(type.getName());
@@ -429,7 +429,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
-        PartyType type = getUnitType();
+        PartyTypeEnum type = getUnitType();
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { null, null, this.getUnitName(), this.getUnitCostCenter(),
@@ -450,7 +450,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
-        PartyType type = getUnitType();
+        PartyTypeEnum type = getUnitType();
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { null, this.getUnit().getIdInternal(), this.getUnitName(),
@@ -471,7 +471,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
-        PartyType type = getUnitType();
+        PartyTypeEnum type = getUnitType();
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), null, this.getUnitName(),
@@ -481,10 +481,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
 
-    private PartyType getUnitType() throws FenixFilterException, FenixServiceException {
-        PartyType type = null;
+    private PartyTypeEnum getUnitType() throws FenixFilterException, FenixServiceException {
+        PartyTypeEnum type = null;
         if (!this.getUnitTypeName().equals("#")) {
-            type = PartyType.valueOf(this.getUnitTypeName());
+            type = PartyTypeEnum.valueOf(this.getUnitTypeName());
         }
         return type;
     }
