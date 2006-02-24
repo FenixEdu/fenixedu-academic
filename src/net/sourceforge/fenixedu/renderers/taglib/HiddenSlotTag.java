@@ -93,10 +93,18 @@ public class HiddenSlotTag extends TagSupport {
         this.multiple = multiple;
     }
 
+    public EditObjectTag getContainerParent() {
+        return this.parent;
+    }
+
+    public void setContainerParent(EditObjectTag parent) {
+        this.parent = parent;
+    }
+
     public int doStartTag() throws JspException {
-		this.parent = (EditObjectTag) findAncestorWithClass(this, EditObjectTag.class);
+		setContainerParent((EditObjectTag) findAncestorWithClass(this, EditObjectTag.class));
 		
-		if (this.parent == null) {
+		if (getContainerParent() == null) {
             throw new JspException("could not find parent input tag");
         }
 
@@ -129,7 +137,7 @@ public class HiddenSlotTag extends TagSupport {
         }
         
         boolean multiple = isMultiple();
-        this.parent.addHiddenSlot(slot, multiple, ConvertUtils.convert(value), converter);
+        getContainerParent().addHiddenSlot(slot, multiple, ConvertUtils.convert(value), converter);
     }
 
     protected boolean isMultiple() {

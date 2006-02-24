@@ -43,14 +43,14 @@ public class EditObjectTag extends BaseRenderObjectTag {
     
     private Map<String, ViewDestination> destinations;
     
-    private Map<String,HiddenSlot> hiddenSlots;
+    private List<HiddenSlot> hiddenSlots;
     
     public EditObjectTag() {
         super();
 
         this.nested = false;
         this.destinations = new Hashtable<String, ViewDestination>();
-        this.hiddenSlots = new Hashtable<String, HiddenSlot>();
+        this.hiddenSlots = new ArrayList<HiddenSlot>();
     }
 
     public boolean isNested() {
@@ -76,7 +76,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
         this.nested = false;
         this.action = null;
         this.destinations = new Hashtable<String, ViewDestination>();
-        this.hiddenSlots = new Hashtable<String, HiddenSlot>();
+        this.hiddenSlots = new ArrayList<HiddenSlot>();
     }
 
     protected boolean isPostBack() {
@@ -151,7 +151,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
         HtmlComponent componentToDraw;
 
         List<HtmlHiddenField> hiddenFields = new ArrayList<HtmlHiddenField>();
-        for (HiddenSlot slot : this.hiddenSlots.values()) {
+        for (HiddenSlot slot : this.hiddenSlots) {
             for (String value : slot.getValues()) {
                 HtmlHiddenField field = new HtmlHiddenField(slot.getName(), value);
                 field.setTargetSlot(slot.getKey());
@@ -246,7 +246,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
     }
 
     private void updateHiddenSlots(MetaObject metaObject) {
-        for (HiddenSlot hiddenSlot : this.hiddenSlots.values()) {
+        for (HiddenSlot hiddenSlot : this.hiddenSlots) {
             for (MetaSlot slot : metaObject.getHiddenSlots()) {
                 if (slot.getName().equals(hiddenSlot.getName())) {
                     hiddenSlot.setKey(slot.getKey());
@@ -258,7 +258,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
     protected MetaObject createMetaObject(Object targetObject, Schema schema) {
         MetaObject metaObject = getNewMetaObject(targetObject, schema);
         
-        for (HiddenSlot slot : this.hiddenSlots.values()) {
+        for (HiddenSlot slot : this.hiddenSlots) {
             SchemaSlotDescription slotDescription = new SchemaSlotDescription(slot.getName());
             
             slotDescription.setConverter(slot.getConverter());
@@ -322,12 +322,12 @@ public class EditObjectTag extends BaseRenderObjectTag {
     }
 
     public void addHiddenSlot(String slot, boolean multiple, String value, Class<Converter> converter) {
-        HiddenSlot hiddenSlot = this.hiddenSlots.get(slot);
+        HiddenSlot hiddenSlot = getHiddenSlot(slot);
         
         if (hiddenSlot == null) {
             hiddenSlot = new HiddenSlot(slot, value, converter);
             
-            this.hiddenSlots.put(slot, hiddenSlot);
+            this.hiddenSlots.add(hiddenSlot);
         }
         else {
             hiddenSlot.addValue(value);
@@ -335,5 +335,15 @@ public class EditObjectTag extends BaseRenderObjectTag {
         
         hiddenSlot.setConverter(converter);
         hiddenSlot.setMultiple(hiddenSlot.isMultiple() || multiple);
+    }
+
+    public HiddenSlot getHiddenSlot(String name) {
+        for (HiddenSlot slot : this.hiddenSlots) {
+            if (slot.getName().equals(name)) {
+                return slot;
+            }
+        }
+        
+        return null;
     }
 }

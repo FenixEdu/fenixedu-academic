@@ -1,19 +1,19 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.taglib;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import javax.servlet.jsp.JspException;
-
-import org.apache.struts.taglib.TagUtils;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+import net.sourceforge.fenixedu.renderers.components.state.HiddenSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.taglib.HiddenSlotTag;
+
+import org.apache.struts.taglib.TagUtils;
 
 public class FenixHiddenSlotTag extends HiddenSlotTag {
 
@@ -43,9 +43,7 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
             
             // HACK: to ease the use of hidden slots
             if (object instanceof DomainObject) {
-                if (getConverter() == null) {
-                    setConverter(isMultiple() ? DomainObjectKeyArrayConverter.class.getName() : DomainObjectKeyConverter.class.getName());
-                }
+                setConverter(getNextDomainObjectConverter());
 
                 DomainObject domainObject = (DomainObject) object;
                 return MetaObjectFactory.createObject(domainObject, null).getKey().toString();
@@ -68,6 +66,20 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
         }
     }
     
+    private String getNextDomainObjectConverter() {
+        if (getConverter() != null) {
+            return getConverter();
+        }
+        
+        HiddenSlot slot = getContainerParent().getHiddenSlot(getSlot());
+        if (slot != null) {
+            return DomainObjectKeyArrayConverter.class.getName();
+        }
+        else {
+            return isMultiple() ? DomainObjectKeyArrayConverter.class.getName() : DomainObjectKeyConverter.class.getName();
+        }
+    }
+
     @Override
     protected void addHiddenSlot(String slot, Object value, String converterName) throws JspException {
         if (value instanceof Collection) {
@@ -75,7 +87,7 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
 
             for (Object object : collection) {
                 if (object instanceof DomainObject) {
-                    String usedConverterName = isMultiple() ? DomainObjectKeyArrayConverter.class.getName() : DomainObjectKeyConverter.class.getName();
+                    String usedConverterName = getNextDomainObjectConverter();
                     
                     DomainObject domainObject = (DomainObject) object;
                     String objectValue = MetaObjectFactory.createObject(domainObject, null).getKey().toString();
