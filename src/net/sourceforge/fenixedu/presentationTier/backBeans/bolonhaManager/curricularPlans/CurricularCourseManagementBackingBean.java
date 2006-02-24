@@ -76,8 +76,16 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return getAndHoldStringParameter("showRules");
     }
     
+    public String getToOrder() {
+        return getAndHoldStringParameter("toOrder");
+    }
+    
     public String getOrganizeBy() {
         return getAndHoldStringParameter("organizeBy");
+    }
+    
+    public String getHideCourses() {
+        return getAndHoldStringParameter("hideCourses");
     }
     
     public Integer getContextID() {

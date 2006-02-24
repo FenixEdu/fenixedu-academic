@@ -69,7 +69,8 @@ public class UICurricularCourse extends UIDegreeModule {
         String action = "&action=" + ((this.toEdit) ? "build" : (String) this.facesContext.getExternalContext().getRequestParameterMap().get("action")); 
         String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
         String showRules = "&showRules=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("showRules");        
-        writer.writeAttribute("href", "viewCurricularCourse.faces?curricularCourseID=" + this.degreeModule.getIdInternal() + action + organizeBy + showRules, null);
+        String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");
+        writer.writeAttribute("href", "viewCurricularCourse.faces?curricularCourseID=" + this.degreeModule.getIdInternal() + action + organizeBy + showRules + hideCourses, null);
         if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
             writer.append(this.degreeModule.getName());    
         } else {
@@ -165,8 +166,9 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.writeAttribute("align", "right", null);
         writer.writeAttribute("style", "width: 9em;", null);
         String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
+        String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");        
         encodeLink("../curricularRules/createCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&degreeModuleID=" + this.degreeModule.getIdInternal() + organizeBy, "setCurricularRule");
+                .get("degreeCurricularPlanID") + "&degreeModuleID=" + this.degreeModule.getIdInternal() + organizeBy + hideCourses, "setCurricularRule");
         writer.endElement("td");
     }
 

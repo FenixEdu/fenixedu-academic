@@ -52,8 +52,9 @@ public class UIDegreeCurricularPlan extends UIInput {
             final String organizeBy = (this.getAttributes().get("organizeBy") != null) ? (String) this.getAttributes().get("organizeBy") : "groups";
             final Boolean onlyStructure = (this.getBooleanAttribute("onlyStructure") != null) ? (Boolean) this.getBooleanAttribute("onlyStructure") : Boolean.FALSE;
             final Boolean toOrder = (this.getBooleanAttribute("toOrder") != null) ? (Boolean) this.getBooleanAttribute("toOrder") : Boolean.FALSE;
-
-            if (incorrectUseOfComponent(organizeBy, onlyStructure, toOrder)) {
+            final Boolean hideCourses = (this.getBooleanAttribute("hideCourses") != null) ? (Boolean) this.getBooleanAttribute("hideCourses") : Boolean.FALSE;
+            
+            if (incorrectUseOfComponent(organizeBy, onlyStructure, toOrder, hideCourses)) {
                 throw new IOException("incorrect.component.usage");
             }
             
@@ -64,16 +65,14 @@ public class UIDegreeCurricularPlan extends UIInput {
                 dcpBuffer.append("[DCP ").append(dcp.getIdInternal()).append("] ").append(dcp.getName());
                 //System.out.println(dcpBuffer);
 
-                new UICourseGroup(dcp.getDegreeModule(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder).encodeBegin(facesContext);
+                new UICourseGroup(dcp.getDegreeModule(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder, hideCourses).encodeBegin(facesContext);
             }
         }
     }
 
-    private boolean incorrectUseOfComponent(String organizeBy, Boolean onlyStructure, Boolean toOrder) {
-        return (
-                (onlyStructure && (showRules || organizeBy.equals("years")))
-                || (toOrder && (!onlyStructure || !toEdit))
-                );
+    private boolean incorrectUseOfComponent(String organizeBy, Boolean onlyStructure, Boolean toOrder, Boolean hideCourses) {
+        return ((onlyStructure && (showRules || organizeBy.equals("years")))
+                || (toOrder && (!onlyStructure || !toEdit)));
     }
 
     private Boolean getBooleanAttribute(String attributeName) {

@@ -19,8 +19,9 @@
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='courseGroupID' name='courseGroupID' type='hidden' value='#{CourseGroupManagement.courseGroupID}'/>"/>
 		<h:outputText escape="false" value="<input id='contextID' name='contextID' type='hidden' value='#{CourseGroupManagement.contextID}'/>"/>
-		<h:outputText escape="false" value="<input id='position' name='position' type='hidden' value='#{CourseGroupManagement.position}'/>"/>		
+		<h:outputText escape="false" value="<input id='pos' name='pos' type='hidden' value='#{CourseGroupManagement.position}'/>"/>		
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
+		<h:outputText escape="false" value="<input id='toOrder' name='toOrder' type='hidden' value='#{CurricularCourseManagement.toOrder}'/>"/>
 
 		<h:outputText value="<p>#{bolonhaBundle['group']}: " escape="false"/>
 		<h:outputText value="<b>#{CourseGroupManagement.name}</b></p><br/>" escape="false"/>

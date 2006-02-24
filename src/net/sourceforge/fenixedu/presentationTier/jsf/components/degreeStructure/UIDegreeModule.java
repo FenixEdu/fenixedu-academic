@@ -63,7 +63,7 @@ public class UIDegreeModule extends UIInput {
         if (this.degreeModule instanceof CurricularCourse) {
             new UICurricularCourse(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs).encodeBegin(facesContext);
         } else if (this.degreeModule instanceof CourseGroup) {
-            new UICourseGroup(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, Boolean.FALSE, Boolean.FALSE).encodeBegin(facesContext);
+            new UICourseGroup(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE).encodeBegin(facesContext);
         }
     }
     
@@ -147,11 +147,13 @@ public class UIDegreeModule extends UIInput {
     private void encodeCurricularRuleOptions(CurricularRule curricularRule) throws IOException {
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright", null);
+        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
+        String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");        
         //encodeLink("../curricularRules/editCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-        //        .get("degreeCurricularPlanID") + "&curricularRuleID=" + curricularRule.getIdInternal(), "edit");
+        //        .get("degreeCurricularPlanID") + "&curricularRuleID=" + curricularRule.getIdInternal() + organizeBy + hideCourses, "edit");
         //writer.append(" , ");
         encodeLink("../curricularRules/deleteCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&curricularRuleID=" + curricularRule.getIdInternal(), "delete");
+                .get("degreeCurricularPlanID") + "&curricularRuleID=" + curricularRule.getIdInternal() + organizeBy + hideCourses, "delete");
         writer.endElement("td");
     }
 

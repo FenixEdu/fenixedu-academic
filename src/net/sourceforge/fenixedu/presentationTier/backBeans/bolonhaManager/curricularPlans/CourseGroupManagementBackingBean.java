@@ -192,7 +192,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     }
     
     public Integer getPosition() {
-        return getAndHoldIntegerParameter("position");
+        return getAndHoldIntegerParameter("pos");
     }
 
     public String orderCourseGroup() {

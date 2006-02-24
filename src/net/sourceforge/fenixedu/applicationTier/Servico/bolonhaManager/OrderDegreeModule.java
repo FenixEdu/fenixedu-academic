@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class OrderDegreeModule extends Service {
 
-    public void run(final Integer contextID, final int position) throws ExcepcaoPersistencia, FenixServiceException {
+    public void run(final Integer contextID, final Integer position) throws ExcepcaoPersistencia, FenixServiceException {
         if (contextID == null) {
             throw new FenixServiceException();
         }
         
         final Context context = (Context) persistentObject.readByOID(Context.class, contextID);
         if (context == null) {
-            throw new FenixServiceException("error.noCourseGroup");
+            throw new FenixServiceException("error.noContext");
         }
         
         context.getCourseGroup().orderChild(context, position);

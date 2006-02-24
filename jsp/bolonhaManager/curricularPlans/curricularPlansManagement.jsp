@@ -46,7 +46,8 @@
 					<h:outputText value="#{bolonhaBundle['view']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
 					<f:param name="organizeBy" value="groups"/>
-					<f:param name="showRules" value="false"/>				
+					<f:param name="showRules" value="false"/>
+					<f:param name="hideCourses" value="false"/>					
 					<f:param name="action" value="view"/>
 				</h:outputLink>
 				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>

@@ -17,6 +17,7 @@
 		<h:outputText value="#{bolonhaBundle['edit.curricularPlan.structure']}" escape="false" />
 		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+		<f:param name="toOrder" value="false"/>
 	</h:outputLink>
 	<h:outputText value="</li>" escape="false"/>
 	
@@ -25,7 +26,8 @@
 			<h:outputLink value="setCurricularRules.faces" >
 			<h:outputText value="#{bolonhaBundle['setCurricularRules']}" escape="false"/>
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
-			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>			
+			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+			<f:param name="hideCourses" value="false"/>					
 		</h:outputLink>
 	<h:outputText value="</li>" escape="false"/>
 	</h:panelGroup>

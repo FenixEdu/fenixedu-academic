@@ -77,6 +77,10 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         return getAndHoldStringParameter("type");
     }
 
+    public String getHideCourses() {
+        return getAndHoldStringParameter("hideCourses");
+    }
+
     public Integer getDegreeModuleID() throws FenixFilterException, FenixServiceException {
         if (degreeModuleID == null) {
             degreeModuleID = getAndHoldIntegerParameter("degreeModuleID"); 
