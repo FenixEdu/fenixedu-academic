@@ -200,5 +200,8 @@ public class Degree extends Degree_Base {
         
         new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
     }
-
+    
+    public boolean isBolonhaDegree() {
+        return this.getBolonhaDegreeType() != null;
+    }
 }
