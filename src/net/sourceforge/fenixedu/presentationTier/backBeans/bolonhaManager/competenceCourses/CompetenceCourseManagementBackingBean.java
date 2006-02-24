@@ -309,7 +309,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         if (getAction().equals("create")) {
             courseLoads.add(new CourseLoad(courseLoads.size() + 1));
         } else if (getAction().equals("edit")) {
-            final CourseLoad courseLoad = searchDeleteCourseLoad(courseLoads);
+            final CourseLoad courseLoad = searchDeletedCourseLoad(courseLoads);
             if (courseLoad != null) {
                 courseLoad.setAction("edit");
             } else {
@@ -318,7 +318,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         }        
     }
     
-    private CourseLoad searchDeleteCourseLoad(final List<CourseLoad> courseLoads) {       
+    private CourseLoad searchDeletedCourseLoad(final List<CourseLoad> courseLoads) {       
         for (final CourseLoad courseLoad : courseLoads) {
             if (courseLoad.getAction().equals("delete")) {
                 return courseLoad;                
