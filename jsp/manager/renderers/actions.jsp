@@ -9,6 +9,7 @@
     <ul>
         <li><a href="#wrapper">How do I collect random pieces of information?</a></li>
         <li><a href="#example">Can you give an example?</a></li>
+        <li><a href="#nested">Can I still used hidden fields technique?</a></li>
         <li><a href="#controllers">Intercepting the submission and changing the destination</a></li>
         <li><a href="#attributes">Controllers and renderer's can save it's own attributes in the <code>ViewState</code></a></li>
     </ul>
@@ -112,6 +113,32 @@ SearchBean bean = (SearchBean) viewState.getMetaObject().getObject();
     All we need now is the <html:link page="/renderers/searchPersons.do?method=prepare">working example</html:link>.
     What I mean by "working" is that the pieces of code presented are executed and not that it will search
     persons.
+</p>
+
+<h3>Can I still used hidden fields technique?</h3>
+<a name="nested"></a>
+
+<p>
+    Yes!
+</p>
+
+<p>
+    What you need to do is used the <code>nested</code> attribute of the <code>edit</code> or <code>create</code>
+    tag. If you specify <code>nested=true</code> then you can put the tag inside an existing form and consequently
+    you can use hidden fields as before because you now control the surrounding form.
+</p>
+
+<div style="border: 1px solid #000; padding: 20px 20px 20px 20px">
+    <pre>&lt;html:form action=&quot;/renderers/searchPersons.do?method=search&quot;&gt;
+    &lt;html:hidden property=&quot;theProperty&quot; value=&quot;theValue&quot;/&gt;
+    
+    &lt;fr:edit nested=&quot;true&quot; name=&quot;bean&quot; action=&quot;/renderers/searchPersons.do?method=search&quot;/&gt;
+&lt;/html:form&gt;</pre>
+</div>
+
+<p>
+    The outter form now defines the target action but if some controler chooses to send the flow to other destination
+    they will still override the destination specified in the form.
 </p>
 
 <h3>Intercepting the submission and changing the destination</h3>
@@ -324,6 +351,3 @@ SearchBean bean = (SearchBean) viewState.getMetaObject().getObject();
         Next: <html:link page="/renderers/new.do">The fourth situation: a new renderer</html:link>
     </span>
 </p>
-
-
-

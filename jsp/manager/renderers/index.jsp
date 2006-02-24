@@ -14,8 +14,11 @@
 <a name="setup"></a>
 
 Renderers integrate with the application as a Struts Plugin. In the same way
-as Tiles or even Struts Validator you have to declare it's use in each module's
-configuration. Here is an extract of that configuration:
+as Tiles or even Struts Validator you have to declare it's use in the module's
+configuration. Since the renderer's configuration is common to all modules the 
+declaration of the plugin is made only in <code>struts-default.xml</code>.
+
+Here is an extract of the module configuration:
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px; margin-top: 10px; margin-bottom: 10px;" >
     <pre>&lt;plug-in className=&quot;net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin&quot;&gt;
@@ -61,10 +64,12 @@ example of the required modification is:
 &lt;/definition&gt;</pre>
 </div>
 
-<strong>Note</strong> that the tiles definition example extends a definition only available in the 
-manager module. Using the conventions of the Fénix project you would extend 
-<code>"defintion.&lt;module&nbsp;name&gt;.masterPage"</code> were <code>&lt;module&nbsp;name&gt;</code>
-is replaced by the corresponding module name.
+<p>
+    <strong>Note</strong> that the tiles definition example extends a definition only available in the 
+    manager module. Using the conventions of the Fénix project you would extend 
+    <code>"defintion.&lt;module&nbsp;name&gt;.masterPage"</code> were <code>&lt;module&nbsp;name&gt;</code>
+    is replaced by the corresponding module name.
+</p>
 
 <h3>Fundamentals</h3>
 <a name="fundamentals"></a>
@@ -92,8 +97,9 @@ There are three fundamental concepts:
     <strong>layout</strong>.
 </p>
 <p>
-    Every renderer as access to the object that needs to be presented and to the meta-object that
-    represents the objects as asked to be presented. The structure of the meta-object should be
+    Every renderer as access to the object that needs to be presented and to the associated meta-object.
+    This meta-object represents the object as asked to be presented, that is, contains at least the
+    information in the schema. The structure of the meta-object should be
     obeyed. Among other things the meta-object contains information about which parts of the object
     should be presented. This information is represented through a <strong>schema</strong>.
     <strong>Schemas</strong> indicate, for complex objects, which slots should be shown, how they

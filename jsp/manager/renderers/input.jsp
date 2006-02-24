@@ -12,6 +12,7 @@
         <li><a href="#validator">Let's validate the input before you do more harm</a></li>
         <li><a href="#define-validator">What is a validator?</a></li>
         <li><a href="#create">How do we create new objects?</a></li>
+        <li><a href="#hidden">And if the user does not provide enough input?</a></li>
     </ul>
 </div>
 
@@ -333,9 +334,123 @@ public class RegexpValidator extends HtmlValidator {
     </div>
 </div>
 
+<h3>And if the user does not provide enough input?</h3>
+<a name="hidden"></a>
+
+<p>
+    Sometimes you want the user to fill some of the object's slots and want to fill the remaining slots yourself. Or
+    some slots are dependant of the context. For example, if you are editing some structure and want to create a child,
+    then the parent may be already determined from the context were the child is beeing created. So the user provides
+    basic information for the child and you provide the parent automatically.
+</p>
+
+<p>
+    It's important to notice that I am not talking about creating the object and then set the value sof the slots that
+    the user didn't provided. The situation here beeing described is the user submiting all the required information
+    without having the capability to edit some of them. The techinque used is similar to the hidden fields techinque. 
+    The only difference is that those values are associated with slots.
+</p>
+
+<p>
+    Let's suppose we wan't to create a person and automatically attribute the same roles that the current user has.
+    We would do this:
+</p>
+
+<div style="border-left: 1px solid #AAAAAA; padding-left: 10px;">
+    <!-- Code -->
+    <div>
+        <p><strong>Code</strong></p>
+        <pre>&lt;fr:create id=&quot;hidden&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot; schema=&quot;person.create-minimal-defaults&quot;&gt;
+    &lt;fr:hidden slot=&quot;personRoles&quot; multiple=&quot;true&quot; name=&quot;UserView&quot; property=&quot;person.personRoles&quot;/&gt;
+    
+    &lt;fr:layout name=&quot;tabular&quot;&gt;
+        &lt;fr:property name=&quot;classes&quot; value=&quot;style1&quot;/&gt;
+        &lt;fr:property name=&quot;columnClasses&quot; value=&quot;listClasses,,&quot;/&gt;
+    &lt;/fr:layout&gt;
+&lt;/fr:create&gt;</pre>
+    </div>
+
+    <!-- Result -->
+    <div>
+        <p><strong>Result</strong></p>
+        <div style="border: 1px solid #000; padding: 20px 20px 20px 20px">
+            <fr:create id="hidden" type="net.sourceforge.fenixedu.domain.Person" schema="person.create-minimal-defaults">
+                <fr:hidden slot="personRoles" multiple="true" name="UserView" property="person.personRoles"/>
+                
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="style1"/>
+                    <fr:property name="columnClasses" value="listClasses,,"/>
+                </fr:layout>
+            </fr:create>
+        </div>
+    </div>
+</div>
+
+<p>
+    As you can see, we declare an hidden slot and say were the value is located in the same way as possible in the main
+    tags. You can specify the name, property and scope to look for the value. You can also specify a conversion for the
+    value. This is needed because every object will be translated to a string and the default conversion may not suffice
+    for all cases. If the value is a <code>DomainObject</code> then a conversion is automatically provided.
+</p>
+
+<p>
+    Another important, but easy to miss, aspect of the example is the <code>multiple</code> attribute. This attribute
+    indicates that the value is to be translated into a list, that is, that several values are, in fact, beeing
+    provided for the same slot. If <code>multiple</code> was not provided then the slot would be set with a single
+    value ... unless tha value was in fact a list. This is complicated and you have several possiblities to specify 
+    an hidden slot and how it should be handled. 
+</p>
+
+<p>
+    Basically, if the given value is a <code>Collection</code> then <code>multiple</code> is assumed to be <code>true</code>
+    for that slot. If you provide multiple declarations of the same slot then <code>multiple</code> is also set to
+    <code>true</code>. In all the other cases <code>multiple</code> is considered to be <code>false</code> unless
+    explicitly specified to be <code>true</code>. So, in the previous example the use of <code>multiple</code> was
+    unnecessary. You can also verify that the example may not even work because the roles are set with an unspecified
+    order. You can provide a specific order by examplicity give multiple values for the slot.
+</p>
+
+<div style="border-left: 1px solid #AAAAAA; padding-left: 10px;">
+    <!-- Code -->
+    <div>
+        <p><strong>Code</strong></p>
+        <pre>&lt;fr:create id=&quot;hidden&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot; schema=&quot;person.create-minimal-defaults&quot;&gt;
+    &lt;fr:hidden slot=&quot;personRoles&quot; name=&quot;UserView&quot; property=&quot;person.personRoles[1]&quot;/&gt;
+    &lt;fr:hidden slot=&quot;personRoles&quot; name=&quot;UserView&quot; property=&quot;person.personRoles[0]&quot;/&gt;
+    
+    &lt;fr:layout name=&quot;tabular&quot;&gt;
+        &lt;fr:property name=&quot;classes&quot; value=&quot;style1&quot;/&gt;
+        &lt;fr:property name=&quot;columnClasses&quot; value=&quot;listClasses,,&quot;/&gt;
+    &lt;/fr:layout&gt;
+&lt;/fr:create&gt;</pre>
+    </div>
+
+    <!-- Result -->
+    <div>
+        <p><strong>Result</strong></p>
+        <div style="border: 1px solid #000; padding: 20px 20px 20px 20px">
+            <fr:create id="hidden" type="net.sourceforge.fenixedu.domain.Person" schema="person.create-minimal-defaults">
+                <fr:hidden slot="personRoles" name="UserView" property="person.personRoles[1]"/>
+                <fr:hidden slot="personRoles" name="UserView" property="person.personRoles[0]"/>
+                
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="style1"/>
+                    <fr:property name="columnClasses" value="listClasses,,"/>
+                </fr:layout>
+            </fr:create>
+        </div>
+    </div>
+</div>
+
+<p>
+    <strong>Note</strong>: this last example probably won't work either because the Person role may not be included or
+    be in the right order.
+</p>
+
 <p style="margin-top: 50px; padding-top: 10px; border-top: 1px solid #AAAAAA">
     <span style="float: left;"><a href="#top">Top</a></span>
     <span style="float: right;">
         Next: <html:link page="/renderers/actions.do">The third situation: renderers meet actions</html:link>
     </span>
 </p>
+
