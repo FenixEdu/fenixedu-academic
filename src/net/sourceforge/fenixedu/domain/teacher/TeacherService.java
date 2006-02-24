@@ -23,7 +23,7 @@ public class TeacherService extends TeacherService_Base {
     static {
         TeacherServiceTeacherServiceItem.addListener(new TeacherServiceTeacherServiceItemListener());
     }
-    
+
     public TeacherService(Teacher teacher, ExecutionPeriod executionPeriod) {
         super();
         if (teacher == null || executionPeriod == null) {
@@ -43,7 +43,6 @@ public class TeacherService extends TeacherService_Base {
         }
     }
 
-
     public DegreeTeachingService getDegreeTeachingServiceByShiftAndProfessorship(final Shift shift,
             final Professorship professorship) {
         return (DegreeTeachingService) CollectionUtils.find(getDegreeTeachingServices(),
@@ -55,16 +54,26 @@ public class TeacherService extends TeacherService_Base {
                     }
                 });
     }
-    
-    public TeacherMasterDegreeService getMasterDegreeServiceByProfessorship(Professorship professorship){        
+
+    public List<DegreeTeachingService> getDegreeTeachingServiceByProfessorship(final Professorship professorship) {
+        return (List<DegreeTeachingService>) CollectionUtils.select(getDegreeTeachingServices(),
+                new Predicate() {
+                    public boolean evaluate(Object arg0) {
+                        DegreeTeachingService degreeTeachingService = (DegreeTeachingService) arg0;
+                        return degreeTeachingService.getProfessorship() == professorship;
+                    }
+                });
+    }
+
+    public TeacherMasterDegreeService getMasterDegreeServiceByProfessorship(Professorship professorship) {
         for (TeacherMasterDegreeService masterDegreeService : getMasterDegreeServices()) {
-            if(masterDegreeService.getProfessorship() == professorship){
+            if (masterDegreeService.getProfessorship() == professorship) {
                 return masterDegreeService;
             }
         }
         return null;
     }
-    
+
     public Double getCredits() {
         double credits = getMasterDegreeServiceCredits();
         credits += getTeachingDegreeCredits();
@@ -166,7 +175,8 @@ public class TeacherService extends TeacherService_Base {
                     if (weekDay.equals(WeekDay.getWeekDay(lesson.getDiaSemana()))) {
                         Date lessonStartTime = lesson.getBegin();
                         Date lessonEndTime = lesson.getEnd();
-                        if (CalendarUtil.intersectTimes(startTime, endTime, lessonStartTime, lessonEndTime)) {
+                        if (CalendarUtil.intersectTimes(startTime, endTime, lessonStartTime,
+                                lessonEndTime)) {
                             throw new DomainException("message.overlapping.lesson.period");
                         }
                     }
@@ -241,8 +251,9 @@ public class TeacherService extends TeacherService_Base {
         long rounded = Math.round(n * 100);
         return new Double(rounded / 100.0);
     }
-    
-    private static class TeacherServiceTeacherServiceItemListener extends dml.runtime.RelationAdapter<TeacherService,TeacherServiceItem> {
+
+    private static class TeacherServiceTeacherServiceItemListener extends
+            dml.runtime.RelationAdapter<TeacherService, TeacherServiceItem> {
         @Override
         public void afterRemove(TeacherService teacherService, TeacherServiceItem serviceItem) {
             if ((teacherService != null) && teacherService.getServiceItems().isEmpty()) {
