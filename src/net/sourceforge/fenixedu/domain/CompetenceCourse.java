@@ -3,17 +3,16 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.beanutils.BeanComparator;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
@@ -220,6 +219,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public List<CompetenceCourseLoad> getCompetenceCourseLoads() {
         return getRecentCompetenceCourseInformation().getCompetenceCourseLoads();
     }
+    
+    public int getCompetenceCourseLoadsCount() {
+        return getRecentCompetenceCourseInformation().getCompetenceCourseLoadsCount();
+    }
 
     public String getObjectives() {
         return getRecentCompetenceCourseInformation().getObjectives();
@@ -316,10 +319,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return this.getUnit().getDepartmentUnit();
     }
     
-    public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads() {
-        final List<CompetenceCourseLoad> result = new ArrayList<CompetenceCourseLoad>();
+    private static final Comparator<CompetenceCourseLoad> COMPETENCE_COURSE_LOAD_ORDER = new Comparator<CompetenceCourseLoad>() {
+        public int compare(CompetenceCourseLoad ccl1, CompetenceCourseLoad ccl2) {
+            return ccl2.getOrder().compareTo(ccl1.getOrder());
+        }
+    };
+    public Set<CompetenceCourseLoad> getSortedCompetenceCourseLoads() {
+        final SortedSet<CompetenceCourseLoad> result = new TreeSet<CompetenceCourseLoad>(COMPETENCE_COURSE_LOAD_ORDER);
         result.addAll(getCompetenceCourseLoads());
-        Collections.sort(result, new BeanComparator("order"));
         return result;
     }
 
