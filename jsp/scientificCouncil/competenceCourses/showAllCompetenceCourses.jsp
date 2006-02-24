@@ -75,7 +75,7 @@ padding-right: 10px;
 		<h:outputText value="#{enumerationBundle[competenceCourse.regime.name]}</li>" escape="false"/>	
 		<h:outputText value="<li><strong>#{scouncilBundle['lessonHours']}: </strong>" escape="false"/>	
 
-		<fc:dataRepeater value="#{CompetenceCourseManagement.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
+		<fc:dataRepeater value="#{competenceCourse.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
 			<h:outputText value="<p class='mbotton0'><em>#{competenceCourseLoad.order}º #{scouncilBundle['semester']}</em></p>" escape="false"
 				rendered="#{competenceCourse.regime.name == 'ANUAL' && numberOfElements == 2}"/>
 			

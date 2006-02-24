@@ -3,12 +3,17 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanComparator;
+
 import net.sourceforge.fenixedu.accessControl.Checked;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
@@ -309,6 +314,13 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public Unit getDepartmentUnit() {
         return this.getUnit().getDepartmentUnit();
+    }
+    
+    public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads() {
+        final List<CompetenceCourseLoad> result = new ArrayList<CompetenceCourseLoad>();
+        result.addAll(getCompetenceCourseLoads());
+        Collections.sort(result, new BeanComparator("order"));
+        return result;
     }
 
     @Override
