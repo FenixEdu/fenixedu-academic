@@ -256,8 +256,8 @@ public class Teacher extends Teacher_Base {
             for (DegreeTeachingService teachingService : teachingServices) {
                 returnValue += ((teachingService.getPercentage() / 100) * teachingService.getShift()
                         .hours());
-            }            
-        }
+                }
+            }
         return returnValue;
     }
 
@@ -520,7 +520,7 @@ public class Teacher extends Teacher_Base {
      * @param executionPeriod
      * @return
      */
-    private OccupationPeriod getLessonsPeriod(ExecutionPeriod executionPeriod) {
+    public OccupationPeriod getLessonsPeriod(ExecutionPeriod executionPeriod) {
         for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear()
                 .getExecutionDegreesByType(DegreeType.DEGREE)) {
             if (executionPeriod.getSemester() == 1) {
@@ -534,7 +534,7 @@ public class Teacher extends Teacher_Base {
 
     private int calculateServiceExemptionsCredits(List<TeacherServiceExemption> list,
             OccupationPeriod occupationPeriod, ExecutionPeriod executionPeriod) {
-
+        
         TeacherServiceExemption teacherServiceExemption = getTeacherServiceExemption(list,
                 occupationPeriod);
 
