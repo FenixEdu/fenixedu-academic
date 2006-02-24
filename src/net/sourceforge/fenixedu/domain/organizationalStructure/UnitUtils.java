@@ -5,6 +5,8 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -61,5 +63,16 @@ public class UnitUtils {
             }
         }
         return allUnitsWithoutParent;
+    }
+    
+    public static List<Unit> readAllDepartmentUnits() {
+        final List<Unit> result = new ArrayList<Unit>();
+        final Date now = Calendar.getInstance().getTime();
+        for (final Unit unit : RootDomainObject.readAllUnits()) {
+            if (unit.isActive(now) && unit.getType() == PartyType.DEPARTMENT) {
+                result.add(unit);
+            }
+        }
+        return result;
     }
 }

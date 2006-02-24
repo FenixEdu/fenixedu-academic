@@ -4,12 +4,10 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularRules;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.SortedSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.faces.component.UISelectItems;
@@ -39,7 +37,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -52,7 +50,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     protected final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
     protected final ResourceBundle enumerationResources = getResourceBundle("resources/EnumerationResources");
     protected final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
-    protected final String NO_SELECTION_STRING = "no_selection";
+    protected final String NO_SELECTION_STRING = "";
     protected final Integer NO_SELECTION_INTEGER = Integer.valueOf(0);
     
     private Integer degreeModuleID = null;
@@ -94,8 +92,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 DegreeModule.class, getDegreeModuleID())) : degreeModule;
     }
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException,
-            FenixServiceException {
+    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
         return (degreeCurricularPlan == null) ? (degreeCurricularPlan = (DegreeCurricularPlan) readDomainObject(
                 DegreeCurricularPlan.class, getDegreeCurricularPlanID()))
                 : degreeCurricularPlan;
@@ -103,49 +100,61 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public String getSelectedCurricularRuleType() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("selectedCurricularRuleType") == null && getCurricularRule() != null) {
-            setSelectedCurricularRuleType(getCurricularRule().getCurricularRuleType().getName());            
+            if (getCurricularRule().getCurricularRuleType() != null) {
+                setSelectedCurricularRuleType(getCurricularRule().getCurricularRuleType().getName());
+            }
         }
         return (String) getViewState().getAttribute("selectedCurricularRuleType");
     }
 
-    public void setSelectedCurricularRuleType(String ruleType) {
-        getViewState().setAttribute("selectedCurricularRuleType", ruleType);
+    public void setSelectedCurricularRuleType(String selectedCurricularRuleType) {
+        getViewState().setAttribute("selectedCurricularRuleType", selectedCurricularRuleType);
     }
 
     private List<SelectItem> getRuleTypes() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final CurricularRuleType curricularRuleType : CurricularRuleType.values()) {
             switch (curricularRuleType) {
+
             case CREDITS_LIMIT:
-                if (getDegreeModule() instanceof CurricularCourse 
-                        && ((CurricularCourse) getDegreeModule()).getType().equals(CurricularCourseType.OPTIONAL_COURSE)) {
-                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
-                    break;
+                if (getDegreeModule() instanceof CurricularCourse) {
+                    final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
+                    if (curricularCourse.getType() == CurricularCourseType.OPTIONAL_COURSE) {
+                        result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
+                                .getString(curricularRuleType.getName())));
+                        break;
+                    }
                 }
-                
+
             case DEGREE_MODULES_SELECTION_LIMIT:
             case PRECEDENCY_BETWEEN_DEGREE_MODULES:
                 if (getDegreeModule() instanceof CourseGroup) {
-                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
+                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
+                            .getString(curricularRuleType.getName())));
                 }
                 break;
-                
+
             case PRECEDENCY_APPROVED_DEGREE_MODULE:
             case PRECEDENCY_ENROLED_DEGREE_MODULE:
             case ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR:
                 if (getDegreeModule() instanceof CurricularCourse) {
-                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
+                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
+                            .getString(curricularRuleType.getName())));
                 }
                 break;
-                
+
             case EXCLUSIVENESS:
-                result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
+                result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
+                        .getString(curricularRuleType.getName())));
                 break;
-                
+
             case ANY_CURRICULAR_COURSE:
-                if (getDegreeModule() instanceof CurricularCourse 
-                        && ((CurricularCourse) getDegreeModule()).getType().equals(CurricularCourseType.OPTIONAL_COURSE)) {
-                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
+                if (getDegreeModule() instanceof CurricularCourse) {
+                    final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
+                    if (curricularCourse.getType() == CurricularCourseType.OPTIONAL_COURSE) {
+                        result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
+                                .getString(curricularRuleType.getName())));
+                    }
                 }
                 break;
 
@@ -458,35 +467,38 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         this.degreeItems = degreeItems;
     }
     
-    //TODO: check this method - improve
-    private List<SelectItem> readBolonhaDegrees(String selectedCurricularRuleType, String selectedDegreeType) throws FenixFilterException, FenixServiceException {
+    //TODO: check this method
+    private List<SelectItem> readBolonhaDegrees(String selectedCurricularRuleType,
+            String selectedDegreeType) throws FenixFilterException, FenixServiceException {
+
         final List<SelectItem> selectItemResults = new ArrayList<SelectItem>();
         if (selectedCurricularRuleType != null
                 && !selectedCurricularRuleType.equals(NO_SELECTION_STRING)
                 && selectedCurricularRuleType.equals(CurricularRuleType.ANY_CURRICULAR_COURSE.name())) {
-            final Object[] args = { Degree.class };
-            final List<Degree> allDegrees = (List<Degree>) ServiceUtils.executeService(null, "ReadAllDomainObjects", args);
-            
+
+            final List<Degree> allDegrees = (List<Degree>) readAllDomainObjects(Degree.class);
             final ComparatorChain chainComparator = new ComparatorChain();
             chainComparator.addComparator(new BeanComparator("bolonhaDegreeType"), false);
             chainComparator.addComparator(new BeanComparator("nome"), false);
 
-            final SortedSet<Degree> sortedDegrees = new TreeSet<Degree>(chainComparator);
-            final BolonhaDegreeType bolonhaDegreeType = (selectedDegreeType == null || selectedDegreeType.equals(NO_SELECTION_STRING)) ? null : BolonhaDegreeType.valueOf(selectedDegreeType);
+            final Set<Degree> sortedDegrees = new TreeSet<Degree>(chainComparator);
+            final BolonhaDegreeType bolonhaDegreeType = (selectedDegreeType == null || selectedDegreeType
+                    .equals(NO_SELECTION_STRING)) ? null : BolonhaDegreeType.valueOf(selectedDegreeType);
             for (final Degree degree : allDegrees) {
-                if (degree.getBolonhaDegreeType() != null 
+                if (degree.isBolonhaDegree()
                         && (bolonhaDegreeType == null || degree.getBolonhaDegreeType() == bolonhaDegreeType)) {
                     sortedDegrees.add(degree);
                 }
             }
             for (final Degree degree : sortedDegrees) {
-                selectItemResults.add(new SelectItem(degree.getIdInternal(),
-                        "[" + enumerationResources.getString(degree.getBolonhaDegreeType().name()) + "] " +
-                        degree.getNome()));
-            } 
+                selectItemResults.add(new SelectItem(degree.getIdInternal(), "["
+                        + enumerationResources.getString(degree.getBolonhaDegreeType().name()) + "] "
+                        + degree.getNome()));
+            }
         }
-        selectItemResults.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources.getString("any.one")));
-        return selectItemResults; 
+        selectItemResults.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources
+                .getString("any.one")));
+        return selectItemResults;
     }
     
     public UISelectItems getDepartmentUnitItems() throws FenixFilterException, FenixServiceException {
@@ -501,18 +513,13 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         this.departmentUnitItems = departmentUnitItems;
     }
     
-    //TODO: check this method
     private Object readDepartmentUnits(String selectedCurricularRuleType) throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (selectedCurricularRuleType != null
                 && !selectedCurricularRuleType.equals(NO_SELECTION_STRING)
                 && selectedCurricularRuleType.equals(CurricularRuleType.ANY_CURRICULAR_COURSE.name())) {
-            final Date now = Calendar.getInstance().getTime();
-            for (final Unit unit : (List<Unit>) readAllDomainObjects(Unit.class)) {
-                if (unit.isActive(now) && unit.getType() != null
-                        && unit.getType().equals(UnitType.DEPARTMENT)) {
-                    result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
-                }
+            for (final Unit unit : UnitUtils.readAllDepartmentUnits()) {
+                result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
             }
         }
         result.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources.getString("choose")));
@@ -534,30 +541,32 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    // TODO: check this method - use only instanceof DegreeModule or CurricularCourse ?
     private List<SelectItem> readDegreeModules(String selectedCurricularRuleType)
             throws FenixFilterException, FenixServiceException {
+        
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (selectedCurricularRuleType != null && !selectedCurricularRuleType.equals(NO_SELECTION_STRING)) {
-            
-            if (selectedCurricularRuleType.equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE.name())
-                    || selectedCurricularRuleType.equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE.name())) {
+            switch (CurricularRuleType.valueOf(selectedCurricularRuleType)) {
+            case PRECEDENCY_APPROVED_DEGREE_MODULE:
+            case PRECEDENCY_ENROLED_DEGREE_MODULE:
+                getCurricularCourses(result);    
+                break;
                 
-                getCurricularCourses(result);
-                
-            } else if (selectedCurricularRuleType.equals(CurricularRuleType.CREDITS_LIMIT.name())
-                    || selectedCurricularRuleType.equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT.name())
-                    || selectedCurricularRuleType.equals(CurricularRuleType.PRECEDENCY_BETWEEN_DEGREE_MODULES.name())) {
-                
+            case CREDITS_LIMIT:
+            case DEGREE_MODULES_SELECTION_LIMIT:
+            case PRECEDENCY_BETWEEN_DEGREE_MODULES:
                 getCourseGroups(result);
+                break;
                 
-            } else if (selectedCurricularRuleType.equals(CurricularRuleType.EXCLUSIVENESS.name())) {
-                
+            case EXCLUSIVENESS:
                 if (getDegreeModule() instanceof CurricularCourse) {
                     getCurricularCourses(result);
                 } else if (getDegreeModule() instanceof CourseGroup) {
                     getCourseGroups(result);
                 }
+                break;
+            default:
+                break;
             }
         }
         result.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources.getString("choose")));
@@ -654,7 +663,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         parametersDTO.setSelectedDegreeID((getSelectedDegreeID() == null || getSelectedDegreeID().equals(NO_SELECTION_INTEGER)) ? null : getSelectedDegreeID());
         parametersDTO.setSelectedDepartmentUnitID((getSelectedDepartmentUnitID() == null || getSelectedDepartmentUnitID().equals(NO_SELECTION_INTEGER)) ? null : getSelectedDepartmentUnitID());
         parametersDTO.setBolonhaDegreeType((getSelectedDegreeType() == null || getSelectedDegreeType().equals(NO_SELECTION_STRING)) ? null : BolonhaDegreeType.valueOf(getSelectedDegreeType()));
-        // must be like this
+        // must get these values like this
         parametersDTO.setMinimumYear((Integer) getViewState().getAttribute("minimumYear"));
         parametersDTO.setMaximumYear((Integer) getViewState().getAttribute("maximumYear"));
         parametersDTO.setCredits((Double) getViewState().getAttribute("credits"));

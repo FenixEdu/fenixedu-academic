@@ -50,6 +50,7 @@ public class CompositeRule extends CompositeRule_Base {
         setCompositeRuleType(compositeRuleType);
 
         for (final CurricularRule curricularRule : curricularRules) {
+            curricularRule.removeDegreeModuleToApplyRule();
             curricularRule.setParentCompositeRule(this);
         }
     }
@@ -89,25 +90,26 @@ public class CompositeRule extends CompositeRule_Base {
         switch (getCompositeRuleType()) {
 
         case NOT:
-            return !getCurricularRules().get(0).evaluate(object);
+            result = !getCurricularRules().get(0).evaluate(object);
         
         case AND:
             for (final CurricularRule curricularRule : getCurricularRules()) {
                 result &= curricularRule.evaluate(object);
                 if (!result) { break; }
             }
-            return result;
+            break;
         
         case OR:
             for (final CurricularRule curricularRule : getCurricularRules()) {
                 result |= curricularRule.evaluate(object);
                 if (result) { break; }
             }
-            return result;
-
+            break;
+            
         default:
             throw new DomainException("unsupported.composite.rule");
         }
+        return result;
     }        
 
     @Override

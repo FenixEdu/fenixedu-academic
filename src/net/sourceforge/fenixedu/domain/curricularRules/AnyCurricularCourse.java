@@ -104,7 +104,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
                 labelList.add(new GenericPair<Object, Boolean>(getMinimumYear(), false));
                 labelList.add(new GenericPair<Object, Boolean>("º ", false));
-                labelList.add(new GenericPair<Object, Boolean>("label.to", true));
+                labelList.add(new GenericPair<Object, Boolean>("label.to1", true));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
                 labelList.add(new GenericPair<Object, Boolean>(getMaximumYear(), false));
                 labelList.add(new GenericPair<Object, Boolean>("º ", false));
