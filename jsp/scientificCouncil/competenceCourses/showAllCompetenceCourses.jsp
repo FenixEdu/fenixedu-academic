@@ -201,7 +201,7 @@ padding-right: 10px;
 		</fc:dataRepeater>
 
 		<h:outputText value="</div>" escape="false"/>
-		<h:outputText value="<br/><br/><hr/>" escape="false"/>
+		<h:outputText value="<div class='mvert2 break-before'></div><hr class='invisible mvert3'/>" escape="false"/>
 	</fc:dataRepeater>
 
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.departmentCompetenceCourses}" >
