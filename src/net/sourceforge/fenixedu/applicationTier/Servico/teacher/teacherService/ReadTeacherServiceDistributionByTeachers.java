@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -69,8 +70,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 				
 				if(returnDTO.isTeacherPresent(teacher.getIdInternal())){
 					returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate()));
-					returnDTO.addCreditsToTeacher(teacher.getIdInternal(), teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry));
-					
+					returnDTO.addCreditsToTeacher(teacher.getIdInternal(), teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry));					
 				} else {
 					returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
 							.getCategory().getCode(), teacher.getPerson().getNome(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate()), 
@@ -125,17 +125,22 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 					returnDTO.addManagementFunctionToTeacher(teacher.getIdInternal(), personFunction.getFunction().getName(), personFunction.getCredits());
 				}
 				
-				List<TeacherServiceExemption> teacherServiceExemptions = teacher.getServiceExemptionSituations(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate());
+				OccupationPeriod occupationPeriod = teacher.getLessonsPeriod(executionPeriodEntry);
 				
-				for(TeacherServiceExemption exemption: teacherServiceExemptions) {
-					Date endDate = null;
-					if(exemption.getEnd() == null) {
-						endDate = executionPeriodEntry.getEndDate();
-					} else {
-						endDate = exemption.getEnd();
-					}
+				if(occupationPeriod != null) {
 					
-					returnDTO.addExemptionSituationToTeacher(teacher.getIdInternal(), exemption.getType().getName(), (double) teacher.getHoursByCategory(exemption.getStart(), endDate));
+					List<TeacherServiceExemption> teacherServiceExemptions = teacher.getServiceExemptionSituations(occupationPeriod.getStart(), occupationPeriod.getEnd());
+					
+					for(TeacherServiceExemption exemption: teacherServiceExemptions) {
+						Date endDate = null;
+						if(exemption.getEnd() == null) {
+							endDate = executionPeriodEntry.getEndDate();
+						} else {
+							endDate = exemption.getEnd();
+						}
+						
+						returnDTO.addExemptionSituationToTeacher(teacher.getIdInternal(), exemption.getType().getName(), (double) teacher.getHoursByCategory(exemption.getStart(), endDate));
+					}
 				}
 				
 			}
