@@ -473,7 +473,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private void checkIfPresentInDegreeCurricularPlan(final CompetenceCourse competenceCourse, final DegreeCurricularPlan degreeCurricularPlan) {
-        final List<CurricularCourse> curricularCoursesFromDegreeCurricularPlan = (List<CurricularCourse>) degreeCurricularPlan.getDcpDegreeModules(CurricularCourse.class);
+        final List<DegreeModule> curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getDcpDegreeModules(CurricularCourse.class);
         for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
             if (curricularCoursesFromDegreeCurricularPlan.contains(curricularCourse)) {
                 throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
@@ -487,7 +487,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
     
-    public List<? extends DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz) {
+    public List<DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
         if (this.getDegreeModule() instanceof CourseGroup) {
             collectChildDegreeModules(clazz, result, (CourseGroup) this.getDegreeModule());

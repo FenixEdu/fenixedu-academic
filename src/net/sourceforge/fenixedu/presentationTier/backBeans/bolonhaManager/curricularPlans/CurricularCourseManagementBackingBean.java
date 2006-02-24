@@ -4,9 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,8 +25,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -189,7 +187,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Unit getDepartmentUnit() throws FenixFilterException, FenixServiceException {
        if (getDepartmentUnitID() != null && !getDepartmentUnitID().equals(0)) {
-           return  (Unit) readDomainObject(Unit.class, getDepartmentUnitID());
+           return (Unit) readDomainObject(Unit.class, getDepartmentUnitID());
        }
        return null;
     }
@@ -508,40 +506,31 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readDepartmentUnits() throws FenixFilterException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
-        try {
-            Date now = Calendar.getInstance().getTime();
-            for (final Unit unit : (List<Unit>) readAllDomainObjects(Unit.class)) {
-                if (unit.isActive(now) && unit.getType() != null
-                        && unit.getType().equals(PartyType.DEPARTMENT)) {
-                    result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
-                }
-            }
-        } catch (FenixServiceException e) {
-            addErrorMessage("error.gettingDepartmentUnits");
+        for (final Unit unit : UnitUtils.readAllDepartmentUnits()) {
+            result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
         }
+        Collections.sort(result, new BeanComparator("label"));
+        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         return result;
     }
 
     private List<SelectItem> readCompetenceCourses() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         final Unit departmentUnit = getDepartmentUnit();
         if (departmentUnit != null) {
-            final List<CompetenceCourse> competenceCourses = new ArrayList<CompetenceCourse>();
             for (final Unit scientificAreaUnit : departmentUnit.getScientificAreaUnits()) {
                 for (final Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
-                    competenceCourses.addAll(competenceCourseGroupUnit.getCompetenceCourses());                    
+                    for (final CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
+                        if (competenceCourse.getCurricularStage() != CurricularStage.DRAFT) {
+                            result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse.getName() + " ("
+                                    + enumerationBundle.getString(competenceCourse.getCurricularStage().getName()) + ")"));
+                        }
                     }
                 }
-            Collections.sort(competenceCourses, new BeanComparator("name"));
-            for (final CompetenceCourse competenceCourse : competenceCourses) {
-                if (!competenceCourse.getCurricularStage().equals(CurricularStage.DRAFT)) {
-                    result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse.getName() + " ("
-                            + enumerationBundle.getString(competenceCourse.getCurricularStage().getName()) + ")"));
-                }                
             }
+            Collections.sort(result, new BeanComparator("label"));
         }
+        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         return result;
     }
 
@@ -555,29 +544,24 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    private void collectChildCourseGroups(final List<SelectItem> result, final CourseGroup courseGroup,
-            final String previousCourseGroupName) {
-        String currentCourseGroupName = "";
+    private void collectChildCourseGroups(final List<SelectItem> result, final CourseGroup courseGroup, String previousPath) {
+        String currentPath = "";
         if (!courseGroup.isRoot()) {
-            currentCourseGroupName = ((previousCourseGroupName.length() == 0) ? "" : (previousCourseGroupName + " > "))
-                    + courseGroup.getName();
-            result.add(new SelectItem(courseGroup.getIdInternal(), currentCourseGroupName));
+            currentPath = ((previousPath.length() == 0) ? "" : (previousPath + " > ")) + courseGroup.getName();
+            result.add(new SelectItem(courseGroup.getIdInternal(), currentPath));
         }
         for (final Context context : courseGroup.getSortedContextsWithCourseGroups()) {
-            collectChildCourseGroups(result, (CourseGroup) context.getDegreeModule(),
-                    currentCourseGroupName);
+            collectChildCourseGroups(result, (CourseGroup) context.getDegreeModule(), currentPath);
         }
     }
 
     private List<SelectItem> readCurricularCourses() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
-        final List<CurricularCourse> curricularCourses = (List<CurricularCourse>) getDegreeCurricularPlan()
-                .getDcpDegreeModules(CurricularCourse.class);
-        Collections.sort(curricularCourses, new BeanComparator("name"));
-        for (final CurricularCourse curricularCourse : curricularCourses) {
-            result.add(new SelectItem(curricularCourse.getIdInternal(), curricularCourse.getName()));
+        for (final DegreeModule degreeModule : getDegreeCurricularPlan().getDcpDegreeModules(CurricularCourse.class)) {
+            result.add(new SelectItem(degreeModule.getIdInternal(), degreeModule.getName()));
         }
+        Collections.sort(result, new BeanComparator("label"));
+        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         return result;
     }
 }

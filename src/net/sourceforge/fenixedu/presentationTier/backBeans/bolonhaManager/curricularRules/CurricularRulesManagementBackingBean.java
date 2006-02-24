@@ -521,6 +521,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             for (final Unit unit : UnitUtils.readAllDepartmentUnits()) {
                 result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
             }
+            Collections.sort(result, new BeanComparator("label"));
         }
         result.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources.getString("choose")));
         return result;
@@ -549,21 +550,17 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             switch (CurricularRuleType.valueOf(selectedCurricularRuleType)) {
             case PRECEDENCY_APPROVED_DEGREE_MODULE:
             case PRECEDENCY_ENROLED_DEGREE_MODULE:
-                getCurricularCourses(result);    
+                getDegreeModules(CurricularCourse.class, result);
                 break;
                 
             case CREDITS_LIMIT:
             case DEGREE_MODULES_SELECTION_LIMIT:
             case PRECEDENCY_BETWEEN_DEGREE_MODULES:
-                getCourseGroups(result);
+                getDegreeModules(CourseGroup.class, result);
                 break;
                 
             case EXCLUSIVENESS:
-                if (getDegreeModule() instanceof CurricularCourse) {
-                    getCurricularCourses(result);
-                } else if (getDegreeModule() instanceof CourseGroup) {
-                    getCourseGroups(result);
-                }
+                getDegreeModules(getDegreeModule().getClass(), result);
                 break;
             default:
                 break;
@@ -572,22 +569,13 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         result.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources.getString("choose")));
         return result;
     }
-
-    private void getCourseGroups(final List<SelectItem> result) throws FenixFilterException, FenixServiceException {
-        final List<CourseGroup> courseGroups = (List<CourseGroup>) getDegreeCurricularPlan().getDcpDegreeModules(CourseGroup.class);
-        courseGroups.remove(getDegreeModule());
-        for (final CourseGroup courseGroup : courseGroups) {
-            result.add(new SelectItem(courseGroup.getIdInternal(), courseGroup.getName()));
-        }
-        Collections.sort(result, new BeanComparator("label"));
-    }
-
-    private void getCurricularCourses(final List<SelectItem> result) throws FenixFilterException, FenixServiceException {
-        final List<CurricularCourse> curricularCourses = (List<CurricularCourse>) getDegreeCurricularPlan()
-                .getDcpDegreeModules(CurricularCourse.class);
-        curricularCourses.remove(getDegreeModule());
-        for (final CurricularCourse curricularCourse : curricularCourses) {
-            result.add(new SelectItem(curricularCourse.getIdInternal(), curricularCourse.getName()));
+    
+    private void getDegreeModules(final Class<? extends DegreeModule> clazz, final List<SelectItem> result)
+            throws FenixFilterException, FenixServiceException {
+        final List<DegreeModule> degreeModules = getDegreeCurricularPlan().getDcpDegreeModules(clazz);
+        degreeModules.remove(getDegreeModule());
+        for (final DegreeModule degreeModule : degreeModules) {
+            result.add(new SelectItem(degreeModule.getIdInternal(), degreeModule.getName()));
         }
         Collections.sort(result, new BeanComparator("label"));
     }

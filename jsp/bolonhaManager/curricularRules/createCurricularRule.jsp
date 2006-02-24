@@ -180,7 +180,7 @@
 				<f:param name="degreeModuleID" value="#{CurricularRulesManagement.degreeModuleID}" />
 			</h:outputLink>
 			<h:outputText value="</p>" escape="false"/>
-<%-- 
+
 			<h:outputText value="<p>" escape="false"/>
 			<h:outputLink value="createCurricularRule.faces">
 				<h:outputText value="#{bolonhaBundle['createCompositeRule']}" />
@@ -189,7 +189,7 @@
 				<f:param name="degreeCurricularPlanID" value="#{CurricularRulesManagement.degreeCurricularPlanID}" />
 				<f:param name="degreeModuleID" value="#{CurricularRulesManagement.degreeModuleID}" />
 			</h:outputLink>
---%>
+
 			<h:outputText value="</p><br/>" escape="false"/>
 		</h:panelGroup>
 
