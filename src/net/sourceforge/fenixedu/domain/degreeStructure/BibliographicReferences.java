@@ -44,25 +44,17 @@ public class BibliographicReferences {
     }
     
     public void deleteBibliographicReference(int oid) {
-        getBibliographicReferencesList().remove(oid);
+        removeBibliographicReference(oid);
         reOrderBibliographicReferences();
     }
     
     public void switchBibliographicReferencePosition(int oldPosition, int newPosition) {
         try {
-            if (validPositions(oldPosition, newPosition)) {                
-                if (moveTop(oldPosition, newPosition)) {
-                    moveTo(getBibliographicReferencesList().get(oldPosition), oldPosition, 0);
-                } else if (moveEnd(oldPosition, newPosition)) {
-                    moveTo(getBibliographicReferencesList().get(oldPosition), oldPosition, getBibliographicReferencesListCount() - 1);
-                } else { //moveUp or moveDown
-                    final BibliographicReference oldBibliographicReference = getBibliographicReferencesList().get(oldPosition);                
-                    final BibliographicReference newBibliographicReference = getBibliographicReferencesList().get(newPosition);
-                    oldBibliographicReference.setOrder(newPosition);
-                    newBibliographicReference.setOrder(oldPosition);
-                    getBibliographicReferencesList().set(newPosition, oldBibliographicReference);
-                    getBibliographicReferencesList().set(oldPosition, newBibliographicReference);
-                }                    
+            if (validPositions(oldPosition, newPosition)) {
+                final BibliographicReference bibliographicReference = getBibliographicReference(oldPosition);
+                removeBibliographicReference(oldPosition);
+                getBibliographicReferencesList().add(newPosition, bibliographicReference);
+                reOrderBibliographicReferences();
             }            
         } catch (IndexOutOfBoundsException e) {
             throw new DomainException("bibliographicReferences.invalid.reference.positions");
@@ -76,29 +68,13 @@ public class BibliographicReferences {
         return true;
     }
     
-    private void moveTo(BibliographicReference bibliographicReference, int oldPosition, int newPosition) {
-        getBibliographicReferencesList().remove(oldPosition);
-        getBibliographicReferencesList().add(newPosition, bibliographicReference);
-        reOrderBibliographicReferences();
-    }
-    
-    private boolean moveTop(int oldPosition, int newPosition) {
-        if (Math.abs(newPosition - oldPosition) > 1 && newPosition < oldPosition) {
-            return true;
-        }
-        return false;
-    }
-    
-    private boolean moveEnd(int oldPosition, int newPosition) {
-        if (Math.abs(newPosition - oldPosition) > 1 && newPosition > oldPosition) {
-            return true;
-        }
-        return false;
+    private BibliographicReference removeBibliographicReference(int oid) {
+        return getBibliographicReferencesList().remove(oid);
     }
     
     private void reOrderBibliographicReferences() {
         for (int i = 0; i < getBibliographicReferencesListCount(); i++) {            
-            getBibliographicReferencesList().get(i).setOrder(i);            
+            getBibliographicReference(i).setOrder(i);            
         }
     }
     
