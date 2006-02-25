@@ -162,6 +162,29 @@ public class Attends extends Attends_Base {
         return null;
     }
 
+    public Interval getCurrentWeek() {
+        final DateMidnight beginningOfSemester = new DateMidnight(getBegginingOfLessonPeriod());
+        final DateMidnight firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
+        final int currentWeek = calculateCurrentWeekOffset();
+        final DateMidnight start = firstMonday.plusWeeks(currentWeek);
+        return new Interval(start, start.plusWeeks(1));
+    }
+
+    public Interval getPreviousWeek() {
+        final DateMidnight beginningOfSemester = new DateMidnight(getBegginingOfLessonPeriod());
+        final DateMidnight firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
+        final int currentWeek = calculateCurrentWeekOffset();
+        final DateMidnight start = firstMonday.plusWeeks(currentWeek - 1);
+        return new Interval(start, start.plusWeeks(1));
+    }
+
+    public Interval getResponseWeek() {
+        final DateMidnight beginningOfSemester = new DateMidnight(getBegginingOfLessonPeriod());
+        final DateMidnight firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
+        final DateMidnight secondMonday = firstMonday.plusWeeks(1);
+        return (secondMonday.isEqualNow() || secondMonday.isBeforeNow()) ? getPreviousWeek() : null;
+    }
+
     private int calculateCurrentWeekOffset() {
         final DateMidnight beginningOfSemester = new DateMidnight(getBegginingOfLessonPeriod());
         final DateMidnight firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);

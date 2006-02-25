@@ -107,6 +107,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
 
         final Attends firstAttends = findFirstAttends(request, selectedExecutionPeriod);
+        request.setAttribute("firstAttends", firstAttends);
         if (firstAttends != null) {
             final Interval executionPeriodInterval = firstAttends.getWeeklyWorkLoadInterval();
             final WeeklyWorkLoadView weeklyWorkLoadView = new WeeklyWorkLoadView(executionPeriodInterval);

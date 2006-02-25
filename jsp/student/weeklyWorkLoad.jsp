@@ -21,9 +21,12 @@
 
 <br/>
 
-<logic:present name="weeklyWorkLoadView">
-<logic:present name="selectedExecutionPeriod" property="previousWeek">
-	<bean:define id="previousWeek" name="selectedExecutionPeriod" property="previousWeek"/>
+<logic:present name="firstAttends" property="responseWeek">
+	<bean:message key="no.previouse.response.period"/>
+</logic:present>
+
+<logic:present name="firstAttends" property="responseWeek">
+	<bean:define id="previousWeek" name="firstAttends" property="responseWeek"/>
 	<table class="style1">
 		<tr>
 			<td colspan="4" class="listClasses-header">
@@ -80,7 +83,6 @@
 			</logic:notPresent>
 		</logic:iterate>
 	</table>
-</logic:present>
 </logic:present>
 
 <br/>
