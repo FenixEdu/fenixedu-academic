@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
@@ -21,9 +19,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -43,13 +39,8 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final int numberOfWeeks;
 
         final Interval[] intervals;
-        final int[] numberResponses;
-        final int[] contactSum;
-        final int[] autonomousStudySum;
-        final int[] otherSum;
-        final int[] totalSum;
 
-        final Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
+        final Set<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 
         public CurricularYearWeeklyWorkLoadView(final DegreeCurricularPlan degreeCurricularPlan,
                 final ExecutionPeriod executionPeriod, final Set<ExecutionCourse> executionCourses) {
@@ -61,22 +52,12 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             int extraWeek = period.getDays() > 0 ? 1 : 0;
             numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek;
             intervals = new Interval[numberOfWeeks];
-            numberResponses = new int[numberOfWeeks];
-            contactSum = new int[numberOfWeeks];
-            autonomousStudySum = new int[numberOfWeeks];
-            otherSum = new int[numberOfWeeks];
-            totalSum = new int[numberOfWeeks];
             for (int i = 0; i < numberOfWeeks; i++) {
                 final DateTime start = interval.getStart().plusWeeks(i);
                 final DateTime end = start.plusWeeks(1);
                 intervals[i] = new Interval(start, end);
             }
-
-            for (final ExecutionCourse executionCourse : executionCourses) {
-                for (final Attends attends : executionCourse.getAttends()) {
-                    add(attends);
-                }
-            }
+            this.executionCourses.addAll(executionCourses);
         }
 
         private ExecutionDegree findExecutionDegree(final ExecutionPeriod executionPeriod, final DegreeCurricularPlan degreeCurricularPlan) {
@@ -103,26 +84,6 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             }
         }
 
-        private void add(final Attends attends) {
-            executionCourses.add(attends.getDisciplinaExecucao());
-
-            for (final WeeklyWorkLoad weeklyWorkLoad : attends.getWeeklyWorkLoads()) {
-                final int weekIndex = weeklyWorkLoad.getWeekOffset();
-                numberResponses[weekIndex]++;
-
-                final Integer contact = weeklyWorkLoad.getContact();
-                contactSum[weekIndex] += contact != null ? contact.intValue() : 0;
-
-                final Integer autounomousStudy = weeklyWorkLoad.getAutonomousStudy();
-                autonomousStudySum[weekIndex] += autounomousStudy != null ? autounomousStudy.intValue() : 0;
-
-                final Integer other = weeklyWorkLoad.getOther();
-                otherSum[weekIndex] += other != null ? other.intValue() : 0;
-
-                totalSum[weekIndex] = contactSum[weekIndex] + autonomousStudySum[weekIndex] + otherSum[weekIndex];
-            }
-        }
-
         public Interval[] getIntervals() {
             return intervals;
         }
@@ -131,95 +92,9 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             return interval;
         }
 
-        public int[] getContactSum() {
-            return contactSum;
-        }
-
-        public int[] getAutonomousStudySum() {
-            return autonomousStudySum;
-        }
-
-        public int[] getOtherSum() {
-            return otherSum;
-        }
-
-        public int[] getNumberResponses() {
-            return numberResponses;
-        }
-
-        public double[] getContactAverage() {
-            return average(getContactSum(), getNumberResponsesTotal());
-        }
-
-        public double[] getAutonomousStudyAverage() {
-            return average(getAutonomousStudySum(), getNumberResponsesTotal());
-        }
-
-        public double[] getOtherAverage() {
-            return average(getOtherSum(), getNumberResponsesTotal());
-        }
-
-        private double[] average(final int[] values, final int divisor) {
-            final double[] valuesAverage = new double[numberOfWeeks];
-            for (int i = 0; i < numberOfWeeks; i++) {
-                valuesAverage[i] = (0.0 + values[i]) / divisor;
-            }
-            return valuesAverage;
-        }
-
-        private int add(final int[] values) {
-            int total = 0;
-            for (int i = 0; i < values.length; i++) {
-                total += values[i];
-            }
-            return total;
-        }
-
-        public int getAutonomousStudyTotal() {
-            return add(autonomousStudySum);
-        }
-
-        public int getContactTotal() {
-            return add(contactSum);
-        }
-
-        public int getNumberResponsesTotal() {
-            return add(numberResponses);
-        }
-
-        public int getOtherSumTotal() {
-            return add(otherSum);
-        }
-
-        public double getAutonomousStudyTotalAverage() {
-            return (0.0 + Math.round((0.0 + add(autonomousStudySum)) / numberOfWeeks)) / 100;
-        }
-
-        public double getContactTotalAverage() {
-            return (0.0 + Math.round((0.0 + add(contactSum)) / numberOfWeeks)) / 100;
-        }
-
-        public double getNumberResponsesTotalAverage() {
-            return (0.0 + Math.round((0.0 + add(numberResponses)) / numberOfWeeks)) / 100;
-        }
-
-        public double getOtherSumTotalAverage() {
-            return (0.0 + Math.round((0.0 + add(otherSum)) / numberOfWeeks)) / 100;
-        }
-
-        public int[] getTotalSum() {
-            return totalSum;
-        }
-
-        public int getTotalSumTotal() {
-            return add(totalSum);
-        }
-
-        public double getTotalAverage() {
-            System.out.println("getTotalSumTotal(): " + getTotalSumTotal());
-            System.out.println("numberOfWeeks: " + numberOfWeeks);
-            return (0.0 + Math.round((0.0 + getTotalSumTotal()) * 100 / numberOfWeeks)) / 100;
-        }
+		public Set<ExecutionCourse> getExecutionCourses() {
+			return executionCourses;
+		}
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form,

@@ -762,8 +762,9 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
     }
 
 	public WeeklyWorkLoadView getWeeklyWorkLoadView() {
-        if (!getAttends().isEmpty()) {
-            final Interval interval = getAttends().get(0).getWeeklyWorkLoadInterval();
+		final Attends attends = findAttendsWithEnrolment();
+        if (attends != null) {
+            final Interval interval = attends.getWeeklyWorkLoadInterval();
             final WeeklyWorkLoadView weeklyWorkLoadView = new WeeklyWorkLoadView(interval);
             for (final Attends attend : getAttends()) {
                 weeklyWorkLoadView.add(attend);
@@ -772,6 +773,15 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
         } else {
             return null;
         }
+	}
+
+	private Attends findAttendsWithEnrolment() {
+		for (final Attends attends : getAttends()) {
+			if (attends.getEnrolment() != null) {
+				return attends;
+			}
+		}
+		return null;
 	}
 
 }
