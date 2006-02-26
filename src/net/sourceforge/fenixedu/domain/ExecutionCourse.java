@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.util.ProposalState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
@@ -671,78 +670,86 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 		}
 
         public double[] getContactAverage() {
-            return average(getContactSum(), getNumberResponsesTotal());
+            return average(getContactSum(), getNumberResponses());
         }
 
         public double[] getAutonomousStudyAverage() {
-            return average(getAutonomousStudySum(), getNumberResponsesTotal());
+            return average(getAutonomousStudySum(), getNumberResponses());
         }
 
         public double[] getOtherAverage() {
-            return average(getOtherSum(), getNumberResponsesTotal());
+            return average(getOtherSum(), getNumberResponses());
         }
 
-        private double[] average(final int[] values, final int divisor) {
+        public double[] getTotalAverage() {
             final double[] valuesAverage = new double[numberOfWeeks];
             for (int i = 0; i < numberOfWeeks; i++) {
-                valuesAverage[i] = (0.0 + values[i]) / divisor;
+                valuesAverage[i] = Math.round((0.0 + getContactSum()[i] +
+                		getAutonomousStudySum()[i] + getOtherSum()[i]) / getNumberResponses()[i]);
             }
             return valuesAverage;
         }
 
-		private int add(final int[] values) {
-			int total = 0;
+        private double[] average(final int[] values, final int[] divisor) {
+            final double[] valuesAverage = new double[numberOfWeeks];
+            for (int i = 0; i < numberOfWeeks; i++) {
+                valuesAverage[i] = Math.round((0.0 + values[i]) / divisor[i]);
+            }
+            return valuesAverage;
+        }
+
+		private double add(final double[] values) {
+			double total = 0;
 			for (int i = 0; i < values.length; i++) {
 				total += values[i];
 			}
 			return total;
 		}
 
-		public int getAutonomousStudyTotal() {
-			return add(autonomousStudySum);
-		}
-
-		public int getContactTotal() {
-			return add(contactSum);
-		}
-
-		public int getNumberResponsesTotal() {
-			return add(numberResponses);
-		}
-
-		public int getOtherSumTotal() {
-			return add(otherSum);
-		}
-
-        public double getAutonomousStudyTotalAverage() {
-            return (0.0 + Math.round((0.0 + add(autonomousStudySum)) / numberOfWeeks)) / 100;
+        public double getContactAverageTotal() {
+        	return add(getContactAverage());
         }
 
-        public double getContactTotalAverage() {
-            return (0.0 + Math.round((0.0 + add(contactSum)) / numberOfWeeks)) / 100;
+        public double getAutonomousStudyAverageTotal() {
+        	return add(getAutonomousStudyAverage());
+        }
+
+        public double getOtherAverageTotal() {
+        	return add(getOtherAverage());
+        }
+
+        public double getTotalAverageTotal() {
+        	return add(getTotalAverage());
+        }
+
+        public int getNumberResponsesTotal() {
+			int total = 0;
+			for (int i = 0; i < getNumberResponses().length; i++) {
+				total += getNumberResponses()[i];
+			}
+			return total;
+        }
+
+        public double getContactAverageTotalAverage() {
+        	return Math.round(getContactAverageTotal() / numberOfWeeks);
+        }
+
+        public double getAutonomousStudyAverageTotalAverage() {
+        	return Math.round(getAutonomousStudyAverageTotal() / numberOfWeeks);
+        }
+
+        public double getOtherAverageTotalAverage() {
+        	return Math.round(getOtherAverageTotal() / numberOfWeeks);
+        }
+
+        public double getTotalAverageTotalAverage() {
+        	return Math.round(getTotalAverageTotal() / numberOfWeeks);
         }
 
         public double getNumberResponsesTotalAverage() {
-            return (0.0 + Math.round((0.0 + add(numberResponses)) / numberOfWeeks)) / 100;
+        	return Math.round((0.0 + getNumberResponsesTotal()) / numberOfWeeks);
         }
 
-        public double getOtherSumTotalAverage() {
-            return (0.0 + Math.round((0.0 + add(otherSum)) / numberOfWeeks)) / 100;
-        }
-
-		public int[] getTotalSum() {
-			return totalSum;
-		}
-
-		public int getTotalSumTotal() {
-			return add(totalSum);
-		}
-
-        public double getTotalAverage() {
-            System.out.println("getTotalSumTotal(): " + getTotalSumTotal());
-            System.out.println("numberOfWeeks: " + numberOfWeeks);
-            return (0.0 + Math.round((0.0 + getTotalSumTotal()) * 100 / numberOfWeeks)) / 100;
-        }
 	}
 
     public Interval getInterval() {
