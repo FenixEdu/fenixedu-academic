@@ -35,13 +35,11 @@
 		<li><html:link page="/testsManagement.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.testsManagement"/></html:link></li>
 		<li><html:link page="/viewExecutionCourseProjects.do?method=prepareViewExecutionCourseProjects" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.groupsManagement"/></html:link></li>
 		<br/>
-<!--
 		<li>
 			<html:link page='<%= "/weeklyWorkLoad.do?method=prepare&amp;executionCourseID=" + executionCourseID.toString() %>'>
 				<bean:message key="link.weekly.work.load"/>
 			</html:link>
 		</li>
--->
 		<br/>
 		<li><html:link page="/viewCourseInformation.do" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.courseInformationManagement"/></html:link></li>
 		<%-- <logic:notEqual name="executionCourse" property="infoExecutionPeriod.state.stateCode" value="C"> --%>
