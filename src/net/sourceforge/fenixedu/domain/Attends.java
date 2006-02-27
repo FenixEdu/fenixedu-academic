@@ -171,11 +171,9 @@ public class Attends extends Attends_Base {
     }
 
     public Interval getPreviousWeek() {
-        final DateMidnight beginningOfSemester = new DateMidnight(getBegginingOfLessonPeriod());
-        final DateMidnight firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
-        final int currentWeek = calculateCurrentWeekOffset();
-        final DateMidnight start = firstMonday.plusWeeks(currentWeek - 1);
-        return new Interval(start, start.plusWeeks(1));
+        final DateMidnight thisMonday = new DateMidnight().withField(DateTimeFieldType.dayOfWeek(), 1);
+        final DateMidnight previousMonday = thisMonday.minusWeeks(1);
+        return new Interval(previousMonday, thisMonday);
     }
 
     public Interval getResponseWeek() {
@@ -192,13 +190,11 @@ public class Attends extends Attends_Base {
     }
 
     private int calculateCurrentWeekOffset() {
-        final DateMidnight beginningOfSemester = new DateMidnight(getBegginingOfLessonPeriod());
-        final DateMidnight firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
-        final DateMidnight now = new DateMidnight();
-        final Period period = new Period(firstMonday, now);
-
-        int extraWeek = period.getDays() > 0 ? 1 : 0;
-        return (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek - 1;
+        final DateMidnight beginningOfLessonPeriod = new DateMidnight(getBegginingOfLessonPeriod());
+        final DateMidnight firstMonday = beginningOfLessonPeriod.withField(DateTimeFieldType.dayOfWeek(), 1);
+        final DateMidnight thisMonday = new DateMidnight().withField(DateTimeFieldType.dayOfWeek(), 1);
+        final Period period = new Period(firstMonday, thisMonday);
+        return (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks();
     }
 
     public Set<WeeklyWorkLoad> getSortedWeeklyWorkLoads() {
