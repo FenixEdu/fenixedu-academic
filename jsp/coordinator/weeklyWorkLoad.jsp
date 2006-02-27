@@ -26,19 +26,40 @@ text-align: left;
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="degreeCurricularPlanID"/>
 
-	<html:select property="executionPeriodID" onchange="this.form.submit();">
-		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
-	</html:select>
-	<br/>
-	<html:select property="curricularYearID" onchange="this.form.submit();">
-		<html:option value=""/>
-		<html:options collection="curricularYears" property="idInternal" labelProperty="year"/>
-	</html:select>
-	<br/>
-	<html:select property="executionCourseID" onchange="this.form.submit();">
-		<html:option value=""/>
-		<html:options collection="executionCourses" property="idInternal" labelProperty="nome"/>
-	</html:select>
+	<table>
+		<tr>
+			<td>
+				<bean:message key="title.weekly.work.load.academic.period"/>
+			</td>
+			<td>
+				<html:select property="executionPeriodID" onchange="this.form.submit();">
+					<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
+				</html:select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="title.weekly.work.load.curricular.year"/>
+			</td>
+			<td>
+				<html:select property="curricularYearID" onchange="this.form.submit();">
+					<html:option value=""/>
+					<html:options collection="curricularYears" property="idInternal" labelProperty="year"/>
+				</html:select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="title.weekly.work.load.execution.period"/>
+			</td>
+			<td>
+				<html:select property="executionCourseID" onchange="this.form.submit();">
+					<html:option value=""/>
+					<html:options collection="executionCourses" property="idInternal" labelProperty="nome"/>
+				</html:select>
+			</td>
+		</tr>
+	</table>
 </html:form>
 
 <br/>
