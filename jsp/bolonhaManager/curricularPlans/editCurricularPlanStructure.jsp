@@ -14,13 +14,13 @@
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeModule.courseGroupContexts}">
 		<h:outputText value="#{bolonhaBundle['manage.groups']}" rendered="#{CurricularCourseManagement.toOrder == 'false'}"/>
 		<h:outputLink value="editCurricularPlanStructure.faces" rendered="#{CurricularCourseManagement.toOrder == 'true'}">
-			<h:outputText value="#{bolonhaBundle['order.groups']}" />
+			<h:outputText value="#{bolonhaBundle['manage.groups']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="toOrder" value="false"/>
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>			
 		</h:outputLink>
 		<h:outputText value=" , " escape="false"/>
-		<h:outputText value="#{bolonhaBundle['manage.groups']}" rendered="#{CurricularCourseManagement.toOrder == 'true'}"/>
+		<h:outputText value="#{bolonhaBundle['order.groups']}" rendered="#{CurricularCourseManagement.toOrder == 'true'}"/>
 		<h:outputLink value="editCurricularPlanStructure.faces" rendered="#{CurricularCourseManagement.toOrder == 'false'}">
 			<h:outputText value="#{bolonhaBundle['order.groups']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
