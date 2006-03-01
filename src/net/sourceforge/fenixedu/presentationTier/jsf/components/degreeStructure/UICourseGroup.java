@@ -68,7 +68,7 @@ public class UICourseGroup extends UIDegreeModule {
                 if (this.toEdit) {
                     if (!this.toOrder) {
                         String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
-                        encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap().get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal() + organizeBy, "create.course.group");
+                        encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap().get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal() + organizeBy + "&toOrder=false", "create.course.group");
                     }
                 }                            
                 writer.startElement("br", this);
@@ -254,16 +254,16 @@ public class UICourseGroup extends UIDegreeModule {
         writer.append("(");
         String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
         encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal() + organizeBy, "create.course.group");
+                .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal() + organizeBy + "&toOrder=false", "create.course.group");
         writer.append(" , ");
         encodeLink("associateCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal() + organizeBy, "associate.course.group");
+                .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal() + organizeBy + "&toOrder=false", "associate.course.group");
         writer.append(" , ");
         encodeLink("editCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + organizeBy, "edit");
+                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + organizeBy + "&toOrder=false", "edit");
         writer.append(" , ");
         encodeLink("deleteCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + "&contextID=" + this.previousContext.getIdInternal() + organizeBy, "delete");
+                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + "&contextID=" + this.previousContext.getIdInternal() + organizeBy + "&toOrder=false", "delete");
         writer.append(") ");
         writer.endElement("td");
     }
