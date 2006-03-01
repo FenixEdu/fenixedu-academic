@@ -63,7 +63,7 @@ public class ClockingInterval {
         for (ClockingInterval clockingInterval: clockingIntervalList) {
             if (attributesIterator.hasNext()) {
                 AttributeType attribute = attributesIterator.next();
-                // TODO encapsulate this shit somehow
+                // TODO encapsulate this somehow
                 List<TimePoint> clockingIntervalToTimePoint = clockingInterval.toTimePoint(attribute);
                 pointList.addAll(clockingIntervalToTimePoint);
             }
