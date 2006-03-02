@@ -44,7 +44,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     
     public int compareTo(Context o) {
         int orderCompare = this.getOrder().compareTo(o.getOrder());
-        if (orderCompare != 0) {
+        if (this.getCourseGroup().equals(o.getCourseGroup()) && orderCompare != 0) {
             return orderCompare;
         } else {
             if (this.getDegreeModule() instanceof CurricularCourse) {
