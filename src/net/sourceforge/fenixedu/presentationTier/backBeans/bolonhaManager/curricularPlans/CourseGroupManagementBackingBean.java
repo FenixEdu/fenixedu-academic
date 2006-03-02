@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -14,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -22,6 +22,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class CourseGroupManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -164,31 +166,24 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
             throw new FenixActionException("error.mustChooseACourseGroup");
         }
     }
-
+    
     private List<SelectItem> readCourseGroups() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        final DegreeModule degreeModule = getDegreeCurricularPlan().getDegreeModule();
-        if (degreeModule instanceof CourseGroup) {
-            Set<CourseGroup> allParents = getCourseGroup(getParentCourseGroupID()).getAllParentCourseGroups();
-            collectChildCourseGroups(result, (CourseGroup) degreeModule, "", allParents);
-        }
-        
-        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
-
-        return result;
-    }
-    
-    private void collectChildCourseGroups(final List<SelectItem> result, final CourseGroup courseGroup, final String previousCourseGroupName, Set<CourseGroup> allParents) throws FenixFilterException, FenixServiceException {
-        String currentCourseGroupName = "";
-        if (!courseGroup.isRoot()) {
-            currentCourseGroupName = previousCourseGroupName + courseGroup.getName();
-            if (getCourseGroup(getParentCourseGroupID()) != courseGroup && !allParents.contains(courseGroup)) {
-                result.add(new SelectItem(courseGroup.getIdInternal(), currentCourseGroupName));
+        final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(CourseGroup.class);
+        final Set<CourseGroup> allParents = getCourseGroup(getParentCourseGroupID()).getAllParentCourseGroups();
+        for (final List<DegreeModule> degreeModules : degreeModulesSet) {
+            final DegreeModule lastDegreeModule = (degreeModules.size() > 0) ? degreeModules.get(degreeModules.size() - 1) : null;
+            if (!allParents.contains(lastDegreeModule) && lastDegreeModule != getCourseGroup(getParentCourseGroupID())) {
+                final StringBuilder pathName = new StringBuilder();
+                for (final DegreeModule degreeModule : degreeModules) {
+                    pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
+                }
+                result.add(new SelectItem(degreeModules.get(degreeModules.size() - 1).getIdInternal(), pathName.toString()));
             }
         }
-        for (final Context context : courseGroup.getSortedContextsWithCourseGroups()) {
-            collectChildCourseGroups(result, (CourseGroup) context.getDegreeModule(), currentCourseGroupName + ((courseGroup.isRoot()) ? "" : " > "), allParents);
-        }
+        Collections.sort(result, new BeanComparator("label"));
+        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
+        return result;
     }
     
     public Integer getPosition() {

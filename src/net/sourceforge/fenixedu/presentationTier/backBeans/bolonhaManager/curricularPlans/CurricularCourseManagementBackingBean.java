@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -545,23 +544,17 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readCourseGroups() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
-        final DegreeModule degreeModule = getDegreeCurricularPlan().getDegreeModule();
-        if (degreeModule instanceof CourseGroup) {
-            collectChildCourseGroups(result, (CourseGroup) degreeModule, "");
+        final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(CourseGroup.class);
+        for (final List<DegreeModule> degreeModules : degreeModulesSet) {
+            final StringBuilder pathName = new StringBuilder();
+            for (final DegreeModule degreeModule : degreeModules) {
+                pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
+            }
+            result.add(new SelectItem(degreeModules.get(degreeModules.size() - 1).getIdInternal(), pathName.toString()));
         }
+        Collections.sort(result, new BeanComparator("label"));
+        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         return result;
-    }
-
-    private void collectChildCourseGroups(final List<SelectItem> result, final CourseGroup courseGroup, String previousPath) {
-        String currentPath = "";
-        if (!courseGroup.isRoot()) {
-            currentPath = ((previousPath.length() == 0) ? "" : (previousPath + " > ")) + courseGroup.getName();
-            result.add(new SelectItem(courseGroup.getIdInternal(), currentPath));
-        }
-        for (final Context context : courseGroup.getSortedContextsWithCourseGroups()) {
-            collectChildCourseGroups(result, (CourseGroup) context.getDegreeModule(), currentPath);
-        }
     }
 
     private List<SelectItem> readCurricularCourses() throws FenixFilterException, FenixServiceException {
