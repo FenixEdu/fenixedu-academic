@@ -96,9 +96,15 @@ public class Exclusiveness extends Exclusiveness_Base {
         
         if (exclusiveness.getExclusiveDegreeModule() == getDegreeModuleToApplyRule()) {
             if (exclusiveness.belongsToCompositeRule()) {
-                throw new DomainException(
-                        "error.cannot.delete.rule.because.belongs.to.composite.rule",
-                        exclusiveness.getDegreeModuleToApplyRule().getName());
+                if (this.belongsToCompositeRule()) { // both belong to composite rules
+                    new Exclusiveness(exclusiveness.getExclusiveDegreeModule(), exclusiveness.getDegreeModuleToApplyRule(), 
+                            exclusiveness.getContextCourseGroup(), exclusiveness.getBegin(), exclusiveness.getEnd());
+                    return;
+                } else {
+                    throw new DomainException(
+                            "error.cannot.delete.rule.because.belongs.to.composite.rule",
+                            exclusiveness.getDegreeModuleToApplyRule().getName());                    
+                }
             }
             curricularRulesIterator.remove();
             exclusiveness.removeExclusiveDegreeModule();
