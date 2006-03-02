@@ -111,9 +111,7 @@ public class UIDegreeModule extends UIInput {
             writer.startElement("tr", this);
         
             writer.startElement("td", this);
-            if (this.toEdit) {
-                writer.writeAttribute("colspan", "6", null);    
-            }
+            writer.writeAttribute("colspan", (this.toEdit) ? "6" : "5", null);    
             writer.writeAttribute("style", "padding:0; margin: 0;", null);
             
             writer.startElement("table", this);
