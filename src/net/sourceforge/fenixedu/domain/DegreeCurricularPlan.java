@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
@@ -265,7 +266,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,
             ExecutionPeriod executionPeriod) {
 
-        List result = new ArrayList();
+        List<IEnrollmentRule> result = new ArrayList<IEnrollmentRule>();
 
         result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
         result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
@@ -279,7 +280,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public List getCurricularCoursesFromArea(Branch area, AreaType areaType) {
 
-        List curricularCourses = new ArrayList();
+        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
 
         List scopes = area.getScopes();
 
@@ -490,53 +491,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public List<DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
         if (this.getDegreeModule() instanceof CourseGroup) {
-            collectChildDegreeModules(clazz, result, (CourseGroup) this.getDegreeModule());
+            ((CourseGroup) this.getDegreeModule()).collectChildDegreeModules(clazz, result);
         }
         return new ArrayList<DegreeModule>(result);
-    }
-    
-    private void collectChildDegreeModules(Class<? extends DegreeModule> clazz, final Set<DegreeModule> result, CourseGroup courseGroup) {
-        for (final Context context : courseGroup.getCourseGroupContexts()) {
-            if (context.getDegreeModule().getClass().equals(clazz)) {
-                result.add(context.getDegreeModule());
-            }
-            if (context.getDegreeModule() instanceof CourseGroup) {
-                collectChildDegreeModules(clazz, result, (CourseGroup) context.getDegreeModule());
-            }
-        }
     }
     
     public List<List<DegreeModule>> getDcpDegreeModulesIncludingFullPath(Class<? extends DegreeModule> clazz) {
         final List<List<DegreeModule>> result = new ArrayList<List<DegreeModule>>(); 
         if (this.getDegreeModule() instanceof CourseGroup) {
-            collectChildDegreeModulesIncludingFullPath(clazz, result, new ArrayList<DegreeModule>(), (CourseGroup) this.getDegreeModule());
+            ((CourseGroup) this.getDegreeModule()).collectChildDegreeModulesIncludingFullPath(clazz, result, new ArrayList<DegreeModule>());
         }
         return result;
-    }
-
-    private void collectChildDegreeModulesIncludingFullPath(Class< ? extends DegreeModule> clazz, List<List<DegreeModule>> result, 
-            List<DegreeModule> previousDegreeModulesPath, CourseGroup courseGroup) {
-        final List<DegreeModule> currentDegreeModulesPath = previousDegreeModulesPath;
-        for (final Context context : courseGroup.getCourseGroupContexts()) {
-            List<DegreeModule> newDegreeModulesPath = null;
-            if (context.getDegreeModule().getClass().equals(clazz)) {
-                newDegreeModulesPath = initNewDegreeModulesPath(newDegreeModulesPath, currentDegreeModulesPath, context.getDegreeModule());
-                result.add(newDegreeModulesPath);
-            }
-            if (context.getDegreeModule() instanceof CourseGroup) {
-                newDegreeModulesPath = initNewDegreeModulesPath(newDegreeModulesPath, currentDegreeModulesPath, context.getDegreeModule());
-                collectChildDegreeModulesIncludingFullPath(clazz, result, newDegreeModulesPath, (CourseGroup) context.getDegreeModule());
-            }
-        }
-    }
-
-    private List<DegreeModule> initNewDegreeModulesPath(List<DegreeModule> newDegreeModulesPath,
-            final List<DegreeModule> currentDegreeModulesPath, final DegreeModule degreeModule) {
-        if (newDegreeModulesPath == null) {
-            newDegreeModulesPath = new ArrayList<DegreeModule>(currentDegreeModulesPath);
-            newDegreeModulesPath.add(degreeModule);
-        }
-        return newDegreeModulesPath;
     }
 
     public Branch getBranchByName(final String branchName) {

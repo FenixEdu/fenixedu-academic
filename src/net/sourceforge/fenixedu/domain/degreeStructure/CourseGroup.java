@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -189,6 +190,42 @@ public class CourseGroup extends CourseGroup_Base {
     @Override
     protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
         result.addAll(getParticipatingContextCurricularRules());
+    }
+
+    public void collectChildDegreeModules(Class<? extends DegreeModule> clazz, final Set<DegreeModule> result) {
+        for (final Context context : this.getCourseGroupContexts()) {
+            if (context.getDegreeModule().getClass().equals(clazz)) {
+                result.add(context.getDegreeModule());
+            }
+            if (context.getDegreeModule() instanceof CourseGroup) {
+                ((CourseGroup) context.getDegreeModule()).collectChildDegreeModules(clazz, result);
+            }
+        }
+    }
+    
+    public void collectChildDegreeModulesIncludingFullPath(Class< ? extends DegreeModule> clazz, List<List<DegreeModule>> result, 
+            List<DegreeModule> previousDegreeModulesPath) {
+        final List<DegreeModule> currentDegreeModulesPath = previousDegreeModulesPath;
+        for (final Context context : this.getCourseGroupContexts()) {
+            List<DegreeModule> newDegreeModulesPath = null;
+            if (context.getDegreeModule().getClass().equals(clazz)) {
+                newDegreeModulesPath = initNewDegreeModulesPath(newDegreeModulesPath, currentDegreeModulesPath, context.getDegreeModule());
+                result.add(newDegreeModulesPath);
+            }
+            if (context.getDegreeModule() instanceof CourseGroup) {
+                newDegreeModulesPath = initNewDegreeModulesPath(newDegreeModulesPath, currentDegreeModulesPath, context.getDegreeModule());
+                ((CourseGroup) context.getDegreeModule()).collectChildDegreeModulesIncludingFullPath(clazz, result, newDegreeModulesPath);
+            }
+        }
+    }
+
+    private List<DegreeModule> initNewDegreeModulesPath(List<DegreeModule> newDegreeModulesPath,
+            final List<DegreeModule> currentDegreeModulesPath, final DegreeModule degreeModule) {
+        if (newDegreeModulesPath == null) {
+            newDegreeModulesPath = new ArrayList<DegreeModule>(currentDegreeModulesPath);
+            newDegreeModulesPath.add(degreeModule);
+        }
+        return newDegreeModulesPath;
     }
 
 }
