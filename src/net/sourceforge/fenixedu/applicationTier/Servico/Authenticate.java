@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.cas.CASServiceUrlProvider;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -149,7 +150,7 @@ public class Authenticate extends Service implements Serializable {
 
     public IUserView run(final String casTicket, final String requestURL) throws ExcepcaoAutenticacao,
             ExcepcaoPersistencia {
-        final CASReceipt receipt = getCASReceipt(casTicket);
+        final CASReceipt receipt = getCASReceipt(casTicket,requestURL);
 
         if (receipt == null) {
             throw new ExcepcaoAutenticacao("bad.authentication");
@@ -168,13 +169,14 @@ public class Authenticate extends Service implements Serializable {
 
     }
 
-    private CASReceipt getCASReceipt(final String casTicket) throws ExcepcaoAutenticacao {
+    private CASReceipt getCASReceipt(final String casTicket, final String requestURL)
+            throws ExcepcaoAutenticacao {
         CASReceipt receipt = null;
 
         try {
             final String casValidateUrl = PropertiesManager.getProperty("cas.validateUrl");
-            final String casServiceUrl = URLEncoder.encode(PropertiesManager
-                    .getProperty("cas.serviceUrl"), URL_ENCODING);
+            final String casServiceUrl = URLEncoder.encode(CASServiceUrlProvider
+                    .getServiceUrl(requestURL), URL_ENCODING);
 
             ProxyTicketValidator pv = new ProxyTicketValidator();
             pv.setCasValidateUrl(casValidateUrl);

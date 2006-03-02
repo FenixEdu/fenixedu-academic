@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.util.cas.CASLogoutCallbackUrlProvider;
+import net.sourceforge.fenixedu.util.cas.CASServiceUrlProvider;
 
 /**
  * 
@@ -25,8 +27,6 @@ public class CASFilter implements Filter {
 
     private String casLoginUrl;
 
-    private String casServiceUrl;
-
     private boolean enabled;
 
     public void init(FilterConfig config) throws ServletException {
@@ -34,15 +34,6 @@ public class CASFilter implements Filter {
 
         if (enabled) {
             casLoginUrl = PropertiesManager.getProperty("cas.loginUrl");
-            casServiceUrl = PropertiesManager.getProperty("cas.serviceUrl");
-
-            if (casServiceUrl == null) {
-                throw new ServletException("casServiceUrl must be set.");
-            }
-
-            if (!(casServiceUrl.startsWith("https://") || (casServiceUrl.startsWith("http://")))) {
-                throw new ServletException("casServiceUrl must start with https:// or http://");
-            }
         }
 
     }
@@ -75,8 +66,13 @@ public class CASFilter implements Filter {
     private void redirectToCAS(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        String serviceString = URLEncoder.encode(casServiceUrl, URL_ENCODING);
-        String casLoginString = casLoginUrl + "?service=" + serviceString;
+        String serviceString = URLEncoder.encode(CASServiceUrlProvider.getServiceUrl(request
+                .getRequestURL().toString()), URL_ENCODING);
+        String logoutCallbackUrlString = URLEncoder.encode(CASLogoutCallbackUrlProvider
+                .getLogoutCallbackUrl(request.getRequestURL().toString()), URL_ENCODING);
+
+        String casLoginString = casLoginUrl + "?service=" + serviceString + "&" + "logoutCallbackUrl="
+                + logoutCallbackUrlString;
 
         ((HttpServletResponse) response).sendRedirect(casLoginString);
 
@@ -88,7 +84,6 @@ public class CASFilter implements Filter {
      * @see javax.servlet.Filter#destroy()
      */
     public void destroy() {
-        // TODO Auto-generated method stub
 
     }
 }

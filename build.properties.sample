@@ -389,7 +389,10 @@ cas.enabled=false
 cas.loginUrl=https://localhost:8443/cas/login
 cas.validateUrl=https://localhost:8443/cas/serviceValidate
 cas.logoutUrl=https://localhost:8443/cas/logout
-cas.serviceUrl=https://localhost:8443/ciapl/loginCAS.do
+cas.serviceUrl.localhost=https://localhost:8443/ciapl/loginCAS.do
+cas.serviceUrl.salad21=https://salad21.ist.utl.pt:8443/ciapl/loginCAS.do
+cas.logoutCallbackUrl.localhost=http://localhost:8080/ciapl/logoff.do?logoutFromCAS=true
+cas.logoutCallbackUrl.salad21=http://salad21:8080/ciapl/logoff.do?logoutFromCAS=true
 
 
 #----------------------------------------------------------------
