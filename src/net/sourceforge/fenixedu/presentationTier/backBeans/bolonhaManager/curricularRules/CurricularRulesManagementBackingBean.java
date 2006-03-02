@@ -575,7 +575,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             throws FenixFilterException, FenixServiceException {
         final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(clazz);
         for (final List<DegreeModule> degreeModules : degreeModulesSet) {
-            if (degreeModules.size() > 0 && degreeModules.get(degreeModules.size() - 1) != getDegreeModule()) {
+            final DegreeModule lastDegreeModule = (degreeModules.size() > 0) ? degreeModules.get(degreeModules.size() - 1) : null; 
+            if (lastDegreeModule != getDegreeModule()) {
                 final StringBuilder pathName = new StringBuilder();
                 for (final DegreeModule degreeModule : degreeModules) {
                     pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
