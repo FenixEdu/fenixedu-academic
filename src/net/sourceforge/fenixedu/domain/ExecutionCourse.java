@@ -784,4 +784,13 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 		return null;
 	}
 
+    public boolean hasGrouping(final Grouping grouping) {
+        for (final ExportGrouping exportGrouping : getExportGroupings()) {
+            if (grouping == exportGrouping.getGrouping()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

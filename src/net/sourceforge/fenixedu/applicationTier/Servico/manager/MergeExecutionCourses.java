@@ -24,16 +24,13 @@ import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.SupportLesson;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
-import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt"> João Mota </a> 29/Nov/2003
@@ -76,6 +73,7 @@ public class MergeExecutionCourses extends Service {
             throw new DuplicateShiftNameException();
         }
 
+        copyShifts(executionCourseFrom, executionCourseTo);
         copyProfessorships(persistentSupport, executionCourseFrom, executionCourseTo);
         copyAttends(executionCourseFrom, executionCourseTo);
         copyBibliographicReference(persistentSupport, executionCourseFrom, executionCourseTo);
@@ -88,7 +86,6 @@ public class MergeExecutionCourses extends Service {
         copySummaries(persistentSupport, executionCourseFrom, executionCourseTo);
         copyGroupPropertiesExecutionCourse(executionCourseFrom, executionCourseTo);
         copySite(persistentSupport, executionCourseFrom, executionCourseTo);
-        copyShifts(executionCourseFrom, executionCourseTo);
         removeEvaluations(persistentSupport, executionCourseFrom, executionCourseTo);
 
         executionCourseTo.getAssociatedCurricularCourses().addAll(executionCourseFrom.getAssociatedCurricularCourses());
@@ -148,7 +145,11 @@ public class MergeExecutionCourses extends Service {
                 .getExportGroupings());
 
         for (final ExportGrouping groupPropertiesExecutionCourse : associatedGroupPropertiesExecutionCourse) {
-            groupPropertiesExecutionCourse.setExecutionCourse(executionCourseTo);
+            if (executionCourseTo.hasGrouping(groupPropertiesExecutionCourse.getGrouping())) {
+                groupPropertiesExecutionCourse.delete();
+            } else {
+                groupPropertiesExecutionCourse.setExecutionCourse(executionCourseTo);
+            }
         }
     }
 
@@ -180,10 +181,7 @@ public class MergeExecutionCourses extends Service {
 
     private void copyShifts(final ExecutionCourse executionCourseFrom,
             final ExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
-
-        final List<Shift> associatedShifts = new ArrayList();
-        associatedShifts.addAll(executionCourseFrom.getAssociatedShifts());
-
+        final List<Shift> associatedShifts = new ArrayList(executionCourseFrom.getAssociatedShifts());
         for (final Shift shift : associatedShifts) {
             shift.setDisciplinaExecucao(executionCourseTo);
         }
@@ -201,9 +199,9 @@ public class MergeExecutionCourses extends Service {
                     otherAttends.setEnrolment(attends.getEnrolment());
                 } else if (otherAttends.hasEnrolment() && attends.hasAluno()) {
                     throw new FenixServiceException("Unable to merge execution courses. Student " + attends.getAluno().getNumber() + " has an enrolment in both.");
-                //} else {
-                    // all is ok
                 }
+                for (;!attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends.getAssociatedMarks().get(0)));
+                for (;!attends.getStudentGroups().isEmpty(); otherAttends.addStudentGroups(attends.getStudentGroups().get(0)));
                 attends.delete();
             }
         }
@@ -266,74 +264,26 @@ public class MergeExecutionCourses extends Service {
             throws ExcepcaoPersistencia {
         for (;!executionCourseFrom.getProfessorships().isEmpty();) {
             final Professorship professorship = executionCourseFrom.getProfessorships().get(0);
-            if (canAddProfessorshipTo(executionCourseTo, professorship)) {
+            final Professorship otherProfessorship = findProfessorShip(executionCourseTo, professorship.getTeacher());
+            if (otherProfessorship == null) {
                 professorship.setExecutionCourse(executionCourseTo);
             } else {
+                for (;!professorship.getAssociatedSummaries().isEmpty(); otherProfessorship.addAssociatedSummaries(professorship.getAssociatedSummaries().get(0)));
+                for (;!professorship.getAssociatedShiftProfessorship().isEmpty(); otherProfessorship.addAssociatedShiftProfessorship(professorship.getAssociatedShiftProfessorship().get(0)));
+                for (;!professorship.getSupportLessons().isEmpty(); otherProfessorship.addSupportLessons(professorship.getSupportLessons().get(0)));
                 professorship.delete();
             }
         }
     }
 
-    private boolean canAddProfessorshipTo(final ExecutionCourse executionCourse,
-            final Professorship professorshipToAdd) {
-        final Iterator associatedProfessorships = executionCourse.getProfessorshipsIterator();
-        while (associatedProfessorships.hasNext()) {
-            Professorship professorship = (Professorship) associatedProfessorships.next();
-            if (professorship.getTeacher().equals(professorshipToAdd.getTeacher())) {
-                return false;
+    private Professorship findProfessorShip(final ExecutionCourse executionCourseTo, final Teacher teacher) {
+        for (final Professorship professorship : executionCourseTo.getProfessorships()) {
+            if (professorship.getTeacher() == teacher) {
+                return professorship;
             }
         }
-        return true;
+        return null;
     }
 
-    private void removeProfessorship(final ISuportePersistente persistentSupport,
-            final Professorship professorship) throws ExcepcaoPersistencia {
-
-        deleteShiftProfessorships(persistentSupport, professorship);
-        deleteSupportLessons(persistentSupport, professorship);
-        dereferenceSummariesFrom(professorship);
-        deleteProfessorship(persistentSupport, professorship);
-    }
-
-    private void dereferenceSummariesFrom(final Professorship professorship) {
-        final Iterator associatedSummaries = professorship.getAssociatedSummariesIterator();
-        while (associatedSummaries.hasNext()) {
-            Summary summary = (Summary) associatedSummaries.next();
-            summary.setProfessorship(null);
-        }
-    }
-
-    private void deleteSupportLessons(final ISuportePersistente persistentSupport,
-            final Professorship professorship) throws ExcepcaoPersistencia {
-        final IPersistentSupportLesson persistentSupportLesson = persistentSupport
-                .getIPersistentSupportLesson();
-        final Iterator associatedSupportLessons = professorship.getSupportLessonsIterator();
-        while (associatedSupportLessons.hasNext()) {
-            SupportLesson supportLesson = (SupportLesson) associatedSupportLessons.next();
-            supportLesson.setProfessorship(null);
-            persistentSupportLesson.deleteByOID(SupportLesson.class, supportLesson.getIdInternal());
-        }
-    }
-
-    private void deleteShiftProfessorships(final ISuportePersistente persistentSupport,
-            final Professorship professorship) throws ExcepcaoPersistencia {
-        final IPersistentShiftProfessorship persistentShiftProfessorship = persistentSupport
-                .getIPersistentShiftProfessorship();
-        final Iterator associatedShifProfessorships = professorship
-                .getAssociatedShiftProfessorshipIterator();
-        while (associatedShifProfessorships.hasNext()) {
-            ShiftProfessorship shiftProfessorship = (ShiftProfessorship) associatedShifProfessorships
-                    .next();
-            shiftProfessorship.setProfessorship(null);
-            shiftProfessorship.setShift(null);
-            persistentShiftProfessorship.deleteByOID(ShiftProfessorship.class, shiftProfessorship
-                    .getIdInternal());
-        }
-    }
-
-    private void deleteProfessorship(final ISuportePersistente persistentSupport,
-            final Professorship professorshipToDelete) throws ExcepcaoPersistencia {                
-        professorshipToDelete.delete();
-    }
 
 }
