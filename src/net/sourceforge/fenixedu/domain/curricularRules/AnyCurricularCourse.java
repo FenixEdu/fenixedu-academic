@@ -87,7 +87,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             labelList.add(new GenericPair<Object, Boolean>("label.in", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
             labelList.add(new GenericPair<Object, Boolean>(getCurricularPeriodOrder(), false));
-            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("º ", false));
             labelList.add(new GenericPair<Object, Boolean>("SEMESTER", true));
         }
         if (getMinimumYear() != null && getMaximumYear() != null) {
