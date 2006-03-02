@@ -115,7 +115,7 @@ text-align: right;
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.credits']}</th>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.totalLecturedHours']}</th>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.availability']}</th>" escape="false" />
-			<h:outputText value="<th>#{bundle['label.teacherService.teacher.accumulatedCredits']}</th>" escape="false" />
+			<h:outputText value="<th>#{bundle['label.teacherService.teacher.accumulatedCredits']} <br> #{viewTeacherService.previousExecutionYear.year}</th>" escape="false" />
 		<c:out value="</tr>" escapeXml="false" />
 		<c:forEach items="${viewTeacherService.teacherServiceDTO}" var="teacher">
 			<c:out value="<tr id=${teacher.teacherIdInternal}>" escapeXml="false" />

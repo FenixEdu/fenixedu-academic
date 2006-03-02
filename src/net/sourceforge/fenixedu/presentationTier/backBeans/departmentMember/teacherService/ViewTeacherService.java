@@ -56,6 +56,8 @@ public class ViewTeacherService extends FenixBackingBean {
 	private static final int COURSE_INFORMATION_COLUMNS = 4;
 
 	private static final int STUDENTS_PER_SHIFT_INFORMATION_COLUMNS = 4;
+	
+	private InfoExecutionYear previousExecutionYear = null;
 
 	public Integer getColumnsCount() {
 		int totalColumns = NUMBER_OF_FIXED_COLUMNS;
@@ -276,6 +278,18 @@ public class ViewTeacherService extends FenixBackingBean {
 
 		Collections.sort(executionPeriods, new BeanComparator("beginDate"));
 
+		InfoExecutionPeriod previousExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
+		.executeService(
+				getUserView(),
+				"ReadPreviousExecutionPeriod",
+				new Object[] { executionPeriods.get(0).getIdInternal() });
+
+		if(previousExecutionPeriod != null) {
+			previousExecutionYear = previousExecutionPeriod.getInfoExecutionYear();
+		} else {
+			previousExecutionYear = null;
+		}
+
 		List<Integer> periodsIDsList = new ArrayList<Integer>();
 
 		for (InfoExecutionPeriod executionPeriod : executionPeriods) {
@@ -395,4 +409,10 @@ public class ViewTeacherService extends FenixBackingBean {
 		return isOptionSelected(VIEW_STUDENTS_ENROLMENTS);
 	}
 
+	public InfoExecutionYear getPreviousExecutionYear() throws FenixFilterException, FenixServiceException {
+		if(previousExecutionYear == null) {
+			buildExecutionPeriodsIDsList();
+		}
+		return previousExecutionYear;	
+	}
 }
