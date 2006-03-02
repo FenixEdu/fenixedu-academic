@@ -114,7 +114,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.endElement("br");
         */
         writer.startElement("ul", this);
-        writer.writeAttribute("class", "nobullet", null);
+        writer.writeAttribute("class", "nobullet mtop2", null);
         writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
         writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
 
@@ -155,13 +155,13 @@ public class UICourseGroup extends UIDegreeModule {
         if (!this.onlyStructure) {
             if (this.depth == BASE_DEPTH) {
                 writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo3 mbottom0 mtop05", null);
+                writer.writeAttribute("class", "showinfo3 mvert0", null);
                 writer.writeAttribute("style", "width: " + width + "em;", null);
             } else if (this.depth > BASE_DEPTH) {
                 writer.startElement("div", this);
                 writer.writeAttribute("style", "padding-left: " + courseGroupIndent + "em;", null);
                 writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo3 mbottom0 mtop05", null);
+                writer.writeAttribute("class", "showinfo3 mvert0", null);
                 writer.writeAttribute("style", "width: " + String.valueOf(width - (this.depth * 3)) +"em;", null);
             }
         }
@@ -202,13 +202,21 @@ public class UICourseGroup extends UIDegreeModule {
                 writer.writeAttribute("style", "padding-left: " + String.valueOf((this.depth + 2)) + "em;", null);
             }
         }
-
-        if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
-            writer.append(this.degreeModule.getName()).append(" ");
+/*
+        writer.startElement("a", this);
+        String action = "&action=" + ((this.toEdit) ? "build" : (String) this.facesContext.getExternalContext().getRequestParameterMap().get("action"));
+        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
+        String showRules = "&showRules=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("showRules");        
+        String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");
+        writer.writeAttribute("href", "courseGroupReport.faces?degreeCurricularPlan="+ this.facesContext.getExternalContext().getRequestParameterMap()
+                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + action + organizeBy + showRules + hideCourses, null);
+*/        if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
+            writer.append(this.degreeModule.getName()).append(" ");    
         } else {
             writer.append(this.degreeModule.getNameEn()).append(" ");
         }
-        
+/*        writer.endElement("a");
+*/        
         if (!this.onlyStructure) {
             writer.endElement("strong");
             writer.endElement("th");
@@ -296,7 +304,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.startElement("div", this);
         writer.writeAttribute("class", (this.depth == BASE_DEPTH) ? "indent3" : "indent" + (courseGroupIndent + 3), null);
         writer.startElement("table", this);
-        writer.writeAttribute("class", "showinfo3 mbottom0 mtop05", null);
+        writer.writeAttribute("class", "showinfo3 mvert0", null);
         writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3)  + "em;", null);
 
         double sumContactLoad = 0.0;
