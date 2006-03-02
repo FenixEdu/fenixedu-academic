@@ -136,7 +136,8 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         for (final Student student : getUserView(request).getPerson().getStudents()) {
             for (final Attends attend : student.getOrderedAttends()) {
                 final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
-                if (executionCourse.getExecutionPeriod() == selectedExecutionPeriod) {
+                if (executionCourse.getExecutionPeriod() == selectedExecutionPeriod
+                        && attend.getEnrolment() != null) {
                     return attend;
                 }
             }
