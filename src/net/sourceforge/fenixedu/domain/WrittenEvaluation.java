@@ -4,11 +4,14 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -162,6 +165,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
             List<ExecutionCourse> executionCoursesToAssociate,
             List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period) {
+        if (rooms == null) {
+            rooms = new ArrayList<OldRoom>(0);
+        }
 
         checkValidHours(beginning, end);
         
@@ -172,9 +178,18 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         this.getAssociatedExecutionCourses().addAll(executionCoursesToAssociate);
         this.getAssociatedCurricularCourseScope().addAll(curricularCourseScopesToAssociate);
 
-        deleteAllRoomOccupations();
-        if (rooms != null) {
-            associateRooms(rooms, period);
+        associateRooms(rooms, period);
+
+        final Set<RoomOccupation> roomOccupationsToDelete = new HashSet<RoomOccupation>();
+        for (final RoomOccupation roomOccupation : getAssociatedRoomOccupation()) {
+            final Room room = roomOccupation.getRoom();
+            if (!rooms.contains(room)) {
+                roomOccupationsToDelete.add(roomOccupation);
+            }
+        }
+
+        for (final RoomOccupation roomOccupation : roomOccupationsToDelete) {
+            roomOccupation.delete();
         }
     }
 
