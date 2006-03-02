@@ -1,3 +1,4 @@
+
 /* transitional.css - 09.01.2006 
    by João Alfaiate @ Fenix */
 
@@ -144,8 +145,8 @@ font-weight: normal;
 padding: 0.5em;
 }
 
-.showinfo1 th { border-top: 1px dotted #bbb; border-bottom: 1px dotted #bbb; }
-.showinfo1 td { border-top: 1px dotted #bbb; border-bottom: 1px dotted #bbb; }
+.showinfo1 th { border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; }
+.showinfo1 td { border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; }
 .showinfo3 th { border-bottom: 1px solid #ccc; }
 .showinfo3 td { border-bottom: 1px solid #eee; }
 
@@ -303,7 +304,7 @@ margin-left: 10.5em;
 .pbottom2 { padding-bottom: 2em;}
 .pbottom3 { padding-bottom: 3em;}
 .mtop0 { margin-top: 0;}
-.mtop05 { margin-top: 0.5e;}
+.mtop05 { margin-top: 0.5em;}
 .mtop1 { margin-top: 1em;}
 .mtop2 { margin-top: 2em;}
 .mtop3 { margin-top: 3em;}
