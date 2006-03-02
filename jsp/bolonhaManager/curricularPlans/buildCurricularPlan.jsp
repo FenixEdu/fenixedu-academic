@@ -43,7 +43,7 @@
 			<f:param name="organizeBy" value="groups"/>
 			<f:param name="action" value="view"/>
 		</h:outputLink>
-		<h:outputText value="<em>#{bolonhaBundle['groups']}</em>" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}" escape="false"/>
+		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['groups']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}" escape="false"/>
 		<h:outputText value=" , " escape="false"/>
 		<h:outputLink value="buildCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}">
 			<h:outputText value="#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}" />
@@ -51,7 +51,7 @@
 			<f:param name="organizeBy" value="years"/>
 			<f:param name="action" value="view"/>
 		</h:outputLink>
-		<h:outputText value="<em>#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}</em>" rendered="#{CurricularCourseManagement.organizeBy == 'years'}" escape="false"/>
+		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'years'}" escape="false"/>
 		<h:outputText value="</p>" escape="false"/>
 	</h:panelGroup>
 

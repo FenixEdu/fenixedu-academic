@@ -21,8 +21,12 @@
 		<h:outputText value="</li></ul>" escape="false"/>
 	</h:form>
 	
+	<h:outputText value="<p>" escape="false"/>
+	<h:messages styleClass="error0" infoClass="success0" layout="table" globalOnly="true"/>
+	<h:outputText value="</p>" escape="false"/>
+	
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeStructure.childs}">
-		<h:outputText value="<p class='mtop2 mbottom0'>" escape="false"/>
+		<h:outputText value="<p class='mtop1 mbottom0'>" escape="false"/>
 		<h:outputText value="#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
 		<h:outputLink value="../curricularPlans/setCurricularRules.faces" rendered="#{CurricularCourseManagement.organizeBy == 'years'}">
 			<h:outputText value="#{bolonhaBundle['groups']}" />
@@ -30,7 +34,7 @@
 			<f:param name="organizeBy" value="groups"/>
 			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
 		</h:outputLink>
-		<h:outputText value="<em>#{bolonhaBundle['groups']}</em>" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}" escape="false"/>
+		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['groups']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}" escape="false"/>
 		<h:outputText value=" , " escape="false"/>
 		<h:outputLink value="../curricularPlans/setCurricularRules.faces" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}">
 			<h:outputText value="#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}" />
@@ -38,12 +42,12 @@
 			<f:param name="organizeBy" value="years"/>		
 			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>			
 		</h:outputLink>
-		<h:outputText value="<em>#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}</em>" rendered="#{CurricularCourseManagement.organizeBy == 'years'}" escape="false"/>		
+		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'years'}" escape="false"/>		
 		<h:outputText value="</p>" escape="false"/>
 	</h:panelGroup>
 
 	<h:panelGroup rendered="#{CurricularCourseManagement.organizeBy == 'groups'}">
-		<h:outputText value="<p class='mtop05 mbottom0'>" escape="false"/>
+		<h:outputText value="<p class='mtop05 mbottom1'>" escape="false"/>
 		<h:outputText value="#{bolonhaBundle['curricularCourses']}: " escape="false"/>
 		<h:outputLink value="../curricularPlans/setCurricularRules.faces" rendered="#{CurricularCourseManagement.hideCourses == 'true'}">
 			<h:outputText value="#{bolonhaBundle['show']}" />
@@ -51,7 +55,7 @@
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 			<f:param name="hideCourses" value="false"/>
 		</h:outputLink>
-		<h:outputText value="<em>#{bolonhaBundle['show']}</em>" rendered="#{CurricularCourseManagement.hideCourses == 'false'}" escape="false"/>
+		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['show']}</span>" rendered="#{CurricularCourseManagement.hideCourses == 'false'}" escape="false"/>
 		<h:outputText value=" , " escape="false"/>
 		<h:outputLink value="../curricularPlans/setCurricularRules.faces" rendered="#{CurricularCourseManagement.hideCourses == 'false'}">
 			<h:outputText value="#{bolonhaBundle['hide']}" />
@@ -59,13 +63,10 @@
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 			<f:param name="hideCourses" value="true"/>
 		</h:outputLink>
-		<h:outputText value="<em>#{bolonhaBundle['hide']}</em>" rendered="#{CurricularCourseManagement.hideCourses == 'true'}" escape="false"/>
+		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['hide']}</span>" rendered="#{CurricularCourseManagement.hideCourses == 'true'}" escape="false"/>
 		<h:outputText value="</p>" escape="false"/>
 	</h:panelGroup>
 
-	<h:outputText value="<br/>" escape="false"/>
-	<h:messages styleClass="error0" infoClass="success0" layout="table" globalOnly="true"/>
-	<h:outputText value="<br/>" escape="false"/>
 
 	<fc:degreeCurricularPlanRender 
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
