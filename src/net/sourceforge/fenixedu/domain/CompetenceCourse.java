@@ -393,4 +393,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         super.addAssociatedCurricularCourses(associatedCurricularCourses);
     }
 
+    public Unit getScientificAreaUnit() {
+        if (this.getUnit().hasAnyParents()) {
+            if (this.getUnit().getParentsCount() > 1) { 
+                throw new DomainException("compentence.course.should.have.only.one.scientific.area");
+            }
+            return (Unit) this.getUnit().getParents().get(0);
+        }  
+        return null;
+    }
+
 }
