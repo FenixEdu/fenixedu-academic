@@ -12,6 +12,8 @@ public class HtmlMenuOption extends HtmlMenuEntry {
     
     private String text;
     
+    private HtmlComponent body;
+    
     public HtmlMenuOption() {
         super(null, null);
     }
@@ -26,6 +28,12 @@ public class HtmlMenuOption extends HtmlMenuEntry {
         this(text);
         
         this.value = value;
+    }
+
+    public HtmlMenuOption(HtmlComponent body) {
+        super(null, null);
+        
+        this.body = body;
     }
 
     public boolean isSelected() {
@@ -49,6 +57,14 @@ public class HtmlMenuOption extends HtmlMenuEntry {
         this.text = text;
     }
 
+    public HtmlComponent getBody() {
+        return this.body;
+    }
+
+    public void setBody(HtmlComponent body) {
+        this.body = body;
+    }
+
     public String getValue() {
         return value;
     }
@@ -63,7 +79,9 @@ public class HtmlMenuOption extends HtmlMenuEntry {
 
         tag.setName("option");
     
-        tag.setText(getText());
+        if (getText() != null) {
+            tag.setText(getText());
+        }
         
         if (this.selected) {
             // XHTML 1.0 Transaction requires the selected attribute to have the value "selected"
@@ -71,6 +89,10 @@ public class HtmlMenuOption extends HtmlMenuEntry {
         }
         
         tag.setAttribute("value", getValue() == null ? getText() : getValue());
+        
+        if (getBody() != null) {
+            tag.addChild(getBody().getOwnTag(context));
+        }
         
         return tag;
     }
