@@ -179,6 +179,7 @@
 				<f:param name="organizeBy" value="#{CurricularRulesManagement.organizeBy}" />
 				<f:param name="degreeCurricularPlanID" value="#{CurricularRulesManagement.degreeCurricularPlanID}" />
 				<f:param name="degreeModuleID" value="#{CurricularRulesManagement.degreeModuleID}" />
+				<f:param name="hideCourses" value="#{CurricularRulesManagement.hideCourses}" />
 			</h:outputLink>
 			<h:outputText value="</p>" escape="false"/>
 
@@ -189,6 +190,7 @@
 				<f:param name="organizeBy" value="#{CurricularRulesManagement.organizeBy}" />
 				<f:param name="degreeCurricularPlanID" value="#{CurricularRulesManagement.degreeCurricularPlanID}" />
 				<f:param name="degreeModuleID" value="#{CurricularRulesManagement.degreeModuleID}" />
+				<f:param name="hideCourses" value="#{CurricularRulesManagement.hideCourses}" />
 			</h:outputLink>
 
 			<h:outputText value="</p><br/>" escape="false"/>
@@ -205,7 +207,7 @@
 		<h:panelGroup rendered="#{CurricularRulesManagement.type == 'rule'}">
 			<h:commandButton immediate="true" value="#{bolonhaBundle['cancel']}" styleClass="inputbutton" action="setCurricularRules"/>
 		</h:panelGroup>
-		<h:panelGroup rendered="#{CurricularRulesManagement.type == 'compositeRule'}">
+		<h:panelGroup rendered="#{empty CurricularRulesManagement.type || CurricularRulesManagement.type == 'compositeRule'}">
 			<h:commandButton immediate="true" value="#{bolonhaBundle['back']}" styleClass="inputbutton" action="setCurricularRules"/>
 		</h:panelGroup>
 		
