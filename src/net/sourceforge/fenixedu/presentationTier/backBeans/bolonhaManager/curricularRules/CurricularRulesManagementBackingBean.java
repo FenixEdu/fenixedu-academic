@@ -475,9 +475,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readBolonhaDegrees(String selectedCurricularRuleType,
             String selectedDegreeType) throws FenixFilterException, FenixServiceException {
 
-        final List<SelectItem> selectItemResults = new ArrayList<SelectItem>();
+        final List<SelectItem> selectItemsResult = new ArrayList<SelectItem>();
         if (selectedCurricularRuleType != null
-                && !selectedCurricularRuleType.equals(NO_SELECTION_STRING)
                 && selectedCurricularRuleType.equals(CurricularRuleType.ANY_CURRICULAR_COURSE.name())) {
 
             final List<Degree> allDegrees = (List<Degree>) readAllDomainObjects(Degree.class);
@@ -495,14 +494,13 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 }
             }
             for (final Degree degree : sortedDegrees) {
-                selectItemResults.add(new SelectItem(degree.getIdInternal(), "["
+                selectItemsResult.add(new SelectItem(degree.getIdInternal(), "["
                         + enumerationResources.getString(degree.getBolonhaDegreeType().name()) + "] "
                         + degree.getNome()));
             }
         }
-        selectItemResults.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources
-                .getString("any.one")));
-        return selectItemResults;
+        selectItemsResult.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources.getString("any.one")));
+        return selectItemsResult;
     }
     
     public UISelectItems getDepartmentUnitItems() throws FenixFilterException, FenixServiceException {
@@ -520,7 +518,6 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     private Object readDepartmentUnits(String selectedCurricularRuleType) throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (selectedCurricularRuleType != null
-                && !selectedCurricularRuleType.equals(NO_SELECTION_STRING)
                 && selectedCurricularRuleType.equals(CurricularRuleType.ANY_CURRICULAR_COURSE.name())) {
             for (final Unit unit : UnitUtils.readAllDepartmentUnits()) {
                 result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
@@ -576,10 +573,15 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     
     private void getDegreeModules(final Class<? extends DegreeModule> clazz, final List<SelectItem> result)
             throws FenixFilterException, FenixServiceException {
-        final List<DegreeModule> degreeModules = getDegreeCurricularPlan().getDcpDegreeModules(clazz);
-        degreeModules.remove(getDegreeModule());
-        for (final DegreeModule degreeModule : degreeModules) {
-            result.add(new SelectItem(degreeModule.getIdInternal(), degreeModule.getName()));
+        final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(clazz);
+        for (final List<DegreeModule> degreeModules : degreeModulesSet) {
+            if (degreeModules.size() > 0 && degreeModules.get(degreeModules.size() - 1) != getDegreeModule()) {
+                final StringBuilder pathName = new StringBuilder();
+                for (final DegreeModule degreeModule : degreeModules) {
+                    pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
+                }
+                result.add(new SelectItem(degreeModules.get(degreeModules.size() - 1).getIdInternal(), pathName.toString()));
+            }
         }
         Collections.sort(result, new BeanComparator("label"));
     }
