@@ -47,7 +47,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private Integer contextID = null;
     private Integer curricularCourseID = null;
     private boolean resetCompetenceCourseID = false;
-    private boolean confirmDelete = false;
+    private boolean toDelete = false;
     
     private Double weight = null;
     private String prerequisites;
@@ -155,11 +155,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getCourseGroups() throws FenixFilterException, FenixServiceException {
-        return (courseGroups == null) ? (courseGroups = readCourseGroups()) : courseGroups;
+        return (courseGroups == null) ? (courseGroups = readDegreeModules(CourseGroup.class)) : courseGroups;
     }
     
     public List<SelectItem> getCurricularCourses() throws FenixFilterException, FenixServiceException {
-        return (curricularCourses == null) ? (curricularCourses = readCurricularCourses()) : curricularCourses;
+        return (curricularCourses == null) ? (curricularCourses = readDegreeModules(CurricularCourse.class)) : curricularCourses;
     }
 
     public List<SelectItem> getCurricularYears() throws FenixFilterException, FenixServiceException {
@@ -326,6 +326,13 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return resultLabels;
     }
     
+    public boolean isToDelete() throws FenixFilterException, FenixServiceException {
+        if (getCurricularCourse() != null) {
+            toDelete = getCurricularCourse().getDegreeModuleContextsCount() == 1; // Last context?
+        }
+        return toDelete;
+    }
+    
     public String createCurricularCourse() throws FenixFilterException {        
         try {
             ServiceUtils.executeService(getUserView(), "CreateCurricularCourse", getArgumentsToCreate());
@@ -479,14 +486,15 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return "";
     }
     
-    public void deleteContext(ActionEvent event) throws FenixFilterException, FenixServiceException {
-        confirmDelete = getCurricularCourse().getDegreeModuleContextsCount() == 1; // Last context?
-        if (!confirmDelete) { 
-            forceDeleteContext(event);
+    public void tryDeleteContext(ActionEvent event) throws FenixFilterException, FenixServiceException {
+        if (!isToDelete()) {
+            deleteContext(event);
+        } else {
+            setContextID(getContextIDToDelete());
         }
-    }    
+    }
     
-    public void forceDeleteContext(ActionEvent event) throws FenixFilterException {        
+    public void deleteContext(ActionEvent event) throws FenixFilterException {
         try {
             Object args[] = { getCurricularCourseID(), getContextIDToDelete() };
             ServiceUtils.executeService(getUserView(), "DeleteContextFromDegreeModule", args);
@@ -495,21 +503,17 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
-            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            addErrorMessage(getFormatedMessage(domainExceptionBundle, e.getKey(), e.getArgs()));
         }
-    }
-    
-    public String editCurricularCourseReturnPath() {
-        return confirmDelete ? "confirmDeleteCurricularCourse" : "";
-    }
-    
-    public String deleteCurricularCourseContextReturnPath() {
-        return confirmDelete ? "confirmDeleteCurricularCourse" : "buildCurricularPlan";
-    }
-    
+    }    
+ 
     public String cancel() {
         setContextID(0);
         return "";
+    }
+    
+    public String editCurricularCourseReturnPath() throws FenixFilterException, FenixServiceException {
+        return !toDelete ? "" : "deleteCurricularCourseContext";
     }
 
     private List<SelectItem> readDepartmentUnits() throws FenixFilterException {
@@ -541,26 +545,16 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         return result;
     }
-
-    private List<SelectItem> readCourseGroups() throws FenixFilterException, FenixServiceException {
+    
+    private List<SelectItem> readDegreeModules(Class<? extends DegreeModule> clazz) throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(CourseGroup.class);
+        final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(clazz);
         for (final List<DegreeModule> degreeModules : degreeModulesSet) {
             final StringBuilder pathName = new StringBuilder();
             for (final DegreeModule degreeModule : degreeModules) {
                 pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
             }
             result.add(new SelectItem(degreeModules.get(degreeModules.size() - 1).getIdInternal(), pathName.toString()));
-        }
-        Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
-        return result;
-    }
-
-    private List<SelectItem> readCurricularCourses() throws FenixFilterException, FenixServiceException {
-        final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final DegreeModule degreeModule : getDegreeCurricularPlan().getDcpDegreeModules(CurricularCourse.class)) {
-            result.add(new SelectItem(degreeModule.getIdInternal(), degreeModule.getName()));
         }
         Collections.sort(result, new BeanComparator("label"));
         result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));

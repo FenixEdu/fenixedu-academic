@@ -85,6 +85,7 @@
 			<h:outputText value="#{bolonhaBundle['newContext']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
 			<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
+			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}" />
 		</h:outputLink>
 		</p>
 
@@ -137,10 +138,11 @@
 						<f:param name="courseGroupID" value="#{context.courseGroup.idInternal}" />
 						<f:param name="contextID" value="#{context.idInternal}" />
 						<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
+						<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}" />
 					</h:outputLink>
-					<h:outputText value=", " escape="false"/>	
+					<h:outputText value=", " escape="false"/>
 					<h:commandLink value="#{bolonhaBundle['delete']}" action="#{CurricularCourseManagement.editCurricularCourseReturnPath}"
-							actionListener="#{CurricularCourseManagement.deleteContext}">
+							actionListener="#{CurricularCourseManagement.tryDeleteContext}">
 						<f:param name="contextIDToDelete" value="#{context.idInternal}"/>
 					</h:commandLink>
 					<h:outputText value="</p></fieldset>" escape="false"/>

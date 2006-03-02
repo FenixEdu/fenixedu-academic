@@ -31,12 +31,27 @@
 			</h:panelGroup>
 		</fc:dataRepeater>
 		
-		<h:outputText value="<br/><p>" escape="false"/>
-		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}" escape="false"/>		
-		<h:outputText value="</p><br/>" escape="false"/>
+		<h:panelGroup rendered="#{CurricularCourseManagement.toDelete && !empty CurricularCourseManagement.rulesLabels}">
+			<h:outputText value="<br/><strong>#{bolonhaBundle['participating.curricularRules']}: </strong>" escape="false"/>
+			<h:outputText value="<ul>" escape="false"/>
+			<fc:dataRepeater value="#{CurricularCourseManagement.rulesLabels}" var="curricularRule">
+				<h:outputText value="<li>#{curricularRule}</li>" escape="false"/>
+			</fc:dataRepeater>
+			<h:outputText value="</ul>" escape="false"/>
+			<h:outputText value="<strong>#{bolonhaBundle['note']}:</strong> " escape="false"/>
+			<h:outputText value="#{bolonhaBundle['confirm.delete.participating.curricularRules']}<br/>" escape="false"/>
+		</h:panelGroup>
+		
+		<h:panelGroup rendered="#{CurricularCourseManagement.toDelete}">
+			<h:outputText value="<br/>" escape="false"/>
+			<h:outputText styleClass="success0" value="#{bolonhaBundle['deleteLastCurricularCourseContext']}<br/>" escape="false"/>
+			<h:outputText value="<br/>" escape="false"/>
+		</h:panelGroup>
+		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}<br/>" escape="false"/>
+		<h:outputText value="<br/><hr>" escape="false"/>
 		
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['yes']}"
-			action="#{CurricularCourseManagement.deleteCurricularCourseContextReturnPath}"
+			action="buildCurricularPlan"
 			actionListener="#{CurricularCourseManagement.deleteContext}" />
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['no']}"
 			action="buildCurricularPlan"/>
