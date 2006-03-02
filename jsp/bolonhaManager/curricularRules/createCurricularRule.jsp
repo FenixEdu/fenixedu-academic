@@ -201,7 +201,14 @@
 		<h:panelGroup rendered="#{CurricularRulesManagement.type == 'compositeRule'}">
 			<h:commandButton value="#{bolonhaBundle['create']}" styleClass="inputbutton" action="#{CompositeRulesManagement.createCompositeRule}"/>
 		</h:panelGroup>
-		<h:commandButton immediate="true" value="#{bolonhaBundle['cancel']}" styleClass="inputbutton" action="setCurricularRules"/>
+		
+		<h:panelGroup rendered="#{CurricularRulesManagement.type == 'rule'}">
+			<h:commandButton immediate="true" value="#{bolonhaBundle['cancel']}" styleClass="inputbutton" action="setCurricularRules"/>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{CurricularRulesManagement.type == 'compositeRule'}">
+			<h:commandButton immediate="true" value="#{bolonhaBundle['back']}" styleClass="inputbutton" action="setCurricularRules"/>
+		</h:panelGroup>
+		
 		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 </ft:tilesView>
