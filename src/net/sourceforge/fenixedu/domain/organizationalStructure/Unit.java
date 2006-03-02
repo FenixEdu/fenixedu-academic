@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -204,6 +205,16 @@ public class Unit extends Unit_Base {
         return result;
     }
 
+    public double getEctsCredits() {
+        double result = 0.0;
+        for (Unit competenceCourseGroupUnit : getCompetenceCourseGroupUnits()) {
+            for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
+                result += competenceCourse.getEctsCredits();
+            }
+        }
+        return result;
+    }
+    
     public List<Unit> getDegreeUnits() {
         List<Unit> result = new ArrayList<Unit>();
         for (Unit unit : this.getSubUnits()) {
