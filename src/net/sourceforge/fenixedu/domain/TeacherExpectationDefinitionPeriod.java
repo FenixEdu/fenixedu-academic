@@ -3,7 +3,11 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.util.DateFormatUtil;
+
 public class TeacherExpectationDefinitionPeriod extends TeacherExpectationDefinitionPeriod_Base {
+
+    private static final String DATE_ONLY_FORMAT = "yyyyMMdd";
 
     public TeacherExpectationDefinitionPeriod() {
         super();
@@ -24,8 +28,10 @@ public class TeacherExpectationDefinitionPeriod extends TeacherExpectationDefini
     public Boolean isPeriodOpen() {
         Date currentDate = Calendar.getInstance().getTime();
 
-        if ((currentDate.compareTo(this.getStartDate()) >= 0)
-                && (currentDate.compareTo(this.getEndDate()) <= 0)) {
+        if ((DateFormatUtil.isAfter(DATE_ONLY_FORMAT, currentDate, this.getStartDate()) || (DateFormatUtil
+                .equalDates(DATE_ONLY_FORMAT, currentDate, this.getStartDate())))
+                && (DateFormatUtil.isBefore(DATE_ONLY_FORMAT, currentDate, this.getEndDate()) || DateFormatUtil
+                        .equalDates(DATE_ONLY_FORMAT, currentDate, this.getEndDate()))) {
             return true;
         } else {
             return false;
