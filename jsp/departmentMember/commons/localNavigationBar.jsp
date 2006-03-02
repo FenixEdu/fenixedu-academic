@@ -22,6 +22,13 @@
 				<bean:message key="link.departmentCourses"/>
 			</html:link>
 		</li>
+		<br/>
+  		<li>
+		  	<html:link page="/showAllTeacherCreditsResume.do">
+		  		<bean:message key="link.teacher.credits"/>
+		  	</html:link>  
+		</li>
+		<br/>
 		<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 		<% String deiCode = "28"; %>
 		<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deiCode %>">
@@ -38,16 +45,11 @@
 		  	</html:link>  
 		</li> 				
 		</logic:equal>
+		<br/>
 		<li>
 			<html:link page="/viewTeacherService/viewTeacherService.faces">
 				<bean:message key="link.teacherService"/>
 			</html:link>
-		</li>
-		<br/>
-  		<li>
-		  	<html:link page="/showAllTeacherCreditsResume.do">
-		  		<bean:message key="link.teacher.credits"/>
-		  	</html:link>  
 		</li>
 	</ul>
 	
