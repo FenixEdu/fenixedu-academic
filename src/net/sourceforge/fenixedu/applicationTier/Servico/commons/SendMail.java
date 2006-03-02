@@ -30,7 +30,7 @@ public class SendMail extends Service {
         if (bundle == null) {
             try {
                 SendMail.bundle = ResourceBundle.getBundle(SendMail.bundleFile);
-                SendMail.mailServer = SendMail.bundle.getString("server.url");
+                SendMail.mailServer = SendMail.bundle.getString("mailSender.server.url");
                 if (SendMail.mailServer == null) {
                     SendMail.mailServer = "mail.adm";
                 }
