@@ -11,20 +11,23 @@
 	<h:outputText value="<i>#{scouncilBundle['scientificCouncil']}</i>" escape="false"/>
 	<h:outputText value="<h2>#{scouncilBundle['curricularPlansManagement']}</h2>" escape="false"/>
 
+	<h:outputText value="<ul>" escape="false" />
+	<h:outputText value="<li>" escape="false" />
 	<h:outputLink value="createDegree.faces">
 		<h:outputFormat value="#{scouncilBundle['create.param']}">
 			<f:param value="#{scouncilBundle['degree']}"/>
 		</h:outputFormat>
 	</h:outputLink>
-	<h:outputText value="<br/><br/>" escape="false" />
+	<h:outputText value="</li>" escape="false" />
+	<h:outputText value="</ul>" escape="false" />
 
 	<h:messages errorClass="error0" infoClass="success0"/>
 	
 	<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.bolonhaDegrees}" var="degree">
 		<h:outputText value="<table style='width: 750px' class='showinfo1'>" escape="false"/>
-		<h:outputText value="<tr class='bgcolor1'><th style='width: 70px'>#{scouncilBundle['degree']}:</th>" escape="false"/>
+		<h:outputText value="<tr class='bgcolor1'><th style='width: 80px'><strong>#{scouncilBundle['degree']}:</strong></th>" escape="false"/>
 
-		<h:outputText value="<td><strong>#{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.acronym})</strong></td>" escape="false"/>
+		<h:outputText value="<td><em>#{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.acronym})</em></td>" escape="false"/>
 		<h:outputText value="<td style='width: 180px'>" escape="false"/>
 		<h:outputLink value="editDegree.faces">
 			<h:outputFormat value="#{scouncilBundle['edit']}"/>
@@ -44,13 +47,12 @@
 		</h:outputLink>
 		<h:outputText value="</td></tr>" escape="false"/>
 		
-		<h:outputText value="<tr><td colspan='3' align='center'><i>#{scouncilBundle['no.curricularPlan']}.</i></td></tr>" escape="false" rendered="#{empty degree.degreeCurricularPlans}"/>
+		<h:outputText value="<tr><td colspan='3' align='center'><em>#{scouncilBundle['no.curricularPlan']}.</em></td></tr>" escape="false" rendered="#{empty degree.degreeCurricularPlans}"/>
 
-<%--#{scouncilBundle['curricularPlans']}--%>
 
 		<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan" rendered="#{!empty degree.degreeCurricularPlans}" rowIndexVar="index">
-			<h:outputText value="<tr>" escape="false"/>
-			<h:outputText rendered="#{index == 0}" value="<th>#{scouncilBundle['plans']}:</th>" escape="false"/>
+			<h:outputText value="<tr class='bgcolor1'>" escape="false"/>
+			<h:outputText rendered="#{index == 0}" value="<th><strong>#{scouncilBundle['plans']}:</strong></th>" escape="false"/>
 			<h:outputText rendered="#{index > 0}" value="<th></th>" escape="false"/>
 
 			<h:outputText value="<td><em style='color: #777; background-color: #ffa;'>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}</em> #{degreeCurricularPlan.name}</td>" escape="false" />

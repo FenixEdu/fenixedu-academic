@@ -10,9 +10,20 @@
 	<h:outputText value="<em>#{CurricularCourseManagement.degreeCurricularPlan.name}" escape="false"/>
 	<h:outputText value=" (#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{bolonhaBundle['edit.curricularPlan.structure']}</h2>" escape="false"/>
-
+	
+	<h:outputText value="<ul>" escape="false"/>
+	<h:outputText value="<li>" escape="false"/>
+	<h:form>
+		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
+		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
+		<h:outputText escape="false" value="<input id='toOrder' name='toOrder' type='hidden' value='#{CurricularCourseManagement.toOrder}'/>"/>
+		<h:commandLink value="#{bolonhaBundle['return']}"
+			action="buildCurricularPlan"/>
+	</h:form>
+	<h:outputText value="</li>" escape="false"/>
+	<h:outputText value="<li>" escape="false"/>
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeModule.courseGroupContexts}">
-		<h:outputText value="#{bolonhaBundle['manage.groups']}" rendered="#{CurricularCourseManagement.toOrder == 'false'}"/>
+		<h:outputText value="<em>#{bolonhaBundle['manage.groups']}</em>" rendered="#{CurricularCourseManagement.toOrder == 'false'}" escape="false"/>
 		<h:outputLink value="editCurricularPlanStructure.faces" rendered="#{CurricularCourseManagement.toOrder == 'true'}">
 			<h:outputText value="#{bolonhaBundle['manage.groups']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
@@ -20,18 +31,20 @@
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>			
 		</h:outputLink>
 		<h:outputText value=" , " escape="false"/>
-		<h:outputText value="#{bolonhaBundle['order.groups']}" rendered="#{CurricularCourseManagement.toOrder == 'true'}"/>
+		<h:outputText value="<em>#{bolonhaBundle['order.groups']}</em>" rendered="#{CurricularCourseManagement.toOrder == 'true'}" escape="false"/>
 		<h:outputLink value="editCurricularPlanStructure.faces" rendered="#{CurricularCourseManagement.toOrder == 'false'}">
-			<h:outputText value="#{bolonhaBundle['order.groups']}" />
+			<h:outputText value="#{bolonhaBundle['order.groups']}" escape="false"/>
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="toOrder" value="true"/>
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>			
 		</h:outputLink>
 	</h:panelGroup>
-
+	<h:outputText value="</li>" escape="false"/>
+	<h:outputText value="</ul>" escape="false"/>
+ 
 	<h:outputText value="<p>" escape="false"/>
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
-	<h:outputText value="</p><br/>" escape="false"/>
+	<h:outputText value="</p>" escape="false"/>
 	
 	<fc:degreeCurricularPlanRender 
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 

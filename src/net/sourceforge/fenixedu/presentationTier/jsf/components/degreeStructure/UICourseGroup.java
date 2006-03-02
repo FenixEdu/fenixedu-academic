@@ -68,15 +68,19 @@ public class UICourseGroup extends UIDegreeModule {
                 if (this.toEdit) {
                     if (!this.toOrder) {
                         String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
-                        encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap().get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal() + organizeBy + "&toOrder=false", "create.course.group");
+						writer.startElement("p", this);
+	                    writer.writeAttribute("style", "mtop05", null);
+                        encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap().get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal() + organizeBy + "&toOrder=false", "create.course.group.root");
+						writer.endElement("p");
                     }
                 }                            
-                writer.startElement("br", this);
+                /*
+				writer.startElement("br", this);
                 writer.append("&nbsp;");
                 writer.endElement("br");
-                
+                */
                 writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo3 mvert0", null);
+                writer.writeAttribute("class", "showinfo3 mbottom0 mtop05", null);
 
                 encodeChildCourseGroups();
                 
@@ -104,10 +108,11 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void encodeSubtitles() throws IOException {
+		/*
         writer.startElement("br", this);
         writer.append("&nbsp;");
         writer.endElement("br");
-        
+        */
         writer.startElement("ul", this);
         writer.writeAttribute("class", "nobullet", null);
         writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
@@ -150,13 +155,13 @@ public class UICourseGroup extends UIDegreeModule {
         if (!this.onlyStructure) {
             if (this.depth == BASE_DEPTH) {
                 writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo3 mvert0", null);
+                writer.writeAttribute("class", "showinfo3 mbottom0 mtop05", null);
                 writer.writeAttribute("style", "width: " + width + "em;", null);
             } else if (this.depth > BASE_DEPTH) {
                 writer.startElement("div", this);
                 writer.writeAttribute("style", "padding-left: " + courseGroupIndent + "em;", null);
                 writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo3  mvert0", null);
+                writer.writeAttribute("class", "showinfo3 mbottom0 mtop05", null);
                 writer.writeAttribute("style", "width: " + String.valueOf(width - (this.depth * 3)) +"em;", null);
             }
         }
@@ -291,7 +296,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.startElement("div", this);
         writer.writeAttribute("class", (this.depth == BASE_DEPTH) ? "indent3" : "indent" + (courseGroupIndent + 3), null);
         writer.startElement("table", this);
-        writer.writeAttribute("class", "showinfo3 mvert0", null);
+        writer.writeAttribute("class", "showinfo3 mbottom0 mtop05", null);
         writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3)  + "em;", null);
 
         double sumContactLoad = 0.0;

@@ -58,7 +58,7 @@
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{CurricularCourseManagement.selectedCurricularCourseType == 'NORMAL_COURSE'}">
-			<h:outputText value="<h4 class='first'>#{bolonhaBundle['curricularCourseInformation']}</h4>" escape="false"/>
+			<h:outputText value="<h4 class='first mtop1'>#{bolonhaBundle['curricularCourseInformation']}</h4>" escape="false"/>
 
 			<h:outputText value="<p><label>#{bolonhaBundle['weight']}:</label>" escape="false"/>
 			<h:inputText id="weight" maxlength="5" size="5" value="#{CurricularCourseManagement.weight}" />

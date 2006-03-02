@@ -18,20 +18,20 @@
 		<h:outputText escape="false" value="<input id='curricularCourseID' name='curricularCourseID' type='hidden' value='#{CurricularCourseManagement.curricularCourseID}'/>"/>
 		<h:outputText escape="false" value="<input id='contextIDToDelete' name='contextIDToDelete' type='hidden' value='#{CurricularCourseManagement.contextIDToDelete}'/>"/>
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
-				
-		<h:outputText style="font-weight: bold" value="#{bolonhaBundle['curricularCourseInformation']}: <br/>"  escape="false"/>		
-		<h:outputText value="#{bolonhaBundle['name']}: "/>
+<!--			
+	 	<h:outputText style="font-weight: bold" value="#{bolonhaBundle['curricularCourseInformation']}: <br/>"  escape="false"/>		
+-->
+		<h:outputText value="<p>" escape="false"/>
+		<h:outputText value="<strong>#{bolonhaBundle['name']}:</strong> " escape="false"/>
 		<h:outputText value="#{CurricularCourseManagement.curricularCourse.name}"/>		
-		<br/><br/>
-		<h:outputText style="font-weight: bold" value="#{bolonhaBundle['context']}: <br/>" escape="false"/>
-		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
-		
+		<h:outputText value="</p>" escape="false"/>
+			
 		<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">
 			<h:panelGroup rendered="#{context.idInternal == CurricularCourseManagement.contextIDToDelete}">								
-				<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
+				<h:outputText value="<p><strong>#{bolonhaBundle['courseGroup']}:</strong> " escape="false"/>
 				<h:outputText value="#{context.courseGroup.name}</p>" escape="false"/>
 				
-				<h:outputText value="<p><label>#{bolonhaBundle['curricularPeriod']}:</label>" escape="false"/>
+				<h:outputText value="<p><strong>#{bolonhaBundle['curricularPeriod']}:</strong> " escape="false"/>
 				<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
 			</h:panelGroup>
 		</fc:dataRepeater>
@@ -48,10 +48,10 @@
 		</h:panelGroup>
 		<h:outputText value="</fieldset><br/>" escape="false"/>
 
-		<h:outputText styleClass="success0" value="#{bolonhaBundle['deleteLastCurricularCourseContext']}<br/>" escape="false"/>
+		<h:outputText styleClass="warning0" value="#{bolonhaBundle['deleteLastCurricularCourseContext']}<br/>" escape="false"/>
 		<h:outputText value="<br/>" escape="false"/>
 		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}<br/>" escape="false"/>
-		<h:outputText value="<br/><hr>" escape="false"/>
+		<h:outputText value="<br/>" escape="false"/>
 		
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['yes']}"
 			 action="buildCurricularPlan" actionListener="#{CurricularCourseManagement.forceDeleteContext}"/>

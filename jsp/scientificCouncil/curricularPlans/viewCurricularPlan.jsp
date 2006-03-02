@@ -13,7 +13,7 @@
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
  
-	<h:outputText value="<br/><br/>#{scouncilBundle['view.structure.organized.by']}: " escape="false"/>
+	<h:outputText value="<br/><p>#{scouncilBundle['view.structure.organized.by']}: " escape="false"/>
 	<h:outputLink value="viewCurricularPlan.faces">
 		<h:outputText value="#{scouncilBundle['groups']}" />
 		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
@@ -27,11 +27,11 @@
 		<f:param name="organizeBy" value="years"/>
 		<f:param name="action" value="view"/>
 	</h:outputLink>
+	<h:outputText value="</p>" escape="false"/>
 
-	<h:outputText value="<br/><br/>" escape="false"/>
 	<fc:degreeCurricularPlanRender dcp="#{ScientificCouncilCurricularPlanManagement.dcp}" onlyStructure="false" toEdit="false" organizeBy="<%=request.getParameter("organizeBy")%>"/>
 
-	<h:outputText value="<br/><br/><hr/>" escape="false"/>
+	<h:outputText value="<br/><p>" escape="false"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'/>"/>
 		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
@@ -43,5 +43,5 @@
 			<h:commandButton immediate="true" styleClass="inputbutton" onclick="window.close()" value="#{scouncilBundle['close']}" />
 		</h:panelGroup>
 	</h:form>
-	
+	<h:outputText value="</p>" escape="false"/>
 </ft:tilesView>
