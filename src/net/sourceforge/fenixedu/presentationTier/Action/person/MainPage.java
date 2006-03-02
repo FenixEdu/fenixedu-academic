@@ -38,16 +38,26 @@ public final class MainPage extends FenixAction {
     	Collections.sort(advisories, new ReverseComparator(new BeanComparator("created")));
     	request.setAttribute(SessionConstants.LIST_ADVISORY, advisories);
 
+        addStudentNotifications(person, advisories);
+
     	if (!advisories.isEmpty()) {
     		final String selectedOidString = request.getParameter("activeAdvisory");
     		final Integer selectedOid = (selectedOidString != null) ?
-    				Integer.valueOf(selectedOidString) : ((Advisory) advisories.get(0)).getIdInternal();
+    				Integer.valueOf(selectedOidString) : getIdInternal(advisories.get(0));
     		request.setAttribute("activeAdvisory", selectedOid);
     	}
 
-        addStudentNotifications(person, advisories);
-
         return mapping.findForward("ShowWelcomePage");
+    }
+
+    private Integer getIdInternal(Object object) {
+        if (object instanceof Advisory) {
+            return ((Advisory) object).getIdInternal();
+        } else if (object instanceof AdvisoryBean) {
+            return ((AdvisoryBean) object).getIdInternal();
+        } else {
+            return null;
+        }
     }
 
     private void addStudentNotifications(final Person person, final List<Advisory> advisories) throws FenixActionException {
@@ -73,25 +83,22 @@ public final class MainPage extends FenixAction {
     }
 
     private void addAdvisory(final List advisories, final Attends attends, final Interval responseWeek) throws FenixActionException {
-        final Object maxAdvisoryByIdInternal = Collections.max(advisories, new Comparator<Object>() {
+        final Object maxAdvisoryByIdInternal;
+        if (!advisories.isEmpty()) {
+            maxAdvisoryByIdInternal = Collections.max(advisories, new Comparator<Object>() {
             public int compare(Object o1, Object o2) {
                 final Integer idInternal1 = getIdInternal(o1);
                 final Integer idInternal2 = getIdInternal(o2);
                 return idInternal1.compareTo(idInternal2);
-            }
-
-            private Integer getIdInternal(final Object object) {
-                if (object instanceof Advisory) {
-                    return ((Advisory) object).getIdInternal();
-                } else if (object instanceof AdvisoryBean) {
-                    return ((AdvisoryBean) object).getIdInternal();
-                } else {
-                    return null;
-                }
             }});
+        } else {
+            maxAdvisoryByIdInternal = null;
+        }
 
         final int maxId;
-        if (maxAdvisoryByIdInternal instanceof Advisory) {
+        if (maxAdvisoryByIdInternal == null) {
+            maxId = 1;
+        } else if (maxAdvisoryByIdInternal instanceof Advisory) {
             maxId = ((Advisory) maxAdvisoryByIdInternal).getIdInternal().intValue();
         } else if (maxAdvisoryByIdInternal instanceof AdvisoryBean) {
             maxId = ((AdvisoryBean) maxAdvisoryByIdInternal).getIdInternal().intValue();
