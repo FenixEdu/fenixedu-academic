@@ -139,7 +139,8 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
     }
 
-    public HtmlInputHidden getSelectedExecutionYearIdHidden() {
+    public HtmlInputHidden getSelectedExecutionYearIdHidden() throws FenixFilterException,
+            FenixServiceException {
         if (this.selectedExecutionYearIdHidden == null) {
             this.selectedExecutionYearIdHidden = new HtmlInputHidden();
             // this.selectedExecutionYearIdHidden.setValue(this.selectedExecutionYearID);
@@ -376,10 +377,27 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         this.researchAndDevProjects = researchAndDevProjects;
     }
 
-    public Integer getSelectedExecutionYearID() {
+    public Integer getSelectedExecutionYearID() throws FenixFilterException, FenixServiceException {
 
-        return (Integer) this.getViewState().getAttribute("selectedExecutionYearID");
+        Integer selectedExecutionYearID = (Integer) this.getViewState().getAttribute("selectedExecutionYearID");
 
+        if (selectedExecutionYearID == null) {
+
+            InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
+                    getUserView(), "ReadCurrentExecutionYear", new Object[] {});
+
+            if (infoExecutionYear != null) {
+                selectedExecutionYearID = infoExecutionYear.getIdInternal();
+            } else {
+                List<SelectItem> executionYearItems = getExecutionYears();
+                selectedExecutionYearID = (Integer) executionYearItems.get(executionYearItems.size()).getValue();
+            }
+
+            this.getViewState().setAttribute("selectedExecutionYearID", selectedExecutionYearID);
+
+        }
+
+        return selectedExecutionYearID;
     }
 
     public void setSelectedExecutionYearID(Integer selectedExecutionYearID) {
@@ -482,8 +500,8 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
     private TeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriod(
             Integer executionYearID) throws FenixFilterException, FenixServiceException {
-        Integer departmentID = this.getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
-                .getIdInternal();
+        Integer departmentID = this.getUserView().getPerson().getEmployee()
+                .getCurrentDepartmentWorkingPlace().getIdInternal();
 
         TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (TeacherExpectationDefinitionPeriod) ServiceUtils
                 .executeService(getUserView(),
@@ -892,5 +910,5 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = getTeacherExpectationDefinitionPeriod(newExecutionYearID);
 
         this.setExpectationDefinitionPeriodOpen(teacherExpectationDefinitionPeriod.isPeriodOpen());
-    }   
+    }
 }

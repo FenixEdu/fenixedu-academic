@@ -9,6 +9,8 @@
 <style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
 
 <logic:present role="DEPARTMENT_MEMBER">
+	
+	<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 	<ul>
 		<li>
 			<html:link page="/viewDepartmentTeachers/listDepartmentTeachers.faces">
@@ -19,13 +21,17 @@
 			<html:link page="/courseStatistics/viewCompetenceCourses.faces">
 				<bean:message key="link.departmentCourses"/>
 			</html:link>
-		</li>	
-		<logic:equal scope="session" name='<%=SessionConstants.U_VIEW%>' property="person.username" value="D2023">
+		</li>
+		<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
+		<% String deiCode = "28"; %>
+		<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deiCode %>">
 		<li>
 			<html:link page="/expectationManagement/viewPersonalExpectation.faces">
 				<bean:message key="link.personalExpectationsManagement"/>
 			</html:link>
 		</li>
+		</logic:equal>
+		<logic:equal scope="session" name='<%=SessionConstants.U_VIEW%>' property="person.username" value="D2023">
   		<li>
 		  	<html:link page="/viewDepartmentTeachersExpectations.do?method=prepare">
 		  		<bean:message key="link.departmentTeachersExpectations"/>
