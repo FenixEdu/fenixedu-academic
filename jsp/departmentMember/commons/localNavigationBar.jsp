@@ -22,6 +22,11 @@
 				<bean:message key="link.departmentCourses"/>
 			</html:link>
 		</li>
+		<li>
+			<html:link page="/viewTeacherService/viewTeacherService.faces">
+				<bean:message key="link.teacherService"/>
+			</html:link>
+		</li>
 		<br/>
   		<li>
 		  	<html:link page="/showAllTeacherCreditsResume.do">
@@ -46,11 +51,6 @@
 		</li> 				
 		</logic:equal>
 		<br/>
-		<li>
-			<html:link page="/viewTeacherService/viewTeacherService.faces">
-				<bean:message key="link.teacherService"/>
-			</html:link>
-		</li>
 	</ul>
 	
 	<br />
