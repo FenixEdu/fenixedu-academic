@@ -112,7 +112,7 @@
 	<target name="get-production-file-properties-file"
             description="Downloads production properties file">
 		<delete file="build.properties"/>
-		<java classname="pt.utl.ist.tools.http.client.WikiClient"
+		<java classname="pt.utl.ist.fenix.tools.http.client.WikiClient"
 				fork="yes"
 				failonerror="false"
 				maxmemory="128m">
