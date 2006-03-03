@@ -596,56 +596,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		<delete file=".casServiceUrlHostnames.properties.xml"/>
 	</target>
 	
-	
-	<target name="write-cas-logoutCallbackUrl-hostnames-configuration-file">
-		<delete file=".casLogoutCallbackUrlHostnames.properties.xml"/>
-		<delete file="${build.home.webinf.classes}/.casLogoutCallbackUrlHostnames.properties"/>
-		<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
-		<concat destfile=".casLogoutCallbackUrlHostnames.properties.xml">
-			${filter.hostnames}
-			<filterchain>
-				<tokenfilter>
-					<ignoreblank/>
-					<trim/>
-					<stringtokenizer delims="," delimsaretokens="true" includeDelims="false"/>
-					<replaceregex pattern="(.*)" replace="\1${line.seperator}"/>
-				</tokenfilter>
-				<tokenfilter>
-					<replacestring from="," to=""/>
-					<trim/>
-					<ignoreblank/>
-				</tokenfilter>
-				<prefixlines prefix="@cas.logoutCallbackUrl."/>
-				<prefixlines prefix="file='${build.home.webinf.classes}/.casLogoutCallbackUrlHostnames.properties'>"/>
-				<prefixlines prefix="append='true' "/>
-				<prefixlines prefix="${character.lessthan}echo "/>
-				<tokenfilter>
-					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="(.*)"
-						flags="s"
-						replace="\1@${allowed-roles.newline.instruction}${character.lessthan}/echo>"/>
-				</tokenfilter>
-				<tokenfilter>
-					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="@(.*)@"
-						flags="s"
-						replace="\1=${character.dollar}{\1}"/>
-				</tokenfilter>
-				<tokenfilter>
-					<stringtokenizer delims="@@@@@@" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="(.*)"
-						flags="s"
-						replace="${allowed-roles.build.file.constructor.header}\1${allowed-roles.build.file.constructor.tail}"/>
-				</tokenfilter>
-				<escapeunicode/>
-			</filterchain>
-		</concat>
-		<ant antfile=".casLogoutCallbackUrlHostnames.properties.xml"/>
-		<delete file=".casLogoutCallbackUrlHostnames.properties.xml"/>
-	</target>
-
-
-
 	<target name="generate" description="Generate java code">
 		<ant antfile="build_codeGenerator.xml" target="generate-domain"/>
 		<ant antfile="build_codeGenerator.xml" target="update-RootDomainObject"/>
@@ -717,7 +667,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		<delete dir="${build.home.webinf.classes}/${renderers.package.dir}" />
 	</target>
 
-	<target name="base-compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file,write-cas-logoutCallbackUrl-hostnames-configuration-file, generate">
+	<target name="base-compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file, generate">
 		<javac destdir="${build.home.webinf.classes}" extdirs="${lib}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
@@ -741,11 +691,11 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		</java>
 	</target>
 
-	<target name="compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file,write-cas-logoutCallbackUrl-hostnames-configuration-file, generate, base-compile">
+	<target name="compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file, generate, base-compile">
 		<ant antfile="build_accessControl.xml"/>
 	</target>
 
-	<target name="compile-without-access-control" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file,write-cas-logoutCallbackUrl-hostnames-configuration-file, generate, base-compile">
+	<target name="compile-without-access-control" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file, generate, base-compile">
 		<ant antfile="build_accessControl.xml" target="void-inject"/>
 	</target>
 

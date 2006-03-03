@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.util.cas.CASLogoutCallbackUrlProvider;
 import net.sourceforge.fenixedu.util.cas.CASServiceUrlProvider;
 
 /**
@@ -68,11 +67,8 @@ public class CASFilter implements Filter {
 
         String serviceString = URLEncoder.encode(CASServiceUrlProvider.getServiceUrl(request
                 .getRequestURL().toString()), URL_ENCODING);
-        String logoutCallbackUrlString = URLEncoder.encode(CASLogoutCallbackUrlProvider
-                .getLogoutCallbackUrl(request.getRequestURL().toString()), URL_ENCODING);
 
-        String casLoginString = casLoginUrl + "?service=" + serviceString + "&" + "logoutCallbackUrl="
-                + logoutCallbackUrlString;
+        String casLoginString = casLoginUrl + "?service=" + serviceString;
 
         ((HttpServletResponse) response).sendRedirect(casLoginString);
 
