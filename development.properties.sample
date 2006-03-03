@@ -12,5 +12,10 @@
 #
 wiki.host=localhost
 wiki.port=80
+wiki.page=SomePageOnWiki
+wiki.username=MyUsername
+wiki.password=MyPassword
+wiki.property.file.page=LocationOfPropertyFileOnWiki
+wiki.property.file.filename=PropertyFilenameToWriteTo
 #
 #
