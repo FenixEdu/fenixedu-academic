@@ -27,17 +27,6 @@
 
 	<h:outputText value="<br/>" escape="false"/>
 	<h:outputText value="<ul><li>" escape="false"/>
-	<h:form>
-		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
-		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
-		<h:panelGroup rendered="#{!empty CurricularCourseManagement.action && CurricularCourseManagement.action == 'view'}">
-			<h:commandLink value="#{bolonhaBundle['return']}" action="curricularPlansManagement"/>
-		</h:panelGroup>
-		<h:panelGroup rendered="#{!empty CurricularCourseManagement.action && CurricularCourseManagement.action == 'close'}">
-			<h:commandButton immediate="true" styleClass="inputbutton" onclick="window.close()" value="#{bolonhaBundle['close']}" />
-		</h:panelGroup>
-	</h:form>
-	<h:outputText value="</li><li>" escape="false"/>
 	<h:outputLink value="viewCurricularPlanStructure.faces" rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeModule.courseGroupContexts}">
 		<h:outputFormat value="#{bolonhaBundle['view.param']}" escape="false">
 			<f:param value="#{bolonhaBundle['curricularPlan.structure']}"/>
@@ -46,7 +35,7 @@
 		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 		<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>		
-		<f:param name="action" value="view"/>
+		<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 	</h:outputLink>
 	<h:outputText value="</li></ul>" escape="false"/>
 
@@ -60,7 +49,7 @@
 			<f:param name="organizeBy" value="groups"/>
 			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
-			<f:param name="action" value="view"/>
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 		</h:outputLink>
 		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['groups']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}" escape="false"/>
 		<h:outputText value=" , " escape="false"/>
@@ -70,7 +59,7 @@
 			<f:param name="organizeBy" value="years"/>
 			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
-			<f:param name="action" value="view"/>
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 		</h:outputLink>
 		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'years'}" escape="false"/>
 	</h:panelGroup>
@@ -85,7 +74,7 @@
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 			<f:param name="showRules" value="true"/>
 			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
-			<f:param name="action" value="view"/>		
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>		
 		</h:outputLink>
 		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['show']}</span>" rendered="#{CurricularCourseManagement.showRules == 'true'}" escape="false"/>
 		<h:outputText value=" , " escape="false"/>
@@ -95,7 +84,7 @@
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 			<f:param name="showRules" value="false"/>
 			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
-			<f:param name="action" value="view"/>		
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 		</h:outputLink>
 		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['hide']}</span>" rendered="#{CurricularCourseManagement.showRules == 'false'}" escape="false"/>
 	</h:panelGroup>
@@ -110,7 +99,7 @@
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 			<f:param name="hideCourses" value="false"/>
-			<f:param name="action" value="view"/>
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 		</h:outputLink>
 		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['show']}</span>" rendered="#{CurricularCourseManagement.hideCourses == 'false'}" escape="false"/>
 		<h:outputText value=" , " escape="false"/>
@@ -120,7 +109,7 @@
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 			<f:param name="hideCourses" value="true"/>
-			<f:param name="action" value="view"/>		
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 		</h:outputLink>
 		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['hide']}</span>" rendered="#{CurricularCourseManagement.hideCourses == 'true'}" escape="false"/>
 	</h:panelGroup>
