@@ -18,7 +18,7 @@
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>	
 		<h:outputText value="<p><label>#{scientificBundle['department']}:</label>" escape="false"/>
 		<h:outputText value="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}</p>" escape="false"/>	
-		<h:outputText value="<p><label>#{scientificBundle['Course']}:</label>" escape="false"/>
+		<h:outputText value="<p><label>#{scientificBundle['course']}:</label>" escape="false"/>
 		<h:outputText value="<span class='attention'>#{CurricularCourseManagement.curricularCourse.competenceCourse.name}</span></p>" escape="false"/>	
 		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
 		<h:outputLink value="../competenceCourses/showCompetenceCourse.faces" target="_blank">
@@ -29,7 +29,7 @@
 	</h:panelGroup>
 
 	<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-	<h:outputText value="<h4 class='first'>#{scientificBundle['curricularCourseInformation']}</h4>>" escape="false"/>
+	<h:outputText value="<h4 class='first'>#{scientificBundle['curricularCourseInformation']}</h4>" escape="false"/>
 	<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 	<h:panelGroup rendered="#{CurricularCourseManagement.selectedCurricularCourseType == 'NORMAL_COURSE'}">
 		<h:outputText value="<p><label>#{scientificBundle['weight']}:</label>" escape="false"/>
@@ -63,8 +63,12 @@
 	<h:outputText value="</div>" escape="false"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
-		<h:outputText escape="false" value="<input id='curricularCourseID' name='curricularCourseID' type='hidden' value='#{CurricularCourseManagement.curricularCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.curricularCourse.parentDegreeCurricularPlan.idInternal}'/>"/>
 		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{CurricularCourseManagement.curricularCourse.parentDegreeCurricularPlan.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
+		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularCourseManagement.showRules}'/>"/>
+		<h:outputText escape="false" value="<input id='hideCourses' name='hideCourses' type='hidden' value='#{CurricularCourseManagement.hideCourses}'/>"/>
+		
 
 		<h:outputText escape="false" value="<br/><br/><hr/>"/>
 		<h:panelGroup rendered="#{!empty CurricularCourseManagement.action && CurricularCourseManagement.action == 'view'}">

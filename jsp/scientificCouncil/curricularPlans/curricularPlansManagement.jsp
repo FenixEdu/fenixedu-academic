@@ -62,6 +62,9 @@
 				<h:outputText value="#{scouncilBundle['view']}" />
 				<f:param name="dcpId" value="#{degreeCurricularPlan.idInternal}"/>
 				<f:param name="action" value="view"/>
+				<f:param name="organizeBy" value="groups"/>
+				<f:param name="showRules" value="false"/>
+				<f:param name="hideCourses" value="false"/>
 			</h:outputLink>
 			<h:outputText value=" , " escape="false"/>
 			<h:outputLink value="editCurricularPlan.faces">

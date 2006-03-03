@@ -39,6 +39,9 @@ padding-right: 10px;
 			<h:outputLink value="../curricularPlans/viewCurricularPlan.faces" target="_blank">
 				<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name}" escape="false"/>
 				<f:param name="action" value="close"/>
+				<f:param name="organizeBy" value="groups"/>
+				<f:param name="showRules" value="false"/>
+				<f:param name="hideCourses" value="false"/>
 				<f:param name="dcpId" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
 			</h:outputLink>
 			<h:outputText value=" > "/>

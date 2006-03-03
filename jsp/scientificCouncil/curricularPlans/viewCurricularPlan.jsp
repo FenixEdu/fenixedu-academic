@@ -17,15 +17,19 @@
 	<h:outputLink value="viewCurricularPlan.faces">
 		<h:outputText value="#{scouncilBundle['groups']}" />
 		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
-		<f:param name="organizeBy" value="groups"/>
-		<f:param name="action" value="view"/>		
+		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+		<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>		
+		<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 	</h:outputLink>
 	<h:outputText value=" , " escape="false"/>
 	<h:outputLink value="viewCurricularPlan.faces">
 		<h:outputText value="#{scouncilBundle['year']}/#{scouncilBundle['semester']}" />
 		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
-		<f:param name="organizeBy" value="years"/>
-		<f:param name="action" value="view"/>
+		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+		<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>		
+		<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 	</h:outputLink>
 	<h:outputText value="</p>" escape="false"/>
 
