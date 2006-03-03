@@ -148,19 +148,22 @@ public class Authenticate extends Service implements Serializable {
         return new UserView(person, allowedRoles);
     }
 
-    public IUserView run(final String casTicket, final String requestURL) throws ExcepcaoAutenticacao,
-            ExcepcaoPersistencia {
-        final CASReceipt receipt = getCASReceipt(casTicket,requestURL);
+    public IUserView run(final String casTicket, final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao {
+        final CASReceipt receipt = getCASReceipt(casTicket, requestURL);
 
         if (receipt == null) {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }
 
         final String username = receipt.getUserName();
-        final Person person = Person.readPersonByUsername(username);
+        Person person = Person.readPersonByUsername(username);
 
         if (person == null) {
-            throw new ExcepcaoAutenticacao("bad.authentication");
+            person = Person.readPersonByIstUsername(username);
+        }
+
+        if (person == null) {
+            throw new ExcepcaoAutenticacao("error.Exception");
         }
 
         final Set allowedRoles = getAllowedRolesByHostname(requestURL);
