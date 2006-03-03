@@ -23,11 +23,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit.TeacherCreditsReportDTO;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -40,7 +38,6 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.Predicate;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -71,24 +68,24 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                 new BeanComparator("name"));
         request.setAttribute("departments", departmentOrderedIterator);
 
-        DynaActionForm dynaForm = (DynaActionForm) form;
-        if (dynaForm.get("departmentID") != null && !((Integer) dynaForm.get("departmentID")).equals(0)) {
-            Integer departmentID = (Integer) dynaForm.get("departmentID");
-            Department department = (Department) ServiceUtils.executeService(userView,
-                    "ReadDomainObject", new Object[] { Department.class, departmentID });
-            List<Unit> units = department.getUnit().getSubUnits();
-            List<Unit> filteredUnits = (List<Unit>) CollectionUtils.select(units, new Predicate() {
-                public boolean evaluate(Object object) {
-                    Unit unit = (Unit) object;
-                    return unit.getType() != null
-                            && (unit.getType().equals(PartyTypeEnum.SECTION) || unit.getType().equals(
-                                    PartyTypeEnum.SCIENTIFIC_AREA));
-                }
-            });
-            Iterator unitsOrderedIter = new OrderedIterator(filteredUnits.iterator(),
-                    new BeanComparator("name"));
-            request.setAttribute("units", unitsOrderedIter);
-        }
+//        DynaActionForm dynaForm = (DynaActionForm) form;
+//        if (dynaForm.get("departmentID") != null && !((Integer) dynaForm.get("departmentID")).equals(0)) {
+//            Integer departmentID = (Integer) dynaForm.get("departmentID");
+//            Department department = (Department) ServiceUtils.executeService(userView,
+//                    "ReadDomainObject", new Object[] { Department.class, departmentID });
+//            List<Unit> units = department.getUnit().getSubUnits();
+//            List<Unit> filteredUnits = (List<Unit>) CollectionUtils.select(units, new Predicate() {
+//                public boolean evaluate(Object object) {
+//                    Unit unit = (Unit) object;
+//                    return unit.getType() != null
+//                            && (unit.getType().equals(PartyTypeEnum.SECTION) || unit.getType().equals(
+//                                    PartyTypeEnum.SCIENTIFIC_AREA));
+//                }
+//            });
+//            Iterator unitsOrderedIter = new OrderedIterator(filteredUnits.iterator(),
+//                    new BeanComparator("name"));
+//            request.setAttribute("units", unitsOrderedIter);
+//        }
         return mapping.findForward("prepare");
     }
 
@@ -133,7 +130,8 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 
             Department department = (Department) ServiceUtils.executeService(userView,
                     "ReadDomainObject", new Object[] { Department.class, departmentID });
-            if (unitID == 0) {
+            
+            if (unitID == null || unitID == 0) {
                 unit = department.getUnit();
 
             } else {
@@ -350,7 +348,8 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 
             Department department = (Department) ServiceUtils.executeService(userView,
                     "ReadDomainObject", new Object[] { Department.class, departmentID });
-            if (unitID == 0) {
+            
+            if (unitID == null || unitID == 0) {
                 unit = department.getUnit();
 
             } else {

@@ -6,7 +6,7 @@
 
 <h3><bean:message key="message.credits.head"/>
 <logic:present name="department">
-	<bean:write name="department" property="name"/>
+	<bean:write name="department" property="realName"/>
 </logic:present>
 <logic:notPresent name="department">
 	<bean:message key="message.credits.allDepartments"/>

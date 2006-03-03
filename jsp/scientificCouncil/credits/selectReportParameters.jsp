@@ -25,7 +25,7 @@
 	<bean:message key="label.credits.choose.Department"/>: <br/>
 	<html:select property="departmentID" size="1" onchange="this.form.method.value='prepare';this.form.submit();">
 		<html:option value="0" key="label.allDepartments"/>
-		<html:options collection="departments" property="idInternal" labelProperty="name"/>
+		<html:options collection="departments" property="idInternal" labelProperty="realName"/>
 	</html:select>
 	
 	<br/><br/>
@@ -38,7 +38,7 @@
 		</html:select>
 	</logic:present>
 	
-	<br/><br/>
+	<br/>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="submit"/>
 	</html:submit>

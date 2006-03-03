@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -39,36 +40,78 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
                 untilExecutionPeriod.getEndDate());
         List<TeacherCreditsReportDTO> creditLines = new ArrayList<TeacherCreditsReportDTO>();
         for (Teacher teacher : teachers) {
-            TeacherCreditsReportDTO creditsReportDTO = new TeacherCreditsReportDTO();
-            creditsReportDTO.setTeacher(teacher);
-            for (ExecutionPeriod executionPeriod : executionPeriodsBetween) {
-                if (unit.getTeacherByPeriod(teacher.getTeacherNumber(), executionPeriod.getBeginDate(),
-                        executionPeriod.getEndDate()) != null) {
-                    updateCreditLine(teacher, executionPeriod, creditsReportDTO, true);
-                } else {
-                    updateCreditLine(teacher, executionPeriod, creditsReportDTO, false);
+            if (!verifyIfTeacherIsMonitor(teacher, executionPeriodsBetween)
+                    && !verifyIfTeacherIsInactive(teacher, executionPeriodsBetween)) {
+                TeacherCreditsReportDTO creditsReportDTO = new TeacherCreditsReportDTO();
+                creditsReportDTO.setTeacher(teacher);
+                for (ExecutionPeriod executionPeriod : executionPeriodsBetween) {
+                    if (unit.getTeacherByPeriod(teacher.getTeacherNumber(), executionPeriod
+                            .getBeginDate(), executionPeriod.getEndDate()) != null) {
+                        updateCreditLine(teacher, executionPeriod, creditsReportDTO, true);
+                    } else {
+
+                        updateCreditLine(teacher, executionPeriod, creditsReportDTO, false);
+                    }
                 }
+                List<Contract> contracts = teacher.getPerson().getEmployee().getContractsByPeriod(
+                        fromExecutionPeriod.getBeginDate(), untilExecutionPeriod.getEndDate());
+                Collections.sort(contracts, new BeanComparator("beginDate"));
+                // if it has more than one contract in the given period, return
+                // the
+                // first working unit contract
+                Unit workingUnit = contracts.get(contracts.size() - 1).getWorkingUnit();
+                Unit displayUnit = getDisplayUnit(workingUnit);
+                creditsReportDTO.setUnit(displayUnit);
+                setPastCredits(teacher, creditsReportDTO);
+                creditLines.add(creditsReportDTO);
             }
-            List<Contract> contracts = teacher.getPerson().getEmployee().getContractsByPeriod(
-                    fromExecutionPeriod.getBeginDate(), untilExecutionPeriod.getEndDate());
-            Collections.sort(contracts, new BeanComparator("beginDate"));
-            //if it has more than one contract in the given period, return the first working unit contract
-            Unit workingUnit = contracts.get(contracts.size() - 1).getWorkingUnit();
-            Unit displayUnit = getDisplayUnit(workingUnit);
-            creditsReportDTO.setUnit(displayUnit);
-            setPastCredits(teacher, creditsReportDTO);
-            creditLines.add(creditsReportDTO);
         }
         return creditLines;
     }
 
-    /**
-     * @param unit
-     * @return
-     */
+    private boolean verifyIfTeacherIsInactive(Teacher teacher,
+            List<ExecutionPeriod> executionPeriodsBetween) {
+
+        if (!executionPeriodsBetween.isEmpty()) {
+            ExecutionPeriod lastExecutionPeriod = executionPeriodsBetween.get(executionPeriodsBetween
+                    .size() - 1);
+            List<TeacherLegalRegimen> allLegalRegimens = teacher.getAllLegalRegimensBelongsToPeriod(
+                    lastExecutionPeriod.getBeginDate(), lastExecutionPeriod.getEndDate());
+            if (allLegalRegimens.isEmpty()) {
+//                System.out.println("Sem contratos legais: " + teacher.getTeacherNumber() + " -> "
+//                        + lastExecutionPeriod.getName() + " de "
+//                        + lastExecutionPeriod.getExecutionYear().getYear());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean verifyIfTeacherIsMonitor(Teacher teacher,
+            List<ExecutionPeriod> executionPeriodsBetween) {
+
+        if (!executionPeriodsBetween.isEmpty()) {
+            Category category = teacher.getCategoryForCreditsByPeriod(executionPeriodsBetween
+                    .get(executionPeriodsBetween.size() - 1));
+            if (category != null
+                    && (category.getCode().equalsIgnoreCase("MNT") || category.getCode()
+                            .equalsIgnoreCase("MNL"))) {
+//                System.out.println("Docente Monitor: "
+//                        + teacher.getTeacherNumber()
+//                        + " -> "
+//                        + executionPeriodsBetween.get(executionPeriodsBetween.size() - 1).getName()
+//                        + " de "
+//                        + executionPeriodsBetween.get(executionPeriodsBetween.size() - 1)
+//                                .getExecutionYear().getYear());
+                return true;
+            }
+        }
+        return false;
+    }
+
     private Unit getDisplayUnit(Unit unit) {
         Set<Unit> displayUnits = new HashSet<Unit>();
-        setAllTopDisplayUnits(unit, displayUnits);        
+        setAllTopDisplayUnits(unit, displayUnits);
         if (displayUnits.isEmpty()) {
             return unit.getDepartmentUnit();
         } else {
@@ -93,18 +136,19 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
         double totalCredits = 0;
         if (countCredits) {
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-            Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
-            if (category != null
-                    // ignore if it has a monitor category
-                    && (!category.getCode().equalsIgnoreCase("MNT") || category.getCode()
-                            .equalsIgnoreCase("MNL"))) {
-                if (teacherService != null) {
-                    totalCredits = teacherService.getCredits();
-                }
-                totalCredits -= teacher.getMandatoryLessonHours(executionPeriod);
-                totalCredits += teacher.getManagementFunctionsCredits(executionPeriod);
-                totalCredits += teacher.getServiceExemptionCredits(executionPeriod);
+//            Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
+//             if (category != null
+//             // ignore if it has a monitor category
+//             && (!category.getCode().equalsIgnoreCase("MNT") ||
+//             category.getCode()
+//             .equalsIgnoreCase("MNL"))) {
+            if (teacherService != null) {
+                totalCredits = teacherService.getCredits();
             }
+            totalCredits -= teacher.getMandatoryLessonHours(executionPeriod);
+            totalCredits += teacher.getManagementFunctionsCredits(executionPeriod);
+            totalCredits += teacher.getServiceExemptionCredits(executionPeriod);
+            // }
         }
         creditLine.getCreditsByExecutionPeriod().put(executionPeriod, totalCredits);
     }
