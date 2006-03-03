@@ -110,7 +110,7 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.CASAuthenticationAction"
 				scope="request">
             <forward name="sucess" path="/home.do" redirect="true"/>
-            <forward name="error" path="/exceptionHandlingAction.do?method=sendEmail"/>
+            <forward name="error" path="/loginPage.jsp" redirect="true"/>
         </action>
         <action path="/redirect"
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction">
