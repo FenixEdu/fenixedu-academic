@@ -129,9 +129,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
         for (Unit unit : allUnitsWithoutParent) {
-            if (!unit.equals(this.getUnit())
-                    && (this.getUnit().getParentUnits().isEmpty() || !this.getUnit().getTopUnits()
-                            .contains(unit))) {
+            if (!unit.equals(this.getUnit())) {
                 getUnitTreeToChooseParentUnit(buffer, unit);
             }
         }
@@ -165,9 +163,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
         
         for (Unit subUnit : parentUnit.getSubUnits()) {
-            if (!subUnit.equals(this.getUnit())
-                    && (this.getUnit().getParentUnits().isEmpty() || !this.getUnit().getParentUnits()
-                            .contains(subUnit))) {
+            if (!subUnit.equals(this.getUnit())) {
                 getUnitsListToChooseParentUnit(subUnit, buffer);
             }
         }
