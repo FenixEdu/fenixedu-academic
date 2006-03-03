@@ -92,7 +92,7 @@
     <renderer mode="input" type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowInputRenderer"/>
 
     <!--@ Can be used to fill a slot with one of many possible objects  -->
-    <renderer mode="input" type="java.lang.Object" layout="menu-select" class="net.sourceforge.fenixedu.renderers.presentationTier.InputMenuOptionListRenderer"/>
+    <renderer mode="input" type="java.lang.Object" layout="menu-select" class="net.sourceforge.fenixedu.presentationTier.renderers.InputMenuOptionListRenderer"/>
 
     <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
     <renderer mode="input" type="java.lang.String" layout="htmlEditor" class="net.sourceforge.fenixedu.presentationTier.renderers.HtmlEditorRenderer"/>
