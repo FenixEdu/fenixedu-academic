@@ -109,4 +109,25 @@
 		</java>
     </target>
 
+	<target name="get-production-file-properties-file"
+            description="Downloads production properties file">
+		<delete file="build.properties"/>
+		<java classname="pt.utl.ist.tools.http.client.WikiClient"
+				fork="yes"
+				failonerror="false"
+				maxmemory="128m">
+			<arg value="${wiki.host}"/>
+			<arg value="${wiki.port}"/>
+			<arg value="${wiki.username}"/>
+			<arg value="${wiki.password}"/>
+			<arg value="${wiki.property.file.page}"/>
+			<arg value="${wiki.property.file.filename}"/>
+			<classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    </target>
+
 </project>
