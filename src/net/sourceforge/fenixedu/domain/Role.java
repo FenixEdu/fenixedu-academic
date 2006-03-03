@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 public class Role extends Role_Base implements Comparable {
 
     public static Role getRoleByRoleType(final RoleType roleType) {
-        for (final Role role : RootDomainObject.instance.getRoles()) {
+        for (final Role role : RootDomainObject.getInstance().getRoles()) {
             if (role.getRoleType() == roleType) {
                 return role;
             }
@@ -21,7 +21,7 @@ public class Role extends Role_Base implements Comparable {
     }
 
     public Role(final RoleType roleType, final String portalSubApplication, final String page, final String pageNameProperty) {
-        setRootDomainObject(RootDomainObject.instance);
+        setRootDomainObject(RootDomainObject.getInstance());
         setRoleType(roleType);
         setPortalSubApplication(portalSubApplication);
         setPage(page);

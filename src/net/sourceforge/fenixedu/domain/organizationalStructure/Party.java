@@ -11,7 +11,7 @@ public abstract class Party extends Party_Base {
     public Party() {
         super();
         setKeyRootDomainObject(1);
-        RootDomainObject.instance.addParties(this);
+        RootDomainObject.getInstance().addParties(this);
         setOjbConcreteClass(getClass().getName());
     }    
 }
