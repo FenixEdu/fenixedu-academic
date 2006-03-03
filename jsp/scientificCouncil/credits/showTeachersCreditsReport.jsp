@@ -4,12 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-<h3><bean:message key="message.head"/>
+<h3><bean:message key="message.credits.head"/>
 <logic:present name="department">
 	<bean:write name="department" property="name"/>
 </logic:present>
 <logic:notPresent name="department">
-	<bean:message key="message.allDepartments"/>
+	<bean:message key="message.credits.allDepartments"/>
 </logic:notPresent>
 </h3>
 
