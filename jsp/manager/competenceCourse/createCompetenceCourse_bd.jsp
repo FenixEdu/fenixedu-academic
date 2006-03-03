@@ -11,11 +11,11 @@
 
 <html:form action="/createEditCompetenceCourse">  
 	<html:hidden property="method" value="createCompetenceCourse"/>
-	<html:hidden property="competenceCourseID" value="null"/>	
+	<html:hidden property="competenceCourseID" value=""/>	
 	<table>
 		<tr>
 			<td>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.name"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.name"/>
 			</td>
 			<td>
 				<html:text size="60" property="name" />
@@ -23,7 +23,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.code"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.code"/>
 			</td>
 			<td>
 				<html:text size="12" property="code" />
@@ -31,14 +31,14 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.department"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.department"/>
 			</td>
 			<td>
 				<logic:iterate id="department" name="departments">
 					<html:multibox property="departmentIDs" >
 						<bean:write name="department" property="idInternal"/>
 					</html:multibox>
-					<bean:write name="department" property="name"/><br/>
+					<bean:write name="department" property="realName"/><br/>
 				</logic:iterate>
 			</td>
 		</tr>
@@ -47,9 +47,9 @@
 	<br>
 	
 	<html:submit styleClass="inputbutton">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 	<html:reset  styleClass="inputbutton">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </html:form>

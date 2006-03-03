@@ -32,7 +32,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public CompetenceCourse(String code, String name, Collection<Department> departments,
             CurricularStage curricularStage) {
         this();
-        setCurricularStage(curricularStage);
+        super.setCurricularStage(curricularStage);
         fillFields(code, name);
         if (departments != null) {
             addDepartments(departments);
@@ -99,20 +99,20 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         if (name == null || name.length() == 0) {
             throw new DomainException("invalid.competenceCourse.values");
         }
-        setCode(code);
-        setName(name);
+        super.setCode(code);
+        super.setName(name);
     }
 
     public void edit(String code, String name, Collection<Department> departments) {
         fillFields(code, name);
         for (final Department department : this.getDepartments()) {
             if (!departments.contains(department)) {
-                removeDepartments(department);
+                super.removeDepartments(department);
             }
         }
         for (final Department department : departments) {
             if (!hasDepartments(department)) {
-                addDepartments(department);
+                super.addDepartments(department);
             }
         }
     }
@@ -146,9 +146,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
         getDepartments().clear();
         removeUnit();
-        for (; !getCompetenceCourseInformations().isEmpty(); getCompetenceCourseInformations().get(0)
-                .delete())
-            ;
+        for (;!getCompetenceCourseInformations().isEmpty();getCompetenceCourseInformations().get(0).delete());
         super.deleteDomainObject();
     }
 
@@ -161,7 +159,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public void addDepartments(Collection<Department> departments) {
         for (Department department : departments) {
-            addDepartments(department);
+            super.addDepartments(department);
         }
     }
 

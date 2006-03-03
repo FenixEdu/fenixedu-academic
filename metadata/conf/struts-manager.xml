@@ -1879,6 +1879,7 @@
 	<message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
+	<message-resources parameter="resources.DomainExceptionResources" key="DOMAIN_RESOURCES" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 			
