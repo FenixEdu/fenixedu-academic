@@ -274,9 +274,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (parentUnit.hasAnySubUnits()) {
             openULTag(parentUnit, buffer);
         }
-        
+                
         for (Unit subUnit : parentUnit.getSubUnits()) {
-            getUnitsListToChoosePrincipalFunction(subUnit, buffer);
+            if (!subUnit.equals(this.getUnit())) {
+                getUnitsListToChoosePrincipalFunction(subUnit, buffer);
+            }
         }
 
         if (parentUnit.hasAnySubUnits()) {
