@@ -630,22 +630,37 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
         public void add(final Attends attends) {
             for (final WeeklyWorkLoad weeklyWorkLoad : attends.getWeeklyWorkLoads()) {
             	final int weekIndex = weeklyWorkLoad.getWeekOffset();
-            	numberResponses[weekIndex]++;
+            	if (consistentAnswers(attends, weekIndex)) {
+            		numberResponses[weekIndex]++;
 
-            	final Integer contact = weeklyWorkLoad.getContact();
-            	contactSum[weekIndex] += contact != null ? contact.intValue() : 0;
+            		final Integer contact = weeklyWorkLoad.getContact();
+            		contactSum[weekIndex] += contact != null ? contact.intValue() : 0;
 
-            	final Integer autounomousStudy = weeklyWorkLoad.getAutonomousStudy();
-            	autonomousStudySum[weekIndex] += autounomousStudy != null ? autounomousStudy.intValue() : 0;
+            		final Integer autounomousStudy = weeklyWorkLoad.getAutonomousStudy();
+            		autonomousStudySum[weekIndex] += autounomousStudy != null ? autounomousStudy.intValue() : 0;
 
-            	final Integer other = weeklyWorkLoad.getOther();
-            	otherSum[weekIndex] += other != null ? other.intValue() : 0;
+            		final Integer other = weeklyWorkLoad.getOther();
+            		otherSum[weekIndex] += other != null ? other.intValue() : 0;
 
-            	totalSum[weekIndex] = contactSum[weekIndex] + autonomousStudySum[weekIndex] + otherSum[weekIndex];
+            		totalSum[weekIndex] = contactSum[weekIndex] + autonomousStudySum[weekIndex] + otherSum[weekIndex];
+            	}
             }
         }
 
-        public Interval[] getIntervals() {
+        private boolean consistentAnswers(final Attends attends, final int weekIndex) {
+        	final ExecutionPeriod executionPeriod = attends.getDisciplinaExecucao().getExecutionPeriod();
+        	int weeklyTotal = 0;
+        	for (final Attends someAttends : attends.getAluno().getAssociatedAttends()) {
+        		for (final WeeklyWorkLoad weeklyWorkLoad : someAttends.getWeeklyWorkLoads()) {
+        			if (weeklyWorkLoad.getWeekOffset().intValue() == weekIndex) {
+        				weeklyTotal += weeklyWorkLoad.getTotal();
+        			}
+        		}
+        	}
+        	return weeklyTotal <= 140;
+		}
+
+		public Interval[] getIntervals() {
             return intervals;
         }
 
