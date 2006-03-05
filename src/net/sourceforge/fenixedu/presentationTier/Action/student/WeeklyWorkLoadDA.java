@@ -129,6 +129,10 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             request.setAttribute("weeklyWorkLoadBean", new WeeklyWorkLoadBean());
         }
 
+        dynaActionForm.set("contact", null);
+        dynaActionForm.set("autonomousStudy", null);
+        dynaActionForm.set("other", null);
+
         return mapping.findForward("showWeeklyWorkLoad");
     }
 

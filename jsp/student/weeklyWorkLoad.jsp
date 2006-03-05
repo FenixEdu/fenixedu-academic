@@ -34,6 +34,10 @@ float: left;
 <bean:define id="autonomousStudy_tooltip" type="java.lang.String"><bean:message key="title.weekly.work.load.autonomousStudy.tooltip"/></bean:define>
 <bean:define id="other_tooltip" type="java.lang.String"><bean:message key="title.weekly.work.load.other.tooltip"/></bean:define>
 
+<bean:define id="submitConfirm" type="java.lang.String">
+	return confirm('<bean:message key="message.confirm.submit.weekly.work.load"/>')
+</bean:define>
+
 <table width="80em">
 	<tr><td width="65em">
 		<logic:notPresent name="firstAttends" property="responseWeek">
@@ -118,7 +122,7 @@ float: left;
 									<html:text size="3" property="other"/>
 								</td>
 								<td>
-									<html:submit value="Submit"/>
+									<html:submit value="Submit" onclick='<%= submitConfirm %>'/>
 								</td>
 							</html:form>
 						</tr>
