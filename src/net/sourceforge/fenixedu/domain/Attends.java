@@ -189,6 +189,11 @@ public class Attends extends Attends_Base {
         		? getPreviousWeek() : null;
     }
 
+    public int getCalculatePreviousWeek() {
+    	final int previousWeekOffset = calculateCurrentWeekOffset() - 1;
+    	return Integer.valueOf(previousWeekOffset + 1);
+    }
+
     private int calculateCurrentWeekOffset() {
         final DateMidnight beginningOfLessonPeriod = new DateMidnight(getBegginingOfLessonPeriod());
         final DateMidnight firstMonday = beginningOfLessonPeriod.withField(DateTimeFieldType.dayOfWeek(), 1);

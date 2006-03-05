@@ -46,7 +46,7 @@ float: left;
 					<td colspan="4" class="listClasses-header">
 						<bean:message key="title.weekly.work.load.week.to.submit"/>:
 					</td>
-					<td>
+					<td class="listClasses-header" >
 					</td>
 				</tr>
 				<tr>
@@ -75,14 +75,15 @@ float: left;
 			<bean:define id="previousWeek" name="firstAttends" property="responseWeek"/>
 			<table class="style1">
 				<tr>
-					<td colspan="4" class="listClasses-header">
+					<td colspan="5" class="listClasses-header">
 						<bean:message key="title.weekly.work.load.week.to.submit"/>:
 						<bean:define id="start" type="org.joda.time.DateTime" name="previousWeek" property="start"/>
 						<bean:define id="end" type="org.joda.time.DateTime" name="previousWeek" property="end"/>				
-						[<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>,
-						 <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>[
-					</td>
-					<td>
+						<bean:write name="firstAttends" property="calculatePreviousWeek"/>
+						(<bean:message key="label.from"/>
+						<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>
+						<bean:message key="label.to"/>
+						<bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>)
 					</td>
 				</tr>
 				<tr>
@@ -97,6 +98,8 @@ float: left;
 					</td>
 					<td class="listClasses-header" title="<%= other_tooltip %>">
 						<bean:message key="title.weekly.work.load.other"/>
+					</td>
+					<td class="listClasses-header">
 					</td>
 				</tr>
 				<logic:iterate id="attend" name="attends">
@@ -121,7 +124,7 @@ float: left;
 								<td class="listClasses" title="<%= other_tooltip %>">
 									<html:text size="3" property="other"/>
 								</td>
-								<td>
+								<td class="listClasses">
 									<html:submit value="Submit" onclick='<%= submitConfirm %>'/>
 								</td>
 							</html:form>
@@ -135,8 +138,10 @@ float: left;
 			<bean:define id="start" type="org.joda.time.DateTime" name="previousWeek" property="start"/>
 			<bean:define id="end" type="org.joda.time.DateTime" name="previousWeek" property="end"/>
 			<bean:define id="intervalArg" type="java.lang.String">
-				[<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>,
-			 	<bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>[
+				(<bean:message key="label.from"/>
+				 <bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>
+				 <bean:message key="label.to"/>
+				 <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>)
 			</bean:define>
 			<bean:message key="title.weekly.work.load.instructions.header" arg0="<%= intervalArg %>"/>
 		</logic:present>
@@ -174,8 +179,8 @@ float: left;
 			<logic:iterate id="interval" indexId="i" type="org.joda.time.Interval" name="weeklyWorkLoadView" property="intervals">
 				<bean:define id="intervalString" type="java.lang.String">
 					<bean:define id="start" type="org.joda.time.DateTime" name="interval" property="start"/>
-					<bean:define id="end" type="org.joda.time.DateTime" name="interval" property="end"/>				
-					[<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>, <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>[
+					<bean:define id="end" type="org.joda.time.DateTime" name="interval" property="end"/>
+					(<bean:message key="label.from"/> <bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/> <bean:message key="label.to"/> <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>)
 				</bean:define>
 				<td class="listClasses-header" title="<%= intervalString %>">
 					<%= i.intValue() + 1 %>
