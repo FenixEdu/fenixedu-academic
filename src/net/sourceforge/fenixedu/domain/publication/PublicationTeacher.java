@@ -55,7 +55,7 @@ public class PublicationTeacher extends PublicationTeacher_Base {
     private static class PublicationTeacherTeacherListener extends dml.runtime.RelationAdapter<Teacher,PublicationTeacher> {
         @Override
         public void beforeAdd(Teacher teacher, PublicationTeacher publication) {
-            if (! teacher.canAddPublicationToTeacherInformationSheet(publication.getPublicationArea())) {
+            if (teacher != null && !teacher.canAddPublicationToTeacherInformationSheet(publication.getPublicationArea())) {
                 throw new DomainException("error.teacherSheetFull", publication.getPublicationArea().getName());
             }
         }
