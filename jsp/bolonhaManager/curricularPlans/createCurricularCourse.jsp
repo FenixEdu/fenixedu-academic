@@ -44,7 +44,7 @@ width: auto;
 				<f:selectItems value="#{CurricularCourseManagement.departmentUnits}"/>
 			</fc:selectOneMenu>
 			<h:outputText value="</p>" escape="false"/>			
-			<h:outputText value="<p><label>#{bolonhaBundle['Course']}:</label>" escape="false"/>
+			<h:outputText value="<p><label>#{bolonhaBundle['course']}:</label>" escape="false"/>
 			<fc:selectOneMenu value="#{CurricularCourseManagement.competenceCourseID}" onchange="this.form.submit();">
 				<f:selectItems value="#{CurricularCourseManagement.competenceCourses}"/>
 			</fc:selectOneMenu>
