@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.renderers;
 
 import java.lang.reflect.Constructor;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
-import org.apache.commons.collections.Predicate;
 import org.apache.log4j.Logger;
 
 public class StandardInputRenderer extends InputRenderer {

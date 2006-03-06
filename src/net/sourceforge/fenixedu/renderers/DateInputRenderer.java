@@ -8,7 +8,6 @@ import java.util.Locale;
 import javax.faces.convert.ConverterException;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
