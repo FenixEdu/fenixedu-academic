@@ -212,5 +212,11 @@ public class Department extends Department_Base {
 
         return personalExpectations;
     }
+    
+    public String retrieveAcronym() {
+        final int begin = this.getRealName().indexOf("(");
+        final int end = this.getRealName().indexOf(")");
+        return this.getRealName().substring(begin + 1, end);
+    }
 
 }
