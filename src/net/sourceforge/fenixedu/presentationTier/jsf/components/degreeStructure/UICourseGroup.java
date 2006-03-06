@@ -204,12 +204,13 @@ public class UICourseGroup extends UIDegreeModule {
         }
 /*
         writer.startElement("a", this);
-        String action = "&action=" + ((this.toEdit) ? "build" : (String) this.facesContext.getExternalContext().getRequestParameterMap().get("action"));
-        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
+        String action = "&action=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("action");
         String showRules = "&showRules=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("showRules");        
         String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");
-        writer.writeAttribute("href", "courseGroupReport.faces?degreeCurricularPlan="+ this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + action + organizeBy + showRules + hideCourses, null);
+        String toOrder = "&toOrder=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("toOrder");
+        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
+        writer.writeAttribute("href", "courseGroupReport.faces?degreeCurricularPlanID="+ this.facesContext.getExternalContext().getRequestParameterMap()
+                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + action + organizeBy + showRules + hideCourses + toOrder, null);
 */        if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
             writer.append(this.degreeModule.getName()).append(" ");    
         } else {
