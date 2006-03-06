@@ -174,7 +174,7 @@ padding: 0.5em;
 
 <br/>
 
-
+asdasdasdasda
 
 <logic:present name="weeklyWorkLoadView">
 	<table class="tstyle3 tpadding01">
@@ -188,7 +188,7 @@ padding: 0.5em;
 			<th colspan="<%= numberOfIntervals %>">
 				<bean:message key="title.weekly.work.load.week"/>
 			</th>
-			<th rowspan="2">
+			<th rowspan="2" style="padding: 1.5em 1.5em;">
 				<bean:message key="title.weekly.work.load.total"/>
 			</th>
 		</tr>

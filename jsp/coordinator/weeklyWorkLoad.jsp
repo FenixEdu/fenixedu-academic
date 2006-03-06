@@ -7,15 +7,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/joda.tld" prefix="joda" %>
 
-<style>
-.information {
-background-color: #fafadd;
-border: 1px solid #ccc;
-padding: 0.5em;
-float: left;
-text-align: left;
-}
-</style>
 
 <h2><bean:message key="link.weekly.work.load"/></h2>
 
@@ -29,7 +20,7 @@ text-align: left;
 	<table>
 		<tr>
 			<td>
-				<bean:message key="title.weekly.work.load.academic.period"/>
+				<bean:message key="title.weekly.work.load.academic.period"/>:
 			</td>
 			<td>
 				<html:select property="executionPeriodID" onchange="this.form.submit();">
@@ -39,7 +30,7 @@ text-align: left;
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="title.weekly.work.load.curricular.year"/>
+				<bean:message key="title.weekly.work.load.curricular.year"/>:
 			</td>
 			<td>
 				<html:select property="curricularYearID" onchange="this.form.submit();">
@@ -50,11 +41,11 @@ text-align: left;
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="title.weekly.work.load.execution.period"/>
+				<bean:message key="title.weekly.work.load.execution.period"/>:
 			</td>
 			<td>
 				<html:select property="executionCourseID" onchange="this.form.submit();">
-					<html:option value=""/>
+					<html:option value="" key="label.all"/>
 					<html:options collection="executionCourses" property="idInternal" labelProperty="nome"/>
 				</html:select>
 			</td>
@@ -63,7 +54,6 @@ text-align: left;
 </html:form>
 
 <br/>
-<br/>
 
 <bean:define id="contact_tooltip" type="java.lang.String"><bean:message key="title.weekly.work.load.contact.tooltip"/></bean:define>
 <bean:define id="autonomousStudy_tooltip" type="java.lang.String"><bean:message key="title.weekly.work.load.autonomousStudy.tooltip"/></bean:define>
@@ -71,20 +61,20 @@ text-align: left;
 
 <logic:notPresent name="selectedExecutionCourse">
 	<logic:present name="curricularYearWeeklyWorkLoadView">
-		<table class="style1">
+		<table class="tstyle3 tpadding01">
 			<tr>
-				<td class="listClasses-header" rowspan="2">
-				</td>
+				<th rowspan="2">
+				</th>
 				<bean:size id="numberOfIntervals" name="curricularYearWeeklyWorkLoadView" property="intervals"/>
-				<td class="listClasses-header" colspan="<%= numberOfIntervals %>">
+				<th colspan="<%= numberOfIntervals %>">
 					<bean:message key="title.weekly.work.load.week"/>
-				</td>
-				<td class="listClasses-header" rowspan="2">
+				</th>
+				<th rowspan="2" style="padding: 0.5em 0.5em;">
 					<bean:message key="title.weekly.work.load.total"/>
-				</td>
-				<td class="listClasses-header" rowspan="2">
+				</th>
+				<th rowspan="2" style="padding: 0.5em 0.5em;">
 					<bean:message key="title.weekly.work.load.total.weekly.average"/>
-				</td>
+				</th>
 			</tr>
 			<tr>
 				<logic:iterate id="interval" indexId="i" type="org.joda.time.Interval" name="curricularYearWeeklyWorkLoadView" property="intervals">
@@ -93,9 +83,9 @@ text-align: left;
 						<bean:define id="end" type="org.joda.time.DateTime" name="interval" property="end"/>				
 						[<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>, <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>[
 					</bean:define>
-					<td class="listClasses-header" title="<%= intervalString %>">
+					<th title="<%= intervalString %>" style="width: 1.5em;">
 						<%= i.intValue() + 1 %>
-					</td>
+					</th>
 				</logic:iterate>
 			</tr>
 			<logic:iterate id="executionCourse" name="curricularYearWeeklyWorkLoadView" property="executionCourses">
@@ -106,14 +96,14 @@ text-align: left;
 						</td>
 						<bean:define id="weeklyWorkLoadView" name="executionCourse" property="weeklyWorkLoadView"/>
 						<logic:iterate id="value" name="weeklyWorkLoadView" property="totalAverage">
-							<td class="listClasses">
+							<td>
 								<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="value"/></str:getPrechomp></str:strip>
 							</td>
 						</logic:iterate>
-						<td class="listClasses">
+						<td class="highlight2">
 							<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="weeklyWorkLoadView" property="totalAverageTotal"/></str:getPrechomp></str:strip>
 						</td>
-						<td class="listClasses">
+						<td class="highlight2">
 							<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="weeklyWorkLoadView" property="totalAverageTotalAverage"/></str:getPrechomp></str:strip>
 						</td>
 					</tr>
@@ -121,32 +111,30 @@ text-align: left;
 			</logic:iterate>
 		</table>
 
-		<br/>
-		<br/>
-
-		<div class="information">
-			<p><bean:message key="info.weekly.work.load.into.execution.courses"/></p>
-		</div>
+		<p><bean:message key="info.weekly.work.load.into.execution.courses"/></p>
 
 	</logic:present>
 </logic:notPresent>
 
+
+
+
 <logic:present name="selectedExecutionCourse">
 	<bean:define id="weeklyWorkLoadView" name="selectedExecutionCourse" property="weeklyWorkLoadView"/>
-	<table class="style1">
+	<table class="tstyle3 tpadding01">
 		<tr>
-			<td class="listClasses-header" rowspan="2">
-			</td>
+			<th rowspan="2">
+			</th>
 			<bean:size id="numberOfIntervals" name="weeklyWorkLoadView" property="intervals"/>
-			<td class="listClasses-header" colspan="<%= numberOfIntervals %>">
+			<th colspan="<%= numberOfIntervals %>">
 				<bean:message key="title.weekly.work.load.week"/>
-			</td>
-			<td class="listClasses-header" rowspan="2">
+			</th>
+			<th rowspan="2" style="padding: 0.5em 0.5em;">
 				<bean:message key="title.weekly.work.load.total"/> <sup>(3)</sup>
-			</td>
-			<td class="listClasses-header" rowspan="2">
+			</th>
+			<th rowspan="2" style="padding: 0.5em 0.5em;">
 				<bean:message key="title.weekly.work.load.total.weekly.average"/> <sup>(4)</sup>
-			</td>
+			</th>
 		</tr>
 		<tr>
 			<logic:iterate id="interval" indexId="i" type="org.joda.time.Interval" name="weeklyWorkLoadView" property="intervals">
@@ -155,9 +143,9 @@ text-align: left;
 					<bean:define id="end" type="org.joda.time.DateTime" name="interval" property="end"/>				
 					[<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>, <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>[
 				</bean:define>
-				<td class="listClasses-header" title="<%= intervalString %>">
+				<th title="<%= intervalString %>" style="width: 1.5em;">
 					<%= i.intValue() + 1 %>
-				</td>
+				</th>
 			</logic:iterate>
 		</tr>
 		<tr>
@@ -165,14 +153,14 @@ text-align: left;
 				<bean:message key="title.weekly.work.load.number.responses"/>
 			</td>
 			<logic:iterate id="responses" name="weeklyWorkLoadView" property="numberResponses">
-				<td class="listClasses">
+				<td>
 					<bean:write name="responses"/>
 				</td>
 			</logic:iterate>
-			<td class="listClasses">
+			<td>
 				<bean:write name="weeklyWorkLoadView" property="numberResponsesTotal"/>
 			</td>
-			<td class="listClasses">
+			<td>
 				<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="weeklyWorkLoadView" property="numberResponsesTotalAverage"/></str:getPrechomp></str:strip>
 			</td>
 		</tr>
@@ -181,14 +169,14 @@ text-align: left;
 				<bean:message key="title.weekly.work.load.contact"/> <sup>(1)</sup>
 			</td>
 			<logic:iterate id="contact" name="weeklyWorkLoadView" property="contactAverage">
-				<td class="listClasses">
+				<td>
 					<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="contact"/></str:getPrechomp></str:strip>
 				</td>
 			</logic:iterate>
-			<td class="listClasses">
+			<td>
 				<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="weeklyWorkLoadView" property="contactAverageTotal"/></str:getPrechomp></str:strip>
 			</td>
-			<td class="listClasses">
+			<td>
 				<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="weeklyWorkLoadView" property="contactAverageTotalAverage"/></str:getPrechomp></str:strip>
 			</td>
 		</tr>
@@ -197,14 +185,14 @@ text-align: left;
 				<bean:message key="title.weekly.work.load.autonomousStudy"/> <sup>(1)</sup>
 			</td>
 			<logic:iterate id="autonomousStudy" name="weeklyWorkLoadView" property="autonomousStudyAverage">
-				<td class="listClasses">
+				<td>
 					<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="autonomousStudy"/></str:getPrechomp></str:strip>
 				</td>
 			</logic:iterate>
-			<td class="listClasses">
+			<td>
 				<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="weeklyWorkLoadView" property="autonomousStudyAverageTotal"/></str:getPrechomp></str:strip>
 			</td>
-			<td class="listClasses">
+			<td>
 				<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="weeklyWorkLoadView" property="autonomousStudyAverageTotalAverage"/></str:getPrechomp></str:strip>
 			</td>
 		</tr>
@@ -213,45 +201,41 @@ text-align: left;
 				<bean:message key="title.weekly.work.load.other"/> <sup>(1)</sup>
 			</td>
 			<logic:iterate id="other" name="weeklyWorkLoadView" property="otherAverage">
-				<td class="listClasses">
+				<td>
 					<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="other"/></str:getPrechomp></str:strip>
 				</td>
 			</logic:iterate>
-			<td class="listClasses">
+			<td>
 				<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="weeklyWorkLoadView" property="otherAverageTotal"/></str:getPrechomp></str:strip>
 			</td>
-			<td class="listClasses">
+			<td>
 				<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="weeklyWorkLoadView" property="otherAverageTotalAverage"/></str:getPrechomp></str:strip>
 			</td>
 		</tr>
 		<tr>
-			<td class="courses">
+			<td class="courses highlight2">
 				<bean:message key="title.weekly.work.load.total"/> <sup>(2)</sup>
 			</td>
 			<logic:iterate id="total" name="weeklyWorkLoadView" property="totalAverage">
-				<td class="listClasses">
+				<td class="highlight2">
 					<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="total"/></str:getPrechomp></str:strip>
 				</td>
 			</logic:iterate>
-			<td class="listClasses">
+			<td class="highlight2">
 				<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="weeklyWorkLoadView" property="totalAverageTotal"/></str:getPrechomp></str:strip>
 			</td>
-			<td class="listClasses">
+			<td class="highlight2">
 				<str:strip delimiter="."><str:getPrechomp delimiter="."><bean:write name="weeklyWorkLoadView" property="totalAverageTotalAverage"/></str:getPrechomp></str:strip>
 			</td>
 		</tr>
 	</table>
 
-	<br/>
-	<br/>
-
-	<div class="information">
 		<p><bean:message key="info.weekly.work.load.into"/></p>
-		<ul>
-		<p>(1) <bean:message key="info.weekly.work.load.values"/></p>
-		<p>(2) <bean:message key="info.weekly.work.load.values.total"/></p>
-		<p>(3) <bean:message key="info.weekly.work.load.values.line.total"/></p>
-		<p>(4) <bean:message key="info.weekly.work.load.values.line.average"/></p>
-		</ul>
-	</div>
+		<ol>
+		<li><bean:message key="info.weekly.work.load.values"/></li>
+		<li><bean:message key="info.weekly.work.load.values.total"/></li>
+		<li><bean:message key="info.weekly.work.load.values.line.total"/></li>
+		<li><bean:message key="info.weekly.work.load.values.line.average"/></li>
+		</ol>
+
 </logic:present>
