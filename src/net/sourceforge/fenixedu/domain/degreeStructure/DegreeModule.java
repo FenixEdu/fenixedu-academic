@@ -17,6 +17,8 @@ public abstract class DegreeModule extends DegreeModule_Base {
         removeNewDegreeCurricularPlan();    
         for (;!getDegreeModuleContexts().isEmpty(); getDegreeModuleContexts().get(0).delete());
         for (;!getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
+        for (;!getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().get(0).delete());
+        for (;!getParticipatingExclusivenessCurricularRules().isEmpty(); getParticipatingExclusivenessCurricularRules().get(0).delete());
     }
     
     public abstract Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,

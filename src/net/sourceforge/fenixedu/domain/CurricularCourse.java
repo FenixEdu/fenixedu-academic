@@ -580,7 +580,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
-        // none rules to add
+        // no rules to add
     }
 
 }

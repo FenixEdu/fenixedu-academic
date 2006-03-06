@@ -44,6 +44,7 @@ public class CourseGroup extends CourseGroup_Base {
     public void delete() {
         if (getCanBeDeleted()) {
             super.delete();
+            for (;!getParticipatingContextCurricularRules().isEmpty();getParticipatingContextCurricularRules().get(0).delete());
             super.deleteDomainObject();
         } else {
             throw new DomainException("courseGroup.notEmptyCourseGroupContexts");
