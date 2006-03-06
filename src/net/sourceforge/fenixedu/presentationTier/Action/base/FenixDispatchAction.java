@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.base;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -7,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
@@ -36,6 +39,18 @@ public abstract class FenixDispatchAction extends DispatchAction {
     protected Object executeService(final HttpServletRequest request, final String serviceName, final Object[] serviceArgs)
             throws FenixFilterException, FenixServiceException {
         return ServiceUtils.executeService(getUserView(request), serviceName, serviceArgs);
+    }
+
+    protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal)
+            throws FenixFilterException, FenixServiceException {
+        final Object[] args = { clazz, idInternal };
+        return (DomainObject) executeService(request, "ReadDomainObject", args);
+    }
+
+    protected Collection readAllDomainObjects(final HttpServletRequest request, final Class clazz)
+            throws FenixFilterException, FenixServiceException {
+        final Object[] args = { clazz };
+        return (Collection) executeService(request, "ReadAllDomainObjects", args);
     }
 
     protected Person getLoggedPerson(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
