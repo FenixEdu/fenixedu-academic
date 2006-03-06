@@ -6,8 +6,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
@@ -243,10 +245,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getRecentCompetenceCourseInformation().getEvaluationMethodEn();
     }
 
-    public double getEctsCredits() {
+    public double getAllEctsCredits() {
+        return getEctsCredits(null);
+    }
+    
+    public double getEctsCredits(Integer order) {
         double result = 0.0;
         if (getRecentCompetenceCourseInformation() != null) {
-            result = getRecentCompetenceCourseInformation().getEctsCredits();
+            result = getRecentCompetenceCourseInformation().getEctsCredits(order);
         }
         return result;
     }
@@ -399,6 +405,19 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             return (Unit) this.getUnit().getParents().get(0);
         }  
         return null;
+    }
+    
+    public Set<DegreeCurricularPlan> presentIn() {
+        Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
+            result.add(curricularCourse.getParentDegreeCurricularPlan());
+        }
+        
+        return result;
+    }
+
+    public boolean isAnual() {
+        return this.getRegime().equals(RegimeType.ANUAL);
     }
 
 }

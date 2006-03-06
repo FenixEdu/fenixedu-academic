@@ -431,11 +431,19 @@ public class CurricularCourse extends CurricularCourse_Base {
         if (super.getEctsCredits() != null) {
             result = super.getEctsCredits();
         } else if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getEctsCredits();
+            result = this.getCompetenceCourse().getAllEctsCredits();
         }       
         return result;
     }    
     
+    public Double getEctsCredits(Integer order) {
+        double result = 0.0;
+        if (this.getCompetenceCourse() != null) {
+            result = this.getCompetenceCourse().getEctsCredits(order);
+        }
+        return result;
+    }
+
     public Double getContactLoad(Integer order) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {

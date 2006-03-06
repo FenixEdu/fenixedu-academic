@@ -129,7 +129,7 @@ public class UICurricularCourse extends UIDegreeModule {
             writer.writeAttribute("class", "aright", null);
             //writer.writeAttribute("style", "width: 7em;", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "credits.abbreviation")).append(" ");
-            writer.append(((CurricularCourse)this.degreeModule).getEctsCredits().toString());
+            writer.append(((CurricularCourse)this.degreeModule).getEctsCredits(previousContext.getCurricularPeriod().getOrder()).toString());
         } else {
             writer.append("&nbsp;");
             writer.endElement("td");

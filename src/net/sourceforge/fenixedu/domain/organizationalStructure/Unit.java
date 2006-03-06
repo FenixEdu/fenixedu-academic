@@ -205,11 +205,11 @@ public class Unit extends Unit_Base {
         return result;
     }
 
-    public double getEctsCredits() {
+    public double getScientificAreaUnitEctsCredits() {
         double result = 0.0;
         for (Unit competenceCourseGroupUnit : getCompetenceCourseGroupUnits()) {
             for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
-                result += competenceCourse.getEctsCredits();
+                result += competenceCourse.getAllEctsCredits();
             }
         }
         return result;

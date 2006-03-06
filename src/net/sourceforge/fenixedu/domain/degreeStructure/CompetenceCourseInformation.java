@@ -46,14 +46,18 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         super.deleteDomainObject();
     }
     
-    public double getEctsCredits() {
+    public double getEctsCredits(Integer order) {
         double result = 0.0;
-        for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
-            result += competenceCourseLoad.getEctsCredits().doubleValue();
+        
+        for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            if (order == null || competenceCourseLoad.getOrder().equals(order)) {
+                result += competenceCourseLoad.getEctsCredits();
+            }
         }
+
         return result;
     }
-    
+
     public BibliographicReference getBibliographicReference(Integer oid) {
         return getBibliographicReferences().getBibliographicReference(oid);
     }
@@ -61,46 +65,34 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     public Double getContactLoad(Integer order) {
         double result = 0.0;
         
-        if (this.getRegime().equals(RegimeType.ANUAL) && this.getCompetenceCourseLoadsCount() > 1) {
-            return (this.getCompetenceCourseLoads(order) != null) ? this.getCompetenceCourseLoads(order).getContactLoad() : result;
-        } 
-        if (this.getCompetenceCourseLoadsCount() == 1) {
-            return (this.getCompetenceCourseLoads(1) != null) ? this.getCompetenceCourseLoads(1).getContactLoad() : result;
+        for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            if (order == null || competenceCourseLoad.getOrder().equals(order)) {
+                result += competenceCourseLoad.getContactLoad();
+            }
         }
 
         return result;
     }
     
-    private CompetenceCourseLoad getCompetenceCourseLoads(Integer order) {
-        for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
-            if (competenceCourseLoad.getOrder().equals(order)) {
-                return competenceCourseLoad;
-            }
-        }
-        return null;
-    }
-
     public Double getAutonomousWorkHours(Integer order) {
         double result = 0.0;
 
-        if (this.getRegime().equals(RegimeType.ANUAL) && this.getCompetenceCourseLoadsCount() > 1) {
-            return (this.getCompetenceCourseLoads(order) != null) ? this.getCompetenceCourseLoads(order).getAutonomousWorkHours() : result;
-        } 
-        if (this.getCompetenceCourseLoadsCount() == 1) {
-            return (this.getCompetenceCourseLoads(1) != null) ? this.getCompetenceCourseLoads(1).getAutonomousWorkHours() : result;
+        for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            if (order == null || competenceCourseLoad.getOrder().equals(order)) {
+                result += competenceCourseLoad.getAutonomousWorkHours();
+            }
         }
-        
+
         return result;
     }
     
     public Double getTotalLoad(Integer order) {
         double result = 0.0;
-
-        if (this.getRegime().equals(RegimeType.ANUAL) && this.getCompetenceCourseLoadsCount() > 1) {
-            return (this.getCompetenceCourseLoads(order) != null) ? this.getCompetenceCourseLoads(order).getTotalLoad() : result;
-        } 
-        if (this.getCompetenceCourseLoadsCount() == 1) {
-            return (this.getCompetenceCourseLoads(1) != null) ? this.getCompetenceCourseLoads(1).getTotalLoad() : result;
+        
+        for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            if (order == null || competenceCourseLoad.getOrder().equals(order)) {
+                result += competenceCourseLoad.getTotalLoad();
+            }
         }
         
         return result;
