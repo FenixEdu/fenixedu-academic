@@ -14,6 +14,12 @@
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.personManagement"/></h2>
 
+<p><strong>&raquo;
+	<html:link module="/manager" page="/personManagement/createPerson.do?method=prepare">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.createPerson" />
+	</html:link>
+</strong></p>
+
 <p><strong>&raquo; 
 	<html:link module="/manager" page="/findPerson.do?method=prepareFindPerson">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.findPerson" />

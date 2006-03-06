@@ -288,4 +288,69 @@
     <slot name="autonomousStudy"/>
     <slot name="other"/>
   </schema>
+
+	<!-- Paulo Zenida and Dinis Martins - 2006-02-17 -->
+	<schema name="person.create-validated"
+		type="net.sourceforge.fenixedu.domain.Person">
+		<!-- Personal data -->
+		<slot name="nome" key="person.name" default="[Primeiro Ultimo]">
+			<validator
+				class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+				<property name="regexp"
+					value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*" />
+				<property name="message"
+					value="Escreva pelo menos o primeiro e último nome" />
+				<property name="key" value="false" />
+			</validator>
+			<property name="size" value="50" />
+		</slot>
+		<slot name="istUsername" default="iscteXXXXX"
+			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+		<slot name="gender"
+			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+		<slot name="numeroDocumentoIdentificacao"
+			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+		<slot name="idDocumentType" default="IDENTITY_CARD"
+			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+		<slot name="localEmissaoDocumentoIdentificacao" />
+		<slot name="dataEmissaoDocumentoIdentificacao">
+			<property name="size" value="12" />
+			<property name="maxLength" value="10" />
+		</slot>
+		<slot name="dataValidadeDocumentoIdentificacao">
+			<property name="size" value="12" />
+			<property name="maxLength" value="10" />
+		</slot>
+		<slot name="numContribuinte" />
+		<slot name="profissao" />
+		<slot name="maritalStatus" default="UNKNOWN" />
+		<!-- Filiation -->
+		<slot name="nascimento" layout="heading-date">
+			<property name="format" value="yyyy - MM - dd HH:mm" />
+		</slot>
+		<slot name="pais" layout="menu-select"> 
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/> 
+			<property name="format" value="${nationality}"/>
+		</slot>
+		<slot name="freguesiaNaturalidade" />
+		<slot name="concelhoNaturalidade" />
+		<slot name="distritoNaturalidade" />
+		<slot name="nomePai" />
+		<slot name="nomeMae" />
+		<!-- Residence -->
+		<slot name="morada" />
+		<slot name="codigoPostal" />
+		<slot name="localidadeCodigoPostal" />
+		<slot name="localidade" />
+		<slot name="freguesiaMorada" />
+		<slot name="concelhoMorada" />
+		<slot name="distritoMorada" />
+		<!-- Contacts -->
+		<slot name="telefone" />
+		<slot name="telemovel" />
+		<slot name="email" />
+		<slot name="enderecoWeb" />
+
+		<slot name="isPassInKerberos" />
+	</schema>
 </schemas>

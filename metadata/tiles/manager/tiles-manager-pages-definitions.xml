@@ -506,5 +506,15 @@
     	<put name="body" value="/manager/domainObjectsManagement/chooseClassAndSlotToFormat.jsp" />
     </definition>
 
-
+	<!-- Paulo Zenida and Dinis Martins - 2006-02-17 -->
+    <definition name="createPerson" extends="definition.manager.masterPage" >
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+    	<put name="body" value="/manager/personManagement/createPerson.jsp" />
+    </definition>
+    <!-- Paulo Zenida and Dinis Martins - 2006-02-22 -->
+    <definition name="createPersonSuccess" extends="definition.manager.masterPage" >
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+    	<put name="body" value="/manager/personManagement/createPersonSuccess.jsp" />
+    </definition>
+    
 </tiles-definitions>

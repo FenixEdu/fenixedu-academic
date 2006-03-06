@@ -575,6 +575,22 @@
 			<form-property name="slotName" type="java.lang.String"/>
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>		
+
+		<!-- Paulo Zenida and Dinis Martins - 2006-02-22 -->
+		<form-bean name="createPersonForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+			dynamic="true">
+			<form-property name="page" type="java.lang.Integer" />
+			<form-property name="name" type="java.lang.String" />
+			<form-property name="username" type="java.lang.String" />
+			<form-property name="istUsername" type="java.lang.String" />
+			<form-property name="idDocumentType"
+				type="java.lang.String" />
+			<form-property name="idDocumentNumber"
+				type="java.lang.String" />
+			<form-property name="gender" type="java.lang.String" />
+			<form-property name="maritalStatus" type="java.lang.String" />
+		</form-bean>
 				
     </form-beans>
     
@@ -1870,6 +1886,14 @@
       <forward name="Success" path="renderers.{1}"/>
     </action>
 
+	<!-- Paulo Zenida and Dinis Martins - 2006-02-22 -->
+	<action path="/personManagement/createPerson"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.CreatePersonAction"
+		scope="request" input="createPerson" parameter="method">
+		<forward name="Prepare" path="createPerson" />
+		<forward name="Success" path="createPersonSuccess" />
+	</action>
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
@@ -1879,7 +1903,6 @@
 	<message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
-	<message-resources parameter="resources.DomainExceptionResources" key="DOMAIN_RESOURCES" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 			
