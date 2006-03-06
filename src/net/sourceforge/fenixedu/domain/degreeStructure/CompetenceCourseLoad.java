@@ -52,11 +52,11 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
             getTutorialOrientationHours().doubleValue();
     }
     
-    public double getContactLoad() {
+    public Double getContactLoad() {
         return 14 * getTotalLessonHours();
     }
     
-    public double getTotalLoad() {
+    public Double getTotalLoad() {
         return getAutonomousWorkHours() + getContactLoad();
     }
 
