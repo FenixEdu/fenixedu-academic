@@ -69,6 +69,6 @@
 <!ELEMENT property EMPTY>
 
 <!ATTLIST property
-	value NMTOKEN #REQUIRED
+	value CDATA #REQUIRED
 	name NMTOKEN #REQUIRED
 >

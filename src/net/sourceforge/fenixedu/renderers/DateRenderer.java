@@ -21,6 +21,9 @@ public class DateRenderer extends OutputRenderer {
         return format == null ? "dd/MM/yyyy" : format;
     }
 
+    /**
+     * @property
+     */
     public void setFormat(String format) {
         this.format = format;
     }

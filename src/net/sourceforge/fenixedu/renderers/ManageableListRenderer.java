@@ -39,6 +39,9 @@ public class ManageableListRenderer extends InputRenderer {
         return this.eachLayout;
     }
 
+    /**
+     * @property
+     */
     public void setEachLayout(String eachLayout) {
         this.eachLayout = eachLayout;
     }
@@ -47,6 +50,9 @@ public class ManageableListRenderer extends InputRenderer {
         return this.eachSchema;
     }
 
+    /**
+     * @property
+     */
     public void setEachSchema(String eachSchema) {
         this.eachSchema = eachSchema;
     }
@@ -55,6 +61,9 @@ public class ManageableListRenderer extends InputRenderer {
         return this.destination;
     }
 
+    /**
+     * @property
+     */
     public void setDestination(String destination) {
         this.destination = destination;
     }

@@ -20,6 +20,9 @@ public class ListRenderer extends OutputRenderer {
 
     private boolean eachInline = true;
 
+    /**
+     * @property
+     */
     public void setEachClasses(String classes) {
         this.eachClasses = classes;
     }
@@ -28,6 +31,9 @@ public class ListRenderer extends OutputRenderer {
         return this.eachClasses;
     }
 
+    /**
+     * @property
+     */
     public void setEachStyle(String style) {
         this.eachStyle = style;
     }
@@ -40,6 +46,9 @@ public class ListRenderer extends OutputRenderer {
         return eachLayout;
     }
 
+    /**
+     * @property
+     */
     public void setEachLayout(String eachLayout) {
         this.eachLayout = eachLayout;
     }
@@ -48,6 +57,9 @@ public class ListRenderer extends OutputRenderer {
         return eachSchema;
     }
 
+    /**
+     * @property
+     */
     public void setEachSchema(String eachSchema) {
         this.eachSchema = eachSchema;
     }
@@ -56,6 +68,9 @@ public class ListRenderer extends OutputRenderer {
         return eachInline;
     }
 
+    /**
+     * @property
+     */
     public void setEachInline(boolean eachInline) {
         this.eachInline = eachInline;
     }

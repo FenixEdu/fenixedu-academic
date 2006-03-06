@@ -13,6 +13,9 @@ public class IntegerRenderer extends OutputRenderer {
         return this.base;
     }
 
+    /**
+     * @property
+     */
     public void setBase(int base) {
         this.base = base;
     }

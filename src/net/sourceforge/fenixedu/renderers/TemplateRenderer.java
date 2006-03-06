@@ -12,6 +12,9 @@ public class TemplateRenderer extends OutputRenderer {
         return template;
     }
 
+    /**
+     * @property
+     */
     public void setTemplate(String template) {
         this.template = template;
     }

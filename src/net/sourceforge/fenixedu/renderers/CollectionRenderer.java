@@ -23,6 +23,12 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+/**
+ * Bla. testing <b>1 2 3</b>. {@link #CollectionRenderer() bla}.
+ * {@inheritDoc}
+ * 
+ * @author cfgi
+ */
 public class CollectionRenderer extends OutputRenderer {
     private String caption;
 
@@ -51,6 +57,9 @@ public class CollectionRenderer extends OutputRenderer {
         return caption;
     }
 
+    /**
+     * @property
+     */
     public void setCaption(String caption) {
         this.caption = caption;
     }
@@ -59,7 +68,10 @@ public class CollectionRenderer extends OutputRenderer {
         return columnClasses;
     }
 
-    public void setColumnClasses(String columnClasses) {
+    /**
+     * @property
+     */
+   public void setColumnClasses(String columnClasses) {
         this.columnClasses = columnClasses;
     }
 
@@ -67,6 +79,9 @@ public class CollectionRenderer extends OutputRenderer {
         return headerClasses;
     }
 
+    /**
+     * @property
+     */
     public void setHeaderClasses(String headerClasses) {
         this.headerClasses = headerClasses;
     }
@@ -75,6 +90,9 @@ public class CollectionRenderer extends OutputRenderer {
         return rowClasses;
     }
 
+    /**
+     * @property
+     */
     public void setRowClasses(String rowClasses) {
         this.rowClasses = rowClasses;
     }
@@ -83,6 +101,9 @@ public class CollectionRenderer extends OutputRenderer {
         return this.prefixes;
     }
 
+    /**
+     * @property
+     */
     public void setPrefixes(String prefixes) {
         this.prefixes = prefixes;
     }
@@ -91,6 +112,9 @@ public class CollectionRenderer extends OutputRenderer {
         return this.suffixes;
     }
 
+    /**
+     * @property
+     */
     public void setSuffixes(String suffixes) {
         this.suffixes = suffixes;
     }
@@ -127,6 +151,9 @@ public class CollectionRenderer extends OutputRenderer {
         return getTableLink(name).getLink();
     }
     
+    /**
+     * @property
+     */
     public void setLink(String name, String value) {
         getTableLink(name).setLink(value);
     }
@@ -135,6 +162,9 @@ public class CollectionRenderer extends OutputRenderer {
         return getTableLink(name).getParam();
     }
     
+    /**
+     * @property
+     */
     public void setParam(String name, String value) {
         getTableLink(name).setParam(value);
     }
@@ -143,7 +173,10 @@ public class CollectionRenderer extends OutputRenderer {
         return getTableLink(name).getKey();
     }
     
-    public void setKey(String name, String value) {
+    /**
+     * @property
+     */
+   public void setKey(String name, String value) {
         getTableLink(name).setKey(value);
     }
 
@@ -151,6 +184,9 @@ public class CollectionRenderer extends OutputRenderer {
         return getTableLink(name).getBundle();
     }
     
+    /**
+     * @property
+     */
     public void setBundle(String name, String value) {
         getTableLink(name).setBundle(value);
     }
@@ -159,6 +195,9 @@ public class CollectionRenderer extends OutputRenderer {
         return getTableLink(name).getModule();
     }
     
+    /**
+     * @property
+     */
     public void setModule(String name, String value) {
         getTableLink(name).setModule(value);
     }
@@ -167,6 +206,9 @@ public class CollectionRenderer extends OutputRenderer {
         return getTableLink(name).getText();
     }
     
+    /**
+     * @property
+     */
     public void setText(String name, String value) {
         getTableLink(name).setText(value);
     }
@@ -175,6 +217,9 @@ public class CollectionRenderer extends OutputRenderer {
         return getTableLink(name).getOrder();
     }
     
+    /**
+     * @property
+     */
     public void setOrder(String name, String value) {
         getTableLink(name).setOrder(value);
     }

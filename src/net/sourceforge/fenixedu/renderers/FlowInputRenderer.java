@@ -28,6 +28,9 @@ public class FlowInputRenderer extends InputRenderer {
         return this.eachClasses;
     }
 
+    /**
+     * @property
+     */
     public void setEachClasses(String eachClasses) {
         this.eachClasses = eachClasses;
     }
@@ -36,6 +39,9 @@ public class FlowInputRenderer extends InputRenderer {
         return this.eachInline;
     }
 
+    /**
+     * @property
+     */
     public void setEachInline(boolean eachInline) {
         this.eachInline = eachInline;
     }
@@ -44,6 +50,9 @@ public class FlowInputRenderer extends InputRenderer {
         return this.eachLayout;
     }
 
+    /**
+     * @property
+     */
     public void setEachLayout(String eachLayout) {
         this.eachLayout = eachLayout;
     }
@@ -52,6 +61,9 @@ public class FlowInputRenderer extends InputRenderer {
         return this.eachSchema;
     }
 
+    /**
+     * @property
+     */
     public void setEachSchema(String eachSchema) {
         this.eachSchema = eachSchema;
     }
@@ -60,6 +72,9 @@ public class FlowInputRenderer extends InputRenderer {
         return this.eachStyle;
     }
 
+    /**
+     * @property
+     */
     public void setEachStyle(String eachStyle) {
         this.eachStyle = eachStyle;
     }
@@ -68,6 +83,9 @@ public class FlowInputRenderer extends InputRenderer {
         return this.labelExcluded;
     }
 
+    /**
+     * @property
+     */
     public void setLabelExcluded(boolean labelExcluded) {
         this.labelExcluded = labelExcluded;
     }

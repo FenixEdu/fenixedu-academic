@@ -86,38 +86,65 @@ public class OrderableCollectionRenderer extends InputRenderer {
         return this.collectionRenderer.getTitle();
     }
 
+    /**
+     * @property
+     */
     public void setCaption(String caption) {
         this.collectionRenderer.setCaption(caption);
     }
 
+    /**
+     * @property
+     */
     public void setClasses(String classes) {
         this.collectionRenderer.setClasses(classes);
     }
 
+    /**
+     * @property
+     */
     public void setColumnClasses(String columnClasses) {
         this.collectionRenderer.setColumnClasses(columnClasses);
     }
 
+    /**
+     * @property
+     */
     public void setHeaderClasses(String headerClasses) {
         this.collectionRenderer.setHeaderClasses(headerClasses);
     }
 
+    /**
+     * @property
+     */
     public void setPrefixes(String prefixes) {
         this.collectionRenderer.setPrefixes(prefixes);
     }
 
+    /**
+     * @property
+     */
     public void setRowClasses(String rowClasses) {
         this.collectionRenderer.setRowClasses(rowClasses);
     }
 
+    /**
+     * @property
+     */
     public void setStyle(String style) {
         this.collectionRenderer.setStyle(style);
     }
 
+    /**
+     * @property
+     */
     public void setSuffixes(String suffixes) {
         this.collectionRenderer.setSuffixes(suffixes);
     }
 
+    /**
+     * @property
+     */
     public void setTitle(String title) {
         this.collectionRenderer.setTitle(title);
     }
@@ -126,6 +153,9 @@ public class OrderableCollectionRenderer extends InputRenderer {
         return this.ascendingClasses;
     }
 
+    /**
+     * @property
+     */
     public void setAscendingClasses(String ascendingClasses) {
         this.ascendingClasses = ascendingClasses;
     }
@@ -134,6 +164,9 @@ public class OrderableCollectionRenderer extends InputRenderer {
         return this.descendingClasses;
     }
 
+    /**
+     * @property
+     */
     public void setDescendingClasses(String descendingClasses) {
         this.descendingClasses = descendingClasses;
     }
@@ -142,6 +175,9 @@ public class OrderableCollectionRenderer extends InputRenderer {
         return this.ascendingImage;
     }
 
+    /**
+     * @property
+     */
     public void setAscendingImage(String ascendingImage) {
         this.ascendingImage = ascendingImage;
     }
@@ -150,6 +186,9 @@ public class OrderableCollectionRenderer extends InputRenderer {
         return this.descendingImage;
     }
 
+    /**
+     * @property
+     */
     public void setDescendingImage(String descendingImage) {
         this.descendingImage = descendingImage;
     }
@@ -158,6 +197,9 @@ public class OrderableCollectionRenderer extends InputRenderer {
         return this.contextRelative;
     }
 
+    /**
+     * @property
+     */
     public void setContextRelative(boolean contextRelative) {
         this.contextRelative = contextRelative;
     }

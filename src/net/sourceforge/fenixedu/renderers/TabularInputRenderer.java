@@ -85,66 +85,114 @@ public class TabularInputRenderer extends InputRenderer {
         return this.collectionRenderer.getTitle();
     }
 
+    /**
+     * @property
+     */
     public void setBundle(String name, String value) {
         this.collectionRenderer.setBundle(name, value);
     }
 
+    /**
+     * @property
+     */
     public void setCaption(String caption) {
         this.collectionRenderer.setCaption(caption);
     }
 
+    /**
+     * @property
+     */
     public void setClasses(String classes) {
         this.collectionRenderer.setClasses(classes);
     }
 
+    /**
+     * @property
+     */
     public void setColumnClasses(String columnClasses) {
         this.collectionRenderer.setColumnClasses(columnClasses);
     }
 
+    /**
+     * @property
+     */
     public void setHeaderClasses(String headerClasses) {
         this.collectionRenderer.setHeaderClasses(headerClasses);
     }
 
+    /**
+     * @property
+     */
     public void setKey(String name, String value) {
         this.collectionRenderer.setKey(name, value);
     }
 
+    /**
+     * @property
+     */
     public void setLink(String name, String value) {
         this.collectionRenderer.setLink(name, value);
     }
 
+    /**
+     * @property
+     */
     public void setModule(String name, String value) {
         this.collectionRenderer.setModule(name, value);
     }
 
+    /**
+     * @property
+     */
     public void setOrder(String name, String value) {
         this.collectionRenderer.setOrder(name, value);
     }
 
+    /**
+     * @property
+     */
     public void setParam(String name, String value) {
         this.collectionRenderer.setParam(name, value);
     }
 
+    /**
+     * @property
+     */
     public void setPrefixes(String prefixes) {
         this.collectionRenderer.setPrefixes(prefixes);
     }
 
+    /**
+     * @property
+     */
     public void setRowClasses(String rowClasses) {
         this.collectionRenderer.setRowClasses(rowClasses);
     }
 
+    /**
+     * @property
+     */
     public void setStyle(String style) {
         this.collectionRenderer.setStyle(style);
     }
 
+    /**
+     * @property
+     */
     public void setSuffixes(String suffixes) {
         this.collectionRenderer.setSuffixes(suffixes);
     }
 
+    /**
+     * @property
+     */
     public void setText(String name, String value) {
         this.collectionRenderer.setText(name, value);
     }
 
+    /**
+     * @property
+     */
     public void setTitle(String title) {
         this.collectionRenderer.setTitle(title);
     }

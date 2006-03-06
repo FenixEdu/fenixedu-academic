@@ -13,6 +13,9 @@ public class FormatRenderer extends OutputRenderer {
         return this.format;
     }
 
+    /**
+     * @property
+     */
     public void setFormat(String format) {
         this.format = format;
     }

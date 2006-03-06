@@ -32,6 +32,9 @@ public class MenuOptionListRenderer extends InputRenderer {
         return this.format;
     }
 
+    /**
+     * @property
+     */
     public void setFormat(String format) {
         this.format = format;
     }
@@ -40,6 +43,9 @@ public class MenuOptionListRenderer extends InputRenderer {
         return this.eachLayout;
     }
 
+    /**
+     * @property
+     */
     public void setEachLayout(String eachLayout) {
         this.eachLayout = eachLayout;
     }
@@ -48,6 +54,9 @@ public class MenuOptionListRenderer extends InputRenderer {
         return this.eachSchema;
     }
 
+    /**
+     * @property
+     */
     public void setEachSchema(String eachSchema) {
         this.eachSchema = eachSchema;
     }
@@ -56,6 +65,9 @@ public class MenuOptionListRenderer extends InputRenderer {
         return this.providerClass;
     }
 
+    /**
+     * @property
+     */
     public void setProviderClass(String providerClass) {
         this.providerClass = providerClass;
     }
@@ -130,6 +142,11 @@ public class MenuOptionListRenderer extends InputRenderer {
                     HtmlComponent component = kit.render(newContext, obj);
                     
                     option.setBody(component);
+                }
+
+                // select the option
+                if (obj.equals(object)) {
+                    option.setSelected(true);
                 }
             }
             

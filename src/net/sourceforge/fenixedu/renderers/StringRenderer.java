@@ -15,6 +15,9 @@ public class StringRenderer extends OutputRenderer {
         return this.isLink;
     }
 
+    /**
+     * @property
+     */
     public void setLink(boolean makeLink) {
         this.isLink = makeLink;
     }
@@ -23,6 +26,9 @@ public class StringRenderer extends OutputRenderer {
         return this.linkText;
     }
 
+    /**
+     * @property
+     */
     public void setLinkText(String linkText) {
         this.linkText = linkText;
     }

@@ -22,6 +22,9 @@ public class TabularListRenderer extends CollectionRenderer {
         return this.subLayout;
     }
 
+    /**
+     * @property
+     */
     public void setSubLayout(String subLayout) {
         this.subLayout = subLayout;
     }
@@ -30,6 +33,9 @@ public class TabularListRenderer extends CollectionRenderer {
         return this.subSchema;
     }
 
+    /**
+     * @property
+     */
     public void setSubSchema(String subSchema) {
         this.subSchema = subSchema;
     }

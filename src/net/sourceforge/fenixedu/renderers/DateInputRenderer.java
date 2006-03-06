@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.HtmlTextInput;
+import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
@@ -27,6 +28,9 @@ public class DateInputRenderer extends TextFieldRenderer {
         return format == null ? "dd/MM/yyyy" : format;
     }
 
+    /**
+     * @property
+     */
     public void setFormat(String format) {
         this.format = format;
     }
@@ -94,7 +98,7 @@ class DateConverter extends Converter {
         try {
             return format.parse((String) value);
         } catch (ParseException e) {
-            throw new ConverterException("could not convert input \"" + value + "\" to a date", e);
+            throw new ConversionException("could not convert input \"" + value + "\" to a date", e);
         }
     }
 }

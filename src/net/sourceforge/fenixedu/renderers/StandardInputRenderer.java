@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.renderers;
 
 import java.lang.reflect.Constructor;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -30,6 +30,9 @@ public class StandardInputRenderer extends InputRenderer {
         return caption;
     }
 
+    /**
+     * @property
+     */
     public void setCaption(String caption) {
         this.caption = caption;
     }
@@ -38,6 +41,9 @@ public class StandardInputRenderer extends InputRenderer {
         return columnClasses;
     }
 
+    /**
+     * @property
+     */
     public void setColumnClasses(String columnClasses) {
         this.columnClasses = columnClasses;
     }
@@ -46,6 +52,9 @@ public class StandardInputRenderer extends InputRenderer {
         return headerClasses;
     }
 
+    /**
+     * @property
+     */
     public void setHeaderClasses(String headerClasses) {
         this.headerClasses = headerClasses;
     }
@@ -54,6 +63,9 @@ public class StandardInputRenderer extends InputRenderer {
         return rowClasses;
     }
 
+    /**
+     * @property
+     */
     public void setRowClasses(String rowClasses) {
         this.rowClasses = rowClasses;
     }
@@ -72,7 +84,7 @@ public class StandardInputRenderer extends InputRenderer {
 
         public ObjectInputTabularLayout(MetaObject object) {
             this.object = object;
-            this.inputComponents = new Hashtable<Integer, HtmlSimpleValueComponent>();
+            this.inputComponents = new HashMap<Integer, HtmlSimpleValueComponent>();
         }
 
         @Override

@@ -33,14 +33,23 @@ public abstract class Renderer {
         this.context = context;
     }
     
-    public void setClasses(String classes) {
+   /**
+    * @property
+    */
+   public void setClasses(String classes) {
         this.classes = classes;
     }
 
+    /**
+     * @property
+     */
     public void setStyle(String style) {
         this.style = style;
     }
 
+    /**
+     *@property 
+     */
     public void setTitle(String title) {
         this.title = title;
     }

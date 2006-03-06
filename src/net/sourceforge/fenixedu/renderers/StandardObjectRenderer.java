@@ -20,6 +20,9 @@ public class StandardObjectRenderer extends OutputRenderer {
         return caption;
     }
 
+    /**
+     * @property
+     */
     public void setCaption(String caption) {
         this.caption = caption;
     }
@@ -28,6 +31,9 @@ public class StandardObjectRenderer extends OutputRenderer {
         return columnClasses;
     }
 
+    /**
+     * @property
+     */
     public void setColumnClasses(String columnClasses) {
         this.columnClasses = columnClasses;
     }
@@ -36,6 +42,9 @@ public class StandardObjectRenderer extends OutputRenderer {
         return headerClasses;
     }
 
+    /**
+     * @property
+     */
     public void setHeaderClasses(String headerClasses) {
         this.headerClasses = headerClasses;
     }
@@ -44,6 +53,9 @@ public class StandardObjectRenderer extends OutputRenderer {
         return rowClasses;
     }
 
+    /**
+     * @property
+     */
     public void setRowClasses(String rowClasses) {
         this.rowClasses = rowClasses;
     }

@@ -29,6 +29,9 @@ public abstract class TextFieldRenderer extends InputRenderer {
         return maxLength;
     }
 
+    /**
+     * @property
+     */
     public void setMaxLength(Integer maxLength) {
         this.maxLength = maxLength;
     }
@@ -37,6 +40,9 @@ public abstract class TextFieldRenderer extends InputRenderer {
         return readOnly;
     }
 
+    /**
+     * @property
+     */
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
     }
@@ -45,6 +51,9 @@ public abstract class TextFieldRenderer extends InputRenderer {
         return size;
     }
 
+    /**
+     * @property
+     */
     public void setSize(String size) {
         this.size = size;
     }

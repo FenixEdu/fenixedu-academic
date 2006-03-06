@@ -31,6 +31,9 @@ public class FlowRenderer extends OutputRenderer {
         return eachLayout;
     }
 
+    /**
+     * @property
+     */
     public void setEachLayout(String eachLayout) {
         this.eachLayout = eachLayout;
     }
@@ -39,6 +42,9 @@ public class FlowRenderer extends OutputRenderer {
         return eachSchema;
     }
 
+    /**
+     * @property
+     */
     public void setEachSchema(String eachSchema) {
         this.eachSchema = eachSchema;
     }
@@ -47,6 +53,9 @@ public class FlowRenderer extends OutputRenderer {
         return htmlSeparator;
     }
 
+    /**
+     * @property
+     */
     public void setHtmlSeparator(String htmlSeparator) {
         this.htmlSeparator = htmlSeparator;
     }
@@ -55,6 +64,9 @@ public class FlowRenderer extends OutputRenderer {
         return emptyMessageKey;
     }
 
+    /**
+     * @property
+     */
     public void setEmptyMessageKey(String emptyMessageKey) {
         this.emptyMessageKey = emptyMessageKey;
     }
@@ -63,6 +75,9 @@ public class FlowRenderer extends OutputRenderer {
         return emptyMessageClasses;
     }
 
+    /**
+     * @property
+     */
     public void setEmptyMessageClasses(String emptyMessageClasses) {
         this.emptyMessageClasses = emptyMessageClasses;
     }

@@ -37,6 +37,9 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
         return this.eachClasses;
     }
 
+    /**
+     * @property
+     */
     public void setEachStyle(String style) {
         this.eachStyle = style;
     }
@@ -49,6 +52,9 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
         return eachLayout;
     }
 
+    /**
+     * @property
+     */
     public void setEachLayout(String eachLayout) {
         this.eachLayout = eachLayout;
     }
@@ -57,6 +63,9 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
         return eachSchema;
     }
 
+    /**
+     * @property
+     */
     public void setEachSchema(String eachSchema) {
         this.eachSchema = eachSchema;
     }
@@ -65,6 +74,9 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
         return this.providerClass;
     }
 
+    /**
+     * @property
+     */
     public void setProviderClass(String providerClass) {
         this.providerClass = providerClass;
     }

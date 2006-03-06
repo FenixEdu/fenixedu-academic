@@ -31,18 +31,43 @@
     The second part speficies that the NumberInputRenderer will be used to
     generate the input presentation of a number. If the requested layout is
     "base-16" then input format will be assumed to be in hexadecimal.
+
+Documentation:
+    
+    To document an entry use '@' as the first character of a comment. The first
+    entry after such comment will be documented.
+    
+    Example:
+    
+        <!- -@ the comment with <tt>HTML</tt> embeded - ->
  -->
   
     <!-- ouptut -->
   
+    <!--@ The default presentation for every object. -->
     <renderer type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer"/>
+
+    <!--@ A tabular presentation for an object. This consist of a table were each row presents one
+          of the object's slots. The slot's name is shown in the left column and the corresponding 
+          value in the right column. -->
     <renderer type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer"/>
   
+    <!--@ The template layout is used when you specify the template attribute of a renderer's tag. It delegates
+          the presentation of the object to a JSP that is extended with the <tt>fenix-template.tld</tt>. -->
     <renderer type="java.lang.Object" layout="template" class="net.sourceforge.fenixedu.renderers.TemplateRenderer"/>
+    
+    <!--@ This layout shows each slot value after the previous without a special organization. You can specify
+          a separator between values and achive simple presentations like "6666 / José Dias" for a person. -->
     <renderer type="java.lang.Object" layout="values" class="net.sourceforge.fenixedu.renderers.ValuesRenderer"/>
+    
+    <!--@ The format offers other way of presenting objects inline. The <tt>format</tt> property accepts a special
+          syntax that allows you to choose how the information is presented. The the renderer documentation for
+          more details. -->
     <renderer type="java.lang.Object" layout="format" class="net.sourceforge.fenixedu.renderers.FormatRenderer"/>
     
-    <!-- NOTE: to be used as a layout for a slot of a DomainObject only. It's a link to the whole object details -->
+    <!--@ This layout is only to be used for slots of domain objcts and never for the top level object that is 
+          beeing presented. It generates a link for the object details. The action called is configurable. The 
+          default layout is set to the tabular presentation of the object. -->
     <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer">
         <property name="destinyLayout" value="tabular"/>
     </renderer>
@@ -59,10 +84,17 @@
     
     <renderer type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanRenderer"/>
     <renderer type="boolean" class="net.sourceforge.fenixedu.renderers.BooleanRenderer"/>
-    
+
+    <!--@ The default presentation for an enum searches the bundle ENUMERATION_RESOURCES for a description
+          of the enumerate value. The key used for seaching the the enumerate name. -->
     <renderer type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumRenderer"/>
+    
+    <!--@ The default presentation of the date respect the user locale and preents the date
+          accordingly with the format given.  -->
     <renderer type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateRenderer"/>
 
+    <!--@ The default presentation for a domain object consist of a link for it's details. The is the top level 
+          version of the <tt>link</tt> layout. -->
     <renderer type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.presentationTier.renderers.DomainObjectLinkRenderer">
         <property name="subLayout" value="values"/>
         <property name="subSchema" value="DomainObject.oid"/>
@@ -73,28 +105,48 @@
         <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/showPersonalExpectationTemplate.jsp"/>
     </renderer>
  
+    <!--@ The default layout for a collection. -->
     <renderer type="java.util.Collection" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>
+    
+    <!--@ Each object in the collection will be presented in a differente row. The given schema is used to define 
+          the table columns as well as the table header. The table can also be extended with control links to the right. 
+          Control links are link that are parameterized with values from the object beeing presented in each row.
+          Check the renderer documentation for more details.  -->
     <renderer type="java.util.Collection" layout="tabular" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>
+    
+    <!--@ This layout intends to provide the control links feature to a list presentation. Each object in the collection
+          is presented with their own layout and schema in the left column o the table. -->
     <renderer type="java.util.Collection" layout="tabular-list" class="net.sourceforge.fenixedu.renderers.TabularListRenderer"/>
+    
+    <!--@ Each object in the collection is presented with it's own layout and schema. This layouts works for several objects
+          the same way that the <tt>values</tt> layouts works for slots. -->
     <renderer type="java.util.Collection" layout="flowLayout" class="net.sourceforge.fenixedu.presentationTier.renderers.FlowRenderer" />
 
+    <!--@ The default layout for a list really creates an html list were each object is presented in a list item. -->
     <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
     
     <!-- input -->
-  
-    <renderer mode="input" type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer"/>
-    <renderer mode="input" type="java.util.Collection" layout="tabular-editable" class="net.sourceforge.fenixedu.renderers.TabularInputRenderer"/>
-    <renderer mode="input" type="java.util.List" layout="option-select" class="net.sourceforge.fenixedu.presentationTier.renderers.InputCheckBoxListRenderer"/>
-    <renderer mode="input" type="java.util.List" layout="external-add" class="net.sourceforge.fenixedu.renderers.ManageableListRenderer"/>
 
+    <!--@ The default layout for editing objects.  -->  
     <renderer mode="input" type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+
+    <!--@ Allows an object to be editing in a tabular way, that is, labels are presented in the left column of the table
+          and slot editors are presented in the right column. Additionally validation errors messages are presented to the
+          right of the editor. -->  
     <renderer mode="input" type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    
+    <!--@ This layout allows several slots to be edited without a specific organization. Each slot's editor e shown after the
+          previous. You can shoose to present the slot's label or not. -->
     <renderer mode="input" type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowInputRenderer"/>
 
-    <!--@ Can be used to fill a slot with one of many possible objects  -->
+    <!--@ Can be used to fill a slot with one of many possible objects. The objects are presented in an html menu. 
+          Note that since the selection is made through a menu the presentatio of each object must be short and 
+          valid as a menu option text. Use the <tt>format</tt> property if possible. -->
     <renderer mode="input" type="java.lang.Object" layout="menu-select" class="net.sourceforge.fenixedu.presentationTier.renderers.InputMenuOptionListRenderer"/>
 
     <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
+    <!--@ This layout allows an html text string to be edited with the fenix javascript html editor. 
+          If the current browser is not supported by the html editor then it falls back to a simple text area. -->
     <renderer mode="input" type="java.lang.String" layout="htmlEditor" class="net.sourceforge.fenixedu.presentationTier.renderers.HtmlEditorRenderer"/>
     
     <renderer mode="input" type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
@@ -105,26 +157,48 @@
     <renderer mode="input" type="double" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
     <renderer mode="input" type="float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
 	
+    <!--@ The default input layout for a boolean is a checkbox. Check is <tt>true</tt>, unched is <tt>false</tt>.  -->
     <renderer mode="input" type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
+    <!--@ The default input layout for a boolean is a checkbox. Check is <tt>true</tt>, unched is <tt>false</tt>.  -->
     <renderer mode="input" type="boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
-    <renderer mode="input" type="java.lang.Boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
-    <renderer mode="input" type="boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
     
+    <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
+          The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
+    <renderer mode="input" type="java.lang.Boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
+    <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
+          The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
+    <renderer mode="input" type="boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
+
+    <!--@ The default input layout for an enumeration presents an html menu with all the values of the enumeration
+          as options. The option labels are fetched from the resources using the enumerate name as key.  -->
     <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>
     <renderer mode="input" type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateInputRenderer"/>
 
-    <!-- NOTE: needed by the create tag. The tag selects a DomainClass but the input can proceed as with a standard domain object -->
-    <renderer mode="input" type="dml.DomainClass" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
-    <renderer mode="input" type="dml.DomainClass" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <!--@ Allows to present a collection in a table were rows can be sorted by pressing the table headers. -->
+    <renderer mode="input" type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer"/>
 
+    <!--@ Allows to edit all objects of a collection by presenting each object in a table row and each slot editor in a table cell. -->
+    <renderer mode="input" type="java.util.Collection" layout="tabular-editable" class="net.sourceforge.fenixedu.renderers.TabularInputRenderer"/>
+    
+    <!--@ Presents a list were each object is presented with it's own layout and schema in a list item. Each item has
+          an checkbox associated. This layout allows to choose several objects from a list. Only the choosen object will
+          be part o the list that is created and used as the slot's value.  -->
+    <renderer mode="input" type="java.util.List" layout="option-select" class="net.sourceforge.fenixedu.presentationTier.renderers.InputCheckBoxListRenderer"/>
+    
+    <!--@ This layout allows you to construct a list of objects for input. The deletion if managed by the renderer the
+          addition of objects to the list must be handled by an external action. -->
+    <renderer mode="input" type="java.util.List" layout="external-add" class="net.sourceforge.fenixedu.renderers.ManageableListRenderer"/>
+
+    <!--@ This layouts is the same as the <tt>values</tt> layout preconfigured with an html separator of values. This
+          way it can be used as a property of other layout. -->
+    <renderer type="java.lang.Object" layout="values-dash" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
+        <property name="htmlSeparator" value=" - "/>
+    </renderer>
+    
     <!-- FIXME: this should be removed, used for renderers examples only -->
     <renderer type="java.lang.Object" layout="nice-details-table" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
         <property name="classes" value="style1"/>
         <property name="columnClasses" value="listClasses,"/>
-    </renderer>
-    
-    <renderer type="java.lang.Object" layout="values-dash" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
-        <property name="htmlSeparator" value=" - "/>
     </renderer>
     
     <renderer mode="input" type="java.lang.String" layout="allow-case-change" class="net.sourceforge.fenixedu.renderers.StringCaseChangerRenderer"/>

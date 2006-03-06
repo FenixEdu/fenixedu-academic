@@ -28,6 +28,9 @@ public class ValuesRenderer extends OutputRenderer {
     
     private String htmlSeparator;
     
+    /**
+     * @property
+     */
     public void setEachClasses(String classes) {
         this.eachClasses = classes;
     }
@@ -36,6 +39,9 @@ public class ValuesRenderer extends OutputRenderer {
         return this.eachClasses;
     }
 
+    /**
+     * @property
+     */
     public void setEachStyle(String style) {
         this.eachStyle = style;
     }
@@ -48,6 +54,9 @@ public class ValuesRenderer extends OutputRenderer {
         return eachInline;
     }
 
+    /**
+     * @property
+     */
     public void setEachInline(boolean eachInline) {
         this.eachInline = eachInline;
     }
@@ -56,6 +65,9 @@ public class ValuesRenderer extends OutputRenderer {
         return eachLayout;
     }
 
+    /**
+     * @property
+     */
     public void setEachLayout(String eachLayout) {
         this.eachLayout = eachLayout;
     }
@@ -64,6 +76,9 @@ public class ValuesRenderer extends OutputRenderer {
         return eachSchema;
     }
 
+    /**
+     * @property
+     */
     public void setEachSchema(String eachSchema) {
         this.eachSchema = eachSchema;
     }

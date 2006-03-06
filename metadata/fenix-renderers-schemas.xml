@@ -9,17 +9,17 @@
 <!-- 
   Example:
   
-    <schema name="person.birth" type="net.sourceforge.fenixedu.domain.IPerson">
+    <schema name="person.birth" type="net.sourceforge.fenixedu.domain.Person">
         <slot name="nascimento" key="person.nascimento.special-case" layout="heading-date">
             <property name="format" value="yyyy - MM - dd HH:mm"/>
         </slot>
     </schema>
     
-    <schema name="person.country" type="net.sourceforge.fenixedu.domain.IPerson">
+    <schema name="person.country" type="net.sourceforge.fenixedu.domain.Person">
         <slot name="pais" schema="pais.minimal"/>
     </schema>
     
-    <schema name="pais.minimal" type="net.sourceforge.fenixedu.domain.IPerson">
+    <schema name="pais.minimal" type="net.sourceforge.fenixedu.domain.Person">
         <slot name="name"/>
         <slot name="nacionality"/>
     </schema>
@@ -352,5 +352,5 @@
 		<slot name="enderecoWeb" />
 
 		<slot name="isPassInKerberos" />
-	</schema>
+	</schema>  
 </schemas>

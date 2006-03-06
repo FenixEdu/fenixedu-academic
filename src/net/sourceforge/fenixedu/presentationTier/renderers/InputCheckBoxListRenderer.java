@@ -20,6 +20,9 @@ public class InputCheckBoxListRenderer extends CheckBoxOptionListRenderer {
         return this.choiceType;
     }
 
+    /**
+     * @property
+     */
     public void setChoiceType(String choiceType) {
         this.choiceType = choiceType;
     }
@@ -28,6 +31,9 @@ public class InputCheckBoxListRenderer extends CheckBoxOptionListRenderer {
         return this.filterClass;
     }
 
+    /**
+     * @property
+     */
     public void setFilterClass(String filterClass) {
         this.filterClass = filterClass;
     }

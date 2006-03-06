@@ -22,6 +22,9 @@ public class HtmlEditorRenderer extends InputRenderer {
         return this.columns;
     }
 
+    /**
+     * @property
+     */
     public void setColumns(int columns) {
         this.columns = columns;
     }
@@ -30,6 +33,9 @@ public class HtmlEditorRenderer extends InputRenderer {
         return this.heigth;
     }
 
+    /**
+     * @property
+     */
     public void setHeigth(int heigth) {
         this.heigth = heigth;
     }
@@ -38,6 +44,9 @@ public class HtmlEditorRenderer extends InputRenderer {
         return this.rows;
     }
 
+    /**
+     * @property
+     */
     public void setRows(int rows) {
         this.rows = rows;
     }
@@ -46,6 +55,9 @@ public class HtmlEditorRenderer extends InputRenderer {
         return this.width;
     }
 
+    /**
+     * @property
+     */
     public void setWidth(int width) {
         this.width = width;
     }

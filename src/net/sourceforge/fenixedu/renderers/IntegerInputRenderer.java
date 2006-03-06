@@ -9,6 +9,9 @@ public class IntegerInputRenderer extends StringInputRenderer {
 
     private int base = 10;
     
+    /**
+     * @property
+     */
     public void setBase(int base) {
         this.base = base;
     }

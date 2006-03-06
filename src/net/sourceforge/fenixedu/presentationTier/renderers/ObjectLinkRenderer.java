@@ -33,6 +33,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
         return isKey;
     }
 
+    /**
+     * @property
+     */
     public void setKey(boolean isKey) {
         this.isKey = isKey;
     }
@@ -41,6 +44,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
         return destinyLayout;
     }
 
+    /**
+     * @property
+     */
     public void setDestinyLayout(String destinyLayout) {
         this.destinyLayout = destinyLayout;
     }
@@ -49,6 +55,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
         return destinySchema;
     }
 
+    /**
+     * @property
+     */
     public void setDestinySchema(String destinySchema) {
         this.destinySchema = destinySchema;
     }
@@ -57,6 +66,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
         return subLayout;
     }
 
+    /**
+     * @property
+     */
     public void setSubLayout(String subLayout) {
         this.subLayout = subLayout;
     }
@@ -65,6 +77,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
         return subSchema;
     }
 
+    /**
+     * @property
+     */
     public void setSubSchema(String subSchema) {
         this.subSchema = subSchema;
     }
@@ -73,6 +88,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
         return text;
     }
 
+    /**
+     * @property
+     */
     public void setText(String text) {
         this.text = text;
     }
@@ -81,6 +99,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
         return this.viewPage;
     }
 
+    /**
+     * @property
+     */
     public void setViewPage(String viewPage) {
         this.viewPage = viewPage;
     }

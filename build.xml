@@ -52,4 +52,8 @@
 		<ant antfile="build_compile.xml" target="jar-without-access-control"/>
     </target>
 
+    <target name="docs"
+    		description="Generates fenix documentation">
+		<ant antfile="build_renderers.xml" target="doc"/>
+    </target>
 </project>
