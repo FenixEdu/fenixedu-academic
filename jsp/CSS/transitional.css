@@ -80,11 +80,13 @@ padding: 0.5em 1em 0.1em 1em;
 font-style: italic;
 }
 
-.tstyle1a, .tstyle1b, .tstyle1c, .tstyle2 {
+.tstyle1a, .tstyle1b, .tstyle1c, .tstyle2, .tstyle3 {
 border-collapse: collapse;
 margin: 1em 0;
 }
-.tstyle1a th, .tstyle1b th, .tstyle1c th, .tstyle2 th {
+.tstyle3 { border: 2px solid #ccc; }
+
+.tstyle1a th, .tstyle1b th, .tstyle1c th, .tstyle2 th, .tstyle3 th {
 padding: 0.5em;
 text-align: center;
 /*font-weight: normal;*/
@@ -93,13 +95,14 @@ text-align: center;
 .tstyle1b th { border: 1px solid #ccccc2; }
 .tstyle1c th { border: 1px solid #c8cacc; }
 .tstyle2 th { border: none; border-bottom: 1px solid #ccc; }
+.tstyle3 th { 	padding: 0.5em 1em; border: 1px solid #ddd; background-color: #eee; }
 
-.tstyle1a th { background: #f8f8f8 url(../images/transitional/back_32gray.gif) left bottom repeat-x; }
-.tstyle1b th { background: #fafaf6 url(../images/transitional/back_32yellow.gif) left bottom repeat-x; }
-.tstyle1c th { background: #f6f8fa url(../images/transitional/back_32blue.gif) left bottom repeat-x; }
-.tstyle2 th { background: #f8f8f8 url(../images/transitional/back_32gray.gif) left bottom repeat-x; }
+.tstyle1a th { background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x; }
+.tstyle1b th { background: #fafaf6 url(../../pics/back_32yellow.gif) left bottom repeat-x; }
+.tstyle1c th { background: #f6f8fa url(../../pics/back_32blue.gif) left bottom repeat-x; }
+.tstyle2 th { background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x; }
 
-.tstyle1a td, .tstyle1b td, .tstyle1c td, .tstyle2 td {
+.tstyle1a td, .tstyle1b td, .tstyle1c td, .tstyle2 td, .tstyle3 td {
 background-color: #fff;
 padding: 0.5em;
 text-align: center;
@@ -109,19 +112,22 @@ text-align: center;
 .tstyle1b td { border: 1px solid #ccccc2; }
 .tstyle1c td { border: 1px solid #c8cacc; }
 .tstyle2 td { border: none; border-bottom: 1px solid #ccc; }
+.tstyle3 td {border: 1px solid #eee; background-color: #fafafa; }
 
 .tstyle2 td {
 border: none;
 border-bottom: 1px solid #ccc;
 }
-.tstyle1a .highlight1, .tstyle1b .highlight1, .tstyle1c .highlight1, .tstyle2 .highlight1 {
-background-color: #ffb;
-}
+.tstyle1a .highlight1, .tstyle1b .highlight1, .tstyle1c .highlight1, .tstyle2 .highlight1, .tstyle3 .highlight1 { background-color: #ffb; }
+.tstyle1a .highlight2, .tstyle1b .highlight2, .tstyle1c .highlight2, .tstyle2 .highlight2, .tstyle3 .highlight2 { background-color: #f5f5f5; }
+.tstyle1a .highlight3, .tstyle1b .highlight3, .tstyle1c .highlight3, .tstyle2 .highlight3, .tstyle3 .highlight3 { background-color: #fff; }
 
 .highlight2 { background-color: #f5f5f5; }
 
-.tstyle1a .aleft, .tstyle1b .aleft, .tstyle1c .aleft, .tstyle2 .aleft { text-align: left; }
-.tstyle1a .aright, .tstyle1b .aright, .tstyle1c .aright, .tstyle2 .aright { text-align: right; }
+.tpadding01 th, .tpadding01 td { padding: 0.5em 0.1em; }
+
+.tstyle1a .aleft, .tstyle1b .aleft, .tstyle1c .aleft, .tstyle2 .aleft, .tstyle3 .aleft  { text-align: left; }
+.tstyle1a .aright, .tstyle1b .aright, .tstyle1c .aright, .tstyle2 .aright, .tstyle3 .aright  { text-align: right; }
 
 
 /* ----------------------

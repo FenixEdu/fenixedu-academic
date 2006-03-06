@@ -9,26 +9,55 @@
 background-color: #fafadd;
 border: 1px solid #ccc;
 padding: 0.5em;
-float: left;
+/*float: left;*/
 }
 </style>
 
 <h2><bean:message key="link.weekly.work.load"/></h2>
 
+<p><span class="error"><html:errors/></span></p>
+
+
+
+<div class="instructions">
+	<logic:present name="previousWeek">
+		<bean:define id="start" type="org.joda.time.DateTime" name="previousWeek" property="start"/>
+		<bean:define id="end" type="org.joda.time.DateTime" name="previousWeek" property="end"/>
+		<bean:define id="intervalArg" type="java.lang.String">
+			[<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>,
+		 	<bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>[
+		</bean:define>
+		<bean:message key="title.weekly.work.load.instructions.header" arg0="<%= intervalArg %>"/>
+	</logic:present>
+	<logic:notPresent name="previousWeek">
+		<bean:message key="title.weekly.work.load.instructions.header" arg0=""/>
+	</logic:notPresent>
+	<ul>
+		<li><bean:message key="title.weekly.work.load.contact.tooltip"/></li>
+		<li><bean:message key="title.weekly.work.load.autonomousStudy.tooltip"/></li>
+		<li><bean:message key="title.weekly.work.load.other.tooltip"/></li>
+	</ul>
+	<bean:message key="title.weekly.work.load.instructions.footer"/>
+</div>
+
+
+
 <br/>
 
-<p><span class="error"><html:errors/></span></p>
+
 
 <html:form action="/weeklyWorkLoad.do">
 	<html:hidden property="method" value="prepare"/>
 	<html:hidden property="page" value="0"/>
-
+	Semestre: 
 	<html:select property="executionPeriodID" onchange="this.form.submit();">
 		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
 	</html:select>
 </html:form>
 
+
 <br/>
+
 
 <bean:define id="contact_tooltip" type="java.lang.String"><bean:message key="title.weekly.work.load.contact.tooltip"/></bean:define>
 <bean:define id="autonomousStudy_tooltip" type="java.lang.String"><bean:message key="title.weekly.work.load.autonomousStudy.tooltip"/></bean:define>
@@ -38,142 +67,130 @@ float: left;
 	return confirm('<bean:message key="message.confirm.submit.weekly.work.load"/>')
 </bean:define>
 
-<table width="80em">
-	<tr><td width="65em">
-		<logic:notPresent name="firstAttends" property="responseWeek">
-			<table class="style1">
-				<tr>
-					<td colspan="4" class="listClasses-header">
-						<bean:message key="title.weekly.work.load.week.to.submit"/>:
-					</td>
-					<td class="listClasses-header" >
-					</td>
-				</tr>
-				<tr>
-					<td class="listClasses-header">
-						<bean:message key="title.execution.course"/>
-					</td>
-					<td class="listClasses-header" title="<%= contact_tooltip %>">
-						<bean:message key="title.weekly.work.load.contact"/>
-					</td>
-					<td class="listClasses-header" title="<%= autonomousStudy_tooltip %>">
-						<bean:message key="title.weekly.work.load.autonomousStudy"/>
-					</td>
-					<td class="listClasses-header" title="<%= other_tooltip %>">
-						<bean:message key="title.weekly.work.load.other"/>
-					</td>
-				</tr>
-				<tr>
-					<td class="listClasses" colspan="4">
-						<bean:message key="no.previouse.response.period"/>
-					</td>
-				</tr>
-			</table>
-		</logic:notPresent>
 
-		<logic:present name="firstAttends" property="responseWeek">
-			<bean:define id="previousWeek" name="firstAttends" property="responseWeek"/>
-			<table class="style1">
-				<tr>
-					<td colspan="5" class="listClasses-header">
-						<bean:message key="title.weekly.work.load.week.to.submit"/>:
-						<bean:define id="start" type="org.joda.time.DateTime" name="previousWeek" property="start"/>
-						<bean:define id="end" type="org.joda.time.DateTime" name="previousWeek" property="end"/>				
-						<bean:write name="firstAttends" property="calculatePreviousWeek"/>
-						(<bean:message key="label.from"/>
-						<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>
-						<bean:message key="label.to"/>
-						<bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>)
-					</td>
-				</tr>
-				<tr>
-					<td class="listClasses-header">
-						<bean:message key="title.execution.course"/>
-					</td>
-					<td class="listClasses-header" title="<%= contact_tooltip %>">
-						<bean:message key="title.weekly.work.load.contact"/>
-					</td>
-					<td class="listClasses-header" title="<%= autonomousStudy_tooltip %>">
-						<bean:message key="title.weekly.work.load.autonomousStudy"/>
-					</td>
-					<td class="listClasses-header" title="<%= other_tooltip %>">
-						<bean:message key="title.weekly.work.load.other"/>
-					</td>
-					<td class="listClasses-header">
-					</td>
-				</tr>
-				<logic:iterate id="attend" name="attends">
-					<logic:notPresent name="attend" property="weeklyWorkLoadOfPreviousWeek">
-						<tr>
-							<html:form action="/weeklyWorkLoad.do">
-								<html:hidden property="method" value="createFromForm"/>
-								<html:hidden property="page" value="1"/>
-								<bean:define id="attendsID" type="java.lang.Integer" name="attend" property="idInternal"/>
-								<html:hidden property="attendsID" value="<%= attendsID.toString() %>"/>
-								<html:hidden property="executionPeriodID"/>
 
-								<td class="listClasses">
-									<bean:write name="attend" property="disciplinaExecucao.nome"/>
-								</td>
-								<td class="listClasses" title="<%= contact_tooltip %>">
-									<html:text size="3" property="contact"/>
-								</td>
-								<td class="listClasses"  title="<%= autonomousStudy_tooltip %>">
-									<html:text size="3" property="autonomousStudy"/>
-								</td>
-								<td class="listClasses" title="<%= other_tooltip %>">
-									<html:text size="3" property="other"/>
-								</td>
-								<td class="listClasses">
-									<html:submit value="Submit" onclick='<%= submitConfirm %>'/>
-								</td>
-							</html:form>
-						</tr>
-					</logic:notPresent>
-				</logic:iterate>
-			</table>
-		</logic:present>
-	</td><td class="instructions" width="35em">
-		<logic:present name="previousWeek">
-			<bean:define id="start" type="org.joda.time.DateTime" name="previousWeek" property="start"/>
-			<bean:define id="end" type="org.joda.time.DateTime" name="previousWeek" property="end"/>
-			<bean:define id="intervalArg" type="java.lang.String">
-				(<bean:message key="label.from"/>
-				 <bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>
-				 <bean:message key="label.to"/>
-				 <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>)
-			</bean:define>
-			<bean:message key="title.weekly.work.load.instructions.header" arg0="<%= intervalArg %>"/>
-		</logic:present>
-		<logic:notPresent name="previousWeek">
-			<bean:message key="title.weekly.work.load.instructions.header" arg0=""/>
-		</logic:notPresent>
-		<ul>
-			<li><bean:message key="title.weekly.work.load.contact.tooltip"/></li>
-			<li><bean:message key="title.weekly.work.load.autonomousStudy.tooltip"/></li>
-			<li><bean:message key="title.weekly.work.load.other.tooltip"/></li>
-		</ul>
-		<bean:message key="title.weekly.work.load.instructions.footer"/>
-	</tr></td>
-</table>
+	<logic:notPresent name="firstAttends" property="responseWeek">
+		<table class="tstyle3">
+			<tr>
+				<th colspan="4">
+					<bean:message key="title.weekly.work.load.week"/>:
+				</th>
+				<th>
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<bean:message key="title.execution.course"/>
+				</th>
+				<th" title="<%= contact_tooltip %>">
+					<bean:message key="title.weekly.work.load.contact"/>
+				</th>
+				<th title="<%= autonomousStudy_tooltip %>">
+					<bean:message key="title.weekly.work.load.autonomousStudy"/>
+				</th>
+				<th title="<%= other_tooltip %>">
+					<bean:message key="title.weekly.work.load.other"/>
+				</th>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<bean:message key="no.previouse.response.period"/>
+				</td>
+			</tr>
+		</table>
+	</logic:notPresent>
+
+
+
+
+
+	<logic:present name="firstAttends" property="responseWeek">
+		<bean:define id="previousWeek" name="firstAttends" property="responseWeek"/>
+		<table class="tstyle3">
+			<tr>
+				<th colspan="5">
+					<bean:message key="title.weekly.work.load.week"/>
+					<bean:define id="start" type="org.joda.time.DateTime" name="previousWeek" property="start"/>
+					<bean:define id="end" type="org.joda.time.DateTime" name="previousWeek" property="end"/>				
+					<bean:write name="firstAttends" property="calculatePreviousWeek"/>
+					<span style="font-weight: normal;">
+					(<bean:message key="label.from"/>
+					<bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/>
+					<bean:message key="label.to"/>
+					<bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>)
+					</span>
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<bean:message key="title.execution.course"/>
+				</th>
+				<th  title="<%= contact_tooltip %>">
+					<bean:message key="title.weekly.work.load.contact"/>
+				</th>
+				<th title="<%= autonomousStudy_tooltip %>">
+					<bean:message key="title.weekly.work.load.autonomousStudy"/>
+				</th>
+				<th title="<%= other_tooltip %>">
+					<bean:message key="title.weekly.work.load.other"/>
+				</th>
+				<th>
+				</th>
+			</tr>
+			<logic:iterate id="attend" name="attends">
+				<logic:notPresent name="attend" property="weeklyWorkLoadOfPreviousWeek">
+					<tr>
+						<html:form action="/weeklyWorkLoad.do">
+							<html:hidden property="method" value="createFromForm"/>
+							<html:hidden property="page" value="1"/>
+							<bean:define id="attendsID" type="java.lang.Integer" name="attend" property="idInternal"/>
+							<html:hidden property="attendsID" value="<%= attendsID.toString() %>"/>
+							<html:hidden property="executionPeriodID"/>
+
+							<td>
+								<bean:write name="attend" property="disciplinaExecucao.nome"/>
+							</td>
+							<td title="<%= contact_tooltip %>">
+								<html:text size="3" property="contact"/>
+							</td>
+							<td  title="<%= autonomousStudy_tooltip %>">
+								<html:text size="3" property="autonomousStudy"/>
+							</td>
+							<td title="<%= other_tooltip %>">
+								<html:text size="3" property="other"/>
+							</td>
+							<td>
+								<html:submit onclick='<%= submitConfirm %>'>
+									<bean:message key="button.submit"/>
+								</html:submit>
+							</td>
+						</html:form>
+					</tr>
+				</logic:notPresent>
+			</logic:iterate>
+		</table>
+	</logic:present>
+
 
 <br/>
 
+
+
 <logic:present name="weeklyWorkLoadView">
-	<table class="style1">
+	<table class="tstyle3 tpadding01">
 		<tr>
-			<td class="listClasses-header" rowspan="2">
+			<th rowspan="2">
 				<bean:message key="title.execution.course"/>
-			</td>
-			<td class="listClasses-header" rowspan="2">
-			</td>
+			</th>
+			<th rowspan="2">
+			</th>
 			<bean:size id="numberOfIntervals" name="weeklyWorkLoadView" property="intervals"/>
-			<td class="listClasses-header" colspan="<%= numberOfIntervals %>">
+			<th colspan="<%= numberOfIntervals %>">
 				<bean:message key="title.weekly.work.load.week"/>
-			</td>
-			<td class="listClasses-header" rowspan="2">
+			</th>
+			<th rowspan="2">
 				<bean:message key="title.weekly.work.load.total"/>
-			</td>
+			</th>
 		</tr>
 		<tr>
 			<logic:iterate id="interval" indexId="i" type="org.joda.time.Interval" name="weeklyWorkLoadView" property="intervals">
@@ -182,28 +199,28 @@ float: left;
 					<bean:define id="end" type="org.joda.time.DateTime" name="interval" property="end"/>
 					(<bean:message key="label.from"/> <bean:write name="start" property="year"/>-<bean:write name="start" property="monthOfYear"/>-<bean:write name="start" property="dayOfMonth"/> <bean:message key="label.to"/> <bean:write name="end" property="year"/>-<bean:write name="end" property="monthOfYear"/>-<bean:write name="end" property="dayOfMonth"/>)
 				</bean:define>
-				<td class="listClasses-header" title="<%= intervalString %>">
+				<th title="<%= intervalString %>" style="width: auto; ">
 					<%= i.intValue() + 1 %>
-				</td>
+				</th>
 			</logic:iterate>
 		</tr>
 
 		<logic:iterate id="weeklyWorkLoadEntry" name="weeklyWorkLoadView" property="weeklyWorkLoadMap">
 			<tr>
-				<td class="listClasses-header" rowspan="4">
+				<th rowspan="4" style="padding: 0.5em 0.5em;">
 					<bean:write name="weeklyWorkLoadEntry" property="key.disciplinaExecucao.nome"/>
-				</td>
-				<td class="courses" title="<%= contact_tooltip %>">
+				</th>
+				<td class="" title="<%= contact_tooltip %>" style="padding: 0.5em 0.5em;">
 					<bean:message key="title.weekly.work.load.contact"/>
 				</td>
 				<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
-					<td class="listClasses">
+					<td>
 						<logic:present name="weeklyWorkLoad">
 							<bean:write name="weeklyWorkLoad" property="contact"/>
 						</logic:present>
 					</td>
 				</logic:iterate>
-				<td class="listClasses">
+				<td class="highlight2">
 					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
 						<logic:present name="weeklyWorkLoad">
 							<strong>
@@ -214,17 +231,17 @@ float: left;
 				</td>
 			</tr>
 			<tr>
-				<td class="courses" title="<%= autonomousStudy_tooltip %>">
+				<td class="" title="<%= autonomousStudy_tooltip %>" style="padding: 0.5em 0.5em;">
 					<bean:message key="title.weekly.work.load.autonomousStudy"/>
 				</td>
 				<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
-					<td class="listClasses">
+					<td>
 						<logic:present name="weeklyWorkLoad">
 							<bean:write name="weeklyWorkLoad" property="autonomousStudy"/>
 						</logic:present>
 					</td>
 				</logic:iterate>
-				<td class="listClasses">
+				<td class="highlight2">
 					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
 						<logic:present name="weeklyWorkLoad">
 							<strong>
@@ -235,17 +252,17 @@ float: left;
 				</td>
 			</tr>
 			<tr>
-				<td class="courses" title="<%= other_tooltip %>">
+				<td class="" title="<%= other_tooltip %>" style="padding: 0.5em 0.5em;">
 					<bean:message key="title.weekly.work.load.other"/>
 				</td>
 				<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
-					<td class="listClasses">
+					<td>
 						<logic:present name="weeklyWorkLoad">
 							<bean:write name="weeklyWorkLoad" property="other"/>
 						</logic:present>
 					</td>
 				</logic:iterate>
-				<td class="listClasses">
+				<td class="highlight2">
 					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
 						<logic:present name="weeklyWorkLoad">
 							<strong>
@@ -256,13 +273,13 @@ float: left;
 				</td>
 			</tr>
 			<tr>
-				<td class="courses">
+				<td class="highlight2" style="padding: 0.5em 0.5em;">
 					<strong>
 						<bean:message key="title.weekly.work.load.total"/>
 					</strong>
 				</td>
 				<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
-					<td class="listClasses">
+					<td class="highlight2">
 						<logic:present name="weeklyWorkLoad">
 							<strong>
 								<bean:write name="weeklyWorkLoad" property="total"/>
@@ -270,7 +287,7 @@ float: left;
 						</logic:present>
 					</td>
 				</logic:iterate>
-				<td class="listClasses">
+				<td class="highlight2">
 					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
 						<logic:present name="weeklyWorkLoad">
 							<strong>
