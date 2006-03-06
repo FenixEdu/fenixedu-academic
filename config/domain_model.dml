@@ -2070,8 +2070,19 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 	}
 
 	class net.sourceforge.fenixedu.domain.space.RoomInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
-		BigDecimal area;
 		String name;
+
+		String area;
+		String hight;
+		String illumination;
+		String distribution;
+		String salubrityArea;
+		String security;
+		String vptoValue;
+		String index;
+		String tm;
+		String observations;
+
 		Integer capacityForLessons;
 		Integer capacityForExams;
 	}

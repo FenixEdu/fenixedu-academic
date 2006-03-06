@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 import org.joda.time.YearMonthDay;
 
 public abstract class SpaceInformation extends SpaceInformation_Base implements Comparable<SpaceInformation> {
@@ -11,8 +13,17 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
         setOjbConcreteClass(this.getClass().getName());
     }
 
+    public abstract void createNewSpaceInformation();
+
     public void delete() {
+        if (getSpace().getSpaceInformationsCount() == 1) {
+            throw new DomainException("space.must.have.at.least.one.space.information");
+        }
         super.setSpace((Space) null);
+        deleteMaintainingReferenceToSpace();
+    }
+
+    protected void deleteMaintainingReferenceToSpace() {
         deleteDomainObject();
     }
 

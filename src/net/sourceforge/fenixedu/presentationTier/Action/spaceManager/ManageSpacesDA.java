@@ -49,10 +49,16 @@ public class ManageSpacesDA extends FenixDispatchAction {
         return mapping.findForward("ManageSpace");
     }
 
-    public ActionForward prepareEditSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward viewSpaceInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final Space space = getSpaceAndSetSelectedSpace(request);
         request.setAttribute("spaces", space.getContainedSpaces());
+        return mapping.findForward("ViewSpaceInformation");
+    }
+
+    public ActionForward prepareEditSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        viewSpaceInformation(mapping, form, request, response);
         return mapping.findForward("EditSpace");
     }
 
@@ -137,16 +143,73 @@ public class ManageSpacesDA extends FenixDispatchAction {
         return manageSpace(mapping, form, request, response);
     }
 
+    public ActionForward createSpaceInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final IUserView userView = getUserView(request);
+
+        final String spaceInformationIDString = request.getParameter("spaceInformationID");
+        final Integer spaceInformationID = Integer.valueOf(spaceInformationIDString);
+
+        final Object[] args = { spaceInformationID };
+        ServiceUtils.executeService(userView, "CreateSpaceInformation", args);
+
+        final SpaceInformation oldSpaceInformation = (SpaceInformation)
+                readDomainObject(request, SpaceInformation.class, spaceInformationID);
+        final Space space = oldSpaceInformation.getSpace();
+        final SpaceInformation newSpaceInformation = space.getOrderedSpaceInformations().last();
+
+        request.setAttribute("selectedSpace", space);
+        request.setAttribute("selectedSpaceInformation", newSpaceInformation);
+        request.setAttribute("spaces", space.getContainedSpaces());
+
+        return mapping.findForward("ManageSpace");
+    }
+
     public ActionForward deleteSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final IUserView userView = getUserView(request);
 
-        final String spaceID = request.getParameter("spaceID");
+        final String spaceIDString = request.getParameter("spaceID");
+        final Integer spaceID = Integer.valueOf(spaceIDString);
+        final Space space = (Space) readDomainObject(request, Space.class, spaceID);
+        final Space surroundingSpace = space.getSuroundingSpace();
 
-        final Object[] args = { Integer.valueOf(spaceID) };
+        final Object[] args = { spaceID };
         ServiceUtils.executeService(userView, "DeleteSpace", args);
 
-        return viewSpaces(mapping, form, request, response);
+        if (surroundingSpace == null) {
+            return viewSpaces(mapping, form, request, response);
+        } else {
+            final SpaceInformation newSpaceInformation = surroundingSpace.getOrderedSpaceInformations().last();
+            request.setAttribute("selectedSpace", surroundingSpace);
+            request.setAttribute("selectedSpaceInformation", newSpaceInformation);
+            request.setAttribute("spaces", surroundingSpace.getContainedSpaces());
+
+            return mapping.findForward("ManageSpace");
+        }
+    }
+
+    public ActionForward deleteSpaceInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final IUserView userView = getUserView(request);
+
+        final String spaceInformationIDString = request.getParameter("spaceInformationID");
+        final Integer spaceInformationID = Integer.valueOf(spaceInformationIDString);
+        
+        final SpaceInformation oldSpaceInformation = (SpaceInformation)
+                readDomainObject(request, SpaceInformation.class, spaceInformationID);
+        final Space space = oldSpaceInformation.getSpace();
+
+        final Object[] args = { spaceInformationID };
+        ServiceUtils.executeService(userView, "DeleteSpaceInformation", args);
+
+        final SpaceInformation newSpaceInformation = space.getOrderedSpaceInformations().last();
+
+        request.setAttribute("selectedSpace", space);
+        request.setAttribute("selectedSpaceInformation", newSpaceInformation);
+        request.setAttribute("spaces", space.getContainedSpaces());
+
+        return mapping.findForward("ManageSpace");
     }
 
     public ActionForward editCampus(ActionMapping mapping, ActionForm form, HttpServletRequest request,

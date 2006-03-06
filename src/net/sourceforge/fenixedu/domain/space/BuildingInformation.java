@@ -11,6 +11,12 @@ public class BuildingInformation extends BuildingInformation_Base {
     }
 
     @Override
+    public void createNewSpaceInformation() {
+        final Building building = (Building) getSpace();
+        new BuildingInformation(building, getName());
+    }
+
+    @Override
     public void setName(final String name) {
         if (name == null) {
             throw new NullPointerException("error.building.name.cannot.be.null");

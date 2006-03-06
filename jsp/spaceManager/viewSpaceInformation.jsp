@@ -12,22 +12,22 @@
 	<br/>
 	<br/>
 
-	<bean:message bundle="SPACE_RESOURCES" key="link.edit.space"/>
+	<bean:message bundle="SPACE_RESOURCES" key="link.space.information"/>
 	<br/>
 	<br/>
 	<br/>
 
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
-		<fr:edit name="selectedSpaceInformation" schema="campusInformation"/>
+		<fr:view name="selectedSpaceInformation" schema="campusInformation"/>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
-		<fr:edit name="selectedSpaceInformation" schema="buildingInformation"/>
+		<fr:view name="selectedSpaceInformation" schema="buildingInformation"/>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
-		<fr:edit name="selectedSpaceInformation" schema="floorInformation"/>
+		<fr:view name="selectedSpaceInformation" schema="floorInformation"/>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-		<fr:edit name="selectedSpaceInformation" schema="roomInformation"/>
+		<fr:view name="selectedSpaceInformation" schema="roomInformation"/>
 	</logic:equal>
 	<br/>
 	<br/>

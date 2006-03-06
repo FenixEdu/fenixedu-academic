@@ -4,9 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <logic:present role="SPACE_MANAGER">	
+<!--
 	<ul>
 		<li>
-			Hello
 		</li>
 	</ul>	
+-->
 </logic:present>

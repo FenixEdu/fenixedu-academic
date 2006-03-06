@@ -57,6 +57,7 @@
             <forward name="ManageSpace" path="show-manage-space-form"/>
             <forward name="ShowCreateSubSpaceForm" path="show-create-sub-space-form"/>
             <forward name="EditSpace" path="show-edit-space-form"/>
+            <forward name="ViewSpaceInformation" path="show-space-information"/>
         </action>
 
         <action path="/createSpace" type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpacesDA"

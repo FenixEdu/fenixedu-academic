@@ -24,6 +24,12 @@
 			</td>
 			<td class="listClasses-header">
 			</td>
+			<td class="listClasses-header">
+			</td>
+			<td class="listClasses-header">
+			</td>
+			<td class="listClasses-header">
+			</td>
 		</tr>
 		<tr>
 			<td class="listClasses">
@@ -41,7 +47,7 @@
 				</logic:equal>
 			</td>
 			<td class="listClasses">
-				<html:link page="/manageSpaces.do?method=prepareEditSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+				<html:link page="/manageSpaces.do?method=viewSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 					<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 						<bean:write name="selectedSpaceInformation" property="name"/>
 					</logic:equal>
@@ -58,6 +64,21 @@
 			</td>
 			<td class="listClasses">
 				<bean:write name="selectedSpaceInformation" property="space.containedSpacesCount"/>
+			</td>
+			<td class="listClasses">
+				<html:link page="/manageSpaces.do?method=prepareEditSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+					<bean:message bundle="SPACE_RESOURCES" key="link.edit.space.information"/>
+				</html:link>
+			</td>
+			<td class="listClasses">
+				<html:link page="/manageSpaces.do?method=createSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+					<bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/>
+				</html:link>
+			</td>
+			<td class="listClasses">
+				<html:link page="/manageSpaces.do?method=deleteSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+					<bean:message bundle="SPACE_RESOURCES" key="link.delete.space.information"/>
+				</html:link>
 			</td>
 			<td class="listClasses">
 				<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal">
@@ -101,7 +122,7 @@
 		<tr>
 			<td colspan="4">
 				<center>
-					<bean:message bundle="SPACE_RESOURCES" key="title.space.number.subspaces"/>
+					<bean:message bundle="SPACE_RESOURCES" key="title.subspaces"/>
 				</center>
 			</td>
 		</tr>

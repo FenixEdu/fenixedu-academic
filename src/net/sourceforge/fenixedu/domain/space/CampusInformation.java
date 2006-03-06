@@ -11,6 +11,12 @@ public class CampusInformation extends CampusInformation_Base {
     }
 
     @Override
+    public void createNewSpaceInformation() {
+        final Campus campus = (Campus) getSpace();
+        new CampusInformation(campus, getName());
+    }
+
+    @Override
     public void setName(final String name) {
         if (name == null) {
             throw new NullPointerException("error.campus.name.cannot.be.null");

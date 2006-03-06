@@ -11,6 +11,12 @@ public class FloorInformation extends FloorInformation_Base {
     }
 
     @Override
+    public void createNewSpaceInformation() {
+        final Floor floor = (Floor) getSpace();
+        new FloorInformation(floor, getLevel());
+    }
+
+    @Override
     public void setSpace(final Space space) {
         throw new DomainException("error.incompatible.space");
     }

@@ -365,6 +365,11 @@
 			column="KEY_SPACE"
 			jdbc-type="INTEGER"
 			/>
+	<field-descriptor
+			name="name"
+			column="NAME"
+			jdbc-type="VARCHAR"
+			/>
 	<reference-descriptor auto-retrieve="false"
 			name="space"
 			class-ref="net.sourceforge.fenixedu.domain.space.Space"
