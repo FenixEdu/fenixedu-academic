@@ -44,6 +44,7 @@ valueType net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType    
 valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType                                as EnrolmentGroupPolicyType;
 valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentState                            as EnrollmentState;
 valueType net.sourceforge.fenixedu.util.EntryPhase                                              as EntryPhase;
+valueType net.sourceforge.fenixedu.domain.research.event.EventType							    as EventType;
 valueType net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                        as ExemptionGratuityType;
 valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus                           as FinalDegreeWorkProposalStatus;  
 valueType net.sourceforge.fenixedu.domain.person.Gender                                         as Gender;
@@ -699,7 +700,7 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
         }
         class net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
         }
-		class net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
+        class net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
             Integer keyExclusiveDegreeModule;
         }
         class net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
@@ -1753,6 +1754,7 @@ class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.feni
 	Integer keyPerson;
 }
 
+
 class net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers extends net.sourceforge.fenixedu.domain.DomainObject {
     Boolean answer5;
     Boolean answer1;
@@ -2400,13 +2402,13 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	Integer keyPartyType;
 }
 	  class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
-		Integer costCenterCode;
-		Integer keyDepartment;	
-		Integer keyDegree;				
+	Integer costCenterCode;
+	Integer keyDepartment;	
+	Integer keyDegree;
 		Date beginDate;
 		Date endDate;		
-	  }
-	  
+}
+
 	  class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer keyCms;
 		Integer keyEmployee;
@@ -2453,7 +2455,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		String istUsername;
 		Integer keyResearcher;
 	 }
-
+	 
 class net.sourceforge.fenixedu.domain.organizationalStructure.PartyType extends net.sourceforge.fenixedu.domain.DomainObject {	
 	PartyType type;
 }	 
@@ -2478,6 +2480,7 @@ class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixed
 	String code;
 	String name;
 }
+
 
 class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -2724,7 +2727,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.Meal extends net.sourceforge
 	Duration minimumMealBreakInterval;
 }
 
-class net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule extends net.sourceforge.fenixedu.domain.DomainObject{
 	TimeInterval workDay; //expediente
 	Interval validFromTo;
 	DateTime createdWhen;
@@ -2733,6 +2736,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule extends net.sou
 	Boolean templateSchedule; // horario tipo
 	String acronym;
 }
+
 
 class net.sourceforge.fenixedu.domain.assiduousness.FlexibleSchedule extends net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule {
 }
@@ -2875,16 +2879,11 @@ class net.sourceforge.fenixedu.domain.research.event.Event extends net.sourcefor
 	YearMonthDay startDate;
 	YearMonthDay endDate;
 	Boolean feeOrFree;
+	EventType eventType;
 }
 
-class net.sourceforge.fenixedu.domain.research.event.EventName extends net.sourceforge.fenixedu.domain.DomainObject{
-	String name;
-	String translation;
+class net.sourceforge.fenixedu.domain.research.project.ProjectEvent extends net.sourceforge.fenixedu.domain.DomainObject{
 }
-
-class net.sourceforge.fenixedu.domain.research.event.EventType extends net.sourceforge.fenixedu.domain.DomainObject{
-}
-
 
 class net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer contact;
@@ -2893,7 +2892,6 @@ class net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad extends net.sourcef
 	Integer weekOffset;
 	Integer keyAttends;
 }
-
 
 /*
  * Relations definitions
@@ -3308,7 +3306,7 @@ relation CurricularPeriodParentChilds {
 //                multiplicity *;
 //        }
 //}
-
+	
 relation CurricularSemesterCurricularYear {
     net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemesters {
         multiplicity *;
@@ -5563,7 +5561,7 @@ relation TeacherPersonalExpectationExecutionYear {
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
-relation ContentOwnership {
+ relation ContentOwnership {
  	net.sourceforge.fenixedu.domain.Person playsRole owners
  	{
  		multiplicity *;
@@ -5571,9 +5569,9 @@ relation ContentOwnership {
  	net.sourceforge.fenixedu.domain.cms.Content playsRole ownedContents
  	{
  		multiplicity *;
-	}
-}
-
+ 	}
+ }
+ 
 relation ContentCreation
 {
 	net.sourceforge.fenixedu.domain.Person playsRole creator;
@@ -5645,7 +5643,6 @@ relation EmployeeContract {
     }
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 }
-
 relation UnitFunction {
     net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole functions  {
     	multiplicity *;
@@ -5776,25 +5773,25 @@ relation EmployeeHasAssiduousness {
 
 relation EmployeeHasRegimes {
     net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime playsRole assiduousnessRegimes {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Employee playsRole employees {
-        multiplicity *;
-    }
-}
-
-relation EmployeeWorksForUnit {
-	net.sourceforge.fenixedu.domain.Employee playsRole employees {
 		multiplicity *;
 	}
+    net.sourceforge.fenixedu.domain.Employee playsRole employees {
+		multiplicity *;
+	}
+}
+        
+relation EmployeeWorksForUnit {
+	net.sourceforge.fenixedu.domain.Employee playsRole employees {
+        multiplicity *;
+    }
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit {
 		multiplicity 1;
-	}
+    }
 }
 
 relation EmployeeHasPermanentCard {
 	net.sourceforge.fenixedu.domain.assiduousness.PermanentCard playsRole permanentCard {
-		multiplicity 1; 
+		multiplicity 1;
 	}
 	net.sourceforge.fenixedu.domain.Employee playsRole employees {
 		multiplicity 1;
@@ -5813,19 +5810,19 @@ relation EmployeeHasTemporaryCard {
 relation AssiduousnessHasAssiduousnessRecord {
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness {
 		multiplicity 1;
-    }
+	}
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
 		multiplicity *;
 	}
-}
+}               
 
 relation AssiduousnessHasSchedule {
 	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedule {
 		multiplicity 1;
-    }
+	}
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecord {
 		multiplicity 1;
-	}
+ 	}
 }
 
 relation ScheduleHasWorkSchedule {
@@ -5834,7 +5831,7 @@ relation ScheduleHasWorkSchedule {
     }
 	net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule playsRole workSchedule {
 		multiplicity *;
-	}
+    }
 }
 
 relation WorkScheduleHasNormalPeriod {
@@ -5853,7 +5850,7 @@ relation WorkScheduleHasMealPeriod {
 	net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule playsRole workSchedules {
 		multiplicity *;
 	}
-}
+	}
 
 relation WorkScheduleHasFixedPeriod {
 	net.sourceforge.fenixedu.domain.assiduousness.FixedPeriod playsRole fixedPeriod {
@@ -5863,7 +5860,7 @@ relation WorkScheduleHasFixedPeriod {
 		multiplicity *;
 	}
 }
-        
+
 relation ClockingClockUnit {
 	net.sourceforge.fenixedu.domain.assiduousness.Clocking playsRole clockings {
 		multiplicity *;
@@ -5891,25 +5888,6 @@ relation DailyBalanceForWorkSchedule {
 	}
 }
 
-relation ProjectUnit {
-	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
-		multiplicity *;
-	}
-    net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole units {
-    	multiplicity *;
-    }
-}
-
-relation ProjectProjectTitle {
-	net.sourceforge.fenixedu.domain.research.project.Project playsRole project;
-	net.sourceforge.fenixedu.domain.research.project.ProjectTitle playsRole title;
-}
-
-relation ProjectProjectAbstract {
-	net.sourceforge.fenixedu.domain.research.project.Project playsRole project;
-	net.sourceforge.fenixedu.domain.research.project.ProjectAbstract playsRole projectAbstract;
-}
-
 relation ProjectProjectKeyword {
 	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
 		multiplicity *;
@@ -5922,7 +5900,7 @@ relation ProjectProjectKeyword {
 relation CurricularRuleDegreeModule {
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModuleToApplyRule;
 	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole curricularRules {
-		multiplicity *;
+		multiplicity*;
 	}	
 }
 
@@ -5942,7 +5920,7 @@ relation CurricularRuleEndExecutionPeriod {
 
 relation CurricularRuleCompositeRule {
 	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole curricularRules {
-		multiplicity *;
+		multiplicity*;
 	}
 	net.sourceforge.fenixedu.domain.curricularRules.CompositeRule playsRole parentCompositeRule;
 }
@@ -5982,26 +5960,20 @@ relation AnyCurricularCourseDepartmentUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole departmentUnit;
 }
 
-relation ProjectEvent {
-	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
+relation EventEventProject {
+    net.sourceforge.fenixedu.domain.research.event.Event playsRole event;
+    net.sourceforge.fenixedu.domain.research.project.ProjectEvent playsRole eventProjects {
 		multiplicity *;
 	}
-    net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
-    	multiplicity *;
-    }
 }
 
-relation EventEventType{
-    net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
-    	multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.research.event.EventType playsRole type;
+relation ProjectEventProject {
+    net.sourceforge.fenixedu.domain.research.project.Project playsRole project;
+    net.sourceforge.fenixedu.domain.research.project.ProjectEvent playsRole eventProjects {
+		multiplicity *;
+	}
 }
 
-relation EventEventName{
-    net.sourceforge.fenixedu.domain.research.event.Event playsRole event;
-    net.sourceforge.fenixedu.domain.research.event.EventName playsRole name;
-}
 
 relation AccountabilityAccountabilityType {
 	net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType playsRole accountabilityType;	 

@@ -12,17 +12,19 @@
 	/>
 	
 	<field-descriptor
-		name="keyTitle"
-		column="KEY_PROJECT_TITLE"
-		jdbc-type="INTEGER"
+		name="title"
+		column="TITLE"
+		jdbc-type="LONGVARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
 	/>
 	
 	<field-descriptor
-		name="keyProjectAbstract"
-		column="KEY_PROJECT_ABSTRACT"
-		jdbc-type="INTEGER"
+		name="abstract"
+		column="ABSTRACT"
+		jdbc-type="LONGVARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
 	/>
-
+	
 	<field-descriptor
 		name="startDate"
 		column="START_DATE"
@@ -67,29 +69,9 @@
 		<fk-pointing-to-element-class column="KEY_PROJECT_KEYWORD"/>
 	</collection-descriptor>
 
-<!-- This will be substituted by party
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="researchers"
-			element-class-ref="net.sourceforge.fenixedu.domain.research.Researcher"
-			indirection-table="PROJECT_RESEARCHER"
-			>
-		<fk-pointing-to-this-class column="KEY_PROJECT"/>
-		<fk-pointing-to-element-class column="KEY_RESEARCHER"/>
-	</collection-descriptor>
-
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="units"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"
-			indirection-table="PROJECT_UNIT"
-			>
-		<fk-pointing-to-this-class column="KEY_PROJECT"/>
-		<fk-pointing-to-element-class column="KEY_UNIT"/>
-	</collection-descriptor>
--->	
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.event.Event" 
-	table="RESEARCH_EVENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.event.Event" table="RESEARCH_EVENT">
 	
 	<field-descriptor
          name="idInternal"
@@ -97,6 +79,13 @@
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
+	/>
+	
+	<field-descriptor
+		name="name"
+		column="NAME"
+		jdbc-type="LONGVARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
 	/>
 	
 	<field-descriptor
@@ -124,6 +113,13 @@
 		column="FEE_OR_FREE"
 		jdbc-type="INTEGER"
 	/>
+	
+	<field-descriptor 
+	   name="eventType"    
+	   column="EVENT_TYPE"  
+	   jdbc-type="VARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ResearchEventType2SqlResearchEventTypeConversion"
+    />
 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="projects"
@@ -133,107 +129,7 @@
 		<fk-pointing-to-this-class column="KEY_EVENT"/>
 		<fk-pointing-to-element-class column="KEY_PROJECT"/>
 	</collection-descriptor>
-
-<!-- This will be substituted by Party
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="units"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"
-			indirection-table="UNIT_EVENT"
-			>
-		<fk-pointing-to-this-class column="KEY_EVENT"/>
-		<fk-pointing-to-element-class column="KEY_UNIT"/>
-	</collection-descriptor>
-
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="researchers"
-			element-class-ref="net.sourceforge.fenixedu.domain.research.Researcher"
-			indirection-table="RESEARCHER_EVENT"
-			>
-		<fk-pointing-to-this-class column="KEY_EVENT"/>
-		<fk-pointing-to-element-class column="KEY_RESEARCHER"/>
-	</collection-descriptor>
--->	
-	
 </class-descriptor>
-
-
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectTitle"
-	table="PROJECT_TITLE">
-	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	
-	<field-descriptor
-		name="keyProject"
-		column="KEY_PROJECT"
-		jdbc-type="INTEGER"
-	/>
-	
-	<field-descriptor
-		name="title"
-		column="TITLE"
-		jdbc-type="VARCHAR"
-	/>
-	
-	<field-descriptor
-		name="translation"
-		column="TRANSLATION"
-		jdbc-type="VARCHAR"
-	/>
-	
-	<reference-descriptor auto-retrieve="false"
-			name="project"
-			class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
-			>
-		<foreignkey field-ref="keyProject"/>
-	</reference-descriptor>
-	
-</class-descriptor>
-
-
-
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectAbstract"
-	table="PROJECT_ABSTRACT">
-	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	
-	<field-descriptor
-		name="keyProject"
-		column="KEY_PROJECT"
-		jdbc-type="INTEGER"
-	/>
-
-	<field-descriptor
-		name="projectAbstract"
-		column="ABSTRACT"
-		jdbc-type="VARCHAR"
-	/>
-	
-	<field-descriptor
-		name="translation"
-		column="TRANSLATION"
-		jdbc-type="VARCHAR"
-	/>
-	
-	<reference-descriptor auto-retrieve="false"
-			name="project"
-			class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
-			>
-		<foreignkey field-ref="keyProject"/>
-	</reference-descriptor>
-	
-</class-descriptor>  
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectKeyword"
 	table="PROJECT_KEYWORD">
@@ -249,13 +145,8 @@
 	<field-descriptor
 		name="keyword"
 		column="KEYWORD"
-		jdbc-type="VARCHAR"
-	/>
-	
-	<field-descriptor
-		name="translation"
-		column="TRANSLATION"
-		jdbc-type="VARCHAR"
+		jdbc-type="LONGVARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
 	/>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"

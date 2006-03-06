@@ -9,6 +9,5 @@ public class Event extends Event_Base {
         setStartDate(startDate);
         setEventLocation(eventLocation);
         setFeeOrFree(feeOrFree);
-        setType(type);
     }
 }
