@@ -256,8 +256,8 @@ public class Teacher extends Teacher_Base {
             for (DegreeTeachingService teachingService : teachingServices) {
                 returnValue += ((teachingService.getPercentage() / 100) * teachingService.getShift()
                         .hours());
-                }
             }
+        }
         return returnValue;
     }
 
@@ -534,7 +534,7 @@ public class Teacher extends Teacher_Base {
 
     private int calculateServiceExemptionsCredits(List<TeacherServiceExemption> list,
             OccupationPeriod occupationPeriod, ExecutionPeriod executionPeriod) {
-        
+
         TeacherServiceExemption teacherServiceExemption = getTeacherServiceExemption(list,
                 occupationPeriod);
 
@@ -545,9 +545,11 @@ public class Teacher extends Teacher_Base {
                         || teacherServiceExemption.getType().equals(
                                 ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)
                         || teacherServiceExemption.getType().equals(
-                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL) || teacherServiceExemption
+                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL)
+                        || teacherServiceExemption.getType().equals(
+                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS) || teacherServiceExemption
                         .getType().equals(
-                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS))) {
+                                ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_E_C_D_U))) {
 
             Integer daysBetween = CalendarUtil.getNumberOfDaysBetweenDates(teacherServiceExemption
                     .getStart(), teacherServiceExemption.getEnd());
@@ -721,7 +723,8 @@ public class Teacher extends Teacher_Base {
         if (teacherServiceExemption == null) {
             return false;
         }
-        if (teacherServiceExemption.getType().equals(ServiceExemptionType.CONTRACT_SUSPEND)
+        if (teacherServiceExemption.getType().equals(ServiceExemptionType.CONTRACT_SUSPEND_ART_73_ECDU)
+                || teacherServiceExemption.getType().equals(ServiceExemptionType.CONTRACT_SUSPEND)
                 || teacherServiceExemption.getType().equals(ServiceExemptionType.GOVERNMENT_MEMBER)
                 || teacherServiceExemption.getType().equals(
                         ServiceExemptionType.LICENSE_WITHOUT_SALARY_FOR_ACCOMPANIMENT)
