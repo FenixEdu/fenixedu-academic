@@ -7,6 +7,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -43,6 +44,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public void delete() {
         if (getCanBeDeleted()) {
+            removeParentDegreeCurricularPlan();
             super.delete();
             for (;!getParticipatingContextCurricularRules().isEmpty();getParticipatingContextCurricularRules().get(0).delete());
             super.deleteDomainObject();
@@ -64,6 +66,18 @@ public class CourseGroup extends CourseGroup_Base {
         }
     }
 
+    public boolean isRoot() {
+        return (super.getParentDegreeCurricularPlan() != null);
+    }
+    
+    @Override
+    public DegreeCurricularPlan getParentDegreeCurricularPlan() {
+        if (isRoot()) {
+            return super.getParentDegreeCurricularPlan();
+        }
+        return getDegreeModuleContexts().get(0).getCourseGroup().getParentDegreeCurricularPlan();
+    }
+    
     public List<Context> getSortedContextsWithCurricularCourses() {
         List<Context> result = new ArrayList<Context>();
         for (Context context : this.getCourseGroupContexts()) {

@@ -562,7 +562,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     MarkType markType;
     GradeScale gradeScale;
     CurricularStage curricularStage;
-    Integer keyDegreeModule;
+    Integer keyRoot;
    	Group curricularPlanMembersGroup;
    	Integer keyDegreeStructure;
 }
@@ -622,7 +622,6 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
 
 
 class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyNewDegreeCurricularPlan;
     String ojbConcreteClass;
 	String name;
 	String nameEn;
@@ -663,6 +662,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 	}
 
 	class net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
+		Integer keyParentDegreeCurricularPlan;
 	}
 
 class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3332,9 +3332,9 @@ relation DegreeCurricularPlanCurricularCourseEquivalence {
 
 
 relation DegreeCurricularPlanDegreeModule {
-    net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModule;
+    net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole root;
     
-    net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole newDegreeCurricularPlan;
+    net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole parentDegreeCurricularPlan;
 }
 
 

@@ -23,10 +23,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
-/**
- * @author David Santos on Jul 12, 2004
- */
-
 public class CurricularCourse extends CurricularCourse_Base {
 
     protected CurricularCourse() {
@@ -97,6 +93,14 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public boolean isLeaf() {
         return true;
+    }
+    
+    public boolean isRoot() {
+        return false;
+    }
+    
+    public DegreeCurricularPlan getParentDegreeCurricularPlan() {
+        return getDegreeModuleContexts().get(0).getCourseGroup().getParentDegreeCurricularPlan();
     }
     
     public void edit(Double weight, String prerequisites, String prerequisitesEn,

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
@@ -65,7 +64,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                 dcpBuffer.append("[DCP ").append(dcp.getIdInternal()).append("] ").append(dcp.getName());
                 //System.out.println(dcpBuffer);
 
-                new UICourseGroup(dcp.getDegreeModule(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder, hideCourses).encodeBegin(facesContext);
+                new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder, hideCourses).encodeBegin(facesContext);
             }
         }
     }
@@ -87,7 +86,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         this.facesContext = facesContext;
         this.writer = facesContext.getResponseWriter();
 
-        if (!((CourseGroup) dcp.getDegreeModule()).hasAnyCourseGroupContexts()) {
+        if (!dcp.getRoot().hasAnyCourseGroupContexts()) {
             encodeEmptyCurricularPlanInfo();
         } else {
             CurricularPeriod degreeStructure = dcp.getDegreeStructure();

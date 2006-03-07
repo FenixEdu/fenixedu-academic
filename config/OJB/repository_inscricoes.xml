@@ -208,11 +208,6 @@
 		jdbc-type="INTEGER"
 	/> 
 	<field-descriptor
-		name="keyNewDegreeCurricularPlan"
-		column="KEY_NEW_DEGREE_CURRICULAR_PLAN"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
 		name="credits"
 		column="CREDITS"
 		jdbc-type="DOUBLE"
@@ -375,12 +370,6 @@
 			>
 		<foreignkey field-ref="keyDegreeCurricularPlan"/>
 	 </reference-descriptor>
- 	<reference-descriptor auto-retrieve="false"
-			name="newDegreeCurricularPlan"
-			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
-            >
-		<foreignkey field-ref="keyNewDegreeCurricularPlan"/>
-	</reference-descriptor>
 	 <reference-descriptor auto-retrieve="false"
 			name="scientificArea"
 			class-ref="net.sourceforge.fenixedu.domain.ScientificArea"

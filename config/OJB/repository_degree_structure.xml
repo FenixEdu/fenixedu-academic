@@ -13,11 +13,6 @@
 		autoincrement="true"
 	/>
 	<field-descriptor
-		name="keyNewDegreeCurricularPlan"
-		column="KEY_NEW_DEGREE_CURRICULAR_PLAN"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
 		name="name"
 		column="NAME"
 		jdbc-type="VARCHAR"
@@ -42,12 +37,6 @@
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
     />		
-	<reference-descriptor auto-retrieve="false"
-			name="newDegreeCurricularPlan"
-			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
-            >
-		<foreignkey field-ref="keyNewDegreeCurricularPlan"/>
-	</reference-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="degreeModuleContexts"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
@@ -82,7 +71,7 @@
 		autoincrement="true"
 	/>
 	<field-descriptor
-		name="keyNewDegreeCurricularPlan"
+		name="keyParentDegreeCurricularPlan"
 		column="KEY_NEW_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
@@ -112,10 +101,10 @@
          jdbc-type="VARCHAR"
     />		
 	<reference-descriptor auto-retrieve="false"
-			name="newDegreeCurricularPlan"
+			name="parentDegreeCurricularPlan"
 			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
             >
-		<foreignkey field-ref="keyNewDegreeCurricularPlan"/>
+		<foreignkey field-ref="keyParentDegreeCurricularPlan"/>
 	</reference-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="degreeModuleContexts"

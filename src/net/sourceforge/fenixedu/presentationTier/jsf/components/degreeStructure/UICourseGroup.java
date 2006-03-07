@@ -99,7 +99,7 @@ public class UICourseGroup extends UIDegreeModule {
                     writer.endElement("table");
                 } else {
                     encodeChildCourseGroups();
-                    if (this.degreeModule.getNewDegreeCurricularPlan().getDegreeStructure().hasAnyChilds()) {
+                    if (this.degreeModule.getParentDegreeCurricularPlan().getDegreeStructure().hasAnyChilds()) {
                         encodeSubtitles();
                     }
                 }

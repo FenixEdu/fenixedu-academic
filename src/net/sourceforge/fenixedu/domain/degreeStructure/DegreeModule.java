@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 public abstract class DegreeModule extends DegreeModule_Base {
        
     public void delete() {
-        removeNewDegreeCurricularPlan();    
         for (;!getDegreeModuleContexts().isEmpty(); getDegreeModuleContexts().get(0).delete());
         for (;!getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
         for (;!getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().get(0).delete());
@@ -38,17 +37,6 @@ public abstract class DegreeModule extends DegreeModule_Base {
         if (!hasAnyDegreeModuleContexts()) {
             delete();
         }
-    }
-    
-    public boolean isRoot() {
-        return (getNewDegreeCurricularPlan() != null);
-    }
-    
-    public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        if (isRoot()) {
-            return getNewDegreeCurricularPlan();
-        }
-        return getDegreeModuleContexts().get(0).getCourseGroup().getParentDegreeCurricularPlan();
     }
     
     public Set<CourseGroup> getAllParentCourseGroups() {
@@ -78,6 +66,8 @@ public abstract class DegreeModule extends DegreeModule_Base {
     public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
 	public abstract Boolean getCanBeDeleted();
 	public abstract boolean isLeaf();
+    public abstract boolean isRoot();
+    public abstract DegreeCurricularPlan getParentDegreeCurricularPlan();
     protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
     protected abstract void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
 }

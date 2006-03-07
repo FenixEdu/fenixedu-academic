@@ -122,7 +122,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         newStructureFieldsChange(CurricularStage.DRAFT);
 
         CourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME, name + this.DCP_ROOT_NAME);
-        this.setDegreeModule(dcpRoot);
+        this.setRoot(dcpRoot);
 
         if (curricularPeriod == null) {
             throw new DomainException("degreeCurricularPlan.curricularPeriod.not.null");
@@ -165,17 +165,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private Boolean getCanBeDeleted() {
-        return ((CourseGroup) getDegreeModule()).getCanBeDeleted()
+        return (getRoot().getCanBeDeleted()
                 && !(hasAnyStudentCurricularPlans() || hasAnyCurricularCourseEquivalences()
                         || hasAnyEnrolmentPeriods() || hasAnyCurricularCourses()
-                        || hasAnyExecutionDegrees() || hasAnyAreas());
+                        || hasAnyExecutionDegrees() || hasAnyAreas()));
     }
 
     public void delete() {
         if (getCanBeDeleted()) {
             removeDegree();
-            if (hasDegreeModule()) {
-                getDegreeModule().delete();
+            if (hasRoot()) {
+                getRoot().delete();
             }
             if (hasDegreeStructure()) {
                 getDegreeStructure().delete();
@@ -206,7 +206,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
             dcp.append("[DCP ").append(this.getIdInternal()).append("] ").append(this.getName()).append(
                     "\n");
-            this.getDegreeModule().print(dcp, "", null);
+            this.getRoot().print(dcp, "", null);
 
             return dcp.toString();
         } else {
@@ -490,17 +490,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     
     public List<DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
-        if (this.getDegreeModule() instanceof CourseGroup) {
-            ((CourseGroup) this.getDegreeModule()).collectChildDegreeModules(clazz, result);
-        }
+        this.getRoot().collectChildDegreeModules(clazz, result);
         return new ArrayList<DegreeModule>(result);
     }
     
     public List<List<DegreeModule>> getDcpDegreeModulesIncludingFullPath(Class<? extends DegreeModule> clazz) {
         final List<List<DegreeModule>> result = new ArrayList<List<DegreeModule>>(); 
-        if (this.getDegreeModule() instanceof CourseGroup) {
-            ((CourseGroup) this.getDegreeModule()).collectChildDegreeModulesIncludingFullPath(clazz, result, new ArrayList<DegreeModule>());
-        }
+        this.getRoot().collectChildDegreeModulesIncludingFullPath(clazz, result, new ArrayList<DegreeModule>());
         return result;
     }
 
@@ -544,8 +540,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     @Override
     @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
-    public void setDegreeModule(DegreeModule degreeModule) {
-        super.setDegreeModule(degreeModule);
+    public void setRoot(CourseGroup courseGroup) {
+        super.setRoot(courseGroup);
     }
 
     @Override
