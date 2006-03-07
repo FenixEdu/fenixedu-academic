@@ -245,7 +245,127 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getRecentCompetenceCourseInformation().getEvaluationMethodEn();
     }
 
-    public double getAllEctsCredits() {
+    public double getTheoreticalHours() {
+        return getTheoreticalHours(null);
+    }
+    
+    public double getTheoreticalHours(Integer order) {
+        double result = 0.0;
+        if (getRecentCompetenceCourseInformation() != null) {
+            result = getRecentCompetenceCourseInformation().getTheoreticalHours(order);
+        }
+        return result;
+    }
+
+    public double getProblemsHours() {
+        return getProblemsHours(null);
+    }
+    
+    public double getProblemsHours(Integer order) {
+        double result = 0.0;
+        if (getRecentCompetenceCourseInformation() != null) {
+            result = getRecentCompetenceCourseInformation().getProblemsHours(order);
+        }
+        return result;
+    }
+
+    public double getLaboratorialHours() {
+        return getLaboratorialHours(null);
+    }
+    
+    public double getLaboratorialHours(Integer order) {
+        double result = 0.0;
+        if (getRecentCompetenceCourseInformation() != null) {
+            result = getRecentCompetenceCourseInformation().getLaboratorialHours(order);
+        }
+        return result;
+    }
+
+    public double getSeminaryHours() {
+        return getSeminaryHours(null);
+    }
+    
+    public double getSeminaryHours(Integer order) {
+        double result = 0.0;
+        if (getRecentCompetenceCourseInformation() != null) {
+            result = getRecentCompetenceCourseInformation().getSeminaryHours(order);
+        }
+        return result;
+    }
+
+    public double getFieldWorkHours() {
+        return getFieldWorkHours(null);
+    }
+    
+    public double getFieldWorkHours(Integer order) {
+        double result = 0.0;
+        if (getRecentCompetenceCourseInformation() != null) {
+            result = getRecentCompetenceCourseInformation().getFieldWorkHours(order);
+        }
+        return result;
+    }
+
+    public double getTrainingPeriodHours() {
+        return getTrainingPeriodHours(null);
+    }
+    
+    public double getTrainingPeriodHours(Integer order) {
+        double result = 0.0;
+        if (getRecentCompetenceCourseInformation() != null) {
+            result = getRecentCompetenceCourseInformation().getTrainingPeriodHours(order);
+        }
+        return result;
+    }
+
+    public double getTutorialOrientationHours() {
+        return getTutorialOrientationHours(null);
+    }
+    
+    public double getTutorialOrientationHours(Integer order) {
+        double result = 0.0;
+        if (getRecentCompetenceCourseInformation() != null) {
+            result = getRecentCompetenceCourseInformation().getTutorialOrientationHours(order);
+        }
+        return result;
+    }
+
+    public double getAutonomousWorkHours() {
+        return getAutonomousWorkHours(null);
+    }
+    
+    public Double getAutonomousWorkHours(Integer order) {
+        double result = 0.0;
+        if (getRecentCompetenceCourseInformation() != null) {
+            result = getRecentCompetenceCourseInformation().getAutonomousWorkHours(order);
+        }
+        return result;
+    }
+    
+    public double getContactLoad() {
+        return getContactLoad(null);
+    }
+    
+    public Double getContactLoad(Integer order) {
+        double result = 0.0;
+        if (getRecentCompetenceCourseInformation() != null) {
+            result = getRecentCompetenceCourseInformation().getContactLoad(order);
+        }
+        return result;
+    }
+    
+    public double getTotalLoad() {
+        return getTotalLoad(null);
+    }
+    
+    public Double getTotalLoad(Integer order) {
+        double result = 0.0;
+        if (getRecentCompetenceCourseInformation() != null) {
+            result = getRecentCompetenceCourseInformation().getTotalLoad(order);
+        }
+        return result;
+    }
+    
+    public double getEctsCredits() {
         return getEctsCredits(null);
     }
     
@@ -257,30 +377,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return result;
     }
 
-    public Double getContactLoad(Integer order) {
-        double result = 0.0;
-        if (getRecentCompetenceCourseInformation() != null) {
-            result = getRecentCompetenceCourseInformation().getContactLoad(order);
-        }
-        return result;
-    }
-    
-    public Double getAutonomousWorkHours(Integer order) {
-        double result = 0.0;
-        if (getRecentCompetenceCourseInformation() != null) {
-            result = getRecentCompetenceCourseInformation().getAutonomousWorkHours(order);
-        }
-        return result;
-    }
-    
-    public Double getTotalLoad(Integer order) {
-        double result = 0.0;
-        if (getRecentCompetenceCourseInformation() != null) {
-            result = getRecentCompetenceCourseInformation().getTotalLoad(order);
-        }
-        return result;
-    }
-    
     public Map<Degree, List<CurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {
         Map<Degree, List<CurricularCourse>> curricularCoursesMap = new HashMap<Degree, List<CurricularCourse>>();
         for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {

@@ -46,28 +46,88 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         super.deleteDomainObject();
     }
     
-    public double getEctsCredits(Integer order) {
+    public BibliographicReference getBibliographicReference(Integer oid) {
+        return getBibliographicReferences().getBibliographicReference(oid);
+    }
+    
+    public Double getTheoreticalHours(Integer order) {
         double result = 0.0;
         
         for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
             if (order == null || competenceCourseLoad.getOrder().equals(order)) {
-                result += competenceCourseLoad.getEctsCredits();
+                result += competenceCourseLoad.getTheoreticalHours();
             }
         }
 
         return result;
     }
-
-    public BibliographicReference getBibliographicReference(Integer oid) {
-        return getBibliographicReferences().getBibliographicReference(oid);
-    }
     
-    public Double getContactLoad(Integer order) {
+    public Double getProblemsHours(Integer order) {
         double result = 0.0;
         
         for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
             if (order == null || competenceCourseLoad.getOrder().equals(order)) {
-                result += competenceCourseLoad.getContactLoad();
+                result += competenceCourseLoad.getProblemsHours();
+            }
+        }
+
+        return result;
+    }
+    
+    public Double getLaboratorialHours(Integer order) {
+        double result = 0.0;
+        
+        for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            if (order == null || competenceCourseLoad.getOrder().equals(order)) {
+                result += competenceCourseLoad.getLaboratorialHours();
+            }
+        }
+
+        return result;
+    }
+    
+    public Double getSeminaryHours(Integer order) {
+        double result = 0.0;
+        
+        for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            if (order == null || competenceCourseLoad.getOrder().equals(order)) {
+                result += competenceCourseLoad.getSeminaryHours();
+            }
+        }
+
+        return result;
+    }
+    
+    public Double getFieldWorkHours(Integer order) {
+        double result = 0.0;
+        
+        for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            if (order == null || competenceCourseLoad.getOrder().equals(order)) {
+                result += competenceCourseLoad.getFieldWorkHours();
+            }
+        }
+
+        return result;
+    }
+    
+    public Double getTrainingPeriodHours(Integer order) {
+        double result = 0.0;
+        
+        for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            if (order == null || competenceCourseLoad.getOrder().equals(order)) {
+                result += competenceCourseLoad.getTrainingPeriodHours();
+            }
+        }
+
+        return result;
+    }
+    
+    public Double getTutorialOrientationHours(Integer order) {
+        double result = 0.0;
+        
+        for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            if (order == null || competenceCourseLoad.getOrder().equals(order)) {
+                result += competenceCourseLoad.getTutorialOrientationHours();
             }
         }
 
@@ -76,10 +136,22 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     
     public Double getAutonomousWorkHours(Integer order) {
         double result = 0.0;
-
+        
         for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
             if (order == null || competenceCourseLoad.getOrder().equals(order)) {
                 result += competenceCourseLoad.getAutonomousWorkHours();
+            }
+        }
+
+        return result;
+    }
+    
+    public Double getContactLoad(Integer order) {
+        double result = 0.0;
+        
+        for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            if (order == null || competenceCourseLoad.getOrder().equals(order)) {
+                result += competenceCourseLoad.getContactLoad();
             }
         }
 
@@ -95,6 +167,18 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
             }
         }
         
+        return result;
+    }
+
+    public double getEctsCredits(Integer order) {
+        double result = 0.0;
+        
+        for (CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+            if (order == null || competenceCourseLoad.getOrder().equals(order)) {
+                result += competenceCourseLoad.getEctsCredits();
+            }
+        }
+
         return result;
     }
 

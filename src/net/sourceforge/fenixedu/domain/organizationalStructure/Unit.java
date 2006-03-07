@@ -209,7 +209,7 @@ public class Unit extends Unit_Base {
         double result = 0.0;
         for (Unit competenceCourseGroupUnit : getCompetenceCourseGroupUnits()) {
             for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
-                result += competenceCourse.getAllEctsCredits();
+                result += competenceCourse.getEctsCredits();
             }
         }
         return result;
