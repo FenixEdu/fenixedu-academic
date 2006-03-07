@@ -232,7 +232,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                 sumContactLoad += ((CurricularCourse)degreeModule).getContactLoad(context.getCurricularPeriod().getOrder());
                 sumAutonomousWork += ((CurricularCourse)degreeModule).getAutonomousWorkHours(context.getCurricularPeriod().getOrder());
                 sumTotalLoad += ((CurricularCourse)degreeModule).getTotalLoad(context.getCurricularPeriod().getOrder());
-                sumCredits += degreeModule.getEctsCredits();
+                sumCredits += ((CurricularCourse)degreeModule).getEctsCredits(context.getCurricularPeriod().getOrder());
                 new UICurricularCourse((CurricularCourse) degreeModule, context, this.toEdit, this.showRules).encodeBegin(facesContext);
             }
         }
