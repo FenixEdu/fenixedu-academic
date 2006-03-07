@@ -124,6 +124,7 @@ valueType net.sourceforge.fenixedu.domain.util.LogicOperators   								as Logic
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectType							as ProjectType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum					as PartyType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum		as AccountabilityType;
+valueType net.sourceforge.fenixedu.util.MultiLanguageString										as MultiLanguageString;
 
 /*
 *
@@ -2861,28 +2862,11 @@ class net.sourceforge.fenixedu.domain.assiduousness.Balance extends net.sourcefo
 
 
 class net.sourceforge.fenixedu.domain.research.project.Project extends net.sourceforge.fenixedu.domain.DomainObject{
-	Integer keyTitle;
-	Integer keyProjectAbstract;
+	MultiLanguageString title;
+	MultiLanguageString projectAbstract;
 	Partial startDate;
 	Partial endDate;
 	ProjectType projectType;
-}
-
-class net.sourceforge.fenixedu.domain.research.project.ProjectTitle extends net.sourceforge.fenixedu.domain.DomainObject{
-	Integer keyProject;
-	String title;
-	String translation;
-}
-
-class net.sourceforge.fenixedu.domain.research.project.ProjectAbstract extends net.sourceforge.fenixedu.domain.DomainObject{
-	Integer keyProject;
-	String projectAbstract;
-	String translation;
-}
-
-class net.sourceforge.fenixedu.domain.research.project.ProjectKeyword extends net.sourceforge.fenixedu.domain.DomainObject{
-	String keyword;
-	String translation;
 }
 
 class net.sourceforge.fenixedu.domain.research.event.Event extends net.sourceforge.fenixedu.domain.DomainObject{
@@ -2891,9 +2875,6 @@ class net.sourceforge.fenixedu.domain.research.event.Event extends net.sourcefor
 	YearMonthDay endDate;
 	Boolean feeOrFree;
 	EventType eventType;
-}
-
-class net.sourceforge.fenixedu.domain.research.project.ProjectEvent extends net.sourceforge.fenixedu.domain.DomainObject{
 }
 
 class net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5899,15 +5880,6 @@ relation DailyBalanceForWorkSchedule {
 	}
 }
 
-relation ProjectProjectKeyword {
-	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.research.project.ProjectKeyword playsRole keywords {
-		multiplicity *;
-	}
-}
-
 relation CurricularRuleDegreeModule {
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModuleToApplyRule;
 	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole curricularRules {
@@ -5970,21 +5942,6 @@ relation AnyCurricularCourseDepartmentUnit {
 	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole departmentUnit;
 }
-
-relation EventEventProject {
-    net.sourceforge.fenixedu.domain.research.event.Event playsRole event;
-    net.sourceforge.fenixedu.domain.research.project.ProjectEvent playsRole eventProjects {
-		multiplicity *;
-	}
-}
-
-relation ProjectEventProject {
-    net.sourceforge.fenixedu.domain.research.project.Project playsRole project;
-    net.sourceforge.fenixedu.domain.research.project.ProjectEvent playsRole eventProjects {
-		multiplicity *;
-	}
-}
-
 
 relation AccountabilityAccountabilityType {
 	net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType playsRole accountabilityType;	 

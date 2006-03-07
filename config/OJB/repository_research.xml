@@ -46,29 +46,6 @@
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectType2SqlProjectTypeConversion"
     /> 
 	
-	<reference-descriptor auto-retrieve="false"
-			name="title"
-			class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectTitle"
-			>
-		<foreignkey field-ref="keyTitle"/>
-	</reference-descriptor>
-	
-	<reference-descriptor auto-retrieve="false"
-			name="projectAbstract"
-			class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectAbstract"
-			>
-		<foreignkey field-ref="keyProjectAbstract"/>
-	</reference-descriptor>
-	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="keywords"
-			element-class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectKeyword"
-			indirection-table="PROJECT_PROJECT_KEYWORD"
-			>
-		<fk-pointing-to-this-class column="KEY_PROJECT"/>
-		<fk-pointing-to-element-class column="KEY_PROJECT_KEYWORD"/>
-	</collection-descriptor>
-
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.event.Event" table="RESEARCH_EVENT">
@@ -131,31 +108,3 @@
 	</collection-descriptor>
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectKeyword"
-	table="PROJECT_KEYWORD">
-	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	
-	<field-descriptor
-		name="keyword"
-		column="KEYWORD"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
-	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="projects"
-			element-class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
-			indirection-table="PROJECT_PROJECT_KEYWORD"
-			>
-		<fk-pointing-to-this-class column="KEY_PROJECT_KEYWORD"/>
-		<fk-pointing-to-element-class column="KEY_PROJECT"/>
-	</collection-descriptor>
-	
-</class-descriptor> 
