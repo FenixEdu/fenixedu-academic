@@ -1,6 +1,9 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <tiles-definitions>
+	<definition name="domain.view" extends="researcher.masterPage" >
+	    <put name="body" value="/commons/renderers/view.jsp" />
+	</definition>
     <definition name="index" extends="researcher.masterPage">
         <put name="body" value="/researcher/index.jsp"></put>
     </definition>

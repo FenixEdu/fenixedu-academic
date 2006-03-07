@@ -35,6 +35,10 @@
         <action path="/viewCurriculum" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
             <forward name="Success" path="viewCurriculum"/>
         </action>  
+        
+        <action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">
+		    <forward name="show" path="domain.view"/>
+		</action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

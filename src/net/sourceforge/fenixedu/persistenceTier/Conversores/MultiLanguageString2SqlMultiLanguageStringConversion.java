@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.MultiLanguageString.ExistingLanguageException;
 
@@ -32,7 +33,7 @@ public class MultiLanguageString2SqlMultiLanguageStringConversion implements Fie
 					final String content = MLSFromSql[i].substring(letterCodeSize);
 
 					try {
-						multiLanguageString.addContent(language, content);
+						multiLanguageString.addContent(Language.valueOf(language), content);
 					} catch (ExistingLanguageException e) {
 						e.printStackTrace();
 					}

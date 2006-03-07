@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 public enum Language {
-	PORTUGUÊS,
+	PT,
 	ENGLISH,
 	DEUTSCH,
 	FRANÇAIS,

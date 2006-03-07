@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <style>
 		table.search {
@@ -82,6 +83,12 @@
 		<!-- Personal Information -->
 		<h3 id='personalInformationTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.personalInformationTitle"/> </span> </h3>
 		
+		<fr:view name="UserView" property="person" layout="tabular" schema="person.personalInfo">
+			<fr:layout>
+				<fr:property name="columnClasses" value="labelColumnClass,valueColumnClass"/>
+			</fr:layout>
+		</fr:view>
+		
 		<ul style="list-style: none;">
 			<li>
 				<strong> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.name"/> : </strong> &nbsp;
@@ -102,6 +109,13 @@
 		
 		<!-- Publications -->
 		<h3 id='publicationsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.publicationsTitle"/> </span> </h3>
+		
+		<fr:view name="UserView" property="person.personAuthorships">
+			<fr:layout>
+				<fr:property name="eachLayout" value="values-comma"/>
+				<fr:property name="eachSchema" value="authorship.publication"/>
+			</fr:layout>
+		</fr:view>
 		
 		<!-- Patents -->
 		<h3 id='patentsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.patentsTitle"/> </span> </h3>
