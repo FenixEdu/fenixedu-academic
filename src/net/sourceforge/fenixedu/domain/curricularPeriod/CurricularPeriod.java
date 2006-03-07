@@ -207,4 +207,13 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
             }
         }
     }
+
+    public Integer getParentOrder() {
+        if (this.getParent() != null) {
+            return this.getParent().getOrder();    
+        } 
+
+        return null;
+    }
+
 }
