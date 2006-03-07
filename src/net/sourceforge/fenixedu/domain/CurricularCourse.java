@@ -723,4 +723,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         // no rules to add
     }
 
+    public boolean isOptional() {
+        return getType().equals(CurricularCourseType.OPTIONAL_COURSE);
+    }
+
 }
