@@ -43,15 +43,15 @@
 						
 						
 						<h:panelGroup rendered="#{!empty scientificAreaUnit.competenceCourseGroupUnits}">
-							<h:outputText value="<ul class='list3'>" escape="false"/>
+							<h:outputText value="<ul class='list3' style='padding-left: 2em;'>" escape="false"/>
 							<fc:dataRepeater value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
 								<h:outputText value="<li class='tree_label' style='background-position: 0em 0.75em;'>" escape="false"/>
-								<h:outputText value="<table style='width: 50em; background-color: #fff;'><tr>" escape="false"/>
+								<h:outputText value="<table style='width: 54em; background-color: #fff;'><tr>" escape="false"/>
 								<h:outputText value="<td>#{competenceCourseGroupUnit.name}</td> " escape="false"/>
 								<h:outputText value="<td class='aright'>" escape="false"/>
 									<h:outputLink value="createCompetenceCourse.faces">
 										<h:outputFormat value="#{bolonhaBundle['create.param']}" escape="false">
-											<f:param value=" #{bolonhaBundle['Course']}"/>
+											<f:param value=" #{bolonhaBundle['course']}"/>
 										</h:outputFormat>								
 										<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.idInternal}"/>
 									</h:outputLink>
@@ -59,7 +59,7 @@
 								
 								
 								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse" 
-												styleClass="showinfo1 smallmargin mtop05" style="width: 50em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
+												styleClass="showinfo1 smallmargin mtop05" style="width: 54em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
 									<h:column>
 										<h:outputText value="#{competenceCourse.name}"/>
 										<h:outputText value="  <em>(#{enumerationBundle[competenceCourse.curricularStage]})</em>" escape="false"/>
