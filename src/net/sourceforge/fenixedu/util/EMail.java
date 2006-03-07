@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.util;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -15,6 +14,7 @@ import javax.mail.Multipart;
 import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.Message.RecipientType;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -66,7 +66,7 @@ public class EMail extends FenixUtil {
 
     public static List send(String server, String fromName, String fromAddress, String subject,
             List tos, List ccs, List bccs, String body) {
-        List unsentMails = new LinkedList();
+        List<String> unsentMails = new LinkedList<String>();
         /* Configura as propriedades do sistema */
         Properties props = new Properties();
         props.put("mail.smtp.host", server);
@@ -80,59 +80,42 @@ public class EMail extends FenixUtil {
                 composedFrom = "\"" + fromName + "\"" + " <" + fromAddress + ">";
             /* Define os parametros da mensagem */
             mensagem.setFrom(new InternetAddress(composedFrom));
-            for (Iterator iter = bccs.iterator(); iter.hasNext();) {
-                String bcc = (String) iter.next();
-                try {
-                    if (bcc != null) {
-                        mensagem.addRecipient(Message.RecipientType.BCC, new InternetAddress(bcc));
-                    }
-
-                } catch (AddressException e) {
-                    unsentMails.add(bcc);
-                }
-            }
-            for (Iterator iter = tos.iterator(); iter.hasNext();) {
-                String to = (String) iter.next();
-                try {
-                    if (to != null) {
-                        mensagem.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                    }
-
-                } catch (AddressException e) {
-                    unsentMails.add(to);
-                }
-            }
-            for (Iterator iter = ccs.iterator(); iter.hasNext();) {
-                String cc = (String) iter.next();
-                try {
-                    if (cc != null) {
-                        mensagem.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));
-                    }
-
-                } catch (AddressException e) {
-                    unsentMails.add(cc);
-                }
-            }
+            addRecipients(mensagem, Message.RecipientType.TO, tos, unsentMails);
+            addRecipients(mensagem, Message.RecipientType.CC, ccs, unsentMails);
+            addRecipients(mensagem, Message.RecipientType.BCC, bccs, unsentMails);
             mensagem.setSubject(subject);
             mensagem.setText(body);
             Transport.send(mensagem);
         } catch (SendFailedException e) {
             if (e.getValidUnsentAddresses() != null) {
                 for (int i = 0; i < e.getValidUnsentAddresses().length; i++) {
-                    unsentMails.add(e.getValidUnsentAddresses()[i]);
+                    unsentMails.add(e.getValidUnsentAddresses()[i].toString());
                 }
             } else {
                 if (e.getValidSentAddresses() == null || e.getValidSentAddresses().length == 0) {
                     unsentMails.addAll(tos);
                     unsentMails.addAll(ccs);
                     unsentMails.addAll(bccs);
-
                 }
             }
         } catch (MessagingException e) {
+        	e.printStackTrace();
         }
         return unsentMails;
     }
+
+	private static void addRecipients(MimeMessage mensagem, RecipientType recipientType, List<String> emailAddresses, List<String> unsentMails)
+			throws MessagingException {
+		for (final String emailAddress : emailAddresses) {
+		    try {
+		        if (emailAddressFormatIsValid(emailAddress)) {
+		            mensagem.addRecipient(recipientType, new InternetAddress(emailAddress));
+		        }
+		    } catch (AddressException e) {
+		        unsentMails.add(emailAddress);
+		    }
+		}
+	}
 
     private static boolean _send(String Servidor, String Origem, String Destino, String Assunto,
             String Texto) {
