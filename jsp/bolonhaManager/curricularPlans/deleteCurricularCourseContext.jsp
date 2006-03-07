@@ -38,22 +38,27 @@
 				<h:outputText value="<li>#{curricularRule}</li>" escape="false"/>
 			</fc:dataRepeater>
 			<h:outputText value="</ul>" escape="false"/>
-			<h:outputText value="<strong>#{bolonhaBundle['note']}:</strong> " escape="false"/>
-			<h:outputText value="#{bolonhaBundle['confirm.delete.participating.curricularRules']}<br/>" escape="false"/>
+
 		</h:panelGroup>
-		
+
+<%--
+		<h:outputText value="<span class='attention'>#{bolonhaBundle['confirm.delete.participating.curricularRules']}</span>" escape="false"/>
 		<h:panelGroup rendered="#{CurricularCourseManagement.toDelete}">
-			<h:outputText value="<br/>" escape="false"/>
-			<h:outputText styleClass="success0" value="#{bolonhaBundle['deleteLastCurricularCourseContext']}<br/>" escape="false"/>
-			<h:outputText value="<br/>" escape="false"/>
+			<h:outputText value="<p class='mvert1'><span class='attention'>" escape="false"/>
+			<h:outputText value="#{bolonhaBundle['deleteLastCurricularCourseContext']}" escape="false"/>
+			<h:outputText value="</span></p>" escape="false"/>
 		</h:panelGroup>
-		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}<br/>" escape="false"/>
-		<h:outputText value="<br/><hr>" escape="false"/>
+--%>
+	
+		<h:outputText value="<p class='mtop2'><span class='warning0'>#{bolonhaBundle['confirmDeleteMessage']}</span></p>" escape="false"/>
+		<h:outputText value="<br/>" escape="false"/>
 		
+		<h:outputText value="<p>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['yes']}"
 			action="buildCurricularPlan"
 			actionListener="#{CurricularCourseManagement.deleteContext}" />
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['no']}"
 			action="buildCurricularPlan"/>
+		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 </ft:tilesView>
