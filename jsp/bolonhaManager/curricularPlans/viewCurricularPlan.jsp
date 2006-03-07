@@ -26,6 +26,8 @@
 	</h:panelGroup>
 
 	<h:outputText value="<br/>" escape="false"/>
+	
+<h:outputText value="<div class='invisible'>" escape="false"/>
 	<h:outputText value="<ul><li>" escape="false"/>
 	<h:outputLink value="viewCurricularPlanStructure.faces" rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeModule.courseGroupContexts}">
 		<h:outputFormat value="#{bolonhaBundle['view.param']}" escape="false">
@@ -114,9 +116,9 @@
 		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['hide']}</span>" rendered="#{CurricularCourseManagement.hideCourses == 'true'}" escape="false"/>
 	</h:panelGroup>
 	<h:outputText value="</p>" escape="false"/>
+<h:outputText value="</div>" escape="false"/>
 	
-	
-	<h:outputText value="<br/><br/>" escape="false"/>
+	<h:outputText value="<br/>" escape="false"/>
 	<fc:degreeCurricularPlanRender 
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
 		organizeBy="<%=request.getParameter("organizeBy")%>"

@@ -21,9 +21,6 @@
 		<h:outputText value="</li></ul>" escape="false"/>
 	</h:form>
 	
-	<h:outputText value="<p>" escape="false"/>
-	<h:messages styleClass="error0" infoClass="success0" layout="table" globalOnly="true"/>
-	<h:outputText value="</p>" escape="false"/>
 	
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeStructure.childs}">
 		<h:outputText value="<p class='mtop1 mbottom0'>" escape="false"/>
@@ -67,6 +64,10 @@
 		<h:outputText value="</p>" escape="false"/>
 	</h:panelGroup>
 
+	<h:outputText value="<div class='mbottom1'>" escape="false"/>
+	<h:messages styleClass="error0" infoClass="success0" layout="table" globalOnly="true"/>
+	<h:outputText value="</div>" escape="false"/>
+	
 
 	<fc:degreeCurricularPlanRender 
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 

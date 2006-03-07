@@ -50,8 +50,8 @@
 		</h:panelGroup>
 --%>
 	
-		<h:outputText value="<p class='mtop2'><span class='warning0'>#{bolonhaBundle['confirmDeleteMessage']}</span></p>" escape="false"/>
-		<h:outputText value="<br/>" escape="false"/>
+		<h:outputText value="<p class='mtop2 mbottom2'><span class='warning0'>#{bolonhaBundle['confirmDeleteMessage']}</span></p>" escape="false"/>
+
 		
 		<h:outputText value="<p>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['yes']}"
