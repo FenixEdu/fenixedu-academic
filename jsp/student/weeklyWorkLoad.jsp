@@ -15,10 +15,6 @@ padding: 0.5em;
 
 <h2><bean:message key="link.weekly.work.load"/></h2>
 
-<p><span class="error"><html:errors/></span></p>
-
-
-
 <div class="instructions">
 	<logic:present name="previousWeek">
 		<bean:define id="start" type="org.joda.time.DateTime" name="previousWeek" property="start"/>
@@ -56,7 +52,7 @@ padding: 0.5em;
 </html:form>
 
 
-<br/>
+<p><span class="error"><html:errors/></span></p>
 
 
 <bean:define id="contact_tooltip" type="java.lang.String"><bean:message key="title.weekly.work.load.contact.tooltip"/></bean:define>
@@ -102,7 +98,7 @@ padding: 0.5em;
 
 
 
-
+<p class="mbottom0"><span class="attention">Atenção:</span> Deve submeter uma disciplina de cada vez e preencher os três campos (Contacto, Estudo Autónomo e Outro).</p>
 
 	<logic:present name="firstAttends" property="responseWeek">
 		<bean:define id="previousWeek" name="firstAttends" property="responseWeek"/>
@@ -126,13 +122,13 @@ padding: 0.5em;
 					<bean:message key="title.execution.course"/>
 				</th>
 				<th  title="<%= contact_tooltip %>">
-					<bean:message key="title.weekly.work.load.contact"/>
+					<bean:message key="title.weekly.work.load.contact"/><br/><span style="font-weight: normal;"><bean:message key="label.weekly.work.load.hoursperweek"/></span>
 				</th>
 				<th title="<%= autonomousStudy_tooltip %>">
-					<bean:message key="title.weekly.work.load.autonomousStudy"/>
+					<bean:message key="title.weekly.work.load.autonomousStudy"/><br/><span style="font-weight: normal;"><bean:message key="label.weekly.work.load.hoursperweek"/></span>
 				</th>
 				<th title="<%= other_tooltip %>">
-					<bean:message key="title.weekly.work.load.other"/>
+					<bean:message key="title.weekly.work.load.other"/><br/><span style="font-weight: normal;"><bean:message key="label.weekly.work.load.hoursperweek"/></span>
 				</th>
 				<th>
 				</th>
@@ -174,7 +170,7 @@ padding: 0.5em;
 
 <br/>
 
-asdasdasdasda
+
 
 <logic:present name="weeklyWorkLoadView">
 	<table class="tstyle3 tpadding01">
