@@ -18,7 +18,7 @@
 	<property name="config.layouts" location="${config.web}/fenix-renderers-config.xml"/>
 	<property name="config.layouts.dtd" location="${config.web}/fenix-renderers-config.dtd"/>
 
-	<property name="tools.build" location="tools"/>
+	<property name="tools.build" location="${build.home.webinf.classes}"/>
 	<property name="tools.src" location="src_tools"/>
 	<property name="tools.lib" location="lib"/>
 
