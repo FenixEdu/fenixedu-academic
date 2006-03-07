@@ -12,8 +12,9 @@
 	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
- 
-	<h:outputText value="<br/><p>#{scouncilBundle['view.structure.organized.by']}: " escape="false"/>
+ 	
+ 	<h:outputText value="<br/>" escape="false"/>
+	<h:outputText value="<p>#{scouncilBundle['view.structure.organized.by']}: " escape="false"/>
 	<h:outputLink value="viewCurricularPlan.faces">
 		<h:outputText value="#{scouncilBundle['groups']}" />
 		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
@@ -32,6 +33,7 @@
 		<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 	</h:outputLink>
 	<h:outputText value="</p>" escape="false"/>
+
 
 	<fc:degreeCurricularPlanRender dcp="#{ScientificCouncilCurricularPlanManagement.dcp}" onlyStructure="false" toEdit="false" organizeBy="<%=request.getParameter("organizeBy")%>"/>
 

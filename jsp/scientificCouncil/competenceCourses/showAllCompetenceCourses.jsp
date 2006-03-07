@@ -102,7 +102,7 @@ padding-right: 10px;
 			<h:outputText value="#{competenceCourseLoad.tutorialOrientationHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
 	
 			<h:outputText value="<li>#{scouncilBundle['autonomousWork']}: " escape="false"/>
-			<h:outputText value="#{competenceCourseLoad.autonomousWorkHours} h/<b>#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
+			<h:outputText value="#{competenceCourseLoad.autonomousWorkHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
 	
 			<h:outputText value="<li><strong>#{scouncilBundle['ectsCredits']}: "escape="false"/>
 			<h:outputText value="#{competenceCourseLoad.ectsCredits}</strong></li>" escape="false"/>

@@ -36,23 +36,34 @@
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.groupMembersLabels && !empty CompetenceCourseManagement.selectedDepartmentUnitID}">
 			<h:outputText value="<br/><i>#{scouncilBundle['label.empty.group.members']}</i><br/>" escape="false" />
 		</h:panelGroup>
-		
 
-		<h:outputLink rendered="#{!empty CompetenceCourseManagement.departmentDraftCompetenceCourses}" value="showAllCompetenceCourses.faces" target="_blank">
-			<h:outputText value="<br/>#{scouncilBundle['showDraftCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
+	
+		<h:outputText value="<p class='mtop2 mbottom05'><b>Opções de listagem:</b></p>" escape="false"/>
+		<h:outputText value="<ul>" escape="false"/>
+		<h:outputText value="<li>" escape="false"/>
+			<h:outputLink rendered="#{!empty CompetenceCourseManagement.departmentDraftCompetenceCourses}" value="showAllCompetenceCourses.faces" target="_blank">
+			<h:outputText value="#{scouncilBundle['showDraftCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
 			<f:param name="competenceCoursesToList" value="DRAFT"/>
 			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 		</h:outputLink>
+		<h:outputText value="</li>" escape="false"/>
+		<h:outputText value="<li>" escape="false"/>
 		<h:outputLink rendered="#{!empty CompetenceCourseManagement.departmentPublishedCompetenceCourses}" value="showAllCompetenceCourses.faces" target="_blank">
-			<h:outputText value="<br/>#{scouncilBundle['showPublishedCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
+			<h:outputText value="#{scouncilBundle['showPublishedCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
 			<f:param name="competenceCoursesToList" value="PUBLISHED"/>
 			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 		</h:outputLink>
-		<h:outputLink rendered="#{!empty CompetenceCourseManagement.departmentApprovedCompetenceCourses}" value="showAllCompetenceCourses.faces" target="_blank">
-			<h:outputText value="<br/>#{scouncilBundle['showApprovedCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
-			<f:param name="competenceCoursesToList" value="APPROVED"/>
-			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-		</h:outputLink>
+		<h:outputText value="</li>" escape="false"/>
+		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.departmentApprovedCompetenceCourses}">
+			<h:outputText value="<li>" escape="false"/>
+			<h:outputLink value="showAllCompetenceCourses.faces" target="_blank">
+				<h:outputText value="#{scouncilBundle['showApprovedCompetenceCourses']} (#{scouncilBundle['newPage']})" escape="false"/>
+				<f:param name="competenceCoursesToList" value="APPROVED"/>
+				<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+			</h:outputLink>
+			<h:outputText value="</li>" escape="false"/>
+		</h:panelGroup>
+		<h:outputText value="</ul>" escape="false"/>
 
 		<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit"
 				rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
