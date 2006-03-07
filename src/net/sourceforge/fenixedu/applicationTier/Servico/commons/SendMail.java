@@ -20,25 +20,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
  */
 public class SendMail extends Service {
 
-    private static String bundleFile = new String("SMTPConfiguration");
-
-    private static ResourceBundle bundle = null;
-
-    private static String mailServer = null;
+    private static final String mailServer = ResourceBundle.getBundle("SMTPConfiguration").getString("mailSender.server.url");
 
     public List run(List toList, List ccList, List bccList, String fromName, String from, String subject, String text) {
-        if (bundle == null) {
-            try {
-                SendMail.bundle = ResourceBundle.getBundle(SendMail.bundleFile);
-                SendMail.mailServer = SendMail.bundle.getString("mailSender.server.url");
-                if (SendMail.mailServer == null) {
-                    SendMail.mailServer = "mail.adm";
-                }
-            } catch (Exception e) {
-                // the default server
-                SendMail.mailServer = "mail.adm";
-            }
-        }
         return EMail.send(SendMail.mailServer, fromName, from, subject, toList, ccList, bccList, text);
     }
 
