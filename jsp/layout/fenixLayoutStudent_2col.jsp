@@ -27,7 +27,7 @@
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0">
    <tr>
-     <td id="navlateral" width="25%" valign="top" nowrap="nowrap"><tiles:insert attribute="navLocal" />
+     <td id="navlateral" valign="top" nowrap="nowrap"><tiles:insert attribute="navLocal" />
      </td>
      <td id="bodycontent" width="100%" align="left" valign="top">
      	<tiles:insert attribute="body-context" ignore="true"/>     

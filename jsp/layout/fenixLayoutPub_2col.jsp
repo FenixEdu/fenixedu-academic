@@ -29,7 +29,7 @@
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
-     <td width="25%" align="left" valign="top" nowrap="nowrap" class="navlateral"><tiles:insert attribute="navLocal" />
+     <td align="left" valign="top" nowrap="nowrap" class="navlateral"><tiles:insert attribute="navLocal" />
     </td>
      <td width="100%" align="left" valign="top"  class="bodycontent"><tiles:insert attribute="body" />
 	</td>

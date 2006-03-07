@@ -30,7 +30,7 @@
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0">
    <tr>
-     <td id="navlateral_photos" width="25%" valign="top" nowrap="nowrap"><tiles:insert attribute="photos" />
+     <td id="navlateral_photos" valign="top" nowrap="nowrap"><tiles:insert attribute="photos" />
      </td>
      <td id="bodycontent" width="100%" align="left" valign="top">
      	<tiles:insert attribute="body-context" ignore="true"/>     
