@@ -2875,6 +2875,7 @@ class net.sourceforge.fenixedu.domain.research.event.Event extends net.sourcefor
 	YearMonthDay endDate;
 	Boolean feeOrFree;
 	EventType eventType;
+	MultiLanguageString name;
 }
 
 class net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad extends net.sourceforge.fenixedu.domain.DomainObject {

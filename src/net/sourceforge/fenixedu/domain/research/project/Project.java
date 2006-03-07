@@ -33,19 +33,19 @@ public class Project extends Project_Base {
         
         ProjectTranslation translation = new ProjectTranslation(language);
         if (this.getTitle().hasLanguage(language)) {
-            translation.title = this.getTitle().getContent(language);
+            translation.setTitle(this.getTitle().getContent(language));
         }
         else { 
             hasTitle = false;
-            translation.title = this.getTitle().getContent(Language.PT);
+            translation.setTitle(this.getTitle().getContent(Language.getDefaultLanguage()));
         }
         
         if (this.getProjectAbstract().hasLanguage(language)) {
-            translation.projectAbstract = this.getProjectAbstract().getContent(language);
+            translation.setProjectAbstract(this.getProjectAbstract().getContent(language));
         }
         else {
             hasAbstract = false;
-            translation.projectAbstract = this.getProjectAbstract().getContent(Language.PT);
+            translation.setProjectAbstract(this.getProjectAbstract().getContent(Language.getDefaultLanguage()));
         }
         
         if (!hasTitle && !hasAbstract) {
@@ -60,7 +60,31 @@ public class Project extends Project_Base {
         private String title;
         private String projectAbstract;
         
-        ProjectTranslation (Language language){
+        public Language getLanguage() {
+			return language;
+		}
+
+		public void setLanguage(Language language) {
+			this.language = language;
+		}
+
+		public String getProjectAbstract() {
+			return projectAbstract;
+		}
+
+		public void setProjectAbstract(String projectAbstract) {
+			this.projectAbstract = projectAbstract;
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
+		public void setTitle(String title) {
+			this.title = title;
+		}
+
+		ProjectTranslation (Language language){
             this.language = language;
             title = new String();
             projectAbstract = new String();

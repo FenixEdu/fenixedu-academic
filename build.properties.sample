@@ -24,6 +24,8 @@ login.page=https://fenix.ist.utl.pt/privado
 institution.url=http://www.ist.utl.pt
 
 institution.project=/home/gedl/workspace/fenix-head
+
+language=pt
 #
 #
 #------------------------------------------------------------------------------

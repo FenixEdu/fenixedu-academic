@@ -92,8 +92,8 @@
 	/>
 	
 	<field-descriptor 
-	   name="eventType"    
-	   column="EVENT_TYPE"  
+	   name="type"    
+	   column="TYPE"  
 	   jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ResearchEventType2SqlResearchEventTypeConversion"
     />

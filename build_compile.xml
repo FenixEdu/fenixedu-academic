@@ -348,6 +348,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		    			   property="password.generator"/>	
 				<replacefilter token="@checkPasswordKerberos.authorizedHosts@"
 							property="checkPasswordKerberos.authorizedHosts"/>
+				<replacefilter token="@language@"
+						    property="language"/>	
 			</replace>
 
 			<replace dir="${build.home.webinf.classes}"
