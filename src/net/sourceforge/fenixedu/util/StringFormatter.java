@@ -297,9 +297,4 @@ public class StringFormatter {
         Matcher matcher = pattern.matcher(string);        
         return matcher.replaceAll(" ");
     }
-    
-    public static void main(String[] args) {
-        
-        System.out.println(normalize("És um    granda palhaço!  "));
-    }
 }
