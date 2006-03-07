@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.TreeSet;
 
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
@@ -44,7 +42,6 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     protected final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -471,36 +468,27 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         this.degreeItems = degreeItems;
     }
     
-    //TODO: check this method
     private List<SelectItem> readBolonhaDegrees(String selectedCurricularRuleType,
             String selectedDegreeType) throws FenixFilterException, FenixServiceException {
 
-        final List<SelectItem> selectItemsResult = new ArrayList<SelectItem>();
+        final List<SelectItem> result = new ArrayList<SelectItem>();
         if (selectedCurricularRuleType != null
                 && selectedCurricularRuleType.equals(CurricularRuleType.ANY_CURRICULAR_COURSE.name())) {
-
             final List<Degree> allDegrees = (List<Degree>) readAllDomainObjects(Degree.class);
-            final ComparatorChain chainComparator = new ComparatorChain();
-            chainComparator.addComparator(new BeanComparator("bolonhaDegreeType"), false);
-            chainComparator.addComparator(new BeanComparator("nome"), false);
-
-            final Set<Degree> sortedDegrees = new TreeSet<Degree>(chainComparator);
             final BolonhaDegreeType bolonhaDegreeType = (selectedDegreeType == null || selectedDegreeType
                     .equals(NO_SELECTION_STRING)) ? null : BolonhaDegreeType.valueOf(selectedDegreeType);
             for (final Degree degree : allDegrees) {
                 if (degree.isBolonhaDegree()
                         && (bolonhaDegreeType == null || degree.getBolonhaDegreeType() == bolonhaDegreeType)) {
-                    sortedDegrees.add(degree);
+                    result.add(new SelectItem(degree.getIdInternal(), "["
+                            + enumerationResources.getString(degree.getBolonhaDegreeType().name()) + "] "
+                            + degree.getNome()));
                 }
             }
-            for (final Degree degree : sortedDegrees) {
-                selectItemsResult.add(new SelectItem(degree.getIdInternal(), "["
-                        + enumerationResources.getString(degree.getBolonhaDegreeType().name()) + "] "
-                        + degree.getNome()));
-            }
+            Collections.sort(result, new BeanComparator("label"));
         }
-        selectItemsResult.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources.getString("any.one")));
-        return selectItemsResult;
+        result.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources.getString("any.one")));
+        return result;
     }
     
     public UISelectItems getDepartmentUnitItems() throws FenixFilterException, FenixServiceException {
