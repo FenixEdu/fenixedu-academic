@@ -1023,6 +1023,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>AddPersonRole</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.AddPersonRole</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>ReadRoles</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadRoles</implementationClass>
 		<description />
