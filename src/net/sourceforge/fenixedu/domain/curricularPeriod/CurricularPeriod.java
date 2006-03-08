@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
@@ -213,6 +214,19 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
             return this.getParent().getOrder();    
         } 
 
+        return null;
+    }
+
+    public CurricularPeriod getNext() {
+        List<CurricularPeriod> brothers = this.getParent().getSortedChilds();
+        
+        for (Iterator<CurricularPeriod> iterator = brothers.iterator(); iterator.hasNext();) {
+            CurricularPeriod brother = iterator.next();
+            
+            if (brother.getOrder().equals(this.getOrder()) && iterator.hasNext()) {
+                return iterator.next();
+            }
+        }
         return null;
     }
 
