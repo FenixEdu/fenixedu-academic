@@ -5958,14 +5958,14 @@ relation PartyPartyType {
 }
 
 relation PartyTypeParentConnectionRule {
-	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole parentPartyType;
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole allowedParentPartyType;
 	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole allowedParentConnectionRules {
 	   multiplicity *;
 	}	 
 }
 
 relation PartyTypeChildConnectionRule {
-	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole childPartyType;
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole allowedChildPartyType;
 	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole allowedChildConnectionRules {
 	   multiplicity *;
 	}	 

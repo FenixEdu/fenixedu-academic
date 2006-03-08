@@ -303,13 +303,13 @@
     />		
     
 	<reference-descriptor auto-retrieve="false"
-    	name="parentPartyType"
+    	name="allowedParentPartyType"
         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType">
 	    <foreignkey field-ref="keyAllowedParentPartyType"/>
 	</reference-descriptor>
 	
 	<reference-descriptor auto-retrieve="false"
-    	name="childPartyType"
+    	name="allowedChildPartyType"
         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType">
 	    <foreignkey field-ref="keyAllowedChildPartyType"/>
 	</reference-descriptor>
