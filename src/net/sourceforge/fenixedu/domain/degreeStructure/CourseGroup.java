@@ -58,10 +58,10 @@ public class CourseGroup extends CourseGroup_Base {
         dcp.append(tab);
         dcp.append("[CG ").append(this.getIdInternal()).append("] ").append(this.getName()).append("\n");
 
-        for (Context context : this.getSortedContextsWithCurricularCourses()) {
+        for (Context context : this.getSortedChildContextsWithCurricularCourses()) {
             context.getChildDegreeModule().print(dcp, tab, context);
         }
-        for (Context context : this.getSortedContextsWithCourseGroups()) {
+        for (Context context : this.getSortedChildContextsWithCourseGroups()) {
             context.getChildDegreeModule().print(dcp, tab, context);
         }
     }
@@ -78,10 +78,10 @@ public class CourseGroup extends CourseGroup_Base {
         return getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan();
     }
     
-    public List<Context> getSortedContextsWithCurricularCourses() {
+    public List<Context> getSortedChildContextsWithCurricularCourses() {
         List<Context> result = new ArrayList<Context>();
         for (Context context : this.getChildContexts()) {
-            if (context.getChildDegreeModule() instanceof CurricularCourse) {
+            if (context.getChildDegreeModule().isLeaf()) {
                 result.add(context);
             }
         }
@@ -90,10 +90,10 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
     
-    public List<Context> getSortedContextsWithCourseGroups() {
+    public List<Context> getSortedChildContextsWithCourseGroups() {
         List<Context> result = new ArrayList<Context>();
         for (Context context : this.getChildContexts()) {
-            if (context.getChildDegreeModule() instanceof CourseGroup) {
+            if (!context.getChildDegreeModule().isLeaf()) {
                 result.add(context);
             }
         }
@@ -180,9 +180,9 @@ public class CourseGroup extends CourseGroup_Base {
     public void orderChild(Context contextToOrder, int position) {
         List<Context> newSort = null;
         if (contextToOrder.getChildDegreeModule() instanceof CurricularCourse) {
-            newSort = this.getSortedContextsWithCurricularCourses(); 
+            newSort = this.getSortedChildContextsWithCurricularCourses(); 
         } else {
-            newSort = this.getSortedContextsWithCourseGroups();
+            newSort = this.getSortedChildContextsWithCourseGroups();
         }
         
         if (newSort.size() <= 1 || position < 0 || position > newSort.size()) {
@@ -212,7 +212,7 @@ public class CourseGroup extends CourseGroup_Base {
             if (context.getChildDegreeModule().getClass().equals(clazz)) {
                 result.add(context.getChildDegreeModule());
             }
-            if (context.getChildDegreeModule() instanceof CourseGroup) {
+            if (!context.getChildDegreeModule().isLeaf()) {
                 ((CourseGroup) context.getChildDegreeModule()).collectChildDegreeModules(clazz, result);
             }
         }
@@ -227,7 +227,7 @@ public class CourseGroup extends CourseGroup_Base {
                 newDegreeModulesPath = initNewDegreeModulesPath(newDegreeModulesPath, currentDegreeModulesPath, context.getChildDegreeModule());
                 result.add(newDegreeModulesPath);
             }
-            if (context.getChildDegreeModule() instanceof CourseGroup) {
+            if (!context.getChildDegreeModule().isLeaf()) {
                 newDegreeModulesPath = initNewDegreeModulesPath(newDegreeModulesPath, currentDegreeModulesPath, context.getChildDegreeModule());
                 ((CourseGroup) context.getChildDegreeModule()).collectChildDegreeModulesIncludingFullPath(clazz, result, newDegreeModulesPath);
             }

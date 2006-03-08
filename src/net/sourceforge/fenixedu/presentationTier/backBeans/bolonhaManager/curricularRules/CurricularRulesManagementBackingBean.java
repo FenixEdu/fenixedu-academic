@@ -118,7 +118,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             switch (curricularRuleType) {
 
             case CREDITS_LIMIT:
-                if (getDegreeModule() instanceof CurricularCourse) {
+                if (getDegreeModule().isLeaf()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
                     if (curricularCourse.getType() == CurricularCourseType.OPTIONAL_COURSE) {
                         result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
@@ -129,7 +129,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
             case DEGREE_MODULES_SELECTION_LIMIT:
             case PRECEDENCY_BETWEEN_DEGREE_MODULES:
-                if (getDegreeModule() instanceof CourseGroup) {
+                if (!getDegreeModule().isLeaf()) {
                     result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
                             .getString(curricularRuleType.getName())));
                 }
@@ -138,7 +138,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             case PRECEDENCY_APPROVED_DEGREE_MODULE:
             case PRECEDENCY_ENROLED_DEGREE_MODULE:
             case ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR:
-                if (getDegreeModule() instanceof CurricularCourse) {
+                if (getDegreeModule().isLeaf()) {
                     result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
                             .getString(curricularRuleType.getName())));
                 }
@@ -150,7 +150,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 break;
 
             case ANY_CURRICULAR_COURSE:
-                if (getDegreeModule() instanceof CurricularCourse) {
+                if (getDegreeModule().isLeaf()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
                     if (curricularCourse.getType() == CurricularCourseType.OPTIONAL_COURSE) {
                         result.add(new SelectItem(curricularRuleType.getName(), enumerationResources

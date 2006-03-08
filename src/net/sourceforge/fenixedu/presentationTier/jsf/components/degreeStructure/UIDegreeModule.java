@@ -60,9 +60,9 @@ public class UIDegreeModule extends UIInput {
         
         setFromAttributes();
         
-        if (this.degreeModule instanceof CurricularCourse) {
+        if (this.degreeModule.isLeaf()) {
             new UICurricularCourse(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs).encodeBegin(facesContext);
-        } else if (this.degreeModule instanceof CourseGroup) {
+        } else if (!this.degreeModule.isLeaf()) {
             new UICourseGroup(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE).encodeBegin(facesContext);
         }
     }

@@ -95,9 +95,9 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     }
     
     private void collectChildDegreeModules(final List<Context> result, CourseGroup courseGroup) throws FenixFilterException, FenixServiceException {
-        result.addAll(courseGroup.getSortedContextsWithCurricularCourses());
+        result.addAll(courseGroup.getSortedChildContextsWithCurricularCourses());
         
-        for (final Context context : courseGroup.getSortedContextsWithCourseGroups()) {
+        for (final Context context : courseGroup.getSortedChildContextsWithCourseGroups()) {
             collectChildDegreeModules(result, (CourseGroup) context.getChildDegreeModule());
         }
     }

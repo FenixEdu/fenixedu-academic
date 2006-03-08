@@ -178,7 +178,7 @@ public class UICourseGroup extends UIDegreeModule {
                 writer.endElement("div");
             }
             
-            if (!this.hideCourses && ((CourseGroup)this.degreeModule).getSortedContextsWithCurricularCourses().size() > 0) {
+            if (!this.hideCourses && ((CourseGroup)this.degreeModule).getSortedChildContextsWithCurricularCourses().size() > 0) {
                 encodeChildCurricularCourses(width, courseGroupIndent);
                 //encodeSumsFooter(sums);
             } else {
@@ -312,7 +312,7 @@ public class UICourseGroup extends UIDegreeModule {
         double sumAutonomousWork = 0.0;
         double sumTotalLoad = 0.0;
         double sumCredits = 0.0;
-        for (Context context : ((CourseGroup)this.degreeModule).getSortedContextsWithCurricularCourses()) {
+        for (Context context : ((CourseGroup)this.degreeModule).getSortedChildContextsWithCurricularCourses()) {
             DegreeModule degreeModule = context.getChildDegreeModule();
             
             sumContactLoad += ((CurricularCourse)degreeModule).getContactLoad(context.getCurricularPeriod().getOrder());
@@ -374,7 +374,7 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void encodeChildCourseGroups() throws IOException {
-        for (Context context : ((CourseGroup)this.degreeModule).getSortedContextsWithCourseGroups()) {
+        for (Context context : ((CourseGroup)this.degreeModule).getSortedChildContextsWithCourseGroups()) {
             new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses).encodeBegin(facesContext);
         }
     }
