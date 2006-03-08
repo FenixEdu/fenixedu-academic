@@ -17,6 +17,11 @@ import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 import org.apache.commons.collections.Predicate;
 import org.apache.log4j.Logger;
 
+/**
+ * The base renderer for every input renderer.
+ * 
+ * @author cfgi
+ */
 public abstract class InputRenderer extends Renderer {
     private static final Logger logger = Logger.getLogger(InputRenderer.class);
     

@@ -7,6 +7,18 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+/**
+ * This renderer provides an alternative way of doing the input of
+ * a boolean value. This renderer presents an html menu with two
+ * options: one for the <tt>true</tt> value, and other for the
+ * <tt>false</tt> value.
+ * 
+ * <p>
+ * The options text is retrieved from the resources using the keys
+ * <tt>TRUE</tt> and <tt>FALSE</tt>.
+ * 
+ * @author cfgi
+ */
 public class BooleanMenuInputRenderer extends InputRenderer {
 
     @Override

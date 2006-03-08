@@ -5,6 +5,17 @@ import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
+/**
+ * This renderer provides the default input for a float value. The
+ * value is read with an text input field and parsed with 
+ * {@link Float#parseFloat(java.lang.String)}.
+ *  
+ * <p>
+ * Example:
+ *  <input type="text" value="10.5"/>
+ * 
+ * @author cfgi
+ */
 public class FloatInputRenderer extends StringInputRenderer {
 
     @Override

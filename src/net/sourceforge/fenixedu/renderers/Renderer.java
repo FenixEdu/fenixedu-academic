@@ -15,6 +15,19 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 
+/**
+ * The base class for all renderers. Allows all renderers to be configured with
+ * the common properties of all html elements: {@link #setClasses(String) classes},
+ * {@link #setStyle(String) style}, and {@link #setTitle(String) title}.
+ * 
+ * Renderers are currently divided in a complete and disjunctive hierarchy. This
+ * class provides the base behaviour for every renderer.
+ * 
+ * @see net.sourceforge.fenixedu.renderers.OutputRenderer
+ * @see net.sourceforge.fenixedu.renderers.InputRenderer
+ * 
+ * @author cfgi
+ */
 public abstract class Renderer {
 
     private PresentationContext context;
@@ -34,6 +47,9 @@ public abstract class Renderer {
     }
     
    /**
+    * Allows you to specify the css classes that are to be applied to the top level
+    * html element that is generated.
+    *  
     * @property
     */
    public void setClasses(String classes) {
@@ -41,6 +57,9 @@ public abstract class Renderer {
     }
 
     /**
+     * This property allows you to specify the value of the style attribute of the
+     * top level html element that is generated.
+     * 
      * @property
      */
     public void setStyle(String style) {
@@ -48,6 +67,8 @@ public abstract class Renderer {
     }
 
     /**
+     * Allows you to specify the title of the top level html element that is generated.
+     * 
      *@property 
      */
     public void setTitle(String title) {

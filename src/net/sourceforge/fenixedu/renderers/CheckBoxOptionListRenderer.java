@@ -16,6 +16,23 @@ import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderMode;
 
+/**
+ * This renderer can be used as the input for a list of objects. The list of
+ * objects the user can choose will be presented as an html list were each
+ * list item will contain the presentation of the object and a checkbox that
+ * allows to choose that particular object. When submiting, all the checked objects
+ * will be added to a list and that list will be the value passed to the slot.
+ * 
+ * <p> 
+ * Example:
+ *  <ul>
+ *      <li><input type="checkbox"/><em>&lt;object A presentation&gt;</em></li>
+ *      <li><input type="checkbox" checked="checked"/><em>&lt;object B presentation&gt;</em></li>
+ *      <li><input type="checkbox"/><em>&lt;object C presentation&gt;</em></li>
+ *  </ul>
+ * 
+ * @author cfgi
+ */
 public class CheckBoxOptionListRenderer extends InputRenderer {
     private String eachClasses;
 
@@ -29,6 +46,12 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
 
     private DataProvider provider;
     
+    /**
+     * This property allows you to configure the class attribute for each
+     * object's presentation.
+     * 
+     * @property
+     */
     public void setEachClasses(String classes) {
         this.eachClasses = classes;
     }
@@ -38,6 +61,9 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
     }
 
     /**
+     * Allows yout to configure the style attribute for each object's
+     * presentation.
+     * 
      * @property
      */
     public void setEachStyle(String style) {
@@ -53,6 +79,8 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
     }
 
     /**
+     * Allows you to choose the layout in wich each object is to be presented.
+     * 
      * @property
      */
     public void setEachLayout(String eachLayout) {
@@ -64,6 +92,9 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
     }
 
     /**
+     * Allows you to specify the schema that should be used when presenting
+     * each individual object.
+     * 
      * @property
      */
     public void setEachSchema(String eachSchema) {
@@ -75,6 +106,18 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
     }
 
     /**
+     * The class name of a {@link DataProvider data provider}. The data
+     * provider is responsible for providing a collection of objects. This
+     * collection represents all the possible options for the slot beeing
+     * edited. Additionally the data provider can also provide a custom
+     * converter for the object encoded values.
+     * 
+     * <p>
+     * Those objects that are already part of the slot's value will make
+     * the associated checkbox to be checked. In the example above, the
+     * slot contained as value a collection with at least object B but didn't
+     * contained object A or C.
+     * 
      * @property
      */
     public void setProviderClass(String providerClass) {

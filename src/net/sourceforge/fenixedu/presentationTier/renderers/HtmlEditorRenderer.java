@@ -11,6 +11,13 @@ import net.sourceforge.fenixedu.renderers.components.HtmlTextArea;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 
+/**
+ * An javascript html editor for doing the input of html text.
+ * This renderer abstracts the javascript html editor available in
+ * Fenix and binds it to the slot beeing edited.
+ * 
+ * @author cfgi
+ */
 public class HtmlEditorRenderer extends InputRenderer {
 
     private int columns;
@@ -23,21 +30,14 @@ public class HtmlEditorRenderer extends InputRenderer {
     }
 
     /**
+     * The number of columns of the fall back textarea, that
+     * is, the text area that is shown when the html editor is not
+     * supported by the browser.
+     * 
      * @property
      */
     public void setColumns(int columns) {
         this.columns = columns;
-    }
-
-    public int getHeigth() {
-        return this.heigth;
-    }
-
-    /**
-     * @property
-     */
-    public void setHeigth(int heigth) {
-        this.heigth = heigth;
     }
 
     public int getRows() {
@@ -45,10 +45,25 @@ public class HtmlEditorRenderer extends InputRenderer {
     }
 
     /**
+     * The number of rows of the fall back textarea.
+     * 
      * @property
      */
     public void setRows(int rows) {
         this.rows = rows;
+    }
+
+    public int getHeigth() {
+        return this.heigth;
+    }
+
+    /**
+     * The height of the html editor.
+     * 
+     * @property
+     */
+    public void setHeigth(int heigth) {
+        this.heigth = heigth;
     }
 
     public int getWidth() {
@@ -56,6 +71,8 @@ public class HtmlEditorRenderer extends InputRenderer {
     }
 
     /**
+     * The width of thehtml editor.
+     * 
      * @property
      */
     public void setWidth(int width) {

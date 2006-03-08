@@ -11,6 +11,14 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts.util.MessageResources;
 
+/**
+ * The default enumeration input renderer. This renderer presents an
+ * html menu with one option for each possible enum value. Each option's
+ * label is searched in the bundle <tt>ENUMERATION_RESOURCES</tt> using the
+ * enum's name.
+ * 
+ * @author cfgi
+ */
 public class EnumInputRenderer extends InputRenderer {
 
     private static Logger logger = Logger.getLogger(EnumInputRenderer.class);

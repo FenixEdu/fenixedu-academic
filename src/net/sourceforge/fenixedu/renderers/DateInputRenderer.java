@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.faces.convert.ConverterException;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -20,15 +19,35 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 
 import org.apache.struts.util.RequestUtils;
 
+/**
+ * This renderer provides a default input for a date. The date
+ * is accepted from a text input field using a certain format. The 
+ * format beeing accepted is shown to the right.
+ * 
+ * <p>
+ * Example:
+ *  <input type="text" value="01/02/3456"/> dd/MM/yyyy
+ * 
+ * @author cfgi
+ */
 public class DateInputRenderer extends TextFieldRenderer {
 
+    private static final String DEFAULT_FORMAT = "dd/MM/yyyy";
+    
     private String format;
     
     public String getFormat() {
-        return format == null ? "dd/MM/yyyy" : format;
+        return format == null ? DEFAULT_FORMAT : format;
     }
 
     /**
+     * The format in which the date should be displayed. The format can
+     * have the form accepted by 
+     * <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormat</a>
+     * 
+     * <p>
+     * The default format is {@value #DEFAULT_FORMAT}.
+     * 
      * @property
      */
     public void setFormat(String format) {

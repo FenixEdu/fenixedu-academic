@@ -17,46 +17,61 @@ import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
 import org.apache.log4j.Logger;
 
+/**
+ * This renderer provides a default way of editing objects. A table
+ * is used to organize the presentation. Each slot will have it's
+ * corresponding row. Each row has three columns. In the left column
+ * the slot's label will be presented. In the middle column the
+ * editor for the slot's value will be presented. In the rightmost
+ * column validation errors are presented.
+ * 
+ * <p>
+ * Example:
+ * <table border="1">
+ *  <tr>
+ *      <td>Name</td>
+ *      <td><input type="text"/></td>
+ *      <td>An empty name is not valid.</td>
+ *  </tr>
+ *  <tr>
+ *      <td>Age</td>
+ *      <td><input type="text" value="20"/></td>
+ *      <td></td>
+ *  </tr>
+ *  <tr>
+ *      <td>Gender</td>
+ *      <td>
+ *          <select>
+ *              <option>-- Please Select --</option>
+ *              <option>Female</option>
+ *              <option>Male</option>
+ *          </select>
+ *      </td>
+ *      <td>You must select a gender.</td>
+ *  </tr>
+ * </table>
+ * 
+ * @author cfgi
+ */
 public class StandardInputRenderer extends InputRenderer {
-    private String caption;
-
     private String rowClasses;
 
     private String columnClasses;
-
-    private String headerClasses;
-
-    public String getCaption() {
-        return caption;
-    }
-
-    /**
-     * @property
-     */
-    public void setCaption(String caption) {
-        this.caption = caption;
-    }
 
     public String getColumnClasses() {
         return columnClasses;
     }
 
     /**
+     * The classes to be used in each column of the generated table.
+     * See {@link CollectionRenderer#setColumnClasses(String)} for more details.
+     * Remember that the first column contains labels, the second column
+     * slot's editors, and the third the validator messages. 
+     * 
      * @property
      */
     public void setColumnClasses(String columnClasses) {
         this.columnClasses = columnClasses;
-    }
-
-    public String getHeaderClasses() {
-        return headerClasses;
-    }
-
-    /**
-     * @property
-     */
-    public void setHeaderClasses(String headerClasses) {
-        this.headerClasses = headerClasses;
     }
 
     public String getRowClasses() {
@@ -64,6 +79,9 @@ public class StandardInputRenderer extends InputRenderer {
     }
 
     /**
+     * The classes to be used in each row of the table.
+     * See {@link CollectionRenderer#setRowClasses(String)} for more details.
+     * 
      * @property
      */
     public void setRowClasses(String rowClasses) {

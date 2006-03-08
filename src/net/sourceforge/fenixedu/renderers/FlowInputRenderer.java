@@ -11,6 +11,20 @@ import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
+/**
+ * This input renderer allows several slots to be edited without any
+ * special formating. Each slot's editor is placed after the previous. 
+ * You should note that this technique does not work well for more than 
+ * two or three slots. You can decreese the space taken by suppresing
+ * the slots labels but then you need other way of identifing wich slot
+ * is beeing edited.
+ * 
+ * <p>
+ * Example:
+ *  Name: <input type="text"/> Age: <input type="text"/>
+ * 
+ * @author cfgi
+ */
 public class FlowInputRenderer extends InputRenderer {
     private String eachClasses;
 
@@ -29,6 +43,9 @@ public class FlowInputRenderer extends InputRenderer {
     }
 
     /**
+     * Allows to specify the class attribute for each one
+     * of the slot's presentation. 
+     * 
      * @property
      */
     public void setEachClasses(String eachClasses) {
@@ -40,6 +57,11 @@ public class FlowInputRenderer extends InputRenderer {
     }
 
     /**
+     * This property selects if each slot should be presented as an inline
+     * element or as a block element. By default slots are presented inline,
+     * that is, they will be added inside <tt>span</tt> elements. If 
+     * <tt>eachInline</tt> is <tt>false</tt> then a <tt>div</tt> will be used.
+     * 
      * @property
      */
     public void setEachInline(boolean eachInline) {
@@ -51,6 +73,8 @@ public class FlowInputRenderer extends InputRenderer {
     }
 
     /**
+     * The layout to be used in each slot's presentation.
+     * 
      * @property
      */
     public void setEachLayout(String eachLayout) {
@@ -62,6 +86,8 @@ public class FlowInputRenderer extends InputRenderer {
     }
 
     /**
+     * The schema to be used in each of the slot's presentation.
+     * 
      * @property
      */
     public void setEachSchema(String eachSchema) {
@@ -73,6 +99,8 @@ public class FlowInputRenderer extends InputRenderer {
     }
 
     /**
+     * The value of the style attribute of each slot's presentation.
+     * 
      * @property
      */
     public void setEachStyle(String eachStyle) {
@@ -84,6 +112,8 @@ public class FlowInputRenderer extends InputRenderer {
     }
 
     /**
+     * Whether the label should be presented before each editor or not. 
+     * 
      * @property
      */
     public void setLabelExcluded(boolean labelExcluded) {

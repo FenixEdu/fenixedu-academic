@@ -86,7 +86,7 @@ Documentation:
     <renderer type="boolean" class="net.sourceforge.fenixedu.renderers.BooleanRenderer"/>
 
     <!--@ The default presentation for an enum searches the bundle ENUMERATION_RESOURCES for a description
-          of the enumerate value. The key used for seaching the the enumerate name. -->
+          of the enum value. The key used for seaching is the enum name. -->
     <renderer type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumRenderer"/>
     
     <!--@ The default presentation of the date respect the user locale and preents the date
@@ -157,7 +157,7 @@ Documentation:
     <renderer mode="input" type="double" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
     <renderer mode="input" type="float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
 	
-    <!--@ The default input layout for a boolean is a checkbox. Check is <tt>true</tt>, unched is <tt>false</tt>.  -->
+    <!--@ The default input layout for a boolean is a checkbox. Check is <tt>true</tt>, unchecked is <tt>false</tt>.  -->
     <renderer mode="input" type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
     <!--@ The default input layout for a boolean is a checkbox. Check is <tt>true</tt>, unched is <tt>false</tt>.  -->
     <renderer mode="input" type="boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
@@ -170,7 +170,7 @@ Documentation:
     <renderer mode="input" type="boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
 
     <!--@ The default input layout for an enumeration presents an html menu with all the values of the enumeration
-          as options. The option labels are fetched from the resources using the enumerate name as key.  -->
+          as options. The option labels are fetched from the resources using the enum name as key.  -->
     <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>
     <renderer mode="input" type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateInputRenderer"/>
 

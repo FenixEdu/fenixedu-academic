@@ -7,6 +7,12 @@ import net.sourceforge.fenixedu.renderers.contexts.InputContext;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 
+/**
+ * This renderer serves as a base for all input renderers that are
+ * based in a text input field.
+ * 
+ * @author cfgi
+ */
 public abstract class TextFieldRenderer extends InputRenderer {
 
     private boolean disabled;
@@ -21,6 +27,12 @@ public abstract class TextFieldRenderer extends InputRenderer {
         return disabled;
     }
 
+    /**
+     * Indicates that the field is to be disabled, that is, the user
+     * won't be able to change it's value and it wont be submited.
+     * 
+     * @property
+     */
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
     }
@@ -30,6 +42,8 @@ public abstract class TextFieldRenderer extends InputRenderer {
     }
 
     /**
+     * The max length of the field's input. 
+     * 
      * @property
      */
     public void setMaxLength(Integer maxLength) {
@@ -41,6 +55,9 @@ public abstract class TextFieldRenderer extends InputRenderer {
     }
 
     /**
+     * Indicates that the field is read only. The user cannot change
+     * the field's value but the field is submited.
+     * 
      * @property
      */
     public void setReadOnly(boolean readOnly) {
@@ -52,6 +69,8 @@ public abstract class TextFieldRenderer extends InputRenderer {
     }
 
     /**
+     * The size of the field.
+     * 
      * @property
      */
     public void setSize(String size) {

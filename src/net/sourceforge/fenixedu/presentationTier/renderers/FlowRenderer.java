@@ -11,6 +11,10 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+/**
+ * 
+ * @author naat
+ */
 public class FlowRenderer extends OutputRenderer {
 
     private String eachLayout;

@@ -13,6 +13,7 @@ import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.Doc;
 import com.sun.javadoc.FieldDoc;
 import com.sun.javadoc.MethodDoc;
+import com.sun.javadoc.RootDoc;
 import com.sun.javadoc.Tag;
 
 import pt.utl.ist.renderers.ConfigurationNode;
@@ -80,12 +81,15 @@ public class HtmlProducer implements DocumentationProducer {
         footer.addAttribute("time", String.valueOf(new Date()));
 
         generateTypes(parser, main, header, footer);
+        main.removeAttribute("title");
         main.removeAttribute("body");
         
         generateLayouts(parser, main, header, footer);
+        main.removeAttribute("title");
         main.removeAttribute("body");
         
         generateRenderers(parser, main, header, footer);
+        main.removeAttribute("title");
         main.removeAttribute("body");
     }
 
@@ -194,14 +198,14 @@ public class HtmlProducer implements DocumentationProducer {
 
             renderersTemplate.addAttribute("renderer", 
                     makeAnchor(node.doc.qualifiedTypeName(), makeCvsLink(node.doc.qualifiedTypeName())));
-            renderersTemplate.addAttribute("comment", getPlainComment(node.doc));
+            renderersTemplate.addAttribute("comment", getPlainComment(parser.getRootDoc(), node.doc));
             
             List<MethodDoc> properties = mergeProperties(node);
             for (MethodDoc property : properties) {
                 Template propertiesTemplate = createTemplate("renderers-properties");
             
                 propertiesTemplate.addAttribute("signature", generateSignature(property));
-                propertiesTemplate.addAttribute("comment", getPlainComment(property));
+                propertiesTemplate.addAttribute("comment", getPlainComment(parser.getRootDoc(), property));
                 
                 renderersTemplate.addAttribute("properties", propertiesTemplate);
             }
@@ -240,7 +244,7 @@ public class HtmlProducer implements DocumentationProducer {
         return properties;
     }
 
-    private String getPlainComment(Doc doc) {
+    private String getPlainComment(RootDoc root, Doc doc) {
         StringBuilder builder = new StringBuilder();
 
         Tag[] tags = doc.inlineTags();
@@ -251,7 +255,7 @@ public class HtmlProducer implements DocumentationProducer {
                 builder.append(tag.text());
             }
             else {
-                builder.append(parseTag(doc, tag));
+                builder.append(parseTag(root, doc, tag));
             }
         }
         
@@ -261,7 +265,7 @@ public class HtmlProducer implements DocumentationProducer {
     /**
      * TODO: find how to do this with taglets 
      */
-    private String parseTag(Doc doc, Tag tag) {
+    private String parseTag(RootDoc root, Doc doc, Tag tag) {
         String name = tag.name();
         String text = tag.text();
 
@@ -290,11 +294,19 @@ public class HtmlProducer implements DocumentationProducer {
                 }
             }
             
+            String finalText;
             if (linkText != null && linkText.trim().length() > 0) {
-                return linkText;
+                finalText = linkText;
             }
             else {
-                return text;
+                finalText = text;
+            }
+            
+            if (name.startsWith("@linkplain")) {
+                return finalText;
+            }
+            else {
+                return "<code>" + finalText + "</code>";
             }
         }
         
@@ -368,7 +380,7 @@ public class HtmlProducer implements DocumentationProducer {
             }
             
             if (superDoc != null) {
-                return getPlainComment(superDoc);
+                return getPlainComment(root, superDoc);
             }
             else {
                 return "";

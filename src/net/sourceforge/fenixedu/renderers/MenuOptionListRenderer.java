@@ -17,6 +17,24 @@ import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderMode;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+/**
+ * This renderer as a purpose similar to {@link net.sourceforge.fenixedu.renderers.CheckBoxOptionListRenderer}
+ * but is intended to collect only one value. All the possible values for the slot beeing edited
+ * are presented in an html menu. The presentation of each object must have in consideration
+ * that the object is beeing presented in an option of the menu so it must be short and simple.
+ * If possible used the <tt>format</tt> property to format the object. Nevertheless the usual 
+ * configuration is possible with <tt>eachLayout</tt> and <tt>eachSchema</tt>.
+ * 
+ * <p>
+ * Example:
+ * <select>
+ *  <option>&lt;object A presentation&gt;</option>
+ *  <option>&lt;object B presentation&gt;</option>
+ *  <option>&lt;object C presentation&gt;</option>
+ * </select>
+ * 
+ * @author cfgi
+ */
 public class MenuOptionListRenderer extends InputRenderer {
     private String format; 
     
@@ -33,6 +51,10 @@ public class MenuOptionListRenderer extends InputRenderer {
     }
 
     /**
+     * This allows to specify a presentation format for each
+     * object. For more details about the format syntaxt
+     * check the {@see FormatRenderer}. 
+     * 
      * @property
      */
     public void setFormat(String format) {
@@ -44,6 +66,9 @@ public class MenuOptionListRenderer extends InputRenderer {
     }
 
     /**
+     * The layout to be used when presenting each object. This property will
+     * only be used if {@link #setFormat(String) format} is not specified. 
+     * 
      * @property
      */
     public void setEachLayout(String eachLayout) {
@@ -55,6 +80,8 @@ public class MenuOptionListRenderer extends InputRenderer {
     }
 
     /**
+     * The schema to be used when presenting each object.
+     * 
      * @property
      */
     public void setEachSchema(String eachSchema) {
@@ -66,6 +93,10 @@ public class MenuOptionListRenderer extends InputRenderer {
     }
 
     /**
+     * The class name of a {@linkplain DataProvider data provider}. The
+     * provider is responsible for constructing a collection will all
+     * possible values.
+     * 
      * @property
      */
     public void setProviderClass(String providerClass) {

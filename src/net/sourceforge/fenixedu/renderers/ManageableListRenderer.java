@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
+import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
@@ -27,8 +28,30 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.collections.Predicate;
 
+/**
+ * This renderer allows you get a list as input but delegates part of the
+ * list's management to an external action. Each one of the slot's values
+ * will be presented in an html list. The renderer manages the removal of
+ * values from the list. So a delete action link will appear next to each 
+ * object's presentation. An add action link will allow the user to start the
+ * external <em>use-case</em> that will add a new value to the list. 
+ * 
+ * <p>
+ * Example:
+ * <ul>
+ *  <li><em>&lt;Object A presentation &gt;</em> <a href="#">Remove</a>
+ *  <li><em>&lt;Object B presentation &gt;</em> <a href="#">Remove</a>
+ *  <li><em>&lt;Object C presentation &gt;</em> <a href="#">Remove</a>
+ * </ul>
+ * <a href="#">Add</a>
+ * 
+ * @author cfgi
+ */
 public class ManageableListRenderer extends InputRenderer {
 
+    public static final String MANAGED_SLOT_NAME = ManageableListRenderer.class.getName() + "/slot/name";
+    public static final String MANAGED_SLOT_KEY  = ManageableListRenderer.class.getName() + "/slot/key";
+    
     private String destination;
     
     private String eachSchema;
@@ -40,6 +63,8 @@ public class ManageableListRenderer extends InputRenderer {
     }
 
     /**
+     * The layout to be used when presenting each object.
+     * 
      * @property
      */
     public void setEachLayout(String eachLayout) {
@@ -51,6 +76,8 @@ public class ManageableListRenderer extends InputRenderer {
     }
 
     /**
+     * The schema to be used when presenting each object.
+     * 
      * @property
      */
     public void setEachSchema(String eachSchema) {
@@ -62,6 +89,46 @@ public class ManageableListRenderer extends InputRenderer {
     }
 
     /**
+     * The destination for were control will be forwarded whn pressing
+     * the add button. The destiny action is responsible for keeping the
+     * current <tt>viewstate</tt> during the interaction. The action
+     * is also responsible for changing the viewstate to reflect the intended
+     * changes, that is, adding a new value to the managed list, before
+     * sending the control back to the inicial page.
+     * 
+     * <p>
+     * The action can obtain a representation of the viewstate suitable for
+     * including in a hidden field by doing: 
+     * <pre>
+     *   IViewState viewState = RenderUtils.getViewState();
+     *   String encoded = ViewState.encodeToBase64(viewState); 
+     * </pre>
+
+     * Retrieving the viewstate from it's encoded state and preparing before
+     * sending control to the inicial page can be done with:
+     * <pre>
+     *   IViewState viewState = ViewState.decodeFromBase64(&lt;encoded viewstate&gt;);  
+     *   viewState.setUser(UserIdentityFactory.create(request)); 
+     *   // update slot in viewstate
+     *   RenderUtils.setViewState(viewState);
+     * </pre>
+     * 
+     * Updating the viewstate consists of adding a new value to the slot's.
+     * This must only be done through the meta-object contained in the viewstate:
+     * <pre>
+     *   MetaSlot slot = &lt;find slot in viewState.getMetaObject().getSlots()&gt;;
+     *   List values = new ArrayList((List) slot.getObject());
+     *   values.add(&lt;the new value&gt;);
+     *   slot.setObject(values);
+     * </pre>
+     * 
+     * The slot that was beeing managed is available in viewstate attributes. You can
+     * get information about the slot with:
+     * <pre>
+     *   String slotName = viewState.getAttribute(ManageableListRenderer.MANAGED_SLOT_NAME);
+     *   MetaSlotKey slotKey = viewState.getAttribute(ManageableListRenderer.MANAGED_SLOT_KEY);
+     * </pre>
+     * 
      * @property
      */
     public void setDestination(String destination) {
@@ -117,7 +184,7 @@ public class ManageableListRenderer extends InputRenderer {
             HtmlActionLink link = new HtmlActionLink();
             link.setName(getInputContext().getMetaObject().getKey().toString() + "/add");
             link.setText(RenderUtils.getResourceString("list.management.add")); 
-            link.setController(new FollowDestinationController());
+            link.setController(new FollowDestinationController((MetaSlot) getInputContext().getMetaObject()));
             
             container.addChild(link);
             
@@ -209,9 +276,18 @@ public class ManageableListRenderer extends InputRenderer {
     
     class FollowDestinationController extends HtmlActionLinkController {
 
+        private MetaSlot slot;
+        
+        public FollowDestinationController(MetaSlot slot) {
+            this.slot = slot;
+        }
+        
         @Override
         public void linkPressed(IViewState viewState, HtmlActionLink link) {
             if (getDestination() != null) {
+                viewState.setAttribute(ManageableListRenderer.MANAGED_SLOT_NAME, slot.getName());
+                viewState.setAttribute(ManageableListRenderer.MANAGED_SLOT_KEY, slot.getKey());
+                
                 viewState.setCurrentDestination(getDestination());
             }
         }

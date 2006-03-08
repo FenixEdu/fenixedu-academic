@@ -5,11 +5,28 @@ import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
+/**
+ * This renderer provides the default input for a integer number.
+ * The number is read form a text input field and parsed with
+ * {@link Integer#parseInt(java.lang.String, int)} were the 
+ * second argument is the value given in the {@linkplain #setBase(int) base}
+ * property.
+ *  
+ * <p>
+ * Example:
+ *  <input type="text" value="12345"/>
+ * 
+ * @author cfgi
+ */
 public class IntegerInputRenderer extends StringInputRenderer {
 
     private int base = 10;
     
     /**
+     * The base in which the number should be interpreted. For instance,
+     * if <tt>base</tt> is 16 then an input like <tt>CAFE</tt> will be 
+     * interpreted as 51966.
+     * 
      * @property
      */
     public void setBase(int base) {

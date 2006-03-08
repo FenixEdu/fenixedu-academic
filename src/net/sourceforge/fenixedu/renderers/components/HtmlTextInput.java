@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 
 public class HtmlTextInput extends HtmlInputComponent {
 
-    private Boolean readOnly;
+    private boolean readOnly;
     
     private Integer maxLength;
     
@@ -30,7 +30,7 @@ public class HtmlTextInput extends HtmlInputComponent {
         return readOnly;
     }
 
-    public void setReadOnly(Boolean readOnly) {
+    public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
     }
 
@@ -39,6 +39,10 @@ public class HtmlTextInput extends HtmlInputComponent {
         HtmlTag tag =  super.getOwnTag(context);
         
         tag.setAttribute("maxlength", this.maxLength);
+        
+        if (getReadOnly()) {
+            tag.setAttribute("readonly", "readonly");
+        }
         
         return tag;
     }

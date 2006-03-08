@@ -11,6 +11,13 @@ import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObje
 import net.sourceforge.fenixedu.renderers.MenuOptionListRenderer;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
+/**
+ * Fenix extension to the {@link net.sourceforge.fenixedu.renderers.MenuOptionListRenderer}.
+ * 
+ * {@inheritDoc}
+ * 
+ * @author cfgi
+ */
 public class InputMenuOptionListRenderer extends MenuOptionListRenderer {
     private String choiceType;
     
@@ -21,6 +28,11 @@ public class InputMenuOptionListRenderer extends MenuOptionListRenderer {
     }
 
     /**
+     * This property is really an abbreviation for a data provider that
+     * read all objects of a given type from the database. As such the
+     * class name given must be the name of a subclass of 
+     * {@link net.sourceforge.fenixedu.domain.DomainObject}.
+     * 
      * @property
      */
     public void setChoiceType(String choiceType) {
@@ -32,6 +44,10 @@ public class InputMenuOptionListRenderer extends MenuOptionListRenderer {
     }
 
     /**
+     * This property allows you to indicate a {@linkplain DataFilter data filter}
+     * that will remove values, from the collection returned by data provider,
+     * not valid in a specific context.
+     * 
      * @property
      */
     public void setFilterClass(String filterClass) {

@@ -24,8 +24,73 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 
 /**
- * Bla. testing <b>1 2 3</b>. {@link #CollectionRenderer() bla}.
- * {@inheritDoc}
+ * This renderer provides a way of presenting a collection in a table.
+ * The table will have as many rows as there are objects in the collection
+ * beeing presented. The table will have as many columns as the slots
+ * defined in the given schema.
+ * 
+ * <p>
+ * If no schema is given then a default schema is created for the first
+ * object in the collection and then used for the remaining objects.
+ * 
+ * <p>
+ * The header of each column will contain the slot's label. The table 
+ * can also be extended with control links in each row. That allows you to
+ * start an action configured with data from the object in the row.
+ * 
+ * Example:
+ *  <table border="1">
+ *      <thead>
+ *          <th>Name</th>
+ *          <th>Age</th>
+ *          <th>Gender</th>
+ *          <th></th>
+ *          <th></th>
+ *      </thead>
+ *      <tr>
+ *          <td>Name A</td>
+ *          <td>20</td>
+ *          <td>Female</td>
+ *          <td><a href="#">Edit</a></td>
+ *          <td><a href="#">Delete</a></td>
+ *      </tr>
+ *      <tr>
+ *          <td>Name B</td>
+ *          <td>22</td>
+ *          <td>Male</td>
+ *          <td><a href="#">Edit</a></td>
+ *          <td><a href="#">Delete</a></td>
+ *      </tr>
+ *      <tr>
+ *          <td>Name C</td>
+ *          <td>21</td>
+ *          <td>Female</td>
+ *          <td><a href="#">Edit</a></td>
+ *          <td><a href="#">Delete</a></td>
+ *      </tr>
+ *  </table>
+ * 
+ * <p>
+ * Control links are an advanced feature of the collection renderer. A link
+ * can be added and configured through a set of properties.  
+ * 
+ * <ul>
+ *  <li>{@linkplain #setLink(String, String) link}</li>
+ *  <li>{@linkplain #setModule(String, String) module}</li>
+ *  <li>{@linkplain #setParam(String, String) param}</li>
+ *  <li>{@linkplain #setKey(String, String) key}</li>
+ *  <li>{@linkplain #setBundle(String, String) bundle}</li>
+ *  <li>{@linkplain #setText(String, String) text}</li>
+ *  <li>{@linkplain #setOrder(String, String) order}</li>
+ * </ul>
+ * 
+ * As you may want to specify a different value for each property and for
+ * each link you need, for example, to distinguish between the <code>key</code> property
+ * of the Edit control link, and the <code>key</code> property of the Delete control link.
+ * That's why each property as the format <em>&lt;property&gt;(String, String)</em>. It
+ * means that you can separate properties by name and use <code>key(a)</code> and
+ * <code>bundle(a)</code> to refer to the key and bundle properties of the link you
+ * named "a".
  * 
  * @author cfgi
  */
@@ -58,6 +123,8 @@ public class CollectionRenderer extends OutputRenderer {
     }
 
     /**
+     * The table caption.
+     * 
      * @property
      */
     public void setCaption(String caption) {
@@ -69,6 +136,16 @@ public class CollectionRenderer extends OutputRenderer {
     }
 
     /**
+     * The classes to be used in the table columns. You can separate classes
+     * with commas. The value "class1" means that all columns will have the
+     * specified class. The value "class1,class2" means that columns will have
+     * "class1" or "class2" as their class depending of their position. The first
+     * column will have "class1", the second "class2", the third "class1", etc.
+     * The only way to specify a class for the first and last column is to give
+     * empty classes to all the middle columns. So if you have 3 columns, a value
+     * of "class1,,class2" would put "class1" in the first column and "class2"
+     * in the third and last column.
+     * 
      * @property
      */
    public void setColumnClasses(String columnClasses) {
@@ -80,6 +157,11 @@ public class CollectionRenderer extends OutputRenderer {
     }
 
     /**
+     * The value of the class attribute of each cell in the
+     * table's header. There is no repetition as in 
+     * {@linkplain #setColumnClasses(String) columnClasses}
+     * or {@linkplain #setRowClasses(String) rowClasses}.
+     * 
      * @property
      */
     public void setHeaderClasses(String headerClasses) {
@@ -91,21 +173,15 @@ public class CollectionRenderer extends OutputRenderer {
     }
 
     /**
+     * The classes to be used for each row in the table. In a similar way
+     * to {@link #setColumnClasses(String) columnClasses} you can use a repeating pattern
+     * for the classes. A value like "gray," could make each alternating row
+     * be shaded.
+     * 
      * @property
      */
     public void setRowClasses(String rowClasses) {
         this.rowClasses = rowClasses;
-    }
-    
-    public String getPrefixes() {
-        return this.prefixes;
-    }
-
-    /**
-     * @property
-     */
-    public void setPrefixes(String prefixes) {
-        this.prefixes = prefixes;
     }
 
     public String getSuffixes() {
@@ -113,10 +189,40 @@ public class CollectionRenderer extends OutputRenderer {
     }
 
     /**
+     * This property allows you to specify a string to be included as
+     * a suffix of each cell in the table. The suffix value can have
+     * a repeating pattern as {@linkplain #setRowClasses(String) rowClasses}.
+     * This means that, for the example above, a prefix of <code>",years old,"</code>
+     * would produce rows like:
+     * 
+     * <table border="1">
+     *  <tr>
+     *      <td>Name A</td>
+     *      <td>20 years old</td>
+     *      <td>Female</td>
+     *      <td><a href="#">Edit</a></td>
+     *      <td><a href="#">Delete</a></td>
+     *  </tr>
+     * </table>
+     * 
      * @property
      */
     public void setSuffixes(String suffixes) {
         this.suffixes = suffixes;
+    }
+    
+    public String getPrefixes() {
+        return this.prefixes;
+    }
+
+    /**
+     * This property is similar to {@linkplain #setSuffixes(String) suffixes} with
+     * the difference that the text is inlcuded as prefix of each cell content.
+     *
+     * @property
+     */
+    public void setPrefixes(String prefixes) {
+        this.prefixes = prefixes;
     }
 
     private String getStringPart(String string, int index) {
@@ -152,17 +258,68 @@ public class CollectionRenderer extends OutputRenderer {
     }
     
     /**
+     * The link property indicates the page to were the control link
+     * will point. All params will be appended to this link.
+     * 
      * @property
      */
     public void setLink(String name, String value) {
         getTableLink(name).setLink(value);
     }
     
+    public String getModule(String name) {
+        return getTableLink(name).getModule();
+    }
+    
+    /**
+     * By default the link property will be mapped to the current
+     * module. You can override that with this property.
+     * 
+     * @property
+     */
+    public void setModule(String name, String value) {
+        getTableLink(name).setModule(value);
+    }
+
     public String getParam(String name) {
         return getTableLink(name).getParam();
     }
     
     /**
+     * The <code>param</code> property allows you to indicate will values
+     * of the object shown in a given row should be used to configure
+     * the link specified.
+     * 
+     * <p>
+     * Imagine you want to add and link that sends you to a page were you
+     * can edit the object. The link forwards to an action and that action
+     * needs to know which is the object you want ot edit. Supposing that 
+     * each object as an <code>id</code> you may have a configuration similar
+     * to:
+     * <pre>
+     *  link(edit)  = "/edit.do"
+     *  param(edit) = "id"
+     * </pre> 
+     * The result will be a link that will point to 
+     * <code>&lt;module&gt;/edit.do?id=&lt;object id&gt:</code> were the id param
+     * will be different for each object shown in the table.
+     * 
+     * <p>
+     * The <code>param</code> property supports two more features. It allows you 
+     * to choose the name of the link parameter and explicitly give new parameters.
+     * You can specify several parameters by separating the with a comma. The full
+     * syntax of the <code>param</code> property is:
+     * <pre>
+     *  &lt;slot&gt[&lt;name&gt]?[=&lt;value&gt]?
+     * </pre>
+     * The <code>slot</code> part specifies the name of the object's slot from were
+     * the value will be retrieved. In the example above each object needed to have
+     * a <code>getId()</code> method. The <code>name</code> part specifies the name
+     * of the parameters that will appended to the link. If this parts is not given
+     * the slot name will be used. The <code>value</code> parts allows you to override
+     * the value of the parameters. If you specify this part then <code>slot</code>
+     * does not need to be a real slot of the object.
+     * 
      * @property
      */
     public void setParam(String name, String value) {
@@ -174,6 +331,9 @@ public class CollectionRenderer extends OutputRenderer {
     }
     
     /**
+     * The resource key that will be used to find the link name, that is,
+     * the name that will appear in the table.
+     * 
      * @property
      */
    public void setKey(String name, String value) {
@@ -185,21 +345,13 @@ public class CollectionRenderer extends OutputRenderer {
     }
     
     /**
+     * If the module's default bundle is not to be used you can indicate 
+     * the alternative bundle with this property.
+     * 
      * @property
      */
     public void setBundle(String name, String value) {
         getTableLink(name).setBundle(value);
-    }
-
-    public String getModule(String name) {
-        return getTableLink(name).getModule();
-    }
-    
-    /**
-     * @property
-     */
-    public void setModule(String name, String value) {
-        getTableLink(name).setModule(value);
     }
 
     public String getText(String name) {
@@ -207,6 +359,10 @@ public class CollectionRenderer extends OutputRenderer {
     }
     
     /**
+     * An alternative to the {@link #setKey(String, String) key} property
+     * is specifying the text to appear directly. Oviously this approach 
+     * does not work well with internationalized interfaces.
+     * 
      * @property
      */
     public void setText(String name, String value) {
@@ -218,6 +374,26 @@ public class CollectionRenderer extends OutputRenderer {
     }
     
     /**
+     * As the container make no guarantees about the order properties 
+     * are set in the implementation we can't rely on the order links
+     * appear defined in the page. You can use this attribute to explicitly
+     * indicate the order link should appear. The value is not important 
+     * and it's only used for an alfabethic comparison. Both the following
+     * examples indicate that the links should appear in the order: a, c, b.
+     * <p>
+     * Example 1:
+     * <pre>
+     *  order(a) = "1"
+     *  order(b) = "3"
+     *  order(c) = "2"
+     * </pre>
+     * <p>
+     * Example 2:
+     * <pre>
+     *  order(a) = "first"
+     *  order(b) = "second"
+     *  order(c) = "third"
+     * </pre> 
      * @property
      */
     public void setOrder(String name, String value) {

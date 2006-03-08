@@ -28,6 +28,36 @@ import net.sourceforge.fenixedu.renderers.utils.RenderMode;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
+/**
+ * This renderer provides a tabular presentation for a collection that allows
+ * rows of the table to be sorted by clicking the table headers. The behaviour
+ * of this renderer is very similar to the one of {@link net.sourceforge.fenixedu.renderers.CollectionRenderer}.
+ * The main difference is that the rows can be ordered and it does not support
+ * control links.
+ * 
+ * <p>
+ * Example:
+ *  <table border="1">
+ *      <thead>
+ *          <th><a href="#">Name</a></th>
+ *          <th>V <a href="#">Age</a></th>
+ *      </thead>
+ *      <tr>
+ *          <td>Name A</td>
+ *          <td>20</td>
+ *      </tr>
+ *      <tr>
+ *          <td>Name C</td>
+ *          <td>21</td>
+ *      </tr>
+ *      <tr>
+ *          <td>Name B</td>
+ *          <td>22</td>
+ *      </tr>
+ *  </table>
+ * 
+ * @author cfgi
+ */
 public class OrderableCollectionRenderer extends InputRenderer {
     private static String ORDER_ATTRIBUTE_NAME = OrderableCollectionRenderer.class.getName() + "/ascending";
     private static String COLUMN_ATTRIBUTE_NAME = OrderableCollectionRenderer.class.getName() + "/column";
@@ -86,7 +116,29 @@ public class OrderableCollectionRenderer extends InputRenderer {
         return this.collectionRenderer.getTitle();
     }
 
+    public String getAscendingClasses() {
+        return this.ascendingClasses;
+    }
+    
+    public String getDescendingClasses() {
+        return this.descendingClasses;
+    }
+    
+    public String getAscendingImage() {
+        return this.ascendingImage;
+    }
+    
+    public String getDescendingImage() {
+        return this.descendingImage;
+    }
+    
+    public boolean isContextRelative() {
+        return this.contextRelative;
+    }
+
     /**
+     * The table caption.
+     * 
      * @property
      */
     public void setCaption(String caption) {
@@ -94,6 +146,8 @@ public class OrderableCollectionRenderer extends InputRenderer {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @property
      */
     public void setClasses(String classes) {
@@ -101,6 +155,10 @@ public class OrderableCollectionRenderer extends InputRenderer {
     }
 
     /**
+     * The classes to be used in each column of the table. See
+     * {@link CollectionRenderer#setColumnClasses(String)} for 
+     * more details.
+     * 
      * @property
      */
     public void setColumnClasses(String columnClasses) {
@@ -108,6 +166,10 @@ public class OrderableCollectionRenderer extends InputRenderer {
     }
 
     /**
+     * The classes to be used in each header cell. See
+     * {@link CollectionRenderer#setHeaderClasses(String)} for 
+     * more details.
+     * 
      * @property
      */
     public void setHeaderClasses(String headerClasses) {
@@ -115,6 +177,10 @@ public class OrderableCollectionRenderer extends InputRenderer {
     }
 
     /**
+     * The string prefix to include in each cell of the table. See
+     * {@link CollectionRenderer#setPrefixes(String)} for 
+     * more details.
+     * 
      * @property
      */
     public void setPrefixes(String prefixes) {
@@ -122,6 +188,10 @@ public class OrderableCollectionRenderer extends InputRenderer {
     }
 
     /**
+     * The classes for the table's rows. See
+     * {@link CollectionRenderer#setRowClasses(String)} for 
+     * more details.
+     * 
      * @property
      */
     public void setRowClasses(String rowClasses) {
@@ -129,6 +199,8 @@ public class OrderableCollectionRenderer extends InputRenderer {
     }
 
     /**
+     * The table style. 
+     * 
      * @property
      */
     public void setStyle(String style) {
@@ -136,6 +208,10 @@ public class OrderableCollectionRenderer extends InputRenderer {
     }
 
     /**
+     * The string suffix to include in each cell of the table. See
+     * {@link CollectionRenderer#setPrefixes(String)} for 
+     * more details.
+     * 
      * @property
      */
     public void setSuffixes(String suffixes) {
@@ -143,61 +219,64 @@ public class OrderableCollectionRenderer extends InputRenderer {
     }
 
     /**
+     * The table html title.
+     * 
      * @property
      */
     public void setTitle(String title) {
         this.collectionRenderer.setTitle(title);
     }
 
-    public String getAscendingClasses() {
-        return this.ascendingClasses;
-    }
-
     /**
+     * The classes to use in a header when the corresponding column is 
+     * ordered in <strong>ascending</strong> mode. This property can be used 
+     * to use a custom style that denotes an ascending ordering.
+     * 
      * @property
      */
     public void setAscendingClasses(String ascendingClasses) {
         this.ascendingClasses = ascendingClasses;
     }
 
-    public String getDescendingClasses() {
-        return this.descendingClasses;
-    }
-
     /**
+     * The classes to use in a header when the corresponding column is 
+     * ordered in <strong>descending</strong> mode. This property can be 
+     * used to use a custom style that denotes an descending ordering.
+     * 
      * @property
      */
     public void setDescendingClasses(String descendingClasses) {
         this.descendingClasses = descendingClasses;
     }
 
-    public String getAscendingImage() {
-        return this.ascendingImage;
-    }
-
     /**
+     * If this property is specified an image will be placed to the left
+     * of the header title. This image will be used when the header is
+     * clicked and the ordering is <strong>ascending</strong>.
+     * 
      * @property
      */
     public void setAscendingImage(String ascendingImage) {
         this.ascendingImage = ascendingImage;
     }
 
-    public String getDescendingImage() {
-        return this.descendingImage;
-    }
-
     /**
+     * If this property is specified an image will be placed to the left
+     * of the header title. This image will be used when the header is
+     * clicked and the ordering is <strong>descending</strong>.
+     * 
      * @property
      */
     public void setDescendingImage(String descendingImage) {
         this.descendingImage = descendingImage;
     }
 
-    public boolean isContextRelative() {
-        return this.contextRelative;
-    }
-
     /**
+     * This property specifies whether the image url given in 
+     * {@link #setAscendingImage(String) ascendingImage} or 
+     * {@link #setDescendingImage(String) descendingImage} is relative
+     * to the application context or not. 
+     * 
      * @property
      */
     public void setContextRelative(boolean contextRelative) {

@@ -11,6 +11,13 @@ import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObje
 import net.sourceforge.fenixedu.renderers.CheckBoxOptionListRenderer;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
+/**
+ * This is the Fenix extension to the {@link net.sourceforge.fenixedu.renderers.CheckBoxOptionListRenderer}.
+ * 
+ * {@inheritDoc}
+ * 
+ * @author cfgi
+ */
 public class InputCheckBoxListRenderer extends CheckBoxOptionListRenderer {
     private String choiceType;
     
@@ -21,6 +28,10 @@ public class InputCheckBoxListRenderer extends CheckBoxOptionListRenderer {
     }
 
     /**
+     * This property is an abbreviation for a data provider that provides all objects
+     * of a given type. The class named given must be a {@link net.sourceforge.fenixedu.domain.DomainObject}
+     * beacuse this renderers tries to read all objects using the <tt>ReadAllDomainObjects</tt> service.
+     * 
      * @property
      */
     public void setChoiceType(String choiceType) {
@@ -32,6 +43,10 @@ public class InputCheckBoxListRenderer extends CheckBoxOptionListRenderer {
     }
 
     /**
+     * Since all objects of a given type are selected with {@link #setChoiceType(String) choiceType}, this
+     * property allows you to specify a {@link DataFilter data filter} that filters objects that are
+     * not allowed from the collection created by the provider.
+     * 
      * @property
      */
     public void setFilterClass(String filterClass) {

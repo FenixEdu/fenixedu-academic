@@ -28,6 +28,8 @@ public class RenderersParser {
     private Hashtable<String, List<ConfigurationNode>> types;
     private Hashtable<String, List<ConfigurationNode>> layouts;
     
+    private RootDoc rootDoc;
+    
     public RenderersParser(ParserConfiguration configuration) {
         this.configuration = configuration;
         
@@ -56,12 +58,21 @@ public class RenderersParser {
         this.configuration = configuration;
     }
 
+    public RootDoc getRootDoc() {
+        return this.rootDoc;
+    }
+
+    protected void setRootDoc(RootDoc rootDoc) {
+        this.rootDoc = rootDoc;
+    }
+
     public void parse(RootDoc root) {
         collectRenderers(root);
         collectLayoutsAndTypes(root);
     }
 
     private void collectRenderers(RootDoc root) {
+        setRootDoc(root);
         ClassDoc rendererClassDoc = root.classNamed(RENDERER_CLASS_NAME);
         
         if (rendererClassDoc == null) {

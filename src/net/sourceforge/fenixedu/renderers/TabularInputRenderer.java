@@ -6,6 +6,57 @@ import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 
+/**
+ * This renderer allows to edit all objects of a collection at the same time.
+ * The presentation is very similar to the one of {@link net.sourceforge.fenixedu.renderers.CollectionRenderer}
+ * but instead of presentig the slot's value in each cell, the slot's editor
+ * is shown.
+ * 
+ * <p>
+ * Example:
+ * <table border="1">
+ *  <thead>
+ *      <th>Name</th>
+ *      <th>Age</th>
+ *      <th>Gender</th>
+ *  </thead>
+ *  <tr>
+ *      <td><input type="text" value="Name A"/></td>
+ *      <td><input type="text" value="20"/></td>
+ *      <td>
+ *          <select>
+ *              <option>-- Please Select --</option>
+ *              <option selected="selected">Female</option>
+ *              <option>Male</option>
+ *          </select>
+ *      </td>
+ *  </tr>
+ *  <tr>
+ *      <td><input type="text" value="Name B"/></td>
+ *      <td><input type="text" value="22"/></td>
+ *      <td>
+ *          <select>
+ *              <option>-- Please Select --</option>
+ *              <option>Female</option>
+ *              <option selected="selected">Male</option>
+ *          </select>
+ *      </td>
+ *  </tr>
+ *  <tr>
+ *      <td><input type="text" value="Name C"/></td>
+ *      <td><input type="text" value="21"/></td>
+ *      <td>
+ *          <select>
+ *              <option>-- Please Select --</option>
+ *              <option selected="selected">Female</option>
+ *              <option>Male</option>
+ *          </select>
+ *      </td>
+ *  </tr>
+ * </table>
+ * 
+ * @author cfgi
+ */
 public class TabularInputRenderer extends InputRenderer {
 
     private CollectionRenderer collectionRenderer;
@@ -21,75 +72,40 @@ public class TabularInputRenderer extends InputRenderer {
         };
     }
     
-    public String getBundle(String name) {
-        return this.collectionRenderer.getBundle(name);
+    public String getClasses() {
+        return this.collectionRenderer.getClasses();
+    }
+    
+    public String getStyle() {
+        return this.collectionRenderer.getStyle();
+    }
+    
+    public String getTitle() {
+        return this.collectionRenderer.getTitle();
     }
 
     public String getCaption() {
         return this.collectionRenderer.getCaption();
     }
-
-    public String getClasses() {
-        return this.collectionRenderer.getClasses();
+    
+    public String getHeaderClasses() {
+        return this.collectionRenderer.getHeaderClasses();
     }
 
     public String getColumnClasses() {
         return this.collectionRenderer.getColumnClasses();
     }
-
-    public String getHeaderClasses() {
-        return this.collectionRenderer.getHeaderClasses();
-    }
-
-    public String getKey(String name) {
-        return this.collectionRenderer.getKey(name);
-    }
-
-    public String getLink(String name) {
-        return this.collectionRenderer.getLink(name);
-    }
-
-    public String getModule(String name) {
-        return this.collectionRenderer.getModule(name);
-    }
-
-    public String getOrder(String name) {
-        return this.collectionRenderer.getOrder(name);
-    }
-
-    public String getParam(String name) {
-        return this.collectionRenderer.getParam(name);
+    
+    public String getRowClasses() {
+        return this.collectionRenderer.getRowClasses();
     }
 
     public String getPrefixes() {
         return this.collectionRenderer.getPrefixes();
     }
 
-    public String getRowClasses() {
-        return this.collectionRenderer.getRowClasses();
-    }
-
-    public String getStyle() {
-        return this.collectionRenderer.getStyle();
-    }
-
     public String getSuffixes() {
         return this.collectionRenderer.getSuffixes();
-    }
-
-    public String getText(String name) {
-        return this.collectionRenderer.getText(name);
-    }
-
-    public String getTitle() {
-        return this.collectionRenderer.getTitle();
-    }
-
-    /**
-     * @property
-     */
-    public void setBundle(String name, String value) {
-        this.collectionRenderer.setBundle(name, value);
     }
 
     /**
@@ -100,6 +116,8 @@ public class TabularInputRenderer extends InputRenderer {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @property
      */
     public void setClasses(String classes) {
@@ -107,69 +125,8 @@ public class TabularInputRenderer extends InputRenderer {
     }
 
     /**
-     * @property
-     */
-    public void setColumnClasses(String columnClasses) {
-        this.collectionRenderer.setColumnClasses(columnClasses);
-    }
-
-    /**
-     * @property
-     */
-    public void setHeaderClasses(String headerClasses) {
-        this.collectionRenderer.setHeaderClasses(headerClasses);
-    }
-
-    /**
-     * @property
-     */
-    public void setKey(String name, String value) {
-        this.collectionRenderer.setKey(name, value);
-    }
-
-    /**
-     * @property
-     */
-    public void setLink(String name, String value) {
-        this.collectionRenderer.setLink(name, value);
-    }
-
-    /**
-     * @property
-     */
-    public void setModule(String name, String value) {
-        this.collectionRenderer.setModule(name, value);
-    }
-
-    /**
-     * @property
-     */
-    public void setOrder(String name, String value) {
-        this.collectionRenderer.setOrder(name, value);
-    }
-
-    /**
-     * @property
-     */
-    public void setParam(String name, String value) {
-        this.collectionRenderer.setParam(name, value);
-    }
-
-    /**
-     * @property
-     */
-    public void setPrefixes(String prefixes) {
-        this.collectionRenderer.setPrefixes(prefixes);
-    }
-
-    /**
-     * @property
-     */
-    public void setRowClasses(String rowClasses) {
-        this.collectionRenderer.setRowClasses(rowClasses);
-    }
-
-    /**
+     * {@inheritDoc}
+     * 
      * @property
      */
     public void setStyle(String style) {
@@ -177,24 +134,59 @@ public class TabularInputRenderer extends InputRenderer {
     }
 
     /**
-     * @property
-     */
-    public void setSuffixes(String suffixes) {
-        this.collectionRenderer.setSuffixes(suffixes);
-    }
-
-    /**
-     * @property
-     */
-    public void setText(String name, String value) {
-        this.collectionRenderer.setText(name, value);
-    }
-
-    /**
+     * {@inheritDoc}
+     * 
      * @property
      */
     public void setTitle(String title) {
         this.collectionRenderer.setTitle(title);
+    }
+
+    /**
+     * The classes to be used in each header cell. See
+     * {@link CollectionRenderer#setHeaderClasses(String)}.
+     * 
+     * @property
+     */
+    public void setHeaderClasses(String headerClasses) {
+        this.collectionRenderer.setHeaderClasses(headerClasses);
+    }
+
+    /**
+     * The classes to be used in each row's cell. See
+     * {@link CollectionRenderer#setColumnClasses(String)}.
+     * @property
+     */
+    public void setColumnClasses(String columnClasses) {
+        this.collectionRenderer.setColumnClasses(columnClasses);
+    }
+
+    /**
+     * The classes to be used in each row. See
+     * {@link CollectionRenderer#setRowClasses(String)}.
+     *
+     * @property
+     */
+    public void setRowClasses(String rowClasses) {
+        this.collectionRenderer.setRowClasses(rowClasses);
+    }
+
+    /**
+     * The text to be added as a prefix to each cell.
+     * 
+     * @property
+     */
+    public void setPrefixes(String prefixes) {
+        this.collectionRenderer.setPrefixes(prefixes);
+    }
+
+    /**
+     * The text to be added as a suffix of each cell.
+     * 
+     * @property
+     */
+    public void setSuffixes(String suffixes) {
+        this.collectionRenderer.setSuffixes(suffixes);
     }
 
     @Override
