@@ -72,6 +72,12 @@
 		<inverse-foreignkey field-ref="keyParentParty"/>
 	</collection-descriptor>
 	
+    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         	name="projectParticipations"
+         	element-class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
+         <inverse-foreignkey field-ref="keyParty"/>
+    </collection-descriptor>
+	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Unit -->

@@ -1,5 +1,3 @@
-<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Unit -->
-
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.project.Project"
 	table="PROJECT">
 	
@@ -45,6 +43,12 @@
 	   jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectType2SqlProjectTypeConversion"
     /> 
+	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         	name="projectParticipations"
+         	element-class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
+         <inverse-foreignkey field-ref="keyType"/>
+    </collection-descriptor>
 	
 </class-descriptor>
 
@@ -107,4 +111,52 @@
 		<fk-pointing-to-element-class column="KEY_PROJECT"/>
 	</collection-descriptor>
 </class-descriptor>
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation"
+	table="PROJECT_PARTICIPATION">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	
+	<field-descriptor
+		name="keyProject" 
+		column="KEY_PROJECT"
+		jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor
+		name="keyParty" 
+		column="KEY_PARTY"
+		jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor
+	   name="role"    
+	   column="PROJECT_TYPE"  
+	   jdbc-type="VARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectParticipationType2SqlProjectParticipationTypeConversion"
+    /> 
+    
+    <reference-descriptor auto-retrieve="false" 
+		name="project"
+		class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
+		>
+	    <foreignkey field-ref="keyProject"/>
+    </reference-descriptor>
+
+    <reference-descriptor auto-retrieve="false" 
+		name="party"
+		class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party"
+		>
+	    <foreignkey field-ref="keyParty"/>
+    </reference-descriptor>
+	
+</class-descriptor>
+
 

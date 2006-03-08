@@ -20,3 +20,4 @@ function execute() {
 }
 
 execute "Alter TeacherServiceExemption Table" alterTeacherServiceExemptionTable.sql
+execute "Create ProjectParticipation Table" createProjectParticipationTable.sql

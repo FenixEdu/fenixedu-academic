@@ -125,6 +125,7 @@ valueType net.sourceforge.fenixedu.domain.research.project.ProjectType							as 
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum					as PartyType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum		as AccountabilityType;
 valueType net.sourceforge.fenixedu.util.MultiLanguageString										as MultiLanguageString;
+valueType net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.ProjectParticipationType								as ProjectParticipationType;
 
 /*
 *
@@ -2867,6 +2868,12 @@ class net.sourceforge.fenixedu.domain.research.project.Project extends net.sourc
 	Partial startDate;
 	Partial endDate;
 	ProjectType projectType;
+}
+
+class net.sourceforge.fenixedu.domain.research.project.ProjectParticipation extends net.sourceforge.fenixedu.domain.DomainObject{
+	ProjectParticipationType role;
+	Integer keyProject;
+	Integer keyParty;
 }
 
 class net.sourceforge.fenixedu.domain.research.event.Event extends net.sourceforge.fenixedu.domain.DomainObject{
@@ -5993,6 +6000,7 @@ relation AccountabilityChildParty {
 	   multiplicity *;
 	}	 
 }
+
 
 /*
  * Relations definitions of relations to RootDomainObject

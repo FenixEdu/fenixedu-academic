@@ -22,8 +22,8 @@ public class Project extends Project_Base {
     
     /** This method is responsible for creating the logic of what is a translation
      * If the project hasn't got a given attribute in the wanted language it 
-     * substitutes it by Portuguese(?). If the project hasn't got any attribute in
-     * the wanted language a domainException is thrown.
+     * substitutes it by the application's delfault language. If the project hasn't
+     * got any attribute in the wanted language a domainException is thrown.
      * @param language the language we want the translation
      * @return the projecttranslation in the given language
      */
