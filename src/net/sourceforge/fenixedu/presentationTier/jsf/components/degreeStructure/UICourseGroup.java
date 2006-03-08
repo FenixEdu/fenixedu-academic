@@ -308,25 +308,11 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("class", "showinfo3 mvert0", null);
         writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3)  + "em;", null);
 
-        double sumContactLoad = 0.0;
-        double sumAutonomousWork = 0.0;
-        double sumTotalLoad = 0.0;
-        double sumCredits = 0.0;
         for (Context context : ((CourseGroup)this.degreeModule).getSortedChildContextsWithCurricularCourses()) {
-            DegreeModule degreeModule = context.getChildDegreeModule();
-            
-            sumContactLoad += ((CurricularCourse)degreeModule).getContactLoad(context.getCurricularPeriod().getOrder());
-            sumAutonomousWork += ((CurricularCourse)degreeModule).getAutonomousWorkHours(context.getCurricularPeriod().getOrder());
-            sumTotalLoad += ((CurricularCourse)degreeModule).getTotalLoad(context.getCurricularPeriod().getOrder());
-            sumCredits += degreeModule.getEctsCredits();
-            new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs + "\t").encodeBegin(facesContext);
+            CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+
+            new UICurricularCourse(curricularCourse, context, this.toEdit, this.showRules, this.depth, this.tabs + "\t").encodeBegin(facesContext);
         }
-        
-        List<Double> result = new ArrayList<Double>(4);
-        result.add(sumContactLoad);
-        result.add(sumAutonomousWork);
-        result.add(sumTotalLoad);
-        result.add(sumCredits);
         
         writer.endElement("table");
         writer.endElement("div");
