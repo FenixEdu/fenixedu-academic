@@ -120,7 +120,7 @@
 			<h:outputText value="<br/>" escape="false"/>
 		</h:panelGroup>
 
-		<h:dataTable value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">
+		<h:dataTable value="#{CurricularCourseManagement.curricularCourse.parentContexts}" var="context">
 			<h:column>
 				<h:panelGroup rendered="#{context.idInternal != CurricularCourseManagement.contextID}">
 					<h:outputText value="<fieldset class='lfloat'>" escape="false"/>

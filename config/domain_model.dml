@@ -383,7 +383,7 @@ class net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias extend
 class net.sourceforge.fenixedu.domain.degreeStructure.Context extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer order;
 	Integer keyCurricularSemester;
-	Integer keyDegreeModule;
+	Integer keyChildDegreeModule;
 	Integer keyParentCourseGroup;
 	Integer keyBeginExecutionPeriod;
 	Integer keyEndExecutionPeriod;
@@ -3361,9 +3361,9 @@ relation DegreeDegreeInfo {
 
 
 relation DegreeModuleContext {
-	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModule;
+	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole childDegreeModule;
 	
-	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole degreeModuleContexts{
+	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole parentContexts {
 		multiplicity *;
 	}
 }

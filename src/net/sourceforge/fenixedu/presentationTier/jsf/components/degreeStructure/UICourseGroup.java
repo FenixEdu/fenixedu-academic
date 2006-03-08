@@ -313,13 +313,13 @@ public class UICourseGroup extends UIDegreeModule {
         double sumTotalLoad = 0.0;
         double sumCredits = 0.0;
         for (Context context : ((CourseGroup)this.degreeModule).getSortedContextsWithCurricularCourses()) {
-            DegreeModule degreeModule = context.getDegreeModule();
+            DegreeModule degreeModule = context.getChildDegreeModule();
             
             sumContactLoad += ((CurricularCourse)degreeModule).getContactLoad(context.getCurricularPeriod().getOrder());
             sumAutonomousWork += ((CurricularCourse)degreeModule).getAutonomousWorkHours(context.getCurricularPeriod().getOrder());
             sumTotalLoad += ((CurricularCourse)degreeModule).getTotalLoad(context.getCurricularPeriod().getOrder());
             sumCredits += degreeModule.getEctsCredits();
-            new UICurricularCourse(context.getDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs + "\t").encodeBegin(facesContext);
+            new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs + "\t").encodeBegin(facesContext);
         }
         
         List<Double> result = new ArrayList<Double>(4);
@@ -375,7 +375,7 @@ public class UICourseGroup extends UIDegreeModule {
 
     private void encodeChildCourseGroups() throws IOException {
         for (Context context : ((CourseGroup)this.degreeModule).getSortedContextsWithCourseGroups()) {
-            new UICourseGroup(context.getDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses).encodeBegin(facesContext);
+            new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses).encodeBegin(facesContext);
         }
     }
 

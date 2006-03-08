@@ -98,7 +98,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         result.addAll(courseGroup.getSortedContextsWithCurricularCourses());
         
         for (final Context context : courseGroup.getSortedContextsWithCourseGroups()) {
-            collectChildDegreeModules(result, (CourseGroup) context.getDegreeModule());
+            collectChildDegreeModules(result, (CourseGroup) context.getChildDegreeModule());
         }
     }
 
@@ -151,7 +151,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         Set<Unit> scientificAreaUnits = new HashSet<Unit>();
         
         for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
-            CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getDegreeModule();
+            CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
             
             if (!scientificAreaUnits.contains(curricularCourse.getCompetenceCourse().getScientificAreaUnit())) {
                 final Row row = spreadsheet.addRow();
@@ -182,7 +182,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     
     private void fillStudiesPlan(List<Context> contextsWithCurricularCourses, final Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
         for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
-            CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getDegreeModule();
+            CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
             
             final Row row = spreadsheet.addRow();
             

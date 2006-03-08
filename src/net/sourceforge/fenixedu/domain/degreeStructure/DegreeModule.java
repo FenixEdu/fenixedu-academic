@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 public abstract class DegreeModule extends DegreeModule_Base {
        
     public void delete() {
-        for (;!getDegreeModuleContexts().isEmpty(); getDegreeModuleContexts().get(0).delete());
+        for (;!getParentContexts().isEmpty(); getParentContexts().get(0).delete());
         for (;!getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
         for (;!getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().get(0).delete());
         for (;!getParticipatingExclusivenessCurricularRules().isEmpty(); getParticipatingExclusivenessCurricularRules().get(0).delete());
@@ -31,10 +31,10 @@ public abstract class DegreeModule extends DegreeModule_Base {
     }
     
     public void deleteContext(Context context) {        
-        if (hasDegreeModuleContexts(context)) {
+        if (hasParentContexts(context)) {
             context.delete();
         }
-        if (!hasAnyDegreeModuleContexts()) {
+        if (!hasAnyParentContexts()) {
             delete();
         }
     }
@@ -46,7 +46,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
     }
 
     private void collectParentCourseGroups(Set<CourseGroup> result, DegreeModule module) {
-        for (Context parent : module.getDegreeModuleContexts()) {
+        for (Context parent : module.getParentContexts()) {
             if (!parent.getParentCourseGroup().isRoot()) {
                 result.add(parent.getParentCourseGroup());
                 collectParentCourseGroups(result, parent.getParentCourseGroup());

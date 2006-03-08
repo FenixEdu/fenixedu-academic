@@ -519,7 +519,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     private Object readParentCourseGroups(String selectedCurricularRuleType) throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (selectedCurricularRuleType != null && !selectedCurricularRuleType.equals(NO_SELECTION_STRING)) {
-            for (final Context context : getDegreeModule().getDegreeModuleContexts()) {
+            for (final Context context : getDegreeModule().getParentContexts()) {
                 final CourseGroup courseGroup = context.getParentCourseGroup();
                 if (!courseGroup.isRoot()) {
                     result.add(new SelectItem(courseGroup.getIdInternal(), courseGroup.getName()));

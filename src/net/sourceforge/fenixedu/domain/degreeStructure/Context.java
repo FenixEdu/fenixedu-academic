@@ -21,7 +21,7 @@ public class Context extends Context_Base implements Comparable<Context> {
             throw new DomainException("error.incorrectContextValues");
         }
         super.setParentCourseGroup(courseGroup);
-        super.setDegreeModule(degreeModule);
+        super.setChildDegreeModule(degreeModule);
         super.setCurricularPeriod(curricularPeriod);
         super.setBeginExecutionPeriod(beginExecutionPeriod);
         super.setEndExecutionPeriod(endExecutionPeriod);
@@ -29,13 +29,13 @@ public class Context extends Context_Base implements Comparable<Context> {
     
     public void edit(CourseGroup courseGroup, DegreeModule degreeModule, CurricularPeriod curricularPeriod) {
         setParentCourseGroup(courseGroup);
-        setDegreeModule(degreeModule);
+        setChildDegreeModule(degreeModule);
         setCurricularPeriod(curricularPeriod);
     }
 
     public void delete() {
         removeCurricularPeriod();
-        removeDegreeModule();
+        removeChildDegreeModule();
         removeParentCourseGroup();
         removeBeginExecutionPeriod();
         removeEndExecutionPeriod();
@@ -47,14 +47,14 @@ public class Context extends Context_Base implements Comparable<Context> {
         if (this.getParentCourseGroup().equals(o.getParentCourseGroup()) && orderCompare != 0) {
             return orderCompare;
         } else {
-            if (this.getDegreeModule() instanceof CurricularCourse) {
+            if (this.getChildDegreeModule() instanceof CurricularCourse) {
                 int periodsCompare = this.getCurricularPeriod().compareTo(o.getCurricularPeriod());
                 if (periodsCompare != 0) {
                     return periodsCompare;     
                 }
-                return this.getDegreeModule().getName().compareTo(o.getDegreeModule().getName());
+                return this.getChildDegreeModule().getName().compareTo(o.getChildDegreeModule().getName());
             } else {
-                return this.getDegreeModule().getName().compareTo(o.getDegreeModule().getName());
+                return this.getChildDegreeModule().getName().compareTo(o.getChildDegreeModule().getName());
             }
         }
     }
@@ -73,8 +73,8 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     @Override
     @Checked("ContextPredicates.curricularPlanMemberWritePredicate")
-    public void setDegreeModule(DegreeModule degreeModule) {
-        super.setDegreeModule(degreeModule);
+    public void setChildDegreeModule(DegreeModule degreeModule) {
+        super.setChildDegreeModule(degreeModule);
     }
 
 }

@@ -51,7 +51,7 @@
 	
 	<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 	<h:outputText value="<h4 class='first'>#{bolonhaBundle['contexts']}</h4>" escape="false"/>	
-	<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">
+	<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.parentContexts}" var="context">
 		<h:outputText value="<fieldset class='lfloat mbottom1'>" escape="false"/>
 		<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
 		<h:outputText value="#{context.parentCourseGroup.name}</p>" escape="false"/>

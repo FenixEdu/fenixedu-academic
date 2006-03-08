@@ -38,9 +38,9 @@
          jdbc-type="VARCHAR"
     />		
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="degreeModuleContexts"
+			name="parentContexts"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-		<inverse-foreignkey field-ref="keyDegreeModule"/>
+		<inverse-foreignkey field-ref="keyChildDegreeModule"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularRules"
@@ -107,9 +107,9 @@
 		<foreignkey field-ref="keyParentDegreeCurricularPlan"/>
 	</reference-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="degreeModuleContexts"
+			name="parentContexts"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-		<inverse-foreignkey field-ref="keyDegreeModule"/>
+		<inverse-foreignkey field-ref="keyChildDegreeModule"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularRules"
@@ -156,7 +156,7 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyDegreeModule"
+		name="keyChildDegreeModule"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
 	/>
@@ -191,10 +191,10 @@
 	</reference-descriptor>
 	
 	<reference-descriptor auto-retrieve="false"
-			name="degreeModule"
+			name="childDegreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
             >
-		<foreignkey field-ref="keyDegreeModule"/>
+		<foreignkey field-ref="keyChildDegreeModule"/>
 	</reference-descriptor>	
 	
 	<reference-descriptor auto-retrieve="false"

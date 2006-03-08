@@ -226,7 +226,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         double sumTotalLoad = 0.0;
         double sumCredits = 0.0;
         for (Context context : contexts) {
-            DegreeModule degreeModule = context.getDegreeModule();
+            DegreeModule degreeModule = context.getChildDegreeModule();
             if (degreeModule instanceof CurricularCourse) {
                 sumContactLoad += ((CurricularCourse)degreeModule).getContactLoad(context.getCurricularPeriod().getOrder());
                 sumAutonomousWork += ((CurricularCourse)degreeModule).getAutonomousWorkHours(context.getCurricularPeriod().getOrder());

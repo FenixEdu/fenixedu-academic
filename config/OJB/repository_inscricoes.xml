@@ -492,9 +492,9 @@
 		<inverse-foreignkey field-ref="keyCurricularCourse"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="degreeModuleContexts"
+			name="parentContexts"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-		<inverse-foreignkey field-ref="keyDegreeModule"/>
+		<inverse-foreignkey field-ref="keyChildDegreeModule"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularRules"

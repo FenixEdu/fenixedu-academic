@@ -328,7 +328,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     
     public boolean isToDelete() throws FenixFilterException, FenixServiceException {
         if (getCurricularCourse() != null) {
-            toDelete = getCurricularCourse().getDegreeModuleContextsCount() == 1; // Last context?
+            toDelete = getCurricularCourse().getParentContextsCount() == 1; // Last context?
         }
         return toDelete;
     }
