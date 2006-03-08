@@ -154,12 +154,7 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 
 			boolean teacherBelongsToDepartment = false;
 
-			// TODO: See this because this is not always true. Changes when
-			// teacher changes department (e.g. In different
-			// execution year/periods he might work in different departments...
-			// (see new model)
-
-			if (teacher.getLastWorkingDepartment() == department) {
+			if (teacher.getCurrentWorkingDepartment() == department) {
 				teacherBelongsToDepartment = true;
 			}
 
