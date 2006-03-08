@@ -24,7 +24,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
             ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod);
     
     public void editContext(Context context, CourseGroup courseGroup, CurricularPeriod curricularPeriod) {
-        if (context.getCourseGroup() != courseGroup || context.getCurricularPeriod() != curricularPeriod) {
+        if (context.getParentCourseGroup() != courseGroup || context.getCurricularPeriod() != curricularPeriod) {
             checkContextsFor(courseGroup, curricularPeriod);
             context.edit(courseGroup, this, curricularPeriod);
         }
@@ -47,9 +47,9 @@ public abstract class DegreeModule extends DegreeModule_Base {
 
     private void collectParentCourseGroups(Set<CourseGroup> result, DegreeModule module) {
         for (Context parent : module.getDegreeModuleContexts()) {
-            if (!parent.getCourseGroup().isRoot()) {
-                result.add(parent.getCourseGroup());
-                collectParentCourseGroups(result, parent.getCourseGroup());
+            if (!parent.getParentCourseGroup().isRoot()) {
+                result.add(parent.getParentCourseGroup());
+                collectParentCourseGroups(result, parent.getParentCourseGroup());
             }
         }
     }

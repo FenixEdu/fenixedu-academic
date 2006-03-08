@@ -127,9 +127,9 @@
 		<inverse-foreignkey field-ref="keyExclusiveDegreeModule"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="courseGroupContexts"
+			name="childContexts"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-		<inverse-foreignkey field-ref="keyCourseGroup"/>
+		<inverse-foreignkey field-ref="keyParentCourseGroup"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="participatingContextCurricularRules"
@@ -161,7 +161,7 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="keyCourseGroup"
+		name="keyParentCourseGroup"
 		column="KEY_COURSE_GROUP"
 		jdbc-type="INTEGER"
 	/>
@@ -198,10 +198,10 @@
 	</reference-descriptor>	
 	
 	<reference-descriptor auto-retrieve="false"
-			name="courseGroup"
+			name="parentCourseGroup"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup"
             >
-		<foreignkey field-ref="keyCourseGroup"/>
+		<foreignkey field-ref="keyParentCourseGroup"/>
 	</reference-descriptor>
 
 	<reference-descriptor auto-retrieve="false"

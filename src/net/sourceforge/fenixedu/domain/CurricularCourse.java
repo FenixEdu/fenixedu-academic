@@ -100,7 +100,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
     
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        return getDegreeModuleContexts().get(0).getCourseGroup().getParentDegreeCurricularPlan();
+        return getDegreeModuleContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan();
     }
     
     public void edit(Double weight, String prerequisites, String prerequisitesEn,
@@ -677,7 +677,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     
     protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
         for (final Context context : this.getDegreeModuleContexts()) {
-            if (context.getCourseGroup() == parentCourseGroup && context.getCurricularPeriod() == curricularPeriod) {
+            if (context.getParentCourseGroup() == parentCourseGroup && context.getCurricularPeriod() == curricularPeriod) {
                 throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
             }
         }

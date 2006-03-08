@@ -86,7 +86,7 @@ public class UICurricularCourse extends UIDegreeModule {
             writer.writeAttribute("align", "center", null);
             writer.append(CurricularPeriodLabelFormatter.getFullLabel((CurricularPeriod)previousContext.getCurricularPeriod(), getLocale(), true));
         } else {
-            writer.append(previousContext.getCourseGroup().getName());
+            writer.append(previousContext.getParentCourseGroup().getName());
         }
         writer.endElement("td");
         writer.startElement("td", this);

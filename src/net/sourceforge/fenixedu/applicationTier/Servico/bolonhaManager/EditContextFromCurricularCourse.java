@@ -18,7 +18,7 @@ public class EditContextFromCurricularCourse extends Service {
     public void run(CurricularCourse curricularCourse, Context context, CourseGroup courseGroup,
             Integer year, Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
 
-        CurricularPeriod degreeCurricularPeriod = context.getCourseGroup()
+        CurricularPeriod degreeCurricularPeriod = context.getParentCourseGroup()
                 .getParentDegreeCurricularPlan().getDegreeStructure();
 
         CurricularPeriod curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(

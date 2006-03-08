@@ -384,7 +384,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.Context extends net.source
 	Integer order;
 	Integer keyCurricularSemester;
 	Integer keyDegreeModule;
-	Integer keyCourseGroup;
+	Integer keyParentCourseGroup;
 	Integer keyBeginExecutionPeriod;
 	Integer keyEndExecutionPeriod;
 	Integer keyCurricularPeriod;
@@ -3076,9 +3076,9 @@ relation CourseEquivalencyTheme {
 
 
 relation CourseGroupContext {
-	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole courseGroup;
+	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole parentCourseGroup;
 	
-	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole courseGroupContexts{
+	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole childContexts {
 		multiplicity *;
 	}
 }
@@ -3292,14 +3292,6 @@ relation CurricularPeriodParentChilds {
 	net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod playsRole parent;
 }
 
-//relation CurricularSemesterContext {
-//        net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemester;
-//        
-//        net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole contexts{
-//                multiplicity *;
-//        }
-//}
-	
 relation CurricularSemesterCurricularYear {
     net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemesters {
         multiplicity *;

@@ -104,7 +104,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             courseGroupID = getAndHoldIntegerParameter("courseGroupID");
             if (courseGroupID == null) {
                 courseGroupID = (getContext(getContextID()) != null) ? getContext(getContextID())
-                        .getCourseGroup().getIdInternal() : courseGroupID;
+                        .getParentCourseGroup().getIdInternal() : courseGroupID;
             }
         }
         return courseGroupID;

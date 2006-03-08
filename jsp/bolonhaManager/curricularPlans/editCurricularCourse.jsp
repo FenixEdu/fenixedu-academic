@@ -126,7 +126,7 @@
 					<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 					
 					<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
-					<h:outputText value="#{context.courseGroup.name}</p>" escape="false"/>
+					<h:outputText value="#{context.parentCourseGroup.name}</p>" escape="false"/>
 					
 					<h:outputText value="<p><label>#{bolonhaBundle['curricularPeriod']}:</label>" escape="false"/>
 					<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
@@ -135,7 +135,7 @@
 					<h:outputLink value="editCurricularCourse.faces">
 						<h:outputText value="#{bolonhaBundle['edit']}" />
 						<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
-						<f:param name="courseGroupID" value="#{context.courseGroup.idInternal}" />
+						<f:param name="courseGroupID" value="#{context.parentCourseGroup.idInternal}" />
 						<f:param name="contextID" value="#{context.idInternal}" />
 						<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
 						<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}" />

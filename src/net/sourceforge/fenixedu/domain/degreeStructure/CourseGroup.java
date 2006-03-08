@@ -39,7 +39,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Boolean getCanBeDeleted() {
-        return !hasAnyCourseGroupContexts();
+        return !hasAnyChildContexts();
     }
 
     public void delete() {
@@ -75,12 +75,12 @@ public class CourseGroup extends CourseGroup_Base {
         if (isRoot()) {
             return super.getParentDegreeCurricularPlan();
         }
-        return getDegreeModuleContexts().get(0).getCourseGroup().getParentDegreeCurricularPlan();
+        return getDegreeModuleContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan();
     }
     
     public List<Context> getSortedContextsWithCurricularCourses() {
         List<Context> result = new ArrayList<Context>();
-        for (Context context : this.getCourseGroupContexts()) {
+        for (Context context : this.getChildContexts()) {
             if (context.getDegreeModule() instanceof CurricularCourse) {
                 result.add(context);
             }
@@ -92,7 +92,7 @@ public class CourseGroup extends CourseGroup_Base {
     
     public List<Context> getSortedContextsWithCourseGroups() {
         List<Context> result = new ArrayList<Context>();
-        for (Context context : this.getCourseGroupContexts()) {
+        for (Context context : this.getChildContexts()) {
             if (context.getDegreeModule() instanceof CourseGroup) {
                 result.add(context);
             }
@@ -105,7 +105,7 @@ public class CourseGroup extends CourseGroup_Base {
     public Double getEctsCredits() {
         Double result = 0.0;
 
-        for (Context context : this.getCourseGroupContexts()) {
+        for (Context context : this.getChildContexts()) {
             if (context.getDegreeModule() != null && context.getDegreeModule().getEctsCredits() != null) {
                 result += context.getDegreeModule().getEctsCredits();
             }
@@ -124,7 +124,7 @@ public class CourseGroup extends CourseGroup_Base {
     protected void checkContextsFor(final CourseGroup parentCourseGroup,
             final CurricularPeriod curricularPeriod) {
         for (final Context context : this.getDegreeModuleContexts()) {
-            if (context.getCourseGroup() == parentCourseGroup) {
+            if (context.getParentCourseGroup() == parentCourseGroup) {
                 throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
             }
         }
@@ -149,7 +149,7 @@ public class CourseGroup extends CourseGroup_Base {
         String normalizedName = StringFormatter.normalize(name);
         String normalizedNameEn = StringFormatter.normalize(nameEn);
         for (Context parentContext : getDegreeModuleContexts()) {
-            CourseGroup parentCourseGroup = parentContext.getCourseGroup();
+            CourseGroup parentCourseGroup = parentContext.getParentCourseGroup();
             if (!parentCourseGroup.verifyNames(normalizedName, normalizedNameEn, this)) {
                 throw new DomainException("error.existingCourseGroupWithSameName");
             }
@@ -161,7 +161,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
     
     private boolean verifyNames(String normalizedName, String normalizedNameEn, DegreeModule excludedModule) {
-        for (Context context : getCourseGroupContexts()) {
+        for (Context context : getChildContexts()) {
             DegreeModule degreeModule = context.getDegreeModule();
             if (degreeModule != excludedModule) {
                 if (degreeModule.getName() != null
@@ -208,7 +208,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public void collectChildDegreeModules(Class<? extends DegreeModule> clazz, final Set<DegreeModule> result) {
-        for (final Context context : this.getCourseGroupContexts()) {
+        for (final Context context : this.getChildContexts()) {
             if (context.getDegreeModule().getClass().equals(clazz)) {
                 result.add(context.getDegreeModule());
             }
@@ -221,7 +221,7 @@ public class CourseGroup extends CourseGroup_Base {
     public void collectChildDegreeModulesIncludingFullPath(Class< ? extends DegreeModule> clazz, List<List<DegreeModule>> result, 
             List<DegreeModule> previousDegreeModulesPath) {
         final List<DegreeModule> currentDegreeModulesPath = previousDegreeModulesPath;
-        for (final Context context : this.getCourseGroupContexts()) {
+        for (final Context context : this.getChildContexts()) {
             List<DegreeModule> newDegreeModulesPath = null;
             if (context.getDegreeModule().getClass().equals(clazz)) {
                 newDegreeModulesPath = initNewDegreeModulesPath(newDegreeModulesPath, currentDegreeModulesPath, context.getDegreeModule());

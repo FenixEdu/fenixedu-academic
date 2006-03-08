@@ -189,11 +189,38 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
             row.setCell(curricularCourse.getName());
             row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
             row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime().toString()));
-            row.setCell(curricularCourse.getTotalLoad(contextWithCurricularCourse.getCurricularPeriod().getOrder()).toString());
-            row.setCell(curricularCourse.getContactLoad(contextWithCurricularCourse.getCurricularPeriod().getOrder()).toString());
-            row.setCell(curricularCourse.getEctsCredits().toString());
+            
+            StringBuilder loads = new StringBuilder();
+            int order = contextWithCurricularCourse.getCurricularPeriod().getOrder();
+            
+            if (curricularCourse.getTheoreticalHours(order) != 0.0) {
+                loads.append(" T=").append(curricularCourse.getTheoreticalHours(order));    
+            }
+            if (curricularCourse.getProblemsHours(order) != 0.0) {
+                loads.append(" TP=").append(curricularCourse.getProblemsHours(order));
+            }
+            if (curricularCourse.getLaboratorialHours(order) != 0.0) {
+                loads.append(" PL=").append(curricularCourse.getLaboratorialHours(order));    
+            }
+            if (curricularCourse.getSeminaryHours(order) != 0.0) {
+                loads.append(" S=").append(curricularCourse.getSeminaryHours());    
+            }
+            if (curricularCourse.getFieldWorkHours(order) != 0.0) {
+                loads.append(" TC=").append(curricularCourse.getFieldWorkHours(order));    
+            }
+            if (curricularCourse.getTrainingPeriodHours(order) != 0.0) {
+                loads.append(" E=").append(curricularCourse.getTrainingPeriodHours(order));    
+            }
+            if (curricularCourse.getTutorialOrientationHours(order) != 0.0) {
+                loads.append(" OT=").append(curricularCourse.getTutorialOrientationHours(order));    
+            }
+            loads.append(" TA=").append(curricularCourse.getAutonomousWorkHours(order)).append(" (h/semestre)");
+            loads.append(" C=").append(curricularCourse.getContactLoad(order));
+            loads.append(" Total=").append(curricularCourse.getTotalLoad(order));
+            
+            row.setCell(curricularCourse.getEctsCredits(contextWithCurricularCourse.getCurricularPeriod().getOrder()).toString());
             row.setCell("");
-            row.setCell(contextWithCurricularCourse.getCourseGroup().getName());
+            row.setCell(contextWithCurricularCourse.getParentCourseGroup().getName());
             row.setCell(contextWithCurricularCourse.getCurricularPeriod().getParent().getOrder().toString());
             row.setCell(contextWithCurricularCourse.getCurricularPeriod().getOrder().toString());
         }

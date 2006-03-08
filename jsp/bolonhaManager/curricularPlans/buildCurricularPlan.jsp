@@ -21,7 +21,7 @@
 	</h:outputLink>
 	<h:outputText value="</li>" escape="false"/>
 	
-	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeModule.courseGroupContexts}">
+	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.root.childContexts}">
 		<h:outputText value="<li>" escape="false"/>
 			<h:outputLink value="setCurricularRules.faces" >
 			<h:outputText value="#{bolonhaBundle['setCurricularRules']}" escape="false"/>

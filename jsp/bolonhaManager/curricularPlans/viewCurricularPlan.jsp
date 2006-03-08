@@ -29,7 +29,7 @@
 	
 <h:outputText value="<div class='invisible'>" escape="false"/>
 	<h:outputText value="<ul><li>" escape="false"/>
-	<h:outputLink value="viewCurricularPlanStructure.faces" rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeModule.courseGroupContexts}">
+	<h:outputLink value="viewCurricularPlanStructure.faces" rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.root.childContexts}">
 		<h:outputFormat value="#{bolonhaBundle['view.param']}" escape="false">
 			<f:param value="#{bolonhaBundle['curricularPlan.structure']}"/>
 		</h:outputFormat>
@@ -68,7 +68,7 @@
 	<h:outputText value="</p>" escape="false"/>
 	
 	<h:outputText value="<p class='mtop05 mbottom0'>" escape="false"/>
-	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeModule.courseGroupContexts}">	
+	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.root.childContexts}">	
 		<h:outputText value="#{bolonhaBundle['curricularRules']}: " escape="false"/>
 		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.showRules == 'false'}">
 			<h:outputText value="#{bolonhaBundle['show']}" />

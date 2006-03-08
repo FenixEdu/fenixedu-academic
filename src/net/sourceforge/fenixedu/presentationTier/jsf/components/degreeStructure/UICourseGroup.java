@@ -86,7 +86,7 @@ public class UICourseGroup extends UIDegreeModule {
                 
                 writer.endElement("table");
             } else {
-                if (!((CourseGroup)this.degreeModule).hasAnyCourseGroupContexts()) {
+                if (!((CourseGroup)this.degreeModule).hasAnyChildContexts()) {
                     writer.startElement("table", this);
                     writer.startElement("tr", this);
                     writer.startElement("td", this);
@@ -245,7 +245,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.append("(");
 
         encodeOrderOption(0, "top", false);
-        encodeOrderOption(this.previousContext.getCourseGroup().getCourseGroupContextsCount() - 1, "end", false);
+        encodeOrderOption(this.previousContext.getParentCourseGroup().getChildContextsCount() - 1, "end", false);
         encodeOrderOption(this.previousContext.getOrder() - 1, "up", false);
         encodeOrderOption(this.previousContext.getOrder() + 1, "down", true);
         

@@ -24,7 +24,7 @@
 	--%>
 	<h:outputText value="</li>" escape="false"/>
 	<h:outputText value="<li>" escape="false"/>
-	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeModule.courseGroupContexts}">
+	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.root.childContexts}">
 		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['manage.groups']}</span>" rendered="#{CurricularCourseManagement.toOrder == 'false'}" escape="false"/>
 		<h:outputLink value="editCurricularPlanStructure.faces" rendered="#{CurricularCourseManagement.toOrder == 'true'}">
 			<h:outputText value="#{bolonhaBundle['manage.groups']}" />

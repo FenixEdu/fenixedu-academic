@@ -25,7 +25,7 @@
 		<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">
 			<h:panelGroup rendered="#{context.idInternal == CurricularCourseManagement.contextID}">								
 				<h:outputText value="<p><strong>#{bolonhaBundle['courseGroup']}:</strong> " escape="false"/>
-				<h:outputText value="#{context.courseGroup.name}</p>" escape="false"/>			
+				<h:outputText value="#{context.parentCourseGroup.name}</p>" escape="false"/>			
 				<h:outputText value="<p><strong>#{bolonhaBundle['curricularPeriod']}:</strong> " escape="false"/>
 				<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
 			</h:panelGroup>

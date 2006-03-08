@@ -20,7 +20,7 @@ public class Context extends Context_Base implements Comparable<Context> {
         if (courseGroup == null || degreeModule == null || beginExecutionPeriod == null) {
             throw new DomainException("error.incorrectContextValues");
         }
-        super.setCourseGroup(courseGroup);
+        super.setParentCourseGroup(courseGroup);
         super.setDegreeModule(degreeModule);
         super.setCurricularPeriod(curricularPeriod);
         super.setBeginExecutionPeriod(beginExecutionPeriod);
@@ -28,7 +28,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
     
     public void edit(CourseGroup courseGroup, DegreeModule degreeModule, CurricularPeriod curricularPeriod) {
-        setCourseGroup(courseGroup);
+        setParentCourseGroup(courseGroup);
         setDegreeModule(degreeModule);
         setCurricularPeriod(curricularPeriod);
     }
@@ -36,7 +36,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     public void delete() {
         removeCurricularPeriod();
         removeDegreeModule();
-        removeCourseGroup();
+        removeParentCourseGroup();
         removeBeginExecutionPeriod();
         removeEndExecutionPeriod();
         super.deleteDomainObject();
@@ -44,7 +44,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     
     public int compareTo(Context o) {
         int orderCompare = this.getOrder().compareTo(o.getOrder());
-        if (this.getCourseGroup().equals(o.getCourseGroup()) && orderCompare != 0) {
+        if (this.getParentCourseGroup().equals(o.getParentCourseGroup()) && orderCompare != 0) {
             return orderCompare;
         } else {
             if (this.getDegreeModule() instanceof CurricularCourse) {
@@ -61,8 +61,8 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     @Override
     @Checked("ContextPredicates.curricularPlanMemberWritePredicate")
-    public void setCourseGroup(CourseGroup courseGroup) {
-        super.setCourseGroup(courseGroup);
+    public void setParentCourseGroup(CourseGroup courseGroup) {
+        super.setParentCourseGroup(courseGroup);
     }
 
     @Override

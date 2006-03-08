@@ -86,7 +86,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         this.facesContext = facesContext;
         this.writer = facesContext.getResponseWriter();
 
-        if (!dcp.getRoot().hasAnyCourseGroupContexts()) {
+        if (!dcp.getRoot().hasAnyChildContexts()) {
             encodeEmptyCurricularPlanInfo();
         } else {
             CurricularPeriod degreeStructure = dcp.getDegreeStructure();

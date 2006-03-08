@@ -17,7 +17,7 @@ public class OrderDegreeModule extends Service {
             throw new FenixServiceException("error.noContext");
         }
         
-        context.getCourseGroup().orderChild(context, position);
+        context.getParentCourseGroup().orderChild(context, position);
     }
     
 }
