@@ -5,11 +5,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.EMail;
 import net.sourceforge.fenixedu.applicationTier.Service;
+import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -20,10 +20,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
  */
 public class SendMail extends Service {
 
-    private static final String mailServer = ResourceBundle.getBundle("SMTPConfiguration").getString("mailSender.server.url");
-
-    public List run(List toList, List ccList, List bccList, String fromName, String from, String subject, String text) {
-        return EMail.send(SendMail.mailServer, fromName, from, subject, toList, ccList, bccList, text);
+    public Collection<String> run(List toList, List ccList, List bccList, String fromName, String from, String subject, String text) {
+    	return EmailSender.send(fromName, from, toList, ccList, bccList, subject, text);
     }
 
 }

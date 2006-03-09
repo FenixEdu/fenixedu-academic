@@ -22,14 +22,10 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.EMail;
 import net.sourceforge.fenixedu.util.PeriodState;
+import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class SendMailBackingBean extends FenixBackingBean {
-
-    private static final int MAX_MAIL_RECIPIENTS = 50;
-
-    private static final List<String> EMPTY_LIST = new ArrayList<String>();
 
     private String from = null;
     private String to = null;
@@ -47,73 +43,38 @@ public class SendMailBackingBean extends FenixBackingBean {
     private Boolean degreeCoordinators = null;
 
     public void send() throws FenixFilterException, FenixServiceException {
-        final List<String> toList = getToList();
-        final List<String> ccList = getCCList();
-        final List<String> bccList = getBCCList();
+        EmailSender.send(getFrom(), getFrom(), getToList(), getCCList(), getBCCList(), getSubject(), getMessage());
+    }
 
-        if (!toList.isEmpty() || !ccList.isEmpty()) {
-            EMail.send(mailServer(), getFrom(), getFrom(), getSubject(), getToList(), getCCList(), EMPTY_LIST, getMessage());
-        }
-
-        if (!bccList.isEmpty()) {
-            for (int i = 0; i < bccList.size(); i = i + MAX_MAIL_RECIPIENTS) {
-                final List<String> subList = bccList.subList(i, Math.min(bccList.size(), i + MAX_MAIL_RECIPIENTS));
-                EMail.send(mailServer(), getFrom(), getFrom(), getSubject(), EMPTY_LIST, EMPTY_LIST, subList, getMessage());
+    private List<String> getEmailList(final String emailStrings) {
+        final List<String> emails = new ArrayList<String>();
+        if (emailStrings != null && emailStrings.length() > 0) {
+            for (final String email : emailStrings.split(",")) {
+                emails.add(email);
             }
         }
+        return emails;
     }
 
     private List<String> getToList() {
-        final List<String> emails = new ArrayList<String>();
-
-        final String to = getTo();
-        if (to != null && to.length() > 0) {
-            for (final String email : to.split(",")) {
-                emails.add(email);
-            }
-        }
-        
-        return emails;
+    	return getEmailList(getTo());
     }
 
     private List<String> getCCList() {
-        final List<String> emails = new ArrayList<String>();
-
-        final String ccs = getCcs();
-        if (ccs != null && ccs.length() > 0) {
-            for (final String email : ccs.split(",")) {
-                emails.add(email);
-            }
-        }
-        
-        return emails;
+    	return getEmailList(getCcs());
     }
 
     private List<String> getBCCList() throws FenixFilterException, FenixServiceException {
-        final List<String> emails = new ArrayList<String>();
-
-        final String bccs = getBccs();
-        if (bccs != null && bccs.length() > 0) {
-            for (final String email : bccs.split(",")) {
-                emails.add(email);
-            }
-        }
+    	final List<String> emails = getEmailList(getBccs());
 
         final Boolean teachers = getTeachers();
         if (teachers.booleanValue()) {
-            final Object[] args = { RoleType.TEACHER };
-            final Role role = (Role) ServiceUtils.executeService(getUserView(), "ReadRoleByRoleType", args);
-            for (final Person person : role.getAssociatedPersons()) {
-                if (person.getEmail() != null && person.getEmail().length() > 0) {
-                    emails.add(person.getEmail());
-                }
-            }
+        	addEmails(emails, RoleType.TEACHER);
         }
 
         final Boolean employees = getEmployees();
         if (employees.booleanValue()) {
-            final Object[] args = { RoleType.EMPLOYEE };
-            final Role role = (Role) ServiceUtils.executeService(getUserView(), "ReadRoleByRoleType", args);
+        	final Role role = Role.getRoleByRoleType(RoleType.EMPLOYEE);
             for (final Person person : role.getAssociatedPersons()) {
                 if (person.getTeacher() == null) {
                     if (person.getEmail() != null && person.getEmail().length() > 0) {
@@ -126,8 +87,7 @@ public class SendMailBackingBean extends FenixBackingBean {
         final Boolean degreeStudents = getDegreeStudents();
         final Boolean masterDegreeStudents = getMasterDegreeStudents();
         if (degreeStudents.booleanValue() || masterDegreeStudents.booleanValue()) {
-            final Object[] args = { RoleType.STUDENT };
-            final Role role = (Role) ServiceUtils.executeService(getUserView(), "ReadRoleByRoleType", args);
+        	final Role role = Role.getRoleByRoleType(RoleType.STUDENT);
             for (final Person person : role.getAssociatedPersons()) {
                 Student student = null;
                 if (degreeStudents.booleanValue()) {
@@ -177,7 +137,16 @@ public class SendMailBackingBean extends FenixBackingBean {
         return emails;
     }
 
-    private void addEmailsForDegreeType(final List<String> emails, final DegreeType degreeType) throws FenixServiceException, FenixFilterException {
+    private void addEmails(final List<String> emails, final RoleType roleType) {
+        final Role role = Role.getRoleByRoleType(roleType);
+        for (final Person person : role.getAssociatedPersons()) {
+            if (person.getEmail() != null && person.getEmail().length() > 0) {
+                emails.add(person.getEmail());
+            }
+        }
+    }
+
+	private void addEmailsForDegreeType(final List<String> emails, final DegreeType degreeType) throws FenixServiceException, FenixFilterException {
         final Object[] args = { ExecutionYear.class };
         final List<ExecutionYear> executionYears = (List<ExecutionYear>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
         for (final ExecutionYear executionYear : executionYears) {
