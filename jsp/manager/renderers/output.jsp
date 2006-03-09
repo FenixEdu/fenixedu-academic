@@ -160,7 +160,7 @@
     </ol>
 
 <p>
-    If no key is present the the programmatic name of the slot is shown. <strong>Note</strong> that slots 
+    If no key is present the programmatic name of the slot is shown. <strong>Note</strong> that slots 
     may have more complex names like <code>pais.code</code>. This does not correspond directly to a getter
     of person but is treated the same way as before.
 </p>
