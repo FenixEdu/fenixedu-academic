@@ -19,19 +19,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
@@ -161,8 +162,12 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
             try {
                 newInfoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
                         "ChangePersonalStudentInfo", args);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
+            
+            } catch (DomainException e) {
+                ActionMessages actionMessages = new ActionMessages();
+                actionMessages.add("", new ActionMessage(e.getMessage()));
+                saveMessages(request, actionMessages); 
+                return mapping.getInputForward();
             }
 
             request.removeAttribute("idInternal");

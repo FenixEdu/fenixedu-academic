@@ -8,9 +8,13 @@
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="java.util.Date" %>
+
 <span class="error"><html:errors/></span>
-
-
+<html:messages id="message" message="true" bundle="DEFAULT">
+	<span class="error">
+		<bean:write name="message"/>
+	</span>
+</html:messages>
 
 <bean:define id="personalInfo" name="infoPerson" scope="request" />
 <br />
