@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -26,7 +27,6 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class CourseGroupReportBackingBean extends FenixBackingBean {
-    private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
     private final ResourceBundle enumerationResources = getResourceBundle("resources/EnumerationResources");
     
     private enum InfoToExport {
@@ -191,38 +191,38 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
             row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime().toString()));
             
             StringBuilder loads = new StringBuilder();
-            int order = contextWithCurricularCourse.getCurricularPeriod().getOrder();
+            CurricularPeriod curricularPeriod = contextWithCurricularCourse.getCurricularPeriod();
             
-            if (curricularCourse.getTheoreticalHours(order) != 0.0) {
-                loads.append(" T=").append(curricularCourse.getTheoreticalHours(order));    
+            if (curricularCourse.getTheoreticalHours(curricularPeriod) != 0.0) {
+                loads.append(" T=").append(curricularCourse.getTheoreticalHours(curricularPeriod));    
             }
-            if (curricularCourse.getProblemsHours(order) != 0.0) {
-                loads.append(" TP=").append(curricularCourse.getProblemsHours(order));
+            if (curricularCourse.getProblemsHours(curricularPeriod) != 0.0) {
+                loads.append(" TP=").append(curricularCourse.getProblemsHours(curricularPeriod));
             }
-            if (curricularCourse.getLaboratorialHours(order) != 0.0) {
-                loads.append(" PL=").append(curricularCourse.getLaboratorialHours(order));    
+            if (curricularCourse.getLaboratorialHours(curricularPeriod) != 0.0) {
+                loads.append(" PL=").append(curricularCourse.getLaboratorialHours(curricularPeriod));    
             }
-            if (curricularCourse.getSeminaryHours(order) != 0.0) {
+            if (curricularCourse.getSeminaryHours(curricularPeriod) != 0.0) {
                 loads.append(" S=").append(curricularCourse.getSeminaryHours());    
             }
-            if (curricularCourse.getFieldWorkHours(order) != 0.0) {
-                loads.append(" TC=").append(curricularCourse.getFieldWorkHours(order));    
+            if (curricularCourse.getFieldWorkHours(curricularPeriod) != 0.0) {
+                loads.append(" TC=").append(curricularCourse.getFieldWorkHours(curricularPeriod));    
             }
-            if (curricularCourse.getTrainingPeriodHours(order) != 0.0) {
-                loads.append(" E=").append(curricularCourse.getTrainingPeriodHours(order));    
+            if (curricularCourse.getTrainingPeriodHours(curricularPeriod) != 0.0) {
+                loads.append(" E=").append(curricularCourse.getTrainingPeriodHours(curricularPeriod));    
             }
-            if (curricularCourse.getTutorialOrientationHours(order) != 0.0) {
-                loads.append(" OT=").append(curricularCourse.getTutorialOrientationHours(order));    
+            if (curricularCourse.getTutorialOrientationHours(curricularPeriod) != 0.0) {
+                loads.append(" OT=").append(curricularCourse.getTutorialOrientationHours(curricularPeriod));    
             }
-            loads.append(" TA=").append(curricularCourse.getAutonomousWorkHours(order)).append(" (h/semestre)");
-            loads.append(" C=").append(curricularCourse.getContactLoad(order));
-            loads.append(" Total=").append(curricularCourse.getTotalLoad(order));
+            loads.append(" TA=").append(curricularCourse.getAutonomousWorkHours(curricularPeriod)).append(" (h/semestre)");
+            loads.append(" C=").append(curricularCourse.getContactLoad(curricularPeriod));
+            loads.append(" Total=").append(curricularCourse.getTotalLoad(curricularPeriod));
             
-            row.setCell(curricularCourse.getEctsCredits(contextWithCurricularCourse.getCurricularPeriod().getOrder()).toString());
+            row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
             row.setCell("");
             row.setCell(contextWithCurricularCourse.getParentCourseGroup().getName());
-            row.setCell(contextWithCurricularCourse.getCurricularPeriod().getParent().getOrder().toString());
-            row.setCell(contextWithCurricularCourse.getCurricularPeriod().getOrder().toString());
+            row.setCell(curricularPeriod.getParent().getOrder().toString());
+            row.setCell(curricularPeriod.getOrder().toString());
         }
     }
 

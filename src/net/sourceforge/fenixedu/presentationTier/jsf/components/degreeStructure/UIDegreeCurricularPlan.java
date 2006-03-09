@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.faces.component.UIInput;
@@ -13,8 +15,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 
 public class UIDegreeCurricularPlan extends UIInput {
@@ -45,7 +45,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
 
         final DegreeCurricularPlan dcp = (DegreeCurricularPlan) this.getAttributes().get("dcp");
-        if (!dcp.getCurricularStage().equals(CurricularStage.OLD)) {
+        if (dcp.getDegree().isBolonhaDegree()) {
             this.toEdit = (this.getBooleanAttribute("toEdit") != null) ? (Boolean) this.getBooleanAttribute("toEdit") : Boolean.FALSE;
             this.showRules = (this.getBooleanAttribute("showRules") != null) ? (Boolean) this.getBooleanAttribute("showRules") : Boolean.FALSE;
             final String organizeBy = (this.getAttributes().get("organizeBy") != null) ? (String) this.getAttributes().get("organizeBy") : "groups";
@@ -122,46 +122,6 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.endElement("table");
     }
 
-    private void encodeSubtitles() throws IOException {
-        writer.startElement("br", this);
-        writer.append("&nbsp;");
-        writer.endElement("br");
-
-        writer.startElement("ul", this);
-        writer.writeAttribute("class", "nobullet", null);
-        writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
-        writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
-
-        encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(), null);
-        encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
-
-        encodeSubtitleElement("BolonhaManagerResources", "contactLessonHoursAcronym", "contactLessonHours", null);
-        encodeSubtitleElement("BolonhaManagerResources", "autonomousWorkAcronym", "autonomousWork", null);
-
-        StringBuilder explanation = new StringBuilder();
-        explanation.append(" (");
-        explanation.append(this.getBundleValue("BolonhaManagerResources", "contactLessonHoursAcronym"));
-        explanation.append(" + ");
-        explanation.append(this.getBundleValue("BolonhaManagerResources", "autonomousWorkAcronym"));
-        explanation.append(")");
-        encodeSubtitleElement("BolonhaManagerResources", "totalLoadAcronym", "totalLoad", explanation);
-        
-        writer.endElement("ul");
-    }
-
-    private void encodeSubtitleElement(String bundle, String acronym, String full, StringBuilder explanation) throws IOException {
-        writer.startElement("li", this);
-        writer.startElement("span", this);
-        writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue("" + bundle, acronym)).append(" - ");
-        writer.endElement("span");
-        writer.append(this.getBundleValue("" + bundle, full));
-        if (explanation != null) {
-            writer.append(explanation);
-        }
-        writer.endElement("li");
-    }
-    
     private void encodePeriodTable(CurricularPeriod curricularPeriod) throws IOException {
         if (curricularPeriod.hasAnyChilds()) {
             for (CurricularPeriod child : curricularPeriod.getSortedChilds()) {
@@ -174,8 +134,7 @@ public class UIDegreeCurricularPlan extends UIInput {
 
             encodeHeader(curricularPeriod);
             if (curricularPeriod.hasAnyContexts()) {
-                List<Double> sums = encodeCurricularCourses(curricularPeriod.getContexts());
-                //encodeSumsFooter(sums);
+                encodeCurricularCourses(curricularPeriod);
             } else {
                 encodeEmptySemesterInfo();
             }
@@ -220,29 +179,35 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.endElement("th");
     }
     
-    private List<Double> encodeCurricularCourses(List<Context> contexts) throws IOException {
-        double sumContactLoad = 0.0;
-        double sumAutonomousWork = 0.0;
-        double sumTotalLoad = 0.0;
-        double sumCredits = 0.0;
-        for (Context context : contexts) {
-            DegreeModule degreeModule = context.getChildDegreeModule();
-            if (degreeModule instanceof CurricularCourse) {
-                sumContactLoad += ((CurricularCourse)degreeModule).getContactLoad(context.getCurricularPeriod().getOrder());
-                sumAutonomousWork += ((CurricularCourse)degreeModule).getAutonomousWorkHours(context.getCurricularPeriod().getOrder());
-                sumTotalLoad += ((CurricularCourse)degreeModule).getTotalLoad(context.getCurricularPeriod().getOrder());
-                sumCredits += ((CurricularCourse)degreeModule).getEctsCredits(context.getCurricularPeriod().getOrder());
-                new UICurricularCourse((CurricularCourse) degreeModule, context, this.toEdit, this.showRules).encodeBegin(facesContext);
+    private Map<CurricularPeriod, List<Context>> toRepeat =  new HashMap<CurricularPeriod, List<Context>>();
+    
+    private void encodeCurricularCourses(CurricularPeriod curricularPeriod) throws IOException {
+        for (Context context : curricularPeriod.getContexts()) {
+            if (context.getChildDegreeModule().isLeaf()) {
+                CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+                
+                curricularCourse.getContactLoad(curricularPeriod);
+                curricularCourse.getAutonomousWorkHours(curricularPeriod);
+                curricularCourse.getTotalLoad(curricularPeriod);
+                curricularCourse.getEctsCredits(curricularPeriod);
+                new UICurricularCourse(curricularCourse, context, this.toEdit, this.showRules).encodeBegin(facesContext);
+                
+                if (curricularCourse.isAnual()) {
+                    List<Context> toUpdate = toRepeat.get(curricularPeriod.getNext());
+                    if (toUpdate == null) {
+                        toUpdate = new ArrayList<Context>();
+                    }
+                    toUpdate.add(context);
+                    toRepeat.put(curricularPeriod.getNext(), toUpdate);
+                }
             }
         }
         
-        List<Double> result = new ArrayList<Double>(4);
-        result.add(sumContactLoad);
-        result.add(sumAutonomousWork);
-        result.add(sumTotalLoad);
-        result.add(sumCredits);
-        
-        return result;
+        if (toRepeat.containsKey(curricularPeriod)) {
+            for (Context check : toRepeat.get(curricularPeriod)) {
+                new UICurricularCourse(check.getChildDegreeModule(), check, this.toEdit, this.showRules).encodeInNextPeriod(facesContext);
+            }
+        }
     }
 
     private void encodeSumsFooter(List<Double> sums) throws IOException {
@@ -302,16 +267,56 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.endElement("tr");
     }
 
-    protected String getBundleValue(String bundleName, String bundleKey) {
+    private String getBundleValue(String bundleName, String bundleKey) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, facesContext.getViewRoot().getLocale());
         return bundle.getString(bundleKey);
     }
 
-    protected void encodeLink(String href, String bundleKey) throws IOException {
+    private void encodeLink(String href, String bundleKey) throws IOException {
         writer.startElement("a", this);
         writer.writeAttribute("href", href, null);
         writer.write(this.getBundleValue("BolonhaManagerResources", bundleKey));
         writer.endElement("a");
+    }
+
+    private void encodeSubtitles() throws IOException {
+        writer.startElement("br", this);
+        writer.append("&nbsp;");
+        writer.endElement("br");
+
+        writer.startElement("ul", this);
+        writer.writeAttribute("class", "nobullet", null);
+        writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
+        writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
+
+        encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(), null);
+        encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
+
+        encodeSubtitleElement("BolonhaManagerResources", "contactLessonHoursAcronym", "contactLessonHours", null);
+        encodeSubtitleElement("BolonhaManagerResources", "autonomousWorkAcronym", "autonomousWork", null);
+
+        StringBuilder explanation = new StringBuilder();
+        explanation.append(" (");
+        explanation.append(this.getBundleValue("BolonhaManagerResources", "contactLessonHoursAcronym"));
+        explanation.append(" + ");
+        explanation.append(this.getBundleValue("BolonhaManagerResources", "autonomousWorkAcronym"));
+        explanation.append(")");
+        encodeSubtitleElement("BolonhaManagerResources", "totalLoadAcronym", "totalLoad", explanation);
+        
+        writer.endElement("ul");
+    }
+
+    private void encodeSubtitleElement(String bundle, String acronym, String full, StringBuilder explanation) throws IOException {
+        writer.startElement("li", this);
+        writer.startElement("span", this);
+        writer.writeAttribute("style", "color: #888", null);
+        writer.append(this.getBundleValue("" + bundle, acronym)).append(" - ");
+        writer.endElement("span");
+        writer.append(this.getBundleValue("" + bundle, full));
+        if (explanation != null) {
+            writer.append(explanation);
+        }
+        writer.endElement("li");
     }
 
 }

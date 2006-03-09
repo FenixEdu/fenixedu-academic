@@ -440,10 +440,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public Double getTheoreticalHours(Integer order) {
+    public Double getTheoreticalHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getTheoreticalHours(order);
+            result = this.getCompetenceCourse().getTheoreticalHours(curricularPeriod.getOrder());
         }
         return result;
     }
@@ -456,10 +456,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public Double getProblemsHours(Integer order) {
+    public Double getProblemsHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getProblemsHours(order);
+            result = this.getCompetenceCourse().getProblemsHours(curricularPeriod.getOrder());
         }
         return result;
     }
@@ -472,10 +472,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public Double getLaboratorialHours(Integer order) {
+    public Double getLaboratorialHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getLaboratorialHours(order);
+            result = this.getCompetenceCourse().getLaboratorialHours(curricularPeriod.getOrder());
         }
         return result;
     }
@@ -488,10 +488,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public Double getSeminaryHours(Integer order) {
+    public Double getSeminaryHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getSeminaryHours(order);
+            result = this.getCompetenceCourse().getSeminaryHours(curricularPeriod.getOrder());
         }
         return result;
     }
@@ -504,10 +504,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public Double getFieldWorkHours(Integer order) {
+    public Double getFieldWorkHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getFieldWorkHours(order);
+            result = this.getCompetenceCourse().getFieldWorkHours(curricularPeriod.getOrder());
         }
         return result;
     }
@@ -520,10 +520,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public Double getTrainingPeriodHours(Integer order) {
+    public Double getTrainingPeriodHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getTrainingPeriodHours(order);
+            result = this.getCompetenceCourse().getTrainingPeriodHours(curricularPeriod.getOrder());
         }
         return result;
     }
@@ -536,10 +536,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public Double getTutorialOrientationHours(Integer order) {
+    public Double getTutorialOrientationHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getTutorialOrientationHours(order);
+            result = this.getCompetenceCourse().getTutorialOrientationHours(curricularPeriod.getOrder());
         }
         return result;
     }
@@ -552,10 +552,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public Double getAutonomousWorkHours(Integer order) {
+    public Double getAutonomousWorkHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getAutonomousWorkHours(order);
+            result = this.getCompetenceCourse().getAutonomousWorkHours(curricularPeriod.getOrder());
         }
         return result;
     }
@@ -568,10 +568,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public Double getContactLoad(Integer order) {
+    public Double getContactLoad(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getContactLoad(order);
+            result = this.getCompetenceCourse().getContactLoad(curricularPeriod.getOrder());
         }
         return result;
     }
@@ -585,10 +585,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public Double getTotalLoad(Integer order) {
+    public Double getTotalLoad(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getTotalLoad(order);
+            result = this.getCompetenceCourse().getTotalLoad(curricularPeriod.getOrder());
         }
         return result;
     }
@@ -604,10 +604,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }    
     
-    public Double getEctsCredits(Integer order) {
+    public Double getEctsCredits(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
-            result = this.getCompetenceCourse().getEctsCredits(order);
+            result = this.getCompetenceCourse().getEctsCredits(curricularPeriod.getOrder());
         }
         return result;
     }
@@ -729,6 +729,13 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public boolean isOptional() {
         return getType().equals(CurricularCourseType.OPTIONAL_COURSE);
+    }
+
+    public boolean isAnual() {
+        if (this.getCompetenceCourse() != null) {
+            return this.getCompetenceCourse().isAnual();
+        }
+        return false;
     }
 
 }

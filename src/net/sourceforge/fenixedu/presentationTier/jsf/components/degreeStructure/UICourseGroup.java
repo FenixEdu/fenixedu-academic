@@ -1,13 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.faces.context.FacesContext;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -18,12 +16,14 @@ public class UICourseGroup extends UIDegreeModule {
 
     public static final String COMPONENT_FAMILY = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICourseGroup";
 
+    private CourseGroup courseGroup;
     private Boolean onlyStructure;
     private Boolean toOrder;
     private Boolean hideCourses;
     
     public UICourseGroup() {
         super();
+        this.courseGroup = (CourseGroup) super.degreeModule;
     }
 
     public UICourseGroup(DegreeModule courseGroup, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, Boolean onlyStructure, Boolean toOrder, Boolean hideCourses) throws IOException {
@@ -32,6 +32,7 @@ public class UICourseGroup extends UIDegreeModule {
         if (toOrder && (!onlyStructure || !toEdit)) {
             throw new IOException("incorrect.component.usage");
         }
+        this.courseGroup = (CourseGroup) super.degreeModule;
         this.onlyStructure = onlyStructure;
         this.toOrder = toOrder;
         this.hideCourses = hideCourses;
@@ -46,73 +47,76 @@ public class UICourseGroup extends UIDegreeModule {
             return;
         }
         
-        StringBuilder buffer = new StringBuilder();
-        buffer.append(tabs);
-        buffer.append("[LEVEL ").append(Integer.valueOf(this.depth)).append("]");
-        buffer.append("[CG ").append(this.degreeModule.getIdInternal()).append("] ").append(this.degreeModule.getName());
-        //System.out.println(buffer);
-
-        this.facesContext = facesContext;
-        this.writer = facesContext.getResponseWriter();
-        encodeCourseGroup();
+        log(false);
+        encodeCourseGroup(facesContext);
     }
 
-    private void encodeCourseGroup() throws IOException {
-        if (!this.degreeModule.isRoot()) {
-            // this is not the root course group
+    private void log(boolean on) {
+        if (on) {
+            StringBuilder buffer = new StringBuilder();
+            buffer.append(tabs);
+            buffer.append("[LEVEL ").append(Integer.valueOf(this.depth)).append("]");
+            buffer.append("[CG ").append(this.courseGroup.getIdInternal()).append("] ").append(this.courseGroup.getName());
+            System.out.println(buffer);
+        }
+    }
+
+    private void encodeCourseGroup(FacesContext facesContext) throws IOException {
+        this.facesContext = facesContext;
+        this.writer = facesContext.getResponseWriter();
+        
+        if (this.courseGroup.isRoot()) {
+            encodeRoot();
+        } else {
             encodeSelf();
             encodeChildCourseGroups();
-        } else {
-            // root course group
-            if (this.onlyStructure) {
-                if (this.toEdit) {
-                    if (!this.toOrder) {
-                        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
-						writer.startElement("p", this);
-	                    writer.writeAttribute("style", "mtop05", null);
-                        encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap().get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal() + organizeBy + "&toOrder=false", "create.course.group.root");
-						writer.endElement("p");
-                    }
-                }                            
-                /*
-				writer.startElement("br", this);
-                writer.append("&nbsp;");
-                writer.endElement("br");
-                */
-                writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo3 mbottom0 mtop05", null);
+        }
+    }
 
-                encodeChildCourseGroups();
-                
+    private void encodeRoot() throws IOException {
+        if (this.onlyStructure) {
+            if (this.toEdit) {
+                if (!this.toOrder) {
+                    String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
+                    writer.startElement("p", this);
+                    writer.writeAttribute("style", "mtop05", null);
+                    encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap().get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.courseGroup.getIdInternal() + organizeBy + "&toOrder=false", "create.course.group.root");
+                    writer.endElement("p");
+                }
+            }                            
+
+            writer.startElement("table", this);
+            writer.writeAttribute("class", "showinfo3 mbottom0 mtop05", null);
+            encodeChildCourseGroups();
+            writer.endElement("table");
+        } else {
+            if (!this.courseGroup.hasAnyChildContexts()) {
+                writer.startElement("table", this);
+                writer.startElement("tr", this);
+                writer.startElement("td", this);
+                writer.writeAttribute("align", "center", null);
+                writer.startElement("i", this);
+                writer.append(this.getBundleValue("BolonhaManagerResources", "empty.curricularPlan"));
+                writer.endElement("i");
+                writer.endElement("td");
+                writer.endElement("tr");
                 writer.endElement("table");
             } else {
-                if (!((CourseGroup)this.degreeModule).hasAnyChildContexts()) {
-                    writer.startElement("table", this);
-                    writer.startElement("tr", this);
-                    writer.startElement("td", this);
-                    writer.writeAttribute("align", "center", null);
-                    writer.startElement("i", this);
-                    writer.append(this.getBundleValue("BolonhaManagerResources", "empty.curricularPlan"));
-                    writer.endElement("i");
-                    writer.endElement("td");
-                    writer.endElement("tr");
-                    writer.endElement("table");
-                } else {
-                    encodeChildCourseGroups();
-                    if (this.degreeModule.getParentDegreeCurricularPlan().getDegreeStructure().hasAnyChilds()) {
-                        encodeSubtitles();
-                    }
+                encodeChildCourseGroups();
+                if (this.courseGroup.getParentDegreeCurricularPlan().getDegreeStructure().hasAnyChilds()) {
+                    encodeSubtitles();
                 }
             }
         }
     }
 
+    private void encodeChildCourseGroups() throws IOException {
+        for (Context context : this.courseGroup.getSortedChildContextsWithCourseGroups()) {
+            new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses).encodeBegin(facesContext);
+        }
+    }
+
     private void encodeSubtitles() throws IOException {
-		/*
-        writer.startElement("br", this);
-        writer.append("&nbsp;");
-        writer.endElement("br");
-        */
         writer.startElement("ul", this);
         writer.writeAttribute("class", "nobullet mtop2", null);
         writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
@@ -169,7 +173,7 @@ public class UICourseGroup extends UIDegreeModule {
         encodeHeader();
         
         if (!this.onlyStructure) {
-            if (this.showRules && this.degreeModule.hasAnyCurricularRules()) {
+            if (this.showRules && this.courseGroup.hasAnyCurricularRules()) {
                 encodeCurricularRules();    
             }
 
@@ -178,7 +182,7 @@ public class UICourseGroup extends UIDegreeModule {
                 writer.endElement("div");
             }
             
-            if (!this.hideCourses && ((CourseGroup)this.degreeModule).getSortedChildContextsWithCurricularCourses().size() > 0) {
+            if (!this.hideCourses && this.courseGroup.getSortedChildContextsWithCurricularCourses().size() > 0) {
                 encodeChildCurricularCourses(width, courseGroupIndent);
                 //encodeSumsFooter(sums);
             } else {
@@ -189,41 +193,8 @@ public class UICourseGroup extends UIDegreeModule {
 
     private void encodeHeader() throws IOException {
         writer.startElement("tr", this);
-        if (!this.onlyStructure) {
-            writer.writeAttribute("class", "bgcolor2", null);
-            writer.startElement("th", this);
-            writer.writeAttribute("class", "aleft", null);
-            writer.writeAttribute("colspan", (this.toEdit) ? 3 : 5, null);
-        } else {
-            writer.startElement("td", this);
-            if (this.depth == BASE_DEPTH) {
-                writer.startElement("strong", this);       
-            } else if (this.depth > BASE_DEPTH) {
-                writer.writeAttribute("style", "padding-left: " + String.valueOf((this.depth + 2)) + "em;", null);
-            }
-        }
-/*
-        writer.startElement("a", this);
-        String action = "&action=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("action");
-        String showRules = "&showRules=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("showRules");        
-        String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");
-        String toOrder = "&toOrder=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("toOrder");
-        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
-        writer.writeAttribute("href", "courseGroupReport.faces?degreeCurricularPlanID="+ this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + action + organizeBy + showRules + hideCourses + toOrder, null);
-*/        if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
-            writer.append(this.degreeModule.getName()).append(" ");    
-        } else {
-            writer.append(this.degreeModule.getNameEn()).append(" ");
-        }
-/*        writer.endElement("a");
-*/        
-        if (!this.onlyStructure) {
-            writer.endElement("strong");
-            writer.endElement("th");
-        } else {
-            writer.endElement("td");
-        }
+
+        encodeName(false);    
         
         if (this.toEdit) {
             if (this.onlyStructure) {
@@ -238,6 +209,52 @@ public class UICourseGroup extends UIDegreeModule {
         }
         
         writer.endElement("tr");
+    }
+
+    private void encodeName(boolean linkable) throws IOException {
+        if (this.onlyStructure) {
+            writer.startElement("td", this);
+            if (this.depth == BASE_DEPTH) {
+                writer.startElement("strong", this);       
+            } else if (this.depth > BASE_DEPTH) {
+                writer.writeAttribute("style", "padding-left: " + String.valueOf((this.depth + 2)) + "em;", null);
+            }
+        } else {
+            writer.writeAttribute("class", "bgcolor2", null);
+            writer.startElement("th", this);
+            writer.writeAttribute("class", "aleft", null);
+            writer.writeAttribute("colspan", (this.toEdit) ? 3 : 5, null);
+        }
+        
+        if (linkable) {
+            writer.startElement("a", this);
+            String action = "&action=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("action");
+            String showRules = "&showRules=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("showRules");        
+            String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");
+            String toOrder = "&toOrder=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("toOrder");
+            String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
+            writer.writeAttribute("href", "courseGroupReport.faces?degreeCurricularPlanID="+ this.facesContext.getExternalContext().getRequestParameterMap()
+                    .get("degreeCurricularPlanID") + "&courseGroupID=" + this.courseGroup.getIdInternal() + action + organizeBy + showRules + hideCourses + toOrder, null);
+        }
+        
+        if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
+            writer.append(this.courseGroup.getName()).append(" ");    
+        } else {
+            writer.append(this.courseGroup.getNameEn()).append(" ");
+        }
+        
+        if (linkable) {
+            writer.endElement("a");    
+        }
+        
+        if (this.onlyStructure) {
+            if (this.depth == BASE_DEPTH) {
+                writer.endElement("strong");       
+            } 
+            writer.endElement("td");
+        } else {
+            writer.endElement("th");
+        }
     }
 
     private void encodeOrderOptions() throws IOException {
@@ -256,7 +273,7 @@ public class UICourseGroup extends UIDegreeModule {
         String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
         String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");
         encodeLink("orderCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + "&contextID=" + this.previousContext.getIdInternal() + "&pos=" + posToTest + "&toOrder=true" + organizeBy + hideCourses, label);
+                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.courseGroup.getIdInternal() + "&contextID=" + this.previousContext.getIdInternal() + "&pos=" + posToTest + "&toOrder=true" + organizeBy + hideCourses, label);
         if (!lastOption) {
             writer.append(" , ");
         }
@@ -268,16 +285,16 @@ public class UICourseGroup extends UIDegreeModule {
         writer.append("(");
         String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
         encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal() + organizeBy + "&toOrder=false", "create.course.group");
+                .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.courseGroup.getIdInternal() + organizeBy + "&toOrder=false", "create.course.group");
         writer.append(" , ");
         encodeLink("associateCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal() + organizeBy + "&toOrder=false", "associate.course.group");
+                .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.courseGroup.getIdInternal() + organizeBy + "&toOrder=false", "associate.course.group");
         writer.append(" , ");
         encodeLink("editCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + organizeBy + "&toOrder=false", "edit");
+                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.courseGroup.getIdInternal() + organizeBy + "&toOrder=false", "edit");
         writer.append(" , ");
         encodeLink("deleteCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + "&contextID=" + this.previousContext.getIdInternal() + organizeBy + "&toOrder=false", "delete");
+                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.courseGroup.getIdInternal() + "&contextID=" + this.previousContext.getIdInternal() + organizeBy + "&toOrder=false", "delete");
         writer.append(") ");
         writer.endElement("td");
     }
@@ -289,14 +306,14 @@ public class UICourseGroup extends UIDegreeModule {
         String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
         if (!this.showRules) {
             encodeLink("createCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                    .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + organizeBy, "create.curricular.course");
+                    .get("degreeCurricularPlanID") + "&courseGroupID=" + this.courseGroup.getIdInternal() + organizeBy, "create.curricular.course");
             writer.append(" , ");
             encodeLink("associateCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                    .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + organizeBy, "associate.curricular.course");
+                    .get("degreeCurricularPlanID") + "&courseGroupID=" + this.courseGroup.getIdInternal() + organizeBy, "associate.curricular.course");
         } else {
             String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");
             encodeLink("../curricularRules/createCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                    .get("degreeCurricularPlanID") + "&degreeModuleID=" + this.degreeModule.getIdInternal() + organizeBy + hideCourses, "setCurricularRule");
+                    .get("degreeCurricularPlanID") + "&degreeModuleID=" + this.courseGroup.getIdInternal() + organizeBy + hideCourses, "setCurricularRule");
         }
         writer.endElement("th");
     }
@@ -308,10 +325,8 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("class", "showinfo3 mvert0", null);
         writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3)  + "em;", null);
 
-        for (Context context : ((CourseGroup)this.degreeModule).getSortedChildContextsWithCurricularCourses()) {
-            CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-
-            new UICurricularCourse(curricularCourse, context, this.toEdit, this.showRules, this.depth, this.tabs + "\t").encodeBegin(facesContext);
+        for (Context context : this.courseGroup.getSortedChildContextsWithCurricularCourses()) {
+            new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs + "\t").encodeBegin(facesContext);
         }
         
         writer.endElement("table");
@@ -357,12 +372,6 @@ public class UICourseGroup extends UIDegreeModule {
         writer.append(this.getBundleValue("BolonhaManagerResources", acronym)).append("-");
         writer.endElement("span");
         writer.append(String.valueOf(sums.get(order))).append(" ");
-    }
-
-    private void encodeChildCourseGroups() throws IOException {
-        for (Context context : ((CourseGroup)this.degreeModule).getSortedChildContextsWithCourseGroups()) {
-            new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses).encodeBegin(facesContext);
-        }
     }
 
 }
