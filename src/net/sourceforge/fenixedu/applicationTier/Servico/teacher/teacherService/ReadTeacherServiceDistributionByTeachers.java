@@ -55,7 +55,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		
 		DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
 
-		Department department = persistentTeacher.readTeacherByUsername(username).getLastWorkingDepartment();
+		Department department = persistentTeacher.readTeacherByUsername(username).getCurrentWorkingDepartment();
 		
 		for (ExecutionPeriod executionPeriodEntry : executionPeriodList) {
 											
@@ -131,6 +131,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 					
 					List<TeacherServiceExemption> teacherServiceExemptions = teacher.getServiceExemptionSituations(occupationPeriod.getStart(), occupationPeriod.getEnd());
 					
+				
 					for(TeacherServiceExemption exemption: teacherServiceExemptions) {
 						Date endDate = null;
 						if(exemption.getEnd() == null) {
@@ -139,7 +140,13 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 							endDate = exemption.getEnd();
 						}
 						
-						returnDTO.addExemptionSituationToTeacher(teacher.getIdInternal(), exemption.getType().getName(), (double) teacher.getHoursByCategory(exemption.getStart(), endDate));
+						List<TeacherServiceExemption> exemptionList = new ArrayList<TeacherServiceExemption>();
+						exemptionList.add(exemption);
+						int exemptionCredits = teacher.calculateServiceExemptionsCredits(exemptionList, occupationPeriod, executionPeriodEntry);
+						
+						if(exemptionCredits > 0){
+							returnDTO.addExemptionSituationToTeacher(teacher.getIdInternal(), exemption.getType().getName(), (double) exemptionCredits);
+						}
 					}
 				}
 				

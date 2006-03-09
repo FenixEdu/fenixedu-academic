@@ -38,7 +38,7 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 				
 		Teacher teacher = persistenceTeacher.readTeacherByUsername(username);
 
-		Department department = teacher.getLastWorkingDepartment();
+		Department department = teacher.getCurrentWorkingDepartment();
 
 		List<CompetenceCourse> competenceCourseList = department.getCompetenceCourses();
 		
