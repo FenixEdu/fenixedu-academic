@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PersonRole;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -34,9 +33,7 @@ public class ReviewProjectAccess extends Service {
                     IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
                     if ((persistentSupportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
                         persistentProjectAccess.deleteByPersonAndCC(person, false);
-                        PersonRole personRole = persistentSupport.getIPersistentPersonRole().readByPersonAndRole(person, role);
-                        if (personRole != null)
-                            persistentSupport.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
+                        person.removePersonRoles(role);
                     }
                 } else
                     throw new FenixServiceException();
@@ -52,9 +49,7 @@ public class ReviewProjectAccess extends Service {
                     IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
                     if ((persistentSupportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
                         persistentProjectAccess.deleteByPersonAndCC(person, true);
-                        PersonRole personRole = persistentSupport.getIPersistentPersonRole().readByPersonAndRole(person, role);
-                        if (personRole != null)
-                            persistentSupport.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
+                        person.removePersonRoles(role);
                     }
                 } else
                     throw new FenixServiceException();

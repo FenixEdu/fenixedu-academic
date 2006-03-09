@@ -13,7 +13,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PersonRole;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -964,34 +963,35 @@ public class InfoPerson extends InfoObject {
     }
     
     private List getImportantRoles(Person person, List mainRoles) {        
-        
-        if(person.getAssociatedPersonRolesCount() != 0){
-            
-            boolean teacher = false, employee = false;
-        
-            for(PersonRole personRole : person.getAssociatedPersonRoles()){                    
-                RoleType roleType = personRole.getRole().getRoleType();
-                
-                if(roleType.equals(RoleType.TEACHER)){                        
-                    mainRoles.add("Docente");
-                    teacher = true;
-                }
-                else if(roleType.equals(RoleType.STUDENT)){
-                    mainRoles.add("Aluno");
-                }
-                else if(roleType.equals(RoleType.GRANT_OWNER)){
-                    mainRoles.add("Bolseiro");
-                }
-                else if(!teacher && roleType.equals(RoleType.EMPLOYEE)){                
-                    employee = true;
-                }                
-            }
-            
-            if(employee && !teacher){
-                mainRoles.add("Funcionário");
-            }
-        }
-        return mainRoles;
+
+        throw new RuntimeException("PersonRole has been removed. Please reimplement this code.");
+//        if(person.getPersonRolesCount() != 0){
+//            
+//            boolean teacher = false, employee = false;
+//        
+//            for(PersonRole personRole : person.getPer AssociatedPersonRoles()){                    
+//                RoleType roleType = personRole.getRole().getRoleType();
+//                
+//                if(roleType.equals(RoleType.TEACHER)){                        
+//                    mainRoles.add("Docente");
+//                    teacher = true;
+//                }
+//                else if(roleType.equals(RoleType.STUDENT)){
+//                    mainRoles.add("Aluno");
+//                }
+//                else if(roleType.equals(RoleType.GRANT_OWNER)){
+//                    mainRoles.add("Bolseiro");
+//                }
+//                else if(!teacher && roleType.equals(RoleType.EMPLOYEE)){                
+//                    employee = true;
+//                }                
+//            }
+//            
+//            if(employee && !teacher){
+//                mainRoles.add("Funcionário");
+//            }
+//        }
+//        return mainRoles;
     }
 
     public static InfoPerson newInfoFromDomain(Person person) {

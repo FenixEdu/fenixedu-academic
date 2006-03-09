@@ -69,7 +69,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDat
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -592,11 +591,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope()
 	{
 		return new CurricularCourseScopeOJB();
-	}
-
-	public IPersistentPersonRole getIPersistentPersonRole()
-	{
-		return new PersonRoleOJB();
 	}
 
 	public IPersistentRestriction getIPersistentRestriction()

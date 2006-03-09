@@ -53,47 +53,6 @@
 	 
 </class-descriptor>
 
-
-
-<!-- ***********************************
-     Definitions for net.sourceforge.fenixedu.domain.PersonRole 
-     *********************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.PersonRole"
-                  table="PERSON_ROLE">
-    <field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-
-    <field-descriptor
-        name="keyRole"
-        column="KEY_ROLE"
-        nullable = "false"
-        jdbc-type="INTEGER"
-    />
-    <field-descriptor 
-        name="keyPerson"
-        column="KEY_PERSON"
-		nullable="false"
-        jdbc-type="INTEGER"
-    />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      
-      
-     
-
-</class-descriptor>
-
-
-
 <!-- Definitions for net.sourceforge.fenixedu.domain.Teacher -->
    <class-descriptor class="net.sourceforge.fenixedu.domain.Teacher" table="TEACHER">
    	  

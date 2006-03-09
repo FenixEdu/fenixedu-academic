@@ -1776,13 +1776,6 @@ class net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers exte
     Boolean answer2;
 }
 
-
-class net.sourceforge.fenixedu.domain.PersonRole extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keyPerson;
-    Integer keyRole;
-}
-
-
 class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
 }
@@ -4693,15 +4686,6 @@ relation PersonRole {
 	}
 }
 
-
-relation PersonRolePerson {
-    net.sourceforge.fenixedu.domain.PersonRole playsRole associatedPersonRoles {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Person playsRole person;
-}
-
-
 relation PersonTeacher {
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 	net.sourceforge.fenixedu.domain.Person playsRole person;
@@ -4856,15 +4840,6 @@ relation ResidenceCandidaciesStudent {
     }
     net.sourceforge.fenixedu.domain.Student playsRole student;
 }
-
-
-relation RolePersonRole {
-    net.sourceforge.fenixedu.domain.Role playsRole role;
-    net.sourceforge.fenixedu.domain.PersonRole playsRole associatedPersonRoles {
-        multiplicity *;
-    }
-}
-
 
 relation RoomLesson {
 	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {

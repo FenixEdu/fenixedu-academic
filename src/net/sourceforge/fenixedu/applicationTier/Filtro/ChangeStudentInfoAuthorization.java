@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PersonRole;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -41,8 +40,8 @@ public class ChangeStudentInfoAuthorization extends AuthorizationByRoleFilter {
         Role teacherRole = (Role) Role.getRoleByRoleType(RoleType.TEACHER);
         Role employeeRole = (Role) Role.getRoleByRoleType(RoleType.EMPLOYEE);
         
-        for (PersonRole personRole : person.getAssociatedPersonRoles()) {
-            if (personRole.getRole().equals(teacherRole) || personRole.getRole().equals(employeeRole)) {
+        for (Role role : person.getPersonRoles()) {
+            if (role.equals(teacherRole) || role.equals(employeeRole)) {
                 throw new NotAuthorizedFilterException();
             }
         }

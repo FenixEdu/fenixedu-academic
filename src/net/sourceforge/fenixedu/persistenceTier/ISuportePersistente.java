@@ -188,8 +188,6 @@ public interface ISuportePersistente
 
 	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
 
-	public IPersistentPersonRole getIPersistentPersonRole();
-
 	public IPersistentRestriction getIPersistentRestriction();
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
