@@ -10,22 +10,17 @@
 	<h:outputText rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}" value="<em>#{bolonhaBundle['competenceCoursesManagement']}</em>" escape="false"/>
 	<h:outputText value="<h2>#{CompetenceCourseManagement.personDepartment.realName}</h2>" escape="false"/>
 
-<%--
-	<h:outputText rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}" value="<p class='mtop2 mbottom1'><a href='#members' title='#{bolonhaBundle['view.group.members.description']}'>#{bolonhaBundle['view.group.members']}</a></p>" escape="false"/>
---%>
-
-		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}">
-			<h:outputText value="<br/><b id='members' class='highlight1'>#{bolonhaBundle['groupMembers']}</b> #{bolonhaBundle['label.group.members.explanation']}:<br/>" escape="false" />
-			<h:outputText value="<ul>" escape="false"/>
-			<fc:dataRepeater value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
-				<h:outputText value="<li>#{memberLabel}</li>" escape="false"/>
-			</fc:dataRepeater>
-			<h:outputText value="</ul>" escape="false"/>
-		</h:panelGroup>
-		<h:panelGroup rendered="#{empty CompetenceCourseManagement.groupMembersLabels}">
-			<h:outputText value="<i>#{bolonhaBundle['label.empty.group.members']}</i><br/>" escape="false" />
-		</h:panelGroup>
-
+	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}">
+		<h:outputText value="<br/><b id='members' class='highlight1'>#{bolonhaBundle['groupMembers']}</b> #{bolonhaBundle['label.group.members.explanation']}:<br/>" escape="false" />
+		<h:outputText value="<ul>" escape="false"/>
+		<fc:dataRepeater value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
+			<h:outputText value="<li>#{memberLabel}</li>" escape="false"/>
+		</fc:dataRepeater>
+		<h:outputText value="</ul>" escape="false"/>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{empty CompetenceCourseManagement.groupMembersLabels}">
+		<h:outputText value="<i>#{bolonhaBundle['label.empty.group.members']}</i><br/>" escape="false" />
+	</h:panelGroup>
 
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.personDepartment}">
 		<h:panelGroup rendered="#{CompetenceCourseManagement.canView}">
