@@ -28,9 +28,9 @@ public class AuthenticateKerberos extends Authenticate {
             if (person.getIsPassInKerberos()) {
                 try {
 
-                    if (!PasswordEncryptor.areEquals(person.getPassword(), password)) {
+                    /*if (!PasswordEncryptor.areEquals(person.getPassword(), password)) {
                         person.setPassword(PasswordEncryptor.encryptPassword(password));
-                    }
+                    }*/
                     Script.verifyPass(person.getIstUsername(), password);
                     return getUserView(person, requestURL);
                 } catch (KerberosException ke) {
