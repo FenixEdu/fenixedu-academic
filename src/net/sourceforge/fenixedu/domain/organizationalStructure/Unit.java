@@ -234,7 +234,7 @@ public class Unit extends Unit_Base {
         for (Employee employee : employees) {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null
-                    && !teacher.getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(begin,
+                    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin,
                             end).isEmpty()) {
                 teachers.add(teacher);
             }
@@ -247,7 +247,7 @@ public class Unit extends Unit_Base {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null
                     && teacher.getTeacherNumber().equals(teacherNumber)
-                    && !teacher.getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(begin,
+                    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin,
                             end).isEmpty()) {
                 return teacher;
             }

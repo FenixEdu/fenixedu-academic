@@ -61,7 +61,8 @@ public class Teacher extends Teacher_Base {
     }
 
     public Boolean canAddPublicationToTeacherInformationSheet(PublicationArea area) {
-        // NOTA : a linha seguinte cont�m um n�mero expl�cito quando n�o deve.
+        // NOTA : a linha seguinte cont�m um n�mero expl�cito quando n�o
+        // deve.
         // Isto deve ser mudado! Mas esta mudan�a implica tornar expl�cito o
         // conceito de Ficha de docente.
         return new Boolean(countPublicationsInArea(area) < 5);
@@ -126,40 +127,49 @@ public class Teacher extends Teacher_Base {
     }
 
     public Category getCategory() {
-        TeacherLegalRegimen regimen = getLastLegalRegimen();
+        TeacherLegalRegimen regimen = getLastLegalRegimenWithoutSpecialSituations();
         if (regimen != null) {
             return regimen.getCategory();
         }
         return null;
     }
 
-    public TeacherLegalRegimen getLastLegalRegimen() {
+    public TeacherLegalRegimen getLastLegalRegimenWithoutSpecialSituations() {
         Date date = null;
         TeacherLegalRegimen regimenToReturn = null;
         for (TeacherLegalRegimen regimen : this.getLegalRegimens()) {
-            if (regimen.isActive(Calendar.getInstance().getTime())) {
-                return regimen;
-            } else if (date == null || date.before(regimen.getEndDate())) {
-                date = regimen.getEndDate();
-                regimenToReturn = regimen;
+            if (checkDeathEmeritusAndRetirementSituations(regimen)) {
+                if (regimen.isActive(Calendar.getInstance().getTime())) {
+                    return regimen;
+                } else if (date == null || date.before(regimen.getEndDate())) {
+                    date = regimen.getEndDate();
+                    regimenToReturn = regimen;
+                }
             }
         }
         return regimenToReturn;
     }
 
-    public List<TeacherLegalRegimen> getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(
+    public List<TeacherLegalRegimen> getAllLegalRegimensWithoutSpecialSituations(
             Date beginDate, Date endDate) {
 
         List<TeacherLegalRegimen> legalRegimens = new ArrayList<TeacherLegalRegimen>();
         for (TeacherLegalRegimen legalRegimen : this.getLegalRegimens()) {
-            if (!legalRegimen.getLegalRegimenType().equals(LegalRegimenType.DEATH)
-                    && !legalRegimen.getLegalRegimenType().equals(LegalRegimenType.EMERITUS)
-                    && !legalRegimen.getLegalRegimenType().equals(LegalRegimenType.RETIREMENT)
+            if (checkDeathEmeritusAndRetirementSituations(legalRegimen)
                     && legalRegimen.belongsToPeriod(beginDate, endDate)) {
                 legalRegimens.add(legalRegimen);
             }
         }
         return legalRegimens;
+    }
+
+    private boolean checkDeathEmeritusAndRetirementSituations(TeacherLegalRegimen legalRegimen) {
+        if (!legalRegimen.getLegalRegimenType().equals(LegalRegimenType.DEATH)
+                && !legalRegimen.getLegalRegimenType().equals(LegalRegimenType.EMERITUS)
+                && !legalRegimen.getLegalRegimenType().equals(LegalRegimenType.RETIREMENT)) {
+            return true;
+        }
+        return false;
     }
 
     public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(
@@ -183,7 +193,8 @@ public class Teacher extends Teacher_Base {
         List<Proposal> proposalList = new ArrayList<Proposal>();
         for (Iterator iter = getAssociatedProposalsByOrientator().iterator(); iter.hasNext();) {
             Proposal proposal = (Proposal) iter.next();
-            if (proposal.getScheduleing().getExecutionDegreesSet().iterator().next().getExecutionYear().equals(executionYear)) {
+            if (proposal.getScheduleing().getExecutionDegreesSet().iterator().next().getExecutionYear()
+                    .equals(executionYear)) {
                 // if it was attributed by the coordinator the proposal is
                 // efective
                 if (proposal.getGroupAttributed() != null) {
@@ -432,7 +443,7 @@ public class Teacher extends Teacher_Base {
 
     public int getHoursByCategory(Date begin, Date end) {
 
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(
                 begin, end);
 
         if (list.isEmpty()) {
@@ -450,7 +461,7 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return 0;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(
                 occupationPeriod.getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
@@ -512,7 +523,7 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return null;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(
                 occupationPeriod.getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
@@ -702,7 +713,7 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return 0;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(
                 occupationPeriod.getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {

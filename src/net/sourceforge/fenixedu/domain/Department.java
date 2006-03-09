@@ -85,7 +85,8 @@ public class Department extends Department_Base {
         for (Employee employee : employees) {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null) {
-                TeacherLegalRegimen legalRegimen = teacher.getLastLegalRegimen();
+                TeacherLegalRegimen legalRegimen = teacher
+                        .getLastLegalRegimenWithoutSpecialSituations();
                 if (legalRegimen != null && legalRegimen.isActive(currentDate)) {
                     teachers.add(teacher);
                 }
@@ -118,7 +119,7 @@ public class Department extends Department_Base {
         for (Employee employee : employees) {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null
-                    && !teacher.getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(begin,
+                    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin,
                             end).isEmpty()) {
                 teachers.add(teacher);
             }
@@ -131,7 +132,7 @@ public class Department extends Department_Base {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null
                     && teacher.getTeacherNumber().equals(teacherNumber)
-                    && !teacher.getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(begin,
+                    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin,
                             end).isEmpty()) {
                 return teacher;
             }
