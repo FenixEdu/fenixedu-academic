@@ -532,7 +532,7 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
-    private int calculateServiceExemptionsCredits(List<TeacherServiceExemption> list,
+    public int calculateServiceExemptionsCredits(List<TeacherServiceExemption> list,
             OccupationPeriod occupationPeriod, ExecutionPeriod executionPeriod) {
 
         TeacherServiceExemption teacherServiceExemption = getTeacherServiceExemption(list,
