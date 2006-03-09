@@ -40,17 +40,14 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
     private String prevailingScientificArea;
 
     public List<Degree> getBolonhaDegrees() throws FenixFilterException, FenixServiceException {
-        Object[] args = { Degree.class };
-        List<Degree> allDegrees = (List<Degree>) ServiceUtils.executeService(null, "ReadAllDomainObjects", args);
-        
-        List<Degree> result = new ArrayList<Degree>();
-        for (Degree degree : allDegrees) {
-            if (degree.getBolonhaDegreeType() != null) {
+        final List<Degree> result = new ArrayList<Degree>();
+        final List<Degree> allDegrees = readAllDomainObjects(Degree.class);
+        for (final Degree degree : allDegrees) {
+            if (degree.isBolonhaDegree()) {
                 result.add(degree);
             }
         }
-        
-        ComparatorChain chainComparator = new ComparatorChain();
+        final ComparatorChain chainComparator = new ComparatorChain();
         chainComparator.addComparator(new BeanComparator("bolonhaDegreeType"), false);
         chainComparator.addComparator(new BeanComparator("nome"), false);
         Collections.sort(result, chainComparator);
@@ -59,13 +56,11 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
     }
     
     public List<Degree> getFilteredBolonhaDegrees() throws FenixFilterException, FenixServiceException {
-        Object[] args = { Degree.class };
-        List<Degree> allDegrees = (List<Degree>) ServiceUtils.executeService(null, "ReadAllDomainObjects", args);
-        
-        Set<Degree> result = new HashSet<Degree>();
-        for (Degree degree : allDegrees) {
-            if (degree.getBolonhaDegreeType() != null) {
-                for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+        final Set<Degree> result = new HashSet<Degree>();
+        final List<Degree> allDegrees = readAllDomainObjects(Degree.class);
+        for (final Degree degree : allDegrees) {
+            if (degree.isBolonhaDegree()) {
+                for (final DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
                     if (dcp.getCurricularStage().equals(CurricularStage.PUBLISHED) 
                             || dcp.getCurricularStage().equals(CurricularStage.APPROVED) 
                             || dcp.getCurricularPlanMembersGroup().isMember(this.getUserView().getPerson())) {
@@ -75,8 +70,8 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
             }
         }
         
-        List orderedResult = new ArrayList<Degree>(result);
-        ComparatorChain chainComparator = new ComparatorChain();
+        final List<Degree> orderedResult = new ArrayList<Degree>(result);
+        final ComparatorChain chainComparator = new ComparatorChain();
         chainComparator.addComparator(new BeanComparator("bolonhaDegreeType"), false);
         chainComparator.addComparator(new BeanComparator("nome"), false);
         Collections.sort(orderedResult, chainComparator);
