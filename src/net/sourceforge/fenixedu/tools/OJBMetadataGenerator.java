@@ -3,17 +3,13 @@
  */
 package net.sourceforge.fenixedu.tools;
 
-import java.io.IOException;
 import java.lang.reflect.Modifier;
-import java.util.Formatter;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
-import net.sourceforge.fenixedu.util.FileUtils;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
@@ -54,11 +50,7 @@ public class OJBMetadataGenerator {
         DomainModel domainModel = DmlCompiler.getDomainModel(dmlFilesArray);
         Map ojbMetadata = MetadataManager.getInstance().getGlobalRepository().getDescriptorTable();
 
-        if (args.length > 1 && args[1].equalsIgnoreCase("fixTables")) {
-            fixManyToManyRelationsTablesNamesAndKeys(ojbMetadata, domainModel);
-        } else {
-            updateOJBMappingFromDomainModel(ojbMetadata, domainModel);
-        }
+        updateOJBMappingFromDomainModel(ojbMetadata, domainModel);
 
         printUnmmapedAttributes(unmappedObjectReferenceAttributesInDML,
                 "UnmappedObjectReferenceAttributes in DML:");
@@ -74,12 +66,12 @@ public class OJBMetadataGenerator {
     }
 
     private static void printUnmmapedAttributes(Set<String> unmappedAttributesSet, String title) {
-        if(!unmappedAttributesSet.isEmpty()){
+        if (!unmappedAttributesSet.isEmpty()) {
             System.out.println();
             System.out.println(title);
             for (String objectReference : unmappedAttributesSet) {
                 System.out.println(objectReference);
-            }            
+            }
         }
     }
 
@@ -254,108 +246,21 @@ public class OJBMetadataGenerator {
     }
 
     private static Slot findSlotByName(DomainClass domainClass, String slotName) {
-        for (Iterator<Slot> slotsIter = domainClass.getSlots(); slotsIter.hasNext();) {
-            Slot slot = (Slot) slotsIter.next();
-            if (slot.getName().equals(slotName)) {
-                return slot;
+        DomainClass domainClassIter = domainClass;
+        while(domainClassIter != null){
+            
+            for (Iterator<Slot> slotsIter = domainClassIter.getSlots(); slotsIter.hasNext();) {
+                Slot slot = (Slot) slotsIter.next();
+                if (slot.getName().equals(slotName)) {
+                    return slot;
+                }
             }
+            
+            domainClassIter = (DomainClass) domainClassIter.getSuperclass();
         }
+        
+
         return null;
     }
 
-    private static void fixManyToManyRelationsTablesNamesAndKeys(Map ojbMetadata, DomainModel domainModel)
-            throws ClassNotFoundException, IOException {
-
-        Formatter result = new Formatter();
-        Map<String, String> renamedIndirectionTables = new HashMap<String, String>();
-
-        for (final Iterator iterator = domainModel.getClasses(); iterator.hasNext();) {
-            final DomainClass domClass = (DomainClass) iterator.next();
-            final ClassDescriptor classDescriptor = (ClassDescriptor) ojbMetadata.get(domClass
-                    .getFullName());
-
-            if (classDescriptor != null) {
-
-                DomainEntity domEntity = domClass;
-                while (domEntity instanceof DomainClass) {
-                    DomainClass dClass = (DomainClass) domEntity;
-
-                    Class clazz = Class.forName(domEntity.getFullName());
-
-                    if (!Modifier.isAbstract(clazz.getModifiers())) {
-
-                        // roles
-                        Iterator roleSlots = dClass.getRoleSlots();
-                        while (roleSlots.hasNext()) {
-                            Role role = (Role) roleSlots.next();
-                            String roleName = role.getName();
-
-                            if (role.getMultiplicityUpper() != 1
-                                    && role.getOtherRole().getMultiplicityUpper() != 1
-                                    && classDescriptor.getCollectionDescriptorByName(roleName) != null) {
-
-                                generateFix(result, classDescriptor, role, roleName,
-                                        renamedIndirectionTables);
-                            }
-                        }
-
-                    }
-                    domEntity = dClass.getSuperclass();
-                }
-
-            }
-        }
-
-        System.out.println(result.toString());
-        FileUtils.writeFile("fixIndirecionTables.sql", result.toString(), false);
-
-    }
-
-    private static void generateFix(Formatter result, final ClassDescriptor classDescriptor, Role role,
-            String roleName, Map<String, String> renamedIndirectionTables) {
-        CollectionDescriptor descriptor = classDescriptor.getCollectionDescriptorByName(roleName);
-
-        String relationName = role.getRelation().getName();
-
-        String relationNameUpped = StringFormatter.splitCamelCaseString(relationName).replace(' ', '_')
-                .toUpperCase();
-        if (!relationNameUpped.equals(descriptor.getIndirectionTable())) {
-            String renamedTable = renamedIndirectionTables.get(descriptor.getIndirectionTable());
-            if (renamedTable != null) {
-                if (renamedTable.equals(relationNameUpped)) {
-                    return;
-                } else {
-                    System.out.println("PROBLEMS!!!!!!!! on " + descriptor.getIndirectionTable() + " + "
-                            + relationNameUpped + " * " + relationName + "\n :: "
-                            + classDescriptor.getClassNameOfObject() + " -> "
-                            + descriptor.getAttributeName());
-                }
-            } else {
-                result.format("ALTER TABLE %s RENAME %s;\n", descriptor.getIndirectionTable(),
-                        relationNameUpped);
-                renamedIndirectionTables.put(descriptor.getIndirectionTable(), relationNameUpped);
-
-            }
-
-        }
-
-        String keyOneGenerated = "KEY_"
-                + StringFormatter.splitCamelCaseString(role.getType().getName()).replace(' ', '_')
-                        .toUpperCase();
-        String keyTwoGenerated = "KEY_"
-                + StringFormatter.splitCamelCaseString(role.getOtherRole().getType().getName()).replace(
-                        ' ', '_').toUpperCase();
-        String keyOneMapped = descriptor.getFksToItemClass()[0];
-        String keyTwoMapped = descriptor.getFksToThisClass()[0];
-
-        if (!keyOneMapped.equals(keyOneGenerated)) {
-            result.format("ALTER TABLE %s CHANGE %s %s int(11) NOT NULL default '0';\n",
-                    relationNameUpped, keyOneMapped, keyOneGenerated);
-        }
-        if (!keyTwoMapped.equals(keyTwoGenerated)) {
-            result.format("ALTER TABLE %s CHANGE %s %s int(11) NOT NULL default '0';\n",
-                    relationNameUpped, keyTwoMapped, keyTwoGenerated);
-        }
-
-    }
 }
