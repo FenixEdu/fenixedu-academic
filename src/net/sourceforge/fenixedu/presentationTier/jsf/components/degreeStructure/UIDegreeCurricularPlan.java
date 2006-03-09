@@ -193,12 +193,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                 new UICurricularCourse(curricularCourse, context, this.toEdit, this.showRules).encodeBegin(facesContext);
                 
                 if (curricularCourse.isAnual()) {
-                    List<Context> toUpdate = toRepeat.get(curricularPeriod.getNext());
-                    if (toUpdate == null) {
-                        toUpdate = new ArrayList<Context>();
-                    }
-                    toUpdate.add(context);
-                    toRepeat.put(curricularPeriod.getNext(), toUpdate);
+                    remindToEncodeInNextPeriod(curricularPeriod, context);
                 }
             }
         }
@@ -207,6 +202,17 @@ public class UIDegreeCurricularPlan extends UIInput {
             for (Context check : toRepeat.get(curricularPeriod)) {
                 new UICurricularCourse(check.getChildDegreeModule(), check, this.toEdit, this.showRules).encodeInNextPeriod(facesContext);
             }
+        }
+    }
+
+    private void remindToEncodeInNextPeriod(CurricularPeriod curricularPeriod, Context context) {
+        if (curricularPeriod.getNext() != null) {
+            List<Context> toUpdate = toRepeat.get(curricularPeriod.getNext());
+            if (toUpdate == null) {
+                toUpdate = new ArrayList<Context>();
+            }
+            toUpdate.add(context);
+            toRepeat.put(curricularPeriod.getNext(), toUpdate);
         }
     }
 

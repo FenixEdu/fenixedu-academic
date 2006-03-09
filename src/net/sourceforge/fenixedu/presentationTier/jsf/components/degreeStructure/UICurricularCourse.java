@@ -185,21 +185,23 @@ public class UICurricularCourse extends UIDegreeModule {
     }
 
     public void encodeInNextPeriod(FacesContext facesContext) throws IOException {
-        this.facesContext = facesContext;
-        this.writer = facesContext.getResponseWriter();
-        
-        writer.startElement("tr", this);
-        
-        encodeName(false);
-        encodeContext(previousContext.getCurricularPeriod().getNext());
-        encodeRegime();
-        encodeLoadsAndCredits(previousContext.getCurricularPeriod().getNext());
-        
-        writer.startElement("td", this);
-        writer.append("&nbsp;");
-        writer.endElement("td");
-        
-        writer.endElement("tr");
+        if (previousContext.getCurricularPeriod().getNext() != null) {
+            this.facesContext = facesContext;
+            this.writer = facesContext.getResponseWriter();
+            
+            writer.startElement("tr", this);
+            
+            encodeName(false);
+            encodeContext(previousContext.getCurricularPeriod().getNext());
+            encodeRegime();
+            encodeLoadsAndCredits(previousContext.getCurricularPeriod().getNext());
+            
+            writer.startElement("td", this);
+            writer.append("&nbsp;");
+            writer.endElement("td");
+            
+            writer.endElement("tr");
+        }
     }
 
     private void encodeCurricularCourseOptions() throws IOException {
