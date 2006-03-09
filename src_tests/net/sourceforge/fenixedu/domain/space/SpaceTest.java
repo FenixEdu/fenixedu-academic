@@ -14,6 +14,10 @@ public class SpaceTest extends DomainTestBase {
             super();
             setSpace(space);
         }
+
+		@Override
+		public void createNewSpaceInformation() {
+		}
     }
 
     public void testSpaceConstructor() {
