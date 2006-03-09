@@ -287,14 +287,36 @@ public class StringFormatter {
      * @param string
      * @return
      */
-    public static String normalize(String string) {        
-        String spacesReplacedString = removeDuplicateSpaces(string.trim());       
+    public static String normalize(String string) {
+        String spacesReplacedString = removeDuplicateSpaces(string.trim());
         return StringNormalizer.normalize(spacesReplacedString).toLowerCase();
     }
 
     private static String removeDuplicateSpaces(String string) {
         Pattern pattern = Pattern.compile("\\s+");
-        Matcher matcher = pattern.matcher(string);        
+        Matcher matcher = pattern.matcher(string);
         return matcher.replaceAll(" ");
     }
+
+    /**
+     * 
+     * @param string
+     * @return
+     */
+    public static String splitCamelCaseString(String string) {
+
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for (char c : string.toCharArray()) {
+            if (first) {
+                first = false;
+            } else if (Character.isUpperCase(c)) {
+                result.append(' ');
+            }
+            result.append(c);
+        }
+
+        return result.toString();
+    }
+
 }
