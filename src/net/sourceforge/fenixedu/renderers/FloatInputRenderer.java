@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.ConversionExcept
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 /**
- * This renderer provides the default input for a float value. The
+ * This renderer provides a simple way of doing the input of a float value. The
  * value is read with an text input field and parsed with 
  * {@link Float#parseFloat(java.lang.String)}.
  *  

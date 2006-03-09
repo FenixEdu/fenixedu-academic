@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction;
+import net.sourceforge.fenixedu.presentationTier.renderers.actions.NavigationAction;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
@@ -10,34 +10,69 @@ import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+/**
+ * This renderer can only be used to present a domain object's slot. It will generate a link to the
+ * object's details. In the following example we are imitating the presentation of a person where the
+ * slot <code>name</code> is presented by this renderer.
+ * 
+ * <p>
+ * Example: <a href="#">Jane Doe</a>
+ * 
+ * @author cfgi
+ */
 public class ObjectLinkRenderer extends OutputRenderer {
 
-    private String text;
-    private boolean isKey;
+    // TODO: remove constant action path
+    private static final String DEFAULT_PAGE = "/domain/view.do";
+
+    private String viewPage;
 
     private String subSchema;
+
     private String subLayout;
-    
+
     private String destinySchema;
+
     private String destinyLayout;
-    
-    private String viewPage;
-    
+
+    private String text;
+
+    private boolean isKey;
+
     public ObjectLinkRenderer() {
         super();
-        
+
         this.isKey = false;
     }
-    
-    public boolean isKey() {
-        return isKey;
+
+    public String getViewPage() {
+        return this.viewPage;
     }
 
     /**
+     * This property allows you to override the page or action that is used to show the object's details.
+     * The default page is {@value #DEFAULT_PAGE}. This renderer will generate a link for the specified
+     * page passing as arguments:
+     * <dl>
+     *   <dt>type</dt>
+     *   <dd>the the object type (as given by {@link NavigationAction#getTypeName(Class)})</dd>
+     * 
+     *   <dt>oid</dt>
+     *   <dd>the object id</dd>
+     * 
+     *   <dt>layout</dt>
+     *   <dd>the layout to be used in the presentation and specified by
+     *   {@link #setDestinyLayout(String) destinyLayout}. It may not be present.</dd>
+     * 
+     *   <dt>schema</dt>
+     *   <dd>the schema to be used in the presentation and specified by
+     *   {@link #setDestinySchema(String) destinySchema}. It may not be present.</dd>
+     * </dl>
+     * 
      * @property
      */
-    public void setKey(boolean isKey) {
-        this.isKey = isKey;
+    public void setViewPage(String viewPage) {
+        this.viewPage = viewPage;
     }
 
     public String getDestinyLayout() {
@@ -45,6 +80,8 @@ public class ObjectLinkRenderer extends OutputRenderer {
     }
 
     /**
+     * The layout to be used in the detailed presentation of the object.
+     * 
      * @property
      */
     public void setDestinyLayout(String destinyLayout) {
@@ -56,17 +93,21 @@ public class ObjectLinkRenderer extends OutputRenderer {
     }
 
     /**
+     * The schema to be used in the detailed presentation of the object.
+     * 
      * @property
      */
     public void setDestinySchema(String destinySchema) {
         this.destinySchema = destinySchema;
     }
-    
+
     public String getSubLayout() {
         return subLayout;
     }
 
     /**
+     * The layout in which the slot's value should be presented.
+     * 
      * @property
      */
     public void setSubLayout(String subLayout) {
@@ -78,6 +119,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
     }
 
     /**
+     * If the slot's value is a complex value, that is, it's an object with slots, then this property can
+     * be used to indicate the layout in which it should be presented.
+     * 
      * @property
      */
     public void setSubSchema(String subSchema) {
@@ -89,21 +133,27 @@ public class ObjectLinkRenderer extends OutputRenderer {
     }
 
     /**
+     * If you specify this slot then the sub object's presentation is ignored and this text is shown
+     * instead.
+     * 
      * @property
      */
     public void setText(String text) {
         this.text = text;
     }
 
-    public String getViewPage() {
-        return this.viewPage;
+    public boolean isKey() {
+        return isKey;
     }
 
     /**
+     * This property indicates that the value given in the {@link #setText(String) text} property is to
+     * be treated as a resource key.
+     * 
      * @property
      */
-    public void setViewPage(String viewPage) {
-        this.viewPage = viewPage;
+    public void setKey(boolean isKey) {
+        this.isKey = isKey;
     }
 
     @Override
@@ -116,12 +166,10 @@ public class ObjectLinkRenderer extends OutputRenderer {
 
                 if (getText() != null) {
                     link.setText(getLinkText());
-                }
-                else {
+                } else {
                     if (object == null) {
                         return link;
-                    }
-                    else {            
+                    } else {
                         link.setBody(renderLinkBody(object));
                     }
                 }
@@ -131,7 +179,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
 
                 return link;
             }
-            
+
         };
     }
 
@@ -143,8 +191,8 @@ public class ObjectLinkRenderer extends OutputRenderer {
         link.setUrl(getViewUrl());
 
         link.setParameter("oid", domainObject.getIdInternal().toString());
-        link.setParameter("type", ViewObjectAction.getTypeName(domainObject.getClass()));
-        
+        link.setParameter("type", NavigationAction.getTypeName(domainObject.getClass()));
+
         if (getDestinyLayout() != null) {
             link.setParameter("layout", getDestinyLayout());
         }
@@ -157,10 +205,8 @@ public class ObjectLinkRenderer extends OutputRenderer {
     private String getViewUrl() {
         if (getViewPage() != null) {
             return getViewPage();
-        }
-        else {
-            // TODO: remove constant action path
-            return "/domain/view.do";
+        } else {
+            return DEFAULT_PAGE;
         }
     }
 
@@ -168,7 +214,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
         if (isKey()) {
             return RenderUtils.getResourceString(getText());
         }
-        
+
         return getText();
     }
 

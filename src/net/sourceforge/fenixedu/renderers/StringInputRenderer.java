@@ -4,8 +4,8 @@ import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlTextInput;
 
 /**
- * This renderer provices the default input for a string. The 
- * string is read with and text input field.
+ * This renderer provides a standard way of doing the input of a string. The 
+ * string is read with a text input field.
  *  
  * <p>
  * Example:

@@ -65,7 +65,7 @@ Documentation:
           more details. -->
     <renderer type="java.lang.Object" layout="format" class="net.sourceforge.fenixedu.renderers.FormatRenderer"/>
     
-    <!--@ This layout is only to be used for slots of domain objcts and never for the top level object that is 
+    <!--@ This layout is only to be used for slots of domain objects and never for the top level object that is 
           beeing presented. It generates a link for the object details. The action called is configurable. The 
           default layout is set to the tabular presentation of the object. -->
     <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer">

@@ -7,8 +7,12 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 
 /**
- * The default input renderer for a boolean value. This renderer presents
- * a checkbox that is checked accordingly with the slot's value.
+ * This renderer allows you to do the input of a boolean value. 
+ * A checkbox is presented and is checked accordingly with the slot's value.
+ * 
+ * <p>
+ * Example:
+ * <input type="checkbox"/>
  * 
  * @author cfgi
  */

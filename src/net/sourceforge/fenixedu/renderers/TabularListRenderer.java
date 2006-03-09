@@ -8,6 +8,36 @@ import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 
+/**
+ * This renderer allows you to present a collection of objects as a
+ * list but at the same time allows you to add control links to 
+ * each item like you can in {@link net.sourceforge.fenixedu.renderers.CollectionRenderer}.
+ * A table is used to accomplish this. Each object will be presented
+ * in a row but the left column will contain the entire presentation of the object
+ * and further column will contain the defined control links.
+ * 
+ * <p>
+ * Example:
+ * <table border="1">
+ *  <tr>
+ *      <td><em>&lt;object A presentation&gt;</em></td>
+ *      <td><a href="#">Edit</a></td>
+ *      <td><a href="#">Delete</a></td>
+ *  </tr>
+ *  <tr>
+ *      <td><em>&lt;object B presentation&gt;</em></td>
+ *      <td><a href="#">Edit</a></td>
+ *      <td><a href="#">Delete</a></td>
+ *  </tr>
+ *  <tr>
+ *      <td><em>&lt;object C presentation&gt;</em></td>
+ *      <td><a href="#">Edit</a></td>
+ *      <td><a href="#">Delete</a></td>
+ *  </tr>
+ * </table>
+ * 
+ * @author cfgi
+ */
 public class TabularListRenderer extends CollectionRenderer {
 
     private String subSchema;
@@ -23,6 +53,9 @@ public class TabularListRenderer extends CollectionRenderer {
     }
 
     /**
+     * With this property you can choose the layout to be used
+     * in each object's presentation. 
+     * 
      * @property
      */
     public void setSubLayout(String subLayout) {
@@ -34,6 +67,9 @@ public class TabularListRenderer extends CollectionRenderer {
     }
 
     /**
+     * Specifies the schema that will be used when presenting
+     * each sub object.
+     * 
      * @property
      */
     public void setSubSchema(String subSchema) {

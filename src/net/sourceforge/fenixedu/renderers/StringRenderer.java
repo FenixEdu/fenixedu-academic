@@ -5,6 +5,13 @@ import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 
+/**
+ * Provides the most basic presentation of all. This renderer is designed
+ * to present strings and can convert some strings to links if they have the
+ * correct format.
+ * 
+ * @author cfgi
+ */
 public class StringRenderer extends OutputRenderer {
 
     private boolean isLink;
@@ -16,6 +23,16 @@ public class StringRenderer extends OutputRenderer {
     }
 
     /**
+     * This property indicates that the text to be presented should be
+     * considered a link. If the text actually has a link format, that is,
+     * is either a url or a mail address then a link is presented.
+     * 
+     * <p>
+     * For example the string <code>"http://www.somewhere.net"</code> would
+     * be presented as <a href="http://www.somewhere.net">http://www.somewhere.net</a>
+     * and <code>jane.doe@somewhere.net</code> as <a href="mailto:jane.doe@somewhere.net">
+     * jane.doe@somewhere.net</a>.
+     * 
      * @property
      */
     public void setLink(boolean makeLink) {
@@ -27,6 +44,9 @@ public class StringRenderer extends OutputRenderer {
     }
 
     /**
+     * If this property is specifyed then the generated link will have the value
+     * given instead.
+     * 
      * @property
      */
     public void setLinkText(String linkText) {
@@ -39,7 +59,7 @@ public class StringRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                String string = (String) object;
+                String string = String.valueOf(object == null ? "" : object);
                 
                 if (! isLink() || string == null) {
                     return new HtmlText(string);

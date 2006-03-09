@@ -12,10 +12,22 @@ import org.apache.log4j.Logger;
 import org.apache.struts.util.MessageResources;
 
 /**
- * The default enumeration input renderer. This renderer presents an
- * html menu with one option for each possible enum value. Each option's
- * label is searched in the bundle <tt>ENUMERATION_RESOURCES</tt> using the
+ * This renderer presents an html menu with one option for each possible enum value.
+ * Each option's label is searched in the bundle <tt>ENUMERATION_RESOURCES</tt> using the
  * enum's name.
+ * 
+ * <p>
+ * Example:<br>
+ * Choose a {@link java.lang.annotation.ElementType element type}:
+ * <select>
+ *  <option>Type</option>
+ *  <option>Field</option>
+ *  <option>Parameter</option>
+ *  <option>Constructor</option>
+ *  <option>Local Variable</option>
+ *  <option>Annotation</option>
+ *  <option>Package</option>
+ * </select>
  * 
  * @author cfgi
  */

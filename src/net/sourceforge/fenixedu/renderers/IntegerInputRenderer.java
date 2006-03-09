@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.ConversionExcept
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 /**
- * This renderer provides the default input for a integer number.
+ * This renderer provides a simple way of doing the input of a integer number.
  * The number is read form a text input field and parsed with
  * {@link Integer#parseInt(java.lang.String, int)} were the 
  * second argument is the value given in the {@linkplain #setBase(int) base}

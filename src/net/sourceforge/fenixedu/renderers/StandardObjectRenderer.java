@@ -7,6 +7,32 @@ import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 
+/**
+ * This renderer provides a basic presentation for an object. The object
+ * is presented in a table that contains it's details. The table will have 
+ * two columns and a row for each one of the object's slots. In the left column
+ * of each row the slot's label will be placed. In the right column the 
+ * slot's value will be presented.
+ * 
+ * <p>
+ * Example:
+ * <table border="1">
+ *  <tr>
+ *      <td>Name</td>
+ *      <td>Jane Doe</td>
+ *  </tr>
+ *  <tr>
+ *      <td>Age</td>
+ *      <td>20</td>
+ *  </tr>
+ *  <tr>
+ *      <td>Gender</td>
+ *      <td>Female</td>
+ *  </tr>
+ * </table>
+ * 
+ * @author cfgi
+ */
 public class StandardObjectRenderer extends OutputRenderer {
     private String caption;
 
@@ -14,13 +40,13 @@ public class StandardObjectRenderer extends OutputRenderer {
 
     private String columnClasses;
 
-    private String headerClasses;
-
     public String getCaption() {
         return caption;
     }
 
     /**
+     * The caption of the generated table.
+     * 
      * @property
      */
     public void setCaption(String caption) {
@@ -32,21 +58,13 @@ public class StandardObjectRenderer extends OutputRenderer {
     }
 
     /**
+     * The classes to be used for each column in the generated table.
+     * See {@link CollectionRenderer#setColumnClasses(String)}.
+     * 
      * @property
      */
     public void setColumnClasses(String columnClasses) {
         this.columnClasses = columnClasses;
-    }
-
-    public String getHeaderClasses() {
-        return headerClasses;
-    }
-
-    /**
-     * @property
-     */
-    public void setHeaderClasses(String headerClasses) {
-        this.headerClasses = headerClasses;
     }
 
     public String getRowClasses() {
@@ -54,6 +72,9 @@ public class StandardObjectRenderer extends OutputRenderer {
     }
 
     /**
+     * The classes to be used for each row in the table.
+     * See {@link CollectionRenderer#setRowClasses(String)}.
+     * 
      * @property
      */
     public void setRowClasses(String rowClasses) {

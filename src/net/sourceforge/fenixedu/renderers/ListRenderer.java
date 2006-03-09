@@ -9,6 +9,21 @@ import net.sourceforge.fenixedu.renderers.layouts.ListLayout;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 
+/**
+ * This renderer provides a basic presentation for a {@link java.util.List}. There is
+ * a direct translation from the list to an html list. As such, each object in the list
+ * will be presented in a list item.
+ * 
+ * <p>
+ * Example:
+ * <ul>
+ *  <li><em>&lt;object A presentation&gt;</em></li>
+ *  <li><em>&lt;object B presentation&gt;</em></li>
+ *  <li><em>&lt;object C presentation&gt;</em></li>
+ * </ul>
+ * 
+ * @author cfgi
+ */
 public class ListRenderer extends OutputRenderer {
     private String eachClasses;
 
@@ -21,6 +36,8 @@ public class ListRenderer extends OutputRenderer {
     private boolean eachInline = true;
 
     /**
+     * The css classes to apply in each object's presentation.
+     * 
      * @property
      */
     public void setEachClasses(String classes) {
@@ -32,6 +49,8 @@ public class ListRenderer extends OutputRenderer {
     }
 
     /**
+     * The style to apply to each object's presentation.
+     * 
      * @property
      */
     public void setEachStyle(String style) {
@@ -47,6 +66,8 @@ public class ListRenderer extends OutputRenderer {
     }
 
     /**
+     * The layout to be used when presenting each sub object.
+     * 
      * @property
      */
     public void setEachLayout(String eachLayout) {
@@ -58,23 +79,14 @@ public class ListRenderer extends OutputRenderer {
     }
 
     /**
+     * The schema to be used in each sub object presentation.
+     * 
      * @property
      */
     public void setEachSchema(String eachSchema) {
         this.eachSchema = eachSchema;
     }
 
-    public boolean isEachInline() {
-        return eachInline;
-    }
-
-    /**
-     * @property
-     */
-    public void setEachInline(boolean eachInline) {
-        this.eachInline = eachInline;
-    }
-    
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new ListRendererLayout((Collection) object);

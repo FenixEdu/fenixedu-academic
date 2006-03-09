@@ -7,6 +7,16 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.util.MessageResources;
 
+/**
+ * The <code>EnumRenderer</code> provides a simple presentation for 
+ * enumeration values. An enum value will be displayed in one of two forms.
+ * First a bundle named <code>ENUMERATION_RESOURCES</code> is used. Using 
+ * as key the enum name a localized message is searched. If the bundle is 
+ * not defined or the key does not exist in the bundle then the programmatic
+ * name of the enum is presented.
+ * 
+ * @author cfgi
+ */
 public class EnumRenderer extends OutputRenderer {
 
     protected String getEnumDescription(Enum enumerate) {

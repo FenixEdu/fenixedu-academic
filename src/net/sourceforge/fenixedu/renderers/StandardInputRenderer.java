@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 import org.apache.log4j.Logger;
 
 /**
- * This renderer provides a default way of editing objects. A table
+ * This renderer provides a simple way of editing objects. A table
  * is used to organize the presentation. Each slot will have it's
  * corresponding row. Each row has three columns. In the left column
  * the slot's label will be presented. In the middle column the

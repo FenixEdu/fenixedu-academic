@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import org.apache.struts.util.RequestUtils;
 
 /**
- * This renderer provides a default input for a date. The date
+ * This renderer provides a simple way of doing the input of a date. The date
  * is accepted from a text input field using a certain format. The 
  * format beeing accepted is shown to the right.
  * 

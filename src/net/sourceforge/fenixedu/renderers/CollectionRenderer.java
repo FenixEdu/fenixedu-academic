@@ -312,13 +312,23 @@ public class CollectionRenderer extends OutputRenderer {
      * <pre>
      *  &lt;slot&gt[&lt;name&gt]?[=&lt;value&gt]?
      * </pre>
-     * The <code>slot</code> part specifies the name of the object's slot from were
+     * 
+     * <dl>
+     *  <dt><code>slot</code></dt>
+     *  <dd> specifies the name of the object's slot from were
      * the value will be retrieved. In the example above each object needed to have
-     * a <code>getId()</code> method. The <code>name</code> part specifies the name
+     * a <code>getId()</code> method.</dd>
+     * 
+     *  <dt><code>name</code></dt>
+     *  <dd>specifies the name
      * of the parameters that will appended to the link. If this parts is not given
-     * the slot name will be used. The <code>value</code> parts allows you to override
+     * the slot name will be used.</dd>
+     * 
+     *  <dt><code>value</code></dt>
+     *  <dd>allows you to override
      * the value of the parameters. If you specify this part then <code>slot</code>
-     * does not need to be a real slot of the object.
+     * does not need to be a real slot of the object.</dd>
+     * </dl>
      * 
      * @property
      */

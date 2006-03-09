@@ -13,15 +13,28 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 
 import org.apache.struts.util.RequestUtils;
 
+/**
+ * The renderer allows you to present dates in a simple way.
+ * 
+ * @author cfgi
+ */
 public class DateRenderer extends OutputRenderer {
+    
+    private static final String DEFAULT_FORMAT = "dd/MM/yyyy";
 
     private String format;
     
     public String getFormat() {
-        return format == null ? "dd/MM/yyyy" : format;
+        return format == null ? DEFAULT_FORMAT : format;
     }
 
     /**
+     * The format in which the date should be displayed. The format can
+     * have the form accepted by {@link SimpleDateFormat}.
+     * 
+     * <p>
+     * The default format is {@value #DEFAULT_FORMAT}.
+     * 
      * @property
      */
     public void setFormat(String format) {

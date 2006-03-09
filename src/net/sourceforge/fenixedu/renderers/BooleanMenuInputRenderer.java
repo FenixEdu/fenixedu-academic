@@ -17,6 +17,13 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
  * The options text is retrieved from the resources using the keys
  * <tt>TRUE</tt> and <tt>FALSE</tt>.
  * 
+ * <p>
+ * Example:
+ * <select>
+ *  <option>Yes</option>
+ *  <option>No</option>
+ * </select>
+ * 
  * @author cfgi
  */
 public class BooleanMenuInputRenderer extends InputRenderer {

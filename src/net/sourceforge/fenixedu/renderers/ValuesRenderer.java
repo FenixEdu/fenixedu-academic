@@ -14,6 +14,17 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 
+/**
+ * This renderer provides a basic way of presenting slot's values without a special
+ * organization. Only slot's values are presented and they can have a separator between
+ * them. In the following example an object representing a person is shown using this renderer
+ * and a separator of <code>" - "</code>.
+ * 
+ * <p>
+ * Example:
+ * Jane Doe - 20 - Female
+ * @author cfgi
+ */
 public class ValuesRenderer extends OutputRenderer {
 
     private String eachClasses;
@@ -29,6 +40,8 @@ public class ValuesRenderer extends OutputRenderer {
     private String htmlSeparator;
     
     /**
+     * Specifies the css classes to be used in the presentation of each value.
+     * 
      * @property
      */
     public void setEachClasses(String classes) {
@@ -40,6 +53,8 @@ public class ValuesRenderer extends OutputRenderer {
     }
 
     /**
+     * The style to be used in the presentation of each value.
+     * 
      * @property
      */
     public void setEachStyle(String style) {
@@ -55,6 +70,10 @@ public class ValuesRenderer extends OutputRenderer {
     }
 
     /**
+     * This property allows you to indicate if each value should be presented
+     * inside a <code>span</code> or a <code>div</code>, that is, inline or 
+     * as a block. By default the values are presented inline.
+     * 
      * @property
      */
     public void setEachInline(boolean eachInline) {
@@ -66,6 +85,8 @@ public class ValuesRenderer extends OutputRenderer {
     }
 
     /**
+     * The layout in which each value will be shown.
+     * 
      * @property
      */
     public void setEachLayout(String eachLayout) {
@@ -77,20 +98,25 @@ public class ValuesRenderer extends OutputRenderer {
     }
 
     /**
+     * The schema to use when presenting each value.
+     * 
      * @property
      */
     public void setEachSchema(String eachSchema) {
         this.eachSchema = eachSchema;
     }
 
-    public ValuesRenderer() {
-        super();
-    }
-
     public String getHtmlSeparator() {
         return htmlSeparator;
     }
 
+    /**
+     * The htm separator to be placed between each value. The separator 
+     * will appera between any two elements and never at the beginning or 
+     * the end.
+     *
+     * @property
+     */
     public void setHtmlSeparator(String htmlSeparator) {
         this.htmlSeparator = htmlSeparator;
     }
