@@ -67,17 +67,8 @@
       	jdbc-type="INTEGER"
       	locking="false"
 	/>
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="questions"
-		element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.Question">
-		<inverse-foreignkey field-ref="keyMetadata"/>
-	</collection-descriptor>
-	<reference-descriptor auto-retrieve="false"
-         name="executionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-    >
-    <foreignkey field-ref="keyExecutionCourse"/>
-	</reference-descriptor>
+    
+	
 </class-descriptor>
 
 <!-- ******************************** -->
@@ -118,21 +109,9 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<reference-descriptor auto-retrieve="false"
-         name="metadata"
-         class-ref="net.sourceforge.fenixedu.domain.onlineTests.Metadata"> 
-	<foreignkey field-ref="keyMetadata"/>
-	</reference-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="testQuestions"
-		element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.TestQuestion">
-		<inverse-foreignkey field-ref="keyQuestion"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="studentTestsQuestions"
-		element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion">
-		<inverse-foreignkey field-ref="keyQuestion"/>
-	</collection-descriptor>
+	
+	
+	
 </class-descriptor>
 
 <!-- **************************** -->
@@ -180,17 +159,8 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<reference-descriptor auto-retrieve="false"
-         name="testScope"
-         class-ref="net.sourceforge.fenixedu.domain.onlineTests.TestScope"> 
-	<foreignkey field-ref="keyTestScope"/>
-	</reference-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="testQuestions"
-		element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.TestQuestion"
-		>
-		<inverse-foreignkey field-ref="keyTest"/>
-	</collection-descriptor>
+	
+	
 </class-descriptor>
 
 <!-- ************************************ -->
@@ -237,16 +207,8 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<reference-descriptor auto-retrieve="false"
-         name="question"
-         class-ref="net.sourceforge.fenixedu.domain.onlineTests.Question">
-	<foreignkey field-ref="keyQuestion"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-         name="test"
-         class-ref="net.sourceforge.fenixedu.domain.onlineTests.Test"> 
-	<foreignkey field-ref="keyTest"/>
-	</reference-descriptor>
+	
+	
 </class-descriptor>
 
 <!-- *************************************** -->
@@ -332,36 +294,11 @@
         column="KEY_ONLINE_TEST"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-		name="onlineTest"
-		class-ref="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest"
-		>
-		<foreignkey field-ref="keyOnlineTest"/>
-	</reference-descriptor>      
-	<reference-descriptor auto-retrieve="false"
-         name="testScope"
-         class-ref="net.sourceforge.fenixedu.domain.onlineTests.TestScope"
-    > 
-	<foreignkey field-ref="keyTestScope"/>
-	</reference-descriptor>
-	 <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="studentsLogs"
-		element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog"
-		auto-delete="true">
-		<inverse-foreignkey field-ref="keyDistributedTest"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="distributedTestQuestions"
-		element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion"
-		auto-delete="true">
-		<inverse-foreignkey field-ref="keyDistributedTest"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="distributedTestAdvisories"
-		element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory"
-		auto-delete="true">
-		<inverse-foreignkey field-ref="keyDistributedTest"/>
-	</collection-descriptor>
+	      
+	
+	 
+	
+	
 </class-descriptor>
 
 <!-- ******************************************* -->
@@ -419,21 +356,9 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-     <reference-descriptor auto-retrieve="false"
-        name="student"
-        class-ref="net.sourceforge.fenixedu.domain.Student">
-	     <foreignkey field-ref="keyStudent"/>
-     </reference-descriptor>
-     <reference-descriptor auto-retrieve="false"
-        name="distributedTest"
-        class-ref="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
-     	<foreignkey field-ref="keyDistributedTest"/>
-     </reference-descriptor>
-     <reference-descriptor auto-retrieve="false"
-        name="question"
-        class-ref="net.sourceforge.fenixedu.domain.onlineTests.Question">
-     	<foreignkey field-ref="keyQuestion"/>
-     </reference-descriptor>
+     
+     
+     
 </class-descriptor>
 
 <!-- ************************************** -->
@@ -475,18 +400,8 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-    <reference-descriptor auto-retrieve="false"
-         name="student"
-         class-ref="net.sourceforge.fenixedu.domain.Student"
-    >
-	<foreignkey field-ref="keyStudent"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-         name="distributedTest"
-         class-ref="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"
-    >
-	<foreignkey field-ref="keyDistributedTest"/>
-	</reference-descriptor>
+    
+	
 </class-descriptor>
 
 <!-- ********************************** -->
@@ -523,24 +438,9 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedExecutionCoursesForOnlineTest"
-			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-			indirection-table="EXAM_EXECUTION_COURSE">
-		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
-		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
-	</collection-descriptor>
-	<reference-descriptor auto-retrieve="false"
-         name="distributedTest"
-         class-ref="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
-		<foreignkey field-ref="keyDistributedTest"/>
-	</reference-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="marks"
-			element-class-ref="net.sourceforge.fenixedu.domain.Mark"
-			>
-		<inverse-foreignkey field-ref="keyEvaluation"/>
-	</collection-descriptor>
+	
+	
+	
 </class-descriptor>
 
 <!-- ********************************* -->
@@ -573,16 +473,8 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="tests"
-		element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.Test">
-		<inverse-foreignkey field-ref="keyTestScope"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="distributedTests"
-		element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest">
-		<inverse-foreignkey field-ref="keyTestScope"/>
-	</collection-descriptor>
+    
+	
 </class-descriptor>
 
 
@@ -615,15 +507,6 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<reference-descriptor auto-retrieve="false"
-         name="distributedTest"
-         class-ref="net.sourceforge.fenixedu.domain.onlineTests.DistributedTest"
-    >
-    <foreignkey field-ref="keyDistributedTest"/>
-    </reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-         name="advisory"
-         class-ref="net.sourceforge.fenixedu.domain.Advisory">
-    <foreignkey field-ref="keyAdvisory"/>
-    </reference-descriptor>
+	
+    
 </class-descriptor>

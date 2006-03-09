@@ -57,151 +57,28 @@
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="false"/>
-	   <reference-descriptor auto-retrieve="false"
-          name="executionYear"
-          class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
-          <foreignkey field-ref="keyExecutionYear"/>
-       </reference-descriptor>      
-       <reference-descriptor auto-retrieve="false"
-         name="previousExecutionPeriod"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-         <foreignkey field-ref="keyPreviousExecutionPeriod"/>
-       </reference-descriptor> 
-	   <reference-descriptor auto-retrieve="false"
-         name="nextExecutionPeriod"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-         <foreignkey field-ref="keyNextExecutionPeriod"/>
-       </reference-descriptor>
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="schoolClasses"
-			element-class-ref="net.sourceforge.fenixedu.domain.SchoolClass"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedOtherTypeCreditLines"
-			element-class-ref="net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedTeacherDegreeFinalProjectStudents"
-			element-class-ref="net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="enrolments"
-			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedTeacherInstitutionWorkTime"
-			element-class-ref="net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="enrolmentPeriod"
-			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedOldInquiriesTeachersRes"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedExecutionCourses"
-			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="lessons"
-			element-class-ref="net.sourceforge.fenixedu.domain.Lesson"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedOldInquiriesSummaries"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedOldInquiriesCoursesRes"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedInquiriesCourses"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedInquiriesRegistries"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry"
-			
-			>
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="beginExecutionPeriodContexts"
-			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context"
-			>
-		<inverse-foreignkey field-ref="keyBeginExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="endExecutionPeriodContexts"
-			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context"
-			>
-		<inverse-foreignkey field-ref="keyEndExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="associatedStartadvises" 
-		element-class-ref="net.sourceforge.fenixedu.domain.teacher.Advise">
-		<inverse-foreignkey field-ref="keyStartExecutionPeriod"/>
-	</collection-descriptor>	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="associatedEndadvises" 
-		element-class-ref="net.sourceforge.fenixedu.domain.teacher.Advise">
-		<inverse-foreignkey field-ref="keyEndExecutionPeriod"/>
-	</collection-descriptor>	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="teacherServices" 
-		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherService">
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="enrolmentLogs" 
-		element-class-ref="net.sourceforge.fenixedu.domain.log.EnrolmentLog">
-		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="participatingBeginCurricularRules" 
-		element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule">
-		<inverse-foreignkey field-ref="keyBegin"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="participatingEndCurricularRules" 
-		element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule">
-		<inverse-foreignkey field-ref="keyEnd"/>
-	</collection-descriptor>
+	         
+        
+	   
+    
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		
+	
+	
+	
+	
 </class-descriptor> 

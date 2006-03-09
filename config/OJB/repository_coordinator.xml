@@ -33,18 +33,8 @@
 		column="KEY_EXECUTION_DEGREE"
 		jdbc-type="INTEGER"
 	/>
-    <reference-descriptor auto-retrieve="false"
-			name="executionDegree"
-			class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-			>
-		<foreignkey field-ref="keyExecutionDegree"/>
-	</reference-descriptor>   
-	 <reference-descriptor auto-retrieve="false"
-			name="teacher"
-			class-ref="net.sourceforge.fenixedu.domain.Teacher"
-			>
-		<foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>   
+       
+	    
    </class-descriptor>
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeInfo -->   
@@ -204,12 +194,7 @@
    			column="LAST_MODIFICATION_DATE"
    			jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
    		/>   				
-	    <reference-descriptor auto-retrieve="false"
-				name="degree"
-				class-ref="net.sourceforge.fenixedu.domain.Degree"
-				>
-			<foreignkey field-ref="keyDegree"/>
-		</reference-descriptor>     	   	
+	         	   	
    </class-descriptor>	
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.Tutor -->    
@@ -238,17 +223,7 @@
 			column="KEY_STUDENT"
 			jdbc-type="INTEGER"
 		/>
-	    <reference-descriptor auto-retrieve="false"
-				name="teacher"
-				class-ref="net.sourceforge.fenixedu.domain.Teacher"
-				>
-			<foreignkey field-ref="keyTeacher"/>
-		</reference-descriptor> 
-	    <reference-descriptor auto-retrieve="false"
-				name="student"
-				class-ref="net.sourceforge.fenixedu.domain.Student"
-				>
-			<foreignkey field-ref="keyStudent"/>
-		</reference-descriptor> 
+	     
+	     
    </class-descriptor>
 <!-- Mapping of User defined classses ends here -->

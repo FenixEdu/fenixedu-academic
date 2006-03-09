@@ -73,23 +73,9 @@
          conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
       />
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="equivalencies"
-         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency"
-         
-         
-      >
-        <inverse-foreignkey field-ref="keySeminary"/>
-     </collection-descriptor>
+	
      
-     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="candidacies"
-         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
-         
-         
-      >
-        <inverse-foreignkey field-ref="keySeminary"/>
-     </collection-descriptor>
+     
      
 	  
 </class-descriptor>
@@ -129,41 +115,13 @@
       	locking="false"
       />
 
-     <reference-descriptor auto-retrieve="false"
-         name="seminary"
-         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Seminary"
-         
-         
-      >
-	      <foreignkey field-ref="keySeminary"/>
-     </reference-descriptor>
+     
 
-	 <reference-descriptor auto-retrieve="false"
-         name="curricularCourse"
-         class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-         
-         
-      >
-	    <foreignkey field-ref="keyCurricularCourse"/>
-	 </reference-descriptor>
+	 
 
-      <reference-descriptor auto-retrieve="false"
-         name="modality"
-         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Modality"
-         
-         
-      >
-	      <foreignkey field-ref="keyModality"/>
-     </reference-descriptor>
+      
     
-     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="themes"
-        element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Theme"
-	    indirection-table="EQUIVALENCY_THEME"
-     >
-         <fk-pointing-to-this-class column="EQUIVALENCY_ID"/>
-         <fk-pointing-to-element-class column="THEME_ID"/>
-      </collection-descriptor>
+     
     	  
 </class-descriptor>
 
@@ -233,13 +191,7 @@
       	locking="false"
       />
 
-	  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="caseStudies"
-        element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
-		       
-     >
-        <inverse-foreignkey field-ref="keySeminaryTheme"/>
-     </collection-descriptor>
+	  
     	 
 </class-descriptor>
 
@@ -284,21 +236,10 @@
       	locking="false"
       />
 
-     <reference-descriptor auto-retrieve="false"
-         name="seminaryTheme"
-         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Theme"
-         
-         
-      >
-	      <foreignkey field-ref="keySeminaryTheme"/>
-     </reference-descriptor>
+     
 
 	 	<!-- Choices made to this case study -->
-      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="seminaryCandidacies"
-         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice">
-       <inverse-foreignkey field-ref="keyCaseStudy"/>
-      </collection-descriptor> 
+       
     	 
 </class-descriptor>
 
@@ -361,52 +302,13 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-<reference-descriptor auto-retrieve="false"
-         name="seminary"
-         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Seminary"
-         
-         
-      >
-	      <foreignkey field-ref="keySeminary"/>
-     </reference-descriptor>
-	 <reference-descriptor auto-retrieve="false"
-         name="student"
-         class-ref="net.sourceforge.fenixedu.domain.Student"
-         
-         
-      >
-	      <foreignkey field-ref="keyStudent"/>
-     </reference-descriptor>
-      <reference-descriptor auto-retrieve="false"
-         name="modality"
-         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Modality"
-         
-         
-      >
-	      <foreignkey field-ref="keyModality"/>
-     </reference-descriptor>
-     <reference-descriptor auto-retrieve="false"
-         name="curricularCourse"
-         class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-         
-         
-      >
-	      <foreignkey field-ref="keyCurricularCourse"/>
-     </reference-descriptor>
-     <reference-descriptor auto-retrieve="false"
-         name="theme"
-         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Theme"
-         
-         
-      >
-	      <foreignkey field-ref="keyTheme"/>
-     </reference-descriptor>
+
+	 
+      
+     
+     
 	<!-- Choosen case studies -->
-      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="caseStudyChoices"
-         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice">
-       <inverse-foreignkey field-ref="keyCandidacy"/>
-      </collection-descriptor>    	 
+          	 
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
@@ -437,21 +339,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-       <reference-descriptor auto-retrieve="false"
-         name="caseStudy"
-         class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
-         
-         
-      >
-	      <foreignkey field-ref="keyCaseStudy"/>
-     </reference-descriptor>
-     <reference-descriptor auto-retrieve="false"
-         name="candidacy"
-         class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
-         
-         
-      >
-	      <foreignkey field-ref="keyCandidacy"/>
-     </reference-descriptor>
+       
+     
       
 </class-descriptor>

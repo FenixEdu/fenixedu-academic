@@ -12,9 +12,5 @@
                       conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"/>  
     
     <field-descriptor name="keyPerson" column="KEY_PERSON" jdbc-type="INTEGER"/>
-    <reference-descriptor auto-retrieve="false"
-        name="person"
-        class-ref="net.sourceforge.fenixedu.domain.Person">
-        <foreignkey field-ref="keyPerson"/>
-    </reference-descriptor>
+    
 </class-descriptor>

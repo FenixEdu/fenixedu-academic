@@ -58,12 +58,7 @@
 	locking="false"
   />
 
-  <reference-descriptor auto-retrieve="false"
-	name="student"
-	class-ref="net.sourceforge.fenixedu.domain.Student"
-	>
-	<foreignkey field-ref="keyStudent"/>
-  </reference-descriptor>
+  
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
@@ -107,12 +102,7 @@
 		locking="false"
 	  />
 
-	<reference-descriptor auto-retrieve="false"
-		name="student"
-		class-ref="net.sourceforge.fenixedu.domain.Student"
-		>
-		<foreignkey field-ref="keyStudent"/>
-	  </reference-descriptor>
+	
 </class-descriptor>
 
 

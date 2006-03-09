@@ -46,37 +46,11 @@
       	locking="false"
      />
 
-	<reference-descriptor auto-retrieve="false"
-         name="unit"
-         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-         <foreignkey field-ref="keyUnit"/>
-    </reference-descriptor>
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="associatedPersons"
-         element-class-ref="net.sourceforge.fenixedu.domain.Person"         
-         indirection-table = "crd_CREDITS_MANAGER_DEPARTMENT"                  
-         auto-update="false"
-         auto-delete="false"
-		>
-    	<fk-pointing-to-this-class column="KEY_DEPARTMENT"/>
-    	<fk-pointing-to-element-class column="KEY_PERSON"/>
-    </collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="competenceCourses"
-		element-class-ref="net.sourceforge.fenixedu.domain.CompetenceCourse"
-		indirection-table = "COMPETENCE_COURSE_DEPARTMENT"
-         auto-update="false"
-         auto-delete="false"
-		>
-		<fk-pointing-to-this-class column="KEY_DEPARTMENT"/>
-    	<fk-pointing-to-element-class column="KEY_COMPETENCE_COURSE"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="teacherExpectationDefinitionPeriods"
-        element-class-ref="net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod">
-		<inverse-foreignkey field-ref="keyDepartment"/>
-    </collection-descriptor>
+    
+	
+	
+	
 	
 </class-descriptor>   
 
@@ -123,32 +97,10 @@
         column="CREATION_DATE"
         jdbc-type="DATE"
 	/>
-	<reference-descriptor auto-retrieve="false"
-         name="unit"
-         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-         <foreignkey field-ref="keyUnit"/>
-    </reference-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="departments"
-		element-class-ref="net.sourceforge.fenixedu.domain.Department"
-		indirection-table = "COMPETENCE_COURSE_DEPARTMENT"
-         auto-update="false"
-         auto-delete="false"
-		>
-		<fk-pointing-to-this-class column="KEY_COMPETENCE_COURSE"/>
-    	<fk-pointing-to-element-class column="KEY_DEPARTMENT"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="associatedCurricularCourses"
-		element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-         >
-		<inverse-foreignkey field-ref="keyCompetenceCourse"/>
-	</collection-descriptor>
-   	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="competenceCourseInformations"
-		element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation">
-		<inverse-foreignkey field-ref="keyCompetenceCourse"/>
-	</collection-descriptor>
+	
+	
+	
+   	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod -->
@@ -186,14 +138,6 @@
       	jdbc-type="INTEGER"
       	locking="false"
     />
-    <reference-descriptor auto-retrieve="false"
-         name="department"
-         class-ref="net.sourceforge.fenixedu.domain.Department">
-         <foreignkey field-ref="keyDepartment"/>
-    </reference-descriptor>
-    	<reference-descriptor auto-retrieve="false"
-         name="executionYear"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
-         <foreignkey field-ref="keyExecutionYear"/>
-    </reference-descriptor>
+    
+    	
 </class-descriptor>

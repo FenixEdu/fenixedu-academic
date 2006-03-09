@@ -47,11 +47,5 @@
       	jdbc-type="INTEGER"
       	locking="false"
 	/>
-	<reference-descriptor auto-retrieve="false"
-         name="person"
-         class-ref="net.sourceforge.fenixedu.domain.Person"
-         
-    >
-    <foreignkey field-ref="keyPerson"/>
-	</reference-descriptor>
+	
 </class-descriptor>

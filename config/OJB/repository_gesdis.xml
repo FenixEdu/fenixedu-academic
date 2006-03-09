@@ -53,30 +53,12 @@
       	locking="false"
       />
 	
-    <reference-descriptor auto-retrieve="false"
-         name="executionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-    >
-	<foreignkey field-ref="keyExecutionCourse"/>
+    
+
+
 	
-	</reference-descriptor>
 
-
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="associatedAnnouncements"
-		element-class-ref="net.sourceforge.fenixedu.domain.Announcement"
-		
-		>
-		<inverse-foreignkey field-ref="keySite"/>
-  </collection-descriptor>
-
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="associatedSections"
-		element-class-ref="net.sourceforge.fenixedu.domain.Section"
-		
-		>
-		<inverse-foreignkey field-ref="keySite"/>
-  </collection-descriptor>
+	
 
 </class-descriptor>
 
@@ -125,13 +107,7 @@
       	locking="false"
       />
 	
-    <reference-descriptor auto-retrieve="false"
-         name="site"
-         class-ref="net.sourceforge.fenixedu.domain.Site"
-         
-    >
-	<foreignkey field-ref="keySite"/>
-    </reference-descriptor>
+    
     
 </class-descriptor>
 
@@ -185,34 +161,10 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-      <reference-descriptor auto-retrieve="false"
-         name="site"
-         class-ref="net.sourceforge.fenixedu.domain.Site"
-         >
-         <foreignkey field-ref="keySite"/>
-      </reference-descriptor>
-      <reference-descriptor auto-retrieve="false"
-         name="superiorSection"
-         class-ref="net.sourceforge.fenixedu.domain.Section"
-         >   
-         <foreignkey field-ref="keySuperiorSection"/>
-      </reference-descriptor>
-      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="associatedItems"
-         element-class-ref="net.sourceforge.fenixedu.domain.Item"
-         
-         
-         >
-		<inverse-foreignkey field-ref="keySection"/>
-      </collection-descriptor>	
-	  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="associatedSections"
-         element-class-ref="net.sourceforge.fenixedu.domain.Section"
-         
-         
-         >
-		<inverse-foreignkey field-ref="keySuperiorSection"/>
-      </collection-descriptor>	
+      
+      
+      	
+	  	
     </class-descriptor>
 
 
@@ -264,13 +216,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-      <reference-descriptor auto-retrieve="false"
-         name="section"
-         class-ref="net.sourceforge.fenixedu.domain.Section"
-         
-      >
-         <foreignkey field-ref="keySection"/>
-      </reference-descriptor>
+      
    </class-descriptor>
 
 
@@ -332,12 +278,7 @@
       	locking="false"
       />
 	
-    <reference-descriptor auto-retrieve="false"
-         name="executionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-    >
-	<foreignkey field-ref="keyExecutionCourse"/>
-    </reference-descriptor>
+    
     
 </class-descriptor>
 
@@ -368,9 +309,7 @@
       	locking="false"
       />
 
-	<reference-descriptor auto-retrieve="false" name="professorship"  class-ref="net.sourceforge.fenixedu.domain.Professorship">
-		<foreignkey field-ref="keyProfessorship"/>
-    </reference-descriptor>
+	
 
 </class-descriptor>
     
@@ -410,12 +349,7 @@
       	locking="false"
       />
         
-    <reference-descriptor auto-retrieve="false"
-         name="executionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-    >
-		<foreignkey field-ref="keyExecutionCourse"/>	
-	</reference-descriptor>
+    
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
@@ -456,52 +390,13 @@
         jdbc-type="BIT"
 	/>   
 	
-	<reference-descriptor auto-retrieve="false"
-         name="teacher"
-         class-ref="net.sourceforge.fenixedu.domain.Teacher">
-		<foreignkey field-ref="keyTeacher"/>
-    </reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-         name="executionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
-		<foreignkey field-ref="keyExecutionCourse"/>
-    </reference-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="associatedShiftProfessorship"
-         element-class-ref="net.sourceforge.fenixedu.domain.ShiftProfessorship"
-         
-         >
-		<inverse-foreignkey field-ref="keyProfessorship"/>
-    </collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="degreeTeachingServices"
-         element-class-ref="net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService"
-         
-         >
-		<inverse-foreignkey field-ref="keyProfessorship"/>
-    </collection-descriptor> 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="teacherMasterDegreeServices"
-         element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService"
-         
-         >
-		<inverse-foreignkey field-ref="keyProfessorship"/>
-    </collection-descriptor>       
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="supportLessons"
-         element-class-ref="net.sourceforge.fenixedu.domain.SupportLesson"
-         
-         
-         >
-		<inverse-foreignkey field-ref="keyProfessorship"/>
-    </collection-descriptor>	
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="associatedSummaries" 
-		element-class-ref="net.sourceforge.fenixedu.domain.Summary"
+	
+	
+	
+	 
+	       
 		
-		>
-		<inverse-foreignkey field-ref="keyProfessorship"/>
-	</collection-descriptor>
+    
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
@@ -595,41 +490,11 @@
       	jdbc-type="INTEGER"
       	locking="false"
     />
-    <reference-descriptor auto-retrieve="false"
-         name="executionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-    >
-    	<foreignkey field-ref="keyExecutionCourse"/>
-    </reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-         name="shift"
-         class-ref="net.sourceforge.fenixedu.domain.Shift"
-         
-    >
-    	<foreignkey field-ref="keyShift"/>
-    </reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-         name="professorship"
-         class-ref="net.sourceforge.fenixedu.domain.Professorship"
-         
-		 
-    >
-    	<foreignkey field-ref="keyProfessorship"/>
-    </reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-         name="teacher"
-         class-ref="net.sourceforge.fenixedu.domain.Teacher"
-         
-    >
-    	<foreignkey field-ref="keyTeacher"/>
-    </reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-         name="room"
-         class-ref="net.sourceforge.fenixedu.domain.space.OldRoom"
-         
-    >
-    	<foreignkey field-ref="keyRoom"/>
-    </reference-descriptor>
+    
+    
+    
+    
+    
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
@@ -669,25 +534,11 @@
 	  	locking="false"
 	  />
 	    
-    <reference-descriptor auto-retrieve="false"
-         name="shift"
-         class-ref="net.sourceforge.fenixedu.domain.Shift">
-		<foreignkey field-ref="keyShift"/>	
-	</reference-descriptor>
+    
 
-	<reference-descriptor auto-retrieve="false"
-         name="grouping"
-         class-ref="net.sourceforge.fenixedu.domain.Grouping">
-		<foreignkey field-ref="keyGrouping"/>	
-	</reference-descriptor>
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="attends"
-			element-class-ref="net.sourceforge.fenixedu.domain.Attends"
-			indirection-table="STUDENT_GROUP_ATTEND">
-		<fk-pointing-to-element-class column="KEY_ATTEND" />
-		<fk-pointing-to-this-class column="KEY_STUDENT_GROUP" />
-	</collection-descriptor>
+	
 
 </class-descriptor>
 
@@ -773,25 +624,11 @@
       	locking="false"
       />       
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="attends"
-			element-class-ref="net.sourceforge.fenixedu.domain.Attends"
-			indirection-table="GROUPING_ATTENDS">
-		<fk-pointing-to-element-class column="KEY_ATTEND" />
-		<fk-pointing-to-this-class column="KEY_GROUPING" />
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-			name="exportGroupings" 
-			element-class-ref="net.sourceforge.fenixedu.domain.ExportGrouping">
-		<inverse-foreignkey field-ref="keyGrouping"/>
-    </collection-descriptor>
+	
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-			name="studentGroups" 
-			element-class-ref="net.sourceforge.fenixedu.domain.StudentGroup">
-		<inverse-foreignkey field-ref="keyGrouping"/>
-    </collection-descriptor>
+	
 		
 </class-descriptor>
 
@@ -820,12 +657,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<reference-descriptor auto-retrieve="false"
-         name="executionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-    >
-	  <foreignkey field-ref="keyExecutionCourse"/>
-    </reference-descriptor> 
+	 
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
@@ -859,13 +691,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<reference-descriptor auto-retrieve="false"
-         name="curricularCourse"
-         class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-         
-    >
-	  <foreignkey field-ref="keyCurricularCourse"/>
-    </reference-descriptor> 
+	 
 </class-descriptor>
   
 <!-- ******************************************************************************************************************************* -->
@@ -900,14 +726,7 @@
                       jdbc-type="INTEGER"
                       locking="false"/>
 
-	<reference-descriptor auto-retrieve="false"
-         name="curricularCourse"
-         class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-         
-    >
-    
-        <foreignkey field-ref="keyCurricularCourse"/>
-    </reference-descriptor> 
+	 
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
@@ -960,41 +779,14 @@
       	locking="false"
     />
         
-    <reference-descriptor auto-retrieve="false"
-         name="grouping"
-         class-ref="net.sourceforge.fenixedu.domain.Grouping"         
-    >
-		<foreignkey field-ref="keyGrouping"/>
-	</reference-descriptor>
+    
 	
-	<reference-descriptor auto-retrieve="false"
-         name="executionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-    >
-	<foreignkey field-ref="keyExecutionCourse"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-         name="senderPerson"
-         class-ref="net.sourceforge.fenixedu.domain.Person"
-         
-    >
-	<foreignkey field-ref="keySenderPerson"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-         name="receiverPerson"
-         class-ref="net.sourceforge.fenixedu.domain.Person"
-         
-    >
-	<foreignkey field-ref="keyReceiverPerson"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-         name="senderExecutionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-    >
-	<foreignkey field-ref="keySenderExecutionCourse"/>
-	</reference-descriptor>
+	
+	
+	
+	
 	
 </class-descriptor>
 

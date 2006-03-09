@@ -30,22 +30,7 @@
 		jdbc-type="INTEGER"
 		locking="false"
 	/>
-	<reference-descriptor auto-retrieve="false"
-			name="oldCurricularCourse"
-			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-			>
-		<foreignkey field-ref="keyOldCurricularCourse"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="equivalentCurricularCourse"
-			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-			>
-		<foreignkey field-ref="keyEquivalentCurricularCourse"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="degreeCurricularPlan"
-			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
-			>
-		<foreignkey field-ref="keyDegreeCurricularPlan"/>
-	</reference-descriptor>
+	
+	
+	
 </class-descriptor>

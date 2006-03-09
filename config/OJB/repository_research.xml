@@ -22,7 +22,7 @@
 		jdbc-type="LONGVARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
 	/>
-	
+
 	<field-descriptor
 		name="startDate"
 		column="START_DATE"
@@ -44,12 +44,7 @@
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectType2SqlProjectTypeConversion"
     /> 
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         	name="projectParticipations"
-         	element-class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
-         <inverse-foreignkey field-ref="keyType"/>
-    </collection-descriptor>
-	
+
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.event.Event" table="RESEARCH_EVENT">
@@ -94,7 +89,7 @@
 		column="FEE_OR_FREE"
 		jdbc-type="INTEGER"
 	/>
-	
+
 	<field-descriptor 
 	   name="type"    
 	   column="TYPE"  
@@ -102,14 +97,7 @@
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ResearchEventType2SqlResearchEventTypeConversion"
     />
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="projects"
-			element-class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
-			indirection-table="PROJECT_EVENT"
-			>
-		<fk-pointing-to-this-class column="KEY_EVENT"/>
-		<fk-pointing-to-element-class column="KEY_PROJECT"/>
-	</collection-descriptor>
+		
 </class-descriptor>
 
 
@@ -125,7 +113,7 @@
 	/>
 	
 	<field-descriptor
-		name="keyProject" 
+		name="keyProject"
 		column="KEY_PROJECT"
 		jdbc-type="INTEGER"
 	/>
@@ -139,23 +127,11 @@
 	<field-descriptor
 	   name="role"    
 	   column="PROJECT_TYPE"  
-	   jdbc-type="VARCHAR"
+		jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectParticipationType2SqlProjectParticipationTypeConversion"
-    /> 
-    
-    <reference-descriptor auto-retrieve="false" 
-		name="project"
-		class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
-		>
-	    <foreignkey field-ref="keyProject"/>
-    </reference-descriptor>
-
-    <reference-descriptor auto-retrieve="false" 
-		name="party"
-		class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party"
-		>
-	    <foreignkey field-ref="keyParty"/>
-    </reference-descriptor>
+	/>
+	
+	
 	
 </class-descriptor>
 

@@ -46,28 +46,12 @@
 	   jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ContractType2SqlContractTypeConversion"
     /> 
-	<reference-descriptor auto-retrieve="false"
-    	name="salaryUnit"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-	    <foreignkey field-ref="keySalaryUnit"/>
-	</reference-descriptor>
+	
 
-	<reference-descriptor auto-retrieve="false"
-    	name="mailingUnit"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-	    <foreignkey field-ref="keyMailingUnit"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-    	name="workingUnit"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-	    <foreignkey field-ref="keyWorkingUnit"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-    	name="employee"
-        class-ref="net.sourceforge.fenixedu.domain.Employee">
-	    <foreignkey field-ref="keyEmployee"/>
-	</reference-descriptor>
+	
+	
+	
 
 </class-descriptor>

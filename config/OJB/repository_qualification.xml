@@ -93,16 +93,8 @@
 	   		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.QualificationType2SqlQualificationType"
          /> 
 		  
-	     <reference-descriptor auto-retrieve="false"
-         	name="person"
-         	class-ref="net.sourceforge.fenixedu.domain.Person">
-    	      <foreignkey field-ref="keyPerson"/>
-	      </reference-descriptor>
+	     
 	      
-	  	  <reference-descriptor auto-retrieve="false"
-         	name="country"
-         	class-ref="net.sourceforge.fenixedu.domain.Country">
-    	      <foreignkey field-ref="keyCountry"/>
-     	  </reference-descriptor>   
+	  	     
      	                      
 </class-descriptor>

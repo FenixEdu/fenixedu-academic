@@ -41,57 +41,14 @@
       jdbc-type="DATE"
       conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
     />
-  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="executionPeriods"
-		element-class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
-		>
-	<inverse-foreignkey field-ref="keyExecutionYear"/>
-  </collection-descriptor>  
-  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="delegate"
-		element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate"
-		
-		>
-	<inverse-foreignkey field-ref="keyExecutionYear"/>
-  </collection-descriptor>  
-  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="insuranceTransactions"
-		element-class-ref="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction"
-		
-		>
-	<inverse-foreignkey field-ref="keyExecutionYear"/>
-  </collection-descriptor>  
-  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="executionDegrees"
-		element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-		
-		>
-	<inverse-foreignkey field-ref="keyExecutionYear"/>
-  </collection-descriptor>  
-  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="students"
-		element-class-ref="net.sourceforge.fenixedu.domain.Student"
-		
-		>
-	<inverse-foreignkey field-ref="keyRegistrationYear"/>
-  </collection-descriptor>  
+    
+    
+    
+    
+    
   
-   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="studentPersonalDataAuthorizations"
-		element-class-ref="net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization"		
-		>
-	<inverse-foreignkey field-ref="keyExecutionYear"/>
-  </collection-descriptor>
-  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="teacherPersonalExpectations"
-		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation"
-		>
-	<inverse-foreignkey field-ref="keyExecutionYear"/>
-  </collection-descriptor>  
+   
+    
   
-  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="teacherExpectationDefinitionPeriods"
-        element-class-ref="net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod">
-		<inverse-foreignkey field-ref="keyExecutionYear"/>
-    </collection-descriptor>
+  
 </class-descriptor> 

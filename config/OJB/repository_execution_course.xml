@@ -75,156 +75,29 @@
          column="KEY_EXECUTION_COURSE_WEBSITE"
         jdbc-type="INTEGER"
 	/>		
-	<reference-descriptor auto-retrieve="false"
-			name="executionPeriod"
-			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod" >
-		<foreignkey field-ref="keyExecutionPeriod"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="executionCourseWebsite"
-			class-ref="net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite" >
-		<foreignkey field-ref="keyExecutionCourseWebsite"/>
-	</reference-descriptor>	
-	<reference-descriptor auto-retrieve="false"
-			name="courseReport"
-			class-ref="net.sourceforge.fenixedu.domain.gesdis.CourseReport" 
-			>
-		<foreignkey field-ref="keyCourseReport"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="evaluationMethod"
-			class-ref="net.sourceforge.fenixedu.domain.EvaluationMethod" 
-			>
-		<foreignkey field-ref="keyEvaluationMethod"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="site"
-			class-ref="net.sourceforge.fenixedu.domain.Site" 
-			>
-		<foreignkey field-ref="keySite"/>
-	</reference-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedCurricularCourses"
-			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
-			
-			
-			>
-		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
-		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedEvaluations"
-			element-class-ref="net.sourceforge.fenixedu.domain.Evaluation"
-			indirection-table="EXAM_EXECUTION_COURSE"
-			
-			
-			auto-update="false"
-			auto-delete="false"
-			
-			>
-		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
-		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="attends"
-		element-class-ref="net.sourceforge.fenixedu.domain.Attends"
+	
 		
+	
+	
+	
+	
+	
+	
+	            
 		
-		auto-update="false"
-		auto-delete="false"
-		>
-		<inverse-foreignkey field-ref="keyDisciplinaExecucao"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="executionCourseProperties"
-		element-class-ref="net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty"
-		
-		
-		auto-update="false"
-		auto-delete="false"
-		>
-		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-	</collection-descriptor>            
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="professorships"
-		element-class-ref="net.sourceforge.fenixedu.domain.Professorship"
-		
-		
-		auto-update="false"
-		auto-delete="false"
-		>
-		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-	</collection-descriptor>	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-			name="exportGroupings" 
-			element-class-ref="net.sourceforge.fenixedu.domain.ExportGrouping"
-			>
-		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-    </collection-descriptor>
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="nonAffiliatedTeachers"
-			element-class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher"
-			
-			indirection-table="NON_AFFILIATED_TEACHER_PROFESSORSHIPS"
-			
-			>
-		<fk-pointing-to-element-class column="KEY_NON_AFFILIATED_TEACHER" />
-		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE" />
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="associatedBibliographicReferences" 
-		element-class-ref="net.sourceforge.fenixedu.domain.BibliographicReference"
-		
-		>
-		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="associatedSummaries" 
-		element-class-ref="net.sourceforge.fenixedu.domain.Summary"
-		
-		>
-		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="associatedShifts" 
-		element-class-ref="net.sourceforge.fenixedu.domain.Shift"
-		
-		>
-		<inverse-foreignkey field-ref="keyDisciplinaExecucao"/>
-	</collection-descriptor>
+	
+    
+	
+	
+	
 	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="groupingSenderExecutionCourse" 
-		element-class-ref="net.sourceforge.fenixedu.domain.ExportGrouping">
-		<inverse-foreignkey field-ref="keySenderExecutionCourse"/>
-	</collection-descriptor>
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedInquiriesCourses"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse"
-			>
-		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-	</collection-descriptor>
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedInquiriesRegistries"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry"
-			>
-		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-	</collection-descriptor>
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="metadatas"
-			element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.Metadata">
-		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="onlineTest"
-			element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest"
-			indirection-table="EXAM_EXECUTION_COURSE">
-		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
-		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
-	</collection-descriptor>
-</class-descriptor>
+	<!--
+	
+--></class-descriptor>

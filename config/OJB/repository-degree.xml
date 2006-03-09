@@ -12,11 +12,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	  <reference-descriptor auto-retrieve="false"
-			name="executionYear"
-			class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
-		<foreignkey field-ref="keyExecutionYear"/>
-	 </reference-descriptor>   
+	     
  </class-descriptor>  
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.degree.finalProject.DegreeFinalProjectOrientation"
@@ -37,16 +33,6 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	  <reference-descriptor auto-retrieve="false"
-			name="teacher"
-			class-ref="net.sourceforge.fenixedu.domain.Teacher"
-			>
-		<foreignkey field-ref="keyTeacher"/>
-	 </reference-descriptor>   
-	  <reference-descriptor auto-retrieve="false"
-			name="degreeFinalProject"
-			class-ref="net.sourceforge.fenixedu.domain.degree.finalProject.DegreeFinalProject"
-			>
-		<foreignkey field-ref="keyDegreeFinalProject"/>
-	 </reference-descriptor>
+	     
+	  
  </class-descriptor>

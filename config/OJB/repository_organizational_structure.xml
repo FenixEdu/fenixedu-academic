@@ -38,45 +38,15 @@
 	    jdbc-type="INTEGER"
 	/>
 	
-	<reference-descriptor auto-retrieve="false"
-    	name="partyType"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType">
-	    <foreignkey field-ref="keyPartyType"/>
-	</reference-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="parents"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party"
-			indirection-table="PARTY_PARTY">
-		<fk-pointing-to-element-class column="KEY_PARENT_PARTY" />
-		<fk-pointing-to-this-class column="KEY_SUB_PARTY" />
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="childs"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party"
-			indirection-table="PARTY_PARTY">
-		<fk-pointing-to-element-class column="KEY_SUB_PARTY" />
-		<fk-pointing-to-this-class column="KEY_PARENT_PARTY" />
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="childAccountabilities"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability">
-		<inverse-foreignkey field-ref="keyChildParty"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="parentAccountabilities"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability">
-		<inverse-foreignkey field-ref="keyParentParty"/>
-	</collection-descriptor>
 	
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         	name="projectParticipations"
-         	element-class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
-         <inverse-foreignkey field-ref="keyParty"/>
-    </collection-descriptor>
+	
+	
+	
+	
 	
 </class-descriptor>
 
@@ -141,98 +111,34 @@
 	    column="KEY_PARTY_TYPE"
 	    jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-    	name="partyType"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType">
-	    <foreignkey field-ref="keyPartyType"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-    	name="department"
-        class-ref="net.sourceforge.fenixedu.domain.Department">
-	    <foreignkey field-ref="keyDepartment"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-    	name="degree"
-        class-ref="net.sourceforge.fenixedu.domain.Degree">
-	    <foreignkey field-ref="keyDegree"/>
-	</reference-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="salaryContracts"
-        element-class-ref="net.sourceforge.fenixedu.domain.Contract">
-		<inverse-foreignkey field-ref="keySalaryUnit"/>
-    </collection-descriptor>
+	
+	
+	
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="mailingContracts"
-        element-class-ref="net.sourceforge.fenixedu.domain.Contract">
-		<inverse-foreignkey field-ref="keyMailingUnit"/>
-     </collection-descriptor>
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="workingContracts"
-        element-class-ref="net.sourceforge.fenixedu.domain.Contract">
-		<inverse-foreignkey field-ref="keyWorkingUnit"/>
-    </collection-descriptor>
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="functions"
-        element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
-		<inverse-foreignkey field-ref="keyUnit"/>
-    </collection-descriptor>
+	
     
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="competenceCourses"
-        element-class-ref="net.sourceforge.fenixedu.domain.CompetenceCourse">
-		<inverse-foreignkey field-ref="keyUnit"/>
-    </collection-descriptor>
-
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="externalPersons"
-        element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson">
-		<inverse-foreignkey field-ref="keyInstitutionUnit"/>
-    </collection-descriptor>
     
-     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="associatedNonAffiliatedTeachers"
-        element-class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher">
-		<inverse-foreignkey field-ref="keyInstitutionUnit"/>
-    </collection-descriptor>
+
+    
+    
+     
   
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="parents"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party"
-			indirection-table="PARTY_PARTY">
-		<fk-pointing-to-element-class column="KEY_PARENT_PARTY" />
-		<fk-pointing-to-this-class column="KEY_SUB_PARTY" />
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="childs"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party"
-			indirection-table="PARTY_PARTY">
-		<fk-pointing-to-element-class column="KEY_SUB_PARTY" />
-		<fk-pointing-to-this-class column="KEY_PARENT_PARTY" />
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="childAccountabilities"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability">
-		<inverse-foreignkey field-ref="keyChildParty"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="parentAccountabilities"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability">
-		<inverse-foreignkey field-ref="keyParentParty"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="participatingAnyCurricularCourseCurricularRules"
-        element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse">
-		<inverse-foreignkey field-ref="keyDepartmentUnit"/>
-    </collection-descriptor>
+	
+	
+	
+	
+	
 
 </class-descriptor>
 
@@ -262,17 +168,9 @@
 	   jdbc-type="INTEGER"
     />
 
-	<reference-descriptor auto-retrieve="false"
-    	name="childParty"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party">
-	    <foreignkey field-ref="keyChildParty"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-    	name="parentParty"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party">
-	    <foreignkey field-ref="keyParentParty"/>
-	</reference-descriptor>
+	
+	
 	
 </class-descriptor>
 
@@ -302,23 +200,11 @@
 	   jdbc-type="INTEGER"
     />		
     
-	<reference-descriptor auto-retrieve="false"
-    	name="allowedParentPartyType"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType">
-	    <foreignkey field-ref="keyAllowedParentPartyType"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-    	name="allowedChildPartyType"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType">
-	    <foreignkey field-ref="keyAllowedChildPartyType"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-    	name="accountabilityType"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType">
-	    <foreignkey field-ref="keyAccountabilityType"/>
-	</reference-descriptor>
+	
+	
+	
 	
 </class-descriptor>
 
@@ -339,17 +225,9 @@
 	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.AccountabilityType2SQLAccountabilityTypeFieldConversion"   	       
 	/>
 		
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="accountabilities"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability">
-		<inverse-foreignkey field-ref="keyAccountabilityType"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="connectionRules"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule">
-		<inverse-foreignkey field-ref="keyAccountabilityType"/>
-	</collection-descriptor>
+	
+	
 	
 </class-descriptor>
 
@@ -370,22 +248,10 @@
 	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.AccountabilityType2SQLAccountabilityTypeFieldConversion"   	    
 	/>
 		
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="parties"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party">
-		<inverse-foreignkey field-ref="keyPartyType"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="allowedParentConnectionRules"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule">
-		<inverse-foreignkey field-ref="keyAllowedParentPartyType"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="allowedChildConnectionRules"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule">
-		<inverse-foreignkey field-ref="keyAllowedChildPartyType"/>
-	</collection-descriptor>
+	
+	
+	
 	
 </class-descriptor>

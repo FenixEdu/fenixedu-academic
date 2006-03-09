@@ -67,58 +67,18 @@
 		column="PREVAILING_SCIENTIFIC_AREA"
 		jdbc-type="VARCHAR"
 	/>
-	<reference-descriptor auto-retrieve="false"
-         name="unit"
-         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-         <foreignkey field-ref="keyUnit"/>
-    </reference-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="degreeCurricularPlans"
-			element-class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
-			
-			>
-		<inverse-foreignkey field-ref="keyDegree"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="degreeInfos"
-			element-class-ref="net.sourceforge.fenixedu.domain.DegreeInfo"
-			>
-		<inverse-foreignkey field-ref="keyDegree"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="delegate"
-			element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate"
-			>
-		<inverse-foreignkey field-ref="keyDegree"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedOldInquiriesSummaries"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
-			>
-		<inverse-foreignkey field-ref="keyDegree"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedOldInquiriesTeachersRes"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
-			>
-		<inverse-foreignkey field-ref="keyDegree"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedOldInquiriesCoursesRes"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
-			>
-		<inverse-foreignkey field-ref="keyDegree"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="participatingAnyCurricularCourseCurricularRules"
-			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse"
-			>
-		<inverse-foreignkey field-ref="keyDegree"/>
-	</collection-descriptor>
+	
+	
+	
+	
+	
+	
+	
+	
 		
 </class-descriptor>

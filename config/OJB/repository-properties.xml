@@ -12,7 +12,5 @@
 	<field-descriptor name="valueString" column="VALUE" jdbc-type="VARCHAR" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR" nullable="false"/>      
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <reference-descriptor auto-retrieve="false" name="executionCourse" class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
-	    <foreignkey field-ref="keyExecutionCourse"/>
-    </reference-descriptor>
+    
 </class-descriptor>

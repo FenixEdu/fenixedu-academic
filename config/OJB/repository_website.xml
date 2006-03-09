@@ -136,13 +136,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-      <reference-descriptor auto-retrieve="false"
-         name="webSite"
-         class-ref="net.sourceforge.fenixedu.domain.WebSite"
-         
-      >
-         <foreignkey field-ref="keyWebSite"/>
-      </reference-descriptor>
+      
     </class-descriptor>
 
 
@@ -236,19 +230,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-      <reference-descriptor auto-retrieve="false"
-         name="editor"
-         class-ref="net.sourceforge.fenixedu.domain.Person"
-         
-      >
-         <foreignkey field-ref="keyEditor"/>
-      </reference-descriptor>
-      <reference-descriptor auto-retrieve="false"
-         name="webSiteSection"
-         class-ref="net.sourceforge.fenixedu.domain.WebSiteSection"
-         
-      >
-         <foreignkey field-ref="keyWebSiteSection"/>
-      </reference-descriptor>
+      
+      
    </class-descriptor>
 <!-- Mapping of User defined classes ends here -->

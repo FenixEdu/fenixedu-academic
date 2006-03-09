@@ -26,9 +26,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
-		<foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>
+	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeachingCareer -->
@@ -43,9 +41,7 @@
     				  conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"/>
 	<field-descriptor name="courseOrPosition" column="COURSE_OR_POSITION" jdbc-type="VARCHAR" nullable="true"/>
     <field-descriptor name="keyCategory" column="KEY_CATEGORY" jdbc-type="INTEGER" nullable="true"/>
-    <reference-descriptor auto-retrieve="false" name="category" class-ref="net.sourceforge.fenixedu.domain.teacher.Category" >
-	    <foreignkey field-ref="keyCategory"/>
-    </reference-descriptor>
+    
     <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
       <field-descriptor
       	name="ackOptLock"
@@ -53,9 +49,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
-		<foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>
+	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation -->
@@ -77,9 +71,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
-		<foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>
+	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.ExternalActivity -->
@@ -97,9 +89,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
-		<foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>
+	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime -->
@@ -120,9 +110,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-    <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
-		<foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>
+    
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.Orientation -->
@@ -145,9 +133,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-    <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
-		<foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>
+    
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.PublicationsNumber -->
@@ -170,9 +156,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-    <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
-		<foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>
+    
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.OldPublication -->
@@ -196,9 +180,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-    <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
-		<foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>
+    
 </class-descriptor>  
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.NonAffiliatedTeacher -->
@@ -227,27 +209,11 @@
       	locking="false"
     />
     	
-	<reference-descriptor auto-retrieve="false"
-    	name="institutionUnit"
-    	class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" >
-		<foreignkey field-ref="keyInstitutionUnit"/>
-	</reference-descriptor>
+	
 		
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="executionCourses"
-			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-			indirection-table="NON_AFFILIATED_TEACHER_PROFESSORSHIPS"
-			>
-		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE" />
-		<fk-pointing-to-this-class column="KEY_NON_AFFILIATED_TEACHER" />
-	</collection-descriptor>
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedInquiriesTeachers"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher"
-			>
-		<inverse-foreignkey field-ref="keyNonAffiliatedTeacher"/>
-	</collection-descriptor>
+	
 </class-descriptor>  
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation -->
@@ -441,20 +407,11 @@
       	locking="false"
     />
      
-    <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
-		<foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>
+    
 	
-    <reference-descriptor auto-retrieve="false" name="executionYear" class-ref="net.sourceforge.fenixedu.domain.ExecutionYear" >
-		<foreignkey field-ref="keyExecutionYear"/>
-	</reference-descriptor>
+    
 		
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedNonAffiliatedTeachers"
-			element-class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher"
-			>
-		<inverse-foreignkey field-ref="keyInstitution"/>
-	</collection-descriptor>
+	
 </class-descriptor>  
 				 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.Advise -->
@@ -506,39 +463,15 @@
       	locking="false"
        />
 	
-	<reference-descriptor auto-retrieve="false"
-		name="teacher"
-		class-ref="net.sourceforge.fenixedu.domain.Teacher"        
-		>
-		<foreignkey field-ref="keyTeacher"/>	
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-		name="student"
-		class-ref="net.sourceforge.fenixedu.domain.Student"        
-		>
-		<foreignkey field-ref="keyStudent"/>	
-	</reference-descriptor>	
+	
+		
 
-	<reference-descriptor auto-retrieve="false"
-		name="startExecutionPeriod"
-		class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"        
-		>
-		<foreignkey field-ref="keyStartExecutionPeriod"/>	
-	</reference-descriptor>	
+		
 	
-	<reference-descriptor auto-retrieve="false"
-		name="endExecutionPeriod"
-		class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"        
-		>
-		<foreignkey field-ref="keyEndExecutionPeriod"/>	
-	</reference-descriptor>	
+		
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="teacherAdviseServices"
-		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService">
-		<inverse-foreignkey field-ref="keyAdvise"/>
-	</collection-descriptor>
+	
 		
 </class-descriptor>				  		
 <!-- Mapping of User defined classses ends here -->

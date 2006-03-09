@@ -136,133 +136,38 @@
 		column="KEY_SENIOR"
 		jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-			name="person"
-			class-ref="net.sourceforge.fenixedu.domain.Person"
+	<field-descriptor
+		name="keyAssociatedGaugingTestResult"
+		column="KEY_ASSOCIATED_GAUGING_TEST_RESULT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyAssociatedTutor"
+		column="KEY_ASSOCIATED_TUTOR"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyPersonalDataUseInquiryAnswers"
+		column="KEY_PERSONAL_DATA_USE_INQUIRY_ANSWERS"
+		jdbc-type="INTEGER"
+	/>
 			
-			>
-		<foreignkey field-ref="keyPerson"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="studentKind"
-			class-ref="net.sourceforge.fenixedu.domain.StudentKind"
-			>
-		<foreignkey field-ref="keyStudentKind"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="registrationYear"
-			class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
-		<foreignkey field-ref="keyRegistrationYear"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="dislocatedStudent"
-			class-ref="net.sourceforge.fenixedu.domain.DislocatedStudent">
-		<foreignkey field-ref="keyDislocatedStudent"/>
-	</reference-descriptor>		
-	<reference-descriptor auto-retrieve="false"
-			name="senior"
-			class-ref="net.sourceforge.fenixedu.domain.student.Senior"
-			
-			>
-		<foreignkey field-ref="keySenior"/>
-	</reference-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="studentCurricularPlans"
-			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
-			
-			>
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedCandidancies"
-			element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
-			
-			>
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedInquiriesRegistries"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry"
-			>
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="associatedAttends"
-			element-class-ref="net.sourceforge.fenixedu.domain.Attends">
-		<inverse-foreignkey field-ref="keyAluno"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="writtenEvaluationEnrolments"
-			element-class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment"
-			
-			>
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	 <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="shifts"
-			element-class-ref="net.sourceforge.fenixedu.domain.Shift"
-			indirection-table="SHIFT_STUDENT"
-			>
-		<fk-pointing-to-this-class column="KEY_STUDENT"/>
-		<fk-pointing-to-element-class column="KEY_SHIFT"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="enrolmentLogs"
-			element-class-ref="net.sourceforge.fenixedu.domain.log.EnrolmentLog"
-			
-			>
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="studentTestsLogs"
-			element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog">
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="studentTestsQuestions"
-			element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion">
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedGroupStudents"
-			element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent">
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedResidenceCandidacies"
-			element-class-ref="net.sourceforge.fenixedu.domain.student.ResidenceCandidacies">
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="delegate"
-			element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate">
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="teacherDegreeFinalProjectStudent"
-			element-class-ref="net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent">
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="insuranceTransactions"
-			element-class-ref="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction">
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="secretaryEnrolmentStudents"
-			element-class-ref="net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent">
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="advises"
-			element-class-ref="net.sourceforge.fenixedu.domain.teacher.Advise">
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="studentPersonalDataAuthorizations"
-			element-class-ref="net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization"
-			
-			>
-		<inverse-foreignkey field-ref="keyStudent"/>
-	</collection-descriptor>
+	
+	
+	
+	
+	
+	
+	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </class-descriptor>

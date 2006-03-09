@@ -58,16 +58,8 @@
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.RegimenType2SqlRegimenTypeConversion"
     />    
 		
-	<reference-descriptor auto-retrieve="false"
-    	name="category"
-        class-ref="net.sourceforge.fenixedu.domain.teacher.Category">
-	    <foreignkey field-ref="keyCategory"/>
-	</reference-descriptor>
+	
 
-	<reference-descriptor auto-retrieve="false"
-    	name="teacher"
-        class-ref="net.sourceforge.fenixedu.domain.Teacher">
-	    <foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>
+	
 
 </class-descriptor>

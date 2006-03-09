@@ -101,46 +101,16 @@
       	locking="false"
       />
 
-      	  <reference-descriptor auto-retrieve="false"
-         	name="person"
-         	class-ref="net.sourceforge.fenixedu.domain.Person"
-			
-      	  >
-          <foreignkey field-ref="keyPerson"/>
-          </reference-descriptor>
+      	  
 	  
 	  
-      	  <reference-descriptor auto-retrieve="false"
-         	name="executionDegree"
-         	class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-         	
-      	  >
-          <foreignkey field-ref="keyExecutionDegree"/>
-          </reference-descriptor>
+      	  
           
-	    <reference-descriptor auto-retrieve="false"
-	        name="guider"
-	        class-ref="net.sourceforge.fenixedu.domain.Teacher"
-	        refresh="true"
-	    >
-	        <foreignkey field-ref="keyGuider"/> 
-	    </reference-descriptor>
+	    
           
-         <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-	         name="situations"
-	         element-class-ref="net.sourceforge.fenixedu.domain.CandidateSituation"
-			>
-           <inverse-foreignkey field-ref="keyMasterDegreeCandidate"/>
-	         <!---->
-         </collection-descriptor>
+         
 
-         <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-	         name="candidateEnrolments"
-	         element-class-ref="net.sourceforge.fenixedu.domain.CandidateEnrolment"
-			>
-           <inverse-foreignkey field-ref="keyMasterDegreeCandidate"/>
-	         <!---->
-         </collection-descriptor>
+         
      	
 	</class-descriptor>
 
@@ -197,13 +167,7 @@
       	locking="false"
       />
 	  
-	  <reference-descriptor auto-retrieve="false"
-         	name="masterDegreeCandidate"
-         	class-ref="net.sourceforge.fenixedu.domain.MasterDegreeCandidate"
-         	
-			>
-          <foreignkey field-ref="keyMasterDegreeCandidate"/>
-      </reference-descriptor>
+	  
 		
 	</class-descriptor>
           
@@ -342,62 +306,17 @@
       	locking="false"
       />
 	 
- 	  <reference-descriptor auto-retrieve="false"
-         	name="contributor"
-         	class-ref="net.sourceforge.fenixedu.domain.Contributor"
-         	
-			
-      	  >
-          <foreignkey field-ref="keyContributor"/>
-      </reference-descriptor>
+ 	  
       
-      <reference-descriptor auto-retrieve="false"
-         	name="person"
-         	class-ref="net.sourceforge.fenixedu.domain.Person"
-         	
-			
-      	  >
-          <foreignkey field-ref="keyPerson"/>
-      </reference-descriptor>
       
-     <reference-descriptor auto-retrieve="false"
-     	name="executionDegree"
-     	class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-     	
-			
-      >
-      <foreignkey field-ref="keyExecutionDegree"/>
-      </reference-descriptor>
-       
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="guideEntries"
-         
-     	
-         element-class-ref="net.sourceforge.fenixedu.domain.GuideEntry"
-       >
-       <inverse-foreignkey field-ref="keyGuide"/>
-     </collection-descriptor>
-
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="guideSituations"
-         
-     	
-         element-class-ref="net.sourceforge.fenixedu.domain.GuideSituation"
-       >
-       <inverse-foreignkey field-ref="keyGuide"/>
-     </collection-descriptor>
+      
      
-     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="reimbursementGuides"
-         
-		 
-		 auto-update="false"
-		 auto-delete="false"
-		 
-         element-class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide"
-       >
-       <inverse-foreignkey field-ref="keyGuide"/>
-     </collection-descriptor>
+       
+    
+
+    
+     
+     
        
 	 </class-descriptor>
 	 
@@ -460,30 +379,11 @@
 	     jdbc-type="INTEGER"
 	  />
 	  
-	   <reference-descriptor auto-retrieve="false"
-         	name="guide"
-         	class-ref="net.sourceforge.fenixedu.domain.Guide"
-      	  >
-          <foreignkey field-ref="keyGuide"/>
-      </reference-descriptor>
+	   
 
-	   <reference-descriptor auto-retrieve="false"
-         	name="paymentTransaction"
-         	class-ref="net.sourceforge.fenixedu.domain.transactions.PaymentTransaction"
-      	  >
-          <foreignkey field-ref="keyPaymentTransaction"/>
-      </reference-descriptor>      
+	         
 	  
-	 <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="reimbursementGuideEntries"
-         
-         
-   		 auto-update="false"
-		 auto-delete="false"
-         element-class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry"
-      >
-		<inverse-foreignkey field-ref="keyGuideEntry"/>
-	  </collection-descriptor>
+	 
 	  
 	 </class-descriptor>
 	 
@@ -538,14 +438,7 @@
       	locking="false"
       />
 	  
-	   <reference-descriptor auto-retrieve="false"
-         	name="guide"
-         	class-ref="net.sourceforge.fenixedu.domain.Guide"
-         	
-			
-      	  >
-          <foreignkey field-ref="keyGuide"/>
-      </reference-descriptor>
+	   
 
 	 </class-descriptor>
 	 
@@ -587,12 +480,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="guides"
-		element-class-ref="net.sourceforge.fenixedu.domain.Guide"
-		>
-		<inverse-foreignkey field-ref="keyContributor"/>
-	</collection-descriptor>
+	
 
 </class-descriptor>
  
@@ -636,26 +524,11 @@
       	locking="false"
       />
         
-	   <reference-descriptor auto-retrieve="false"
-         	name="masterDegreeCandidate"
-         	class-ref="net.sourceforge.fenixedu.domain.MasterDegreeCandidate"
-      	  >
-          <foreignkey field-ref="keyMasterDegreeCandidate"/>
-       </reference-descriptor>
+	   
 		
-       <!-- <reference-descriptor auto-retrieve="false"
-         	name="curricularCourseScope"
-         	class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
-      	  >
-          <foreignkey field-ref="curricularCourseScopeKey"/>
-         </reference-descriptor>-->
+       <!-- -->
  
-         <reference-descriptor auto-retrieve="false"
-         	name="curricularCourse"
-         	class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-      	  >
-          <foreignkey field-ref="keyCurricularCourse"/>
-         </reference-descriptor>
+         
 
    		<attribute
      	attribute-name="cacheable"
@@ -692,32 +565,11 @@
       	locking="false"
       />
         
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="masterDegreeProofVersions"
-         
-         
-         
-         element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion"
-       >
-       <inverse-foreignkey field-ref="keyMasterDegreeThesis"/>
-     </collection-descriptor>
+    
         
-     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="masterDegreeThesisDataVersions"
-         
-         
-         
-         element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
-       >
-       <inverse-foreignkey field-ref="keyMasterDegreeThesis"/>
-     </collection-descriptor>  
+       
 
-	   <reference-descriptor auto-retrieve="false"
-         	name="studentCurricularPlan"
-         	class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
-      	  >
-          <foreignkey field-ref="keyStudentCurricularPlan"/>
-       </reference-descriptor>
+	   
 
  </class-descriptor>  
 
@@ -774,75 +626,17 @@
       	locking="false"
       />
                 
-        <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        	name="guiders"
-	        element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
-    	    
-        	
-	        
-         	auto-update="false"
-         	auto-delete="false"
-	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER"
-      	>
-    	    <fk-pointing-to-this-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
-        	<fk-pointing-to-element-class column="KEY_TEACHER"/>
-      	</collection-descriptor>
         
-        <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        	name="externalGuiders"
-	        element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson"
-    	    
-        	
-	        
-         	auto-update="false"
-         	auto-delete="false"
-	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER"
-      	>
-    	    <fk-pointing-to-this-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
-        	<fk-pointing-to-element-class column="KEY_EXTERNAL_PERSON"/>
-      	</collection-descriptor>
         
-        <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-	        name="assistentGuiders"
-    	    element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
-        	
-	        
-	        
-         	auto-update="false"
-         	auto-delete="false"
-    	    indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER"
-      	>
-        	<fk-pointing-to-this-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
-	        <fk-pointing-to-element-class column="KEY_TEACHER"/>
-      	</collection-descriptor>
+        
+        
+        
       	        
-        <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-    	    name="externalAssistentGuiders"
-        	element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson"
-	        
-    	    
-    	    
-         	auto-update="false"
-         	auto-delete="false"
-        	indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER"
-      	>
-	        <fk-pointing-to-this-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
-    	    <fk-pointing-to-element-class column="KEY_EXTERNAL_PERSON"/>
-      	</collection-descriptor>
+        
       	  
-		<reference-descriptor auto-retrieve="false"
-        	name="masterDegreeThesis"
-	        class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesis"
-      	>
-    	    <foreignkey field-ref="keyMasterDegreeThesis"/>
-		</reference-descriptor>      	  
+		      	  
 
-		<reference-descriptor auto-retrieve="false"
-   		    name="responsibleEmployee"
-        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-      	>
-	        <foreignkey field-ref="keyResponsibleEmployee"/>
-		</reference-descriptor> 	
+		 	
 		      	  
    </class-descriptor>       
         
@@ -918,47 +712,13 @@
       	locking="false"
       />
 
-		<reference-descriptor auto-retrieve="false"
-        	name="masterDegreeThesis"
-	        class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesis"
-      	>
-    	    <foreignkey field-ref="keyMasterDegreeThesis"/>
-		</reference-descriptor>      	  
+		      	  
 
-		<reference-descriptor auto-retrieve="false"
-   		    name="responsibleEmployee"
-        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-      	>
-	        <foreignkey field-ref="keyResponsibleEmployee"/>
-		</reference-descriptor>
 		
-		<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        	name="juries"
-	        element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
-    	    
-        	
-	        
-         	auto-update="false"
-         	auto-delete="false"
-	        indirection-table="MASTER_DEGREE_PROOF_VERSION_JURY"
-      	>
-    	    <fk-pointing-to-this-class column="KEY_MASTER_DEGREE_PROOF_VERSION"/>
-        	<fk-pointing-to-element-class column="KEY_TEACHER"/>
-      	</collection-descriptor> 
+		
+		 
       	
-      	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        	name="externalJuries"
-	        element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson"
-    	    
-        	
-	        
-         	auto-update="false"
-         	auto-delete="false"
-	        indirection-table="MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY"
-      	>
-    	    <fk-pointing-to-this-class column="KEY_MASTER_DEGREE_PROOF_VERSION"/>
-        	<fk-pointing-to-element-class column="KEY_EXTERNAL_PERSON"/>
-      	</collection-descriptor>
+      	
              
  </class-descriptor>  
    
@@ -998,54 +758,15 @@
       	locking="false"
       />
 
-		<reference-descriptor auto-retrieve="false"
-        	name="person"
-	        class-ref="net.sourceforge.fenixedu.domain.Person"
-      	>
-    	    <foreignkey field-ref="keyPerson"/>
-		</reference-descriptor>		
+				
 	  
-	 	<reference-descriptor auto-retrieve="false"
-        	name="institutionUnit"
-	        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-    	    <foreignkey field-ref="keyInstitutionUnit"/>
-		</reference-descriptor>			  	  
+	 				  	  
 	  	   	  
-	   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        	name="masterDegreeThesisExternalGuider"
-	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
-    	            		        
-         	auto-update="false"
-         	auto-delete="false"
-	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER"
-      	>
-    	    <fk-pointing-to-this-class column="KEY_EXTERNAL_PERSON"/>
-        	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
-      	</collection-descriptor>
+	   
 
-	   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        	name="masterDegreeThesisExternalAssistentGuider"
-	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
-    	            		        
-         	auto-update="false"
-         	auto-delete="false"
-	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER"
-      	>
-    	    <fk-pointing-to-this-class column="KEY_EXTERNAL_PERSON"/>
-        	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
-      	</collection-descriptor>
+	   
       	
-	   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        	name="masterDegreeProofsExternalJury"
-	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion"
-    	            		        
-         	auto-update="false"
-         	auto-delete="false"
-	        indirection-table="MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY"
-      	>
-    	    <fk-pointing-to-this-class column="KEY_EXTERNAL_PERSON"/>
-        	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_PROOF_VERSION"/>
-      	</collection-descriptor>      	
+	         	
                 
  </class-descriptor>  
    
@@ -1083,35 +804,11 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
- 	 <reference-descriptor auto-retrieve="false"
-         	name="guide"
-         	class-ref="net.sourceforge.fenixedu.domain.Guide"
-         	
-      	  >
-          <foreignkey field-ref="keyGuide"/>
-      </reference-descriptor>
+ 	 
       
-      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="reimbursementGuideSituations"
-         
-         
-   		 auto-update="false"
-		 auto-delete="false"
-         element-class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation"
-       >
-		<inverse-foreignkey field-ref="keyReimbursementGuide"/>
-	  </collection-descriptor>
+      
 	  
-	  <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="reimbursementGuideEntries"
-         
-         
-         auto-update="false"
-		 auto-delete="false"
-         element-class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry"
-       >
-		<inverse-foreignkey field-ref="keyReimbursementGuide"/>
-	   </collection-descriptor>
+	  
 
 	 </class-descriptor>
 <!-- End of definitions for class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide -->
@@ -1170,21 +867,8 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
- 	  <reference-descriptor auto-retrieve="false"
-         	name="reimbursementGuide"
-         	class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide"
-         	
-      	  >
-          <foreignkey field-ref="keyReimbursementGuide"/>
-      </reference-descriptor>
-  	<reference-descriptor auto-retrieve="false"
-         	name="employee"
-         	class-ref="net.sourceforge.fenixedu.domain.Employee"
-         	
-			
-      	  >
-          <foreignkey field-ref="keyEmployee"/>
-      </reference-descriptor>
+ 	  
+  	
 
 	 </class-descriptor>
 <!-- End of definitions for class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation -->
@@ -1226,23 +910,14 @@
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="false"
-      />
+      />      
+	  <field-descriptor 
+	     name="keyReimbursementTransaction"
+	     column="KEY_REIMBURSEMENT_TRANSACTION"
+	     jdbc-type="INTEGER"
+	  />
       
-	  <reference-descriptor auto-retrieve="false"
-         	name="reimbursementGuide"
-         	class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide"
-         	
-      	  >
-          <foreignkey field-ref="keyReimbursementGuide"/>
-      </reference-descriptor>
       
-      <reference-descriptor auto-retrieve="false"
-         	name="guideEntry"
-         	class-ref="net.sourceforge.fenixedu.domain.GuideEntry"
-         	
-      	  >
-          <foreignkey field-ref="keyGuideEntry"/>
-      </reference-descriptor>
       
 	 </class-descriptor>
 	 
@@ -1324,38 +999,11 @@
       	jdbc-type="INTEGER"
       	locking="false"
     />   	
-    <reference-descriptor auto-retrieve="false"
-      	name="executionDegree"
-       	class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-       	
-		
-    >
-        <foreignkey field-ref="keyExecutionDegree"/>
-    </reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-      	name="employee"
-       	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	
-		
-    >
-        <foreignkey field-ref="keyEmployee"/>
-    </reference-descriptor>    
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="paymentPhaseList"
-		element-class-ref="net.sourceforge.fenixedu.domain.PaymentPhase"
-		
-		
-		auto-update="false"
-		auto-delete="false"
-		>
-		<inverse-foreignkey field-ref="keyGratuityValues"/>
-	 </collection-descriptor>
+    
+        
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="gratuitySituations"
-		element-class-ref="net.sourceforge.fenixedu.domain.GratuitySituation">
-		<inverse-foreignkey field-ref="keyGratuityValues"/>
-	 </collection-descriptor>
+	
 
 
 </class-descriptor>  
@@ -1430,37 +1078,10 @@
       	jdbc-type="INTEGER"
       	locking="false"
     />    
-    <reference-descriptor auto-retrieve="false"
-      	name="gratuityValues"
-       	class-ref="net.sourceforge.fenixedu.domain.GratuityValues">
-        <foreignkey field-ref="keyGratuityValues"/>
-    </reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-      	name="employee"
-       	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	
-		
-    >
-        <foreignkey field-ref="keyEmployee"/>
-    </reference-descriptor>    
-    <reference-descriptor auto-retrieve="false"
-      	name="studentCurricularPlan"
-       	class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
-       	
-		
-    >
-        <foreignkey field-ref="keyStudentCurricularPlan"/>
-    </reference-descriptor>   
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="transactionList"
-		element-class-ref="net.sourceforge.fenixedu.domain.transactions.GratuityTransaction"
-		
-		
-		auto-update="false"
-		auto-delete="false"
-		>
-		<inverse-foreignkey field-ref="keyGratuitySituation"/>
-	 </collection-descriptor>
+    
+        
+       
+	
 </class-descriptor>
 <!-- End of definitions for class GratuitySituation -->
 <!-- Definitions for class PaymentPhase -->
@@ -1507,14 +1128,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
     />      	    
-    <reference-descriptor auto-retrieve="false"
-      	name="gratuityValues"
-       	class-ref="net.sourceforge.fenixedu.domain.GratuityValues"
-       	
-		
-    >   	
-        <foreignkey field-ref="keyGratuityValues"/>
-    </reference-descriptor>
+    
 </class-descriptor>
 <!-- End of definitions for class PaymentPhase -->
 <!-- Definitions for class SibsPaymentFile -->
@@ -1539,17 +1153,7 @@
       	jdbc-type="INTEGER"
       	locking="false"
     />
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-    	name="sibsPaymentFileEntries"
-	 	
-        
-	    
-        auto-update="false"
-        auto-delete="false"
-        element-class-ref="net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry"
-     >
-       <inverse-foreignkey field-ref="keySibsPaymentFile"/>
-    </collection-descriptor>      	    
+          	    
 </class-descriptor>
 
 <!-- End of definitions for class SibsPaymentFile -->
@@ -1609,14 +1213,7 @@
    		jdbc-type="VARCHAR"   		
    		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSibsPaymentStatus2SQLSibsPaymentStatusFieldConversion"
    	/>
-    <reference-descriptor auto-retrieve="false"
-      	name="sibsPaymentFile"
-       	class-ref="net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile"
-       	
-
-    >   	
-        <foreignkey field-ref="keySibsPaymentFile"/>
-    </reference-descriptor>      	    
+          	    
 </class-descriptor>
 <!-- End of definitions for class SibsPaymentFileEntry -->
 <!-- Mapping of User defined classes ends here -->

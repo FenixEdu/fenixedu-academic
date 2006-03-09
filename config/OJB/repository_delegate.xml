@@ -42,21 +42,7 @@
         name="type" 
         column="TYPE" 
         jdbc-type="BIT"/>
-    <reference-descriptor auto-retrieve="false"
-			name="degree"
-			class-ref="net.sourceforge.fenixedu.domain.Degree"
-			>
-		<foreignkey field-ref="keyDegree"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="executionYear"
-			class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
-		<foreignkey field-ref="keyExecutionYear"/>
-	</reference-descriptor>    
-	 <reference-descriptor auto-retrieve="false"
-			name="student"
-			class-ref="net.sourceforge.fenixedu.domain.Student"
-			>
-		<foreignkey field-ref="keyStudent"/>
-	</reference-descriptor>   
+    
+	    
+	    
    </class-descriptor>

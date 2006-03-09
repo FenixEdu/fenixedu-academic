@@ -34,25 +34,9 @@
 	    jdbc-type="INTEGER"
 	/>
 	
-	<reference-descriptor auto-retrieve="false"
-       	name="person"
-       	class-ref="net.sourceforge.fenixedu.domain.Person"
-       	
-		
-    >
-		<foreignkey field-ref="keyPerson"/>
-	</reference-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="transactions"
-		element-class-ref="net.sourceforge.fenixedu.domain.transactions.Transaction"
-		
-		
-		auto-update="false"
-		auto-delete="false"
-		>
-		<inverse-foreignkey field-ref="keyPersonAccount"/>
-	 </collection-descriptor>   
+	
+	   
 		
 </class-descriptor>
 

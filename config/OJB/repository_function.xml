@@ -42,28 +42,12 @@
 	   jdbc-type="DATE"
     />
 	
-	<reference-descriptor auto-retrieve="false"
-    	name="unit"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-	    <foreignkey field-ref="keyUnit"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-    	name="parentInherentFunction"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
-	    <foreignkey field-ref="keyParentInherentFunction"/>
-	</reference-descriptor>
+	
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="inherentFunctions"
-        element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
-		<inverse-foreignkey field-ref="keyParentInherentFunction"/>
-    </collection-descriptor>	
+		
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="personFunctions"
-        element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
-		<inverse-foreignkey field-ref="keyFunction"/>
-    </collection-descriptor>	
+		
 
 </class-descriptor>

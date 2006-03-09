@@ -85,32 +85,11 @@
 	    jdbc-type="INTEGER"
 	/>
 		
-	<reference-descriptor auto-retrieve="false"
-       	name="personAccount"
-       	class-ref="net.sourceforge.fenixedu.domain.PersonAccount"
-       	
-		
-    >
-		<foreignkey field-ref="keyPersonAccount"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-       	name="reimbursementGuideEntry"
-       	class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry"
-       	
-		
-    >
-		<foreignkey field-ref="keyReimbursementGuideEntry"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-       	name="responsiblePerson"
-       	class-ref="net.sourceforge.fenixedu.domain.Person"
-       	
-		
-    >
-		<foreignkey field-ref="keyResponsiblePerson"/>
-	</reference-descriptor>
+	
+	
+	
 	
 </class-descriptor>
 

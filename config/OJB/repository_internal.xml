@@ -110,12 +110,7 @@
          column="SIZE_"
          jdbc-type="INTEGER"
       />
-      <collection-descriptor proxy="true" auto-retrieve="false"
-         name="elements"
-         element-class-ref="org.apache.ojb.odmg.collections.DListEntry"
-      >
-         <inverse-foreignkey field-ref="dlistId"/>
-      </collection-descriptor>
+      
    </class-descriptor>
 
 <!-- THIS IS THE OJB DLIST ENTRY IMPLEMENTATION, DO NOT EDIT-->
@@ -166,12 +161,7 @@
          column="SIZE_"
          jdbc-type="INTEGER"
       />
-      <collection-descriptor proxy="true" auto-retrieve="false"
-         name="elements"
-         element-class-ref="org.apache.ojb.odmg.collections.DListEntry_2"
-      >
-         <inverse-foreignkey field-ref="dlistId"/>
-      </collection-descriptor>
+      
    </class-descriptor>
 
 <!-- THIS IS THE OJB DLIST ENTRY IMPLEMENTATION, DO NOT EDIT-->
@@ -221,12 +211,7 @@
          column="SIZE_"
          jdbc-type="INTEGER"
       />
-      <collection-descriptor proxy="true" auto-retrieve="false"
-         name="elements"
-         element-class-ref="org.apache.ojb.odmg.collections.DListEntry"
-      >
-         <inverse-foreignkey field-ref="dlistId"/>
-      </collection-descriptor>
+      
    </class-descriptor>
 
 <!-- THIS IS THE OJB DSET IMPLEMENTATION, DO NOT EDIT-->
@@ -246,12 +231,7 @@
          column="SIZE_"
          jdbc-type="INTEGER"
       />
-      <collection-descriptor proxy="true" auto-retrieve="false"
-         name="elements"
-         element-class-ref="org.apache.ojb.odmg.collections.DSetEntry"
-      >
-         <inverse-foreignkey field-ref="dlistId"/>
-      </collection-descriptor>
+      
    </class-descriptor>
 
 <!-- THIS IS THE OJB DSET ENTRY IMPLEMENTATION, DO NOT EDIT-->
@@ -301,13 +281,7 @@
          column="SIZE_"
          jdbc-type="INTEGER"
       />
-      <collection-descriptor proxy="true" auto-retrieve="false"
-         name="entries"
-         element-class-ref="org.apache.ojb.odmg.collections.DMapEntry"
-         collection-class="org.apache.ojb.broker.util.collections.ManageableHashSet"
-      >
-         <inverse-foreignkey field-ref="dmapId"/>
-      </collection-descriptor>
+      
    </class-descriptor>
 
 <!-- THIS IS THE OJB DMAP ENTRY IMPLEMENTATION, DO NOT EDIT-->

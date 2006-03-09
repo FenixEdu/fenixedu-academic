@@ -31,12 +31,7 @@
         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaContentType2SqlContentTypeFieldConversion"        
     />    	
 	
-	<reference-descriptor auto-retrieve="false"
-       	name="person"
-       	class-ref="net.sourceforge.fenixedu.domain.Person"
-    >
-		<foreignkey field-ref="keyPerson"/>
-	</reference-descriptor>
+	
 
 </class-descriptor>
 

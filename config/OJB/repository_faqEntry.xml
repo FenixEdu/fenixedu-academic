@@ -29,10 +29,5 @@
 		column="ANSWER"
 		jdbc-type="VARCHAR"
 		/>
-	<reference-descriptor auto-retrieve="false"
-			name="parentSection"
-			class-ref="net.sourceforge.fenixedu.domain.support.FAQSection"
-			>
-		<foreignkey field-ref="keyParentSection"/>
-	</reference-descriptor>
+	
 </class-descriptor>

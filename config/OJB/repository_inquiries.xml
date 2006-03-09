@@ -16,55 +16,35 @@
         column="KEY_EXECUTION_PERIOD"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="executionPeriod"
-	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-	  <foreignkey field-ref="keyExecutionPeriod"/>
-   </reference-descriptor>
+	
    
    <field-descriptor
         name="keyExecutionCourse"
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="executionCourse"
-	  class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
-	  <foreignkey field-ref="keyExecutionCourse"/>
-   </reference-descriptor>
+	
    
    <field-descriptor
         name="keyExecutionDegreeCourse"
         column="KEY_EXECUTION_DEGREE_COURSE"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="executionDegreeCourse"
-	  class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
-	  <foreignkey field-ref="keyExecutionDegreeCourse"/>
-   </reference-descriptor>
+	
    
    <field-descriptor
         name="keyExecutionDegreeStudent"
         column="KEY_EXECUTION_DEGREE_STUDENT"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="executionDegreeStudent"
-	  class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
-	  <foreignkey field-ref="keyExecutionDegreeStudent"/>
-   </reference-descriptor>
+	
    
    <field-descriptor
         name="keyStudentSchoolClass"
         column="KEY_SCHOOL_CLASS"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="studentSchoolClass"
-	  class-ref="net.sourceforge.fenixedu.domain.SchoolClass">
-	  <foreignkey field-ref="keyStudentSchoolClass"/>
-   </reference-descriptor>
+	
    
    <field-descriptor
         name="studentCurricularYear"
@@ -146,19 +126,9 @@
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion"
 	/>
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedInquiriesRooms"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom"
-			>
-		<inverse-foreignkey field-ref="keyInquiriesCourse"/>
-	</collection-descriptor>
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedInquiriesTeachers"
-			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher"
-			>
-		<inverse-foreignkey field-ref="keyInquiriesCourse"/>
-	</collection-descriptor>
+	
 
 </class-descriptor>
 
@@ -180,33 +150,21 @@
         column="KEY_EXECUTION_PERIOD"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="executionPeriod"
-	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-	  <foreignkey field-ref="keyExecutionPeriod"/>
-   </reference-descriptor>
+	
    
    <field-descriptor
         name="keyExecutionCourse"
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="executionCourse"
-	  class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
-	  <foreignkey field-ref="keyExecutionCourse"/>
-   </reference-descriptor>
+	
    
    <field-descriptor
         name="keyStudent"
         column="KEY_STUDENT"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="student"
-	  class-ref="net.sourceforge.fenixedu.domain.Student">
-	  <foreignkey field-ref="keyStudent"/>
-   </reference-descriptor>
+	
 
 	<field-descriptor
 	  name="ackOptLock"
@@ -235,22 +193,14 @@
         column="KEY_INQUIRIES_COURSE"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="inquiriesCourse"
-	  class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse">
-	  <foreignkey field-ref="keyInquiriesCourse"/>
-   </reference-descriptor>
+	
       
    <field-descriptor
         name="keyRoom"
         column="KEY_ROOM"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="room"
-	  class-ref="net.sourceforge.fenixedu.domain.space.OldRoom">
-	  <foreignkey field-ref="keyRoom"/>
-   </reference-descriptor>
+	
    
    <field-descriptor
         name="spaceAdequation"
@@ -299,33 +249,21 @@
         column="KEY_INQUIRIES_COURSE"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="inquiriesCourse"
-	  class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse">
-	  <foreignkey field-ref="keyInquiriesCourse"/>
-   </reference-descriptor>
+	
       
    <field-descriptor
         name="keyTeacher"
         column="KEY_TEACHER"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="teacher"
-	  class-ref="net.sourceforge.fenixedu.domain.Teacher">
-	  <foreignkey field-ref="keyTeacher"/>
-   </reference-descriptor>
+	
    
    <field-descriptor
         name="keyNonAffiliatedTeacher"
         column="KEY_NON_AFFILIATED_TEACHER"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="nonAffiliatedTeacher"
-	  class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher">
-	  <foreignkey field-ref="keyNonAffiliatedTeacher"/>
-   </reference-descriptor>
+	
    
    <field-descriptor
         name="shiftType"
@@ -436,17 +374,9 @@
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.StudentPersonalDataAuthorizationChoice2sqlStudentPersonalDataAuthorizationChoiceFieldConversion"
 	/>
    
-   	<reference-descriptor auto-retrieve="false"
-	  name="student"
-	  class-ref="net.sourceforge.fenixedu.domain.Student">
-	  <foreignkey field-ref="keyStudent"/>
-   </reference-descriptor>
+   	
    
-   <reference-descriptor auto-retrieve="false"
-	  name="executionYear"
-	  class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
-	  <foreignkey field-ref="keyExecutionYear"/>
-   </reference-descriptor>
+   
 </class-descriptor>   
 
 <!-- ******************************************************************************************************************************* -->
@@ -493,27 +423,11 @@
         jdbc-type="INTEGER"
 	/>	
 	   
-   	<reference-descriptor auto-retrieve="false"
-	  name="student"
-	  class-ref="net.sourceforge.fenixedu.domain.Student">
-	  <foreignkey field-ref="keyStudent"/>
-   </reference-descriptor>
+   	
    
-   <reference-descriptor auto-retrieve="false"
-	  name="country"
-	  class-ref="net.sourceforge.fenixedu.domain.Country">
-	  <foreignkey field-ref="keyCountry"/>
-   </reference-descriptor>
    
-   <reference-descriptor auto-retrieve="false"
-	  name="dislocatedCountry"
-	  class-ref="net.sourceforge.fenixedu.domain.Country">
-	  <foreignkey field-ref="keyDislocatedCountry"/>
-   </reference-descriptor>  
    
-   <reference-descriptor auto-retrieve="false"
-	  name="district"
-	  class-ref="net.sourceforge.fenixedu.domain.District">
-	  <foreignkey field-ref="keyDistrict"/>
-   </reference-descriptor>    
+     
+   
+       
 </class-descriptor>   

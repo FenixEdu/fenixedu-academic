@@ -2,12 +2,8 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="keyCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <reference-descriptor auto-retrieve="false" name="curricularCourse" class-ref="net.sourceforge.fenixedu.domain.CurricularCourse">
-	    <foreignkey field-ref="keyCurricularCourse"/>
-    </reference-descriptor>
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" name="restrictions" element-class-ref="net.sourceforge.fenixedu.domain.precedences.Restriction"  >
-       <inverse-foreignkey field-ref="keyPrecedence"/>
-    </collection-descriptor>
+    
+    
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.Restriction">
@@ -30,9 +26,7 @@
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
-	    <foreignkey field-ref="keyPrecedence"/>
-    </reference-descriptor>
+    
 	<field-descriptor name="periodToApplyRestriction" column="PERIOD_TO_APPLY" jdbc-type="INTEGER" nullable="false" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConversion"/>
 </class-descriptor>
 
@@ -41,9 +35,7 @@
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
-	    <foreignkey field-ref="keyPrecedence"/>
-    </reference-descriptor>
+    
 	<field-descriptor name="numberOfCurricularCourses" column="NUMBER_OF_CURRICULAR_COURSE_DONE" jdbc-type="INTEGER" nullable="false"/>
 </class-descriptor>
 
@@ -53,13 +45,9 @@
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
-	    <foreignkey field-ref="keyPrecedence"/>
-    </reference-descriptor>
+    
 	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedentCurricularCourse" class-ref="net.sourceforge.fenixedu.domain.CurricularCourse">
-	    <foreignkey field-ref="keyPrecedentCurricularCourse"/>
-    </reference-descriptor>
+    
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionNotEnrolledInCurricularCourse" table="RESTRICTION">
@@ -67,13 +55,9 @@
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
-	    <foreignkey field-ref="keyPrecedence"/>
-    </reference-descriptor>
+    
 	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedentCurricularCourse" class-ref="net.sourceforge.fenixedu.domain.CurricularCourse">
-	    <foreignkey field-ref="keyPrecedentCurricularCourse"/>
-    </reference-descriptor>
+    
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse" table="RESTRICTION">
@@ -82,13 +66,9 @@
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
-	    <foreignkey field-ref="keyPrecedence"/>
-    </reference-descriptor>
+    
 	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedentCurricularCourse" class-ref="net.sourceforge.fenixedu.domain.CurricularCourse">
-	    <foreignkey field-ref="keyPrecedentCurricularCourse"/>
-    </reference-descriptor>
+    
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse" table="RESTRICTION">
@@ -98,13 +78,9 @@
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
-	    <foreignkey field-ref="keyPrecedence"/>
-    </reference-descriptor>
+    
 	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedentCurricularCourse" class-ref="net.sourceforge.fenixedu.domain.CurricularCourse">
-	    <foreignkey field-ref="keyPrecedentCurricularCourse"/>
-    </reference-descriptor>
+    
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse" table="RESTRICTION">
@@ -112,13 +88,9 @@
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
-	    <foreignkey field-ref="keyPrecedence"/>
-    </reference-descriptor>
+    
 	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedentCurricularCourse" class-ref="net.sourceforge.fenixedu.domain.CurricularCourse">
-	    <foreignkey field-ref="keyPrecedentCurricularCourse"/>
-    </reference-descriptor>
+    
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse" table="RESTRICTION">
@@ -126,11 +98,7 @@
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence" >
-	    <foreignkey field-ref="keyPrecedence"/>
-    </reference-descriptor>
+    
 	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
-    <reference-descriptor auto-retrieve="false" name="precedentCurricularCourse" class-ref="net.sourceforge.fenixedu.domain.CurricularCourse">
-	    <foreignkey field-ref="keyPrecedentCurricularCourse"/>
-    </reference-descriptor>
+    
 </class-descriptor>

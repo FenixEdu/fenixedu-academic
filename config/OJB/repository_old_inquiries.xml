@@ -28,11 +28,7 @@
         column="KEY_EXECUTION_PERIOD"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="executionPeriod"
-	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-	  <foreignkey field-ref="keyExecutionPeriod"/>
-   </reference-descriptor>
+	
 	            
     <field-descriptor
          name="semester"
@@ -44,11 +40,7 @@
          column="KEY_DEGREE"
     	 jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="degree"
-	  class-ref="net.sourceforge.fenixedu.domain.Degree">
-	  <foreignkey field-ref="keyDegree"/>
-   </reference-descriptor>
+	
     
     <field-descriptor
          name="gepDegreeName"
@@ -305,11 +297,7 @@
         column="KEY_EXECUTION_PERIOD"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="executionPeriod"
-	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-	  <foreignkey field-ref="keyExecutionPeriod"/>
-   </reference-descriptor>
+	
 	            
     <field-descriptor
          name="semester"
@@ -321,11 +309,7 @@
          column="KEY_DEGREE"
     	 jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="degree"
-	  class-ref="net.sourceforge.fenixedu.domain.Degree">
-	  <foreignkey field-ref="keyDegree"/>
-   </reference-descriptor>
+	
     
     <field-descriptor
          name="curricularYear"
@@ -374,11 +358,7 @@
          column="KEY_TEACHER"
     	 jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="teacher"
-	  class-ref="net.sourceforge.fenixedu.domain.Teacher">
-	  <foreignkey field-ref="keyTeacher"/>
-   </reference-descriptor>
+	
 
     <field-descriptor
          name="active"
@@ -679,22 +659,14 @@
         column="KEY_EXECUTION_PERIOD"
         jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="executionPeriod"
-	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
-	  <foreignkey field-ref="keyExecutionPeriod"/>
-   </reference-descriptor>
+	
 	                	 
    	<field-descriptor
          name="keyDegree"
          column="KEY_DEGREE"
     	 jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-	  name="degree"
-	  class-ref="net.sourceforge.fenixedu.domain.Degree">
-	  <foreignkey field-ref="keyDegree"/>
-   </reference-descriptor>
+	
     
     <field-descriptor
          name="gepCourseId"

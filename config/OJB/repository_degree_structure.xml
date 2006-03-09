@@ -37,26 +37,11 @@
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
     />		
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="parentContexts"
-			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-		<inverse-foreignkey field-ref="keyChildDegreeModule"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="curricularRules"
-			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule">
-		<inverse-foreignkey field-ref="keyDegreeModuleToApplyRule"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="participatingPrecedenceCurricularRules"
-			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule">
-		<inverse-foreignkey field-ref="keyPrecedenceDegreeModule"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="participatingExclusivenessCurricularRules"
-			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness">
-		<inverse-foreignkey field-ref="keyExclusiveDegreeModule"/>
-	</collection-descriptor>
+	
+	
+	
+	
+	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -100,42 +85,13 @@
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
     />		
-	<reference-descriptor auto-retrieve="false"
-			name="parentDegreeCurricularPlan"
-			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
-            >
-		<foreignkey field-ref="keyParentDegreeCurricularPlan"/>
-	</reference-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="parentContexts"
-			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-		<inverse-foreignkey field-ref="keyChildDegreeModule"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="curricularRules"
-			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule">
-		<inverse-foreignkey field-ref="keyDegreeModuleToApplyRule"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="participatingPrecedenceCurricularRules"
-			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule">
-		<inverse-foreignkey field-ref="keyPrecedenceDegreeModule"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="participatingExclusivenessCurricularRules"
-			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness">
-		<inverse-foreignkey field-ref="keyExclusiveDegreeModule"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="childContexts"
-			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-		<inverse-foreignkey field-ref="keyParentCourseGroup"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="participatingContextCurricularRules"
-			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule">
-		<inverse-foreignkey field-ref="keyContextCourseGroup"/>
-	</collection-descriptor>
+	
+	
+	
+	
+	
+	
+	
 </class-descriptor>
 
 
@@ -183,40 +139,15 @@
 		jdbc-type="INTEGER"
 	/>
 	
-	<reference-descriptor auto-retrieve="false"
-			name="curricularPeriod"
-			class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod"
-            >
-		<foreignkey field-ref="keyCurricularPeriod"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-			name="childDegreeModule"
-			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
-            >
-		<foreignkey field-ref="keyChildDegreeModule"/>
-	</reference-descriptor>	
 	
-	<reference-descriptor auto-retrieve="false"
-			name="parentCourseGroup"
-			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup"
-            >
-		<foreignkey field-ref="keyParentCourseGroup"/>
-	</reference-descriptor>
+		
+	
+	
 
-	<reference-descriptor auto-retrieve="false"
-			name="beginExecutionPeriod"
-			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
-            >
-		<foreignkey field-ref="keyBeginExecutionPeriod"/>
-	</reference-descriptor>
 	
-	<reference-descriptor auto-retrieve="false"
-			name="endExecutionPeriod"
-			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
-            >
-		<foreignkey field-ref="keyEndExecutionPeriod"/>
-	</reference-descriptor>				
+	
+					
 </class-descriptor>
 
 
@@ -303,16 +234,8 @@
 	 	jdbc-type="LONGVARCHAR"
 	 	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaBibliographicReferences2SqlBibliographicReferencesFieldConversion"
 	 />
-	<reference-descriptor auto-retrieve="false"
-			name="competenceCourse"
-			class-ref="net.sourceforge.fenixedu.domain.CompetenceCourse">
-		<foreignkey field-ref="keyCompetenceCourse"/>
-	</reference-descriptor>	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="competenceCourseLoads"
-			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad">
-		<inverse-foreignkey field-ref="keyCompetenceCourseInformation"/>
-	</collection-descriptor>
+		
+	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -387,9 +310,5 @@
 		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularPeriodType2SqlCurricularPeriodTypeFieldConversion"
 	/>
-	<reference-descriptor auto-retrieve="false"
-			name="competenceCourseInformation"
-			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation">
-		<foreignkey field-ref="keyCompetenceCourseInformation"/>
-	</reference-descriptor>		
+			
 </class-descriptor>

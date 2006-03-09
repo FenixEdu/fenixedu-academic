@@ -254,234 +254,45 @@
 	    column="KEY_PARTY_TYPE"
 	    jdbc-type="INTEGER"
 	/>
-	<reference-descriptor auto-retrieve="false"
-    	name="partyType"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType">
-	    <foreignkey field-ref="keyPartyType"/>
-	</reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-    	name="personalPhoto"
-        class-ref="net.sourceforge.fenixedu.domain.FileEntry">
-	    <foreignkey field-ref="keyPersonalPhoto"/>
-	</reference-descriptor>    
-    <reference-descriptor auto-retrieve="false"
-    	name="grantOwner"
-        class-ref="net.sourceforge.fenixedu.domain.grant.owner.GrantOwner">
-	    <foreignkey field-ref="keyGrantOwner"/>
-	</reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-    	name="externalPerson"
-        class-ref="net.sourceforge.fenixedu.domain.ExternalPerson">
-	    <foreignkey field-ref="keyExternalPerson"/>
-	</reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-    	name="teacher"
-        class-ref="net.sourceforge.fenixedu.domain.Teacher">
-	    <foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-         name="pais"
-         class-ref="net.sourceforge.fenixedu.domain.Country"
-         
-    >
-         <foreignkey field-ref="keyPais"/>
-    </reference-descriptor>
-    <reference-descriptor auto-retrieve="false"
-         name="employee"
-         class-ref="net.sourceforge.fenixedu.domain.Employee"
-         >
-         <foreignkey field-ref="keyEmployee"/>
-    </reference-descriptor>
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="personRoles"
-         element-class-ref="net.sourceforge.fenixedu.domain.Role"
-         indirection-table = "PERSON_ROLE"
-    >
-    	<fk-pointing-to-this-class  column="KEY_PERSON" />
-    	<fk-pointing-to-element-class column="KEY_ROLE" />
-    </collection-descriptor>    
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="manageableDepartmentCredits"
-         element-class-ref="net.sourceforge.fenixedu.domain.Department"
-         
-         indirection-table = "crd_CREDITS_MANAGER_DEPARTMENT"
-         
-         
-         auto-update="false"
-         auto-delete="false"
-    >
-    	<fk-pointing-to-this-class  column="KEY_PERSON" />
-    	<fk-pointing-to-element-class column="KEY_DEPARTMENT" />
-    </collection-descriptor>    
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="advisories"
-         element-class-ref="net.sourceforge.fenixedu.domain.Advisory"
-         
-         indirection-table = "PERSON_ADVISORY"
-                  
-         auto-update="false"
-         auto-delete="false"
-	>
-    	<fk-pointing-to-this-class  column="KEY_PERSON" />
-    	<fk-pointing-to-element-class column="KEY_ADVISORY" />
-    	<query-customizer
-	    	class="net.sourceforge.fenixedu.persistenceTier.customQueries.AdvisoryFilter">
-	    </query-customizer>
-    </collection-descriptor>    
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="associatedAlteredCurriculums" 
-		element-class-ref="net.sourceforge.fenixedu.domain.Curriculum"
+   	<field-descriptor 
+	   name="keyAssociatedPersonAccount"    
+	   column="KEY_PERSON_ACCOUNT"  
+	   jdbc-type="INTEGER"
+    />	
+	<!--
+        
+    
+    
+    
+    
+    --><!--
+        
+    -->    
+        
+	
+	
+	
+	
+	
+	
+	<!--
+	
+	-->
+	
+	
+	
+	
+	
+					
+						
+	
+	
 		
-		>
-		<inverse-foreignkey field-ref="keyPersonWhoAltered"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="enrolmentEvaluations" 
-		element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation"
-		>
-		<inverse-foreignkey field-ref="keyPersonResponsibleForGrade"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="enrolmentEvaluations" 
-		element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation"
+     
+    	
 		
-		>
-		<inverse-foreignkey field-ref="keyPersonResponsibleForGrade"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="students" 
-		element-class-ref="net.sourceforge.fenixedu.domain.Student">
-			<inverse-foreignkey field-ref="keyPerson"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="personAuthorships"
-			element-class-ref="net.sourceforge.fenixedu.domain.publication.Authorship"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyAuthor"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedPersonRoles"
-			element-class-ref="net.sourceforge.fenixedu.domain.PersonRole"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyPerson"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="editedWebSiteItems"
-			element-class-ref="net.sourceforge.fenixedu.domain.WebSiteItem"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyEditor"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="guides"
-			element-class-ref="net.sourceforge.fenixedu.domain.Guide"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyPerson"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="sentSms"
-			element-class-ref="net.sourceforge.fenixedu.domain.sms.SentSms"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyPerson"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="responsabilityTransactions"
-			element-class-ref="net.sourceforge.fenixedu.domain.transactions.Transaction"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyResponsiblePerson"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="projectAccesses"
-			element-class-ref="net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyPerson"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="masterDegreeCandidates"
-			element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeCandidate"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyPerson"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="exportGroupingReceivers"
-			element-class-ref="net.sourceforge.fenixedu.domain.ExportGrouping"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyReceiverPerson"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="exportGroupingSenders"
-			element-class-ref="net.sourceforge.fenixedu.domain.ExportGrouping"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keySenderPerson"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="createdContents"
-			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyCreator"/>
-	</collection-descriptor>				
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="createdContents"
-			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyCreator"/>
-	</collection-descriptor>					
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="ownedContents"
-			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
-			refresh="true" 
-			indirection-table="CMS_CONTENT_OWNERSHIP">
-		<fk-pointing-to-element-class column="KEY_CONTENT"/>
-		<fk-pointing-to-this-class column="KEY_OWNER" />	
-	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="associatedQualifications"
-			element-class-ref="net.sourceforge.fenixedu.domain.Qualification"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyPerson"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="personFunctions"
-        element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
-		<inverse-foreignkey field-ref="keyPerson"/>
-    </collection-descriptor>	
-     <reference-descriptor auto-retrieve="false"
-    	name="cms"
-        class-ref="net.sourceforge.fenixedu.domain.cms.Cms">
-	    <foreignkey field-ref="keyCms"/>
-	</reference-descriptor>
-    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-        name="personalGroups"
-        element-class-ref="net.sourceforge.fenixedu.domain.PersonalGroup">
-        <inverse-foreignkey field-ref="keyPerson"/>
-    </collection-descriptor>	
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="createdWebsiteTypes"
-			element-class-ref="net.sourceforge.fenixedu.domain.cms.website.WebsiteType"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyCreator"/>
-	</collection-descriptor>	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="parents"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party"
-			indirection-table="PARTY_PARTY">
-		<fk-pointing-to-element-class column="KEY_PARENT_PARTY" />
-		<fk-pointing-to-this-class column="KEY_SUB_PARTY" />
-	</collection-descriptor>	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="childs"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party"
-			indirection-table="PARTY_PARTY">
-		<fk-pointing-to-element-class column="KEY_SUB_PARTY" />
-		<fk-pointing-to-this-class column="KEY_PARENT_PARTY" />
-	</collection-descriptor>	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="childAccountabilities"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability">
-		<inverse-foreignkey field-ref="keyChildParty"/>
-	</collection-descriptor>	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="parentAccountabilities"
-			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability">
-		<inverse-foreignkey field-ref="keyParentParty"/>
-	</collection-descriptor>	
+		
+		
+		
+		
 </class-descriptor>

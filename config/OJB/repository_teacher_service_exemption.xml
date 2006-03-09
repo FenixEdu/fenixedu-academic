@@ -42,8 +42,6 @@
       		locking="false"
       />
       
-      <reference-descriptor auto-retrieve="false" name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher">
-         <foreignkey field-ref="keyTeacher"/>
-      </reference-descriptor>
+      
       
 </class-descriptor>

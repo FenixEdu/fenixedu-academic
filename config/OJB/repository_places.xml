@@ -21,16 +21,6 @@
 	  	jdbc-type="INTEGER"
 	  	locking="false"
 	/>
-   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="executionDegrees"
-		element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-		>
-		<inverse-foreignkey field-ref="keyCampus"/>
-   </collection-descriptor>             
-   <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="buildings"
-		element-class-ref="net.sourceforge.fenixedu.domain.space.OldBuilding"
-		>
-		<inverse-foreignkey field-ref="keyCampus"/>
-   </collection-descriptor>
+                
+   
 </class-descriptor>

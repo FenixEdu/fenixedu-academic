@@ -36,16 +36,8 @@
 	   jdbc-type="DOUBLE"
     />
 
-	<reference-descriptor auto-retrieve="false"
-    	name="person"
-        class-ref="net.sourceforge.fenixedu.domain.Person">
-	    <foreignkey field-ref="keyPerson"/>
-	</reference-descriptor>
+	
 
-	<reference-descriptor auto-retrieve="false"
-    	name="function"
-        class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
-	    <foreignkey field-ref="keyFunction"/>
-	</reference-descriptor>
+	
 	
 </class-descriptor>

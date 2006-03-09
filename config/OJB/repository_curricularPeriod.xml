@@ -36,28 +36,12 @@
         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularPeriodType2SqlCurricularPeriodTypeFieldConversion"
     />      
 
-	<reference-descriptor auto-retrieve="false"
-    	name="degreeCurricularPlan"
-        class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan">
-	    <foreignkey field-ref="keyDegreeCurricularPlan"/>
-	</reference-descriptor>	
+		
 
-	<reference-descriptor auto-retrieve="false"
-    	name="parent"
-        class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod">
-	    <foreignkey field-ref="keyParent"/>
-	</reference-descriptor>	
+		
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="childs"
-			element-class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod">
-		<inverse-foreignkey field-ref="keyParent"/>
-	</collection-descriptor>
+	
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="contexts"
-			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-		<inverse-foreignkey field-ref="keyCurricularPeriod"/>
-	</collection-descriptor>
+	
 	
 </class-descriptor>

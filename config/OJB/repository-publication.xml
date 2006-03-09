@@ -37,12 +37,8 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" name="restrictions" element-class-ref="net.sourceforge.fenixedu.domain.Restriction" >
-       <inverse-foreignkey field-ref="keyPrecedence"/>
-    </collection-descriptor>
+	
     
-	<reference-descriptor auto-retrieve="false" name="precedence" class-ref="net.sourceforge.fenixedu.domain.Precedence" >
-	    <foreignkey field-ref="keyPrecedence"/>
-    </reference-descriptor>
+	
 	<field-descriptor name="numberOfCurricularCourses" column="NUMBER_OF_CURRICULAR_COURSE_DONE" jdbc-type="INTEGER" nullable="false"/>
 </class-descriptor>

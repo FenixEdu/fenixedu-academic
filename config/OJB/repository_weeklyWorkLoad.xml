@@ -31,9 +31,5 @@
 			column="OTHER"
 			jdbc-type="INTEGER"
 		/>
-	<reference-descriptor auto-retrieve="false"
-			name="attends"
-			class-ref="net.sourceforge.fenixedu.domain.Attends">
-		<foreignkey field-ref="keyAttends"/>
-	</reference-descriptor>
+	
 </class-descriptor>

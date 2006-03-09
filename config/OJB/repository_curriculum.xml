@@ -62,21 +62,7 @@
         jdbc-type="INTEGER"
 	/>
     
-    <reference-descriptor auto-retrieve="false"    	
-         name="curricularCourse"
-         class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-         
-         
-    >
-	<foreignkey field-ref="keyCurricularCourse"/>
-    </reference-descriptor>
     
-    <reference-descriptor auto-retrieve="false"    	
-         name="personWhoAltered"
-         class-ref="net.sourceforge.fenixedu.domain.Person"
-         
-         
-    >
-	<foreignkey field-ref="keyPersonWhoAltered"/>
-    </reference-descriptor>
+    
+    
 </class-descriptor>

@@ -7,13 +7,7 @@
 		autoincrement="true"
 		/>
 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-			name="roles" element-class-ref="net.sourceforge.fenixedu.domain.Role">
-		<inverse-foreignkey field-ref="keyRootDomainObject"/>
-	</collection-descriptor>
 	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-			name="parties" element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party">
-		<inverse-foreignkey field-ref="keyRootDomainObject"/>
-	</collection-descriptor>		
+	
+			
 </class-descriptor>

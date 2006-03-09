@@ -40,13 +40,7 @@
          jdbc-type="DATE"
 	 />
 	
-	<reference-descriptor auto-retrieve="false"
-       	name="executionYear"
-       	class-ref="net.sourceforge.fenixedu.domain.ExecutionYear"
-		
-    >
-		<foreignkey field-ref="keyExecutionYear"/>
-	</reference-descriptor>
+	
 		
 </class-descriptor>
 

@@ -65,10 +65,5 @@
 		column="LAST_MODIFICATION_DATE"
 		jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
-	<reference-descriptor auto-retrieve="false" 
-			name="student" 
-			class-ref="net.sourceforge.fenixedu.domain.Student" 
-			>
-		<foreignkey field-ref="keyStudent"/>
-	</reference-descriptor>
+	
 </class-descriptor>
