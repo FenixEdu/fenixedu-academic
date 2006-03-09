@@ -137,6 +137,40 @@
 		</java>
     	<antcall target="clean-all"/>
     </target>
+	
+    <target name="generate-OJBMetadata"
+    		description="Adds specific readByOID methods to RootDomainObject."
+    		depends="compile">
+		<java classname="net.sourceforge.fenixedu.tools.OJBMetadataGenerator" fork="true">
+			<arg value="${dml.definition.file}"/>
+			<arg value="${option}"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>	
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    </target>
+
+    <target name="generate-OJBMetadataWithDebug"
+    		description="Adds specific readByOID methods to RootDomainObject."
+    		depends="compile">
+		<java classname="net.sourceforge.fenixedu.tools.OJBMetadataGenerator" fork="true" 
+			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"
+		>
+			<arg value="${dml.definition.file}"/>
+			<arg value="${option}"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>	
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    </target>
 
     <target name="dmlGenerator"
     		description="Generate DML file from OJB Mapping.">
