@@ -31,7 +31,7 @@ public class DeleteDistributedTest extends Service {
 
         if (distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
             OnlineTest onlineTest = (OnlineTest) persistentSupport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
-            Iterator<ExecutionCourse> executionCourseIterator = onlineTest.getAssociatedExecutionCoursesForOnlineTestIterator();
+            Iterator<ExecutionCourse> executionCourseIterator = onlineTest.getAssociatedExecutionCoursesIterator();
             while (executionCourseIterator.hasNext()) {
                 executionCourseIterator.next();
                 executionCourseIterator.remove();

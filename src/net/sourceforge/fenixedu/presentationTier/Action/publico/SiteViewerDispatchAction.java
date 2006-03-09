@@ -176,12 +176,8 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         final Integer executionCourseID = ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal();
         final Evaluation evaluation = evaluationMarksComponent.getEvaluation();
         final List<ExecutionCourse> executionCourses;
-        if (evaluation instanceof OnlineTest) {
-            executionCourses = ((OnlineTest) evaluation).getAssociatedExecutionCoursesForOnlineTest();
-        } else {
-            executionCourses = evaluation.getAssociatedExecutionCourses();
-        }
 
+        executionCourses = evaluation.getAssociatedExecutionCourses();
         for (final ExecutionCourse executionCourse : executionCourses) {
             if (executionCourse.getIdInternal().equals(executionCourseID)) {
                 evaluationMarksComponent.setExecutionCourse(executionCourse);
