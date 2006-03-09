@@ -8,7 +8,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -114,20 +113,20 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
     
-    public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
-            ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
-        checkContextsFor(parentCourseGroup, curricularPeriod);
-        parentCourseGroup.checkDuplicateChildNames(getName(), getNameEn());
-        return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
-    }
-
-    protected void checkContextsFor(final CourseGroup parentCourseGroup,
-            final CurricularPeriod curricularPeriod) {
+    protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
         for (final Context context : this.getParentContexts()) {
             if (context.getParentCourseGroup() == parentCourseGroup) {
                 throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
             }
         }
+    }
+    
+    protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
+        result.addAll(getParticipatingContextCurricularRules());
+    }
+    
+    protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
+        parentCourseGroup.checkDuplicateChildNames(getName(), getNameEn());
     }
 
     @Override
@@ -200,11 +199,6 @@ public class CourseGroup extends CourseGroup_Base {
             }
             context.setOrder(newOrder);
         }
-    }
-
-    @Override
-    protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
-        result.addAll(getParticipatingContextCurricularRules());
     }
 
     public void collectChildDegreeModules(Class<? extends DegreeModule> clazz, final Set<DegreeModule> result) {

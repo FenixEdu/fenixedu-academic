@@ -20,13 +20,19 @@ public abstract class DegreeModule extends DegreeModule_Base {
         for (;!getParticipatingExclusivenessCurricularRules().isEmpty(); getParticipatingExclusivenessCurricularRules().get(0).delete());
     }
     
-    public abstract Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
-            ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod);
+    public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
+            ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+        
+        checkContextsFor(parentCourseGroup, curricularPeriod);
+        checkOwnRestrictions(parentCourseGroup, curricularPeriod);
+        return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+    }
     
-    public void editContext(Context context, CourseGroup courseGroup, CurricularPeriod curricularPeriod) {
-        if (context.getParentCourseGroup() != courseGroup || context.getCurricularPeriod() != curricularPeriod) {
-            checkContextsFor(courseGroup, curricularPeriod);
-            context.edit(courseGroup, this, curricularPeriod);
+    public void editContext(Context context, CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod) {
+        if (context.getParentCourseGroup() != parentCourseGroup || context.getCurricularPeriod() != curricularPeriod) {
+            checkContextsFor(parentCourseGroup, curricularPeriod);
+            checkOwnRestrictions(parentCourseGroup, curricularPeriod);
+            context.edit(parentCourseGroup, this, curricularPeriod);
         }
     }
     
@@ -70,4 +76,5 @@ public abstract class DegreeModule extends DegreeModule_Base {
     public abstract DegreeCurricularPlan getParentDegreeCurricularPlan();
     protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
     protected abstract void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
+    protected abstract void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
 }

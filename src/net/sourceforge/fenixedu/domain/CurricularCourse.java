@@ -669,12 +669,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return results;
     }
     
-    public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
-            ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
-        checkContextsFor(parentCourseGroup, curricularPeriod);
-        return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);        
-    }
-    
     protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
         for (final Context context : this.getParentContexts()) {
             if (context.getParentCourseGroup() == parentCourseGroup && context.getCurricularPeriod() == curricularPeriod) {
@@ -682,7 +676,18 @@ public class CurricularCourse extends CurricularCourse_Base {
             }
         }
     }
-
+    
+    protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
+        // no rules to add
+    }
+    
+    protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
+        if (getCompetenceCourse() != null && getCompetenceCourse().getRegime() == RegimeType.ANUAL
+            && (curricularPeriod.getOrder() == null || curricularPeriod.getOrder() != 1)) {
+            throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
+        }
+    }
+    
     @Override
     public String getName() {
         if ((super.getName() == null || super.getName().length() == 0) && this.getCompetenceCourse() != null) {
@@ -720,11 +725,6 @@ public class CurricularCourse extends CurricularCourse_Base {
             return this.getCompetenceCourse().getRegime();
 		}
         return null;
-    }
-
-    @Override
-    protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
-        // no rules to add
     }
 
     public boolean isOptional() {
