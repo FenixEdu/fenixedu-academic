@@ -51,7 +51,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 
 				masterDegreeCandidates = executionDegree.getMasterDegreeCandidates();
 				guides = executionDegree.getGuides();
-				proposals = executionDegree.getAssociatedFinalDegreeWorkProposals();
+				proposals = executionDegree.getScheduling().getProposals();
 				groups = executionDegree.getAssociatedFinalDegreeWorkGroups();
 				scheduleing = executionDegree.getScheduling();
 

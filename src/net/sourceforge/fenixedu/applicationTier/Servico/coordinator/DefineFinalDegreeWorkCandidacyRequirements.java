@@ -36,7 +36,7 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
                     scheduleing.setCurrentProposalNumber(new Integer(1));
                 }
 
-                scheduleing.setExecutionDegree(cursoExecucao);
+                scheduleing.addExecutionDegrees(cursoExecucao);
                 scheduleing.setMinimumNumberOfCompletedCourses(minimumNumberOfCompletedCourses);
                 scheduleing.setMinimumNumberOfStudents(minimumNumberOfStudents);
                 scheduleing.setMaximumNumberOfStudents(maximumNumberOfStudents);

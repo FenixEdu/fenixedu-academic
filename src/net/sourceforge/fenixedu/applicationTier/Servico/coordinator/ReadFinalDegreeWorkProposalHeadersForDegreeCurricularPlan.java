@@ -40,8 +40,8 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan extends S
                     finalDegreeWorkProposalHeader.setIdInternal(proposal.getIdInternal());
                     finalDegreeWorkProposalHeader.setProposalNumber(proposal.getProposalNumber());
                     finalDegreeWorkProposalHeader.setTitle(proposal.getTitle());
-                    finalDegreeWorkProposalHeader.setExecutionYear(proposal.getExecutionDegree()
-                            .getExecutionYear().getYear());
+                    finalDegreeWorkProposalHeader.setExecutionYear(proposal.getScheduleing().getExecutionDegrees()
+                            .iterator().next().getExecutionYear().getYear());
                     if (proposal.getOrientator() != null) {
                         finalDegreeWorkProposalHeader.setOrientatorOID(proposal.getOrientator()
                                 .getIdInternal());

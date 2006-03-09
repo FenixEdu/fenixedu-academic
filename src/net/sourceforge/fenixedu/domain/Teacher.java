@@ -60,8 +60,8 @@ public class Teacher extends Teacher_Base {
     }
 
     public Boolean canAddPublicationToTeacherInformationSheet(PublicationArea area) {
-        // NOTA : a linha seguinte contém um número explícito quando não deve.
-        // Isto deve ser mudado! Mas esta mudança implica tornar explícito o
+        // NOTA : a linha seguinte contï¿½m um nï¿½mero explï¿½cito quando nï¿½o deve.
+        // Isto deve ser mudado! Mas esta mudanï¿½a implica tornar explï¿½cito o
         // conceito de Ficha de docente.
         return new Boolean(countPublicationsInArea(area) < 5);
 
@@ -177,7 +177,7 @@ public class Teacher extends Teacher_Base {
         List<Proposal> proposalList = new ArrayList<Proposal>();
         for (Iterator iter = getAssociatedProposalsByOrientator().iterator(); iter.hasNext();) {
             Proposal proposal = (Proposal) iter.next();
-            if (proposal.getExecutionDegree().getExecutionYear().equals(executionYear)) {
+            if (proposal.getScheduleing().getExecutionDegreesSet().iterator().next().getExecutionYear().equals(executionYear)) {
                 // if it was attributed by the coordinator the proposal is
                 // efective
                 if (proposal.getGroupAttributed() != null) {

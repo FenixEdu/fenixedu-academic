@@ -56,7 +56,7 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
             if (proposal == null) {
                 return false;
             }
-            ExecutionDegree executionDegree = proposal.getExecutionDegree();
+            ExecutionDegree executionDegree = proposal.getScheduleing().getExecutionDegreesSet().iterator().next();
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             List coordinators = executionDegree.getCoordinatorsList();

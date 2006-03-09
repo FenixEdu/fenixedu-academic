@@ -1,8 +1,3 @@
-/*
- * Created on 2004/03/09
- *  
- */
-
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
@@ -17,23 +12,19 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.ojb.broker.query.Criteria;
 
-/**
- * @author Luis Cruz
- */
-
 public class FinalDegreeWorkOJB extends PersistentObjectOJB implements IPersistentFinalDegreeWork {
 
     public List readFinalDegreeWorkProposalsByExecutionDegree(Integer executionDegreeOID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionDegree.idInternal", executionDegreeOID);
+        criteria.addEqualTo("scheduleing.executionDegrees.idInternal", executionDegreeOID);
         return queryList(Proposal.class, criteria);
     }
 
     public Scheduleing readFinalDegreeWorkScheduleing(Integer executionDegreeOID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionDegree.idInternal", executionDegreeOID);
+        criteria.addEqualTo("executionDegrees.idInternal", executionDegreeOID);
         return (Scheduleing) queryObject(Scheduleing.class, criteria);
     }
 
@@ -49,7 +40,7 @@ public class FinalDegreeWorkOJB extends PersistentObjectOJB implements IPersiste
     public List readAprovedFinalDegreeWorkProposals(Integer executionDegreeOID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionDegree.idInternal", executionDegreeOID);
+        criteria.addEqualTo("scheduleing.executionDegrees.idInternal", executionDegreeOID);
         criteria.addEqualTo("status", FinalDegreeWorkProposalStatus.APPROVED_STATUS);
         return queryList(Proposal.class, criteria);
     }
@@ -57,7 +48,7 @@ public class FinalDegreeWorkOJB extends PersistentObjectOJB implements IPersiste
     public List readPublishedFinalDegreeWorkProposalsByExecutionDegree(Integer executionDegreeOID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionDegree.idInternal", executionDegreeOID);
+        criteria.addEqualTo("scheduleing.executionDegrees.idInternal", executionDegreeOID);
         criteria.addEqualTo("status", FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
         return queryList(Proposal.class, criteria);
     }

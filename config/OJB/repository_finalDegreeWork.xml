@@ -20,8 +20,8 @@
       	jdbc-type="INTEGER"
       />
       <field-descriptor
-         name="keyExecutionDegree"
-         column="KEY_EXECUTION_DEGREE"
+         name="keyScheduleing"
+         column="KEY_SCHEDULEING"
          jdbc-type="INTEGER"
       />
       <field-descriptor
@@ -147,9 +147,9 @@
          jdbc-type="INTEGER"
       />
       <reference-descriptor auto-retrieve="false"
-         name="executionDegree"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
-         <foreignkey field-ref="keyExecutionDegree"/>
+         name="scheduleing"
+         class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing">
+         <foreignkey field-ref="keyScheduleing"/>
       </reference-descriptor>
       <reference-descriptor auto-retrieve="false"
          name="orientator"
@@ -215,11 +215,6 @@
       	name="currentProposalNumber"
       	column="CURRENT_PROPOSAL_NUMBER"
       	jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="keyExecutionDegree"
-         column="KEY_EXECUTION_DEGREE"
-         jdbc-type="INTEGER"
       />
       <field-descriptor
          name="startOfProposalPeriodDate"
@@ -289,11 +284,13 @@
       	column="MAXIMUM_NUMBER_OF_PROPOSAL_CANDIDACIES_PER_GROUP"
       	jdbc-type="INTEGER"
       />
-      <reference-descriptor auto-retrieve="false"
-         name="executionDegree"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
-         <foreignkey field-ref="keyExecutionDegree"/>
-      </reference-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="executionDegrees"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+
+			>
+		<inverse-foreignkey field-ref="keyScheduling"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.finalDegreeWork.Group"

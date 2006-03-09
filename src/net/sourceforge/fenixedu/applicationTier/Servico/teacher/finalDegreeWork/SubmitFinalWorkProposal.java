@@ -69,7 +69,7 @@ public class SubmitFinalWorkProposal extends Service {
         proposal.setDeliverable(infoProposal.getDeliverable());
         proposal.setDescription(infoProposal.getDescription());
 
-        proposal.setExecutionDegree(executionDegree);
+        proposal.setScheduleing(executionDegree.getScheduling());
         proposal.setFraming(infoProposal.getFraming());
         proposal.setLocation(infoProposal.getLocation());
 

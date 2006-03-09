@@ -10,14 +10,4 @@ package net.sourceforge.fenixedu.domain.finalDegreeWork;
  *  
  */
 public class Proposal extends Proposal_Base {
-
-    public String toString() {
-        String result = "[Proposal";
-        result += ", idInternal=" + getIdInternal();
-        result += ", title=" + getTitle();
-        result += ", degreeCurricularPlan=" + getExecutionDegree();
-        result += "]";
-        return result;
-    }
-
 }

@@ -37,7 +37,7 @@ public class DefineFinalDegreeWorkProposalSubmisionPeriod extends Service {
                     scheduleing.setCurrentProposalNumber(new Integer(1));
                 }
 
-                scheduleing.setExecutionDegree(cursoExecucao);
+                scheduleing.addExecutionDegrees(cursoExecucao);
                 scheduleing.setStartOfProposalPeriod(startOfProposalPeriod);
                 scheduleing.setEndOfProposalPeriod(endOfProposalPeriod);
             }

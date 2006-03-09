@@ -48,10 +48,10 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher extends Service {
 					FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = new FinalDegreeWorkProposalHeader();
 
 					finalDegreeWorkProposalHeader.setIdInternal(proposal.getIdInternal());
-					finalDegreeWorkProposalHeader.setExecutionDegreeOID(proposal.getExecutionDegree()
+					finalDegreeWorkProposalHeader.setExecutionDegreeOID(proposal.getScheduleing().getExecutionDegrees().iterator().next()
 							.getIdInternal());
 					finalDegreeWorkProposalHeader.setTitle(proposal.getTitle());
-					finalDegreeWorkProposalHeader.setExecutionYear(proposal.getExecutionDegree()
+					finalDegreeWorkProposalHeader.setExecutionYear(proposal.getScheduleing().getExecutionDegrees().iterator().next()
 							.getExecutionYear().getYear());
 					finalDegreeWorkProposalHeader.setProposalNumber(proposal.getProposalNumber());
 					if (proposal.getOrientator() != null) {
@@ -67,11 +67,11 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher extends Service {
 								.getPerson().getNome());
 					}
 					finalDegreeWorkProposalHeader.setCompanyLink(proposal.getCompanionName());
-					finalDegreeWorkProposalHeader.setDegreeCode(proposal.getExecutionDegree()
+					finalDegreeWorkProposalHeader.setDegreeCode(proposal.getScheduleing().getExecutionDegrees().iterator().next()
 							.getDegreeCurricularPlan().getDegree().getSigla());
 
 					Scheduleing scheduleing = persistentFinalDegreeWork
-							.readFinalDegreeWorkScheduleing(proposal.getExecutionDegree()
+							.readFinalDegreeWorkScheduleing(proposal.getScheduleing().getExecutionDegrees().iterator().next()
 									.getIdInternal());
 					if (scheduleing != null
 							&& scheduleing.getStartOfProposalPeriod() != null

@@ -1803,7 +1803,7 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal extends net.sourc
 	Integer keyGroupAttributedByTeacher;
 	String companionName;
 	String deliverable;
-	Integer keyExecutionDegree;
+	Integer keyScheduleing;
 	String url;
 	String companyAdress;
 	Integer keyGroupAttributed;
@@ -1988,7 +1988,6 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing extends net.so
 	Integer minimumNumberOfStudents;
 	Integer maximumNumberOfProposalCandidaciesPerGroup;
 	Integer minimumNumberOfCompletedCourses;
-	Integer keyExecutionDegree;
 	Integer currentProposalNumber;
 	Date startOfProposalPeriodTime;
 	Date startOfProposalPeriodDate;
@@ -4745,10 +4744,10 @@ relation ProposalTeacherByOrientator {
 
 
 relation ProposalExecutionDegree {
-	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole associatedFinalDegreeWorkProposals {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole proposals {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing playsRole scheduleing;
 }
 
 
@@ -4909,7 +4908,9 @@ relation ServiceProviderRegimeTeacher {
 
 relation SchedulingExecutionDegree {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing playsRole scheduling;
-	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegrees {
+		multiplicity *;
+	}
 }
 
 relation SchoolClassExecutionDegree {

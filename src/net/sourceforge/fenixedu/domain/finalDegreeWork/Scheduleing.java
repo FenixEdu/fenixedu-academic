@@ -13,14 +13,6 @@ import java.util.Date;
  */
 public class Scheduleing extends Scheduleing_Base {
 
-    public String toString() {
-        String result = "[Proposal";
-        result += ", idInternal=" + getIdInternal();
-        result += ", executionDegree=" + getExecutionDegree();
-        result += "]";
-        return result;
-    }
-
     public Date getEndOfProposalPeriod() {
         if (this.getEndOfProposalPeriodDate() != null && this.getEndOfProposalPeriodTime() != null) {
             Calendar calendar = Calendar.getInstance();
