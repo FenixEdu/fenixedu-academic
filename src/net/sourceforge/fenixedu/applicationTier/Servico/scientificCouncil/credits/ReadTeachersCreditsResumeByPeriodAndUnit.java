@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.LegalRegimenType;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -41,7 +42,8 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
         List<TeacherCreditsReportDTO> creditLines = new ArrayList<TeacherCreditsReportDTO>();
         for (Teacher teacher : teachers) {
             if (!verifyIfTeacherIsMonitor(teacher, executionPeriodsBetween)
-                    && !verifyIfTeacherIsInactive(teacher, executionPeriodsBetween)) {
+                    && !verifyIfTeacherIsInactive(teacher, executionPeriodsBetween)
+                    && !verifyIfTeacherIsDeath(teacher)) {
                 TeacherCreditsReportDTO creditsReportDTO = new TeacherCreditsReportDTO();
                 creditsReportDTO.setTeacher(teacher);
                 for (ExecutionPeriod executionPeriod : executionPeriodsBetween) {
@@ -69,18 +71,25 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
         return creditLines;
     }
 
+    private boolean verifyIfTeacherIsDeath(Teacher teacher) {
+        for (TeacherLegalRegimen legalRegimen : teacher.getLegalRegimens()) {
+            if (legalRegimen.getLegalRegimenType().equals(LegalRegimenType.DEATH)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean verifyIfTeacherIsInactive(Teacher teacher,
             List<ExecutionPeriod> executionPeriodsBetween) {
 
         if (!executionPeriodsBetween.isEmpty()) {
             ExecutionPeriod lastExecutionPeriod = executionPeriodsBetween.get(executionPeriodsBetween
                     .size() - 1);
-            List<TeacherLegalRegimen> allLegalRegimens = teacher.getAllLegalRegimensBelongsToPeriod(
-                    lastExecutionPeriod.getBeginDate(), lastExecutionPeriod.getEndDate());
+            List<TeacherLegalRegimen> allLegalRegimens = teacher
+                    .getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(lastExecutionPeriod
+                            .getBeginDate(), lastExecutionPeriod.getEndDate());
             if (allLegalRegimens.isEmpty()) {
-//                System.out.println("Sem contratos legais: " + teacher.getTeacherNumber() + " -> "
-//                        + lastExecutionPeriod.getName() + " de "
-//                        + lastExecutionPeriod.getExecutionYear().getYear());
                 return true;
             }
         }
@@ -96,13 +105,6 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
             if (category != null
                     && (category.getCode().equalsIgnoreCase("MNT") || category.getCode()
                             .equalsIgnoreCase("MNL"))) {
-//                System.out.println("Docente Monitor: "
-//                        + teacher.getTeacherNumber()
-//                        + " -> "
-//                        + executionPeriodsBetween.get(executionPeriodsBetween.size() - 1).getName()
-//                        + " de "
-//                        + executionPeriodsBetween.get(executionPeriodsBetween.size() - 1)
-//                                .getExecutionYear().getYear());
                 return true;
             }
         }
@@ -136,12 +138,13 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
         double totalCredits = 0;
         if (countCredits) {
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-//            Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
-//             if (category != null
-//             // ignore if it has a monitor category
-//             && (!category.getCode().equalsIgnoreCase("MNT") ||
-//             category.getCode()
-//             .equalsIgnoreCase("MNL"))) {
+            // Category category =
+            // teacher.getCategoryForCreditsByPeriod(executionPeriod);
+            // if (category != null
+            // // ignore if it has a monitor category
+            // && (!category.getCode().equalsIgnoreCase("MNT") ||
+            // category.getCode()
+            // .equalsIgnoreCase("MNL"))) {
             if (teacherService != null) {
                 totalCredits = teacherService.getCredits();
             }

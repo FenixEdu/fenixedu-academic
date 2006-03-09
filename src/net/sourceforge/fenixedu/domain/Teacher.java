@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.util.CalendarUtil;
+import net.sourceforge.fenixedu.util.LegalRegimenType;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.State;
 
@@ -146,10 +147,15 @@ public class Teacher extends Teacher_Base {
         return regimenToReturn;
     }
 
-    public List<TeacherLegalRegimen> getAllLegalRegimensBelongsToPeriod(Date beginDate, Date endDate) {
+    public List<TeacherLegalRegimen> getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(
+            Date beginDate, Date endDate) {
+
         List<TeacherLegalRegimen> legalRegimens = new ArrayList<TeacherLegalRegimen>();
         for (TeacherLegalRegimen legalRegimen : this.getLegalRegimens()) {
-            if (legalRegimen.belongsToPeriod(beginDate, endDate)) {
+            if (!legalRegimen.getLegalRegimenType().equals(LegalRegimenType.DEATH)
+                    && !legalRegimen.getLegalRegimenType().equals(LegalRegimenType.EMERITUS)
+                    && !legalRegimen.getLegalRegimenType().equals(LegalRegimenType.RETIREMENT)
+                    && legalRegimen.belongsToPeriod(beginDate, endDate)) {
                 legalRegimens.add(legalRegimen);
             }
         }
@@ -426,7 +432,8 @@ public class Teacher extends Teacher_Base {
 
     public int getHoursByCategory(Date begin, Date end) {
 
-        List<TeacherLegalRegimen> list = getAllLegalRegimensBelongsToPeriod(begin, end);
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(
+                begin, end);
 
         if (list.isEmpty()) {
             return 0;
@@ -443,8 +450,8 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return 0;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensBelongsToPeriod(occupationPeriod.getStart(),
-                occupationPeriod.getEnd());
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(
+                occupationPeriod.getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
             return 0;
@@ -505,8 +512,8 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return null;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensBelongsToPeriod(occupationPeriod.getStart(),
-                occupationPeriod.getEnd());
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(
+                occupationPeriod.getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
             return null;
@@ -548,8 +555,7 @@ public class Teacher extends Teacher_Base {
                                 ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL)
                         || teacherServiceExemption.getType().equals(
                                 ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS) || teacherServiceExemption
-                        .getType().equals(
-                                ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_E_C_D_U))) {
+                        .getType().equals(ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_E_C_D_U))) {
 
             Integer daysBetween = CalendarUtil.getNumberOfDaysBetweenDates(teacherServiceExemption
                     .getStart(), teacherServiceExemption.getEnd());
@@ -696,8 +702,8 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return 0;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensBelongsToPeriod(occupationPeriod.getStart(),
-                occupationPeriod.getEnd());
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(
+                occupationPeriod.getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
             return 0;

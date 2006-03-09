@@ -34,7 +34,7 @@ public class Department extends Department_Base {
     }
 
     public List<Employee> getCurrentActiveWorkingEmployees() {
-        
+
         Unit departmentUnit = this.getUnit();
         Set<Employee> employees = new HashSet<Employee>();
         Date currentDate = Calendar.getInstance().getTime();
@@ -44,8 +44,8 @@ public class Department extends Department_Base {
         }
         return new ArrayList<Employee>(employees);
     }
-    
-    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date currentDate){
+
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date currentDate) {
         for (Contract contract : unit.getWorkingContracts()) {
             Employee employee = contract.getEmployee();
             if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
@@ -54,11 +54,11 @@ public class Department extends Department_Base {
         }
         for (Unit subUnit : unit.getSubUnits()) {
             readAndSaveEmployees(subUnit, employees, currentDate);
-        }        
+        }
     }
-      
-    public List<Employee> getWorkingEmployees(Date begin, Date end) {        
-        
+
+    public List<Employee> getWorkingEmployees(Date begin, Date end) {
+
         Unit departmentUnit = this.getUnit();
         Set<Employee> employees = new HashSet<Employee>();
 
@@ -68,20 +68,20 @@ public class Department extends Department_Base {
         return new ArrayList<Employee>(employees);
     }
 
-    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date begin, Date end){
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date begin, Date end) {
         for (Contract contract : unit.getWorkingContracts(begin, end)) {
             employees.add(contract.getEmployee());
         }
-        for (Unit subUnit : unit.getSubUnits()) {               
-            readAndSaveEmployees(subUnit, employees, begin, end);               
-        }                
+        for (Unit subUnit : unit.getSubUnits()) {
+            readAndSaveEmployees(subUnit, employees, begin, end);
+        }
     }
-    
+
     public List<Teacher> getCurrentTeachers() {
         Date currentDate = Calendar.getInstance().getTime();
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = this.getCurrentActiveWorkingEmployees();
-     
+
         for (Employee employee : employees) {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null) {
@@ -117,7 +117,9 @@ public class Department extends Department_Base {
         List<Employee> employees = this.getWorkingEmployees(begin, end);
         for (Employee employee : employees) {
             Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && !teacher.getAllLegalRegimensBelongsToPeriod(begin, end).isEmpty()) {
+            if (teacher != null
+                    && !teacher.getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(begin,
+                            end).isEmpty()) {
                 teachers.add(teacher);
             }
         }
@@ -127,8 +129,10 @@ public class Department extends Department_Base {
     public Teacher getTeacherByPeriod(Integer teacherNumber, Date begin, Date end) {
         for (Employee employee : getWorkingEmployees(begin, end)) {
             Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)
-                    && !teacher.getAllLegalRegimensBelongsToPeriod(begin, end).isEmpty()) {
+            if (teacher != null
+                    && teacher.getTeacherNumber().equals(teacherNumber)
+                    && !teacher.getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(begin,
+                            end).isEmpty()) {
                 return teacher;
             }
         }
@@ -212,7 +216,7 @@ public class Department extends Department_Base {
 
         return personalExpectations;
     }
-    
+
     public String retrieveAcronym() {
         final int begin = this.getRealName().indexOf("(");
         final int end = this.getRealName().indexOf(")");

@@ -23,7 +23,7 @@ public class Unit extends Unit_Base {
     public Unit() {
         super();
     }
-    
+
     public List<Unit> getTopUnits() {
         Unit unit = this;
         List<Unit> allTopUnits = new ArrayList<Unit>();
@@ -154,18 +154,20 @@ public class Unit extends Unit_Base {
     }
 
     public void delete() {
-        if (!hasAnyChilds() && (!hasAnyParents() || (this.getParentUnits().size() == 1 && this.getParents().size() == 1))
+        if (!hasAnyChilds()
+                && (!hasAnyParents() || (this.getParentUnits().size() == 1 && this.getParents().size() == 1))
                 && !hasAnyFunctions() && !hasAnyWorkingContracts() && !hasAnyMailingContracts()
                 && !hasAnySalaryContracts() && !hasAnyCompetenceCourses() && !hasAnyExternalPersons()
-                && !hasAnyAssociatedNonAffiliatedTeachers()) {                      
+                && !hasAnyAssociatedNonAffiliatedTeachers()) {
 
             if (hasAnyParentUnits()) {
                 this.removeParents(this.getParentUnits().get(0));
             }
-            
-            for (;!getParticipatingAnyCurricularCourseCurricularRules().isEmpty()
-                 ;getParticipatingAnyCurricularCourseCurricularRules().get(0).delete());
-            
+
+            for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
+                    .get(0).delete())
+                ;
+
             removeDepartment();
             removeDegree();
             RootDomainObject.getInstance().removeParties(this);
@@ -214,7 +216,7 @@ public class Unit extends Unit_Base {
         }
         return result;
     }
-    
+
     public List<Unit> getDegreeUnits() {
         List<Unit> result = new ArrayList<Unit>();
         for (Unit unit : this.getSubUnits()) {
@@ -231,7 +233,9 @@ public class Unit extends Unit_Base {
         List<Employee> employees = getWorkingEmployees(begin, end);
         for (Employee employee : employees) {
             Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && !teacher.getAllLegalRegimensBelongsToPeriod(begin, end).isEmpty()) {
+            if (teacher != null
+                    && !teacher.getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(begin,
+                            end).isEmpty()) {
                 teachers.add(teacher);
             }
         }
@@ -241,8 +245,10 @@ public class Unit extends Unit_Base {
     public Teacher getTeacherByPeriod(Integer teacherNumber, Date begin, Date end) {
         for (Employee employee : getWorkingEmployees(begin, end)) {
             Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)
-                    && !teacher.getAllLegalRegimensBelongsToPeriod(begin, end).isEmpty()) {
+            if (teacher != null
+                    && teacher.getTeacherNumber().equals(teacherNumber)
+                    && !teacher.getAllLegalRegimensWithoutDeathEmeritusAndRetirementSituations(begin,
+                            end).isEmpty()) {
                 return teacher;
             }
         }
@@ -266,7 +272,7 @@ public class Unit extends Unit_Base {
             readAndSaveEmployees(subUnit, employees, begin, end);
         }
     }
-    
+
     public List<Unit> getParentUnits() {
         Set<Unit> allParentUnits = new HashSet<Unit>();
         List<Party> allParents = this.getParents();
@@ -277,7 +283,7 @@ public class Unit extends Unit_Base {
         }
         return new ArrayList<Unit>(allParentUnits);
     }
-    
+
     public List<Unit> getSubUnits() {
         Set<Unit> allChildsUnits = new HashSet<Unit>();
         List<Party> allChilds = this.getChilds();
@@ -298,7 +304,7 @@ public class Unit extends Unit_Base {
         }
         return false;
     }
-    
+
     public boolean hasAnySubUnits() {
         List<Party> allChilds = this.getChilds();
         for (Party parent : allChilds) {
