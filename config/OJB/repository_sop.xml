@@ -22,6 +22,12 @@
          column="KEY_CAMPUS"
          jdbc-type="INTEGER"
       />
+	 <field-descriptor
+			name="keySuroundingSpace"
+			column="KEY_SUROUNDING_SPACE"
+			jdbc-type="INTEGER"
+			/>      
+      
       
      
 </class-descriptor>
@@ -73,7 +79,11 @@
          column="KEY_BUILDING"
          jdbc-type="INTEGER"
       />
-      
+	 <field-descriptor
+			name="keySuroundingSpace"
+			column="KEY_SUROUNDING_SPACE"
+			jdbc-type="INTEGER"
+			/>      
       
       
 
