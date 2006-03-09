@@ -30,3 +30,5 @@ alter table STUDENT add column KEY_PERSONAL_DATA_USE_INQUIRY_ANSWERS int default
 alter table STUDENT add column KEY_ASSOCIATED_TUTOR int default null;
 alter table STUDENT add column KEY_ASSOCIATED_GAUGING_TEST_RESULT int default null;
 
+alter table ROOM add column KEY_SUROUNDING_SPACE int default null;
+alter table BUILDING add column KEY_SUROUNDING_SPACE int default null;
