@@ -1,0 +1,361 @@
+/**
+ * 
+ */
+package net.sourceforge.fenixedu.tools;
+
+import java.io.IOException;
+import java.lang.reflect.Modifier;
+import java.util.Formatter;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
+import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
+import net.sourceforge.fenixedu.util.FileUtils;
+import net.sourceforge.fenixedu.util.StringFormatter;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.ojb.broker.metadata.ClassDescriptor;
+import org.apache.ojb.broker.metadata.CollectionDescriptor;
+import org.apache.ojb.broker.metadata.MetadataManager;
+import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
+
+import dml.DmlCompiler;
+import dml.DomainClass;
+import dml.DomainEntity;
+import dml.DomainModel;
+import dml.Role;
+import dml.Slot;
+
+/**
+ * @author - Shezad Anavarali (shezad@ist.utl.pt)
+ * 
+ */
+public class OJBMetadataGenerator {
+
+    private static final Set<String> unmappedObjectReferenceAttributesInDML = new TreeSet<String>();
+
+    private static final Set<String> unmappedCollectionReferenceAttributesInDML = new TreeSet<String>();
+
+    private static final Set<String> unmappedObjectReferenceAttributesInOJB = new TreeSet<String>();
+
+    private static final Set<String> unmappedCollectionReferenceAttributesInOJB = new TreeSet<String>();
+
+    /**
+     * @param args
+     * @throws Exception
+     */
+    public static void main(String[] args) throws Exception {
+
+        // String[] dmlFilesArray = { args[0] };
+        String[] dmlFilesArray = { "config/domain_model.dml" };
+        DomainModel domainModel = DmlCompiler.getDomainModel(dmlFilesArray);
+        Map ojbMetadata = MetadataManager.getInstance().getGlobalRepository().getDescriptorTable();
+
+        if (args.length > 1 && args[1].equalsIgnoreCase("fixTables")) {
+            fixManyToManyRelationsTablesNamesAndKeys(ojbMetadata, domainModel);
+        } else {
+            updateOJBMappingFromDomainModel(ojbMetadata, domainModel);
+        }
+
+        printUnmmapedAttributes(unmappedObjectReferenceAttributesInDML,
+                "UnmappedObjectReferenceAttributes in DML:");
+        printUnmmapedAttributes(unmappedCollectionReferenceAttributesInDML,
+                "UnmappedCollectionReferenceAttributes in DML:");
+        printUnmmapedAttributes(unmappedObjectReferenceAttributesInOJB,
+                "UnmappedObjectReferenceAttributes in OJB:");
+        printUnmmapedAttributes(unmappedCollectionReferenceAttributesInOJB,
+                "UnmappedCollectionReferenceAttributes in OJB:");
+
+        System.exit(0);
+
+    }
+
+    private static void printUnmmapedAttributes(Set<String> unmappedAttributesSet, String title) {
+        if(!unmappedAttributesSet.isEmpty()){
+            System.out.println();
+            System.out.println(title);
+            for (String objectReference : unmappedAttributesSet) {
+                System.out.println(objectReference);
+            }            
+        }
+    }
+
+    public static void updateOJBMappingFromDomainModel(Map ojbMetadata, DomainModel domainModel)
+            throws Exception {
+
+        for (final Iterator iterator = domainModel.getClasses(); iterator.hasNext();) {
+            final DomainClass domClass = (DomainClass) iterator.next();
+            final Class clazz = Class.forName(domClass.getFullName());
+
+            if (!Modifier.isAbstract(clazz.getModifiers())) {
+                final ClassDescriptor classDescriptor = (ClassDescriptor) ojbMetadata.get(domClass
+                        .getFullName());
+
+                if (classDescriptor != null) {
+                    update(classDescriptor, domClass, ojbMetadata, clazz);
+                }
+            }
+        }
+
+    }
+
+    protected static void update(final ClassDescriptor classDescriptor, final DomainClass domClass,
+            Map ojbMetadata, Class persistentFieldClass) throws Exception {
+
+        DomainEntity domEntity = domClass;
+        while (domEntity instanceof DomainClass) {
+            DomainClass dClass = (DomainClass) domEntity;
+
+            // roles
+            Iterator roleSlots = dClass.getRoleSlots();
+            while (roleSlots.hasNext()) {
+                Role role = (Role) roleSlots.next();
+                String roleName = role.getName();
+
+                if (role.getMultiplicityUpper() == 1) {
+
+                    // reference descriptors
+                    if (classDescriptor.getObjectReferenceDescriptorByName(roleName) == null) {
+
+                        String foreignKeyField = "key" + StringUtils.capitalize(roleName);
+
+                        if (findSlotByName(dClass, foreignKeyField) == null) {
+                            unmappedObjectReferenceAttributesInDML.add(foreignKeyField + " -> "
+                                    + dClass.getName());
+                            continue;
+                        }
+
+                        if (classDescriptor.getFieldDescriptorByName(foreignKeyField) == null) {
+                            Class classToVerify = Class.forName(dClass.getFullName());
+                            if (!Modifier.isAbstract(classToVerify.getModifiers())) {
+                                unmappedObjectReferenceAttributesInOJB.add(foreignKeyField + " -> "
+                                        + dClass.getName());
+                                continue;
+                            }
+                        }
+
+                        generateReferenceDescriptor(classDescriptor, persistentFieldClass, role,
+                                roleName, foreignKeyField);
+
+                    }
+                } else {
+
+                    // collection descriptors
+                    if (classDescriptor.getCollectionDescriptorByName(roleName) == null) {
+
+                        CollectionDescriptor collectionDescriptor = new CollectionDescriptor(
+                                classDescriptor);
+
+                        if (role.getOtherRole().getMultiplicityUpper() == 1) {
+
+                            String foreignKeyField = "key"
+                                    + StringUtils.capitalize(role.getOtherRole().getName());
+
+                            if (findSlotByName((DomainClass) role.getType(), foreignKeyField) == null) {
+                                unmappedCollectionReferenceAttributesInDML.add(foreignKeyField + " | "
+                                        + ((DomainClass) role.getType()).getName() + " -> "
+                                        + dClass.getName());
+                                continue;
+                            }
+
+                            ClassDescriptor otherClassDescriptor = (ClassDescriptor) ojbMetadata
+                                    .get(((DomainClass) role.getType()).getFullName());
+                            if (otherClassDescriptor.getFieldDescriptorByName(foreignKeyField) == null) {
+                                Class classToVerify = Class.forName(otherClassDescriptor
+                                        .getClassNameOfObject());
+                                if (!Modifier.isAbstract(classToVerify.getModifiers())) {
+                                    unmappedCollectionReferenceAttributesInOJB.add(foreignKeyField
+                                            + " -> " + otherClassDescriptor.getClassNameOfObject()
+                                            + " | " + classDescriptor.getClassNameOfObject());
+                                    continue;
+                                }
+
+                            }
+
+                            generateOneToManyCollectionDescriptor(collectionDescriptor, foreignKeyField);
+
+                        } else {
+                            generateManyToManyCollectionDescriptor(collectionDescriptor, role);
+
+                        }
+                        updateCollectionDescriptorWithCommonSettings(classDescriptor,
+                                persistentFieldClass, role, roleName, collectionDescriptor);
+                    }
+                }
+            }
+
+            domEntity = dClass.getSuperclass();
+        }
+    }
+
+    private static void updateCollectionDescriptorWithCommonSettings(
+            final ClassDescriptor classDescriptor, Class persistentFieldClass, Role role,
+            String roleName, CollectionDescriptor collectionDescriptor) throws ClassNotFoundException {
+        collectionDescriptor.setItemClass(Class.forName(role.getType().getFullName()));
+        collectionDescriptor.setPersistentField(persistentFieldClass, roleName);
+        collectionDescriptor.setRefresh(true);
+        collectionDescriptor.setCollectionClass(OJBFunctionalSetWrapper.class);
+        collectionDescriptor.setCascadeRetrieve(false);
+        collectionDescriptor.setLazy(false);
+        classDescriptor.addCollectionDescriptor(collectionDescriptor);
+    }
+
+    private static void generateManyToManyCollectionDescriptor(
+            CollectionDescriptor collectionDescriptor, Role role) {
+
+        String indirectionTableName = StringFormatter.splitCamelCaseString(role.getRelation().getName())
+                .replace(' ', '_').toUpperCase();
+        String fkToItemClass = "KEY_"
+                + StringFormatter.splitCamelCaseString(role.getType().getName()).replace(' ', '_')
+                        .toUpperCase();
+        String fkToThisClass = "KEY_"
+                + StringFormatter.splitCamelCaseString(role.getOtherRole().getType().getName()).replace(
+                        ' ', '_').toUpperCase();
+
+        if (fkToItemClass.equals(fkToThisClass)) {
+            fkToItemClass = fkToItemClass
+                    + "_"
+                    + StringFormatter.splitCamelCaseString(role.getName()).replace(' ', '_')
+                            .toUpperCase();
+            fkToThisClass = fkToThisClass
+                    + "_"
+                    + StringFormatter.splitCamelCaseString(role.getOtherRole().getName()).replace(' ',
+                            '_').toUpperCase();
+        }
+
+        collectionDescriptor.setIndirectionTable(indirectionTableName);
+        collectionDescriptor.addFkToItemClass(fkToItemClass);
+        collectionDescriptor.addFkToThisClass(fkToThisClass);
+        collectionDescriptor.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
+        collectionDescriptor.setCascadingDelete(ObjectReferenceDescriptor.CASCADE_NONE);
+    }
+
+    private static void generateOneToManyCollectionDescriptor(CollectionDescriptor collectionDescriptor,
+            String foreignKeyField) {
+        collectionDescriptor.setCascadingStore(ObjectReferenceDescriptor.CASCADE_NONE);
+        collectionDescriptor.addForeignKeyField(foreignKeyField);
+    }
+
+    private static void generateReferenceDescriptor(final ClassDescriptor classDescriptor,
+            Class persistentFieldClass, Role role, String roleName, String foreignKeyField)
+            throws ClassNotFoundException {
+        ObjectReferenceDescriptor referenceDescriptor = new ObjectReferenceDescriptor(classDescriptor);
+        referenceDescriptor.setItemClass(Class.forName(role.getType().getFullName()));
+        referenceDescriptor.addForeignKeyField(foreignKeyField);
+        referenceDescriptor.setPersistentField(persistentFieldClass, roleName);
+        referenceDescriptor.setCascadeRetrieve(false);
+        referenceDescriptor.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
+        referenceDescriptor.setLazy(false);
+
+        classDescriptor.addObjectReferenceDescriptor(referenceDescriptor);
+    }
+
+    private static Slot findSlotByName(DomainClass domainClass, String slotName) {
+        for (Iterator<Slot> slotsIter = domainClass.getSlots(); slotsIter.hasNext();) {
+            Slot slot = (Slot) slotsIter.next();
+            if (slot.getName().equals(slotName)) {
+                return slot;
+            }
+        }
+        return null;
+    }
+
+    private static void fixManyToManyRelationsTablesNamesAndKeys(Map ojbMetadata, DomainModel domainModel)
+            throws ClassNotFoundException, IOException {
+
+        Formatter result = new Formatter();
+        Map<String, String> renamedIndirectionTables = new HashMap<String, String>();
+
+        for (final Iterator iterator = domainModel.getClasses(); iterator.hasNext();) {
+            final DomainClass domClass = (DomainClass) iterator.next();
+            final ClassDescriptor classDescriptor = (ClassDescriptor) ojbMetadata.get(domClass
+                    .getFullName());
+
+            if (classDescriptor != null) {
+
+                DomainEntity domEntity = domClass;
+                while (domEntity instanceof DomainClass) {
+                    DomainClass dClass = (DomainClass) domEntity;
+
+                    Class clazz = Class.forName(domEntity.getFullName());
+
+                    if (!Modifier.isAbstract(clazz.getModifiers())) {
+
+                        // roles
+                        Iterator roleSlots = dClass.getRoleSlots();
+                        while (roleSlots.hasNext()) {
+                            Role role = (Role) roleSlots.next();
+                            String roleName = role.getName();
+
+                            if (role.getMultiplicityUpper() != 1
+                                    && role.getOtherRole().getMultiplicityUpper() != 1
+                                    && classDescriptor.getCollectionDescriptorByName(roleName) != null) {
+
+                                generateFix(result, classDescriptor, role, roleName,
+                                        renamedIndirectionTables);
+                            }
+                        }
+
+                    }
+                    domEntity = dClass.getSuperclass();
+                }
+
+            }
+        }
+
+        System.out.println(result.toString());
+        FileUtils.writeFile("fixIndirecionTables.sql", result.toString(), false);
+
+    }
+
+    private static void generateFix(Formatter result, final ClassDescriptor classDescriptor, Role role,
+            String roleName, Map<String, String> renamedIndirectionTables) {
+        CollectionDescriptor descriptor = classDescriptor.getCollectionDescriptorByName(roleName);
+
+        String relationName = role.getRelation().getName();
+
+        String relationNameUpped = StringFormatter.splitCamelCaseString(relationName).replace(' ', '_')
+                .toUpperCase();
+        if (!relationNameUpped.equals(descriptor.getIndirectionTable())) {
+            String renamedTable = renamedIndirectionTables.get(descriptor.getIndirectionTable());
+            if (renamedTable != null) {
+                if (renamedTable.equals(relationNameUpped)) {
+                    return;
+                } else {
+                    System.out.println("PROBLEMS!!!!!!!! on " + descriptor.getIndirectionTable() + " + "
+                            + relationNameUpped + " * " + relationName + "\n :: "
+                            + classDescriptor.getClassNameOfObject() + " -> "
+                            + descriptor.getAttributeName());
+                }
+            } else {
+                result.format("ALTER TABLE %s RENAME %s;\n", descriptor.getIndirectionTable(),
+                        relationNameUpped);
+                renamedIndirectionTables.put(descriptor.getIndirectionTable(), relationNameUpped);
+
+            }
+
+        }
+
+        String keyOneGenerated = "KEY_"
+                + StringFormatter.splitCamelCaseString(role.getType().getName()).replace(' ', '_')
+                        .toUpperCase();
+        String keyTwoGenerated = "KEY_"
+                + StringFormatter.splitCamelCaseString(role.getOtherRole().getType().getName()).replace(
+                        ' ', '_').toUpperCase();
+        String keyOneMapped = descriptor.getFksToItemClass()[0];
+        String keyTwoMapped = descriptor.getFksToThisClass()[0];
+
+        if (!keyOneMapped.equals(keyOneGenerated)) {
+            result.format("ALTER TABLE %s CHANGE %s %s int(11) NOT NULL default '0';\n",
+                    relationNameUpped, keyOneMapped, keyOneGenerated);
+        }
+        if (!keyTwoMapped.equals(keyTwoGenerated)) {
+            result.format("ALTER TABLE %s CHANGE %s %s int(11) NOT NULL default '0';\n",
+                    relationNameUpped, keyTwoMapped, keyTwoGenerated);
+        }
+
+    }
+}
