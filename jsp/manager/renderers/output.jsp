@@ -250,7 +250,7 @@
 
 <p>
     Most of these changes can be done by passing properties to the renderer. Yes you can pass properties to
-    the renderers. If a renderer has methods <code>getFoo</code> and <code>setFoo</code> the it supports
+    the renderers. If a renderer has methods <code>getFoo</code> and <code>setFoo</code> then it supports
     a property named <code>"foo"</code>.
 </p>
 
