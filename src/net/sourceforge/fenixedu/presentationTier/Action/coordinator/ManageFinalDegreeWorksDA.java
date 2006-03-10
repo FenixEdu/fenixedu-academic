@@ -23,12 +23,12 @@ public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
 
     	final DegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(request);
     	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-    	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.toString());
+    	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal().toString());
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String executionDegreeIDString = dynaActionForm.getString("executionDegreeID");
         final ExecutionDegree executionDegree;
-        if (executionDegreeIDString == null) {
+        if (executionDegreeIDString == null || executionDegreeIDString.length() == 0) {
         	executionDegree = findExecutionDegree(degreeCurricularPlan);
         	dynaActionForm.set("executionDegreeID", executionDegree.getIdInternal().toString());
         } else {
@@ -64,8 +64,12 @@ public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
 
 	private DegreeCurricularPlan readDegreeCurricularPlan(final HttpServletRequest request)
 			throws FenixFilterException, FenixServiceException {
-    	final String degreeCurricularPlanIDString = request.getParameter("degreeCurricularPlanID");
-    	final Integer degreeCurricularPlanID = (request.getParameter("degreeCurricularPlanID") != null) ?
+    	String degreeCurricularPlanIDString = request.getParameter("degreeCurricularPlanID");
+        if (degreeCurricularPlanIDString == null || degreeCurricularPlanIDString.length() == 0) {
+            degreeCurricularPlanIDString = (String) request.getAttribute("degreeCurricularPlanID");
+        }
+    	final Integer degreeCurricularPlanID =
+                (degreeCurricularPlanIDString != null && degreeCurricularPlanIDString.length() > 0) ?
     			Integer.valueOf(degreeCurricularPlanIDString) : null;
     	return (DegreeCurricularPlan) readDomainObject(request, DegreeCurricularPlan.class, degreeCurricularPlanID);
 	}

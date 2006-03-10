@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 
@@ -16,7 +17,41 @@
 		<html:options collection="executionDegrees" property="idInternal" labelProperty="executionYear.nextExecutionYear.year"/>
 	</html:select>
 </html:form>
+<br/>
+<br/>
 
 <logic:present name="executionDegree">
-	<bean:write name="executionDegree" property="idInternal"/>
+	<logic:notPresent name="executionDegree" property="scheduling">
+		<fr:create
+				type="net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing"
+				schema="final.degree.work.scheduleing">
+			<fr:hidden slot="currentProposalNumber" value="1" />
+			<fr:hidden slot="executionDegrees" multiple="true" name="executionDegree"/>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="style1" />
+				<fr:property name="columnClasses" value="listClasses,," />
+			</fr:layout>
+		</fr:create>
+	</logic:notPresent>
+	<logic:present name="executionDegree" property="scheduling">
+		<fr:edit name="executionDegree" property="scheduling"
+				type="net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing"
+				schema="final.degree.work.scheduleing">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="style1" />
+				<fr:property name="columnClasses" value="listClasses,," />
+			</fr:layout>
+		</fr:edit>
+
+		<br/>
+		<br/>
+
+        <fr:view name="executionDegree" property="scheduling.proposals" schema="final.degree.work.proposal.short">
+			<fr:layout name="tabular">
+        	    <fr:property name="headerClasses" value="listClasses-header"/>
+    	        <fr:property name="columnClasses" value="listClasses"/>
+	            <fr:property name="style" value="width: 100%"/>
+			</fr:layout>
+        </fr:view> 
+	</logic:present>
 </logic:present>
