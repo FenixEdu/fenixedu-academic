@@ -164,6 +164,9 @@
 	<definition name="studentsGratuityList" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/gratuity/studentsGratuityList.jsp"/>
 	</definition>
+	<definition name="df.page.manageFinalDegreeWorks" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/finalDegreeWork/manageFinalDegreeWorks.jsp" />
+	</definition>
 
 	<!-- =================== View Old Inquiries Teacher's Results ============== -->
 	<definition name="inquiry-choose-execution-period-and-course" 

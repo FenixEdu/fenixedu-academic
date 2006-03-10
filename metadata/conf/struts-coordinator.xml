@@ -188,6 +188,13 @@
 	</form-bean>
 
 		<!-- FINAL DEGREE WORK  -->
+		<form-bean name="manageFinalDegreeWorksForm"
+				   type="org.apache.struts.validator.DynaValidatorForm"
+				   dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionDegreeID" type="java.lang.String"/>
+		</form-bean>
+
 		<form-bean name="finalDegreeWorkScheduleing" 
 				   type="org.apache.struts.validator.DynaValidatorForm" 
 				   dynamic="true">
@@ -742,6 +749,17 @@
 	<action type="net.sourceforge.fenixedu.presentationTier.Action.teacher.DownloadStudentsWithAttendsByExecutionCourseListAction" 
             path="/getTabSeparatedStudentList" scope="request">
         </action>
+
+	<action path="/manageFinalDegreeWorks"
+			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ManageFinalDegreeWorksDA"
+			input="/manageFinalDegreeWorks.do?method=prepare&amp;page=0"
+			name="manageFinalDegreeWorksForm"
+			attribute="manageFinalDegreeWorksForm"
+			parameter="method"
+			scope="request"
+			>
+		<forward name="show-final-degree-works-managment-page" path="df.page.manageFinalDegreeWorks"/>
+	</action>
 
 	<!-- Final Degree Work Manipulation -->
 	<action path="/manageFinalDegreeWork"

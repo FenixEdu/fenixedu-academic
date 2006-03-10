@@ -11,7 +11,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Created on 11/Fev/2003
  * 
- * @author João Mota ciapl Dominio
+ * @author Joï¿½o Mota ciapl Dominio
  * 
  */
 public class ExecutionYear extends ExecutionYear_Base implements INode, Comparable {
@@ -61,6 +61,17 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
         }
 
         return previousExecutionYear;
+    }
+
+    public ExecutionYear getNextExecutionYear() {
+        for (ExecutionPeriod executionPeriod = this.getExecutionPeriods().get(0);
+        	executionPeriod != null; executionPeriod = executionPeriod.getNextExecutionPeriod()) {
+        	if (executionPeriod.getExecutionYear() != this) {
+        		return executionPeriod.getExecutionYear();
+        	}
+        }
+
+        return null;
     }
 
     public int compareTo(Object object) {

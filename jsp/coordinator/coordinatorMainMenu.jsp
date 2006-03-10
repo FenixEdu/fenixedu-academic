@@ -165,6 +165,12 @@
 	        	<bean:message key="link.coordinator.managefinalDegreeWorks" />
 	        </html:link>
         </li>
+
+       	<li>
+        	<html:link page="<%= "/manageFinalDegreeWorks.do?method=prepare&amp;page=0&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+	        	<bean:message key="link.coordinator.managefinalDegreeWorks" />
+	        </html:link>
+        </li>
 	</ul>
 	
 	<br /><br />
