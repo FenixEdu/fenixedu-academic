@@ -479,13 +479,15 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return 0;
         }
-        List<TeacherServiceExemption> list = getServiceExemptionSituations(occupationPeriod.getStart(),
+        List<TeacherServiceExemption> serviceExemptions = getServiceExemptionSituations(occupationPeriod.getStart(),
                 occupationPeriod.getEnd());
 
-        if (list.isEmpty()) {
+        if (serviceExemptions.isEmpty()) {
             return 0;
         } else {
-            return calculateServiceExemptionsCredits(list, occupationPeriod, executionPeriod);
+            TeacherServiceExemption teacherServiceExemption = chooseOneServiceExemption(serviceExemptions,
+                    executionPeriod);
+            return getCreditsForServiceExemption(executionPeriod, teacherServiceExemption);            
         }
     }
 
@@ -538,7 +540,7 @@ public class Teacher extends Teacher_Base {
      * @param executionPeriod
      * @return
      */
-    public OccupationPeriod getLessonsPeriod(ExecutionPeriod executionPeriod) {
+    private OccupationPeriod getLessonsPeriod(ExecutionPeriod executionPeriod) {
         for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear()
                 .getExecutionDegreesByType(DegreeType.DEGREE)) {
             if (executionPeriod.getSemester() == 1) {
@@ -550,12 +552,8 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
-    public int calculateServiceExemptionsCredits(List<TeacherServiceExemption> list,
-            OccupationPeriod occupationPeriod, ExecutionPeriod executionPeriod) {
-
-        TeacherServiceExemption teacherServiceExemption = getTeacherServiceExemption(list,
-                occupationPeriod);
-
+    public int getCreditsForServiceExemption(ExecutionPeriod executionPeriod, TeacherServiceExemption teacherServiceExemption) {
+        OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
         if (teacherServiceExemption != null
                 && (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)
                         || teacherServiceExemption.getType().equals(
@@ -609,20 +607,22 @@ public class Teacher extends Teacher_Base {
         return 0;
     }
 
-    private TeacherServiceExemption getTeacherServiceExemption(List<TeacherServiceExemption> list,
-            OccupationPeriod occupationPeriod) {
+    public TeacherServiceExemption chooseOneServiceExemption(List<TeacherServiceExemption> serviceExemptions,
+            ExecutionPeriod executionPeriod) {
         Integer numberOfDaysInPeriod = null, maxDays = 0;
         TeacherServiceExemption teacherServiceExemption = null;
+        OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
 
         Date begin = occupationPeriod.getStart();
         Date end = occupationPeriod.getEnd();
 
-        for (TeacherServiceExemption serviceExemption : list) {
+        for (TeacherServiceExemption serviceExemption : serviceExemptions) {
 
             if (serviceExemption.getStart().before(begin) || serviceExemption.getStart().equals(begin)) {
                 Date endDate = (serviceExemption.getEnd() == null) ? end : serviceExemption.getEnd();
                 numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(begin, endDate);
                 if (numberOfDaysInPeriod >= maxDays) {
+                    maxDays = numberOfDaysInPeriod;
                     teacherServiceExemption = serviceExemption;
                 }
             }
@@ -631,12 +631,14 @@ public class Teacher extends Teacher_Base {
                 numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(serviceExemption
                         .getStart(), serviceExemption.getEnd());
                 if (numberOfDaysInPeriod >= maxDays) {
+                    maxDays = numberOfDaysInPeriod;
                     teacherServiceExemption = serviceExemption;
                 }
             } else if (serviceExemption.getStart().after(begin)) {
                 numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(serviceExemption
                         .getStart(), end);
                 if (numberOfDaysInPeriod >= maxDays) {
+                    maxDays = numberOfDaysInPeriod;
                     teacherServiceExemption = serviceExemption;
                 }
             }
@@ -721,8 +723,8 @@ public class Teacher extends Teacher_Base {
         } else {
             List<TeacherServiceExemption> exemptions = getServiceExemptionSituations(occupationPeriod
                     .getStart(), occupationPeriod.getEnd());
-            TeacherServiceExemption teacherServiceExemption = getTeacherServiceExemption(exemptions,
-                    occupationPeriod);
+            TeacherServiceExemption teacherServiceExemption = chooseOneServiceExemption(exemptions,
+                    executionPeriod);
             if (isServiceExemptionToCountZero(teacherServiceExemption)) {
                 return 0;
             }
