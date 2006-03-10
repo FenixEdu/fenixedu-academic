@@ -123,34 +123,18 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 				for(PersonFunction personFunction: teacherManagementFunctions) {
 					returnDTO.addManagementFunctionToTeacher(teacher.getIdInternal(), personFunction.getFunction().getName(), personFunction.getCredits());
 				}
-				
-				OccupationPeriod occupationPeriod = teacher.getLessonsPeriod(executionPeriodEntry);
-				
-				if(occupationPeriod != null) {
 					
-					List<TeacherServiceExemption> teacherServiceExemptions = teacher.getServiceExemptionSituations(occupationPeriod.getStart(), occupationPeriod.getEnd());
-					
+				List<TeacherServiceExemption> teacherServiceExemptions = teacher.getServiceExemptionSituations(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate());
+                
+                TeacherServiceExemption teacherServiceExemption = teacher.chooseOneServiceExemption(teacherServiceExemptions, executionPeriodEntry);
 				
-					for(TeacherServiceExemption exemption: teacherServiceExemptions) {
-						Date endDate = null;
-						if(exemption.getEnd() == null) {
-							endDate = executionPeriodEntry.getEndDate();
-						} else {
-							endDate = exemption.getEnd();
-						}
-						
-						List<TeacherServiceExemption> exemptionList = new ArrayList<TeacherServiceExemption>();
-						exemptionList.add(exemption);
-						int exemptionCredits = teacher.calculateServiceExemptionsCredits(exemptionList, occupationPeriod, executionPeriodEntry);
-						
-						if(exemptionCredits > 0){
-							returnDTO.addExemptionSituationToTeacher(teacher.getIdInternal(), exemption.getType().getName(), (double) exemptionCredits);
-						}
-					}
+                if(teacherServiceExemption != null) {
+                    double exemptionCredits = (double) teacher.getCreditsForServiceExemption(executionPeriodEntry, teacherServiceExemption);
+                    if(exemptionCredits > 0.0) {
+                        returnDTO.addExemptionSituationToTeacher(teacher.getIdInternal(), teacherServiceExemption.getType().getName(), exemptionCredits);
+                    }
 				}
-				
 			}
-		
 		}
 
 		ArrayList<TeacherDistributionServiceEntryDTO> returnArraylist = new ArrayList<TeacherDistributionServiceEntryDTO>();
