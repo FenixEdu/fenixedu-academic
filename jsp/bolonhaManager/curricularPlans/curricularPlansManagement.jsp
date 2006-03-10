@@ -54,7 +54,10 @@
 				<h:outputLink value="buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild}">
 					<h:outputText value="#{bolonhaBundle['manageCurricularPlan']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
-					<f:param name="organizeBy" value="groups"/>					
+					<f:param name="organizeBy" value="groups"/>
+					<f:param name="showRules" value="false"/>
+					<f:param name="hideCourses" value="false"/>					
+					<f:param name="action" value="view"/>				
 				</h:outputLink>
 				<h:outputText value="</td></tr>" escape="false"/>
 			</fc:dataRepeater>
