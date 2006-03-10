@@ -250,6 +250,18 @@ public class Person extends Person_Base {
     public String getNacionalidade() {
         return this.getPais().getNationality();
     }
+        
+    @Override
+    public List<Advisory> getAdvisories() {
+        Date currentDate = Calendar.getInstance().getTime();
+        List<Advisory> result = new ArrayList<Advisory>();
+        for (Advisory advisory : super.getAdvisories()) {
+            if(advisory.getExpires().after(currentDate)){
+                result.add(advisory);
+            }
+        }        
+        return result;
+    }
 
     /***************************************************************************
      * PRIVATE METHODS *

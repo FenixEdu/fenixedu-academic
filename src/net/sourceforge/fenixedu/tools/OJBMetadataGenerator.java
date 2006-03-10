@@ -221,7 +221,7 @@ public class OJBMetadataGenerator {
         collectionDescriptor.setIndirectionTable(indirectionTableName);
         collectionDescriptor.addFkToItemClass(fkToItemClass);
         collectionDescriptor.addFkToThisClass(fkToThisClass);
-        collectionDescriptor.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
+        collectionDescriptor.setCascadingStore(ObjectReferenceDescriptor.CASCADE_NONE);
         collectionDescriptor.setCascadingDelete(ObjectReferenceDescriptor.CASCADE_NONE);
     }
 
