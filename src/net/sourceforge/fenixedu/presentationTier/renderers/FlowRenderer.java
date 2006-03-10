@@ -18,8 +18,9 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
  * 
  * <p>
  * Example:
- * <em>&ltobject A presentation&gt;</em> <em>&ltobject B presentation&gt;</em>
- * <em>&ltobject C presentation&gt;</em>
+ * <em>&lt;object A presentation&gt;</em> <em>&lt;object B presentation&gt;</em>
+ * <em>&lt;object C presentation&gt;</em>
+ * 
  * @author naat
  */
 public class FlowRenderer extends OutputRenderer {
