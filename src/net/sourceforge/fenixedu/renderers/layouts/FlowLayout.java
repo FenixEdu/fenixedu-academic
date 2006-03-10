@@ -68,20 +68,11 @@ public abstract class FlowLayout extends Layout {
 
         while (hasMoreComponents()) {
             HtmlComponent component = getNextComponent();
-
+            
             addComponent(container, component);
         }
 
         return container;
-    }
-
-    protected HtmlComponent getContainer() {
-        if (isEachInline()) {
-            return new HtmlInlineContainer();
-        }
-        else {
-            return new HtmlBlockContainer();
-        }
     }
 
     protected abstract boolean hasMoreComponents();
@@ -89,7 +80,23 @@ public abstract class FlowLayout extends Layout {
     protected abstract HtmlComponent getNextComponent();
 
     protected void addComponent(HtmlComponent component, HtmlComponent child) {
-        ((HtmlContainer) component).addChild(child);
+        HtmlContainer eachContainer = getEachContainer();
+        eachContainer.addChild(child);
+        
+        ((HtmlContainer) component).addChild(eachContainer);
+    }
+
+    protected HtmlComponent getContainer() {
+        return new HtmlInlineContainer();
+    }
+
+    protected HtmlContainer getEachContainer() {
+        if (isEachInline()) {
+            return new HtmlInlineContainer();
+        }
+        else {
+            return new HtmlBlockContainer();
+        }
     }
 
     @Override

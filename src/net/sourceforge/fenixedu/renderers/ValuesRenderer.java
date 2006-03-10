@@ -139,11 +139,6 @@ public class ValuesRenderer extends OutputRenderer {
         }
 
         @Override
-        protected HtmlComponent getContainer() {
-            return new HtmlInlineContainer();
-        }
-
-        @Override
         protected boolean hasMoreComponents() {
             return slotsIterator.hasNext();
         }
@@ -170,23 +165,7 @@ public class ValuesRenderer extends OutputRenderer {
                 layout = getEachLayout();
             }
             
-            HtmlComponent component = ValuesRenderer.this.renderValue(slot.getObject(), schema, layout, slot.getProperties());
-            HtmlContainer container;
-            
-            if (isEachInline()) {
-                container = new HtmlInlineContainer();
-            }
-            else {
-                container = new HtmlBlockContainer();
-            }
-            
-            container.addChild(component);
-            return container;
-        }
-
-        @Override
-        protected void addComponent(HtmlComponent container, HtmlComponent component) {
-            ((HtmlContainer) container).addChild(component);
+            return renderValue(slot.getObject(), schema, layout, slot.getProperties());
         }
     }
 }

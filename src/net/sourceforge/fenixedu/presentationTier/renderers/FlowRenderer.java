@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 /**
  * This renderer allows you to present a collection of objects using
- * a flow layout, that is, every objects is presented jsut after the previous
+ * a flow layout, that is, every object is presented just after the previous
  * without any special interface organization.
  * 
  * <p>
@@ -38,6 +38,8 @@ public class FlowRenderer extends OutputRenderer {
 
     private String emptyMessageClasses;
 
+    private String eachInline;
+    
     public FlowRenderer() {
         super();
     }
@@ -137,6 +139,20 @@ public class FlowRenderer extends OutputRenderer {
      */
     public void setEmptyMessageClasses(String emptyMessageClasses) {
         this.emptyMessageClasses = emptyMessageClasses;
+    }
+
+    public String getEachInline() {
+        return this.eachInline;
+    }
+
+    /**
+     * Indicates if the each object's presentation should be placed 
+     * inside a <code>&lt;div&gt;</code> or a <code>&lt;span&gt;</code>.
+     * 
+     * @param eachInline
+     */
+    public void setEachInline(String eachInline) {
+        this.eachInline = eachInline;
     }
 
     @Override
