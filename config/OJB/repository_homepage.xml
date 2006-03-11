@@ -1,0 +1,19 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.Homepage" table="HOMEPAGE">
+    <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+	/>
+	<field-descriptor
+	    name="myUrl"
+	    column="MY_URL"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+        name="keyPerson"
+        column="KEY_PERSON"
+        jdbc-type="INTEGER"
+    />	
+</class-descriptor>

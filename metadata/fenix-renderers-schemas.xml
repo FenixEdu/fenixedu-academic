@@ -411,4 +411,8 @@
 		<slot name="status"/>
 	</schema>
 
+	<schema name="person.homepage.manage" type="net.sourceforge.fenixedu.domain.Homepage">
+		<slot name="myUrl"/>
+	</schema>
+
 </schemas>

@@ -259,40 +259,9 @@
 	   column="KEY_PERSON_ACCOUNT"  
 	   jdbc-type="INTEGER"
     />	
-	<!--
-        
-    
-    
-    
-    
-    --><!--
-        
-    -->    
-        
-	
-	
-	
-	
-	
-	
-	<!--
-	
-	-->
-	
-	
-	
-	
-	
-					
-						
-	
-	
-		
-     
-    	
-		
-		
-		
-		
-		
+	<field-descriptor
+        name="keyHomepage"
+        column="KEY_HOMEPAGE"
+        jdbc-type="INTEGER"
+    />	
 </class-descriptor>

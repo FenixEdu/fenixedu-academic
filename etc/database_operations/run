@@ -20,3 +20,4 @@ function execute() {
 }
 
 execute "Change indirection tables" changeIndirectionTables.sql
+execute "Change indirection tables" createTableHomepage.sql

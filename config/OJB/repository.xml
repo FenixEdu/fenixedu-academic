@@ -81,6 +81,7 @@
 <!ENTITY curricularRules SYSTEM "repository_curricular_rules.xml">
 <!ENTITY party SYSTEM "repository_organizational_structure.xml">
 <!ENTITY weeklyWorkLoad SYSTEM "repository_weeklyWorkLoad.xml">
+<!ENTITY homepage SYSTEM "repository_homepage.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -166,5 +167,6 @@
     &curricularRules;
     &party;
     &weeklyWorkLoad;
-	
+    &homepage;
+
 </descriptor-repository>

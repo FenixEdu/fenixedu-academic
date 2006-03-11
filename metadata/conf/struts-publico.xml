@@ -747,6 +747,14 @@
     	<forward name="Sucess" path="viewAllExamsByDegreeAndCurricularYear"/>
 	</action>
 
+		<action path="/viewHomepage"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA"
+    			parameter="method"
+    			>
+    		<forward name="view-homepage" path="view-homepage"/>
+    		<forward name="not-found-homepage" path="not-found-homepage"/>
+		</action>
+
      </action-mappings>     
     
     <!-- ========== Controller Configuration ================================ -->

@@ -1396,6 +1396,11 @@ class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu
     ContentType contentType;
 }
 
+class net.sourceforge.fenixedu.domain.Homepage extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPerson;
+    String myUrl;
+}
+
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
     Integer keyExecutionCourse;
@@ -2473,6 +2478,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Boolean isPassInKerberos;
 		String istUsername;
 		Integer keyResearcher;
+		Integer keyHomepage;
 	 }
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.PartyType extends net.sourceforge.fenixedu.domain.DomainObject {	
@@ -5967,6 +5973,11 @@ relation PartyParty {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parents{
 		multiplicity *;
 	}
+}
+
+relation PersonHomepage {
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.Homepage playsRole homepage;
 }
 
 relation AccountabilityParentParty {

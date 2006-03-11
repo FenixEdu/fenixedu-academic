@@ -270,6 +270,11 @@
         <action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">
           <forward name="show" path="domain.view"/>
         </action>						
+
+        <action path="/manageHomepage" type="net.sourceforge.fenixedu.presentationTier.Action.person.ManageHomepageDA"
+        		parameter="method">
+          <forward name="show-manage-homepage" path="show-manage-homepage"/>
+        </action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
