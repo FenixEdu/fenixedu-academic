@@ -9717,5 +9717,23 @@
         <filterChains>
         	<chain name="MasterDegreeAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>   
-</serviceDefinitions>    
+    </service>
+	<service>
+		<name>AddExecutionDegreeToScheduling</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddExecutionDegreeToScheduling</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="CoordinatorAuthorization" />
+		</filterChains>
+	</service>    
+	<service>
+		<name>RemoveExecutionDegreeToScheduling</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveExecutionDegreeToScheduling</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="CoordinatorAuthorization" />
+		</filterChains>
+	</service>    
+</serviceDefinitions>

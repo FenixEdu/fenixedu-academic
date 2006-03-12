@@ -5,7 +5,65 @@
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegreeOID" scope="request" />
 
+<strong>
+	<bean:message key="message.final.degree.work.administration"/>
+</strong>
+<bean:write name="executionDegree" property="executionYear.nextExecutionYear.year"/>
+
 <br />
+<br />
+
+<logic:present name="executionDegree" property="scheduling">
+	<strong>
+		<bean:message key="message.final.degree.work.other.execution.degrees"/>
+	</strong>
+	<br/>
+	<table>
+		<logic:iterate id="currentExecutionDegree" name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName">
+			<logic:notEqual name="currentExecutionDegree" property="idInternal" value="<%= executionDegreeOID.toString() %>">
+				<tr>
+					<td class="listClasses">
+						<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.degree.presentationName"/>
+					</td>
+					<td class="listClasses">
+						<html:form action="/manageFinalDegreeWork">
+							<html:hidden property="method" value="removeExecutionDegree"/>
+							<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
+							<html:hidden property="page" value="0"/>
+							<html:hidden property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
+							<bean:define id="otherExecutionDegreeID" name="currentExecutionDegree" property="idInternal"/>
+							<html:hidden property="otherExecutionDegreeID" value="<%= otherExecutionDegreeID.toString() %>"/>
+							<html:submit><bean:message key="label.remove"/></html:submit>
+						</html:form>
+					</td>
+				</tr>
+			</logic:notEqual>
+		</logic:iterate>
+		<html:form action="/manageFinalDegreeWork">
+			<html:hidden property="method" value="addExecutionDegree"/>
+			<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
+			<html:hidden property="page" value="0"/>
+			<html:hidden property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
+
+			<bean:define id="executionDegrees" name="executionDegree" property="executionYear.executionDegreesSortedByDegreeName"/>
+
+			<tr>
+				<td class="listClasses">
+					<html:select property="otherExecutionDegreeID">
+						<html:option value=""/>
+						<html:options collection="executionDegrees" property="idInternal" labelProperty="degreeCurricularPlan.degree.presentationName"/>
+					</html:select>
+				</td>
+				<td class="listClasses">
+					<html:submit><bean:message key="label.add"/></html:submit>
+				</td>
+			</tr>
+		</html:form>
+	</table>
+	<br />
+	<br />
+</logic:present>
+
 <span class="error"><html:errors/><br /><br /></span>
 <logic:present name="sucessfulSetOfDegreeProposalPeriod">
 	<span class="sucessfulOperarion"><bean:message key="finalDegreeWorkProposal.setProposalPeriod.sucess"/><br /><br /></span>

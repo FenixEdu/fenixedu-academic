@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Iterator;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
@@ -204,4 +205,11 @@ public class Degree extends Degree_Base {
     public boolean isBolonhaDegree() {
         return this.getBolonhaDegreeType() != null;
     }
+
+    public String getPresentationName() {
+    	final ResourceBundle enumResourceBundle = ResourceBundle.getBundle("resources.EnumerationResources");
+    	final ResourceBundle appResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources");
+    	return enumResourceBundle.getString(getTipoCurso().toString()) + " " + appResourceBundle.getString("label.in") + " " + getNome();
+    }
+
 }

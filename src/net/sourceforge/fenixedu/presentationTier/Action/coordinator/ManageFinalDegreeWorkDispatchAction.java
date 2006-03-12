@@ -26,7 +26,10 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWo
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -71,7 +74,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
 
         Integer degreeCurricularPlanID = null;
@@ -83,6 +86,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         Integer executionDegreeOID = Integer.valueOf((String) dynaActionForm.get("executionDegreeOID"));
         request.setAttribute("executionDegreeOID", executionDegreeOID);
+        final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, executionDegreeOID);
+        request.setAttribute("executionDegree", executionDegree);
 
         Object args[] = { executionDegreeOID };
         List finalDegreeWorkProposalHeaders = null;
@@ -334,11 +339,18 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                         finalWorkForm.set("branchList", branchList);
                     }
 
-                    InfoExecutionDegree infoExecutionDegree = CommonServiceRequests
-                            .getInfoExecutionDegree(userView, infoProposal.getExecutionDegree()
-                                    .getIdInternal());
-                    List branches = CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
-                            infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+                    final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, executionDegreeOID);
+                    final Scheduleing scheduleing = executionDegree.getScheduling();
+                    final List branches = new ArrayList();
+                    for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
+                    	final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
+                    	branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView, degreeCurricularPlan.getIdInternal()));
+                    }
+//                    InfoExecutionDegree infoExecutionDegree = CommonServiceRequests
+//                            .getInfoExecutionDegree(userView, infoProposal.getExecutionDegree()
+//                                    .getIdInternal());
+//                    List branches = CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
+//                            infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
 
                     request.setAttribute("branches", branches);
 
@@ -389,7 +401,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward setFinalDegreeProposalPeriod(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
+            FenixFilterException, FenixServiceException {
 
         DynaActionForm finalDegreeWorkScheduleingForm = (DynaActionForm) form;
 
@@ -788,7 +800,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward publishAprovedProposals(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
+            FenixFilterException, FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
         HttpSession session = request.getSession(false);
 
@@ -816,21 +828,21 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward aproveSelectedProposalsStatus(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
+            FenixFilterException, FenixServiceException {
         return changeSelectedProposalsStatus(mapping, form, request, response,
                 FinalDegreeWorkProposalStatus.APPROVED_STATUS);
     }
 
     public ActionForward publishSelectedProposals(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
+            FenixFilterException, FenixServiceException {
         return changeSelectedProposalsStatus(mapping, form, request, response,
                 FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
     }
 
     public ActionForward changeSelectedProposalsStatus(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response,
-            FinalDegreeWorkProposalStatus status) throws FenixActionException, FenixFilterException {
+            FinalDegreeWorkProposalStatus status) throws FenixActionException, FenixFilterException, FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
         HttpSession session = request.getSession(false);
 
@@ -948,6 +960,42 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         request.setAttribute("studentNumber", studentNumber);
 
         return mapping.findForward("show-student-curricular-plan");
+    }
+
+    public ActionForward addExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws FenixActionException, FenixFilterException, FenixServiceException {
+    	final DynaActionForm dynaActionForm = (DynaActionForm) form;
+    	final String executionDegreeOIDString = dynaActionForm.getString("executionDegreeOID");
+    	final ExecutionDegree executionDegree = (ExecutionDegree)
+    			readDomainObject(request, ExecutionDegree.class, Integer.valueOf(executionDegreeOIDString));
+    	final String otherExecutionDegreeIDString = dynaActionForm.getString("otherExecutionDegreeID");
+    	final ExecutionDegree otherExecutionDegree = (ExecutionDegree)
+    			readDomainObject(request, ExecutionDegree.class, Integer.valueOf(otherExecutionDegreeIDString));
+
+    	final Object[] args = { executionDegree.getScheduling(), otherExecutionDegree };
+    	executeService(request, "AddExecutionDegreeToScheduling", args );
+
+    	dynaActionForm.set("otherExecutionDegreeID", null);
+
+        return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward removeExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException, FenixServiceException {
+    	final DynaActionForm dynaActionForm = (DynaActionForm) form;
+    	final String executionDegreeOIDString = dynaActionForm.getString("executionDegreeOID");
+    	final ExecutionDegree executionDegree = (ExecutionDegree)
+    			readDomainObject(request, ExecutionDegree.class, Integer.valueOf(executionDegreeOIDString));
+    	final String otherExecutionDegreeIDString = dynaActionForm.getString("otherExecutionDegreeID");
+    	final ExecutionDegree otherExecutionDegree = (ExecutionDegree)
+				readDomainObject(request, ExecutionDegree.class, Integer.valueOf(otherExecutionDegreeIDString));
+
+    	final Object[] args = { executionDegree.getScheduling(), otherExecutionDegree };
+    			executeService(request, "RemoveExecutionDegreeToScheduling", args );
+
+    	dynaActionForm.set("otherExecutionDegreeID", null);
+
+    	return prepare(mapping, form, request, response);
     }
 
 }

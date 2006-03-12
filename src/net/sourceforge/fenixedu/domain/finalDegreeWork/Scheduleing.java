@@ -6,6 +6,11 @@ package net.sourceforge.fenixedu.domain.finalDegreeWork;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 /**
  * @author Luis Cruz
@@ -87,6 +92,13 @@ public class Scheduleing extends Scheduleing_Base {
     public void setEndOfCandidacyPeriod(Date endOfCandidacyPeriod) {
         this.setEndOfCandidacyPeriodDate(endOfCandidacyPeriod);
         this.setEndOfCandidacyPeriodTime(endOfCandidacyPeriod);
+    }
+
+    public SortedSet<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
+    	final SortedSet<ExecutionDegree> executionDegrees =
+    			new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+    	executionDegrees.addAll(getExecutionDegrees());
+    	return executionDegrees;
     }
 
 }

@@ -1,12 +1,17 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.fileSuport.INode;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
  * Created on 11/Fev/2003
@@ -86,6 +91,13 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
             }
         }
         return null;
+    }
+
+    public SortedSet<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
+    	final SortedSet<ExecutionDegree> executionDegrees =
+    			new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+    	executionDegrees.addAll(getExecutionDegrees());
+    	return executionDegrees;
     }
 
 }

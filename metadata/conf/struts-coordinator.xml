@@ -208,6 +208,7 @@
 			<form-property name="selectedGroupProposal" type="java.lang.String"/>
 			<form-property name="attributedByTeacher" type="java.lang.String[]"/>
 			<form-property name="attributions" type="java.lang.String[]"/>
+			<form-property name="otherExecutionDegreeID" type="java.lang.String"/>
 		</form-bean>
 
 		<form-bean name="finalDegreeWorkCandidacyPeriod" 
