@@ -9,6 +9,25 @@
 <span class="error">
 	<html:errors/><br />
 </span>
+
+<logic:present name="scheduling">
+	<strong>
+		<bean:message key="message.final.degree.work.execution.degrees"/>
+	</strong>
+	<br/>
+	<table>
+		<logic:iterate id="currentExecutionDegree" name="scheduling" property="executionDegreesSortedByDegreeName">
+			<tr>
+				<td class="listClasses">
+					<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.degree.presentationName"/>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
+	<br/>
+	<br/>
+</logic:present>
+
 <html:form action="/finalWorkManagement">
 	<html:hidden property="page" value="2"/>
 	<html:hidden property="method" value="submit"/>
