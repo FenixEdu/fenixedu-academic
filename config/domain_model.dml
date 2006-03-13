@@ -107,7 +107,7 @@ valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleType       
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ClockingState                      as ClockingState;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.DayType                            as DayType;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup                 as JustificationGroup;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType                  as JustificationType;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationMotiveType            as JustificationMotiveType;
 valueType net.sourceforge.fenixedu.domain.assiduousness.WorkWeek                                as WorkWeek;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval                       as TimeInterval;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessStatus                as AssiduousnessStatus;
@@ -2800,26 +2800,20 @@ class net.sourceforge.fenixedu.domain.assiduousness.ClockUnit extends net.source
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Justification extends net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord {
-		//      JustificationTemplate justificationTemplate;
-        DateTime startDate; // has the date and the time of the justification
-        DateTime endDate;
-        String comment;
+		DateTime startDate;
+		Duration duration;
+		JustificationMotiveType motiveType;
         DateTime createdWhen;
 }
-
-class net.sourceforge.fenixedu.domain.assiduousness.JustificationBalance extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
+class net.sourceforge.fenixedu.domain.assiduousness.MissingClocking extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
 }
 
-class net.sourceforge.fenixedu.domain.assiduousness.JustificationTime extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
+class net.sourceforge.fenixedu.domain.assiduousness.Leave extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
 }
 
-class net.sourceforge.fenixedu.domain.assiduousness.JustificationOccurrence extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
-}
-
-class net.sourceforge.fenixedu.domain.assiduousness.JustificationType extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive extends net.sourceforge.fenixedu.domain.DomainObject {
         String acronym;
-        String name;
-        JustificationType type;
+        String description;
         DayType dayType;
         JustificationGroup group;       
 }
@@ -5841,13 +5835,31 @@ relation WorkScheduleHasFixedPeriod {
 	}
 }
         
-relation ClockingClockUnit {
+relation ClockingClockDoneInUnit {
 	net.sourceforge.fenixedu.domain.assiduousness.Clocking playsRole clockings {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.assiduousness.ClockUnit playsRole clockUnit {
 		multiplicity 1;
  	}
+}
+
+relation ClockingHasMissingClocking {
+	net.sourceforge.fenixedu.domain.assiduousness.MissingClocking playsRole missingClocking {
+		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.assiduousness.Clocking playsRole clockings {
+		multiplicity *;
+	}
+}
+
+relation JustificationHasMotive {
+	net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive playsRole motive {
+		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.assiduousness.Justification playsRole justifications {
+		multiplicity *;
+	}
 }
 
 relation DailyBalanceForClockings {
