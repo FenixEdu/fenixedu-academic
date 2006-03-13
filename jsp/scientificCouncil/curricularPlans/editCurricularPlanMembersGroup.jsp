@@ -20,7 +20,7 @@
 		<h:messages styleClass="error"/>
 		
 
-		<h:outputText value="<p><b>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']}):</p>" escape="false" />		
+		<h:outputText value="<p><b id='members' class='highlight1'>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']}):</p>" escape="false" />		
 		<h:outputText value="<p><em>#{scouncilBundle['groupMembers.empty']}</em></p>" rendered="#{empty CurricularPlansMembersManagementBackingBean.groupMembers}" escape="false" />					
 
 		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembers}">		
