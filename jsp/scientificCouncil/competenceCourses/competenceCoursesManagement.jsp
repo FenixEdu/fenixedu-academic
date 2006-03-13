@@ -93,6 +93,12 @@
 												<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 												<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 											</h:outputLink>
+											<h:outputText value=" , "/>
+											<h:outputLink value="transferCompetenceCourse.faces">
+												<h:outputText value="#{scouncilBundle['transfer']}"/>
+												<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+												<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+											</h:outputLink>
 											<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'DRAFT'}">
 												<h:outputText value=" , "/>
 												<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['approve']}">

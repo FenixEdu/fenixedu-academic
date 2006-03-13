@@ -4098,6 +4098,16 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>TransferCompetenceCourse</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.competenceCourses.TransferCompetenceCourse</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>CreateDegree</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegree</implementationClass>

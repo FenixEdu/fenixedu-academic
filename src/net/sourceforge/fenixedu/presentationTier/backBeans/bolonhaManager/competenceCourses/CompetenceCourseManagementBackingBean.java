@@ -4,10 +4,12 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.competenceCourses;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -27,17 +29,22 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
+import org.apache.commons.beanutils.BeanComparator;
+
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
+    private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
     private final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
+    private final Integer NO_SELECTION = 0;
     
     private Integer selectedDepartmentUnitID = null;
     private Integer competenceCourseID = null;
     private Unit competenceCourseGroupUnit = null;
-    private CompetenceCourse competenceCourse = null;        
+    private CompetenceCourse competenceCourse = null;
     // Competence-Course-Information
     private String name;
     private String nameEn;
@@ -60,6 +67,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private String reference;
     private String type;
     private String url;
+    
+    private UISelectItems departmentUnitItems;
+    private UISelectItems scientificAreaUnitItems;
+    private UISelectItems competenceCourseGroupUnitItems;
     
     public String getAction() {
         return getAndHoldStringParameter("action");
@@ -670,7 +681,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return "";
     }
     
-    public String createBibliographicReference() {        
+    public String createBibliographicReference() {
         try {
             final Object[] args = {getCompetenceCourseID(), getYear(), getTitle(), getAuthor(),
                     getReference(), BibliographicReferenceType.valueOf(getType()), getUrl()};
@@ -765,5 +776,154 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             addErrorMessage(domainResources.getString(e.getMessage()));
         }
         return "";
+    }
+
+    public UISelectItems getDepartmentUnitItems() throws FenixFilterException, FenixServiceException {
+        if (departmentUnitItems == null) {
+            departmentUnitItems = new UISelectItems();
+            departmentUnitItems.setValue(readDepartmentUnitLabels());
+        }
+        return departmentUnitItems;
+    }
+    
+    public void setDepartmentUnitItems(UISelectItems departmentUnitItems) {
+        this.departmentUnitItems = departmentUnitItems;
+    }
+    
+    public void onChangeDepartmentUnit(ValueChangeEvent event) throws FenixFilterException, FenixServiceException {
+        setTransferToDepartmentUnitID((Integer) event.getNewValue());
+        getScientificAreaUnitItems().setValue(readScientificAreaUnitLabels((Integer) event.getNewValue()));
+    }
+    
+    private List<SelectItem> readDepartmentUnitLabels() throws FenixFilterException {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        for (final Unit unit : UnitUtils.readAllDepartmentUnits()) {
+            result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
+        }
+        Collections.sort(result, new BeanComparator("label"));
+        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
+        return result;
+    }
+    
+    public UISelectItems getScientificAreaUnitItems() throws FenixFilterException, FenixServiceException {
+        if (scientificAreaUnitItems == null) {
+            scientificAreaUnitItems = new UISelectItems();
+            scientificAreaUnitItems.setValue(readScientificAreaUnitLabels(getTransferToDepartmentUnitID()));
+        }
+        return scientificAreaUnitItems;
+    }
+    
+    public void setScientificAreaUnitItems(UISelectItems scientificAreaUnitItems) {
+        this.scientificAreaUnitItems = scientificAreaUnitItems;
+    }
+    
+    public void onChangeScientificAreaUnit(ValueChangeEvent event) throws FenixFilterException, FenixServiceException {
+        setTransferToScientificAreaUnitID((Integer) event.getNewValue());
+        getCompetenceCourseGroupUnitItems().setValue(readCompetenceCourseGroupUnitLabels((Integer) event.getNewValue()));
+    }
+    
+    private List<SelectItem> readScientificAreaUnitLabels(Integer transferToDepartmentUnitID) throws FenixServiceException, FenixFilterException {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        if (transferToDepartmentUnitID != null && transferToDepartmentUnitID != 0) {
+            for (final Unit unit : readDepartmentUnitToTransferTo(transferToDepartmentUnitID).getScientificAreaUnits()) {
+                result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
+            }
+        }
+        Collections.sort(result, new BeanComparator("label"));
+        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
+        return result;
+    }
+    
+    public Integer getTransferToDepartmentUnitID() {
+        if (getViewState().getAttribute("transferToDepartmentUnitID") != null) {
+            return (Integer) getViewState().getAttribute("transferToDepartmentUnitID");    
+        }
+        return 0;
+    }
+
+    public void setTransferToDepartmentUnitID(Integer transferToDepartmentUnitID) {
+        this.getViewState().setAttribute("transferToDepartmentUnitID", transferToDepartmentUnitID);
+    }
+
+    private Unit readDepartmentUnitToTransferTo(Integer transferToDepartmentUnitID) throws FenixFilterException, FenixServiceException {
+        return (Unit) readDomainObject(Unit.class, transferToDepartmentUnitID);
+    }
+    
+    public UISelectItems getCompetenceCourseGroupUnitItems() throws FenixFilterException, FenixServiceException {
+        if (competenceCourseGroupUnitItems == null) {
+            competenceCourseGroupUnitItems = new UISelectItems();
+            competenceCourseGroupUnitItems.setValue(readCompetenceCourseGroupUnitLabels(getTransferToScientificAreaUnitID()));
+        }
+        return competenceCourseGroupUnitItems;
+    }
+    
+    public void setCompetenceCourseGroupUnitItems(UISelectItems competenceCourseGroupUnitItems) {
+        this.competenceCourseGroupUnitItems = competenceCourseGroupUnitItems;
+    }
+    
+    private List<SelectItem> readCompetenceCourseGroupUnitLabels(Integer transferToScientificAreaUnitID) throws FenixFilterException, FenixServiceException {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        if (transferToScientificAreaUnitID != null && transferToScientificAreaUnitID != 0) {
+            for (final Unit unit : readScientificAreaUnitToTransferTo(transferToScientificAreaUnitID).getCompetenceCourseGroupUnits()) {
+                result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
+            }
+        }
+        Collections.sort(result, new BeanComparator("label"));
+        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
+        return result;
+    }
+    
+    public Integer getTransferToScientificAreaUnitID() {
+        if (getViewState().getAttribute("transferToScientificAreaUnitID") != null) {
+            return (Integer) getViewState().getAttribute("transferToScientificAreaUnitID");    
+        }
+        return 0;
+    }
+
+    public void setTransferToScientificAreaUnitID(Integer transferToScientificAreaUnitID) {
+        this.getViewState().setAttribute("transferToScientificAreaUnitID", transferToScientificAreaUnitID);
     }    
+
+    private Unit readScientificAreaUnitToTransferTo(Integer transferToScientificAreaUnitID) throws FenixFilterException, FenixServiceException {
+        return (Unit) readDomainObject(Unit.class, transferToScientificAreaUnitID);
+    }
+    
+    public String transferCompetenceCourse() {
+        try {
+            if (getCompetenceCourse() == null || readCompetenceCourseGroupUnitToTransferTo() == null) {
+                addErrorMessage(scouncilBundle.getString("error.transferingCompetenceCourse"));
+                return "competenceCoursesManagement";
+            }
+            
+            final Object args[] = { getCompetenceCourse(), readCompetenceCourseGroupUnitToTransferTo()};
+            ServiceUtils.executeService(getUserView(), "TransferCompetenceCourse", args);
+            return "competenceCoursesManagement";
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+        } catch (FenixServiceException e) {
+            addErrorMessage(scouncilBundle.getString("error.transferingCompetenceCourse"));
+        } catch (DomainException e) {
+            addErrorMessage(domainResources.getString(e.getMessage()));
+        }
+        return "";
+    }
+    
+    private Unit readCompetenceCourseGroupUnitToTransferTo() throws FenixFilterException, FenixServiceException {
+        if (getTransferToCompetenceCourseGroupUnitID() != null) {
+            return (Unit) readDomainObject(Unit.class, getTransferToCompetenceCourseGroupUnitID());
+        }
+        return null; 
+    }
+    
+    public Integer getTransferToCompetenceCourseGroupUnitID() {
+        if (getViewState().getAttribute("transferToCompetenceCourseGroupUnitID") != null) {
+            return (Integer) getViewState().getAttribute("transferToCompetenceCourseGroupUnitID");    
+        }
+        return 0;
+    }
+
+    public void setTransferToCompetenceCourseGroupUnitID(Integer transferToCompetenceCourseGroupUnitID) {
+        this.getViewState().setAttribute("transferToCompetenceCourseGroupUnitID", transferToCompetenceCourseGroupUnitID);
+    }
+
 }
