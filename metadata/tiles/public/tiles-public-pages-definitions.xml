@@ -148,11 +148,9 @@
 		<put name="body" value="/publico/viewAllExamsByDegreeAndCurricularYear_bd.jsp"/>
 	</definition>
 	<definition name="view-homepage" extends="definition.public.homepage">
-		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
-		<put name="body" value="/publico/viewHomepage.jsp"/>
+		<put name="body" value="/publico/homepage/home.jsp"/>
 	</definition>	
 	<definition name="not-found-homepage" extends="definition.public.homepage">
-		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
-		<put name="body" value="/publico/notFoundHomepage.jsp"/>
+		<put name="body" value="/publico/homepage/notFound.jsp"/>
 	</definition>	
 </tiles-definitions>

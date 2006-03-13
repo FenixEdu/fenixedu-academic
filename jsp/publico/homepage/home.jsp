@@ -5,6 +5,6 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <h1>
-	<bean:message key="title.homepage.of"/>:
+	<bean:message bundle="HOMEPAGE_RESOURCES" key="title.homepage.of"/>:
 	<bean:write name="homepage" property="person.name"/>
 </h1>
