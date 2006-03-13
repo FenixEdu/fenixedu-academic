@@ -1,6 +1,3 @@
-/*
- * Created on Dec 7, 2005
- */
 package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans;
 
 import java.io.IOException;
@@ -183,47 +180,44 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     private void fillStudiesPlan(List<Context> contextsWithCurricularCourses, final Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
         for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
             CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
-            
-            final Row row = spreadsheet.addRow();
-            
-            row.setCell(curricularCourse.getName());
-            row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
-            row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime().toString()));
-            
-            StringBuilder loads = new StringBuilder();
             CurricularPeriod curricularPeriod = contextWithCurricularCourse.getCurricularPeriod();
+            String parentCourseGroupName = contextWithCurricularCourse.getParentCourseGroup().getName();
             
-            if (curricularCourse.getTheoreticalHours(curricularPeriod) != 0.0) {
-                loads.append(" T=").append(curricularCourse.getTheoreticalHours(curricularPeriod));    
+            fillCurricularCourse(spreadsheet, curricularCourse, curricularPeriod, parentCourseGroupName);
+            if (curricularCourse.isAnual()) {
+                fillCurricularCourse(spreadsheet, curricularCourse, curricularPeriod.getNext(), parentCourseGroupName);
             }
-            if (curricularCourse.getProblemsHours(curricularPeriod) != 0.0) {
-                loads.append(" TP=").append(curricularCourse.getProblemsHours(curricularPeriod));
-            }
-            if (curricularCourse.getLaboratorialHours(curricularPeriod) != 0.0) {
-                loads.append(" PL=").append(curricularCourse.getLaboratorialHours(curricularPeriod));    
-            }
-            if (curricularCourse.getSeminaryHours(curricularPeriod) != 0.0) {
-                loads.append(" S=").append(curricularCourse.getSeminaryHours());    
-            }
-            if (curricularCourse.getFieldWorkHours(curricularPeriod) != 0.0) {
-                loads.append(" TC=").append(curricularCourse.getFieldWorkHours(curricularPeriod));    
-            }
-            if (curricularCourse.getTrainingPeriodHours(curricularPeriod) != 0.0) {
-                loads.append(" E=").append(curricularCourse.getTrainingPeriodHours(curricularPeriod));    
-            }
-            if (curricularCourse.getTutorialOrientationHours(curricularPeriod) != 0.0) {
-                loads.append(" OT=").append(curricularCourse.getTutorialOrientationHours(curricularPeriod));    
-            }
-            loads.append(" TA=").append(curricularCourse.getAutonomousWorkHours(curricularPeriod)).append(" (h/semestre)");
-            loads.append(" C=").append(curricularCourse.getContactLoad(curricularPeriod));
-            loads.append(" Total=").append(curricularCourse.getTotalLoad(curricularPeriod));
-            
-            row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
-            row.setCell("");
-            row.setCell(contextWithCurricularCourse.getParentCourseGroup().getName());
-            row.setCell(curricularPeriod.getParent().getOrder().toString());
-            row.setCell(curricularPeriod.getOrder().toString());
         }
+    }
+
+    private void fillCurricularCourse(final Spreadsheet spreadsheet, CurricularCourse curricularCourse, CurricularPeriod curricularPeriod, String parentCourseGroupName) {
+        final Row row = spreadsheet.addRow();
+        
+        row.setCell(curricularCourse.getName());
+        row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
+        row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime().toString()));
+        
+        StringBuilder loads = new StringBuilder();
+        loads.append(" C=").append(curricularCourse.getContactLoad(curricularPeriod)).append(" (h/semestre)");
+        loads.append(" TA=").append(curricularCourse.getAutonomousWorkHours(curricularPeriod)).append(" (h/semestre)");
+        loads.append(" Total=").append(curricularCourse.getTotalLoad(curricularPeriod));
+        row.setCell(loads.toString());
+
+        StringBuilder contact = new StringBuilder();
+        contact.append(" T=").append(curricularCourse.getTheoreticalHours(curricularPeriod));    
+        contact.append(" TP=").append(curricularCourse.getProblemsHours(curricularPeriod));
+        contact.append(" PL=").append(curricularCourse.getLaboratorialHours(curricularPeriod));    
+        contact.append(" TC=").append(curricularCourse.getFieldWorkHours(curricularPeriod));
+        contact.append(" S=").append(curricularCourse.getSeminaryHours());    
+        contact.append(" E=").append(curricularCourse.getTrainingPeriodHours(curricularPeriod));
+        contact.append(" OT=").append(curricularCourse.getTutorialOrientationHours(curricularPeriod));    
+        row.setCell(contact.toString());
+
+        row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
+        row.setCell("");
+        row.setCell(parentCourseGroupName);
+        row.setCell(curricularPeriod.getParent().getOrder().toString());
+        row.setCell(curricularPeriod.getOrder().toString());
     }
 
 }
