@@ -62,7 +62,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 		Criteria crit = new Criteria();
 		crit.addEqualTo("specialization", specialization);
 		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
-		crit.addEqualTo("person.numeroDocumentoIdentificacao", idDocumentNumber);
+		crit.addEqualTo("person.documentIdNumber", idDocumentNumber);
 		crit.addEqualTo("person.idDocumentType", idDocumentType);
 		return (MasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 

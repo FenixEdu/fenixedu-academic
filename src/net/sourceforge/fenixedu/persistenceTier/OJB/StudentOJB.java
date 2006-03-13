@@ -95,7 +95,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         }
 
         if (idNumber != null) {
-            criteria.addEqualTo("person.numeroDocumentoIdentificacao", idNumber);
+            criteria.addEqualTo("person.documentIdNumber", idNumber);
         }
 
         if (idType != null) {

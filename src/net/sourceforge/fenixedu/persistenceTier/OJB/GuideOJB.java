@@ -94,7 +94,7 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
 
         //		query.addGroupBy("number");
 
-        criteria.addEqualTo("person.numeroDocumentoIdentificacao", identificationDocumentNumber);
+        criteria.addEqualTo("person.documentIdNumber", identificationDocumentNumber);
         criteria.addEqualTo("person.idDocumentType", identificationDocumentType);
 
         List result = queryList(Guide.class, criteria);

@@ -31,7 +31,7 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
     public Person lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
             IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
+        criteria.addEqualTo("documentIdNumber", numeroDocumentoIdentificacao);
         criteria.addEqualTo("idDocumentType", tipoDocumentoIdentificacao);
         return (Person) queryObject(Person.class, criteria);
     }
@@ -58,7 +58,7 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
     public Collection<Person> readByIdentificationDocumentNumber(String identificationDocumentNumber)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("numeroDocumentoIdentificacao", identificationDocumentNumber);
+        criteria.addEqualTo("documentIdNumber", identificationDocumentNumber);
         return queryList(Person.class, criteria);
     }
 

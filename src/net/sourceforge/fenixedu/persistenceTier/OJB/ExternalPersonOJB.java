@@ -84,7 +84,7 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
 
         String lastIdStr = "0";
         List<ExternalPerson> externalPeople = queryList(ExternalPerson.class,
-                criteria, "person.numeroDocumentoIdentificacao", false);
+                criteria, "person.documentIdNumber", false);
         if (!externalPeople.isEmpty()) {
             externalPerson = (ExternalPerson) externalPeople.get(0);
             if (externalPerson != null) {

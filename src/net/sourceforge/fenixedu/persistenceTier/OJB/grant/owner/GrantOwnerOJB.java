@@ -59,7 +59,7 @@ public class GrantOwnerOJB extends PersistentObjectOJB implements IPersistentGra
             throws ExcepcaoPersistencia {
         GrantOwner grantOwner = null;
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("person.numeroDocumentoIdentificacao", idNumber);
+        criteria.addEqualTo("person.documentIdNumber", idNumber);
         criteria.addEqualTo("person.idDocumentType", idType);
         grantOwner = (GrantOwner) queryObject(GrantOwner.class, criteria);
         return grantOwner;
