@@ -188,7 +188,7 @@ public class OJBMetadataGenerator {
             String roleName, CollectionDescriptor collectionDescriptor) throws ClassNotFoundException {
         collectionDescriptor.setItemClass(Class.forName(role.getType().getFullName()));
         collectionDescriptor.setPersistentField(persistentFieldClass, roleName);
-        collectionDescriptor.setRefresh(true);
+        collectionDescriptor.setRefresh(false);
         collectionDescriptor.setCollectionClass(OJBFunctionalSetWrapper.class);
         collectionDescriptor.setCascadeRetrieve(false);
         collectionDescriptor.setLazy(false);
