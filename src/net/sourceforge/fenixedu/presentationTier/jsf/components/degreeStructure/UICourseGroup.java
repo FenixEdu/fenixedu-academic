@@ -194,7 +194,7 @@ public class UICourseGroup extends UIDegreeModule {
     private void encodeHeader() throws IOException {
         writer.startElement("tr", this);
 
-        encodeName(false);    
+        encodeName(true);    
         
         if (this.toEdit) {
             if (this.onlyStructure) {
@@ -233,8 +233,11 @@ public class UICourseGroup extends UIDegreeModule {
             String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");
             String toOrder = "&toOrder=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("toOrder");
             String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
-            writer.writeAttribute("href", "courseGroupReport.faces?degreeCurricularPlanID="+ this.facesContext.getExternalContext().getRequestParameterMap()
-                    .get("degreeCurricularPlanID") + "&courseGroupID=" + this.courseGroup.getIdInternal() + action + organizeBy + showRules + hideCourses + toOrder, null);
+            String dcpId = (String) this.facesContext.getExternalContext().getRequestParameterMap().get("degreeCurricularPlanID");
+            if (dcpId == null) {
+                dcpId = (String) this.facesContext.getExternalContext().getRequestParameterMap().get("dcpId");
+            }
+            writer.writeAttribute("href", "../../bolonhaManager/curricularPlans/courseGroupReport.faces?degreeCurricularPlanID="+ dcpId  + "&courseGroupID=" + this.courseGroup.getIdInternal() + action + organizeBy + showRules + hideCourses + toOrder, null);
         }
         
         if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
