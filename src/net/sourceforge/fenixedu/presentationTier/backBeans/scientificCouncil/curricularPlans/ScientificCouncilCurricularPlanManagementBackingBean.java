@@ -8,6 +8,7 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -25,7 +26,6 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
     private Integer dcpId;
     private DegreeCurricularPlan dcp;
     private String name;
-    private String curricularStage;
     private String gradeScale;
     
     public String getAction() {
@@ -61,11 +61,14 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
     }    
 
     public String getCurricularStage() throws FenixFilterException, FenixServiceException {
-        return (curricularStage == null && getDcp() != null) ? (curricularStage = getDcp().getCurricularStage().getName()) : curricularStage;
+        if (getViewState().getAttribute("curricularStage") == null && getDcp() != null) {
+            setCurricularStage(getDcp().getCurricularStage().getName());
+        }
+        return (String) getViewState().getAttribute("curricularStage");
     }
 
     public void setCurricularStage(String curricularStage) {
-        this.curricularStage = curricularStage;
+        getViewState().setAttribute("curricularStage", curricularStage);
     }
     
     public String getGradeScale() throws FenixFilterException, FenixServiceException {
@@ -101,8 +104,29 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
         return result;
     }
     
-    public String editCurricularPlan() {
-        Object[] args = { this.getDcpId(), this.name, CurricularStage.valueOf(this.curricularStage), null }; //GradeScale.valueOf(this.gradeScale) };
+    public Integer getExecutionYearID() {
+        return (Integer) getViewState().getAttribute("executionYearID");
+    }
+    
+    public void setExecutionYearID(Integer executionYearID) {
+        getViewState().setAttribute("executionYearID", executionYearID);
+    }
+    
+    public List<SelectItem> getExecutionYearItems() throws FenixFilterException, FenixServiceException {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+
+        final InfoExecutionYear currentInfoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(getUserView(), "ReadCurrentExecutionYear", new Object[] {});
+        final List<InfoExecutionYear> notClosedInfoExecutionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(getUserView(), "ReadNotClosedExecutionYears", new Object[] {});
+        for (final InfoExecutionYear notClosedInfoExecutionYear : notClosedInfoExecutionYears) {
+            if (notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
+                result.add(new SelectItem(notClosedInfoExecutionYear.getIdInternal(), notClosedInfoExecutionYear.getYear()));
+            }
+        }
+        return result;
+    }
+    
+    public String editCurricularPlan() throws FenixFilterException, FenixServiceException {
+        Object[] args = { getDcpId(), getName(), CurricularStage.valueOf(getCurricularStage()), null, getExecutionYearID() }; //GradeScale.valueOf(this.gradeScale) };
         return changeDegreeCurricularPlan("EditDegreeCurricularPlan", args, "degreeCurricularPlan.edited", "error.editingDegreeCurricularPlan");
     }
     

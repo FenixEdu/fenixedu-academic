@@ -516,8 +516,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return this.getRegime().equals(RegimeType.ANUAL);
     }
 
+    public boolean isApproved() {
+        return getCurricularStage() == CurricularStage.APPROVED;
+    }
+    
     public void transfer(Unit competenceCourseGroupUnit) {
         this.setUnit(competenceCourseGroupUnit);
     }
-
 }

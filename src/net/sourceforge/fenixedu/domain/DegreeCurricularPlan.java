@@ -119,7 +119,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         super.setName(name);
         super.setGradeScale(gradeScale);
 
-        newStructureFieldsChange(CurricularStage.DRAFT);
+        newStructureFieldsChange(CurricularStage.DRAFT, null);
 
         CourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME, name + this.DCP_ROOT_NAME);
         this.setRoot(dcpRoot);
@@ -135,12 +135,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setCurricularPlanMembersGroup(new FixedSetGroup(creator));
     }
 
-    private void newStructureFieldsChange(CurricularStage curricularStage) {
+    private void newStructureFieldsChange(CurricularStage curricularStage, ExecutionYear beginExecutionYear) {
         if (curricularStage == null) {
             throw new DomainException("degreeCurricularPlan.curricularStage.not.null");
         }
-
-        this.setCurricularStage(curricularStage);
+        if (curricularStage == CurricularStage.APPROVED) {
+            approve(beginExecutionYear);
+        } else {
+            this.setCurricularStage(curricularStage);            
+        }
     }
 
     public void edit(String name, DegreeCurricularPlanState state, Date inicialDate, Date endDate,
@@ -152,14 +155,43 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
     }
 
-    public void edit(String name, CurricularStage curricularStage, GradeScale gradeScale) {
+    public void edit(String name, CurricularStage curricularStage, GradeScale gradeScale, ExecutionYear beginExecutionYear) {
         commonFieldsChange(name, gradeScale);
-        newStructureFieldsChange(curricularStage);
+        newStructureFieldsChange(curricularStage, beginExecutionYear);
 
         // assert unique pair name/degree
         for (final DegreeCurricularPlan dcp : this.getDegree().getDegreeCurricularPlans()) {
             if (dcp != this && dcp.getName().equalsIgnoreCase(name)) {
                 throw new DomainException("error.degreeCurricularPlan.existing.name.and.degree");
+            }
+        }
+    }
+    
+    public void approve(ExecutionYear beginExecutionYear) {
+        if (beginExecutionYear == null) {
+            throw new DomainException("error.invalid.execution.year");
+        } else if (beginExecutionYear.getExecutionPeriodForSemester(Integer.valueOf(1)) == null) {
+            throw new DomainException("error.invalid.execution.period");
+        }
+        checkIfCurricularCoursesBelongToApprovedCompetenceCourses();
+        initBeginExecutionPeriodForContexts(getRoot(), beginExecutionYear.getExecutionPeriodForSemester(Integer.valueOf(1)));
+        setCurricularStage(CurricularStage.APPROVED);
+    }
+    
+    private void checkIfCurricularCoursesBelongToApprovedCompetenceCourses() {
+        for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
+            final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
+            if (! curricularCourse.getCompetenceCourse().isApproved()) {
+                throw new DomainException("error.not.all.competence.courses.are.approved");
+            }
+        }
+    }
+
+    private void initBeginExecutionPeriodForContexts(final CourseGroup courseGroup, final ExecutionPeriod beginExecutionPeriod) {
+        for (final Context context : courseGroup.getChildContexts()) {
+            context.setBeginExecutionPeriod(beginExecutionPeriod);
+            if (! context.getChildDegreeModule().isLeaf()) {
+                initBeginExecutionPeriodForContexts((CourseGroup) context.getChildDegreeModule(), beginExecutionPeriod);
             }
         }
     }

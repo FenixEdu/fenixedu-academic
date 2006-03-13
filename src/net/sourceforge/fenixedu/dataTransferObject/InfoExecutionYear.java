@@ -157,4 +157,8 @@ public class InfoExecutionYear extends InfoObject {
         return stringBuilder.append(year1).append('/').append(year2).toString();
     }
 
+    public boolean after(InfoExecutionYear infoExecutionYear) {
+        return this.getBeginDate().after(infoExecutionYear.getEndDate());
+    }
+
 }

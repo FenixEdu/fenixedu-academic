@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
@@ -13,8 +14,8 @@
 	</h:outputFormat>
 	<h:form>
 		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'/>"/>
-
-
+		<fc:viewState binding="#{ScientificCouncilCurricularPlanManagement.viewState}"/>
+		
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
@@ -22,24 +23,26 @@
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 		
 		<h:outputText value="<p><label>#{scouncilBundle['curricularStage']}:</label> " escape="false"/>
-		<h:panelGroup>
-			<h:selectOneMenu id="curricularStage" value="#{ScientificCouncilCurricularPlanManagement.curricularStage}">
-				<f:selectItems value="#{ScientificCouncilCurricularPlanManagement.curricularStages}" />
-			</h:selectOneMenu>
-			<h:message for="curricularStage" errorClass="error" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>
-		</h:panelGroup>
+		<h:selectOneMenu id="curricularStage" value="#{ScientificCouncilCurricularPlanManagement.curricularStage}" onchange="this.form.submit();">
+			<f:selectItems value="#{ScientificCouncilCurricularPlanManagement.curricularStages}" />
+		</h:selectOneMenu>
+		<h:message for="curricularStage" errorClass="error" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>
 		<h:outputText value="</p>" escape="false"/>
 		
-		<h:outputText value="<p><label>#{scouncilBundle['name']}:</label>" escape="false"/>
-		<h:panelGroup>
-			<h:inputText id="name" value="#{ScientificCouncilCurricularPlanManagement.name}" required="true" maxlength="100" size="40"/>
-			<h:message for="name" errorClass="error0" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>
+		<h:panelGroup rendered="#{ScientificCouncilCurricularPlanManagement.curricularStage == 'APPROVED'}">
+			<h:outputText value="<p><label>#{scouncilBundle['executionYear']}:</label> " escape="false"/>
+ 			<h:selectOneMenu value="#{ScientificCouncilCurricularPlanManagement.executionYearID}">
+				<f:selectItems value="#{ScientificCouncilCurricularPlanManagement.executionYearItems}" />
+			</h:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
+		
+		<h:outputText value="<p><label>#{scouncilBundle['name']}:</label>" escape="false"/>
+		<h:inputText id="name" value="#{ScientificCouncilCurricularPlanManagement.name}" required="true" maxlength="100" size="40"/>
+		<h:message for="name" errorClass="error0" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>
 		<h:outputText value="</p>" escape="false"/>
 			
 		<h:outputText value="</fieldset></div>" escape="false"/>
-
-
 
 		<h:outputText value="<p><b>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']}):<p/>" escape="false" />
 		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
