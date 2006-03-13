@@ -351,7 +351,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 //                                    .getIdInternal());
 //                    List branches = CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
 //                            infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
-
                     request.setAttribute("branches", branches);
 
                     request.setAttribute("finalDegreeWorkProposalStatusList",
@@ -367,7 +366,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward createNewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
+            FenixFilterException, FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
 
         Integer degreeCurricularPlanID = null;
@@ -388,9 +387,15 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         finalWorkForm.set("degree", infoExecutionDegree.getIdInternal().toString());
 
-        List branches = CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
-                infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
-
+        final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, executionDegreeOID);
+        final Scheduleing scheduleing = executionDegree.getScheduling();
+        final List branches = new ArrayList();
+        for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
+            final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
+            branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView, degreeCurricularPlan.getIdInternal()));
+        }
+//        List branches = CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
+//                infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
         request.setAttribute("branches", branches);
 
         request.setAttribute("finalDegreeWorkProposalStatusList", FinalDegreeWorkProposalStatus
@@ -682,7 +687,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward showTeacherName(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
+            FenixFilterException, FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
@@ -746,7 +751,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
+            FenixFilterException, FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
@@ -760,8 +765,15 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         InfoExecutionDegree infoExecutionDegree = CommonServiceRequests.getInfoExecutionDegree(userView,
                 new Integer(degreeId));
 
-        List branches = CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
-                infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+        final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, infoExecutionDegree.getIdInternal());
+        final Scheduleing scheduleing = executionDegree.getScheduling();
+        final List branches = new ArrayList();
+        for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
+            final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
+            branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView, degreeCurricularPlan.getIdInternal()));
+        }
+//        List branches = CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
+//                infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
         request.setAttribute("branches", branches);
 
         request.setAttribute("finalDegreeWorkProposalStatusList", FinalDegreeWorkProposalStatus
@@ -772,7 +784,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward coorientatorVisibility(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
+            FenixFilterException, FenixServiceException {
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String alteredField = (String) finalWorkForm.get("alteredField");
         String companionName = (String) finalWorkForm.get("companionName");
