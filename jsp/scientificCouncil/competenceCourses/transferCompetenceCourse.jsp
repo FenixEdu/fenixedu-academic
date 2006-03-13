@@ -33,23 +33,25 @@ padding-right: 10px;
 		<h:outputText escape="false" value="<input id='selectedDepartmentUnitID' name='selectedDepartmentUnitID' type='hidden' value='#{CompetenceCourseManagement.selectedDepartmentUnitID}'/>"/>
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
 
+		<h:outputText value="<p>" escape="false"/>
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.transferToDepartmentUnitID}" 
 			onchange="submit()"
 			valueChangeListener="#{CompetenceCourseManagement.onChangeDepartmentUnit}">
 			<f:selectItems binding="#{CompetenceCourseManagement.departmentUnitItems}"/>
 		</fc:selectOneMenu>
-		<h:outputText value="<br/>" escape="false"/>
+		<h:outputText value="<p/><p>" escape="false"/>
   		<fc:selectOneMenu value="#{CompetenceCourseManagement.transferToScientificAreaUnitID}" 
 			onchange="submit()"
 			valueChangeListener="#{CompetenceCourseManagement.onChangeScientificAreaUnit}">
 			<f:selectItems binding="#{CompetenceCourseManagement.scientificAreaUnitItems}"/>
 		</fc:selectOneMenu>
-		<h:outputText value="<br/>" escape="false"/>	
+		<h:outputText value="<p/><p>" escape="false"/>
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.transferToCompetenceCourseGroupUnitID}">
 			<f:selectItems binding="#{CompetenceCourseManagement.competenceCourseGroupUnitItems}"/>
 		</fc:selectOneMenu>
-		<h:outputText value="<br/><br/>" escape="false"/>
+		<h:outputText value="<p/><p>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" action="#{CompetenceCourseManagement.transferCompetenceCourse}" value="#{scouncilBundle['transfer']}" />
 		<h:commandButton immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{scouncilBundle['back']}" />
+		<h:outputText value="<p/>" escape="false"/>
 	</h:form>
 </ft:tilesView>
