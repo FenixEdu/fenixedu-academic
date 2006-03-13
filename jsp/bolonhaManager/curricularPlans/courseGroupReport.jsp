@@ -21,8 +21,11 @@
 		<h:outputText value="<p>#{bolonhaBundle['group']}: " escape="false"/>
 		<h:outputText value="<b>#{CourseGroupReport.name}</b></p><br/>" escape="false"/>
 
+		<p>
 		<fc:commandLink value="#{bolonhaBundle['course.group.curricular.structure']}" action="#{CourseGroupReport.exportCourseGroupCurricularStructureToExcel}"/>
-		<br/>
+		</p>
+		<p>
 		<fc:commandLink value="#{bolonhaBundle['course.group.studies.plan']}" action="#{CourseGroupReport.exportCourseGroupStudiesPlanToExcel}"/>
+		</p>
 	</h:form>
 </ft:tilesView>
