@@ -250,16 +250,16 @@ public class Person extends Person_Base {
     public String getNacionalidade() {
         return this.getPais().getNationality();
     }
-        
+
     @Override
     public List<Advisory> getAdvisories() {
         Date currentDate = Calendar.getInstance().getTime();
         List<Advisory> result = new ArrayList<Advisory>();
         for (Advisory advisory : super.getAdvisories()) {
-            if(advisory.getExpires().after(currentDate)){
+            if (advisory.getExpires().after(currentDate)) {
                 result.add(advisory);
             }
-        }        
+        }
         return result;
     }
 
@@ -870,4 +870,235 @@ public class Person extends Person_Base {
             }
         }
     }
+
+    @Deprecated
+    public String getCodigoFiscal() {
+        return super.getFiscalCode();
+    }
+
+    @Deprecated
+    public String getCodigoPostal() {
+        return super.getAreaCode();
+    }
+
+    @Deprecated
+    public String getConcelhoMorada() {
+        return super.getDistrictSubdivisionOfResidence();
+    }
+
+    @Deprecated
+    public String getConcelhoNaturalidade() {
+        return super.getDistrictSubdivisionOfBirth();
+    }
+
+    @Deprecated
+    public Date getDataEmissaoDocumentoIdentificacao() {
+        return super.getEmissionDateOfDocumentId();
+    }
+
+    @Deprecated
+    public Date getDataValidadeDocumentoIdentificacao() {
+        return super.getExpirationDateOfDocumentId();
+    }
+
+    @Deprecated
+    public String getDistritoMorada() {
+        return super.getDistrictOfResidence();
+    }
+
+    @Deprecated
+    public String getDistritoNaturalidade() {
+        return super.getDistrictOfBirth();
+    }
+
+    @Deprecated
+    public String getEnderecoWeb() {
+        return super.getWebAddress();
+    }
+
+    @Deprecated
+    public String getFreguesiaMorada() {
+        return super.getParishOfResidence();
+    }
+
+    @Deprecated
+    public String getFreguesiaNaturalidade() {
+        return super.getParishOfBirth();
+    }
+
+    @Deprecated
+    public String getLocalEmissaoDocumentoIdentificacao() {
+        return super.getEmissionLocationOfDocumentId();
+    }
+
+    @Deprecated
+    public String getLocalidade() {
+        return super.getArea();
+    }
+
+    @Deprecated
+    public String getLocalidadeCodigoPostal() {
+        return super.getAreaOfAreaCode();
+    }
+
+    @Deprecated
+    public String getMorada() {
+        return super.getAddress();
+    }
+
+    @Deprecated
+    public Date getNascimento() {
+        return super.getDateOfBirth();
+    }
+
+    @Deprecated
+    public String getNomeMae() {
+        return super.getNameOfMother();
+    }
+
+    @Deprecated
+    public String getNomePai() {
+        return super.getNameOfFather();
+    }
+
+    @Deprecated
+    public String getNumContribuinte() {
+        return super.getSocialSecurityNumber();
+    }
+
+    @Deprecated
+    public String getNumeroDocumentoIdentificacao() {
+        return super.getDocumentIdNumber();
+    }
+
+    @Deprecated
+    public String getProfissao() {
+        return super.getProfession();
+    }
+
+    @Deprecated
+    public String getTelefone() {
+        return super.getPhone();
+    }
+
+    @Deprecated
+    public String getTelemovel() {
+        return super.getMobile();
+    }
+
+    @Deprecated
+    public void setCodigoFiscal(String codigoFiscal) {
+        super.setFiscalCode(codigoFiscal);
+    }
+
+    @Deprecated
+    public void setCodigoPostal(String codigoPostal) {
+        super.setAreaCode(codigoPostal);
+    }
+
+    @Deprecated
+    public void setConcelhoMorada(String concelhoMorada) {
+        super.setDistrictSubdivisionOfResidence(concelhoMorada);
+    }
+
+    @Deprecated
+    public void setConcelhoNaturalidade(String concelhoNaturalidade) {
+        super.setDistrictSubdivisionOfBirth(concelhoNaturalidade);
+    }
+
+    @Deprecated
+    public void setDataEmissaoDocumentoIdentificacao(Date dataEmissaoDocumentoIdentificacao) {
+        super.setEmissionDateOfDocumentId(dataEmissaoDocumentoIdentificacao);
+    }
+
+    @Deprecated
+    public void setDataValidadeDocumentoIdentificacao(Date dataValidadeDocumentoIdentificacao) {
+        super.setExpirationDateOfDocumentId(dataValidadeDocumentoIdentificacao);
+    }
+
+    @Deprecated
+    public void setDistritoMorada(String distritoMorada) {
+        super.setDistrictOfResidence(distritoMorada);
+    }
+
+    @Deprecated
+    public void setDistritoNaturalidade(String distritoNaturalidade) {
+        super.setDistrictOfBirth(distritoNaturalidade);
+    }
+
+    @Deprecated
+    public void setEnderecoWeb(String enderecoWeb) {
+        super.setWebAddress(enderecoWeb);
+    }
+
+    @Deprecated
+    public void setFreguesiaMorada(String freguesiaMorada) {
+        super.setParishOfResidence(freguesiaMorada);
+    }
+
+    @Deprecated
+    public void setFreguesiaNaturalidade(String freguesiaNaturalidade) {
+        super.setParishOfBirth(freguesiaNaturalidade);
+    }
+
+    @Deprecated
+    public void setLocalEmissaoDocumentoIdentificacao(String localEmissaoDocumentoIdentificacao) {
+        super.setEmissionLocationOfDocumentId(localEmissaoDocumentoIdentificacao);
+    }
+
+    @Deprecated
+    public void setLocalidade(String localidade) {
+        super.setArea(localidade);
+    }
+
+    @Deprecated
+    public void setLocalidadeCodigoPostal(String localidadeCodigoPostal) {
+        super.setAreaOfAreaCode(localidadeCodigoPostal);
+    }
+
+    @Deprecated
+    public void setMorada(String morada) {
+        super.setAddress(morada);
+    }
+
+    @Deprecated
+    public void setNascimento(Date nascimento) {
+        super.setDateOfBirth(nascimento);
+    }
+
+    @Deprecated
+    public void setNomeMae(String nomeMae) {
+        super.setNameOfMother(nomeMae);
+    }
+
+    @Deprecated
+    public void setNomePai(String nomePai) {
+        super.setNameOfFather(nomePai);
+    }
+
+    @Deprecated
+    public void setNumContribuinte(String numContribuinte) {
+        super.setSocialSecurityNumber(numContribuinte);
+    }
+
+    @Deprecated
+    public void setNumeroDocumentoIdentificacao(String numeroDocumentoIdentificacao) {
+        super.setDocumentIdNumber(numeroDocumentoIdentificacao);
+    }
+
+    @Deprecated
+    public void setProfissao(String profissao) {
+        super.setProfession(profissao);
+    }
+
+    @Deprecated
+    public void setTelefone(String telefone) {
+        super.setPhone(telefone);
+    }
+
+    @Deprecated
+    public void setTelemovel(String telemovel) {
+        super.setMobile(telemovel);
+    }
+
 }

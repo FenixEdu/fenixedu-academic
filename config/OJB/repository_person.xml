@@ -37,97 +37,97 @@
 	    jdbc-type="VARCHAR"
 	/>
     <field-descriptor
-        name="numeroDocumentoIdentificacao"
+        name="documentIdNumber"
         column="DOCUMENT_ID_NUMBER"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="localEmissaoDocumentoIdentificacao"
+        name="emissionLocationOfDocumentId"
         column="EMISSION_LOCATION_OF_DOCUMENT_ID"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="dataEmissaoDocumentoIdentificacao"
+        name="emissionDateOfDocumentId"
         column="EMISSION_DATE_OF_DOCUMENT_ID"
         jdbc-type="DATE"
     />
     <field-descriptor
-        name="dataValidadeDocumentoIdentificacao"
+        name="expirationDateOfDocumentId"
         column="EXPERATION_DATE_OF_DOCUMENT_ID"
         jdbc-type="DATE"
     />
     <field-descriptor
-        name="nascimento"
+        name="dateOfBirth"
         column="DATE_OF_BIRTH"
         jdbc-type="DATE"
     />
     <field-descriptor
-        name="nomePai"
+        name="nameOfFather"
         column="NAME_OF_FATHER"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="nomeMae"
+        name="nameOfMother"
         column="NAME_OF_MOTHER"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="freguesiaNaturalidade"
+        name="parishOfBirth"
         column="PARISH_OF_BIRTH"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="concelhoNaturalidade"
+        name="districtSubdivisionOfBirth"
         column="DISTRICT_SUBDIVISION_OF_BIRTH"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="distritoNaturalidade"
+        name="districtOfBirth"
         column="DISTRICT_OF_BIRTH"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="morada"
+        name="address"
         column="ADDRESS"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="localidade"
+        name="area"
         column="AREA"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="codigoPostal"
+        name="areaCode"
         column="AREA_CODE"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="localidadeCodigoPostal"
+        name="areaOfAreaCode"
         column="AREA_OF_AREA_CODE"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="freguesiaMorada"
+        name="parishOfResidence"
         column="PARISH_OF_RESIDENCE"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="concelhoMorada"
+        name="districtSubdivisionOfResidence"
         column="DISTRICT_SUBDIVISION_OF_RESIDENCE"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="distritoMorada"
+        name="districtOfResidence"
         column="DISTRICT_OF_RESIDENCE"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="telefone"
+        name="phone"
         column="PHONE"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="telemovel"
+        name="mobile"
         column="MOBILE"
         jdbc-type="VARCHAR"
     />
@@ -147,7 +147,7 @@
         jdbc-type="BIT"
     />
     <field-descriptor
-        name="enderecoWeb"
+        name="webAddress"
         column="WEB_ADRDRESS"
         jdbc-type="VARCHAR"
     />
@@ -157,12 +157,12 @@
         jdbc-type="BIT"
     />
     <field-descriptor
-        name="numContribuinte"
+        name="socialSecurityNumber"
         column="SOCIAL_SECURITY_NUMBER"
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="profissao"
+        name="profession"
         column="PROFESSION"
         jdbc-type="VARCHAR"
     />
@@ -182,7 +182,7 @@
         jdbc-type="INTEGER"
     />
     <field-descriptor
-        name="codigoFiscal"
+        name="fiscalCode"
         column="FISCAL_CODE"
         jdbc-type="VARCHAR"
     />
