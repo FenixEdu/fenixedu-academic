@@ -201,5 +201,13 @@ Documentation:
         <property name="columnClasses" value="listClasses,"/>
     </renderer>
     
+    <renderer type="java.lang.Object" layout="values-dash" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
+        <property name="htmlSeparator" value=" - "/>
+    </renderer>
+    
+    <renderer type="java.lang.Object" layout="values-comma" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
+        <property name="htmlSeparator" value=", "/>
+    </renderer>
+
     <renderer mode="input" type="java.lang.String" layout="allow-case-change" class="net.sourceforge.fenixedu.renderers.StringCaseChangerRenderer"/>
 </renderers-config>

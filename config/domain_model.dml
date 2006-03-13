@@ -5994,6 +5994,20 @@ relation AccountabilityChildParty {
 	}	 
 }
 
+relation ProjectParticipationProject {
+	net.sourceforge.fenixedu.domain.research.project.Project playsRole project;
+	net.sourceforge.fenixedu.domain.research.project.ProjectParticipation playsRole projectParticipations {
+		multiplicity *;
+	}
+}
+
+relation ProjectParticipationParty {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+	net.sourceforge.fenixedu.domain.research.project.ProjectParticipation playsRole projectParticipations {
+		multiplicity *;
+	}
+}
+
 /*
  * Relations definitions of relations to RootDomainObject
  * 

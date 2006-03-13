@@ -8,7 +8,10 @@ public class ProjectParticipation extends ProjectParticipation_Base {
     }
     
     public enum ProjectParticipationType {
-        banana;
+        Coordinator,
+        Speaker,
+        Sponsor,
+        Participant;
     }
 
 }
