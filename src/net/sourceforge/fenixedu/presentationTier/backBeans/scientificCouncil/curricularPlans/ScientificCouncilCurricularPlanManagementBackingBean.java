@@ -140,7 +140,7 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
             this.addErrorMessage(scouncilBundle.getString(e.getMessage()));
             return "";
         } catch (DomainException e) {
-            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            addErrorMessages(domainExceptionBundle, e.getKey(), e.getArgs());
             return "";
         } catch (Exception e) {
             this.addErrorMessage(scouncilBundle.getString(errorMsg));

@@ -160,15 +160,15 @@ public class FenixBackingBean {
     
     protected String getFormatedMessage(final String bundleName, final String key, final String ... args) {
     	final ResourceBundle bundle = getResourceBundle(bundleName);
-    	return formatMessage(key, bundle, args);
+        String message = bundle.getString(key);
+    	return formatMessage(message, args);
     }
 
     protected String getFormatedMessage(final ResourceBundle bundle, final String key, final String ... args) {
-        return formatMessage(key, bundle, args);
+        return formatMessage(bundle.getString(key), args);
     }
     
-    private String formatMessage(final String key, ResourceBundle bundle, final String... args) {
-        String message = bundle.getString(key);
+    private String formatMessage(String message, final String... args) {
         if(message != null && args != null) {
             for(int i = 0; args.length > i; i++) {
                 String substring = "{" + i + "}";
@@ -177,7 +177,22 @@ public class FenixBackingBean {
         }
         return message;
     }
-
+    
+    protected void addErrorMessages(final ResourceBundle bundle, final String key, final String ... args) {
+        String message = bundle.getString(key);
+        if (message != null) {
+            int indexOfManyArgs = message.indexOf("{...}");
+            if (args != null && indexOfManyArgs != -1) {
+                addErrorMessage(message.substring(0, indexOfManyArgs));
+                for (final String arg : args) {
+                    addErrorMessage(arg);
+                }
+            } else {
+                addErrorMessage(formatMessage(message, args));
+            }
+        }
+    }
+    
     protected Double getAndHoldDoubleParameter(final String parameterName) {
         final String parameterString = getRequestParameter(parameterName);
         final Double parameterValue;

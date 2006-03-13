@@ -179,11 +179,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
     
     private void checkIfCurricularCoursesBelongToApprovedCompetenceCourses() {
+        final List<String> approvedCompetenceCourses = new ArrayList<String>();
         for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
             final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-            if (! curricularCourse.getCompetenceCourse().isApproved()) {
-                throw new DomainException("error.not.all.competence.courses.are.approved");
+            if (! curricularCourse.isOptional() && ! curricularCourse.getCompetenceCourse().isApproved()) {
+                approvedCompetenceCourses.add(
+                        curricularCourse.getCompetenceCourse().getDepartmentUnit().getName()
+                        + " > " + curricularCourse.getCompetenceCourse().getName());
             }
+        }
+        if (!approvedCompetenceCourses.isEmpty()) {
+            final String[] result = new String[approvedCompetenceCourses.size()];
+            throw new DomainException("error.not.all.competence.courses.are.approved", approvedCompetenceCourses.toArray(result));
         }
     }
 
