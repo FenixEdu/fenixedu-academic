@@ -521,6 +521,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
     
     public void transfer(Unit competenceCourseGroupUnit) {
-        this.setUnit(competenceCourseGroupUnit);
+        super.setUnit(competenceCourseGroupUnit);
     }
 }

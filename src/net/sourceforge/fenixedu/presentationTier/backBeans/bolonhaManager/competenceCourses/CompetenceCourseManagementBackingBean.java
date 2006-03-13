@@ -897,7 +897,6 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             
             final Object args[] = { getCompetenceCourse(), readCompetenceCourseGroupUnitToTransferTo()};
             ServiceUtils.executeService(getUserView(), "TransferCompetenceCourse", args);
-            return "competenceCoursesManagement";
         } catch (FenixFilterException e) {
             this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
         } catch (FenixServiceException e) {
@@ -905,7 +904,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         } catch (DomainException e) {
             addErrorMessage(domainResources.getString(e.getMessage()));
         }
-        return "";
+        return "competenceCoursesManagement";
     }
     
     private Unit readCompetenceCourseGroupUnitToTransferTo() throws FenixFilterException, FenixServiceException {
