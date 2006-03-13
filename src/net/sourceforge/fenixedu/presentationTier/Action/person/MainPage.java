@@ -63,18 +63,20 @@ public final class MainPage extends FenixAction {
     private void addStudentNotifications(final Person person, final List<Advisory> advisories) throws FenixActionException {
         for (final Student student : person.getStudents()) {
             for (final Attends attends : student.getAssociatedAttends()) {
-                final ExecutionPeriod executionPeriod = attends.getDisciplinaExecucao().getExecutionPeriod();
-                if (executionPeriod.getState().equals(PeriodState.CURRENT) && attends.hasEnrolment()) {
-                    final Interval responseWeek = attends.getResponseWeek();
-                    if (responseWeek != null) {
-                        boolean hasResponse = false;
-                        for (final WeeklyWorkLoad weeklyWorkLoad : attends.getWeeklyWorkLoads()) {
-                            if (weeklyWorkLoad.getInterval().equals(responseWeek)) {
-                                hasResponse = true;
+                if (attends.getEnrolment() != null) {
+                    final ExecutionPeriod executionPeriod = attends.getDisciplinaExecucao().getExecutionPeriod();
+                    if (executionPeriod.getState().equals(PeriodState.CURRENT) && attends.hasEnrolment()) {
+                        final Interval responseWeek = attends.getResponseWeek();
+                        if (responseWeek != null) {
+                            boolean hasResponse = false;
+                            for (final WeeklyWorkLoad weeklyWorkLoad : attends.getWeeklyWorkLoads()) {
+                                if (weeklyWorkLoad.getInterval().equals(responseWeek)) {
+                                    hasResponse = true;
+                                }
                             }
-                        }
-                        if (!hasResponse) {
-                            addAdvisory(advisories, attends, responseWeek);
+                            if (!hasResponse) {
+                                addAdvisory(advisories, attends, responseWeek);
+                            }
                         }
                     }
                 }
