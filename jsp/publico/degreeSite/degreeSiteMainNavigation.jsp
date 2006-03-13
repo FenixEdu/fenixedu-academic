@@ -37,11 +37,13 @@
 			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.schedulesByClass"/>
         </html:link>
 	</li>
+<%--
 	<li>
     	<html:link page="<%= "/chooseExamsMapContextDA.do?method=choose&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
 			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.exams"/>
         </html:link>
 	</li>
+--%>
 	<li>
     	<html:link page="<%= "/degreeSite/publicEvaluations.faces?degreeID=" +  request.getAttribute("degreeID") %>" >
 			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.evaluations"/>
