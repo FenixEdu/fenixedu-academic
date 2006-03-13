@@ -48,7 +48,8 @@ padding-right: 10px;
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.transferToCompetenceCourseGroupUnitID}">
 			<f:selectItems binding="#{CompetenceCourseManagement.competenceCourseGroupUnitItems}"/>
 		</fc:selectOneMenu>
-
+		<h:outputText value="<br/><br/>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" action="#{CompetenceCourseManagement.transferCompetenceCourse}" value="#{scouncilBundle['transfer']}" />
+		<h:commandButton immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{scouncilBundle['back']}" />
 	</h:form>
 </ft:tilesView>
