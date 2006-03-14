@@ -40,27 +40,31 @@
 	</h:outputLink>
 	<h:outputText value="</li></ul>" escape="false"/>
 
- 	<h:outputText value="<br/>" escape="false"/>
-	<h:outputText value="<p>#{scouncilBundle['view.structure.organized.by']}: " escape="false"/>
-	<h:outputLink value="viewCurricularPlan.faces">
-		<h:outputText value="#{scouncilBundle['groups']}" />
-		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
-		<f:param name="organizeBy" value="groups"/>
-		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
-		<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>		
-		<f:param name="action" value="#{CurricularCourseManagement.action}"/>
-	</h:outputLink>
-	<h:outputText value=" , " escape="false"/>
-	<h:outputLink value="viewCurricularPlan.faces">
-		<h:outputText value="#{scouncilBundle['year']}/#{scouncilBundle['semester']}" />
-		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
-		<f:param name="organizeBy" value="years"/>
-		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
-		<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>		
-		<f:param name="action" value="#{CurricularCourseManagement.action}"/>
-	</h:outputLink>
-	<h:outputText value="</p>" escape="false"/>
 
+	<h:outputText value="<p class='mtop2 mbottom0'>" escape="false"/>
+	<h:panelGroup rendered="#{!empty ScientificCouncilCurricularPlanManagement.dcp.degreeStructure.childs}">
+		<h:outputText value="#{scouncilBundle['view.structure.organized.by']}: " escape="false"/>
+		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'years'}">
+			<h:outputText value="#{scouncilBundle['groups']}" />
+			<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+			<f:param name="organizeBy" value="groups"/>
+			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+		</h:outputLink>
+		<h:outputText value="<span class='highlight3'>#{scouncilBundle['groups']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}" escape="false"/>
+		<h:outputText value=" , " escape="false"/>
+		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}">
+			<h:outputText value="#{scouncilBundle['year']}/#{scouncilBundle['semester']}" />
+			<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+			<f:param name="organizeBy" value="years"/>
+			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+		</h:outputLink>
+		<h:outputText value="<span class='highlight3'>#{scouncilBundle['year']}/#{scouncilBundle['semester']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'years'}" escape="false"/>
+	</h:panelGroup>
+	<h:outputText value="</p>" escape="false"/>
 
 	<fc:degreeCurricularPlanRender dcp="#{ScientificCouncilCurricularPlanManagement.dcp}" onlyStructure="false" toEdit="false" organizeBy="<%=request.getParameter("organizeBy")%>"/>
 
