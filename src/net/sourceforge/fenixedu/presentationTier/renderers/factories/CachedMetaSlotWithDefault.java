@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
-import java.beans.PropertyDescriptor;
-
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
-
-import org.apache.commons.beanutils.PropertyUtils;
+import net.sourceforge.fenixedu.renderers.utils.RendererPropertyUtils;
 
 public class CachedMetaSlotWithDefault extends CachedMetaSlot {
 
@@ -30,16 +27,7 @@ public class CachedMetaSlotWithDefault extends CachedMetaSlot {
     @Override
     public Class getType() {
         Class type = getMetaObject().getType();
-        PropertyDescriptor[] descriptors = PropertyUtils.getPropertyDescriptors(type);
         
-        for (int i = 0; i < descriptors.length; i++) {
-            PropertyDescriptor descriptor = descriptors[i];
-            
-            if (descriptor.getName().equals(getName())) {
-                return descriptor.getPropertyType();
-            }
-        }
-        
-        return super.getType();
+        return RendererPropertyUtils.getPropertyType(type, getName());
     }
 }

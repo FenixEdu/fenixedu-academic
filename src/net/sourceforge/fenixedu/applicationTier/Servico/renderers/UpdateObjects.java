@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.renderers;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
@@ -41,27 +42,49 @@ public class UpdateObjects extends Service {
         return objects.values();
     }
 
-    private void setProperty(Object object, String slot, Object value) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        Class type = PropertyUtils.getPropertyType(object, slot);
+    protected void setProperty(Object object, String slot, Object value) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+        Class type = getSlotType(object, slot);
         
         if (type == null) {
             throw new RuntimeException("could not find type of property " + slot + " in object " + object);
         }
         
-        if (type.isAssignableFrom(List.class)) {
-            setRelation(object, slot, (List) value);
+        if (type.isAssignableFrom(Collection.class)) {
+            setCollectionProperty(object, slot, (List) value);
         }
         else {
-            PropertyUtils.setProperty(object, slot, value);
+            setSlotProperty(object, slot, value);
         }
     }
 
-    private void setRelation(Object object, String slot, List list) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        List relationList = (List) PropertyUtils.getProperty(object, slot);
+    protected Class getSlotType(Object object, String slot) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        return PropertyUtils.getPropertyType(object, slot);
+    }
+
+    protected void setSlotProperty(Object object, String slot, Object value) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+        PropertyUtils.setProperty(object, slot, value);
+    }
+
+    protected void setCollectionProperty(Object object, String slot, List list) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+        Collection relation = (Collection) getSlotProperty(object, slot);
         
-        // TODO: cfgi, I hope this is ok but must check
-        relationList.clear();
-        relationList.addAll(list);
+        if (relation == null) { 
+            relation = new ArrayList();
+            relation.addAll(list);
+            
+            // ASSUMPTION: if collection is null then there is a setter that allows the value to be changed
+            setSlotProperty(object, slot, relation);
+        }
+        else {
+            // ASSUMPTION: changing the list affects the relation
+            // TODO: cfgi, I hope this is ok but must check
+            relation.clear();
+            relation.addAll(list);
+        }
+    }
+
+    protected Object getSlotProperty(Object object, String slot) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+        return PropertyUtils.getProperty(object, slot);
     }
 
     private Object getObject(Hashtable<ObjectKey, Object> objects, ObjectChange change) throws ExcepcaoPersistencia,

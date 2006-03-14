@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.renderers.model;
 
+import net.sourceforge.fenixedu.renderers.utils.RendererPropertyUtils;
+
 public class SimpleMetaSlotWithDefault extends SimpleMetaSlot {
 
     private boolean createValue;
@@ -19,5 +21,17 @@ public class SimpleMetaSlotWithDefault extends SimpleMetaSlot {
         }
         
         return super.getObject();
+    }
+    
+    @Override
+    public void setObject(Object object) {
+        setProperty(getMetaObject().getObject(), getName(), object);
+    }
+
+    /**
+     * Sets property and build parent objects if they are null.
+     */
+    private void setProperty(Object object, String name, Object value) {
+        RendererPropertyUtils.setProperty(object, name, value, true);
     }
 }
