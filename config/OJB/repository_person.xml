@@ -166,17 +166,6 @@
         column="PROFESSION"
         jdbc-type="VARCHAR"
     />
-    <!-- 
-    <field-descriptor
-        name="username"
-        column="USERNAME"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="password"
-        column="PASSWD"
-        jdbc-type="VARCHAR"
-    /> -->
     <field-descriptor
         name="keyPais"
         column="KEY_COUNTRY"
@@ -230,17 +219,6 @@
 	   column="KEY_GRANT_OWNER"  
 	   jdbc-type="INTEGER"
     />
-    <!--
-	<field-descriptor
-        name="isPassInKerberos"
-        column="IS_PASS_KERBEROS"
-        jdbc-type="BIT"
-    />     
-    <field-descriptor
-        name="istUsername"
-        column="IST_USERNAME"
-        jdbc-type="VARCHAR"
-    />    -->
     <field-descriptor
         name="keyCms"
         column="KEY_CMS"

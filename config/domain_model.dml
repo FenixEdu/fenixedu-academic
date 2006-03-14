@@ -2461,11 +2461,9 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Boolean availableWebSite;
 		String socialSecurityNumber;
 		String areaOfAreaCode;
-		//String username;
 		String phone;
 		String emissionLocationOfDocumentId;
 		String districtOfBirth;
-		//String password;
 		Boolean availableEmail;
 		String workPhone;
 		String name;
@@ -2481,8 +2479,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	    MaritalStatus maritalStatus;
 	    Gender gender;
 	    IDDocumentType idDocumentType; 
-		//Boolean isPassInKerberos;
-		//String istUsername;
 	 }
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.PartyType extends net.sourceforge.fenixedu.domain.DomainObject {	

@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -173,7 +171,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
         final String newPassword = (String) authenticationForm.get("newPassword");
         final String requestURL = request.getRequestURL().toString();
         
-        String remoteHostName = getRemoteHostName(request);
+        String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
         Object argsAutenticacao[] = { username, password, newPassword, requestURL, remoteHostName};
                 
         return (IUserView) ServiceManagerServiceFactory.executeService(null, "AuthenticationExpired",
@@ -186,15 +184,5 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
         actionErrors.add(messageKey, new ActionError(messageKey));
         saveErrors(request, actionErrors);
         return mapping.getInputForward();
-    }
-    
-    private String getRemoteHostName(HttpServletRequest request) {
-        String remoteHostName;
-        try {
-            remoteHostName = InetAddress.getByName(request.getRemoteAddr()).getHostName();
-        } catch (UnknownHostException e) {
-            remoteHostName = request.getRemoteHost();
-        }
-        return remoteHostName;
     }
 }
