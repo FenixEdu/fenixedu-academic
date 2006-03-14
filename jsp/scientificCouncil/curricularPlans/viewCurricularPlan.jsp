@@ -27,6 +27,7 @@
 
 	<h:outputText value="<br/>" escape="false"/>
 	
+<h:outputText value="<div class='invisible'>" escape="false"/>
 	<h:outputText value="<ul><li>" escape="false"/>
 	<h:outputLink value="viewCurricularPlanStructure.faces" rendered="#{!empty ScientificCouncilCurricularPlanManagement.dcp.root.childContexts}">
 		<h:outputFormat value="#{scouncilBundle['view.param']}" escape="false">
@@ -65,14 +66,69 @@
 		<h:outputText value="<span class='highlight3'>#{scouncilBundle['year']}/#{scouncilBundle['semester']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'years'}" escape="false"/>
 	</h:panelGroup>
 	<h:outputText value="</p>" escape="false"/>
+	
+	<h:outputText value="<p class='mtop05 mbottom0'>" escape="false"/>
+	<h:panelGroup rendered="#{!empty ScientificCouncilCurricularPlanManagement.dcp.root.childContexts}">	
+		<h:outputText value="#{scouncilBundle['curricularRules']}: " escape="false"/>
+		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.showRules == 'false'}">
+			<h:outputText value="#{scouncilBundle['show']}" />
+			<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+			<f:param name="showRules" value="true"/>
+			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>		
+		</h:outputLink>
+		<h:outputText value="<span class='highlight3'>#{scouncilBundle['show']}</span>" rendered="#{CurricularCourseManagement.showRules == 'true'}" escape="false"/>
+		<h:outputText value=" , " escape="false"/>
+		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.showRules == 'true'}">
+			<h:outputText value="#{scouncilBundle['hide']}" />
+			<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+			<f:param name="showRules" value="false"/>
+			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+		</h:outputLink>
+		<h:outputText value="<span class='highlight3'>#{scouncilBundle['hide']}</span>" rendered="#{CurricularCourseManagement.showRules == 'false'}" escape="false"/>
+	</h:panelGroup>
+	<h:outputText value="</p>" escape="false"/>
 
-	<fc:degreeCurricularPlanRender dcp="#{ScientificCouncilCurricularPlanManagement.dcp}" onlyStructure="false" toEdit="false" organizeBy="<%=request.getParameter("organizeBy")%>"/>
+	<h:outputText value="<p class='mtop05 mbottom0'>" escape="false"/>
+	<h:panelGroup rendered="#{CurricularCourseManagement.showRules == 'true' && CurricularCourseManagement.organizeBy == 'groups'}">
+		<h:outputText value="#{scouncilBundle['curricularCourses']}: " escape="false"/>
+		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.hideCourses == 'true'}">
+			<h:outputText value="#{scouncilBundle['show']}" />
+			<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+			<f:param name="hideCourses" value="false"/>
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+		</h:outputLink>
+		<h:outputText value="<span class='highlight3'>#{scouncilBundle['show']}</span>" rendered="#{CurricularCourseManagement.hideCourses == 'false'}" escape="false"/>
+		<h:outputText value=" , " escape="false"/>
+		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.hideCourses == 'false'}">
+			<h:outputText value="#{scouncilBundle['hide']}" />
+			<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+			<f:param name="hideCourses" value="true"/>
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+		</h:outputLink>
+		<h:outputText value="<span class='highlight3'>#{scouncilBundle['hide']}</span>" rendered="#{CurricularCourseManagement.hideCourses == 'true'}" escape="false"/>
+	</h:panelGroup>
+	<h:outputText value="</p>" escape="false"/>
+<h:outputText value="</div>" escape="false"/>
+	
+	<h:outputText value="<br/>" escape="false"/>
+	<fc:degreeCurricularPlanRender 
+		dcp="#{ScientificCouncilCurricularPlanManagement.dcp}" 
+		organizeBy="<%=request.getParameter("organizeBy")%>"
+		showRules="<%=request.getParameter("showRules")%>"
+		hideCourses="<%=request.getParameter("hideCourses")%>"/>
 
-	<h:outputText value="<br/><p>" escape="false"/>
+	<h:outputText value="<p>" escape="false"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'/>"/>
 		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
-
 		<h:panelGroup rendered="#{!empty ScientificCouncilCurricularPlanManagement.action && ScientificCouncilCurricularPlanManagement.action == 'view'}">
 			<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['return']}" action="curricularPlansManagement"/>
 		</h:panelGroup>
@@ -81,4 +137,5 @@
 		</h:panelGroup>
 	</h:form>
 	<h:outputText value="</p>" escape="false"/>
+
 </ft:tilesView>
