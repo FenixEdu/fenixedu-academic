@@ -21,6 +21,8 @@ insert into USER select
 	null, null, null, null, PARTY.ID_INTERNAL
 from PARTY where PARTY.CLASS_NAME = 'net.sourceforge.fenixedu.domain.Person';
 
+update PARTY set PARTY.KEY_USER = PARTY.ID_INTERNAL where PARTY.CLASS_NAME = 'net.sourceforge.fenixedu.domain.Person';
+
 alter table PARTY drop column USERNAME;
 alter table PARTY drop column IST_USERNAME;
 alter table PARTY drop column IS_PASS_KERBEROS;
