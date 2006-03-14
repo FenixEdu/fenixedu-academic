@@ -25,12 +25,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.cas.CASServiceUrlProvider;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
@@ -127,8 +129,9 @@ public class Authenticate extends Service implements Serializable {
         return userView instanceof UserView;
     }
 
-    public IUserView run(final String username, final String password, final String requestURL)
-            throws ExcepcaoAutenticacao, ExcepcaoPersistencia, FenixServiceException {
+    public IUserView run(final String username, final String password, final String requestURL,
+            final String remoteHost) throws ExcepcaoAutenticacao, ExcepcaoPersistencia,
+            FenixServiceException {
 
         Person person = Person.readPersonByUsername(username);
 
@@ -140,6 +143,8 @@ public class Authenticate extends Service implements Serializable {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }
 
+        setLoginHostNameAndDateTime(remoteHost, person);
+
         return getUserView(person, requestURL);
     }
 
@@ -148,7 +153,8 @@ public class Authenticate extends Service implements Serializable {
         return new UserView(person, allowedRoles);
     }
 
-    public IUserView run(final String casTicket, final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao {
+    public IUserView run(final String casTicket, final String requestURL, final String remoteHost)
+            throws ExcepcaoPersistencia, ExcepcaoAutenticacao {
         final CASReceipt receipt = getCASReceipt(casTicket, requestURL);
 
         if (receipt == null) {
@@ -165,11 +171,18 @@ public class Authenticate extends Service implements Serializable {
         if (person == null) {
             throw new ExcepcaoAutenticacao("error.Exception");
         }
+      
+        setLoginHostNameAndDateTime(remoteHost, person);
 
-        final Set allowedRoles = getAllowedRolesByHostname(requestURL);
+        return getUserView(person, requestURL);
+    }
 
-        return new UserView(person, allowedRoles);
-
+    private void setLoginHostNameAndDateTime(final String remoteHost, Person person) {
+        User user = person.getUser();
+        user.setLastLoginHost(user.getCurrentLoginHost());
+        user.setLastLoginDateTime(user.getCurrentLoginDateTime());
+        user.setCurrentLoginDateTime(new DateTime());
+        user.setCurrentLoginHost(remoteHost);               
     }
 
     private CASReceipt getCASReceipt(final String casTicket, final String requestURL)

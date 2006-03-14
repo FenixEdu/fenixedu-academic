@@ -31,9 +31,9 @@ public class Authentication extends FenixAction {
         final String username = request.getParameter("username");
         final String password = request.getParameter("password");
         final String requestURL = request.getRequestURL().toString();
-        boolean result = false;
-
-        Object argsAutenticacao[] = { username, password, requestURL };
+        boolean result = false;              
+        
+        Object argsAutenticacao[] = { username, password, requestURL, "" };
         try {
             String scheme = request.getScheme();
 

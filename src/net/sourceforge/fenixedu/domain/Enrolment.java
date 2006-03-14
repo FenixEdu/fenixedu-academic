@@ -486,6 +486,6 @@ public class Enrolment extends Enrolment_Base {
     }
     
     protected void createEnrolmentLog(EnrolmentAction action) {
-    	EnrolmentLog enrolmentLog = new EnrolmentLog(action, this.getStudentCurricularPlan().getStudent(), this.getCurricularCourse(), this.getExecutionPeriod(), getUser());
+    	EnrolmentLog enrolmentLog = new EnrolmentLog(action, this.getStudentCurricularPlan().getStudent(), this.getCurricularCourse(), this.getExecutionPeriod(), getCurrentUser());
     }
 }

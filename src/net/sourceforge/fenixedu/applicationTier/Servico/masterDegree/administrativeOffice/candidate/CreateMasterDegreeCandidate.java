@@ -84,18 +84,18 @@ public class CreateMasterDegreeCandidate extends Service {
 
         Role personRole = Role.getRoleByRoleType(RoleType.PERSON);
 
-        if (person == null) {
-            // Create the new Person
-            person = DomainFactory.makePerson(name, identificationDocumentNumber,
-                    identificationDocumentType, Gender.MALE);
-
-            // Generate Person Username
+        if (person == null) {            
+            //Generate Person Username
             String username = MasterDegreeCandidate.generateUsernameForNewCandidate(
                     masterDegreeCandidate, persons);
-            person.changeUsername(username, persons);
-
+            
+            // Create the new Person
+            person = DomainFactory.makePerson(name, identificationDocumentNumber,
+                    identificationDocumentType, Gender.MALE, username);          
+            
             // Give the Person Role
             person.getPersonRoles().add(personRole);
+            
         } else {
             if (person.getUsername().startsWith("INA")) {
                 // Generate Person Username

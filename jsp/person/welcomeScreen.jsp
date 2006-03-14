@@ -4,6 +4,18 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+
+<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
+
+<logic:notEmpty name="userView" property="person.user.lastLoginHost">
+	<bean:define id="lastLoginDateTime" type="org.joda.time.DateTime" name="userView" property="person.user.lastLoginDateTime"/>
+	<bean:define id="timestamp" ><%= lastLoginDateTime.toDate().getTime() %></bean:define>
+	<bean:define id="lastLoginHost" name="userView" property="person.user.lastLoginHost"/>
+	<bean:message key="last.login.dateTime"/>&nbsp;<b><date:format pattern="dd-MM-yyyy HH:mm"><bean:write name="timestamp"/></date:format></b>
+	<br/><bean:message key="last.login.host"/>&nbsp;<b><bean:write name="lastLoginHost"/></b>	    
+	<br/><br/>
+</logic:notEmpty>
+
 <logic:present name="<%= SessionConstants.LIST_ADVISORY %>" scope="request">
 	<bean:size id="numberAdvisories" name="<%= SessionConstants.LIST_ADVISORY %>" scope="request"/>
 	<p><bean:message key="label.have"/>

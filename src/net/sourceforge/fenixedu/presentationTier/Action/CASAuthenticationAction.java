@@ -15,12 +15,11 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessages;
 
 public class CASAuthenticationAction extends BaseAuthenticationAction {
 
     @Override
-    protected IUserView doAuthentication(ActionForm form, HttpServletRequest request)
+    protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
             throws FenixFilterException, FenixServiceException {
 
         if (!useCASAuthentication) {
@@ -32,7 +31,7 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
         if (userView == null) {
             final String casTicket = (String) request.getParameter("ticket");
             final String requestURL = request.getRequestURL().toString();
-            final Object authenticationArgs[] = { casTicket, requestURL };
+            final Object authenticationArgs[] = { casTicket, requestURL , remoteHostName};
 
             userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
                     authenticationArgs);
@@ -45,8 +44,7 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
     @Override
     protected ActionForward getAuthenticationFailedForward(final ActionMapping mapping,
             final HttpServletRequest request, final String actionKey, final String messageKey) {
-        final ActionErrors actionErrors = new ActionErrors();
-        final ActionMessages actionMessages = new ActionMessages();
+        final ActionErrors actionErrors = new ActionErrors();        
         actionErrors.add(actionKey, new ActionError(messageKey));
         saveErrors(request, actionErrors);
         return mapping.findForward("error");

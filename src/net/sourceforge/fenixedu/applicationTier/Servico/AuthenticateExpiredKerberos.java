@@ -6,14 +6,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswo
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
 
 public class AuthenticateExpiredKerberos extends Authenticate {
 
     public IUserView run(final String username, final String password, final String newPassword,
-            final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao,
+            final String requestURL, String remoteHostName) throws ExcepcaoPersistencia, ExcepcaoAutenticacao,
             FenixServiceException {
 
         Person person = Person.readPersonByUsername(username);
@@ -65,7 +64,7 @@ public class AuthenticateExpiredKerberos extends Authenticate {
                     }
                 }
             } else {
-                final IUserView userView = super.run(username, password, requestURL);
+                final IUserView userView = super.run(username, password, requestURL, remoteHostName);
 
                 if (userView == null) {
                     throw new InvalidPasswordServiceException("error.person.impossible.change");
@@ -99,6 +98,6 @@ public class AuthenticateExpiredKerberos extends Authenticate {
 
             }
         }
-        return super.run(username, password, requestURL);
+        return super.run(username, password, requestURL, remoteHostName);
     }
 }

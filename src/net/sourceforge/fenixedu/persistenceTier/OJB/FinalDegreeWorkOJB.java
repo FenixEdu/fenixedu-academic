@@ -55,7 +55,7 @@ public class FinalDegreeWorkOJB extends PersistentObjectOJB implements IPersiste
 
     public Group readFinalDegreeWorkGroupByUsername(String username) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("groupStudents.student.person.username", username);
+        criteria.addEqualTo("groupStudents.student.person.user.username", username);
         criteria.addEqualTo("executionDegree.executionYear.state", PeriodState.CURRENT);
         return (Group) queryObject(Group.class, criteria);
     }

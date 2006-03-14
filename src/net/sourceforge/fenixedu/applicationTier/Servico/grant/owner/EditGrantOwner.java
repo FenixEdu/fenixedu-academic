@@ -76,8 +76,8 @@ public class EditGrantOwner extends Service {
         }
 
         // create or edit person information
-        if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {
-            person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);
+        if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {           
+            person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);            
         } else {
             person = (Person) persistentObject.readByOID(Person.class, infoGrantOwner.getPersonInfo()
                     .getIdInternal());

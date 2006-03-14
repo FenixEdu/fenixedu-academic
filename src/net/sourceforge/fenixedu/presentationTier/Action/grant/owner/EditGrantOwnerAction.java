@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -147,6 +148,9 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
             Object[] args = { infoGrantOwner };
             IUserView userView = SessionUtils.getUserView(request);
             grantOwnerId = (Integer) ServiceUtils.executeService(userView, "EditGrantOwner", args);
+        
+        } catch (DomainException e) {
+            return setError(request, mapping, "errors.grant.owner.personexists", null, null);       
         } catch (ExistingServiceException e) {
             return setError(request, mapping, "errors.grant.owner.personexists", null, null);
         } catch (FenixServiceException e) {
@@ -344,7 +348,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
         Gender sexo = Gender.valueOf((String) editGrantOwnerForm.get("sex"));
         infoPerson.setSexo(sexo);
         MaritalStatus estadoCivil;
-        if (((String)editGrantOwnerForm.get("maritalStatus")).equals("") || ((String)editGrantOwnerForm.get("maritalStatus")).equals(null))
+        if (((String)editGrantOwnerForm.get("maritalStatus")).equals("") || ((String)editGrantOwnerForm.get("maritalStatus")).equals("null"))
             estadoCivil = MaritalStatus.SINGLE;
         else
             estadoCivil = MaritalStatus.valueOf((String) editGrantOwnerForm.get("maritalStatus"));

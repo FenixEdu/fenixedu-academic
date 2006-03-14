@@ -2443,6 +2443,9 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyGrantOwner;
 		Integer keyPersonalPhoto;
 		Integer keyAssociatedPersonAccount;
+		Integer keyResearcher;
+		Integer keyUser;
+        Integer keyHomepage;
 		String area;
 		String fiscalCode;
 		String mobile;
@@ -2458,11 +2461,11 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Boolean availableWebSite;
 		String socialSecurityNumber;
 		String areaOfAreaCode;
-		String username;
+		//String username;
 		String phone;
 		String emissionLocationOfDocumentId;
 		String districtOfBirth;
-		String password;
+		//String password;
 		Boolean availableEmail;
 		String workPhone;
 		String name;
@@ -2478,10 +2481,8 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	    MaritalStatus maritalStatus;
 	    Gender gender;
 	    IDDocumentType idDocumentType; 
-		Boolean isPassInKerberos;
-		String istUsername;
-		Integer keyResearcher;
-		Integer keyHomepage;
+		//Boolean isPassInKerberos;
+		//String istUsername;
 	 }
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.PartyType extends net.sourceforge.fenixedu.domain.DomainObject {	
@@ -2802,7 +2803,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.ClockUnit extends net.source
         String name;
 }
 
-class net.sourceforge.fenixedu.domain.assiduousness.Justification extends net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord {
+class net.sourceforge.fenixedu.domain.assiduousness.Justification extends net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord {	
 		DateTime startDate;
 		Duration duration;
 		JustificationMotiveType motiveType;
@@ -2900,6 +2901,17 @@ class net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad extends net.sourcef
 	Integer keyAttends;
 }
 
+class net.sourceforge.fenixedu.domain.User extends net.sourceforge.fenixedu.domain.DomainObject{
+	Integer keyPerson;	
+	Boolean isPassInKerberos;
+	String username;
+	String istUsername;
+	String password;
+	String lastLoginHost;
+	String currentLoginHost;
+	DateTime lastLoginDateTime;
+	DateTime currentLoginDateTime;
+}
 
 /*
  * Relations definitions
@@ -5787,19 +5799,19 @@ relation EmployeeHasTemporaryCard {
 relation AssiduousnessHasAssiduousnessRecord {
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness {
 		multiplicity 1;
-    }
+	}
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
 		multiplicity *;
 	}
-}
+}               
 
 relation AssiduousnessHasSchedule {
 	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedule {
 		multiplicity 1;
-    }
+	}
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecord {
 		multiplicity 1;
-	}
+ 	}
 }
 
 relation ScheduleHasWorkSchedule {
@@ -5808,7 +5820,7 @@ relation ScheduleHasWorkSchedule {
     }
 	net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule playsRole workSchedule {
 		multiplicity *;
-	}
+    }
 }
 
 relation WorkScheduleHasNormalPeriod {
@@ -5837,7 +5849,7 @@ relation WorkScheduleHasFixedPeriod {
 		multiplicity *;
 	}
 }
-        
+
 relation ClockingClockDoneInUnit {
 	net.sourceforge.fenixedu.domain.assiduousness.Clocking playsRole clockings {
 		multiplicity *;
@@ -5961,14 +5973,14 @@ relation PartyPartyType {
 }
 
 relation PartyTypeParentConnectionRule {
-	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole allowedParentPartyType;
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole parentPartyType;
 	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole allowedParentConnectionRules {
 	   multiplicity *;
 	}	 
 }
 
 relation PartyTypeChildConnectionRule {
-	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole allowedChildPartyType;
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole childPartyType;
 	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole allowedChildConnectionRules {
 	   multiplicity *;
 	}	 
@@ -6021,6 +6033,11 @@ relation ProjectParticipationParty {
 	net.sourceforge.fenixedu.domain.research.project.ProjectParticipation playsRole projectParticipations {
 		multiplicity *;
 	}
+}
+
+relation UserPerson{
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+    net.sourceforge.fenixedu.domain.User playsRole user;
 }
 
 /*

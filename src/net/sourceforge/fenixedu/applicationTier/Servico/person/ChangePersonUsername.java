@@ -11,8 +11,7 @@ public class ChangePersonUsername extends Service {
 
     public void run(String newUsername, Integer personId) throws ExcepcaoPersistencia {
         Person person = (Person) persistentObject.readByOID(Person.class, personId);
-        List<Person> persons = RootDomainObject.readAllPersons();
-        
+        List<Person> persons = RootDomainObject.readAllPersons();       
         person.changeUsername(newUsername, persons);
     }
 }

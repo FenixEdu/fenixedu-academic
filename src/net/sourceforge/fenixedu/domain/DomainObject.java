@@ -151,7 +151,7 @@ public abstract class DomainObject extends DomainObject_Base implements Serializ
 	}
     }
     
-    protected String getUser() {
+    protected String getCurrentUser() {
     	if(AccessControl.getUserView() != null) {
     		return AccessControl.getUserView().getUtilizador();
     	} else {

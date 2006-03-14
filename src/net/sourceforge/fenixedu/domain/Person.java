@@ -47,20 +47,21 @@ public class Person extends Person_Base {
 
         checkConditionsToCreateNewPerson(personToCreate.getUsername(), personToCreate
                 .getNumeroDocumentoIdentificacao(), personToCreate.getTipoDocumentoIdentificacao(), this);
-
+        
+        setUser(new User(personToCreate.getUsername()));
         setProperties(personToCreate);
-        setUsername(personToCreate.getUsername());
         setPais(country);
         setIsPassInKerberos(Boolean.FALSE);
     }
 
     public Person(String name, String identificationDocumentNumber,
-            IDDocumentType identificationDocumentType, Gender gender) {
+            IDDocumentType identificationDocumentType, Gender gender, String username) {
 
         super();
-        checkConditionsToCreateNewPerson(null, identificationDocumentNumber, identificationDocumentType,
-                this);
-
+        checkConditionsToCreateNewPerson(username, identificationDocumentNumber,
+                identificationDocumentType, this);
+        
+        setUser(new User(username));
         setNome(name);
         setNumeroDocumentoIdentificacao(identificationDocumentNumber);
         setIdDocumentType(identificationDocumentType);
@@ -78,8 +79,8 @@ public class Person extends Person_Base {
 
         super();
         checkConditionsToCreateNewPerson(username, documentIDNumber, documentType, this);
-
-        setUsername(username);
+        
+        setUser(new User(username));
         setNome(name);
         setGender(gender);
         setMorada(address);
@@ -92,8 +93,69 @@ public class Person extends Person_Base {
         setAvailableEmail(Boolean.FALSE);
         setAvailableWebSite(Boolean.FALSE);
         setAvailablePhoto(Boolean.FALSE);
-        setMaritalStatus(MaritalStatus.SINGLE);
-        setIsPassInKerberos(Boolean.FALSE);
+        setMaritalStatus(MaritalStatus.UNKNOWN);
+        setIsPassInKerberos(Boolean.FALSE);     
+    }
+
+    public Person() {
+        super();
+        this.setMaritalStatus(MaritalStatus.UNKNOWN);
+        this.setAvailableEmail(Boolean.FALSE);
+        this.setAvailableWebSite(Boolean.FALSE);
+        this.setAvailablePhoto(Boolean.FALSE);
+    }
+
+    public Person(String numeroDocumentoIdentificacao, IDDocumentType tipoDocumentoIdentificacao,
+            String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
+            Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
+            Date nascimento, String nomePai, String nomeMae, String freguesiaNaturalidade,
+            String concelhoNaturalidade, String distritoNaturalidade, String morada, String localidade,
+            String codigoPostal, String localidadeCodigoPostal, String freguesiaMorada,
+            String concelhoMorada, String distritoMorada, String telefone, String telemovel,
+            String email, String enderecoWeb, String numContribuinte, String profissao, String username,
+            Country pais, String codigoFiscal, Boolean availableEmail, Boolean availableWebSite,
+            String workPhone) {
+
+        super();
+        checkConditionsToCreateNewPerson(username, numeroDocumentoIdentificacao,
+                tipoDocumentoIdentificacao, this);
+
+        this.setUser(new User(username));
+        this.setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
+        this.setIdDocumentType(tipoDocumentoIdentificacao);
+        this.setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
+        this.setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
+        this.setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
+        this.setNome(nome);
+        this.setGender(sex);
+        this.setMaritalStatus(estadoCivil);
+        this.setNascimento(nascimento);
+        this.setNomePai(nomePai);
+        this.setNomeMae(nomeMae);
+        this.setFreguesiaNaturalidade(freguesiaNaturalidade);
+        this.setConcelhoNaturalidade(concelhoNaturalidade);
+        this.setDistritoNaturalidade(distritoNaturalidade);
+        this.setMorada(morada);
+        this.setLocalidade(localidade);
+        this.setCodigoPostal(codigoPostal);
+        this.setLocalidadeCodigoPostal(localidadeCodigoPostal);
+        this.setFreguesiaMorada(freguesiaMorada);
+        this.setConcelhoMorada(concelhoMorada);
+        this.setDistritoMorada(distritoMorada);
+        this.setTelefone(telefone);
+        this.setTelemovel(telemovel);
+        this.setEmail(email);
+        this.setEnderecoWeb(enderecoWeb);
+        this.setNumContribuinte(numContribuinte);
+        this.setProfissao(profissao);
+        this.setPais(pais);
+        this.setCodigoFiscal(codigoFiscal);
+        this.setAvailableEmail(Boolean.FALSE);
+        this.setAvailableWebSite(Boolean.FALSE);
+        this.setAvailablePhoto(Boolean.FALSE);
+        this.setAvailableEmail(availableEmail);
+        this.setAvailableWebSite(availableWebSite);
+        this.setWorkPhone(workPhone);     
     }
 
     public void edit(InfoPerson personToEdit, Country country) {
@@ -164,24 +226,64 @@ public class Person extends Person_Base {
             }
         }
         return false;
+    }        
+    
+    public String getUsername() {
+        return (getUser() != null) ? getUser().getUsername() : null;
+    }
+    
+    public void setUsername(String username) {        
+        getUser().setUsername(username);
+    }
+    
+    public String getPassword(){
+        return (getUser() != null) ? getUser().getPassword() : null;
+    }
+      
+    public void setPassword(String password){
+        getUser().setPassword(password);
+    }
+        
+    public void setIstUsername(String istUsername) {        
+        getUser().setIstUsername(istUsername);
+    }
+    
+    public String getIstUsername() {
+        return (getUser() != null) ? getUser().getIstUsername() : null;
+    }
+        
+    public void setIsPassInKerberos(Boolean isPassInKerberos) {        
+        getUser().setIsPassInKerberos(isPassInKerberos);
+    }
+   
+    public Boolean getIsPassInKerberos() {        
+        return (getUser() != null) ? getUser().getIsPassInKerberos() : null;
     }
 
     public void changeUsername(String newUsername, List<Person> persons) {
         if (newUsername == null || newUsername.equals("")) {
             throw new DomainException("error.person.nullOrEmptyUsername");
         }
+        
+        if (getUser() == null) {
+            throw new DomainException("error.person.unExistingUser");
+        }
 
         if (checkIfUsernameExists(newUsername, persons, this)) {
             throw new DomainException("error.person.existingUsername");
         }
-
+        
         setUsername(newUsername);
     }
-
+        
     public void changePassword(String oldPassword, String newPassword) {
 
         if (newPassword == null) {
             throw new DomainException("error.person.invalidNullPassword");
+        }
+        
+        if (getUser() == null) {
+            throw new DomainException("error.person.unExistingUser");
         }
 
         if (!PasswordEncryptor.areEquals(getPassword(), oldPassword)) {
@@ -416,118 +518,70 @@ public class Person extends Person_Base {
      * OTHER METHODS *
      **************************************************************************/
 
-    public Person() {
-        super();
-        this.setMaritalStatus(MaritalStatus.UNKNOWN);
-        this.setAvailableEmail(Boolean.FALSE);
-        this.setAvailableWebSite(Boolean.FALSE);
-        this.setAvailablePhoto(Boolean.FALSE);
-    }
-
     /*
      * Construtor sem país Acrescentado por Fernanda Quitério & Tânia Pousão
      * Devido ao JDBC
      */
-    public Person(Integer codigoInterno, String numeroDocumentoIdentificacao,
-            IDDocumentType iDDocumentType, String localEmissaoDocumentoIdentificacao,
-            Date dataEmissaoDocumentoIdentificacao, Date dataValidadeDocumentoIdentificacao,
-            String nome, Gender sex, MaritalStatus estadoCivil, Date nascimento, String nomePai,
-            String nomeMae, String nacionalidade, String freguesiaNaturalidade,
-            String concelhoNaturalidade, String distritoNaturalidade, String morada, String localidade,
-            String codigoPostal, String localidadeCodigoPostal, String freguesiaMorada,
-            String concelhoMorada, String distritoMorada, String telefone, String telemovel,
-            String email, String enderecoWeb, String numContribuinte, String profissao, String username,
-            String password, String codigoFiscal) {
-
-        super();
-        checkConditionsToCreateNewPerson(username, numeroDocumentoIdentificacao, iDDocumentType, this);
-
-        this.setIdInternal(codigoInterno);
-        this.setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
-        this.setIdDocumentType(iDDocumentType);
-        this.setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
-        this.setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
-        this.setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
-        this.setNome(nome);
-        this.setGender(sex);
-        this.setMaritalStatus(estadoCivil);
-        this.setNascimento(nascimento);
-        this.setNomePai(nomePai);
-        this.setNomeMae(nomeMae);
-        this.setFreguesiaNaturalidade(freguesiaNaturalidade);
-        this.setConcelhoNaturalidade(concelhoNaturalidade);
-        this.setDistritoNaturalidade(distritoNaturalidade);
-        this.setMorada(morada);
-        this.setLocalidade(localidade);
-        this.setCodigoPostal(codigoPostal);
-        this.setLocalidadeCodigoPostal(localidadeCodigoPostal);
-        this.setFreguesiaMorada(freguesiaMorada);
-        this.setConcelhoMorada(concelhoMorada);
-        this.setDistritoMorada(distritoMorada);
-        this.setTelefone(telefone);
-        this.setTelemovel(telemovel);
-        this.setEmail(email);
-        this.setEnderecoWeb(enderecoWeb);
-        this.setNumContribuinte(numContribuinte);
-        this.setProfissao(profissao);
-        this.setUsername(username);
-        this.setPassword(password);
-        this.setCodigoFiscal(codigoFiscal);
-        this.setAvailableEmail(Boolean.FALSE);
-        this.setAvailableWebSite(Boolean.FALSE);
-        this.setAvailablePhoto(Boolean.FALSE);
-    }
-
-    public Person(String numeroDocumentoIdentificacao, IDDocumentType tipoDocumentoIdentificacao,
-            String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
-            Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
-            Date nascimento, String nomePai, String nomeMae, String nacionalidade,
-            String freguesiaNaturalidade, String concelhoNaturalidade, String distritoNaturalidade,
-            String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
-            String freguesiaMorada, String concelhoMorada, String distritoMorada, String telefone,
-            String telemovel, String email, String enderecoWeb, String numContribuinte,
-            String profissao, String username, String password, Country pais, String codigoFiscal) {
-
-        super();
-        checkConditionsToCreateNewPerson(username, numeroDocumentoIdentificacao,
-                tipoDocumentoIdentificacao, this);
-
-        this.setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
-        this.setIdDocumentType(tipoDocumentoIdentificacao);
-        this.setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
-        this.setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
-        this.setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
-        this.setNome(nome);
-        this.setGender(sex);
-        this.setMaritalStatus(estadoCivil);
-        this.setNascimento(nascimento);
-        this.setNomePai(nomePai);
-        this.setNomeMae(nomeMae);
-        this.setFreguesiaNaturalidade(freguesiaNaturalidade);
-        this.setConcelhoNaturalidade(concelhoNaturalidade);
-        this.setDistritoNaturalidade(distritoNaturalidade);
-        this.setMorada(morada);
-        this.setLocalidade(localidade);
-        this.setCodigoPostal(codigoPostal);
-        this.setLocalidadeCodigoPostal(localidadeCodigoPostal);
-        this.setFreguesiaMorada(freguesiaMorada);
-        this.setConcelhoMorada(concelhoMorada);
-        this.setDistritoMorada(distritoMorada);
-        this.setTelefone(telefone);
-        this.setTelemovel(telemovel);
-        this.setEmail(email);
-        this.setEnderecoWeb(enderecoWeb);
-        this.setNumContribuinte(numContribuinte);
-        this.setProfissao(profissao);
-        this.setUsername(username);
-        this.setPassword(password);
-        this.setPais(pais);
-        this.setCodigoFiscal(codigoFiscal);
-        this.setAvailableEmail(Boolean.FALSE);
-        this.setAvailableWebSite(Boolean.FALSE);
-        this.setAvailablePhoto(Boolean.FALSE);
-    }
-
+    // public Person(Integer codigoInterno, String numeroDocumentoIdentificacao,
+    // IDDocumentType iDDocumentType, String localEmissaoDocumentoIdentificacao,
+    // Date dataEmissaoDocumentoIdentificacao, Date
+    // dataValidadeDocumentoIdentificacao,
+    // String nome, Gender sex, MaritalStatus estadoCivil, Date nascimento,
+    // String nomePai,
+    // String nomeMae, String nacionalidade, String freguesiaNaturalidade,
+    // String concelhoNaturalidade, String distritoNaturalidade, String morada,
+    // String localidade,
+    // String codigoPostal, String localidadeCodigoPostal, String
+    // freguesiaMorada,
+    // String concelhoMorada, String distritoMorada, String telefone, String
+    // telemovel,
+    // String email, String enderecoWeb, String numContribuinte, String
+    // profissao, String username,
+    // String password, String codigoFiscal) {
+    //
+    // super();
+    // List<Person> allPersons = RootDomainObject.readAllPersons();
+    // checkConditionsToCreateNewPerson(username, numeroDocumentoIdentificacao,
+    // iDDocumentType,
+    // allPersons, this);
+    //
+    // this.setIdInternal(codigoInterno);
+    // this.setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
+    // this.setIdDocumentType(iDDocumentType);
+    // this.setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
+    // this.setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
+    // this.setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
+    // this.setNome(nome);
+    // this.setGender(sex);
+    // this.setMaritalStatus(estadoCivil);
+    // this.setNascimento(nascimento);
+    // this.setNomePai(nomePai);
+    // this.setNomeMae(nomeMae);
+    // this.setFreguesiaNaturalidade(freguesiaNaturalidade);
+    // this.setConcelhoNaturalidade(concelhoNaturalidade);
+    // this.setDistritoNaturalidade(distritoNaturalidade);
+    // this.setMorada(morada);
+    // this.setLocalidade(localidade);
+    // this.setCodigoPostal(codigoPostal);
+    // this.setLocalidadeCodigoPostal(localidadeCodigoPostal);
+    // this.setFreguesiaMorada(freguesiaMorada);
+    // this.setConcelhoMorada(concelhoMorada);
+    // this.setDistritoMorada(distritoMorada);
+    // this.setTelefone(telefone);
+    // this.setTelemovel(telemovel);
+    // this.setEmail(email);
+    // this.setEnderecoWeb(enderecoWeb);
+    // this.setNumContribuinte(numContribuinte);
+    // this.setProfissao(profissao);
+    // this.setUsername(username);
+    // this.setPassword(password);
+    // this.setCodigoFiscal(codigoFiscal);
+    // this.setAvailableEmail(Boolean.FALSE);
+    // this.setAvailableWebSite(Boolean.FALSE);
+    // this.setAvailablePhoto(Boolean.FALSE);
+    // }
+    
+    
     public String toString() {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("[Person idInternal= ");

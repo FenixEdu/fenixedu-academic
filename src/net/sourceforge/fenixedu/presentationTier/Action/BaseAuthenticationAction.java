@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -17,16 +19,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
     
@@ -39,8 +37,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     public final ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
-
-            final IUserView userView = doAuthentication(form, request);
+                       
+            String remoteHostName = getRemoteHostName(request);
+            final IUserView userView = doAuthentication(form, request, remoteHostName);
 
             if (userView.getRoles().isEmpty()) {
                 return getAuthenticationFailedForward(mapping, request, "errors.noAuthorization",
@@ -59,7 +58,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         }
     }
 
-    protected abstract IUserView doAuthentication(ActionForm form, HttpServletRequest request)
+    protected abstract IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
             throws FenixFilterException, FenixServiceException;
 
     protected abstract ActionForward getAuthenticationFailedForward(final ActionMapping mapping,
@@ -132,21 +131,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         return newSession;
     }
 
-    private IUserView authenticateUser(final ActionForm form, final HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
-        final DynaActionForm authenticationForm = (DynaActionForm) form;
-
-        final String username = (String) authenticationForm.get("username");
-        final String password = (String) authenticationForm.get("password");
-        final String requestURL = request.getRequestURL().toString();
-
-        final Object argsAutenticacao[] = { username, password, requestURL };
-        final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
-                "Autenticacao", argsAutenticacao);
-
-        return userView;
-    }
-
     /**
      * @param userRoles
      * @return
@@ -191,5 +175,15 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
         }
         return null;
+    }
+    
+    private String getRemoteHostName(HttpServletRequest request) {
+        String remoteHostName;
+        try {
+            remoteHostName = InetAddress.getByName(request.getRemoteAddr()).getHostName();
+        } catch (UnknownHostException e) {
+            remoteHostName = request.getRemoteHost();
+        }
+        return remoteHostName;
     }
 }

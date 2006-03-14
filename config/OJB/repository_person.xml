@@ -166,6 +166,7 @@
         column="PROFESSION"
         jdbc-type="VARCHAR"
     />
+    <!-- 
     <field-descriptor
         name="username"
         column="USERNAME"
@@ -175,7 +176,7 @@
         name="password"
         column="PASSWD"
         jdbc-type="VARCHAR"
-    />
+    /> -->
     <field-descriptor
         name="keyPais"
         column="KEY_COUNTRY"
@@ -229,16 +230,17 @@
 	   column="KEY_GRANT_OWNER"  
 	   jdbc-type="INTEGER"
     />
+    <!--
 	<field-descriptor
         name="isPassInKerberos"
         column="IS_PASS_KERBEROS"
         jdbc-type="BIT"
-    /> 
+    />     
     <field-descriptor
         name="istUsername"
         column="IST_USERNAME"
         jdbc-type="VARCHAR"
-    />  
+    />    -->
     <field-descriptor
         name="keyCms"
         column="KEY_CMS"
@@ -248,20 +250,82 @@
         name="keyPersonalPhoto"
         column="KEY_PERSONAL_PHOTO"
         jdbc-type="INTEGER"
-    />      
-    <field-descriptor 
-	    name="keyPartyType"
-	    column="KEY_PARTY_TYPE"
-	    jdbc-type="INTEGER"
-	/>
-   	<field-descriptor 
-	   name="keyAssociatedPersonAccount"    
-	   column="KEY_PERSON_ACCOUNT"  
-	   jdbc-type="INTEGER"
-    />	
+    /> 
 	<field-descriptor
         name="keyHomepage"
         column="KEY_HOMEPAGE"
         jdbc-type="INTEGER"
+    />
+	<field-descriptor 
+	    name="keyPartyType"
+	    column="KEY_PARTY_TYPE"
+	    jdbc-type="INTEGER"
+	/>
+	<field-descriptor 
+	   name="keyAssociatedPersonAccount"    
+	   column="KEY_PERSON_ACCOUNT"  
+	   jdbc-type="INTEGER"
     />	
+    <field-descriptor 
+	   name="keyUser"    
+	   column="KEY_USER"  
+	   jdbc-type="INTEGER"
+    />	
+</class-descriptor>
+
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.User 
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.User" table="USER">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+	    name="username"
+	    column="USERNAME"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+	    name="istUsername"
+	    column="IST_USERNAME"
+	/>
+	<field-descriptor
+	    name="password"
+	    column="PASSWORD"
+	    jdbc-type="VARCHAR"
+	/>
+    <field-descriptor
+        name="isPassInKerberos"
+        column="IS_PASS_KERBEROS"
+        jdbc-type="BIT"
+    /> 
+	<field-descriptor
+	    name="lastLoginHost"
+	    column="LAST_LOGIN_HOST"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+	    name="currentLoginHost"
+	    column="CURRENT_LOGIN_HOST"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+	    name="lastLoginDateTime"
+	    column="LAST_LOGIN_DATE_TIME"
+	    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
+	/>
+	<field-descriptor
+	    name="currentLoginDateTime"
+	    column="CURRENT_LOGIN_DATE_TIME"
+	    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
+	/>
+	<field-descriptor
+        name="keyPerson"
+        column="KEY_PERSON"
+        jdbc-type="INTEGER"
+    />  
 </class-descriptor>

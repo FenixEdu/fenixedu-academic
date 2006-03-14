@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.kerberos.Script;
 
 public class AuthenticateKerberos extends Authenticate {
 
-    public IUserView run(final String username, final String password, final String requestURL)
+    public IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
             throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
 
         Person person = Person.readPersonByUsername(username);
@@ -39,13 +39,13 @@ public class AuthenticateKerberos extends Authenticate {
                     if (ke.getReturnCode().equals(KerberosException.WRONG_PASSWORD)) {
                         throw new ExcepcaoAutenticacao("bad.authentication");
                     } else {
-                        return super.run(username, password, requestURL);
+                        return super.run(username, password, requestURL, remoteHost);
                     }
                 } catch (ExcepcaoPersistencia ep) {
-                    return super.run(username, password, requestURL);
+                    return super.run(username, password, requestURL, remoteHost);
                 }
             } else {
-                final IUserView userView = super.run(username, password, requestURL);
+                final IUserView userView = super.run(username, password, requestURL, remoteHost);
                 if (userView != null) {
                     try {
                         Script.createUser(person.getIstUsername(), password);
@@ -68,7 +68,7 @@ public class AuthenticateKerberos extends Authenticate {
                 return userView;
             }
         } else {
-            return super.run(username, password, requestURL);
+            return super.run(username, password, requestURL, remoteHost);
         }
     }
 }

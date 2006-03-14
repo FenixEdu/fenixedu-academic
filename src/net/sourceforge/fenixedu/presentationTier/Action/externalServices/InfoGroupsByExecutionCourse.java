@@ -121,7 +121,7 @@ public class InfoGroupsByExecutionCourse extends FenixAction
     private IUserView authenticate(String username, String password, String requestURL) throws FenixServiceException,
             FenixFilterException
     {
-        Object argsAutenticacao[] = { username, password, requestURL };
+        Object argsAutenticacao[] = { username, password, requestURL, null };
         IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
                 "Autenticacao", argsAutenticacao); //$NON-NLS-1$
 

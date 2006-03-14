@@ -21,7 +21,7 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
     
     public Teacher readTeacherByUsername(String userName) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("person.username", userName);
+        criteria.addEqualTo("person.user.username", userName);
         return (Teacher) queryObject(Teacher.class, criteria);
     }
 

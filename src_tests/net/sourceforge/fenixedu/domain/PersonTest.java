@@ -233,13 +233,14 @@ public class PersonTest extends DomainTestBase {
 
 	public void testCreatePerson2() {
 		Person person = new Person(nome, numDocumentoIdentificacao,
-				documentType, sexo);
+				documentType, sexo, username);
 
 		assertEquals(person.getNome(), nome);
 		assertEquals(person.getNumeroDocumentoIdentificacao(),
 				numDocumentoIdentificacao);
 		assertEquals(person.getIdDocumentType(), documentType);
 		assertEquals(person.getGender(), sexo);
+        assertEquals(person.getUsername(), username);
 	}
 
 	public void testCreatePerson3() {

@@ -54,7 +54,7 @@ public class ShowStudentGroupInfo extends Action
 		try
 		{
 			Object argsAutenticacao[] =
-			{ username, password, requestURL };
+			{ username, password, requestURL, null};
 			IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
 
 			ExecutionCourse executionCourse = null;

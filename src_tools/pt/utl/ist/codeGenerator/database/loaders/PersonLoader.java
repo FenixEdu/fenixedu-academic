@@ -24,15 +24,16 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class PersonLoader extends BaseLoader {
 
-	public static void addSheet(final HSSFWorkbook workbook, final HSSFCellStyle cellStyle, final HSSFRow header) {
-		final String classname = Person.class.getName();
+    public static void addSheet(final HSSFWorkbook workbook, final HSSFCellStyle cellStyle,
+            final HSSFRow header) {
+        final String classname = Person.class.getName();
 
         addColumn(cellStyle, header, classname, "username");
 
         addColumn(cellStyle, header, classname, "nome");
         addColumn(cellStyle, header, classname, "gender");
         addColumn(cellStyle, header, "COUNTRY");
-        
+
         addColumn(cellStyle, header, classname, "nascimento");
         addColumn(cellStyle, header, classname, "nacionalidade");
         addColumn(cellStyle, header, classname, "freguesiaNaturalidade");
@@ -62,7 +63,7 @@ public class PersonLoader extends BaseLoader {
         addColumn(cellStyle, header, classname, "codigoPostal");
         addColumn(cellStyle, header, classname, "concelhoMorada");
         addColumn(cellStyle, header, classname, "freguesiaMorada");
-        
+
         addColumn(cellStyle, header, classname, "email");
         addColumn(cellStyle, header, classname, "enderecoWeb");
         addColumn(cellStyle, header, classname, "availableWebSite");
@@ -71,96 +72,73 @@ public class PersonLoader extends BaseLoader {
 
         addColumn(cellStyle, header, classname, "availableEmail");
         addColumn(cellStyle, header, classname, "workPhone");
-	}
+    }
 
-	public static void load(final HSSFWorkbook workbook, final Map<String, Country> countries)
+    public static void load(final HSSFWorkbook workbook, final Map<String, Country> countries)
             throws ExcepcaoPersistencia {
-		load(workbook, calculateSheetName(Person.class), countries);
-	}
+        load(workbook, calculateSheetName(Person.class), countries);
+    }
 
-	public static Map<String, Person> load(final HSSFWorkbook workbook, final String sheetname, final Map<String, Country> countries)
-            throws ExcepcaoPersistencia {
+    public static Map<String, Person> load(final HSSFWorkbook workbook, final String sheetname,
+            final Map<String, Country> countries) throws ExcepcaoPersistencia {
         final Map<String, Person> people = new HashMap<String, Person>();
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
         persistentSupport.iniciarTransaccao();
 
         final Role personRole = Role.getRoleByRoleType(RoleType.PERSON);
         final List<Person> peopleWithPersonRole = personRole.getAssociatedPersons();
 
-		final HSSFSheet sheet = workbook.getSheet(sheetname);
-		for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
-			final HSSFRow row = sheet.getRow(i);
+        final HSSFSheet sheet = workbook.getSheet(sheetname);
+        for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
+            final HSSFRow row = sheet.getRow(i);
 
-			final String username = row.getCell((short) 0).getStringCellValue();
-			final String name = row.getCell((short) 1).getStringCellValue();
-			final String gender = row.getCell((short) 2).getStringCellValue();
-			final String COUNTRY = row.getCell((short) 3).getStringCellValue();
-			final Date nascimento = row.getCell((short) 4).getDateCellValue();
-			/* final String nacionalidade = */ row.getCell((short) 5).getStringCellValue();
-			final String freguesiaNaturalidade = row.getCell((short) 6).getStringCellValue();
+            final String username = row.getCell((short) 0).getStringCellValue();
+            final String name = row.getCell((short) 1).getStringCellValue();
+            final String gender = row.getCell((short) 2).getStringCellValue();
+            final String COUNTRY = row.getCell((short) 3).getStringCellValue();
+            final Date nascimento = row.getCell((short) 4).getDateCellValue();
+            /* final String nacionalidade = */row.getCell((short) 5).getStringCellValue();
+            final String freguesiaNaturalidade = row.getCell((short) 6).getStringCellValue();
             final String concelhoNaturalidade = row.getCell((short) 7).getStringCellValue();
             final String distritoNaturalidade = row.getCell((short) 8).getStringCellValue();
-			final String maritalStatus = row.getCell((short) 9).getStringCellValue();
-			final String nomePai = row.getCell((short) 10).getStringCellValue();
-			final String nomeMae = row.getCell((short) 11).getStringCellValue();
-			final String idDocumentType = row.getCell((short) 12).getStringCellValue();
-			final String numeroDocumentoIdentificacao = row.getCell((short) 13).getStringCellValue();
-			final Date dataEmissaoDocumentoIdentificacao = row.getCell((short) 14).getDateCellValue();
-			final Date dataValidadeDocumentoIdentificacao = row.getCell((short) 15).getDateCellValue();
-			final String localEmissaoDocumentoIdentificacao = row.getCell((short) 16).getStringCellValue();
-			final String codigoFiscal = row.getCell((short) 17).getStringCellValue();
-			final String numContribuinte = row.getCell((short) 18).getStringCellValue();
-			final String telemovel = row.getCell((short) 19).getStringCellValue();
-			final String telefone = row.getCell((short) 20).getStringCellValue();
-			final String morada = row.getCell((short) 21).getStringCellValue();
-			final String localidade = row.getCell((short) 22).getStringCellValue();
-			final String localidadeCodigoPostal = row.getCell((short) 23).getStringCellValue();
-			final String distritoMorada = row.getCell((short) 24).getStringCellValue();
-			final String codigoPostal = row.getCell((short) 25).getStringCellValue();
-			final String concelhoMorada = row.getCell((short) 26).getStringCellValue();
-			final String freguesiaMorada = row.getCell((short) 27).getStringCellValue();
-			final String email = row.getCell((short) 28).getStringCellValue();
-			final String enderecoWeb = row.getCell((short) 29).getStringCellValue();
+            final String maritalStatus = row.getCell((short) 9).getStringCellValue();
+            final String nomePai = row.getCell((short) 10).getStringCellValue();
+            final String nomeMae = row.getCell((short) 11).getStringCellValue();
+            final String idDocumentType = row.getCell((short) 12).getStringCellValue();
+            final String numeroDocumentoIdentificacao = row.getCell((short) 13).getStringCellValue();
+            final Date dataEmissaoDocumentoIdentificacao = row.getCell((short) 14).getDateCellValue();
+            final Date dataValidadeDocumentoIdentificacao = row.getCell((short) 15).getDateCellValue();
+            final String localEmissaoDocumentoIdentificacao = row.getCell((short) 16)
+                    .getStringCellValue();
+            final String codigoFiscal = row.getCell((short) 17).getStringCellValue();
+            final String numContribuinte = row.getCell((short) 18).getStringCellValue();
+            final String telemovel = row.getCell((short) 19).getStringCellValue();
+            final String telefone = row.getCell((short) 20).getStringCellValue();
+            final String morada = row.getCell((short) 21).getStringCellValue();
+            final String localidade = row.getCell((short) 22).getStringCellValue();
+            final String localidadeCodigoPostal = row.getCell((short) 23).getStringCellValue();
+            final String distritoMorada = row.getCell((short) 24).getStringCellValue();
+            final String codigoPostal = row.getCell((short) 25).getStringCellValue();
+            final String concelhoMorada = row.getCell((short) 26).getStringCellValue();
+            final String freguesiaMorada = row.getCell((short) 27).getStringCellValue();
+            final String email = row.getCell((short) 28).getStringCellValue();
+            final String enderecoWeb = row.getCell((short) 29).getStringCellValue();
             final boolean availableEmail = row.getCell((short) 30).getBooleanCellValue();
-			final boolean availableWebSite = row.getCell((short) 31).getBooleanCellValue();
-			final String profissao = row.getCell((short) 32).getStringCellValue();
-			final String workPhone = row.getCell((short) 33).getStringCellValue();
+            final boolean availableWebSite = row.getCell((short) 31).getBooleanCellValue();
+            final String profissao = row.getCell((short) 32).getStringCellValue();
+            final String workPhone = row.getCell((short) 33).getStringCellValue();
 
-            final Person person = new Person();
-            person.setUsername(username);
-            person.setNome(name);
-            person.setGender(Gender.valueOf(gender));
-            person.setPais(countries.get(COUNTRY));
-            person.setNascimento(nascimento);
-            person.setFreguesiaNaturalidade(freguesiaNaturalidade);
-            person.setConcelhoNaturalidade(concelhoNaturalidade);
-            person.setDistritoNaturalidade(distritoNaturalidade);
-            person.setMaritalStatus(MaritalStatus.valueOf(maritalStatus));
-            person.setNomePai(nomePai);
-            person.setNomeMae(nomeMae);
-            person.setIdDocumentType(IDDocumentType.valueOf(idDocumentType));
-            person.setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
-            person.setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
-            person.setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
-            person.setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
-            person.setCodigoFiscal(codigoFiscal);
-            person.setNumContribuinte(numContribuinte);
-            person.setTelemovel(telemovel);
-            person.setTelefone(telefone);
-            person.setMorada(morada);
-            person.setLocalidade(localidade);
-            person.setLocalidadeCodigoPostal(localidadeCodigoPostal);
-            person.setDistritoMorada(distritoMorada);
-            person.setCodigoPostal(codigoPostal);
-            person.setConcelhoMorada(concelhoMorada);
-            person.setFreguesiaMorada(freguesiaMorada);
-            person.setEmail(email);
-            person.setEnderecoWeb(enderecoWeb);
-            person.setAvailableEmail(Boolean.valueOf(availableEmail));
-            person.setAvailableWebSite(Boolean.valueOf(availableWebSite));
-            person.setProfissao(profissao);
-            person.setWorkPhone(workPhone);
+            final Person person = new Person(numeroDocumentoIdentificacao, IDDocumentType
+                    .valueOf(idDocumentType), localEmissaoDocumentoIdentificacao,
+                    dataEmissaoDocumentoIdentificacao, dataValidadeDocumentoIdentificacao, name, Gender
+                            .valueOf(gender), MaritalStatus.valueOf(maritalStatus), nascimento, nomePai,
+                    nomeMae, freguesiaNaturalidade, concelhoNaturalidade, distritoNaturalidade, morada,
+                    localidade, codigoPostal, localidadeCodigoPostal, freguesiaMorada, concelhoMorada,
+                    distritoMorada, telefone, telemovel, email, enderecoWeb, numContribuinte, profissao,
+                    username, countries.get(COUNTRY), codigoFiscal, availableEmail, availableWebSite,
+                    workPhone);
 
             persistentSupport.confirmarTransaccao();
             persistentSupport.iniciarTransaccao();
@@ -168,12 +146,12 @@ public class PersonLoader extends BaseLoader {
             peopleWithPersonRole.add(person);
 
             people.put(username, person);
-		}
+        }
 
-		persistentSupport.confirmarTransaccao();
+        persistentSupport.confirmarTransaccao();
 
         return people;
-	}
+    }
 
     public static void dump(final HSSFRow row, final Person person) {
         final HSSFCell usernameCell = row.createCell((short) 0);
@@ -230,12 +208,15 @@ public class PersonLoader extends BaseLoader {
         idDocumentTypeCell.setCellValue(person.getIdDocumentType().toString());
         numeroDocumentoIdentificacaoCell.setCellValue(person.getNumeroDocumentoIdentificacao());
         if (person.getDataEmissaoDocumentoIdentificacao() != null) {
-            dataEmissaoDocumentoIdentificacaoCell.setCellValue(person.getDataEmissaoDocumentoIdentificacao());
+            dataEmissaoDocumentoIdentificacaoCell.setCellValue(person
+                    .getDataEmissaoDocumentoIdentificacao());
         }
         if (person.getDataValidadeDocumentoIdentificacao() != null) {
-            dataValidadeDocumentoIdentificacaoCell.setCellValue(person.getDataValidadeDocumentoIdentificacao());
+            dataValidadeDocumentoIdentificacaoCell.setCellValue(person
+                    .getDataValidadeDocumentoIdentificacao());
         }
-        localEmissaoDocumentoIdentificacaoCell.setCellValue(person.getLocalEmissaoDocumentoIdentificacao());
+        localEmissaoDocumentoIdentificacaoCell.setCellValue(person
+                .getLocalEmissaoDocumentoIdentificacao());
         codigoFiscalCell.setCellValue(person.getCodigoFiscal());
         numContribuinteCell.setCellValue(person.getNumContribuinte());
         telemovelCell.setCellValue(person.getTelemovel());
