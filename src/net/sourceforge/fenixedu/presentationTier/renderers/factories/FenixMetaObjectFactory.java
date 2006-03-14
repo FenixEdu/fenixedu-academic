@@ -29,9 +29,7 @@ public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
     @Override
     public MetaObject createMetaObject(Class type, Schema schema) {
         if (DomainObject.class.isAssignableFrom(type)) {
-            DomainClass domainClass = MetadataManager.getDomainModel().findClass(type.getName());
-            
-            return createCreationMetaObject(domainClass, schema);
+            return createCreationMetaObject(type, schema);
         }
         else {
             return super.createMetaObject(type, schema);
@@ -52,8 +50,8 @@ public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
         return metaObject;
     }
 
-    private MetaObject createCreationMetaObject(DomainClass object, Schema schema) {
-        CreationDomainMetaObject metaObject = new CreationDomainMetaObject(object);
+    private MetaObject createCreationMetaObject(Class type, Schema schema) {
+        CreationDomainMetaObject metaObject = new CreationDomainMetaObject(type);
         metaObject.setSchema(schema.getName());
         
         List<SchemaSlotDescription> slotDescriptions = schema.getSlotDescriptions(); 

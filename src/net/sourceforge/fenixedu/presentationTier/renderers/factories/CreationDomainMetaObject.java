@@ -7,21 +7,16 @@ import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.UpdateObjects.ObjectChange;
 import net.sourceforge.fenixedu.renderers.model.CreationMetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
-import dml.DomainClass;
 
 public class CreationDomainMetaObject extends DomainMetaObject implements CreationMetaObject {
 
     private Class type;
     private transient Object createdObject;
 
-    public CreationDomainMetaObject(DomainClass domainClass) {
+    public CreationDomainMetaObject(Class type) {
         super();
 
-        try {
-            this.type = Class.forName(domainClass.getFullName());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("could not find concrete class for domain class " + domainClass);
-        }
+        this.type = type;
     }
 
     @Override

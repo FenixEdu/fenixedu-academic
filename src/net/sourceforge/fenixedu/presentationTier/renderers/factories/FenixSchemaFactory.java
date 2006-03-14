@@ -34,6 +34,19 @@ public class FenixSchemaFactory extends DefaultSchemaFactory {
         return super.createSchema(object);
     }
     
+    @Override
+    public Schema createSchema(Class type) {
+        if (DomainObject.class.isAssignableFrom(type)) {
+            try {
+                return FenixSchemaFactory.getSchemaForDomainObject(type.getName());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return super.createSchema(type);
+    }
+
     public static List<Slot> getDomainClassSlots(DomainClass domainClass) {
         List<Slot> slots = new ArrayList<Slot>();
         String[] slotsToIgnore = new String[] {
