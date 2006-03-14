@@ -76,7 +76,7 @@
 		jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
-		name="keyUnit"
+		name="keyCompetenceCourseGroupUnit"
 		column="KEY_UNIT"
 		jdbc-type="INTEGER"
 	/>

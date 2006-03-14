@@ -12,9 +12,9 @@
 		<h:outputText value="<p><span style='font-weight: bold;'>#{bolonhaBundle['department']}:</span>" escape="false"/>
 		<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}</p>" escape="false"/>
 
-		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
+		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
 			<h:outputText value="<p><span style='font-weight: bold;'>#{bolonhaBundle['area']}</span>" escape="false"/>
-			<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.unit.name}</p>" escape="false"/>
+			<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.name}</p>" escape="false"/>
 		</fc:dataRepeater>		
 		<br/>
 		<h:outputText value="<p><span style='font-weight: bold;'>#{bolonhaBundle['name']} (pt):</span>" escape="false"/>

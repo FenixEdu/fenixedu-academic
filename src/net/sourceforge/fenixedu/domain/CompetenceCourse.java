@@ -45,7 +45,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             RegimeType regimeType, CurricularStage curricularStage, Unit unit) {
         this();
         super.setCurricularStage(curricularStage);
-        super.setUnit(unit);
+        super.setCompetenceCourseGroupUnit(unit);
         super.addCompetenceCourseInformations(new CompetenceCourseInformation(name.trim(), nameEn.trim(), acronym.trim(), basic,
                 regimeType, null));
     }
@@ -147,7 +147,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             throw new DomainException("competenceCourse.approved");
         }
         getDepartments().clear();
-        removeUnit();
+        removeCompetenceCourseGroupUnit();
         for (;!getCompetenceCourseInformations().isEmpty();getCompetenceCourseInformations().get(0).delete());
         super.deleteDomainObject();
     }
@@ -413,7 +413,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public Unit getDepartmentUnit() {
-        return this.getUnit().getDepartmentUnit();
+        return this.getCompetenceCourseGroupUnit().getDepartmentUnit();
     }
     
     public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads() {
@@ -450,8 +450,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     @Override
     @Checked("CompetenceCoursePredicates.writePredicate")
-    public void removeUnit() {
-        super.removeUnit();
+    public void removeCompetenceCourseGroupUnit() {
+        super.removeCompetenceCourseGroupUnit();
     }
 
     @Override
@@ -483,8 +483,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     @Override
     @Checked("CompetenceCoursePredicates.writePredicate")
-    public void setUnit(Unit unit) {
-        super.setUnit(unit);
+    public void setCompetenceCourseGroupUnit(Unit unit) {
+        super.setCompetenceCourseGroupUnit(unit);
     }
 
     @Override
@@ -494,11 +494,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public Unit getScientificAreaUnit() {
-        if (this.getUnit().hasAnyParents()) {
-            if (this.getUnit().getParentsCount() > 1) { 
+        if (this.getCompetenceCourseGroupUnit().hasAnyParents()) {
+            if (this.getCompetenceCourseGroupUnit().getParentsCount() > 1) { 
                 throw new DomainException("compentence.course.should.have.only.one.scientific.area");
             }
-            return (Unit) this.getUnit().getParents().get(0);
+            return (Unit) this.getCompetenceCourseGroupUnit().getParents().get(0);
         }  
         return null;
     }
@@ -521,6 +521,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
     
     public void transfer(Unit competenceCourseGroupUnit) {
-        super.setUnit(competenceCourseGroupUnit);
+        super.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
     }
 }

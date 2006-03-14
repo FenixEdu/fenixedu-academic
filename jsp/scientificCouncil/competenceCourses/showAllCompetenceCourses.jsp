@@ -24,9 +24,9 @@ padding-right: 10px;
 		<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>
 		<h:outputText value="<li><strong>#{scouncilBundle['department']}: </strong>" escape="false"/>
 		<h:outputText value="#{competenceCourse.departmentUnit.department.realName}</li>" escape="false"/>
-		<fc:dataRepeater value="#{competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
+		<fc:dataRepeater value="#{competenceCourse.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
 			<h:outputText value="<li><strong>#{scouncilBundle['area']}: </strong>" escape="false"/>
-			<h:outputText value="#{scientificAreaUnit.name} > #{competenceCourse.unit.name}</li>" escape="false"/>
+			<h:outputText value="#{scientificAreaUnit.name} > #{competenceCourse.competenceCourseGroupUnit.name}</li>" escape="false"/>
 		</fc:dataRepeater>		
 		<h:outputText value="</ul>" escape="false"/>
 

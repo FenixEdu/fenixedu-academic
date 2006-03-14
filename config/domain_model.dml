@@ -741,7 +741,7 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 	String code;
-	Integer keyUnit;
+	Integer keyCompetenceCourseGroupUnit;
 	CurricularStage curricularStage;
 	Date creationDate;
 }
@@ -3429,7 +3429,7 @@ relation CompetenceCourseUnit {
 	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourses {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole competenceCourseGroupUnit;
 }
 
 relation DislocatedStudentCountry {
