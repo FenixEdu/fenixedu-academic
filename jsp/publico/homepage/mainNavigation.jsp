@@ -6,17 +6,27 @@
 <ul class="treemenu">
 	<li>
 		<html:link page="/l1">
-			Menu Link 1
+			Home
 		</html:link>
     </li>
 	<li>
-		<html:link page="/l2">
-			Menu Link 2
+		<html:link page="/l1">
+			Blog
+		</html:link>
+    </li>
+	<li>
+		<html:link page="/l1">
+			Curriculum Vitae
+		</html:link>
+    </li>
+	<li>
+		<html:link page="/l1">
+			Links
 		</html:link>
     </li>
 	<li>
 		<html:link page="/l3">
-			Menu Link 3
+			Contacts
 		</html:link>
     </li>
 </ul>

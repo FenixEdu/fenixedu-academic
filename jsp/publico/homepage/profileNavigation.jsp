@@ -6,17 +6,7 @@
 <ul class="treemenu">
 	<li>
 		<html:link page="/l1">
-			Header Link 1
-		</html:link>
-    </li>
-	<li>
-		<html:link page="/l2">
-			Header Link 2
-		</html:link>
-    </li>
-	<li>
-		<html:link page="/l3">
-			Header Link 3
+			Homepage listings
 		</html:link>
     </li>
 </ul>
