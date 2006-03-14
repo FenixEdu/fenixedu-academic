@@ -37,9 +37,13 @@ public class FloatInputRenderer extends StringInputRenderer {
     protected HtmlComponent createTextField(Object object, Class type) {
         HtmlFormComponent formComponent = (HtmlFormComponent) super.createTextField(object, type);
         
-        formComponent.setConverter(new FloatNumberConverter());
+        formComponent.setConverter(getConverter());
         
         return formComponent;
+    }
+
+    protected Converter getConverter() {
+        return new FloatNumberConverter();
     }
     
     private class FloatNumberConverter extends Converter {

@@ -35,7 +35,7 @@
 Documentation:
     
     To document an entry use '@' as the first character of a comment. The first
-    entry after such comment will be documented.
+    entry after such comment will be documented.replayed
     
     Example:
     
@@ -150,12 +150,17 @@ Documentation:
     <renderer mode="input" type="java.lang.String" layout="htmlEditor" class="net.sourceforge.fenixedu.presentationTier.renderers.HtmlEditorRenderer"/>
     
     <renderer mode="input" type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
+
     <renderer mode="input" type="int" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
+    <renderer mode="input" type="java.lang.Integer" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
     <renderer mode="input" type="long" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
+    <renderer mode="input" type="java.lang.Long" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
     <renderer mode="input" type="short" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
-    
-    <renderer mode="input" type="double" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
+    <renderer mode="input" type="java.lang.Short" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
+    <renderer mode="input" type="double" class="net.sourceforge.fenixedu.renderers.DoubleInputRenderer"/>
+    <renderer mode="input" type="java.lang.Double" class="net.sourceforge.fenixedu.renderers.DoubleInputRenderer"/>
     <renderer mode="input" type="float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
+    <renderer mode="input" type="java.lang.Float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
 	
     <!--@ The default input layout for a boolean is a checkbox. Check is <tt>true</tt>, unchecked is <tt>false</tt>.  -->
     <renderer mode="input" type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
@@ -189,11 +194,17 @@ Documentation:
           addition of objects to the list must be handled by an external action. -->
     <renderer mode="input" type="java.util.List" layout="external-add" class="net.sourceforge.fenixedu.renderers.ManageableListRenderer"/>
 
+    <!--@ This layout is the default layout for creating objects. The input of a class is the same as creating a new object of the
+          type represented by the class. This allows to reuse all the other layouts defined for the input mode, that is, we don't need
+          to define a create mode and redefine all the layouts to that mode.  -->
+    <renderer mode="input" type="java.lang.Class" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+
     <!--@ This layouts is the same as the <tt>values</tt> layout preconfigured with an html separator of values. This
           way it can be used as a property of other layout. -->
     <renderer type="java.lang.Object" layout="values-dash" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
         <property name="htmlSeparator" value=" - "/>
     </renderer>
+
     
     <!-- FIXME: this should be removed, used for renderers examples only -->
     <renderer type="java.lang.Object" layout="nice-details-table" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
