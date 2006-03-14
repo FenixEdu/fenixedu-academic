@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWo
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
@@ -43,16 +44,16 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher extends Service {
 			finalDegreeWorkProposalHeaders = new ArrayList();
 			for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
 				Proposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
+				final Scheduleing scheduleing = proposal.getScheduleing();
+				for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegrees()) {
 
 				if (proposal != null) {
 					FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = new FinalDegreeWorkProposalHeader();
 
 					finalDegreeWorkProposalHeader.setIdInternal(proposal.getIdInternal());
-					finalDegreeWorkProposalHeader.setExecutionDegreeOID(proposal.getScheduleing().getExecutionDegrees().iterator().next()
-							.getIdInternal());
+					finalDegreeWorkProposalHeader.setExecutionDegreeOID(executionDegree.getIdInternal());
 					finalDegreeWorkProposalHeader.setTitle(proposal.getTitle());
-					finalDegreeWorkProposalHeader.setExecutionYear(proposal.getScheduleing().getExecutionDegrees().iterator().next()
-							.getExecutionYear().getYear());
+					finalDegreeWorkProposalHeader.setExecutionYear(executionDegree.getExecutionYear().getYear());
 					finalDegreeWorkProposalHeader.setProposalNumber(proposal.getProposalNumber());
 					if (proposal.getOrientator() != null) {
 						finalDegreeWorkProposalHeader.setOrientatorOID(proposal.getOrientator()
@@ -67,12 +68,9 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher extends Service {
 								.getPerson().getNome());
 					}
 					finalDegreeWorkProposalHeader.setCompanyLink(proposal.getCompanionName());
-					finalDegreeWorkProposalHeader.setDegreeCode(proposal.getScheduleing().getExecutionDegrees().iterator().next()
+					finalDegreeWorkProposalHeader.setDegreeCode(executionDegree
 							.getDegreeCurricularPlan().getDegree().getSigla());
 
-					Scheduleing scheduleing = persistentFinalDegreeWork
-							.readFinalDegreeWorkScheduleing(proposal.getScheduleing().getExecutionDegrees().iterator().next()
-									.getIdInternal());
 					if (scheduleing != null
 							&& scheduleing.getStartOfProposalPeriod() != null
 							&& scheduleing.getEndOfProposalPeriod() != null
@@ -148,6 +146,7 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher extends Service {
 					}
 
 					finalDegreeWorkProposalHeaders.add(finalDegreeWorkProposalHeader);
+				}
 				}
 			}
 		}
