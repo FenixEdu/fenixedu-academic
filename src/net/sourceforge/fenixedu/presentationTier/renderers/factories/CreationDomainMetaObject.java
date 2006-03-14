@@ -21,7 +21,7 @@ public class CreationDomainMetaObject extends DomainMetaObject implements Creati
 
     @Override
     public Object getObject() {
-        return MetadataManager.getDomainModel().findClass(getType().getName());
+        return getType();
     }
     
     public Object getCreatedObject() {
