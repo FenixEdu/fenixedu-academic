@@ -5,21 +5,17 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 
 /**
- * This renderer provides a simple way of doing the input of a double value. The
- * value is read with an text input field and parsed with 
- * {@link Double#parseDouble(java.lang.String)}.
- *  
- * <p>
- * Example:
- *  <input type="text" value="10.5"/>
+ * {@inheritDoc}
+ * 
+ * This renderer converts the value to a float with {@link Double#parseDouble(java.lang.String)}.
  * 
  * @author cfgi
  */
-public class DoubleInputRenderer extends FloatInputRenderer {
+public class DoubleInputRenderer extends NumberInputRenderer {
 
     @Override
     protected Converter getConverter() {
-        return super.getConverter();
+        return new DoubleNumberConverter();
     }
 
     private class DoubleNumberConverter extends Converter {

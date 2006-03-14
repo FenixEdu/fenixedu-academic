@@ -153,10 +153,10 @@ Documentation:
 
     <renderer mode="input" type="int" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
     <renderer mode="input" type="java.lang.Integer" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
-    <renderer mode="input" type="long" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
-    <renderer mode="input" type="java.lang.Long" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
-    <renderer mode="input" type="short" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
-    <renderer mode="input" type="java.lang.Short" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
+    <renderer mode="input" type="long" class="net.sourceforge.fenixedu.renderers.LongInputRenderer"/>
+    <renderer mode="input" type="java.lang.Long" class="net.sourceforge.fenixedu.renderers.LongInputRenderer"/>
+    <renderer mode="input" type="short" class="net.sourceforge.fenixedu.renderers.ShortInputRenderer"/>
+    <renderer mode="input" type="java.lang.Short" class="net.sourceforge.fenixedu.renderers.ShortInputRenderer"/>
     <renderer mode="input" type="double" class="net.sourceforge.fenixedu.renderers.DoubleInputRenderer"/>
     <renderer mode="input" type="java.lang.Double" class="net.sourceforge.fenixedu.renderers.DoubleInputRenderer"/>
     <renderer mode="input" type="float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>

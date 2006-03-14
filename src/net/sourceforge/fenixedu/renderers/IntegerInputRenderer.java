@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.renderers;
 
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
@@ -18,7 +16,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
  * 
  * @author cfgi
  */
-public class IntegerInputRenderer extends StringInputRenderer {
+public class IntegerInputRenderer extends NumberInputRenderer {
 
     private int base = 10;
     
@@ -38,34 +36,15 @@ public class IntegerInputRenderer extends StringInputRenderer {
     }
     
     @Override
-    public HtmlComponent render(Object targetObject, Class type) {
-        Number number = (Number) targetObject;
-        
-        String text;
-        if (number == null) {
-            text = "";
-        }
-        else {
-            text = number.toString();
-        }
-        
-        return super.render(text, type);
-    }
-
-    @Override
-    protected HtmlComponent createTextField(Object object, Class type) {
-        HtmlFormComponent formComponent = (HtmlFormComponent) super.createTextField(object, type);
-        
-        formComponent.setConverter(new NumberConverter(getBase()));
-        
-        return formComponent;
+    protected Converter getConverter() {
+        return new IntegerNumberConverter(getBase());
     }
     
-    private class NumberConverter extends Converter {
+    private class IntegerNumberConverter extends Converter {
 
         private int base;
         
-        public NumberConverter(int base) {
+        public IntegerNumberConverter(int base) {
             this.base = base;
         }
 
