@@ -4,13 +4,14 @@
  */
 package net.sourceforge.fenixedu.domain.finalDegreeWork;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 /**
  * @author Luis Cruz
@@ -94,11 +95,10 @@ public class Scheduleing extends Scheduleing_Base {
         this.setEndOfCandidacyPeriodTime(endOfCandidacyPeriod);
     }
 
-    public SortedSet<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
-    	final SortedSet<ExecutionDegree> executionDegrees =
-    			new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
-    	executionDegrees.addAll(getExecutionDegrees());
-    	return executionDegrees;
+    public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
+        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
+        Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+        return executionDegrees;
     }
 
 }
