@@ -177,7 +177,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         return null;
     }
     
-    private String getRemoteHostName(HttpServletRequest request) {
+    public static String getRemoteHostName(HttpServletRequest request) {
         String remoteHostName;
         try {
             remoteHostName = InetAddress.getByName(request.getRemoteAddr()).getHostName();

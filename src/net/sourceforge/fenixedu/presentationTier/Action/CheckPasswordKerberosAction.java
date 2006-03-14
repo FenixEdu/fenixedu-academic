@@ -48,7 +48,7 @@ public class CheckPasswordKerberosAction extends FenixAction {
             final String username = request.getParameter("username");
             final String password = request.getParameter("password");
             final String requestURL = request.getRequestURL().toString();
-            final Object authenticationArgs[] = { username, password, requestURL };
+            final Object authenticationArgs[] = { username, password, requestURL, BaseAuthenticationAction.getRemoteHostName(request) };
 
             String result = null;
 
