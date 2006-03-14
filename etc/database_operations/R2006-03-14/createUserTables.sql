@@ -19,7 +19,7 @@ CREATE TABLE `USER` (
 insert into USER select
 	PARTY.ID_INTERNAL, PARTY.USERNAME, PARTY.IST_USERNAME, PARTY.IS_PASS_KERBEROS, PARTY.PASSWD,
 	null, null, null, null, PARTY.ID_INTERNAL
-from PARTY where PARTY.CLASS_NAME = 'net.sourceforge.fenixedu.domain.PERSON';
+from PARTY where PARTY.CLASS_NAME = 'net.sourceforge.fenixedu.domain.Person';
 
 alter table PARTY drop column USERNAME;
 alter table PARTY drop column IST_USERNAME;
