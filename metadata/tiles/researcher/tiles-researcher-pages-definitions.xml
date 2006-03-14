@@ -10,4 +10,10 @@
     <definition name="viewCurriculum" extends="researcher.masterPage">
         <put name="body" value="/researcher/viewCurriculum.jsp"></put>
     </definition>
+    <definition name="projects.projectsManagement" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/projectsManagement.jsp"></put>
+    </definition>
+    <definition name="projects.createProject" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/createProject.jsp"></put>
+    </definition>
 </tiles-definitions>

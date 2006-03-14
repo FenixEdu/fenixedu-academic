@@ -415,4 +415,9 @@
 		<slot name="myUrl"/>
 	</schema>
 
+	<schema name="project.summary" type="net.sourceforge.fenixedu.domain.research.project.Project">
+		<slot name="title.content" layout="link"/>
+		<slot name="projectAbstract.content"/>
+	</schema>
+
 </schemas>

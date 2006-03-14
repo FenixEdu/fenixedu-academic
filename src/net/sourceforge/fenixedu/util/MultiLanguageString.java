@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.util;
 import java.util.Collection;
 import java.util.Map;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Language;
 
 public class MultiLanguageString {
@@ -18,6 +19,10 @@ public class MultiLanguageString {
 	public Collection<Language> getAllLanguages() {
 		return contentsMap.keySet();
 	}
+    
+    public String getContent() {
+        return getContent(Language.getDefaultLanguage());
+    }
 
 	public String getContent(Language language) {
 		return contentsMap.get(language.toString());

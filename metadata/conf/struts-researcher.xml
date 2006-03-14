@@ -34,11 +34,20 @@
         </action>       
         <action path="/viewCurriculum" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
             <forward name="Success" path="viewCurriculum"/>
-        </action>  
+        </action>
+        
+        <action path="/projects/projectsManagement" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.ProjectsManagementDispatchAction">
+		    <forward name="Success" path="projects.projectsManagement"/>
+		</action>  
         
         <action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">
 		    <forward name="show" path="domain.view"/>
 		</action>
+		
+		<action path="/projects/createProject" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+		    <forward name="Success" path="projects.createProject"/>
+		</action>
+		
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

@@ -10,7 +10,7 @@
 	<property name="src" location="src"/>
 
 	<!-- Directories for compiled code -->
-	<property name="build" location="build"/>
+	<property name="build.home" location="build"/>
 	<property name="build.home.webinf" location="${build.home}/WEB-INF"/>
 	<property name="build.home.webinf.classes" location="${build.home.webinf}/classes"/>
 

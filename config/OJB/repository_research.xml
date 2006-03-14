@@ -39,7 +39,7 @@
 	
 	<field-descriptor
 	   name="projectType"    
-	   column="PROJECT_TYPE"  
+	   column="TYPE"  
 	   jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectType2SqlProjectTypeConversion"
     /> 
@@ -126,7 +126,7 @@
 	
 	<field-descriptor
 	   name="role"    
-	   column="PROJECT_TYPE"  
+	   column="ROLE"  
 		jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectParticipationType2SqlProjectParticipationTypeConversion"
 	/>
