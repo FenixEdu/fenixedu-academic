@@ -1500,6 +1500,13 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/viewCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
 		<from-view-id>/scientificCouncil/curricularPlans/viewCurricularCourse.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>viewCurricularPlan</from-outcome>

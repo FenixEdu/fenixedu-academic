@@ -27,7 +27,19 @@
 
 	<h:outputText value="<br/>" escape="false"/>
 	
- 	
+	<h:outputText value="<ul><li>" escape="false"/>
+	<h:outputLink value="viewCurricularPlanStructure.faces" rendered="#{!empty ScientificCouncilCurricularPlanManagement.dcp.root.childContexts}">
+		<h:outputFormat value="#{scouncilBundle['view.param']}" escape="false">
+			<f:param value="#{scouncilBundle['curricularPlan.structure']}"/>
+		</h:outputFormat>
+		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+		<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>		
+		<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+	</h:outputLink>
+	<h:outputText value="</li></ul>" escape="false"/>
+
  	<h:outputText value="<br/>" escape="false"/>
 	<h:outputText value="<p>#{scouncilBundle['view.structure.organized.by']}: " escape="false"/>
 	<h:outputLink value="viewCurricularPlan.faces">
