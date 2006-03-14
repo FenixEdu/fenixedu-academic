@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
+import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
 import net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -158,6 +159,11 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                     }
                 }
                 break;
+                
+            case MINIMUM_NUMBER_OF_CREDITS_TO_ENROL:
+                result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
+                        .getString(curricularRuleType.getName())));
+                break;
 
             default:
                 break;
@@ -267,6 +273,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 setMinimumCredits(((CreditsLimit) getCurricularRule()).getMinimum());               
             } else if (getCurricularRule() != null && getCurricularRule() instanceof RestrictionBetweenDegreeModules) {
                 setMinimumCredits(((RestrictionBetweenDegreeModules) getCurricularRule()).getMinimum());
+            } else if (getCurricularRule() != null && getCurricularRule() instanceof MinimumNumberOfCreditsToEnrol) {
+                setMinimumCredits(((MinimumNumberOfCreditsToEnrol) getCurricularRule()).getMinimum());
             } else {
                 setMinimumCredits(Double.valueOf(0));
             }
@@ -474,6 +482,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (selectedCurricularRuleType != null
                 && selectedCurricularRuleType.equals(CurricularRuleType.ANY_CURRICULAR_COURSE.name())) {
+            
             final List<Degree> allDegrees = (List<Degree>) readAllDomainObjects(Degree.class);
             final BolonhaDegreeType bolonhaDegreeType = (selectedDegreeType == null || selectedDegreeType
                     .equals(NO_SELECTION_STRING)) ? null : BolonhaDegreeType.valueOf(selectedDegreeType);
@@ -569,7 +578,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 for (final DegreeModule degreeModule : degreeModules) {
                     pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
                 }
-                result.add(new SelectItem(degreeModules.get(degreeModules.size() - 1).getIdInternal(), pathName.toString()));
+                result.add(new SelectItem(lastDegreeModule.getIdInternal(), pathName.toString()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));

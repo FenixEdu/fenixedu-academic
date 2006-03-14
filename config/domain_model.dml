@@ -716,6 +716,9 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
             Integer keyDegree;
             Integer keyDepartmentUnit;
         }
+        class net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
+            Double minimum;
+        }
 
 class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;

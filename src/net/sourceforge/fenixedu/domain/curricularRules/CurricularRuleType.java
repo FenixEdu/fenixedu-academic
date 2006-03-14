@@ -20,7 +20,9 @@ public enum CurricularRuleType {
     
     EXCLUSIVENESS,
     
-    ANY_CURRICULAR_COURSE;
+    ANY_CURRICULAR_COURSE,
+    
+    MINIMUM_NUMBER_OF_CREDITS_TO_ENROL;
 
     public String getName() {
         return name();

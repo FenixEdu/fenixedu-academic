@@ -54,13 +54,16 @@ public class CurricularRulesManager {
         case ANY_CURRICULAR_COURSE:
             return createAnyCurricularCourse(degreeModuleToApplyRule, begin, end, parametersDTO,
                     persistentObject);
-
+            
+        case MINIMUM_NUMBER_OF_CREDITS_TO_ENROL:
+            return createMinimumNumberOfCreditsToEnrol(degreeModuleToApplyRule, begin, end, parametersDTO,
+                    persistentObject);
         default:
             break;
         }
         return null;
     }
-    
+
     public static CurricularRule createCompositeRule(DegreeModule degreeModuleToApplyRule, LogicOperators logicOperator,
             ExecutionPeriod begin, ExecutionPeriod end, CurricularRule ... curricularRules) {
         return new CompositeRule(degreeModuleToApplyRule, begin, end, logicOperator, curricularRules);
@@ -103,10 +106,26 @@ public class CurricularRulesManager {
         case ANY_CURRICULAR_COURSE:
             editAnyCurricularCourse(curricularRule, parametersDTO, persistentObject);
             break;
+            
+        case MINIMUM_NUMBER_OF_CREDITS_TO_ENROL:
+            editMinimumNumberOfCreditsToEnrol(curricularRule, parametersDTO, persistentObject);
+            break;
 
         default:
             break;
         }
+    }
+    
+    private static CurricularRule createMinimumNumberOfCreditsToEnrol(
+            DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin, ExecutionPeriod end,
+            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            throws ExcepcaoPersistencia {
+
+        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
+                CourseGroup.class, parametersDTO.getContextCourseGroupID());
+
+        return new MinimumNumberOfCreditsToEnrol(degreeModuleToApplyRule, contextCourseGroup, begin,
+                end, parametersDTO.getMinimumCredits());
     }
 
     private static CurricularRule createAnyCurricularCourse(DegreeModule degreeModuleToApplyRule,
@@ -224,6 +243,16 @@ public class CurricularRulesManager {
         return new RestrictionDoneDegreeModule((CurricularCourse) degreeModuleToApplyRule,
                 doneDegreeModule, contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO(), begin,
                 end);
+    }
+    
+    private static void editMinimumNumberOfCreditsToEnrol(CurricularRule curricularRule, CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject) throws ExcepcaoPersistencia {
+        
+        final MinimumNumberOfCreditsToEnrol minimumNumberOfCreditsToEnrol = (MinimumNumberOfCreditsToEnrol) curricularRule;
+        
+        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
+                CourseGroup.class, parametersDTO.getContextCourseGroupID());
+        
+        minimumNumberOfCreditsToEnrol.edit(contextCourseGroup, parametersDTO.getMinimumCredits());
     }
 
     private static void editAnyCurricularCourse(CurricularRule curricularRule,

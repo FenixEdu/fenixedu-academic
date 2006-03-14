@@ -48,11 +48,6 @@
 		column="KEY_CONTEXT_COURSE_GROUP"
 		jdbc-type="INTEGER"
 	/>
-		
-		
-	
-	
-	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -109,12 +104,6 @@
 		column="KEY_CONTEXT_COURSE_GROUP"
 		jdbc-type="INTEGER"
 	/>
-		
-		
-	
-	
-	
-	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -128,6 +117,7 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol" />
 	
 	<field-descriptor
 		name="idInternal"
@@ -172,11 +162,6 @@
 		column="KEY_CONTEXT_COURSE_GROUP"
 		jdbc-type="INTEGER"
 	/>
-		
-		
-	
-	
-		
 </class-descriptor>
 
 
@@ -248,12 +233,6 @@
 		column="CURRICULAR_PERIOD_ORDER"
 		jdbc-type="INTEGER"
 	/>	
-		
-		
-	
-	
-	
-		
 </class-descriptor>
 
 
@@ -320,12 +299,6 @@
 		column="CURRICULAR_PERIOD_ORDER"
 		jdbc-type="INTEGER"
 	/>	
-		
-		
-	
-	
-	
-		
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -391,12 +364,6 @@
 		column="CURRICULAR_PERIOD_ORDER"
 		jdbc-type="INTEGER"
 	/>	
-		
-		
-	
-	
-	
-		
 </class-descriptor>
 
 
@@ -468,12 +435,6 @@
 		column="MINIMUM_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
-		
-		
-	
-	
-	
-		
 </class-descriptor>
 
 
@@ -535,11 +496,6 @@
 		column="MAXIMUM_LIMIT"
 		jdbc-type="INTEGER"
 	/>
-		
-		
-	
-	
-		
 </class-descriptor>
 
 
@@ -601,11 +557,6 @@
 		column="MAXIMUM_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
-		
-		
-	
-	
-		
 </class-descriptor>
 
 
@@ -657,11 +608,6 @@
 		column="KEY_CONTEXT_COURSE_GROUP"
 		jdbc-type="INTEGER"
 	/>
-		
-		
-	
-	
-		
 </class-descriptor>
 
 
@@ -718,12 +664,6 @@
 		column="KEY_EXCLUSIVE_DEGREE_MODULE"
 		jdbc-type="INTEGER"
 	/>
-		
-		
-	
-	
-		
-	
 </class-descriptor>
 
 
@@ -811,11 +751,59 @@
 		column="KEY_DEPARTMENT_UNIT"
 		jdbc-type="INTEGER"
 	/>
-		
-		
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.Rule -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol" table="CURRICULAR_RULE">	
 	
-	
-	
-	
-	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+		name="keyDegreeModuleToApplyRule"
+		column="KEY_DEGREE_MODULE_TO_APPLY_RULE"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
+		name="keyBegin"
+		column="KEY_BEGIN_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyEnd"
+		column="KEY_END_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyParentCompositeRule"
+		column="KEY_PARENT_COMPOSITE_RULE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="curricularRuleType"
+		column="CURRICULAR_RULE_TYPE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularRuleType2SqlCurricularRuleTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="keyContextCourseGroup"
+		column="KEY_CONTEXT_COURSE_GROUP"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="minimum"
+		column="MINIMUM_CREDITS"
+		jdbc-type="DOUBLE"
+	/>
 </class-descriptor>

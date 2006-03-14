@@ -178,7 +178,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
                 for (final DegreeModule degreeModule : degreeModules) {
                     pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
                 }
-                result.add(new SelectItem(degreeModules.get(degreeModules.size() - 1).getIdInternal(), pathName.toString()));
+                result.add(new SelectItem(lastDegreeModule.getIdInternal(), pathName.toString()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));

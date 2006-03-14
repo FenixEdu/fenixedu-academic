@@ -74,7 +74,6 @@ public class CreditsLimit extends CreditsLimit_Base {
         }
 
         return labelList;
-
     }
 
     @Override
