@@ -615,4 +615,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         super.setOjbConcreteClass(ojbConcreteClass);
     }
 
+    public String getPresentationName() {
+        return getDegree().getPresentationName() + " " + getName();
+    }
 }

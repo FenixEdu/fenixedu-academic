@@ -23,7 +23,7 @@
 			<logic:notEqual name="currentExecutionDegree" property="idInternal" value="<%= executionDegreeOID.toString() %>">
 				<tr>
 					<td class="listClasses">
-						<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.degree.presentationName"/>
+						<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.presentationName"/>
 					</td>
 					<td class="listClasses">
 						<html:form action="/manageFinalDegreeWork">
@@ -51,7 +51,7 @@
 				<td class="listClasses">
 					<html:select property="otherExecutionDegreeID">
 						<html:option value=""/>
-						<html:options collection="executionDegrees" property="idInternal" labelProperty="degreeCurricularPlan.degree.presentationName"/>
+						<html:options collection="executionDegrees" property="idInternal" labelProperty="degreeCurricularPlan.presentationName"/>
 					</html:select>
 				</td>
 				<td class="listClasses">

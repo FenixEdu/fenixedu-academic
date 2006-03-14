@@ -34,7 +34,7 @@
 	<html:select property="degree"
 			onchange="this.form.method.value='chooseDegree';this.form.submit();"
 			>
-		<html:options collection="executionDegreeList" property="idInternal" labelProperty="infoDegreeCurricularPlan.infoDegree.nome" />
+		<html:options collection="executionDegreeList" property="idInternal" labelProperty="infoDegreeCurricularPlan.presentationName" />
 	</html:select>
 	<br /><br />
 	<strong><bean:message key="label.teacher.finalWork.role" />:</strong>

@@ -153,6 +153,10 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         return name;
     }
 
+    public String getPresentationName() {
+        return getInfoDegree().getNome() + " " + getName();
+    }
+
     /**
      * @return DegreeCurricularPlanState
      */

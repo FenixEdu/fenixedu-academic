@@ -19,7 +19,7 @@
 		<logic:iterate id="currentExecutionDegree" name="scheduling" property="executionDegreesSortedByDegreeName">
 			<tr>
 				<td class="listClasses">
-					<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.degree.presentationName"/>
+					<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.presentationName"/>
 				</td>
 			</tr>
 		</logic:iterate>

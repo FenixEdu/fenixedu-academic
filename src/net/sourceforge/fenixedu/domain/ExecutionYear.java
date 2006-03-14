@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -93,11 +96,10 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
         return null;
     }
 
-    public SortedSet<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
-    	final SortedSet<ExecutionDegree> executionDegrees =
-    			new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
-    	executionDegrees.addAll(getExecutionDegrees());
-    	return executionDegrees;
+    public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
+        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
+        Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+        return executionDegrees;
     }
 
 }
