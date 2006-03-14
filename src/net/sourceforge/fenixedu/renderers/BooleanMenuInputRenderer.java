@@ -42,7 +42,10 @@ public class BooleanMenuInputRenderer extends InputRenderer {
                 trueOption.setValue("true");
                 falseOption.setValue("false");
                 
-                (((Boolean) object) ? trueOption : falseOption).setSelected(true);
+                if (object != null) {
+                    (((Boolean) object) ? trueOption : falseOption).setSelected(true);
+                }
+                
                 menu.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
                 
                 return menu;
