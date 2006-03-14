@@ -12,9 +12,9 @@
 	<h:outputFormat value="<h2>#{bolonhaBundle['view.param']}</h2>" escape="false">
 		<f:param value="#{bolonhaBundle['curricularPlan']}"/>
 	</h:outputFormat>
-
+	
 	<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
-		<h:outputText value="<br/><b>#{bolonhaBundle['groupMembers']}</b> (#{bolonhaBundle['groupMembersExplanation']}):<br/>" escape="false" />
+		<h:outputText value="<br/><b id='members' class='highlight1'>#{bolonhaBundle['groupMembers']}</b> (#{bolonhaBundle['groupMembersExplanation']}):<br/>" escape="false" />
 		<h:dataTable value="#{CurricularPlansMembersManagementBackingBean.groupMembersLabels}" var="memberLabel">
 			<h:column>
 				<h:outputText value="#{memberLabel}" escape="false"/>
