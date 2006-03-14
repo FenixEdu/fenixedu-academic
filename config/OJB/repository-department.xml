@@ -29,7 +29,7 @@
 		jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
-		name="keyUnit"
+		name="keyDepartmentUnit"
 		column="KEY_UNIT"
 		jdbc-type="INTEGER"
 	 />

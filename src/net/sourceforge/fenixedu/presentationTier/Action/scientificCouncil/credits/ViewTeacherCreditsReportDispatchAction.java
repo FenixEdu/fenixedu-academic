@@ -116,7 +116,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             List<Department> departments = (List<Department>) ServiceUtils.executeService(userView,
                     "ReadAllDomainObjects", new Object[] { Department.class });
             for (Department department : departments) {
-                Unit unit = department.getUnit();
+                Unit unit = department.getDepartmentUnit();
                 teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ServiceUtils.executeService(
                         userView, "ReadTeachersCreditsResumeByPeriodAndUnit", new Object[] { unit,
                                 fromExecutionPeriod, untilExecutionPeriod });
@@ -132,7 +132,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                     "ReadDomainObject", new Object[] { Department.class, departmentID });
             
             if (unitID == null || unitID == 0) {
-                unit = department.getUnit();
+                unit = department.getDepartmentUnit();
 
             } else {
                 unit = (Unit) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] {
@@ -336,7 +336,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             List<Department> departments = (List<Department>) ServiceUtils.executeService(userView,
                     "ReadAllDomainObjects", new Object[] { Department.class });
             for (Department department : departments) {
-                Unit unit = department.getUnit();
+                Unit unit = department.getDepartmentUnit();
                 teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ServiceUtils.executeService(
                         userView, "ReadTeachersCreditsResumeByPeriodAndUnit", new Object[] { unit,
                                 fromExecutionPeriod, untilExecutionPeriod });
@@ -350,7 +350,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                     "ReadDomainObject", new Object[] { Department.class, departmentID });
             
             if (unitID == null || unitID == 0) {
-                unit = department.getUnit();
+                unit = department.getDepartmentUnit();
 
             } else {
                 unit = (Unit) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] {

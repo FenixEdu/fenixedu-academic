@@ -35,7 +35,7 @@ public class Department extends Department_Base {
 
     public List<Employee> getCurrentActiveWorkingEmployees() {
 
-        Unit departmentUnit = this.getUnit();
+        Unit departmentUnit = this.getDepartmentUnit();
         Set<Employee> employees = new HashSet<Employee>();
         Date currentDate = Calendar.getInstance().getTime();
 
@@ -59,7 +59,7 @@ public class Department extends Department_Base {
 
     public List<Employee> getWorkingEmployees(Date begin, Date end) {
 
-        Unit departmentUnit = this.getUnit();
+        Unit departmentUnit = this.getDepartmentUnit();
         Set<Employee> employees = new HashSet<Employee>();
 
         if (departmentUnit != null) {
@@ -96,7 +96,7 @@ public class Department extends Department_Base {
     }
 
     public List<Teacher> getTeachersHistoric() {
-        Unit unit = this.getUnit();
+        Unit unit = this.getDepartmentUnit();
         Set<Employee> allEmployees = new HashSet<Employee>();
         List<Teacher> allTeachers = new ArrayList<Teacher>();
         if (unit != null) {

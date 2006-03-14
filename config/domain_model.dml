@@ -733,7 +733,7 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	String code;
 	String realName;
 	String name;
-	Integer keyUnit;
+	Integer keyDepartmentUnit;
 	Group competenceCourseMembersGroup;
 }
 
@@ -5599,10 +5599,10 @@ relation ContractWorkingUnit {
 
 relation DepartmentUnit {
     net.sourceforge.fenixedu.domain.Department playsRole department;    
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole departmentUnit;
 }
 
-relation DegreetUnit {
+relation DegreeUnit {
     net.sourceforge.fenixedu.domain.Degree playsRole degree;    
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }

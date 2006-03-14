@@ -102,7 +102,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         if (getSelectedDepartmentUnit() != null) {
             departmentUnit = getSelectedDepartmentUnit();
         } else if (getPersonDepartment() != null) {
-            departmentUnit = getPersonDepartment().getUnit();
+            departmentUnit = getPersonDepartment().getDepartmentUnit();
         } 
         return (departmentUnit != null) ? departmentUnit.getScientificAreaUnits() : null;
     }
@@ -351,7 +351,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             if (getAndHoldIntegerParameter("selectedDepartmentUnitID") != null) {
                 selectedDepartmentUnitID = getAndHoldIntegerParameter("selectedDepartmentUnitID");
             } else if (getPersonDepartment() != null) {
-                selectedDepartmentUnitID = getPersonDepartment().getUnit().getIdInternal();
+                selectedDepartmentUnitID = getPersonDepartment().getDepartmentUnit().getIdInternal();
             }
         }
         return selectedDepartmentUnitID;
