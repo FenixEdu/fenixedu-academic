@@ -12,6 +12,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
@@ -135,7 +136,7 @@ public class ReadStudentExternalInformation extends Service
 				Enrolment enrollment = (Enrolment) iterEnrolments.next();
 				if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED))
 				{
-					CurricularCourse curricularCourse = enrollment.get$curricularCourse();
+					CurricularCourse curricularCourse = enrollment.getCurricularCourse();
 					if (curricularCourse.getEctsCredits().doubleValue() == 0)
 					{
 						Collection<DegreeCurricularPlan> degrees = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeCurricularPlans();
@@ -151,16 +152,35 @@ public class ReadStudentExternalInformation extends Service
 							}
 						}
 					}
-					InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromEnrollment(enrollment);
-					if (!curricularCourse.equals(enrollment.getCurricularCourse()))
-					{
-						info.setCourse(InfoExternalCurricularCourseInfo.newFromDomain(curricularCourse));
-					}
 
-					GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
-					InfoEnrolmentEvaluation infoEnrollmentEvaluation = getEnrollmentGrade.run(enrollment);
-					info.setFinalGrade(infoEnrollmentEvaluation.getGrade());
-					enrollments.add(info);
+					if (!student.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getDegreeCurricularPlans().contains(enrollment.getCurricularCourse().getDegreeCurricularPlan()))
+					{
+						curricularCourse = null;
+						DegreeCurricularPlan studentDegreeCurricularPlan = student.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
+						List<CurricularCourse> curricularCourses = enrollment.getCurricularCourse().getCompetenceCourse().getAssociatedCurricularCourses();
+						for (CurricularCourse course : curricularCourses)
+						{
+							if (course.getDegreeCurricularPlan().equals(studentDegreeCurricularPlan))
+							{
+								curricularCourse = course;
+								break;
+							}
+						}
+					}
+					if (curricularCourse != null)
+					{
+						InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromEnrollment(enrollment);
+
+						if (!curricularCourse.equals(enrollment.getCurricularCourse()))
+						{
+							info.setCourse(InfoExternalCurricularCourseInfo.newFromDomain(curricularCourse));
+						}
+
+						GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
+						InfoEnrolmentEvaluation infoEnrollmentEvaluation = getEnrollmentGrade.run(enrollment);
+						info.setFinalGrade(infoEnrollmentEvaluation.getGrade());
+						enrollments.add(info);
+					}
 				}
 			}
 		}
@@ -200,6 +220,7 @@ public class ReadStudentExternalInformation extends Service
 					}
 				}
 			}
+						
 			info.addCourse(InfoExternalCurricularCourseInfo.newFromDomain(curricularCourse));
 		}
 
