@@ -57,7 +57,7 @@ public class Spreadsheet {
     }
 
     public void setName(final String name) {
-        this.name = name;
+        this.name = name.substring(0, Math.min(31, name.length())).replaceAll("(", "_").replaceAll(")", "_");
     }
 
     public void setHeader(final int columnNumber, final String columnHeader) {
