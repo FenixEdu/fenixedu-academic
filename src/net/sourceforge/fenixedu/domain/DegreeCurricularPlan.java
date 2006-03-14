@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
@@ -174,7 +175,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             throw new DomainException("error.invalid.execution.period");
         }
         checkIfCurricularCoursesBelongToApprovedCompetenceCourses();
-        initBeginExecutionPeriodForContexts(getRoot(), beginExecutionYear.getExecutionPeriodForSemester(Integer.valueOf(1)));
+        initBeginExecutionPeriodForDegreeCurricularPlan(getRoot(), beginExecutionYear
+                .getExecutionPeriodForSemester(Integer.valueOf(1)));
         setCurricularStage(CurricularStage.APPROVED);
     }
     
@@ -194,11 +196,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
 
-    private void initBeginExecutionPeriodForContexts(final CourseGroup courseGroup, final ExecutionPeriod beginExecutionPeriod) {
+    private void initBeginExecutionPeriodForDegreeCurricularPlan(final CourseGroup courseGroup,
+            final ExecutionPeriod beginExecutionPeriod) {
+
+        for (final CurricularRule curricularRule : courseGroup.getCurricularRules()) {
+            curricularRule.setBegin(beginExecutionPeriod);
+        }
         for (final Context context : courseGroup.getChildContexts()) {
             context.setBeginExecutionPeriod(beginExecutionPeriod);
             if (! context.getChildDegreeModule().isLeaf()) {
-                initBeginExecutionPeriodForContexts((CourseGroup) context.getChildDegreeModule(), beginExecutionPeriod);
+                initBeginExecutionPeriodForDegreeCurricularPlan((CourseGroup) context
+                        .getChildDegreeModule(), beginExecutionPeriod);
             }
         }
     }
