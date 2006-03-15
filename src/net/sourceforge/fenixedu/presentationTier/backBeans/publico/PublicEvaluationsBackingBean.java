@@ -238,13 +238,15 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
                     if (executionCourse.getExecutionPeriod() == executionPeriod) {
                         for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
                             if (evaluation instanceof WrittenEvaluation) {
-                                final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-                                CalendarLink calendarLink = new CalendarLink();
-                                calendarLinks.add(calendarLink);
+                                if (!(evaluation instanceof Exam) || ((Exam) evaluation).isExamsMapPublished()) {
+                                    final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
+                                    CalendarLink calendarLink = new CalendarLink();
+                                    calendarLinks.add(calendarLink);
 
-                                calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-                                calendarLink.setObjectLinkLabel(constructCalendarPresentation(executionCourse, writtenEvaluation));
-                                calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
+                                    calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
+                                    calendarLink.setObjectLinkLabel(constructCalendarPresentation(executionCourse, writtenEvaluation));
+                                    calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
+                                }
                             } else if (evaluation instanceof Project) {
                                 final Project project = (Project) evaluation;
                                    CalendarLink calendarLinkBegin = new CalendarLink();
