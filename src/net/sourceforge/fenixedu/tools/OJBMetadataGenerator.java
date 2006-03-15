@@ -39,14 +39,20 @@ public class OJBMetadataGenerator {
 
     private static final Set<String> unmappedCollectionReferenceAttributesInOJB = new TreeSet<String>();
 
+    private static String classToDebug = null; 
+    
     /**
      * @param args
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
 
-        // String[] dmlFilesArray = { args[0] };
-        String[] dmlFilesArray = { "config/domain_model.dml" };
+         String[] dmlFilesArray = { args[0] };
+//        String[] dmlFilesArray = { "config/domain_model.dml" };
+         if(args.length == 2){
+             classToDebug = args[1];
+         }
+         
         DomainModel domainModel = DmlCompiler.getDomainModel(dmlFilesArray);
         Map ojbMetadata = MetadataManager.getInstance().getGlobalRepository().getDescriptorTable();
 
@@ -88,6 +94,9 @@ public class OJBMetadataGenerator {
 
                 if (classDescriptor != null) {
                     update(classDescriptor, domClass, ojbMetadata, clazz);
+                    if(classToDebug != null && classDescriptor.getClassNameOfObject().contains(classToDebug)){
+                        System.out.println(classDescriptor.toXML());
+                    }
                 }
             }
         }

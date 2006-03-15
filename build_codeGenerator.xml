@@ -143,7 +143,7 @@
     		depends="compile">
 		<java classname="net.sourceforge.fenixedu.tools.OJBMetadataGenerator" fork="true">
 			<arg value="${dml.definition.file}"/>
-			<arg value="${option}"/>
+			<arg value="${class}"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>	
 				<pathelement path="${build.home.webinf.classes}"/>
