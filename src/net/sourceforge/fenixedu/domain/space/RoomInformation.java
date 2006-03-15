@@ -17,12 +17,13 @@ public class RoomInformation extends RoomInformation_Base {
         newRoomInformation.setArea(getArea());
         newRoomInformation.setHight(getHight());
         newRoomInformation.setIllumination(getIllumination());
-        newRoomInformation.setDistribution(getDistribution());
-        newRoomInformation.setSalubrityArea(getSalubrityArea());
+        // TODO
+        //newRoomInformation.setDistribution(getDistribution());
+        //newRoomInformation.setSalubrityArea(getSalubrityArea());
         newRoomInformation.setSecurity(getSecurity());
-        newRoomInformation.setVptoValue(getVptoValue());
-        newRoomInformation.setIndex(getIndex());
-        newRoomInformation.setTm(getTm());
+        //newRoomInformation.setVptoValue(getVptoValue());
+        //newRoomInformation.setIndex(getIndex());
+        //newRoomInformation.setTm(getTm());
         newRoomInformation.setObservations(getObservations());
         newRoomInformation.setCapacityForLessons(getCapacityForLessons());
         newRoomInformation.setCapacityForExams(getCapacityForExams());
