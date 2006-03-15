@@ -18,3 +18,5 @@ function execute() {
 	mysql -u$USER -f -p$password $DB < $2
 	echo
 }
+
+execute "Alter table User" alterTableUser.sql
