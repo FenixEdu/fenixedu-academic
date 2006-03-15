@@ -20,3 +20,4 @@ function execute() {
 }
 
 execute "Alter table User" alterTableUser.sql
+execute "Create blog tables" createBlogTables.sql

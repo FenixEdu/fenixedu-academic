@@ -18,5 +18,3 @@ function execute() {
 	mysql -u$USER -f -p$password $DB < $2
 	echo
 }
-
-execute "Create blog tables" createBlogTables.sql
