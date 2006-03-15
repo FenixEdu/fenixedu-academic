@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Language;
 
 public class MultiLanguageString {
@@ -54,12 +53,10 @@ public class MultiLanguageString {
 
 	@Override
 	public String toString() {
-		StringBuilder result = new StringBuilder();
-		
-		for (Language key : contentsMap.keySet()) {
-			result.append(key + "\002" + contentsMap.get(key) + "\001");
+		final StringBuilder result = new StringBuilder();
+		for (final Language key : contentsMap.keySet()) {
+            result.append(key).append("\002").append(contentsMap.get(key)).append("\001");
 		}
-		
 		return result.toString();
 	}
 }
