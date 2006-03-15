@@ -7,7 +7,7 @@
 <h2><bean:message key="title.manage.homepage"/></h2>
 
 <logic:notPresent name="UserView" property="person.homepage">
-	<fr:create type="net.sourceforge.fenixedu.domain.Homepage" schema="person.homepage.manage">
+	<fr:create type="net.sourceforge.fenixedu.domain.homepage.Homepage" schema="person.homepage.manage">
 		<fr:layout name="tabular">
 			<fr:hidden slot="person" name="UserView" property="person"/>
 			<fr:property name="classes" value="style1" />
@@ -29,11 +29,36 @@
 	<br/>
 
 	<fr:edit name="UserView" property="person.homepage"
-			type="net.sourceforge.fenixedu.domain.Homepage"
-			 schema="person.homepage.manage">
+			type="net.sourceforge.fenixedu.domain.homepage.Homepage"
+			schema="person.homepage.manage">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="style1" />
 			<fr:property name="columnClasses" value="listClasses" />
 		</fr:layout>
 	</fr:edit>
+
+	<br/>
+	<br/>
+
+	<logic:notPresent name="UserView" property="person.homepage.blog">
+		<fr:create type="net.sourceforge.fenixedu.domain.homepage.Blog" schema="person.homepage.blog.manage">
+			<fr:layout name="tabular">
+				<fr:hidden slot="homepage" name="UserView" property="person.homepage"/>
+				<fr:property name="classes" value="style1" />
+				<fr:property name="columnClasses" value="listClasses" />
+			</fr:layout>
+		</fr:create>
+	</logic:notPresent>
+
+	<logic:present name="UserView" property="person.homepage.blog">
+		<fr:edit name="UserView" property="person.homepage.blog"
+				type="net.sourceforge.fenixedu.domain.homepage.Blog"
+				schema="person.homepage.blog.manage">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="style1" />
+				<fr:property name="columnClasses" value="listClasses" />
+			</fr:layout>
+		</fr:edit>
+	</logic:present>
+
 </logic:present>

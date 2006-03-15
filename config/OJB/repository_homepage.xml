@@ -1,4 +1,4 @@
-<class-descriptor class="net.sourceforge.fenixedu.domain.Homepage" table="HOMEPAGE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.homepage.Homepage" table="HOMEPAGE">
     <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
@@ -15,5 +15,92 @@
         name="keyPerson"
         column="KEY_PERSON"
         jdbc-type="INTEGER"
-    />	
+    />
+	<field-descriptor
+        name="keyBlog"
+        column="KEY_BLOG"
+        jdbc-type="INTEGER"
+    />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.homepage.Blog" table="BLOG">
+    <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+	/>
+	<field-descriptor
+        name="keyHomepage"
+        column="KEY_HOMEPAGE"
+        jdbc-type="INTEGER"
+    />
+	<field-descriptor
+	    name="name"
+	    column="NAME"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+	    name="about"
+	    column="ABOUT"
+	    jdbc-type="VARCHAR"
+	/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.homepage.BlogEntry" table="BLOG_ENTRY">
+    <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+	/>
+	<field-descriptor
+        name="keyBlog"
+        column="KEY_BLOG"
+        jdbc-type="INTEGER"
+    />
+	<field-descriptor
+	    name="posted"
+	    column="POSTED"
+	    jdbc-type="TIMESTAMP"
+	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
+	/>
+	<field-descriptor
+	    name="title"
+	    column="TITLE"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+	    name="content"
+	    column="CONTENT"
+	    jdbc-type="VARCHAR"
+	/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.homepage.BlogEntryComment" table="BLOG_ENTRY_COMMENT">
+    <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+	/>
+	<field-descriptor
+        name="keyBlogEntries"
+        column="KEY_BLOG_ENTRIES"
+        jdbc-type="INTEGER"
+    />
+	<field-descriptor
+	    name="posted"
+	    column="POSTED"
+	    jdbc-type="TIMESTAMP"
+	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
+	/>
+	<field-descriptor
+	    name="comment"
+	    column="COMMENT"
+	    jdbc-type="VARCHAR"
+	/>
 </class-descriptor>

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Homepage;
+import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 
 import org.apache.struts.action.ActionForm;

@@ -1,5 +1,7 @@
-package net.sourceforge.fenixedu.domain;
+package net.sourceforge.fenixedu.domain.homepage;
 
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Homepage extends Homepage_Base {

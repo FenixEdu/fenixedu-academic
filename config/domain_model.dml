@@ -183,6 +183,26 @@ class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourcef
 }
 
 
+class net.sourceforge.fenixedu.domain.homepage.Blog extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyHomepage;
+	String name;
+	String about;
+}
+
+class net.sourceforge.fenixedu.domain.homepage.BlogEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyBlog;
+	DateTime posted;
+	String title;
+	String content;
+}
+
+class net.sourceforge.fenixedu.domain.homepage.BlogEntryComment extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyBlogEntries;
+	DateTime posted;
+	String comment;
+}
+
+
 class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer secondaryCredits;
     String code;
@@ -1399,8 +1419,9 @@ class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu
     ContentType contentType;
 }
 
-class net.sourceforge.fenixedu.domain.Homepage extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
+	Integer keyBlog;
     String myUrl;
 }
 
@@ -4202,6 +4223,24 @@ relation GuideSituationGuide {
 	net.sourceforge.fenixedu.domain.Guide playsRole guide;
 }
 
+relation HomepageBlog {
+	net.sourceforge.fenixedu.domain.homepage.Homepage playsRole homepage;
+	net.sourceforge.fenixedu.domain.homepage.Blog playsRole blog;
+}
+
+relation BlogBlogEntry {
+	net.sourceforge.fenixedu.domain.homepage.Blog playsRole blog;
+	net.sourceforge.fenixedu.domain.homepage.BlogEntry playsRole blogEntries {
+		multiplicity *;
+	}
+}
+
+relation BlogEntryBlogEntryComment {
+	net.sourceforge.fenixedu.domain.homepage.BlogEntry playsRole blogEntry;
+	net.sourceforge.fenixedu.domain.homepage.BlogEntryComment playsRole blogEntryComments {
+		multiplicity *;
+	}
+}
 
 relation InquiriesCourseExecutionCourse {
     net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse playsRole associatedInquiriesCourses {
@@ -5995,7 +6034,7 @@ relation PartyParty {
 
 relation PersonHomepage {
     net.sourceforge.fenixedu.domain.Person playsRole person;
-	net.sourceforge.fenixedu.domain.Homepage playsRole homepage;
+	net.sourceforge.fenixedu.domain.homepage.Homepage playsRole homepage;
 }
 
 relation AccountabilityParentParty {

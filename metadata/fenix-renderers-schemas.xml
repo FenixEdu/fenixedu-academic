@@ -411,8 +411,13 @@
 		<slot name="status"/>
 	</schema>
 
-	<schema name="person.homepage.manage" type="net.sourceforge.fenixedu.domain.Homepage">
+	<schema name="person.homepage.manage" type="net.sourceforge.fenixedu.domain.homepage.Homepage">
 		<slot name="myUrl"/>
+	</schema>
+
+	<schema name="person.homepage.blog.manage" type="net.sourceforge.fenixedu.domain.homepage.Blog">
+		<slot name="name"/>
+		<slot name="about"/>
 	</schema>
 
 	<schema name="project.summary" type="net.sourceforge.fenixedu.domain.research.project.Project">

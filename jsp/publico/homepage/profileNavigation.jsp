@@ -9,4 +9,14 @@
 			Homepage listings
 		</html:link>
     </li>
+	<li>
+		<html:link page="/l1">
+			Blog listings
+		</html:link>
+    </li>
+	<li>
+		<html:link page="/l1">
+			Statistics
+		</html:link>
+    </li>
 </ul>
