@@ -1,17 +1,19 @@
 package net.sourceforge.fenixedu.util;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Language;
 
 public class MultiLanguageString {
-	public class ExistingLanguageException extends Exception {
-	}
-
 	private Map<Language, String> contentsMap;
 
+	public MultiLanguageString() {
+		this.contentsMap = new HashMap<Language, String>();
+	}
+	
 	public Collection<String> getAllContents() {
 		return contentsMap.values();
 	}
@@ -23,17 +25,13 @@ public class MultiLanguageString {
     public String getContent() {
         return getContent(Language.getDefaultLanguage());
     }
-
+	
 	public String getContent(Language language) {
 		return contentsMap.get(language.toString());
 	}
 
-	public String addContent(Language language, String content) throws ExistingLanguageException {
-		if (!contentsMap.containsKey(language)) {
-			return contentsMap.put(language, content);
-		} else {
-			throw new ExistingLanguageException();
-		}
+	public String addContent(Language language, String content) {
+		return contentsMap.put(language, content);
 	}
 
 	public String editContent(Language language, String content) {
@@ -56,11 +54,12 @@ public class MultiLanguageString {
 
 	@Override
 	public String toString() {
-		String result = new String();
+		StringBuilder result = new StringBuilder();
 		
 		for (Language key : contentsMap.keySet()) {
-			result.concat(key + "\001" + contentsMap.get(key) + "\001");
+			result.append(key + "\002" + contentsMap.get(key) + "\001");
 		}
-		return null;
+		
+		return result.toString();
 	}
 }
