@@ -6,38 +6,38 @@
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>	
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
-	<h:outputText value="<i>#{ScientificCouncilDegreeManagement.degree.nome}" escape="false"/>
-	<h:outputText value=" (#{ScientificCouncilDegreeManagement.degree.acronym})</i>" escape="false"/>
+	<h:outputText value="<i>#{DegreeManagement.degree.nome}" escape="false"/>
+	<h:outputText value=" (#{DegreeManagement.degree.acronym})</i>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['degree']}" />
 	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{ScientificCouncilDegreeManagement.degreeId}'/>"/>
+		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>"/>
 
 <%--
 		<h:outputText value="<p><b>#{scouncilBundle['degree.data']}:</b><p/><br/>" escape="false"/>
 --%>	
 
-		<h:outputText styleClass="error" rendered="#{!empty ScientificCouncilDegreeManagement.errorMessage}" value="<p>#{ScientificCouncilDegreeManagement.errorMessage}<p/><br/>" escape="false"/>
+		<h:outputText styleClass="error" rendered="#{!empty DegreeManagement.errorMessage}" value="<p>#{DegreeManagement.errorMessage}<p/><br/>" escape="false"/>
 
 			<h:outputText value="<p><b>#{scouncilBundle['name']} (pt):</b> " escape="false"/>
-			<h:outputText id="name" value="#{ScientificCouncilDegreeManagement.name}</p>" escape="false"/>
+			<h:outputText id="name" value="#{DegreeManagement.name}</p>" escape="false"/>
 			
 			<h:outputText value="<p><b>#{scouncilBundle['name']} (en):</b> " escape="false"/>
-			<h:outputText id="nameEn" value="#{ScientificCouncilDegreeManagement.nameEn}</p>" escape="false"/>
+			<h:outputText id="nameEn" value="#{DegreeManagement.nameEn}</p>" escape="false"/>
 			
 			<h:outputText value="<p><b>#{scouncilBundle['acronym']}:</b> " escape="false"/>
-			<h:outputText id="acronym" value="#{ScientificCouncilDegreeManagement.acronym}</p>" escape="false"/>
+			<h:outputText id="acronym" value="#{DegreeManagement.acronym}</p>" escape="false"/>
 			
 			<h:outputText value="<p><b>#{scouncilBundle['degreeType']}:</b> " escape="false"/>
-			<h:outputText id="bolonhaDegreeType" value="#{enumerationBundle[ScientificCouncilDegreeManagement.bolonhaDegreeType]}</p>" escape="false"/>
+			<h:outputText id="bolonhaDegreeType" value="#{enumerationBundle[DegreeManagement.bolonhaDegreeType]}</p>" escape="false"/>
 
 			<h:outputText value="<p><b>#{scouncilBundle['ectsCredits']}:</b> " escape="false"/>
-			<h:outputText id="ectsCredits" value="#{ScientificCouncilDegreeManagement.ectsCredits}</p>" escape="false"/>
+			<h:outputText id="ectsCredits" value="#{DegreeManagement.ectsCredits}</p>" escape="false"/>
 
 <%-- 
  			<h:outputText value="<b>#{scouncilBundle['gradeTypes']}:</b> " escape="false"/>
-			<h:outputText id="gradeType" value="#{enumerationBundle[ScientificCouncilDegreeManagement.gradeType]}"/>
+			<h:outputText id="gradeType" value="#{enumerationBundle[DegreeManagement.gradeType]}"/>
 --%>
 
 		<br/>

@@ -275,9 +275,9 @@
 
 	<!-- BEGIN: Bolonha Management Beans -->
 	<managed-bean>
-		<description>ScientificCouncilDegreeManagement</description>
-		<managed-bean-name>ScientificCouncilDegreeManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.ScientificCouncilDegreeManagementBackingBean</managed-bean-class>
+		<description>DegreeManagement</description>
+		<managed-bean-name>DegreeManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.DegreeManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>

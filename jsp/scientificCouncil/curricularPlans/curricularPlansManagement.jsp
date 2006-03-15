@@ -23,7 +23,7 @@
 
 	<h:messages errorClass="error0" infoClass="success0"/>
 	
-	<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.bolonhaDegrees}" var="degree">
+	<fc:dataRepeater value="#{DegreeManagement.bolonhaDegrees}" var="degree">
 		<h:outputText value="<table style='width: 750px' class='showinfo1'>" escape="false"/>
 		<h:outputText value="<tr class='bgcolor1'><th style='width: 80px'><strong>#{scouncilBundle['degree']}:</strong></th>" escape="false"/>
 
