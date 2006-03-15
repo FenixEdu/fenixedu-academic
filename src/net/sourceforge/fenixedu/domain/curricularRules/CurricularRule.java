@@ -37,11 +37,15 @@ public abstract class CurricularRule extends CurricularRule_Base {
     }
     
     private boolean appliesToCourseGroup(Context context) {
-        return (this.getContextCourseGroup() == null || this.getContextCourseGroup().equals(context.getParentCourseGroup()));
+        return this.getContextCourseGroup() == context.getParentCourseGroup();
     }
     
     public boolean isCompositeRule() {
         return getCurricularRuleType() == null;
+    }
+    
+    protected boolean belongsToCompositeRule() {        
+        return (getParentCompositeRule() != null);
     }
     
     public abstract boolean isLeaf();    
@@ -50,23 +54,23 @@ public abstract class CurricularRule extends CurricularRule_Base {
     
     @Override
     public ExecutionPeriod getBegin() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getBegin() : super.getBegin();
+        return belongsToCompositeRule() ? getParentCompositeRule().getBegin() : super.getBegin();
     }
 
     @Override
     public ExecutionPeriod getEnd() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getEnd() : super.getEnd();
+        return belongsToCompositeRule() ? getParentCompositeRule().getEnd() : super.getEnd();
     }
 
     @Override
     public DegreeModule getDegreeModuleToApplyRule() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule()
+        return belongsToCompositeRule() ? getParentCompositeRule()
                 .getDegreeModuleToApplyRule() : super.getDegreeModuleToApplyRule();
     }
 
     @Override
     public CourseGroup getContextCourseGroup() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getContextCourseGroup()
+        return belongsToCompositeRule() ? getParentCompositeRule().getContextCourseGroup()
                 : super.getContextCourseGroup();
     }
 }
