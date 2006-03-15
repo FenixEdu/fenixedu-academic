@@ -46,7 +46,7 @@ public class EMailSender
 			try
 			{
 				EMailSender.bundle = ResourceBundle.getBundle(EMailSender.bundleFile);
-				EMailSender.mailServer = EMailSender.bundle.getString("mailSender.server.url");
+				EMailSender.mailServer = EMailSender.bundle.getString("mail.smtp.host");
 				if (EMailSender.mailServer == null)
 				{
 					EMailSender.mailServer = "mail.adm";

@@ -34,7 +34,7 @@ import org.apache.struts.util.MessageResources;
 public class GroupStudentEnrolment extends Service {
 
     public String mailServer() {
-        final String server = ResourceBundle.getBundle("SMTPConfiguration").getString("mailSender.server.url");
+        final String server = ResourceBundle.getBundle("SMTPConfiguration").getString("mail.smtp.host");
         return (server != null) ? server : "mail.adm";
     }
 

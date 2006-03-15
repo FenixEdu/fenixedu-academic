@@ -7,9 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import org.apache.struts.util.MessageResources;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -29,7 +26,10 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.EMail;
+
+import org.apache.struts.util.MessageResources;
+
+import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
  * @author asnr and scpo
@@ -37,11 +37,6 @@ import net.sourceforge.fenixedu.util.EMail;
  */
 
 public class EditGroupShift extends Service {
-
-    public String mailServer() {
-        final String server = ResourceBundle.getBundle("SMTPConfiguration").getString("mailSender.server.url");
-        return (server != null) ? server : "mail.adm";
-    }
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
@@ -118,10 +113,9 @@ public class EditGroupShift extends Service {
             }
             executionCourseNames.append(executionCourse.getNome());
         }
-        EMail.send(mailServer(), "Fenix System", messages.getMessage("suporte.mail"),
-                messages.getMessage("message.subject.grouping.change"), emails, new ArrayList(), new ArrayList(),
-                messages.getMessage("message.body.grouping.change.shift", student.getNumber().toString(),
-                        studentGroup.getGroupNumber().toString()));
+        EmailSender.send("Fenix System", messages.getMessage("suporte.mail"), emails, null, null,
+        		messages.getMessage("message.subject.grouping.change"),
+        		messages.getMessage("message.body.grouping.change.shift", student.getNumber().toString(), studentGroup.getGroupNumber().toString()));
     }
 
 }

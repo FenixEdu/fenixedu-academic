@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.manager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -165,11 +164,6 @@ public class SendMailBackingBean extends FenixBackingBean {
                 break;
             }
         }
-    }
-
-    public String mailServer() {
-        final String server = ResourceBundle.getBundle("SMTPConfiguration").getString("mailSender.server.url");
-        return (server != null) ? server : "mail.adm";
     }
 
     public String getBccs() {

@@ -59,7 +59,7 @@ public class CmsConfigurationManagement extends FenixDispatchAction
 			{
 				InputStream inputStream = getClass().getResourceAsStream(propertiesFilename);
 				properties.load(inputStream);
-				fenixCmsName = properties.getProperty("mailSender.server.url");
+				fenixCmsName = properties.getProperty("mail.smtp.host");
 				if (fenixCmsName == null)
 				{
 					fenixCmsName = defaultFenixCMSName;

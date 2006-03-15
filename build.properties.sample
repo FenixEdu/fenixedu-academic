@@ -353,8 +353,8 @@ struts.validation.doctype.url=file:///home/gedl/workspace/fenix-head/metadata/dt
 #-----------------------------------------------------------------------------
 cms.mailer.username=xptze
 cms.mailer.password=xptze
-mailSender.server.url=localhost
-mailSender.server.name=localhost
+mail.smtp.host=localhost
+mail.smtp.name=localhost
 #
 #
 #----------------------------------------------

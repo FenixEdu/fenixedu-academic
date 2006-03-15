@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.util.EMail;
 public class UnEnrollStudentInGroup extends Service {
 
     public String mailServer() {
-        final String server = ResourceBundle.getBundle("SMTPConfiguration").getString("mailSender.server.url");
+        final String server = ResourceBundle.getBundle("SMTPConfiguration").getString("mail.smtp.host");
         return (server != null) ? server : "mail.adm";
     }
 

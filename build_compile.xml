@@ -199,10 +199,10 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="SMTPConfiguration.properties"/>
-				<replacefilter token="@mailSender.server.url@" 
-			    			   property="mailSender.server.url"/>
-				<replacefilter token="@mailSender.server.name@" 
-			    			   property="mailSender.server.name"/>
+				<replacefilter token="@mail.smtp.host@" 
+			    			   property="mail.smtp.host"/>
+				<replacefilter token="@mail.smtp.name@" 
+			    			   property="mail.smtp.name"/>
 			</replace>
 
 
