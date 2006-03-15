@@ -776,23 +776,13 @@ public class Person extends Person_Base {
     }
 
     public static Person readPersonByUsername(final String username) throws ExcepcaoPersistencia {
-        List<Person> allPersons = RootDomainObject.readAllPersons();
-        for (final Person person : allPersons) {
-            if (person.getUsername().equalsIgnoreCase(username)) {
-                return person;
-            }
-        }
-        return null;
+        final User user = User.readUserByUsername(username);
+        return user != null ? user.getPerson() : null;
     }
 
     public static Person readPersonByIstUsername(final String istUsername) throws ExcepcaoPersistencia {
-        List<Person> allPersons = RootDomainObject.readAllPersons();
-        for (final Person person : allPersons) {
-            if (person.getIstUsername() != null && person.getIstUsername().equalsIgnoreCase(istUsername)) {
-                return person;
-            }
-        }
-        return null;
+        final User user = User.readUserByIstUsername(istUsername);
+        return user != null ? user.getPerson() : null;
     }
 
     private static class PersonRoleListener extends dml.runtime.RelationAdapter<Role, Person> {

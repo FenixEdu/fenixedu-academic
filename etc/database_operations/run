@@ -19,3 +19,4 @@ function execute() {
 	echo
 }
 
+execute "Alter table User" alterTableUser.sql

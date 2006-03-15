@@ -2082,18 +2082,13 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 
 	class net.sourceforge.fenixedu.domain.space.RoomInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
 		String name;
-
-		String area;
-		String hight;
-		String illumination;
-		String distribution;
-		String salubrityArea;
-		String security;
-		String vptoValue;
-		String index;
-		String tm;
+		BigDecimal area;
+		Boolean hight;
+		Boolean illumination;
+		Boolean distanceFromSanitaryInstalations;
+		Boolean security;
+		Boolean age;
 		String observations;
-
 		Integer capacityForLessons;
 		Integer capacityForExams;
 	}
@@ -6051,6 +6046,13 @@ relation RootDomainObjectRole {
 relation RootDomainObjectParty {
     net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
     net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parties {
+    	multiplicity *;
+    }
+}
+
+relation RootDomainObjectUser {
+    net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+    net.sourceforge.fenixedu.domain.User playsRole users {
     	multiplicity *;
     }
 }

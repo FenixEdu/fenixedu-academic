@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.List;
+
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+
 /** 
  * @author mrsp
  * @author shezad
@@ -24,4 +28,23 @@ public class User extends User_Base {
         this.setIstUsername(istUsername);
         this.setIsPassInKerberos(isPassInKerberos);
     }
+
+    public static User readUserByUsername(final String username) throws ExcepcaoPersistencia {
+        for (final User user : RootDomainObject.getInstance().getUsers()) {
+            if (user.getUsername().equalsIgnoreCase(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public static User readUserByIstUsername(final String istUsername) throws ExcepcaoPersistencia {
+        for (final User user : RootDomainObject.getInstance().getUsers()) {
+            if (user.getIstUsername() != null && user.getIstUsername().equalsIgnoreCase(istUsername)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
 }
