@@ -281,9 +281,9 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<description>ScientificCouncilCurricularPlanManagement</description>
-		<managed-bean-name>ScientificCouncilCurricularPlanManagement</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.ScientificCouncilCurricularPlanManagementBackingBean</managed-bean-class>
+		<description>DegreeCurricularPlanManagement</description>
+		<managed-bean-name>DegreeCurricularPlanManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans.DegreeCurricularPlanManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>

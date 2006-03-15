@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
-public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixBackingBean {
+public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
     private final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
     private final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");

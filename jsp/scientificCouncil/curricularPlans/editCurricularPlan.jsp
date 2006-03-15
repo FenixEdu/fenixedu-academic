@@ -7,14 +7,14 @@
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="<i>#{ScientificCouncilCurricularPlanManagement.dcp.name}" escape="false"/>
-	<h:outputText value=" (#{enumerationBundle[ScientificCouncilCurricularPlanManagement.dcp.curricularStage.name]})</i>" escape="false"/>
+	<h:outputText value="<i>#{DegreeCurricularPlanManagement.dcp.name}" escape="false"/>
+	<h:outputText value=" (#{enumerationBundle[DegreeCurricularPlanManagement.dcp.curricularStage.name]})</i>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['edit.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'/>"/>
-		<fc:viewState binding="#{ScientificCouncilCurricularPlanManagement.viewState}"/>
+		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{DegreeCurricularPlanManagement.dcpId}'/>"/>
+		<fc:viewState binding="#{DegreeCurricularPlanManagement.viewState}"/>
 		
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
@@ -23,23 +23,23 @@
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 		
 		<h:outputText value="<p><label>#{scouncilBundle['curricularStage']}:</label> " escape="false"/>
-		<h:selectOneMenu id="curricularStage" value="#{ScientificCouncilCurricularPlanManagement.curricularStage}" onchange="this.form.submit();">
-			<f:selectItems value="#{ScientificCouncilCurricularPlanManagement.curricularStages}" />
+		<h:selectOneMenu id="curricularStage" value="#{DegreeCurricularPlanManagement.curricularStage}" onchange="this.form.submit();">
+			<f:selectItems value="#{DegreeCurricularPlanManagement.curricularStages}" />
 		</h:selectOneMenu>
-		<h:message for="curricularStage" errorClass="error" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>
+		<h:message for="curricularStage" errorClass="error" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
 		<h:outputText value="</p>" escape="false"/>
 		
-		<h:panelGroup rendered="#{ScientificCouncilCurricularPlanManagement.curricularStage == 'APPROVED'}">
+		<h:panelGroup rendered="#{DegreeCurricularPlanManagement.curricularStage == 'APPROVED'}">
 			<h:outputText value="<p><label>#{scouncilBundle['executionYear']}:</label> " escape="false"/>
- 			<h:selectOneMenu value="#{ScientificCouncilCurricularPlanManagement.executionYearID}">
-				<f:selectItems value="#{ScientificCouncilCurricularPlanManagement.executionYearItems}" />
+ 			<h:selectOneMenu value="#{DegreeCurricularPlanManagement.executionYearID}">
+				<f:selectItems value="#{DegreeCurricularPlanManagement.executionYearItems}" />
 			</h:selectOneMenu>
 			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
 		
 		<h:outputText value="<p><label>#{scouncilBundle['name']}:</label>" escape="false"/>
-		<h:inputText id="name" value="#{ScientificCouncilCurricularPlanManagement.name}" required="true" maxlength="100" size="40"/>
-		<h:message for="name" errorClass="error0" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>
+		<h:inputText id="name" value="#{DegreeCurricularPlanManagement.name}" required="true" maxlength="100" size="40"/>
+		<h:message for="name" errorClass="error0" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
 		<h:outputText value="</p>" escape="false"/>
 			
 		<h:outputText value="</fieldset></div>" escape="false"/>
@@ -66,7 +66,7 @@
 		
 		<h:outputText value="<br/><p>" escape="false" />
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['button.save']}"
-			action="#{ScientificCouncilCurricularPlanManagement.editCurricularPlan}"/>
+			action="#{DegreeCurricularPlanManagement.editCurricularPlan}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>
 		<h:outputText value="</p>" escape="false" />

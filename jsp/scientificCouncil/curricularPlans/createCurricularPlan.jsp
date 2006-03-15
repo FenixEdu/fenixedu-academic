@@ -22,8 +22,8 @@
 
 		<h:outputText value="<p style='padding-top: 1em; padding-bottom: 0.5em;'><label>#{scouncilBundle['name']}:</label>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText id="name" value="#{ScientificCouncilCurricularPlanManagement.name}" required="true" maxlength="100" size="20"/>
-			<h:message for="name" errorClass="error0" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>
+			<h:inputText id="name" value="#{DegreeCurricularPlanManagement.name}" required="true" maxlength="100" size="20"/>
+			<h:message for="name" errorClass="error0" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
 
@@ -31,7 +31,7 @@
 
 		<h:outputText value="<p>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['create']}"
-			action="#{ScientificCouncilCurricularPlanManagement.createCurricularPlan}"/>
+			action="#{DegreeCurricularPlanManagement.createCurricularPlan}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>
 		<h:outputText value="</p>" escape="false"/>

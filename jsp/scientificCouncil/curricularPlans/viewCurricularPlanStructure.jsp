@@ -7,19 +7,19 @@
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="<em>#{ScientificCouncilCurricularPlanManagement.dcp.name}" escape="false"/>
-	<h:outputText value=" (#{enumerationBundle[ScientificCouncilCurricularPlanManagement.dcp.curricularStage.name]})</em>" escape="false"/>
+	<h:outputText value="<em>#{DegreeCurricularPlanManagement.dcp.name}" escape="false"/>
+	<h:outputText value=" (#{enumerationBundle[DegreeCurricularPlanManagement.dcp.curricularStage.name]})</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['curricularPlan.structure']}"/>
 	</h:outputFormat>
 
 	<fc:degreeCurricularPlanRender 
-		dcp="#{ScientificCouncilCurricularPlanManagement.dcp}" 
+		dcp="#{DegreeCurricularPlanManagement.dcp}" 
 		onlyStructure="true"/>
 	
 	<h:outputText value="<br/><p>" escape="false"/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'/>"/>
+		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{DegreeCurricularPlanManagement.dcpId}'/>"/>
 		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
 		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularCourseManagement.showRules}'/>"/>
