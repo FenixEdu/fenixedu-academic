@@ -53,7 +53,15 @@ public class UpdateObjects extends Service {
             setCollectionProperty(object, slot, (List) value);
         }
         else {
-            setSlotProperty(object, slot, value);
+            try {
+                setSlotProperty(object, slot, value);
+            }
+            catch (IllegalArgumentException e) {
+                throw new RuntimeException("the value '" + value + "' given for slot '" + slot + "' does not match slot's type '" + type + "'");
+            }
+            catch (IllegalAccessException e) {
+                throw new RuntimeException("could not access to the slot '" + slot + "' of object '" + object + "', probably is not public");
+            }
         }
     }
 

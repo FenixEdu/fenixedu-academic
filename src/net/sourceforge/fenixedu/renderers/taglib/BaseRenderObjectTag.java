@@ -8,6 +8,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts.taglib.TagUtils;
@@ -131,7 +132,7 @@ public abstract class BaseRenderObjectTag extends TagSupport {
             try {
                 return PropertyUtils.getProperty(object, getProperty());
             } catch (Exception e) {
-                throw new RuntimeException("object " + object + " does not have property " + getProperty(), e);
+                throw new RuntimeException("object '" + object + "' does not have property '" + getProperty() + "'", e);
             } 
         }
         
@@ -156,6 +157,11 @@ public abstract class BaseRenderObjectTag extends TagSupport {
     
     public int doEndTag() throws JspException {
         Object object = getTargetObject();
+        
+        if (object == null) {
+            throw new RuntimeException("cannot present the null value, name='" + getName() + "' property='" + getProperty() + "' scope='" + getScope() + "'");
+        }
+        
         String layout = getLayout();
         String schema = getSchema();
         Properties properties = getRenderProperties();
@@ -166,7 +172,7 @@ public abstract class BaseRenderObjectTag extends TagSupport {
         try {
             drawComponent(context, component);
         } catch (IOException e) {
-            throw new JspException("Failed to render component", e);
+            throw new JspException("failed to render component", e);
         }
         
         release(); // force release
