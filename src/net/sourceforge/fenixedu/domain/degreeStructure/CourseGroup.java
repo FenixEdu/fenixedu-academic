@@ -1,15 +1,21 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
+import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.util.StringFormatter;
@@ -236,5 +242,70 @@ public class CourseGroup extends CourseGroup_Base {
         }
         return newDegreeModulesPath;
     }
+    
+    public Collection<CourseGroup> getNotOptionalChildCourseGroup(ExecutionPeriod executionPeriod){
+    	Collection<CourseGroup> notOptional = new HashSet<CourseGroup>();
+    	Collection<CurricularRule> curricularRules = getCurricularRulesByExecutionPeriod(executionPeriod);
+    	Collection<DegreeModule> degreeModules = getDegreeModulesByExecutionPeriod(executionPeriod);
+    	DegreeModulesSelectionLimit degreeModulesSelectionLimit = null; 
+    	if((degreeModulesSelectionLimit = getDegreeModulesSelectionLimitRule(curricularRules)) != null) {
+    		if(degreeModulesSelectionLimit.getMinimum().equals(degreeModulesSelectionLimit.getMaximum()) && degreeModulesSelectionLimit.getMaximum().equals(degreeModules.size())) {
+    			return filterCourseGroups(degreeModules);
+    		} else {
+    			return notOptional;
+    		}
+    	}
+    	return filterCourseGroups(degreeModules);
+    }
+    
+    private Collection<CourseGroup> filterCourseGroups(Collection<DegreeModule> degreeModules) {
+    	Collection<CourseGroup> courseGroups = new HashSet<CourseGroup>();
+    	for (DegreeModule degreeModule : degreeModules) {
+			if(degreeModule instanceof CourseGroup) {
+				courseGroups.add((CourseGroup) degreeModule);
+			}
+		}
+		return courseGroups;
+	}
 
+	private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(Collection<CurricularRule> curricularRules) {
+    	for (CurricularRule rule : curricularRules) {
+			if(rule.getCurricularRuleType().equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT)) {
+				return (DegreeModulesSelectionLimit) rule;
+			}
+		}
+    	return null;
+    }
+    
+    private Collection<CurricularRule> getCurricularRulesByExecutionPeriod(final ExecutionPeriod executionPeriod){
+    	Collection<CurricularRule> validCurricularRulesInExecutionPeriod = new HashSet<CurricularRule>();
+    	for (final CurricularRule curricularRule : this.getCurricularRulesSet()) {
+			if(curricularRule.isValid(executionPeriod)) {
+				validCurricularRulesInExecutionPeriod.add(curricularRule);
+			}
+		}
+    	return validCurricularRulesInExecutionPeriod;
+    }
+
+    private Collection<DegreeModule> getDegreeModulesByExecutionPeriod(final ExecutionPeriod executionPeriod){
+    	Collection<DegreeModule> validDegreeModulesInExecutionPeriod = new HashSet<DegreeModule>();
+    	for (final Context context : this.getChildContexts()) {
+			if(context.isValid(executionPeriod)) {
+				validDegreeModulesInExecutionPeriod.add(context.getChildDegreeModule());
+			}
+		}
+    	return validDegreeModulesInExecutionPeriod;
+    }
+    
+    public boolean validate(CurricularCourse curricularCourse) {
+    	for (final Context context : this.getChildContextsSet()) {
+			if(context.getChildDegreeModule() instanceof CurricularCourse) {
+				CurricularCourse childCurricularCourse = (CurricularCourse) context.getChildDegreeModule();
+				if(childCurricularCourse.isEquivalent(curricularCourse)) {
+					return true;
+				}
+			}
+		}
+    	return false;
+    }
 }
