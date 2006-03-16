@@ -90,9 +90,8 @@ public class EnrollmentVO extends VersionedObjectsBase implements
 			final String year) throws ExcepcaoPersistencia {
 		CurricularCourse curricularCourse = (CurricularCourse) readByOID(
 				CurricularCourse.class, curricularCourseId);
-		List enrolments = curricularCourse.getEnrolments();
 
-		return (List) CollectionUtils.select(enrolments, new Predicate() {
+		return (List) CollectionUtils.select(curricularCourse.getCurriculumModules(), new Predicate() {
 			public boolean evaluate(Object o) {
 				return ((Enrolment) o).getExecutionPeriod().getExecutionYear()
 						.getYear().equals(year);
@@ -105,9 +104,8 @@ public class EnrollmentVO extends VersionedObjectsBase implements
 			throws ExcepcaoPersistencia {
 		CurricularCourse curricularCourse = (CurricularCourse) readByOID(
 				CurricularCourse.class, curricularCourseId);
-		List enrolments = curricularCourse.getEnrolments();
 
-		return (List) CollectionUtils.select(enrolments, new Predicate() {
+		return (List) CollectionUtils.select(curricularCourse.getCurriculumModules(), new Predicate() {
 			public boolean evaluate(Object o) {
 				return ((Enrolment) o).getExecutionPeriod().getIdInternal()
 						.equals(executionPeriodId);
@@ -172,9 +170,8 @@ public class EnrollmentVO extends VersionedObjectsBase implements
 			throws ExcepcaoPersistencia {
 		CurricularCourse curricularCourse = (CurricularCourse) readByOID(
 				CurricularCourse.class, curricularCourseId);
-		List enrolments = curricularCourse.getEnrolments();
 
-		return (CollectionUtils.select(enrolments, new Predicate() {
+		return (CollectionUtils.select(curricularCourse.getCurriculumModules(), new Predicate() {
 			public boolean evaluate(Object o) {
 				return ((Enrolment) o).getExecutionPeriod().getIdInternal()
 						.equals(executionPeriodId);
