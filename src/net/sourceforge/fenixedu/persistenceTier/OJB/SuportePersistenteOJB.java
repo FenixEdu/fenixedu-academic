@@ -39,7 +39,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentLog;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
@@ -128,7 +127,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.InquiriesTeacherOJ
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesCoursesResOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesSummaryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesTeachersResOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.log.EnrolmentLogOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.CostCenterOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.ExtraWorkCompensationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.ExtraWorkHistoricOJB;
@@ -1228,11 +1226,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentExportGrouping getIPersistentExportGrouping()
 	{
 		return new ExportGroupingOJB();
-	}
-
-	public IPersistentEnrolmentLog getIPersistentEnrolmentLog()
-	{
-		return new EnrolmentLogOJB();
 	}
 
 	// Rita Ferreira e Jo�o Fialho
