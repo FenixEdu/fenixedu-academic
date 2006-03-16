@@ -30,7 +30,7 @@ public class ReadDegreeCurricularPlans extends Service {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public List run() throws ExcepcaoPersistencia {
-		final List curricularPlans = persistentSupport.getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
+		final List curricularPlans = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
 		final List infoCurricularPlans = new ArrayList(curricularPlans.size());
 
 		for (final Iterator iter = curricularPlans.iterator(); iter.hasNext();) {

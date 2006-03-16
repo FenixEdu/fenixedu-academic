@@ -22,8 +22,8 @@ public class InsertDegreeCurricularPlan extends Service {
         }
 
         // assert unique pair name/degree
-        final List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentSupport
-                .getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
+        
+        final List<DegreeCurricularPlan> dcps = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
         for (DegreeCurricularPlan dcp : dcps) {
             if (dcp.getDegree().getIdInternal().equals(infoDcp.getInfoDegree().getIdInternal())
                     && dcp.getName().equalsIgnoreCase(infoDcp.getName())) {

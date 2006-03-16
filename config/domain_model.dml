@@ -6093,3 +6093,10 @@ relation RootDomainObjectTeacher {
     	multiplicity *;
     }
 }
+    
+relation RootDomainObjectDegreeCurricularPlan {
+    net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+    net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlans {
+    	multiplicity *;
+    }
+}    

@@ -38,10 +38,7 @@ public class ListMasterDegreeStudents extends Service {
 
         final Collection<InfoStudentCurricularPlanWithFirstTimeEnrolment> infoStudentCurricularPlans = new ArrayList();
         final Collection<StudentCurricularPlan> studentCurricularPlans = new ArrayList();
-        final Collection<DegreeCurricularPlan> masterDegreeCurricularPlans = persistentSupport
-                .getIPersistentDegreeCurricularPlan().readByDegreeTypeAndState(DegreeType.MASTER_DEGREE,
-                        DegreeCurricularPlanState.ACTIVE);
-
+        final Collection<DegreeCurricularPlan> masterDegreeCurricularPlans = DegreeCurricularPlan.readByDegreeTypeAndState(DegreeType.MASTER_DEGREE, DegreeCurricularPlanState.ACTIVE);
         CollectionUtils.filter(masterDegreeCurricularPlans, new Predicate() {
 
             public boolean evaluate(Object arg0) {

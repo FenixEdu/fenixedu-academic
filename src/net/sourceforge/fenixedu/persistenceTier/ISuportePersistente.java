@@ -144,8 +144,6 @@ public interface ISuportePersistente
 
 	public IPersistentDepartment getIDepartamentoPersistente();
 
-	public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan();
-
 	public IPersistentStudentCurricularPlan getIStudentCurricularPlanPersistente();
 
 	public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate();

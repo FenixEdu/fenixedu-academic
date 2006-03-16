@@ -51,6 +51,11 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="keyRootDomainObject"
+		column="KEY_ROOT_DOMAIN_OBJECT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
 		name="degreeDuration"
 		column="DEGREE_DURATION"
 		jdbc-type="INTEGER"

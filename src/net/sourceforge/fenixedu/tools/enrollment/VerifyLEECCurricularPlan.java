@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -35,13 +34,9 @@ public class VerifyLEECCurricularPlan {
     public static void main(String args[]) {
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSuport
-                    .getIPersistentDegreeCurricularPlan();
-
             persistentSuport.iniciarTransaccao();
 
-            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) degreeCurricularPlanDAO
-                    .readByOID(DegreeCurricularPlan.class, new Integer("48"));
+            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSuport.getIPersistentObject().readByOID(DegreeCurricularPlan.class, new Integer("48"));
 
             List branches = degreeCurricularPlan.getAreas();
 

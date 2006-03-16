@@ -1,11 +1,14 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
@@ -211,5 +214,14 @@ public class Degree extends Degree_Base {
     	final ResourceBundle appResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources");
     	return enumResourceBundle.getString(getTipoCurso().toString()) + " " + appResourceBundle.getString("label.in") + " " + getNome();
     }
-
+    
+    public List<DegreeCurricularPlan> findDegreeCurricularPlansByState(DegreeCurricularPlanState state){
+    	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+    	for (DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlans()) {
+			if(degreeCurricularPlan.getState().equals(state)) {
+				result.add(degreeCurricularPlan);
+			}
+		}
+    	return result;
+    }
 }

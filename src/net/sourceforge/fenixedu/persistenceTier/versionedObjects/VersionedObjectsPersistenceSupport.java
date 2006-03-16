@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -181,7 +180,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularY
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurriculumVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoExecucaoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeCurricularPlanVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DepartmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DislocatedStudentVO;
@@ -440,10 +438,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public ITurnoPersistente getITurnoPersistente() {
         return new TurnoVO();
-    }
-
-    public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan() {
-        return new DegreeCurricularPlanVO();
     }
 
     public IPersistentDelegate getIPersistentDelegate() {

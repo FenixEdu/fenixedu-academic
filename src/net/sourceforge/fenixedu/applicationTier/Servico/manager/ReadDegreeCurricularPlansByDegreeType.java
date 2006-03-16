@@ -24,8 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadDegreeCurricularPlansByDegreeType extends Service {
 
     public List run(final DegreeType tipoCurso) throws ExcepcaoPersistencia {
-        final List degreeCurricularPlans = persistentSupport.getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
-
+        final List degreeCurricularPlans = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
         return constructInfoDegreeCurricularPlans(tipoCurso, degreeCurricularPlans);
     }
 

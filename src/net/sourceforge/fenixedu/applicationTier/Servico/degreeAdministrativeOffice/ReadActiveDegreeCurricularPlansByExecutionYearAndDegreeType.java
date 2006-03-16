@@ -24,9 +24,7 @@ public class ReadActiveDegreeCurricularPlansByExecutionYearAndDegreeType extends
     public Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType)
             throws ExcepcaoPersistencia {
 
-        List<DegreeCurricularPlan> degreeCurricularPlans = persistentSupport.getIPersistentDegreeCurricularPlan()
-                .readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE);
-
+        List<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE);
         return CollectionUtils.collect(degreeCurricularPlans, new Transformer() {
 
             public Object transform(Object arg0) {

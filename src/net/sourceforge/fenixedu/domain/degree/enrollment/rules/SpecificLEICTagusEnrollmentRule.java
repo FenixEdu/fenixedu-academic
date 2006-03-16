@@ -81,7 +81,7 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 	protected List<CurricularCourse> getLEIC5Courses(){
 		try {
 			Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
-			DegreeCurricularPlan leicDegreeCurricularPlan = (DegreeCurricularPlan) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class, 88);
+			DegreeCurricularPlan leicDegreeCurricularPlan = (DegreeCurricularPlan) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentObject().readByOID(DegreeCurricularPlan.class, 88);
 			List<CurricularCourseGroup> optionalCurricularCourseGroups = leicDegreeCurricularPlan.getAllOptionalCurricularCourseGroups();
 	        for (CurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
 				List<CurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();

@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
@@ -46,6 +47,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public DegreeCurricularPlan() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     private DegreeCurricularPlan(Degree degree) {
@@ -618,5 +620,30 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public String getPresentationName() {
         return getDegree().getPresentationName() + " " + getName();
+    }
+    
+    
+    // -------------------------------------------------------------
+    // read static methods 
+    // -------------------------------------------------------------
+    
+    public static List<DegreeCurricularPlan> readByCurricularStage(CurricularStage curricularStage){
+    	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+    	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlans()) {
+			if(degreeCurricularPlan.getCurricularStage().equals(curricularStage)) {
+				result.add(degreeCurricularPlan);
+			}
+		}
+    	return result;
+    }
+        
+    public static List readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state) {
+    	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+    	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlans()) {
+    		if(degreeCurricularPlan.getDegree().getTipoCurso().equals(degreeType) && degreeCurricularPlan.getState().equals(state) && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
+    			result.add(degreeCurricularPlan);
+    		}
+    	}
+    	return result;
     }
 }

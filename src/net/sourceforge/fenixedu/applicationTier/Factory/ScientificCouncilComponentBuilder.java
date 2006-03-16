@@ -24,11 +24,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -177,10 +175,9 @@ public class ScientificCouncilComponentBuilder {
 		if (degree == null) {
 			throw new InvalidArgumentsServiceException();
 		}
-		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
-				.getIPersistentDegreeCurricularPlan();
-		List degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegreeAndState(degree
-				.getIdInternal(), DegreeCurricularPlanState.ACTIVE, CurricularStage.OLD);
+		
+		List degreeCurricularPlans = degree.findDegreeCurricularPlansByState(DegreeCurricularPlanState.ACTIVE);
+		
 		Iterator iter = degreeCurricularPlans.iterator();
 		List infoDegreeCurricularPlans = new ArrayList();
 		while (iter.hasNext()) {

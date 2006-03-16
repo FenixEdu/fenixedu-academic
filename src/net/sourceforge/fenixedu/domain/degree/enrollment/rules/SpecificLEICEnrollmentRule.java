@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -352,7 +353,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 
 	protected List<CurricularCourse> getTagus4And5Courses() {
 		try {
-			DegreeCurricularPlan tagusCurricularPlan = (DegreeCurricularPlan) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class, 89);
+			DegreeCurricularPlan tagusCurricularPlan = (DegreeCurricularPlan) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentObject().readByOID(DegreeCurricularPlan.class, 89);
 			Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
 			Set<CurricularCourse> allCurricularCourses = new HashSet<CurricularCourse>();
 
