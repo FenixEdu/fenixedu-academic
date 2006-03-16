@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -27,9 +28,9 @@ import org.apache.commons.lang.StringUtils;
 public class Enrolment extends Enrolment_Base {
 
     private Integer accumulatedWeight;
-
-    protected Enrolment() {
-        this.setOjbConcreteClass(this.getClass().getName());
+    
+    public Enrolment() {
+    	super();
     }
 
     public Enrolment(StudentCurricularPlan studentCurricularPlan,
@@ -38,9 +39,45 @@ public class Enrolment extends Enrolment_Base {
     	this();
     	initializeAsNew(studentCurricularPlan, curricularCourse,
                 executionPeriod, enrolmentCondition, createdBy);
-    	createEnrolmentLog(EnrolmentAction.ENROL);
+    	createEnrolmentLog(studentCurricularPlan.getStudent(), EnrolmentAction.ENROL);
     }
     
+    //new student structure methods
+    public Enrolment(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+            EnrollmentCondition enrolmentCondition, String createdBy){
+    	if(studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null || executionPeriod == null || enrolmentCondition == null ) {
+    		throw new DomainException("invalid arguments");
+    	}
+    	validateDegreeModuleLink(curriculumGroup, curricularCourse);
+    	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionPeriod, enrolmentCondition, createdBy);
+    }
+    
+    protected void initializeAsNew(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+            CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+            EnrollmentCondition enrolmentCondition, String createdBy) {
+        initializeAsNewWithoutEnrolmentEvaluation(studentCurricularPlan, curriculumGroup, curricularCourse,
+                executionPeriod, enrolmentCondition, createdBy);
+        createEnrolmentEvaluationWithoutGrade();
+    }
+
+    protected void initializeAsNewWithoutEnrolmentEvaluation(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+            CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+            EnrollmentCondition enrolmentCondition, String createdBy) {
+        setCurricularCourse(curricularCourse);
+        setEnrollmentState(EnrollmentState.ENROLLED);
+        setExecutionPeriod(executionPeriod);
+        setCurricularCourse(curricularCourse);
+        setCurriculumGroup(curriculumGroup);
+        setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+        setCreationDate(new Date());
+        setCondition(enrolmentCondition);
+        setCreatedBy(createdBy);
+
+        createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod);
+    }
+    
+    
+    //end 
     public Integer getAccumulatedWeight() {
         return accumulatedWeight;
     }
@@ -99,12 +136,11 @@ public class Enrolment extends Enrolment_Base {
 
     public void delete() {
     	createEnrolmentLog(EnrolmentAction.UNENROL);
-    	
+    	//TODO: falta ver se é dos antigos enrolments ou dos novos
         final Student student = getStudentCurricularPlan().getStudent();
 
         removeExecutionPeriod();
         removeStudentCurricularPlan();
-        removeCurricularCourse();
 
         Iterator<Attends> attendsIter = getAttendsIterator();
         while (attendsIter.hasNext()) {
@@ -192,7 +228,7 @@ public class Enrolment extends Enrolment_Base {
             equivalence.delete();
         }
 
-        super.deleteDomainObject();
+        super.delete();
 
     }
 
@@ -485,7 +521,25 @@ public class Enrolment extends Enrolment_Base {
         return this.getStudentCurricularPlan().getEnrolments(this.getCurricularCourse()).size() == 1;
     }
     
+    public CurricularCourse getCurricularCourse() {
+    	return (CurricularCourse) getDegreeModule();
+    }
+    
+    public void setCurricularCourse(CurricularCourse curricularCourse) {
+    	setDegreeModule(curricularCourse);
+    }
+    
+    protected void createEnrolmentLog(Student student, EnrolmentAction action) {
+    	EnrolmentLog enrolmentLog = new EnrolmentLog(action, student, this.getCurricularCourse(), this.getExecutionPeriod(), getCurrentUser());
+    }
+    
     protected void createEnrolmentLog(EnrolmentAction action) {
     	EnrolmentLog enrolmentLog = new EnrolmentLog(action, this.getStudentCurricularPlan().getStudent(), this.getCurricularCourse(), this.getExecutionPeriod(), getCurrentUser());
     }
+
+	@Override
+	public StringBuilder print(String tabs) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
