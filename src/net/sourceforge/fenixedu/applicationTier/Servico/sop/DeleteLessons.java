@@ -5,16 +5,12 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
-/**
- * @author Luis Cruz & Sara Ribeiro
- */
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentRoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 public class DeleteLessons extends Service {
@@ -36,9 +32,6 @@ public class DeleteLessons extends Service {
 
     public static void deleteLesson(final ISuportePersistente persistentSupport, final Lesson lesson)
             throws ExcepcaoPersistencia {
-        final IPersistentRoomOccupation persistentRoomOccupation = persistentSupport
-                .getIPersistentRoomOccupation();
-
         final RoomOccupation roomOccupation = lesson.getRoomOccupation();
 
         roomOccupation.setPeriod(null);
@@ -49,7 +42,7 @@ public class DeleteLessons extends Service {
         lesson.setSala(null);
         lesson.setExecutionPeriod(null);
 
-        persistentRoomOccupation.deleteByOID(RoomOccupation.class, roomOccupation.getIdInternal());
+        roomOccupation.delete();
         persistentObject.deleteByOID(Lesson.class, lesson.getIdInternal());
     }
 

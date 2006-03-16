@@ -74,7 +74,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentRoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
@@ -1141,12 +1140,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork()
 	{
 		return new FinalDegreeWorkOJB();
-	}
-
-	// Ana e Ricardo
-	public IPersistentRoomOccupation getIPersistentRoomOccupation()
-	{
-		return new RoomOccupationOJB();
 	}
 
 	public IPersistentPeriod getIPersistentPeriod()

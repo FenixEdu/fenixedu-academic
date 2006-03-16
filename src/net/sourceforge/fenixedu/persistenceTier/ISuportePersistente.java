@@ -361,9 +361,6 @@ public interface ISuportePersistente
 
 	public IPersistentSentSms getIPersistentSentSms();
 
-	// Ana e Ricardo
-	public IPersistentRoomOccupation getIPersistentRoomOccupation();
-
 	public IPersistentPeriod getIPersistentPeriod();
 
 	// Nuno Correia & Ricardo Rodrigues
@@ -411,7 +408,7 @@ public interface ISuportePersistente
 
 	public IPersistentExportGrouping getIPersistentExportGrouping();
 
-	// Rita Ferreira e João Fialho
+	// Rita Ferreira e Joï¿½o Fialho
 	public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary();
 
 	public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes();
