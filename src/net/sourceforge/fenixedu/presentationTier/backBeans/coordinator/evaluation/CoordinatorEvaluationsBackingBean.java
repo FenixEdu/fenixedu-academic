@@ -175,9 +175,9 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         final ExecutionPeriod executionPeriod = getExecutionPeriod();
         if (executionDegree != null) {
             if (executionPeriod.getSemester().intValue() == 1) {
-                return executionDegree.getPeriodLessonsFirstSemester().getEnd();
+                return executionDegree.getPeriodExamsFirstSemester().getEnd();
             } else if (executionPeriod.getSemester().intValue() == 2) {
-                return executionDegree.getPeriodLessonsSecondSemester().getEnd();
+                return executionDegree.getPeriodExamsSecondSemester().getEnd();
             } else {
                 return executionPeriod.getEndDate();
             }
@@ -251,13 +251,18 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         for (final ExecutionCourse executionCourse : getExecutionCourses()) {
 			for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
 				if (evaluationType == null || evaluationType.length() == 0 || evaluationType.equals(evaluation.getClass().getName())) {
-					if (evaluation instanceof WrittenEvaluation) {
-						final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-						constructCalendarLink(calendarLinks, writtenEvaluation, executionCourse);
+					if (evaluation instanceof WrittenTest) {
+						final WrittenTest writtenTest = (WrittenTest) evaluation;
+						constructCalendarLink(calendarLinks, writtenTest, executionCourse);
 					} else if (evaluation instanceof Project) {
 						final Project project = (Project) evaluation;
 						constructCalendarLink(calendarLinks, project, executionCourse);
-					}
+                    } else if (evaluation instanceof Exam) {
+                        final Exam exam = (Exam) evaluation;
+                        if (exam.isExamsMapPublished()) {
+                            constructEmptyCalendarLink(calendarLinks, exam, executionCourse);
+                        }
+                    }
 				}
 			}        	
         }
@@ -314,6 +319,14 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
     	final Integer curricularYearID = getCurricularYearID();
     	return (curricularYearID != null) ? (CurricularYear) readDomainObject(CurricularYear.class, curricularYearID) : null;
 	}
+
+    private void constructEmptyCalendarLink(final List<CalendarLink> calendarLinks, final WrittenEvaluation writtenEvaluation, final ExecutionCourse executionCourse) {
+        CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, locale);
+        //addLinkParameters(calendarLink, executionCourse, writtenEvaluation);
+        //addWrittenEvaluationLinkParameters(calendarLink, writtenEvaluation);
+        calendarLink.setAsLink(false);
+        calendarLinks.add(calendarLink);
+    }
 
 	private void constructCalendarLink(final List<CalendarLink> calendarLinks, final WrittenEvaluation writtenEvaluation, final ExecutionCourse executionCourse) {
         CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, locale);

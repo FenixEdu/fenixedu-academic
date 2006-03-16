@@ -178,11 +178,15 @@ public class UIFenixCalendar extends UIInput {
                         for (CalendarLink calendarLink : toDisplay) {
                             writer.startElement("br", this);
                             writer.endElement("br");
-                            writer.startElement("a", this);
-                            writer.writeAttribute("style", "text-decoration:none", null);
-                            writer.writeAttribute("href", calendarLink.giveLink(editLinkPage), null);
+                            if (calendarLink.isAsLink()) { 
+                                writer.startElement("a", this);
+                                writer.writeAttribute("style", "text-decoration:none", null);
+                                writer.writeAttribute("href", calendarLink.giveLink(editLinkPage), null);
+                            }
                             writer.write(calendarLink.getObjectLinkLabel());
-                            writer.endElement("a");
+                            if (calendarLink.isAsLink()) {
+                                writer.endElement("a");
+                            }
                         }
                     } else {
                         writer.writeAttribute("class", "fenixCalendar_defaultDay", null);

@@ -91,6 +91,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 					<f:selectItem itemLabel="#{bundle['message.all']}" itemValue=""/>
 					<f:selectItem itemLabel="#{bundle['label.evaluation.type.writtenTest']}" itemValue="net.sourceforge.fenixedu.domain.WrittenTest"/>
 					<f:selectItem itemLabel="#{bundle['label.evaluation.type.project']}" itemValue="net.sourceforge.fenixedu.domain.Project"/>
+					<f:selectItem itemLabel="#{bundle['label.evaluation.type.exam']}" itemValue="net.sourceforge.fenixedu.domain.Exam"/>
 				</h:selectOneMenu>
 			</h:panelGrid>
 		<h:outputText value="</div>" escape="false"/>
@@ -225,6 +226,21 @@ table.executionCoursesWithoutWrittenEvaluations td {
 								<a href='<c:out value="${deleteEvaluationURL}"/>'>
 									<c:out value="${bundle['label.delete']}"/>
 								</a>
+							</td>
+						</tr>
+					</c:if>
+				</c:forEach>
+				<c:forEach items="${executionCourseEvaluationEntry.value}" var="evaluation">
+					<c:if test="${evaluation.class.name == 'net.sourceforge.fenixedu.domain.Exam'}">
+						<tr>
+							<td><c:out value="${evaluation.season}"/></td>
+							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${evaluation.dayDate}"/> <fmt:formatDate pattern="HH:mm" value="${evaluation.beginningDate}"/></td>
+							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${evaluation.dayDate}"/> <fmt:formatDate pattern="HH:mm" value="${evaluation.endDate}"/></td>
+							<td><c:out value="${executionCourseEvaluationEntry.key.attendsCount}"/></td>
+							<td>
+								<fmt:formatDate var="date" pattern="dd/MM/yyyy" value="${evaluation.dayDate}"/>
+								<fmt:formatDate var="begin" pattern="dd/MM/yyyy" value="${evaluation.beginningDate}"/>
+								<fmt:formatDate var="end" pattern="dd/MM/yyyy" value="${evaluation.endDate}"/>
 							</td>
 						</tr>
 					</c:if>

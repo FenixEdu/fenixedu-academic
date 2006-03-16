@@ -22,6 +22,8 @@ public class CalendarLink {
     private String objectLinkLabel;
     private Map<String,String> linkParameters = new HashMap<String, String>();
 
+    private boolean asLink = true;
+
     public CalendarLink() {
     }
 
@@ -113,6 +115,14 @@ public class CalendarLink {
         stringBuilder.append(") ");
         stringBuilder.append(tail);
         return stringBuilder.toString();
+    }
+
+    public boolean isAsLink() {
+        return asLink;
+    }
+
+    public void setAsLink(boolean asLink) {
+        this.asLink = asLink;
     }
 
 }
