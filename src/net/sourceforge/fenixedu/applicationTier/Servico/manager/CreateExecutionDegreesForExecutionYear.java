@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.Calendar;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Campus;
@@ -29,7 +30,7 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
         final ExecutionYear executionYear = (ExecutionYear) persistentObject
                 .readByOID(ExecutionYear.class, executionYearID);
 
-        final Campus campus = persistentSupport.getIPersistentCampus().readByName(campusName);
+        final Campus campus = readCampusByName(campusName);
 
         final OccupationPeriod lessonSeason1 = createPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
         final OccupationPeriod lessonSeason2 = createPeriod(lessonSeason2BeginDate, lessonSeason2EndDate);
@@ -56,7 +57,16 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
 
     }
 
-    private OccupationPeriod createPeriod(final Calendar startDate, final Calendar endDate) {
+    private Campus readCampusByName(String campusName) throws ExcepcaoPersistencia {
+    	for (Campus campus : ((Collection<Campus>) persistentObject.readAll(Campus.class))) {
+    		if (campus.getName().equalsIgnoreCase(campusName)) {
+    			return campus;
+    		}
+    	}
+    	return null;
+	}
+
+	private OccupationPeriod createPeriod(final Calendar startDate, final Calendar endDate) {
         final OccupationPeriod period = DomainFactory.makeOccupationPeriod();
 
         period.setStartDate(startDate);

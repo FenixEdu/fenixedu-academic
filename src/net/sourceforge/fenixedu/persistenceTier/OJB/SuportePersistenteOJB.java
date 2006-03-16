@@ -144,7 +144,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestQuestionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestScopeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.person.qualification.QualificationOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.places.campus.CampusOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.projectsManagement.ProjectAccessOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.AuthorshipOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAttributeOJB;
@@ -230,7 +229,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTe
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestScope;
-import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
@@ -806,16 +804,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentScientificArea getIPersistentScientificArea()
 	{
 		return new ScientificAreaOJB();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentCampus()
-	 */
-	public IPersistentCampus getIPersistentCampus()
-	{
-		return new CampusOJB();
 	}
 
 	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)

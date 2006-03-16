@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -23,8 +22,7 @@ public class ReadAllCampus extends Service {
 
 	public List run() throws FenixServiceException, ExcepcaoPersistencia {
 		List infoCampusList;
-		IPersistentCampus campus = persistentSupport.getIPersistentCampus();
-		List campusList = campus.readAll();
+		List campusList = (List) persistentObject.readAll(Campus.class);
 		infoCampusList = (List) CollectionUtils.collect(campusList, new Transformer() {
 
 			public Object transform(Object input) {
