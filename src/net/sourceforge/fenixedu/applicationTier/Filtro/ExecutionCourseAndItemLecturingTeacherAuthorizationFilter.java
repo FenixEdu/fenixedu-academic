@@ -14,10 +14,8 @@ import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -47,15 +45,9 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
         }
     }
 
-    /**
-     * @param id
-     * @param argumentos
-     * @return
-     */
     private boolean itemBelongsExecutionCourse(IUserView id, Object[] argumentos) {
         InfoExecutionCourse infoExecutionCourse = null;
         ExecutionCourse executionCourse = null;
-        ISuportePersistente sp;
         Item item = null;
         InfoItem infoItem = null;
 
@@ -71,7 +63,6 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
                 executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
-            IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
             if (argumentos[1] instanceof InfoItem) {
                 infoItem = (InfoItem) argumentos[1];
 

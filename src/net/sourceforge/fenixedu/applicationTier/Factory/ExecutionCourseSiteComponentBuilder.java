@@ -71,7 +71,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -380,27 +379,19 @@ public class ExecutionCourseSiteComponentBuilder {
 	private ISiteComponent getInfoSiteSection(InfoSiteSection component, Site site,
 			InfoSiteCommon commonComponent, Integer sectionIndex) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		List sections = commonComponent.getSections();
-		InfoSection infoSection = (InfoSection) sections.get(sectionIndex.intValue());
+        
+        final InfoSection infoSection = (InfoSection) commonComponent.getSections().get(sectionIndex.intValue());
 		component.setSection(infoSection);
-		List itemsList = null;
+        
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final Section section = (Section) persistentSupport.getIPersistentObject().readByOID(Section.class, infoSection.getIdInternal());
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
-		itemsList = persistentItem.readAllItemsBySection(infoSection.getIdInternal(), infoSection
-				.getInfoSite().getInfoExecutionCourse().getSigla(), infoSection.getInfoSite()
-				.getInfoExecutionCourse().getInfoExecutionPeriod().getInfoExecutionYear().getYear(),
-				infoSection.getInfoSite().getInfoExecutionCourse().getInfoExecutionPeriod().getName());
-
-		List infoItemsList = new ArrayList(itemsList.size());
-		Iterator iter = itemsList.iterator();
-
-		while (iter.hasNext()) {
-			Item item = (Item) iter.next();
-			InfoItem infoItem = InfoItem.newInfoFromDomain(item);
-			infoItem.setLinks(item.getSlideName());
-			infoItemsList.add(infoItem);
-		}
+		final List<InfoItem> infoItemsList = new ArrayList(section.getAssociatedItemsCount());
+		for (final Item item : section.getAssociatedItems()) {
+            final InfoItem infoItem = InfoItem.newInfoFromDomain(item);
+            infoItem.setLinks(item.getSlideName());
+            infoItemsList.add(infoItem);
+        }
 
 		Collections.sort(infoItemsList);
 		component.setItems(infoItemsList);

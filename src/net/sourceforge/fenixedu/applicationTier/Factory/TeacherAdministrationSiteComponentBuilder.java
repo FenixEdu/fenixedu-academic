@@ -99,7 +99,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -726,53 +725,26 @@ public class TeacherAdministrationSiteComponentBuilder {
 		return component;
 	}
 
-	/**
-	 * @param section
-	 * @param site
-	 * @return
-	 * @throws ExcepcaoPersistencia
-	 */
 	private ISiteComponent getInfoSiteSection(InfoSiteSection component, Site site, Integer sectionCode)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		Section iSection = null;
-		List itemsList = null;
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final Section section = (Section) persistentSupport.getIPersistentObject().readByOID(Section.class, sectionCode);
+        
+		final List<InfoItem> infoItemsList = new ArrayList(section.getAssociatedItemsCount());
+		for (final Item item : section.getAssociatedItems()) {
+            final InfoItem infoItem = InfoItem.newInfoFromDomain(item);
+            infoItem.setLinks(item.getSlideName());
+            infoItemsList.add(infoItem);
+        }
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
-		IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
-
-		iSection = (Section) persistentSection.readByOID(Section.class, sectionCode);
-
-		itemsList = persistentItem.readAllItemsBySection(iSection.getIdInternal(), iSection.getSite()
-				.getExecutionCourse().getSigla(), iSection.getSite().getExecutionCourse()
-				.getExecutionPeriod().getExecutionYear().getYear(), iSection.getSite()
-				.getExecutionCourse().getExecutionPeriod().getName());
-
-		List infoItemsList = new ArrayList(itemsList.size());
-		Iterator iter = itemsList.iterator();
-
-		while (iter.hasNext()) {
-			Item item = (Item) iter.next();
-
-			InfoItem infoItem = InfoItem.newInfoFromDomain(item);
-			infoItem.setLinks(item.getSlideName());
-			infoItemsList.add(infoItem);
-		}
-
-		component.setSection(InfoSectionWithAll.newInfoFromDomain(iSection));
+		component.setSection(InfoSectionWithAll.newInfoFromDomain(section));
 		Collections.sort(infoItemsList);
 		component.setItems(infoItemsList);
 
 		return component;
 	}
 
-	/**
-	 * @param sections
-	 * @param site
-	 * @return
-	 * @throws ExcepcaoPersistencia
-	 */
 	private ISiteComponent getInfoSiteRegularSections(InfoSiteRegularSections component, Site site,
 			Integer sectionCode) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -849,43 +821,23 @@ public class TeacherAdministrationSiteComponentBuilder {
 		return component;
 	}
 
-	/**
-	 * @param items
-	 * @param site
-	 * @param integer
-	 * @return
-	 * @throws ExcepcaoPersistencia
-	 */
 	private ISiteComponent getInfoSiteItems(InfoSiteItems component, Site site, Integer itemCode)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
-		IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
-
-		Item iItem = (Item) persistentItem.readByOID(Item.class, itemCode);
-
-		InfoItem infoItem = InfoItem.newInfoFromDomain(iItem);
-
-		Section iSection = (Section) persistentSection.readByOID(Section.class, iItem.getSection()
-				.getIdInternal());
-		infoItem.setInfoSection(InfoSectionWithInfoSiteAndInfoExecutionCourse
-				.newInfoFromDomain(iSection));
-		List allItems = persistentItem.readAllItemsBySection(iSection.getIdInternal(), iSection
-				.getSite().getExecutionCourse().getSigla(), iSection.getSite().getExecutionCourse()
-				.getExecutionPeriod().getExecutionYear().getYear(), iSection.getSite()
-				.getExecutionCourse().getExecutionPeriod().getName());
-
-		// build the result of this service
-		Iterator iterator = allItems.iterator();
-		List infoItemsList = new ArrayList(allItems.size());
-
-		while (iterator.hasNext()) {
-			Item item = (Item) iterator.next();
-			if (!item.getIdInternal().equals(iItem.getIdInternal())) {
-				infoItemsList.add(InfoItem.newInfoFromDomain(item));
-			}
-		}
+		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		final Item iItem = (Item) persistentSupport.getIPersistentObject().readByOID(Item.class, itemCode);
+        final Section iSection = iItem.getSection();
+        
+        final InfoItem infoItem = InfoItem.newInfoFromDomain(iItem);
+		infoItem.setInfoSection(InfoSectionWithInfoSiteAndInfoExecutionCourse.newInfoFromDomain(iSection));
+        
+		final List<Item> allItems = iSection.getAssociatedItems();
+        List infoItemsList = new ArrayList(iSection.getAssociatedItemsCount());
+        for (final Item item : allItems) {
+            if (item != iItem) {
+                infoItemsList.add(InfoItem.newInfoFromDomain(item));
+            }
+        }
 
 		Collections.sort(infoItemsList);
 		component.setItem(infoItem);

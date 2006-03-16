@@ -59,7 +59,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVersion;
@@ -510,14 +509,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentSection getIPersistentSection()
 	{
 		return new SectionOJB();
-	}
-
-	/**
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentItem()
-	 */
-	public IPersistentItem getIPersistentItem()
-	{
-		return new ItemOJB();
 	}
 
 	/**

@@ -160,8 +160,6 @@ public interface ISuportePersistente
 
 	public IPersistentSection getIPersistentSection();
 
-	public IPersistentItem getIPersistentItem();
-
 	public IPersistentCurriculum getIPersistentCurriculum();
 
 	public IPersistentEvaluationMethod getIPersistentEvaluationMethod();
