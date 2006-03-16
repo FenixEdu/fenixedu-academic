@@ -26,7 +26,7 @@ public class MultiLanguageString {
     }
 	
 	public String getContent(Language language) {
-		return contentsMap.get(language.toString());
+		return contentsMap.get(language);
 	}
 
 	public String addContent(Language language, String content) {
