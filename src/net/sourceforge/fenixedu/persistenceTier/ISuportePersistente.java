@@ -406,8 +406,6 @@ public interface ISuportePersistente
 
 	public IPersistentFAQEntries getIPersistentFAQEntries();
 
-	public IPersistentGlossaryEntries getIPersistentGlossaryEntries();
-
 	// Ricardo Rodrigues
 	public IPersistentPublicationTeacher getIPersistentPublicationTeacher();
 

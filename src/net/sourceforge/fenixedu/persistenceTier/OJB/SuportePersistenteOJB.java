@@ -54,7 +54,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQEntries;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGlossaryEntries;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
@@ -1276,11 +1275,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentFAQEntries getIPersistentFAQEntries()
 	{
 		return new FAQEntriesOJB();
-	}
-
-	public IPersistentGlossaryEntries getIPersistentGlossaryEntries()
-	{
-		return new GlossaryEntriesOJB();
 	}
 
 	public IPersistentExportGrouping getIPersistentExportGrouping()
