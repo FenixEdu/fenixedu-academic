@@ -26,7 +26,7 @@ public class RootDomainObject extends RootDomainObject_Base {
             throw new Error("error.root.domain.object.not.retrieved", e);
         }
     }
-
+    
     public static RootDomainObject getInstance() {
         if (instance != null) {
             return instance;
@@ -37,7 +37,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     private RootDomainObject() {
-        throw new Error("error.root.domain.object.constructor");
     }
  
     public static List<Person> readAllPersons() {
@@ -61,4 +60,8 @@ public class RootDomainObject extends RootDomainObject_Base {
         }
         return allUnits;
     }
+
+	public static void initTests() {
+		instance = new RootDomainObject();		
+	}
 }
