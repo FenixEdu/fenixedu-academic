@@ -180,8 +180,6 @@ public interface ISuportePersistente
 
 	public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage();
 
-	public IPersistentWrittenEvaluationEnrolment getIPersistentWrittenEvaluationEnrolment();
-
 	public IPersistentMark getIPersistentMark();
 
 	public IPersistentEmployee getIPersistentEmployee();

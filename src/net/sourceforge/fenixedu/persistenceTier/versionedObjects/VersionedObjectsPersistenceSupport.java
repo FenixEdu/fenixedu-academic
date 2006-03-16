@@ -67,7 +67,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentUniversity;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -226,7 +225,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Transaction
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurnoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UniversityVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WrittenEvaluationEnrolmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ManagementPositionCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.OtherTypeCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.degree.finalProject.TeacherDegreeFinalProjectStudentVO;
@@ -351,10 +349,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentReimbursementGuide getIPersistentReimbursementGuide() {
         return new ReimbursementGuideVO();
-    }
-
-    public IPersistentWrittenEvaluationEnrolment getIPersistentWrittenEvaluationEnrolment() {
-        return new WrittenEvaluationEnrolmentVO();
     }
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion() {

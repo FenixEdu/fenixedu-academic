@@ -21,13 +21,12 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  */
 
@@ -40,11 +39,10 @@ public class ReadExamsByStudent extends Service {
         List infoExamsToEnroll = new ArrayList();
         List infoWrittenEvaluationEnrolmentList = new ArrayList();
 
-        IPersistentWrittenEvaluationEnrolment writtenEvaluationEnrolmentDAO = persistentSupport.getIPersistentWrittenEvaluationEnrolment();
         Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
 
         if (student != null) {
-            List examsStudentRooms = writtenEvaluationEnrolmentDAO.readByStudentOID(student.getIdInternal());
+        	List examsStudentRooms = student.getWrittenEvaluationEnrolments();
             Iterator iter = examsStudentRooms.iterator();
             List<Exam> examsEnrolled = new ArrayList<Exam>();
 

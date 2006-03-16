@@ -83,7 +83,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentUniversity;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -560,16 +559,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage()
 	{
 		return new ShiftProfessorshipOJB();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIpersistentWrittenEvaluationEnrolment()
-	 */
-	public IPersistentWrittenEvaluationEnrolment getIPersistentWrittenEvaluationEnrolment()
-	{
-		return new WrittenEvaluationEnrolmentOJB();
 	}
 
 	public IPersistentMark getIPersistentMark()
