@@ -162,7 +162,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.student.DislocatedStudentOJB
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.NotNeedToEnrollInCurricularCourseOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.SeniorOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.StudentPersonalDataAuthorizationOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.AdviseOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.CareerOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.CategoryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.ExternalActivityOJB;
@@ -253,7 +252,6 @@ import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDislocatedStu
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentAdvise;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -1432,8 +1430,5 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentOtherService getIPersistentOtherService() {
         return new OtherServiceOJB();
     }  
-    
-    public IPersistentAdvise getIPersistentAdvise() {
-        return new AdviseOJB();
-    }
+
 }

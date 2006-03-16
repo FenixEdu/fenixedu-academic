@@ -90,7 +90,6 @@ import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
-import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
@@ -143,7 +142,6 @@ import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDislocatedStu
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentAdvise;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -282,7 +280,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.EquivalencyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.ModalityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.SeminaryVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.AdviseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.CareerVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.ExternalActivityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
@@ -461,10 +458,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentUniversity getIPersistentUniversity() {
         return new UniversityVO();
-    }
-
-    public IPersistentCourseHistoric getIPersistentCourseHistoric() {
-        return null;
     }
 
     public IPersistentPaymentTransaction getIPersistentPaymentTransaction() {
@@ -999,7 +992,4 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new OtherServiceVO();
     }  
     
-    public IPersistentAdvise getIPersistentAdvise() {
-        return new AdviseVO();
-    }
 }

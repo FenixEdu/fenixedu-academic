@@ -461,6 +461,4 @@ public interface ISuportePersistente
     public IPersistentInstitutionWorkTime getIPersistentInstitutionWorkTime();
     
     public IPersistentOtherService getIPersistentOtherService();
-    
-    public IPersistentAdvise getIPersistentAdvise();
 }
