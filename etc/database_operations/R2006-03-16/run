@@ -19,3 +19,5 @@ function execute() {
 	echo
 }
 
+execute "Change PARTY_PARTY Table" alterPartyPartyTable.sql
+execute "Change TEACHER Table" alterTeacherTable.sql
