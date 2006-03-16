@@ -19,3 +19,5 @@ function execute() {
 	echo
 }
 
+execute "Create Student Curriculum Structure" createStudentCurriculum.sql
+
