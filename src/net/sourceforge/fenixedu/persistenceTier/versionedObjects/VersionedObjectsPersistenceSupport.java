@@ -136,10 +136,6 @@ import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicati
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDislocatedStudent;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -182,7 +178,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoExecuc
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DepartmentVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DislocatedStudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrollmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEvaluationVO;
@@ -203,7 +198,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceVa
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeProofVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisDataVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.NotNeedToEnrollInCurricularCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PersonAccountVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PessoaVO;
@@ -227,7 +221,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPayment
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SmsTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentCurricularPlanVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentPersonalDataAuthorizationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
@@ -816,10 +809,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new ProfessorshipVO();
     }
 
-    public IPersistentSenior getIPersistentSenior() {
-        return null;
-    }
-
     public IPersistentExtraWork getIPersistentExtraWork() {
         return null;
     }
@@ -928,18 +917,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public IPersistentNotNeedToEnrollInCurricularCourse getIPersistentNotNeedToEnrollInCurricularCourse() {
-        return new NotNeedToEnrollInCurricularCourseVO();
-    }
-    
-    public IPersistentStudentPersonalDataAuthorization getIPersistentStudentPersonalDataAuthorization() {
-        return new StudentPersonalDataAuthorizationVO();
-    }
-    
-    public IPersistentDislocatedStudent getIPersistentDislocatedStudent() {
-        return new DislocatedStudentVO();
-    }
     
     public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation() {
         return new TeacherPersonalExpectationVO();

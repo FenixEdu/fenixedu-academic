@@ -10,11 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSenior;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 
 /**
  * @author Luis Egidio, luis.egidio@ist.utl.pt
@@ -23,14 +21,10 @@ import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 public class ReadSeniorInfoByUsername extends Service {
 
 	public InfoSenior run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		Person person = Person.readPersonByUsername(userView.getUtilizador());
+		Student student = person.getStudentByType(DegreeType.DEGREE);
 
-		IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-		Student student = persistentStudent.readByUsername(userView.getUtilizador());
-
-		IPersistentSenior persistentSenior = persistentSupport.getIPersistentSenior();
-		Senior senior = persistentSenior.readByStudent(student);
+		Senior senior = student.getSenior();
 
 		InfoSenior readInfoSenior = null;
 		if (senior == null)
