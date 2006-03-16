@@ -21,7 +21,7 @@ public class RegexpValidator extends HtmlValidator {
         
         // default messsage
         setKey(true);
-        setMessage("validator.regexp");
+        setMessage("renderers.validator.regexp");
     }
 
     public String getRegexp() {

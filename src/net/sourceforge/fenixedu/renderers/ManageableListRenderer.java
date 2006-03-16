@@ -183,7 +183,7 @@ public class ManageableListRenderer extends InputRenderer {
             
             HtmlActionLink link = new HtmlActionLink();
             link.setName(getInputContext().getMetaObject().getKey().toString() + "/add");
-            link.setText(RenderUtils.getResourceString("list.management.add")); 
+            link.setText(RenderUtils.getResourceString("renderers.list.management.add")); 
             link.setController(new FollowDestinationController((MetaSlot) getInputContext().getMetaObject()));
             
             container.addChild(link);
@@ -222,7 +222,7 @@ public class ManageableListRenderer extends InputRenderer {
                 
                 String prefix = getInputContext().getMetaObject().getKey().toString();
                 link.setName(prefix + "/delete/" + rowIndex);
-                link.setText(RenderUtils.getResourceString("list.management.delete"));
+                link.setText(RenderUtils.getResourceString("renderers.list.management.delete"));
                 
                 HtmlTableRow row = getTable().getRows().get(rowIndex);
                 link.setController(new RemoveLineController(getTable(), this.hiddenValues, row, prefix));

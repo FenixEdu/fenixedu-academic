@@ -32,8 +32,8 @@ public class HtmlForm extends HtmlComponent implements Controllable {
         super();
         
         this.hiddenFields = new ArrayList<HtmlHiddenField>();
-        this.submitButton = new HtmlSubmitButton(RenderUtils.getResourceString("form.submit.name"));
-        this.resetButton = new HtmlResetButton(RenderUtils.getResourceString("form.reset.name"));
+        this.submitButton = new HtmlSubmitButton(RenderUtils.getResourceString("renderers.form.submit.name"));
+        this.resetButton = new HtmlResetButton(RenderUtils.getResourceString("renderers.form.reset.name"));
     }
 
     public String getAction() {

@@ -7,6 +7,6 @@ public class EmailValidator extends RegexpValidator {
     public EmailValidator(Validatable component) {
         super(component, "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*$");
         
-        setMessage("validator.email");
+        setMessage("renderers.validator.email");
     }
 }

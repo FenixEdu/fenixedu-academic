@@ -81,7 +81,7 @@ public class EnumInputRenderer extends InputRenderer {
                 
                 HtmlMenu menu = new HtmlMenu();
                 
-                String defaultOptionTitle = RenderUtils.getResourceString("menu.default.title");
+                String defaultOptionTitle = RenderUtils.getResourceString("renderers.menu.default.title");
                 menu.createDefaultOption(defaultOptionTitle).setSelected(enumerate == null);
                 
                 Object[] constants = type.getEnumConstants();

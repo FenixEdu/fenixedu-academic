@@ -79,27 +79,29 @@ public class RenderUtils {
     }
     
     public static String getResourceString(String bundle, String key) {
-        if (bundle == null) {
-            try {
-                // TODO: allow the name to be configured or fetch the resources in other way
-                MessageResources resources = getMessageResources("RENDERER_RESOURCES");
-                
-                if (resources.isPresent(key)) {
-                    return resources.getMessage(key);
-                }
-            }
-            catch (Exception e) {
-                // could not found renderer resources, ignore and procede
-            }
-        }
-        
         MessageResources resources = getMessageResources(bundle);
 
-        if (! resources.isPresent(key)) {
+        if (resources.isPresent(key)) {
+            return resources.getMessage(key);
+        }
+        
+        if (bundle != null) {
             return null;
         }
         
-        return resources.getMessage(key);
+        try {
+            // TODO: allow the name to be configured or fetch the resources in other way
+            MessageResources rendererResources = getMessageResources("RENDERER_RESOURCES");
+            
+            if (rendererResources.isPresent(key)) {
+                return rendererResources.getMessage(key);
+            }
+        }
+        catch (Exception e) {
+            // could not found renderer resources, ignore and procede
+        }
+        
+        return null;
     }
 
     public static MessageResources getMessageResources() {

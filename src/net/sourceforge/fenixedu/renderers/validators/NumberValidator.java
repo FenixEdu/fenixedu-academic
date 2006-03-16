@@ -11,7 +11,7 @@ public class NumberValidator extends RequiredValidator {
     
     @Override
     public String getErrorMessage() {
-        return RenderUtils.getResourceString("validator.number");
+        return RenderUtils.getResourceString("renderers.validator.number");
     }
 
     @Override
