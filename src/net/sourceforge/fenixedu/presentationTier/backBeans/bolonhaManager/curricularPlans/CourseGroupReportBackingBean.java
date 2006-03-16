@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -33,6 +35,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     
     private String name = null;
     private Integer courseGroupID;
+    private Map<Context, String> contextPaths = new HashMap<Context, String>();
 
     public Integer getDegreeCurricularPlanID() {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
@@ -70,6 +73,10 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         exportToExcel(InfoToExport.STUDIES_PLAN);
     }
     
+    public Map<Context, String> getContextPaths() {
+        return contextPaths;
+    }
+    
     public void exportToExcel(InfoToExport infoToExport) throws FenixFilterException, FenixServiceException {
         List<Context> contextsWithCurricularCourses = contextsWithCurricularCoursesToList();
         
@@ -86,16 +93,18 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
 
     private List<Context> contextsWithCurricularCoursesToList() throws FenixFilterException, FenixServiceException {
         List<Context> result = new ArrayList<Context>();
-        collectChildDegreeModules(result, this.getCourseGroup());
-        
+        getContextPaths().clear();
+        collectChildDegreeModules(result, this.getCourseGroup(), this.getCourseGroup().getName());
         return result;
     }
     
-    private void collectChildDegreeModules(final List<Context> result, CourseGroup courseGroup) throws FenixFilterException, FenixServiceException {
-        result.addAll(courseGroup.getSortedChildContextsWithCurricularCourses());
-        
+    private void collectChildDegreeModules(final List<Context> result, CourseGroup courseGroup, String previousPath) throws FenixFilterException, FenixServiceException {
+        for (final Context context : courseGroup.getSortedChildContextsWithCurricularCourses()) {
+            result.add(context);
+            getContextPaths().put(context, previousPath);
+        }
         for (final Context context : courseGroup.getSortedChildContextsWithCourseGroups()) {
-            collectChildDegreeModules(result, (CourseGroup) context.getChildDegreeModule());
+            collectChildDegreeModules(result, (CourseGroup) context.getChildDegreeModule(), previousPath + " > " + context.getChildDegreeModule().getName());
         }
     }
 
@@ -181,7 +190,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
             CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
             CurricularPeriod curricularPeriod = contextWithCurricularCourse.getCurricularPeriod();
-            String parentCourseGroupName = contextWithCurricularCourse.getParentCourseGroup().getName();
+            String parentCourseGroupName = getContextPaths().get(contextWithCurricularCourse);
             
             fillCurricularCourse(spreadsheet, curricularCourse, curricularPeriod, parentCourseGroupName);
             if (curricularCourse.isAnual()) {
