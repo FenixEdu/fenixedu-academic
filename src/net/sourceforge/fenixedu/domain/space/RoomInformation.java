@@ -17,13 +17,9 @@ public class RoomInformation extends RoomInformation_Base {
         newRoomInformation.setArea(getArea());
         newRoomInformation.setHight(getHight());
         newRoomInformation.setIllumination(getIllumination());
-        // TODO
-        //newRoomInformation.setDistribution(getDistribution());
-        //newRoomInformation.setSalubrityArea(getSalubrityArea());
+        newRoomInformation.setDistanceFromSanitaryInstalations(getDistanceFromSanitaryInstalations());
         newRoomInformation.setSecurity(getSecurity());
-        //newRoomInformation.setVptoValue(getVptoValue());
-        //newRoomInformation.setIndex(getIndex());
-        //newRoomInformation.setTm(getTm());
+        newRoomInformation.setAge(getAge());
         newRoomInformation.setObservations(getObservations());
         newRoomInformation.setCapacityForLessons(getCapacityForLessons());
         newRoomInformation.setCapacityForExams(getCapacityForExams());
