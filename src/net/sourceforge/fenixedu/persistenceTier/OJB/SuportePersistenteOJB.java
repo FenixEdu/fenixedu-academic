@@ -79,7 +79,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentKind;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentUniversity;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
@@ -644,11 +643,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentExternalPerson getIPersistentExternalPerson()
 	{
 		return new ExternalPersonOJB();
-	}
-
-	public IPersistentUniversity getIPersistentUniversity()
-	{
-		return new UniversityOJB();
 	}
 
 	public IPersistentEvaluationMethod getIPersistentEvaluationMethod()

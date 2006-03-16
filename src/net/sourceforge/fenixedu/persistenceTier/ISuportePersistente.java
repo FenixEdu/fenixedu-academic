@@ -275,8 +275,6 @@ public interface ISuportePersistente
 
 	public IPersistentDegreeInfo getIPersistentDegreeInfo();
 
-	public IPersistentUniversity getIPersistentUniversity();
-
 	public IPersistentCategory getIPersistentCategory();
 
 	public IPersistentCareer getIPersistentCareer();
