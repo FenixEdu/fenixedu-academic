@@ -73,4 +73,8 @@ public abstract class CurricularRule extends CurricularRule_Base {
         return belongsToCompositeRule() ? getParentCompositeRule().getContextCourseGroup()
                 : super.getContextCourseGroup();
     }
+    
+    public boolean isValid(ExecutionPeriod executionPeriod) {
+    	return (getBegin().isBeforeOrEquals(executionPeriod) && (getEnd() == null || getEnd().isAfterOrEquals(executionPeriod)));
+    }
 }

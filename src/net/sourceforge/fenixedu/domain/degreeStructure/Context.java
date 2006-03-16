@@ -76,5 +76,9 @@ public class Context extends Context_Base implements Comparable<Context> {
     public void setChildDegreeModule(DegreeModule degreeModule) {
         super.setChildDegreeModule(degreeModule);
     }
+    
+    public boolean isValid(ExecutionPeriod executionPeriod) {
+    	return (getBeginExecutionPeriod().isBeforeOrEquals(executionPeriod) && (getEndExecutionPeriod() == null || getEndExecutionPeriod().isAfterOrEquals(executionPeriod)));
+    }
 
 }
