@@ -863,23 +863,44 @@ class net.sourceforge.fenixedu.domain.EmployeeHistoric extends net.sourceforge.f
     Date when;
 }
 
-class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject {
-    String createdBy;
-    Date creationDate;
-    Integer keyCurricularCourse;
-    Integer keyExecutionPeriod;
+class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyDegreeModule;
+	Integer keyCurriculumGroup;
     String ojbConcreteClass;
-    Integer keyStudentCurricularPlan;
-    EnrollmentState enrollmentState;
-    EnrollmentCondition condition;
-    EnrolmentEvaluationType enrolmentEvaluationType;
 }
 
-    class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
-    }
-    
-    class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
-    }
+	class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule {
+		Integer keyParentStudentCurricularPlan;
+	}
+
+	class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule {
+	}
+	
+		class net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
+		}
+		
+		class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
+			Integer givenCredits;
+		}
+	
+		class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
+		    String createdBy;
+		    Date creationDate;
+		    Integer keyCurricularCourse;
+		    Integer keyExecutionPeriod;
+		    Integer keyStudentCurricularPlan;
+		    EnrollmentState enrollmentState;
+		    EnrollmentCondition condition;
+		    EnrolmentEvaluationType enrolmentEvaluationType;
+		}
+			
+			//Isto é da estrutura antiga, faz sentido ainda?
+		    class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
+		    }
+		    
+		    class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
+		    }
+		    //
 
 class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyEnrolment;
@@ -2284,6 +2305,7 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     Date startDate;
     Integer keyStudent;
     Date when;
+    Integer keyRoot;
     StudentCurricularPlanState currentState;
     Specialization specialization;
 }
@@ -3220,12 +3242,12 @@ relation CurricularCourseCompetenceCourse {
 	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourse;
 }
 
-relation CurricularCourseEnrolment {
+/*relation CurricularCourseEnrolment {
 	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
-}
+}*/
 
 relation CurricularCourseEnrolmentLog {
 	net.sourceforge.fenixedu.domain.log.EnrolmentLog playsRole enrolmentLogs {
@@ -6060,6 +6082,53 @@ relation UserPerson{
     net.sourceforge.fenixedu.domain.Person playsRole person;
     net.sourceforge.fenixedu.domain.User playsRole user;
 }
+
+relation CurriculumGroupStudentCurricularPlan {
+	net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup playsRole root;
+	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole parentStudentCurricularPlan;
+}
+
+relation DegreeModuleCurriculumModule {
+	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModule;
+	net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule playsRole curriculumModules {
+	   multiplicity *;
+	}	 
+}
+
+relation CurriculumModuleCurriculumGroup {
+	net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup playsRole curriculumGroup;
+	net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule playsRole curriculumModules {
+	   multiplicity *;
+	}	 
+}
+
+relation EquivalenceEnrolment {
+    net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments{
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence playsRole equivalences{
+		multiplicity *;
+	}
+}
+
+relation CreditsEnrolment {
+    net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments{
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits{
+		multiplicity *;
+	}
+}
+
+relation EquivalenceCurricularCourseCurricularCourse {
+    net.sourceforge.fenixedu.domain.CurricularCourse playsRole oldCurricularCourses{
+    	multiplicity *;
+    }
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole equivalentCurricularCourses{
+		multiplicity *;
+	}
+}
+
 
 /*
  * Relations definitions of relations to RootDomainObject

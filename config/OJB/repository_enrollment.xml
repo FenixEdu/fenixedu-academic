@@ -1,7 +1,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Enrolment -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Enrolment" table="ENROLMENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.Enrolment" table="CURRICULUM_MODULE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -14,11 +14,16 @@
 		column="KEY_STUDENT_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
-	<field-descriptor
-		name="keyCurricularCourse"
-		column="KEY_CURRICULAR_COURSE"
-		jdbc-type="INTEGER"
-	/>
+   <field-descriptor
+         name="keyDegreeModule"
+         column="KEY_DEGREE_MODULE"
+         jdbc-type="INTEGER"
+    />	
+    <field-descriptor
+         name="keyCurriculumGroup"
+         column="KEY_CURRICULUM_GROUP"
+         jdbc-type="INTEGER"
+    />			
 	<field-descriptor
 		name="keyExecutionPeriod"
 		column="KEY_EXECUTION_PERIOD"
@@ -59,21 +64,6 @@
 		column="CREATED_BY"
 		jdbc-type="VARCHAR"
 	/>
-	
-	      
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse"/>
@@ -82,7 +72,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse" table="ENROLMENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse" table="CURRICULUM_MODULE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -95,11 +85,16 @@
 		column="KEY_STUDENT_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
-	<field-descriptor
-		name="keyCurricularCourse"
-		column="KEY_CURRICULAR_COURSE"
-		jdbc-type="INTEGER"
-	/>
+    <field-descriptor
+         name="keyDegreeModule"
+         column="KEY_DEGREE_MODULE"
+         jdbc-type="INTEGER"
+    />	
+    <field-descriptor
+         name="keyCurriculumGroup"
+         column="KEY_CURRICULUM_GROUP"
+         jdbc-type="INTEGER"
+    />			
 	<field-descriptor
 		name="keyExecutionPeriod"
 		column="KEY_EXECUTION_PERIOD"
@@ -140,27 +135,13 @@
 		column="CREATED_BY"
 		jdbc-type="VARCHAR"
 	/>
-	
-	      
-	
-	    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	
-
-	
-	
-	
-	
-	
-	
-	
-		
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse" table="ENROLMENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse" table="CURRICULUM_MODULE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -173,11 +154,16 @@
 		column="KEY_STUDENT_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
-	<field-descriptor
-		name="keyCurricularCourse"
-		column="KEY_CURRICULAR_COURSE"
-		jdbc-type="INTEGER"
-	/>
+    <field-descriptor
+         name="keyDegreeModule"
+         column="KEY_DEGREE_MODULE"
+         jdbc-type="INTEGER"
+    />	
+    <field-descriptor
+         name="keyCurriculumGroup"
+         column="KEY_CURRICULUM_GROUP"
+         jdbc-type="INTEGER"
+    />			
 	<field-descriptor
 		name="keyExecutionPeriod"
 		column="KEY_EXECUTION_PERIOD"
@@ -218,22 +204,7 @@
 		column="CREATED_BY"
 		jdbc-type="VARCHAR"
 	/>
-	
-	      
-	
-	    
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
