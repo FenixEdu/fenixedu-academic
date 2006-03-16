@@ -6023,15 +6023,6 @@ relation ConnectionRuleAccountabilityType {
 	}	 
 }
 
-relation PartyParty {
-    net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole childParties{
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parentParties{
-		multiplicity *;
-	}
-}
-
 relation PersonHomepage {
     net.sourceforge.fenixedu.domain.Person playsRole person;
 	net.sourceforge.fenixedu.domain.homepage.Homepage playsRole homepage;
