@@ -81,5 +81,21 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
    		final DateMidnight thisMonday = getThisMonday();
    		return thisMonday == null ? null : new Interval(thisMonday.minusWeeks(1), thisMonday);
     }
+    
+    public boolean isAfter(ExecutionPeriod executionPeriod) {
+    	return this.compareTo(executionPeriod) > 0;
+    }
+
+    public boolean isAfterOrEquals(ExecutionPeriod executionPeriod) {
+    	return this.compareTo(executionPeriod) >= 0;
+    }
+
+    public boolean isBefore(ExecutionPeriod executionPeriod) {
+    	return this.compareTo(executionPeriod) < 0;
+    }
+
+    public boolean isBeforeOrEquals(ExecutionPeriod executionPeriod) {
+    	return this.compareTo(executionPeriod) <= 0;
+    }
 
 }
