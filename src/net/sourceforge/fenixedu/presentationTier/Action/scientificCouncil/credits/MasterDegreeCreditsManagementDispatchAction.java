@@ -232,8 +232,8 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
             } else {
                 this.semesters.append("0");
             }
-            List<Enrolment> enrolments = curricularCourse.getEnrolments();
-            numberEnrolments = enrolments.size();
+            
+            numberEnrolments = curricularCourse.getCurriculumModules().size();
             for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
                 List<ExecutionCourse> executionCourses = curricularCourse
                         .getExecutionCoursesByExecutionPeriod(executionPeriod);

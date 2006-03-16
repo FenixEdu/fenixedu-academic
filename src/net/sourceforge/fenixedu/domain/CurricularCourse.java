@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -630,9 +631,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     
     private List<EnrolmentEvaluation> getActiveEnrollments(ExecutionPeriod executionPeriod,
             Student student) {
-        List<Enrolment> enrollments = getEnrolments();
         List<EnrolmentEvaluation> results = new ArrayList<EnrolmentEvaluation>();
-        for (Enrolment enrollment : enrollments) {
+        for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+        	Enrolment enrollment = (Enrolment) curriculumModule;
             boolean filters = true;
             filters &= !enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED);
             filters &= executionPeriod == null
@@ -736,6 +737,10 @@ public class CurricularCourse extends CurricularCourse_Base {
             return this.getCompetenceCourse().isAnual();
         }
         return false;
+    }
+    
+    public boolean isEquivalent(CurricularCourse oldCurricularCourse) {
+    	return this.equals(oldCurricularCourse) || this.getOldCurricularCourses().contains(oldCurricularCourse) || this.getCompetenceCourse().getAssociatedCurricularCourses().contains(oldCurricularCourse);
     }
 
 }

@@ -59,7 +59,7 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 			enrolments = persistentEnrolment.readByCurricularCourseAndYear(curricularCourseCode,
 					yearString);
 		} else {
-			enrolments = curricularCourse.getEnrolments();
+			enrolments = curricularCourse.getCurriculumModules();
 		}
 		List enrolmentEvaluations = new ArrayList();
 		Iterator iterEnrolment = enrolments.listIterator();

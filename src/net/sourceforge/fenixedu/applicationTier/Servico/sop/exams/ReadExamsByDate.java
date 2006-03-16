@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -92,7 +93,8 @@ public class ReadExamsByDate extends Service {
     private Integer calculateNumberOfEnrolmentStudents(final CurricularCourse curricularCourse,
             final ExecutionPeriod executionPeriod) {
         int numberOfStudents = 0;
-        for (final Enrolment enrolment : curricularCourse.getEnrolments()) {
+        for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModules()) {
+        	Enrolment enrolment = (Enrolment) curriculumModule;
             if (enrolment.getExecutionPeriod() == executionPeriod) {
                 numberOfStudents++;
             }

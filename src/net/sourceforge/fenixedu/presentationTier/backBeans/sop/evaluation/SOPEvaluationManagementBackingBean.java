@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
@@ -643,8 +644,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 if (!curricularCourseIDs.contains(curricularCourseScope.getCurricularCourse()
                         .getIdInternal())) {
                     curricularCourseIDs.add(curricularCourseScope.getCurricularCourse().getIdInternal());
-                    for (final Enrolment enrolment : curricularCourseScope.getCurricularCourse()
-                            .getEnrolments()) {
+                    for (final CurriculumModule curriculumModule : curricularCourseScope.getCurricularCourse()
+                            .getCurriculumModules()) {
+                    	Enrolment enrolment = (Enrolment) curriculumModule;
                         if (enrolment.getExecutionPeriod() == executionPeriod) {
                             numberOfEnroledStudents++;
                         }

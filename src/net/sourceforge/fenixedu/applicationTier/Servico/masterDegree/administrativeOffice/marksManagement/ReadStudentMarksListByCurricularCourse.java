@@ -41,7 +41,7 @@ public class ReadStudentMarksListByCurricularCourse extends Service {
             enrolmentList = persistentSupport.getIPersistentEnrolment().readByCurricularCourseAndYear(
                     curricularCourseID, executionYear);
         } else {
-            enrolmentList = curricularCourse.getEnrolments();
+            enrolmentList = curricularCourse.getCurriculumModules();
         }
         if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
             throw new NonExistingServiceException();

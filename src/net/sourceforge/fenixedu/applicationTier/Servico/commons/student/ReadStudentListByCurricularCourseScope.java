@@ -30,7 +30,7 @@ public class ReadStudentListByCurricularCourseScope extends Service {
         CurricularCourseScope curricularCourseScope = (CurricularCourseScope) persistentObject
                 .readByOID(CurricularCourseScope.class, curricularCourseScopeID);
 
-        List enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
+        List enrolmentList = curricularCourseScope.getCurricularCourse().getCurriculumModules();
 
         if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
             throw new NonExistingServiceException();

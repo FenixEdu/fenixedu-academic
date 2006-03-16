@@ -57,7 +57,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 			enrolments = persistentEnrolment.readByCurricularCourseAndYear(curricularCourseCode,
 					yearString);
 		} else {
-			enrolments = curricularCourse.getEnrolments();
+			enrolments = curricularCourse.getCurriculumModules();
 		}
 
 		List enrolmentEvaluations = new ArrayList();

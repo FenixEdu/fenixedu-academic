@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.fileSuport.INode;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.ProposalState;
@@ -400,8 +401,9 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 		int executionCourseAssociatedStudents = 0;
 
 		for (CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCourses()) {
-			for (Enrolment enrolmentsEntry : curricularCourseFromExecutionCourseEntry
-					.getEnrolments()) {
+			for (CurriculumModule curriculumModule :  curricularCourseFromExecutionCourseEntry
+					.getCurriculumModules()) {
+				Enrolment enrolmentsEntry = (Enrolment) curriculumModule;
 				if (enrolmentsEntry.getExecutionPeriod() == getExecutionPeriod()) {
 
 					StudentCurricularPlan studentCurricularPlanEntry = enrolmentsEntry
@@ -431,8 +433,9 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 		int executionCourseStudentNumber = 0;
 
 		for (CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCourses()) {
-			for (Enrolment enrolmentsEntry : curricularCourseFromExecutionCourseEntry
-					.getEnrolments()) {
+			for (CurriculumModule curriculumModule : curricularCourseFromExecutionCourseEntry
+					.getCurriculumModules()) {
+				Enrolment enrolmentsEntry = (Enrolment) curriculumModule;
 				if (enrolmentsEntry.getExecutionPeriod() == getExecutionPeriod()) {
 					executionCourseStudentNumber++;
 				}
@@ -558,7 +561,8 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
     private static class CurricularCourseExecutionCourseListener extends dml.runtime.RelationAdapter<ExecutionCourse,CurricularCourse> {
         @Override
         public void afterAdd(ExecutionCourse execution, CurricularCourse curricular) {
-            for (final Enrolment enrolment : curricular.getEnrolments()) {
+            for (final CurriculumModule curriculumModule : curricular.getCurriculumModules()) {
+            	Enrolment enrolment = (Enrolment) curriculumModule;
                 if (enrolment.getExecutionPeriod().equals(execution.getExecutionPeriod())) {
                     associateAttend(enrolment, execution);
                 }

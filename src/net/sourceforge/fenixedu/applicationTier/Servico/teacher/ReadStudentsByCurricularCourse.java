@@ -61,7 +61,7 @@ public class ReadStudentsByCurricularCourse extends Service {
             throws ExcepcaoPersistencia {
         List infoStudentList;
 
-        List enrolments = curricularCourse.getEnrolments();
+        List enrolments = curricularCourse.getCurriculumModules();
 
         infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer() {
             public Object transform(Object input) {
