@@ -21,13 +21,11 @@ import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 /**
@@ -38,8 +36,6 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 	
 
 	public List run(String username, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia, ParseException {		
-		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-		
 		
 		final List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
 		for(Integer executionPeriodID : executionPeriodsIDs){
@@ -54,7 +50,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		
 		DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
 
-		Department department = persistentTeacher.readTeacherByUsername(username).getCurrentWorkingDepartment();
+		Department department = Teacher.readTeacherByUsername(username).getCurrentWorkingDepartment();
 		
 		for (ExecutionPeriod executionPeriodEntry : executionPeriodList) {
 											

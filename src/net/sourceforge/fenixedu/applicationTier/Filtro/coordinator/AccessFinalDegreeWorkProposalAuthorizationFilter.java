@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author Luis Cruz
@@ -49,15 +48,13 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
                 return false;
             }
 
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
             Proposal proposal = (Proposal) persistentObject.readByOID(Proposal.class,
                     objectId);
             if (proposal == null) {
                 return false;
             }
             ExecutionDegree executionDegree = proposal.getScheduleing().getExecutionDegreesSet().iterator().next();
-            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
             List coordinators = executionDegree.getCoordinatorsList();
             if (coordinators != null && teacher != null) {

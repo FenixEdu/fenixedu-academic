@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author joaosa & rmalo
@@ -42,8 +41,7 @@ public class RejectNewProjectProposal extends Service {
 		}
 
 		IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
-		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
+		
 		Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
 				groupPropertiesId);
 
@@ -58,7 +56,7 @@ public class RejectNewProjectProposal extends Service {
 			throw new ExistingServiceException();
 		}
 
-		Person receiverPerson = persistentTeacher.readTeacherByUsername(rejectorUserName).getPerson();
+		Person receiverPerson = Teacher.readTeacherByUsername(rejectorUserName).getPerson();
 
 		ExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
 		groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);

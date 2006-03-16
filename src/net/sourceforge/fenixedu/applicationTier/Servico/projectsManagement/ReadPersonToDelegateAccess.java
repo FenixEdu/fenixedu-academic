@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -28,7 +29,7 @@ public class ReadPersonToDelegateAccess extends Service {
     }
 
     private boolean isTeacherOrEmployee(Person person) throws ExcepcaoPersistencia {
-        if (persistentSupport.getIPersistentTeacher().readTeacherByUsername(person.getUsername()) == null) {
+        if (Teacher.readTeacherByUsername(person.getUsername()) == null) {
             if (persistentSupport.getIPersistentEmployee().readByPerson(person.getIdInternal()) == null) {
                 return false;
             }

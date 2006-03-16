@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -262,9 +261,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
     }
 
     protected Teacher readTeacher(IUserView id) throws ExcepcaoPersistencia {
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
-        return persistentTeacher.readTeacherByUsername(id.getUtilizador());
+        return Teacher.readTeacherByUsername(id.getUtilizador());
     }
 
     /**

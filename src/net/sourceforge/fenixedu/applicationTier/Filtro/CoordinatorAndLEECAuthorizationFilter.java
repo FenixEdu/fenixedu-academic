@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -71,11 +70,9 @@ public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFi
         }
         if(argumentos[0] == null)return false;	
         
-        ISuportePersistente sp;
         String degreeCode = null;
-        try {
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+        try {            
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             
            	IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
             Coordinator coordinator = persistentCoordinator

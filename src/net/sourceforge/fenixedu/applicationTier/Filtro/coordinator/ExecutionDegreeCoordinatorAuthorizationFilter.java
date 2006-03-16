@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author Leonor Almeida
@@ -28,12 +27,11 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends DomainObjectA
 
     protected boolean verifyCondition(IUserView id, Integer objectId) throws ExcepcaoPersistencia {
         IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
+        
         ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, objectId);
 
-        Teacher coordinator = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+        Teacher coordinator = Teacher.readTeacherByUsername(id.getUtilizador());
         List executionDegrees = persistentExecutionDegree.readByTeacher(coordinator.getIdInternal());
 
         return executionDegrees.contains(executionDegree);

@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author mrsp and jdnf
@@ -19,9 +18,8 @@ public class ReadProfessorshipByTeacherNumberAndExecutionCourseID extends Servic
             throws FenixServiceException, ExcepcaoPersistencia {
 
         IPersistentProfessorship persistentProfessorship = persistentSupport
-                .getIPersistentProfessorship();
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = persistentTeacher.readTeacherByUsername(username);
+                .getIPersistentProfessorship();        
+        Teacher teacher = Teacher.readTeacherByUsername(username);
         if (teacher == null) {
             throw new FenixServiceException();
         }

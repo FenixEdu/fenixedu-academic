@@ -77,52 +77,21 @@
          name="keyPerson"
          column="KEY_PERSON"
          jdbc-type="INTEGER"/>
-
-                 
-
+              
 	 <field-descriptor
          name="keyServiceProviderRegime"
          column="KEY_SERVICE_PROVIDER_REGIME"
          jdbc-type="INTEGER"/>
-
-	
       
-	<field-descriptor
+ 	<field-descriptor
          name="keyPublicationsNumber"
          column="KEY_PUBLICATIONS_NUMBER"
          jdbc-type="INTEGER"/>
-
     
-
-    
-	    	
-	    	
-	   
-	  	 	
-	  	 	
-	  	 
-    
-    
+	<field-descriptor
+		name="keyRootDomainObject"
+    	column="KEY_ROOT_DOMAIN_OBJECT"
+    	jdbc-type="INTEGER"/>
+    	
 	
-	
-	
-		
-	
-		
-	
-	
-	
-	
-	
-	
-	
-		
-		
-	
-	
-	 
-   	
-	
-	
-		
 </class-descriptor>

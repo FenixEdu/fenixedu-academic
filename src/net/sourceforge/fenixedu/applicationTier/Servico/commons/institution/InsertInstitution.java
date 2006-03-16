@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -37,12 +36,12 @@ public class InsertInstitution extends Service {
         return newInstitution;
     }
 
-    private Unit makeNewUnit(String unitName, Unit externalIntitutionsUnit) {
+    private Unit makeNewUnit(String unitName, Unit externalIntitutionsUnit) throws ExcepcaoPersistencia {
         Unit institutionUnit = DomainFactory.makeUnit();
         institutionUnit.setName(unitName);
         institutionUnit.setBeginDate(Calendar.getInstance().getTime());
         institutionUnit.setType(PartyTypeEnum.EXTERNAL_INSTITUTION);  
-        institutionUnit.addParents(externalIntitutionsUnit);
+        institutionUnit.addParent(externalIntitutionsUnit);        
         return institutionUnit;
     }
 }

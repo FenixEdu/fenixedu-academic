@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
  * @author Leonor Almeida
@@ -36,13 +34,6 @@ public abstract class ReadDomainObjectService extends Service {
 	 * @return
 	 */
 	protected abstract Class getDomainObjectClass();
-
-	/**
-	 * @param persistentSupport
-	 * @return
-	 */
-	protected abstract IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport)
-			throws ExcepcaoPersistencia;
 
 	/**
 	 * This method invokes the cloneing to convert from DomainObject to

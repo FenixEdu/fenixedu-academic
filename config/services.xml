@@ -8973,6 +8973,15 @@
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>
     </service>        
+    <service>
+    	<name>DeleteConnectionRule</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DeleteConnectionRule</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>
+    </service>  
 	<!--############# CMS ####################-->  
     <service>
 		<name>WriteMailingList</name>

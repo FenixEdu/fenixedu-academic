@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -28,15 +27,14 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
 	public void execute(ServiceRequest request, ServiceResponse response)
 			throws FilterException, Exception {
 	    
-	    IPersistentDepartment persistentDepartment = persistentSupport.getIDepartamentoPersistente();
-	    IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+	    IPersistentDepartment persistentDepartment = persistentSupport.getIDepartamentoPersistente();	    
         IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
         IPessoaPersistente pessoaPersistente = persistentSupport.getIPessoaPersistente();
 	         
 	    IUserView userView = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
         
-        Department teacherDepartment = getTeacherDepartment(persistentDepartment, persistentTeacher, argumentos);
+        Department teacherDepartment = getTeacherDepartment(persistentDepartment, argumentos);
         Department employeeDepartment = getEmployeeDepartment(persistentDepartment, persistentEmployee, pessoaPersistente, userView);
            
         if(!employeeDepartment.getName().equals(teacherDepartment.getName()))
@@ -73,8 +71,8 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
      * @throws ExcepcaoPersistencia
      * @throws NotAuthorizedFilterException
      */
-    protected Department getTeacherDepartment(IPersistentDepartment persistentDepartment, IPersistentTeacher persistentTeacher, Object[] argumentos) throws NotAuthorizedFilterException, ExcepcaoPersistencia {
-        Teacher teacher = getTeacher(persistentTeacher, argumentos);
+    protected Department getTeacherDepartment(IPersistentDepartment persistentDepartment, Object[] argumentos) throws NotAuthorizedFilterException, ExcepcaoPersistencia {
+        Teacher teacher = getTeacher(argumentos);
         Department teacherDepartment = getDepartment(persistentDepartment, teacher);
         return teacherDepartment;
     }
@@ -115,9 +113,9 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
      * @throws FenixServiceException
      * @throws NotAuthorizedFilterException
      */
-    protected Teacher getTeacher(IPersistentTeacher persistentTeacher, Object[] argumentos) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
+    protected Teacher getTeacher(Object[] argumentos) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
         String teacherNumber = getTeacherNumber(argumentos);
-        Teacher teacher = persistentTeacher.readByNumber(new Integer(teacherNumber));
+        Teacher teacher = Teacher.readByNumber(new Integer(teacherNumber));
         
         if(teacher == null) {
             throw new NotAuthorizedFilterException("error.teacher.not.found");

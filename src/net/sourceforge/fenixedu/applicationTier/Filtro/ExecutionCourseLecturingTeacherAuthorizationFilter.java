@@ -57,12 +57,12 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
             return false;
         }
         try {
-            final Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
-                    id.getUtilizador());
+            final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             if (teacher == null) {
                 return false;
             }
-            final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseID);
+            final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
+                    ExecutionCourse.class, executionCourseID);
             if (executionCourse == null) {
                 return false;
             }

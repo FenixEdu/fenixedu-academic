@@ -494,11 +494,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public Unit getScientificAreaUnit() {
-        if (this.getCompetenceCourseGroupUnit().hasAnyParents()) {
-            if (this.getCompetenceCourseGroupUnit().getParentsCount() > 1) { 
+        if (this.getCompetenceCourseGroupUnit().hasAnyParentUnits()) {
+            if (this.getCompetenceCourseGroupUnit().getParentUnits().size() > 1) { 
                 throw new DomainException("compentence.course.should.have.only.one.scientific.area");
             }
-            return (Unit) this.getCompetenceCourseGroupUnit().getParents().get(0);
+            return (Unit) this.getCompetenceCourseGroupUnit().getParentUnits().get(0);
         }  
         return null;
     }

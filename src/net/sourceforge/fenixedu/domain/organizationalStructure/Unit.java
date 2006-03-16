@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class Unit extends Unit_Base {
@@ -129,7 +130,7 @@ public class Unit extends Unit_Base {
     }
 
     public void edit(String unitName, Integer unitCostCenter, Date beginDate, Date endDate,
-            PartyTypeEnum type, Unit parentUnit) {
+            PartyTypeEnum type, Unit parentUnit) throws ExcepcaoPersistencia {
 
         this.setName(unitName);
         this.setBeginDate(beginDate);
@@ -137,7 +138,7 @@ public class Unit extends Unit_Base {
         this.setType(type);
         this.setCostCenterCode(unitCostCenter);
         if (parentUnit != null) {
-            this.addParents(parentUnit);
+            this.addParent(parentUnit);
         }
         if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.endDateBeforeBeginDate");
@@ -161,12 +162,11 @@ public class Unit extends Unit_Base {
                 && !hasAnyAssociatedNonAffiliatedTeachers()) {
 
             if (hasAnyParentUnits()) {
-                this.removeParents(this.getParentUnits().get(0));
+                this.getParents().get(0).delete();
             }
 
             for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
-                    .get(0).delete())
-                ;
+                    .get(0).delete());
 
             removeDepartment();
             removeDegree();
@@ -256,11 +256,8 @@ public class Unit extends Unit_Base {
     }
 
     public List<Employee> getWorkingEmployees(Date begin, Date end) {
-
         Set<Employee> employees = new HashSet<Employee>();
-
         readAndSaveEmployees(this, employees, begin, end);
-
         return new ArrayList<Employee>(employees);
     }
 
@@ -275,10 +272,10 @@ public class Unit extends Unit_Base {
 
     public List<Unit> getParentUnits() {
         Set<Unit> allParentUnits = new HashSet<Unit>();
-        List<Party> allParents = this.getParents();
-        for (Party parent : allParents) {
-            if (parent instanceof Unit) {
-                allParentUnits.add((Unit) parent);
+        List<Accountability> allParents = this.getParents();
+        for (Accountability accountability : allParents) {
+            if (accountability.getParentParty() instanceof Unit) {
+                allParentUnits.add((Unit) accountability.getParentParty());
             }
         }
         return new ArrayList<Unit>(allParentUnits);
@@ -286,19 +283,19 @@ public class Unit extends Unit_Base {
 
     public List<Unit> getSubUnits() {
         Set<Unit> allChildsUnits = new HashSet<Unit>();
-        List<Party> allChilds = this.getChilds();
-        for (Party child : allChilds) {
-            if (child instanceof Unit) {
-                allChildsUnits.add((Unit) child);
+        List<Accountability> allChilds = this.getChilds();
+        for (Accountability accountability : allChilds) {
+            if (accountability.getChildParty() instanceof Unit) {
+                allChildsUnits.add((Unit) accountability.getChildParty());
             }
         }
         return new ArrayList<Unit>(allChildsUnits);
     }
 
     public boolean hasAnyParentUnits() {
-        List<Party> allParents = this.getParents();
-        for (Party parent : allParents) {
-            if (parent instanceof Unit) {
+        List<Accountability> allParents = this.getParents();
+        for (Accountability accountability : allParents) {
+            if (accountability.getParentParty() instanceof Unit) {
                 return true;
             }
         }
@@ -306,12 +303,40 @@ public class Unit extends Unit_Base {
     }
 
     public boolean hasAnySubUnits() {
-        List<Party> allChilds = this.getChilds();
-        for (Party parent : allChilds) {
-            if (parent instanceof Unit) {
+        List<Accountability> allChilds = this.getChilds();
+        for (Accountability accountability : allChilds) {
+            if (accountability.getChildParty() instanceof Unit) {
                 return true;
             }
         }
         return false;
+    }
+
+    public Accountability addParent(Unit parentUnit) throws ExcepcaoPersistencia {
+        return new Accountability(parentUnit, this, UnitUtils
+                .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+    }
+    
+    public Accountability addChild(Unit childUnit) throws ExcepcaoPersistencia {
+        return new Accountability(this, childUnit, UnitUtils
+                .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+    }
+
+    public void removeParent(Unit parentUnit) {
+        for (Accountability accountability : this.getParents()) {
+            if (accountability.getParentParty().equals(parentUnit)) {
+                accountability.delete();
+                break;
+            }
+        }
+    }
+    
+    public void removeChild(Unit childUnit) {
+        for (Accountability accountability : this.getChilds()) {
+            if (accountability.getChildParty().equals(childUnit)) {
+                accountability.delete();
+                break;
+            }
+        }
     }
 }

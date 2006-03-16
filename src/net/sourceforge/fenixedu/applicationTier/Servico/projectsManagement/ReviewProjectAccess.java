@@ -26,7 +26,7 @@ public class ReviewProjectAccess extends Service {
         Person person = Person.readPersonByUsername(username);
         Role role = Role.getRoleByRoleType(RoleType.PROJECTS_MANAGER);
         if (persistentProjectAccess.countByPersonAndCC(person, false) == 0) {
-            Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
+            Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
             if (teacher == null) {
                 Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person);
                 if (employee != null) {
@@ -42,7 +42,7 @@ public class ReviewProjectAccess extends Service {
 
         role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
         if (persistentProjectAccess.countByPersonAndCC(person, true) == 0) {
-            Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
+            Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
             if (teacher == null) {
                 Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person);
                 if (employee != null) {

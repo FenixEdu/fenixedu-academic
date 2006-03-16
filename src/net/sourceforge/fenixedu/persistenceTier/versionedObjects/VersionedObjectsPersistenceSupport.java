@@ -64,7 +64,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentKind;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentUniversity;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSite;
@@ -234,7 +233,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentPers
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TeacherVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurnoVO;
@@ -622,10 +620,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentGrantContract getIPersistentGrantContract() {
         return new GrantContractVO();
-    }
-
-    public IPersistentTeacher getIPersistentTeacher() {
-        return new TeacherVO();
     }
 
     public IPersistentEnrolmentEquivalence getIPersistentEnrolmentEquivalence() {

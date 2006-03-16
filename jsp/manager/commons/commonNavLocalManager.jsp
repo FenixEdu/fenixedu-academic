@@ -25,6 +25,11 @@
 		<bean:message bundle="MANAGER_RESOURCES" key="link.manager.organizationalStructureManagement" />
 	</html:link>
 </strong></p>
+<p><strong>&raquo; 
+	<html:link module="/manager" page="/rulesManagement.do?method=listRules">
+		<bean:message bundle="MANAGER_RESOURCES" key="link.manager.rules.management" />
+	</html:link>
+</strong></p>
 
 <br />
 <strong>Gestão de Execuções</strong>

@@ -15,9 +15,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -44,38 +41,29 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter {
      */
     private void verifyTeacherPermission(IUserView requester, Integer teacherNumber)
             throws FenixServiceException {
-        try {
-            IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
 
-            Teacher teacher = teacherDAO.readByNumber(teacherNumber);
-            if (teacher == null) {
-                throw new NonExistingServiceException("Teacher doesn't exists");
-            }
-
-            IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
-            Person requesterPerson = Person.readPersonByUsername(requester.getUtilizador());
-            if (requesterPerson == null) {
-                throw new NotAuthorizedException("No person with that userView");
-            }
-
-            List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
-            
-            Department department = teacher.getCurrentWorkingDepartment();
-
-            if (department == null) {
-                throw new NotAuthorizedException("Teacher number " + teacher.getTeacherNumber()
-                        + " doesn't have department!");
-            }
-
-            if (!departmentsWithAccessGranted.contains(department)) {
-                throw new NotAuthorizedException("Not authorized to run the service!");
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException("Problems with database!", e);
-
+        Teacher teacher = Teacher.readByNumber(teacherNumber);
+        if (teacher == null) {
+            throw new NonExistingServiceException("Teacher doesn't exists");
+        }
+        
+        Person requesterPerson = Person.readPersonByUsername(requester.getUtilizador());
+        if (requesterPerson == null) {
+            throw new NotAuthorizedException("No person with that userView");
         }
 
+        List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
+
+        Department department = teacher.getCurrentWorkingDepartment();
+
+        if (department == null) {
+            throw new NotAuthorizedException("Teacher number " + teacher.getTeacherNumber()
+                    + " doesn't have department!");
+        }
+
+        if (!departmentsWithAccessGranted.contains(department)) {
+            throw new NotAuthorizedException("Not authorized to run the service!");
+        }
     }
 
     /*

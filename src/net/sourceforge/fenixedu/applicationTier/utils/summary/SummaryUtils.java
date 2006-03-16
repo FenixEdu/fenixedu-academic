@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -83,8 +82,7 @@ public class SummaryUtils {
             final InfoSummary infoSummary) throws ExcepcaoPersistencia, FenixServiceException {
         if (infoSummary.getInfoTeacher() != null
                 && infoSummary.getInfoTeacher().getTeacherNumber() != null) {
-            final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-            final Teacher teacher = persistentTeacher.readByNumber(infoSummary.getInfoTeacher()
+            final Teacher teacher = Teacher.readByNumber(infoSummary.getInfoTeacher()
                     .getTeacherNumber());
             if (teacher == null) {
                 throw new FenixServiceException("error.summary.no.teacher");

@@ -21,10 +21,6 @@ public class ReadTeacherInstitutionWorkingTimeByOID extends ReadDomainObjectServ
         return TeacherInstitutionWorkTime.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
-        return persistentSupport.getIPersistentTeacherInstitutionWorkingTime();
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoTeacherInstitutionWorkTime.newInfoFromDomain((TeacherInstitutionWorkTime) domainObject);
     }

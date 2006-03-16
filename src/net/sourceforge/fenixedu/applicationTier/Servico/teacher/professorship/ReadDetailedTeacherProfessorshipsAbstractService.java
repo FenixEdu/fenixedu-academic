@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -98,7 +97,7 @@ public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    protected Teacher readTeacher(Integer teacherId, IPersistentTeacher teacherDAO)
+    protected Teacher readTeacher(Integer teacherId)
             throws NotFoundTeacher, ExcepcaoPersistencia {
         Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);
         if (teacher == null) {

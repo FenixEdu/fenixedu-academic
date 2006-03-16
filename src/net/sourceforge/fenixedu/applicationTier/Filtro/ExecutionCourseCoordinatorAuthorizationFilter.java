@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -76,8 +74,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
             }
             IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
 
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
             if (teacher != null && executionCourse != null) {
                 List executionDegrees = persistentCoordinator.readExecutionDegreesByTeacher(teacher

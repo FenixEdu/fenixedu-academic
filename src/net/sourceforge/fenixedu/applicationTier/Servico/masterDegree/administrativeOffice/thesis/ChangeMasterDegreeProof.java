@@ -64,7 +64,7 @@ public class ChangeMasterDegreeProof extends Service {
         Person person = Person.readPersonByUsername(userView.getUtilizador());
         Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
 
-        List<Teacher> teacherJuries = (List<Teacher>) persistentSupport.getIPersistentTeacher().readByNumbers(
+        List<Teacher> teacherJuries = (List<Teacher>) Teacher.readByNumbers(
                 teacherJuriesNumbers);
         List<ExternalPerson> externalJuries = (List<ExternalPerson>) persistentSupport.getIPersistentExternalPerson()
                 .readByIDs(externalJuriesIDs);

@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.util.ProposalState;
 
 /**
@@ -47,7 +46,6 @@ public class AcceptNewProjectProposal extends Service {
 
 		IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
 		IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
-		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
 		Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
 				groupPropertiesId);
@@ -63,7 +61,7 @@ public class AcceptNewProjectProposal extends Service {
 			throw new ExistingServiceException();
 		}
 
-		Person receiverPerson = persistentTeacher.readTeacherByUsername(acceptancePersonUserName)
+		Person receiverPerson = Teacher.readTeacherByUsername(acceptancePersonUserName)
 				.getPerson();
 
 		ExecutionCourse executionCourseAux = groupPropertiesExecutionCourse.getExecutionCourse();

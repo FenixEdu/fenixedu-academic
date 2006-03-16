@@ -54,7 +54,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -85,8 +84,7 @@ public class ReadTeacherInformation extends Service {
 
         InfoSiteTeacherInformation infoSiteTeacherInformation = new InfoSiteTeacherInformation();
 
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = persistentTeacher.readTeacherByUsername(user);
+        Teacher teacher = Teacher.readTeacherByUsername(user);
 
         // if no execution year is persistentSupportecified, the info shown should refer to
         // the previous execution year

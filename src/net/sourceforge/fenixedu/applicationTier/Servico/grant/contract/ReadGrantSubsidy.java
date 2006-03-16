@@ -29,10 +29,6 @@ public class ReadGrantSubsidy extends ReadDomainObjectService {
 		return GrantSubsidy.class;
 	}
 
-	protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
-		return persistentSupport.getIPersistentGrantSubsidy();
-	}
-
 	protected InfoObject newInfoFromDomain(DomainObject domainObject) {
 		return InfoGrantSubsidyWithContract.newInfoFromDomain((GrantSubsidy) domainObject);
 	}

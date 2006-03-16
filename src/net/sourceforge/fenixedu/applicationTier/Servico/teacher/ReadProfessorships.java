@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author jpvl
@@ -26,7 +25,6 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
 
         IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
-        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
 
         ExecutionPeriod executionPeriod = null;
         if (executionPeriodCode != null) {
@@ -34,7 +32,7 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
                     ExecutionPeriod.class, executionPeriodCode);
         }
 
-        Teacher teacher = teacherDAO.readTeacherByUsername(userView.getUtilizador());
+        Teacher teacher = Teacher.readTeacherByUsername(userView.getUtilizador());
 
         List professorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
         List professorshipsList = new ArrayList();

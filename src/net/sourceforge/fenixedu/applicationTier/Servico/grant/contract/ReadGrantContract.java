@@ -26,10 +26,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientatio
  */
 public class ReadGrantContract extends ReadDomainObjectService {
 
-	protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
-		return persistentSupport.getIPersistentGrantContract();
-	}
-
 	protected InfoObject newInfoFromDomain(DomainObject domainObject) {
 		return InfoGrantContractWithGrantOwnerAndGrantType
 				.newInfoFromDomain((GrantContract) domainObject);

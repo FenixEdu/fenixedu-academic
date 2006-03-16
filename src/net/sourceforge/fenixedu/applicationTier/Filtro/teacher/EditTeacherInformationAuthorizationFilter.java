@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRe
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -62,9 +60,7 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
     private boolean argumentsBelongToTeacher(IUserView id,
             InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation) {
         try {
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
-            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Integer teacherId = teacher.getIdInternal();
 
             if (!infoServiceProviderRegime.getInfoTeacher().getIdInternal().equals(teacherId))
@@ -73,8 +69,6 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
             if (!infoWeeklyOcupation.getInfoTeacher().getIdInternal().equals(teacherId))
                 return false;
             return true;
-        } catch (ExcepcaoPersistencia e) {
-            return false;
         } catch (Exception e) {
             return false;
         }

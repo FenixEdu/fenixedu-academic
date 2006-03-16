@@ -24,10 +24,6 @@ public class ReadCareer extends ReadDomainObjectService {
         return Career.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
-        return persistentSupport.getIPersistentCareer();
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         InfoCareer infoCarrerWithInfoTeacher = InfoCareer.newInfoFromDomain((Career) domainObject); 
     	infoCarrerWithInfoTeacher.setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(((Career) domainObject).getTeacher()));

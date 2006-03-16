@@ -12,9 +12,7 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 
 /**
@@ -41,9 +39,8 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
                 degreeCode = executionDegree.getDegreeCurricularPlan().getDegree().getSigla();
             }
 
-            //teacher
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-            Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
+            //teacher           
+            Teacher teacher = Teacher.readByNumber(teacherNumber);
             if (teacher == null) {
                 throw new NonExistingServiceException("error.tutor.unExistTeacher");
             }

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -52,13 +51,11 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter e
             return false;
         }
         boolean result = false;
-        try {
-            final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
+        try {            
             final Integer announcementID = getAnnouncementID(args);
             final Announcement announcement = (Announcement) persistentObject.readByOID(
                     Announcement.class, announcementID);
-            final Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
             if (announcement != null && teacher != null) {
                 final ExecutionCourse executionCourse = announcement.getSite().getExecutionCourse();

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteOldPublicatio
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 
@@ -28,9 +27,8 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadOldPublications extends Service {
 
-    public SiteView run(OldPublicationType oldPublicationType, String user) throws ExcepcaoPersistencia {
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = persistentTeacher.readTeacherByUsername(user);
+    public SiteView run(OldPublicationType oldPublicationType, String user) throws ExcepcaoPersistencia {       
+        Teacher teacher = Teacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
         IPersistentOldPublication persistentOldPublication = persistentSupport

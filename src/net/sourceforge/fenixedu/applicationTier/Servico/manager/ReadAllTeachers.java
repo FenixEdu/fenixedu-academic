@@ -24,7 +24,7 @@ public class ReadAllTeachers extends Service {
 
         final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
-        final Collection<Teacher> allTeachers = persistentSupport.getIPersistentTeacher().readAll(
+        final Collection<Teacher> allTeachers = persistentSupport.getIPersistentObject().readAll(
                 Teacher.class);
 
         if (allTeachers != null) {

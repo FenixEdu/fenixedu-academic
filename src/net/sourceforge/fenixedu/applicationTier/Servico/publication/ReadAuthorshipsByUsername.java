@@ -13,17 +13,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.publication.Authorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 public class ReadAuthorshipsByUsername extends Service {
 
 	public SiteView run(String user) throws FenixServiceException, ExcepcaoPersistencia {
-		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
 		Person person = Person.readPersonByUsername(user);
-		Teacher teacher = persistentTeacher.readTeacherByUsername(user);
+		Teacher teacher = Teacher.readTeacherByUsername(user);
 
 		InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 		List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(person

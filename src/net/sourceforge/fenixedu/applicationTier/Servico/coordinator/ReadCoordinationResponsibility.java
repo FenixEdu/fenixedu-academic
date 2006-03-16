@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author João Mota 17/Set/2003
@@ -22,9 +21,8 @@ public class ReadCoordinationResponsibility extends Service {
     public Boolean run(Integer executionDegreeId, IUserView userView) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
+        IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();        
+        Teacher teacher = Teacher.readTeacherByUsername(userView.getUtilizador());
         if (teacher == null) {
             throw new FenixServiceException("error.teacher.not.found");
         }

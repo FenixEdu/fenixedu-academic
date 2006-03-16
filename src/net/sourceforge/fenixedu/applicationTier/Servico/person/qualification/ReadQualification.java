@@ -26,10 +26,6 @@ public class ReadQualification extends ReadDomainObjectService {
         return Qualification.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
-        return persistentSupport.getIPersistentQualification();
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoQualificationWithPersonAndCountry.newInfoFromDomain((Qualification) domainObject);
     }

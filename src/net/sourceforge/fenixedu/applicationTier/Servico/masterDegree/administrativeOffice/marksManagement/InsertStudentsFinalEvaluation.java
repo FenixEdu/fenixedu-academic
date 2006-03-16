@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author Fernanda Quitério
@@ -26,11 +25,9 @@ public class InsertStudentsFinalEvaluation extends Service {
 
 		List<InfoEnrolmentEvaluation> infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
 
-		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
 		for (InfoEnrolmentEvaluation infoEnrolmentEvaluation : evaluations) {
 
-			Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
+			Teacher teacher = Teacher.readByNumber(teacherNumber);
 			if (teacher == null) {
 				throw new NonExistingServiceException();
 			}

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author João Mota
@@ -24,10 +23,8 @@ public class ReadExecutionCoursesByTeacherResponsibility extends Service {
     public List run(Integer teacherNumber) throws FenixServiceException, ExcepcaoPersistencia {
 
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
-        
-        final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
        
-        Teacher teacher = persistentTeacher.readByNumber(teacherNumber);        
+        Teacher teacher = Teacher.readByNumber(teacherNumber);        
         
         final List<Professorship> responsibilities = teacher.responsibleFors();
         

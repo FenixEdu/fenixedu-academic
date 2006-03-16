@@ -10,27 +10,17 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 
 /**
  * @author João Mota
@@ -116,9 +106,7 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
     }
 
     protected Teacher readTeacher(IUserView id) throws ExcepcaoPersistencia {
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
-        return persistentTeacher.readTeacherByUsername(id.getUtilizador());
+        return Teacher.readTeacherByUsername(id.getUtilizador());
     }
 
     protected boolean verifyCoordinator(Teacher teacher, Object[] arguments)

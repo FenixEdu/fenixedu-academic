@@ -77,11 +77,11 @@ public class SummariesControlAction extends FenixDispatchAction {
         } else if (departmentID == null || departmentID.equals("")) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("", new ActionMessage("error.no.deparment"));
-            saveMessages(request, actionMessages);   
+            saveMessages(request, actionMessages);
         } else if (executionPeriodID == null || executionPeriodID.equals("")) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("", new ActionMessage("error.no.execution.period"));
-            saveMessages(request, actionMessages);                     
+            saveMessages(request, actionMessages);
         }
 
         return prepareSummariesControl(mapping, actionForm, request, response);
@@ -98,14 +98,14 @@ public class SummariesControlAction extends FenixDispatchAction {
         if (departmentID == null || departmentID.equals("")) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("", new ActionMessage("error.no.deparment"));
-            saveMessages(request, actionMessages);            
+            saveMessages(request, actionMessages);
             dynaActionForm.set("executionPeriod", "");
             runProcess = false;
         }
         if (executionPeriodID == null || executionPeriodID.equals("")) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("", new ActionMessage("error.no.execution.period"));
-            saveMessages(request, actionMessages);  
+            saveMessages(request, actionMessages);
             runProcess = false;
         }
 
@@ -129,15 +129,11 @@ public class SummariesControlAction extends FenixDispatchAction {
         final ExecutionPeriod executionPeriod;
         Object[] args = { Department.class, Integer.valueOf(departmentID) }, args1 = {
                 ExecutionPeriod.class, Integer.valueOf(executionPeriodID) };
-        try {
-            department = (Department) ServiceManagerServiceFactory.executeService(null,
-                    "ReadDomainObject", args);
-            executionPeriod = (ExecutionPeriod) ServiceManagerServiceFactory.executeService(null,
-                    "ReadDomainObject", args1);
 
-        } catch (FenixServiceException e) {
-            throw new FenixServiceException();
-        }
+        department = (Department) ServiceManagerServiceFactory.executeService(null, "ReadDomainObject",
+                args);
+        executionPeriod = (ExecutionPeriod) ServiceManagerServiceFactory.executeService(null,
+                "ReadDomainObject", args1);
 
         List<Teacher> allDepartmentTeachers = (department != null && executionPeriod != null) ? department
                 .getTeachers(executionPeriod.getBeginDate(), executionPeriod.getEndDate())
@@ -171,24 +167,24 @@ public class SummariesControlAction extends FenixDispatchAction {
                         // GET TOTAL SUMMARY HOURS
                         courseSummaryHours = readSummaryHours(professorship, shift, courseSummaryHours);
                     }
-                                        
+
                     summaryHours = NumberUtils.formatNumber(summaryHours, 1);
                     lessonHours = NumberUtils.formatNumber(lessonHours, 1);
                     courseSummaryHours = NumberUtils.formatNumber(courseSummaryHours, 1);
-                    
+
                     shiftDifference = getDifference(lessonHours, summaryHours);
                     courseDifference = getDifference(lessonHours, courseSummaryHours);
-                   
+
                     Category category = teacher.getCategory();
                     String categoryName = (category != null) ? category.getCode() : "";
 
                     String siglas = getSiglas(professorship);
-                    
+
                     SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(teacher
                             .getPerson().getNome(), professorship.getExecutionCourse().getNome(),
                             teacher.getTeacherNumber(), categoryName, lessonHours, summaryHours,
                             courseSummaryHours, shiftDifference, courseDifference, siglas);
-                                                          
+
                     allListElements.add(listElementDTO);
                 }
             }
@@ -200,21 +196,21 @@ public class SummariesControlAction extends FenixDispatchAction {
         return allListElements;
     }
 
-    private String getSiglas(Professorship professorship) {                
+    private String getSiglas(Professorship professorship) {
         ExecutionCourse executionCourse = professorship.getExecutionCourse();
         int numberOfCurricularCourse = executionCourse.getAssociatedCurricularCourses().size();
-        
-        List<String> siglas = new ArrayList<String>();                          
+
+        List<String> siglas = new ArrayList<String>();
         StringBuffer buffer = new StringBuffer();
-                       
+
         for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-            String sigla = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();            
-            if(!siglas.contains(sigla)){     
-               if(numberOfCurricularCourse < executionCourse.getAssociatedCurricularCourses().size()){                
-                   buffer.append(",");
-               } 
-               buffer.append(sigla);
-               siglas.add(sigla);                                             
+            String sigla = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
+            if (!siglas.contains(sigla)) {
+                if (numberOfCurricularCourse < executionCourse.getAssociatedCurricularCourses().size()) {
+                    buffer.append(",");
+                }
+                buffer.append(sigla);
+                siglas.add(sigla);
             }
             numberOfCurricularCourse--;
         }
@@ -223,7 +219,7 @@ public class SummariesControlAction extends FenixDispatchAction {
 
     private DegreeTeachingService readDegreeTeachingService(TeacherService teacherService, Shift shift,
             Professorship professorship) {
-        
+
         DegreeTeachingService degreeTeachingService = null;
         if (teacherService != null) {
             degreeTeachingService = teacherService.getDegreeTeachingServiceByShiftAndProfessorship(
@@ -235,7 +231,7 @@ public class SummariesControlAction extends FenixDispatchAction {
     private Double readLessonHours(DegreeTeachingService degreeTeachingService,
             TeacherService teacherService, Professorship professorship, Shift shift, Double percentage,
             Double lessonHours) {
-        
+
         if (degreeTeachingService != null) {
             percentage = degreeTeachingService.getPercentage();
             lessonHours += getLessonHoursByExecutionCourseAndExecutionPeriod(percentage, teacherService,
@@ -411,13 +407,9 @@ public class SummariesControlAction extends FenixDispatchAction {
             FenixServiceException {
         List<Department> allDepartments = new ArrayList<Department>();
         Object[] args = { Department.class };
-        try {
-            allDepartments = (List<Department>) ServiceManagerServiceFactory.executeService(null,
-                    "ReadAllDomainObjects", args);
 
-        } catch (FenixServiceException e) {
-            throw new FenixServiceException();
-        }
+        allDepartments = (List<Department>) ServiceManagerServiceFactory.executeService(null,
+                "ReadAllDomainObjects", args);
 
         List<LabelValueBean> departments = getAllDepartments(allDepartments);
         request.setAttribute("departments", departments);
@@ -427,14 +419,9 @@ public class SummariesControlAction extends FenixDispatchAction {
             FenixServiceException {
         List<InfoExecutionPeriod> allExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
         Object[] args = {};
-        try {
 
-            allExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory
-                    .executeService(null, "ReadNotClosedExecutionPeriods", args);
-
-        } catch (FenixServiceException e) {
-            throw new FenixServiceException();
-        }
+        allExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
+                null, "ReadNotClosedExecutionPeriods", args);
 
         List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(allExecutionPeriods);
         request.setAttribute("executionPeriods", executionPeriods);

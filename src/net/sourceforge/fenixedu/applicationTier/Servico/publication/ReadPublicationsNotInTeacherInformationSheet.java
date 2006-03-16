@@ -13,16 +13,14 @@ import net.sourceforge.fenixedu.domain.publication.Authorship;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 
 public class ReadPublicationsNotInTeacherInformationSheet extends Service {
 
     public SiteView run(String user) throws ExcepcaoPersistencia {
         InfoSitePublications infoSitePublications = new InfoSitePublications();
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         
-        Teacher teacher = persistentTeacher.readTeacherByUsername(user);
+        Teacher teacher = Teacher.readTeacherByUsername(user);
 
         List<Publication> publicationsInTeacherSheet = new ArrayList<Publication>(teacher.getTeacherPublicationsCount());
         for(PublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {

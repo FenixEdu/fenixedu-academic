@@ -38,16 +38,6 @@
 	    jdbc-type="INTEGER"
 	/>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Unit -->
@@ -111,35 +101,6 @@
 	    column="KEY_PARTY_TYPE"
 	    jdbc-type="INTEGER"
 	/>
-	
-	
-	
-	
-	
-	
-
-	
-
-	
-
-	
-    
-    
-
-    
-    
-     
-  
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Accountability -->
@@ -168,10 +129,6 @@
 	   jdbc-type="INTEGER"
     />
 
-	
-	
-	
-	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule -->
@@ -199,13 +156,6 @@
 	   column="KEY_ALLOWED_CHILD_PARTY_TYPE"  
 	   jdbc-type="INTEGER"
     />		
-    
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType -->
@@ -224,14 +174,9 @@
 	    jdbc-type="VARCHAR"   	 
 	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.AccountabilityType2SQLAccountabilityTypeFieldConversion"   	       
 	/>
-		
-	
-	
-	
-	
 </class-descriptor>
 
-<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.PartyType -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType" table="PARTY_TYPE">
 	
 	<field-descriptor 
@@ -245,13 +190,6 @@
 	    name="type"
 	    column="TYPE"
 	    jdbc-type="VARCHAR"
-	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.AccountabilityType2SQLAccountabilityTypeFieldConversion"   	    
+	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.PartyType2SQLPartyTypeFieldConversion"   	    
 	/>
-		
-	
-	
-	
-	
-	
-	
 </class-descriptor>

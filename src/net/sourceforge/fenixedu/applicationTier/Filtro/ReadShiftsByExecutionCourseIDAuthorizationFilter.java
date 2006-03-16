@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -97,7 +96,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 
                 Integer executionCourseID = (Integer) arguments[0];
 
-                teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
                 ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
                         .readByOID(ExecutionCourse.class, executionCourseID);
@@ -169,9 +168,8 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
             } else {
                 executionCourseID = (Integer) argumentos[0];
             }
-
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
                 IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
@@ -88,8 +88,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
             // Set the correct grant orientation teacher
 
             IPersistentGrantCostCenter pGrantCostCenter = persistentSupport.getIPersistentGrantCostCenter();
-            IPersistentTeacher pTeacher = persistentSupport.getIPersistentTeacher();
-
+ 
             GrantContract grantContract = (GrantContract) persistentObject.readByOID(
                     GrantContract.class, infoGrantContractRegime.getInfoGrantContract().getIdInternal());
 
@@ -129,7 +128,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                         infoPerson = getInfoPerson(teacher.getPerson());
                         infoTeacher.setInfoPerson(infoPerson);
                     } else {
-                        teacher = pTeacher.readByNumber(infoGrantContractRegime.getInfoTeacher()
+                        teacher = Teacher.readByNumber(infoGrantContractRegime.getInfoTeacher()
                                 .getTeacherNumber());
                         Person person = (Person) persistentObject.readByOID(Person.class, teacher
                                 .getPerson().getIdInternal());

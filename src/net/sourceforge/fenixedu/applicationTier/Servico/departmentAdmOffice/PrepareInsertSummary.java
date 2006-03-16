@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
@@ -99,9 +98,8 @@ public class PrepareInsertSummary extends Service {
         }
         Collections.sort(infoRooms, new BeanComparator("nome"));
 
-        //teacher logged
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
+        //teacher logged        
+        Teacher teacher = Teacher.readByNumber(teacherNumber);
         Integer professorshipSelect = null;
         if (teacher != null) {
             Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(

@@ -567,6 +567,14 @@
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
 		
+		<!-- ========== RULES MANAGEMENT ========== -->	
+		<form-bean name="rulesManagementForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">			
+			<form-property name="method" type="java.lang.String"/>
+            <form-property name="page" type="java.lang.Integer" initial="0" />
+		</form-bean>
+		
 		<!-- ========== DOMAIN OBJECT MANAGEMENT ========== -->	
 		<form-bean name="stringPropertyFormatterForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
@@ -1863,6 +1871,16 @@
 			type="net.sourceforge.fenixedu.presentationTier.Action.manager.domainObjectsManagement.DomainObjectStringPropertyFormatterDispatchAction"
 			scope="request">
 		<forward name="propertyFormatter" path="chooseClassAndSlotToFormat"/>
+	</action>
+	
+	<!-- ConnectionRules Management -->     
+	<action path="/rulesManagement"
+			parameter="method"
+			name="rulesManagementForm"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.organizationalStructure.RulesManagementAction"
+			scope="request">
+		<forward name="listRules" path="listRules"/>	
+		<forward name="insertNewRule" path="insertNewRule"/>
 	</action>
 
     <!-- ========= Renderers ================ -->

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -18,7 +19,7 @@ public class ReadTeachersByNumbers extends Service {
 
     public Collection<InfoTeacher> run(Collection<Integer> teacherNumbers) throws ExcepcaoPersistencia {
         Collection<InfoTeacher> infoTeachers = new ArrayList(teacherNumbers.size());
-        Collection<Teacher> teachers = persistentSupport.getIPersistentTeacher().readByNumbers(teacherNumbers);
+        Collection<Teacher> teachers = Teacher.readByNumbers(teacherNumbers);
 
         for (Teacher teacher : teachers) {
             infoTeachers.add(InfoTeacherWithPerson.newInfoFromDomain(teacher));

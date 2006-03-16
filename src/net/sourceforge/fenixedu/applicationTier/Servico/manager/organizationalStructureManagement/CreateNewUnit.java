@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.domain.DomainFactory;
 
 public class CreateNewUnit extends Service {
 
@@ -26,7 +26,7 @@ public class CreateNewUnit extends Service {
         Unit unit = null;
         if (unitID == null) {
             unit = DomainFactory.makeUnit();
-        } else {
+        } else {            
             unit = (Unit) persistentObject.readByOID(Unit.class, unitID);
             if (unit == null) {
                 throw new FenixServiceException("error.noUnit");
@@ -89,15 +89,18 @@ public class CreateNewUnit extends Service {
     }
 
     private Unit setParentUnits(Integer parentUnitID, Unit unit)
-            throws ExcepcaoPersistencia {
+            throws ExcepcaoPersistencia, FenixServiceException {
+        
         Unit parentUnit = null;
         if (parentUnitID != null) {
-            parentUnit = (Unit) persistentObject.readByOID(Unit.class,
-                    parentUnitID);
-            if (unit.getParents().contains(parentUnit)) {
-                unit.removeParents(parentUnit);
+            parentUnit = (Unit) persistentObject.readByOID(Unit.class, parentUnitID);
+            if(parentUnit.equals(unit)){
+                throw new FenixServiceException("error.same.unit");
+            } 
+            if(unit.getParentUnits().contains(parentUnit)){
+                unit.removeParent(parentUnit);
                 parentUnit = null;
-            }
+            }            
         }
         return parentUnit;
     }

@@ -92,7 +92,7 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
                 if (executionDegreeID == null) {
                     return false;
                 }
-                Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
                 Coordinator coordinator = persistentSupport.getIPersistentCoordinator()
                         .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), executionDegreeID);
                 if (coordinator != null) {

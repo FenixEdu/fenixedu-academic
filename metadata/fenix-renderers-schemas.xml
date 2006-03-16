@@ -288,8 +288,32 @@
     <slot name="autonomousStudy"/>
     <slot name="other"/>
   </schema>
-
-  <schema name="roomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation">
+  
+  <schema name="list.connectionRules" type="net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule">
+    <slot name="accountabilityType.type"/>
+    <slot name="allowedChildPartyType.type"/>
+    <slot name="allowedParentPartyType.type"/>    
+  </schema>  
+  
+  <schema name="connectionRule.bean" type="net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule">
+    <slot name="accountabilityType" layout="menu-select">
+        <property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType"/>
+        <property name="eachLayout" value="values-dash"/>
+        <!-- <property name="eachSchema" value="websiteType.list"/>  -->
+    </slot>
+    <slot name="allowedChildPartyType" layout="menu-select">
+        <property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType"/>
+        <property name="eachLayout" value="values-dash"/>
+        <!-- <property name="eachSchema" value="websiteType.list"/>  -->
+    </slot>
+    <slot name="allowedParentPartyType" layout="menu-select">
+        <property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType"/>
+        <property name="eachLayout" value="values-dash"/>
+        <!-- <property name="eachSchema" value="websiteType.list"/>  -->
+    </slot>
+  </schema>
+  
+<schema name="roomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation">
     <slot name="name"/>
     <slot name="area"/>
     <slot name="hight"/>

@@ -6003,15 +6003,15 @@ relation PartyPartyType {
 }
 
 relation PartyTypeParentConnectionRule {
-	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole parentPartyType;
-	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole allowedParentConnectionRules {
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole allowedParentPartyType;
+	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole allowedChildConnectionRules {
 	   multiplicity *;
 	}	 
 }
 
 relation PartyTypeChildConnectionRule {
-	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole childPartyType;
-	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole allowedChildConnectionRules {
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole allowedChildPartyType;
+	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole allowedParentConnectionRules {
 	   multiplicity *;
 	}	 
 }
@@ -6024,10 +6024,10 @@ relation ConnectionRuleAccountabilityType {
 }
 
 relation PartyParty {
-    net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole childs{
+    net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole childParties{
     	multiplicity *;
     }
-	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parents{
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parentParties{
 		multiplicity *;
 	}
 }
@@ -6038,15 +6038,15 @@ relation PersonHomepage {
 }
 
 relation AccountabilityParentParty {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parentParty;
-	net.sourceforge.fenixedu.domain.organizationalStructure.Accountability playsRole parentAccountabilities {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole childParty;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Accountability playsRole parents {
 	   multiplicity *;
 	}	 
 }
 
 relation AccountabilityChildParty {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole childParty;
-	net.sourceforge.fenixedu.domain.organizationalStructure.Accountability playsRole childAccountabilities {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parentParty;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Accountability playsRole childs {
 	   multiplicity *;
 	}	 
 }
@@ -6092,6 +6092,13 @@ relation RootDomainObjectParty {
 relation RootDomainObjectUser {
     net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
     net.sourceforge.fenixedu.domain.User playsRole users {
+    	multiplicity *;
+    }
+}
+
+relation RootDomainObjectTeacher {
+    net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+    net.sourceforge.fenixedu.domain.Teacher playsRole teachers {
     	multiplicity *;
     }
 }

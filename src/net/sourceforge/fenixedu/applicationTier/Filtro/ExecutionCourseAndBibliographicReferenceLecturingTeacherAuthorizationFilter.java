@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -50,12 +49,11 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
 
         boolean result = false;
         try {
-            final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
             final Integer bibliographicReferenceID = getBibliographicReference(args);
             final BibliographicReference bibliographicReference = (BibliographicReference) persistentObject
                     .readByOID(BibliographicReference.class, bibliographicReferenceID);
-            final Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
             if (bibliographicReference != null && teacher != null) {
                 final ExecutionCourse executionCourse = bibliographicReference.getExecutionCourse();

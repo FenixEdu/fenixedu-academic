@@ -162,8 +162,6 @@ public interface ISuportePersistente
 
 	public IPersistentEvaluationMethod getIPersistentEvaluationMethod();
 
-	public IPersistentTeacher getIPersistentTeacher();
-
 	public IPersistentExam getIPersistentExam();
 
 	public IPersistentCurricularYear getIPersistentCurricularYear();

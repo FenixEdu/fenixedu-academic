@@ -71,7 +71,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 
                 String ids[] = (String[]) arguments[1];
 
-                teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
                 for (int i = 0; i < ids.length; i++) {
 

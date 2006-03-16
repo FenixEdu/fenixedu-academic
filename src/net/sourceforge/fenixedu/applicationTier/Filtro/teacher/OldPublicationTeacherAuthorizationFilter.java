@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author Leonor Almeida
@@ -26,9 +25,7 @@ public class OldPublicationTeacherAuthorizationFilter extends DomainObjectAuthor
      */
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
-            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             OldPublication oldPublication = (OldPublication) persistentObject.readByOID(
                     OldPublication.class, objectId);
 

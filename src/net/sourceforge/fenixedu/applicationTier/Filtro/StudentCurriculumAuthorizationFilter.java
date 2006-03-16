@@ -274,8 +274,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         roleTemp.add(RoleType.TEACHER);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             try {
-                Teacher teacher = persistentSupport.getIPersistentTeacher()
-                        .readTeacherByUsername(id.getUtilizador());
+                Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
                 if (teacher == null) {
                     return "noAuthorization";
                 }

@@ -21,10 +21,6 @@ public class ReadGrantInsurance extends ReadDomainObjectService {
         return GrantInsurance.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
-        return persistentSupport.getIPersistentGrantInsurance();
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoGrantInsuranceWithContractAndPaymentEntity
                 .newInfoFromDomain((GrantInsurance) domainObject);

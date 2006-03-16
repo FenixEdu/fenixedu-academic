@@ -101,7 +101,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -526,8 +525,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 				infoTeachers.add(infoTeacher);
 			}
 
-			// see if teacher is responsible for that execution course
-			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+			// see if teacher is responsible for that execution course			
 			List responsibleTeachers = executionCourse.responsibleFors();
 
 			List infoResponsibleTeachers = new ArrayList();
@@ -542,7 +540,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 					infoResponsibleTeachers.add(infoTeacher);
 				}
 
-				Teacher teacher = persistentTeacher.readTeacherByUsername(username);
+				Teacher teacher = Teacher.readTeacherByUsername(username);
 				Professorship responsibleFor = persistentProfessorship.readByTeacherAndExecutionCourse(
 						teacher.getIdInternal(), executionCourse.getIdInternal());
 				if (teacher != null) {

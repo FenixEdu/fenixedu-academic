@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 
 /**
@@ -39,8 +38,7 @@ public class ReadStudentsByTutor extends Service {
             throw new FenixServiceException("error.tutor.impossibleOperation");
         }
 
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacherDB = persistentTeacher.readByNumber(tutorNumber);
+        Teacher teacherDB = Teacher.readByNumber(tutorNumber);
         if (teacherDB == null) {
             throw new FenixServiceException("error.noTutor");
         }

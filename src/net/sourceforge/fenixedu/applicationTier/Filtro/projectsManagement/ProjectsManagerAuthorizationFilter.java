@@ -38,7 +38,7 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 
         ServiceParameters s = request.getServiceParameters();
 
-        Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(username);
+        Teacher teacher = Teacher.readTeacherByUsername(username);
         Integer userNumber = null;
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();

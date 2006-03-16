@@ -87,7 +87,7 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
 
                 Integer candidateID = (Integer) arguments[0];
 
-                teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
                 MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject
                 		.readByOID(MasterDegreeCandidate.class, candidateID);

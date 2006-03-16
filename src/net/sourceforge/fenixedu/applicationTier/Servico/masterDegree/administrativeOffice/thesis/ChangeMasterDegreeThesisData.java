@@ -80,8 +80,8 @@ public class ChangeMasterDegreeThesisData extends Service {
                         .getMasterDegreeThesis(), employee, dissertationTitle, new Date(), new State(
                         State.ACTIVE));
 
-        Collection<Teacher> guiders = persistentSupport.getIPersistentTeacher().readByNumbers(guidersNumbers);
-        Collection<Teacher> assistentGuiders = persistentSupport.getIPersistentTeacher().readByNumbers(
+        Collection<Teacher> guiders = Teacher.readByNumbers(guidersNumbers);
+        Collection<Teacher> assistentGuiders = Teacher.readByNumbers(
                 assistentGuidersNumbers);
         Collection<ExternalPerson> externalGuiders = persistentSupport.getIPersistentExternalPerson().readByIDs(
                 externalGuidersIDs);

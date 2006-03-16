@@ -29,10 +29,6 @@ public class ReadTeacherDegreeFinalProjectStudentByOID extends ReadDomainObjectS
         return TeacherDegreeFinalProjectStudent.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
-        return persistentSupport.getIPersistentTeacherDegreeFinalProjectStudent();
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain((TeacherDegreeFinalProjectStudent) domainObject);
     }

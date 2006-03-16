@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTutorWithInfoStudent;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 
 /**
@@ -30,9 +29,8 @@ public class ViewStudentsByTutor extends Service {
             throw new FenixServiceException("error.tutor.impossibleOperation");
         }
 
-        List infoTutorStudents = new ArrayList();
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = persistentTeacher.readTeacherByUsername(userName);
+        List infoTutorStudents = new ArrayList();        
+        Teacher teacher = Teacher.readTeacherByUsername(userName);
 
         IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
         List<Tutor> tutorStudents = persistentTutor.readStudentsByTeacher(teacher.getIdInternal(),

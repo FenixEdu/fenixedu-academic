@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author Barbosa
@@ -35,9 +34,8 @@ public class EditGrantPaymentEntity extends Service {
         grantCostCenter.setDesignation(infoObject.getDesignation());
         grantCostCenter.setNumber(infoObject.getNumber());
 //      ResponsibleTeacher
-    	if (infoObject.getInfoResponsibleTeacher() != null) {
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-            Teacher teacher = persistentTeacher.readByNumber(infoObject
+    	if (infoObject.getInfoResponsibleTeacher() != null) {            
+            Teacher teacher = Teacher.readByNumber(infoObject
                     .getInfoResponsibleTeacher().getTeacherNumber());
             if (teacher == null)
                 throw new GrantOrientationTeacherNotFoundException();
@@ -63,9 +61,8 @@ public class EditGrantPaymentEntity extends Service {
     	}
     	
     	//ResponsibleTeacher
-    	if (infoObject.getInfoResponsibleTeacher() != null) {
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-            Teacher teacher = persistentTeacher.readByNumber(infoObject
+    	if (infoObject.getInfoResponsibleTeacher() != null) {            
+            Teacher teacher = Teacher.readByNumber(infoObject
                     .getInfoResponsibleTeacher().getTeacherNumber());
             if (teacher == null)
                 throw new GrantOrientationTeacherNotFoundException();

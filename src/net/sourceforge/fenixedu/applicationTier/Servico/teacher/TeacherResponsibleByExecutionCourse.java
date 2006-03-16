@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author Tânia Pousão Create on 18/Dez/2003
@@ -27,9 +26,7 @@ public class TeacherResponsibleByExecutionCourse extends Service {
             throws ExcepcaoPersistencia {
         boolean result = false;
 
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
-        Teacher teacher = persistentTeacher.readTeacherByUsername(teacherUserName);
+        Teacher teacher = Teacher.readTeacherByUsername(teacherUserName);
         Professorship responsibleFor = teacher.responsibleFor(executionCourseCode);
         if (responsibleFor == null) {
             result = false;

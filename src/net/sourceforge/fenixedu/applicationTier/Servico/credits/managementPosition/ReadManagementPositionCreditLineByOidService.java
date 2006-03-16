@@ -20,10 +20,6 @@ public class ReadManagementPositionCreditLineByOidService extends ReadDomainObje
         return ManagementPositionCreditLine.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
-        return persistentSupport.getIPersistentManagementPositionCreditLine();
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoManagementPositionCreditLine.newInfoFromDomain((ManagementPositionCreditLine) domainObject);
     }

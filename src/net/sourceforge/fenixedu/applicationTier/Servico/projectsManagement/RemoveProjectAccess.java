@@ -53,7 +53,7 @@ public class RemoveProjectAccess extends Service {
 
     private Integer getUserNumber(ISuportePersistente persistentSupport, Person person) throws ExcepcaoPersistencia {
         Integer userNumber = null;
-        Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
+        Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {

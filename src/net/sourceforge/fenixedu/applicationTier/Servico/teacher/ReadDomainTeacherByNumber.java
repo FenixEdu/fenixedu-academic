@@ -21,7 +21,7 @@ import org.apache.commons.collections.Predicate;
 public class ReadDomainTeacherByNumber extends Service {
 
     public Teacher run(final Integer teacherNumber) throws ExcepcaoPersistencia, FenixServiceException {
-        List<Teacher> teachers = (List<Teacher>) persistentSupport.getIPersistentTeacher().readAll(
+        List<Teacher> teachers = (List<Teacher>) persistentSupport.getIPersistentObject().readAll(
                 Teacher.class);
 
         Teacher teacher = (Teacher) CollectionUtils.find(teachers, new Predicate() {

@@ -26,8 +26,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.util.ProposalState;
 
 /**
@@ -52,8 +50,7 @@ public class NewProjectProposal extends Service {
                 ExecutionCourse.class, goalExecutionCourseId);
         ExecutionCourse startExecutionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, objectCode);
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Person senderPerson = persistentTeacher.readTeacherByUsername(senderPersonUsername).getPerson();
+        Person senderPerson = Teacher.readTeacherByUsername(senderPersonUsername).getPerson();
 
         if (groupProperties == null) {
             throw new InvalidArgumentsServiceException("error.noGroupProperties");

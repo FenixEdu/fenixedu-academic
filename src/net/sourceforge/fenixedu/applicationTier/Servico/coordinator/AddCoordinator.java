@@ -16,14 +16,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 public class AddCoordinator extends Service {
 
     public Boolean run(Integer executionDegreeId, Integer teacherNumber) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
+            ExcepcaoPersistencia {        
+        Teacher teacher = Teacher.readByNumber(teacherNumber);
         if (teacher == null) {
             throw new NonExistingServiceException();
         }

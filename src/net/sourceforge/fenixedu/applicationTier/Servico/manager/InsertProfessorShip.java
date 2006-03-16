@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author lmac1
@@ -28,8 +27,7 @@ public class InsertProfessorShip extends Service {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }
 
-        final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        final Teacher teacher = persistentTeacher.readByNumber(infoProfessorShip.getInfoTeacher().getTeacherNumber());
+        final Teacher teacher = Teacher.readByNumber(infoProfessorShip.getInfoTeacher().getTeacherNumber());
         if (teacher == null) {
             throw new NonExistingServiceException("message.non.existing.teacher", null);
         }

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -28,14 +27,13 @@ public class ReadInfoTeacherByTeacherNumber extends Service {
     public InfoTeacher run(Integer teacherNumber) throws FenixServiceException, ExcepcaoPersistencia {
 
         InfoTeacher infoTeacher = null;
-        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
         IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
        
         if (teacherNumber == null) {
             throw new FenixServiceException("nullTeacherNumber");
         }
 
-        Teacher teacher = teacherDAO.readByNumber(teacherNumber);
+        Teacher teacher = Teacher.readByNumber(teacherNumber);
         if (teacher == null) {
             throw new NonExistingServiceException("noTeacher");
         }

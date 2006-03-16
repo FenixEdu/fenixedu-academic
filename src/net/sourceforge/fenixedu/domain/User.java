@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
-
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /** 
  * @author mrsp
@@ -13,15 +10,18 @@ public class User extends User_Base {
     
     public User() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }    
     
     public User(String username){
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         this.setUsername(username);        
     }
     
     public User(String username, String istUsername, Boolean isPassInKerberos, String password, Person person){
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         this.setUsername(username);        
         this.setPerson(person);
         this.setPassword(password);
@@ -29,7 +29,7 @@ public class User extends User_Base {
         this.setIsPassInKerberos(isPassInKerberos);
     }
 
-    public static User readUserByUsername(final String username) throws ExcepcaoPersistencia {
+    public static User readUserByUsername(final String username) {
         for (final User user : RootDomainObject.getInstance().getUsers()) {
             if (user.getUsername().equalsIgnoreCase(username)) {
                 return user;
@@ -38,7 +38,7 @@ public class User extends User_Base {
         return null;
     }
 
-    public static User readUserByIstUsername(final String istUsername) throws ExcepcaoPersistencia {
+    public static User readUserByIstUsername(final String istUsername) {
         for (final User user : RootDomainObject.getInstance().getUsers()) {
             if (user.getIstUsername() != null && user.getIstUsername().equalsIgnoreCase(istUsername)) {
                 return user;

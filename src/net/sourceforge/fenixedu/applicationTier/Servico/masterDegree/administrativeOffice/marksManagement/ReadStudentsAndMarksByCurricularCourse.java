@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -51,7 +50,6 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 		Date lastEvaluationDate = null;
 
 		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
 		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
 				CurricularCourse.class, curricularCourseCode);
@@ -117,7 +115,7 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 			if (enrolmentEvaluationsWithResponsiblePerson.size() > 0) {
 				Person person = ((EnrolmentEvaluation) enrolmentEvaluationsWithResponsiblePerson
 						.get(0)).getPersonResponsibleForGrade();
-				Teacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
+				Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
 				infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
 			}
 

@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -59,13 +58,12 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
     }
 
     protected boolean verifyCondition(IUserView id, String user) {
-        try {
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+        try {            
             IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
             IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
 
-            Teacher teacher = persistentTeacher.readTeacherByUsername(user);
-            Teacher coordinator = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = Teacher.readTeacherByUsername(user);
+            Teacher coordinator = Teacher.readTeacherByUsername(id.getUtilizador());
 
             List<ExecutionDegree> executionDegrees = persistentExecutionDegree
                     .readByTeacher(coordinator.getIdInternal());

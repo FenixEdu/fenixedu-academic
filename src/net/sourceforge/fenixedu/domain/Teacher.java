@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -150,8 +151,8 @@ public class Teacher extends Teacher_Base {
         return regimenToReturn;
     }
 
-    public List<TeacherLegalRegimen> getAllLegalRegimensWithoutSpecialSituations(
-            Date beginDate, Date endDate) {
+    public List<TeacherLegalRegimen> getAllLegalRegimensWithoutSpecialSituations(Date beginDate,
+            Date endDate) {
 
         List<TeacherLegalRegimen> legalRegimens = new ArrayList<TeacherLegalRegimen>();
         for (TeacherLegalRegimen legalRegimen : this.getLegalRegimens()) {
@@ -443,8 +444,7 @@ public class Teacher extends Teacher_Base {
 
     public int getHoursByCategory(Date begin, Date end) {
 
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(
-                begin, end);
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(begin, end);
 
         if (list.isEmpty()) {
             return 0;
@@ -461,8 +461,8 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return 0;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(
-                occupationPeriod.getStart(), occupationPeriod.getEnd());
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(occupationPeriod
+                .getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
             return 0;
@@ -479,15 +479,15 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return 0;
         }
-        List<TeacherServiceExemption> serviceExemptions = getServiceExemptionSituations(occupationPeriod.getStart(),
-                occupationPeriod.getEnd());
+        List<TeacherServiceExemption> serviceExemptions = getServiceExemptionSituations(occupationPeriod
+                .getStart(), occupationPeriod.getEnd());
 
         if (serviceExemptions.isEmpty()) {
             return 0;
         } else {
-            TeacherServiceExemption teacherServiceExemption = chooseOneServiceExemption(serviceExemptions,
-                    executionPeriod);
-            return getCreditsForServiceExemption(executionPeriod, teacherServiceExemption);            
+            TeacherServiceExemption teacherServiceExemption = chooseOneServiceExemption(
+                    serviceExemptions, executionPeriod);
+            return getCreditsForServiceExemption(executionPeriod, teacherServiceExemption);
         }
     }
 
@@ -525,8 +525,8 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return null;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(
-                occupationPeriod.getStart(), occupationPeriod.getEnd());
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(occupationPeriod
+                .getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
             return null;
@@ -552,7 +552,8 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
-    public int getCreditsForServiceExemption(ExecutionPeriod executionPeriod, TeacherServiceExemption teacherServiceExemption) {
+    public int getCreditsForServiceExemption(ExecutionPeriod executionPeriod,
+            TeacherServiceExemption teacherServiceExemption) {
         OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
         if (teacherServiceExemption != null
                 && (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)
@@ -607,8 +608,8 @@ public class Teacher extends Teacher_Base {
         return 0;
     }
 
-    public TeacherServiceExemption chooseOneServiceExemption(List<TeacherServiceExemption> serviceExemptions,
-            ExecutionPeriod executionPeriod) {
+    public TeacherServiceExemption chooseOneServiceExemption(
+            List<TeacherServiceExemption> serviceExemptions, ExecutionPeriod executionPeriod) {
         Integer numberOfDaysInPeriod = null, maxDays = 0;
         TeacherServiceExemption teacherServiceExemption = null;
         OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
@@ -715,8 +716,8 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return 0;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(
-                occupationPeriod.getStart(), occupationPeriod.getEnd());
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(occupationPeriod
+                .getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
             return 0;
@@ -780,4 +781,31 @@ public class Teacher extends Teacher_Base {
         return list;
     }
 
+    public static Teacher readTeacherByUsername(final String userName) {
+        final Person person = Person.readPersonByUsername(userName);
+        return (person.getTeacher() != null) ? person.getTeacher() : null;
+    }
+
+    public static Teacher readByNumber(final Integer teacherNumber) {
+        for (final Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
+            if (teacher.getTeacherNumber().equals(teacherNumber)) {
+                return teacher;
+            }
+        }
+        return null;
+    }
+
+    public static List<Teacher> readByNumbers(Collection<Integer> teacherNumbers) {
+        List<Teacher> selectedTeachers = new ArrayList<Teacher>();
+        for (final Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
+            if (teacherNumbers.contains(teacher.getTeacherNumber())) {
+                selectedTeachers.add(teacher);
+            }
+            // This isn't necessary, its just a fast optimization.
+            if(teacherNumbers.size() == selectedTeachers.size()){
+                break;
+            }
+        }
+        return selectedTeachers;
+    }
 }

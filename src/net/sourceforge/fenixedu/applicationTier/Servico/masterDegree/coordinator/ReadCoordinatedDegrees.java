@@ -32,7 +32,7 @@ public class ReadCoordinatedDegrees extends Service {
 
         // Read the Teacher
 
-		Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+		Teacher teacher = Teacher.readTeacherByUsername(userView.getUtilizador());
 		if (teacher == null) {
 			throw new ExcepcaoInexistente("No Teachers Found !!");
 		}

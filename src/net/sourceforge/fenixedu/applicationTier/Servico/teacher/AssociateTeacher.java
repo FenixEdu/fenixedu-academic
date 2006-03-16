@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -28,9 +27,7 @@ public class AssociateTeacher extends Service {
     public boolean run(Integer infoExecutionCourseCode, Integer teacherNumber)
             throws FenixServiceException, ExcepcaoPersistencia {
         try {
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
-            Teacher iTeacher = persistentTeacher.readByNumber(teacherNumber);
+            Teacher iTeacher = Teacher.readByNumber(teacherNumber);
             if (iTeacher == null) {
                 throw new InvalidArgumentsServiceException();
             }

@@ -27,7 +27,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends Service {
             throw new FenixServiceException("nullTeacherNumber");
         }
 
-        final Teacher teacher = persistentSupport.getIPersistentTeacher().readByNumber(teacherNumber);
+        final Teacher teacher = Teacher.readByNumber(teacherNumber);
         if (teacher == null) {
             throw new NonExistingServiceException("noTeacher");
         }

@@ -11,6 +11,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class UnitUtils {
 
@@ -74,5 +77,17 @@ public class UnitUtils {
             }
         }
         return result;
+    }
+           
+    public static AccountabilityType readAccountabilityTypeByType(AccountabilityTypeEnum typeEnum) throws ExcepcaoPersistencia{
+        final ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentObject persistentObject = suportePersistente.getIPersistentObject();        
+        List<AccountabilityType> allAccountabilityTypes = (List<AccountabilityType>) persistentObject.readAll(AccountabilityType.class);
+        for (AccountabilityType accountabilityType : allAccountabilityTypes) {
+            if(accountabilityType.getType().equals(typeEnum)){
+                return accountabilityType;
+            }
+        }
+        return null;
     }
 }

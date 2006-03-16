@@ -66,7 +66,7 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter
     	    {
     	        String username = (String)arguments[0];
 
-    	        Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+    	        Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
     	        
     	        Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
     	        if (student == null) 

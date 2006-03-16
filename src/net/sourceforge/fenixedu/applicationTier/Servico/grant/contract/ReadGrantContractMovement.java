@@ -21,10 +21,6 @@ public class ReadGrantContractMovement extends ReadDomainObjectService {
         return GrantContractMovement.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
-        return persistentSupport.getIPersistentGrantContractMovement();
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoGrantContractMovementWithContract
                 .newInfoFromDomain((GrantContractMovement) domainObject);

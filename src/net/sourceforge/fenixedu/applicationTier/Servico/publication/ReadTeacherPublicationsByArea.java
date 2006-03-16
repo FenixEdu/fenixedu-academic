@@ -11,13 +11,11 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublicati
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 public class ReadTeacherPublicationsByArea extends Service {
     
-    public SiteView run(String user, String publicationAreaString) throws ExcepcaoPersistencia {
-        final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        final Teacher teacher = persistentTeacher.readTeacherByUsername(user);
+    public SiteView run(String user, String publicationAreaString) throws ExcepcaoPersistencia {        
+        final Teacher teacher = Teacher.readTeacherByUsername(user);
         
         List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(); 
         for(PublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {

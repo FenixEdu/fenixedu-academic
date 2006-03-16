@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
@@ -25,7 +24,6 @@ public class CreateOrEditGrantContract extends Service {
 
     public void run(InfoGrantContract infoGrantContract) throws FenixServiceException,
             ExcepcaoPersistencia {
-        IPersistentTeacher pTeacher = persistentSupport.getIPersistentTeacher();
         IPersistentGrantType pGrantType = persistentSupport.getIPersistentGrantType();
         IPersistentGrantContract pGrantContract = persistentSupport.getIPersistentGrantContract();
         IPersistentGrantOrientationTeacher pGrantOrientationTeacher = persistentSupport
@@ -74,7 +72,7 @@ public class CreateOrEditGrantContract extends Service {
                         .getGrantOrientationTeacherInfo(), grantContract);
             } else {
 
-                final Teacher teacher = pTeacher
+                final Teacher teacher = Teacher
                         .readByNumber(infoGrantContract.getGrantOrientationTeacherInfo()
                                 .getOrientationTeacherInfo().getTeacherNumber());
 
@@ -105,10 +103,8 @@ public class CreateOrEditGrantContract extends Service {
 
     private GrantOrientationTeacher createNewGrantOrientationTeacher(InfoGrantOrientationTeacher grantOrientationTeacherInfo, GrantContract grantContract)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        IPersistentTeacher pTeacher = persistentSupport.getIPersistentTeacher();
-
-        final Teacher teacher = pTeacher.readByNumber(grantOrientationTeacherInfo
+        
+        final Teacher teacher = Teacher.readByNumber(grantOrientationTeacherInfo
                 .getOrientationTeacherInfo().getTeacherNumber());
 
         final GrantOrientationTeacher newGrantOrientationTeacher;

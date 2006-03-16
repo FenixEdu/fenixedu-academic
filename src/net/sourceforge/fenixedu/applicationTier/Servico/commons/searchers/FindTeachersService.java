@@ -21,7 +21,7 @@ public class FindTeachersService extends SearchService {
     @Override
     protected List doSearch(HashMap searchParameters) throws ExcepcaoPersistencia {
 
-        Teacher teacher = persistentSupport.getIPersistentTeacher().readByNumber(
+        Teacher teacher = Teacher.readByNumber(
                 Integer.valueOf((String) searchParameters.get("teacherNumber")));
 
         List<Teacher> returnList = new ArrayList<Teacher>();

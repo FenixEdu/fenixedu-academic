@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
@@ -27,9 +26,7 @@ public class ReadOpenExecutionPeriodsByTeacherExecutionCourses extends Service {
     public List run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
         
         final List<InfoExecutionPeriod> result = new ArrayList();
-        final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        
-        final Teacher teacher = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
+        final Teacher teacher = Teacher.readTeacherByUsername(userView.getUtilizador());
         final List<ExecutionPeriod> executionPeriods = new ArrayList();
         
         final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();

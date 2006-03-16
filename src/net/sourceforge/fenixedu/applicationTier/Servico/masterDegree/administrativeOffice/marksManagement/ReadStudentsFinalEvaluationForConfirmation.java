@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -47,8 +46,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 		InfoTeacher infoTeacher = new InfoTeacher();
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
 
-		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();		
 		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
 		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
@@ -95,7 +93,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 			// curricularCourseScope
 			Person person = ((EnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0))
 					.getPersonResponsibleForGrade();
-			Teacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
+			Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
 			infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
 
 			// transform evaluations in databeans

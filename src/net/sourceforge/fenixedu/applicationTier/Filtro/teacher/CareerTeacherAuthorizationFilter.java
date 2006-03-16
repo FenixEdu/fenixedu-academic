@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author Leonor Almeida
@@ -30,9 +29,8 @@ public class CareerTeacherAuthorizationFilter extends DomainObjectAuthorizationF
      */
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Career career = (Career) persistentObject.readByOID(Career.class, objectId);
 
             return career.getTeacher().equals(teacher);

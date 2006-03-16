@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
@@ -21,8 +20,7 @@ public class LoggedCoordinatorCanEdit extends Service {
     public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
         Boolean result = new Boolean(false);
-
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+        
         IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
 
         if (executionDegreeCode == null) {
@@ -35,7 +33,7 @@ public class LoggedCoordinatorCanEdit extends Service {
             throw new FenixServiceException("nullUsername");
         }
 
-        Teacher teacher = persistentTeacher.readTeacherByUsername(username);
+        Teacher teacher = Teacher.readTeacherByUsername(username);
 
         ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeCode);

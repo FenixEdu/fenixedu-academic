@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * 
@@ -32,11 +31,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 public class ReadTeacherServiceDistributionByCourse extends Service {
 
 	public List run(String username, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia {
-
 			
-		IPersistentTeacher persistenceTeacher = persistentSupport.getIPersistentTeacher();
-				
-		Teacher teacher = persistenceTeacher.readTeacherByUsername(username);
+		Teacher teacher = Teacher.readTeacherByUsername(username);
 
 		Department department = teacher.getCurrentWorkingDepartment();
 

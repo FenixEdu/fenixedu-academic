@@ -4,9 +4,6 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 
-/**
- * @author jpvl
- */
 public enum ServiceExemptionType {
         
     GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY,
@@ -36,7 +33,7 @@ public enum ServiceExemptionType {
     FUNCTIONS_MANAGEMENT_SERVICE_EXEMPTION,
     INCAPACITY_FOR_TOGETHER_DOCTOR_OF_THE_CGA,
     PUBLIC_MANAGER,
-    GOVERNMENT_MEMBER;             
+    GOVERNMENT_MEMBER;      
         
     public String getName() {
         return name();

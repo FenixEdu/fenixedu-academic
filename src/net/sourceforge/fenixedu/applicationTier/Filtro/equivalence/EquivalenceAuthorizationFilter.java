@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -188,11 +187,10 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return List
      * @throws ExcepcaoPersistencia
      */
-    private List getExecutionDegreesOfThisCoordinator(String username) throws ExcepcaoPersistencia {
-        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
+    private List getExecutionDegreesOfThisCoordinator(String username) throws ExcepcaoPersistencia {       
         IPersistentCoordinator coordinatorDAO = persistentSupport.getIPersistentCoordinator();
 
-        Teacher teacher = teacherDAO.readTeacherByUsername(username);
+        Teacher teacher = Teacher.readTeacherByUsername(username);
         return coordinatorDAO.readExecutionDegreesByTeacher(teacher.getIdInternal());
     }
 

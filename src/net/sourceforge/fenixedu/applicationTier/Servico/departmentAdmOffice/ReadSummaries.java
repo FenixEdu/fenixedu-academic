@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -43,12 +42,11 @@ public class ReadSummaries extends Service {
     
     public SiteView run(Integer teacherNumber, Integer executionCourseId, String summaryType,
             Integer shiftId) throws FenixServiceException, ExcepcaoPersistencia {
-
-        final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+      
         final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         
-        final Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
+        final Teacher teacher = Teacher.readByNumber(teacherNumber);
         if (teacher == null) {
             throw new FenixServiceException("no.shift");
         }

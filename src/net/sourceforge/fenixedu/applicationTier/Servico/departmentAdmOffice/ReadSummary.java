@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
@@ -88,8 +87,7 @@ public class ReadSummary extends Service {
 
         IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
         List infoProfessorships = new ArrayList();
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
+        Teacher teacher = Teacher.readByNumber(teacherNumber);
 
         if (teacher != null) {
             Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(

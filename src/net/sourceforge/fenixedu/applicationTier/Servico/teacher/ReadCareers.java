@@ -22,7 +22,7 @@ import org.apache.commons.beanutils.BeanComparator;
 public class ReadCareers extends Service {
 
     public SiteView run(CareerType careerType, String user) throws ExcepcaoPersistencia {
-        final Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(user);
+        final Teacher teacher = Teacher.readTeacherByUsername(user);
         
         final InfoSiteCareers bodyComponent = new InfoSiteCareers();
         bodyComponent.setInfoCareers(getInfoCareers(teacher, careerType));

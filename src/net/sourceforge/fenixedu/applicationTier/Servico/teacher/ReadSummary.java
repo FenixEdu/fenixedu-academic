@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
@@ -92,9 +91,8 @@ public class ReadSummary extends Service {
 
         // We present only the responsible teacher (by gedl)
 
-        // teacher logged
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = persistentTeacher.readTeacherByUsername(userLogged);
+        // teacher logged        
+        Teacher teacher = Teacher.readTeacherByUsername(userLogged);
         if (teacher != null) {
             Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
                     teacher.getIdInternal(), executionCourseId);

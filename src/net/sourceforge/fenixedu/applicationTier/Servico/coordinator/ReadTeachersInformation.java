@@ -49,7 +49,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -160,9 +159,8 @@ public class ReadTeachersInformation extends Service {
             throws ExcepcaoPersistencia {
 
         InfoSiteTeacherInformation infoSiteTeacherInformation = new InfoSiteTeacherInformation();
-
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();        
-        Teacher teacher = persistentTeacher.readTeacherByUsername(user);
+              
+        Teacher teacher = Teacher.readTeacherByUsername(user);
 
         InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
         infoSiteTeacherInformation.setInfoTeacher(infoTeacher);

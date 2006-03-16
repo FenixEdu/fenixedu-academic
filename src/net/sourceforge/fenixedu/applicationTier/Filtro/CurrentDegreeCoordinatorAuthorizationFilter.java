@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.util.PeriodState;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -66,9 +64,8 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
         if (argumentos[0] == null) {
             return result;
         }
-        try {
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+        try {            
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
             ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, (Integer) argumentos[0]);

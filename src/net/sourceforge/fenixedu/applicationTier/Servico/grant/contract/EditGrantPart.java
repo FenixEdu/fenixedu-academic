@@ -11,12 +11,10 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 public class EditGrantPart extends Service {
 
     public void run(InfoGrantPart infoGrantPart) throws FenixServiceException, ExcepcaoPersistencia {
-        final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
         GrantPart grantPart = (GrantPart) persistentObject.readByOID(
                 GrantPart.class, infoGrantPart.getIdInternal());
@@ -39,7 +37,7 @@ public class EditGrantPart extends Service {
         grantPart.setPercentage(infoGrantPart.getPercentage());
 
         if (infoGrantPart.getInfoResponsibleTeacher() != null) {
-            final Teacher teacher = persistentTeacher.readByNumber(infoGrantPart
+            final Teacher teacher = Teacher.readByNumber(infoGrantPart
                     .getInfoResponsibleTeacher().getTeacherNumber());
             if (teacher == null) {
                 throw new InvalidPartResponsibleTeacherException();

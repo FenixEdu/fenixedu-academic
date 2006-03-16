@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTi
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -165,10 +164,10 @@ public class ReadTeacherCreditsSheet extends Service {
         return infoTeacherInstitutionWorkingTimeList;
     }
 
-    private Teacher readTeacher(Integer teacherNumber, IPersistentTeacher teacherDAO)
+    private Teacher readTeacher(Integer teacherNumber)
             throws FenixServiceException, ExcepcaoPersistencia {
         Teacher teacher;
-        teacher = teacherDAO.readByNumber(teacherNumber);
+        teacher = Teacher.readByNumber(teacherNumber);
         return teacher;
     }
 
@@ -199,10 +198,9 @@ public class ReadTeacherCreditsSheet extends Service {
 
         TeacherCreditsSheetDTO teacherCreditsSheetDTO = new TeacherCreditsSheetDTO();
 
-        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
         IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
         ExecutionPeriod executionPeriod = readExecutionPeriod(executionPeriodId, executionPeriodDAO);
-        Teacher teacher = readTeacher(infoTeacherParam.getTeacherNumber(), teacherDAO);
+        Teacher teacher = readTeacher(infoTeacherParam.getTeacherNumber());
 
         List infoMasterDegreeProfessorships = readInfoMasterDegreeProfessorships(teacher,
                 executionPeriod);

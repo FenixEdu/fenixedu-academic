@@ -21,8 +21,7 @@ public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthori
     @Override
     protected boolean verifyCondition(IUserView id, Integer degreeCurricularPlanID)
             throws ExcepcaoPersistencia {
-        final Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
-                id.getUtilizador());
+        final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
         for (final Coordinator coordinator : teacher.getCoordinators()) {
             if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getIdInternal().equals(

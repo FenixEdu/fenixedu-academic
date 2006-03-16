@@ -13,7 +13,7 @@ public class UserCoordinatorByExecutionDegree extends Service {
 
     public Boolean run(Integer executionDegreeCode, String teacherUserName, String degree2Compare)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
+        final Teacher teacher = Teacher.readTeacherByUsername(
                 teacherUserName);
 
         final Coordinator coordinator = persistentSupport.getIPersistentCoordinator()

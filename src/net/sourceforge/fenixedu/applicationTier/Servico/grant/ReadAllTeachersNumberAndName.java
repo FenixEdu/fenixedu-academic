@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author Barbosa
@@ -27,8 +26,7 @@ public class ReadAllTeachersNumberAndName extends Service {
 
         final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
-        final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        final Collection<Teacher> teachers = persistentTeacher.readAll(Teacher.class);
+        final Collection<Teacher> teachers = persistentObject.readAll(Teacher.class);
 
         if (teachers != null) {
             for (final Teacher teacher : teachers) {

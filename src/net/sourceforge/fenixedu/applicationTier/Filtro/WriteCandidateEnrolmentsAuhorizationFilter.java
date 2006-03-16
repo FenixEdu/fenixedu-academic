@@ -90,7 +90,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 
             	Set<Integer> selection = (Set<Integer>) arguments[0];
                 Integer candidateID = (Integer) arguments[1];
-                teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
                 MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject
                 		.readByOID(MasterDegreeCandidate.class, candidateID);
