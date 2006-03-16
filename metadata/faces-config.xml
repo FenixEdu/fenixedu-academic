@@ -1782,6 +1782,16 @@
 		</navigation-case>
 	</navigation-rule>
 	<!-- END: CurricularRules Navigation Rules -->
+	
+	<!-- BEGIN: DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER Navigation Rules -->
+	<navigation-rule>
+		<from-view-id>/degreeAdministrativeOffice/curricularPlans/viewDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/degreeAdministrativeOffice/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- END: DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER Navigation Rules -->
 
 	<!-- Custom Components -->
 	<component>

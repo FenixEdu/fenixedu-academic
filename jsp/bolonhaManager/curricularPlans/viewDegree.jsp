@@ -13,32 +13,22 @@
 	</h:outputFormat>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>"/>
+		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
-<%--
-		<h:outputText value="<p><b>#{scouncilBundle['degree.data']}:</b><p/><br/>" escape="false"/>
---%>	
+		<h:outputText value="<p><b>#{scouncilBundle['name']} (pt):</b> " escape="false"/>
+		<h:outputText id="name" value="#{DegreeManagement.name}</p>" escape="false"/>
+		
+		<h:outputText value="<p><b>#{scouncilBundle['name']} (en):</b> " escape="false"/>
+		<h:outputText id="nameEn" value="#{DegreeManagement.nameEn}</p>" escape="false"/>
+		
+		<h:outputText value="<p><b>#{scouncilBundle['acronym']}:</b> " escape="false"/>
+		<h:outputText id="acronym" value="#{DegreeManagement.acronym}</p>" escape="false"/>
+		
+		<h:outputText value="<p><b>#{scouncilBundle['degreeType']}:</b> " escape="false"/>
+		<h:outputText id="bolonhaDegreeType" value="#{enumerationBundle[DegreeManagement.bolonhaDegreeType]}</p>" escape="false"/>
 
-		<h:outputText styleClass="error" rendered="#{!empty DegreeManagement.errorMessage}" value="<p>#{DegreeManagement.errorMessage}<p/><br/>" escape="false"/>
-
-			<h:outputText value="<p><b>#{scouncilBundle['name']} (pt):</b> " escape="false"/>
-			<h:outputText id="name" value="#{DegreeManagement.name}</p>" escape="false"/>
-			
-			<h:outputText value="<p><b>#{scouncilBundle['name']} (en):</b> " escape="false"/>
-			<h:outputText id="nameEn" value="#{DegreeManagement.nameEn}</p>" escape="false"/>
-			
-			<h:outputText value="<p><b>#{scouncilBundle['acronym']}:</b> " escape="false"/>
-			<h:outputText id="acronym" value="#{DegreeManagement.acronym}</p>" escape="false"/>
-			
-			<h:outputText value="<p><b>#{scouncilBundle['degreeType']}:</b> " escape="false"/>
-			<h:outputText id="bolonhaDegreeType" value="#{enumerationBundle[DegreeManagement.bolonhaDegreeType]}</p>" escape="false"/>
-
-			<h:outputText value="<p><b>#{scouncilBundle['ectsCredits']}:</b> " escape="false"/>
-			<h:outputText id="ectsCredits" value="#{DegreeManagement.ectsCredits}</p>" escape="false"/>
-
-<%-- 
- 			<h:outputText value="<b>#{scouncilBundle['gradeTypes']}:</b> " escape="false"/>
-			<h:outputText id="gradeType" value="#{enumerationBundle[DegreeManagement.gradeType]}"/>
---%>
+		<h:outputText value="<p><b>#{scouncilBundle['ectsCredits']}:</b> " escape="false"/>
+		<h:outputText id="ectsCredits" value="#{DegreeManagement.ectsCredits}</p>" escape="false"/>
 
 		<br/>
 		<h:outputText value="<p> " escape="false"/>

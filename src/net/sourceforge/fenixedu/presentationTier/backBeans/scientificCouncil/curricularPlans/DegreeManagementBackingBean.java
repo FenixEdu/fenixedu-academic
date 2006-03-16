@@ -219,10 +219,10 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
             return "curricularPlansManagement";
         } catch (FenixServiceException e) {
-            this.setErrorMessage(scouncilBundle.getString(e.getMessage()));
+            this.addErrorMessage(scouncilBundle.getString(e.getMessage()));
             return "";
         } catch (DomainException e) {
-            this.setErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
             return "";
         } catch (Exception e) {
             this.addErrorMessage(scouncilBundle.getString(errorMsg));

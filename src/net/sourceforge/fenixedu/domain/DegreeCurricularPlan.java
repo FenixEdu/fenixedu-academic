@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -558,7 +559,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Boolean getUserCanBuild() {
         Person person = AccessControl.getUserView().getPerson();
-        return this.getCurricularPlanMembersGroup().isMember(person);
+        return this.getCurricularPlanMembersGroup().isMember(person) || person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
     }
 
     @Override
