@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
@@ -59,9 +58,7 @@ public class ShowGrantOwner extends Service {
 					.getIdInternal());
 			Iterator contractsIter = grantContractsList.iterator();
 			// set list of qualifications
-			IPersistentQualification persistentQualification = persistentSupport.getIPersistentQualification();
-			List infoQualificationsList = persistentQualification
-					.readQualificationsByPersonId(grantOwner.getPerson().getIdInternal());
+			List infoQualificationsList = grantOwner.getPerson().getAssociatedQualifications();
 			if (infoQualificationsList != null)
 				infoListGrantOwnerComplete.setInfoQualifications(infoQualificationsList);
 			while (contractsIter.hasNext()) {

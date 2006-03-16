@@ -190,8 +190,6 @@ public interface ISuportePersistente
 
 	public IPersistentSummary getIPersistentSummary();
 
-	public IPersistentQualification getIPersistentQualification();
-
 	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence();
 
 	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003)

@@ -52,7 +52,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
@@ -259,7 +258,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestQuestionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestScopeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.person.qualification.QualificationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.projectsManagement.ProjectAccessVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CandidacyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyChoiceVO;
@@ -621,10 +619,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentWebSiteItem getIPersistentWebSiteItem() {
         return null;
-    }
-
-    public IPersistentQualification getIPersistentQualification() {
-        return new QualificationVO();
     }
 
     public IPersistentGratuitySituation getIPersistentGratuitySituation() {

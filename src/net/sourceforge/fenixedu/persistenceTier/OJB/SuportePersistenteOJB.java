@@ -68,7 +68,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
@@ -143,7 +142,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.StudentTestQuest
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestQuestionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestScopeOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.person.qualification.QualificationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.projectsManagement.ProjectAccessOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.AuthorshipOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAttributeOJB;
@@ -602,11 +600,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentSummary getIPersistentSummary()
 	{
 		return new SummaryOJB();
-	}
-
-	public IPersistentQualification getIPersistentQualification()
-	{
-		return new QualificationOJB();
 	}
 
 	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence()

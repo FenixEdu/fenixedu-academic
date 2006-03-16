@@ -48,7 +48,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -342,8 +341,7 @@ public class ReadTeachersInformation extends Service {
 
     private List getInfoQualifications(ISuportePersistente persistentSupport, Teacher teacher)
             throws ExcepcaoPersistencia {
-        IPersistentQualification persistentQualification = persistentSupport.getIPersistentQualification();
-        List qualifications = persistentQualification.readQualificationsByPersonId(teacher.getPerson().getIdInternal());
+        List qualifications = teacher.getPerson().getAssociatedQualifications();
         List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer() {
             public Object transform(Object o) {
                 Qualification qualification = (Qualification) o;
