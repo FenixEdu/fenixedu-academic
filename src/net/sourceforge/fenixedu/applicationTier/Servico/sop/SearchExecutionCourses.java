@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -116,9 +115,7 @@ public class SearchExecutionCourses extends Service {
 
                     infoExecutionCourse.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
 
-                    IPersistentCourseReport persistentCourseReport = persistentSupport.getIPersistentCourseReport();
-                    CourseReport courseReport = persistentCourseReport
-                            .readCourseReportByExecutionCourse(executionCourse.getIdInternal());
+                    CourseReport courseReport = executionCourse.getCourseReport();
                     if (courseReport != null) {
                         infoExecutionCourse
                                 .setCourseReportFilled(courseReport.getReport() != null ? "true"
@@ -127,11 +124,6 @@ public class SearchExecutionCourses extends Service {
                 }
             }
 
-            /**
-             * @param curricularCourses
-             * @param persistentSupport
-             * @return
-             */
             private Integer getApproved(List enrolments) {
                 int approved = 0;
                 Iterator iter = enrolments.iterator();

@@ -91,7 +91,6 @@ import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPos
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseHistoric;
-import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentStudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMovement;
@@ -177,7 +176,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateSi
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ContributorVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CoordinatorVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CountryVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CourseReportVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseGroupVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseScopeVO;
@@ -692,10 +690,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentQuestion getIPersistentQuestion() {
         return new QuestionVO();
-    }
-
-    public IPersistentCourseReport getIPersistentCourseReport() {
-        return new CourseReportVO();
     }
 
     public IPersistentCandidateSituation getIPersistentCandidateSituation() {

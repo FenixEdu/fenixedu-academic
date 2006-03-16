@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -174,9 +173,7 @@ public class ReadCoursesInformation extends Service {
                 ShiftType.TEORICO_PRATICA.name(), persistentSupport));
         infoSiteCourseInformation.setNumberOfLabLessons(getNumberOfLessons(infoLessons,
                 ShiftType.LABORATORIAL.name() , persistentSupport));
-        IPersistentCourseReport persistentCourseReport = persistentSupport.getIPersistentCourseReport();
-        CourseReport courseReport = persistentCourseReport
-                .readCourseReportByExecutionCourse(executionCourse.getIdInternal());
+        CourseReport courseReport = executionCourse.getCourseReport();
         if (courseReport == null) {
             InfoCourseReport infoCourseReport = new InfoCourseReport();
             infoCourseReport.setInfoExecutionCourse(infoExecutionCourse);
