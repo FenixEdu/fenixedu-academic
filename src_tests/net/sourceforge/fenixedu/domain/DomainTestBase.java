@@ -10,15 +10,16 @@ import net.sourceforge.fenixedu.stm.Transaction;
 public class DomainTestBase extends TestCase {
 
     protected void setUp() throws Exception {
-        super.setUp();
+        super.setUp();        
         try {
         	Transaction.abort();
         	Transaction.commit();
         }catch (Exception e) {
 			
-		}
-        Transaction.begin();
+		}               
+        Transaction.begin();        
         DomainObject.turnOffLockMode();
+        RootDomainObject.initTests();
     }
 
     protected void tearDown() throws Exception {
