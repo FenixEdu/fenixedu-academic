@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
  * @author jpvl
@@ -42,10 +41,4 @@ public class EditManagementPositionCreditLineService extends EditDomainObjectSer
     protected Class getDomainObjectClass() {
         return ManagementPositionCreditLine.class;
     }
-
-    @Override
-    protected IPersistentObject getIPersistentObject() {
-        return persistentSupport.getIPersistentManagementPositionCreditLine();
-    }
-
 }

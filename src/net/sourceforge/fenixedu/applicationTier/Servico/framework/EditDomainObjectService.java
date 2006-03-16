@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
  * @author Leonor Almeida
@@ -59,12 +58,6 @@ public abstract class EditDomainObjectService extends Service {
 	 */
 	protected void doBeforeLock(DomainObject domainObjectToLock, InfoObject infoObject) throws Exception {
 	}
-
-	/**
-	 * @param persistentSupport
-	 * @return
-	 */
-	protected abstract IPersistentObject getIPersistentObject() throws ExcepcaoPersistencia;
 
 	/**
 	 * Checks if the internalId of the object is null or 0

@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -35,11 +34,6 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 		public InvalidPeriodException() {
 			super();
 		}
-	}
-
-	@Override
-	protected IPersistentObject getIPersistentObject() {
-		return persistentSupport.getIPersistentSupportLesson();
 	}
 
 	protected DomainObject readObjectByUnique(DomainObject domainObject)

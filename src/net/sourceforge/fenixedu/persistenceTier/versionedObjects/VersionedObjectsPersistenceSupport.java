@@ -91,7 +91,6 @@ import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPos
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseHistoric;
-import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentStudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
@@ -782,10 +781,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency() {
         return new EquivalencyVO();
-    }
-
-    public IPersistentStudentCourseReport getIPersistentStudentCourseReport() {
-        return null;
     }
 
     public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter() {

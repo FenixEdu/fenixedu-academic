@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
  * @author jpvl
@@ -46,11 +45,6 @@ public class EditOtherTypeCreditLineService extends EditDomainObjectService {
     @Override
     protected Class getDomainObjectClass() {
         return OtherTypeCreditLine.class;
-    }
-
-    @Override
-    protected IPersistentObject getIPersistentObject() {
-        return persistentSupport.getIPersistentOtherTypeCreditLine();
     }
 
 }

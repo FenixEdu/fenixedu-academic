@@ -44,11 +44,6 @@ public class EditGrantSubsidy extends EditDomainObjectService {
     }
 
     @Override
-    protected IPersistentObject getIPersistentObject() {
-        return persistentSupport.getIPersistentGrantSubsidy();
-    }
-
-    @Override
     protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject)
             throws FenixServiceException, ExcepcaoPersistencia {
         /*

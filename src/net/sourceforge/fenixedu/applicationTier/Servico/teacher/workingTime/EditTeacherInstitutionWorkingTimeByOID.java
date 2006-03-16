@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -81,11 +80,6 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
 		if (!ok) {
 			throw new OverlappingInstitutionWorkingPeriod();
 		}
-	}
-
-	@Override
-	protected IPersistentObject getIPersistentObject() {
-		return persistentSupport.getIPersistentTeacherInstitutionWorkingTime();
 	}
 
 	protected DomainObject readObjectByUnique(DomainObject domainObject)

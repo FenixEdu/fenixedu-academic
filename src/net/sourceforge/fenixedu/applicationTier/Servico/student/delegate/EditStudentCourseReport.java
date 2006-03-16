@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -21,11 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  * 
  */
 public class EditStudentCourseReport extends EditDomainObjectService {
-
-    @Override
-    protected IPersistentObject getIPersistentObject() {
-        return persistentSupport.getIPersistentStudentCourseReport();
-    }
 
     @Override
     protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)

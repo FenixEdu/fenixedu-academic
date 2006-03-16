@@ -108,7 +108,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.credits.OtherTypeCreditLineO
 import net.sourceforge.fenixedu.persistenceTier.OJB.degree.finalProject.TeacherDegreeFinalProjectStudentOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.GaugingTestResultOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
-import net.sourceforge.fenixedu.persistenceTier.OJB.gesdis.StudentCourseReportOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractMovementOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractRegimeOJB;
@@ -202,7 +201,6 @@ import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
-import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentStudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
@@ -1084,16 +1082,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentTutor getIPersistentTutor()
 	{
 		return new TutorOJB();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentStudentCourseReport()
-	 */
-	public IPersistentStudentCourseReport getIPersistentStudentCourseReport()
-	{
-		return new StudentCourseReportOJB();
 	}
 
 	/*

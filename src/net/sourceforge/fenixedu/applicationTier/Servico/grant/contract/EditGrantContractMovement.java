@@ -22,11 +22,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 public class EditGrantContractMovement extends EditDomainObjectService {
 
     @Override
-    protected IPersistentObject getIPersistentObject() {
-        return persistentSupport.getIPersistentGrantContractMovement();
-    }
-
-    @Override
     protected DomainObject readObjectByUnique(InfoObject infoObject)
             throws ExcepcaoPersistencia {
         InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
