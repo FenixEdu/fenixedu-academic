@@ -495,11 +495,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new CurricularYearOJB();
 	}
 
-	public IPersistentContributor getIPersistentContributor()
-	{
-		return new ContributorOJB();
-	}
-
 	public IPersistentCurricularSemester getIPersistentCurricularSemester()
 	{
 		return new CurricularSemesterOJB();

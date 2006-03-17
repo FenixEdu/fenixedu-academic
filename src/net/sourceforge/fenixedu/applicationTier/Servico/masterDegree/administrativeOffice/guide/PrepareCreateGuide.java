@@ -49,9 +49,7 @@ public class PrepareCreateGuide extends Service {
 		MasterDegreeCandidate masterDegreeCandidate = null;
 		InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
 
-		// Read the Contributor
-
-		contributor = persistentSupport.getIPersistentContributor().readByContributorNumber(contributorNumber);
+		contributor = Contributor.readByContributorNumber(contributorNumber);
 
 		if ((contributor == null)
 				&& ((contributorAddress == null) || (contributorAddress.length() == 0)

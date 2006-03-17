@@ -1,6 +1,3 @@
-/*
- * Created on 21/Mar/2003
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
 import java.sql.Timestamp;
@@ -40,9 +37,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
 
-/**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- */
 public class EditGuideInformation extends Service {
 
     public InfoGuide run(InfoGuide infoGuide, String[] quantityList, Integer contributorNumber,
@@ -71,9 +65,7 @@ public class EditGuideInformation extends Service {
             contributorNumber = infoGuide.getInfoContributor().getContributorNumber();
         }
 
-        // Read the Contributor
-
-        Contributor contributor = persistentSupport.getIPersistentContributor().readByContributorNumber(contributorNumber);
+        Contributor contributor = Contributor.readByContributorNumber(contributorNumber);
 
         infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
 
@@ -312,8 +304,7 @@ public class EditGuideInformation extends Service {
             ExcepcaoPersistencia {
         // Read the needed information from the DataBase
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
-        Contributor contributor = persistentSupport.getIPersistentContributor().readByContributorNumber(
-                infoGuide.getInfoContributor().getContributorNumber());
+        Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
         ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(
                 infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 

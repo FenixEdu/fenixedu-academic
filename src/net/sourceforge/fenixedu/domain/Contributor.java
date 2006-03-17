@@ -1,20 +1,16 @@
-/*
- * Created on 21/Mar/2003
- *
- * 
- */
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-/**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- */
 public class Contributor extends Contributor_Base {
 
     public Contributor() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Contributor(Integer contributorNumber, String contributorName, String contributorAddress) {
+        this();
         this.setContributorNumber(contributorNumber);
         this.setContributorName(contributorName);
         this.setContributorAddress(contributorAddress);
@@ -27,6 +23,26 @@ public class Contributor extends Contributor_Base {
         result += "\n  - Contributor Name : " + getContributorName();
         result += "\n  - Contributor Address : " + getContributorAddress();
         return result;
+    }
+
+    public void edit(Integer contributorNumber, String contributorName, String contributorAddress) {
+        Contributor contributor = Contributor.readByContributorNumber(contributorNumber);
+        if (contributor != null && !contributor.equals(this)) {
+            throw new DomainException("duplicate.contributor.number");
+        }
+
+        this.setContributorNumber(contributorNumber);
+        this.setContributorName(contributorName);
+        this.setContributorAddress(contributorAddress);
+    }    
+
+    public static Contributor readByContributorNumber(final Integer contributorNumber) {
+        for (final Contributor contributor : RootDomainObject.getInstance().getContributors()) {
+            if (contributor.getContributorNumber().equals(contributorNumber)) {
+                return contributor;
+            }
+        }
+        return null;
     }
 
 }

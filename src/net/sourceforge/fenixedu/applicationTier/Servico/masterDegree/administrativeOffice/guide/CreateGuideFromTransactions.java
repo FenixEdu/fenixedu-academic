@@ -87,10 +87,8 @@ public class CreateGuideFromTransactions extends Service {
                                 .getSigla(),
                         infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
-        Contributor contributor = persistentSupport.getIPersistentContributor().readByContributorNumber(
-                infoGuide.getInfoContributor().getContributorNumber());
-        Person person = Person.readPersonByUsername(
-                infoGuide.getInfoPerson().getUsername());
+        Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
+        Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
 
         guide.setExecutionDegree(executionDegree);
         guide.setContributor(contributor);

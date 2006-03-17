@@ -457,7 +457,11 @@
            primarykey="true"
            autoincrement="true"
         />
-
+		<field-descriptor
+	        name="keyRootDomainObject"
+	        column="KEY_ROOT_DOMAIN_OBJECT"
+	        jdbc-type="INTEGER"
+	    />
         <field-descriptor
            name="contributorNumber"
            column="CONTRIBUTOR_NUMBER"

@@ -2462,7 +2462,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
     String ojbConcreteClass;
 	String name;
 	PartyType type;
-	Integer keyRootDomainObject;
 	Integer keyPartyType;
 }
 	  class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
@@ -6134,6 +6133,14 @@ relation EquivalenceCurricularCourseCurricularCourse {
  * Relations definitions of relations to RootDomainObject
  * 
  */
+
+
+relation RootDomainObjectContributor {
+    net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+    net.sourceforge.fenixedu.domain.Contributor playsRole contributors {
+    	multiplicity *;
+    }
+}
 
 relation RootDomainObjectRole {
     net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
