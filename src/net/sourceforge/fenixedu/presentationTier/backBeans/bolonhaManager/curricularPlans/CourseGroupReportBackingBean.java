@@ -159,12 +159,13 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
             CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
             
-            if (!scientificAreaUnits.contains(curricularCourse.getCompetenceCourse().getScientificAreaUnit())) {
+            if (!curricularCourse.isOptional()
+                    && !scientificAreaUnits.contains(curricularCourse.getCompetenceCourse().getScientificAreaUnit())) {
                 final Row row = spreadsheet.addRow();
                 
                 row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
                 row.setCell("");//curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
-                row.setCell(Double.valueOf(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getScientificAreaUnitEctsCredits()).toString());
+                row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getScientificAreaUnitEctsCredits(contextsWithCurricularCourses).toString());
                 
                 scientificAreaUnits.add(curricularCourse.getCompetenceCourse().getScientificAreaUnit());
             }
