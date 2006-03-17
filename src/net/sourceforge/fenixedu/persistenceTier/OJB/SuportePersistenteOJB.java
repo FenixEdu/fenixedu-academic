@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
@@ -385,11 +384,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IFrequentaPersistente getIFrequentaPersistente()
 	{
 		return new FrequentaOJB();
-	}
-
-	public IPersistentEnrollment getIPersistentEnrolment()
-	{
-		return new EnrollmentOJB();
 	}
 
 	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation()

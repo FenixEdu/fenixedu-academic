@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -45,8 +44,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 		List infoEnrolmentEvaluations = new ArrayList();
 		InfoTeacher infoTeacher = new InfoTeacher();
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-
-		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();		
+	
 		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
 		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
@@ -54,8 +52,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 
 		List enrolments = null;
 		if (yearString != null) {
-			enrolments = persistentEnrolment.readByCurricularCourseAndYear(curricularCourseCode,
-					yearString);
+			enrolments = curricularCourse.getEnrolmentsByYear(yearString);
 		} else {
 			enrolments = curricularCourse.getCurriculumModules();
 		}

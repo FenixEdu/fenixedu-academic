@@ -647,6 +647,42 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return results;
     }
+    
+    public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionPeriod executionPeriod){
+    	List<Enrolment> result = new ArrayList<Enrolment>();
+    	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+			final Enrolment enrolment = (Enrolment) curriculumModule;
+			if(enrolment.getExecutionPeriod().equals(executionPeriod)) {
+				result.add(enrolment);
+			}
+		}
+    	return result;
+    }
+
+    public int countEnrolmentsByExecutionPeriod(final ExecutionPeriod executionPeriod){
+    	return getEnrolmentsByExecutionPeriod(executionPeriod).size();
+    }
+
+    public List<Enrolment> getEnrolmentsByYear(String year) {
+    	List<Enrolment> result = new ArrayList<Enrolment>();
+    	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+			final Enrolment enrolment = (Enrolment) curriculumModule;
+			if(enrolment.getExecutionPeriod().getExecutionYear().getYear().equals(year)) {
+				result.add(enrolment);
+			}
+		}
+    	return result;
+    }
+    
+    public Enrolment getEnrolmentByStudentAndYear(Student student, String year) { 
+    	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+			final Enrolment enrolment = (Enrolment) curriculumModule;
+			if(enrolment.getStudentCurricularPlan().getStudent().equals(student) && enrolment.getExecutionPeriod().getExecutionYear().getYear().equals(year)) {
+				return enrolment;
+			}
+		}
+    	return null;
+    }
 
     public List<EnrolmentEvaluation> getActiveEnrollmentEvaluations(Student student) {
         return getActiveEnrollments(null, student);

@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -120,9 +121,9 @@ public class ReadFilteredExamsMap extends Service {
                 CurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
                 if (!checkedCurricularCourses.contains(curricularCourse)) {
                     checkedCurricularCourses.add(curricularCourse);
-                    int numberEnroledStudentsInCurricularCourse = persistentSupport.getIPersistentEnrolment().countEnrolmentsByCurricularCourseAndExecutionPeriod(
-                            curricularCourse.getIdInternal(),
-                            executionPeriodId);
+                    ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodId);
+                    int numberEnroledStudentsInCurricularCourse = curricularCourse.countEnrolmentsByExecutionPeriod(executionPeriod);
+                    
                     numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;
                 }
                 

@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -55,9 +54,7 @@ public class ReadCurriculumHistoricReport extends Service {
         CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, curricularCourseID);
         // read all enrollments
-        IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
-        List enrollments = persistentEnrollment.readByCurricularCourseAndExecutionPeriod(
-                curricularCourse.getIdInternal(), executionPeriod.getIdInternal());
+        List<Enrolment> enrollments = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
 
         InfoCurriculumHistoricReport infoCurriculumHistoricReport = createInfoCurriculumHistoricReport(enrollments);
 

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
@@ -27,7 +26,6 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
         Scheduleing scheduleing = persistentFinalDegreeWork
                 .readFinalDegreeWorkScheduleing(executionDegreeOID);
@@ -50,9 +48,8 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
 
         Student student = persistentStudent.readByUsername(userView.getUtilizador());
 
-        int numberOfCompletedCourses = persistentEnrolment
-                .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student.getIdInternal());
-
+        int numberOfCompletedCourses = student.countCompletedCoursesForActiveUndergraduateCurricularPlan();
+        
         Integer numberOfNecessaryCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
         if (numberOfCompletedCourses < numberOfNecessaryCompletedCourses.intValue()) {
             throw new InsufficientCompletedCoursesException(numberOfNecessaryCompletedCourses.toString());

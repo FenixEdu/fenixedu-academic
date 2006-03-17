@@ -1112,4 +1112,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         return results;
     }
+    
+    public List<Enrolment> getEnrolmentsByState(EnrollmentState state){
+    	List<Enrolment> results = new ArrayList<Enrolment>();
+    	for (Enrolment enrolment : this.getEnrolments()) {
+            if (enrolment.getEnrollmentState().equals(state)) {
+                results.add(enrolment);
+            }
+        }
+    	return results;
+    }
+    
+    public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionPeriod executionPeriod){
+    	List<Enrolment> results = new ArrayList<Enrolment>();
+    	for (Enrolment enrolment : this.getEnrolments()) {
+            if (enrolment.getExecutionPeriod().equals(executionPeriod)) {
+                results.add(enrolment);
+            }
+        }
+    	return results;
+    }
 }

@@ -39,8 +39,7 @@ public class ReadStudentListByCurricularCourse extends Service {
 
         List enrolmentList = null;
         if (executionYear != null) {
-            enrolmentList = persistentSupport.getIPersistentEnrolment().readByCurricularCourseAndYear(
-                    curricularCourseID, executionYear);
+        	enrolmentList = curricularCourse.getEnrolmentsByYear(executionYear);
         } else {
             enrolmentList = curricularCourse.getCurriculumModules();
         }

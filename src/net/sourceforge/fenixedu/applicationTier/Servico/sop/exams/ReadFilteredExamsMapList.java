@@ -27,8 +27,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 
 public class ReadFilteredExamsMapList extends Service {
 
@@ -62,8 +62,6 @@ public class ReadFilteredExamsMapList extends Service {
         infoExamsMap.setEndSeason1(null);
         infoExamsMap.setStartSeason2(null);
         infoExamsMap.setEndSeason2(endSeason2);
-
-        IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
         // List of execution courses
         List infoExecutionCourses = new ArrayList();
@@ -125,10 +123,9 @@ public class ReadFilteredExamsMapList extends Service {
                             InfoCurricularCourse infoCurricularCourse = scope.getInfoCurricularCourse();
                             if (!curricularCourseIDs.contains(infoCurricularCourse.getIdInternal())) {
                                 curricularCourseIDs.add(infoCurricularCourse.getIdInternal());
-                                int numberEnroledStudentsInCurricularCourse = persistentEnrolment
-                                        .countEnrolmentsByCurricularCourseAndExecutionPeriod(
-                                                infoCurricularCourse.getIdInternal(),
-                                                infoExecutionPeriod.getIdInternal());
+                                CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, infoCurricularCourse.getIdInternal());
+                                ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
+                                int numberEnroledStudentsInCurricularCourse = curricularCourse.countEnrolmentsByExecutionPeriod(executionPeriod);
 
                                 numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;
                             }

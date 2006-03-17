@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -101,7 +100,7 @@ public class ReadStudentCourseReport extends Service {
 			throws ExcepcaoPersistencia {
 
 		InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-		List enrolled = getEnrolled(executionPeriod, curricularCourse, persistentSupport);
+		List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
 		infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
 		infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
 		infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
@@ -155,7 +154,7 @@ public class ReadStudentCourseReport extends Service {
 			InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
 			infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod
 					.newInfoFromDomain(executionPeriod));
-			List enrolled = getEnrolled(executionPeriod, curricularCourse, persistentSupport);
+			List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
 			infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
 			infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
 			infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
@@ -202,17 +201,5 @@ public class ReadStudentCourseReport extends Service {
 		return new Integer(evaluated);
 	}
 
-	/**
-	 * @param curricularCourses
-	 * @param persistentSupport
-	 * @return
-	 */
-	private List getEnrolled(ExecutionPeriod executionPeriod, CurricularCourse curricularCourse,
-			ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
-		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-		List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse
-				.getIdInternal(), executionPeriod.getIdInternal());
-		return enrolments;
-	}
 
 }

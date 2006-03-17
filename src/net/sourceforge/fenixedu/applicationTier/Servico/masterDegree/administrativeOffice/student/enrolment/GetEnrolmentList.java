@@ -27,14 +27,9 @@ public class GetEnrolmentList extends Service {
 
 	public List run(Integer studentCurricularPlanID, EnrollmentState enrollmentState)
 			throws FenixServiceException, Exception {
-
-		List enrolmentList = null;
-
-		// Read the list
-
-		enrolmentList = persistentSupport.getIPersistentEnrolment()
-				.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlanID,
-						enrollmentState);
+		
+		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+		List<Enrolment> enrolmentList = studentCurricularPlan.getEnrolmentsByState(enrollmentState);
 
 		List result = new ArrayList();
 		Iterator iterator = enrolmentList.iterator();
@@ -91,10 +86,8 @@ public class GetEnrolmentList extends Service {
 			return this.run(studentCurricularPlanID, enrollmentState);
 		}
 
-		// Read the list
-		List enrolmentList = persistentSupport.getIPersistentEnrolment()
-				.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlanID,
-						enrollmentState);
+		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+		List<Enrolment> enrolmentList = studentCurricularPlan.getEnrolmentsByState(enrollmentState);
 
 		// clone
 		List result = new ArrayList();

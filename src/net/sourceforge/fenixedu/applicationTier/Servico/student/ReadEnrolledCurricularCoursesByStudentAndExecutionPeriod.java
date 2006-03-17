@@ -11,8 +11,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -21,29 +22,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 public class ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod extends
 		Service {
 
-	private static ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod service =
-		new ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod();
-	
-	public ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod() {
-	}
-
-	public String getNome() {
-		return "student.ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod";
-	}
-
-    /**
-     * @return Returns the service.
-     */
-    public static ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod getService() {
-        return service;
-    }
     
 	public List<InfoCurricularCourse> run(Integer studentCurricularPlanId, Integer executionPeriodId)
 	throws ExcepcaoPersistencia {
-		IPersistentEnrollment pe = persistentSupport.getIPersistentEnrolment();
-		
-		List<Enrolment> enrollments =
-			pe.readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(studentCurricularPlanId, executionPeriodId);
+		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
+		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodId);
+		List<Enrolment> enrollments = studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod);
 		
 		List<InfoCurricularCourse> enrolledCurricularCourses = new ArrayList<InfoCurricularCourse>();
 		

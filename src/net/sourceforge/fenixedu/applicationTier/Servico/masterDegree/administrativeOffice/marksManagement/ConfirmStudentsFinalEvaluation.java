@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 /**
@@ -27,8 +25,6 @@ public class ConfirmStudentsFinalEvaluation extends Service {
 
 	public Boolean run(Integer curricularCourseCode, String yearString, IUserView userView)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
 
 		Person person = Person.readPersonByUsername(userView.getUtilizador());
@@ -39,8 +35,7 @@ public class ConfirmStudentsFinalEvaluation extends Service {
 
 		List enrolments = null;
 		if (yearString != null) {
-			enrolments = persistentEnrolment.readByCurricularCourseAndYear(curricularCourseCode,
-					yearString);
+			enrolments = curricularCourse.getEnrolmentsByYear(yearString);
 		} else {
 			enrolments = curricularCourse.getCurriculumModules();
 		}

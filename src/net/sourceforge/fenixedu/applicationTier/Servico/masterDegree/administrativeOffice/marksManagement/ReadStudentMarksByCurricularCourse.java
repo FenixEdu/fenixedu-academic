@@ -101,14 +101,11 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 		// }
 		Enrolment enrolment = null;
 		if (executionYear != null) {
-			enrolment = persistentSupport.getIPersistentEnrolment().readEnrolmentByStudentNumberAndCurricularCourse(
-					studentCurricularPlan.getStudent().getNumber(), curricularCourse.getIdInternal(),
-					executionYear);
+			enrolment = curricularCourse.getEnrolmentByStudentAndYear(studentCurricularPlan.getStudent(), executionYear);
+
 		} else {
 			// TODO: Não se sabe se este comportamento está correcto!
-			List enrollments = persistentSupport.getIPersistentEnrolment()
-					.readByStudentCurricularPlanAndCurricularCourse(
-							studentCurricularPlan.getIdInternal(), curricularCourse.getIdInternal());
+			List<Enrolment> enrollments = studentCurricularPlan.getEnrolments(curricularCourse); 
 
 			if (enrollments.isEmpty()) {
 				throw new ExistingServiceException();

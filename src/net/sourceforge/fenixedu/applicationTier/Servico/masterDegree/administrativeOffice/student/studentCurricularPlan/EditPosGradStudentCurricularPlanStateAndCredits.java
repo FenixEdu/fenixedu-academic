@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 /**
@@ -49,7 +48,6 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 		Employee employee = null;
 		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
 		Person person = Person.readPersonByUsername(userView.getUtilizador());
 		if (person == null) {
@@ -96,11 +94,11 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 						copyEnrollment(enrolment, auxEnrolment);
 						setEnrolmentCreationInformation(userView, auxEnrolment);
 
-						changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, auxEnrolment);
+						changeAnnulled2ActiveIfActivePlan(newState, auxEnrolment);
 
 						enrolment.delete();
 					} else {
-						changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, enrolment);
+						changeAnnulled2ActiveIfActivePlan(newState, enrolment);
 					}
 				} else {
 					if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
@@ -110,12 +108,12 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 						copyEnrollment(enrolment, auxEnrolment);
 						setEnrolmentCreationInformation(userView, auxEnrolment);
 
-						changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, auxEnrolment);
+						changeAnnulled2ActiveIfActivePlan(newState, auxEnrolment);
 
 						DeleteEnrollment deleteEnrolmentService = new DeleteEnrollment();
 						deleteEnrolmentService.run(enrolment.getIdInternal());
 					} else {
-						changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, enrolment);
+						changeAnnulled2ActiveIfActivePlan(newState, enrolment);
 					}
 				}
 			}
@@ -164,8 +162,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 	 * @param enrolment
 	 * @throws ExcepcaoPersistencia
 	 */
-	private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState,
-			IPersistentEnrollment persistentEnrolment, Enrolment enrolment) throws ExcepcaoPersistencia {
+	private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState, Enrolment enrolment) throws ExcepcaoPersistencia {
 		if (newState.equals(StudentCurricularPlanState.ACTIVE)) {
 			if (enrolment.getEnrollmentState() == EnrollmentState.ANNULED) {
 				enrolment.setEnrollmentState(EnrollmentState.ENROLLED);

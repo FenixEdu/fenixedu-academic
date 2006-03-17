@@ -56,10 +56,8 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -185,7 +183,7 @@ public class ReadCourseInformation extends Service {
             CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-            List enrolled = getEnrolled(executionPeriod, curricularCourse, persistentSupport);
+            List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
             infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
             infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
             infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
@@ -242,7 +240,7 @@ public class ReadCourseInformation extends Service {
 
             infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
                     .newInfoFromDomain(executionPeriod));
-            List enrolled = getEnrolled(executionPeriod, curricularCourse, persistentSupport);
+            List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
             infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
             infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
             infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
@@ -291,18 +289,6 @@ public class ReadCourseInformation extends Service {
         return new Integer(evaluated);
     }
 
-    /**
-     * @param curricularCourses
-     * @param persistentSupport
-     * @return
-     */
-    private List getEnrolled(ExecutionPeriod executionPeriod, CurricularCourse curricularCourse,
-            ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
-        IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-        List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse
-                .getIdInternal(), executionPeriod.getIdInternal());
-        return enrolments;
-    }
 
     /**
      * @param executionCourse

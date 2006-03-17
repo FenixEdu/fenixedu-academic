@@ -29,8 +29,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -101,8 +99,7 @@ public class SearchExecutionCourses extends Service {
                     while (iter.hasNext()) {
                         CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 
-                        List enrolled = getEnrolled(executionCourse.getExecutionPeriod(),
-                                curricularCourse, persistentSupport);
+                        List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
                         if (enrolled != null) {
                             enrolledInCurricularCourse += enrolled.size();
                             evaluated += getEvaluated(enrolled).intValue();
@@ -149,15 +146,6 @@ public class SearchExecutionCourses extends Service {
                     }
                 }
                 return new Integer(evaluated);
-            }
-
-            private List getEnrolled(ExecutionPeriod executionPeriod,
-                    CurricularCourse curricularCourse, ISuportePersistente persistentSupport)
-                    throws ExcepcaoPersistencia {
-                IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-                List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(
-                        curricularCourse.getIdInternal(), executionPeriod.getIdInternal());
-                return enrolments;
             }
 
             private void checkEqualLoads(Object arg0, InfoExecutionCourse infoExecutionCourse,

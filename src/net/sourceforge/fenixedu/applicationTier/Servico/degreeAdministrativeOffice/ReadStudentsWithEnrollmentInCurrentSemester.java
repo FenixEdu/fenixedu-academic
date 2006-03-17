@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
@@ -63,13 +62,11 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
      */
     private boolean studentHasEnrollments(Student student)
             throws ExcepcaoPersistencia {
-
-        IPersistentEnrollment pEnrollment = persistentSupport.getIPersistentEnrolment();
         IPersistentExecutionPeriod pExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         ExecutionPeriod executionPeriod = pExecutionPeriod.readActualExecutionPeriod();
 
-        List enrollments = pEnrollment.readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(
-                student.getActiveStudentCurricularPlan().getIdInternal(), executionPeriod.getIdInternal());
+        
+        List<Enrolment> enrollments = student.getActiveStudentCurricularPlan().getEnrolmentsByExecutionPeriod(executionPeriod); 
 
         for (int iter = 0; iter < enrollments.size(); iter++) {
             Enrolment enrollment = (Enrolment) enrollments.get(iter);

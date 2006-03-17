@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 public class WriteStudentAttendingCourse extends Service {
@@ -29,8 +28,6 @@ public class WriteStudentAttendingCourse extends Service {
 	public Boolean run(InfoStudent infoStudent, Integer executionCourseId)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
-		IPersistentEnrollment persistentEnrolment = persistentSupport
-				.getIPersistentEnrolment();
 		IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
 				.getIStudentCurricularPlanPersistente();
 
@@ -67,8 +64,7 @@ public class WriteStudentAttendingCourse extends Service {
 				attendsEntry.setAluno(studentCurricularPlan.getStudent());
 				attendsEntry.setDisciplinaExecucao(executionCourse);
 
-				findEnrollmentForAttend(persistentEnrolment,
-						studentCurricularPlan, executionCourse, attendsEntry);
+				findEnrollmentForAttend(studentCurricularPlan, executionCourse, attendsEntry);
 
 			}
 		}
@@ -76,7 +72,6 @@ public class WriteStudentAttendingCourse extends Service {
 	}
 
 	private void findEnrollmentForAttend(
-			IPersistentEnrollment persistentEnrolment,
 			StudentCurricularPlan studentCurricularPlan,
 			ExecutionCourse executionCourse, Attends attendsEntry)
 			throws ExcepcaoPersistencia {
@@ -87,12 +82,8 @@ public class WriteStudentAttendingCourse extends Service {
 			CurricularCourse curricularCourseElem = (CurricularCourse) iterCurricularCourses
 					.next();
 
-			Enrolment enrollment = persistentEnrolment
-					.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
-							studentCurricularPlan.getIdInternal(),
-							curricularCourseElem.getIdInternal(),
-							executionCourse.getExecutionPeriod()
-									.getIdInternal());
+			Enrolment enrollment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourseElem, executionCourse.getExecutionPeriod());
+
 			if (enrollment != null) {
 				attendsEntry.setEnrolment(enrollment);
 				break;

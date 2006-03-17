@@ -280,4 +280,18 @@ public class Student extends Student_Base {
     	result.addAll(getAssociatedAttends());
     	return result;
     }
+    
+    public int countCompletedCoursesForActiveUndergraduateCurricularPlan() {
+    	return getActiveStudentCurricularPlan().getAprovedEnrolments().size();
+    }
+        
+    public List<StudentCurricularPlan> getStudentCurricularPlansByStateAndType(StudentCurricularPlanState state, DegreeType type){
+    	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+    	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+			if(studentCurricularPlan.getCurrentState().equals(state) && studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(type)) {
+				result.add(studentCurricularPlan);
+			}
+		}
+    	return result;
+    }
 }

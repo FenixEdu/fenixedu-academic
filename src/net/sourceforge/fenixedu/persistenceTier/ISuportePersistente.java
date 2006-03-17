@@ -116,8 +116,6 @@ public interface ISuportePersistente
 
 	public IFrequentaPersistente getIFrequentaPersistente();
 
-	public IPersistentEnrollment getIPersistentEnrolment();
-
 	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation();
 
 	public IPersistentCurricularCourse getIPersistentCurricularCourse();
