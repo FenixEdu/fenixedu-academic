@@ -49,7 +49,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
@@ -354,8 +353,7 @@ public class ReadTeachersInformation extends Service {
 
     private List getInfoCareers(ISuportePersistente persistentSupport, Teacher teacher, CareerType careerType)
             throws ExcepcaoPersistencia {
-        IPersistentCareer persistentCareer = persistentSupport.getIPersistentCareer();
-        List careers = persistentCareer.readAllByTeacherIdAndCareerType(teacher.getIdInternal(), careerType);
+        List<Career> careers = Career.readAllByTeacherIdAndCareerType(teacher, careerType);
         List infoCareers = (List) CollectionUtils.collect(careers, new Transformer() {
             public Object transform(Object o) {
                 Career career = (Career) o;

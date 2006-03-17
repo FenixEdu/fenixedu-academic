@@ -51,7 +51,7 @@ public class CreateInsuranceTransaction extends Service {
                     "error.message.transaction.insuranceTransactionAlreadyExists");
         }
 
-        PersonAccount personAccount = persistentSupport.getIPersistentPersonAccount().readByPerson(guide.getPerson().getIdInternal());
+        PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
         
         if(personAccount == null){
             personAccount = DomainFactory.makePersonAccount(guide.getPerson());

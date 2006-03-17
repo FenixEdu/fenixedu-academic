@@ -69,8 +69,6 @@ import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicati
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
@@ -271,10 +269,6 @@ public interface ISuportePersistente
 
 	public IPersistentDegreeInfo getIPersistentDegreeInfo();
 
-	public IPersistentCategory getIPersistentCategory();
-
-	public IPersistentCareer getIPersistentCareer();
-
 	public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation();
 
 	public IPersistentExternalActivity getIPersistentExternalActivity();
@@ -355,8 +349,6 @@ public interface ISuportePersistente
 	public IPersistentSmsTransaction getIPersistentSmsTransaction();
 
 	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction();
-
-	public IPersistentPersonAccount getIPersistentPersonAccount();
 
 	public IPersistentTransaction getIPersistentTransaction();
 

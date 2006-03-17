@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.State;
@@ -109,9 +108,7 @@ public class EditReimbursementGuide extends Service {
 			ReimbursementGuideEntry reimbursementGuideEntry = null;
 			ReimbursementTransaction reimbursementTransaction = null;
 
-			IPersistentPersonAccount persistentPersonAccount = persistentSupport.getIPersistentPersonAccount();
-			PersonAccount personAccount = persistentPersonAccount.readByPerson(reimbursementGuide
-					.getGuide().getPerson().getIdInternal());
+			PersonAccount personAccount = reimbursementGuide.getGuide().getPerson().getAssociatedPersonAccount();
 
 			if (personAccount == null) {
 				personAccount = DomainFactory.makePersonAccount(reimbursementGuide.getGuide()

@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentContributor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
@@ -63,7 +62,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesis;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -148,8 +146,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTeach
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTypeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.sms.SentSmsOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.student.DelegateOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.CareerOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.CategoryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.ExternalActivityOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OldPublicationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OrientationOJB;
@@ -233,8 +229,6 @@ import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicati
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
@@ -647,16 +641,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentDegreeInfo getIPersistentDegreeInfo()
 	{
 		return new DegreeInfoOJB();
-	}
-
-	public IPersistentCategory getIPersistentCategory()
-	{
-		return new CategoryOJB();
-	}
-
-	public IPersistentCareer getIPersistentCareer()
-	{
-		return new CareerOJB();
 	}
 
 	public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation()
@@ -1136,11 +1120,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction()
 	{
 		return new InsuranceTransactionOJB();
-	}
-
-	public IPersistentPersonAccount getIPersistentPersonAccount()
-	{
-		return new PersonAccountOJB();
 	}
 
 	public IPersistentTransaction getIPersistentTransaction()

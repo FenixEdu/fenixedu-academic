@@ -36,7 +36,7 @@ public class CreateGratuityTransaction extends Service {
                 DegreeType.MASTER_DEGREE);
         GratuitySituation gratuitySituation = persistentSupport.getIPersistentGratuitySituation()
                 .readGratuitySituationByExecutionDegreeAndStudent(guide.getExecutionDegree().getIdInternal(), student.getIdInternal());
-        PersonAccount personAccount = persistentSupport.getIPersistentPersonAccount().readByPerson(guide.getPerson().getIdInternal());
+        PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
         
         if(personAccount == null){
             personAccount = DomainFactory.makePersonAccount(guide.getPerson());

@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
 
@@ -190,10 +189,8 @@ public class EditGuideInformation extends Service {
                 guideSituation.setState(new State(State.ACTIVE));
 
                 PaymentTransaction paymentTransaction = null;
-                GratuitySituation gratuitySituation = null;
-                IPersistentPersonAccount persistentPersonAccount = persistentSupport.getIPersistentPersonAccount();
-                PersonAccount personAccount = persistentPersonAccount.readByPerson(guide.getPerson()
-                        .getIdInternal());
+                GratuitySituation gratuitySituation = null;                
+                PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
 
                 if (personAccount == null) {
                     personAccount = DomainFactory.makePersonAccount(guide.getPerson());

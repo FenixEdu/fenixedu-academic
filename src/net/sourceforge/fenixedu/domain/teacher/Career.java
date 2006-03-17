@@ -4,6 +4,12 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.CareerType;
+import net.sourceforge.fenixedu.domain.Teacher;
+
 
 /**
  * @author Leonor Almeida
@@ -22,5 +28,25 @@ public abstract class Career extends Career_Base {
 		super.deleteDomainObject();
 	}
 		
-    
+    public static List<Career> readAllByTeacherIdAndCareerType(Teacher teacher, CareerType careerType){
+        if(careerType == null){
+            return teacher.getAssociatedCareers();
+        }
+        List<Career> allTeacherCareers = new ArrayList<Career>();
+        
+        if(careerType.equals(CareerType.PROFESSIONAL)) {
+            readCareersByClass(teacher, allTeacherCareers, ProfessionalCareer.class.getName());        
+        } else if(careerType.equals(CareerType.TEACHING)) {
+            readCareersByClass(teacher, allTeacherCareers, TeachingCareer.class.getName());        
+        }        
+        return allTeacherCareers;        
+    }
+
+    private static void readCareersByClass(Teacher teacher, List<Career> allTeacherCareers, String className) {
+        for (Career career : teacher.getAssociatedCareers()) {
+            if(career.getOjbConcreteClass().equals(className)){
+                allTeacherCareers.add(career);
+            }
+        }
+    }
 }

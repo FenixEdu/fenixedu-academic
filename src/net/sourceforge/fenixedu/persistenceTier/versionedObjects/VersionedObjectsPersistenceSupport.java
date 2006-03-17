@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesis;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -130,7 +129,6 @@ import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicati
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
@@ -191,7 +189,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegre
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisDataVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PeriodVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PersonAccountVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PessoaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PriceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ProfessorshipVO;
@@ -257,7 +254,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.EquivalencyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.ModalityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.SeminaryVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.CareerVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.ExternalActivityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OrientationVO;
@@ -289,10 +285,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentTestScope getIPersistentTestScope() {
         return new TestScopeVO();
-    }
-
-    public IPersistentCareer getIPersistentCareer() {
-        return new CareerVO();
     }
 
     public IPessoaPersistente getIPessoaPersistente() {
@@ -751,10 +743,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentWebSiteSection getIPersistentWebSiteSection() {
         return null;
-    }
-
-    public IPersistentPersonAccount getIPersistentPersonAccount() {
-        return new PersonAccountVO();
     }
 
     public IPersistentExecutionYear getIPersistentExecutionYear() {

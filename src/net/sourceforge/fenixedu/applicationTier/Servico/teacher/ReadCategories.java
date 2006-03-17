@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -23,9 +22,8 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadCategories extends Service {
 
-	public List run() throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentCategory persistentCategory = persistentSupport.getIPersistentCategory();
-		List categories = persistentCategory.readAll();
+	public List run() throws FenixServiceException, ExcepcaoPersistencia {		
+		List categories = (List) persistentObject.readAll(Category.class);
 
 		List result = (List) CollectionUtils.collect(categories, new Transformer() {
 			public Object transform(Object input) {

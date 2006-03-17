@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -65,8 +64,7 @@ public class CategoryLoader extends BaseLoader {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         persistentSupport.iniciarTransaccao();
 
-        final IPersistentCategory persistentCategory = persistentSupport.getIPersistentCategory();
-        final List<Category> categories = (List<Category>) persistentCategory.readAll(Category.class);
+        final List<Category> categories = (List<Category>) persistentSupport.getIPersistentObject().readAll(Category.class);
         for (final Category category : categories) {
             final HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
             final HSSFCell longNameCell = row.createCell((short) 0);

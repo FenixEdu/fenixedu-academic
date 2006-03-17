@@ -42,7 +42,7 @@ public class ReadAllTeacherCredits extends Service {
                     }
                 });
 
-        List<Category> categories = persistentSupport.getIPersistentCategory().readAll();
+        List<Category> categories = (List<Category>) persistentObject.readAll(Category.class);
         List<Category> monitorCategories = (List<Category>) CollectionUtils.select(categories, new Predicate(){
             public boolean evaluate(Object object) {
                 Category category = (Category) object;

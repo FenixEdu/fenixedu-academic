@@ -117,8 +117,7 @@ public class ProcessSibsPaymentFile extends Service {
             Person responsiblePerson = Person.readPersonByUsername(
                     userView.getUtilizador());
 
-            PersonAccount personAccount = persistentSupport.getIPersistentPersonAccount().readByPerson(
-                    student.getPerson().getIdInternal());
+            PersonAccount personAccount = student.getPerson().getAssociatedPersonAccount();
             if (personAccount == null) {
                 personAccount = DomainFactory.makePersonAccount(student.getPerson());
             }

@@ -11,8 +11,7 @@
 	<bean:define id="lastLoginDateTime" type="org.joda.time.DateTime" name="userView" property="person.user.lastLoginDateTime"/>
 	<bean:define id="timestamp" ><%= lastLoginDateTime.toDate().getTime() %></bean:define>
 	<bean:define id="lastLoginHost" name="userView" property="person.user.lastLoginHost"/>
-	<bean:message key="last.login.dateTime"/>&nbsp;<b><date:format pattern="dd-MM-yyyy HH:mm"><bean:write name="timestamp"/></date:format></b>
-	<br/><bean:message key="last.login.host"/>&nbsp;<b><bean:write name="lastLoginHost"/></b>	    
+    <p class="mtop0 mbottom2"><span style="background-color: #eee; padding: 0.25em;"><bean:message key="last.login.dateTime"/>&nbsp;<b><date:format pattern="dd-MM-yyyy HH:mm"><bean:write name="timestamp"/></date:format></b> (<bean:write name="lastLoginHost"/>)</span></p>
 	<br/><br/>
 </logic:notEmpty>
 

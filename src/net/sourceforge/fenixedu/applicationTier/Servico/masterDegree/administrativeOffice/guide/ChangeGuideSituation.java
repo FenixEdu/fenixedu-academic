@@ -95,8 +95,7 @@ public class ChangeGuideSituation extends Service {
                 guide.setPaymentType(PaymentType.valueOf(paymentType));
 
                 // For Transactions Creation
-                PersonAccount personAccount = persistentSupport.getIPersistentPersonAccount().readByPerson(
-                        guide.getPerson().getIdInternal());
+                PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
                 if (personAccount == null) {
                     personAccount = DomainFactory.makePersonAccount(guide.getPerson());
                 }
