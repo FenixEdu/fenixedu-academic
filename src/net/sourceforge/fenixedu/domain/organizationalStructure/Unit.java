@@ -12,9 +12,11 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Contract;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -207,11 +209,25 @@ public class Unit extends Unit_Base {
         return result;
     }
 
-    public double getScientificAreaUnitEctsCredits() {
+    public Double getScientificAreaUnitEctsCredits() {
         double result = 0.0;
         for (Unit competenceCourseGroupUnit : getCompetenceCourseGroupUnits()) {
             for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
                 result += competenceCourse.getEctsCredits();
+            }
+        }
+        return result;
+    }
+    
+    public Double getScientificAreaUnitEctsCredits(List<Context> contexts) {
+        double result = 0.0;
+        for (Context context : contexts) {
+            if (context.getChildDegreeModule().isLeaf()) {
+                CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+                
+                if (!curricularCourse.isOptional() && curricularCourse.getCompetenceCourse().getScientificAreaUnit().equals(this)) {
+                    result += curricularCourse.getCompetenceCourse().getEctsCredits();    
+                }
             }
         }
         return result;
@@ -339,4 +355,5 @@ public class Unit extends Unit_Base {
             }
         }
     }
+
 }
