@@ -41,7 +41,7 @@ public class RootDomainObject extends RootDomainObject_Base {
  
     public static List<Person> readAllPersons() {
         List<Person> allPersons = new ArrayList<Person>();
-        for (Party party : getInstance().getParties()) {
+        for (Party party : getInstance().getPartys()) {
            if (party instanceof Person) {
                Person person = (Person) party;
                allPersons.add(person);
@@ -52,7 +52,7 @@ public class RootDomainObject extends RootDomainObject_Base {
     
     public static List<Unit> readAllUnits() {
         List<Unit> allUnits = new ArrayList<Unit>();
-        for (Party party : getInstance().getParties()) {
+        for (Party party : getInstance().getPartys()) {
            if (party instanceof Unit) {
                Unit unit = (Unit) party;
                allUnits.add(unit);

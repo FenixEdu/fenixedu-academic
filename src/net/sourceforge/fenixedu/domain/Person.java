@@ -633,7 +633,7 @@ public class Person extends Person_Base {
             getAdvisories().clear();
             removeCms();
             removePais();
-            RootDomainObject.getInstance().removeParties(this);
+            RootDomainObject.getInstance().removePartys(this);
             deleteDomainObject();
             return true;
         }

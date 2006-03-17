@@ -12,9 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.utils.FileUtil;
+import net.sourceforge.fenixedu.framework.FenixPersistentField;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
-import net.sourceforge.fenixedu.util.FileUtils;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
@@ -57,7 +56,6 @@ public class OJBMetadataGenerator {
     public static void main(String[] args) throws Exception {
 
         String[] dmlFilesArray = { args[0] };
-        // String[] dmlFilesArray = { "config/domain_model.dml" };
         if (args.length == 2) {
             classToDebug = args[1];
         }
@@ -104,11 +102,22 @@ public class OJBMetadataGenerator {
             if (!Modifier.isAbstract(clazz.getModifiers())) {
                 final ClassDescriptor classDescriptor = (ClassDescriptor) ojbMetadata.get(domClass
                         .getFullName());
-
                 if (classDescriptor != null) {
-
                     // add keyRootDomainObject field
                     addKeyRootDomainObjectField(clazz, classDescriptor);
+                }
+            }
+        }        
+        
+        for (final Iterator iterator = domainModel.getClasses(); iterator.hasNext();) {
+            final DomainClass domClass = (DomainClass) iterator.next();
+            final Class clazz = Class.forName(domClass.getFullName());
+
+            if (!Modifier.isAbstract(clazz.getModifiers())) {
+                final ClassDescriptor classDescriptor = (ClassDescriptor) ojbMetadata.get(domClass
+                        .getFullName());
+
+                if (classDescriptor != null) {
 
                     update(classDescriptor, domClass, ojbMetadata, clazz);
                     if (classToDebug != null
@@ -130,12 +139,12 @@ public class OJBMetadataGenerator {
                     maxFieldID = descriptor.getColNo();
                 }
             }
-            FieldDescriptor rootDomainObjectFieldDescriptor = new FieldDescriptor(classDescriptor,
-                    maxFieldID);
+            FieldDescriptor rootDomainObjectFieldDescriptor = new FieldDescriptor(classDescriptor, ++maxFieldID);
             rootDomainObjectFieldDescriptor.setColumnName("KEY_ROOT_DOMAIN_OBJECT");
             rootDomainObjectFieldDescriptor.setColumnType("INTEGER");
             rootDomainObjectFieldDescriptor.setAccess("readwrite");
-            rootDomainObjectFieldDescriptor.setPersistentField(Integer.class, "keyRootDomainObject");
+            PersistentField persistentField = new FenixPersistentField(clazz, "keyRootDomainObject");
+            rootDomainObjectFieldDescriptor.setPersistentField(persistentField);
             classDescriptor.addFieldDescriptor(rootDomainObjectFieldDescriptor);
 
             if (changeTablesCommands == null) {
@@ -208,6 +217,13 @@ public class OJBMetadataGenerator {
 
                             ClassDescriptor otherClassDescriptor = (ClassDescriptor) ojbMetadata
                                     .get(((DomainClass) role.getType()).getFullName());
+                            
+                            if(otherClassDescriptor == null){
+                                System.out.println("Ignoring " + ((DomainClass) role.getType()).getFullName());
+                                continue;
+                            }
+                            
+                            
                             if (otherClassDescriptor.getFieldDescriptorByName(foreignKeyField) == null) {
                                 Class classToVerify = Class.forName(otherClassDescriptor
                                         .getClassNameOfObject());

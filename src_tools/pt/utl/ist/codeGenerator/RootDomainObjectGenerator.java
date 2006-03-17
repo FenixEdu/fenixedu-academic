@@ -9,7 +9,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Formatter;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -54,6 +56,7 @@ public class RootDomainObjectGenerator {
 
         String rootObjectSourceCodeFilePath = outputFolder + "/" + CLASS_NAME.replace('.', '/')
                 + sourceSuffix;
+        Set<String> usedNames = new HashSet<String>();
 
         String rootObjectSourceCode = readFile(rootObjectSourceCodeFilePath);
         int lastBrace = rootObjectSourceCode.lastIndexOf('}');
@@ -68,14 +71,20 @@ public class RootDomainObjectGenerator {
                 if (roleSlot.getMultiplicityUpper() != 1) {
                     String slotName = StringUtils.capitalize(roleSlot.getName());
                     DomainClass otherDomainClass = (DomainClass) roleSlot.getType();
+                    String className = otherDomainClass.getName();
+                    if(usedNames.contains(className)){
+                        className = otherDomainClass.getSuperclassName() + className;
+                    }
                     methods.format("\n\tpublic %s read%sByOID(Integer idInternal){\n", otherDomainClass
-                            .getFullName(), otherDomainClass.getName());
+                            .getFullName(), className);
                     methods.format("\t\tfor (%s iter%s : get%s()) {\n", otherDomainClass.getFullName(),
-                            otherDomainClass.getName(), slotName);
+                            className, slotName);
                     methods.format("\t\t\tif(iter%s.getIdInternal().equals(idInternal)){\n",
-                            otherDomainClass.getName());
+                            className);
                     methods.format("\t\t\t\treturn iter%s;\n\t\t\t}\n\t\t}\n\t\treturn null;\n\t}\n",
-                            otherDomainClass.getName());
+                            className);
+                    
+                    usedNames.add(className);
                 }
             }
 

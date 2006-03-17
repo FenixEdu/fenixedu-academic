@@ -37,6 +37,7 @@
 
 	<!-- DML definition file -->
 	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
+	<property name="dml.definition.file.completed" value="${build.home.webinf.classes}/domain_model.dml"/>
 
 	<!-- Compilation options -->
 	<property name="compile.debug"       value="on"/>
@@ -74,8 +75,6 @@
 			<copy todir="${build.home.webinf.classes}">
 				<fileset dir="${config}"/>
 			</copy>
-
-			<copy todir="${build.home.webinf}" file="${config}/domain_model.dml"/>
 
 			<copy todir="${build.home.webinf}">
 				<fileset dir="${config.web}" >
@@ -599,6 +598,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 	
 	<target name="generate" description="Generate java code">
+		<ant antfile="build_codeGenerator.xml" target="generate-root-domain-object-relations"/>
 		<ant antfile="build_codeGenerator.xml" target="generate-domain"/>
 		<ant antfile="build_codeGenerator.xml" target="update-RootDomainObject"/>
 		<ant antfile="build_codeGenerator.xml" target="generate-DAOs"/>
@@ -642,7 +642,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<arg value="-cfn"/>
 			<arg value="net.sourceforge.fenixedu.domain.DomainFactory"/>
 			<arg value="-d"/>
-			<arg value="${dml.definition.file}"/>
+			<arg value="${dml.definition.file.completed}"/>
 		</java>
 	</target>
 
@@ -689,11 +689,11 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<arg value="-cfn"/>
 			<arg value="net.sourceforge.fenixedu.persistenceTier.OJB.DomainAllocator"/>
 			<arg value="-d"/>
-			<arg value="${dml.definition.file}"/>
+			<arg value="${dml.definition.file.completed}"/>
 		</java>
 	</target>
 
-	<target name="compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file, generate, base-compile">
+	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain,compile-renderers, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file, generate, base-compile">
 		<ant antfile="build_accessControl.xml"/>
 	</target>
 

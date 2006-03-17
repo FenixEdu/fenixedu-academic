@@ -172,7 +172,7 @@ public class Unit extends Unit_Base {
 
             removeDepartment();
             removeDegree();
-            RootDomainObject.getInstance().removeParties(this);
+            RootDomainObject.getInstance().removePartys(this);
             deleteDomainObject();
         } else {
             throw new DomainException("error.delete.unit");

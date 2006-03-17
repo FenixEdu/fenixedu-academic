@@ -29,6 +29,7 @@
   	<property name="compile.optimize"    value="on"/>
 
 	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
+	<property name="dml.definition.file.completed" value="${build.home.webinf.classes}/domain_model.dml"/>
 
 	  <path id="classpath.analysis">
 	    <pathelement path="${build.home.temp.classes}"/>
@@ -49,7 +50,7 @@
 			<arg value="-db"/>
 			<arg value="${src_gen}"/>
 <!--			<arg value="-gf"/>-->
-			<arg value="${dml.definition.file}"/>
+			<arg value="${dml.definition.file.completed}"/>
 			<classpath>
 				<fileset dir="${lib}">
 					<include name="dml.jar"/>
@@ -107,6 +108,25 @@
 		</javac>
 	</target>
 
+    <target name="generate-root-domain-object-relations"
+    		description="Generate relations with RootDomainObject.">
+    	<delete file="${dml.definition.file.completed}"/>
+    	<copy file="${dml.definition.file}" tofile="${dml.definition.file.completed}"/>
+		<java classname="pt.utl.ist.fenix.tools.dml.OneToManyRelationGenerator" fork="true">
+			<arg value="${dml.definition.file}"/>
+			<arg value="net.sourceforge.fenixedu.domain.RootDomainObject"/>
+			<arg value="${dml.definition.file.completed}"/>
+			<arg value="append"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    </target>
+
     <target name="generate-DAOs"
     		description="Generate DAO skeletons."
     		depends="compile">
@@ -127,7 +147,7 @@
     		depends="compile">
 		<java classname="pt.utl.ist.codeGenerator.RootDomainObjectGenerator" fork="true">
 			<arg value="${src_gen}"/>
-			<arg value="${dml.definition.file}"/>
+			<arg value="${dml.definition.file.completed}"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>			
 				<fileset dir="${lib}">
@@ -142,7 +162,7 @@
     		description="Adds specific readByOID methods to RootDomainObject."
     		depends="compile">
 		<java classname="net.sourceforge.fenixedu.tools.OJBMetadataGenerator" fork="true">
-			<arg value="${dml.definition.file}"/>
+			<arg value="${dml.definition.file.completed}"/>
 			<arg value="${class}"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>	
@@ -160,7 +180,7 @@
 		<java classname="net.sourceforge.fenixedu.tools.OJBMetadataGenerator" fork="true" 
 			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"
 		>
-			<arg value="${dml.definition.file}"/>
+			<arg value="${dml.definition.file.completed}"/>
 			<arg value="${option}"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>	
@@ -192,7 +212,7 @@
 	    <java classname="pt.utl.ist.codeDegenerator.DomainObjectInterfaceEliminator" fork="true">
 	      <classpath refid="classpath.analysis"/>
 	      <arg value="-d"/>
-	      <arg value="${dml.definition.file}"/>
+	      <arg value="${dml.definition.file.completed}"/>
 	      <arg value="-f"/>
 	      <arg value="${basedir}"/>
 	      <arg value="-i"/>

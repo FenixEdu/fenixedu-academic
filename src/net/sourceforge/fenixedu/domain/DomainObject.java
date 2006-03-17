@@ -64,16 +64,14 @@ public abstract class DomainObject extends DomainObject_Base implements Serializ
 
     public DomainObject() {
         super();
-
         // All domain objects become persistent upon there creation.
         // Ensure that this object gets an idInternal
-	// The idInternal will be used by both the hashcode and the equals methods
-	// jcachopo: This should be changed in the future...
-
-	ensureIdInternal();
-
-	Transaction.storeNewObject(this);
-	setAckOptLock(new Integer(0));
+        // The idInternal will be used by both the hashcode and the equals methods
+        // jcachopo: This should be changed in the future...
+        ensureIdInternal();
+        Transaction.storeNewObject(this);
+        setAckOptLock(new Integer(0));
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     private void ensureIdInternal() {
