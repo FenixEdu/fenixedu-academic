@@ -3,20 +3,27 @@
  */
 package net.sourceforge.fenixedu.tools;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Modifier;
+import java.util.Formatter;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.utils.FileUtil;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
+import net.sourceforge.fenixedu.util.FileUtils;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.CollectionDescriptor;
+import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.metadata.MetadataManager;
 import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
+import org.apache.ojb.broker.metadata.fieldaccess.PersistentField;
 
 import dml.DmlCompiler;
 import dml.DomainClass;
@@ -39,20 +46,22 @@ public class OJBMetadataGenerator {
 
     private static final Set<String> unmappedCollectionReferenceAttributesInOJB = new TreeSet<String>();
 
-    private static String classToDebug = null; 
-    
+    private static String classToDebug = null;
+
+    private static Formatter changeTablesCommands = null;
+
     /**
      * @param args
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
 
-         String[] dmlFilesArray = { args[0] };
-//        String[] dmlFilesArray = { "config/domain_model.dml" };
-         if(args.length == 2){
-             classToDebug = args[1];
-         }
-         
+        String[] dmlFilesArray = { args[0] };
+        // String[] dmlFilesArray = { "config/domain_model.dml" };
+        if (args.length == 2) {
+            classToDebug = args[1];
+        }
+
         DomainModel domainModel = DmlCompiler.getDomainModel(dmlFilesArray);
         Map ojbMetadata = MetadataManager.getInstance().getGlobalRepository().getDescriptorTable();
 
@@ -66,6 +75,10 @@ public class OJBMetadataGenerator {
                 "UnmappedObjectReferenceAttributes in OJB:");
         printUnmmapedAttributes(unmappedCollectionReferenceAttributesInOJB,
                 "UnmappedCollectionReferenceAttributes in OJB:");
+
+        if (changeTablesCommands != null) {
+            changeTablesCommands.flush();
+        }
 
         System.exit(0);
 
@@ -93,14 +106,45 @@ public class OJBMetadataGenerator {
                         .getFullName());
 
                 if (classDescriptor != null) {
+
+                    // add keyRootDomainObject field
+                    addKeyRootDomainObjectField(clazz, classDescriptor);
+
                     update(classDescriptor, domClass, ojbMetadata, clazz);
-                    if(classToDebug != null && classDescriptor.getClassNameOfObject().contains(classToDebug)){
+                    if (classToDebug != null
+                            && classDescriptor.getClassNameOfObject().contains(classToDebug)) {
                         System.out.println(classDescriptor.toXML());
                     }
                 }
             }
         }
+    }
 
+    private static void addKeyRootDomainObjectField(final Class clazz,
+            final ClassDescriptor classDescriptor) throws FileNotFoundException {
+
+        if (classDescriptor.getFieldDescriptorByName("keyRootDomainObject") == null) {
+            int maxFieldID = 0;
+            for (FieldDescriptor descriptor : classDescriptor.getFieldDescriptions()) {
+                if (descriptor.getColNo() > maxFieldID) {
+                    maxFieldID = descriptor.getColNo();
+                }
+            }
+            FieldDescriptor rootDomainObjectFieldDescriptor = new FieldDescriptor(classDescriptor,
+                    maxFieldID);
+            rootDomainObjectFieldDescriptor.setColumnName("KEY_ROOT_DOMAIN_OBJECT");
+            rootDomainObjectFieldDescriptor.setColumnType("INTEGER");
+            rootDomainObjectFieldDescriptor.setAccess("readwrite");
+            rootDomainObjectFieldDescriptor.setPersistentField(Integer.class, "keyRootDomainObject");
+            classDescriptor.addFieldDescriptor(rootDomainObjectFieldDescriptor);
+
+            if (changeTablesCommands == null) {
+                changeTablesCommands = new Formatter(new File("addRootDomainObjectKeys.sql"));
+            }
+            changeTablesCommands.format(
+                    "alter table %s add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;\n",
+                    classDescriptor.getFullTableName());
+        }
     }
 
     protected static void update(final ClassDescriptor classDescriptor, final DomainClass domClass,
@@ -256,18 +300,17 @@ public class OJBMetadataGenerator {
 
     private static Slot findSlotByName(DomainClass domainClass, String slotName) {
         DomainClass domainClassIter = domainClass;
-        while(domainClassIter != null){
-            
+        while (domainClassIter != null) {
+
             for (Iterator<Slot> slotsIter = domainClassIter.getSlots(); slotsIter.hasNext();) {
                 Slot slot = (Slot) slotsIter.next();
                 if (slot.getName().equals(slotName)) {
                     return slot;
                 }
             }
-            
+
             domainClassIter = (DomainClass) domainClassIter.getSuperclass();
         }
-        
 
         return null;
     }
