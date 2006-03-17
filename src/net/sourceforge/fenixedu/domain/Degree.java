@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
@@ -217,11 +218,13 @@ public class Degree extends Degree_Base {
     
     public List<DegreeCurricularPlan> findDegreeCurricularPlansByState(DegreeCurricularPlanState state){
     	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-    	for (DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlans()) {
-			if(degreeCurricularPlan.getState().equals(state)) {
-				result.add(degreeCurricularPlan);
-			}
-		}
+    	if(!isBolonhaDegree()) {
+    		for (DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlans()) {
+    			if(degreeCurricularPlan.getState().equals(state)) {
+    				result.add(degreeCurricularPlan);
+    			}
+    		}
+    	}
     	return result;
     }
 }
