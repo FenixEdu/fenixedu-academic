@@ -174,7 +174,8 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     private List<Object> getStudiesPlanHeaders() {
         final List<Object> headers = new ArrayList<Object>();
         headers.add("Unidades Curriculares");
-        headers.add("Área Científica");
+        headers.add("Nome Área Científica");
+        headers.add("Sigla Área Científica");
         headers.add("Tipo");
         headers.add("Horas Total");
         headers.add("Horas Contacto");
@@ -203,27 +204,37 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         final Row row = spreadsheet.addRow();
         
         row.setCell(curricularCourse.getName());
-        row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
-        row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime().toString()));
+        if (curricularCourse.isOptional()) {
+            row.setCell(""); // scientific area unit name
+            row.setCell(""); // scientific area unit acronym
+            row.setCell(""); // regime
+            row.setCell(""); // loads
+            row.setCell(""); // contact
+            row.setCell(""); // ects
+        } else {
+            row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
+            row.setCell(""); //row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
+            row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime().toString()));
         
-        StringBuilder loads = new StringBuilder();
-        loads.append(" C=").append(curricularCourse.getContactLoad(curricularPeriod)).append(" (h/semestre)");
-        loads.append(" TA=").append(curricularCourse.getAutonomousWorkHours(curricularPeriod)).append(" (h/semestre)");
-        loads.append(" Total=").append(curricularCourse.getTotalLoad(curricularPeriod));
-        row.setCell(loads.toString());
-
-        StringBuilder contact = new StringBuilder();
-        contact.append(" T=").append(curricularCourse.getTheoreticalHours(curricularPeriod));    
-        contact.append(" TP=").append(curricularCourse.getProblemsHours(curricularPeriod));
-        contact.append(" PL=").append(curricularCourse.getLaboratorialHours(curricularPeriod));    
-        contact.append(" TC=").append(curricularCourse.getFieldWorkHours(curricularPeriod));
-        contact.append(" S=").append(curricularCourse.getSeminaryHours());    
-        contact.append(" E=").append(curricularCourse.getTrainingPeriodHours(curricularPeriod));
-        contact.append(" OT=").append(curricularCourse.getTutorialOrientationHours(curricularPeriod));    
-        row.setCell(contact.toString());
-
-        row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
-        row.setCell("");
+            StringBuilder loads = new StringBuilder();
+            loads.append(" C=").append(curricularCourse.getContactLoad(curricularPeriod)).append(" (h/semestre)");
+            loads.append(" TA=").append(curricularCourse.getAutonomousWorkHours(curricularPeriod)).append(" (h/semestre)");
+            loads.append(" Total=").append(curricularCourse.getTotalLoad(curricularPeriod));
+            row.setCell(loads.toString());
+    
+            StringBuilder contact = new StringBuilder();
+            contact.append(" T=").append(curricularCourse.getTheoreticalHours(curricularPeriod));    
+            contact.append(" TP=").append(curricularCourse.getProblemsHours(curricularPeriod));
+            contact.append(" PL=").append(curricularCourse.getLaboratorialHours(curricularPeriod));    
+            contact.append(" TC=").append(curricularCourse.getFieldWorkHours(curricularPeriod));
+            contact.append(" S=").append(curricularCourse.getSeminaryHours());    
+            contact.append(" E=").append(curricularCourse.getTrainingPeriodHours(curricularPeriod));
+            contact.append(" OT=").append(curricularCourse.getTutorialOrientationHours(curricularPeriod));    
+            row.setCell(contact.toString());
+    
+            row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
+        }
+        row.setCell(""); // notes
         row.setCell(parentCourseGroupName);
         row.setCell(curricularPeriod.getParent().getOrder().toString());
         row.setCell(curricularPeriod.getOrder().toString());
