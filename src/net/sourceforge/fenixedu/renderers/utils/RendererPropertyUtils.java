@@ -62,7 +62,7 @@ public class RendererPropertyUtils {
     }
     
     private static Object getCreatedProperty(Object object, String name, boolean create) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
-        Object property = PropertyUtils.getProperty(object, name);
+        Object property = getProperty(object, name, create);
         
         if (property == null && create) {
             Class type = getPropertyType(object.getClass(), name);
@@ -127,7 +127,7 @@ public class RendererPropertyUtils {
             
             Object target = getCreatedProperty(object, firstPart, create);
             if (target != null) {
-                PropertyUtils.setProperty(object, remaining, value);
+                PropertyUtils.setProperty(target, remaining, value);
             }
         } catch (Exception e) {
             throw new RuntimeException("could not set property '" + name + "' for object '" + object + "'", e);
