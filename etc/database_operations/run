@@ -20,4 +20,5 @@ function execute() {
 }
 
 execute "Create Student Curriculum Structure" createStudentCurriculum.sql
-
+execute "Add Root Domain Object Relations" addRootDomainObjectRelations.sql
+execute "Change Event and Project Tables" changeEventAndProjectTables.sql
