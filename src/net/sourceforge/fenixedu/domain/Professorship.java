@@ -31,7 +31,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
         Professorship professorShip = new Professorship();
         professorShip.setHours((hours == null) ? new Double(0.0) : hours);
-        
+
         if (responsibleFor.booleanValue()) {
             ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse,
                     professorShip);
@@ -44,13 +44,13 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public void delete() {
-        if (hasAnyAssociatedSummaries() || hasAnyAssociatedShiftProfessorship() || hasAnySupportLessons()) {
-            throw new DomainException(this.getClass().getName(), "");
+        if (hasAnyAssociatedSummaries() || hasAnyAssociatedShiftProfessorship()
+                || hasAnySupportLessons() || hasAnyDegreeTeachingServices()
+                || hasAnyTeacherMasterDegreeServices()) {
+            throw new DomainException("error.remove.professorship");
         }
         this.removeExecutionCourse();
         this.removeTeacher();
-
         super.deleteDomainObject();
     }
-
 }

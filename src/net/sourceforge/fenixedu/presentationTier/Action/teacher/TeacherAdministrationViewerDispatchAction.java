@@ -747,13 +747,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, teacherCode };
         try {
-            ServiceManagerServiceFactory.executeService(userView, "DeleteTeacher", args);
+            ServiceManagerServiceFactory.executeService(userView, "DeleteProfessorship", args);
         } catch (NotAuthorizedFilterException e) {
             final ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error.invalidTeacherRemoval", new ActionError("error.invalidTeacherRemoval"));
-            saveErrors(request, actionErrors);
-        } catch (FenixServiceException e) {
+            saveErrors(request, actionErrors);       
+        } catch (FenixServiceException e) {            
             throw new FenixActionException(e);
+        } catch (DomainException domainException){
+            final ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error", new ActionError(domainException.getMessage()));
+            saveErrors(request, actionErrors);       
         }
         return viewTeachersByProfessorship(mapping, form, request, response);
     }

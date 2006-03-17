@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
@@ -85,15 +84,10 @@ public class DeleteExecutionCourses extends Service {
     }
 
     private void deleteProfessorships(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        final IPersistentProfessorship persistentProfessorship = persistentSupport
-                .getIPersistentProfessorship();
-        final List<Professorship> professorships = executionCourse.getProfessorships();
-        for (final Professorship professorship : professorships) {
-            professorship.delete();
-            persistentProfessorship.deleteByOID(Professorship.class, professorship.getIdInternal());
-        }
-        professorships.clear();
+            final ExecutionCourse executionCourse) throws ExcepcaoPersistencia {        
+        
+        final List<Professorship> professorships = executionCourse.getProfessorships();             
+        for(; !professorships.isEmpty(); professorships.get(0).delete());
     }
 
     private boolean canBeDeleted(ExecutionCourse executionCourse) {

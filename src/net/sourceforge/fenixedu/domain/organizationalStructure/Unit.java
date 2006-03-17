@@ -46,11 +46,11 @@ public class Unit extends Unit_Base {
 
     public Unit getDepartmentUnit() {
         List<Unit> parentUnits = this.getParentUnits();
-        if (unitDepartment(this)) {
+        if (isUnitDepartment(this)) {
             return this;
         } else if (!parentUnits.isEmpty()) {
             for (Unit parentUnit : parentUnits) {
-                if (unitDepartment(parentUnit)) {
+                if (isUnitDepartment(parentUnit)) {
                     return parentUnit;
                 } else if (parentUnit.hasAnyParentUnits()) {
                     Unit departmentUnit = parentUnit.getDepartmentUnit();
@@ -65,7 +65,7 @@ public class Unit extends Unit_Base {
         return null;
     }
 
-    private boolean unitDepartment(Unit unit) {
+    private boolean isUnitDepartment(Unit unit) {
         if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT)
                 && unit.getDepartment() != null) {
             return true;

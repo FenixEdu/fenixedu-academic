@@ -89,12 +89,12 @@ public class Summary extends Summary_Base {
         setProfessorship(null);
     }
 
-    public void delete() {
-        setExecutionCourse(null);
-        setProfessorship(null);
-        setShift(null);
-        setRoom(null);
-        setTeacher(null);
+    public void delete() {        
+        removeExecutionCourse();
+        removeProfessorship();
+        removeRoom();
+        removeShift();       
+        removeTeacher();
         super.deleteDomainObject();
     }
 

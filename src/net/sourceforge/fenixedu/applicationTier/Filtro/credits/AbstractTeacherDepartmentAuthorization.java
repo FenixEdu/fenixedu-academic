@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -38,8 +37,7 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
         Integer teacherId = getTeacherId(serviceRequest.getServiceParameters().parametersArray());
         if (teacherId != null) {
-
-            IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
+            
             Person requesterPerson = Person.readPersonByUsername(requester.getUtilizador());
 
             Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);

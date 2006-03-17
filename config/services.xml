@@ -2911,12 +2911,12 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>DeleteTeacher</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteTeacher</implementationClass>
+		<name>DeleteProfessorship</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="DeleteProffessorshpAuthorization" />
+			<chain name="DeleteProffessorshipAuthorization" />
 		</filterChains>
 	</service>
 	<service>

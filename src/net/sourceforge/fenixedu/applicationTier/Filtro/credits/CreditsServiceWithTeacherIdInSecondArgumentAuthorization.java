@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
  * @author jpvl

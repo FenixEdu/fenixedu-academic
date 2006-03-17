@@ -4,14 +4,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
-public class DeleteProffessorshpAuthorizationFilter extends AuthorizationByRoleFilter {
+public class DeleteProffessorshipAuthorizationFilter extends AuthorizationByRoleFilter {
 
     @Override
     protected RoleType getRoleType() {
@@ -24,9 +22,18 @@ public class DeleteProffessorshpAuthorizationFilter extends AuthorizationByRoleF
         Object[] arguments = getServiceCallArguments(request);
 
         try {
-            if ((id == null) || (id.getRoles() == null)
+
+            final Person loggedPerson = id.getPerson();
+            final Integer executionCourseID = (Integer) arguments[0];
+            final Integer selectedTeacherID = (Integer) arguments[1];
+            final Professorship selectedProfessorship = persistentSupport.getIPersistentProfessorship()
+                    .readByTeacherAndExecutionCourse(selectedTeacherID, executionCourseID);
+
+            if ((id == null)
+                    || (id.getRoles() == null)
                     || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-                    || isSamePersonAsBeingRemoved(id, arguments)) {
+                    || isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getTeacher()
+                            .getPerson()) || selectedProfessorship.getResponsibleFor()) {
                 throw new NotAuthorizedFilterException();
             }
         } catch (RuntimeException e) {
@@ -34,18 +41,9 @@ public class DeleteProffessorshpAuthorizationFilter extends AuthorizationByRoleF
         }
     }
 
-    private boolean isSamePersonAsBeingRemoved(IUserView id, Object[] argumentos) 
+    private boolean isSamePersonAsBeingRemoved(Person loggedPerson, Person selectedPerson)
             throws ExcepcaoPersistencia {
-        final IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-
-        final Integer executionCourseID = (Integer) argumentos[0];
-        final Integer teacherID = (Integer) argumentos[1];
-
-        final Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
-                teacherID, executionCourseID);
-        final Teacher teacher = professorship.getTeacher();
-        final Person person = teacher.getPerson();
-        return id.getUtilizador().equalsIgnoreCase(person.getUsername());
+        return loggedPerson == selectedPerson;
     }
 
 }

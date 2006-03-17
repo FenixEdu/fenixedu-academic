@@ -4,12 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.department.professorship;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteTeacher;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship;;
 
 /**
  * @author jpvl
  */
-public class RemoveProfessorship extends DeleteTeacher {
+public class RemoveProfessorship extends DeleteProfessorship {
 
     /*
      * (non-Javadoc)
