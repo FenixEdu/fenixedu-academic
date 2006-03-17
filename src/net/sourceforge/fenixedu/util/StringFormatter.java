@@ -319,4 +319,13 @@ public class StringFormatter {
         return result.toString();
     }
 
+    /**
+     * 
+     * @param string
+     * @return
+     */
+    public static String convertToDBStyle(String string) {
+        return splitCamelCaseString(string).replace(' ', '_').toUpperCase();
+    }
+
 }
