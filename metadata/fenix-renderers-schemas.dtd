@@ -14,12 +14,18 @@
   
   NOTE: 'type' currently is not used nor are the schemas verified as said
   TODO: implement the verification if slots exist in the defined schemas.
+  
+  The 'extends' attribute allows you to indicate that the schema beeing defined
+  is an extension of the referred schema. This means that the schema beeing
+  defined will include all the slots of the referred schema and can optionally
+  override some slot's definitions.
 -->
-<!ELEMENT schema (slot+)>
+<!ELEMENT schema (slot+ | remove+)>
 
 <!ATTLIST schema
-	type NMTOKEN #REQUIRED
 	name ID #REQUIRED
+	type NMTOKEN #REQUIRED
+	extends IDREF #IMPLIED
 >
 
 <!--
@@ -55,6 +61,19 @@
 	converter NMTOKEN #IMPLIED
 	default CDATA #IMPLIED
 	read-only CDATA #IMPLIED
+>
+
+<!--
+	The 'remove' element can only be used when the 'extends' attribute of the schema
+	is set. This element allows you to indicate that a certain slot definition of
+	the extended schema is to be ignored, that is, not included in this schema.
+	
+	The 'name' attribute specifies the name of the slot to be removed.
+-->
+<!ELEMENT remove EMPTY>
+
+<!ATTLIST remove
+	name CDATA #REQUIRED
 >
 
 <!--

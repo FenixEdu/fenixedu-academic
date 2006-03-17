@@ -9,6 +9,7 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import net.sourceforge.fenixedu.renderers.exceptions.NoSuchSchemaException;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
@@ -77,79 +78,118 @@ public class ConfigurationReader {
 
                 String schemaName = schemaElement.getAttributeValue("name");
                 String typeName = schemaElement.getAttributeValue("type");
+                String extendedSchemaName = schemaElement.getAttributeValue("extends");
 
                 Class type;
                 try {
                     type = getClassForType(typeName);
+                } catch (ClassNotFoundException e) {
+                    logger.error("schema '" + schemaName + "' was defined for the undefined type '" + typeName + "'");
+                    e.printStackTrace();
+                    continue;
+                }
+                    
+                Schema extendedSchema;
+                try {
+                    extendedSchema = RenderKit.getInstance().findSchema(extendedSchemaName);
+                } catch (NoSuchSchemaException e) {
+                    logger.error("schema '" + schemaName + "' cannot extend '" + extendedSchemaName + "', schema not found");
+                    e.printStackTrace();
+                    continue;
+                }
 
-                    Schema schema = new Schema(schemaName, type);
+                if (extendedSchema != null && !extendedSchema.getType().isAssignableFrom(type)) {
+                    logger.warn("schema '" + schemaName + "' is defined for type '" + typeName + "' that is not a subclass of the type '" + extendedSchema.getType().getName() + "' specified in the extended schema");
+                }
+                
+                Schema schema = new Schema(schemaName, type, extendedSchema);
 
-                    List slotElements = schemaElement.getChildren("slot");
-                    for (Iterator slotIterator = slotElements.iterator(); slotIterator.hasNext();) {
-                        Element slotElement = (Element) slotIterator.next();
-
-                        String slotName      = slotElement.getAttributeValue("name");
-                        String layout        = slotElement.getAttributeValue("layout");
-                        String key           = slotElement.getAttributeValue("key");
-                        String slotSchema    = slotElement.getAttributeValue("schema");
-                        String validatorName = slotElement.getAttributeValue("validator");
-                        String defaultValue  = slotElement.getAttributeValue("default");
-                        String converterName = slotElement.getAttributeValue("converter");
-                        String readOnlyValue = slotElement.getAttributeValue("read-only");
-
-                        Properties properties = getPropertiesFromElement(slotElement);
+                List removeElements = schemaElement.getChildren("remove");
+                if (extendedSchemaName == null && removeElements.size() > 0) {
+                    logger.warn("schema '" + schemaName + "' specifies slots to be removed but it does not extend a schema");
+                }
+                else {
+                    for (Iterator removeIterator = removeElements.iterator(); removeIterator.hasNext();) {
+                        Element removeElement = (Element) removeIterator.next();
                         
-                        Properties validatorProperties;
-                        Element validatorElement = slotElement.getChild("validator");
-                        if (validatorElement != null) {
-                            validatorProperties = getPropertiesFromElement(validatorElement);
-                            validatorName = validatorElement.getAttributeValue("class");
-                        }
-                        else {
-                            validatorProperties = new Properties();
-                        }
-
-                        Class validator = null;
-                        
-                        if (validatorName != null) {
-                            try {
-                                validator = getClassForType(validatorName);
-                            } catch (ClassNotFoundException e) {
-                                logger.warn("specified validator '" + validatorName + "' does not exist");
-                            }
-                        }
-                        
-                        Class converter = null;
-                        if (converterName != null) {
-                            try {
-                                converter = getClassForType(converterName);
-                            } catch (ClassNotFoundException e) {
-                                logger.warn("specified converter '" + converterName + "' does not exist");
-                            }
+                        String name = removeElement.getAttributeValue("name");
+        
+                        SchemaSlotDescription slotDescription = schema.getSlotDescription(name);
+                        if (slotDescription == null) {
+                            logger.warn("schema '" + schemaName + "' specifies that slot '" + name + "' is to be removed but it is not defined in the extended schema");
+                            continue;
                         }
                         
-                        boolean readOnly = readOnlyValue == null ? false : Boolean.parseBoolean(readOnlyValue);
-                        
-                        SchemaSlotDescription slotDescription = new SchemaSlotDescription(slotName);
+                        schema.removeSlotDescription(slotDescription);
+                    }
+                }
+                
+                List slotElements = schemaElement.getChildren("slot");
+                for (Iterator slotIterator = slotElements.iterator(); slotIterator.hasNext();) {
+                    Element slotElement = (Element) slotIterator.next();
 
-                        slotDescription.setLayout(layout);
-                        slotDescription.setKey(key);
-                        slotDescription.setProperties(properties);
-                        slotDescription.setSchema(slotSchema);
-                        slotDescription.setValidator(validator);
-                        slotDescription.setConverter(converter);
-                        slotDescription.setValidatorProperties(validatorProperties);
-                        slotDescription.setDefaultValue(defaultValue);
-                        slotDescription.setReadonly(readOnly);
-                        
-                        schema.addSlotDescription(slotDescription);
+                    String slotName      = slotElement.getAttributeValue("name");
+                    String layout        = slotElement.getAttributeValue("layout");
+                    String key           = slotElement.getAttributeValue("key");
+                    String slotSchema    = slotElement.getAttributeValue("schema");
+                    String validatorName = slotElement.getAttributeValue("validator");
+                    String defaultValue  = slotElement.getAttributeValue("default");
+                    String converterName = slotElement.getAttributeValue("converter");
+                    String readOnlyValue = slotElement.getAttributeValue("read-only");
+
+                    Properties properties = getPropertiesFromElement(slotElement);
+                    
+                    Properties validatorProperties;
+                    Element validatorElement = slotElement.getChild("validator");
+                    if (validatorElement != null) {
+                        validatorProperties = getPropertiesFromElement(validatorElement);
+                        validatorName = validatorElement.getAttributeValue("class");
+                    }
+                    else {
+                        validatorProperties = new Properties();
                     }
 
-                    logger.debug("adding new schema: " + schema.getName());
-                    RenderKit.getInstance().registerSchema(schema);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                    Class validator = null;
+                    if (validatorName != null) {
+                        try {
+                            validator = getClassForType(validatorName);
+                        } catch (ClassNotFoundException e) {
+                            logger.error("in schema '" + schemaName + "': validator '" + validatorName + "' was not found");
+                            e.printStackTrace();
+                            continue;
+                        }
+                    }
+                    
+                    Class converter = null;
+                    if (converterName != null) {
+                        try {
+                            converter = getClassForType(converterName);
+                        } catch (ClassNotFoundException e) {
+                            logger.error("in schema '" + schemaName + "': converter '" + converterName + "' was not found");
+                            e.printStackTrace();
+                            continue;
+                        }
+                    }
+                    
+                    boolean readOnly = readOnlyValue == null ? false : Boolean.parseBoolean(readOnlyValue);
+                    
+                    SchemaSlotDescription slotDescription = new SchemaSlotDescription(slotName);
+
+                    slotDescription.setLayout(layout);
+                    slotDescription.setKey(key);
+                    slotDescription.setProperties(properties);
+                    slotDescription.setSchema(slotSchema);
+                    slotDescription.setValidator(validator);
+                    slotDescription.setConverter(converter);
+                    slotDescription.setValidatorProperties(validatorProperties);
+                    slotDescription.setDefaultValue(defaultValue);
+                    slotDescription.setReadonly(readOnly);
+                    
+                    schema.addSlotDescription(slotDescription);
                 }
+
+                logger.debug("adding new schema: " + schema.getName());
+                RenderKit.getInstance().registerSchema(schema);
             }
         }
     }
@@ -158,8 +198,7 @@ public class ConfigurationReader {
         Properties properties = new Properties();
 
         List propertyElements = element.getChildren("property");
-        for (Iterator propertyIterator = propertyElements.iterator(); propertyIterator
-                .hasNext();) {
+        for (Iterator propertyIterator = propertyElements.iterator(); propertyIterator.hasNext();) {
             Element propertyElement = (Element) propertyIterator.next();
 
             String name = propertyElement.getAttributeValue("name");

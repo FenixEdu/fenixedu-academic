@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.renderers.schemas;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -16,6 +17,16 @@ public class Schema {
         this.name = name;
         this.type = type;
         this.slotDescriptions = new ArrayList<SchemaSlotDescription>();
+    }
+    
+    public Schema(String name, Class type, Schema baseSchema) {
+        this(name, type);
+        
+        if (baseSchema != null) {
+            for (SchemaSlotDescription slotDescription : baseSchema.getSlotDescriptions()) {
+                addSlotDescription(slotDescription);
+            }
+        }
     }
 
     public Schema(Class type) {
@@ -34,15 +45,41 @@ public class Schema {
         return slotDescriptions;
     }
 
+    public SchemaSlotDescription getSlotDescription(String slotName) {
+        for (SchemaSlotDescription slotDescription : getSlotDescriptions()) {
+            if (slotDescription.getSlotName().equals(slotName)) {
+                return slotDescription;
+            }
+        }
+        
+        return null;
+    }
+
     public void addSlotDescription(SchemaSlotDescription slotDescription) {
-        this.slotDescriptions.add(slotDescription);
+        int index = findSlotIndex(slotDescription.getSlotName());
+
+        if (index != -1) {
+            this.slotDescriptions.set(index, slotDescription);
+        }
+        else {
+            this.slotDescriptions.add(slotDescription);
+        }
     }
     
-//    public void addSlotDescription(String slotName, String layout, String key, Properties properties) {
-//        this.slotDescriptions.add(new SchemaSlotDescription(slotName, layout, key, properties));
-//    }
+    private int findSlotIndex(String name) {
+        int i = 0;
+        for (Iterator iterator = this.slotDescriptions.iterator(); iterator.hasNext(); i++) {
+            SchemaSlotDescription slotDescription = (SchemaSlotDescription) iterator.next();
+            
+            if (slotDescription.getSlotName().equals(name)) {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
     
-//    public void addSlotDescription(String slotName) {
-//        addSlotDescription(slotName, null, null, new Properties());
-//    }
+    public void removeSlotDescription(SchemaSlotDescription slotDescription) {
+        this.slotDescriptions.remove(slotDescription);
+    }
 }
