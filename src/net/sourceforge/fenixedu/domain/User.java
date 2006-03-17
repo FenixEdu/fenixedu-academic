@@ -14,15 +14,12 @@ public class User extends User_Base {
     }    
     
     public User(String username){
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        this();
         this.setUsername(username);        
     }
     
     public User(String username, String istUsername, Boolean isPassInKerberos, String password, Person person){
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        this.setUsername(username);        
+        this(username);        
         this.setPerson(person);
         this.setPassword(password);
         this.setIstUsername(istUsername);
