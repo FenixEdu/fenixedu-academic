@@ -11,7 +11,12 @@
     </li>
 	<li>
 		<html:link page="/l1">
-			Blog listings
+			Blogs
+		</html:link>
+    </li>
+	<li>
+		<html:link page="/l1">
+			Forums
 		</html:link>
     </li>
 	<li>

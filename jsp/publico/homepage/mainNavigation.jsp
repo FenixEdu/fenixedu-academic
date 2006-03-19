@@ -9,11 +9,13 @@
 			Home
 		</html:link>
     </li>
-	<li>
-		<html:link page="/l1">
-			Blog
-		</html:link>
-    </li>
+	<logic:present name="homepage" property="blog">
+		<li>
+			<html:link page="/l1">
+				Blog: <bean:write name="homepage" property="blog.name"/>
+			</html:link>
+    	</li>
+	</logic:present>
 	<li>
 		<html:link page="/l1">
 			Curriculum Vitae
