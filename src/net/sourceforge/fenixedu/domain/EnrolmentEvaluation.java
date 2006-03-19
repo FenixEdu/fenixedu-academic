@@ -18,31 +18,18 @@ import net.sourceforge.fenixedu.util.MarkType;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
 
-    private static final String RECTIFICATION = "RECTIFICAÇÃO";
-	
-	
-	public EnrolmentEvaluation() {}
+    private static final String RECTIFICATION = "RECTIFICAï¿½ï¿½O";
+
+	public EnrolmentEvaluation() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 	
 	public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType type) {
+		this();
 		setEnrolment(enrolment);
 		setEnrolmentEvaluationType(type);
 	}
-	
-	
-    public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "grade = " + this.getGrade() + "; ";
-        result += "enrolmentEvaluationType = " + this.getEnrolmentEvaluationType() + "; ";
-        result += "examDate = " + this.getExamDate() + "; ";
-        result += "personResponsibleForGrade = " + this.getPersonResponsibleForGrade() + "; ";
-        result += "enrolmentEvaluationState = " + this.getEnrolmentEvaluationState() + "; ";
-        result += "when = " + this.getWhen() + "; ";
-        result += "checkSum = " + this.getCheckSum() + "; ";
-        result += "enrolment = " + this.getEnrolment() + "; ";
-        result += "gradeAvailableDate = " + this.getGradeAvailableDate() + "]\n";
-        result += "employee = " + this.getEmployee() + "; ";
-        return result;
-    }
 
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)

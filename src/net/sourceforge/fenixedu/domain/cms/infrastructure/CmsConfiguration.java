@@ -2,6 +2,8 @@
 
 package net.sourceforge.fenixedu.domain.cms.infrastructure;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 public class CmsConfiguration extends CmsConfiguration_Base
 {
 	private static String SMTP_SERVER_ADDRESS_DEFAULT = "mail.adm";
@@ -14,6 +16,7 @@ public class CmsConfiguration extends CmsConfiguration_Base
 	public CmsConfiguration()
 	{
 		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 		this.setSmtpServerAddress(SMTP_SERVER_ADDRESS_DEFAULT);
 		this.setFilterNonTextualAttachments(FILTER_NON_TEXTUAL_ATTACHMENTS_DEFAULT);
 		this.setMailingListsHost(MAILING_LIST_HOST_DEFAULT);

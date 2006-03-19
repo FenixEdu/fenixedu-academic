@@ -11,7 +11,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * @author Susana Fernandes
  * 
  * 21/Jul/2003 fenix-head Dominio
@@ -19,7 +19,12 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
  */
 public class Summary extends Summary_Base {
 
-    public boolean compareTo(Object obj) {
+    public Summary() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public boolean compareTo(Object obj) {
         boolean resultado = false;
         if (obj instanceof Summary) {
             Summary summary = (Summary) obj;

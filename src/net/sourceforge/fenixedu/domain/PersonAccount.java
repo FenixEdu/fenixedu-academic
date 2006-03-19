@@ -18,9 +18,12 @@ import net.sourceforge.fenixedu.domain.transactions.Transaction;
 public class PersonAccount extends PersonAccount_Base {
 
     public PersonAccount() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public PersonAccount(Person person) {
+    	this();
         setPerson(person);
         setBalance(new Double(0));
 

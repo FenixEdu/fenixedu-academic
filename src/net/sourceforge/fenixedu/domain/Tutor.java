@@ -4,7 +4,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Tutor extends Tutor_Base {
 
-    private Boolean getCanBeDeleted() {
+    public Tutor() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	private Boolean getCanBeDeleted() {
         return Boolean.TRUE;
     }
     

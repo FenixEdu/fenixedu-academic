@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
-import net.sourceforge.fenixedu.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;

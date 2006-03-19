@@ -8,10 +8,13 @@ package net.sourceforge.fenixedu.domain;
 public class GuideEntry extends GuideEntry_Base {
 
     public GuideEntry() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public GuideEntry(GraduationType graduationType, DocumentType documentType, String description,
             Integer quantity, Double price, Guide guide) {
+    	this();
         this.setDescription(description);
         this.setGuide(guide);
         this.setDocumentType(documentType);
@@ -19,18 +22,6 @@ public class GuideEntry extends GuideEntry_Base {
         this.setPrice(price);
         this.setQuantity(quantity);
 
-    }
-
-    public String toString() {
-        String result = "[GUIDE ENTRY";
-        result += ", description=" + getDescription();
-        result += ", guide=" + getGuide();
-        result += ", documentType=" + getDocumentType();
-        result += ", graduationType=" + getGraduationType();
-        result += ", price=" + getPrice();
-        result += ", quantity=" + getQuantity();
-        result += "]";
-        return result;
     }
 
 }

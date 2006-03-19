@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain.grant.contract;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author Barbosa
@@ -11,5 +13,10 @@ package net.sourceforge.fenixedu.domain.grant.contract;
  *  
  */
 public class GrantOrientationTeacher extends GrantOrientationTeacher_Base {
+
+	public GrantOrientationTeacher() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 }

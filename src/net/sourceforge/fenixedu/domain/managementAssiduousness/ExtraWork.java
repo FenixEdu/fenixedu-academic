@@ -3,10 +3,18 @@
  */
 package net.sourceforge.fenixedu.domain.managementAssiduousness;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
- * @author Tânia Pousão
+ * @author Tï¿½nia Pousï¿½o
  *
  */
 public class ExtraWork extends ExtraWork_Base {
+
+	public ExtraWork() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
 }

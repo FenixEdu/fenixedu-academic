@@ -235,21 +235,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             throw new DomainException("error.degree.curricular.plan.cant.delete");
     }
 
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "idInternal = " + getIdInternal() + "; ";
-        result += "name = " + this.getName() + "; ";
-        result += "initialDate = " + this.getInitialDate() + "; ";
-        result += "endDate = " + this.getEndDate() + "; ";
-        result += "state = " + this.getState() + "; ";
-        result += "needed Credits = " + this.getNeededCredits() + "; ";
-        result += "Mark Type = " + this.getMarkType() + "; ";
-        result += "degree = " + this.getDegree() + "]\n";
-        result += "NumerusClausus = " + this.getNumerusClausus() + "]\n";
-
-        return result;
-    }
-
     public String print() {
         if (!this.getCurricularStage().equals(CurricularStage.OLD)) {
             StringBuilder dcp = new StringBuilder();

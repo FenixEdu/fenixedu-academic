@@ -7,13 +7,19 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 
 
 public abstract class DegreeModule extends DegreeModule_Base {
-       
-    public void delete() {
+
+    public DegreeModule() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void delete() {
         for (;!getParentContexts().isEmpty(); getParentContexts().get(0).delete());
         for (;!getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
         for (;!getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().get(0).delete());

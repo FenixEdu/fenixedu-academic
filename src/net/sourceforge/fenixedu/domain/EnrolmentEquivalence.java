@@ -8,13 +8,12 @@ package net.sourceforge.fenixedu.domain;
 
 public class EnrolmentEquivalence extends EnrolmentEquivalence_Base {
 
-    public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "enrolment = " + getEnrolment() + "; ";
-        return result;
-    }
+    public EnrolmentEquivalence() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void delete() {
+	public void delete() {
         deleteDomainObject();
     }
 

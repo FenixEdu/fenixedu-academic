@@ -5,6 +5,8 @@
 
 package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 /**
  * This class contains all the information regarding a Reimbursement Guide
  * Entry. <br>
@@ -16,6 +18,8 @@ package net.sourceforge.fenixedu.domain.reimbursementGuide;
 public class ReimbursementGuideEntry extends ReimbursementGuideEntry_Base {
 
 	public ReimbursementGuideEntry() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
 }

@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.presentationTier.util.DTO;
 import net.sourceforge.fenixedu.presentationTier.util.PresentationConstants;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.FixedPeriodsExceedPlatformsDurationException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidNormalWorkPeriod1IntervalException;
@@ -34,9 +35,14 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime;
  *
  */
 public class ContinuousSchedule extends ContinuousSchedule_Base {
-     
+
+	public ContinuousSchedule() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
 	public static ContinuousSchedule makeContinuousSchedule(Employee employee,  NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriod, List<AssiduousnessRegime> regimes, 
-			TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) { 
+			TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) {
 		ContinuousSchedule newContinuousSchedule = new ContinuousSchedule();
  //       newContinuousSchedule.setEmployee(employee);
         newContinuousSchedule.setNormalWorkPeriod(normalWorkPeriod);

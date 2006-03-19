@@ -6,9 +6,16 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
-    public void delete() {
+    public TeacherServiceExemption() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void delete() {
         this.removeTeacher();
         super.deleteDomainObject();
     }

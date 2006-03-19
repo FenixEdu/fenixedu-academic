@@ -7,6 +7,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public abstract class Content extends Content_Base implements Comparable<Content>
 {
@@ -24,7 +25,7 @@ public abstract class Content extends Content_Base implements Comparable<Content
 	public Content()
 	{
 		super();
-        
+		setRootDomainObject(RootDomainObject.getInstance());
 		this.setCreationDate(new Date(System.currentTimeMillis()));
         setCreator(AccessControl.getUserView().getPerson());
 	}

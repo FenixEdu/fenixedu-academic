@@ -73,16 +73,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	public GradeScale getGradeScaleChain() {
     	return super.getGradeScale() != null ? super.getGradeScale() : getDegreeCurricularPlan().getGradeScaleChain();
     }
-	
-    public String toString() {
-        StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append("[").append(this.getClass()).append(":").append("idInternal = ").append(
-                this.getIdInternal()).append(";name = ").append(this.getName()).append(";code = ")
-                .append(this.getCode()).append("\n degreeCurricularPlan = ").append(
-                        this.getDegreeCurricularPlan()).append(";type = ").append(this.getType());
-        return stringBuffer.toString();
-    }
-    
+
     public void print(StringBuilder dcp, String tabs, Context previousContext) {
         String tab = tabs + "\t";
         dcp.append(tab);

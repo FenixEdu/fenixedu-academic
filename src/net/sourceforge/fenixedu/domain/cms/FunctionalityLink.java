@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.cms;
 
 public class FunctionalityLink extends FunctionalityLink_Base {
     
-    public  FunctionalityLink() {
+    public FunctionalityLink() {
         super();
     }
 

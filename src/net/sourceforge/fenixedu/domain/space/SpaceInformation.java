@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
@@ -10,6 +11,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 
     protected SpaceInformation() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(this.getClass().getName());
     }
 

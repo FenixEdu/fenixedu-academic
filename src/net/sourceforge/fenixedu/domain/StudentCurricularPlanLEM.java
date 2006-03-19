@@ -9,27 +9,28 @@ import org.apache.commons.collections.Predicate;
 public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
 
     
-	private static final String RAMO_PRODUCAO = "Ramo de Produção";
+	private static final String RAMO_PRODUCAO = "Ramo de Produï¿½ï¿½o";
 	
 	//1 Semester
 	private static final String METROLOGIA_INDUSTRIAL_CODE = "A8Z";
 
     private static final String PLACAS_E_CASCAS_CODE = "6Q";
 
-    private static final String FITH_YEAR_1SEM_OPTIONAL_GROUP = "Opções 5ºAno 1ºSem";
+    private static final String FITH_YEAR_1SEM_OPTIONAL_GROUP = "Opï¿½ï¿½es 5ï¿½Ano 1ï¿½Sem";
 
-    private static final String FOURTH_YEAR_1SEM_OPTIONAL_GROUP = "Opções 4ºAno 1ºSem";
+    private static final String FOURTH_YEAR_1SEM_OPTIONAL_GROUP = "Opï¿½ï¿½es 4ï¿½Ano 1ï¿½Sem";
     
     //2 Semester
-    private static final String FITH_YEAR_2SEM_OPTIONAL_GROUP = "Opções 5ºAno 2ºSem";
+    private static final String FITH_YEAR_2SEM_OPTIONAL_GROUP = "Opï¿½ï¿½es 5ï¿½Ano 2ï¿½Sem";
     
-    private static final String FOURTH_YEAR_2SEM_OPTIONAL_GROUP = "Opções 4ºAno 2ºSem";
+    private static final String FOURTH_YEAR_2SEM_OPTIONAL_GROUP = "Opï¿½ï¿½es 4ï¿½Ano 2ï¿½Sem";
     
     private static final String CALCULO_AUTOMATICO_ESTRUTURAS_CODE = "A6U";
     
     private static final String MAQUINAS_FERRAMENTAS_CODE = "A90";
 
     public StudentCurricularPlanLEM() {
+    	super();
         setOjbConcreteClass(getClass().getName());
     }
 
@@ -38,7 +39,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
      * @param curricularCoursesToKeep
      * @param optionalCurricularCourseGroup
      */
-    //  FIXME: MÉTODO PARA O 2º SEMSTERE
+    //  FIXME: Mï¿½TODO PARA O 2ï¿½ SEMSTERE
     protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
             List curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup, ExecutionPeriod executionPeriod) {
         int count = 0;
@@ -93,7 +94,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
     }
 
  /*   
-    //FIXME: MÉTODO PARA O 1º SEMSTERE
+    //FIXME: Mï¿½TODO PARA O 1ï¿½ SEMSTERE
     protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
             List curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup, ExecutionPeriod executionPeriod) {
         int count = 0;

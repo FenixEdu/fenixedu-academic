@@ -6,6 +6,8 @@
  */
 package net.sourceforge.fenixedu.domain.publication;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author TJBF & PFON
@@ -14,5 +16,10 @@ package net.sourceforge.fenixedu.domain.publication;
  * Preferences - Java - Code Generation - Code and Comments
  */
 public class PublicationSubtype extends PublicationSubtype_Base {
-   
+
+	public PublicationSubtype() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
 }

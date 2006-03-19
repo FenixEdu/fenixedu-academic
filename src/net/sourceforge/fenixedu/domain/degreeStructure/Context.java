@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -10,6 +11,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     protected Context() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         this.setOrder(0);
     }
 

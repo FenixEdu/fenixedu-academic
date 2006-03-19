@@ -11,8 +11,10 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
  */
 
 public class EnrolmentInExtraCurricularCourse extends EnrolmentInExtraCurricularCourse_Base {
-    protected EnrolmentInExtraCurricularCourse() {
+
+	protected EnrolmentInExtraCurricularCourse() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public EnrolmentInExtraCurricularCourse(StudentCurricularPlan studentCurricularPlan,
@@ -24,7 +26,4 @@ public class EnrolmentInExtraCurricularCourse extends EnrolmentInExtraCurricular
     	createEnrolmentLog(EnrolmentAction.ENROL);
     }
 
-    public String toString() {
-        return super.toString();
-    }
 }

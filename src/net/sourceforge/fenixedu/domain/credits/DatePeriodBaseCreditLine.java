@@ -10,7 +10,11 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
  */
 public abstract class DatePeriodBaseCreditLine extends DatePeriodBaseCreditLine_Base {
 
-    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
+    public DatePeriodBaseCreditLine() {
+		super();
+	}
+
+	public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
         return (getEnd().after(executionPeriod.getBeginDate()) && getStart().before(executionPeriod
                 .getEndDate()));
     }

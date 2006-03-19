@@ -16,26 +16,16 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 
-    /**
-     * Default Constructor
-     */
     public MasterDegreeProofVersion() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    /**
-     * @param masterDegreeThesis
-     * @param responsibleEmployee
-     * @param lastModification
-     * @param proofDate
-     * @param thesisDeliveryDate
-     * @param finalResult
-     * @param attachedCopiesNumber
-     * @param currentState
-     */
     public MasterDegreeProofVersion(MasterDegreeThesis masterDegreeThesis,
             Employee responsibleEmployee, Date lastModification, Date proofDate,
             Date thesisDeliveryDate, MasterDegreeClassification finalResult,
             Integer attachedCopiesNumber, State currentState, List juries, List externalJuries) {
+    	this();
         this.setMasterDegreeThesis(masterDegreeThesis);
         this.setResponsibleEmployee(responsibleEmployee);
         this.setLastModification(lastModification);
@@ -46,22 +36,6 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         this.setCurrentState(currentState);
         this.getJuries().addAll(juries);
         this.getExternalJuries().addAll(externalJuries);
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": \n";
-        result += "idInternal = " + this.getIdInternal() + "; \n";
-        result += "masterDegreeThesis = " + this.getMasterDegreeThesis().getIdInternal() + "; \n";
-        result += "responsibleEmployee = " + this.getResponsibleEmployee().getIdInternal() + "; \n";
-        result += "lastModification = " + this.getLastModification().toString() + "; \n";
-        result += "proofDate = " + this.getProofDate().toString() + "; \n";
-        result += "thesisDeliveryDate = " + this.getThesisDeliveryDate().toString() + "; \n";
-        result += "finalResult = " + this.getFinalResult().toString() + "; \n";
-        result += "attachedCopiesNumber = " + this.getAttachedCopiesNumber().toString() + "; \n";
-        result += "currentState = " + this.getCurrentState().toString() + "; \n";
-        result += "] \n";
-
-        return result;
     }
 
 }

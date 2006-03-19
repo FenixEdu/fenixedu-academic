@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
 
@@ -25,13 +26,13 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     public CurricularPeriod(CurricularPeriodType curricularPeriodType) {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         setPeriodType(curricularPeriodType);
     }
 
     public CurricularPeriod(CurricularPeriodType curricularPeriodType, Integer order,
             CurricularPeriod parent) {
-        super();
-        setPeriodType(curricularPeriodType);
+        this(curricularPeriodType);
         setOrder(order);
         setParent(parent);
 

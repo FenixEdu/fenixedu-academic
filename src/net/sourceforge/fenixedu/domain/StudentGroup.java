@@ -14,26 +14,21 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class StudentGroup extends StudentGroup_Base {
 
     public StudentGroup() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public StudentGroup(Integer groupNumber, Grouping grouping) {
+    	this();
         super.setGroupNumber(groupNumber);
         super.setGrouping(grouping);
     }
 
     public StudentGroup(Integer groupNumber, Grouping grouping, Shift shift) {
+    	this();
         super.setGroupNumber(groupNumber);
         super.setGrouping(grouping);
         super.setShift(shift);
-    }
-
-    public String toString() {
-        String result = "[STUDENT_GROUP";
-        result += ", groupNumber=" + getGroupNumber();
-        result += ", grouping=" + getGrouping();
-        result += ", shift =" + getShift();
-        result += "]";
-        return result;
     }
 
     public void delete(){

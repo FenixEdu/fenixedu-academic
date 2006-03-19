@@ -14,7 +14,7 @@ public class Exam extends Exam_Base {
             List<CurricularCourseScope> curricularCourseScopesToAssociate, 
             List<OldRoom> rooms,
             OccupationPeriod period, Season season) {
-
+    	super();
         checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);
     	
         setAttributesAndAssociateRooms(examDay, examStartTime, examEndTime, executionCoursesToAssociate,
@@ -46,12 +46,6 @@ public class Exam extends Exam_Base {
             }
         }
         return true;
-    }
-
-    public String toString() {
-        return "[EXAM:" + " id= '" + this.getIdInternal() + "'\n" + " day= '" + this.getDay() + "'\n"
-                + " beginning= '" + this.getBeginning() + "'\n" + " end= '" + this.getEnd() + "'\n"
-                + " season= '" + this.getSeason() + "'\n" + "";
     }
 
     public void edit(Date examDay, Date examStartTime, Date examEndTime, 

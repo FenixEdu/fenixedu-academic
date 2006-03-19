@@ -40,7 +40,12 @@ import org.apache.commons.collections.Predicate;
 
 public class Teacher extends Teacher_Base {
 
-    /***************************************************************************
+    public Teacher() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	/***************************************************************************
      * BUSINESS SERVICES *
      **************************************************************************/
 
@@ -312,15 +317,6 @@ public class Teacher extends Teacher_Base {
     /***************************************************************************
      * OTHER METHODS *
      **************************************************************************/
-
-    public String toString() {
-        String result = "[Dominio.Teacher ";
-        result += ", teacherNumber=" + getTeacherNumber();
-        result += ", person=" + getPerson();
-        result += ", category= " + getCategory();
-        result += "]";
-        return result;
-    }
 
     public InfoCredits getExecutionPeriodCredits(ExecutionPeriod executionPeriod) {
         return InfoCreditsBuilder.build(this, executionPeriod);

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
@@ -23,11 +24,15 @@ public class FixedPeriod extends FixedPeriod_Base {
 
 
     public FixedPeriod(TimeInterval fixedPeriod1, TimeInterval fixedPeriod2) {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
         setFixedPeriod1(fixedPeriod1);
         setFixedPeriod2(fixedPeriod2);
     }
 
     public FixedPeriod(TimeInterval fixedPeriod1) {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
         setFixedPeriod1(fixedPeriod1);
         setFixedPeriod2(null);
     }

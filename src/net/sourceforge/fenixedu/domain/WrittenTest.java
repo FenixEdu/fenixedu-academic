@@ -25,7 +25,7 @@ public class WrittenTest extends WrittenTest_Base {
             List<ExecutionCourse> executionCoursesToAssociate,
             List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period, String description) {
-
+    	super();
         checkEvaluationDate(testDate, executionCoursesToAssociate);
         setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime,
                 executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);
@@ -43,12 +43,6 @@ public class WrittenTest extends WrittenTest_Base {
                 throw new DomainException("error.invalidWrittenTestDate");
             }
         }
-    }
-
-    public String toString() {
-        return "[WRITTEN_TEST:" + " id= '" + this.getIdInternal() + "'\n" + " day= '" + this.getDay()
-                + "'\n" + " beginning= '" + this.getBeginning() + "'\n" + " end= '" + this.getEnd()
-                + "'\n" + "";
     }
 
     public void edit(Date testDate, Date testStartTime, Date testEndTime,

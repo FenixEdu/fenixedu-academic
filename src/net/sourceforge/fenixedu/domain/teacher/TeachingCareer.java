@@ -30,18 +30,7 @@ public class TeachingCareer extends TeachingCareer_Base {
 		setCategory(category);
 		setBasicProperties(infoTeachingCareer);
 	}
-    
-    public String toString() {
-        String result = "[" + TeachingCareer.class.getName();
-        result += ", beginYear=" + getBeginYear();
-        result += ", endYear=" + getEndYear();
-        result += ", category=" + getCategory();
-        result += ", courseOrPosition=" + getCourseOrPosition();
-        result += ", teacher=" + getTeacher();
-        result += "]";
-        return result;
-    }
-	
+
 	public void delete() {
 		removeCategory();
 		super.delete();

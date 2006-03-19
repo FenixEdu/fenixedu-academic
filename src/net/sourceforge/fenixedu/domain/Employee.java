@@ -13,19 +13,16 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 /**
  * 
- * @author Tânia Pousão
+ * @author Tï¿½nia Pousï¿½o
  */
 public class Employee extends Employee_Base {
 
-    public String toString() {
-        String result = "[Dominio.Employee ";
-        result += ", employeeNumber=" + getEmployeeNumber();
-        result += ", person=" + getPerson();
-        result += "]";
-        return result;
-    }
+    public Employee() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public Department getCurrentDepartmentWorkingPlace() {
+	public Department getCurrentDepartmentWorkingPlace() {
 
         Contract contract = getCurrentContract();
         if (contract != null && contract.getWorkingUnit() != null) {

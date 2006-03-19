@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author David Santos in Jun 9, 2004
@@ -7,15 +9,14 @@ package net.sourceforge.fenixedu.domain.precedences;
 
 public abstract class RestrictionByCurricularCourse extends RestrictionByCurricularCourse_Base {
 
-    public String toString() {
-        StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append("Restriction(").append(this.getClass()).append("):").append("\n\t");
-        stringBuffer.append(this.getPrecedentCurricularCourse()).append("\n");
-        return stringBuffer.toString();
-    }
-	
+	public RestrictionByCurricularCourse() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
 	public void delete(){
 		removePrecedentCurricularCourse();
 		super.delete();
 	}
+
 }

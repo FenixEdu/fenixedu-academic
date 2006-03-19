@@ -2,12 +2,18 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class PersonFunction extends PersonFunction_Base {
 
-    public void edit(Function function, Date beginDate, Date endDate, Double credits) {
+    public PersonFunction() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void edit(Function function, Date beginDate, Date endDate, Double credits) {
         this.setFunction(function);
         this.setCredits(credits);        
         this.setBeginDate(beginDate);

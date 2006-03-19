@@ -13,7 +13,8 @@ import net.sourceforge.fenixedu.util.EvaluationType;
  */
 public class OnlineTest extends OnlineTest_Base {
 
-    public OnlineTest() {    	
+    public OnlineTest() {
+    	super();
         this.setOjbConcreteClass(OnlineTest.class.getName());
     }
     

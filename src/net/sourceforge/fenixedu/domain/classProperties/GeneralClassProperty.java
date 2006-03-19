@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.classProperties;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyName;
 import net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue;
 
@@ -9,7 +10,12 @@ import net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue;
 
 public abstract class GeneralClassProperty extends GeneralClassProperty_Base {
 
-    public GeneralClassPropertyName getName() {
+    public GeneralClassProperty() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public GeneralClassPropertyName getName() {
         return new GeneralClassPropertyName(getNameString());
     }
 

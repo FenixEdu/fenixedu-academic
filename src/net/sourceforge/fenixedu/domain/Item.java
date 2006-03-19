@@ -11,20 +11,12 @@ import net.sourceforge.fenixedu.fileSuport.INode;
 
 public class Item extends Item_Base implements INode {
 
-    public String toString() {
-        String result = "[ITEM";
-        result += ", codInt=" + getIdInternal();
-        result += ", nome=" + getName();
-        result += ", seccao=" + getSection();
-        result += ", ordem=" + getItemOrder();
-        result += ", informacao=" + getInformation();
-        result += ", urgente=" + getUrgent();
-        result += ", chaveSeccao=" + getKeySection();
-        result += "]";
-        return result;
-    }
+    public Item() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public String getSlideName() {
+	public String getSlideName() {
         String result = getParentNode().getSlideName() + "/I" + getIdInternal();
         return result;
     }

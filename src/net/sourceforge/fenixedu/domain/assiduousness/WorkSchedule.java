@@ -13,6 +13,7 @@ import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidWorkdayIntervalException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.WorkdayOutOfLegalBoundsException;
@@ -37,6 +38,7 @@ public class WorkSchedule extends WorkSchedule_Base {
     
     public WorkSchedule() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
  
     public boolean isTemplate() {

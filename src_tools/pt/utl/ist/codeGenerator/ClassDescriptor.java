@@ -8,7 +8,7 @@ import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.utl.ist.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class ClassDescriptor {
 

@@ -35,10 +35,11 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.StringAppender;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.util.MessageResources;
+
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 

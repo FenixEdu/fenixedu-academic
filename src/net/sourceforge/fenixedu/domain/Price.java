@@ -9,26 +9,17 @@ package net.sourceforge.fenixedu.domain;
 public class Price extends Price_Base {
 
     public Price() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Price(GraduationType graduationType, DocumentType documentType, String description,
             Double price) {
+    	this();
         this.setDescription(description);
         this.setDocumentType(documentType);
         this.setGraduationType(graduationType);
         this.setPrice(price);
-
-    }
-
-    public String toString() {
-        String result = "[GUIDE ENTRY";
-        result += ", description=" + getDescription();
-        result += ", documentType=" + getDocumentType();
-        result += ", graduationType=" + getGraduationType();
-        result += ", price=" + getPrice();
-
-        result += "]";
-        return result;
     }
 
 }

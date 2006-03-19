@@ -8,11 +8,9 @@ package net.sourceforge.fenixedu.domain;
 
 public class University extends University_Base {
 
-    public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "code = " + this.getCode() + "; ";
-        result += "name = " + this.getName() + "; ";
-        return result;
-    }
+	public University() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 }

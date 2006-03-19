@@ -11,13 +11,15 @@ import java.util.Date;
 public class InsuranceValue extends InsuranceValue_Base {
 
     public InsuranceValue() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public InsuranceValue(ExecutionYear executionYear, Double annualValue, Date endDate) {
+    	this();
         this.setExecutionYear(executionYear);
         this.setAnnualValue(annualValue);
         this.setEndDate(endDate);
-
     }
 
 }

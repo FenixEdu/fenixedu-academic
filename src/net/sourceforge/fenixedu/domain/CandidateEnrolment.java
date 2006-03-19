@@ -8,26 +8,15 @@ package net.sourceforge.fenixedu.domain;
 public class CandidateEnrolment extends CandidateEnrolment_Base {
 
 	public CandidateEnrolment() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
-
-	// public CandidateEnrolment(MasterDegreeCandidate masterDegreeCandidate,
-	// CurricularCourseScope curricularCourseScope) {
-	// setMasterDegreeCandidate(masterDegreeCandidate);
-	// setCurricularCourseScope(curricularCourseScope);
-	// }
 
 	public CandidateEnrolment(MasterDegreeCandidate masterDegreeCandidate,
 			CurricularCourse curricularCourse) {
+		this();
 		setMasterDegreeCandidate(masterDegreeCandidate);
 		setCurricularCourse(curricularCourse);
 	}
 
-	public String toString() {
-		String result = "[CANDIDATE_ENROLMENT";
-		result += ", codInt=" + getIdInternal();
-		result += ", masterDegreeCandidate=" + getMasterDegreeCandidate();
-		result += ", curricularCourse=" + getCurricularCourse();
-		result += "]";
-		return result;
-	}
 }

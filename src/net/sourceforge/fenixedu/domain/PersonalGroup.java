@@ -9,6 +9,7 @@ public class PersonalGroup extends PersonalGroup_Base implements IGroup{
     
     public PersonalGroup() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public void delete() {

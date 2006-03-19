@@ -19,7 +19,12 @@ import net.sourceforge.fenixedu.util.ProposalState;
  */
 public class Grouping extends Grouping_Base {
 
-    public Calendar getEnrolmentBeginDay() {
+    public Grouping() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public Calendar getEnrolmentBeginDay() {
         if (this.getEnrolmentBeginDayDate() != null) {
             Calendar result = Calendar.getInstance();
             result.setTime(this.getEnrolmentBeginDayDate());
@@ -51,20 +56,6 @@ public class Grouping extends Grouping_Base {
         } else {
             this.setEnrolmentEndDayDate(null);
         }
-    }
-
-    public String toString() {
-        String result = "[GROUP";
-        result += ", maximumCapacity=" + getMaximumCapacity();
-        result += ", minimumCapacity=" + getMinimumCapacity();
-        result += ", idealCapacity=" + getIdealCapacity();
-        result += ", enrolmentPolicy=" + getEnrolmentPolicy();
-        result += ", groupMaximumNumber=" + getGroupMaximumNumber();
-        result += ", name=" + getName();
-        result += ", shiftType=" + getShiftType();
-        result += ", projectDescription=" + getProjectDescription();
-        result += "]";
-        return result;
     }
 
     public List<ExecutionCourse> getExecutionCourses() {

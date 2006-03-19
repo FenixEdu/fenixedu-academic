@@ -7,8 +7,13 @@ package net.sourceforge.fenixedu.domain;
 /**
  * Dominio
  * 
- * @author João Mota 27/Out/2003
+ * @author Joï¿½o Mota 27/Out/2003
  */
 public class Coordinator extends Coordinator_Base {
+
+	public Coordinator() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 }

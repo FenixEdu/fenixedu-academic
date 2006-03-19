@@ -4,20 +4,17 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
 public class ResidenceCandidacies extends ResidenceCandidacies_Base {
 
-    public String toString() {
-        String result = "ResidenceCandidancy :\n";
-        result += "\n  - InternalId : " + getIdInternal();
-        result += "\n  - Student : " + getStudent();
-        result += "\n  - Creation Date : " + getCreationDate();
-        result += "\n  - Observations : " + getObservations();
-        result += "\n  - Candidate : " + getCandidate();
-        return result;
-    }
+	public ResidenceCandidacies() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 }

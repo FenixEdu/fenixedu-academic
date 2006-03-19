@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -12,6 +13,7 @@ public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<We
     public WeeklyWorkLoad(final Attends attends, final Integer weekOffset,
             final Integer contact, final Integer autonomousStudy, final Integer other) {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
 
         if (attends == null || weekOffset == null) {
             throw new NullPointerException();

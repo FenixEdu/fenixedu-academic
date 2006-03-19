@@ -38,11 +38,6 @@ public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
     public void setMinimumNumberOfOptionalCourses(Integer minimumNumberOfOptionalCourses) {
     }
 
-    public String toString() {
-        return "minimumCredits[" + super.getMinimumValue() + "] maximumCredits["
-                + super.getMaximumValue() + "] branch[" + getBranch().getName() + "]";
-    }
-
 	public void edit(String name, Branch branch, Integer minimumValue, Integer maximumValue, AreaType areaType){
         setName(name);
 		setBranch(branch);

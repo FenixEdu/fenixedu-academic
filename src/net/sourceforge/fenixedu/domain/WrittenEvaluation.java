@@ -20,14 +20,14 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public WrittenEvaluation() {
-    	
+    	super();
     }
 
     public WrittenEvaluation(Date evaluationDay, Date evaluationBeginningTime, Date evaluationEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
             List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period) {
-
+    	this();
         setAttributesAndAssociateRooms(evaluationDay, evaluationBeginningTime, evaluationEndTime,
                 executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);
     }
@@ -35,12 +35,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	public EvaluationType getEvaluationType() {
 		return EvaluationType.EXAM_TYPE;
 	}
-    
-    public String toString() {
-        return "[WRITTEN EVALUATION:" + " id= '" + this.getIdInternal() + "'\n" + " day= '"
-                + this.getDay() + "'\n" + " beginning= '" + this.getBeginning() + "'\n" + " end= '"
-                + this.getEnd() + "'\n" + "";
-    }
 
     public Calendar getBeginning() {
         if (this.getBeginningDate() != null) {
@@ -196,7 +190,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     private boolean checkValidHours(Date beginning, Date end) {
         if (beginning.after(end)) {
-            throw new DomainException("error.data.exame.inválida");
+            throw new DomainException("error.data.exame.invï¿½lida");
         }
         return true;
     }

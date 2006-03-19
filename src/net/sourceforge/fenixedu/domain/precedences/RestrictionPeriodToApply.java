@@ -12,21 +12,11 @@ import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base {
 
 	public RestrictionPeriodToApply() {}
-	
-	
+
 	public RestrictionPeriodToApply(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
-		
         setPrecedence(precedence);
         setPeriodToApplyRestriction(PeriodToApplyRestriction.getEnum(number.intValue()));
 	}
-	
-	
-    public String toString() {
-        StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append("Restriction(").append(this.getClass()).append("):").append("\n\t");
-        stringBuffer.append(this.getPeriodToApplyRestriction()).append("\n");
-        return stringBuffer.toString();
-    }
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
         ExecutionPeriod executionPeriod = precedenceContext.getExecutionPeriod();

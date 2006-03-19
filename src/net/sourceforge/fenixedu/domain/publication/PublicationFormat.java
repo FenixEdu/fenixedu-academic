@@ -6,6 +6,8 @@
  */
 package net.sourceforge.fenixedu.domain.publication;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author TJBF & PFON
@@ -13,6 +15,11 @@ package net.sourceforge.fenixedu.domain.publication;
  * To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Generation - Code and Comments
  */
-public class PublicationFormat extends PublicationFormat_Base {  
+public class PublicationFormat extends PublicationFormat_Base {
+
+	public PublicationFormat() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}  
 
 }

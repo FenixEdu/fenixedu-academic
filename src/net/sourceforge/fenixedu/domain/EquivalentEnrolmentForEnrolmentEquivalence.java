@@ -1,16 +1,16 @@
-/*
- * Created on 2/Abr/2003 by jpvl
- *
- */
 package net.sourceforge.fenixedu.domain;
 
 /**
  * @author jpvl
  */
-public class EquivalentEnrolmentForEnrolmentEquivalence extends
-        EquivalentEnrolmentForEnrolmentEquivalence_Base {
+public class EquivalentEnrolmentForEnrolmentEquivalence extends EquivalentEnrolmentForEnrolmentEquivalence_Base {
 
-    public void delete() {
+    public EquivalentEnrolmentForEnrolmentEquivalence() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void delete() {
         deleteDomainObject();
     }
 

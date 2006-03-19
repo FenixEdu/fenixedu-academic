@@ -37,19 +37,9 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
         CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
     }
 
-
-	public String toString() {
-		String result = "[EXECUTION_COURSE";
-		result += ", codInt=" + getIdInternal();
-		result += ", sigla=" + getSigla();
-		result += ", nome=" + getNome();
-		result += ", theoreticalHours=" + getTheoreticalHours();
-		result += ", praticalHours=" + getPraticalHours();
-		result += ", theoPratHours=" + getTheoPratHours();
-		result += ", labHours=" + getLabHours();
-		result += ", executionPeriod=" + getExecutionPeriod();
-		result += "]";
-		return result;
+	public ExecutionCourse() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
 	public String getSlideName() {

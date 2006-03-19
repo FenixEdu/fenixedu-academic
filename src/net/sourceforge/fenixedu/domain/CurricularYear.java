@@ -10,21 +10,16 @@ public class CurricularYear extends CurricularYear_Base implements Comparable<Cu
 
     public CurricularYear() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public CurricularYear(final Integer year, final int numberOfSemesters) {
-        super();
+        this();
         setYear(year);
 
         for (int i = 1; i <= numberOfSemesters; i++) {
             new CurricularSemester(this, Integer.valueOf(i));
         }
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "year = " + this.getYear() + "]\n";
-        return result;
     }
 
 	public int compareTo(final CurricularYear curricularYear) {

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.project;
 
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.Period;
@@ -9,6 +10,7 @@ public class Project extends Project_Base {
     
     public  Project() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public Period getPeriod () {

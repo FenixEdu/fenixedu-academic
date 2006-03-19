@@ -4,6 +4,7 @@ public class DislocatedStudent extends DislocatedStudent_Base {
     
     public DislocatedStudent() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
 }

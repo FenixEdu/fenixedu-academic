@@ -45,12 +45,6 @@ public class OptionalCurricularCourseGroup extends OptionalCurricularCourseGroup
     public void setAreaType(AreaType areaType) {
     }
 
-    public String toString() {
-        return "minimumNumberOfOptionalCourses[" + super.getMinimumValue()
-                + "] maximumNumberOfOptionalCourses[" + super.getMaximumValue() + "] branch["
-                + getBranch().getName() + "]";
-    }
-	
 	public void edit(String name, Branch branch, Integer minimumValue, Integer maximumValue, AreaType areaType) {
 		edit(name, branch, minimumValue, maximumValue);
 	}

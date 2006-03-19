@@ -3,11 +3,19 @@
  */
 package net.sourceforge.fenixedu.domain.managementAssiduousness;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
- * @author Tânia Pousão
+ * @author Tï¿½nia Pousï¿½o
  *
  */
 public class MoneyCostCenter extends MoneyCostCenter_Base {
+
+	public MoneyCostCenter() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
 }
 

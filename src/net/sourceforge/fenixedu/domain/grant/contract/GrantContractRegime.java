@@ -6,13 +6,20 @@ package net.sourceforge.fenixedu.domain.grant.contract;
 import java.util.Calendar;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 /**
  * @author Pica
  * @author Barbosa
  */
 public class GrantContractRegime extends GrantContractRegime_Base {
 
-    public Boolean getContractRegimeActive() {
+    public GrantContractRegime() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public Boolean getContractRegimeActive() {
         if (getDateEndContract().after(Calendar.getInstance().getTime())) {
             return Boolean.TRUE;
         }

@@ -6,6 +6,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Homepage extends Homepage_Base {
 
+	public Homepage() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
 	@Override
 	public void setMyUrl(String myUrl) {
 		for (final Person person : RootDomainObject.readAllPersons()) {

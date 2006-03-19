@@ -27,7 +27,12 @@ public class ExecutionDegree extends ExecutionDegree_Base {
     	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.nome"));
     }
 
-    public boolean isFirstYear() {
+    public ExecutionDegree() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public boolean isFirstYear() {
 
         List<ExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
 
@@ -39,21 +44,6 @@ public class ExecutionDegree extends ExecutionDegree_Base {
         }
 
         return false;
-    }
-
-    public String toString() {
-        String result = "[CURSO_EXECUCAO";
-        result += ", codInt=" + getIdInternal();
-        result += ", executionYear=" + getExecutionYear();
-        result += ", degreeCurricularPlan=" + getDegreeCurricularPlan();
-        if (getCoordinatorsList() != null) {
-            result += ", coordinatorsList=" + getCoordinatorsList().size();
-        } else {
-            result += ", coordinatorsList is NULL";
-        }
-        result += ", campus=" + getCampus();
-        result += "]";
-        return result;
     }
 
 }

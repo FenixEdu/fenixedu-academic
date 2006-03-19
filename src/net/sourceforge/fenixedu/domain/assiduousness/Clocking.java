@@ -5,6 +5,7 @@ import org.joda.time.Interval;
 
 //import net.sourceforge.fenixedu.domain.Employee_Base.Body;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ClockingState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
@@ -13,10 +14,12 @@ public class Clocking extends Clocking_Base {
 
     public Clocking() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
    
     public Clocking(Employee employee, Card card, ClockUnit clockUnit, ClockingState clockingState, DateTime date) {
+    	this();
         setDate(date);
 //        setEmployee(employee);
 //        setCard(card);

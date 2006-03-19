@@ -18,18 +18,12 @@ import org.joda.time.Interval;
  */
 public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comparable {
 
-    public String toString() {
-        String result = "[EXECUTION_PERIOD";
-        result += ", internalCode=" + getIdInternal();
-        result += ", name=" + getName();
-        result += ", executionYear=" + getExecutionYear();
-        result += ", begin Date=" + getBeginDate();
-        result += ", end Date=" + getEndDate();
-        result += "]\n";
-        return result;
-    }
+    public ExecutionPeriod() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public String getSlideName() {
+	public String getSlideName() {
         String result = getParentNode().getSlideName() + "/EP" + getIdInternal();
         return result;
     }

@@ -6,22 +6,18 @@
 package net.sourceforge.fenixedu.domain;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  * 
  */
 public class EvaluationMethod extends EvaluationMethod_Base {
 
-    public String toString() {
-        String result = "[EvaluationMethod";
-        result += ", codInt=" + getIdInternal();
-        result += ", evaluationElements =" + getEvaluationElements();
-        result += ", executionCourse =" + getExecutionCourse();
-        result += "]";
-        return result;
-    }
-    
-    public void edit(String evaluationElements, String evaluationElementsEng) {
+    public EvaluationMethod() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void edit(String evaluationElements, String evaluationElementsEng) {
         if (evaluationElements == null || evaluationElementsEng == null)
             throw new NullPointerException();
         

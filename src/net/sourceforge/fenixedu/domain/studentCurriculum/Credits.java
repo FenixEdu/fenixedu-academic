@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -7,6 +8,7 @@ public class Credits extends Credits_Base {
     
     public Credits() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     @Override

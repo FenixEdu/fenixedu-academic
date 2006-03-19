@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain.gesdis;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
@@ -11,20 +13,14 @@ package net.sourceforge.fenixedu.domain.gesdis;
  */
 public class CourseHistoric extends CourseHistoric_Base {
 
-    public String toString() {
-        String result = "[Dominio.gesdis.CourseHistoric ";
-        result += ", enrolled=" + getEnrolled();
-        result += ", evaluated=" + getEvaluated();
-        result += ", approved=" + getApproved();
-        result += ", curricularYear=" + getCurricularYear();
-        result += ", semester=" + getSemester();
-        result += ", curricularCourse=" + getCurricularCourse();
-        result += "]";
-        return result;
-    }
-    
-    public void delete(){
+    public CourseHistoric() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void delete(){
         removeCurricularCourse();
         super.deleteDomainObject();
     }
+
 }

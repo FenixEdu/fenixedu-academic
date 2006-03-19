@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu.domain.Seminaries;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
@@ -16,7 +18,12 @@ import java.util.Calendar;
  */
 public class Seminary extends Seminary_Base {
 
-    /**
+    public Seminary() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	/**
      * @return
      */
     public Calendar getEnrollmentBeginDate() {
@@ -107,17 +114,6 @@ public class Seminary extends Seminary_Base {
         } else {
             this.setEnrollmentTimeEnd(null);
         }
-    }
-
-    public String toString() {
-        String result;
-        result = "[Seminary:";
-        result += "ID=" + this.getIdInternal();
-        result += ",Name=" + this.getName();
-        result += ",Description=" + this.getDescription();
-        result += ",Allowed Candidacies Per Student=" + this.getAllowedCandidaciesPerStudent();
-        result += ",Modalities=" + this.getEquivalencies() + "]";
-        return result;
     }
 
 }

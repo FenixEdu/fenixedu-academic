@@ -5,11 +5,13 @@ import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 public class Mark extends Mark_Base {
 
     public Mark() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     	setOjbConcreteClass(this.getClass().getName());
     }
 
     public Mark(final Attends attends, final Evaluation evaluation, final String mark) {
-        setOjbConcreteClass(this.getClass().getName());
+    	this();
         setAttend(attends);
         setEvaluation(evaluation);
         setMark(mark);
@@ -23,18 +25,7 @@ public class Mark extends Mark_Base {
     		throw new InvalidMarkDomainException("errors.invalidMark", mark, getAttend().getAluno().getNumber().toString());
     	}
     }
-    
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "idInternal = " + getIdInternal() + "; ";
-        result += "mark = " + getMark() + "; ";
-        result += "published mark = " + getPublishedMark() + "; ";
-        result += "evaluation= " + getEvaluation().getIdInternal() + "; ";
-        result += "attend = " + getAttend().getIdInternal() + "; ]";
 
-        return result;
-    }
-    
     public void delete() {
     	setAttend(null);
     	setEvaluation(null);

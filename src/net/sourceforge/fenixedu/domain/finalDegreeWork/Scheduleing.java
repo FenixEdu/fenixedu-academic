@@ -1,7 +1,3 @@
-/*
- * Created on Mar 7, 2004
- *
- */
 package net.sourceforge.fenixedu.domain.finalDegreeWork;
 
 import java.util.ArrayList;
@@ -12,14 +8,16 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-/**
- * @author Luis Cruz
- * 
- */
 public class Scheduleing extends Scheduleing_Base {
 
-    public Date getEndOfProposalPeriod() {
+    public Scheduleing() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public Date getEndOfProposalPeriod() {
         if (this.getEndOfProposalPeriodDate() != null && this.getEndOfProposalPeriodTime() != null) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(this.getEndOfProposalPeriodDate().getTime());

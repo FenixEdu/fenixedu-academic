@@ -20,6 +20,8 @@ import net.sourceforge.fenixedu.stm.VersionedSubject;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 
+import pt.utl.ist.fenix.tools.util.StringAppender;
+
 /**
  * @author jpvl
  */
@@ -153,4 +155,10 @@ public abstract class DomainObject extends DomainObject_Base implements Serializ
     		return System.getProperty("user.name", "FENIX");
     	}
     }
+
+	@Override
+	public final String toString() {
+		return StringAppender.append(getClass().getName(), "(", getIdInternal().toString(), ")");
+	}
+
 }

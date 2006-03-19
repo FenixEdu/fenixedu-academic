@@ -7,11 +7,19 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 import java.util.Calendar;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 /**
  * @author Susana Fernandes
  */
 public class DistributedTest extends DistributedTest_Base {
-    public Calendar getBeginDate() {
+
+    public DistributedTest() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public Calendar getBeginDate() {
         if (getBeginDateDate() != null) {
             final Calendar calendar = Calendar.getInstance();
             calendar.setTime(getBeginDateDate());

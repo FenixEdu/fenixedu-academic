@@ -20,24 +20,16 @@ public class Branch extends Branch_Base {
 
 	public Branch() {
 		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 	
 	public Branch (String name, String nameEn, String code, DegreeCurricularPlan degreeCurricularPlan) {
-		super();
+		this();
 		setName(name);
 		setNameEn(nameEn);
 		setCode(code);
 		setDegreeCurricularPlan(degreeCurricularPlan);
 	}
-	
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "idInternal = " + getIdInternal() + "; ";
-        result += "name = " + this.getName() + "; ";
-        result += "code = " + this.getCode() + "; ";
-        result += "acronym = " + this.getAcronym() + "]\n";
-        return result;
-    }
 
     public Boolean representsCommonBranch() {
         if (this.getBranchType().equals(BranchType.COMNBR)) {

@@ -16,15 +16,6 @@ public class Contributor extends Contributor_Base {
         this.setContributorAddress(contributorAddress);
     }
 
-    public String toString() {
-        String result = "Contributor:\n";
-        result += "\n  - Internal Code : " + getIdInternal();
-        result += "\n  - Contributor Number : " + getContributorNumber();
-        result += "\n  - Contributor Name : " + getContributorName();
-        result += "\n  - Contributor Address : " + getContributorAddress();
-        return result;
-    }
-
     public void edit(Integer contributorNumber, String contributorName, String contributorAddress) {
         Contributor contributor = Contributor.readByContributorNumber(contributorNumber);
         if (contributor != null && !contributor.equals(this)) {

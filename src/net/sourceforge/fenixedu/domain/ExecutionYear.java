@@ -24,17 +24,12 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class ExecutionYear extends ExecutionYear_Base implements INode, Comparable {
 
-    public String toString() {
-        String result = "[EXECUTION_YEAR";
-        result += ", internalCode=" + getIdInternal();
-        result += ", year=" + getYear();
-        result += ", begin=" + getBeginDate();
-        result += ", end=" + getEndDate();
-        result += "]";
-        return result;
-    }
+    public ExecutionYear() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public String getSlideName() {
+	public String getSlideName() {
         String result = "/EY" + getIdInternal();
         return result;
     }

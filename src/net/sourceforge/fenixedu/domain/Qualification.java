@@ -9,9 +9,11 @@ public class Qualification extends Qualification_Base {
 
     public Qualification(){
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public Qualification(Person person, Country country, InfoQualification infoQualification) {
+    	this();
         if(person == null)
             throw new DomainException("The person should not be null!");
         this.setPerson(person);

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 
@@ -17,10 +18,9 @@ import org.apache.struts.upload.FormFile;
 
 public class Metadata extends Metadata_Base {
 
-    
-
     public Metadata(final ExecutionCourse executionCourse, final FormFile metadataFile, final String path) {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         setVisibility(Boolean.TRUE);
         setExecutionCourse(executionCourse);
 

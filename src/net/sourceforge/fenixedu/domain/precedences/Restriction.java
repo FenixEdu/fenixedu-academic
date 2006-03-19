@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 
@@ -12,6 +13,7 @@ public abstract class Restriction extends Restriction_Base {
     
     public Restriction() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(this.getClass().getName());
     }
 	

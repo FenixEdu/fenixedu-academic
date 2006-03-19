@@ -31,6 +31,7 @@ public class Enrolment extends Enrolment_Base {
     
     public Enrolment() {
     	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Enrolment(StudentCurricularPlan studentCurricularPlan,
@@ -44,7 +45,8 @@ public class Enrolment extends Enrolment_Base {
     
     //new student structure methods
     public Enrolment(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
-            EnrollmentCondition enrolmentCondition, String createdBy){
+            EnrollmentCondition enrolmentCondition, String createdBy) {
+    	this();
     	if(studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null || executionPeriod == null || enrolmentCondition == null ) {
     		throw new DomainException("invalid arguments");
     	}
@@ -109,16 +111,6 @@ public class Enrolment extends Enrolment_Base {
         createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod);
     }
 
-    public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "idInternal = " + super.getIdInternal() + "; ";
-        result += "studentCurricularPlan = " + this.getStudentCurricularPlan() + "; ";
-        result += "enrollmentState = " + this.getEnrollmentState() + "; ";
-        result += "execution OccupationPeriod = " + this.getExecutionPeriod() + "; ";
-        result += "curricularCourse = " + this.getCurricularCourse() + "]\n";
-        return result;
-    }
-
     public void unEnroll() throws DomainException {
 
         for (EnrolmentEvaluation eval : getEvaluations()) {
@@ -136,7 +128,7 @@ public class Enrolment extends Enrolment_Base {
 
     public void delete() {
     	createEnrolmentLog(EnrolmentAction.UNENROL);
-    	//TODO: falta ver se é dos antigos enrolments ou dos novos
+    	//TODO: falta ver se ï¿½ dos antigos enrolments ou dos novos
         final Student student = getStudentCurricularPlan().getStudent();
 
         removeExecutionPeriod();

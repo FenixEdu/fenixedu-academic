@@ -14,6 +14,7 @@ public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurr
 
     protected EnrolmentInOptionalCurricularCourse() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public EnrolmentInOptionalCurricularCourse(StudentCurricularPlan studentCurricularPlan,

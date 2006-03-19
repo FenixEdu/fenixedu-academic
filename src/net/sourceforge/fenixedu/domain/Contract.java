@@ -10,7 +10,12 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class Contract extends Contract_Base {
 
-    public boolean belongsToPeriod(Date beginDate, Date endDate) {
+    public Contract() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public boolean belongsToPeriod(Date beginDate, Date endDate) {
         if (!this.getBeginDate().after(endDate)
                 && (this.getEndDate() == null || !this.getEndDate().before(beginDate))) {
             return true;

@@ -11,7 +11,8 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 
 public class Project extends Project_Base {
 
-    private Project() {    	
+    private Project() {
+    	super();
         this.setOjbConcreteClass(Project.class.getName());
     }
 

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.publication;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.PublicationArea;
@@ -15,6 +16,7 @@ public class PublicationTeacher extends PublicationTeacher_Base {
     public PublicationTeacher()
     {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     /********************************************************************
@@ -22,6 +24,7 @@ public class PublicationTeacher extends PublicationTeacher_Base {
      ********************************************************************/
     
     public PublicationTeacher(Publication publication, Teacher teacher, PublicationArea area) {
+    	this();
         verifyIfAuthor(teacher, publication);
     	setPublicationArea(area);
         setPublication(publication);

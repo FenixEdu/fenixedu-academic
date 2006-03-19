@@ -11,7 +11,11 @@ import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
  */
 public class OtherTypeCreditLine extends OtherTypeCreditLine_Base {
 
-    protected CreditsEvent getCreditEventGenerated() {
+    public OtherTypeCreditLine() {
+		super();
+	}
+
+	protected CreditsEvent getCreditEventGenerated() {
         return CreditsEvent.OTHER_CREDIT;
     }
     

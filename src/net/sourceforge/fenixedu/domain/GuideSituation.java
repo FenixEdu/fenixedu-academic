@@ -11,25 +11,17 @@ import net.sourceforge.fenixedu.util.State;
 public class GuideSituation extends GuideSituation_Base {
 
     public GuideSituation() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public GuideSituation(GuideState situation, String remarks, Date date, Guide guide, State state) {
+    	this();
         this.setRemarks(remarks);
         this.setGuide(guide);
         this.setSituation(situation);
         this.setDate(date);
         this.setState(state);
-    }
-
-    public String toString() {
-        String result = "[GUIDE SITUATION";
-        result += ", remarks=" + getRemarks();
-        result += ", guide=" + getGuide();
-        result += ", guide Situtation=" + getSituation();
-        result += ", date=" + getDate();
-        result += ", state=" + getState();
-        result += "]";
-        return result;
     }
 
 }

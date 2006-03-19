@@ -6,6 +6,7 @@ public class ShiftProfessorship extends ShiftProfessorship_Base implements ICred
 
     public ShiftProfessorship() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public void delete() {

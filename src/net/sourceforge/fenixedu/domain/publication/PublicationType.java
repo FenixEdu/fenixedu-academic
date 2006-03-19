@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.publication;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -11,6 +13,7 @@ public class PublicationType extends PublicationType_Base {
 
     public PublicationType() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     /**

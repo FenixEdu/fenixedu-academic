@@ -3,12 +3,19 @@
  */
 package net.sourceforge.fenixedu.domain.onlineTests;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 /**
  * @author Susana Fernandes
  */
 public class StudentTestQuestion extends StudentTestQuestion_Base {
 
-    public void delete() {
+    public StudentTestQuestion() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void delete() {
         removeDistributedTest();
         removeQuestion();
         removeStudent();

@@ -11,25 +11,12 @@ import net.sourceforge.fenixedu.util.State;
 
 public class Guide extends Guide_Base {
 
-    public String toString() {
-        String result = "[GUIDE";
-        result += ", codInt=" + getIdInternal();
-        result += ", number=" + getNumber();
-        result += ", year=" + getYear();
-        result += ", contributor=" + getContributor();
-        result += ", total=" + getTotal();
-        result += ", remarks=" + getRemarks();
-        result += ", guide Requester=" + getGuideRequester();
-        result += ", execution Degree=" + getExecutionDegree();
-        result += ", payment Type=" + getPaymentType();
-        result += ", creation Date=" + getCreationDate();
-        result += ", version=" + getVersion();
-        result += ", payment Date=" + getPaymentDate();
-        result += "]";
-        return result;
-    }
+    public Guide() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public GuideSituation getActiveSituation() {
+	public GuideSituation getActiveSituation() {
         if (this.getGuideSituations() != null) {
             Iterator iterator = this.getGuideSituations().iterator();
             while (iterator.hasNext()) {

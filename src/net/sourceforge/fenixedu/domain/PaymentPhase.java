@@ -7,22 +7,17 @@ package net.sourceforge.fenixedu.domain;
 import org.apache.struts.util.MessageResources;
 
 /**
- * @author Tânia Pousão
+ * @author Tï¿½nia Pousï¿½o
  * 
  */
 public class PaymentPhase extends PaymentPhase_Base {
 
-    public String toString() {
-        StringBuilder object = new StringBuilder();
-        object = object.append("\n[PaymentPhase: ").append("idInternal= ").append(getIdInternal())
-                .append(" starDate= ").append(getStartDate()).append("; endDate= ").append(getEndDate())
-                .append("; value= ").append(getValue()).append("; description= ").append(
-                        getDescriptionFromMessageResourses()).append("\n");
+    public PaymentPhase() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-        return object.toString();
-    }
-
-    public String getDescriptionFromMessageResourses() {
+	public String getDescriptionFromMessageResourses() {
         MessageResources messages = MessageResources
             .getMessageResources("resources.ApplicationResources");
 

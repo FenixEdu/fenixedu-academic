@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 
 /**
@@ -15,7 +16,12 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
  */
 public class Test extends Test_Base {
 
-    public void insertTestQuestion(final Question question, final Integer testQuestionOrder, final Double testQuestionValue,
+    public Test() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void insertTestQuestion(final Question question, final Integer testQuestionOrder, final Double testQuestionValue,
             final CorrectionFormula formula) {
         organizeTestQuestionsOrder(testQuestionOrder);
         TestQuestion testQuestion = new TestQuestion();

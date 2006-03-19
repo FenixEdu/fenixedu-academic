@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 
@@ -7,6 +8,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     
     public CurriculumModule() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         this.setOjbConcreteClass(this.getClass().getName());
     }
     

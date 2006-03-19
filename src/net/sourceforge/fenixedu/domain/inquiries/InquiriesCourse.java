@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -19,13 +20,14 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 
 /**
- * @author João Fialho & Rita Ferreira
+ * @author Joï¿½o Fialho & Rita Ferreira
  * 
  */
 public class InquiriesCourse extends InquiriesCourse_Base {
 	
 	public InquiriesCourse() {
 		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
 	/**
@@ -53,6 +55,7 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 			SchoolClass schoolClass, InfoInquiriesCourse infoInquiriesCourse,
             Character entryGradeClassification, Character approvationRatioClassification, 
             Character arithmeticMeanClassification) {
+		this();
 		if((executionCourse == null) || (executionDegreeCourse == null) || (executionDegreeStudent == null) || (executionPeriod == null)) {
 			throw new DomainException("Neither the executionCourse, executionDegreeCourse, executionDegreeStudent nor executionPeriod should not be null!");
 		}

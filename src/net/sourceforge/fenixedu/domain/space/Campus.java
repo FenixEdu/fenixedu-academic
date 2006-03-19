@@ -9,7 +9,7 @@ public class Campus extends Campus_Base {
     }
 
     public Campus(final String buildingName) {
-        super();
+        this();
         new CampusInformation(this, buildingName);
     }
 

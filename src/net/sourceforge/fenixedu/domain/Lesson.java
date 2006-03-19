@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 public class Lesson extends Lesson_Base {
 
-    /**
-     * Construtor sem argumentos público requerido pela moldura de objectos OJB
-     */
     public Lesson() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, OldRoom sala,
             RoomOccupation roomOccupation, Shift shift) {
+    	this();
         setDiaSemana(diaSemana);
         setInicio(inicio);
         setFim(fim);
@@ -62,22 +62,6 @@ public class Lesson extends Lesson_Base {
         } else {
             this.setEnd(null);
         }
-    }
-
-    public String toString() {
-        String result = "[AULA";
-        result += ", codInt=" + getIdInternal();
-        result += ", diaSemana=" + getDiaSemana();
-        if (getInicio() != null)
-            result += ", inicio=" + getInicio().get(Calendar.HOUR_OF_DAY) + ":"
-                    + getInicio().get(Calendar.MINUTE);
-        if (getFim() != null)
-            result += ", fim=" + getFim().get(Calendar.HOUR_OF_DAY) + ":"
-                    + getFim().get(Calendar.MINUTE);
-        result += ", tipo=" + getTipo();
-        result += ", keySala=" + getKeySala();
-        result += "]";
-        return result;
     }
 
     public double hours() {

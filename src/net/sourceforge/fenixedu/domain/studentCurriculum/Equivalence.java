@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Equivalence extends Equivalence_Base {

@@ -13,19 +13,12 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": \n";
-        result += "idInternal = " + getIdInternal() + "; \n";
-        result += "studentCurricularPlan = " + getStudentCurricularPlan().getIdInternal() + "; \n";
-        result += "masterDegreeProofVersions = " + getMasterDegreeProofVersions().toString() + "; \n";
-        result += "masterDegreeThesisDataVersions = " + getMasterDegreeThesisDataVersions().toString()
-                + "; \n";
-        result += "] \n";
+    public MasterDegreeThesis() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-        return result;
-    }
-
-    public MasterDegreeThesisDataVersion getActiveMasterDegreeThesisDataVersion(){
+	public MasterDegreeThesisDataVersion getActiveMasterDegreeThesisDataVersion(){
         
         for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : getMasterDegreeThesisDataVersions()) {
             if(masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)){

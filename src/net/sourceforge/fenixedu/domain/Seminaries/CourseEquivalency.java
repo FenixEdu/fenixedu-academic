@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -14,5 +16,10 @@ package net.sourceforge.fenixedu.domain.Seminaries;
  *  
  */
 public class CourseEquivalency extends CourseEquivalency_Base {
+
+	public CourseEquivalency() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 }

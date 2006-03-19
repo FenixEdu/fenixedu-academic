@@ -6,13 +6,20 @@ package net.sourceforge.fenixedu.domain.projectsManagement;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 /**
  * @author Susana Fernandes
  * 
  */
 public class ProjectAccess extends ProjectAccess_Base {
 
-    /**
+    public ProjectAccess() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	/**
      * @return Returns the beginDate.
      */
     public Calendar getBeginDate() {

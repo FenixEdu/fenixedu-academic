@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -26,6 +27,7 @@ public class TeacherService extends TeacherService_Base {
 
     public TeacherService(Teacher teacher, ExecutionPeriod executionPeriod) {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         if (teacher == null || executionPeriod == null) {
             throw new DomainException("arguments can't be null");
         }

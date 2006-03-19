@@ -16,9 +16,12 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
 public class OccupationPeriod extends OccupationPeriod_Base {
 
     public OccupationPeriod() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public OccupationPeriod(Date startDate, Date endDate) {
+    	this();
         this.setStart(startDate);
         this.setEnd(endDate);
     }

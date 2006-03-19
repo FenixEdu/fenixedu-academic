@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 /**
  * @author Nuno Correia & Ricardo Rodrigues
  * 
@@ -8,21 +10,12 @@ package net.sourceforge.fenixedu.domain.student;
 
 public class PersonalDataUseInquiryAnswers extends PersonalDataUseInquiryAnswers_Base {
 
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += " keyStudent " + this.getKeyStudent() + "]\n ";
-        result += "idInternal " + this.getIdInternal() + ";\n ";
-        result += " answer1 " + this.getAnswer1() + "\n ";
-        result += " answer2 " + this.getAnswer2() + "\n ";
-        result += " answer3 " + this.getAnswer3() + "\n ";
-        result += " answer4 " + this.getAnswer4() + "\n ";
-        result += " answer5 " + this.getAnswer5() + "\n ";
-        result += " answer6 " + this.getAnswer6() + "\n ";
-        result += " answer7 " + this.getAnswer7() + "\n ";
-        return result;
-    }
+    public PersonalDataUseInquiryAnswers() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void setAnswer(Integer id, Boolean answer) {
+	public void setAnswer(Integer id, Boolean answer) {
         switch (id.intValue()) {
         case 1:
             setAnswer1(answer);

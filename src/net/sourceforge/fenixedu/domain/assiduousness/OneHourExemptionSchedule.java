@@ -13,6 +13,7 @@ import org.joda.time.Interval;
 import net.sourceforge.fenixedu.presentationTier.util.DTO;
 import net.sourceforge.fenixedu.presentationTier.util.PresentationConstants;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.FixedPeriodsExceedPlatformsDurationException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidFixedPeriod1IntervalException;
@@ -38,7 +39,12 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.WeekDays;
  */
 
 public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
-    	
+
+	public OneHourExemptionSchedule() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
 	public static OneHourExemptionSchedule makeOneHourExemptionSchedule(Employee employee,  NormalWorkPeriod regularSchedule, FixedPeriod fixedPlatforms, List<AssiduousnessRegime> regimes, Meal mealPeriod, Duration consecutiveWork, 
             TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) {
         OneHourExemptionSchedule newOneHourExemptionSchedule = new OneHourExemptionSchedule();

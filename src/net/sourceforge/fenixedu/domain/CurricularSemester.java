@@ -10,20 +10,13 @@ public class CurricularSemester extends CurricularSemester_Base implements Compa
 
     public CurricularSemester() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public CurricularSemester(final CurricularYear curricularYear, final Integer semester) {
-        super();
+        this();
         setCurricularYear(curricularYear);
         setSemester(semester);
-    }    
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "idInternal = " + this.getIdInternal() + "; ";
-        result += "semester = " + this.getSemester() + "; ";
-        result += "curricularYear = " + this.getCurricularYear() + "]\n";
-        return result;
     }
 
 	public int compareTo(final CurricularSemester curricularSemester) {

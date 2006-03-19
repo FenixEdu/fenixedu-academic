@@ -6,6 +6,8 @@
  */
 package net.sourceforge.fenixedu.domain.gesdis;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author Leonor Almeida
@@ -13,5 +15,10 @@ package net.sourceforge.fenixedu.domain.gesdis;
  * 
  */
 public class StudentCourseReport extends StudentCourseReport_Base {
+
+	public StudentCourseReport() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 }

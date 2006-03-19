@@ -8,14 +8,9 @@ package net.sourceforge.fenixedu.domain;
 
 public class StudentKind extends StudentKind_Base {
 
-    public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "idInternal = " + this.getIdInternal() + "; ";
-        result += "studentType = " + this.getStudentType() + "; ";
-        result += "minCoursesToEnrol = " + this.getMinCoursesToEnrol() + "; ";
-        result += "maxNACToEnrol = " + this.getMaxNACToEnrol() + "; ";
-        result += "maxCoursesToEnrol = " + this.getMaxCoursesToEnrol() + "]\n";
-        return result;
-    }
+	public StudentKind() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 }

@@ -48,6 +48,8 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
      **************************************************************************/
 
     public MasterDegreeCandidate() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
         this.setHasGuider(false);
         this.setCourseAssistant(false);
     }
@@ -56,6 +58,7 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
             Integer candidateNumber, Specialization specialization, String majorDegree,
             String majorDegreeSchool, Integer majorDegreeYear, Double average, Teacher guider,
             Boolean hasGuider, Boolean courseAssistant, String coursesToAssist) {
+    	this();
         this.setPerson(person);
         this.setExecutionDegree(executionDegree);
         this.setCandidateNumber(candidateNumber);
@@ -68,48 +71,14 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
         this.setHasGuider(hasGuider);
         this.setCourseAssistant(courseAssistant);
         this.setCoursesToAssist(coursesToAssist);
-
-    }
-
-    public String toString() {
-        String result = "Master Degree Candidate :\n";
-        result += "\n  - Internal Code : " + getIdInternal();
-        result += "\n  - Person : " + getPerson();
-        result += "\n  - Major Degree : " + getMajorDegree();
-        result += "\n  - Candidate Number : " + getCandidateNumber();
-        result += "\n  - Specialization : " + getSpecialization();
-        result += "\n  - Major Degree School : " + getMajorDegreeSchool();
-        result += "\n  - Major Degree Year : " + getMajorDegreeYear();
-        result += "\n  - Major Degree Average : " + getAverage();
-        result += "\n  - Master Degree : " + getExecutionDegree();
-        result += "\n  - Specialization Area : " + getSpecializationArea();
-        result += "\n  - Substitute Order : " + getSubstituteOrder();
-        result += "\n  - Given Credits : " + getGivenCredits();
-        result += "\n  - Given Credits Remarks : " + getGivenCreditsRemarks();
-        if (getCourseAssistant())
-            result += "\n  - Wishes To Assist Courses : " + getCoursesToAssist();
-        else
-            result += "\n  - Does Not Wish To Assist Courses";
-        if (getGuider() == null)
-            result += "\n  - The Candidate Has Not A Guider/Councilour";
-        else {
-            if (getHasGuider())
-                result += "\n  - The Guider Is : " + getGuider().getPerson().getNome();
-            else
-                result += "\n  - The Councilour Is : " + getGuider().getPerson().getNome();
-        }
-
-        return result;
     }
 
     public CandidateSituation getActiveCandidateSituation() {
-
         for (CandidateSituation candidateSituation : getSituations()) {
             if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
                 return candidateSituation;
             }
         }
-
         return null;
     }
 

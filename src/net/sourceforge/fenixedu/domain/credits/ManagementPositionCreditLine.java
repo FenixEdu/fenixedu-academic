@@ -10,7 +10,11 @@ import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
  */
 public class ManagementPositionCreditLine extends ManagementPositionCreditLine_Base {
 
-    protected CreditsEvent getCreditEventGenerated() {
+    public ManagementPositionCreditLine() {
+		super();
+	}
+
+	protected CreditsEvent getCreditEventGenerated() {
         return CreditsEvent.MANAGEMENT_POSITION;
     }
     

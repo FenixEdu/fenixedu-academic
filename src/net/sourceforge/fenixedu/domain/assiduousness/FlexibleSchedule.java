@@ -13,6 +13,7 @@ import org.joda.time.Interval;
 import net.sourceforge.fenixedu.presentationTier.util.DTO;
 import net.sourceforge.fenixedu.presentationTier.util.PresentationConstants;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.FixedPeriodsExceedPlatformsDurationException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidFixedPeriod1IntervalException;
@@ -39,6 +40,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 public class FlexibleSchedule extends FlexibleSchedule_Base {
 	
     private FlexibleSchedule() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
 //    // change to static

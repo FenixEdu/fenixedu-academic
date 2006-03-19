@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
@@ -20,6 +19,7 @@ public class Degree extends Degree_Base {
 
     protected Degree() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,
@@ -157,16 +157,6 @@ public class Degree extends Degree_Base {
         } else {
             throw new DomainException("error.degree.has.degree.curricular.plans");
         }
-    }
-    
-    public String toString() {
-        String result = "[CURSO";
-        result += ", codInt=" + getIdInternal();
-        result += ", sigla=" + getSigla();
-        result += ", nome=" + getNome();
-        result += ", tipoCurso=" + getTipoCurso();
-        result += "]";
-        return result;
     }
 
     public DegreeCurricularPlan getNewDegreeCurricularPlan() {

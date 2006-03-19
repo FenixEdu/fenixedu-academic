@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import jvstm.VBoxBody;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.PersistenceBroker;

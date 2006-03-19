@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.event;
 
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -10,6 +11,8 @@ public class Event extends Event_Base {
 
 	public Event(YearMonthDay endDate, YearMonthDay startDate, String eventLocation, Boolean feeOrFree,
 			EventType type, MultiLanguageString name) {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 		setEndDate(endDate);
 		setStartDate(startDate);
 		setEventLocation(eventLocation);

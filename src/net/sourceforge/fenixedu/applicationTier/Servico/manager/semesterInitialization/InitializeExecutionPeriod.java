@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
-import net.sourceforge.fenixedu.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.ConsoleAppender;

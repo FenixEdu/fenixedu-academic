@@ -28,19 +28,7 @@ public class ProfessionalCareer extends ProfessionalCareer_Base {
 		setTeacher(teacher);
 		setBasicProperties(infoProfessionalCareer);
     }
-	
-    
-    public String toString() {
-        String result = "[" + ProfessionalCareer.class.getName();
-        result += ", beginYear=" + getBeginYear();
-        result += ", endYear=" + getEndYear();
-        result += ", entity=" + getEntity();
-        result += ", function=" + getFunction();
-        result += ", teacher=" + getTeacher();
-        result += "]";
-        return result;
-    }
-	
+
 	public void edit(InfoProfessionalCareer infoProfessionalCareer) {
 		
 		setBasicProperties(infoProfessionalCareer);

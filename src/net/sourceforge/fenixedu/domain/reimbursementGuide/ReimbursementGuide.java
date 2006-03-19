@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -14,11 +15,16 @@ import org.apache.commons.collections.Predicate;
 /**
  * This class contains all the information regarding a Reimbursement Guide. <br>
  * 
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Joï¿½o Mota </a>
  */
 public class ReimbursementGuide extends ReimbursementGuide_Base {
 
-    /**
+    public ReimbursementGuide() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	/**
      * @return
      */
     public Calendar getCreationDate() {
@@ -39,15 +45,6 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
         } else {
             this.setCreation(null);
         }
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += " idInternal=" + this.getIdInternal();
-        result += ", number=" + this.getNumber();
-        result += ", creation Date=" + this.getCreationDate();
-        result += "]";
-        return result;
     }
 
     public ReimbursementGuideSituation getActiveReimbursementGuideSituation() {

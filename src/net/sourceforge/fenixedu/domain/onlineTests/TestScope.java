@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain.onlineTests;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
  * 
@@ -16,17 +17,18 @@ public class TestScope extends TestScope_Base {
     private DomainObject domainObject;
 
     public TestScope() {
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public TestScope(DomainObject object) {
-        super();
+        this();
         setDomainObject(object);
         setClassName(object.getClass().getName());
         setKeyClass(object.getIdInternal());
     }
 
     public TestScope(String className, Integer classId) {
-        super();
+        this();
         setClassName(className);
         setKeyClass(classId);
     }

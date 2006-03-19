@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 
 public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements Comparable {
     
     protected CompetenceCourseLoad() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public CompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours,

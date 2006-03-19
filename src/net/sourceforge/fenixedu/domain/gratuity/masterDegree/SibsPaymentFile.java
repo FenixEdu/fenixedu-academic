@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -11,23 +13,13 @@ package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 public class SibsPaymentFile extends SibsPaymentFile_Base {
 
 	public SibsPaymentFile() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	/**
-	 * @param filename
-	 */
 	public SibsPaymentFile(String filename) {
-		super();
+		this();
 		setFilename(filename);
 	}
 
-	public String toString() {
-
-		String result = "[" + this.getClass().getName() + ": \n";
-		result += "idInternal = " + getIdInternal() + "; \n";
-		result += "filename = " + getFilename().toString() + "; \n";
-		result += "] \n";
-
-		return result;
-	}
 }

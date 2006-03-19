@@ -10,6 +10,7 @@ package net.sourceforge.fenixedu.domain.grant.contract;
 public class GrantCostCenter extends GrantCostCenter_Base {
 
 	public GrantCostCenter() {
+		super();
 		setOjbConcreteClass(GrantCostCenter.class.getName());
 	}
 

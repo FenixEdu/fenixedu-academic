@@ -10,13 +10,18 @@ import net.sourceforge.fenixedu.util.WeekDay;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 /**
- * @author Fernanda Quitério 17/10/2003
+ * @author Fernanda Quitï¿½rio 17/10/2003
  * @author jpvl
  * @author Ricardo Rodrigues
  */
 public class SupportLesson extends SupportLesson_Base implements ICreditsEventOriginator {
 
-    public void delete(){
+    public SupportLesson() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void delete(){
         setProfessorship(null);
         deleteDomainObject();
     }

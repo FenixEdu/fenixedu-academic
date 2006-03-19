@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;

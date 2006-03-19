@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -14,10 +15,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Precedence extends Precedence_Base {
 
-	public Precedence () {}
+	public Precedence () {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 	
 	public Precedence(CurricularCourse curricularCourseToAddPrecedence, String className, CurricularCourse precedentCurricularCourse, Integer number) {
-		
+		this();
 		setCurricularCourse(curricularCourseToAddPrecedence);
 		
 		Class[] parameters = {Integer.class, Precedence.class, CurricularCourse.class};
@@ -32,19 +36,6 @@ public class Precedence extends Precedence_Base {
 		} 
 
 	}
-	
-    public String toString() {
-        StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append("Precedence:\n");
-        stringBuffer.append(this.getCurricularCourse()).append("\n");
-        List restrictions = this.getRestrictions();
-        for (int i = 0; i < restrictions.size(); i++) {
-            Restriction restriction = (Restriction) restrictions.get(i);
-            stringBuffer.append(restriction).append("\n");
-        }
-        stringBuffer.append("---------\n");
-        return stringBuffer.toString();
-    }
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
         List restrictions = getRestrictions();

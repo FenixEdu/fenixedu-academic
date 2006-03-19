@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 /**
- * @author Tânia Pousão
+ * @author Tï¿½nia Pousï¿½o
  * 
  */
 public class FinalEvaluation extends FinalEvaluation_Base {
 
-	
-    public FinalEvaluation() {
+	public FinalEvaluation() {
+		super();
         this.setOjbConcreteClass(FinalEvaluation.class.getName());
     }
 

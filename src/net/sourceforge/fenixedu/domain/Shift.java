@@ -11,18 +11,12 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 public class Shift extends Shift_Base {
 
-    public String toString() {
-        String result = "[TURNO";
-        result += ", codigoInterno=" + this.getIdInternal();
-        result += ", nome=" + getNome();
-        result += ", tipo=" + getTipo();
-        result += ", lotacao=" + getLotacao();
-        result += ", keyDisciplinaExecucao=" + getKeyDisciplinaExecucao();
-        result += "]";
-        return result;
-    }
+    public Shift() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public double hours() {
+	public double hours() {
         double hours = 0;
         List lessons = this.getAssociatedLessons();
         for (int i = 0; i < lessons.size(); i++) {

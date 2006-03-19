@@ -6,6 +6,8 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author Leonor Almeida
@@ -14,13 +16,9 @@ package net.sourceforge.fenixedu.domain.teacher;
  */
 public class Category extends Category_Base {
 
-    public String toString() {
-        String result = "[Dominio.teacher.Category ";
-        result += ", code=" + getCode();
-        result += ", shortName=" + getShortName();
-        result += ", longName=" + getLongName();
-        result += "]";
-        return result;
-    }
+	public Category() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 }

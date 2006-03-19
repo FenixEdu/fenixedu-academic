@@ -6,14 +6,18 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
 public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base {
 
     public WrittenEvaluationEnrolment() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public WrittenEvaluationEnrolment(WrittenEvaluation writtenEvaluation, Student student) {
+    	this();
         this.setWrittenEvaluation(writtenEvaluation);
         this.setStudent(student);
     }
 
     public WrittenEvaluationEnrolment(WrittenEvaluation writtenEvaluation, Student student, OldRoom room) {
+    	this();
         this.setWrittenEvaluation(writtenEvaluation);
         this.setStudent(student);
         this.setRoom(room);

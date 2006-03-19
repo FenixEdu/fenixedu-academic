@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain.publication;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author Ricardo Rodrigues
@@ -11,6 +13,10 @@ package net.sourceforge.fenixedu.domain.publication;
  */
 
 public class PublicationTypeAttribute extends PublicationTypeAttribute_Base {
-    
+
+	public PublicationTypeAttribute() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 }

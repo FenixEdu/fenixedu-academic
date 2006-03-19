@@ -9,6 +9,7 @@ import java.util.Iterator;
 import javax.mail.MessagingException;
 
 import net.sourceforge.fenixedu.commons.OrderedIterator;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.cms.predicates.ContentAssignableClassPredicate;
 
 import org.apache.commons.collections.iterators.FilterIterator;
@@ -30,6 +31,7 @@ public class MailConversation extends MailConversation_Base
 	public MailConversation()
 	{
 		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
 	public boolean isAboutSubject(final String subject)

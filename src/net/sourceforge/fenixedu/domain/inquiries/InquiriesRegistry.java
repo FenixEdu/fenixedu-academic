@@ -6,22 +6,25 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
 
 import org.apache.commons.lang.NullArgumentException;
 
 
 /**
- * @author João Fialho & Rita Ferreira
+ * @author Joï¿½o Fialho & Rita Ferreira
  * 
  */
 public class InquiriesRegistry extends InquiriesRegistry_Base {
 	
 	public InquiriesRegistry() {
 		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 	
 	public InquiriesRegistry(ExecutionCourse executionCourse, ExecutionPeriod executionPeriod, Student student) {
+		this();
 		if((executionCourse == null) || (executionPeriod == null) || (student == null)) {
 			throw new NullArgumentException("The executionCourse, executionPeriod and student should not be null!");
 		}

@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.presentationTier.util.DTO;
 import net.sourceforge.fenixedu.presentationTier.util.PresentationConstants;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidNormalWorkPeriod1IntervalException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidNormalWorkPeriod2IntervalException;
@@ -31,7 +32,12 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.WeekDays;
  *
  */
 public class ScheduleExemption extends ScheduleExemption_Base {
-    
+
+	public ScheduleExemption() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
 	public static ScheduleExemption fillScheduleExemption(Employee employee,  NormalWorkPeriod normalWorkPeriod, List<AssiduousnessRegime> regimes, Meal mealPeriod, TimeInterval workDay, Interval validFromTo, 
             WorkWeek workWeek, boolean exception) {
         ScheduleExemption newScheduleExemption = new ScheduleExemption();

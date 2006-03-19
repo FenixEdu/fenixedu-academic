@@ -14,27 +14,14 @@ public class Country extends Country_Base {
 
 	public Country() {
 		super();
+		setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Country(final String name, final String nationality, final String code) {
-		super();
+		this();
 		setCode(code);
 		setNationality(nationality);
 		setName(name);
-    }
-
-    public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("[COUNTRY idInternal= ");
-		stringBuilder.append(getIdInternal());
-		stringBuilder.append(", name= ");
-		stringBuilder.append(getName());
-		stringBuilder.append(", nationality= ");
-		stringBuilder.append(getNationality());
-		stringBuilder.append(", code= ");
-		stringBuilder.append(getCode());
-		stringBuilder.append("]");
-		return stringBuilder.toString();
     }
 
 }

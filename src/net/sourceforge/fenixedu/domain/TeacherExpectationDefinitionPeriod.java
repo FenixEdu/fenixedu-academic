@@ -11,10 +11,11 @@ public class TeacherExpectationDefinitionPeriod extends TeacherExpectationDefini
 
     public TeacherExpectationDefinitionPeriod() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public TeacherExpectationDefinitionPeriod(ExecutionYear executionYear, Date startDate, Date endDate) {
-        super();
+        this();
         this.setExecutionYear(executionYear);
         this.setStartDate(startDate);
         this.setEndDate(endDate);

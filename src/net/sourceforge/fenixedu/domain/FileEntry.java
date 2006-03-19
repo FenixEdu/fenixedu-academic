@@ -12,10 +12,11 @@ public class FileEntry extends FileEntry_Base {
     
     public FileEntry() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public FileEntry(ContentType contentType, ByteArray content, Person person) {
-        super();
+        this();
         setContentType(contentType);
         setContent(content);
         setPerson(person);

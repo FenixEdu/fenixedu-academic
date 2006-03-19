@@ -9,6 +9,7 @@ import java.util.Iterator;
 import javax.mail.MessagingException;
 
 import net.sourceforge.fenixedu.commons.OrderedIterator;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.cms.Content;
 import net.sourceforge.fenixedu.domain.cms.predicates.ContentAssignableClassPredicate;
 import net.sourceforge.fenixedu.domain.cms.predicates.ContentPredicate;
@@ -20,6 +21,7 @@ public class MailingList extends MailingList_Base
 	public MailingList()
 	{
 		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
 	private class LastConversationsFirstComparator implements Comparator

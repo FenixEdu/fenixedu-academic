@@ -11,8 +11,6 @@ public class GrantProject extends GrantProject_Base {
 
 	public GrantProject() {
 		setOjbConcreteClass(GrantProject.class.getName());
-	
 	}
-	
 
 }

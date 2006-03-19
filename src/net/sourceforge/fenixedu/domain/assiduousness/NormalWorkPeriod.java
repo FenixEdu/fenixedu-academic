@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
@@ -23,11 +24,13 @@ import org.joda.time.Duration;
 public class NormalWorkPeriod extends NormalWorkPeriod_Base {
 
     public NormalWorkPeriod(TimeInterval normalWorkPeriod1, TimeInterval normalWorkPeriod2){
-        setNormalWorkPeriod1(normalWorkPeriod1);
+    	this(normalWorkPeriod1);
         setNormalWorkPeriod2(normalWorkPeriod2);
     }
     
     public NormalWorkPeriod(TimeInterval normalWorkPeriod1){
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
         setNormalWorkPeriod1(normalWorkPeriod1);
     }
 

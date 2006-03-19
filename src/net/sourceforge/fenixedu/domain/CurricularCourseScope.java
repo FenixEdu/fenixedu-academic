@@ -10,11 +10,14 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CurricularCourseScope extends CurricularCourseScope_Base {
 
-	public CurricularCourseScope() {}
+	public CurricularCourseScope() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 	
 	public CurricularCourseScope(Branch branch, CurricularCourse curricularCourse, CurricularSemester curricularSemester,
 								 Calendar beginDate, Calendar endDate, String Annotation){
-		
+		this();
         // check that there isn't another scope active with the same curricular course, branch and semester
 		
         if (curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(curricularSemester, branch)) {
@@ -77,17 +80,6 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         } else {
             this.setEnd(null);
         }
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "idInternal = " + this.getIdInternal() + "; ";
-        result += "curricularCourse = " + this.getCurricularCourse() + "; ";
-        result += "curricularSemester = " + this.getCurricularSemester() + "; ";
-        result += "branch = " + this.getBranch() + "; ";
-        result += "endDate = " + this.getEndDate() + "]\n";
-
-        return result;
     }
 
     public Boolean isActive() {

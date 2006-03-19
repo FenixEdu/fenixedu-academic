@@ -11,26 +11,21 @@ package net.sourceforge.fenixedu.domain;
 public class ExportGrouping extends ExportGrouping_Base {
 
     public ExportGrouping() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public ExportGrouping(Grouping groupProperties,
             ExecutionCourse executionCourse) {
+    	this();
         super.setGrouping(groupProperties);
         super.setExecutionCourse(executionCourse);
     }
 
-    public String toString() {
-        String result = "[EXPORTGROUPING";
-        result += ", groupProperties=" + getGrouping();
-        result += ", executionCourse=" + getExecutionCourse();
-        result += ", proposalState=" + getProposalState();
-        result += "]";
-        return result;
-    }
-    
     public void delete(){
         this.setExecutionCourse(null);
         this.setGrouping(null);        
         super.deleteDomainObject();
     }
+
 }

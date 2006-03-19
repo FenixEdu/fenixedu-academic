@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain.grant.owner;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author Barbosa
@@ -11,5 +13,10 @@ package net.sourceforge.fenixedu.domain.grant.owner;
  *  
  */
 public class GrantOwner extends GrantOwner_Base {
+
+	public GrantOwner() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 }

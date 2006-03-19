@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseLID;
 import net.sourceforge.fenixedu.util.tests.ResponseNUM;
@@ -62,7 +62,7 @@ public class InsertStudentTestResponses extends Service {
     public InfoSiteStudentTestFeedback run(String userName, Integer studentNumber, Integer distributedTestId, Response[] response, String path)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        String logIdString = StringAppender.append("student nº ", studentNumber.toString(), " testId ", distributedTestId.toString());
+        String logIdString = StringAppender.append("student nï¿½ ", studentNumber.toString(), " testId ", distributedTestId.toString());
 
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         this.path = path.replace('\\', '/');
@@ -103,7 +103,7 @@ public class InsertStudentTestResponses extends Service {
                     responseNumber++;
                     if (studentTestQuestion.getResponse() != null && distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
                         totalMark += infoStudentTestQuestion.getTestQuestionMark().doubleValue();
-                        // não pode aceitar nova resposta
+                        // nï¿½o pode aceitar nova resposta
                     } else {
                         try {
                             infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, this.path);

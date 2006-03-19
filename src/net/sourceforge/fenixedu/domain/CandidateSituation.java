@@ -21,28 +21,19 @@ import net.sourceforge.fenixedu.util.State;
 public class CandidateSituation extends CandidateSituation_Base {
 
 	public CandidateSituation() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
 	public CandidateSituation(Date date, String remarks, State validation,
 			MasterDegreeCandidate masterDegreeCandidate,
 			SituationName situation) {
+		this();
 		setMasterDegreeCandidate(masterDegreeCandidate);
 		setSituation(situation);
 		setDate(date);
 		setRemarks(remarks);
 		setValidation(validation);
-	}
-
-	public String toString() {
-		String result = "Candidate Situation:\n";
-		result += "\n  - Internal Code : " + getIdInternal();
-		result += "\n  - Date : " + getDate();
-		result += "\n  - Remarks : " + getRemarks();
-		result += "\n  - Validation : " + getValidation();
-		result += "\n  - Master Degree Candidate : " + getMasterDegreeCandidate();
-		result += "\n  - Situation : " + getSituation();
-
-		return result;
 	}
 
 }

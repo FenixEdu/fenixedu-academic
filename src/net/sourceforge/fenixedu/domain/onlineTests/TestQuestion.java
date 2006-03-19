@@ -5,13 +5,20 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 
 /**
  * @author Susana Fernandes
  */
 public class TestQuestion extends TestQuestion_Base {
-    public void editTestQuestion(Integer newTestQuestionOrder, final Double newTestQuestionValue, final CorrectionFormula newFormula) {
+
+    public TestQuestion() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void editTestQuestion(Integer newTestQuestionOrder, final Double newTestQuestionValue, final CorrectionFormula newFormula) {
         organizeTestQuestionsOrder(newTestQuestionOrder, this.getTestQuestionOrder());
         this.setTestQuestionOrder(newTestQuestionOrder);
         this.setTestQuestionValue(newTestQuestionValue);

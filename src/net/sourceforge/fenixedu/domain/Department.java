@@ -24,16 +24,12 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 
 public class Department extends Department_Base {
 
-    public String toString() {
-        String result = "[DEPARTAMENT";
-        result += ", codInt=" + getIdInternal();
-        result += ", sigla=" + getCode();
-        result += ", nome=" + getName();
-        result += "]";
-        return result;
-    }
+    public Department() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public List<Employee> getCurrentActiveWorkingEmployees() {
+	public List<Employee> getCurrentActiveWorkingEmployees() {
 
         Unit departmentUnit = this.getDepartmentUnit();
         Set<Employee> employees = new HashSet<Employee>();

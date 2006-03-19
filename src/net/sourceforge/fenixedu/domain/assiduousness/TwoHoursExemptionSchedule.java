@@ -13,6 +13,7 @@ import org.joda.time.Interval;
 import net.sourceforge.fenixedu.presentationTier.util.DTO;
 import net.sourceforge.fenixedu.presentationTier.util.PresentationConstants;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidMealBreakIntervalException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidNormalWorkPeriod1IntervalException;
@@ -34,6 +35,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.WeekDays;
 public class TwoHoursExemptionSchedule extends TwoHoursExemptionSchedule_Base {
     	
     public TwoHoursExemptionSchedule() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
     
     // TODO verify what happens when we get the FixedPeriod

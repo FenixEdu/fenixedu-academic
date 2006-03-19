@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -9,10 +10,12 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
 
     public TeacherPersonalExpectation() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public TeacherPersonalExpectation(InfoTeacherPersonalExpectation infoTeacherPersonalExpectation,
             ExecutionYear executionYear) {
+    	this();
         setProperties(infoTeacherPersonalExpectation);
         setExecutionYear(executionYear);
     }

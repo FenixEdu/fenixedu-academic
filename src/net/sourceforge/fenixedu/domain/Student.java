@@ -33,15 +33,15 @@ public class Student extends Student_Base {
     private transient Integer approvedEnrollmentsNumber = 0;
 
     public Student() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
         this.setSpecialSeason(Boolean.FALSE);
     }
 
     public Student(Person person, Integer studentNumber, StudentKind studentKind, StudentState state,
             Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
             DegreeType degreeType) {
-
         this();
-
         setPayedTuition(payedTuition);
         setEnrollmentForbidden(enrolmentForbidden);
         setEntryPhase(entryPhase);
@@ -54,16 +54,6 @@ public class Student extends Student_Base {
         setFlunked(Boolean.FALSE);
         setRequestedChangeDegree(Boolean.FALSE);
         setRequestedChangeBranch(Boolean.FALSE);
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "internalCode = " + this.getIdInternal() + "; ";
-        result += "number = " + this.getNumber() + "; ";
-        result += "state = " + this.getState() + "; ";
-        result += "degreeType = " + this.getDegreeType() + "; ";
-        result += "studentKind = " + this.getStudentKind() + "; ";
-        return result;
     }
 
     public StudentCurricularPlan getActiveStudentCurricularPlan() {

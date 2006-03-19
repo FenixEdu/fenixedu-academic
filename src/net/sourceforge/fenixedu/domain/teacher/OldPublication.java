@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 /**
@@ -13,7 +14,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
  * 
  */
 public class OldPublication extends OldPublication_Base {
-	
+
+	public OldPublication() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
 	public void delete() {
 		removeTeacher();
 		super.deleteDomainObject();

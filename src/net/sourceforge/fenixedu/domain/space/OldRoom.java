@@ -16,7 +16,6 @@ public class OldRoom extends OldRoom_Base {
 
     public OldRoom() {
 		super();
-		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
 	/** @deprecated */

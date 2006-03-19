@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -15,17 +17,9 @@ package net.sourceforge.fenixedu.domain.Seminaries;
  */
 public class Candidacy extends Candidacy_Base {
 
-    public String toString() {
-        String result = "[Candidacy:";
-        result += "Theme=" + getKeyTheme() + ";";
-        result += "Motivation=" + getMotivation() + ";";
-        result += "Student=" + getKeyStudent() + ";";
-        result += "CaseStudyChoices" + getCaseStudyChoices() + ";";
-        result += "CurricularCourse=" + getKeyCurricularCourse() + ";";
-        result += "Seminary:=" + getKeySeminary() + ";";
-        result += "Modality=" + getKeyModality() + "]";
-
-        return result;
-    }
+	public Candidacy() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 }

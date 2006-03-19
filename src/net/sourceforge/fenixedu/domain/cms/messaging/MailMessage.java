@@ -24,6 +24,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimePart;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.cms.predicates.ContentAssignableClassPredicate;
 
 import org.apache.commons.collections.iterators.FilterIterator;
@@ -34,6 +35,7 @@ public class MailMessage extends MailMessage_Base implements MimePart, Part
 	public MailMessage()
 	{
 		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
 	private MimeMessage message;

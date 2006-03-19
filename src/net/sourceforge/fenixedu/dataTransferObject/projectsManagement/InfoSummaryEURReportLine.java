@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
 import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryEURReportLine;
-import net.sourceforge.fenixedu.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 

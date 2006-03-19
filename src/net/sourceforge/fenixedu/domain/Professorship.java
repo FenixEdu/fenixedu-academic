@@ -7,25 +7,21 @@ import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  */
 public class Professorship extends Professorship_Base implements ICreditsEventOriginator {
 
-    public String toString() {
-        String result = "Professorship :\n";
-        result += "\n  - ExecutionCourse : " + getExecutionCourse();
-        result += "\n  - Teacher : " + getTeacher();
+    public Professorship() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-        return result;
-    }
-
-    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
+	public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
         return this.getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
     }
 
     public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse,
             Teacher teacher, Double hours) throws MaxResponsibleForExceed, InvalidCategory {
-
         if (responsibleFor == null || executionCourse == null || teacher == null)
             throw new NullPointerException();
 

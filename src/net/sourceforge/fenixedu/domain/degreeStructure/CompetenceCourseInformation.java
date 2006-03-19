@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
@@ -9,6 +10,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     protected CompetenceCourseInformation() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public CompetenceCourseInformation(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType, Date endDate) {        

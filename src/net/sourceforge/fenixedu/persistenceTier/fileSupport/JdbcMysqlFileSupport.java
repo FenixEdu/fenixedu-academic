@@ -14,7 +14,7 @@ import java.util.Properties;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
-import net.sourceforge.fenixedu.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;

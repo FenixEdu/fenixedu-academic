@@ -1,17 +1,12 @@
 package net.sourceforge.fenixedu.domain.publication;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.PublicationDTO;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 public class Publication extends Publication_Base {
 
@@ -20,6 +15,8 @@ public class Publication extends Publication_Base {
     }
 
     public Publication() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     } 
 
     /********************************************************************
@@ -27,6 +24,7 @@ public class Publication extends Publication_Base {
      ********************************************************************/
     
     public Publication (PublicationDTO publicationDTO, PublicationType publicationType, List<Person> authors) {
+    	this();
         if( authors == null || authors.size() == 0)
             throw new DomainException("error.publication.createPublicationWithoutAuthors");
         setProperties(publicationDTO);
@@ -148,161 +146,6 @@ public class Publication extends Publication_Base {
     /********************************************************************
      *                          OTHER METHODS                           *
      ********************************************************************/
-
-    public String toString() {
-        String publication;
-        publication = "";
-
-        publication += getTitle();
-
-        String str = "";
-        if (getType()!=null && getType().getPublicationType()!=null && getType().getPublicationType().equalsIgnoreCase("translation"))
-            str = " Translation";
-        else if (getType()!=null && getType().getPublicationType()!=null && getType().getPublicationType().equalsIgnoreCase("critique"))
-            str = " Critique";
-
-        if (getSubType() != null && getSubType().length() != 0) {
-            publication = publication + " (" + getSubType() + str + ")";
-        }
-
-        publication += " - ";
-
-        List publicationAuthorships = new ArrayList(this.getPublicationAuthorships());
-        Collections.sort(publicationAuthorships, new BeanComparator("order"));
-        
-        List authors = (List) CollectionUtils.collect(publicationAuthorships, new Transformer() {
-            public Object transform(Object obj){
-                Authorship pa = (Authorship) obj;
-                return pa.getAuthor();
-            }
-        });
-        
-        Iterator iteratorAuthors = authors.iterator();
-        while (iteratorAuthors.hasNext()) {
-            Person author = (Person) iteratorAuthors.next();
-
-            publication += author.getNome()+", ";
-        }
-
-        if (getJournalName() != null && getJournalName().length() != 0) {
-            publication = publication + ", " + getJournalName();
-        }
-
-        if (getCriticizedAuthor() != null && getCriticizedAuthor().length() != 0) {
-            publication = publication + ", Original Author: " + getCriticizedAuthor();
-        }
-
-        if (getConference() != null && getConference().length() != 0) {
-            publication = publication + ", " + getConference();
-        }
-
-        if (getOriginalLanguage() != null && getOriginalLanguage().length() != 0
-                && getLanguage() != null && getLanguage().length() != 0) {
-            publication = publication + ", Translation " + getOriginalLanguage() + " - " + getLanguage();
-        }
-
-        if (getTranslatedAuthor() != null && getTranslatedAuthor().length() != 0) {
-            publication = publication + ", Original Author: " + getTranslatedAuthor();
-        }
-
-        String ola = null;
-
-        if (getEdition() != null) {
-            switch (getEdition().intValue()) {
-            case 1:
-                ola = "st";
-                break;
-            case 2:
-                ola = "nd";
-                break;
-            case 3:
-                ola = "rd";
-                break;
-            default:
-                ola = "th";
-                break;
-            }
-        }
-
-        if (getEdition() != null && getEdition().intValue() != 0) {
-            publication = publication + " " + getEdition() + ola + " Edition";
-        }
-
-        if (getFascicle() != null && getFascicle().intValue() != 0) {
-            publication = publication + ", Fasc. " + getFascicle();
-        }
-
-        if (getNumber() != null && getNumber().intValue() != 0) {
-            publication = publication + ", No. " + getNumber();
-        }
-
-        if (getVolume() != null && getVolume().length() != 0) {
-            publication = publication + ", Vol. " + getVolume();
-        }
-
-        if (getFirstPage() != null && getFirstPage().intValue() != 0) {
-            publication = publication + " (Pag. " + getFirstPage();
-        }
-
-        if (getLastPage() != null && getLastPage().intValue() != 0) {
-            publication = publication + " - " + getLastPage() + ")";
-        }
-
-        if (getSerie() != null && getSerie().intValue() != 0) {
-            publication = publication + ", Serie " + getSerie();
-        }
-
-        if (getEditor() != null && getEditor().length() != 0) {
-            publication = publication + ", " + getEditor();
-        }
-
-        if (getLocal() != null && getLocal().length() != 0) {
-            publication = publication + ", " + getLocal();
-        }
-
-        if (getUniversity() != null && getUniversity().length() != 0) {
-            publication = publication + ", " + getUniversity();
-        }
-
-        if (getInstituition() != null && getInstituition().length() != 0) {
-            publication = publication + ", " + getInstituition();
-        }
-
-        if (getMonth() != null && getMonth().length() != 0) {
-            publication = publication + " " + getMonth();
-        }
-
-        if (getYear() != null && getYear().intValue() != 0) {
-            publication = publication + " " + getYear();
-        }
-
-        if (getMonth_end() != null && getMonth_end().length() != 0) {
-            publication = publication + " a " + getMonth_end();
-        }
-
-        if (getYear_end() != null && getYear_end().intValue() != 0) {
-            publication = publication + " " + getYear_end();
-        }
-
-        if (getEditorCity() != null && getEditorCity().length() != 0) {
-            publication = publication + " " + getEditorCity();
-        }
-
-        if (getCountry() != null && getCountry().length() != 0) {
-            publication = publication + ", " + getCountry();
-        }
-
-        if (getFormat() != null && getFormat().length() != 0) {
-            publication = publication + ", (" + getFormat() + " format)";
-        }
-
-        if (getUrl() != null && getUrl().length() != 0) {
-            publication = publication + " " + getUrl();
-        }
-
-        return publication;
-    }
-
 
     private static class PublicationAuthorshipListener extends dml.runtime.RelationAdapter<Publication,Authorship> {
         

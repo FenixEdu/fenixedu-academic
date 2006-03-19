@@ -11,5 +11,10 @@ package net.sourceforge.fenixedu.domain;
  */
 
 public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
-    
+
+	public NonAffiliatedTeacher() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
 }

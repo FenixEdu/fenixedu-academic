@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -16,9 +18,12 @@ package net.sourceforge.fenixedu.domain.Seminaries;
 public class CaseStudy extends CaseStudy_Base {
     
     public CaseStudy() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public CaseStudy(String name, String description, String code) {
+    	this();
         this.setName(name);
         this.setDescription(description);
         this.setCode(code);

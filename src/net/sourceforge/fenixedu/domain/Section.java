@@ -12,25 +12,16 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.fileSuport.INode;
 
 /**
- * @author Ivo Brandão
+ * @author Ivo Brandï¿½o
  */
 public class Section extends Section_Base implements INode {
 
-    public String toString() {
-        String result = "[SECTION";
-        result += ", codInt=" + getIdInternal();
-        result += ", sectionOrder=" + getSectionOrder();
-        result += ", name=" + getName();
-        result += ", lastModifiedDate=" + getLastModifiedDate();
-        result += ", site=" + getSite();
-        result += ", superiorSection=" + getSuperiorSection();
+    public Section() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-        result += "]";
-
-        return result;
-    }
-
-    public String getSlideName() {
+	public String getSlideName() {
         String result = getParentNode().getSlideName() + "/S" + getIdInternal();
         return result;
     }

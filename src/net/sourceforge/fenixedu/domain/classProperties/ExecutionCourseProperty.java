@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.classProperties;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 
 /**
@@ -8,12 +10,12 @@ package net.sourceforge.fenixedu.domain.classProperties;
 
 public class ExecutionCourseProperty extends ExecutionCourseProperty_Base {
 
-    public String toString() {
-        return "name:[" + super.getName() + "]value:[" + super.getValue() + "]executionCourse:["
-                + this.getExecutionCourse().toString() + "]";
-    }
-    
-    public void delete() {
+    public ExecutionCourseProperty() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void delete() {
     	setExecutionCourse(null);
     	super.deleteDomainObject();
     }

@@ -16,32 +16,19 @@ import net.sourceforge.fenixedu.util.State;
 public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion_Base {
 
     public MasterDegreeThesisDataVersion() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public MasterDegreeThesisDataVersion(MasterDegreeThesis masterDegreeThesis,
             Employee responsibleEmployee, String dissertationTitle, Date lastModification,
             State currentState) {
+    	this();
         this.setMasterDegreeThesis(masterDegreeThesis);
         this.setResponsibleEmployee(responsibleEmployee);
         this.setDissertationTitle(dissertationTitle);
         this.setLastModification(lastModification);
         this.setCurrentState(currentState);
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": \n";
-        result += "idInternal = " + this.getIdInternal() + "; \n";
-        result += "masterDegreeThesis = " + this.getMasterDegreeThesis().getIdInternal() + "; \n";
-        result += "externalAssistentGuiders = " + this.getExternalAssistentGuiders().toString() + "; \n";
-        result += "assistentGuiders = " + this.getAssistentGuiders().toString() + "; \n";
-        result += "guiders = " + this.getGuiders().toString() + "; \n";
-        result += "responsibleEmployee = " + this.getResponsibleEmployee().getIdInternal() + "; \n";
-        result += "dissertationTitle = " + this.getDissertationTitle().toString() + "; \n";
-        result += "lastModification = " + this.getLastModification().toString() + "; \n";
-        result += "currentState = " + this.getCurrentState().toString() + "; \n";
-        result += "] \n";
-
-        return result;
     }
 
 }

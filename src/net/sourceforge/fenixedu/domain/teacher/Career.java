@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CareerType;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 
@@ -20,6 +21,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
 public abstract class Career extends Career_Base {
 
     public Career() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
         this.setOjbConcreteClass(this.getClass().getName());
     }
 	

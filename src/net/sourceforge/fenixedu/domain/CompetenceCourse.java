@@ -29,6 +29,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     protected CompetenceCourse() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public CompetenceCourse(String code, String name, Collection<Department> departments,

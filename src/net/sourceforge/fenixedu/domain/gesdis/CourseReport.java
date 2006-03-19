@@ -8,6 +8,8 @@ package net.sourceforge.fenixedu.domain.gesdis;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author Leonor Almeida
@@ -16,15 +18,12 @@ import java.util.Calendar;
  */
 public class CourseReport extends CourseReport_Base {
 
-    public String toString() {
-        String result = "[" + CourseReport.class.getName();
-        result += ", report=" + getReport();
-        result += ", executionCourse=" + getExecutionCourse();
-        result += "]";
-        return result;
-    }
-    
-    public void edit(String newReport) {
+    public CourseReport() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public void edit(String newReport) {
         if (newReport == null)
             throw new NullPointerException();
         

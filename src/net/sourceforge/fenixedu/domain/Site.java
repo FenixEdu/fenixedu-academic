@@ -13,23 +13,16 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * @author Ivo Brandão
+ * @author Ivo Brandï¿½o
  */
 public class Site extends Site_Base {
 
-    public String toString() {
-        String result = "[SITE";
-        result += ", codInt=" + getIdInternal();
-        result += ", executionCourse=" + getExecutionCourse();
-        result += ", initialStatement=" + getInitialStatement();
-        result += ", introduction=" + getIntroduction();
-        result += ", mail =" + getMail();
-        result += ", alternativeSite=" + getAlternativeSite();
-        result += "]";
-        return result;
-    }
+    public Site() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void edit(final String initialStatement, final String introduction, final String mail,
+	public void edit(final String initialStatement, final String introduction, final String mail,
             final String alternativeSite) {
         
         setInitialStatement(initialStatement);

@@ -15,15 +15,17 @@ import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- * @author Tânia Pousão
+ * @author Tï¿½nia Pousï¿½o
  */
 public class GratuitySituation extends GratuitySituation_Base {
 
 	public GratuitySituation() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 	
     public GratuitySituation(GratuityValues gratuityValues, StudentCurricularPlan studentCurricularPlan) {
-
+    	this();
         setGratuityValues(gratuityValues);
         setStudentCurricularPlan(studentCurricularPlan);
         setWhen(Calendar.getInstance().getTime());
@@ -37,7 +39,6 @@ public class GratuitySituation extends GratuitySituation_Base {
 
         setRemainingValue(totalValue);
         setTotalValue(totalValue);
-
     }
 
     public void updateValues() {

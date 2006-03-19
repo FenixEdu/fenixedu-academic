@@ -22,6 +22,7 @@ import org.apache.commons.collections.Predicate;
 public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
 
     public StudentCurricularPlanLEEC() {
+    	super();
         setOjbConcreteClass(getClass().getName());
     }
 

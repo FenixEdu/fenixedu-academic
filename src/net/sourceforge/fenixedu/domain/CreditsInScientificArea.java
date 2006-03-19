@@ -6,14 +6,11 @@ package net.sourceforge.fenixedu.domain;
 
 public class CreditsInScientificArea extends CreditsInScientificArea_Base {
 
-    public String toString() {
-        String result = "scientificArea: [" + this.getScientificArea().getName();
-        result += "] student: [" + this.getStudentCurricularPlan().getStudent().getNumber().toString();
-        result += "] course: [" + this.getEnrolment().getCurricularCourse().getName() + "]";
-        return result;
-    }
-	
-	
+	public CreditsInScientificArea() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
 	public void delete() {
 		removeScientificArea();
 		removeEnrolment();

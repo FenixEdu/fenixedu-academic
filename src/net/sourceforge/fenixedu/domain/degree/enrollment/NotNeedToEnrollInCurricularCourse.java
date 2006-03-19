@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.degree.enrollment;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 /**
  * @author David Santos in Jun 17, 2004
@@ -9,6 +11,7 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
 
     public NotNeedToEnrollInCurricularCourse() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 	
 	public void delete() {

@@ -7,13 +7,20 @@ package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 13/Nov/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Joï¿½o Mota </a> 13/Nov/2003
  * 
  */
 public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Base {
 
-    /**
+    public ReimbursementGuideSituation() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	/**
      * @return
      */
     public Calendar getModificationDate() {

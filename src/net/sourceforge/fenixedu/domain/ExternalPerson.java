@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 public class ExternalPerson extends ExternalPerson_Base {
 
     public ExternalPerson() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     /***************************************************************************
@@ -18,6 +20,7 @@ public class ExternalPerson extends ExternalPerson_Base {
 
     public ExternalPerson(String name, Gender gender, String address, String phone, String mobile,
             String homepage, String email, String documentIdNumber, Unit institution) {
+    	this();
 
         String username = "e" + documentIdNumber;
 

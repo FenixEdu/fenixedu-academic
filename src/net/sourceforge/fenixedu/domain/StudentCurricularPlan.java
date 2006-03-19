@@ -46,22 +46,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // only
 
     public StudentCurricularPlan() {
-        this.setOjbConcreteClass(getClass().getName());
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "internalCode = " + getIdInternal() + "; ";
-        result += "student = " + this.getStudent() + "; ";
-        result += "degreeCurricularPlan = " + this.getDegreeCurricularPlan() + "; ";
-        result += "startDate = " + this.getStartDate() + "; ";
-        result += "specialization = " + this.getSpecialization() + "; ";
-        result += "currentState = " + this.getCurrentState() + "]\n";
-        result += "when alter = " + this.getWhen() + "]\n";
-        if (this.getEmployee() != null) {
-            result += "employee = " + this.getEmployee().getPerson().getNome() + "]\n";
-        }
-        return result;
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
+        setOjbConcreteClass(getClass().getName());
     }
 
     public Integer getCreditsInSecundaryArea() {

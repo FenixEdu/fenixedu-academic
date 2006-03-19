@@ -7,11 +7,16 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 
 
 /**
- * @author Tânia Pousão 24 de Junho de 2003
+ * @author Tï¿½nia Pousï¿½o 24 de Junho de 2003
  */
 public abstract class Evaluation extends Evaluation_Base {
-	
-    public List<ExecutionCourse> getAttendingExecutionCoursesFor(final Student student) {
+
+    public Evaluation() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public List<ExecutionCourse> getAttendingExecutionCoursesFor(final Student student) {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
             if (student.attends(executionCourse)) {

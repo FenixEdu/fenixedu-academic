@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
@@ -21,12 +22,16 @@ import org.joda.time.Duration;
 public class Meal extends Meal_Base {
 
     public Meal(TimeInterval mealBreak) {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
         setMealBreak(mealBreak);
         setMinimumMealBreakInterval(DomainConstants.MINIMUM_BREAK_INTERVAL);
         setMandatoryMealDiscount(DomainConstants.MANDATORY_MEAL_DISCOUNT);
     }
     
     public Meal(TimeInterval mealBreak, Duration minimumMealInterval, Duration mandatoryMealDiscount) {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
         setMealBreak(mealBreak);
         setMandatoryMealDiscount(mandatoryMealDiscount);
         setMinimumMealBreakInterval(minimumMealInterval);

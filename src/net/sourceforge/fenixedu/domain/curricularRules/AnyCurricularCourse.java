@@ -25,7 +25,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             BolonhaDegreeType bolonhaDegreeType, Degree degree, Unit departmentUnit) {
         
         super();
-        
+
         if (curricularCourseToApplyRule == null || begin == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
@@ -87,14 +87,14 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             labelList.add(new GenericPair<Object, Boolean>("label.in", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
             labelList.add(new GenericPair<Object, Boolean>(getCurricularPeriodOrder(), false));
-            labelList.add(new GenericPair<Object, Boolean>("º ", false));
+            labelList.add(new GenericPair<Object, Boolean>("ï¿½ ", false));
             labelList.add(new GenericPair<Object, Boolean>("SEMESTER", true));
         }
         if (getMinimumYear() != null && getMaximumYear() != null) {
             if (getMinimumYear().compareTo(getMaximumYear()) == 0) {
                 labelList.add(new GenericPair<Object, Boolean>(", ", false));
                 labelList.add(new GenericPair<Object, Boolean>("label.of", true));
-                labelList.add(new GenericPair<Object, Boolean>("º ", false));
+                labelList.add(new GenericPair<Object, Boolean>("ï¿½ ", false));
                 labelList.add(new GenericPair<Object, Boolean>(getMinimumYear(), false));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
                 labelList.add(new GenericPair<Object, Boolean>("label.year", true));
@@ -103,11 +103,11 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
                 labelList.add(new GenericPair<Object, Boolean>("label.of", true));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
                 labelList.add(new GenericPair<Object, Boolean>(getMinimumYear(), false));
-                labelList.add(new GenericPair<Object, Boolean>("º ", false));
+                labelList.add(new GenericPair<Object, Boolean>("ï¿½ ", false));
                 labelList.add(new GenericPair<Object, Boolean>("label.to1", true));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
                 labelList.add(new GenericPair<Object, Boolean>(getMaximumYear(), false));
-                labelList.add(new GenericPair<Object, Boolean>("º ", false));
+                labelList.add(new GenericPair<Object, Boolean>("ï¿½ ", false));
                 labelList.add(new GenericPair<Object, Boolean>("label.year", true));
             }
         }

@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
-import org.apache.commons.lang.time.DateFormatUtils;
-
 /**
  * @author Ana e Ricardo
  * 
@@ -24,14 +22,13 @@ public class RoomOccupation extends RoomOccupation_Base {
 
     public static final int QUINZENAL = 3;
 
-    /**
-     * Construtor
-     */
     public RoomOccupation() {
+    	super();
     }
 
     public RoomOccupation(OldRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
             int frequency) {
+    	this();
         this.setRoom(room);
         this.setStartTime(startTime);
         this.setEndTime(endTime);
@@ -39,9 +36,6 @@ public class RoomOccupation extends RoomOccupation_Base {
         this.setFrequency(new Integer(frequency));
     }
 
-    /**
-     * @return
-     */
     public Calendar getStartTime() {
         if (this.getStartTimeDate() != null) {
             Calendar result = Calendar.getInstance();
@@ -83,20 +77,6 @@ public class RoomOccupation extends RoomOccupation_Base {
         } else {
             this.setEndTimeDate(null);
         }
-    }
-
-    public String toString() {
-        String result = "[ROOM OCCUPATION";
-        result += ", codInt=" + getIdInternal();
-        result += ", startTime=" + DateFormatUtils.format(this.getStartTime().getTime(), "HH:mm");
-        result += ", endTime=" + DateFormatUtils.format(this.getEndTime().getTime(), "HH:mm");
-        result += ", dayOfWeek=" + getDayOfWeek();
-        result += ", periodId=" + getPeriod().getIdInternal();
-        result += ", period="
-                + DateFormatUtils.format(getPeriod().getStartDate().getTime(), "yyyy-MM-dd");
-        result += ", room=" + getRoom().getNome();
-        result += "]";
-        return result;
     }
 
     public boolean roomOccupationForDateAndTime(RoomOccupation roomOccupation) {

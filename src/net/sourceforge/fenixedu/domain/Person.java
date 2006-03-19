@@ -37,9 +37,18 @@ public class Person extends Person_Base {
         super.setName(name);
     }
 
-    public Person(InfoPerson personToCreate, Country country) {
-
+    public Person() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        this.setMaritalStatus(MaritalStatus.UNKNOWN);
+        this.setAvailableEmail(Boolean.FALSE);
+        this.setAvailableWebSite(Boolean.FALSE);
+        this.setAvailablePhoto(Boolean.FALSE);
+    }
+
+    public Person(InfoPerson personToCreate, Country country) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
         if (personToCreate.getIdInternal() != null) {
             throw new DomainException("error.person.existentPerson");
         }
@@ -55,8 +64,8 @@ public class Person extends Person_Base {
 
     public Person(String name, String identificationDocumentNumber,
             IDDocumentType identificationDocumentType, Gender gender, String username) {
-
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         checkConditionsToCreateNewPerson(username, identificationDocumentNumber,
                 identificationDocumentType, this);
         
@@ -75,8 +84,8 @@ public class Person extends Person_Base {
     public Person(String username, String name, Gender gender, String address, String phone,
             String mobile, String homepage, String email, String documentIDNumber,
             IDDocumentType documentType) {
-
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         checkConditionsToCreateNewPerson(username, documentIDNumber, documentType, this);
         
         setUser(new User(username));
@@ -96,14 +105,6 @@ public class Person extends Person_Base {
         setIsPassInKerberos(Boolean.FALSE);     
     }
 
-    public Person() {
-        super();
-        this.setMaritalStatus(MaritalStatus.UNKNOWN);
-        this.setAvailableEmail(Boolean.FALSE);
-        this.setAvailableWebSite(Boolean.FALSE);
-        this.setAvailablePhoto(Boolean.FALSE);
-    }
-
     public Person(String numeroDocumentoIdentificacao, IDDocumentType tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
             Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
@@ -114,8 +115,8 @@ public class Person extends Person_Base {
             String email, String enderecoWeb, String numContribuinte, String profissao, String username,
             Country pais, String codigoFiscal, Boolean availableEmail, Boolean availableWebSite,
             String workPhone) {
-
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         checkConditionsToCreateNewPerson(username, numeroDocumentoIdentificacao,
                 tipoDocumentoIdentificacao, this);
 
@@ -516,16 +517,6 @@ public class Person extends Person_Base {
     /***************************************************************************
      * OTHER METHODS *
      **************************************************************************/
-
-    public String toString() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[Person idInternal= ");
-        stringBuilder.append(getIdInternal());
-        stringBuilder.append(" username= ");
-        stringBuilder.append(getUsername());
-        stringBuilder.append("]");
-        return stringBuilder.toString();
-    }
 
     public String getSlideName() {
         return "/photos/person/P" + getIdInternal();

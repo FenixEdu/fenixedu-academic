@@ -4,13 +4,20 @@
  */
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 
 
 /**
- * @author João Fialho & Rita Ferreira
+ * @author Joï¿½o Fialho & Rita Ferreira
  * 
  */
 public class OldInquiriesSummary extends OldInquiriesSummary_Base {
+
+	public OldInquiriesSummary() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 	public void delete() {
 		removeExecutionPeriod();

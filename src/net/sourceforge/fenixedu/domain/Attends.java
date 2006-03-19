@@ -50,23 +50,17 @@ public class Attends extends Attends_Base {
 		}
 	};
 
-    public Attends() {}
+    public Attends() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
+    }
 	
 	public Attends (Student student, ExecutionCourse executionCourse) {
+		this();
 		setAluno(student);
 		setDisciplinaExecucao(executionCourse);
 	}
 	
-    public String toString() {
-        String result = "[ATTEND";
-        result += ", codigoInterno=" + getIdInternal();
-        result += ", Student=" + getAluno();
-        result += ", ExecutionCourse=" + getDisciplinaExecucao();
-        result += ", Enrolment=" + getEnrolment();
-        result += "]";
-        return result;
-    }
-
 	public void delete() throws DomainException {
 		
 		if (!hasAnyShiftEnrolments() && !hasAnyStudentGroups() && !hasAnyAssociatedMarks()) {

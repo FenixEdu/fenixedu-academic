@@ -7,11 +7,16 @@ package net.sourceforge.fenixedu.domain;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- * @author Tânia Pousão
+ * @author Tï¿½nia Pousï¿½o
  */
 public class GratuityValues extends GratuityValues_Base {
 
-    public Double calculateTotalValueForMasterDegree() {
+    public GratuityValues() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public Double calculateTotalValueForMasterDegree() {
         Double totalValue = 0.0;
 
         Double annualValue = this.getAnualValue();
@@ -62,18 +67,6 @@ public class GratuityValues extends GratuityValues_Base {
         }
 
         return totalValue;
-    }
-
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        result = result.append("[GratuityValues: \n").append("idInternal= ").append(getIdInternal())
-                .append("\nanualValue= ").append(getAnualValue()).append("\nscholarShipPart= ").append(
-                        getScholarShipValue()).append("\nfinalProofValue= ")
-                .append(getFinalProofValue()).append("\ncourseValue= ").append(getCourseValue()).append(
-                        "\ncreditValue= ").append(getCreditValue()).append("\nproofRequestPayment= ")
-                .append(getProofRequestPayment()).append("\nstartPayment= ").append(getStartPayment())
-                .append("\nendPayment= ").append(getEndPayment()).append("]");
-        return result.toString();
     }
 
 }
