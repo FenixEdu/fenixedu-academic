@@ -7,13 +7,19 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class OldRoom extends OldRoom_Base {
 
-    /** @deprecated */
+    public OldRoom() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	/** @deprecated */
     public void createRoomOccupation(OccupationPeriod period, Calendar startTime, Calendar endTime,
 			DiaSemana dayOfWeek, Integer frequency, Integer week, WrittenEvaluation writtenEvaluation) {
 		boolean isFree = isFree(period, startTime, endTime, dayOfWeek, RoomOccupation.DIARIA, null);

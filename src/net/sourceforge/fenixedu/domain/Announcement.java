@@ -1,37 +1,26 @@
-/*
- * Announcement.java
- */
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
 import java.util.Date;
 
 /**
- * @author Ivo Brandão
+ * @author Ivo Brandï¿½o
  */
 public class Announcement extends Announcement_Base {
 
     public Announcement() {
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Announcement(String title, Date creationDate, Date lastModifiedDate, String information,
             Site site) {
+    	this();
         setTitle(title);
         setCreationDate(creationDate);
         setLastModifiedDate(lastModifiedDate);
         setInformation(information);
         setSite(site);
-    }
-
-    public String toString() {
-        String result = "[ANNOUNCEMENT";
-
-        result += ", creationDate=" + getCreationDate();
-        result += ", lastModifiedDate=" + getLastModifiedDate();
-        result += ", information=" + getInformation();
-        result += ", site=" + getSite();
-        result += "]";
-        return result;
     }
 
     public void edit(final String newAnnouncementTitle, final String newAnnouncementInformation) {
