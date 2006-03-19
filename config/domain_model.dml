@@ -140,6 +140,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 }
 
 class net.sourceforge.fenixedu.domain.RootDomainObject extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer idInternal;
 }
 
 class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -894,7 +895,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 		    EnrolmentEvaluationType enrolmentEvaluationType;
 		}
 			
-			//Isto é da estrutura antiga, faz sentido ainda?
+			//Isto ï¿½ da estrutura antiga, faz sentido ainda?
 		    class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
 		    }
 		    
@@ -6124,6 +6125,1610 @@ relation EquivalenceCurricularCourseCurricularCourse {
     	multiplicity *;
     }
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole equivalentCurricularCourses{
+		multiplicity *;
+	}
+}
+
+
+
+/* 
+ * Relations definitions of relations to RootDomainObject 
+ * 
+ */
+
+
+relation RootDomainObjectSummary {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Summary playsRole summarys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCurricularCourseGroup {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CurricularCourseGroup playsRole curricularCourseGroups {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectInsuranceValue {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.InsuranceValue playsRole insuranceValues {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCoordinator {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Coordinator playsRole coordinators {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCurriculumModule {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule playsRole curriculumModules {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExtraWorkHistoric {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric playsRole extraWorkHistorics {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGrouping {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Grouping playsRole groupings {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectOldPublication {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.OldPublication playsRole oldPublications {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGeneralClassProperty {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty playsRole generalClassPropertys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectReimbursementGuideEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntrys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGrantType {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantType playsRole grantTypes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPrecedence {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.precedences.Precedence playsRole precedences {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAssiduousnessHistory {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessHistory playsRole assiduousnessHistorys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSite {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Site playsRole sites {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAttribute {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.publication.Attribute playsRole attributes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExecutionCourse {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourses {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCompetenceCourseInformation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDegreeInfo {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.DegreeInfo playsRole degreeInfos {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectContributor {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Contributor playsRole contributors {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGratuityValues {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValuess {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGlossaryEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.support.GlossaryEntry playsRole glossaryEntrys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMetadata {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.onlineTests.Metadata playsRole metadatas {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherInstitutionWorkTime {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime playsRole teacherInstitutionWorkTimes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectItem {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Item playsRole items {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPublicationsNumber {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.PublicationsNumber playsRole publicationsNumbers {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAssiduousnessRecord {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectBlogEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.homepage.BlogEntry playsRole blogEntrys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDistrict {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.District playsRole districts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEmployeeHistoric {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole employeeHistorics {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCategory {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.Category playsRole categorys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectNotNeedToEnrollInCurricularCourse {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollInCurricularCourses {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectOldInquiriesSummary {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary playsRole oldInquiriesSummarys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDistributedTestAdvisory {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory playsRole distributedTestAdvisorys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectBranch {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Branch playsRole branchs {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTutor {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Tutor playsRole tutors {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCreditsInScientificArea {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CreditsInScientificArea playsRole creditsInScientificAreas {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherExpectationDefinitionPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod playsRole teacherExpectationDefinitionPeriods {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectWebSiteItem {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.WebSiteItem playsRole webSiteItems {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCurricularYear {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CurricularYear playsRole curricularYears {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectFixedPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.FixedPeriod playsRole fixedPeriods {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectStudentTestLog {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog playsRole studentTestLogs {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAdvisory {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Advisory playsRole advisorys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDislocatedStudent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole dislocatedStudents {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPublicationType {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.publication.PublicationType playsRole publicationTypes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCreditLine {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.credits.CreditLine playsRole creditLines {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCourseEquivalency {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherService {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.TeacherService playsRole teacherServices {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectQuestion {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.onlineTests.Question playsRole questions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPersonalGroup {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.PersonalGroup playsRole personalGroups {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPublication {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.publication.Publication playsRole publications {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExternalPerson {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPersons {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAssiduousness {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousnesss {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSection {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Section playsRole sections {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectBlogEntryComment {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.homepage.BlogEntryComment playsRole blogEntryComments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectClockUnit {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.ClockUnit playsRole clockUnits {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectParty {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole partys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMailAddressAlias {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias playsRole mailAddressAliass {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectOldInquiriesCoursesRes {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRess {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectReimbursementGuide {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectFAQSection {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.support.FAQSection playsRole fAQSections {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMailQueue {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue playsRole mailQueues {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExternalActivity {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.ExternalActivity playsRole externalActivitys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacher {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Teacher playsRole teachers {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCandidacy {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole candidacys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTheme {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Seminaries.Theme playsRole themes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectResidenceCandidacies {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.student.ResidenceCandidacies playsRole residenceCandidaciess {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherServiceItem {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem playsRole teacherServiceItems {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCurricularPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod playsRole curricularPeriods {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAssiduousnessRegime {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime playsRole assiduousnessRegimes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPublicationTeacher {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.publication.PublicationTeacher playsRole publicationTeachers {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherDegreeFinalProjectStudent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole teacherDegreeFinalProjectStudents {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAttends {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Attends playsRole attendss {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectInquiriesTeacher {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher playsRole inquiriesTeachers {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectWorkSchedule {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule playsRole workSchedules {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectRoomOccupation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.space.RoomOccupation playsRole roomOccupations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPartyType {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole partyTypes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCampus {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Campus playsRole campuss {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSentSms {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.sms.SentSms playsRole sentSmss {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCaseStudy {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Seminaries.CaseStudy playsRole caseStudys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGuideEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntrys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSupportLesson {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.SupportLesson playsRole supportLessons {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMoneyCostCenter {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter playsRole moneyCostCenters {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPublicationTypeAttribute {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute playsRole publicationTypeAttributes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCandidateEnrolment {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CandidateEnrolment playsRole candidateEnrolments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectUser {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.User playsRole users {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectOccupationPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole occupationPeriods {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPaymentPhase {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.PaymentPhase playsRole paymentPhases {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEnrolmentEvaluation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole enrolmentEvaluations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectWebSiteSection {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.WebSiteSection playsRole webSiteSections {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectInquiriesRoom {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole inquiriesRooms {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGaugingTestResult {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole gaugingTestResults {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCard {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.Card playsRole cards {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSchedule {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedules {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectStudent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Student playsRole students {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPersonalDataUseInquiryAnswers {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers playsRole personalDataUseInquiryAnswerss {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCurricularRule {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole curricularRules {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGrantContractRegime {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime playsRole grantContractRegimes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSibsPaymentFileEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntrys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectBalance {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.Balance playsRole balances {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEvaluationMethod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.EvaluationMethod playsRole evaluationMethods {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCountry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Country playsRole countrys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPublicationFormat {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.publication.PublicationFormat playsRole publicationFormats {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSecretaryEnrolmentStudent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent playsRole secretaryEnrolmentStudents {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectServiceProviderRegime {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime playsRole serviceProviderRegimes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectProfessorship {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorships {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherServiceExemption {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption playsRole teacherServiceExemptions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectScientificArea {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificAreas {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMasterDegreeProofVersion {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectWeeklyOcupation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation playsRole weeklyOcupations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectModality {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Seminaries.Modality playsRole modalitys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCompetenceCourse {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourses {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAuthorship {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.publication.Authorship playsRole authorships {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAccountability {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Accountability playsRole accountabilitys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTestScope {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.onlineTests.TestScope playsRole testScopes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectProject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMasterDegreeCandidate {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectJustificationMotive {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive playsRole justificationMotives {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectNonAffiliatedTeacher {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.NonAffiliatedTeacher playsRole nonAffiliatedTeachers {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDepartment {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Department playsRole departments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherLegalRegimen {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen playsRole teacherLegalRegimens {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPersonFunction {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction playsRole personFunctions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSchoolClass {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.SchoolClass playsRole schoolClasss {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGuide {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Guide playsRole guides {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSpace {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.space.Space playsRole spaces {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGroupProposal {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal playsRole groupProposals {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExecutionDegree {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegrees {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGrantContractMovement {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement playsRole grantContractMovements {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGrantSubsidy {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy playsRole grantSubsidys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCreditsInAnySecundaryArea {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea playsRole creditsInAnySecundaryAreas {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEnrolmentLog {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.log.EnrolmentLog playsRole enrolmentLogs {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAdvise {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.Advise playsRole advises {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectHomepage {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.homepage.Homepage playsRole homepages {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectStudentTestQuestion {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion playsRole studentTestQuestions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectProposal {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole proposals {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectContext {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole contexts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectStudentPersonalDataAuthorization {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization playsRole studentPersonalDataAuthorizations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMark {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Mark playsRole marks {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectUniversity {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.University playsRole universitys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExtraWorkCompensation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation playsRole extraWorkCompensations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectFileEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.FileEntry playsRole fileEntrys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExecutionYear {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYears {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectOldInquiriesTeachersRes {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRess {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectWebsiteType {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole websiteTypes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEnrolmentEquivalence {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.EnrolmentEquivalence playsRole enrolmentEquivalences {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSpaceOccupation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.space.SpaceOccupation playsRole spaceOccupations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectContent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.cms.Content playsRole contents {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEquivalentEnrolmentForEnrolmentEquivalence {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence playsRole equivalentEnrolmentForEnrolmentEquivalences {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectLesson {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Lesson playsRole lessons {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectInquiriesCourse {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse playsRole inquiriesCourses {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGuideSituation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.GuideSituation playsRole guideSituations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectFAQEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.support.FAQEntry playsRole fAQEntrys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectBlog {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.homepage.Blog playsRole blogs {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGrantOrientationTeacher {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher playsRole grantOrientationTeachers {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTransaction {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.transactions.Transaction playsRole transactions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGrantContract {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContracts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCurriculum {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Curriculum playsRole curriculums {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectScheduleing {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing playsRole scheduleings {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDegreeCurricularPlan {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlans {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEvent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExportGrouping {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.ExportGrouping playsRole exportGroupings {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMeal {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.Meal playsRole meals {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTestQuestion {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.onlineTests.TestQuestion playsRole testQuestions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectInquiriesRegistry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole inquiriesRegistrys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDistributedTest {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.onlineTests.DistributedTest playsRole distributedTests {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectProjectParticipation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.project.ProjectParticipation playsRole projectParticipations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectWebSite {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.WebSite playsRole webSites {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectFunction {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole functions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectProjectAccess {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess playsRole projectAccesss {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCurricularCourseEquivalence {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAccountabilityType {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType playsRole accountabilityTypes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectReimbursementGuideSituation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGroup {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole groups {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCourseReport {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.gesdis.CourseReport playsRole courseReports {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectRestriction {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.precedences.Restriction playsRole restrictions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCareer {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.Career playsRole careers {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDegreeModule {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModules {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPublicationSubtype {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.publication.PublicationSubtype playsRole publicationSubtypes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGrantInsurance {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance playsRole grantInsurances {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectStatusAssiduidade {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.StatusAssiduidade playsRole statusAssiduidades {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGrantPart {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole grantParts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSibsPaymentFile {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFiles {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectStudentCurricularPlan {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlans {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSeminary {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Seminaries.Seminary playsRole seminarys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectQualification {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Qualification playsRole qualifications {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCms {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.cms.Cms playsRole cmss {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExtraWorkRequests {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests playsRole extraWorkRequestss {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectShift {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Shift playsRole shifts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGroupStudent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent playsRole groupStudents {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCurricularCourseScope {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole curricularCourseScopes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDegree {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Degree playsRole degrees {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherPersonalExpectation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation playsRole teacherPersonalExpectations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSpaceInformation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.space.SpaceInformation playsRole spaceInformations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCmsConfiguration {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration playsRole cmsConfigurations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGratuitySituation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.GratuitySituation playsRole gratuitySituations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectWeeklyWorkLoad {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad playsRole weeklyWorkLoads {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCostCenter {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CostCenter playsRole costCenters {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTest {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.onlineTests.Test playsRole tests {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEvaluation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Evaluation playsRole evaluations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectContract {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Contract playsRole contracts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDelegate {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegates {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectBibliographicReference {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.BibliographicReference playsRole bibliographicReferences {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGrantOwner {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.grant.owner.GrantOwner playsRole grantOwners {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCompetenceCourseLoad {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad playsRole competenceCourseLoads {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMasterDegreeThesis {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesiss {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectStudentCourseReport {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport playsRole studentCourseReports {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCourseHistoric {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.gesdis.CourseHistoric playsRole courseHistorics {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPrice {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Price playsRole prices {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCandidateSituation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CandidateSituation playsRole candidateSituations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMasterDegreeThesisDataVersion {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectStudentGroup {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.StudentGroup playsRole studentGroups {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExtraWork {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork playsRole extraWorks {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectRole {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Role playsRole roles {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectNormalWorkPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.NormalWorkPeriod playsRole normalWorkPeriods {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectWrittenEvaluationEnrolment {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDailyBalance {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.DailyBalance playsRole dailyBalances {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEnrolmentPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.EnrolmentPeriod playsRole enrolmentPeriods {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEmployee {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Employee playsRole employees {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectShiftProfessorship {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.ShiftProfessorship playsRole shiftProfessorships {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGrantPaymentEntity {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity playsRole grantPaymentEntitys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectConnectionRule {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole connectionRules {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectOrientation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacher.Orientation playsRole orientations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSenior {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.student.Senior playsRole seniors {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectStudentKind {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.StudentKind playsRole studentKinds {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExecutionPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriods {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCaseStudyChoice {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice playsRole caseStudyChoices {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAnnouncement {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Announcement playsRole announcements {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCurricularSemester {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemesters {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPersonAccount {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccounts {
 		multiplicity *;
 	}
 }
