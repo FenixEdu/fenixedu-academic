@@ -99,7 +99,7 @@ public class OJBMetadataGenerator {
             final DomainClass domClass = (DomainClass) iterator.next();
             final Class clazz = Class.forName(domClass.getFullName());
 
-            if (!Modifier.isAbstract(clazz.getModifiers())) {
+            if (!Modifier.isAbstract(clazz.getModifiers()) && !domClass.getFullName().equals("net.sourceforge.fenixedu.domain.RootDomainObject")) {
                 final ClassDescriptor classDescriptor = (ClassDescriptor) ojbMetadata.get(domClass
                         .getFullName());
                 if (classDescriptor != null) {
@@ -168,6 +168,11 @@ public class OJBMetadataGenerator {
             while (roleSlots.hasNext()) {
                 Role role = (Role) roleSlots.next();
                 String roleName = role.getName();
+
+                if (domClass.getFullName().equals("net.sourceforge.fenixedu.domain.RootDomainObject")
+                		&& roleName != null && (roleName.equals("rootDomainObject") || roleName.equals("rootDomainObjects"))) {
+                	continue;
+                }
 
                 if (role.getMultiplicityUpper() == 1) {
 
