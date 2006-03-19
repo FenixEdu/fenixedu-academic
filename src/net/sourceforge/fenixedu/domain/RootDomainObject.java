@@ -20,7 +20,7 @@ public class RootDomainObject extends RootDomainObject_Base {
         try {
             suportePersistente.iniciarTransaccao();
             final IPersistentObject persistentObject = suportePersistente.getIPersistentObject();
-            instance = (RootDomainObject) persistentObject.readByOID(RootDomainObject.class, Integer.valueOf(1));
+            instance = persistentObject.readRootDomainObject();
             suportePersistente.confirmarTransaccao();
         } catch (ExcepcaoPersistencia e) {
             throw new Error("error.root.domain.object.not.retrieved", e);
@@ -64,4 +64,5 @@ public class RootDomainObject extends RootDomainObject_Base {
 	public static void initTests() {
 		instance = new RootDomainObject();		
 	}
+
 }

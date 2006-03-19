@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.stm.Transaction;
@@ -119,6 +120,12 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", oid);
         return (DomainObject) queryObject(classToQuery, criteria);
+    }
+
+    public RootDomainObject readRootDomainObject() throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("idInternal", Integer.valueOf(1));
+        return (RootDomainObject) queryObject(RootDomainObject.class, criteria);
     }
 
     /**

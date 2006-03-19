@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
@@ -21,6 +22,10 @@ public abstract class VersionedObjectsBase {
     public final DomainObject readByOID(final Class classToQuery, final Integer oid)
             throws ExcepcaoPersistencia {
         return SuportePersistenteOJB.getInstance().getIPersistentObject().readByOID(classToQuery, oid);
+    }
+
+    public RootDomainObject readRootDomainObject() throws ExcepcaoPersistencia {
+    	return SuportePersistenteOJB.getInstance().getIPersistentObject().readRootDomainObject();
     }
 
     public Collection readAll(final Class classToQuery) {

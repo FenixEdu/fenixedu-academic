@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -18,5 +19,7 @@ public interface IPersistentObject {
     public int count(Class classToQuery, Criteria criteria);
 
     public Collection readAll(Class classToQuery)  throws ExcepcaoPersistencia;
+
+    public RootDomainObject readRootDomainObject() throws ExcepcaoPersistencia;
 
 }

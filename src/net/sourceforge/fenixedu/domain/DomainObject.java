@@ -61,7 +61,6 @@ public abstract class DomainObject extends DomainObject_Base implements Serializ
         autoDetermineId = false;
     }
 
-
     public DomainObject() {
         super();
         // All domain objects become persistent upon there creation.
@@ -70,11 +69,9 @@ public abstract class DomainObject extends DomainObject_Base implements Serializ
         // jcachopo: This should be changed in the future...
         ensureIdInternal();
         Transaction.storeNewObject(this);
-        setAckOptLock(new Integer(0));
-        setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    private void ensureIdInternal() {
+	private void ensureIdInternal() {
         if (!lockMode || autoDetermineId) {
             setIdInternal(Integer.valueOf(nextIdInternal++));
 	} else {
