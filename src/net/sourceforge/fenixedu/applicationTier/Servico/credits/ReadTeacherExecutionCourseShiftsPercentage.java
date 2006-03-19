@@ -24,13 +24,12 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author Tânia & Alexandra
+ * @author Tï¿½nia & Alexandra
  */
 public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
 
@@ -47,11 +46,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
         result.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         result.setInfoTeacher(InfoTeacher.newInfoFromDomain(teacher));
 
-        ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
-
-        List executionCourseShiftsList = null;
-
-        executionCourseShiftsList = shiftDAO.readByExecutionCourse(executionCourse.getIdInternal());
+        List executionCourseShiftsList = executionCourse.getAssociatedShifts();
 
         Iterator iterator = executionCourseShiftsList.iterator();
         while (iterator.hasNext()) {

@@ -487,7 +487,7 @@ public class ReadCourseInformation extends Service {
             throws ExcepcaoPersistencia {
         List lessons = new ArrayList();
 
-        List shifts = persistentSupport.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
+        List shifts = executionCourse.getAssociatedShifts();
         for (int i = 0; i < shifts.size(); i++) {
             Shift shift = (Shift) shifts.get(i);
             List aulasTemp = shift.getAssociatedLessons();

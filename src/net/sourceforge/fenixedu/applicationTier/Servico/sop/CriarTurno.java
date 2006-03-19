@@ -17,17 +17,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 public class CriarTurno extends Service {
 
     public InfoShift run(InfoShift infoTurno) throws FenixServiceException, ExcepcaoPersistencia {
-        final ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
-
-        final Shift existingShift = shiftDAO.readByNameAndExecutionCourse(infoTurno.getNome(),
-                infoTurno.getInfoDisciplinaExecucao().getIdInternal());
+    	final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao().getIdInternal());
+    	final Shift existingShift = executionCourse.findShiftByName(infoTurno.getNome());
 
         if (existingShift != null) {
             throw new ExistingServiceException("Duplicate Entry: " + infoTurno.getNome());
@@ -37,8 +35,6 @@ public class CriarTurno extends Service {
         Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * infoTurno.getLotacao()
                 .doubleValue())).intValue());
         newShift.setAvailabilityFinal(availabilityFinal);
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
-                .readByOID(ExecutionCourse.class, infoTurno.getInfoDisciplinaExecucao().getIdInternal());
         newShift.setDisciplinaExecucao(executionCourse);
         newShift.setNome(infoTurno.getNome());
         newShift.setLotacao(infoTurno.getLotacao());

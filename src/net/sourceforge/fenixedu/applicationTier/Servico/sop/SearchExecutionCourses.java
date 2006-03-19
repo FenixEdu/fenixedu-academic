@@ -184,8 +184,7 @@ public class SearchExecutionCourses extends Service {
                 Integer doubtsCapacity = new Integer(0);
                 Integer reserveCapacity = new Integer(0);
 
-                List shifts = persistentSupport.getITurnoPersistente().readByExecutionCourse(
-                        executionCourse.getIdInternal());
+                List shifts = executionCourse.getAssociatedShifts();
                 Iterator iterator = shifts.iterator();
                 while (iterator.hasNext()) {
                     Shift shift = (Shift) iterator.next();

@@ -87,6 +87,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -102,7 +103,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -110,7 +110,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda Quitï¿½rio
  * 
  */
 public class TeacherAdministrationSiteComponentBuilder {
@@ -1136,7 +1136,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		if (grouping == null)
 			return null;
 
-		Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftCode);
+		Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
 
 		List infoSiteGroupsByShiftList = new ArrayList();
 		InfoSiteShift infoSiteShift = new InfoSiteShift();
@@ -1186,7 +1186,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		if (groupProperties == null)
 			return null;
 
-		Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftCode);
+		Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
 
 		List aux = new ArrayList();
 		List studentGroupsWithShift = groupProperties.getStudentGroupsWithShift();
@@ -1315,7 +1315,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		if (strategy.checkHasShift(groupProperties)) {
 
-			ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 			List executionCourses = new ArrayList();
 			executionCourses = groupProperties.getExecutionCourses();
 
@@ -1323,8 +1322,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 			List shifts = new ArrayList();
 			while (iterExecutionCourses.hasNext()) {
 				ExecutionCourse executionCourse2 = (ExecutionCourse) iterExecutionCourses.next();
-				List someShifts = persistentShift
-						.readByExecutionCourse(executionCourse2.getIdInternal());
+				List someShifts = executionCourse2.getAssociatedShifts();
 
 				shifts.addAll(someShifts);
 			}

@@ -770,4 +770,14 @@ public class CurricularCourse extends CurricularCourse_Base {
     	return this.equals(oldCurricularCourse) || this.getOldCurricularCourses().contains(oldCurricularCourse) || this.getCompetenceCourse().getAssociatedCurricularCourses().contains(oldCurricularCourse);
     }
 
+	public boolean hasScopeForCurricularYear(final Integer curricularYear) {
+		for (final CurricularCourseScope curricularCourseScope : getScopes()) {
+			final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
+			if (curricularSemester.getCurricularYear().getYear().equals(curricularYear)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

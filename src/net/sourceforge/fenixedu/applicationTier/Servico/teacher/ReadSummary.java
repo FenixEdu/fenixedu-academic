@@ -36,17 +36,16 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author João Mota
- * @author Susana Fernandes modified by Tânia Pousão at 28/Abril/2004
+ * @author Joï¿½o Mota
+ * @author Susana Fernandes modified by Tï¿½nia Pousï¿½o at 28/Abril/2004
  *         21/Jul/2003 fenix-head ServidorAplicacao.Servico.teacher
- * @author modified by Gonçalo Luiz, 18/October/2004
+ * @author modified by Gonï¿½alo Luiz, 18/October/2004
  */
 public class ReadSummary extends Service {
 
@@ -63,8 +62,7 @@ public class ReadSummary extends Service {
             throw new FenixServiceException("no.site");
         }
 
-        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-        List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
+        List shifts = executionCourse.getAssociatedShifts();
         List infoShifts = new ArrayList();
         if (shifts != null && shifts.size() > 0) {
             infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {

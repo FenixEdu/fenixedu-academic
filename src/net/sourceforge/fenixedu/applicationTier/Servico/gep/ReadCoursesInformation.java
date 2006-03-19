@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -188,7 +187,6 @@ public class ReadCoursesInformation extends Service {
     public static Integer getNumberOfLessons(List infoLessons, String lessonType, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
         final String lessonTypeForPredicate = lessonType;
-        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         List lessonsOfType = (List) CollectionUtils.select(infoLessons, new Predicate() {
 
             public boolean evaluate(Object arg0) {
@@ -211,7 +209,7 @@ public class ReadCoursesInformation extends Service {
                         .getIdInternal());
 
                 // shifts = persistentShift.readByLesson(lesson);
-                shift = persistentShift.readByLesson(lesson.getIdInternal());
+                shift = lesson.getShift();
 
                 // if (shifts != null && !shifts.isEmpty()) {
                 if (shift != null) {
@@ -369,9 +367,7 @@ public class ReadCoursesInformation extends Service {
     private List getInfoLessons(ExecutionCourse executionCourse)
             throws ExcepcaoPersistencia {
 
-        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-
-        List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
+        List shifts = executionCourse.getAssociatedShifts();
 
         List lessons = new ArrayList();
 

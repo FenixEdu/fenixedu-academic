@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
  * 
@@ -33,8 +32,6 @@ import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Service {
 
     public InfoExecutionCourse run(final Integer oid) throws ExcepcaoPersistencia {
-        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-
         InfoExecutionCourse infoExecutionCourse = null;
 
         ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
@@ -62,7 +59,7 @@ public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Serv
             }
 
             infoExecutionCourse.setAssociatedInfoShifts(new ArrayList());
-            List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
+            List shifts = executionCourse.getAssociatedShifts();
             for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
                 Shift shift = (Shift) iterator.next();
                 InfoShift infoShift = InfoShift.newInfoFromDomain(shift);

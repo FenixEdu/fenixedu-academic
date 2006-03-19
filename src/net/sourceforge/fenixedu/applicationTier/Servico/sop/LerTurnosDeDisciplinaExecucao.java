@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 /**
- * Serviço LerTurnosDeDisciplinaExecucao.
+ * Serviï¿½o LerTurnosDeDisciplinaExecucao.
  * 
  * @author tfc130
  */
@@ -18,6 +18,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -28,7 +29,7 @@ public class LerTurnosDeDisciplinaExecucao extends Service {
         List infoShiftList = new ArrayList();
         List infoShiftAndLessons = new ArrayList();
 
-        infoShiftList = persistentSupport.getITurnoPersistente().readByExecutionCourse(infoExecutionCourse.getIdInternal());
+        infoShiftList = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal()).getAssociatedShifts();
         Iterator itShiftList = infoShiftList.iterator();
 
         while (itShiftList.hasNext()) {

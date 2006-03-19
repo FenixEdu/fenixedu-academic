@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -800,6 +801,25 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
             }
         }
         return false;
+    }
+
+    public Shift findShiftByName(final String shiftName) {
+    	for (final Shift shift : getAssociatedShiftsSet()) {
+    		if (shift.getNome().equals(shiftName)) {
+    			return shift;
+    		}
+    	}
+    	return null;
+    }
+
+    public Set<Shift> findShiftByType(final ShiftType shiftType) {
+    	final Set<Shift> shifts = new HashSet<Shift>();
+    	for (final Shift shift : getAssociatedShiftsSet()) {
+    		if (shift.getTipo() == shiftType) {
+    			shifts.add(shift);
+    		}
+    	}
+    	return shifts;
     }
 
 }

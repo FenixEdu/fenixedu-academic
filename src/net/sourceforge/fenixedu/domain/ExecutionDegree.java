@@ -8,7 +8,9 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -45,5 +47,19 @@ public class ExecutionDegree extends ExecutionDegree_Base {
 
         return false;
     }
+
+	public Set<Shift> findAvailableShifts(final CurricularYear curricularYear, final ExecutionPeriod executionPeriod) {
+		final Set<Shift> shifts = new HashSet<Shift>();
+		for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCourses()) {
+			if (curricularCourse.hasScopeForCurricularYear(curricularYear.getYear())) {
+				for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+					if (executionCourse.getExecutionPeriod() == executionPeriod) {
+						shifts.addAll(executionCourse.getAssociatedShifts());
+					}
+				}
+			}
+		}
+		return shifts;
+	}
 
 }

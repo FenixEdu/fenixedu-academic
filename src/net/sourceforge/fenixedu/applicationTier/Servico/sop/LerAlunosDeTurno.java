@@ -7,7 +7,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 /**
- * Serviço LerAlunosDeTurno.
+ * Serviï¿½o LerAlunosDeTurno.
  * 
  * @author tfc130
  */
@@ -19,17 +19,17 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 public class LerAlunosDeTurno extends Service {
 
     public Object run(ShiftKey keyTurno) throws ExcepcaoPersistencia {
-        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-        Shift shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), keyTurno
-                .getInfoExecutionCourse().getIdInternal());
+    	final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(keyTurno.getInfoExecutionCourse().getIdInternal());
+    	final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
 
         List<Student> alunos = shift.getStudents();
 

@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -20,10 +21,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  */
 public class SummaryUtils {
@@ -116,9 +116,7 @@ public class SummaryUtils {
                 && summary.getShift().getIdInternal().equals(infoSummary.getInfoShift().getIdInternal())) {
             shift = summary.getShift();
         } else {
-            final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-            shift = (Shift) persistentShift.readByOID(Shift.class, infoSummary.getInfoShift()
-                    .getIdInternal());
+            shift = RootDomainObject.getInstance().readShiftByOID(infoSummary.getInfoShift().getIdInternal());
         }
         if (shift == null) {
             throw new FenixServiceException("error.summary.no.shift");

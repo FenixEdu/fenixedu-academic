@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Site;
@@ -51,7 +52,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author André Fernandes / João Brito
+ * @author Andrï¿½ Fernandes / Joï¿½o Brito
  */
 public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
@@ -91,8 +92,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
         List attends = executionCourse.getAttends();
 
         List allDegreeCurricularPlans = getDegreeCurricularPlansFromAttends(attends);
-        List allShifts = persistentSupport.getITurnoPersistente()
-                .readByExecutionCourse(executionCourse.getIdInternal());
+        List allShifts = executionCourse.getAssociatedShifts();
         List groupProperties = executionCourse.getGroupings();
 
         Map studentGroupsMap = getStudentGroupsMapFromGroupPropertiesList(groupProperties, persistentSupport);
@@ -175,7 +175,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
             while (shiftIterator.hasNext()) {
 
                 Integer shiftId = (Integer) shiftIterator.next();
-                final Shift turno = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftId);
+                final Shift turno = RootDomainObject.getInstance().readShiftByOID(shiftId);
 
                 Iterator attendsIterator = attends.iterator();
 
@@ -195,7 +195,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
         // building the info
         InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = new InfoForReadStudentsWithAttendsByExecutionCourse();
-        List shifts = persistentSupport.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
+        List shifts = executionCourse.getAssociatedShifts();
 
         List infoCompositions = new ArrayList();
         Iterator it = attends.iterator();

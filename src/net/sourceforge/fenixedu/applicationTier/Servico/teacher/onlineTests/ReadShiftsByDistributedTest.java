@@ -35,8 +35,7 @@ public class ReadShiftsByDistributedTest extends Service {
 			throw new InvalidArgumentsServiceException();
 		}
 
-		List<Shift> shiftList = persistentSupport.getITurnoPersistente().readByExecutionCourse(
-				executionCourse.getIdInternal());
+		List<Shift> shiftList = executionCourse.getAssociatedShifts();
 
 		List<InfoShift> result = new ArrayList<InfoShift>();
 		for (Shift shift : shiftList) {

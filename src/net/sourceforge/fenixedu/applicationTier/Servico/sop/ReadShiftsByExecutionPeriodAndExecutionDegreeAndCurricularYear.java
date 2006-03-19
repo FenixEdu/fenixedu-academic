@@ -12,6 +12,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
@@ -26,6 +27,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -33,28 +35,15 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear exte
 
     public Object run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
             InfoCurricularYear infoCurricularYear) throws ExcepcaoPersistencia {
+        final ExecutionPeriod executionPeriod = RootDomainObject.getInstance().readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final CurricularYear curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(infoCurricularYear.getIdInternal());
 
-        List infoShifts = null;
+        final Set<Shift> shifts = executionDegree.findAvailableShifts(curricularYear, executionPeriod);
 
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
-                .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
-
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
-                .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
-
-        CurricularYear curricularYear = (CurricularYear) persistentObject
-        		.readByOID(CurricularYear.class, infoCurricularYear.getIdInternal());
-
-        List shifts = persistentSupport.getITurnoPersistente()
-                .readByExecutionPeriodAndExecutionDegreeAndCurricularYear(
-                        executionPeriod.getIdInternal(), executionDegree.getIdInternal(),
-                        curricularYear.getIdInternal());
-
-        infoShifts = new ArrayList();
-        for (int i = 0; i < shifts.size(); i++) {
-            Shift shift = (Shift) shifts.get(i);
-
-            InfoShift infoShift = new InfoShift();
+        final List infoShifts = new ArrayList();
+        for (final Shift shift : shifts) {
+        	final InfoShift infoShift = new InfoShift();
             infoShift.setAvailabilityFinal(shift.getAvailabilityFinal());
             infoShift.setIdInternal(shift.getIdInternal());
             infoShift.setLotacao(shift.getLotacao());
@@ -62,14 +51,12 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear exte
             infoShift.setTipo(shift.getTipo());
 
             infoShift.setInfoLessons(new ArrayList());
-            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
-                    .newInfoFromDomain(((Shift) shifts.get(i)).getDisciplinaExecucao());
+            final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain((shift).getDisciplinaExecucao());
             infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-            for (int j = 0; j < ((Shift) shifts.get(i)).getAssociatedLessons().size(); j++) {
-                Lesson lesson = ((Shift) shifts.get(i)).getAssociatedLessons().get(j);
-                InfoLesson infoLesson = new InfoLesson();
-                InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
-                InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(lesson
+            for (final Lesson lesson : shift.getAssociatedLessons()) {
+            	final InfoLesson infoLesson = new InfoLesson();
+            	final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
+            	final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(lesson
                         .getRoomOccupation());
 
                 infoLesson.setDiaSemana(lesson.getDiaSemana());

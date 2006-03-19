@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 /**
- * Serviço EditarTurno.
+ * Serviï¿½o EditarTurno.
  * 
  * @author tfc130
  */
@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,10 +29,9 @@ public class EditarTurno extends Service {
 	public Object run(InfoShift infoShiftOld, InfoShift infoShiftNew) throws FenixServiceException,
 			ExcepcaoPersistencia {
 
-		newShiftIsValid(infoShiftOld, infoShiftNew.getTipo(), infoShiftNew.getInfoDisciplinaExecucao(),
-				infoShiftNew.getLotacao());
+		newShiftIsValid(infoShiftOld, infoShiftNew.getTipo(), infoShiftNew.getInfoDisciplinaExecucao(), infoShiftNew.getLotacao());
 
-		final Shift shiftToEdit = (Shift) persistentObject.readByOID(Shift.class, infoShiftOld.getIdInternal());
+		final Shift shiftToEdit = RootDomainObject.getInstance().readShiftByOID(infoShiftOld.getIdInternal());
 
 		final int capacityDiference = infoShiftNew.getLotacao().intValue() - shiftToEdit.getLotacao().intValue();
 
@@ -39,11 +39,9 @@ public class EditarTurno extends Service {
 			throw new InvalidFinalAvailabilityException();
 		}
 
-		final Shift otherShiftWithSameNewName = persistentSupport.getITurnoPersistente().readByNameAndExecutionCourse(
-				infoShiftNew.getNome(), infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
-
-		if ((otherShiftWithSameNewName != null)
-				&& !(otherShiftWithSameNewName.getIdInternal().equals(shiftToEdit.getIdInternal()))) {
+		final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
+		final Shift otherShiftWithSameNewName = executionCourse.findShiftByName(infoShiftNew.getNome());
+		if (otherShiftWithSameNewName != null && otherShiftWithSameNewName != shiftToEdit) {
 			throw new ExistingServiceException("Duplicate Entry: " + otherShiftWithSameNewName.getNome());
 		}
 
@@ -54,9 +52,6 @@ public class EditarTurno extends Service {
 		shiftToEdit.setAvailabilityFinal(new Integer(shiftToEdit.getAvailabilityFinal().intValue()
 				+ capacityDiference));
 
-		final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
-				.readByOID(ExecutionCourse.class,
-						infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
         if (shiftToEdit.getDisciplinaExecucao() != executionCourse) {
             shiftToEdit.setDisciplinaExecucao(executionCourse);
         }

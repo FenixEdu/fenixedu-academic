@@ -35,13 +35,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * @author Susana Fernandes 21/Jul/2003 fenix-head
  *         ServidorAplicacao.Servico.teacher
  */
@@ -65,8 +64,7 @@ public class ReadSummaries extends Service {
         List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
 
         // execution courses's shifts for display to filter summary
-        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-        List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
+        List shifts = executionCourse.getAssociatedShifts();
         List infoShifts = new ArrayList();
         if (shifts != null && shifts.size() > 0) {
             infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
@@ -108,8 +106,7 @@ public class ReadSummaries extends Service {
 
         List summaries = readSummariesByType(executionCourseId, summaryType, persistentSummary);
 
-        summaries = readSummariesByShift(executionCourseId, shiftId, executionCourse, persistentShift,
-                persistentSummary, summaries);
+        summaries = readSummariesByShift(executionCourseId, shiftId, executionCourse, persistentSummary, summaries);
 
         summaries = readTeacherSummaries(executionCourseId, professorShiftId, persistentProfessorship,
                 persistentSummary, summaries);
@@ -161,7 +158,7 @@ public class ReadSummaries extends Service {
     }
 
     protected List readSummariesByShift(Integer executionCourseId, Integer shiftId,
-            ExecutionCourse executionCourse, ITurnoPersistente persistentShift,
+            ExecutionCourse executionCourse,
             IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia,
             FenixServiceException {
         if (shiftId != null && shiftId.intValue() > 0) {

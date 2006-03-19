@@ -30,13 +30,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
- * Manuel Pinto e João Figueiredo
+ * Manuel Pinto e Joï¿½o Figueiredo
  */
 public class ReadSummaries extends Service {
     
@@ -44,7 +43,6 @@ public class ReadSummaries extends Service {
             Integer shiftId) throws FenixServiceException, ExcepcaoPersistencia {
       
         final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
-        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         
         final Teacher teacher = Teacher.readByNumber(teacherNumber);
         if (teacher == null) {
@@ -59,7 +57,7 @@ public class ReadSummaries extends Service {
        
         List<Summary> summaries_aux = readSummariesByType(executionCourseId, summaryType, persistentSummary);        
        
-        summaries_aux = readSummariesByShift(executionCourseId, shiftId, executionCourse, persistentShift, persistentSummary, summaries_aux);
+        summaries_aux = readSummariesByShift(executionCourseId, shiftId, executionCourse, persistentSummary, summaries_aux);
                
         summaries_aux = readAllSummaries(executionCourseId, summaryType, shiftId, persistentSummary, summaries_aux);
                 
@@ -83,7 +81,7 @@ public class ReadSummaries extends Service {
         }
         
         // execution courses's shifts for display to filter summary
-        List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
+        List shifts = executionCourse.getAssociatedShifts();
         List infoShifts = new ArrayList();
         if (shifts != null && shifts.size() > 0) {
             infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
@@ -161,7 +159,7 @@ public class ReadSummaries extends Service {
     }
     
     protected List readSummariesByShift(Integer executionCourseId, Integer shiftId,
-            ExecutionCourse executionCourse, ITurnoPersistente persistentShift,
+            ExecutionCourse executionCourse,
             IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia,
             FenixServiceException {
         if (shiftId != null && shiftId.intValue() > 0) {

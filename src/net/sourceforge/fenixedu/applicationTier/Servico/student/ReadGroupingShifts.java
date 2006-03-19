@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
  * @author asnr and scpo
@@ -61,8 +60,6 @@ public class ReadGroupingShifts extends Service {
 				.getGroupEnrolmentStrategyInstance(grouping);
 
 		if (strategy.checkHasShift(grouping)) {
-			ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-
 			List executionCourses = new ArrayList();
 			executionCourses = grouping.getExecutionCourses();
 
@@ -71,7 +68,7 @@ public class ReadGroupingShifts extends Service {
 			while (iterExecutionCourses.hasNext()) {
 				ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourses.next();
 
-				List someShifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
+				List someShifts = executionCourse.getAssociatedShifts();
 
 				executionCourseShifts.addAll(someShifts);
 			}

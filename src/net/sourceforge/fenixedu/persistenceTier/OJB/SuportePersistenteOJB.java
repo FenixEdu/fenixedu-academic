@@ -83,7 +83,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CandidacyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CaseStudyChoiceOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CaseStudyOJB;
@@ -368,11 +367,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public ITurmaPersistente getITurmaPersistente()
 	{
 		return new TurmaOJB();
-	}
-
-	public ITurnoPersistente getITurnoPersistente()
-	{
-		return new TurnoOJB();
 	}
 
 	public IFrequentaPersistente getIFrequentaPersistente()

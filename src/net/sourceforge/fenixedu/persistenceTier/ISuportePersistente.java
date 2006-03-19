@@ -110,8 +110,6 @@ public interface ISuportePersistente
 
 	public ITurmaPersistente getITurmaPersistente();
 
-	public ITurnoPersistente getITurnoPersistente();
-
 	public IFrequentaPersistente getIFrequentaPersistente();
 
 	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation();

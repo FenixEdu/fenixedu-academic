@@ -62,6 +62,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -74,7 +75,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -82,7 +82,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  * 
  */
@@ -147,7 +147,6 @@ public class ExecutionCourseSiteComponentBuilder {
 		List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
 
 		// execution courses's shifts for display to filter summary
-		ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 		List shifts = executionCourse.getAssociatedShifts();
 		List infoShifts = new ArrayList();
 		if (shifts != null && shifts.size() > 0) {
@@ -192,8 +191,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		}
 
 		if (component.getShiftId() != null && component.getShiftId().intValue() > 0) {
-			Shift shiftSelected = (Shift) persistentShift.readByOID(Shift.class, component
-					.getShiftId());
+			Shift shiftSelected = RootDomainObject.getInstance().readShiftByOID(component.getShiftId());
 			if (shiftSelected == null) {
 				throw new FenixServiceException("no.shift");
 			}
@@ -445,7 +443,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
 		List aulas = new ArrayList();
 
-		List shifts = persistentSupport.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
+		List shifts = executionCourse.getAssociatedShifts();
 		for (int i = 0; i < shifts.size(); i++) {
 			Shift shift = (Shift) shifts.get(i);
 			List aulasTemp = shift.getAssociatedLessons();

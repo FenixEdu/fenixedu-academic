@@ -70,7 +70,7 @@ public class DeleteShift extends Service {
                     !schoolClasses.isEmpty(); shift.removeAssociatedClasses(schoolClasses.get(0)));
 
             shift.setDisciplinaExecucao(null);
-            persistentSupport.getITurnoPersistente().deleteByOID(Shift.class, shift.getIdInternal());
+            persistentObject.deleteByOID(Shift.class, shift.getIdInternal());
         }
     }
 

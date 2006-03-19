@@ -27,11 +27,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -159,11 +159,10 @@ public class GroupSiteComponentBuilder {
 		List infoSiteStudentsAndGroupsList = new ArrayList();
 
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
 		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
-		Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftCode);
+		Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
 
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
@@ -349,14 +348,7 @@ public class GroupSiteComponentBuilder {
 
 	private Shift readShift(Integer shiftCode) throws ExcepcaoInexistente, FenixServiceException,
 			ExcepcaoPersistencia {
-		Shift shift = null;
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-
-		shift = (Shift) persistentShift.readByOID(Shift.class, shiftCode);
-
-		return shift;
+		return RootDomainObject.getInstance().readShiftByOID(shiftCode);
 	}
 
 	/**
