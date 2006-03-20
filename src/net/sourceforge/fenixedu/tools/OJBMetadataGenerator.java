@@ -74,9 +74,9 @@ public class OJBMetadataGenerator {
         printUnmmapedAttributes(unmappedCollectionReferenceAttributesInOJB,
                 "UnmappedCollectionReferenceAttributes in OJB:");
 
-        if (changeTablesCommands != null) {
-            changeTablesCommands.flush();
-        }
+//        if (changeTablesCommands != null) {
+//            changeTablesCommands.flush();
+//        }
 
         System.exit(0);
 
@@ -147,12 +147,12 @@ public class OJBMetadataGenerator {
             rootDomainObjectFieldDescriptor.setPersistentField(persistentField);
             classDescriptor.addFieldDescriptor(rootDomainObjectFieldDescriptor);
 
-            if (changeTablesCommands == null) {
-                changeTablesCommands = new Formatter(new File("addRootDomainObjectKeys.sql"));
-            }
-            changeTablesCommands.format(
-                    "alter table %s add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;\n",
-                    classDescriptor.getFullTableName());
+//            if (changeTablesCommands == null) {
+//                changeTablesCommands = new Formatter(new File("addRootDomainObjectKeys.sql"));
+//            }
+//            changeTablesCommands.format(
+//                    "alter table %s add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;\n",
+//                    classDescriptor.getFullTableName());
         }
     }
 
