@@ -20,14 +20,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerAulasDeTurno extends Service {
 
     public List run(ShiftKey shiftKey) throws ExcepcaoPersistencia {
-    	final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(shiftKey.getInfoExecutionCourse().getIdInternal());
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(shiftKey.getInfoExecutionCourse().getIdInternal());
     	final Shift shift = executionCourse.findShiftByName(shiftKey.getShiftName());
 
         final List<Lesson> aulas = shift.getAssociatedLessons();

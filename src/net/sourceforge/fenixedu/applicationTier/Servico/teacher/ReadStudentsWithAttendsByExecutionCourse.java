@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Site;
@@ -175,7 +174,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
             while (shiftIterator.hasNext()) {
 
                 Integer shiftId = (Integer) shiftIterator.next();
-                final Shift turno = RootDomainObject.getInstance().readShiftByOID(shiftId);
+                final Shift turno = rootDomainObject.readShiftByOID(shiftId);
 
                 Iterator attendsIterator = attends.iterator();
 

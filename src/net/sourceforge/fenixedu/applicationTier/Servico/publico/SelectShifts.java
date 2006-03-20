@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -17,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class SelectShifts extends Service {
 
     public Object run(InfoShift infoShift) throws ExcepcaoPersistencia {
-    	final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getIdInternal());
+    	final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
     	final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
         final List<Shift> shifts = executionCourse.getAssociatedShifts();
 

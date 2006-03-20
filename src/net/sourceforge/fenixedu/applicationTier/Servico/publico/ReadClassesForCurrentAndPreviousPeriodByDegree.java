@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -28,9 +27,9 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree extends Service {
         ExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod
                 .getPreviousExecutionPeriod();
 
-        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeOID);
+        Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
 
-        List classes = RootDomainObject.getInstance().getSchoolClasss();
+        List classes = rootDomainObject.getSchoolClasss();
 
         return constructViews(classes, degree, currentExecutionPeriod, previouseExecutionPeriod);
     }

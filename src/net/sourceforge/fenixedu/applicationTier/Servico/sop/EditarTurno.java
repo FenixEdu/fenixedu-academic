@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -31,7 +30,7 @@ public class EditarTurno extends Service {
 
 		newShiftIsValid(infoShiftOld, infoShiftNew.getTipo(), infoShiftNew.getInfoDisciplinaExecucao(), infoShiftNew.getLotacao());
 
-		final Shift shiftToEdit = RootDomainObject.getInstance().readShiftByOID(infoShiftOld.getIdInternal());
+		final Shift shiftToEdit = rootDomainObject.readShiftByOID(infoShiftOld.getIdInternal());
 
 		final int capacityDiference = infoShiftNew.getLotacao().intValue() - shiftToEdit.getLotacao().intValue();
 
@@ -39,7 +38,7 @@ public class EditarTurno extends Service {
 			throw new InvalidFinalAvailabilityException();
 		}
 
-		final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
+		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
 		final Shift otherShiftWithSameNewName = executionCourse.findShiftByName(infoShiftNew.getNome());
 		if (otherShiftWithSameNewName != null && otherShiftWithSameNewName != shiftToEdit) {
 			throw new ExistingServiceException("Duplicate Entry: " + otherShiftWithSameNewName.getNome());

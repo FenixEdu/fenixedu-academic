@@ -17,14 +17,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CriarTurno extends Service {
 
     public InfoShift run(InfoShift infoTurno) throws FenixServiceException, ExcepcaoPersistencia {
-    	final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao().getIdInternal());
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao().getIdInternal());
     	final Shift existingShift = executionCourse.findShiftByName(infoTurno.getNome());
 
         if (existingShift != null) {
