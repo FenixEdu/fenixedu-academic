@@ -27,16 +27,26 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class CourseGroupReportBackingBean extends FenixBackingBean {
     private final ResourceBundle enumerationResources = getResourceBundle("resources/EnumerationResources");
-    
+    private InfoToExport infoToExport;
+    private boolean rootWasClicked;
+    private String name = null;
+    private Integer courseGroupID;
+    private Map<Context, String> contextPaths = new HashMap<Context, String>();
+
     private enum InfoToExport {
         CURRICULAR_STRUCTURE,
         STUDIES_PLAN;
     }
     
-    private String name = null;
-    private Integer courseGroupID;
-    private Map<Context, String> contextPaths = new HashMap<Context, String>();
-
+    public CourseGroupReportBackingBean() throws FenixFilterException, FenixServiceException {
+        super();
+        rootWasClicked = this.getDegreeCurricularPlan().getRoot().equals(this.getCourseGroup());
+    }
+    
+    public Boolean getRootWasClicked() {
+        return rootWasClicked;
+    }
+    
     public Integer getDegreeCurricularPlanID() {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
     }
@@ -66,35 +76,38 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     }
     
     public void exportCourseGroupCurricularStructureToExcel() throws FenixFilterException, FenixServiceException {
-        exportToExcel(InfoToExport.CURRICULAR_STRUCTURE);
+        infoToExport = InfoToExport.CURRICULAR_STRUCTURE;
+        exportToExcel();
     }
     
     public void exportCourseGroupStudiesPlanToExcel() throws FenixFilterException, FenixServiceException {
-        exportToExcel(InfoToExport.STUDIES_PLAN);
+        infoToExport = InfoToExport.STUDIES_PLAN; 
+        exportToExcel();
     }
     
     public Map<Context, String> getContextPaths() {
         return contextPaths;
     }
     
-    public void exportToExcel(InfoToExport infoToExport) throws FenixFilterException, FenixServiceException {
-        List<Context> contextsWithCurricularCourses = contextsWithCurricularCoursesToList();
-        
+    public void exportToExcel() throws FenixFilterException, FenixServiceException {
         String filename = this.getDegreeCurricularPlan().getName().replace(" ","_") + "-"; 
-        filename += (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) ? "Estrutura_Curricular-" : "Plano_de_Estudos-";
-        filename += this.getCourseGroup().getName().replace(" ", "_") + "-" + getFileName(Calendar.getInstance().getTime());
+        filename += (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) ? "Estrutura_Curricular-" : "Plano_de_Estudos";
+        if (!rootWasClicked) {
+            filename += "-" + this.getCourseGroup().getName().replace(" ", "_");
+        }
+        filename += "-" + getFileName(Calendar.getInstance().getTime());
 
         try {
-            exportToXls(infoToExport, contextsWithCurricularCourses, filename);
+            exportToXls(filename);
         } catch (IOException e) {
             throw new FenixServiceException();
         }
     }
 
-    private List<Context> contextsWithCurricularCoursesToList() throws FenixFilterException, FenixServiceException {
+    private List<Context> contextsWithCurricularCoursesToList(CourseGroup startingPoint) throws FenixFilterException, FenixServiceException {
         List<Context> result = new ArrayList<Context>();
         getContextPaths().clear();
-        collectChildDegreeModules(result, this.getCourseGroup(), this.getCourseGroup().getName());
+        collectChildDegreeModules(result, startingPoint, startingPoint.getName());
         return result;
     }
     
@@ -119,7 +132,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         return (day + "_" + month + "_" + year + "-" + hour + ":" + minutes);
     }
     
-    private void exportToXls(InfoToExport infoToExport, List<Context> contextsWithCurricularCourses, String filename) throws IOException, FenixFilterException, FenixServiceException {
+    private void exportToXls(String filename) throws IOException, FenixFilterException, FenixServiceException {
         this.getResponse().setContentType("application/vnd.ms-excel");
         this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
         ServletOutputStream outputStream = this.getResponse().getOutputStream();
@@ -131,12 +144,12 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
             spreadSheetName = "Estrutura Curricular do Grupo";
             headers = getCurricularStructureHeader();
             spreadsheet = new Spreadsheet(spreadSheetName, headers);
-            fillCurricularStructure(contextsWithCurricularCourses, spreadsheet);
+            reportInfo(spreadsheet);
         } else {
             spreadSheetName = "Plano de Estudos do Grupo";
             headers = getStudiesPlanHeaders();
             spreadsheet = new Spreadsheet(spreadSheetName, headers);
-            fillStudiesPlan(contextsWithCurricularCourses, spreadsheet);
+            reportInfo(spreadsheet);
         }
         
         spreadsheet.exportToXLSSheet(outputStream);
@@ -144,8 +157,38 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         this.getResponse().flushBuffer();
     }
 
+    private void reportInfo(Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
+        List<Context> contextsWithCurricularCourses = null;
+        if (rootWasClicked) {
+            // first level contexts are to be reported
+            for (Context context : this.getCourseGroup().getSortedChildContextsWithCourseGroups()) {
+                CourseGroup toBeReported = (CourseGroup) context.getChildDegreeModule();
+                contextsWithCurricularCourses = contextsWithCurricularCoursesToList(toBeReported);
+                
+                if (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) {
+                    fillCurricularStructure(toBeReported.getName(), contextsWithCurricularCourses, spreadsheet);
+                    spreadsheet.addRow();
+                } else {
+                    fillStudiesPlan(contextsWithCurricularCourses, spreadsheet);
+                    spreadsheet.addRow();
+                }
+            }
+        } else {
+            contextsWithCurricularCourses = contextsWithCurricularCoursesToList(this.getCourseGroup());
+            
+            if (infoToExport.equals(InfoToExport.CURRICULAR_STRUCTURE)) {
+                fillCurricularStructure(null, contextsWithCurricularCourses, spreadsheet);
+            } else {
+                fillStudiesPlan(contextsWithCurricularCourses, spreadsheet);            
+            }
+        }
+    }
+
     private List<Object> getCurricularStructureHeader() {
         final List<Object> headers = new ArrayList<Object>();
+        if (rootWasClicked) {
+            headers.add("Grupo");
+        }
         headers.add("Área Científica");
         headers.add("Sigla");
         headers.add("Créditos Obrigatórios");
@@ -153,7 +196,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         return headers;
     }
     
-    private void fillCurricularStructure(List<Context> contextsWithCurricularCourses, final Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
+    private void fillCurricularStructure(String courseGroupBeingReported, List<Context> contextsWithCurricularCourses, final Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
         Set<Unit> scientificAreaUnits = new HashSet<Unit>();
         
         for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
@@ -163,6 +206,9 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
                     && !scientificAreaUnits.contains(curricularCourse.getCompetenceCourse().getScientificAreaUnit())) {
                 final Row row = spreadsheet.addRow();
                 
+                if (rootWasClicked && courseGroupBeingReported != null) {
+                    row.setCell(courseGroupBeingReported);
+                }
                 row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
                 row.setCell("");//curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
                 row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getScientificAreaUnitEctsCredits(contextsWithCurricularCourses).toString());
@@ -174,10 +220,14 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
 
     private List<Object> getStudiesPlanHeaders() {
         final List<Object> headers = new ArrayList<Object>();
-        headers.add("Unidades Curriculares");
-        headers.add("Nome Área Científica");
-        headers.add("Sigla Área Científica");
+        headers.add("Unidade Curricular");
+        headers.add("Grupo");
+        headers.add("Área Científica");
+        headers.add("Sigla");
         headers.add("Tipo");
+        headers.add("Ano");
+        headers.add("Semestre");
+        headers.add("Créditos");
         headers.add("T");
         headers.add("TP");
         headers.add("PL");
@@ -186,11 +236,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         headers.add("E");
         headers.add("OT");
         headers.add("TA");
-        headers.add("Créditos");
         headers.add("Observações");
-        headers.add("Grupo");
-        headers.add("Ano");
-        headers.add("Semestre");
         return headers;
     }
     
@@ -211,10 +257,16 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         final Row row = spreadsheet.addRow();
         
         row.setCell(curricularCourse.getName());
+        row.setCell(parentCourseGroupName);
         if (curricularCourse.isOptional()) {
             row.setCell(""); // scientific area unit name
             row.setCell(""); // scientific area unit acronym
+            
             row.setCell(""); // regime
+            row.setCell(curricularPeriod.getParent().getOrder().toString());
+            row.setCell(curricularPeriod.getOrder().toString());
+
+            row.setCell(""); // ects
             row.setCell(""); // t
             row.setCell(""); // tp
             row.setCell(""); // pl
@@ -223,12 +275,15 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
             row.setCell(""); // e
             row.setCell(""); // ot
             row.setCell(""); // ta
-            row.setCell(""); // ects
         } else {
             row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
             row.setCell(""); //row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
+            
             row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime().toString()));
+            row.setCell(curricularPeriod.getParent().getOrder().toString());
+            row.setCell(curricularPeriod.getOrder().toString());
         
+            row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
             row.setCell(curricularCourse.getTheoreticalHours(curricularPeriod).toString());
             row.setCell(curricularCourse.getProblemsHours(curricularPeriod).toString());
             row.setCell(curricularCourse.getLaboratorialHours(curricularPeriod).toString());    
@@ -237,13 +292,8 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
             row.setCell(curricularCourse.getTrainingPeriodHours(curricularPeriod).toString());
             row.setCell(curricularCourse.getTutorialOrientationHours(curricularPeriod).toString());    
             row.setCell(curricularCourse.getAutonomousWorkHours(curricularPeriod).toString());
-            
-            row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
         }
         row.setCell(""); // notes
-        row.setCell(parentCourseGroupName);
-        row.setCell(curricularPeriod.getParent().getOrder().toString());
-        row.setCell(curricularPeriod.getOrder().toString());
     }
 
 }

@@ -18,14 +18,20 @@
 		<h:outputText escape="false" value="<input id='toOrder' name='toOrder' type='hidden' value='#{CurricularCourseManagement.toOrder}'/>"/>
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
 
-		<h:outputText value="<p>#{bolonhaBundle['group']}: " escape="false"/>
-		<h:outputText value="<b>#{CourseGroupReport.name}</b></p><br/>" escape="false"/>
+		<h:panelGroup rendered="#{!CourseGroupReport.rootWasClicked}">
+			<h:outputText value="<p>#{bolonhaBundle['group']}: " escape="false"/>
+			<h:outputText value="<b>#{CourseGroupReport.name}</b></p><br/>" escape="false"/>
+		</h:panelGroup>
 
 		<p>
 		<fc:commandLink value="#{bolonhaBundle['course.group.curricular.structure']}" action="#{CourseGroupReport.exportCourseGroupCurricularStructureToExcel}"/>
 		</p>
 		<p>
 		<fc:commandLink value="#{bolonhaBundle['course.group.studies.plan']}" action="#{CourseGroupReport.exportCourseGroupStudiesPlanToExcel}"/>
+		</p>
+		
+		<p>
+		<h:commandButton immediate="true" styleClass="inputbutton" onclick="window.close()" value="#{bolonhaBundle['close']}" />
 		</p>
 	</h:form>
 </ft:tilesView>
