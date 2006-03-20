@@ -2,12 +2,13 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
-<style>
-table.nospace label {
-width: auto;
-}
-</style>
+
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+
+<style>
+table.nospace label { width: auto; }
+</style>
+
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 

@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+
 <style>
 ul.links {
 list-style: none;
@@ -15,7 +17,6 @@ margin-bottom: 0;
 }
 </style>
 
-<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<h:messages layout="table" errorClass="error"/>
 	<h:form>

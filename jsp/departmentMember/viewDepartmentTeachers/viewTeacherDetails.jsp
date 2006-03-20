@@ -20,6 +20,7 @@
 		border: 1px solid #fff;
 		padding: 0.3em;
 		}
+		
 		.leftcolumn {
 		text-align: right;
 		}
@@ -86,7 +87,7 @@
 	<h:form>
 		<fc:viewState binding="#{viewDepartmentTeachers.viewState}"/>
 				
-		<h:outputText value="<h2>#{bundle['label.teacher.details.title']}</h2>" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" escape="false" />
+		<h:outputText value="<h2>#{bundle['label.teacher.details.title']}</h2>" escape="false" />
 				
 		<h:panelGrid columns="2" styleClass="search">
 			<h:outputText value="#{bundle['label.common.executionYear']}:" styleClass="leftColumn"/>

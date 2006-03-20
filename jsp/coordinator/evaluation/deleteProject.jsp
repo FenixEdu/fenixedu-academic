@@ -2,13 +2,12 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+
 <style>
-.boldFontClass { 
-	font-weight: bold
-}
+.boldFontClass { font-weight: bold; }
 </style>
 
-<ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>	
 
 	<h:form>

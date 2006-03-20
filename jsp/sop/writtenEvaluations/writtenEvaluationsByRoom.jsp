@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="c"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
+<ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+
 <style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
 
 <style>
@@ -37,7 +39,6 @@
 }
 </style>
 
-<ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundle"/>
 	<h:outputFormat value="<h2>#{bundle['link.writtenEvaluation.by.room']}</h2>" escape="false"/>
 

@@ -7,9 +7,7 @@
 <ft:tilesView definition="df.page.structure" attributeName="body-inline">
 
 <style>
-.eo_highlight {
-background-color: #ffc;
-}
+.eo_highlight { background-color: #ffc; }
 </style>
 
 	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>

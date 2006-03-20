@@ -4,16 +4,13 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
+<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+
 <style>
-.alignright {
-text-align: right;
-}
-.valigntop {
-vertical-align: top;
-}
+.alignright { text-align: right; }
+.valigntop { vertical-align: top; }
 </style>
 
-<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
 
 	<h:form>	

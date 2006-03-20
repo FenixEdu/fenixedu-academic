@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
+<ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+
 <style>
 .boldFontClass { 
 	font-weight: bold
@@ -65,7 +67,6 @@ table.executionCoursesWithoutWrittenEvaluations td {
 }
 </style>
 
-<ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<h:outputText value="<h2>#{bundle['link.evaluations.calendar']}</h2>" escape="false"/>
 

@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 
+<ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+
 <style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
 
 <style>
@@ -78,8 +80,6 @@ table.executionCoursesWithoutWrittenEvaluations td {
 
 </style>
 
-
-<ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 

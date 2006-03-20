@@ -3,13 +3,14 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
+<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+
 <style>
 .boldFontClass { 
 	font-weight: bold
 }
 </style>
 
-<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<h:form>	
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />

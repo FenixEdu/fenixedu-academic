@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<ft:tilesView definition="definition.gep.two-column" attributeName="body-inline">
+
 <style type="text/css">
 .solidBorderClass {
 	border-style: solid;
@@ -9,8 +11,6 @@
 	border-color: #CCCCCC
 }
 </style>
-
-<ft:tilesView definition="definition.gep.two-column" attributeName="body-inline">
 
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 	<f:loadBundle basename="resources/GEPResources" var="bundleGEP"/>

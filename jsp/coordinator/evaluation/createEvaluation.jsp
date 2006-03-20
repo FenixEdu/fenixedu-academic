@@ -1,15 +1,14 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
-<style>
-.alignright {
-text-align: right;
-}
-.valigntop {
-vertical-align: top;
-}
-</style>
+
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+
+<style>
+.alignright { text-align: right; }
+.valigntop { vertical-align: top; }
+</style>
+
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
 	<h:form>

@@ -3,17 +3,15 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
+
 <style>
 	.alignTopRight {
-		vertical-align: top;
-		text-align: right;
-		tex
-		
+	vertical-align: top;
+	text-align: right;
 	}
 </style>
 
-
-<ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/DepartmentMemberResources" var="bundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 	

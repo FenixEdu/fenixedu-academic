@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline" >
+
 <style type="text/css">
 .boldFontClass { font-weight: bold }
 .bluecell { background: #EDF3FE; width: 100% }
@@ -38,7 +40,6 @@
 }
 </style>
 
-<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline" >
 	<f:loadBundle basename="resources/DegreeAdministrativeOfficeResources" var="bundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 

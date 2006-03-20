@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<ft:tilesView definition="definition.coordinator.two-column" attributeName="body-inline">
+
 <style type="text/css">
 .solidBorderClass {
 	border-style: solid;
@@ -12,7 +14,6 @@
 }
 </style>
 
-<ft:tilesView definition="definition.coordinator.two-column" attributeName="body-inline">
 <f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 <f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 

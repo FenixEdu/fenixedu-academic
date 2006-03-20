@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+
 <style>
 .tableClass {
 	background: #EBECED;
@@ -14,7 +16,6 @@
 }
 </style>
 
-<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<h:form>
 	
