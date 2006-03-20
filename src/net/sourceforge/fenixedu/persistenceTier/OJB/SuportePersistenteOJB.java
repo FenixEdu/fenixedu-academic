@@ -19,7 +19,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
@@ -1221,11 +1220,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentAuthorship getIPersistentAuthorship()
 	{
 		return new AuthorshipOJB();
-	}
-
-	public IPersistentCompetenceCourse getIPersistentCompetenceCourse()
-	{
-		return new CompetenceCourseOJB();
 	}
 
 	public static void fixDescriptors()

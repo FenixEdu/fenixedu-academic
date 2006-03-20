@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
@@ -846,12 +845,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	public IPersistentAuthorship getIPersistentAuthorship() {
         return new AuthorshipVO();
     }
-
-	public IPersistentCompetenceCourse getIPersistentCompetenceCourse() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-    
+   
     public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation() {
         return new TeacherPersonalExpectationVO();
     }

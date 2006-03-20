@@ -514,7 +514,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public boolean isAnual() {
-        return this.getRegime().equals(RegimeType.ANUAL);
+        return this.getRegime() == RegimeType.ANUAL;
     }
 
     public boolean isApproved() {
@@ -523,5 +523,28 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     
     public void transfer(Unit competenceCourseGroupUnit) {
         super.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
+    }
+    
+    //  -------------------------------------------------------------
+    // read static methods 
+    // -------------------------------------------------------------
+    public static List<CompetenceCourse> readByCurricularStage(final CurricularStage curricularStage) {
+        final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
+        for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+            if (competenceCourse.getCurricularStage() == curricularStage) {
+                result.add(competenceCourse);
+            }
+        }
+        return result;
+    }
+    
+    public static List<CompetenceCourse> readFromNewDegreeStructure() {
+        final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
+        for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+            if (competenceCourse.getCurricularStage() != CurricularStage.OLD) {
+                result.add(competenceCourse);
+            }
+        }
+        return result;
     }
 }

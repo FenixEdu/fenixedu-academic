@@ -395,8 +395,6 @@ public interface ISuportePersistente
 
 	public IPersistentAuthorship getIPersistentAuthorship();
 
-	public IPersistentCompetenceCourse getIPersistentCompetenceCourse();
-
 	public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation();
 
 	public IPersistentCMS getIPersistentCms();

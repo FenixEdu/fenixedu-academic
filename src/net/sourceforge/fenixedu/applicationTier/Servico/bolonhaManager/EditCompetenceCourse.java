@@ -3,8 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -70,12 +68,10 @@ public class EditCompetenceCourse extends Service {
             final String name, final String nameEn, final String acronym) throws ExcepcaoPersistencia,
             FenixServiceException {
 
-        String normalizedName = StringFormatter.normalize(name);
-        String normalizedNameEn = StringFormatter.normalize(nameEn);
+        final String normalizedName = StringFormatter.normalize(name);
+        final String normalizedNameEn = StringFormatter.normalize(nameEn);
 
-        final List<CompetenceCourse> competenceCourses = persistentSupport
-                .getIPersistentCompetenceCourse().readFromNewDegreeStructure();
-        for (final CompetenceCourse competenceCourse : competenceCourses) {
+        for (final CompetenceCourse competenceCourse : CompetenceCourse.readFromNewDegreeStructure()) {
             if (competenceCourse != competenceCourseToEdit) {
                 if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
                     throw new ExistingCompetenceCourseInformationException(
