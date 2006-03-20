@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -32,8 +33,8 @@ public class Authentication extends FenixAction {
         final String password = request.getParameter("password");
         final String requestURL = request.getRequestURL().toString();
         boolean result = false;              
-        
-        Object argsAutenticacao[] = { username, password, requestURL, "" };
+        final String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
+        Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
         try {
             String scheme = request.getScheme();
 

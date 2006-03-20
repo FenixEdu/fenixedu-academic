@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -49,7 +50,8 @@ public class InfoGroupsByExecutionCourse extends FenixAction
         {
 
 			final String requestURL = request.getRequestURL().toString();
-            IUserView userView = authenticate(this.studentUsername, this.studentPassword, requestURL);
+            final String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
+            IUserView userView = authenticate(this.studentUsername, this.studentPassword, requestURL, remoteHostName);
             for (int i = 0; i < this.executionCourseIds.length; i++)
             {
                 buffer.append(this.buildInfo(this.executionCourseIds[i], userView));
@@ -118,13 +120,11 @@ public class InfoGroupsByExecutionCourse extends FenixAction
         this.executionCourseIds = buildIdsArray(idsString);
     }
 
-    private IUserView authenticate(String username, String password, String requestURL) throws FenixServiceException,
-            FenixFilterException
-    {
-        Object argsAutenticacao[] = { username, password, requestURL, null };
+    private IUserView authenticate(String username, String password, String requestURL,
+            String remoteHostName) throws FenixServiceException, FenixFilterException {
+        Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
         IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
-                "Autenticacao", argsAutenticacao); //$NON-NLS-1$
-
+                "Autenticacao", argsAutenticacao);
         return userView;
     }
 
