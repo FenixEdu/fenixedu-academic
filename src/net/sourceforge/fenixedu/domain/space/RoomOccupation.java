@@ -324,7 +324,9 @@ public class RoomOccupation extends RoomOccupation_Base {
         removeRoom();
         removePeriod();
 
-        period.deleteIfEmpty();
+        if (period != null) {
+            period.deleteIfEmpty();
+        }
 
         super.deleteDomainObject();
     }
