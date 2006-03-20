@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 
 import org.apache.commons.beanutils.ConvertUtils;
 
-public abstract class HtmlSimpleValueComponent extends HtmlFormComponent implements Validatable {
+public abstract class HtmlSimpleValueComponent extends HtmlFormComponent {
 
     private String value;
     
@@ -21,6 +21,14 @@ public abstract class HtmlSimpleValueComponent extends HtmlFormComponent impleme
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String[] getValues() {
+        if (getValue() == null) {
+            return null;
+        }
+        
+        return new String[] { getValue() };
     }
     
     @Override

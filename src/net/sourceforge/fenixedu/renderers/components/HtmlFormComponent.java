@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 
-public abstract class HtmlFormComponent extends HtmlComponent implements Convertible, Controllable, SlotChanger {
+public abstract class HtmlFormComponent extends HtmlComponent implements Convertible, Controllable, SlotChanger, Validatable {
 
     public static int COMPONENT_NUMBER = 0;
     

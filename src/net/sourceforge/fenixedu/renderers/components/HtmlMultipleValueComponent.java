@@ -22,6 +22,20 @@ public abstract class HtmlMultipleValueComponent extends HtmlFormComponent {
         return values;
     }
     
+    public String getValue() {
+        String[] values = getValues();
+        
+        if (values == null) {
+            return null;
+        }
+        
+        if (values.length == 0) {
+            return null;
+        }
+        
+        return values[0];
+    }
+    
     @Override
     public Object getConvertedValue(MetaSlot slot) {
         if (hasConverter()) {

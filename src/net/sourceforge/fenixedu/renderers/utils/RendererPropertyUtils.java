@@ -130,7 +130,7 @@ public class RendererPropertyUtils {
                 PropertyUtils.setProperty(target, remaining, value);
             }
         } catch (Exception e) {
-            throw new RuntimeException("could not set property '" + name + "' for object '" + object + "'", e);
+            throw new RuntimeException("could not set property '" + name + "' for object '" + object + "' with value '" + value + "'", e);
         }
     }
 }
