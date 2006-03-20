@@ -11,7 +11,7 @@
 	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['degree']}" />
 	</h:outputFormat>
-	<br/>
+
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
 	<h:outputText value="<div class='simpleblock4'> " escape="false"/>

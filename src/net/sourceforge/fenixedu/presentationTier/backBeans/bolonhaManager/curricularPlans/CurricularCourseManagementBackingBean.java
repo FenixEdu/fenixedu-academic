@@ -14,6 +14,7 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -62,6 +63,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> departmentUnits = null;
     public List<SelectItem> courseGroups = null;
     public List<SelectItem> curricularCourses = null;
+    public List<SelectItem> executionYearItems = null;
 
     public Integer getDegreeCurricularPlanID() {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
@@ -333,6 +335,29 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return toDelete;
     }
     
+    public Integer getExecutionYearID() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("executionYearID") == null) {
+            if (getAndHoldIntegerParameter("executionYearID") != null) {
+                setExecutionYearID(getAndHoldIntegerParameter("executionYearID"));
+            } else {
+                setExecutionYearID(getCurrentExecutionYear().getIdInternal());
+            }
+        }
+        return (Integer) getViewState().getAttribute("executionYearID");
+    }
+    
+    public void setExecutionYearID(Integer executionYearID) {
+        getViewState().setAttribute("executionYearID", executionYearID);
+    }
+    
+    protected InfoExecutionYear getCurrentExecutionYear() throws FenixFilterException, FenixServiceException {
+        return (InfoExecutionYear) ServiceUtils.executeService(getUserView(), "ReadCurrentExecutionYear", new Object[] {});
+    }
+    
+    public List<SelectItem> getExecutionYearItems() throws FenixFilterException, FenixServiceException {
+        return (executionYearItems == null) ? (executionYearItems = readExecutionYearItems()) : executionYearItems;
+    }
+
     public String createCurricularCourse() throws FenixFilterException {        
         try {
             ServiceUtils.executeService(getUserView(), "CreateCurricularCourse", getArgumentsToCreate());
@@ -362,14 +387,12 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         final CurricularCourseType curricularCourseType = CurricularCourseType.valueOf(getSelectedCurricularCourseType());
         if (curricularCourseType.equals(CurricularCourseType.NORMAL_COURSE)) {
             checkCompetenceCourse();
-            Object args[] = { getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourseID(),
+            return new Object[] { getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourseID(),
                 getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID(), getDegreeCurricularPlanID() };
-            return args;
         } else if (curricularCourseType.equals(CurricularCourseType.OPTIONAL_COURSE)) {
             checkCurricularCourseNameAndNameEn();
-            Object args[] = { getDegreeCurricularPlanID(), getCourseGroupID(), getName(), getNameEn(),
+            return new Object[] { getDegreeCurricularPlanID(), getCourseGroupID(), getName(), getNameEn(),
                     getCurricularYearID(), getCurricularSemesterID() };
-            return args;
         }
         return null;
     }
@@ -558,6 +581,23 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         }
         Collections.sort(result, new BeanComparator("label"));
         result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
+        return result;
+    }
+    
+    private List<SelectItem> readExecutionYearItems() throws FenixServiceException, FenixFilterException {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+
+        final InfoExecutionYear currentInfoExecutionYear = (InfoExecutionYear) ServiceUtils
+                .executeService(getUserView(), "ReadCurrentExecutionYear", new Object[] {});
+        result.add(new SelectItem(currentInfoExecutionYear.getIdInternal(), currentInfoExecutionYear.getYear()));
+        
+        final List<InfoExecutionYear> notClosedInfoExecutionYears = (List<InfoExecutionYear>) ServiceUtils
+                .executeService(getUserView(), "ReadNotClosedExecutionYears", new Object[] {});
+        for (final InfoExecutionYear notClosedInfoExecutionYear : notClosedInfoExecutionYears) {
+            if (notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
+                result.add(new SelectItem(notClosedInfoExecutionYear.getIdInternal(), notClosedInfoExecutionYear.getYear()));
+            }
+        }
         return result;
     }
 }

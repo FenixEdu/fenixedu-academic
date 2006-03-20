@@ -1791,6 +1791,31 @@
 			<to-view-id>/degreeAdministrativeOffice/curricularPlans/curricularPlansManagement.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/degreeAdministrativeOffice/curricularPlans/viewCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/degreeAdministrativeOffice/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/degreeAdministrativeOffice/curricularPlans/viewCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/degreeAdministrativeOffice/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/degreeAdministrativeOffice/curricularPlans/viewCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/degreeAdministrativeOffice/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/degreeAdministrativeOffice/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<!-- END: DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER Navigation Rules -->
 
 	<!-- Custom Components -->
