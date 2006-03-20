@@ -27,18 +27,8 @@
          column="KEY_CURRICULUM_GROUP"
          jdbc-type="INTEGER"
     />			
-	<reference-descriptor auto-retrieve="false"
-			name="curriculumGroup"
-			class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup"
-            >
-		<foreignkey field-ref="keyCurriculumGroup"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="degreeModule"
-			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
-            >
-		<foreignkey field-ref="keyDegreeModule"/>
-	</reference-descriptor>	
+
+    
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup" table="CURRICULUM_MODULE">
@@ -64,29 +54,12 @@
          column="KEY_CURRICULUM_GROUP"
          jdbc-type="INTEGER"
     />				
-	<reference-descriptor auto-retrieve="false"
-			name="curriculumGroup"
-			class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup"
-            >
-		<foreignkey field-ref="keyCurriculumGroup"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="degreeModule"
-			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
-            >
-		<foreignkey field-ref="keyDegreeModule"/>
-	</reference-descriptor>	
-	<reference-descriptor auto-retrieve="false"
-			name="parentStudentCurricularPlan"
-			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
-            >
-		<foreignkey field-ref="keyParentStudentCurricularPlan"/>
-	</reference-descriptor>		
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="curriculumModules"
-			element-class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule">
-		<inverse-foreignkey field-ref="keyCurriculumGroup"/>
-	</collection-descriptor>
+    <field-descriptor
+         name="keyParentStudentCurricularPlan"
+         column="KEY_NEW_STUDENT_CURRICULAR_PLAN"
+         jdbc-type="INTEGER"
+    />			
+
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine" table="CURRICULUM_MODULE">
@@ -116,18 +89,6 @@
          column="KEY_CURRICULUM_GROUP"
          jdbc-type="INTEGER"
     />					
-	<reference-descriptor auto-retrieve="false"
-			name="curriculumGroup"
-			class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup"
-            >
-		<foreignkey field-ref="keyCurriculumGroup"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="degreeModule"
-			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
-            >
-		<foreignkey field-ref="keyDegreeModule"/>
-	</reference-descriptor>	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.Credits" table="CURRICULUM_MODULE">
@@ -159,32 +120,6 @@
          column="GIVEN_CREDITS"
          jdbc-type="INTEGER"
     />	
-	<reference-descriptor auto-retrieve="false"
-			name="curriculumGroup"
-			class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup"
-            >
-		<foreignkey field-ref="keyCurriculumGroup"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="degreeModule"
-			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
-            >
-		<foreignkey field-ref="keyDegreeModule"/>
-	</reference-descriptor>
-	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="enrolments"
-         element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
-         
-         indirection-table = "CREDITS_ENROLMENT"
-         
-         
-         auto-update="false"
-         auto-delete="false"
-    >
-    	<fk-pointing-to-this-class  column="KEY_CREDITS" />
-    	<fk-pointing-to-element-class column="KEY_ENROLMENT" />
-    </collection-descriptor>    
 	
 </class-descriptor>
 
@@ -212,31 +147,6 @@
          column="KEY_CURRICULUM_GROUP"
          jdbc-type="INTEGER"
     />			
-	<reference-descriptor auto-retrieve="false"
-			name="curriculumGroup"
-			class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup"
-            >
-		<foreignkey field-ref="keyCurriculumGroup"/>
-	</reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-			name="degreeModule"
-			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
-            >
-		<foreignkey field-ref="keyDegreeModule"/>
-	</reference-descriptor>
-	
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="enrolments"
-         element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
-         
-         indirection-table = "EQUIVALENT_ENROLMENT"
-         
-         
-         auto-update="false"
-         auto-delete="false"
-    >
-    	<fk-pointing-to-this-class  column="KEY_EQUIVALENT" />
-    	<fk-pointing-to-element-class column="KEY_ENROLMENT" />
-    </collection-descriptor>    
+
 	
 </class-descriptor>

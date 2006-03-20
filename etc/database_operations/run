@@ -19,3 +19,5 @@ function execute() {
 	echo
 }
 
+execute "Course Group" createCurriculumGroupStudentCurricularPlanRelation.sql
+

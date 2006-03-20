@@ -98,7 +98,12 @@
 		locking="false"
 	/>
 	
-	
+	<field-descriptor
+		name="keyRoot"
+		column="KEY_CURRICULUM_GROUP"
+		jdbc-type="INTEGER"
+		locking="false"
+	/>	
 	
 	
 		
@@ -212,7 +217,12 @@
 	/>
 	
 	
-	
+	<field-descriptor
+		name="keyRoot"
+		column="KEY_CURRICULUM_GROUP"
+		jdbc-type="INTEGER"
+		locking="false"
+	/>
 	
 	
 	    
@@ -325,7 +335,12 @@
 	/>
 	
 	
-	
+	<field-descriptor
+		name="keyRoot"
+		column="KEY_CURRICULUM_GROUP"
+		jdbc-type="INTEGER"
+		locking="false"
+	/>	
 	
 	
 	    
@@ -432,7 +447,12 @@
 		locking="false"
 	/>
 	
-	
+	<field-descriptor
+		name="keyRoot"
+		column="KEY_CURRICULUM_GROUP"
+		jdbc-type="INTEGER"
+		locking="false"
+	/>	
 	
 		
 	    
