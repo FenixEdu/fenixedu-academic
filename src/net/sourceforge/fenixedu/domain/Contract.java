@@ -16,20 +16,14 @@ public class Contract extends Contract_Base {
 	}
 
 	public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        if (!this.getBeginDate().after(endDate)
-                && (this.getEndDate() == null || !this.getEndDate().before(beginDate))) {
-            return true;
-        }
-        return false;
+        return (!this.getBeginDate().after(endDate)
+                && (this.getEndDate() == null || !this.getEndDate().before(beginDate)));            
     }
 
     public boolean isActive(Date currentDate) {
-        if (this.getEndDate() == null
+        return (this.getEndDate() == null
                 || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(), currentDate) || this
-                        .getEndDate().after(currentDate))) {
-            return true;
-        }
-        return false;
+                        .getEndDate().after(currentDate)));            
     }
 
     public void delete() {

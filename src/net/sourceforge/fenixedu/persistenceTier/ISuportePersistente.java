@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquirie
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
-import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkCompensation;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkHistoric;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
@@ -374,8 +373,6 @@ public interface ISuportePersistente
 	public IPersistentCostCenter getIPersistentCostCenter();
 
 	public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter();
-
-	public IPersistentExtraWork getIPersistentExtraWork();
 
 	public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests();
 

@@ -8,10 +8,7 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 public class Function extends Function_Base {
 
     public boolean isInherentFunction() {
-        if (this.getParentInherentFunction() != null) {
-            return true;
-        }
-        return false;
+        return (this.getParentInherentFunction() != null);
     }
 
     public void edit(String functionName, Date beginDate, Date endDate, FunctionType type, Unit unit,
@@ -28,20 +25,14 @@ public class Function extends Function_Base {
     }
 
     public boolean isActive(Date currentDate) {
-        if (this.getEndDate() == null
+        return (this.getEndDate() == null
                 || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(), currentDate) || this
-                        .getEndDate().after(currentDate))) {
-            return true;
-        }
-        return false;
+                        .getEndDate().after(currentDate)));            
     }
     
     public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        if (!this.getBeginDate().after(endDate)
-                && (this.getEndDate() == null || !this.getEndDate().before(beginDate))) {
-            return true;
-        }
-        return false;
+        return (!this.getBeginDate().after(endDate)
+                && (this.getEndDate() == null || !this.getEndDate().before(beginDate)));            
     }
 
     public void delete() {

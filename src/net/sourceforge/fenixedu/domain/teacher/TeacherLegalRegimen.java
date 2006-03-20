@@ -8,6 +8,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.LegalRegimenType;
 
 public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 
@@ -17,20 +18,14 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 	}
 
 	public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        if (!this.getBeginDate().after(endDate)
-                && (this.getEndDate() == null || !this.getEndDate().before(beginDate))) {
-            return true;
-        }
-        return false;
+        return (!this.getBeginDate().after(endDate)
+                && (this.getEndDate() == null || !this.getEndDate().before(beginDate)));
     }
     
     public boolean isActive(Date currentDate) {
-        if (this.getEndDate() == null
+        return (this.getEndDate() == null
                 || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(), currentDate) || this
-                        .getEndDate().after(currentDate))) {
-            return true;
-        }
-        return false;
+                        .getEndDate().after(currentDate)));
     }
     
     public void delete(){
@@ -38,4 +33,23 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
         removeTeacher();
         super.deleteDomainObject();
     }
+    
+    public boolean isEndSituation() {
+       return (this.getLegalRegimenType().equals(LegalRegimenType.DEATH)
+                || this.getLegalRegimenType().equals(LegalRegimenType.EMERITUS)
+                || this.getLegalRegimenType().equals(LegalRegimenType.RETIREMENT)
+                || this.getLegalRegimenType().equals(LegalRegimenType.RETIREMENT_IN_PROGRESS)
+                || this.getLegalRegimenType().equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_END)
+                || this.getLegalRegimenType().equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_END_PROPER_PRESCRIPTIONS)
+                || this.getLegalRegimenType().equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_RESCISSION)
+                || this.getLegalRegimenType().equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_RESCISSION_PROPER_PRESCRIPTIONS)                
+                || this.getLegalRegimenType().equals(LegalRegimenType.CONTRACT_END)
+                || this.getLegalRegimenType().equals(LegalRegimenType.DENUNCIATION)
+                || this.getLegalRegimenType().equals(LegalRegimenType.IST_OUT_NOMINATION)
+                || this.getLegalRegimenType().equals(LegalRegimenType.SERVICE_TURN_OFF)
+                || this.getLegalRegimenType().equals(LegalRegimenType.TEMPORARY_SUBSTITUTION_CONTRACT_END)
+                || this.getLegalRegimenType().equals(LegalRegimenType.EXONERATION)                
+                || this.getLegalRegimenType().equals(LegalRegimenType.RESCISSION)
+                || this.getLegalRegimenType().equals(LegalRegimenType.TRANSFERENCE));
+     }               
 }

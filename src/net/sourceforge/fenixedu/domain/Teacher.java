@@ -41,11 +41,11 @@ import org.apache.commons.collections.Predicate;
 public class Teacher extends Teacher_Base {
 
     public Teacher() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	/***************************************************************************
+    /***************************************************************************
      * BUSINESS SERVICES *
      **************************************************************************/
 
@@ -133,18 +133,18 @@ public class Teacher extends Teacher_Base {
     }
 
     public Category getCategory() {
-        TeacherLegalRegimen regimen = getLastLegalRegimenWithoutSpecialSituations();
+        TeacherLegalRegimen regimen = getLastLegalRegimenWithoutEndSituations();
         if (regimen != null) {
             return regimen.getCategory();
         }
         return null;
     }
 
-    public TeacherLegalRegimen getLastLegalRegimenWithoutSpecialSituations() {
+    public TeacherLegalRegimen getLastLegalRegimenWithoutEndSituations() {
         Date date = null;
         TeacherLegalRegimen regimenToReturn = null;
         for (TeacherLegalRegimen regimen : this.getLegalRegimens()) {
-            if (checkDeathEmeritusAndRetirementSituations(regimen)) {
+            if (!regimen.isEndSituation()) {
                 if (regimen.isActive(Calendar.getInstance().getTime())) {
                     return regimen;
                 } else if (date == null || date.before(regimen.getEndDate())) {
@@ -156,26 +156,14 @@ public class Teacher extends Teacher_Base {
         return regimenToReturn;
     }
 
-    public List<TeacherLegalRegimen> getAllLegalRegimensWithoutSpecialSituations(Date beginDate,
-            Date endDate) {
-
+    public List<TeacherLegalRegimen> getAllLegalRegimensWithoutEndSituations(Date beginDate, Date endDate) {
         List<TeacherLegalRegimen> legalRegimens = new ArrayList<TeacherLegalRegimen>();
         for (TeacherLegalRegimen legalRegimen : this.getLegalRegimens()) {
-            if (checkDeathEmeritusAndRetirementSituations(legalRegimen)
-                    && legalRegimen.belongsToPeriod(beginDate, endDate)) {
+            if (!legalRegimen.isEndSituation() && legalRegimen.belongsToPeriod(beginDate, endDate)) {
                 legalRegimens.add(legalRegimen);
             }
         }
         return legalRegimens;
-    }
-
-    private boolean checkDeathEmeritusAndRetirementSituations(TeacherLegalRegimen legalRegimen) {
-        if (!legalRegimen.getLegalRegimenType().equals(LegalRegimenType.DEATH)
-                && !legalRegimen.getLegalRegimenType().equals(LegalRegimenType.EMERITUS)
-                && !legalRegimen.getLegalRegimenType().equals(LegalRegimenType.RETIREMENT)) {
-            return true;
-        }
-        return false;
     }
 
     public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(
@@ -410,28 +398,12 @@ public class Teacher extends Teacher_Base {
 
         List<TeacherServiceExemption> serviceExemptions = new ArrayList<TeacherServiceExemption>();
         for (TeacherServiceExemption serviceExemption : this.getServiceExemptionSituations()) {
-            if (!isMedicalSituation(serviceExemption)
+            if (!serviceExemption.isMedicalSituation()
                     && serviceExemption.belongsToPeriod(beginDate, endDate)) {
                 serviceExemptions.add(serviceExemption);
             }
         }
         return serviceExemptions;
-    }
-
-    /**
-     * @param serviceExemption
-     * @return
-     */
-    private boolean isMedicalSituation(TeacherServiceExemption serviceExemption) {
-        if (serviceExemption.getType().equals(ServiceExemptionType.MEDICAL_SITUATION)
-                || serviceExemption.getType().equals(
-                        ServiceExemptionType.MATERNAL_LICENSE_WITH_SALARY_80PERCENT)
-                || serviceExemption.getType().equals(ServiceExemptionType.MATERNAL_LICENSE)
-                || serviceExemption.getType().equals(ServiceExemptionType.DANGER_MATERNAL_LICENSE)
-                || serviceExemption.getType().equals(ServiceExemptionType.CHILDBIRTH_LICENSE)) {
-            return true;
-        }
-        return false;
     }
 
     public List<PersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
@@ -440,7 +412,7 @@ public class Teacher extends Teacher_Base {
 
     public int getHoursByCategory(Date begin, Date end) {
 
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(begin, end);
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutEndSituations(begin, end);
 
         if (list.isEmpty()) {
             return 0;
@@ -457,7 +429,7 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return 0;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(occupationPeriod
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutEndSituations(occupationPeriod
                 .getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
@@ -521,7 +493,7 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return null;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(occupationPeriod
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutEndSituations(occupationPeriod
                 .getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
@@ -552,17 +524,7 @@ public class Teacher extends Teacher_Base {
             TeacherServiceExemption teacherServiceExemption) {
         OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
         if (teacherServiceExemption != null
-                && (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)
-                        || teacherServiceExemption.getType().equals(
-                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY)
-                        || teacherServiceExemption.getType().equals(
-                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)
-                        || teacherServiceExemption.getType().equals(
-                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL)
-                        || teacherServiceExemption.getType().equals(
-                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS) || teacherServiceExemption
-                        .getType().equals(ServiceExemptionType.TEACHER_SERVICE_EXEMPTION_E_C_D_U))) {
-
+                && teacherServiceExemption.isServiceExemptionToCountInCredits()) {
             Integer daysBetween = CalendarUtil.getNumberOfDaysBetweenDates(teacherServiceExemption
                     .getStart(), teacherServiceExemption.getEnd());
             if (occupationPeriod.containsDay(teacherServiceExemption.getStart())) {
@@ -712,7 +674,7 @@ public class Teacher extends Teacher_Base {
         if (occupationPeriod == null) {
             return 0;
         }
-        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutSpecialSituations(occupationPeriod
+        List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutEndSituations(occupationPeriod
                 .getStart(), occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
@@ -722,45 +684,14 @@ public class Teacher extends Teacher_Base {
                     .getStart(), occupationPeriod.getEnd());
             TeacherServiceExemption teacherServiceExemption = chooseOneServiceExemption(exemptions,
                     executionPeriod);
-            if (isServiceExemptionToCountZero(teacherServiceExemption)) {
+            if (teacherServiceExemption != null
+                    && teacherServiceExemption.isServiceExemptionToCountZeroInCredits()) {
                 return 0;
             }
             Collections.sort(list, new BeanComparator("beginDate"));
             final Integer hours = list.get(list.size() - 1).getLessonHours();
             return (hours == null) ? 0 : hours.intValue();
         }
-    }
-
-    /**
-     * @param teacherServiceExemption
-     * @return
-     */
-    private boolean isServiceExemptionToCountZero(TeacherServiceExemption teacherServiceExemption) {
-        if (teacherServiceExemption == null) {
-            return false;
-        }
-        if (teacherServiceExemption.getType().equals(ServiceExemptionType.CONTRACT_SUSPEND_ART_73_ECDU)
-                || teacherServiceExemption.getType().equals(ServiceExemptionType.CONTRACT_SUSPEND)
-                || teacherServiceExemption.getType().equals(ServiceExemptionType.GOVERNMENT_MEMBER)
-                || teacherServiceExemption.getType().equals(
-                        ServiceExemptionType.LICENSE_WITHOUT_SALARY_FOR_ACCOMPANIMENT)
-                || teacherServiceExemption.getType().equals(
-                        ServiceExemptionType.LICENSE_WITHOUT_SALARY_FOR_INTERNATIONAL_EXERCISE)
-                || teacherServiceExemption.getType().equals(
-                        ServiceExemptionType.LICENSE_WITHOUT_SALARY_LONG)
-                || teacherServiceExemption.getType().equals(
-                        ServiceExemptionType.LICENSE_WITHOUT_SALARY_UNTIL_NINETY_DAYS)
-                || teacherServiceExemption.getType().equals(
-                        ServiceExemptionType.LICENSE_WITHOUT_SALARY_YEAR)
-                || teacherServiceExemption.getType().equals(ServiceExemptionType.MILITAR_SITUATION)
-                || teacherServiceExemption.getType().equals(ServiceExemptionType.REQUESTED_FOR)
-                || teacherServiceExemption.getType().equals(ServiceExemptionType.SERVICE_COMMISSION)
-                || teacherServiceExemption.getType().equals(
-                        ServiceExemptionType.SERVICE_COMMISSION_IST_OUT)
-                || teacherServiceExemption.getType().equals(ServiceExemptionType.SPECIAL_LICENSE)) {
-            return true;
-        }
-        return false;
     }
 
     public List<PersonFunction> getManagementFunctions(ExecutionPeriod executionPeriod) {
@@ -798,7 +729,7 @@ public class Teacher extends Teacher_Base {
                 selectedTeachers.add(teacher);
             }
             // This isn't necessary, its just a fast optimization.
-            if(teacherNumbers.size() == selectedTeachers.size()){
+            if (teacherNumbers.size() == selectedTeachers.size()) {
                 break;
             }
         }

@@ -87,7 +87,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
             ExecutionPeriod lastExecutionPeriod = executionPeriodsBetween.get(executionPeriodsBetween
                     .size() - 1);
             List<TeacherLegalRegimen> allLegalRegimens = teacher
-                    .getAllLegalRegimensWithoutSpecialSituations(lastExecutionPeriod
+                    .getAllLegalRegimensWithoutEndSituations(lastExecutionPeriod
                             .getBeginDate(), lastExecutionPeriod.getEndDate());
             if (allLegalRegimens.isEmpty()) {
                 return true;

@@ -68,11 +68,8 @@ public class Unit extends Unit_Base {
     }
 
     private boolean isUnitDepartment(Unit unit) {
-        if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT)
-                && unit.getDepartment() != null) {
-            return true;
-        }
-        return false;
+        return (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT)
+                && unit.getDepartment() != null);
     }
 
     public List<Unit> getInactiveSubUnits(Date currentDate) {
@@ -148,12 +145,9 @@ public class Unit extends Unit_Base {
     }
 
     public boolean isActive(Date currentDate) {
-        if (this.getEndDate() == null
+        return (this.getEndDate() == null
                 || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(), currentDate) || this
-                        .getEndDate().after(currentDate))) {
-            return true;
-        }
-        return false;
+                        .getEndDate().after(currentDate)));
     }
 
     public void delete() {
@@ -250,7 +244,7 @@ public class Unit extends Unit_Base {
         for (Employee employee : employees) {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null
-                    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin,
+                    && !teacher.getAllLegalRegimensWithoutEndSituations(begin,
                             end).isEmpty()) {
                 teachers.add(teacher);
             }
@@ -263,7 +257,7 @@ public class Unit extends Unit_Base {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null
                     && teacher.getTeacherNumber().equals(teacherNumber)
-                    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin,
+                    && !teacher.getAllLegalRegimensWithoutEndSituations(begin,
                             end).isEmpty()) {
                 return teacher;
             }

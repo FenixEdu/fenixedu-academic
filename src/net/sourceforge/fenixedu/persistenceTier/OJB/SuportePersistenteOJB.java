@@ -119,7 +119,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesTeache
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.CostCenterOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.ExtraWorkCompensationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.ExtraWorkHistoricOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.ExtraWorkOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.ExtraWorkResquestsOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.MoneyCostCenterOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestAdvisoryOJB;
@@ -1169,11 +1168,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter()
 	{
 		return new MoneyCostCenterOJB();
-	}
-
-	public IPersistentExtraWork getIPersistentExtraWork()
-	{
-		return new ExtraWorkOJB();
 	}
 
 	public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests()
