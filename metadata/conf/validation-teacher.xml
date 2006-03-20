@@ -1110,6 +1110,12 @@
 			<arg0 key="message.error.curriculumHistoric.degreeCurricularPlan" resource="true"/>
 		</field>
 	</form>
+
+	<form name="sendMailForm">
+		<field property="from" depends="required" page="1">
+			<arg0 key="message.error.from" resource="true"/>
+		</field>
+	</form>
 	
 	
   </formset>

@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
+<span class="error"><html:errors/></span>
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop">

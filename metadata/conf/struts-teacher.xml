@@ -436,6 +436,7 @@
             <form-property name="approved" type="java.lang.String" />
         </form-bean>
         <form-bean name="sendMailForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	        <form-property name="page" type="java.lang.Integer" />
             <form-property name="shiftCode" type="java.lang.String" />
             <form-property name="studentGroupCode" type="java.lang.String" />
             <form-property name="objectCode" type="java.lang.String" />
@@ -1713,7 +1714,7 @@
         </action>
         <!--- by gedl, 17-9-2003 -->
         <action type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SendMailToAllStudents" 
-            path="/sendMailToAllStudents" name="sendMailForm" parameter="method" scope="request">
+            path="/sendMailToAllStudents" name="sendMailForm" parameter="method" scope="request" validate="true">
             <forward name="showEmailForm" path="showEmailForm"/>
             <forward name="mailSent" path="/studentsByCurricularCourse.do?method=prepare"/>
             <forward name="mailCandidaciesSent" path="/showCandidacies.do"/>

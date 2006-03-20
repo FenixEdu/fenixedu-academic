@@ -270,6 +270,12 @@ public class SendMailToAllStudents extends FenixDispatchAction {
         Integer shiftID = null;
         Integer groupCode = null;
         String from = request.getParameter("from");
+        if (from == null || from.length() == 0) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.from.address.cannot.be.null", new ActionError("error.from.address.cannot.be.null"));
+            saveErrors(request, actionErrors);
+            return prepare(mapping, form, request, response);
+        }
         String fromName = request.getParameter("fromName");
         String text = request.getParameter("text");
         String subject = request.getParameter("subject");
