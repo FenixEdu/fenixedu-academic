@@ -17,7 +17,9 @@ public class DeleteInstitutionWorkTimeByOID extends Service {
     public void run(Integer institutionWorkTimeID) throws ExcepcaoPersistencia {
         InstitutionWorkTime institutionWorkTime = (InstitutionWorkTime) persistentObject.readByOID(InstitutionWorkTime.class,
                         institutionWorkTimeID);
-        
-        institutionWorkTime.delete();
+        if (institutionWorkTime != null) {
+            institutionWorkTime.delete();
+        }
     }
+
 }
