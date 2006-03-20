@@ -65,12 +65,14 @@ public class HtmlProducer implements DocumentationProducer {
     }
     
     public void produce(RenderersParser parser) {
-        Template main   = createTemplate("main");
-        Template header = createTemplate("header");
-        Template footer = createTemplate("footer");
-        Template css    = createTemplate("css");
+        Template main      = createTemplate("main");
+        Template header    = createTemplate("header");
+        Template footer    = createTemplate("footer");
+        Template cssPrint  = createTemplate("css-print");
+        Template cssScreen = createTemplate("css-screen");
         
-        main.addAttribute("css", css);
+        main.addAttribute("css-print", cssPrint);
+        main.addAttribute("css-screen", cssScreen);
         main.addAttribute("header", header);
         main.addAttribute("footer", footer);
 
