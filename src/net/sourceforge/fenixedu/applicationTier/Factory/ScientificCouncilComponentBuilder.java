@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -199,9 +198,7 @@ public class ScientificCouncilComponentBuilder {
 	private ISiteComponent getInfoSiteSCDegrees(InfoSiteSCDegrees component)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
-		List degrees = persistentDegree.readAllFromOldDegreeStructure();
+		List<Degree> degrees = Degree.readAllFromOldDegreeStructure();
 		Iterator degreeIterator = degrees.iterator();
 		List infoDegrees = new ArrayList();
 		while (degreeIterator.hasNext()) {

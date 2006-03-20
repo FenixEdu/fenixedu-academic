@@ -217,4 +217,47 @@ public class Degree extends Degree_Base {
     	}
     	return result;
     }
+    
+    // -------------------------------------------------------------
+    // read static methods 
+    // -------------------------------------------------------------
+
+    public static Degree readBySigla(final String sigla) {
+    	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
+			if(degree.getSigla().equals(sigla)) {
+				return degree;
+			}
+		}
+    	return null;
+    }
+    
+    public static List<Degree> readAllFromOldDegreeStructure(){
+    	List<Degree> result = new ArrayList<Degree>();
+    	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
+    		if(!degree.isBolonhaDegree()) {
+    			result.add(degree);
+    		}
+    	}
+    	return result;
+    }
+    
+    public static List<Degree> readAllFromNewDegreeStructure(){
+    	List<Degree> result = new ArrayList<Degree>();
+    	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
+    		if(degree.isBolonhaDegree()) {
+    			result.add(degree);
+    		}
+    	}
+    	return result;
+    }
+    
+    public static List<Degree> readAllByDegreeType(final DegreeType degreeType){
+    	List<Degree> result = new ArrayList<Degree>();
+    	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
+    		if(degree.getTipoCurso() != null && degree.getTipoCurso().equals(degreeType)) {
+    			result.add(degree);
+    		}
+    	}
+    	return result;
+    }
 }

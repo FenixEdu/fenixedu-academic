@@ -21,8 +21,7 @@ public class CreateDegree extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final List<Degree> degrees = (List<Degree>) persistentSupport.getICursoPersistente()
-                .readAllFromNewDegreeStructure();
+        final List<Degree> degrees = Degree.readAllFromNewDegreeStructure();
 
         for (Degree degree : degrees) {
             if (degree.getAcronym().equalsIgnoreCase(acronym)) {

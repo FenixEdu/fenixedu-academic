@@ -67,6 +67,11 @@
 		column="PREVAILING_SCIENTIFIC_AREA"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="keyRootDomainObject"
+		column="KEY_ROOT_DOMAIN_OBJECT"
+		jdbc-type="INTEGER"
+	 />
 	
 	
 	

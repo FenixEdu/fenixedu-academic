@@ -30,9 +30,8 @@ public class EditDegree extends Service {
                 || !degreeToEdit.getNome().equalsIgnoreCase(name)
                 || !degreeToEdit.getBolonhaDegreeType().equals(bolonhaDegreeType)) {
 
-            final List<Degree> degrees = (List<Degree>) persistentSupport.getICursoPersistente()
-                    .readAllFromNewDegreeStructure();
-
+        	final List<Degree> degrees = Degree.readAllFromNewDegreeStructure();
+            
             // assert unique degree code and unique pair name/type
             for (Degree degree : degrees) {
                 if (degree != degreeToEdit) {

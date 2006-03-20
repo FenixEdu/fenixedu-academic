@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
@@ -396,11 +395,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPessoaPersistente getIPessoaPersistente()
 	{
 		return new PessoaOJB();
-	}
-
-	public ICursoPersistente getICursoPersistente()
-	{
-		return new CursoOJB();
 	}
 
 	public IPersistentExecutionDegree getIPersistentExecutionDegree()

@@ -19,8 +19,7 @@ public class InsertDegree extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final List<Degree> degrees = (List<Degree>) persistentSupport.getICursoPersistente()
-                .readAllFromOldDegreeStructure();
+        final List<Degree> degrees = Degree.readAllFromOldDegreeStructure();
                 
         // assert unique degree code and unique pair name/type
         for (Degree degree : degrees) {

@@ -27,9 +27,8 @@ public class EditDegree extends Service {
                 || !degreeToEdit.getNome().equalsIgnoreCase(infoDegree.getNome())
                 || !degreeToEdit.getTipoCurso().equals(infoDegree.getTipoCurso())) {
             
-            final List<Degree> degrees = (List<Degree>) persistentSupport.getICursoPersistente()
-                    .readAllFromOldDegreeStructure();
-
+        	final List<Degree> degrees = Degree.readAllFromOldDegreeStructure();
+            
             // assert unique degree code and unique pair name/type
             for (Degree degree : degrees) {
                 if (degree != degreeToEdit) {
