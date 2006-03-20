@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 
 /**
  * @author lmac1
@@ -25,7 +24,6 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 
 	// delete a set of executionDegrees
 	public List run(List executionDegreesIds) throws FenixServiceException, ExcepcaoPersistencia {
-		ITurmaPersistente persistentClass = persistentSupport.getITurmaPersistente();
 
 		Iterator iter = executionDegreesIds.iterator();
 
@@ -47,7 +45,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 			executionDegree = (ExecutionDegree) persistentObject.readByOID(
 					ExecutionDegree.class, executionDegreeId);
 			if (executionDegree != null) {
-				classes = persistentClass.readByExecutionDegree(executionDegree.getIdInternal());
+				classes = executionDegree.getSchoolClasses();
 
 				masterDegreeCandidates = executionDegree.getMasterDegreeCandidates();
 				guides = executionDegree.getGuides();

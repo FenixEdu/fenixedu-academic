@@ -18,10 +18,9 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  * 30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
  * 
@@ -34,8 +33,7 @@ public class ReadAllClasses extends Service {
 		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
 				ExecutionPeriod.class, keyExecutionPeriod);
 
-		ITurmaPersistente persistentClass = persistentSupport.getITurmaPersistente();
-		List classes = persistentClass.readByExecutionPeriod(executionPeriod.getIdInternal());
+		List classes = executionPeriod.getSchoolClasses();
 
 		infoClasses = new ArrayList();
 		Iterator iter = classes.iterator();

@@ -62,4 +62,34 @@ public class ExecutionDegree extends ExecutionDegree_Base {
 		return shifts;
 	}
 
+	public Set<SchoolClass> findSchoolClassesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+		final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
+		for (final SchoolClass schoolClass : getSchoolClasses()) {
+			if (schoolClass.getExecutionPeriod() == executionPeriod) {
+				schoolClasses.add(schoolClass);
+			}
+		}
+		return schoolClasses;
+	}
+
+	public Set<SchoolClass> findSchoolClassesByExecutionPeriodAndCurricularYear(final ExecutionPeriod executionPeriod, final Integer curricularYear) {
+		final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
+		for (final SchoolClass schoolClass : getSchoolClasses()) {
+			if (schoolClass.getExecutionPeriod() == executionPeriod && schoolClass.getAnoCurricular().equals(curricularYear)) {
+				schoolClasses.add(schoolClass);
+			}
+		}
+		return schoolClasses;
+	}
+
+	public SchoolClass findSchoolClassesByExecutionPeriodAndName(final ExecutionPeriod executionPeriod, final String name) {
+		final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
+		for (final SchoolClass schoolClass : getSchoolClasses()) {
+			if (schoolClass.getExecutionPeriod() == executionPeriod && schoolClass.getNome().equals(name)) {
+				return schoolClass;
+			}
+		}
+		return null;
+	}
+	
 }

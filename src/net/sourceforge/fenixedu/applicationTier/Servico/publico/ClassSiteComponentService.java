@@ -6,8 +6,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.PublicSiteComponentBuilder;
@@ -24,10 +23,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  * 
  */
@@ -70,22 +68,14 @@ public class ClassSiteComponentService extends Service {
             ExecutionPeriod executionPeriod, ExecutionDegree executionDegree, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
 
-        ITurmaPersistente persistentClass = persistentSupport.getITurmaPersistente();
         SchoolClass domainClass = null;
-        List domainList = new ArrayList();
         if (curricularYear == null) {
-            domainClass = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod(className,
-                    executionDegree.getIdInternal(), executionPeriod.getIdInternal());
-
+        	domainClass = executionDegree.findSchoolClassesByExecutionPeriodAndName(executionPeriod, className);
         } else {
             if (className == null && curricularYear == null) {
-
-                domainList = persistentClass.readByExecutionDegreeAndDegreeAndExecutionPeriod(
-                        executionDegree.getIdInternal(), executionDegree.getDegreeCurricularPlan()
-                                .getDegree().getIdInternal(), executionPeriod.getIdInternal());
-
+            	Set<SchoolClass> domainList = executionDegree.findSchoolClassesByExecutionPeriod(executionPeriod);
                 if (domainList.size() != 0) {
-                    domainClass = (SchoolClass) domainList.get(0);
+                    domainClass = (SchoolClass) domainList.iterator().next();
                 }
             }
         }

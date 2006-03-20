@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
@@ -28,8 +29,7 @@ public class ReadClassesByExecutionCourse extends Service {
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
                 .readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
-        final List classes = persistentSupport.getITurmaPersistente().readByExecutionCourse(
-                executionCourse.getIdInternal());
+        final Set<SchoolClass> classes = executionCourse.findSchoolClasses();
         final List infoClasses = new ArrayList(classes.size());
 
         final Map infoExecutionDegrees = new HashMap();

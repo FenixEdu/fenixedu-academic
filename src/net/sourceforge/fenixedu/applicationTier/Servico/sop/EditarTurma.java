@@ -18,9 +18,7 @@ public class EditarTurma extends Service {
         final ExecutionDegree executionDegree = classToEdit.getExecutionDegree();
         final ExecutionPeriod executionPeriod = classToEdit.getExecutionPeriod();
 
-        final SchoolClass otherClassWithSameNewName = persistentSupport.getITurmaPersistente()
-                .readByNameAndExecutionDegreeAndExecutionPeriod(newClassView.getNome(),
-                        executionDegree.getIdInternal(), executionPeriod.getIdInternal());
+        final SchoolClass otherClassWithSameNewName = executionDegree.findSchoolClassesByExecutionPeriodAndName(executionPeriod, newClassView.getNome());
 
         if (otherClassWithSameNewName != null) {
             throw new ExistingServiceException("Duplicate Entry: " + otherClassWithSameNewName.getNome());

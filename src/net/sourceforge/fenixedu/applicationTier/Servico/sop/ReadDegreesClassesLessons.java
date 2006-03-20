@@ -40,10 +40,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 
 /**
- * TODO Remove cloner deste serviço...
+ * TODO Remove cloner deste serviï¿½o...
  */
 public class ReadDegreesClassesLessons extends Service {
 
@@ -51,13 +50,12 @@ public class ReadDegreesClassesLessons extends Service {
 
 		List infoViewClassScheduleList = new ArrayList();
 
-		ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
 		List classes = new ArrayList();
 		for (int i = 0; i < infoExecutionDegrees.size(); i++) {
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(i);
 			ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
 					ExecutionDegree.class, infoExecutionDegree.getIdInternal());
-			List degreeClasses = classDAO.readByExecutionDegree(executionDegree.getIdInternal());
+			List degreeClasses = executionDegree.getSchoolClasses();
 			for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext();) {
 				SchoolClass klass = (SchoolClass) iterator.next();
 				if (klass.getExecutionPeriod().getIdInternal().equals(

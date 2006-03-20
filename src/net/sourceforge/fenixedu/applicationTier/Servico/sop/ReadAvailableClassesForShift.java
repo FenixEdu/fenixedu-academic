@@ -23,10 +23,9 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  * 30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
  * 
@@ -48,9 +47,7 @@ public class ReadAvailableClassesForShift extends Service {
 
         ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
 
-        ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
-        List classes = classDAO.readByExecutionPeriod(executionCourse.getExecutionPeriod()
-                .getIdInternal());
+        List classes = executionCourse.getExecutionPeriod().getSchoolClasses();
 
         infoClasses = new ArrayList();
         Iterator iter = classes.iterator();

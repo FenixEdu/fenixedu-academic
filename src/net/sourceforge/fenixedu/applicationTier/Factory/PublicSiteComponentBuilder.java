@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Factory;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -30,12 +31,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  * 
  */
@@ -73,23 +71,14 @@ public class PublicSiteComponentBuilder {
      */
     private ISiteComponent getInfoSiteClasses(InfoSiteClasses component, SchoolClass domainClass)
             throws FenixServiceException, ExcepcaoPersistencia {
-        List classes = new ArrayList();
+        ExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
+        ExecutionDegree executionDegree = domainClass.getExecutionDegree();
+
+        Set<SchoolClass> classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionPeriod, domainClass.getAnoCurricular());
         List infoClasses = new ArrayList();
-
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
-
-            ExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
-            ExecutionDegree executionDegree = domainClass.getExecutionDegree();
-
-            classes = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod
-                    .getIdInternal(), domainClass.getAnoCurricular(), executionDegree.getIdInternal());
-
-            for (int i = 0; i < classes.size(); i++) {
-                SchoolClass taux = (SchoolClass) classes.get(i);
-                infoClasses.add(copyClass2InfoClass(taux));
-            }
+        for (final SchoolClass schoolClass : classes) {
+        	infoClasses.add(copyClass2InfoClass(schoolClass));
+        }
 
         component.setClasses(infoClasses);
         return component;

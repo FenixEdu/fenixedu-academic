@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 
 /**
  * 
@@ -22,16 +22,15 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree extends Service {
     public Object run(Integer degreeOID) throws ExcepcaoPersistencia {
         IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
                 .getIPersistentExecutionPeriod();
-        ITurmaPersistente persistentClass = persistentSupport.getITurmaPersistente();
 
         ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
                 .readActualExecutionPeriod();
         ExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod
                 .getPreviousExecutionPeriod();
 
-        Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeOID);
+        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeOID);
 
-        List classes = persistentClass.readAll();
+        List classes = RootDomainObject.getInstance().getSchoolClasss();
 
         return constructViews(classes, degree, currentExecutionPeriod, previouseExecutionPeriod);
     }

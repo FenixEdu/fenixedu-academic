@@ -8,8 +8,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
@@ -17,41 +17,27 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 
 public class LerTurmas extends Service {
 
     public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
             Integer curricularYear) throws ExcepcaoPersistencia {
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionPeriod executionPeriod = RootDomainObject.getInstance().readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
 
-        List classesList = null;
-        List infoClassesList = null;
-
-
-        ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
-
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
-                .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
-
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
-                .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
-
+        final Set<SchoolClass> classes;
         if (curricularYear != null) {
-            classesList = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
-                    executionPeriod.getIdInternal(), curricularYear, executionDegree.getIdInternal());
+        	classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionPeriod, curricularYear);
         } else {
-            classesList = classDAO.readByExecutionDegreeAndExecutionPeriod(executionDegree
-                    .getIdInternal(), executionPeriod.getIdInternal());
+        	classes = executionDegree.findSchoolClassesByExecutionPeriod(executionPeriod);
         }
 
-        Iterator iterator = classesList.iterator();
-        infoClassesList = new ArrayList();
-        while (iterator.hasNext()) {
-            SchoolClass elem = (SchoolClass) iterator.next();
-
-            InfoClass infoClass = InfoClass.newInfoFromDomain(elem);
+        final List infoClassesList = new ArrayList();
+        for (final SchoolClass schoolClass : classes) {
+            InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
             infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
             infoClassesList.add(infoClass);
         }

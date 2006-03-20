@@ -822,4 +822,12 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
     	return shifts;
     }
 
+    public Set<SchoolClass> findSchoolClasses() {
+    	final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
+    	for (final Shift shift : getAssociatedShifts()) {
+    		schoolClasses.addAll(shift.getAssociatedClasses());
+    	}
+    	return schoolClasses;
+    }
+
 }

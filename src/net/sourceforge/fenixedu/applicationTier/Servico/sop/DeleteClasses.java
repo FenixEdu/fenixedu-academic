@@ -42,7 +42,7 @@ public class DeleteClasses extends Service {
             schoolClass.getExecutionPeriod().getSchoolClasses().remove(schoolClass);
             schoolClass.setExecutionPeriod(null);
 
-            persistentSupport.getITurmaPersistente().deleteByOID(SchoolClass.class, schoolClass.getIdInternal());
+            persistentObject.deleteByOID(SchoolClass.class, schoolClass.getIdInternal());
         }
 
         return new Boolean(true);
