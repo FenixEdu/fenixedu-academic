@@ -138,9 +138,9 @@
 		<h:outputText value="<br/>" escape="false"/>
 		<fc:degreeCurricularPlanRender 
 			dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
-			organizeBy="<%=request.getParameter("organizeBy")%>"
-			showRules="<%=request.getParameter("showRules")%>"
-			hideCourses="<%=request.getParameter("hideCourses")%>"/>
+			organizeBy="#{CurricularCourseManagement.organizeBy}"
+			showRules="#{CurricularCourseManagement.showRules}"
+			hideCourses="#{CurricularCourseManagement.hideCourses}"/>
 	
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
