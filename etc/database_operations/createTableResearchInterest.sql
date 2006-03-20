@@ -1,0 +1,8 @@
+create table `RESEARCH_INTEREST` (
+	`ID_INTERNAL` int(11) NOT NULL auto_increment,
+	`KEY_PARTY` int(11) NOT NULL,
+	`INTEREST` varchar(200) NOT NULL,
+	`INTEREST_ORDER` int(10) NOT NULL,	
+	PRIMARY KEY  (`ID_INTERNAL`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+

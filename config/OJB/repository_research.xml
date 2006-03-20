@@ -130,9 +130,36 @@
 		jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectParticipationType2SqlProjectParticipationTypeConversion"
 	/>
-	
-	
-	
 </class-descriptor>
 
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.ResearchInterest"
+	table="RESEARCH_INTEREST">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	
+	<field-descriptor
+		name="keyParty" 
+		column="KEY_PARTY"
+		jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor
+	   name="interest"    
+	   column="INTEREST"  
+		jdbc-type="VARCHAR"
+	/>
+	
+	<field-descriptor
+	   name="order"    
+	   column="INTEREST_ORDER"  
+		jdbc-type="INTEGER"
+	/>	
+</class-descriptor>
 

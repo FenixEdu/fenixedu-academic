@@ -13,13 +13,13 @@
 				<fr:property name="subLayout" value="values"/>
 				<fr:property name="subSchema" value="project.summary"/>
 			
-				<fr:property name="link(edit)" value="/project/projectsManagement.do?method=edit"/>
+				<fr:property name="link(edit)" value="/projects/projectsManagement.do?method=edit"/>
 				<fr:property name="param(edit)" value="idInternal/oid"/>
 				<fr:property name="key(edit)" value="researcher.project.projectsManagement.edit"/>
 				<fr:property name="bundle(edit)" value="RESEARCHER_RESOURCES"/>
 				<fr:property name="order(edit)" value="1"/>
 
-				<fr:property name="link(delete)" value="/project/projectsManagement.do?method=delete"/>
+				<fr:property name="link(delete)" value="/projects/projectsManagement.do?method=delete"/>
 				<fr:property name="param(delete)" value="idInternal/oid"/>
 				<fr:property name="key(delete)" value="researcher.project.projectsManagement.delete"/>
 				<fr:property name="bundle(delete)" value="RESEARCHER_RESOURCES"/>

@@ -9736,6 +9736,24 @@
 		</filterChains>
 	</service>    
 	<service>
+		<name>DeleteResearchInterest</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteResearchInterest</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service> 	
+	<service>
+		<name>ChangeResearchInterestOrder</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.ChangeResearchInterestOrder</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>RemoveExecutionDegreeToScheduling</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveExecutionDegreeToScheduling</implementationClass>
 		<description />

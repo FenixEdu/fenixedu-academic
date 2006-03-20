@@ -865,7 +865,12 @@
 	<description/>
 	<isTransactional>true</isTransactional>
 </filter>
-
+<filter>
+	<name>ResearcherAuthorization</name>
+	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.research.ResearcherFilter</implementationClass>
+	<description/>
+	<isTransactional>true</isTransactional>
+</filter>
 <!-- ======================================  -->
 <!--######################################-->
     <filter>

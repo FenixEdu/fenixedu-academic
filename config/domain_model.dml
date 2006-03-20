@@ -2927,6 +2927,12 @@ class net.sourceforge.fenixedu.domain.research.event.Event extends net.sourcefor
 	MultiLanguageString name;	
 }
 
+class net.sourceforge.fenixedu.domain.research.ResearchInterest extends net.sourceforge.fenixedu.domain.DomainObject {
+	String interest;
+	Integer order;
+	Integer keyParty;
+}
+
 class net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer contact;
 	Integer autonomousStudy;
@@ -6074,6 +6080,13 @@ relation ProjectParticipationProject {
 relation ProjectParticipationParty {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
 	net.sourceforge.fenixedu.domain.research.project.ProjectParticipation playsRole projectParticipations {
+		multiplicity *;
+	}
+}
+
+relation PartyInterest {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+	net.sourceforge.fenixedu.domain.research.ResearchInterest playsRole researchInterests {
 		multiplicity *;
 	}
 }

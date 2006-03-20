@@ -448,5 +448,14 @@
 		<slot name="title.content" layout="link"/>
 		<slot name="projectAbstract.content"/>
 	</schema>
-
+	
+	<schema name="researchInterest.summary" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
+		<slot name="order"/>
+		<slot name="interest"/>
+	</schema>	
+	
+	<schema name="researchInterest.simpleCreate" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
+		<slot name="interest"/>
+	</schema>	
+	
 </schemas>

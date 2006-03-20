@@ -29,5 +29,16 @@ public class ProjectsManagementDispatchAction extends FenixDispatchAction {
         request.setAttribute("projects", projects);
         return mapping.findForward("Success");  
     }
+    
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        //final IUserView userView = getUserView(request);
+        
+        request.getAttribute("delete");
+        //tratar de chamar o metodo delete do projecto
+        
+        
+        return mapping.findForward("Success");  
+    }
 
 }
