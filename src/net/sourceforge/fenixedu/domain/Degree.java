@@ -224,7 +224,7 @@ public class Degree extends Degree_Base {
 
     public static Degree readBySigla(final String sigla) {
     	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
-			if(degree.getSigla() != null && degree.getSigla().equals(sigla)) {
+			if(degree.getSigla() != null && degree.getSigla().equalsIgnoreCase(sigla)) {
 				return degree;
 			}
 		}
@@ -254,7 +254,7 @@ public class Degree extends Degree_Base {
     public static List<Degree> readAllByDegreeType(final DegreeType degreeType){
     	List<Degree> result = new ArrayList<Degree>();
     	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
-    		if(degree.getTipoCurso() != null && degree.getTipoCurso().equals(degreeType)) {
+    		if(degree.getTipoCurso() != null && degree.getTipoCurso() == degreeType) {
     			result.add(degree);
     		}
     	}
