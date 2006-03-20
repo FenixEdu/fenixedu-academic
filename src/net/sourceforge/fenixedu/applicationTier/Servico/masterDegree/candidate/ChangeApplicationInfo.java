@@ -55,8 +55,7 @@ public class ChangeApplicationInfo extends Service {
         if (isNewPerson) {
             Country country = null;
             if ((infoPerson.getInfoPais() != null)) {
-                country = persistentSupport.getIPersistentCountry().readCountryByNationality(
-                        infoPerson.getInfoPais().getNationality());
+                country = Country.readCountryByNationality(infoPerson.getInfoPais().getNationality());
             }
             
             Person person = existingMasterDegreeCandidate.getPerson();

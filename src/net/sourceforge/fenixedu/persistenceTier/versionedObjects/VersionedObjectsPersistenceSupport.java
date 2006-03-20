@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInSpecificScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
@@ -153,7 +152,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingList
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CoordinatorVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CountryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseGroupVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseScopeVO;
@@ -344,10 +342,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentStudentCurricularPlan getIStudentCurricularPlanPersistente() {
         return new StudentCurricularPlanVO();
-    }
-
-    public IPersistentCountry getIPersistentCountry() {
-        return new CountryVO();
     }
 
     public IPersistentOrientation getIPersistentOrientation() {

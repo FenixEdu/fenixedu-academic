@@ -33,8 +33,7 @@ public class EditMasterDegreeCandidate extends Service {
         Person person = masterDegreeCandidate.getPerson();
         Country country = null;
         if ((newCandidate.getInfoPerson().getInfoPais() != null)) {
-            country = persistentSupport.getIPersistentCountry().readCountryByNationality(
-                    newCandidate.getInfoPerson().getInfoPais().getNationality());
+            country = Country.readCountryByNationality(newCandidate.getInfoPerson().getInfoPais().getNationality());
         }
         person.edit(newCandidate.getInfoPerson(), country);
 

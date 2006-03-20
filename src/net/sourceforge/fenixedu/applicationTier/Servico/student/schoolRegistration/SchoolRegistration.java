@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
@@ -62,16 +61,13 @@ public class SchoolRegistration extends Service {
     private void updatePersonalInfo(final InfoPerson infoPerson, final Person person)
             throws ExcepcaoPersistencia {
 
-        final IPersistentCountry persistentCountry = persistentSupport.getIPersistentCountry();
-
-        Country country = null;
-
+        final Country country;
         if (infoPerson.getInfoPais() != null && infoPerson.getInfoPais().getNationality() != null){
-            country = (Country) persistentCountry.readCountryByNationality(infoPerson.getInfoPais().getNationality());
+            country = Country.readCountryByNationality(infoPerson.getInfoPais().getNationality());
         } else {
             //If the person country is undefined it is set to default "PORTUGUESA NATURAL DO CONTINENTE" 
             //In a not distance future this will not be needed since the coutry can never be null
-            country = persistentCountry.readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
+            country = Country.readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
         }
         
         person.edit(infoPerson,country);

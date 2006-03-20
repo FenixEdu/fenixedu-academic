@@ -5,12 +5,7 @@ package net.sourceforge.fenixedu.dataTransferObject.person;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
-import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author Pica
@@ -34,20 +29,4 @@ public class InfoQualificationWithPersonAndCountry extends InfoQualification {
         }
         return infoQualification;
     }
-
-    public void copyToDomain(InfoQualification infoQualification, Qualification qualification)
-            throws ExcepcaoPersistencia {
-        super.copyToDomain(infoQualification, qualification);
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        Country country = (Country) sp.getIPersistentCountry().readByOID(Country.class,
-                infoQualification.getInfoCountry().getIdInternal());
-        qualification.setCountry(country);
-
-        Person person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
-                infoQualification.getInfoPerson().getIdInternal());
-        qualification.setPerson(person);
-    }
-
 }

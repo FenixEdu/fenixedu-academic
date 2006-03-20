@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
-import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Student;
@@ -21,9 +20,6 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author tfc130
@@ -1003,62 +999,6 @@ public class InfoPerson extends InfoObject {
         return infoPerson;
     }
 
-    public void copyToDomain(InfoPerson infoPerson, Person person) throws ExcepcaoPersistencia {
-        super.copyToDomain(infoPerson, person);
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Country country = (Country) sp.getIPersistentCountry().readByOID(Country.class,
-                infoPerson.getInfoPais().getIdInternal());
-        person.setPais(country);
-
-        person.setNome(infoPerson.getNome());
-        person.setNumeroDocumentoIdentificacao(infoPerson.getNumeroDocumentoIdentificacao());
-        person.setIdDocumentType(infoPerson.getTipoDocumentoIdentificacao());
-        person.setLocalEmissaoDocumentoIdentificacao(infoPerson.getLocalEmissaoDocumentoIdentificacao());
-        person.setDataEmissaoDocumentoIdentificacao(infoPerson.getDataEmissaoDocumentoIdentificacao());
-        person.setDataValidadeDocumentoIdentificacao(infoPerson.getDataValidadeDocumentoIdentificacao());
-
-        person.setGender(infoPerson.getSexo());
-        person.setMaritalStatus(infoPerson.getMaritalStatus());
-
-        person.setEmail(infoPerson.getEmail());
-        person.setAvailableEmail(infoPerson.getAvailableEmail());
-        person.setEnderecoWeb(infoPerson.getEnderecoWeb());
-        person.setAvailableWebSite(infoPerson.getAvailableWebSite());
-        person.setTelefone(infoPerson.getTelefone());
-        person.setTelemovel(infoPerson.getTelemovel());
-        person.setWorkPhone(infoPerson.getWorkPhone());
-
-        person.setProfissao(infoPerson.getProfissao());
-
-        person.setMorada(infoPerson.getMorada());
-        person.setCodigoPostal(infoPerson.getCodigoPostal());
-        person.setLocalidade(infoPerson.getLocalidade());
-        person.setFreguesiaMorada(infoPerson.getFreguesiaMorada());
-        person.setConcelhoMorada(infoPerson.getConcelhoMorada());
-        person.setDistritoMorada(infoPerson.getDistritoMorada());
-
-        person.setConcelhoNaturalidade(infoPerson.getConcelhoNaturalidade());
-        person.setDistritoNaturalidade(infoPerson.getDistritoNaturalidade());
-        person.setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
-
-        person.setLocalidadeCodigoPostal(infoPerson.getLocalidadeCodigoPostal());
-
-        person.setNascimento(infoPerson.getNascimento());
-        person.setNomeMae(infoPerson.getNomeMae());
-        person.setNomePai(infoPerson.getNomePai());
-
-        person.setNumContribuinte(infoPerson.getNumContribuinte());
-        person.setCodigoFiscal(infoPerson.getCodigoFiscal());
-
-        person.setPassword(infoPerson.getPassword());
-        person.setUsername(infoPerson.getUsername());
-
-        person.setAvailablePhoto(infoPerson.getAvailablePhoto());
-        person.setIstUsername(infoPerson.getIstUsername());
-        
-    }
-
     public InfoEmployee getInfoEmployee() {
         return infoEmployee;
     }
@@ -1099,5 +1039,4 @@ public class InfoPerson extends InfoObject {
 	public void setIstUsername(String istUsername) {
 		this.istUsername = istUsername;
 	}
-
 }

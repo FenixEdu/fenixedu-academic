@@ -1,13 +1,3 @@
-/*
- * Country.java
- * 
- * Created on 28 of December 2002, 10:04
- */
-
-/**
- * @author Nuno Nunes & Joana Mota
- */
-
 package net.sourceforge.fenixedu.domain;
 
 public class Country extends Country_Base {
@@ -24,4 +14,16 @@ public class Country extends Country_Base {
 		setName(name);
     }
 
+    
+    //  -------------------------------------------------------------
+    // read static methods 
+    // -------------------------------------------------------------
+    public static Country readCountryByNationality(final String nationality) {
+        for (final Country country : RootDomainObject.getInstance().getCountrysSet()) {
+            if (country.getNationality().equals(nationality)) {
+                return country;
+            }
+        }
+        return null;
+    }
 }

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInSpecificScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
@@ -384,11 +383,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentExecutionCourse getIPersistentExecutionCourse()
 	{
 		return new ExecutionCourseOJB();
-	}
-
-	public IPersistentCountry getIPersistentCountry()
-	{
-		return new CountryOJB();
 	}
 
 	public IPessoaPersistente getIPessoaPersistente()

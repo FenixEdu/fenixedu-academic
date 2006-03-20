@@ -120,8 +120,6 @@ public interface ISuportePersistente
 
 	public IPessoaPersistente getIPessoaPersistente();
 
-	public IPersistentCountry getIPersistentCountry();
-
 	public IPersistentExecutionDegree getIPersistentExecutionDegree();
 
 	public IPersistentStudent getIPersistentStudent();

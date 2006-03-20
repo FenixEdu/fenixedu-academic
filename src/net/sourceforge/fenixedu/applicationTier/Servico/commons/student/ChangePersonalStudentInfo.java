@@ -37,8 +37,7 @@ public class ChangePersonalStudentInfo extends Service {
             if ((person.getPais() == null)
                     || (!newInfoPerson.getInfoPais().getNationality().equals(
                             person.getPais().getNationality()))) {
-                country = persistentSupport.getIPersistentCountry().readCountryByNationality(
-                        newInfoPerson.getInfoPais().getNationality());
+                country = Country.readCountryByNationality(newInfoPerson.getInfoPais().getNationality());
             }else{
                 country = person.getPais();
             }
@@ -46,14 +45,12 @@ public class ChangePersonalStudentInfo extends Service {
         else {
             //If the person country is undefined it is set to default "PORTUGUESA NATURAL DO CONTINENTE" 
             //In a not distance future this will not be needed since the coutry can never be null
-            country = (Country) persistentSupport.getIPersistentCountry().readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
+            country = Country.readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
         }
 
         // Change personal Information
         person.edit(newInfoPerson, country);
-                  
-        InfoPerson infoPerson = InfoPersonWithInfoCountry.newInfoFromDomain(person);
 
-        return infoPerson;
+        return InfoPersonWithInfoCountry.newInfoFromDomain(person);
     }
 }

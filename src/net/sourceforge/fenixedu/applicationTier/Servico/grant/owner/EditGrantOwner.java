@@ -71,8 +71,7 @@ public class EditGrantOwner extends Service {
             // "PORTUGUESA NATURAL DO CONTINENTE"
             // In a not distance future this will not be needed since the coutry
             // can never be null
-            country = (Country) persistentSupport.getIPersistentCountry().readCountryByNationality(
-                    "PORTUGUESA NATURAL DO CONTINENTE");
+            country = Country.readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
         }
 
         // create or edit person information
