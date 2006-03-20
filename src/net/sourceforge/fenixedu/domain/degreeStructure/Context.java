@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -82,5 +83,13 @@ public class Context extends Context_Base implements Comparable<Context> {
     public boolean isValid(ExecutionPeriod executionPeriod) {
     	return (getBeginExecutionPeriod().isBeforeOrEquals(executionPeriod) && (getEndExecutionPeriod() == null || getEndExecutionPeriod().isAfterOrEquals(executionPeriod)));
     }
-
+    
+    public boolean isValid(ExecutionYear executionYear) {
+    	for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+			if(isValid(executionPeriod)) {
+				return true;
+			}
+		}
+    	return false;
+    }
 }
