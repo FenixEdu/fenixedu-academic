@@ -89,17 +89,15 @@
 			</fr:layout>
 		</fr:view>
 		
-		<ul style="list-style: none;">
-			<li>
-				<strong> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.name"/> : </strong> &nbsp;
-			</li>
-			<li>
-				<strong> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.number"/> : </strong> &nbsp;
-			</li>
-			<li>
-				<strong> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.category"/> : </strong> &nbsp;
-			</li>			
-		</ul>
+		<!-- Event Participation -->
+		<h3 id='researchInterestsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.researchInterestsTitle"/> </span> </h3>
+		<fr:view name="researchInterests" >
+			<fr:layout>
+				<fr:property name="eachLayout" value="values-dash"/>
+				<fr:property name="eachSchema" value="researchInterest.summary"/>
+			</fr:layout>
+		</fr:view>
+		
 		
 		<!-- Event Participation -->
 		<h3 id='eventParticipationTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.eventParticipationTitle"/> </span> </h3>

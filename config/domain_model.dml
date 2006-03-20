@@ -7745,3 +7745,10 @@ relation RootDomainObjectPersonAccount {
 		multiplicity *;
 	}
 }
+
+relation RootDomainObjectResearchInterest {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.ResearchInterest playsRole researchInterests {
+		multiplicity *;
+	}
+}

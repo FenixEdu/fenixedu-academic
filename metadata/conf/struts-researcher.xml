@@ -30,9 +30,9 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
         <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
-            <forward name="Success" path="viewCurriculum"/>
+            <forward name="Success" path="/viewCurriculum.do?method=prepare"/>
         </action>       
-        <action path="/viewCurriculum" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+        <action path="/viewCurriculum" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.ViewCurriculumDispatchAction">
             <forward name="Success" path="viewCurriculum"/>
         </action>
         

@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.research;
 
+import org.apache.commons.digester.SetRootRule;
+
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 
@@ -11,6 +14,7 @@ public class ResearchInterest extends ResearchInterest_Base {
     
     public ResearchInterest() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public void delete() {

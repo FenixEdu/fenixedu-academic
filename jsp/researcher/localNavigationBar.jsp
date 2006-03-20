@@ -10,7 +10,7 @@
 <logic:present role="RESEARCHER">
 	<ul>
 		<li>
-			<html:link page="/viewCurriculum.do">
+			<html:link page="/viewCurriculum.do?method=prepare">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="link.viewCurriculum"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</html:link>
 		</li>
