@@ -99,7 +99,7 @@ public class CourseGroup extends CourseGroup_Base {
     public List<Context> getSortedChildContextsWithCurricularCoursesByExecutionYear(ExecutionYear executionYear) {
         List<Context> result = new ArrayList<Context>();
         for (Context context : this.getChildContexts()) {
-            if (context.getChildDegreeModule().isLeaf() && context.isValid(executionYear)) {
+            if (context.getChildDegreeModule().isLeaf() && (executionYear == null || context.isValid(executionYear))) {
                 result.add(context);
             }
         }
@@ -123,7 +123,7 @@ public class CourseGroup extends CourseGroup_Base {
     public List<Context> getSortedChildContextsWithCourseGroupsByExecutionYear(ExecutionYear executionYear) {
         List<Context> result = new ArrayList<Context>();
         for (Context context : this.getChildContexts()) {
-            if (!context.getChildDegreeModule().isLeaf() && context.isValid(executionYear)) {
+            if (!context.getChildDegreeModule().isLeaf() && (executionYear == null || context.isValid(executionYear))) {
                 result.add(context);
             }
         }
