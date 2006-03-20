@@ -77,7 +77,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.startElement("p", this);
         writer.startElement("a", this);
         encodeCourseReportLinkHref();
-        writer.append("Relatórios de curso");
+        writer.append("Relatórios de Plano Curricular");
         writer.endElement("a");
         writer.endElement("p");
         
