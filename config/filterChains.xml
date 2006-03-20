@@ -1019,6 +1019,13 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization</name>
+        <expression>BolonhaManagerAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>ResearcherAuthorization</name>
         <expression>ResearcherAuthorization</expression>
         <description/>

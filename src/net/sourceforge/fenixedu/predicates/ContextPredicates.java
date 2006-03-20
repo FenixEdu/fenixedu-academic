@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -27,6 +28,10 @@ public class ContextPredicates {
             }
 
             Person person = AccessControl.getUserView().getPerson();
+            if (person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+                return true;
+            }
+            
             return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(person);
         }
 

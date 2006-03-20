@@ -9205,7 +9205,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
@@ -9223,7 +9223,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
@@ -9232,7 +9232,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
@@ -9241,7 +9241,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>    
     <service>
@@ -9250,7 +9250,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
     <service>

@@ -27,7 +27,7 @@ public class CourseGroupPredicates {
             }
 
             Person person = AccessControl.getUserView().getPerson();
-            if(person.hasRole(RoleType.MANAGER)){
+            if(person.hasRole(RoleType.MANAGER) || person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
                 return true;
             }
             

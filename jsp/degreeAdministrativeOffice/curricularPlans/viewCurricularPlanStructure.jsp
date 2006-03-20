@@ -13,14 +13,24 @@
 		<f:param value="#{bolonhaBundle['curricularPlan.structure']}"/>
 	</h:outputFormat>
 
-	<fc:degreeCurricularPlanRender 
-		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
-		onlyStructure="true"/>
-	
-	<h:outputText value="<br/><p>" escape="false"/>
 	<h:form>
+		
+		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['executionYear']}:</label> " escape="false"/>
+		<h:selectOneMenu value="#{CurricularCourseManagement.executionYearID}" onchange="this.form.submit();">
+			<f:selectItems value="#{CurricularCourseManagement.executionYearItems}" />
+		</h:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="</fieldset></div>" escape="false"/>
+	
+		<fc:degreeCurricularPlanRender 
+			dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
+			onlyStructure="true"/>
+		
+		<h:outputText value="<br/><p>" escape="false"/>
+
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
-		<h:outputText escape="false" value="<input id='executionYearID' name='executionYearID' type='hidden' value='#{CurricularCourseManagement.executionYearID}'/>"/>
 		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
 		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularCourseManagement.showRules}'/>"/>

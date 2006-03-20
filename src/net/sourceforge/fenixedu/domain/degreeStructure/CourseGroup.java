@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 public class CourseGroup extends CourseGroup_Base {
@@ -37,7 +36,7 @@ public class CourseGroup extends CourseGroup_Base {
         return false;
     }
 
-    public void edit(String name, String nameEn) throws FenixDomainException {
+    public void edit(String name, String nameEn) {
         this.checkDuplicateBrotherNames(name, nameEn);
         setName(StringFormatter.prettyPrint(name));
         setNameEn(StringFormatter.prettyPrint(nameEn));

@@ -102,6 +102,9 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
             ServiceUtils.executeService(getUserView(), "CreateCourseGroup", args);
             addInfoMessage(bolonhaResources.getString("courseGroupCreated"));
             return "editCurricularPlanStructure";
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+            return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (final DomainException e) {
@@ -115,6 +118,9 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
             final Object args[] = { getCourseGroupID(), getName(), getNameEn() };
             ServiceUtils.executeService(getUserView(), "EditCourseGroup", args);
             addInfoMessage(bolonhaResources.getString("courseGroupEdited"));
+            return "editCurricularPlanStructure";
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
@@ -130,6 +136,9 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
             ServiceUtils.executeService(getUserView(), "DeleteContextFromDegreeModule", args);
             addInfoMessage(bolonhaResources.getString("courseGroupDeleted"));
             return "editCurricularPlanStructure";
+        } catch (FenixFilterException e) {
+                this.addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+                return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (final DomainException e) {
