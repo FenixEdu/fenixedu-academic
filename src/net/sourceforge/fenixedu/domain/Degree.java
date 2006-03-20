@@ -224,7 +224,7 @@ public class Degree extends Degree_Base {
 
     public static Degree readBySigla(final String sigla) {
     	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
-			if(degree.getSigla().equals(sigla)) {
+			if(degree.getSigla() != null && degree.getSigla().equals(sigla)) {
 				return degree;
 			}
 		}
