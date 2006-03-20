@@ -12,6 +12,7 @@
         <li><a href="#validator">Let's validate the input before you do more harm</a></li>
         <li><a href="#define-validator">What is a validator?</a></li>
         <li><a href="#create">How do we create new objects?</a></li>
+        <li><a href="#create-multiple">Can I create multiple objects at the same time?</a></li>
         <li><a href="#hidden">And if the user does not provide enough input?</a></li>
     </ul>
 </div>
@@ -334,6 +335,64 @@ public class RegexpValidator extends HtmlValidator {
     </div>
 </div>
 
+<h3>Can I create multiple objects at the same time?</h3>
+<a name="create-multiple"></a>
+
+<p>
+    Short answer: yes. Neverthless the creation of multiple objects at once is only possible in
+    certain conditions. That conditions are:
+</p>
+
+<ul>
+  <li>The objects beeing created must all be related directly or indirectly</li>
+  <li>You can reach all the objects (from a source object) with relations of multiplicity 1</li>
+</ul>
+
+<p>
+    This may seam limitative but convers many pratical cases. Normally you want to create an
+    object but to mantain the domain coherence you need to create some additional objects. These
+    auxiliary objects are normally only required if the relation has multiplicity 1. If the
+    relation has a greater multiplicity then it's represented by a list and it's uncommon to require
+    the list to be not empty. Specially since it's impossible to verify that directly in the 
+    database.
+</p>
+
+<p>
+    Let's give an example. Suppose you want to create a person and it's associated user, that 
+    the person has only one user, and that the user as a <code>"setPlainPassword"</code> method
+    that encripts the password (I know it's a lot to assume :-).
+</p>
+
+<div style="border: 1px solid #000; padding: 20px 20px 20px 20px;">
+    <pre>&lt;schema name=&quot;person.compund.create&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
+  &lt;slot name=&quot;name&quot;/&gt;
+  &lt;slot name=&quot;email&quot;/&gt;
+  &lt;slot name=&quot;user.username&quot;/&gt;
+  &lt;slot name=&quot;user.plainPassword&quot;/&gt;
+&lt;/schema&gt;</pre>
+</div>
+
+<p>
+    If this schema is refered in a <code>fr:create</code> tag then you will be presented with
+    four editors (one for each slot). In the inteface they will be presented as if they all
+    belong to the person but you can see in the schema that the username and the virtual slot
+    <code>plainPassword</code> belong to the user that should be assiaciated with the person.
+</p>
+
+<p>
+    When creating the person, the renderers will try to set the <code>username</code> and <code>plainPassword</code>
+    of an <code>User</code> object that does not exist (because the person is now beeing created). In that case
+    the <code>user object</code> will automatically created. It will be associated to the person and the the 
+    values will be set on the newly created <code>User</code> object.
+</p>
+
+<p>
+    This strategy has no limitation in the number of levels that a schema can refer. All the 
+    intermediary complex values will be created. Nevertheless it should be uncommon to need more
+    that one level like in the example. Specially because you are limited with relations of
+    multiplicity 1.
+</p>
+
 <h3>And if the user does not provide enough input?</h3>
 <a name="hidden"></a>
 
@@ -453,4 +512,3 @@ public class RegexpValidator extends HtmlValidator {
         Next: <html:link page="/renderers/actions.do">The third situation: renderers meet actions</html:link>
     </span>
 </p>
-
