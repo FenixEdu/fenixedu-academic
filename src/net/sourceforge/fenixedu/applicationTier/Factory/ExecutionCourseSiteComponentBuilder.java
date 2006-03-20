@@ -341,10 +341,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		List infoCurricularCourseListByDegree = null;
 		// read sections
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		allSections = persistentSupport.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
-				site.getExecutionCourse().getExecutionPeriod().getName(),
-				site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+		allSections = site.getAssociatedSections();
 
 		// build the result of this service
 		Iterator iterator = allSections.iterator();

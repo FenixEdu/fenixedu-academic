@@ -21,7 +21,7 @@ public class EditSection extends Service {
             throw new NonExistingServiceException();
         }
         
-        List<Section> sectionsList = Section.getSections(iSection.getSuperiorSection(), iSection.getSite());
+        List<Section> sectionsList = iSection.getSite().getAssociatedSections(iSection.getSuperiorSection());
         if (newOrder.intValue() == -2) {
             newOrder = new Integer(sectionsList.size() - 1);
         }

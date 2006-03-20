@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -64,7 +65,7 @@ public class Site extends Site_Base {
 
     private Integer organizeExistingSectionsOrder(final Section parentSection, int sectionOrder) {
 
-        List<Section> associatedSections = Section.getSections(parentSection, this);
+        List<Section> associatedSections = getAssociatedSections(parentSection);
         
         if (associatedSections != null) {
             if (sectionOrder == -1) {
@@ -128,5 +129,20 @@ public class Site extends Site_Base {
     		setExecutionCourse(null);
     		super.deleteDomainObject();
     	}
+    }
+
+    public List<Section> getAssociatedSections(final Section parentSection) {
+        final List<Section> result;
+        if (parentSection != null) {
+            result = parentSection.getAssociatedSections();
+        } else {
+            result = new ArrayList<Section>();
+            for (final Section section : this.getAssociatedSections()) {
+                if (! section.hasSuperiorSection()) {
+                    result.add(section);
+                }
+            }
+        }
+        return result;
     }
 }

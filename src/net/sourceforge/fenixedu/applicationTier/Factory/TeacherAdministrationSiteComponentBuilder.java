@@ -101,7 +101,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -700,11 +699,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 */
 	private ISiteComponent getInfoSiteRootSections(InfoSiteRootSections component, Site site)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		List allSections = persistentSupport.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
-				site.getExecutionCourse().getExecutionPeriod().getName(),
-				site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+		List allSections = site.getAssociatedSections();
 
 		// build the result of this service
 		Iterator iterator = allSections.iterator();
@@ -746,12 +742,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoSiteRegularSections(InfoSiteRegularSections component, Site site,
 			Integer sectionCode) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
 
-		Section iSuperiorSection = (Section) persistentSection.readByOID(Section.class, sectionCode);
-		List allSections = persistentSection.readBySite(site.getExecutionCourse().getSigla(), site
-				.getExecutionCourse().getExecutionPeriod().getName(), site.getExecutionCourse()
-				.getExecutionPeriod().getExecutionYear().getYear());
+		Section iSuperiorSection = (Section) persistentSupport.getIPersistentObject().readByOID(Section.class, sectionCode);
+		List allSections = site.getAssociatedSections();
 
 		// build the result of this service
 		Iterator iterator = allSections.iterator();
@@ -771,24 +764,14 @@ public class TeacherAdministrationSiteComponentBuilder {
 		return component;
 	}
 
-	/**
-	 * @param sections
-	 * @param site
-	 * @param integer
-	 * @return
-	 * @throws ExcepcaoPersistencia
-	 */
 	private ISiteComponent getInfoSiteSections(InfoSiteSections component, Site site,
 			Integer sectionCode) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
 
-		Section iSection = (Section) persistentSection.readByOID(Section.class, sectionCode);
+		Section iSection = (Section) persistentSupport.getIPersistentObject().readByOID(Section.class, sectionCode);
 
 		InfoSection infoSection = InfoSection.newInfoFromDomain(iSection);
-		List allSections = persistentSection.readBySite(site.getExecutionCourse().getSigla(), site
-				.getExecutionCourse().getExecutionPeriod().getName(), site.getExecutionCourse()
-				.getExecutionPeriod().getExecutionYear().getYear());
+		List allSections = site.getAssociatedSections(); 
 
 		// build the result of this service
 		Iterator iterator = allSections.iterator();

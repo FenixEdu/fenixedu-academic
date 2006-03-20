@@ -53,7 +53,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSecretaryEnrolmentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -202,7 +201,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Restriction
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SalaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ScientificAreaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SecretaryEnrolmentStudentVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SectionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SentSmsVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileVO;
@@ -681,10 +679,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion() {
         return new MasterDegreeThesisDataVersionVO();
-    }
-
-    public IPersistentSection getIPersistentSection() {
-        return new SectionVO();
     }
 
     public void clearCache() {

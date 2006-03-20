@@ -1,13 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
-/**
- * Created on 19/03/2003
- * 
- * @author lmac1
- */
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -21,45 +14,21 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadSectionsBySiteAndSuperiorSection extends Service {
 
-	/**
-	 * Executes the service. Returns the current collection of all infosections
-	 * that belong to a site.
-	 * 
-	 * @throws ExcepcaoPersistencia
-	 */
-	public List run(InfoSite infoSite, InfoSection infoSuperiorSection) throws FenixServiceException,
+	public List<InfoSection> run(InfoSite infoSite, InfoSection infoSuperiorSection) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		Site site = (Site) persistentObject.readByOID(Site.class, infoSite.getIdInternal());
-		List allSections = null;
-
-		Section superiorSection = null;
-		if (infoSuperiorSection != null) {
-			superiorSection = (Section) persistentObject.readByOID(Section.class,
-					infoSuperiorSection.getIdInternal());
-			superiorSection.setSite(site);
-		}
-
-		if (superiorSection != null) {
-			allSections = persistentSupport.getIPersistentSection().readBySiteAndSection(
-					site.getExecutionCourse().getSigla(),
-					site.getExecutionCourse().getExecutionPeriod().getName(),
-					site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
-					superiorSection.getIdInternal());
-		} else {
-			allSections = persistentSupport.getIPersistentSection().readBySiteAndSection(
-					site.getExecutionCourse().getSigla(),
-					site.getExecutionCourse().getExecutionPeriod().getName(),
-					site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(), null);
-		}
-
-		List result = new ArrayList();
-		if (allSections != null) {
-			// build the result of this service
-			Iterator iterator = allSections.iterator();
-
-			while (iterator.hasNext())
-				result.add(InfoSectionWithAll.newInfoFromDomain((Section) iterator.next()));
-		}
+        
+		final Site site = (Site) persistentObject.readByOID(Site.class, infoSite.getIdInternal());
+		if (site == null) {
+            throw new FenixServiceException("error.noSite");     
+        }
+        
+        final Section parentSection = (infoSuperiorSection == null) ? null :
+            (Section) persistentObject.readByOID(Section.class, infoSuperiorSection.getIdInternal());
+        
+        final List<InfoSection> result = new ArrayList<InfoSection>();
+        for (final Section section : site.getAssociatedSections(parentSection)) {
+            result.add(InfoSectionWithAll.newInfoFromDomain(section));
+        }
 
 		return result;
 	}

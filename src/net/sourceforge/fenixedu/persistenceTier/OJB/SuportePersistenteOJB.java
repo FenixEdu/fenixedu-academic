@@ -69,7 +69,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSecretaryEnrolmentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -449,14 +448,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentExecutionYear getIPersistentExecutionYear()
 	{
 		return new ExecutionYearOJB();
-	}
-
-	/**
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSection()
-	 */
-	public IPersistentSection getIPersistentSection()
-	{
-		return new SectionOJB();
 	}
 
 	/**

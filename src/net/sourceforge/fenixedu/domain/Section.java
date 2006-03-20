@@ -91,7 +91,7 @@ public class Section extends Section_Base implements INode {
     private Integer organizeSectionsOrder(Integer newOrder, Integer oldOrder, Section superiorSection,
             Site site) {
 
-        List<Section> sectionsList = getSections(superiorSection, this.getSite());
+        List<Section> sectionsList = site.getAssociatedSections(superiorSection);
 
         int diffOrder = newOrder.intValue() - oldOrder.intValue();
 
@@ -148,7 +148,7 @@ public class Section extends Section_Base implements INode {
         this.setSite(null);
 
         // ReOrder Sections
-        List<Section> sectionsReordered = getSections(superiorSection, sectionSite);
+        List<Section> sectionsReordered = sectionSite.getAssociatedSections(superiorSection);
         for (Section section : sectionsReordered) {
             Integer sectionOrder = section.getSectionOrder();
             if (sectionOrder.intValue() > sectionToDeleteOrder.intValue()) {
@@ -157,22 +157,5 @@ public class Section extends Section_Base implements INode {
         }
         
         super.deleteDomainObject();
-    }
-
-    public static List<Section> getSections(Section superiorSection, Site site) {
-
-        List<Section> sections = new ArrayList();
-
-        if (superiorSection != null) {
-            sections = superiorSection.getAssociatedSections();
-
-        } else {
-            List<Section> sectionListAux = site.getAssociatedSections();
-            for (Section section : sectionListAux) {
-                if (section.getSuperiorSection() == null)
-                    sections.add(section);
-            }
-        }
-        return sections;
     }
 }

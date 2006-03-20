@@ -140,8 +140,6 @@ public interface ISuportePersistente
 
 	public IPersistentExecutionYear getIPersistentExecutionYear();
 
-	public IPersistentSection getIPersistentSection();
-
 	public IPersistentCurriculum getIPersistentCurriculum();
 
 	public IPersistentEvaluationMethod getIPersistentEvaluationMethod();
