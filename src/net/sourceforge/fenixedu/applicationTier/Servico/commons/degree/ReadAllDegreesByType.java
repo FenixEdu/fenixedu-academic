@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -16,8 +15,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadAllDegreesByType extends Service {
 
     public List run(String degreeType) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentDegreeInfo degrees = persistentSupport.getIPersistentDegreeInfo();
-        List degreesList = degrees.readDegreeByType(DegreeType.valueOf(degreeType));
+        List<Degree> degreesList = Degree.readAllByDegreeType(DegreeType.valueOf(degreeType));
         List infoDegreesList = (List) CollectionUtils.collect(degreesList, new Transformer() {
 
             public Object transform(Object input) {
@@ -28,6 +26,6 @@ public class ReadAllDegreesByType extends Service {
         });
 
         return infoDegreesList;
-
     }
+    
 }
