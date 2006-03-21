@@ -51,11 +51,14 @@ public class MultiLanguageString {
 		}
 	}
 
-	@Override
-	public String toString() {
+	public String exportAsString() {
 		final StringBuilder result = new StringBuilder();
 		for (final Language key : contentsMap.keySet()) {
-            result.append(key).append("\002").append(contentsMap.get(key)).append("\001");
+            final String value = contentsMap.get(key);
+            result.append(key);
+            result.append(value.length());
+            result.append(':');
+            result.append(value);
 		}
 		return result.toString();
 	}

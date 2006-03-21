@@ -10,7 +10,7 @@ public class MultiLanguageString2SqlMultiLanguageStringConversion implements Fie
 
     public Object javaToSql(Object source) throws ConversionException {
         if (source instanceof MultiLanguageString) {
-            return ((MultiLanguageString) source).toString();
+            return ((MultiLanguageString) source).exportAsString();
         }
         return source;
     }
@@ -21,26 +21,18 @@ public class MultiLanguageString2SqlMultiLanguageStringConversion implements Fie
         }
         if (source instanceof String) {
             String src = (String) source;
-
-            final String[] MLSFromSql = src.split("\001");
-
-            if (MLSFromSql != null) {
-
-                MultiLanguageString multiLanguageString = new MultiLanguageString();
-
-                for (int i = 0; i < MLSFromSql.length; i++) {
-
-                    String[] s = MLSFromSql[i].split("\002");
-
-                    final String language = s[0];
-                    final String content = s[1];
-
-                    multiLanguageString.addContent(Language.valueOf(language), content);
-                }
-                return multiLanguageString;
+            MultiLanguageString multiLanguageString = new MultiLanguageString();
+            for (int i = 0; i < src.length();) {
+                final String language = src.substring(i, i + 2);
+                final int pos = src.indexOf(':');
+                final int lenght = Integer.parseInt(src.substring(i + 2, pos));
+                final String content = src.substring(pos+1, pos + lenght+1);
+                multiLanguageString.addContent(Language.valueOf(language), content);
+                i = pos + lenght+1;
             }
-            return null;
+            return multiLanguageString;
         }
-        return source;
+        return null;
+
     }
 }
