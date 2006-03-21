@@ -26,7 +26,7 @@
     <attribute>
       <name>id</name>
       <required>true</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         The name defined in the page and that will be associated with the value.
       </description>
@@ -111,7 +111,7 @@
 	<attribute>
       <name>property</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
         naming convention for bean properties. If this attribute is not specified then the
@@ -122,7 +122,7 @@
     <attribute>
       <name>scope</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         	The scope where the object will be searched. If no scope is specified the object will be
         	searched using PageScope.findAttribute(name).
@@ -132,7 +132,7 @@
     <attribute>
       <name>layout</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         Indicates wich specific layout will be used to render the object.
       </description>
@@ -141,7 +141,7 @@
     <attribute>
       <name>schema</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         Selects one of the predefined schemas by name. The name specified in this attribute
         will be used to obtain a schema to use when rendering the object.
@@ -151,7 +151,7 @@
     <attribute>
       <name>template</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         	The JSP template to use when rendering the object. If both 'template' and 'layout' attributes
         	are specified, the behaviour is undefined.
@@ -171,7 +171,7 @@
     <attribute>
       <name>name</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
     	    The name of the layout that will be used to render the object.
       </description>
@@ -189,7 +189,7 @@
     <attribute>
       <name>name</name>
       <required>true</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         The name of the property.
       </description>

@@ -26,7 +26,7 @@
     <attribute>
       <name>id</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
         The 'id' of the input context. This attribute allows multiple create tags to be used
@@ -106,7 +106,7 @@
     <attribute>
       <name>id</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
         The 'id' of the input context. This attribute allows multiple edit tags to be used
@@ -276,7 +276,7 @@
     <attribute>
       <name>name</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         	The name of the layout that will be used to render the object.
       </description>
@@ -389,7 +389,7 @@
     <attribute>
       <name>name</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         The name of the layout that will be used to render the object.
       </description>
@@ -407,7 +407,7 @@
     <attribute>
       <name>name</name>
       <required>true</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
     		The name of the property.
       </description>
