@@ -22,12 +22,6 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 
-/**
- * 
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
- *         (naat@mega.ist.utl.pt)
- * 
- */
 public class CreateMasterDegreeThesis extends Service {
 
     public void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle,
@@ -47,8 +41,8 @@ public class CreateMasterDegreeThesis extends Service {
                     "error.exception.masterDegree.externalGuiderAlreadyChosen");
         }
 
-        MasterDegreeThesis storedMasterDegreeThesis = persistentSupport.getIPersistentMasterDegreeThesis()
-                .readByStudentCurricularPlan(studentCurricularPlanID);
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+        MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
         if (storedMasterDegreeThesis != null) {
             throw new ExistingServiceException("error.exception.masterDegree.existingMasterDegreeThesis");
         }
@@ -64,9 +58,7 @@ public class CreateMasterDegreeThesis extends Service {
         }
 
         Person person = Person.readPersonByUsername(userView.getUtilizador());
-        Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,
-                        studentCurricularPlanID);
+        Employee employee = person.getEmployee();
 
         MasterDegreeThesis masterDegreeThesis = DomainFactory.makeMasterDegreeThesis();
         masterDegreeThesis.setStudentCurricularPlan(studentCurricularPlan);

@@ -23,10 +23,6 @@ import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 
-/**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
- *         (naat@mega.ist.utl.pt)
- */
 public class ChangeMasterDegreeProof extends Service {
 
     public void run(IUserView userView, Integer studentCurricularPlanID, Date proofDate,
@@ -34,11 +30,8 @@ public class ChangeMasterDegreeProof extends Service {
             Integer attachedCopiesNumber, List<Integer> teacherJuriesNumbers,
             List<Integer> externalJuriesIDs) throws FenixServiceException, ExcepcaoPersistencia {
 
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,
-                        studentCurricularPlanID);
-
-        MasterDegreeThesis storedMasterDegreeThesis = persistentSupport.getIPersistentMasterDegreeThesis()
-                .readByStudentCurricularPlan(studentCurricularPlanID);
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+        MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
         if (storedMasterDegreeThesis == null) {
             throw new NonExistingServiceException(
                     "error.exception.masterDegree.nonExistentMasterDegreeThesis");
@@ -62,7 +55,7 @@ public class ChangeMasterDegreeProof extends Service {
         }
 
         Person person = Person.readPersonByUsername(userView.getUtilizador());
-        Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
+        Employee employee = person.getEmployee();
 
         List<Teacher> teacherJuries = (List<Teacher>) Teacher.readByNumbers(
                 teacherJuriesNumbers);
