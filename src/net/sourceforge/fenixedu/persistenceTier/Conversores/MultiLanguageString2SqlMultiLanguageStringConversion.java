@@ -19,6 +19,9 @@ public class MultiLanguageString2SqlMultiLanguageStringConversion implements Fie
 		if (source instanceof String) {
 			String src = (String) source;
 
+			if(src == null || src.equals("")){
+	        	return null;
+	        }
 			final String[] MLSFromSql = src.split("\001");
 
 			if (MLSFromSql != null) {
