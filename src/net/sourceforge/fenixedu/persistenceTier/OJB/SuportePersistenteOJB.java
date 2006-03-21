@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVers
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
@@ -914,37 +913,16 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new PublicationOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationType()
-	 */
 	public IPersistentPublicationType getIPersistentPublicationType()
 	{
 		return new PublicationTypeOJB();
 	}
 
-	// Nuno Correia & Ricardo Rodrigues
-	public IPersistentPersonalDataUseInquiryAnswers getIPersistentPersonalDataUseInquiryAnswers()
-	{
-		return new PersonalDataUseInquiryAnswersOJB();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationAttribute()
-	 */
 	public IPersistentPublicationAttribute getIPersistentPublicationAttribute()
 	{
 		return new PublicationAttributeOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationFormat()
-	 */
 	public IPersistentPublicationFormat getIPersistentPublicationFormat()
 	{
 		return new PublicationFormatOJB();

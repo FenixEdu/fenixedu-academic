@@ -290,10 +290,6 @@ public interface ISuportePersistente
 
 	public IPersistentPeriod getIPersistentPeriod();
 
-	// Nuno Correia & Ricardo Rodrigues
-	public IPersistentPersonalDataUseInquiryAnswers getIPersistentPersonalDataUseInquiryAnswers();
-
-	// TJBF & PFON
 	public IPersistentPublication getIPersistentPublication();
 
 	public IPersistentPublicationType getIPersistentPublicationType();
