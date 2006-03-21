@@ -13,6 +13,15 @@
     <definition name="projects.projectsManagement" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/projectsManagement.jsp"></put>
     </definition>
+    <definition name="projects.searchProject" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/searchProject.jsp"></put>
+    </definition>
+    <definition name="projects.selectProject" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/searchProject.jsp"></put>
+    </definition>
+    <definition name="projects.editProject" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/createProject.jsp"></put>
+    </definition>
     <definition name="projects.createProject" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/createProject.jsp"></put>
     </definition>

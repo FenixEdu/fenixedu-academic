@@ -25,16 +25,15 @@ public class MultiLanguageString {
         return getContent(Language.getDefaultLanguage());
     }
 	
+    public void setContent(String text) {
+        setContent(Language.getDefaultLanguage(), text);
+    }
 	public String getContent(Language language) {
 		return contentsMap.get(language);
 	}
 
-	public String addContent(Language language, String content) {
-		return contentsMap.put(language, content);
-	}
-
-	public String editContent(Language language, String content) {
-		return contentsMap.put(language, content);
+	public void setContent(Language language, String content) {
+		contentsMap.put(language, content);
 	}
 
 	public String removeContent(Language language) {

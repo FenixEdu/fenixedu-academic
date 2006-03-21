@@ -27,7 +27,7 @@
 			</fr:layout>
 		</fr:view>
 		
-	<html:link page="/projects/createProject.do"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.createProject" /></html:link>
+	<html:link page="/projects/createProject.do?method=prepareSearchProjectTitle"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.createProject" /></html:link>
 </logic:present>
 		
 <br/>

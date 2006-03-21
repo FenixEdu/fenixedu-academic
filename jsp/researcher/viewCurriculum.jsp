@@ -111,7 +111,7 @@
 		<fr:view name="UserView" property="person.personAuthorships">
 			<fr:layout>
 				<fr:property name="eachLayout" value="values-comma"/>
-				<fr:property name="eachSchema" value="authorship.publication"/>
+				<fr:property name="eachSchema" value="authorship.result"/>
 			</fr:layout>
 		</fr:view>
 		

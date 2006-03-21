@@ -7,6 +7,11 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">		
+		<form-bean name="createProjectForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="searchedProjectTitle" type="java.lang.String"/>
+		</form-bean>
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -48,7 +53,15 @@
 		    <forward name="show" path="domain.view"/>
 		</action>
 		
-		<action path="/projects/createProject" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+		<action path="/projects/createProject"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.CreateProjectDispatchAction"
+				name="createProjectForm"
+				scope="request"
+				parameter="method">
+			<forward name="SearchProject" path="projects.searchProject"/>
+			<forward name="SelectProject" path="projects.searchProject"/>
+			<forward name="ProjectSelected" path="projects.editProject"/>
+			<forward name="CreateProject" path="projects.createProject"/>
 		    <forward name="Success" path="projects.createProject"/>
 		</action>
 		

@@ -77,3 +77,4 @@ build.properties.iseg
 casosUsoMailingLists.pdf
 casosUsoMailingLists.sxw
 build_fenix_ist.properties
+addRootDomainObjectKeys.sql

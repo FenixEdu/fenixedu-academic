@@ -27,7 +27,7 @@ public class MultiLanguageString2SqlMultiLanguageStringConversion implements Fie
                 final int pos = src.indexOf(':');
                 final int lenght = Integer.parseInt(src.substring(i + 2, pos));
                 final String content = src.substring(pos+1, pos + lenght+1);
-                multiLanguageString.addContent(Language.valueOf(language), content);
+                multiLanguageString.setContent(Language.valueOf(language), content);
                 i = pos + lenght+1;
             }
             return multiLanguageString;

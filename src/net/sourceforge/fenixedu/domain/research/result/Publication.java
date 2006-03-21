@@ -85,12 +85,12 @@ public class Publication extends Publication_Base {
     	if (description == null)
     	{
     		description = new MultiLanguageString();
-    	   	description.addContent(Language.pt, observation);
+    	   	description.setContent(Language.pt, observation);
     	   	setDescription(description);
     	}
     	else
     	{
-    		description.addContent(Language.pt, observation);
+    		description.setContent(Language.pt, observation);
     	}
     }
     public String getObservation()
@@ -113,12 +113,12 @@ public class Publication extends Publication_Base {
     	if (title == null)
     	{
     		title = new MultiLanguageString();
-    		title.addContent(Language.pt, titlePt);
+    		title.setContent(Language.pt, titlePt);
       		setTitle(title);
     	}
     	else
     	{
-    		title.addContent(Language.pt, titlePt);
+    		title.setContent(Language.pt, titlePt);
     	}
     }
     public String getTitlePt()

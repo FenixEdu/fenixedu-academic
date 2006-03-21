@@ -51,8 +51,13 @@ public class HtmlTextArea extends HtmlSimpleValueComponent {
         if (isDisabled()) {
             tag.setAttribute("disabled", "disabled");
         }
-        
-        tag.setText(getValue());
+
+        if (getValue() != null) {
+            tag.setText(getValue());
+        }
+        else {
+            tag.setText("");
+        }
         
         return tag;
     }
