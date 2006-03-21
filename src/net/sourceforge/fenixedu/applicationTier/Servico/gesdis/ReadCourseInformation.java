@@ -56,7 +56,6 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -86,9 +85,7 @@ public class ReadCourseInformation extends Service {
 
         infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
 
-        IPersistentEvaluationMethod persistentEvaluationMethod = persistentSupport.getIPersistentEvaluationMethod();
-        EvaluationMethod evaluationMethod = persistentEvaluationMethod
-                .readByIdExecutionCourse(executionCourse.getIdInternal());
+        final EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
         if (evaluationMethod == null) {
             InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
             infoEvaluationMethod.setInfoExecutionCourse(infoExecutionCourse);

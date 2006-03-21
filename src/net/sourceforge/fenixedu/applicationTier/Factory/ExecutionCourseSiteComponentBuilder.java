@@ -71,7 +71,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -434,8 +433,6 @@ public class ExecutionCourseSiteComponentBuilder {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		List infoLessonList = null;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 
 		List aulas = new ArrayList();
@@ -534,17 +531,10 @@ public class ExecutionCourseSiteComponentBuilder {
 	private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, Site site)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		ExecutionCourse executionCourse = site.getExecutionCourse();
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		IPersistentEvaluationMethod persistentEvaluationMethod = persistentSupport.getIPersistentEvaluationMethod();
-		EvaluationMethod evaluationMethod = persistentEvaluationMethod
-				.readByIdExecutionCourse(executionCourse.getIdInternal());
+        final EvaluationMethod evaluationMethod = site.getExecutionCourse().getEvaluationMethod();
 		if (evaluationMethod != null) {
 			component = copyFromDomain(evaluationMethod);
 		}
-
 		return component;
 	}
 

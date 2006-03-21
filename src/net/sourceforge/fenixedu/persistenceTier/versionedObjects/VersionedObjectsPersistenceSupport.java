@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -164,7 +163,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEq
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEvaluationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EquivalentEnrolmentForEnrolmentEquivalenceVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationMethodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
@@ -298,16 +296,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     public IPersistentPublicationsNumber getIPersistentPublicationsNumber() {
         return new PublicationsNumberVO();
     }
-
-    public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
-        return new EvaluationMethodVO();
-    }
-   
-    /*
-    public IPersistentWrittenEvaluationCurricularCourseScope getIPersistentWrittenEvaluationCurricularCourseScope() {
-        return new WrittenEvaluationCurricularCourseScopeVO();
-    }
-*/
 
     public IPersistentExam getIPersistentExam() {
         return new ExamVO();

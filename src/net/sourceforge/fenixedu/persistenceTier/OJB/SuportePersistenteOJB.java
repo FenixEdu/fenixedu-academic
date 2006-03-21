@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -590,11 +589,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentExternalPerson getIPersistentExternalPerson()
 	{
 		return new ExternalPersonOJB();
-	}
-
-	public IPersistentEvaluationMethod getIPersistentEvaluationMethod()
-	{
-		return new EvaluationMethodOJB();
 	}
 
 	public IPersistentCoordinator getIPersistentCoordinator()

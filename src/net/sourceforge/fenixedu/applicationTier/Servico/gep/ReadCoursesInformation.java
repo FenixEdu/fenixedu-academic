@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -134,9 +133,7 @@ public class ReadCoursesInformation extends Service {
                 .newInfoFromDomain(executionCourse);
         infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
 
-        IPersistentEvaluationMethod persistentEvaluationMethod = persistentSupport.getIPersistentEvaluationMethod();
-        EvaluationMethod evaluationMethod = persistentEvaluationMethod
-                .readByIdExecutionCourse(executionCourse.getIdInternal());
+        final EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
         if (evaluationMethod == null) {
             InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
             infoEvaluationMethod.setInfoExecutionCourse(infoExecutionCourse);
