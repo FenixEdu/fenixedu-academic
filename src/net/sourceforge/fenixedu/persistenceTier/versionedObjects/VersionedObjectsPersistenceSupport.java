@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInSpecificScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
@@ -134,7 +133,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingList
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CoordinatorVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseGroupVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseScopeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseVO;
@@ -690,10 +688,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentTestQuestion getIPersistentTestQuestion() {
         return new TestQuestionVO();
-    }
-
-    public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence() {
-        return new CurricularCourseEquivalenceVO();
     }
 
     public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope() {
