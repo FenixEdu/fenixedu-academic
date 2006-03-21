@@ -13,25 +13,18 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerSalas extends Service {
 
 	public Object run() throws ExcepcaoPersistencia {
-		List salas = null;
-		List infoSalas = null;
-
-		salas = persistentSupport.getISalaPersistente().readAll();
-
-		Iterator iterator = salas.iterator();
-		infoSalas = new ArrayList();
-		while (iterator.hasNext()) {
-			OldRoom elem = (OldRoom) iterator.next();
-			infoSalas.add(new InfoRoom(elem.getNome(), elem.getBuilding().getName(), elem.getPiso(),
-					elem.getTipo(), elem.getCapacidadeNormal(), elem.getCapacidadeExame()));
+		List infoSalas = new ArrayList();
+		for (final OldRoom oldRoom : RootDomainObject.getInstance().getOldRoomsSet()) {
+			infoSalas.add(new InfoRoom(oldRoom.getNome(), oldRoom.getBuilding().getName(), oldRoom.getPiso(),
+					oldRoom.getTipo(), oldRoom.getCapacidadeNormal(), oldRoom.getCapacidadeExame()));
 		}
-
 		return infoSalas;
 	}
 

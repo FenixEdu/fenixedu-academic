@@ -22,11 +22,11 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -34,8 +34,6 @@ public class PrepareInsertSummary extends Service {
 
     public SiteView run(Integer executionCourseId, String userLogged) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
@@ -69,7 +67,7 @@ public class PrepareInsertSummary extends Service {
             }
         }
 
-        final List<OldRoom> rooms = persistentRoom.readAll();
+        final List<OldRoom> rooms = RootDomainObject.getInstance().getOldRooms();
         final List<InfoRoom> infoRooms = new ArrayList<InfoRoom>(rooms.size());
 
         for (final OldRoom room : rooms) {

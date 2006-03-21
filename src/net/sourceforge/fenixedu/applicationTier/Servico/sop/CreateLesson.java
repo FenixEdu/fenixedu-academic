@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 /**
- * Serviço CreateLesson.
+ * Serviï¿½o CreateLesson.
  * 
  * @author Luis Cruz & Sara Ribeiro
  */
@@ -63,7 +63,7 @@ public class CreateLesson extends Service {
                     roomOccupation.setWeekOfQuinzenalStart(infoLesson.getInfoRoomOccupation()
                             .getWeekOfQuinzenalStart());
 
-                    final OldRoom sala = persistentSupport.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
+                    final OldRoom sala = OldRoom.findOldRoomByName(infoLesson.getInfoSala().getNome());
                     roomOccupation.setRoom(sala);
 
                     final OccupationPeriod period = (OccupationPeriod) persistentObject.readByOID(OccupationPeriod.class,
@@ -94,7 +94,7 @@ public class CreateLesson extends Service {
 
     private boolean validNoInterceptingLesson(InfoRoomOccupation infoRoomOccupation)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final OldRoom room = (OldRoom) persistentSupport.getISalaPersistente().readByName(infoRoomOccupation.getInfoRoom().getNome());
+        final OldRoom room = OldRoom.findOldRoomByName(infoRoomOccupation.getInfoRoom().getNome());
         final List<RoomOccupation> roomOccupations = room.getRoomOccupations();
 
         for (final RoomOccupation roomOccupation : roomOccupations) {

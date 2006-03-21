@@ -18,11 +18,11 @@ public class EditarSala extends Service {
 	public void run(RoomKey salaAntiga, InfoRoom salaNova) throws ExistingServiceException,
 			ExcepcaoPersistencia {
 
-        final OldRoom room = persistentSupport.getISalaPersistente().readByName(salaAntiga.getNomeSala());
+        final OldRoom room = OldRoom.findOldRoomByName(salaAntiga.getNomeSala());
 		if (room != null) {
 
 			if (!room.getNome().equals(salaNova.getNome())) {
-				OldRoom roomWithSameName = persistentSupport.getISalaPersistente().readByName(salaNova.getNome());
+				OldRoom roomWithSameName = OldRoom.findOldRoomByName(salaNova.getNome());
 				if (roomWithSameName != null) {
 					throw new ExistingServiceException();
 				}

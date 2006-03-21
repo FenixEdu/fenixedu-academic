@@ -2,15 +2,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop.exams;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.TipoSala;
 
 /**
  * @author Ana e Ricardo
@@ -20,14 +22,13 @@ public class ReadAvailableRoomsForExam extends Service {
     public List run(Calendar periodStart, Calendar periodEnd, Calendar startTime, Calendar endTime,
             DiaSemana dayOfWeek, Integer roomOccupationToRemoveId, Integer normalCapacity,
             Integer frequency, Integer weekOfStart, Boolean withLabs) throws ExcepcaoPersistencia {
-        final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-        final List<OldRoom> rooms;
+        final Collection<OldRoom> rooms;
         if (normalCapacity != null) {
-            rooms = persistentRoom.readByNormalCapacity(normalCapacity);
+            rooms = OldRoom.findOldRoomsWithNormalCapacity(normalCapacity);
         } else if (withLabs.booleanValue()) {
-            rooms = persistentRoom.readAll();
+            rooms = RootDomainObject.getInstance().getOldRooms();
         } else {
-            rooms = persistentRoom.readForRoomReservation();
+            rooms = OldRoom.findOldRoomsOfAnyOtherType(new TipoSala(TipoSala.LABORATORIO));
         }
 
         final List<InfoRoom> availableInfoRooms = new ArrayList<InfoRoom>();

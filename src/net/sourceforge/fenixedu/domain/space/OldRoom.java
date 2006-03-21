@@ -2,7 +2,10 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -10,7 +13,9 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.TipoSala;
 
 public class OldRoom extends OldRoom_Base {
 
@@ -73,4 +78,78 @@ public class OldRoom extends OldRoom_Base {
         }
         return lessons;
     }
+
+    public static OldRoom findOldRoomByName(final String name) {
+    	for (final OldRoom oldRoom : RootDomainObject.getInstance().getOldRooms()) {
+    		if (oldRoom.getNome().equalsIgnoreCase(name)) {
+    			return oldRoom;
+    		}
+    	}
+    	return null;
+    }
+
+    public static Set<OldRoom> findOldRoomsBySpecifiedArguments(
+    		String nome, String edificio, Integer piso, Integer tipo, Integer capacidadeNormal, Integer capacidadeExame)
+            throws ExcepcaoPersistencia {        
+        final Set<OldRoom> oldRooms = RootDomainObject.getInstance().getOldRoomsSet();
+        final Set<OldRoom> result = new HashSet<OldRoom>();
+        for (OldRoom room : oldRooms) {
+            boolean isAcceptable = true;
+            if (nome != null && !room.getNome().equalsIgnoreCase(nome)) {
+                continue;
+            }
+            if (edificio != null && !room.getBuilding().getName().equalsIgnoreCase(edificio)) {
+                continue;
+            }
+            if (piso != null && !room.getPiso().equals(piso)) {
+                continue;
+            }
+            if (tipo != null && !room.getTipo().getTipo().equals(tipo)) {
+                continue;
+            }
+            if (capacidadeNormal != null
+                    && room.getCapacidadeNormal().intValue() < capacidadeNormal.intValue()) {
+                continue;
+            }
+            if (capacidadeExame != null
+                    && room.getCapacidadeExame().intValue() < capacidadeExame.intValue()) {
+                continue;
+            }
+            if (isAcceptable) {
+                result.add(room);
+            }
+        }
+        return result;
+    }
+
+    public static Set<OldRoom> findOldRoomsOfAnyOtherType(final TipoSala tipoSala) {
+    	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
+    	for (final OldRoom oldRoom : RootDomainObject.getInstance().getOldRooms()) {
+    		if (!oldRoom.getTipo().equals(tipoSala)) {
+    			oldRooms.add(oldRoom);
+    		}
+    	}
+    	return oldRooms;
+    }
+
+    public static Set<OldRoom> findOldRoomsByBuildingNames(final Collection<String> buildingNames) {
+    	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
+    	for (final OldRoom oldRoom : RootDomainObject.getInstance().getOldRooms()) {
+    		if (buildingNames.contains(oldRoom.getBuilding().getName())) {
+    			oldRooms.add(oldRoom);
+    		}
+    	}
+    	return oldRooms;
+    }
+
+    public static Set<OldRoom> findOldRoomsWithNormalCapacity(final Integer normalCapacity) {
+    	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
+    	for (final OldRoom oldRoom : RootDomainObject.getInstance().getOldRooms()) {
+    		if (oldRoom.getCapacidadeNormal().intValue() >= normalCapacity.intValue()) {
+    			oldRooms.add(oldRoom);
+    		}
+    	}
+    	return oldRooms;
+    }
+
 }

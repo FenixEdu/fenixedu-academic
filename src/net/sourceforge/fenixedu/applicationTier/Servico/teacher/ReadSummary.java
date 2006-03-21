@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -99,8 +98,7 @@ public class ReadSummary extends Service {
             }
         }
 
-        ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-        List<OldRoom> rooms = persistentRoom.readAll();
+        List<OldRoom> rooms = RootDomainObject.getInstance().getOldRooms();
         List<InfoRoom> infoRooms = new ArrayList(rooms.size());
         for (final OldRoom room : rooms) {
             final InfoRoom infoRoom = new InfoRoom();

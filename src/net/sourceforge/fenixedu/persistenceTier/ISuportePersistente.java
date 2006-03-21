@@ -105,8 +105,6 @@ public interface ISuportePersistente
 
 	public Integer getNumberCachedItems();
 
-	public ISalaPersistente getISalaPersistente();
-
 	public IFrequentaPersistente getIFrequentaPersistente();
 
 	public IPersistentCurricularCourse getIPersistentCurricularCourse();

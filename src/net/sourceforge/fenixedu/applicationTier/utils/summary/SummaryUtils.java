@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
@@ -132,9 +131,7 @@ public class SummaryUtils {
                             infoSummary.getInfoRoom().getIdInternal())) {
                 room = summary.getRoom();
             } else {
-                final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-                room = (OldRoom) persistentRoom.readByOID(OldRoom.class, infoSummary.getInfoRoom()
-                        .getIdInternal());
+                room = RootDomainObject.getInstance().readOldRoomByOID(infoSummary.getInfoRoom().getIdInternal());
             }
         } else {
             Lesson lesson = findlesson(shift, infoSummary);

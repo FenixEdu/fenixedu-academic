@@ -14,11 +14,10 @@ import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 /**
- * @author João Mota
- * @author Fernanda Quitério
+ * @author Joï¿½o Mota
+ * @author Fernanda Quitï¿½rio
  * 
  * 
  */
@@ -33,17 +32,8 @@ public class RoomSiteComponentServiceByExecutionPeriodID extends Service {
             ExecutionPeriod executionPeriod) throws Exception {
         SiteView siteView = null;
 
-        ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-        // IPersistentExecutionPeriod persistentExecutionPeriod =
-        // persistentSupport.getIPersistentExecutionPeriod();
 
-        OldRoom room = persistentRoom.readByName(roomKey.getNomeSala());
-        // ExecutionPeriod executionPeriod = (ExecutionPeriod)
-        // persistentExecutionPeriod
-        // .readByOID(ExecutionPeriod.class, infoExecutionPeriodCode);
-        // if (executionPeriod == null) {
-        // throw new NonExistingServiceException();
-        // }
+        OldRoom room = OldRoom.findOldRoomByName(roomKey.getNomeSala());
         RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
         bodyComponent = componentBuilder.getComponent(bodyComponent, day, room, executionPeriod);
 

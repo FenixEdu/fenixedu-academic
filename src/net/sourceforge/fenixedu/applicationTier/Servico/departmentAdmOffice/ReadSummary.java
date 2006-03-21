@@ -28,13 +28,13 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -92,8 +92,7 @@ public class ReadSummary extends Service {
             }
         }
 
-        ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-        List rooms = persistentRoom.readAll();
+        List rooms = RootDomainObject.getInstance().getOldRooms();
         List infoRooms = new ArrayList();
         if (rooms != null && rooms.size() > 0) {
             infoRooms = (List) CollectionUtils.collect(rooms, new Transformer() {

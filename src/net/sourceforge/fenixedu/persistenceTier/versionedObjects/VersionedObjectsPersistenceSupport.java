@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
@@ -156,7 +155,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Reimburseme
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SalaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SecretaryEnrolmentStudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SentSmsVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
@@ -348,10 +346,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IFrequentaPersistente getIFrequentaPersistente() {
         return null;
-    }
-
-    public ISalaPersistente getISalaPersistente() {
-        return new SalaVO();
     }
 
     public void confirmarTransaccao() throws ExcepcaoPersistencia {

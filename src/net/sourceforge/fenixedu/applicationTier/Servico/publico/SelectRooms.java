@@ -14,6 +14,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
@@ -23,11 +24,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class SelectRooms extends Service {
 
 	public Object run(InfoRoom infoRoom) throws ExcepcaoPersistencia {
-		List salas = null;
-
 		Integer tipo = infoRoom.getTipo() != null ? infoRoom.getTipo().getTipo() : null;
 
-		salas = persistentSupport.getISalaPersistente().readSalas(infoRoom.getNome(), infoRoom.getEdificio(),
+		Set<OldRoom> salas = OldRoom.findOldRoomsBySpecifiedArguments(infoRoom.getNome(), infoRoom.getEdificio(),
 				infoRoom.getPiso(), tipo, infoRoom.getCapacidadeNormal(), infoRoom.getCapacidadeExame());
 
 		if (salas == null)

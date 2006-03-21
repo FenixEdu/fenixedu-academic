@@ -7,7 +7,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 /**
- * Serviço CriarSala.
+ * Serviï¿½o CriarSala.
  * 
  * @author tfc130
  * @author Pedro Santos e Rita Carvalho
@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -31,9 +30,7 @@ import org.apache.commons.collections.Predicate;
 public class CriarSala extends Service {
 
     public Object run(InfoRoom infoSala) throws FenixServiceException, ExcepcaoPersistencia {
-        final ISalaPersistente roomDAO = persistentSupport.getISalaPersistente();
-
-        final OldRoom existingRoom = roomDAO.readByName(infoSala.getNome());
+        final OldRoom existingRoom = OldRoom.findOldRoomByName(infoSala.getNome());
 
         if (existingRoom != null) {
             throw new ExistingServiceException("Duplicate Entry: " + infoSala.getNome());
@@ -41,7 +38,7 @@ public class CriarSala extends Service {
 
         final OldBuilding building = findBuilding(persistentSupport, infoSala.getEdificio());
 
-        final OldRoom room = writeRoom(roomDAO, infoSala, building);
+        final OldRoom room = writeRoom(infoSala, building);
 
         return InfoRoom.newInfoFromDomain(room);
 
@@ -58,7 +55,7 @@ public class CriarSala extends Service {
         });
     }
 
-    protected OldRoom writeRoom(final ISalaPersistente roomDAO, final InfoRoom infoRoom, final OldBuilding building)
+    protected OldRoom writeRoom(final InfoRoom infoRoom, final OldBuilding building)
             throws ExcepcaoPersistencia {
         final OldRoom room = DomainFactory.makeOldRoom();
         room.setCapacidadeExame(infoRoom.getCapacidadeExame());

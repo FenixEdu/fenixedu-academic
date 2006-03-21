@@ -7788,3 +7788,10 @@ relation RootDomainObjectResearchInterest {
 		multiplicity *;
 	}
 }
+
+relation RootDomainObjectOldRoom {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.space.OldRoom playsRole oldRooms {
+		multiplicity *;
+	}
+}

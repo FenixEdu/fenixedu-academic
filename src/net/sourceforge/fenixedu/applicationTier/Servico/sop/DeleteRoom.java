@@ -6,19 +6,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 public class DeleteRoom extends Service {
 
 	public void run(RoomKey keySala) throws FenixServiceException, ExcepcaoPersistencia {
-		final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-
-		final OldRoom roomToDelete = (OldRoom) persistentRoom.readByName(keySala.getNomeSala());
+		final OldRoom roomToDelete = OldRoom.findOldRoomByName(keySala.getNomeSala());
 		if (roomToDelete == null)
 			throw new InvalidArgumentsServiceException();
-
 		roomToDelete.delete();
-		persistentRoom.deleteByOID(OldRoom.class, roomToDelete.getIdInternal());
 	}
 
 }

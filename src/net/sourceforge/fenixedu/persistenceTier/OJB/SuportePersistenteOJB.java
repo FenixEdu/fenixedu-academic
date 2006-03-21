@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CandidacyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CaseStudyChoiceOJB;
@@ -306,11 +305,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public void cancelarTransaccao()
 	{
 		Transaction.abort();
-	}
-
-	public ISalaPersistente getISalaPersistente()
-	{
-		return new SalaOJB();
 	}
 
 	public IFrequentaPersistente getIFrequentaPersistente()

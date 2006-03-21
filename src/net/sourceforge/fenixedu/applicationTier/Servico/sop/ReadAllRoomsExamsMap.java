@@ -12,8 +12,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -23,13 +25,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadAllRoomsExamsMap extends Service {
 
@@ -57,12 +56,8 @@ public class ReadAllRoomsExamsMap extends Service {
         endSeason2.set(Calendar.SECOND, 0);
         endSeason2.set(Calendar.MILLISECOND, 0);
 
-        List rooms = persistentSupport.getISalaPersistente().readForRoomReservation();
-
-        for (int i = 0; i < rooms.size(); i++) {
-
-            OldRoom room = (OldRoom) rooms.get(i);
-
+        Collection<OldRoom> rooms = OldRoom.findOldRoomsOfAnyOtherType(new TipoSala(TipoSala.LABORATORIO));
+        for (final OldRoom room : rooms) {
             InfoRoomExamsMap infoExamsMap = new InfoRoomExamsMap();
 
             // Set Exam Season info

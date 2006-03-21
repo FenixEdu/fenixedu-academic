@@ -12,6 +12,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -30,7 +31,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 public class ReadPavillionsRoomsLessons extends Service {
 
@@ -39,8 +39,7 @@ public class ReadPavillionsRoomsLessons extends Service {
     	final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
     			.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
-        final ISalaPersistente roomDAO = persistentSupport.getISalaPersistente();
-        final List<OldRoom> rooms = roomDAO.readByPavillions(pavillions);
+        final Set<OldRoom> rooms = OldRoom.findOldRoomsByBuildingNames(pavillions);
 
         final List infoViewRoomScheduleList = new ArrayList();
         for (final OldRoom room : rooms) {
