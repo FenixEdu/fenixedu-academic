@@ -1,21 +1,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import javax.mail.Message;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -39,45 +32,22 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranc
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
-/**
- * 
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- * 
- */
 public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
-    public GenerateOutgoingSibsPaymentFileByExecutionYearID() {
-
-    }
-
-    /**
-     * 
-     * @param executionYear
-     * @throws FenixServiceException
-     * @throws ExcepcaoPersistencia
-     */
-    // TODO: needs full rewrite and simplification...
     public byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException,
             ExcepcaoPersistencia {
 
         StringBuilder outgoingSibsPaymentFile = new StringBuilder();
 
-        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class,
-                executionYearID);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-        IPersistentGratuitySituation gratuitySituationDAO = persistentSupport
-                .getIPersistentGratuitySituation();
-
-        IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
-                .getIPersistentInsuranceTransaction();
-
-        InsuranceValue insuranceValue = persistentSupport.getIPersistentInsuranceValue()
-                .readByExecutionYear(executionYear.getIdInternal());
-
+        InsuranceValue insuranceValue = executionYear.getInsuranceValue();
         if (insuranceValue == null) {
             throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");
         }
+
+        IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
+        IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport.getIPersistentInsuranceTransaction();
 
         Date insurancePaymentStartDate = Calendar.getInstance().getTime();
         Date insurancePaymentEndDate = paymentEndDate;
@@ -579,4 +549,5 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
         return sibsPaymentCode + "";
 
     }
+
 }

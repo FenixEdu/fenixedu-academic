@@ -1,17 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -38,13 +33,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
-
-/**
- * 
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- * 
- */
 
 public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
@@ -224,30 +212,16 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
     }
 
-    /**
-     * 
-     * @param executionYear
-     * @throws FenixServiceException
-     * @throws ExcepcaoPersistencia
-     */
-    // TODO: needs full rewrite and simplification...
     public byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException,
             ExcepcaoPersistencia {
-        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class,
-                executionYearID);
-
-        IPersistentGratuitySituation gratuitySituationDAO = persistentSupport
-                .getIPersistentGratuitySituation();
-
-        IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
-                .getIPersistentInsuranceTransaction();
-
-        InsuranceValue insuranceValue = persistentSupport.getIPersistentInsuranceValue()
-                .readByExecutionYear(executionYear.getIdInternal());
-
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+        InsuranceValue insuranceValue = executionYear.getInsuranceValue();
         if (insuranceValue == null) {
             throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");
         }
+
+        IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
+        IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport.getIPersistentInsuranceTransaction();
 
         // Date insurancePaymentEndDate = Calendar.getInstance().getTime();
 
@@ -805,22 +779,22 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
             // Student address
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
-                    .getPerson().getMorada()
+                    .getPerson().getAddress()
                     + DATA_SEPARATOR);
 
             // Student localidade
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
-                    .getPerson().getLocalidade()
+                    .getPerson().getArea()
                     + DATA_SEPARATOR);
 
             // Student cod. postal
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
-                    .getPerson().getCodigoPostal()
+                    .getPerson().getAreaCode()
                     + DATA_SEPARATOR);
 
             // Student localidade - cod. postal
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
-                    .getPerson().getLocalidadeCodigoPostal()
+                    .getPerson().getAreaOfAreaCode()
                     + DATA_SEPARATOR);
 
             // Master degree name

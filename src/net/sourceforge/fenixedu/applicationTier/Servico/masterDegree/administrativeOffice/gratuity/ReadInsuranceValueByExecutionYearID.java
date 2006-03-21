@@ -7,28 +7,16 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * 
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- * 
- */
 public class ReadInsuranceValueByExecutionYearID extends Service {
 
 	public InfoInsuranceValue run(Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
-
-		InfoInsuranceValue infoInsuranceValue = null;
-
-		ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-				ExecutionYear.class, executionYearID);
-
-		InsuranceValue insuranceValue = persistentSupport.getIPersistentInsuranceValue().readByExecutionYear(
-				executionYear.getIdInternal());
-
+		ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+		InsuranceValue insuranceValue = executionYear.getInsuranceValue();
 		if (insuranceValue != null) {
-			infoInsuranceValue = InfoInsuranceValue.newInfoFromDomain(insuranceValue);
+			return InfoInsuranceValue.newInfoFromDomain(insuranceValue);
 		}
 
-		return infoInsuranceValue;
+		return null;
 	}
+
 }

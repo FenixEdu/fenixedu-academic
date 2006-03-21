@@ -123,10 +123,7 @@ public class ProcessSibsPaymentFile extends Service {
             }
 
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
-
-                InsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear
-                        .getIdInternal());
-
+                InsuranceValue insuranceValue = executionYear.getInsuranceValue();
                 List insuranceTransactionList = insuranceTransactionDAO
                         .readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(),
                                 student.getIdInternal());
