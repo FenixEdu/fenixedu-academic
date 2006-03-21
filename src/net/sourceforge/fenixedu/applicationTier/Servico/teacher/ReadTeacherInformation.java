@@ -456,7 +456,7 @@ public class ReadTeacherInformation extends Service {
             Publication publication = publicationTeacher.getPublication();
 
             InfoPublication infoPublication = InfoPublication.newInfoFromDomain(publication);
-            infoPublication.setPublicationString(publicationTeacher.getPublication().toString());
+            infoPublication.setPublicationString(publicationTeacher.getPublication().toResume());
             infoPublications.add(infoPublication);
         }
 
