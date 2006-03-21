@@ -306,8 +306,6 @@ public interface ISuportePersistente
 
 	public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry();
 
-	public IPersistentResidenceCandidacies getIPersistentResidenceCandidacies();
-
 	public IPersistentGratuityTransaction getIPersistentGratuityTransaction();
 
 	public IPersistentObject getIPersistentObject();

@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
@@ -969,11 +968,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentGratuityTransaction getIPersistentGratuityTransaction()
 	{
 		return new GratuityTransactionOJB();
-	}
-
-	public IPersistentResidenceCandidacies getIPersistentResidenceCandidacies()
-	{
-		return new ResidenceCandidaciesOJB();
 	}
 
 	public IPersistentReimbursementTransaction getIPersistentReimbursementTransaction()

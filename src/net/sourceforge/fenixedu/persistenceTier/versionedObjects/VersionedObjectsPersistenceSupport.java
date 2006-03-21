@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
@@ -402,10 +401,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentStudent getIPersistentStudent() {
         return new StudentVO();
-    }
-
-    public IPersistentResidenceCandidacies getIPersistentResidenceCandidacies() {
-        return null;
     }
 
     public IPersistentSibsPaymentFile getIPersistentSibsPaymentFile() {
