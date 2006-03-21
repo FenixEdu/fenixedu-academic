@@ -2,10 +2,6 @@ package net.sourceforge.fenixedu.domain.support;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-/**
- * @author Luis Cruz
- *  
- */
 public class FAQSection extends FAQSection_Base {
 
 	public FAQSection() {
@@ -13,4 +9,10 @@ public class FAQSection extends FAQSection_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
+    public void delete() {
+        for (;!getChildEntries().isEmpty();getChildEntries().get(0).delete());
+        for (;!getChildSections().isEmpty();getChildSections().get(0).delete());
+        super.deleteDomainObject();
+    }
+    
 }
