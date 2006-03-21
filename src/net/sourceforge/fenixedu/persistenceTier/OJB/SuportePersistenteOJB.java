@@ -63,7 +63,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -706,11 +705,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup()
 	{
 		return new CurricularCourseGroupOJB();
-	}
-
-	public IPersistentScientificArea getIPersistentScientificArea()
-	{
-		return new ScientificAreaOJB();
 	}
 
 	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)

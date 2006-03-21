@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
@@ -35,8 +35,6 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         this.studentCurricularPlan = studentCurricularPlan;
         this.executionPeriod = executionPeriod;
     }
-
-
 
     protected List specificAlgorithm(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
@@ -225,8 +223,8 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private void calculateNonClashingScientificAreas(StudentCurricularPlan studentCurricularPlan,
             HashMap creditsInScientificAreas, HashMap creditsInSpecializationAreaGroups,
             HashMap creditsInSecundaryAreaGroups, HashMap clashingGroups) throws ExcepcaoPersistencia {
+        
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentScientificArea scientificAreaDAO = persistentSuport.getIPersistentScientificArea();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
@@ -239,8 +237,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
                 Integer credits = (Integer) mapEntry.getValue();
                 Integer scientificAreaID = (Integer) mapEntry.getKey();
 
-                ScientificArea scientificArea = (ScientificArea) scientificAreaDAO.readByOID(
-                        ScientificArea.class, scientificAreaID);
+                ScientificArea scientificArea = RootDomainObject.getInstance().readScientificAreaByOID(scientificAreaID);
 
                 CurricularCourseGroup specializationGroup = curricularCourseGroupDAO
                         .readByBranchAndScientificAreaAndAreaType(studentCurricularPlan.getBranch().getIdInternal(),
