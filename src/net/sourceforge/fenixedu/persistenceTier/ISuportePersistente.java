@@ -229,8 +229,6 @@ public interface ISuportePersistente
 
 	public IPersistentCoordinator getIPersistentCoordinator();
 
-	public IPersistentDegreeInfo getIPersistentDegreeInfo();
-
 	public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation();
 
 	public IPersistentExternalActivity getIPersistentExternalActivity();

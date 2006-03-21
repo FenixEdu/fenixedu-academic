@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
@@ -138,7 +137,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularC
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurriculumVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoExecucaoVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEvaluationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
@@ -676,10 +674,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentOldPublication getIPersistentOldPublication() {
         return new OldPublicationVO();
-    }
-
-    public IPersistentDegreeInfo getIPersistentDegreeInfo() {
-        return new DegreeInfoVO();
     }
 
     public IPersistentEmployee getIPersistentEmployee() {

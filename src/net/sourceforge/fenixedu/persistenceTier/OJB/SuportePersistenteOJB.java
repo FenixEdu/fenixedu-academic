@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
@@ -498,11 +497,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new CoordinatorOJB();
 	}
 
-	public IPersistentDegreeInfo getIPersistentDegreeInfo()
-	{
-		return new DegreeInfoOJB();
-	}
-
 	public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation()
 	{
 		return new WeeklyOcupationOJB();
@@ -518,11 +512,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new ServiceProviderRegimeOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentShiftProfessorship()
-	 */
 	public IPersistentShiftProfessorship getIPersistentShiftProfessorship()
 	{
 		return new ShiftProfessorshipOJB();
