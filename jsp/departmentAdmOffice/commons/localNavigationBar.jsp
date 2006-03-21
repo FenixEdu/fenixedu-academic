@@ -83,4 +83,18 @@
 		</html:link>
 	</ul>
 	--%>
+<!--
+	<ul>
+		<li class="navheader">
+			<strong><bean:message key="title.final.degree.works"/></strong>
+		</li>
+	</ul>
+	<ul>
+       	<li>
+        	<html:link page="/manageFinalDegreeWork.do?method=showChooseExecutionDegreeFormForDepartment">
+				<bean:message key="link.manage.final.degree.works"/>
+			</html:link>
+		</li>
+	</ul>
+-->
 </logic:present>

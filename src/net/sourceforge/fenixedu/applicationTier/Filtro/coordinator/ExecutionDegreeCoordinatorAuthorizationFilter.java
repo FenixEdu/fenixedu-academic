@@ -4,36 +4,83 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  * 
  */
-public class ExecutionDegreeCoordinatorAuthorizationFilter extends DomainObjectAuthorizationFilter {
+public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
 
-    protected RoleType getRoleType() {
-        return RoleType.COORDINATOR;
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        final IUserView userView = getRemoteUser(request);
+        final Object[] arguments = getServiceCallArguments(request);
+        final Integer idInternal = (arguments[0] instanceof Integer) ? (Integer) arguments[0] : ((InfoObject)arguments[0]).getIdInternal();
+
+        if (userView == null || userView.getRoles() == null || !verifyCondition(userView, idInternal)) {
+            System.out.println("userview: " + userView);
+            System.out.println("verifyCondition: " + verifyCondition(userView, idInternal));
+            throw new NotAuthorizedFilterException();
+        }
+
+        if (((userView != null && userView.getRoles() != null && !verifyCondition(userView, idInternal)))
+                || (userView == null) || (userView.getRoles() == null)) {
+            throw new NotAuthorizedFilterException();
+        }
+
     }
 
-    protected boolean verifyCondition(IUserView id, Integer objectId) throws ExcepcaoPersistencia {
-        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-        
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, objectId);
+    public static boolean verifyCondition(IUserView id, Integer objectId) throws ExcepcaoPersistencia {
+        final Person person = id.getPerson();
+        if (person != null) {
+            final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(objectId);
+            if (person.getTeacher() != null && person.hasRole(RoleType.COORDINATOR)) {
+                final Teacher teacher = person.getTeacher();
+                for (final Coordinator coordinator : teacher.getCoordinators()) {
+                    if (executionDegree.getCoordinatorsListSet().contains(coordinator)) {
+                        return true;
+                    }
+                }
+            } else if (person.getEmployee() != null && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
+                final Employee employee = person.getEmployee();
+                final Department department = employee.getCurrentDepartmentWorkingPlace();
+                System.out.println("Department: " + department.getName());
+                for (final CompetenceCourse competenceCourse : department.getCompetenceCoursesSet()) {
+                    for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
+                        if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE) {
+                            System.out.println("curricular course: " + curricularCourse.getName());
+                            final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+                            System.out.println("degree curricular plan: " + degreeCurricularPlan.getName());
+                            if (degreeCurricularPlan.getExecutionDegreesSet().contains(executionDegree)) {
+                                System.out.println("found one.");
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-        Teacher coordinator = Teacher.readTeacherByUsername(id.getUtilizador());
-        List executionDegrees = persistentExecutionDegree.readByTeacher(coordinator.getIdInternal());
-
-        return executionDegrees.contains(executionDegree);
+        return false;
     }
+
 }

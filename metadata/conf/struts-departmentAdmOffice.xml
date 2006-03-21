@@ -162,7 +162,93 @@
             <form-property name="bySummaryType" type="java.lang.String"/>  
             <form-property name="anotherDateVisible" type="java.lang.String"/>            
         </form-bean>	
-		
+
+		<!-- FINAL DEGREE WORK  -->
+		<form-bean name="manageFinalDegreeWorksForm"
+				   type="org.apache.struts.validator.DynaValidatorForm"
+				   dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionDegreeID" type="java.lang.String"/>
+		</form-bean>
+
+		<form-bean name="finalDegreeWorkScheduleing" 
+				   type="org.apache.struts.validator.DynaValidatorForm" 
+				   dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionDegreeOID" type="java.lang.String"/>
+			<form-property name="startOfProposalPeriodDate" type="java.lang.String"/>
+			<form-property name="startOfProposalPeriodHour" type="java.lang.String"/>
+			<form-property name="endOfProposalPeriodDate" type="java.lang.String"/>
+			<form-property name="endOfProposalPeriodHour" type="java.lang.String"/>
+			<form-property name="selectedProposals" type="java.lang.String[]"/>
+			<form-property name="selectedGroupProposal" type="java.lang.String"/>
+			<form-property name="attributedByTeacher" type="java.lang.String[]"/>
+			<form-property name="attributions" type="java.lang.String[]"/>
+			<form-property name="otherExecutionDegreeID" type="java.lang.String"/>
+		</form-bean>
+
+		<form-bean name="finalDegreeWorkCandidacyPeriod" 
+				   type="org.apache.struts.validator.DynaValidatorForm" 
+				   dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionDegreeOID" type="java.lang.String"/>
+			<form-property name="startOfCandidacyPeriodDate" type="java.lang.String"/>
+			<form-property name="startOfCandidacyPeriodHour" type="java.lang.String"/>
+			<form-property name="endOfCandidacyPeriodDate" type="java.lang.String"/>
+			<form-property name="endOfCandidacyPeriodHour" type="java.lang.String"/>
+		</form-bean>
+
+		<form-bean name="finalDegreeWorkCandidacyRequirements" 
+				   type="org.apache.struts.validator.DynaValidatorForm" 
+				   dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionDegreeOID" type="java.lang.String"/>
+			<form-property name="minimumNumberOfCompletedCourses" type="java.lang.String"/>
+			<form-property name="minimumNumberOfStudents" type="java.lang.String"/>
+			<form-property name="maximumNumberOfStudents" type="java.lang.String"/>
+			<form-property name="maximumNumberOfProposalCandidaciesPerGroup" type="java.lang.String"/>
+		</form-bean>
+
+		<!-- SUBMIT FINAL WORK PROPOSAL -->
+		<form-bean name="finalDegreeWorkProposal"
+				   type="org.apache.struts.validator.DynaValidatorForm" 
+				   dynamic="true"
+				   >
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionDegreeOID" type="java.lang.String"/>
+			<form-property name="degree" type="java.lang.String"/>
+			<form-property name="idInternal" type="java.lang.String"/>
+			<form-property name="title" type="java.lang.String"/>
+			<form-property name="orientatorOID" type="java.lang.String"/>
+			<form-property name="coorientatorOID" type="java.lang.String"/>
+			<form-property name="responsibleCreditsPercentage" type="java.lang.String"/>
+			<form-property name="coResponsibleCreditsPercentage" type="java.lang.String"/>
+			<form-property name="framing" type="java.lang.String"/>
+			<form-property name="objectives" type="java.lang.String"/>
+			<form-property name="description" type="java.lang.String"/>
+			<form-property name="requirements" type="java.lang.String"/>
+			<form-property name="deliverable" type="java.lang.String"/>
+			<form-property name="url" type="java.lang.String"/>
+			<form-property name="branchList" type="java.lang.String[]" size="0"/>
+			<form-property name="minimumNumberOfGroupElements" type="java.lang.String"/>
+			<form-property name="maximumNumberOfGroupElements" type="java.lang.String"/>
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="observations" type="java.lang.String"/>
+			<form-property name="location" type="java.lang.String"/>
+			<form-property name="companyName" type="java.lang.String"/>
+			<form-property name="companyAdress" type="java.lang.String"/>
+			<form-property name="companionName" type="java.lang.String" />
+			<form-property name="companionMail" type="java.lang.String" />			
+			<form-property name="companionPhone" type="java.lang.String" />				
+			<form-property name="responsableTeacherName" type="java.lang.String"/>
+			<form-property name="responsableTeacherNumber" type="java.lang.String"/>
+			<form-property name="coResponsableTeacherName" type="java.lang.String"/>
+			<form-property name="coResponsableTeacherNumber" type="java.lang.String"/>
+			<form-property name="alteredField" type="java.lang.String" />
+			<form-property name="status" type="java.lang.String" />
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -821,7 +907,73 @@
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
        		parameter="method">
        		<forward name="show-report" path="view-curriculum-historic"/>
-       	</action>       
+       	</action>
+
+
+		<!-- Final Degree Work Manipulation -->
+		<action path="/manageFinalDegreeWorks"
+				type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ManageFinalDegreeWorksDA"
+				input="/manageFinalDegreeWorks.do?method=prepare&amp;page=0"
+				name="manageFinalDegreeWorksForm"
+				attribute="manageFinalDegreeWorksForm"
+				parameter="method"
+				scope="request"
+				>
+			<forward name="show-final-degree-works-managment-page" path="df.page.manageFinalDegreeWorks"/>
+		</action>
+
+		<action path="/manageFinalDegreeWork"
+				type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
+				input="/manageFinalDegreeWork.do?method=prepare&amp;page=0"
+				name="finalDegreeWorkScheduleing"
+				attribute="finalDegreeWorkScheduleing"
+				parameter="method"
+				scope="request"
+				validate="true"
+				>
+			<forward name="error" path="/indexCoordinator.jsp"/>
+			<forward name="show-choose-execution-degree-page" path="df.page.showFinalDegreeChooseExecutionDegree"/>
+			<forward name="show-final-degree-work-list" path="df.page.showFinalDegreeWorkList"/>
+			<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
+			<forward name="prepare-show-final-degree-work-proposal" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
+			<forward name="show-student-curricular-plan" path="/viewCurriculum.do?method=getStudentCP&amp;page=0"/>
+		</action>
+
+		<action path="/setFinalDegreeWorkCandidacyPeriod"
+				type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
+				input="/manageFinalDegreeWork.do?method=prepare&amp;page=0"
+				name="finalDegreeWorkCandidacyPeriod"
+				attribute="finalDegreeWorkCandidacyPeriod"
+				parameter="method"
+				scope="request"
+				validate="true"
+				>
+			<forward name="Sucess" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
+		</action>
+
+		<action path="/setFinalDegreeWorkCandidacyRequirements"
+				type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
+				input="/manageFinalDegreeWork.do?method=prepare&amp;page=0"
+				name="finalDegreeWorkCandidacyRequirements"
+				attribute="finalDegreeWorkCandidacyRequirements"
+				parameter="method"
+				scope="request"
+				validate="true"
+				>
+			<forward name="Sucess" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
+		</action>
+
+		<action path="/finalDegreeWorkProposal"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
+	    		parameter="method"
+		    	input="/finalDegreeWorkProposal.do?method=createNewFinalDegreeWorkProposal&amp;page=0"
+		    	name="finalDegreeWorkProposal" 
+	    		scope="request" 
+	    		validate="true">
+	    	<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
+			<forward name="show-final-degree-work-list" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
+		</action>
+
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>

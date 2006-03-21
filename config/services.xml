@@ -6404,7 +6404,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TeacherAuthorization" />
+			<chain name="TeacherOrDepartmentAdminOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -6422,7 +6422,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TeacherAuthorization" />
+			<chain name="TeacherOrDepartmentAdminOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -6431,7 +6431,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TeacherAuthorization" />
+			<chain name="TeacherOrDepartmentAdminOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -6440,7 +6440,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TeacherAuthorization" />
+			<chain name="TeacherOrDepartmentAdminOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -9732,7 +9732,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="CoordinatorAuthorization" />
+			<chain name="CoordinatorOrDepartmentAdminOfficeAuthorization" />
 		</filterChains>
 	</service>    
 	<service>
@@ -9759,7 +9759,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="CoordinatorAuthorization" />
+			<chain name="CoordinatorOrDepartmentAdminOfficeAuthorization" />
 		</filterChains>
 	</service>    
 </serviceDefinitions>

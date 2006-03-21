@@ -1038,5 +1038,19 @@
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>    
+    </filterChain>
+    <filterChain>
+        <name>TeacherOrDepartmentAdminOfficeAuthorization</name>
+        <expression>TeacherAuthorization || DepartmentAdministrativeOfficeAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
+        <name>CoordinatorOrDepartmentAdminOfficeAuthorization</name>
+        <expression>DepartmentAdministrativeOfficeAuthorization || CoordinatorAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 </filterChainsDefinitions>

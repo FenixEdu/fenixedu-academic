@@ -217,7 +217,7 @@
     <definition name="show-teacher-credits" extends="creditsManagement.masterPage">
         <put name="body" value="/credits/showTeacherCredits.jsp"/>
     </definition>
-    
+
 	<!-- ==================== View Curricular Course Historic ================== -->
 	<definition name="view-degree-curricular-plan-execution-year" 
 		extends="departmentAdmOffice.masterPage">
@@ -233,5 +233,19 @@
 		extends="departmentAdmOffice.masterPage">
 		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
 	</definition>    
-    
+
+	<!-- ==================== Final Degree Works ================== -->
+	<definition name="df.page.showFinalDegreeWorkList" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/finalDegreeWork/showFinalDegreeWorkList_bd.jsp" />
+	</definition>
+	<definition name="df.page.showFinalDegreeWorkProposal" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/finalDegreeWork/showFinalDegreeWorkProposal_bd.jsp" />
+	</definition>
+	<definition name="df.page.showFinalDegreeChooseExecutionDegree" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/finalDegreeWork/showFinalDegreeChooseExecutionDegree_bd.jsp" />
+	</definition>
+	<definition name="df.page.manageFinalDegreeWorks" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/finalDegreeWork/manageFinalDegreeWorks.jsp" />
+	</definition>
+
 </tiles-definitions>

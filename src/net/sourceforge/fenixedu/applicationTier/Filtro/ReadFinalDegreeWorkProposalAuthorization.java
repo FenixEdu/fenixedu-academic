@@ -5,7 +5,9 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.ExecutionDegreeCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -16,9 +18,6 @@ import pt.utl.ist.berserk.ServiceResponse;
  *  
  */
 public class ReadFinalDegreeWorkProposalAuthorization extends Filtro {
-    public ReadFinalDegreeWorkProposalAuthorization() {
-        super();
-    }
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
@@ -43,6 +42,11 @@ public class ReadFinalDegreeWorkProposalAuthorization extends Filtro {
                         && proposal.getCoorientator().getPerson().getUsername().equals(
                                 id.getUtilizador())) {
                     return;
+                }
+                for (final ExecutionDegree executionDegree : proposal.getScheduleing().getExecutionDegrees()) {
+                    if (ExecutionDegreeCoordinatorAuthorizationFilter.verifyCondition(id, executionDegree.getIdInternal())) {
+                        return;
+                    }
                 }
             }
         }

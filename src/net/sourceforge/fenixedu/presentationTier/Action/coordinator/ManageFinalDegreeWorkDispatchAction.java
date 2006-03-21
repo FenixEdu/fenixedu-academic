@@ -8,7 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +29,12 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWo
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -69,6 +76,26 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 .executeService(userView, "ReadExecutionDegreesByDegreeCurricularPlan", args);
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
+
+        return mapping.findForward("show-choose-execution-degree-page");
+    }
+
+    public ActionForward showChooseExecutionDegreeFormForDepartment(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException, FenixServiceException {
+        final IUserView userView = getUserView(request);
+        final Department department = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
+
+        final Set<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR);
+        for (final CompetenceCourse competenceCourse : department.getCompetenceCourses()) {
+            for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
+                if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE) {
+                    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+                    executionDegrees.addAll(degreeCurricularPlan.getExecutionDegrees());
+                }
+            }
+        }
+        request.setAttribute("executionDegrees", executionDegrees);
 
         return mapping.findForward("show-choose-execution-degree-page");
     }
