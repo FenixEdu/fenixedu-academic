@@ -14,19 +14,19 @@ public class InfoCandidateRegistration extends InfoObject {
 
     private InfoMasterDegreeCandidate infoMasterDegreeCandidate;
 
-    private List enrolments;
+    private List<InfoEnrolment> enrolments;
 
     /**
      * @return
      */
-    public List getEnrolments() {
+    public List<InfoEnrolment> getEnrolments() {
         return enrolments;
     }
 
     /**
      * @param enrolments
      */
-    public void setEnrolments(List enrolments) {
+    public void setEnrolments(List<InfoEnrolment> enrolments) {
         this.enrolments = enrolments;
     }
 

@@ -622,7 +622,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     	return result;
     }
         
-    public static List readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state) {
+    public static List<DegreeCurricularPlan> readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state) {
     	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
     	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlans()) {
     		if(!degreeCurricularPlan.getDegree().isBolonhaDegree()) {
