@@ -276,10 +276,7 @@ public interface ISuportePersistente
 
 	public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime();
 
-	// Nuno Correia & Ricardo Rodrigues
 	public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup();
-
-	public IPersistentGratuityValues getIPersistentGratuityValues();
 
 	public IPersistentGratuitySituation getIPersistentGratuitySituation();
 

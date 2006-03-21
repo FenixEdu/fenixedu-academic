@@ -1,7 +1,3 @@
-/*
- * Created on 10/Jan/2004
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.ArrayList;
@@ -12,20 +8,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValuesWithInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-/**
- * @author Tânia Pousão
- * 
- */
 public class ReadGratuityValuesByExecutionDegree extends Service {
 
 	public Object run(Integer executionDegreeID) throws FenixServiceException, ExcepcaoPersistencia {
@@ -33,12 +25,10 @@ public class ReadGratuityValuesByExecutionDegree extends Service {
 			throw new FenixServiceException("error.impossible.noGratuityValues");
 		}
 
-		GratuityValues gratuityValues = null;
 		List infoPaymentPhases = null;
 
-		IPersistentGratuityValues persistentGratuityValues = persistentSupport.getIPersistentGratuityValues();
-
-		gratuityValues = persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegreeID);
+		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
 		InfoGratuityValues infoGratuityValues = null;
 		if (gratuityValues != null) {

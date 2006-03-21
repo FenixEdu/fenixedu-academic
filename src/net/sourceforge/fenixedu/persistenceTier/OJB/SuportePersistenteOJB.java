@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQEntries;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
@@ -821,11 +820,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public PersistenceBroker currentBroker()
 	{
 		return getCurrentPersistenceBroker();
-	}
-
-	public IPersistentGratuityValues getIPersistentGratuityValues()
-	{
-		return new GratuityValuesOJB();
 	}
 
 	public IPersistentGratuitySituation getIPersistentGratuitySituation()

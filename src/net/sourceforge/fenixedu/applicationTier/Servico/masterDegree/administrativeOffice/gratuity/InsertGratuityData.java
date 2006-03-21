@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 
@@ -56,18 +55,9 @@ public class InsertGratuityData extends Service {
 
 		validateGratuity(infoGratuityValues);
 
-        IPersistentGratuityValues persistentGratuityValues = persistentSupport
-                .getIPersistentGratuityValues();
-
-		GratuityValues gratuityValues = persistentGratuityValues
-				.readGratuityValuesByExecutionDegree(infoGratuityValues.getInfoExecutionDegree()
-						.getIdInternal());
-
-		// execution Degree
-		ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
-				.readByOID(ExecutionDegree.class,
-						infoGratuityValues.getInfoExecutionDegree().getIdInternal());
-
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGratuityValues.getInfoExecutionDegree().getIdInternal());
+        GratuityValues gratuityValues = executionDegree.getGratuityValues();
+        
 		if (gratuityValues == null) // it doesn't exist in database, then
 		// write it
 		{

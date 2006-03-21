@@ -1,6 +1,3 @@
-/*
- * Created on 5/Ago/2003
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
@@ -11,14 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-
-/**
- * @author lmac1
- */
 
 public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 
@@ -74,8 +66,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 
 					// GratuityValues
 					if (executionDegree.getGratuityValues() != null) {
-						persistentSupport.getIPersistentGratuityValues().deleteByOID(GratuityValues.class,
-								executionDegree.getGratuityValues().getIdInternal());
+					    executionDegree.getGratuityValues().delete();
 					}
 
 					// PERIOD's

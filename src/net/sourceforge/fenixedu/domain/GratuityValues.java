@@ -1,14 +1,5 @@
-/*
- * Created on 9/Jan/2004
- *
- */
 package net.sourceforge.fenixedu.domain;
 
-/**
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- * @author T�nia Pous�o
- */
 public class GratuityValues extends GratuityValues_Base {
 
     public GratuityValues() {
@@ -16,7 +7,11 @@ public class GratuityValues extends GratuityValues_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public Double calculateTotalValueForMasterDegree() {
+	public void delete() {
+	    super.deleteDomainObject();
+    }
+    
+    public Double calculateTotalValueForMasterDegree() {
         Double totalValue = 0.0;
 
         Double annualValue = this.getAnualValue();
