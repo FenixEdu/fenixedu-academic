@@ -19,8 +19,8 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
+import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 
 public class Department extends Department_Base {
 
@@ -219,5 +219,17 @@ public class Department extends Department_Base {
         final int end = this.getRealName().indexOf(")");
         return this.getRealName().substring(begin + 1, end);
     }
-
+    
+    
+    // -------------------------------------------------------------
+    // read static methods 
+    // -------------------------------------------------------------
+    public static Department readByName(final String departmentName) {
+        for (final Department department : RootDomainObject.getInstance().getDepartments()) {
+            if (department.getName().equals(departmentName)) {
+                return department;
+            }
+        }
+        return null;
+    }
 }
