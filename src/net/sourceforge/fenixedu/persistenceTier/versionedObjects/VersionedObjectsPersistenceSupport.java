@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
@@ -517,10 +516,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentSummary getIPersistentSummary() {
         return new SummaryVO();
-    }
-
-    public IPersistentFAQSection getIPersistentFAQSection() {
-        return null;
     }
 
     public IPersistentWebSiteItem getIPersistentWebSiteItem() {

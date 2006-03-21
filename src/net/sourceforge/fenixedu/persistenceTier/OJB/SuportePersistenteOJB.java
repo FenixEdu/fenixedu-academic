@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
@@ -1020,17 +1019,11 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new TransactionOJB();
 	}
 
-	public IPersistentFAQSection getIPersistentFAQSection()
-	{
-		return new FAQSectionOJB();
-	}
-
 	public IPersistentExportGrouping getIPersistentExportGrouping()
 	{
 		return new ExportGroupingOJB();
 	}
 
-	// Rita Ferreira e Jo�o Fialho
 	public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary()
 	{
 		return new OldInquiriesSummaryOJB();
