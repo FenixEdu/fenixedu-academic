@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -401,11 +400,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentExam getIPersistentExam()
 	{
 		return new ExamOJB();
-	}
-
-	public IPersistentCurricularSemester getIPersistentCurricularSemester()
-	{
-		return new CurricularSemesterOJB();
 	}
 
 	public IPersistentProfessorship getIPersistentProfessorship()

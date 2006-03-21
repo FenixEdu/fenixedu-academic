@@ -135,8 +135,6 @@ public interface ISuportePersistente
 
 	public IPersistentExam getIPersistentExam();
 
-	public IPersistentCurricularSemester getIPersistentCurricularSemester();
-
 	public IPersistentProfessorship getIPersistentProfessorship();
 
 	public IPersistentPrice getIPersistentPrice();
