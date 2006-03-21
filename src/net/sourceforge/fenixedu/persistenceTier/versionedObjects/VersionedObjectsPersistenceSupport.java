@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideEntry;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVersion;
@@ -163,7 +162,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySit
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceTransactionVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceValueVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeProofVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisDataVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisVO;
@@ -375,10 +373,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentGrantCostCenter getIPersistentGrantCostCenter() {
         return new GrantCostCenterVO();
-    }
-
-    public IPersistentInsuranceValue getIPersistentInsuranceValue() {
-        return new InsuranceValueVO();
     }
 
     public IPersistentCurricularSemester getIPersistentCurricularSemester() {

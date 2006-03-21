@@ -328,8 +328,6 @@ public interface ISuportePersistente
 
 	public IPersistentPaymentTransaction getIPersistentPaymentTransaction();
 
-	public IPersistentInsuranceValue getIPersistentInsuranceValue();
-
 	public IPersistentFAQSection getIPersistentFAQSection();
 
 	public IPersistentPublicationTeacher getIPersistentPublicationTeacher();
