@@ -2916,7 +2916,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="DeleteProffessorshipAuthorization" />
+			<chain name="DeleteProfessorshipAuthorization" />
 		</filterChains>
 	</service>
 	<service>

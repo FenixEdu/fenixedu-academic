@@ -56,7 +56,6 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -374,9 +373,8 @@ public class ReadCourseInformation extends Service {
 
     private List getInfoLecturingTeachers(ExecutionCourse executionCourse)
             throws ExcepcaoPersistencia {
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-        List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse
-                .getIdInternal());
+        
+        List professorShips = executionCourse.getProfessorships();
 
         List infoLecturingTeachers = new ArrayList();
         Iterator iter = professorShips.iterator();

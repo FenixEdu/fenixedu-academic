@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -36,8 +35,7 @@ import org.apache.commons.collections.Transformer;
  * @author João e Rita
  * 
  */
-public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod extends
-        Service {
+public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod extends Service {
 
     /**
      * 
@@ -47,29 +45,27 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
 
     public List run(Integer executionDegreeId, Integer semester, Integer teacherType)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
+                .getIPersistentExecutionPeriod();
+        
         ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeId);
 
         List professorships;
         if (semester.intValue() == 0)
-            professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionYear(
-                    executionDegree.getDegreeCurricularPlan().getIdInternal(), executionDegree
-                            .getExecutionYear().getIdInternal());
+            professorships = Professorship.readByDegreeCurricularPlanAndExecutionYear(executionDegree
+                    .getDegreeCurricularPlan(), executionDegree.getExecutionYear());
         else {
             ExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
                     semester, executionDegree.getExecutionYear().getYear());
-            professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionPeriod(
-                    executionDegree.getDegreeCurricularPlan().getIdInternal(), executionPeriod
-                            .getIdInternal());
+            professorships = Professorship.readByDegreeCurricularPlanAndExecutionPeriod(executionDegree
+                    .getDegreeCurricularPlan(), executionPeriod);
         }
 
         List responsibleFors = getResponsibleForsByDegree(executionDegree);
 
-        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, persistentSupport,
-                teacherType);
+        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors,
+                persistentSupport, teacherType);
 
         // Cleaning out possible null elements inside the list
         Iterator itera = detailedProfessorships.iterator();

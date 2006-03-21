@@ -99,7 +99,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -500,11 +499,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 */
 	private ISiteComponent getInfoSiteTeachers(InfoSiteTeachers component, Site site, String username)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
 
-		ExecutionCourse executionCourse = site.getExecutionCourse();
-		List teachers = persistentProfessorship.readByExecutionCourse(executionCourse.getIdInternal());
+        ExecutionCourse executionCourse = site.getExecutionCourse();
+		List teachers = executionCourse.getProfessorships();
 		List infoTeachers = new ArrayList();
 		if (teachers != null) {
 
@@ -533,8 +530,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 				}
 
 				Teacher teacher = Teacher.readTeacherByUsername(username);
-				Professorship responsibleFor = persistentProfessorship.readByTeacherAndExecutionCourse(
-						teacher.getIdInternal(), executionCourse.getIdInternal());
+				Professorship responsibleFor = teacher.getProfessorshipByExecutionCourse(executionCourse);
 				if (teacher != null) {
 					if (responsibleTeachers != null && !responsibleTeachers.isEmpty()
 							&& responsibleTeachers.contains(responsibleFor)) {

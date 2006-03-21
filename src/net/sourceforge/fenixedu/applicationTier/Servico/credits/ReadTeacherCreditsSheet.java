@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalPro
 import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -297,11 +296,8 @@ public class ReadTeacherCreditsSheet extends Service {
     }
 
     private List readDetailedProfessorships(Teacher teacher, ExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-        IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
 
-        List professorshipList = professorshipDAO.readByTeacherAndExecutionPeriod(teacher
-                .getIdInternal(), executionPeriod.getIdInternal());
-
+        List professorshipList = teacher.getProfessorships(executionPeriod);
         final List responsibleFors = teacher.responsibleFors();
 
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorshipList,

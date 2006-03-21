@@ -11,9 +11,11 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 
 /**
  * @author jpvl
@@ -23,25 +25,27 @@ public class UpdateProfessorshipsHours extends Service {
     public Boolean run(Integer teacherId, Integer executionYearId, final HashMap hours)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-            IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
-           
-            Iterator entries = hours.entrySet().iterator();
-            while (entries.hasNext()) {
-                Map.Entry entry = (Entry) entries.next();
+        Iterator entries = hours.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry entry = (Entry) entries.next();
 
-                String key = entry.getKey().toString();
-                Integer executionCourseId = Integer.valueOf(key);
-                String value = (String) entry.getValue();
-                if (value != null) {
-                    try {
-                        Double ecHours = Double.valueOf(value);
-                        Professorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(teacherId, executionCourseId);
-                        professorship.setHours(ecHours);
-                    } catch (NumberFormatException e1) {
-                        // ignored
-                    }
+            String key = entry.getKey().toString();
+            Integer executionCourseId = Integer.valueOf(key);
+            String value = (String) entry.getValue();
+            if (value != null) {
+                try {
+                    Double ecHours = Double.valueOf(value);
+                    Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
+                    ExecutionCourse executionCourse = RootDomainObject.getInstance()
+                            .readExecutionCourseByOID(executionCourseId);
+                    Professorship professorship = teacher
+                            .getProfessorshipByExecutionCourse(executionCourse);
+                    professorship.setHours(ecHours);
+                } catch (NumberFormatException e1) {
+                    // ignored
                 }
             }
-          return Boolean.TRUE;
+        }
+        return Boolean.TRUE;
     }
 }

@@ -12,13 +12,14 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -26,7 +27,7 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class ReadTeacherInformationCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -58,22 +59,22 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
     }
 
     protected boolean verifyCondition(IUserView id, String user) {
-        try {            
-            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-            IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-
+        try {
+            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
+                    .getIPersistentExecutionDegree();
+         
             Teacher teacher = Teacher.readTeacherByUsername(user);
             Teacher coordinator = Teacher.readTeacherByUsername(id.getUtilizador());
 
-            List<ExecutionDegree> executionDegrees = persistentExecutionDegree
-                    .readByTeacher(coordinator.getIdInternal());
-            List<Integer> degreeCurricularPlanIDs = getDegreeCurricularPlanIDs(executionDegrees);
-            Integer executionYearID = (!degreeCurricularPlanIDs.isEmpty()) ? executionDegrees
-                    .get(0).getExecutionYear().getIdInternal()
+            List<ExecutionDegree> executionDegrees = persistentExecutionDegree.readByTeacher(coordinator
+                    .getIdInternal());
+            List<DegreeCurricularPlan> degreeCurricularPlans = getDegreeCurricularPlans(executionDegrees);
+            ExecutionYear executionDegressExecutionYearID = (!degreeCurricularPlans.isEmpty()) ? executionDegrees
+                    .get(0).getExecutionYear()
                     : null;
 
-            List professorships = persistentProfessorship.readByDegreeCurricularPlansAndExecutionYear(
-                    degreeCurricularPlanIDs, executionYearID);
+            List professorships = Professorship.readByDegreeCurricularPlansAndExecutionYear(
+                    degreeCurricularPlans, executionDegressExecutionYearID);
             Iterator iter = professorships.iterator();
             while (iter.hasNext()) {
                 Professorship professorship = (Professorship) iter.next();
@@ -88,10 +89,11 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
         }
     }
 
-    private List<Integer> getDegreeCurricularPlanIDs(final List<ExecutionDegree> executionDegrees) {
-        final List<Integer> result = new ArrayList<Integer>();
+    private List<DegreeCurricularPlan> getDegreeCurricularPlans(
+            final List<ExecutionDegree> executionDegrees) {
+        final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
         for (final ExecutionDegree executionDegree : executionDegrees) {
-            result.add(executionDegree.getDegreeCurricularPlan().getIdInternal());
+            result.add(executionDegree.getDegreeCurricularPlan());
         }
         return result;
     }

@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -62,7 +61,6 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
         List teachers = department.getCurrentTeachers();
 
         Iterator iter = teachers.iterator();
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
       
         List professorships = new ArrayList();
         List responsibleFors = new ArrayList();
@@ -70,15 +68,12 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             Teacher teacher = (Teacher) iter.next();
             List teacherProfessorships = null;
             if (executionYear == null) {
-                teacherProfessorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
+                teacherProfessorships = teacher.getProfessorships();
             } else {
                 if (semester.intValue() == 0) {
-
-                    teacherProfessorships = persistentProfessorship.readByTeacherAndExecutionYear(
-                            teacher.getIdInternal(), executionYear.getIdInternal());
-                } else {
-                    teacherProfessorships = persistentProfessorship.readByTeacherAndExecutionPeriod(
-                            teacher.getIdInternal(), executionPeriod.getIdInternal());
+                    teacherProfessorships = teacher.getProfessorships(executionYear);
+                } else {                                      
+                    teacherProfessorships = teacher.getProfessorships(executionPeriod);
                 }
             }
             if (teacherProfessorships != null) {

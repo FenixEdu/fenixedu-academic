@@ -10,10 +10,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 
 /**
  * @author jpvl
@@ -23,29 +23,26 @@ public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends
 
     public List run(Integer teacherOID, Integer executionPeriodOID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        IPersistentProfessorship persistentProfessorship = persistentSupport
-        .getIPersistentProfessorship();
 
-        
+        ExecutionPeriod executionPeriod = null;
         if (executionPeriodOID == null) {
             IPersistentExecutionPeriod executionPeriodDAO = persistentSupport
                     .getIPersistentExecutionPeriod();
-            ExecutionPeriod executionPeriod = executionPeriod = executionPeriodDAO
-                    .readActualExecutionPeriod();
-            executionPeriodOID = executionPeriod.getIdInternal();
+            executionPeriod = executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+        } else {
+            executionPeriod = RootDomainObject.getInstance()
+                    .readExecutionPeriodByOID(executionPeriodOID);
         }
-        
-        List professorships = persistentProfessorship.readByTeacherAndExecutionPeriod(teacherOID,
-                executionPeriodOID);
-                
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherOID);
-        
+
+        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherOID);
+        List professorships = teacher.getProfessorships(executionPeriod);
         final List<Professorship> responsibleForsAux = teacher.responsibleFors();
-        final List responsibleFors = new ArrayList();        
-        for(Professorship professorship : responsibleForsAux){
-            if(professorship.getExecutionCourse().getExecutionPeriod().getIdInternal().equals(executionPeriodOID))
+        final List responsibleFors = new ArrayList();
+        for (Professorship professorship : responsibleForsAux) {
+            if (professorship.getExecutionCourse().getExecutionPeriod().getIdInternal().equals(
+                    executionPeriodOID))
                 responsibleFors.add(professorship);
-        }                      
+        }
 
         List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors,
                 persistentSupport);

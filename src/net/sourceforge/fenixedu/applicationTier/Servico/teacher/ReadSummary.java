@@ -28,13 +28,13 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -51,8 +51,10 @@ public class ReadSummary extends Service {
 
     public SiteView run(Integer executionCourseId, Integer summaryId, String userLogged)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseId);
+
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
+                executionCourseId);
+
         if (executionCourse == null) {
             throw new FenixServiceException("no.executioncourse");
         }
@@ -83,17 +85,15 @@ public class ReadSummary extends Service {
                 }
             });
         }
-
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
+        
         List infoProfessorships = new ArrayList();
 
         // We present only the responsible teacher (by gedl)
 
-        // teacher logged        
+        // teacher logged
         Teacher teacher = Teacher.readTeacherByUsername(userLogged);
         if (teacher != null) {
-            Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
-                    teacher.getIdInternal(), executionCourseId);
+            Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             if (professorship != null) {
                 infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
             }
@@ -110,7 +110,7 @@ public class ReadSummary extends Service {
         }
         Collections.sort(infoRooms, new BeanComparator("nome"));
 
-        Summary summary = (Summary) persistentObject.readByOID(Summary.class, summaryId);
+        Summary summary = RootDomainObject.getInstance().readSummaryByOID(summaryId);
         if (summary == null) {
             throw new FenixServiceException("no.summary");
         }

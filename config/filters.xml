@@ -120,9 +120,9 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>DeleteProffessorshipAuthorizationFilter</name>
+        <name>DeleteProfessorshipAuthorizationFilter</name>
         <implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Filtro.DeleteProffessorshipAuthorizationFilter
+            net.sourceforge.fenixedu.applicationTier.Filtro.DeleteProfessorshipAuthorizationFilter
 		</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>

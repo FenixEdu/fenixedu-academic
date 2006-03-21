@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCateg
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -27,7 +26,6 @@ public class ReadInfoTeacherByTeacherNumber extends Service {
     public InfoTeacher run(Integer teacherNumber) throws FenixServiceException, ExcepcaoPersistencia {
 
         InfoTeacher infoTeacher = null;
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
        
         if (teacherNumber == null) {
             throw new FenixServiceException("nullTeacherNumber");
@@ -38,7 +36,7 @@ public class ReadInfoTeacherByTeacherNumber extends Service {
             throw new NonExistingServiceException("noTeacher");
         }
 
-        List professorShips = persistentProfessorship.readByTeacher(teacher.getIdInternal());
+        List professorShips = teacher.getProfessorships();
 
         List responsibleFors = teacher.responsibleFors();
         if ((professorShips == null || professorShips.size() == 0)

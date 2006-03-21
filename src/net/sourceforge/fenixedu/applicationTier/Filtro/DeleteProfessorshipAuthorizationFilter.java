@@ -2,14 +2,17 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
-public class DeleteProffessorshipAuthorizationFilter extends AuthorizationByRoleFilter {
+public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleFilter {
 
     @Override
     protected RoleType getRoleType() {
@@ -26,10 +29,16 @@ public class DeleteProffessorshipAuthorizationFilter extends AuthorizationByRole
             final Person loggedPerson = id.getPerson();
             final Integer executionCourseID = (Integer) arguments[0];
             final Integer selectedTeacherID = (Integer) arguments[1];
-            final Professorship selectedProfessorship = persistentSupport.getIPersistentProfessorship()
-                    .readByTeacherAndExecutionCourse(selectedTeacherID, executionCourseID);
-
-            if ((id == null)
+                        
+            Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(selectedTeacherID);
+            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+            
+            Professorship selectedProfessorship = null;
+            if(teacher != null){
+                selectedProfessorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
+            }
+           
+            if ((id == null) || (selectedProfessorship == null)
                     || (id.getRoles() == null)
                     || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                     || isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getTeacher()

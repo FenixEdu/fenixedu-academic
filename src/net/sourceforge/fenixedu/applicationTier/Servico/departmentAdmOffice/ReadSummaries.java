@@ -21,14 +21,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -38,29 +36,32 @@ import org.apache.commons.collections.Transformer;
  * Manuel Pinto e Jo�o Figueiredo
  */
 public class ReadSummaries extends Service {
-    
+
     public SiteView run(Integer teacherNumber, Integer executionCourseId, String summaryType,
             Integer shiftId) throws FenixServiceException, ExcepcaoPersistencia {
-      
+
         final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
-        
+
         final Teacher teacher = Teacher.readByNumber(teacherNumber);
         if (teacher == null) {
             throw new FenixServiceException("no.shift");
         }
-        
+
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executionCourse");
         }
-       
-        List<Summary> summaries_aux = readSummariesByType(executionCourseId, summaryType, persistentSummary);        
-       
-        summaries_aux = readSummariesByShift(executionCourseId, shiftId, executionCourse, persistentSummary, summaries_aux);
-               
-        summaries_aux = readAllSummaries(executionCourseId, summaryType, shiftId, persistentSummary, summaries_aux);
-                
+
+        List<Summary> summaries_aux = readSummariesByType(executionCourseId, summaryType,
+                persistentSummary);
+
+        summaries_aux = readSummariesByShift(executionCourseId, shiftId, executionCourse,
+                persistentSummary, summaries_aux);
+
+        summaries_aux = readAllSummaries(executionCourseId, summaryType, shiftId, persistentSummary,
+                summaries_aux);
+
         List result = new ArrayList();
         if (summaries_aux != null && summaries_aux.size() > 0) {
             Iterator iter = summaries_aux.iterator();
@@ -70,28 +71,28 @@ public class ReadSummaries extends Service {
                 result.add(infoSummary);
             }
         }
-        
+
         // execution courses's lesson types for display to filter summary
         List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
-        
+
         Site site = executionCourse.getSite();
-        
+
         if (site == null) {
             throw new FenixServiceException("no.site");
         }
-        
+
         // execution courses's shifts for display to filter summary
         List shifts = executionCourse.getAssociatedShifts();
         List infoShifts = new ArrayList();
         if (shifts != null && shifts.size() > 0) {
             infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
-                
+
                 public Object transform(Object arg0) {
                     final Shift turno = (Shift) arg0;
                     final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
                     infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
                     for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator
-                    .hasNext();) {
+                            .hasNext();) {
                         final Lesson lesson = (Lesson) iterator.next();
                         final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                         final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
@@ -102,26 +103,26 @@ public class ReadSummaries extends Service {
                 }
             });
         }
-        
+
         InfoSiteSummaries bodyComponent = new InfoSiteSummaries();
         bodyComponent.setInfoSummaries(result);
         bodyComponent.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         bodyComponent.setLessonTypes(lessonTypes);
         bodyComponent.setInfoShifts(infoShifts);
         bodyComponent.setInfoProfessorships(new ArrayList());
-        
+
         TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
-        .getInstance();
+                .getInstance();
         ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
                 null, null);
         SiteView siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
-        
+
         return siteView;
     }
-    
+
     private List findLessonTypesExecutionCourse(ExecutionCourse executionCourse) {
         List lessonTypes = new ArrayList();
-        
+
         if (executionCourse.getTheoreticalHours() != null
                 && executionCourse.getTheoreticalHours().intValue() > 0) {
             lessonTypes.add(ShiftType.TEORICA);
@@ -137,10 +138,10 @@ public class ReadSummaries extends Service {
         if (executionCourse.getLabHours() != null && executionCourse.getLabHours().intValue() > 0) {
             lessonTypes.add(ShiftType.LABORATORIAL);
         }
-        
+
         return lessonTypes;
     }
-    
+
     protected List readSummariesByType(Integer executionCourseId, String summaryType,
             IPersistentSummary persistentSummary) throws ExcepcaoPersistencia {
         List summaries = null;
@@ -157,11 +158,10 @@ public class ReadSummaries extends Service {
         }
         return summaries;
     }
-    
+
     protected List readSummariesByShift(Integer executionCourseId, Integer shiftId,
-            ExecutionCourse executionCourse,
-            IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia,
-            FenixServiceException {
+            ExecutionCourse executionCourse, IPersistentSummary persistentSummary, List summaries)
+            throws ExcepcaoPersistencia, FenixServiceException {
         if (shiftId != null && shiftId.intValue() > 0) {
             Shift shiftSelected = (Shift) persistentObject.readByOID(Shift.class, shiftId);
             if (shiftSelected == null) {
@@ -183,43 +183,21 @@ public class ReadSummaries extends Service {
         }
         return summaries;
     }
-    
-    protected List readTeacherSummaries(Integer executionCourseId, Integer professorShiftId,
-            IPersistentProfessorship persistentProfessorship, IPersistentSummary persistentSummary,
-            List summaries) throws ExcepcaoPersistencia, FenixServiceException {
 
-        if (professorShiftId != null && professorShiftId.intValue() > 0) {
-            Professorship professorshipSelected = (Professorship) persistentObject.readByOID(
-                    Professorship.class, professorShiftId);
+    protected List readAllSummaries(Integer executionCourseId, String summaryType, Integer shiftId,
+            IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia {
+        if ((summaryType == null || summaryType.equals("0"))
+                && (shiftId == null || shiftId.intValue() == 0)) {
 
-            if (professorshipSelected == null || professorshipSelected.getTeacher() == null) {
-                throw new FenixServiceException("no.shift");
-            }
-
-            List summariesByProfessorship = persistentSummary.readByTeacher(executionCourseId,
-                    professorshipSelected.getTeacher().getTeacherNumber());
-
-            if (summaries != null) {
-                summaries = (List) CollectionUtils.intersection(summaries, summariesByProfessorship);
-            } else {
-                summaries = summariesByProfessorship;
-            }
-        }
-        return summaries;
-    }
-    
-    protected List readAllSummaries(Integer executionCourseId, String summaryType, Integer shiftId, IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia {
-        if ((summaryType == null || summaryType.equals("0")) && (shiftId == null || shiftId.intValue() == 0)) {
-            
             summaries = persistentSummary.readByExecutionCourseShifts(executionCourseId);
 
-            List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourseId);           
-            
+            List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourseId);
+
             summaries = allSummaries(summaries, summariesByExecutionCourse);
         }
         return summaries;
-    }  
-    
+    }
+
     private List allSummaries(List summaries, List summariesByExecutionCourse) {
         List allSummaries = new ArrayList();
 
@@ -245,7 +223,7 @@ public class ReadSummaries extends Service {
         }
         return allSummaries;
     }
-    
+
     private List findLesson(IPersistentSummary persistentSummary, ExecutionCourse executionCourse,
             Shift shift) throws ExcepcaoPersistencia {
 
@@ -275,7 +253,7 @@ public class ReadSummaries extends Service {
                 dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour.get(Calendar.HOUR_OF_DAY));
                 dateAndHourSummary.set(Calendar.MINUTE, summaryHour.get(Calendar.MINUTE));
                 dateAndHourSummary.set(Calendar.SECOND, 00);
-             
+
                 Calendar beginLesson = Calendar.getInstance();
                 beginLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
                 beginLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));

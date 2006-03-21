@@ -10,10 +10,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 
 /**
  * @author jpvl
@@ -29,20 +29,20 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
 
     public List run(Integer teacherID, Integer executionYearID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        IPersistentProfessorship persistentProfessorship = persistentSupport
-                .getIPersistentProfessorship();
-      
+            
+        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
+        
+        ExecutionYear executionYear = null;
         if (executionYearID == null) {
             IPersistentExecutionYear persistentExecutionYear = persistentSupport
                     .getIPersistentExecutionYear();
-            ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
-            executionYearID = executionYear.getIdInternal();
+            executionYear = persistentExecutionYear.readCurrentExecutionYear();
+                    
+        } else{
+            executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
         }
 
-        List professorships = persistentProfessorship.readByTeacherAndExecutionYear(teacherID,
-                executionYearID);
-                               
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherID);
+        List professorships = teacher.getProfessorships(executionYear);
         
         final List<Professorship> responsibleForsAux = teacher.responsibleFors();
         final List responsibleFors = new ArrayList();        

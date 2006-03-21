@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
@@ -55,8 +56,7 @@ public class CreateNewUnit extends Service {
                 && (unit.getType().equals(PartyTypeEnum.DEGREE) || unit.getType().equals(
                         PartyTypeEnum.MASTER_DEGREE))) {
 
-            degree = (Degree) persistentObject.readByOID(Degree.class,
-                    degreeID);
+            degree = RootDomainObject.getInstance().readDegreeByOID(degreeID);
 
             if ((degree.getTipoCurso().equals(DegreeType.DEGREE) && unit.getType().equals(
                     PartyTypeEnum.DEGREE))
@@ -79,8 +79,7 @@ public class CreateNewUnit extends Service {
 
         Department department = null;
         if (departmentID != null && unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
-            department = (Department) persistentObject.readByOID(
-                    Department.class, departmentID);
+            department = RootDomainObject.getInstance().readDepartmentByOID(departmentID);
             unit.setDepartment(department);
 
         } else if (unit.getDepartment() != null) {
@@ -93,7 +92,7 @@ public class CreateNewUnit extends Service {
         
         Unit parentUnit = null;
         if (parentUnitID != null) {
-            parentUnit = (Unit) persistentObject.readByOID(Unit.class, parentUnitID);
+            parentUnit =  (Unit) RootDomainObject.getInstance().readPartyByOID(parentUnitID);
             if(parentUnit.equals(unit)){
                 throw new FenixServiceException("error.same.unit");
             } 

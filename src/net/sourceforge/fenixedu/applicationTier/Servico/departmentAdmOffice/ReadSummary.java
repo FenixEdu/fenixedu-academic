@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -83,13 +82,11 @@ public class ReadSummary extends Service {
             });
         }
 
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
         List infoProfessorships = new ArrayList();
         Teacher teacher = Teacher.readByNumber(teacherNumber);
 
         if (teacher != null) {
-            Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
-                    teacher.getIdInternal(), executionCourse.getIdInternal());
+            Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             if (professorship != null) {
                 infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
             }
@@ -138,7 +135,7 @@ public class ReadSummary extends Service {
     }
 
     private void findBestShiftForSummary(Summary summary, List shifts) {
-        //choose the shift with:
+        // choose the shift with:
         // 1. the same summary type / lesson type
         // 2. the lesson with date and hour of the summary
 
@@ -204,8 +201,8 @@ public class ReadSummary extends Service {
                 }
             }
 
-            //If the execution to arrive until here,
-            //then was impossible attribute a shift to the summary
+            // If the execution to arrive until here,
+            // then was impossible attribute a shift to the summary
             summary.setIsExtraLesson(Boolean.TRUE);
             summary.setShift((Shift) shifts.get(0));
         }

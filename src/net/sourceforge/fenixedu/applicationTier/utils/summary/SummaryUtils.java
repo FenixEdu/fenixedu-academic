@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -82,8 +81,8 @@ public class SummaryUtils {
             final InfoSummary infoSummary) throws ExcepcaoPersistencia, FenixServiceException {
         if (infoSummary.getInfoTeacher() != null
                 && infoSummary.getInfoTeacher().getTeacherNumber() != null) {
-            final Teacher teacher = Teacher.readByNumber(infoSummary.getInfoTeacher()
-                    .getTeacherNumber());
+            final Teacher teacher = Teacher
+                    .readByNumber(infoSummary.getInfoTeacher().getTeacherNumber());
             if (teacher == null) {
                 throw new FenixServiceException("error.summary.no.teacher");
             }
@@ -96,10 +95,8 @@ public class SummaryUtils {
             final InfoSummary infoSummary) throws FenixServiceException, ExcepcaoPersistencia {
         if (infoSummary.getInfoProfessorship() != null
                 && infoSummary.getInfoProfessorship().getIdInternal() != null) {
-            final IPersistentProfessorship persistentProfessorship = persistentSupport
-                    .getIPersistentProfessorship();
-            final Professorship professorship = (Professorship) persistentProfessorship.readByOID(
-                    Professorship.class, infoSummary.getInfoProfessorship().getIdInternal());
+            final Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(
+                    infoSummary.getInfoProfessorship().getIdInternal());
             if (professorship == null) {
                 throw new FenixServiceException("error.summary.no.teacher");
             }
@@ -116,7 +113,8 @@ public class SummaryUtils {
                 && summary.getShift().getIdInternal().equals(infoSummary.getInfoShift().getIdInternal())) {
             shift = summary.getShift();
         } else {
-            shift = RootDomainObject.getInstance().readShiftByOID(infoSummary.getInfoShift().getIdInternal());
+            shift = RootDomainObject.getInstance().readShiftByOID(
+                    infoSummary.getInfoShift().getIdInternal());
         }
         if (shift == null) {
             throw new FenixServiceException("error.summary.no.shift");
@@ -193,7 +191,7 @@ public class SummaryUtils {
                     endLesson.set(Calendar.MINUTE, lesson.getFim().get(Calendar.MINUTE));
                     endLesson.set(Calendar.SECOND, 00);
                     endLesson.set(Calendar.MILLISECOND, 00);
-                                       
+
                     if (summary.getShift().getTipo().equals(lesson.getTipo())
                             && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
                                     .getDiaSemana().intValue() && !beginLesson.after(dateAndHourSummary)

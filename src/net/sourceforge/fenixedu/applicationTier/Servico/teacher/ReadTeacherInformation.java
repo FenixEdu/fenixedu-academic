@@ -53,7 +53,6 @@ import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -262,8 +261,8 @@ public class ReadTeacherInformation extends Service {
 
     private List getInfoLecturingExecutionCourses(ISuportePersistente persistentSupport, Teacher teacher,
             final ExecutionYear wantedExecutionYear) throws ExcepcaoPersistencia {
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-        List professorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
+        
+        List professorships = teacher.getProfessorships();
 
         // filter only the execution courses of the wanted execution year
         professorships = (List) CollectionUtils.select(professorships, new Predicate() {

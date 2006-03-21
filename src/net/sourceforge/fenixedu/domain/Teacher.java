@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.util.CalendarUtil;
-import net.sourceforge.fenixedu.util.LegalRegimenType;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.State;
 
@@ -734,5 +733,26 @@ public class Teacher extends Teacher_Base {
             }
         }
         return selectedTeachers;
+    }
+
+    public List<Professorship> getProfessorships(ExecutionPeriod executionPeriod) {
+        List<Professorship> professorships = new ArrayList<Professorship>();
+        for (Professorship professorship : this.getProfessorships()) {
+            if (professorship.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)) {
+                professorships.add(professorship);
+            }
+        }
+        return professorships;
+    }
+
+    public List<Professorship> getProfessorships(ExecutionYear executionYear) {
+        List<Professorship> professorships = new ArrayList<Professorship>();
+        for (Professorship professorship : this.getProfessorships()) {
+            if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().equals(
+                    executionYear)) {
+                professorships.add(professorship);
+            }
+        }
+        return professorships;
     }
 }

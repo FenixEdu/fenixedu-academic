@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDat
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
@@ -152,7 +151,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegre
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PessoaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PriceVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ProfessorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationTeacherVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationTypeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
@@ -625,10 +623,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentObject getIPersistentObject() {
         return null;
-    }
-
-    public IPersistentProfessorship getIPersistentProfessorship() {
-        return new ProfessorshipVO();
     }
 
     public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests() {

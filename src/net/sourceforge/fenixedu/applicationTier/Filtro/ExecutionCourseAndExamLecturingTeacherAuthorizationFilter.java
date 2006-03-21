@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -67,9 +67,9 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-                professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher
-                        .getIdInternal(), executionCourseID);
+                ExecutionCourse executionCourse = RootDomainObject.getInstance()
+                        .readExecutionCourseByOID(executionCourseID);
+                professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             }
             return professorship != null;
 

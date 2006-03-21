@@ -14,13 +14,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class ReadTeacherExecutionCoursesSitesService extends Service {
 
@@ -28,15 +29,14 @@ public class ReadTeacherExecutionCoursesSitesService extends Service {
 
         final List<InfoSite> infoSites = new ArrayList<InfoSite>();
 
-        //final IPersistentSite persistentSite =
+        // final IPersistentSite persistentSite =
         // persistentSupport.getIPersistentSite();
-        final IPersistentProfessorship persistentProfessorship = persistentSupport
-                .getIPersistentProfessorship();
 
-        final List<Professorship> professorships = persistentProfessorship
-                .readByTeacherNumber(infoTeacher.getTeacherNumber());
+        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(infoTeacher.getIdInternal());
+        final List<Professorship> professorships = teacher.getProfessorships();
         for (final Professorship professorship : professorships) {
-            InfoSite infoSite = InfoSiteWithInfoExecutionCourse.newInfoFromDomain(professorship.getExecutionCourse().getSite());
+            InfoSite infoSite = InfoSiteWithInfoExecutionCourse.newInfoFromDomain(professorship
+                    .getExecutionCourse().getSite());
             infoSites.add(infoSite);
         }
 

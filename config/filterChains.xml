@@ -114,8 +114,8 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>DeleteProffessorshipAuthorization</name>
-        <expression>DeleteProffessorshipAuthorizationFilter</expression>
+        <name>DeleteProfessorshipAuthorization</name>
+        <expression>DeleteProfessorshipAuthorizationFilter</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

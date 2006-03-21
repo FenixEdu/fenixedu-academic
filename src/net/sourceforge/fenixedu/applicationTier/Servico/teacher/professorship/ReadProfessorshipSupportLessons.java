@@ -12,10 +12,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipSupportLessonsDTO;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -28,12 +30,17 @@ public class ReadProfessorshipSupportLessons extends Service {
 
     public ProfessorshipSupportLessonsDTO run(Integer teacherId, Integer executionCourseId)
             throws FenixServiceException, ExcepcaoPersistencia {
-        
+
         ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
 
-        IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
-        Professorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(teacherId,
+        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
                 executionCourseId);
+
+        Professorship professorship = null;
+        if (teacher != null) {
+            teacher.getProfessorshipByExecutionCourse(executionCourse);
+        }
 
         InfoProfessorship infoProfessorship = InfoProfessorshipWithAll.newInfoFromDomain(professorship);
         professorshipSupportLessonsDTO.setInfoProfessorship(infoProfessorship);

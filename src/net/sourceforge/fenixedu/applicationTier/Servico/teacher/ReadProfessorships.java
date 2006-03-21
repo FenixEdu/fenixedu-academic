@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 
 /**
  * @author jpvl
@@ -22,9 +21,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstractService {
 
     public List run(IUserView userView, Integer executionPeriodCode) throws ExcepcaoPersistencia {
-
-        IPersistentProfessorship persistentProfessorship = persistentSupport
-                .getIPersistentProfessorship();
 
         ExecutionPeriod executionPeriod = null;
         if (executionPeriodCode != null) {
@@ -34,7 +30,7 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
 
         Teacher teacher = Teacher.readTeacherByUsername(userView.getUtilizador());
 
-        List professorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
+        List professorships = teacher.getProfessorships();
         List professorshipsList = new ArrayList();
         professorshipsList.addAll(professorships);
 

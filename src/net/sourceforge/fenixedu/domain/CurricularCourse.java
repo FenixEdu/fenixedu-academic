@@ -31,7 +31,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         this.setOjbConcreteClass(CurricularCourse.class.getName());
     }
 
-    protected CurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed, CurricularStage curricularStage) {
+    protected CurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
+            CurricularStage curricularStage) {
         this();
         setName(name);
         setCode(code);
@@ -39,13 +40,13 @@ public class CurricularCourse extends CurricularCourse_Base {
         setEnrollmentAllowed(enrolmentAllowed);
         setCurricularStage(curricularStage);
     }
-    
+
     public CurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
             CurricularStage curricularStage, CompetenceCourse competenceCourse,
             CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
             ExecutionPeriod beginExecutionPeriod) {
-        
-        this();       
+
+        this();
         setWeigth(weight);
         setPrerequisites(prerequisites);
         setPrerequisitesEn(prerequisitesEn);
@@ -54,14 +55,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         setType(CurricularCourseType.NORMAL_COURSE);
         new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, null);
     }
-    
+
     /**
-     * - This constructor is used to create a 'special' curricular course 
-     *   that will represent any curricular course accordding to a rule 
+     * - This constructor is used to create a 'special' curricular course that
+     * will represent any curricular course accordding to a rule
      */
     public CurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn,
-            CurricularStage curricularStage, CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod) {
-        
+            CurricularStage curricularStage, CurricularPeriod curricularPeriod,
+            ExecutionPeriod beginExecutionPeriod) {
+
         this();
         setName(name);
         setNameEn(nameEn);
@@ -69,62 +71,65 @@ public class CurricularCourse extends CurricularCourse_Base {
         setType(CurricularCourseType.OPTIONAL_COURSE);
         new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, null);
     }
-    
-	public GradeScale getGradeScaleChain() {
-    	return super.getGradeScale() != null ? super.getGradeScale() : getDegreeCurricularPlan().getGradeScaleChain();
+
+    public GradeScale getGradeScaleChain() {
+        return super.getGradeScale() != null ? super.getGradeScale() : getDegreeCurricularPlan()
+                .getGradeScaleChain();
     }
 
     public void print(StringBuilder dcp, String tabs, Context previousContext) {
         String tab = tabs + "\t";
         dcp.append(tab);
         dcp.append("[CC ").append(this.getIdInternal()).append("][");
-        dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
-        dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S] ");
+        dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR))
+                .append("Y,");
+        dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER))
+                .append("S] ");
         dcp.append(this.getName()).append("\n");
     }
 
     public boolean isLeaf() {
         return true;
     }
-    
+
     public boolean isRoot() {
         return false;
     }
-    
+
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
         return getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan();
     }
-    
+
     public void edit(Double weight, String prerequisites, String prerequisitesEn,
             CurricularStage curricularStage, CompetenceCourse competenceCourse) {
-        
+
         setWeigth(weight);
         setPrerequisites(prerequisites);
         setPrerequisitesEn(prerequisitesEn);
         setCurricularStage(curricularStage);
         setCompetenceCourse(competenceCourse);
     }
-    
+
     /**
-     * - This method is used to edit a 'special' curricular course 
-     *   that will represent any curricular course according to a rule 
+     * - This method is used to edit a 'special' curricular course that will
+     * represent any curricular course according to a rule
      */
     public void edit(String name, String nameEn, CurricularStage curricularStage) {
         setName(name);
         setNameEn(nameEn);
         setCurricularStage(curricularStage);
     }
- 
+
     public Boolean getCanBeDeleted() {
         return true;
     }
-    
+
     public void delete() {
         super.delete();
         removeCompetenceCourse();
         super.deleteDomainObject();
     }
-    
+
     public boolean curricularCourseIsMandatory() {
         return getMandatory().booleanValue();
     }
@@ -136,31 +141,18 @@ public class CurricularCourse extends CurricularCourse_Base {
                 result.add(curricularCourseScope);
             }
         }
-        
+
         return result;
     }
-    
+
     public List<CurricularCourseScope> getActiveScopesInExecutionPeriod(
             final ExecutionPeriod executionPeriod) {
         final List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
         for (final CurricularCourseScope scope : getScopes()) {
-        	final CurricularSemester curricularSemester = scope.getCurricularSemester();
+            final CurricularSemester curricularSemester = scope.getCurricularSemester();
             if (curricularSemester.getSemester().equals(executionPeriod.getSemester())
-            		&& (scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate().getTime())
-                    && ((scope.getEndDate() == null)
-                    		|| (scope.getEndDate().getTime().getTime() >= executionPeriod.getEndDate().getTime()))) {
-                activeScopesInExecutionPeriod.add(scope);
-            }
-        }
-        return activeScopesInExecutionPeriod;
-    }
-    
-    public List<CurricularCourseScope> getActiveScopesInExecutionPeriodAndSemester(
-            final ExecutionPeriod executionPeriod) {
-        List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
-        for (Iterator iter = getScopes().iterator(); iter.hasNext();) {
-            CurricularCourseScope scope = (CurricularCourseScope) iter.next();
-            if ((scope.getCurricularSemester().getSemester().equals(executionPeriod.getSemester())) && (scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate().getTime())
+                    && (scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate()
+                            .getTime())
                     && ((scope.getEndDate() == null) || (scope.getEndDate().getTime().getTime() >= executionPeriod
                             .getEndDate().getTime()))) {
                 activeScopesInExecutionPeriod.add(scope);
@@ -168,20 +160,37 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return activeScopesInExecutionPeriod;
     }
-    
+
+    public List<CurricularCourseScope> getActiveScopesInExecutionPeriodAndSemester(
+            final ExecutionPeriod executionPeriod) {
+        List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
+        for (Iterator iter = getScopes().iterator(); iter.hasNext();) {
+            CurricularCourseScope scope = (CurricularCourseScope) iter.next();
+            if ((scope.getCurricularSemester().getSemester().equals(executionPeriod.getSemester()))
+                    && (scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate()
+                            .getTime())
+                    && ((scope.getEndDate() == null) || (scope.getEndDate().getTime().getTime() >= executionPeriod
+                            .getEndDate().getTime()))) {
+                activeScopesInExecutionPeriod.add(scope);
+            }
+        }
+        return activeScopesInExecutionPeriod;
+    }
+
     public List<CurricularCourseScope> getActiveScopesIntersectedByExecutionPeriod(
             final ExecutionPeriod executionPeriod) {
         List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
         for (final CurricularCourseScope scope : getScopes()) {
-        	if (scope.getBeginDate().getTime().getTime() < executionPeriod.getBeginDate().getTime()){
-        		if((scope.getEnd() == null) || (scope.getEnd().getTime() >= executionPeriod.getBeginDate().getTime())){
-        			activeScopesInExecutionPeriod.add(scope);
-        		}
-        	} else {
-        		if(scope.getBeginDate().getTime().getTime() <= executionPeriod.getEndDate().getTime()){
-        			activeScopesInExecutionPeriod.add(scope);
-        		}
-        	}
+            if (scope.getBeginDate().getTime().getTime() < executionPeriod.getBeginDate().getTime()) {
+                if ((scope.getEnd() == null)
+                        || (scope.getEnd().getTime() >= executionPeriod.getBeginDate().getTime())) {
+                    activeScopesInExecutionPeriod.add(scope);
+                }
+            } else {
+                if (scope.getBeginDate().getTime().getTime() <= executionPeriod.getEndDate().getTime()) {
+                    activeScopesInExecutionPeriod.add(scope);
+                }
+            }
         }
         return activeScopesInExecutionPeriod;
     }
@@ -192,8 +201,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public CurricularYear getCurricularYearByBranchAndSemester(final Branch branch,
             final Integer semester) {
-    	Date date = new Date();
-    	return getCurricularYearByBranchAndSemester(branch, semester, date);
+        Date date = new Date();
+        return getCurricularYearByBranchAndSemester(branch, semester, date);
     }
 
     public CurricularYear getCurricularYearByBranchAndSemester(final Branch branch,
@@ -265,7 +274,8 @@ public class CurricularCourse extends CurricularCourse_Base {
                     // curricularYearToReturn =
                     // getCurricularYearWithLowerYear(this.getScopes());
                     // } else {
-                    curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound, date);
+                    curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound,
+                            date);
                     // }
                 } else {
                     notFoundInSemester = true;
@@ -308,19 +318,21 @@ public class CurricularCourse extends CurricularCourse_Base {
         final List<CurricularCourseScope> scopes = this.getScopes();
         for (final CurricularCourseScope curricularCourseScope : scopes) {
             if (curricularCourseScope.getCurricularSemester().equals(curricularSemester)
-                    && curricularCourseScope.isActive() && curricularCourseScope.getBranch().equals(branch)) {
+                    && curricularCourseScope.isActive()
+                    && curricularCourseScope.getBranch().equals(branch)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean hasActiveScopeInGivenSemesterForGivenBranch(
-            final Integer semester, final Branch branch) {
+    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester,
+            final Branch branch) {
         final List<CurricularCourseScope> scopes = this.getScopes();
         for (final CurricularCourseScope curricularCourseScope : scopes) {
             if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
-                    && curricularCourseScope.isActive() && curricularCourseScope.getBranch().equals(branch)) {
+                    && curricularCourseScope.isActive()
+                    && curricularCourseScope.getBranch().equals(branch)) {
                 return true;
             }
         }
@@ -344,13 +356,14 @@ public class CurricularCourse extends CurricularCourse_Base {
         return !result.isEmpty();
     }
 
-   private CurricularYear getCurricularYearWithLowerYear(List listOfScopes, Date date) {
-        
-        if(listOfScopes.isEmpty()) {
-        	return null;
+    private CurricularYear getCurricularYearWithLowerYear(List listOfScopes, Date date) {
+
+        if (listOfScopes.isEmpty()) {
+            return null;
         }
-        
-        CurricularYear minCurricularYear = ((CurricularCourseScope) listOfScopes.get(0)).getCurricularSemester().getCurricularYear();
+
+        CurricularYear minCurricularYear = ((CurricularCourseScope) listOfScopes.get(0))
+                .getCurricularSemester().getCurricularYear();
 
         CurricularYear actualCurricularYear = null;
         for (CurricularCourseScope curricularCourseScope : (List<CurricularCourseScope>) listOfScopes) {
@@ -365,7 +378,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 
         return minCurricularYear;
     }
-   
 
     // -------------------------------------------------------------
     // END: Only for enrollment purposes
@@ -385,7 +397,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn) {
 
         Curriculum curriculum = new Curriculum();
-        
+
         curriculum.setCurricularCourse(this);
         curriculum.setProgram(program);
         curriculum.setProgramEn(programEn);
@@ -393,45 +405,55 @@ public class CurricularCourse extends CurricularCourse_Base {
         curriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
         curriculum.setGeneralObjectives(generalObjectives);
         curriculum.setGeneralObjectivesEn(generalObjectivesEn);
-        
+
         Calendar today = Calendar.getInstance();
         curriculum.setLastModificationDate(today.getTime());
 
         return curriculum;
     }
-	
-	public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod (final ExecutionPeriod executionPeriod) {
 
-		return (List)CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
+    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(
+            final ExecutionPeriod executionPeriod) {
+        return (List) CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
+            public boolean evaluate(Object o) {
+                ExecutionCourse executionCourse = (ExecutionCourse) o;
+                return executionCourse.getExecutionPeriod().equals(executionPeriod);
+            }
+        });
+    }
 
-			public boolean evaluate(Object o) {
-				ExecutionCourse executionCourse = (ExecutionCourse)o;
-				return executionCourse.getExecutionPeriod().equals(executionPeriod);
-			}
-		});
-	}
+    public List<ExecutionCourse> getExecutionCoursesByExecutionYear(final ExecutionYear executionYear) {
+        return (List) CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
+            public boolean evaluate(Object o) {
+                ExecutionCourse executionCourse = (ExecutionCourse) o;
+                return executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear);
+            }
+        });
+    }
 
     public Curriculum findLatestCurriculum() {
         Curriculum latestCurriculum = null;
         for (final Curriculum curriculum : getAssociatedCurriculums()) {
-            if (latestCurriculum == null || latestCurriculum.getLastModificationDate().before(curriculum.getLastModificationDate())) {
+            if (latestCurriculum == null
+                    || latestCurriculum.getLastModificationDate().before(
+                            curriculum.getLastModificationDate())) {
                 latestCurriculum = curriculum;
             }
         }
         return latestCurriculum;
     }
-    
+
     @Override
     public Double getTheoreticalHours() {
-        Double result = 0.0;        
+        Double result = 0.0;
         if (super.getTheoreticalHours() != null) {
             result = super.getTheoreticalHours();
         } else if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getTheoreticalHours();
-        }       
+        }
         return result;
     }
-    
+
     public Double getTheoreticalHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
@@ -439,15 +461,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
-    
+
     public Double getProblemsHours() {
-        Double result = 0.0;        
+        Double result = 0.0;
         if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getProblemsHours();
-        }       
+        }
         return result;
     }
-    
+
     public Double getProblemsHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
@@ -455,15 +477,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
-    
+
     public Double getLaboratorialHours() {
-        Double result = 0.0;        
+        Double result = 0.0;
         if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getLaboratorialHours();
-        }       
+        }
         return result;
     }
-    
+
     public Double getLaboratorialHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
@@ -471,15 +493,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
-    
+
     public Double getSeminaryHours() {
-        Double result = 0.0;        
+        Double result = 0.0;
         if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getSeminaryHours();
-        }       
+        }
         return result;
     }
-    
+
     public Double getSeminaryHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
@@ -487,15 +509,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
-    
+
     public Double getFieldWorkHours() {
-        Double result = 0.0;        
+        Double result = 0.0;
         if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getFieldWorkHours();
-        }       
+        }
         return result;
     }
-    
+
     public Double getFieldWorkHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
@@ -503,15 +525,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
-    
+
     public Double getTrainingPeriodHours() {
-        Double result = 0.0;        
+        Double result = 0.0;
         if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getTrainingPeriodHours();
-        }       
+        }
         return result;
     }
-    
+
     public Double getTrainingPeriodHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
@@ -519,15 +541,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
-    
+
     public Double getTutorialOrientationHours() {
-        Double result = 0.0;        
+        Double result = 0.0;
         if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getTutorialOrientationHours();
-        }       
+        }
         return result;
     }
-    
+
     public Double getTutorialOrientationHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
@@ -535,15 +557,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
-    
+
     public Double getAutonomousWorkHours() {
-        Double result = 0.0;        
+        Double result = 0.0;
         if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getAutonomousWorkHours();
-        }       
+        }
         return result;
     }
-    
+
     public Double getAutonomousWorkHours(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
@@ -551,15 +573,15 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
-    
+
     public Double getContactLoad() {
-        Double result = 0.0;        
+        Double result = 0.0;
         if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getContactLoad();
-        }       
+        }
         return result;
     }
-    
+
     public Double getContactLoad(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
@@ -568,15 +590,14 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    
     public Double getTotalLoad() {
-        Double result = 0.0;        
+        Double result = 0.0;
         if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getTotalLoad();
-        }       
+        }
         return result;
     }
-    
+
     public Double getTotalLoad(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
@@ -584,18 +605,18 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
-    
+
     @Override
     public Double getEctsCredits() {
-        Double result = 0.0;        
+        Double result = 0.0;
         if (super.getEctsCredits() != null) {
             result = super.getEctsCredits();
         } else if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getEctsCredits();
-        }       
+        }
         return result;
-    }    
-    
+    }
+
     public Double getEctsCredits(CurricularPeriod curricularPeriod) {
         double result = 0.0;
         if (this.getCompetenceCourse() != null) {
@@ -605,26 +626,28 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public CurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, Date date) {
-    	CurricularSemester result = null;
-    	for (CurricularCourseScope curricularCourseScope : getScopes()) {
-			if(curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope.isActive(date)) {
-				if(result == null) {
-					result = curricularCourseScope.getCurricularSemester();
-				} else {
-					if(result.getCurricularYear().getYear() > curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()) {
-						result = curricularCourseScope.getCurricularSemester();
-					}
-				}
-			}
-		}
-    	return result;
+        CurricularSemester result = null;
+        for (CurricularCourseScope curricularCourseScope : getScopes()) {
+            if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
+                    && curricularCourseScope.isActive(date)) {
+                if (result == null) {
+                    result = curricularCourseScope.getCurricularSemester();
+                } else {
+                    if (result.getCurricularYear().getYear() > curricularCourseScope
+                            .getCurricularSemester().getCurricularYear().getYear()) {
+                        result = curricularCourseScope.getCurricularSemester();
+                    }
+                }
+            }
+        }
+        return result;
     }
-    
+
     private List<EnrolmentEvaluation> getActiveEnrollments(ExecutionPeriod executionPeriod,
             Student student) {
         List<EnrolmentEvaluation> results = new ArrayList<EnrolmentEvaluation>();
         for (final CurriculumModule curriculumModule : getCurriculumModules()) {
-        	Enrolment enrollment = (Enrolment) curriculumModule;
+            Enrolment enrollment = (Enrolment) curriculumModule;
             boolean filters = true;
             filters &= !enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED);
             filters &= executionPeriod == null
@@ -638,41 +661,42 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return results;
     }
-    
-    public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionPeriod executionPeriod){
-    	List<Enrolment> result = new ArrayList<Enrolment>();
-    	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
-			final Enrolment enrolment = (Enrolment) curriculumModule;
-			if(enrolment.getExecutionPeriod().equals(executionPeriod)) {
-				result.add(enrolment);
-			}
-		}
-    	return result;
+
+    public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+        List<Enrolment> result = new ArrayList<Enrolment>();
+        for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+            final Enrolment enrolment = (Enrolment) curriculumModule;
+            if (enrolment.getExecutionPeriod().equals(executionPeriod)) {
+                result.add(enrolment);
+            }
+        }
+        return result;
     }
 
-    public int countEnrolmentsByExecutionPeriod(final ExecutionPeriod executionPeriod){
-    	return getEnrolmentsByExecutionPeriod(executionPeriod).size();
+    public int countEnrolmentsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+        return getEnrolmentsByExecutionPeriod(executionPeriod).size();
     }
 
     public List<Enrolment> getEnrolmentsByYear(String year) {
-    	List<Enrolment> result = new ArrayList<Enrolment>();
-    	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
-			final Enrolment enrolment = (Enrolment) curriculumModule;
-			if(enrolment.getExecutionPeriod().getExecutionYear().getYear().equals(year)) {
-				result.add(enrolment);
-			}
-		}
-    	return result;
+        List<Enrolment> result = new ArrayList<Enrolment>();
+        for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+            final Enrolment enrolment = (Enrolment) curriculumModule;
+            if (enrolment.getExecutionPeriod().getExecutionYear().getYear().equals(year)) {
+                result.add(enrolment);
+            }
+        }
+        return result;
     }
-    
-    public Enrolment getEnrolmentByStudentAndYear(Student student, String year) { 
-    	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
-			final Enrolment enrolment = (Enrolment) curriculumModule;
-			if(enrolment.getStudentCurricularPlan().getStudent().equals(student) && enrolment.getExecutionPeriod().getExecutionYear().getYear().equals(year)) {
-				return enrolment;
-			}
-		}
-    	return null;
+
+    public Enrolment getEnrolmentByStudentAndYear(Student student, String year) {
+        for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+            final Enrolment enrolment = (Enrolment) curriculumModule;
+            if (enrolment.getStudentCurricularPlan().getStudent().equals(student)
+                    && enrolment.getExecutionPeriod().getExecutionYear().getYear().equals(year)) {
+                return enrolment;
+            }
+        }
+        return null;
     }
 
     public List<EnrolmentEvaluation> getActiveEnrollmentEvaluations(Student student) {
@@ -696,50 +720,57 @@ public class CurricularCourse extends CurricularCourse_Base {
 
         return results;
     }
-    
-    protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
+
+    protected void checkContextsFor(final CourseGroup parentCourseGroup,
+            final CurricularPeriod curricularPeriod) {
         for (final Context context : this.getParentContexts()) {
-            if (context.getParentCourseGroup() == parentCourseGroup && context.getCurricularPeriod() == curricularPeriod) {
+            if (context.getParentCourseGroup() == parentCourseGroup
+                    && context.getCurricularPeriod() == curricularPeriod) {
                 throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
             }
         }
     }
-    
+
     protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
         // no rules to add
     }
-    
-    protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
+
+    protected void checkOwnRestrictions(final CourseGroup parentCourseGroup,
+            final CurricularPeriod curricularPeriod) {
         if (getCompetenceCourse() != null && getCompetenceCourse().getRegime() == RegimeType.ANUAL
-            && (curricularPeriod.getOrder() == null || curricularPeriod.getOrder() != 1)) {
-            throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
+                && (curricularPeriod.getOrder() == null || curricularPeriod.getOrder() != 1)) {
+            throw new DomainException(
+                    "competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
         }
     }
-    
+
     @Override
     public String getName() {
-        if ((super.getName() == null || super.getName().length() == 0) && this.getCompetenceCourse() != null) {
+        if ((super.getName() == null || super.getName().length() == 0)
+                && this.getCompetenceCourse() != null) {
             return this.getCompetenceCourse().getName();
         }
         return super.getName();
-    }        
-    
-        @Override
+    }
+
+    @Override
     public String getNameEn() {
-        if ((super.getNameEn() == null || super.getNameEn().length() == 0) && this.getCompetenceCourse() != null) {
+        if ((super.getNameEn() == null || super.getNameEn().length() == 0)
+                && this.getCompetenceCourse() != null) {
             return this.getCompetenceCourse().getNameEn();
         }
         return super.getNameEn();
     }
-    
+
     @Override
     public String getAcronym() {
-        if ((super.getAcronym() == null || super.getAcronym().length() == 0) && this.getCompetenceCourse() != null) {
+        if ((super.getAcronym() == null || super.getAcronym().length() == 0)
+                && this.getCompetenceCourse() != null) {
             return this.getCompetenceCourse().getAcronym();
         }
         return super.getAcronym();
     }
-    
+
     @Override
     public Boolean getBasic() {
         if (super.getBasic() == null && this.getCompetenceCourse() != null) {
@@ -747,11 +778,11 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return super.getBasic();
     }
-    
+
     public RegimeType getRegime() {
         if (this.getCompetenceCourse() != null) {
             return this.getCompetenceCourse().getRegime();
-		}
+        }
         return null;
     }
 
@@ -765,19 +796,22 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return false;
     }
-    
+
     public boolean isEquivalent(CurricularCourse oldCurricularCourse) {
-    	return this.equals(oldCurricularCourse) || this.getOldCurricularCourses().contains(oldCurricularCourse) || this.getCompetenceCourse().getAssociatedCurricularCourses().contains(oldCurricularCourse);
+        return this.equals(oldCurricularCourse)
+                || this.getOldCurricularCourses().contains(oldCurricularCourse)
+                || this.getCompetenceCourse().getAssociatedCurricularCourses().contains(
+                        oldCurricularCourse);
     }
 
-	public boolean hasScopeForCurricularYear(final Integer curricularYear) {
-		for (final CurricularCourseScope curricularCourseScope : getScopes()) {
-			final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
-			if (curricularSemester.getCurricularYear().getYear().equals(curricularYear)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean hasScopeForCurricularYear(final Integer curricularYear) {
+        for (final CurricularCourseScope curricularCourseScope : getScopes()) {
+            final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
+            if (curricularSemester.getCurricularYear().getYear().equals(curricularYear)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

@@ -38,7 +38,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
-    private String unitName, unitCostCenter, unitTypeName, unitBeginDate, unitEndDate;
+    private String unitName, unitCostCenter, unitTypeName, unitBeginDate, unitEndDate, unitAcronym;
 
     private String functionName, functionTypeName, functionBeginDate, functionEndDate;
 
@@ -759,6 +759,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void setUnitEndDate(String unitEndDate) {
         this.unitEndDate = unitEndDate;
+    }
+    
+    public String getUnitAcronym() throws FenixFilterException, FenixServiceException {
+        if (this.unitAcronym == null && this.getChooseUnit() != null) {
+            this.unitAcronym = this.getChooseUnit().getAcronym();
+        }
+        return unitAcronym;
+    }
+
+    public void setUnitAcronym(String unitAcronym) {
+        this.unitAcronym = unitAcronym;
     }
 
     public String getUnitName() throws FenixFilterException, FenixServiceException {

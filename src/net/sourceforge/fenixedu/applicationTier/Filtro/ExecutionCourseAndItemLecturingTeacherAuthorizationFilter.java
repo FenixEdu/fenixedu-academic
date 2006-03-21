@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -56,12 +56,12 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
         try {
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                        ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
+                        infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                        ExecutionCourse.class, (Integer) argumentos[0]);
-            }            
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
+                        (Integer) argumentos[0]);
+            }
             if (argumentos[1] instanceof InfoItem) {
                 infoItem = (InfoItem) argumentos[1];
 
@@ -95,13 +95,13 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
             } else {
                 executionCourseID = (Integer) argumentos[0];
             }
-           
+
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-                professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher
-                        .getIdInternal(), executionCourseID);
+                ExecutionCourse executionCourse = RootDomainObject.getInstance()
+                        .readExecutionCourseByOID(executionCourseID);
+                professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             }
             return professorship != null;
 

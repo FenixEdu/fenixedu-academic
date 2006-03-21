@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
@@ -50,11 +49,8 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
     protected DomainObject readObjectByUnique(DomainObject domainObject, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
-        Professorship professorship = (Professorship) domainObject;
-        IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
-        professorship = professorshipDAO.readByTeacherAndExecutionCourse(professorship.getTeacher()
-                .getIdInternal(), professorship.getExecutionCourse().getIdInternal());
-        return professorship;
+        
+        return (Professorship) domainObject;
     }
 
 }

@@ -4,10 +4,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -21,11 +23,18 @@ public class DeleteProfessorship extends Service {
 
     public Boolean run(Integer infoExecutionCourseCode, Integer teacherCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-        IPersistentShiftProfessorship shiftProfessorshipDAO = persistentSupport.getIPersistentShiftProfessorship();
-        
-        Professorship professorshipToDelete = persistentProfessorship.readByTeacherAndExecutionCourse(
-                teacherCode, infoExecutionCourseCode);
+
+        IPersistentShiftProfessorship shiftProfessorshipDAO = persistentSupport
+                .getIPersistentShiftProfessorship();
+
+        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherCode);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
+                infoExecutionCourseCode);
+
+        Professorship professorshipToDelete = null;
+        if (teacher != null) {
+            professorshipToDelete = teacher.getProfessorshipByExecutionCourse(executionCourse);
+        }
 
         List shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorshipToDelete);
 
@@ -47,17 +56,17 @@ public class DeleteProfessorship extends Service {
         } else {
             if (hasCredits) {
                 throw new ExistingAssociatedCredits("error.remove.professorship");
-            } 
+            }
         }
         return Boolean.TRUE;
-    }    
+    }
 
     protected boolean canDeleteResponsibleFor() {
         return false;
     }
 
     private class ExistingAssociatedCredits extends FenixServiceException {
-        private ExistingAssociatedCredits(String key){
+        private ExistingAssociatedCredits(String key) {
             super(key);
         }
     }

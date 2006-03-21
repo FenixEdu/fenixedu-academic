@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -50,20 +49,17 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
                 .readByOID(Department.class, departmentId);
         
         List teachers = department.getCurrentTeachers();
-
         Iterator iter = teachers.iterator();
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-        
+       
         List professorships = new ArrayList();
         List responsibleFors = new ArrayList();
         while (iter.hasNext()) {
             Teacher teacher = (Teacher) iter.next();
             List teacherProfessorships = null;
             if (executionYear == null) {
-                teacherProfessorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
+                teacherProfessorships = teacher.getProfessorships();
             } else {
-                teacherProfessorships = persistentProfessorship.readByTeacherAndExecutionYear(teacher
-                        .getIdInternal(), executionYear.getIdInternal());
+                teacherProfessorships = teacher.getProfessorships(executionYear);
             }
             if (teacherProfessorships != null) {
                 professorships.addAll(teacherProfessorships);

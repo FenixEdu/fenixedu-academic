@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -78,10 +77,8 @@ public class PrepareInsertSummary extends Service {
                 }
             });
         }
-
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
+        
         List infoProfessorships = new ArrayList();
-
         ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
         List rooms = persistentRoom.readAll();
         List infoRooms = new ArrayList();
@@ -100,8 +97,7 @@ public class PrepareInsertSummary extends Service {
         Teacher teacher = Teacher.readByNumber(teacherNumber);
         Integer professorshipSelect = null;
         if (teacher != null) {
-            Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
-                    teacher.getIdInternal(), executionCourse.getIdInternal());
+            Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);            
             if (professorship != null) {
                 professorshipSelect = professorship.getIdInternal();
                 infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
