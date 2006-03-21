@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.research.result.Authorship;
 import net.sourceforge.fenixedu.domain.research.result.Patent;
 import net.sourceforge.fenixedu.domain.research.result.Publication;
 import net.sourceforge.fenixedu.domain.research.result.Result;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
 public class Person extends Person_Base {
