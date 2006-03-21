@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
@@ -158,7 +157,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurriculumV
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoExecucaoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DepartmentVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEvaluationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EquivalentEnrolmentForEnrolmentEquivalenceVO;
@@ -537,10 +535,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentGrantContract getIPersistentGrantContract() {
         return new GrantContractVO();
-    }
-
-    public IPersistentEnrolmentEquivalence getIPersistentEnrolmentEquivalence() {
-        return new EnrolmentEquivalenceVO();
     }
 
     public IPersistentSummary getIPersistentSummary() {

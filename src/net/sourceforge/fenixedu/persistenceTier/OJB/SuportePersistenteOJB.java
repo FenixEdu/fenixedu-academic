@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
@@ -450,16 +449,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new CurricularSemesterOJB();
 	}
 
-	public IPersistentEnrolmentEquivalence getIPersistentEnrolmentEquivalence()
-	{
-		return new EnrolmentEquivalenceOJB();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentProfessorship()
-	 */
 	public IPersistentProfessorship getIPersistentProfessorship()
 	{
 		return new ProfessorshipOJB();
