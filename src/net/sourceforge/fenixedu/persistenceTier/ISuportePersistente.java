@@ -155,8 +155,6 @@ public interface ISuportePersistente
 
 	public IPersistentEmployee getIPersistentEmployee();
 
-	public IPersistentEquivalentEnrolmentForEnrolmentEquivalence getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
-
 	public IPersistentSummary getIPersistentSummary();
 
 	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence();

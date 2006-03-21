@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -445,26 +444,11 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new MarkOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentEmployee()
-	 */
 	public IPersistentEmployee getIPersistentEmployee()
 	{
 		return new EmployeeOJB();
 	}
 
-	public IPersistentEquivalentEnrolmentForEnrolmentEquivalence getIPersistentEquivalentEnrolmentForEnrolmentEquivalence()
-	{
-		return new EquivalentEnrolmentForEnrolmentEquivalenceOJB();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSummary()
-	 */
 	public IPersistentSummary getIPersistentSummary()
 	{
 		return new SummaryOJB();
@@ -902,12 +886,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new SentSmsOJB();
 	}
 
-	// TJBF & PFON
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublication()
-	 */
 	public IPersistentPublication getIPersistentPublication()
 	{
 		return new PublicationOJB();
