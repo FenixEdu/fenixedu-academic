@@ -1,10 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-/**
- * @author dcs-rjao
- * 
- * 24/Mar/2003
- */
+import net.sourceforge.fenixedu.util.StudentType;
 
 public class StudentKind extends StudentKind_Base {
 
@@ -13,4 +9,13 @@ public class StudentKind extends StudentKind_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
+    public static StudentKind readByStudentType(final StudentType studentType) {
+        for (final StudentKind studentKind : RootDomainObject.getInstance().getStudentKindsSet()) {
+            if (studentKind.getStudentType().equals(studentType)) {
+                return studentKind;
+            }
+        }
+        return null;
+    }
+    
 }

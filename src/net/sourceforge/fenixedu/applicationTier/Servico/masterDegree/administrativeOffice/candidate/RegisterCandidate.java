@@ -37,23 +37,16 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.StudentState;
 import net.sourceforge.fenixedu.util.StudentType;
 
-/**
- * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- */
 public class RegisterCandidate extends Service {
 
-    public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber,
-            IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
-                        candidateID);
+    public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
         Person person = masterDegreeCandidate.getPerson();
         Student student = person.getStudentByType(DegreeType.MASTER_DEGREE);
 
@@ -63,19 +56,18 @@ public class RegisterCandidate extends Service {
         person.getPersonRoles().remove(person.getPersonRole(RoleType.MASTER_DEGREE_CANDIDATE));
 
         // check if old student number is free
-        checkOldStudentNumber(studentNumber, person, persistentSupport);
+        checkOldStudentNumber(studentNumber, person);
 
         // create new student
         if (student == null) {
-            student = createNewStudent(studentNumber, person, persistentSupport);
+            student = createNewStudent(studentNumber, person);
         }
 
         checkDuplicateStudentCurricularPlan(masterDegreeCandidate, student);
 
-        StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(student, branchID,
-                masterDegreeCandidate, persistentSupport);
+        StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(student, branchID, masterDegreeCandidate);
 
-        createEnrolments(userView, masterDegreeCandidate, studentCurricularPlan, persistentSupport);
+        createEnrolments(userView, masterDegreeCandidate, studentCurricularPlan);
 
         updateCandidateSituation(masterDegreeCandidate);
 
@@ -87,8 +79,7 @@ public class RegisterCandidate extends Service {
 
     }
 
-    private InfoCandidateRegistration createNewInfoCandidateRegistration(
-            MasterDegreeCandidate masterDegreeCandidate, StudentCurricularPlan studentCurricularPlan) {
+    private InfoCandidateRegistration createNewInfoCandidateRegistration(MasterDegreeCandidate masterDegreeCandidate, StudentCurricularPlan studentCurricularPlan) {
         InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
         infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
                 .newInfoFromDomain(masterDegreeCandidate));
@@ -106,8 +97,7 @@ public class RegisterCandidate extends Service {
         return infoCandidateRegistration;
     }
 
-    private void createGratuitySituation(MasterDegreeCandidate masterDegreeCandidate,
-            StudentCurricularPlan studentCurricularPlan)
+    private void createGratuitySituation(MasterDegreeCandidate masterDegreeCandidate, StudentCurricularPlan studentCurricularPlan)
             throws GratuityValuesNotDefinedServiceException {
 
         GratuityValues gratuityValues = masterDegreeCandidate.getExecutionDegree().getGratuityValues();
@@ -118,7 +108,6 @@ public class RegisterCandidate extends Service {
         }
 
         DomainFactory.makeGratuitySituation(gratuityValues, studentCurricularPlan);
-
     }
 
     private void copyQualifications(MasterDegreeCandidate masterDegreeCandidate, Person person) {
@@ -154,22 +143,18 @@ public class RegisterCandidate extends Service {
         candidateSituation.setSituation(SituationName.ENROLLED_OBJ);
     }
 
-    private void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
-            StudentCurricularPlan studentCurricularPlan, ISuportePersistente persistentSupport)
-            throws ExcepcaoPersistencia {
+    private void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate, StudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
         List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
         ExecutionPeriod executionPeriod = persistentSupport.getIPersistentExecutionPeriod()
                 .readActualExecutionPeriod();
         for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
-            Enrolment enrolment = DomainFactory.makeEnrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(),
+            DomainFactory.makeEnrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(),
                     executionPeriod, EnrollmentCondition.FINAL, userView.getUtilizador());
         }
     }
 
-    private StudentCurricularPlan createNewStudentCurricularPlan(Student student, Integer branchID,
-            MasterDegreeCandidate masterDegreeCandidate, ISuportePersistente persistentSupport)
-            throws ExcepcaoPersistencia {
-        Branch branch = (Branch) persistentObject.readByOID(Branch.class, branchID);
+    private StudentCurricularPlan createNewStudentCurricularPlan(Student student, Integer branchID, MasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
+        Branch branch = rootDomainObject.readBranchByOID(branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree()
                 .getDegreeCurricularPlan();
         Date startDate = Calendar.getInstance().getTime();
@@ -180,15 +165,13 @@ public class RegisterCandidate extends Service {
         return studentCurricularPlan;
     }
 
-    private Student createNewStudent(Integer studentNumber, Person person, ISuportePersistente persistentSupport)
-            throws ExcepcaoPersistencia {
+    private Student createNewStudent(Integer studentNumber, Person person) throws ExcepcaoPersistencia {
         Student student;
         if (studentNumber == null) {
             studentNumber = persistentSupport.getIPersistentStudent().generateStudentNumber(DegreeType.MASTER_DEGREE);
         }
 
-        StudentKind studentKind = persistentSupport.getIPersistentStudentKind().readByStudentType(
-                new StudentType(StudentType.NORMAL));
+        StudentKind studentKind = StudentKind.readByStudentType(new StudentType(StudentType.NORMAL));
         StudentState state = new StudentState(StudentState.INSCRITO);
         student = DomainFactory.makeStudent(person, studentNumber, studentKind, state, false, false,
                 EntryPhase.FIRST_PHASE_OBJ, DegreeType.MASTER_DEGREE);
@@ -198,10 +181,8 @@ public class RegisterCandidate extends Service {
         return student;
     }
 
-    private void checkDuplicateStudentCurricularPlan(MasterDegreeCandidate masterDegreeCandidate,
-            Student student) throws ExistingServiceException {
-        List<StudentCurricularPlan> studentCurricularPlans = masterDegreeCandidate.getExecutionDegree()
-                .getDegreeCurricularPlan().getStudentCurricularPlans();
+    private void checkDuplicateStudentCurricularPlan(MasterDegreeCandidate masterDegreeCandidate, Student student) throws ExistingServiceException {
+        List<StudentCurricularPlan> studentCurricularPlans = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getStudentCurricularPlans();
         for (StudentCurricularPlan scp : studentCurricularPlans) {
             if (scp.getStudent().equals(student)
                     && scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) {
@@ -210,8 +191,7 @@ public class RegisterCandidate extends Service {
         }
     }
 
-    private void checkOldStudentNumber(Integer studentNumber, Person person, ISuportePersistente persistentSupport)
-            throws ExcepcaoPersistencia, ExistingServiceException {
+    private void checkOldStudentNumber(Integer studentNumber, Person person) throws ExcepcaoPersistencia, ExistingServiceException {
         if (studentNumber != null) {
             Student existingStudent = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(
                     studentNumber, DegreeType.MASTER_DEGREE);
@@ -221,14 +201,7 @@ public class RegisterCandidate extends Service {
         }
     }
 
-    /**
-     * @param situation
-     * @return
-     * @throws InvalidChangeServiceException
-     */
-    private void checkCandidateSituation(CandidateSituation situation)
-            throws InvalidChangeServiceException {
-
+    private void checkCandidateSituation(CandidateSituation situation) throws InvalidChangeServiceException {
         if (situation.getSituation().equals(SituationName.ADMITIDO_OBJ)
                 || situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_OBJ)
                 || situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_FINALIST_OBJ)
