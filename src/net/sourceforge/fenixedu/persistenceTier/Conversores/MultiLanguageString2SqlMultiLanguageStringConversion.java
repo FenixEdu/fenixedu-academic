@@ -8,39 +8,39 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 public class MultiLanguageString2SqlMultiLanguageStringConversion implements FieldConversion {
 
-	public Object javaToSql(Object source) throws ConversionException {
-		if (source instanceof MultiLanguageString) {
-			return ((MultiLanguageString) source).toString();
-		}
-		return source;
-	}
+    public Object javaToSql(Object source) throws ConversionException {
+        if (source instanceof MultiLanguageString) {
+            return ((MultiLanguageString) source).toString();
+        }
+        return source;
+    }
 
-	public Object sqlToJava(Object source) throws ConversionException {
-		if (source instanceof String) {
-			String src = (String) source;
+    public Object sqlToJava(Object source) throws ConversionException {
+        if (source == null || source.equals("")) {
+            return null;
+        }
+        if (source instanceof String) {
+            String src = (String) source;
 
-			if(src == null || src.equals("")){
-	        	return null;
-	        }
-			final String[] MLSFromSql = src.split("\001");
+            final String[] MLSFromSql = src.split("\001");
 
-			if (MLSFromSql != null) {
+            if (MLSFromSql != null) {
 
-				MultiLanguageString multiLanguageString = new MultiLanguageString();
+                MultiLanguageString multiLanguageString = new MultiLanguageString();
 
-				for (int i = 0; i < MLSFromSql.length; i++) {
+                for (int i = 0; i < MLSFromSql.length; i++) {
 
-					String[] s = MLSFromSql[i].split("\002");
+                    String[] s = MLSFromSql[i].split("\002");
 
-					final String language = s[0];
-					final String content = s[1];
+                    final String language = s[0];
+                    final String content = s[1];
 
-					multiLanguageString.addContent(Language.valueOf(language), content);
-				}
-				return multiLanguageString;
-			}
-			return null;
-		}
-		return source;
-	}
+                    multiLanguageString.addContent(Language.valueOf(language), content);
+                }
+                return multiLanguageString;
+            }
+            return null;
+        }
+        return source;
+    }
 }
