@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsPaymentFileUtils;
@@ -78,7 +77,6 @@ public class ProcessSibsPaymentFile extends Service {
         final IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
                 .getIPersistentInsuranceTransaction();
         final IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
-        final IPersistentInsuranceValue insuranceValueDAO = persistentSupport.getIPersistentInsuranceValue();
         for (int i = 0; i < totalPaymentEntries; i++) {
 
             SibsPaymentFileEntry sibsPaymentFileEntry = sibsPaymentFileEntries.get(i);
