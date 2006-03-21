@@ -234,8 +234,6 @@ public interface ISuportePersistente
 
 	public IPersistentWebSiteItem getIPersistentWebSiteItem();
 
-	public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis();
-
 	public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion();
 
 	public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion();

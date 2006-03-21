@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesis;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
@@ -273,7 +272,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		}
 		if (descriptorMap == null)
 		{
-			descriptorMap = new HashMap();
+			descriptorMap = new HashMap<String,DescriptorRepository>();
 
 		}
 		return _instance;
@@ -484,39 +483,29 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new CurricularCourseEquivalenceOJB();
 	}
 
-	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003)
 	public IPersistentSeminaryModality getIPersistentSeminaryModality()
 	{
 		return new ModalityOJB();
 	}
 
-	// by Barbosa (October 28th, 2003)
 	public IPersistentGrantOwner getIPersistentGrantOwner()
 	{
 		return new GrantOwnerOJB();
 	}
 
-	// by Barbosa (November 18th, 2003)
 	public IPersistentGrantContract getIPersistentGrantContract()
 	{
 		return new GrantContractOJB();
 	}
 
-	// By Barbosa (November 19th, 2003)
 	public IPersistentGrantType getIPersistentGrantType()
 	{
 		return new GrantTypeOJB();
 	}
 
-	// By Barbosa (November 20th, 2003)
 	public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher()
 	{
 		return new GrantOrientationTeacherOJB();
-	}
-
-	public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis()
-	{
-		return new MasterDegreeThesisOJB();
 	}
 
 	public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion()
