@@ -37,8 +37,6 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
         final Integer idInternal = (arguments[0] instanceof Integer) ? (Integer) arguments[0] : ((InfoObject)arguments[0]).getIdInternal();
 
         if (userView == null || userView.getRoles() == null || !verifyCondition(userView, idInternal)) {
-            System.out.println("userview: " + userView);
-            System.out.println("verifyCondition: " + verifyCondition(userView, idInternal));
             throw new NotAuthorizedFilterException();
         }
 
@@ -63,15 +61,11 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
             } else if (person.getEmployee() != null && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
                 final Employee employee = person.getEmployee();
                 final Department department = employee.getCurrentDepartmentWorkingPlace();
-                System.out.println("Department: " + department.getName());
                 for (final CompetenceCourse competenceCourse : department.getCompetenceCoursesSet()) {
                     for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
                         if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE) {
-                            System.out.println("curricular course: " + curricularCourse.getName());
                             final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-                            System.out.println("degree curricular plan: " + degreeCurricularPlan.getName());
                             if (degreeCurricularPlan.getExecutionDegreesSet().contains(executionDegree)) {
-                                System.out.println("found one.");
                                 return true;
                             }
                         }

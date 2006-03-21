@@ -8,14 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -40,7 +38,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
@@ -406,13 +403,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         Integer executionDegreeOID = Integer.valueOf((String) dynaActionForm.get("executionDegreeOID"));
         request.setAttribute("executionDegreeOID", executionDegreeOID);
 
-        HttpSession session = request.getSession(false);
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
-
         DynaActionForm finalWorkForm = (DynaActionForm) form;
-
-        finalWorkForm.set("degree", infoExecutionDegree.getIdInternal().toString());
+        finalWorkForm.set("degree", executionDegreeOID.toString());
 
         final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, executionDegreeOID);
         final Scheduleing scheduleing = executionDegree.getScheduling();
@@ -437,6 +429,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         DynaActionForm finalDegreeWorkScheduleingForm = (DynaActionForm) form;
 
+        String executionDegreeOIDString = finalDegreeWorkScheduleingForm.getString("executionDegreeOID");
+        Integer executionDegreeOID = Integer.valueOf(executionDegreeOIDString);
         String startOfProposalPeriodDateString = (String) finalDegreeWorkScheduleingForm
                 .get("startOfProposalPeriodDate");
         String startOfProposalPeriodHourString = (String) finalDegreeWorkScheduleingForm
@@ -475,16 +469,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             return mapping.getInputForward();
         }
 
-        IUserView userView = SessionUtils.getUserView(request);
-        HttpSession session = request.getSession(false);
-
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
-
-        Object args[] = { infoExecutionDegree.getIdInternal(), startOfProposalPeriod,
-                endOfProposalPeriod };
+        Object args[] = { executionDegreeOID, startOfProposalPeriod, endOfProposalPeriod };
         try {
-            ServiceUtils.executeService(userView, "DefineFinalDegreeWorkProposalSubmisionPeriod", args);
+            executeService(request, "DefineFinalDegreeWorkProposalSubmisionPeriod", args);
         } catch (NotAuthorizedFilterException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error", new ActionError("error.exception.notAuthorized2"));
@@ -504,6 +491,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         DynaActionForm finalDegreeWorkScheduleingForm = (DynaActionForm) form;
 
+        String executionDegreeOIDString = finalDegreeWorkScheduleingForm.getString("executionDegreeOID");
+        Integer executionDegreeOID = Integer.valueOf(executionDegreeOIDString);
         String startOfCandidacyPeriodDateString = (String) finalDegreeWorkScheduleingForm
                 .get("startOfCandidacyPeriodDate");
         String startOfCandidacyPeriodHourString = (String) finalDegreeWorkScheduleingForm
@@ -542,16 +531,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             return mapping.getInputForward();
         }
 
-        IUserView userView = SessionUtils.getUserView(request);
-        HttpSession session = request.getSession(false);
-
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
-
-        Object args[] = { infoExecutionDegree.getIdInternal(), startOfCandidacyPeriod,
+        Object args[] = { executionDegreeOID, startOfCandidacyPeriod,
                 endOfCandidacyPeriod };
         try {
-            ServiceUtils.executeService(userView, "DefineFinalDegreeWorkCandidacySubmisionPeriod", args);
+            executeService(request, "DefineFinalDegreeWorkCandidacySubmisionPeriod", args);
         } catch (NotAuthorizedFilterException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error", new ActionError("error.exception.notAuthorized2"));
@@ -841,16 +824,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException, FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
-        HttpSession session = request.getSession(false);
-
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         Integer executionDegreeOID = Integer.valueOf((String) dynaActionForm.get("executionDegreeOID"));
         request.setAttribute("executionDegreeOID", executionDegreeOID);
 
-        Object args[] = { infoExecutionDegree.getIdInternal() };
+        Object args[] = { executionDegreeOID };
         try {
             ServiceUtils.executeService(userView, "PublishAprovedFinalDegreeWorkProposals", args);
         } catch (NotAuthorizedFilterException e) {
@@ -883,13 +862,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response,
             FinalDegreeWorkProposalStatus status) throws FenixActionException, FenixFilterException, FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
-        HttpSession session = request.getSession(false);
-
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String[] selectedProposals = (String[]) finalWorkForm.get("selectedProposals");
+        String executionDegreeOIDString = finalWorkForm.getString("executionDegreeOID");
+        Integer executionDegreeOID = Integer.valueOf(executionDegreeOIDString);
 
         if (selectedProposals != null && selectedProposals.length > 0) {
             List selectedProposalOIDs = new ArrayList();
@@ -899,7 +876,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 }
             }
 
-            Object args[] = { infoExecutionDegree.getIdInternal(), selectedProposalOIDs, status };
+            Object args[] = { executionDegreeOID, selectedProposalOIDs, status };
             try {
                 ServiceUtils.executeService(userView, "ChangeStatusOfFinalDegreeWorkProposals", args);
             } catch (FenixServiceException e) {
@@ -915,6 +892,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             FenixFilterException {
 
         DynaActionForm finalDegreeWorkScheduleingForm = (DynaActionForm) form;
+
+        String executionDegreeOIDString = finalDegreeWorkScheduleingForm.getString("executionDegreeOID");
+        Integer executionDegreeOID = Integer.valueOf(executionDegreeOIDString);
 
         String minimumNumberOfCompletedCoursesString = (String) finalDegreeWorkScheduleingForm
                 .get("minimumNumberOfCompletedCourses");
@@ -949,12 +929,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         }
 
         IUserView userView = SessionUtils.getUserView(request);
-        HttpSession session = request.getSession(false);
 
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
         try {
-            Object args[] = { infoExecutionDegree.getIdInternal(), minimumNumberOfCompletedCourses,
+            Object args[] = { executionDegreeOID, minimumNumberOfCompletedCourses,
                     minimumNumberOfStudents, maximumNumberOfStudents,
                     maximumNumberOfProposalCandidaciesPerGroup };
             ServiceUtils.executeService(userView, "DefineFinalDegreeWorkCandidacyRequirements", args);

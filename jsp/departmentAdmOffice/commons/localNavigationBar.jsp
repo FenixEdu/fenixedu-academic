@@ -83,7 +83,6 @@
 		</html:link>
 	</ul>
 	--%>
-<!--
 	<ul>
 		<li class="navheader">
 			<strong><bean:message key="title.final.degree.works"/></strong>
@@ -96,5 +95,4 @@
 			</html:link>
 		</li>
 	</ul>
--->
 </logic:present>
