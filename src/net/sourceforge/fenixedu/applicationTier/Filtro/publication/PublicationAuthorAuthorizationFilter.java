@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAut
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.publication.Authorship;
-import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.research.result.Authorship;
+import net.sourceforge.fenixedu.domain.research.result.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
@@ -39,7 +39,7 @@ public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizat
             Person possibleAuthor = Person.readPersonByUsername(id.getUtilizador());
 
             //check if the teacher is any of the owners of the publication
-            List<Authorship> authorships = new ArrayList(publication.getPublicationAuthorships());
+            List<Authorship> authorships = new ArrayList(publication.getResultAuthorships());
             for (Authorship authorship : authorships) {
                 if (authorship.getAuthor().equals(possibleAuthor)) {
                     return true;

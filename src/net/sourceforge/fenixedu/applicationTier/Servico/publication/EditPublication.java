@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationAuthor;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.publication.Publication;
-import net.sourceforge.fenixedu.domain.publication.PublicationType;
+import net.sourceforge.fenixedu.domain.research.result.Publication;
+import net.sourceforge.fenixedu.domain.research.result.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditPublication extends Service {

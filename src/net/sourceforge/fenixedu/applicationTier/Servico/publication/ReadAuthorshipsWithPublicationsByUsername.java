@@ -11,21 +11,23 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublications;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.research.result.Authorship;
+import net.sourceforge.fenixedu.domain.research.result.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadAuthorshipsByUsername extends Service {
+public class ReadAuthorshipsWithPublicationsByUsername extends Service {
 
 	public SiteView run(String user) throws FenixServiceException, ExcepcaoPersistencia {
 		Person person = Person.readPersonByUsername(user);
 		Teacher teacher = Teacher.readTeacherByUsername(user);
 
 		InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
-		List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(person
-				.getPersonAuthorshipsCount());
+		List<InfoPublication> infoPublications = new ArrayList<InfoPublication>();
+		/*List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(person
+				.getPersonAuthorshipsCount());*/
 
-		for (Authorship authorship : person.getPersonAuthorships()) {
-			infoPublications.add(InfoPublication.newInfoFromDomain(authorship.getPublication()));
+		for (Authorship authorship : person.getPersonAuthorshipsWithPublications()) {
+			infoPublications.add(InfoPublication.newInfoFromDomain((Publication)authorship.getResult()));
 		}
 
 		InfoSitePublications infoSitePublications = new InfoSitePublications();

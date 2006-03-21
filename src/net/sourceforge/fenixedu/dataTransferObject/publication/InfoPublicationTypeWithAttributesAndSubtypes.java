@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.dataTransferObject.publication;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.publication.Attribute;
-import net.sourceforge.fenixedu.domain.publication.PublicationSubtype;
-import net.sourceforge.fenixedu.domain.publication.PublicationType;
+import net.sourceforge.fenixedu.domain.research.result.Attribute;
+import net.sourceforge.fenixedu.domain.research.result.PublicationSubtype;
+import net.sourceforge.fenixedu.domain.research.result.PublicationType;
 
 public class InfoPublicationTypeWithAttributesAndSubtypes extends InfoPublicationType {
 

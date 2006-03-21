@@ -6,8 +6,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationSubtype;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationSubtypeWithPublicationType;
-import net.sourceforge.fenixedu.domain.publication.PublicationSubtype;
-import net.sourceforge.fenixedu.domain.publication.PublicationType;
+import net.sourceforge.fenixedu.domain.research.result.PublicationSubtype;
+import net.sourceforge.fenixedu.domain.research.result.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 

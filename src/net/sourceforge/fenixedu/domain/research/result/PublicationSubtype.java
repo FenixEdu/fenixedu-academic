@@ -4,7 +4,7 @@
  * To change the template for this generated file go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-package net.sourceforge.fenixedu.domain.publication;
+package net.sourceforge.fenixedu.domain.research.result;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  * To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Generation - Code and Comments
  */
-public class PublicationFormat extends PublicationFormat_Base {
+public class PublicationSubtype extends PublicationSubtype_Base {
 
-	public PublicationFormat() {
+	public PublicationSubtype() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
-	}  
+	}
 
 }

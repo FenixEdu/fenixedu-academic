@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.publication;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.publication.PublicationType;
+import net.sourceforge.fenixedu.domain.research.result.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;

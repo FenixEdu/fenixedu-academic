@@ -444,7 +444,7 @@
 		<slot name="about"/>
 	</schema>
 
-	<schema name="authorship.publication" type="net.sourceforge.fenixedu.domain.publication.Authorship">
+	<schema name="authorship.publication" type="net.sourceforge.fenixedu.domain.research.result.Authorship">
 		<slot name="publication.title"/>
 	</schema>
 

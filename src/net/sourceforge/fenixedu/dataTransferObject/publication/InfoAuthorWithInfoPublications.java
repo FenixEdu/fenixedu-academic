@@ -8,8 +8,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.publication.Authorship;
-import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.research.result.Authorship;
+import net.sourceforge.fenixedu.domain.research.result.Publication;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -21,13 +21,13 @@ public class InfoAuthorWithInfoPublications extends InfoAuthor {
         if (author != null){
             super.copyFromDomain(author);
 	        
-            List publicationAuthors = new ArrayList(author.getPersonAuthorships());
+            List publicationAuthors = new ArrayList(author.getPersonAuthorshipsWithPublications());
             Collections.sort(publicationAuthors, new BeanComparator("order"));
             List publicationList = (List)CollectionUtils.collect(publicationAuthors,
                     new Transformer() {
                         public Object transform(Object object) {
                             Authorship authorship = (Authorship) object;
-                            return authorship.getPublication();
+                            return authorship.getResult();
             }});
             
 	        List infoPublicationsList = new ArrayList();

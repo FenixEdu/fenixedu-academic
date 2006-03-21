@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.publication.PublicationFormat;
+import net.sourceforge.fenixedu.domain.research.result.PublicationFormat;
 
 public class InfoPublicationFormat extends InfoObject {
 

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.publication.Authorship;
-import net.sourceforge.fenixedu.domain.publication.Publication;
-import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.research.result.Authorship;
+import net.sourceforge.fenixedu.domain.research.result.Publication;
+import net.sourceforge.fenixedu.domain.research.result.PublicationTeacher;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class PublicationTeacherTest extends DomainTestBase {

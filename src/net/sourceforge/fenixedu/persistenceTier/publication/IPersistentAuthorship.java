@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier.publication;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.research.result.Authorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 

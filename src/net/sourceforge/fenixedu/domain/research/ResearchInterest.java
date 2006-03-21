@@ -30,7 +30,7 @@ public class ResearchInterest extends ResearchInterest_Base {
          * the others researchInterests associated with the same party have their order rearranged.
          * @param publicationAuthorship the authorship being removed from the publication
          * @param publication the publication from whom the authorship will be removed
-         * @see relations.PublicationAuthorship_Base#remove(net.sourceforge.fenixedu.domain.publication.Authorship, net.sourceforge.fenixedu.domain.publication.Publication)
+         * @see relations.PublicationAuthorship_Base#remove(net.sourceforge.fenixedu.domain.research.result.Authorship, net.sourceforge.fenixedu.domain.research.result.Publication)
          */
             @Override
             public void afterRemove(ResearchInterest removedResearchInterest, Party party) {

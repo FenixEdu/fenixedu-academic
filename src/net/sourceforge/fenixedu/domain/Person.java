@@ -17,6 +17,11 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.research.result.Authorship;
+import net.sourceforge.fenixedu.domain.research.result.Patent;
+import net.sourceforge.fenixedu.domain.research.result.Publication;
+import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
 public class Person extends Person_Base {
@@ -352,7 +357,33 @@ public class Person extends Person_Base {
     public String getNacionalidade() {
         return this.getPais().getNationality();
     }
+    
+    public List<Authorship> getPersonAuthorshipsWithPublications() {
 
+    	List<Authorship> publicationAuthorships = new ArrayList<Authorship>();
+    	for(Authorship authorship : getPersonAuthorships()) {
+            Result result = authorship.getResult();
+            //filter only publication authorships
+            if (result instanceof Publication) {
+            	publicationAuthorships.add(authorship);
+			}
+        }
+    	return publicationAuthorships;
+    }
+    
+    public List<Authorship> getPersonAuthorshipsWithPatents() {
+
+    	List<Authorship> patentAuthorships = new ArrayList<Authorship>();
+    	for(Authorship authorship : getPersonAuthorships()) {
+            Result result = authorship.getResult();
+            //filter only patent authorships
+            if (result instanceof Patent) {
+            	patentAuthorships.add(authorship);
+			}
+        }
+    	return patentAuthorships;
+    }
+    
     @Override
     public List<Advisory> getAdvisories() {
         Date currentDate = Calendar.getInstance().getTime();
@@ -364,7 +395,6 @@ public class Person extends Person_Base {
         }
         return result;
     }
-
     /***************************************************************************
      * PRIVATE METHODS *
      **************************************************************************/

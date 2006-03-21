@@ -21,3 +21,4 @@ function execute() {
 
 execute "Course Group" createCurriculumGroupStudentCurricularPlanRelation.sql
 
+execute "Updating Publication for CERIF Result Model" alterPublicationTableToResult.sql

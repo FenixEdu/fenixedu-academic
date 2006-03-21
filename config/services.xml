@@ -3219,8 +3219,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadAuthorshipsByUsername</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorshipsByUsername</implementationClass>
+		<name>ReadAuthorshipsWithPublicationsByUsername</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorshipsWithPublicationsByUsername</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublications;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.research.result.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadTeacherPublicationsByArea extends Service {

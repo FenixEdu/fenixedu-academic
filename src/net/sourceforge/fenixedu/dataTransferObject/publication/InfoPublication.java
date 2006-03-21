@@ -8,9 +8,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.publication.Authorship;
-import net.sourceforge.fenixedu.domain.publication.Publication;
-import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.research.result.Authorship;
+import net.sourceforge.fenixedu.domain.research.result.Publication;
+import net.sourceforge.fenixedu.domain.research.result.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -64,12 +64,12 @@ public class InfoPublication extends PublicationDTO {
             setNumberPages(publication.getNumberPages());
             setObservation(publication.getObservation());
             setOriginalLanguage(publication.getOriginalLanguage());
-            setPublicationString(publication.toString());
+            setPublicationString(publication.toResume());
             setPublicationType(publication.getPublicationType());
             setScope(publication.getScope());
             setSerie(publication.getSerie());
             setSubType(publication.getSubType());
-            setTitle(publication.getTitle());
+            setTitle(publication.getTitlePt());
             setTranslatedAuthor(publication.getTranslatedAuthor());
             setUniversity(publication.getUniversity());
             setUrl(publication.getUrl());
@@ -83,7 +83,7 @@ public class InfoPublication extends PublicationDTO {
         		setInfoPublicationType(InfoPublicationType.newInfoFromDomain(publication.getType()));
         	}
             
-            List unsortedAuthorsList = new ArrayList(publication.getPublicationAuthorships());
+            List unsortedAuthorsList = new ArrayList(publication.getResultAuthorships());
             Collections.sort(unsortedAuthorsList, new BeanComparator("order"));
             List authorsList = (List)CollectionUtils.collect(unsortedAuthorsList,
                     new Transformer() {
@@ -156,7 +156,7 @@ public class InfoPublication extends PublicationDTO {
             publication.setScope(infoPublication.getScope());
             publication.setSerie(infoPublication.getSerie());
             publication.setSubType(infoPublication.getSubType());
-            publication.setTitle(infoPublication.getTitle());
+            publication.setTitlePt(infoPublication.getTitle());
             publication.setTranslatedAuthor(infoPublication.getTranslatedAuthor());
             publication.setUniversity(infoPublication.getUniversity());
             publication.setUrl(infoPublication.getUrl());
