@@ -8,13 +8,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInSpecificScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -318,11 +316,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IFrequentaPersistente getIFrequentaPersistente()
 	{
 		return new FrequentaOJB();
-	}
-
-	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation()
-	{
-		return new EnrolmentEvaluationOJB();
 	}
 
 	public IPersistentCurricularCourse getIPersistentCurricularCourse()
@@ -731,10 +724,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new GratuitySituationOJB();
 	}
 
-	public IPersistentCreditsInSpecificScientificArea getIPersistentCreditsInSpecificScientificArea()
-	{
-		return new CreditsInSpecificScientificAreaOJB();
-	}
 
 	/*
 	 * (non-Javadoc)

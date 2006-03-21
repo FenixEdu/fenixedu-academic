@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -77,9 +78,9 @@ public class Enrolment extends Enrolment_Base {
 
         createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod);
     }
+    //end
     
     
-    //end 
     public Integer getAccumulatedWeight() {
         return accumulatedWeight;
     }
@@ -265,6 +266,16 @@ public class Enrolment extends Enrolment_Base {
             }
 
         });
+    }
+    
+    public List<EnrolmentEvaluation> getEnrolmentEvaluationsByEnrolmentEvaluationState(final EnrolmentEvaluationState evaluationState){
+    	List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
+    	for (EnrolmentEvaluation evaluation : result) {
+			if(evaluation.getEnrolmentEvaluationState().equals(evaluationState)) {
+				result.add(evaluation);
+			}
+		}
+    	return result;
     }
 
     public EnrolmentEvaluation submitEnrolmentEvaluation(

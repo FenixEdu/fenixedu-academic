@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -40,9 +39,6 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 		List enrolmentEvaluations = null;
 		InfoTeacher infoTeacher = null;
 		List infoSiteEnrolmentEvaluations = new ArrayList();
-
-		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = persistentSupport
-				.getIPersistentEnrolmentEvaluation();
 
 		// read curricularCourse by ID
 		CurricularCourse curricularCourse = (CurricularCourse) persistentObject
@@ -118,12 +114,9 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 			// while (iter1.hasNext()) {
 			// enrolment = (Enrolment) iter1.next();
 
-			EnrolmentEvaluationState enrolmentEvaluationState = new EnrolmentEvaluationState(
-					EnrolmentEvaluationState.FINAL);
-			enrolmentEvaluations = persistentEnrolmentEvaluation
-					.readEnrolmentEvaluationByEnrolmentEvaluationState(enrolment.getIdInternal(),
-							enrolmentEvaluationState);
-			// enrolmentEvaluations = enrolment.getEvaluations();
+			EnrolmentEvaluationState enrolmentEvaluationState = EnrolmentEvaluationState.FINAL_OBJ;
+			enrolmentEvaluations = enrolment.getEnrolmentEvaluationsByEnrolmentEvaluationState(enrolmentEvaluationState);
+
 
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
 				Person person = ((EnrolmentEvaluation) enrolmentEvaluations.get(0))
