@@ -334,14 +334,10 @@ public interface ISuportePersistente
 
 	public IPersistentFAQSection getIPersistentFAQSection();
 
-	public IPersistentFAQEntries getIPersistentFAQEntries();
-
-	// Ricardo Rodrigues
 	public IPersistentPublicationTeacher getIPersistentPublicationTeacher();
 
 	public IPersistentExportGrouping getIPersistentExportGrouping();
 
-	// Rita Ferreira e Jo�o Fialho
 	public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary();
 
 	public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes();
@@ -354,7 +350,6 @@ public interface ISuportePersistente
 
 	public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher();
 
-	//
 	public IPersistentCostCenter getIPersistentCostCenter();
 
 	public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter();
