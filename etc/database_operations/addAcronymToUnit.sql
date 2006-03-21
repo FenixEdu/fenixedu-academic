@@ -1,0 +1,1 @@
+alter table PARTY add column ACRONYM varchar(100) default NULL;

@@ -20,5 +20,5 @@ function execute() {
 }
 
 execute "Course Group" createCurriculumGroupStudentCurricularPlanRelation.sql
-
 execute "Updating Publication for CERIF Result Model" alterPublicationTableToResult.sql
+execute "Add acronyms to Unit" addAcronymToUnit.sql

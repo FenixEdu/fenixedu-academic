@@ -60,6 +60,12 @@
 	    column="NAME"
 	    jdbc-type="VARCHAR"
 	/>
+	<field-descriptor 
+	    name="acronym"
+	    column="ACRONYM"
+	    jdbc-type="VARCHAR"
+	/>
+	
 	<field-descriptor
 	    name="type"
 	    column="PARTY_TYPE"

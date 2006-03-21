@@ -2470,6 +2470,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	Integer keyPartyType;
 }
 	  class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
+		String acronym;
 		Integer costCenterCode;
 		Integer keyDepartment;	
 		Integer keyDegree;				

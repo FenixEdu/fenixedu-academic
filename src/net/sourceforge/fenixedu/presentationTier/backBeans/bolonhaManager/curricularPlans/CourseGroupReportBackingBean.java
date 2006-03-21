@@ -210,7 +210,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
                     row.setCell(courseGroupBeingReported);
                 }
                 row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
-                row.setCell("");//curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
+                row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
                 row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getScientificAreaUnitEctsCredits(contextsWithCurricularCourses).toString());
                 
                 scientificAreaUnits.add(curricularCourse.getCompetenceCourse().getScientificAreaUnit());
@@ -277,7 +277,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
             row.setCell(""); // ta
         } else {
             row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
-            row.setCell(""); //row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
+            row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
             
             row.setCell(this.getFormatedMessage(enumerationResources, curricularCourse.getCompetenceCourse().getRegime().toString()));
             row.setCell(curricularPeriod.getParent().getOrder().toString());
