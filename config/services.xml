@@ -3977,15 +3977,6 @@
 		</filterChains>
 	</service>	
 	<service>
-		<name>ValidateSubmitMarks</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ValidateSubmitMarks</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadPublishedMarksByExam</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadPublishedMarksByExam</implementationClass>
