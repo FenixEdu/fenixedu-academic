@@ -20,4 +20,7 @@ alter table RESULT add column CLASS_NAME varchar(255) NOT NULL;
 
 UPDATE RESULT SET CLASS_NAME = "net.sourceforge.fenixedu.domain.research.result.Publication";
 
-	
+update RESULT set TITLE = (select concat("pt",length(TITLE_OLD),":",TITLE_OLD));
+update RESULT set DESCRIPTION = (select concat("pt",length(DESCRIPTION_OLD),":",DESCRIPTION_OLD));
+
+
