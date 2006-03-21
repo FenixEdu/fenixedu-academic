@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -87,15 +86,10 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         }
     }
 
-    private int getGivenCreditsInAnySecundaryArea(StudentCurricularPlan studentCurricularPlan)
-            throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCreditsInAnySecundaryArea creditsInAnySecundaryAreaDAO = persistentSuport
-                .getIPersistentCreditsInAnySecundaryArea();
+    private int getGivenCreditsInAnySecundaryArea(StudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
         int creditsInAnySecundaryAreas = 0;
 
-        List givenCreditsInAnySecundaryAreas = creditsInAnySecundaryAreaDAO
-                .readAllByStudentCurricularPlan(studentCurricularPlan);
+        List<CreditsInAnySecundaryArea> givenCreditsInAnySecundaryAreas = studentCurricularPlan.getCreditsInAnySecundaryAreas();
 
         if (givenCreditsInAnySecundaryAreas != null && !givenCreditsInAnySecundaryAreas.isEmpty()) {
             int size = givenCreditsInAnySecundaryAreas.size();
@@ -548,7 +542,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
-        List secundaryAreaCurricularCourses = new ArrayList();
+        List<CurricularCourse> secundaryAreaCurricularCourses = new ArrayList<CurricularCourse>();
 
         List groups = curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan
                 .getSecundaryBranch().getIdInternal(), AreaType.SECONDARY);
@@ -572,7 +566,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
-        List specializationAreaCurricularCourses = new ArrayList();
+        List<CurricularCourse> specializationAreaCurricularCourses = new ArrayList<CurricularCourse>();
 
         List groups = curricularCourseGroupDAO.readByBranchAndAreaType(
                 studentCurricularPlan.getBranch().getIdInternal(), AreaType.SPECIALIZATION);
