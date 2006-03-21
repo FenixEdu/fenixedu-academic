@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.GenericTrio;
@@ -65,10 +66,9 @@ public class ReadActiveMasterDegreeThesis extends Service {
             predicates.add(yearPredicate);
         }
 
-        Collection<MasterDegreeThesis> masterDegreeThesis = persistentSupport
-                .getIPersistentMasterDegreeThesis().readAll(MasterDegreeThesis.class);
+        List<MasterDegreeThesis> masterDegreeThesis = rootDomainObject.getMasterDegreeThesiss();
 
-        Collection<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
+        List<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
         for (MasterDegreeThesis thesis : masterDegreeThesis) {
 
             boolean isToAdd = true;
