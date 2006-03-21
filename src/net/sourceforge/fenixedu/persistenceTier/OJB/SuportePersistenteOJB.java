@@ -1,16 +1,4 @@
-/*
- * SuportePersistenteOJB.java
- * 
- * Created on 19 de Agosto de 2002, 1:18
- */
-
-
 package net.sourceforge.fenixedu.persistenceTier.OJB;
-
-
-/**
- * @author ars
- */
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -63,7 +51,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentSecretaryEnrolmentStu
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentKind;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
@@ -253,7 +240,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 {
 	private static SuportePersistenteOJB _instance = null;
 
-	private static HashMap descriptorMap = null;
+	private static HashMap<String,DescriptorRepository> descriptorMap = null;
 
 	public void setDescriptor(DescriptorRepository descriptorRepository, String hashName)
 	{
@@ -271,21 +258,11 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return Transaction.getOJBBroker();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#clearCache()
-	 */
 	public void clearCache()
 	{
 		getCurrentPersistenceBroker().clearCache();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#clearCache()
-	 */
 	public Integer getNumberCachedItems()
 	{
 		return new Integer(FenixCache.getNumberOfCachedItems());
@@ -473,11 +450,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod()
 	{
 		return new PersistentEnrolmentPeriod();
-	}
-
-	public IPersistentStudentKind getIPersistentStudentKind()
-	{
-		return new StudentKindOJB();
 	}
 
 	public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage()

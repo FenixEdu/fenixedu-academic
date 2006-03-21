@@ -153,8 +153,6 @@ public interface ISuportePersistente
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 
-	public IPersistentStudentKind getIPersistentStudentKind();
-
 	public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage();
 
 	public IPersistentMark getIPersistentMark();

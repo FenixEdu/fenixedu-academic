@@ -47,7 +47,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentSecretaryEnrolmentStu
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentKind;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
@@ -187,7 +186,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPayment
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SmsTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentCurricularPlanVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
@@ -573,10 +571,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public Integer getNumberCachedItems() {
         return null;
-    }
-
-    public IPersistentStudentKind getIPersistentStudentKind() {
-        return new StudentKindVO();
     }
 
     public IPersistentSeminary getIPersistentSeminary() {
