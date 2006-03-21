@@ -236,8 +236,6 @@ public interface ISuportePersistente
 
 	public IPersistentGrantContractMovement getIPersistentGrantContractMovement();
 
-	public IPersistentWebSite getIPersistentWebSite();
-
 	public IPersistentWebSiteSection getIPersistentWebSiteSection();
 
 	public IPersistentWebSiteItem getIPersistentWebSiteItem();
