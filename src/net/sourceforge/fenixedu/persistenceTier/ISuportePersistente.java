@@ -259,8 +259,6 @@ public interface ISuportePersistente
 
 	public IPersistentGratuitySituation getIPersistentGratuitySituation();
 
-	public IPersistentCreditsInAnySecundaryArea getIPersistentCreditsInAnySecundaryArea();
-
 	public IPersistentCreditsInSpecificScientificArea getIPersistentCreditsInSpecificScientificArea();
 
 	public IPersistentTutor getIPersistentTutor();
