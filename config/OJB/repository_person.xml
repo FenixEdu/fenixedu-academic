@@ -275,6 +275,7 @@
 	<field-descriptor
 	    name="istUsername"
 	    column="IST_USERNAME"
+	    jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
 	    name="password"
