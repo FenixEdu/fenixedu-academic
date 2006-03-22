@@ -35,6 +35,12 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">
+					<h:outputText value="#{bundle['message.unitAcronym']}" />
+				</f:facet>				
+				<h:outputText value="#{unit.acronym}" escape="false"/>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitType']}" />
 				</f:facet>				
 				<h:outputText value="#{bundleEnum[unit.type.name]}" escape="false"/>
@@ -109,6 +115,12 @@
 					<h:outputText value="#{bundle['message.unitCostCenter']}" />
 				</f:facet>				
 				<h:outputText value="#{unit.costCenterCode}" escape="false"/>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{bundle['message.unitAcronym']}" />
+				</f:facet>				
+				<h:outputText value="#{unit.acronym}" escape="false"/>
 			</h:column>
 			<h:column>
 				<f:facet name="header">

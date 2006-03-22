@@ -118,13 +118,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             }
         }
         return allInherentFunctions;
-    }    
+    }
 
     private List<Unit> readAllUnits() throws FenixServiceException, FenixFilterException {
         return RootDomainObject.readAllUnits();
     }
 
-    public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
+    public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException,
+            ExcepcaoPersistencia {
         StringBuilder buffer = new StringBuilder();
         List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
@@ -151,7 +152,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (parentUnit.hasAnySubUnits()) {
             putImage(parentUnit, buffer);
         }
-        
+
         buffer.append("<a href=\"").append(getContextPath()).append(
                 "/manager/organizationalStructureManagament/").append("chooseParentUnit.faces?").append(
                 "unitID=").append(this.getUnit().getIdInternal()).append("&chooseUnitID=").append(
@@ -161,7 +162,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (parentUnit.hasAnySubUnits()) {
             openULTag(parentUnit, buffer);
         }
-        
+
         for (Unit subUnit : parentUnit.getSubUnits()) {
             if (!subUnit.equals(this.getUnit())) {
                 getUnitsListToChooseParentUnit(subUnit, buffer);
@@ -184,7 +185,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     && (unit.isActive(currentDate) || !unit.getAllActiveSubUnits(currentDate).isEmpty())) {
                 getUnitTree(buffer, unit, unit.getActiveSubUnits(currentDate), currentDate, true);
             } else if (this.getListingTypeValueToUnitsHidden().getValue().toString().equals("1")
-                    && (!unit.isActive(currentDate) || !unit.getAllInactiveSubUnits(currentDate).isEmpty())) {
+                    && (!unit.isActive(currentDate) || !unit.getAllInactiveSubUnits(currentDate)
+                            .isEmpty())) {
                 getUnitTree(buffer, unit, unit.getInactiveSubUnits(currentDate), currentDate, false);
             }
         }
@@ -214,11 +216,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 .append("</a>").append("</li>");
 
         if (!subUnits.isEmpty()) {
-            openULTag(parentUnit, buffer);                       
-        }        
-        
+            openULTag(parentUnit, buffer);
+        }
+
         Collections.sort(subUnits, new BeanComparator("name"));
-        
+
         for (Unit subUnit : subUnits) {
             if (active) {
                 getUnitsList(subUnit, subUnit.getActiveSubUnits(currentDate), buffer, currentDate,
@@ -228,17 +230,18 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                         active);
             }
         }
-        
+
         if (parentUnit.hasAnySubUnits()) {
-           closeULTag(buffer);
+            closeULTag(buffer);
         }
     }
 
-    public String getUnitsToChoosePrincipalFunction() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
+    public String getUnitsToChoosePrincipalFunction() throws FenixFilterException,
+            FenixServiceException, ExcepcaoPersistencia {
         StringBuilder buffer = new StringBuilder();
         List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
-        
+
         for (Unit unit : allUnitsWithoutParent) {
             if (!unit.equals(this.getUnit())) {
                 getUnitTreeToChoosePrincipalFunction(buffer, unit);
@@ -263,7 +266,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (parentUnit.hasAnySubUnits()) {
             putImage(parentUnit, buffer);
         }
-        
+
         buffer.append("<a href=\"").append(getContextPath()).append(
                 "/manager/organizationalStructureManagament/").append("chooseFunction.faces?").append(
                 "unitID=").append(this.getUnit().getIdInternal()).append("&chooseUnitID=").append(
@@ -274,7 +277,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (parentUnit.hasAnySubUnits()) {
             openULTag(parentUnit, buffer);
         }
-                
+
         for (Unit subUnit : parentUnit.getSubUnits()) {
             if (!subUnit.equals(this.getUnit())) {
                 getUnitsListToChoosePrincipalFunction(subUnit, buffer);
@@ -431,7 +434,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { null, null, this.getUnitName(), this.getUnitCostCenter(),
-                datesResult.getBeginDate(), datesResult.getEndDate(), type,
+                this.getUnitAcronym(), datesResult.getBeginDate(), datesResult.getEndDate(), type,
                 parameters.getDepartmentID(), parameters.getDegreeID() };
 
         return executeCreateNewUnitService(argsToRead, "listAllUnits");
@@ -452,8 +455,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { null, this.getUnit().getIdInternal(), this.getUnitName(),
-                this.getUnitCostCenter(), datesResult.getBeginDate(), datesResult.getEndDate(), type,
-                parameters.getDepartmentID(), parameters.getDegreeID() };
+                this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
+                datesResult.getEndDate(), type, parameters.getDepartmentID(), parameters.getDegreeID() };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -473,8 +476,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), null, this.getUnitName(),
-                this.getUnitCostCenter(), datesResult.getBeginDate(), datesResult.getEndDate(), type,
-                parameters.getDepartmentID(), parameters.getDegreeID() };
+                this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
+                datesResult.getEndDate(), type, parameters.getDepartmentID(), parameters.getDegreeID() };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -495,8 +498,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         final Object[] argsToRead = { this.getUnit().getIdInternal(),
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
-                this.getUnit().getBeginDate(), this.getUnit().getEndDate(), this.getUnit().getType(),
-                parameters.getDepartmentID(), parameters.getDegreeID() };
+                this.getUnitAcronym(), this.getUnit().getBeginDate(), this.getUnit().getEndDate(),
+                this.getUnit().getType(), parameters.getDepartmentID(), parameters.getDegreeID() };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -509,8 +512,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         final Object[] argsToRead = { this.getUnit().getIdInternal(),
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
-                this.getUnit().getBeginDate(), this.getUnit().getEndDate(), this.getUnit().getType(),
-                parameters.getDepartmentID(), parameters.getDegreeID() };
+                this.getUnitAcronym(), this.getUnit().getBeginDate(), this.getUnit().getEndDate(),
+                this.getUnit().getType(), parameters.getDepartmentID(), parameters.getDegreeID() };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -705,19 +708,18 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private void openULTag(Unit parentUnit, StringBuilder buffer) {
-        buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
-                .append("style='display:none'>\r\n");
+        buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal())
+                .append("\" ").append("style='display:none'>\r\n");
     }
 
     private void putImage(Unit parentUnit, StringBuilder buffer) {
         buffer.append("<img ").append("src='").append(getContextPath()).append(
                 "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
-                .append("indexed='true' onClick=\"").append("check(document.getElementById('")
-                .append("aa").append(parentUnit.getIdInternal()).append(
-                        "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
-                        "'));return false;").append("\"> ");
+                .append("indexed='true' onClick=\"").append("check(document.getElementById('").append(
+                        "aa").append(parentUnit.getIdInternal()).append("'),document.getElementById('")
+                .append(parentUnit.getIdInternal()).append("'));return false;").append("\"> ");
     }
-    
+
     private void closeULTag(StringBuilder buffer) {
         buffer.append("</ul>");
     }
@@ -725,7 +727,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void openLITag(StringBuilder buffer) {
         buffer.append("<li>");
     }
-    
+
     public String getUnitCostCenter() throws FenixFilterException, FenixServiceException {
         if (this.unitCostCenter == null && this.getChooseUnit() != null
                 && this.getChooseUnit().getCostCenterCode() != null) {
@@ -760,7 +762,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public void setUnitEndDate(String unitEndDate) {
         this.unitEndDate = unitEndDate;
     }
-    
+
     public String getUnitAcronym() throws FenixFilterException, FenixServiceException {
         if (this.unitAcronym == null && this.getChooseUnit() != null) {
             this.unitAcronym = this.getChooseUnit().getAcronym();

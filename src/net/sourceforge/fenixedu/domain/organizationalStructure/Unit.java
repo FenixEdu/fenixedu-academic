@@ -128,7 +128,7 @@ public class Unit extends Unit_Base {
         }
     }
 
-    public void edit(String unitName, Integer unitCostCenter, Date beginDate, Date endDate,
+    public void edit(String unitName, Integer unitCostCenter, String acronym, Date beginDate, Date endDate,
             PartyTypeEnum type, Unit parentUnit) throws ExcepcaoPersistencia {
 
         this.setName(unitName);
@@ -136,6 +136,8 @@ public class Unit extends Unit_Base {
         this.setEndDate(endDate);
         this.setType(type);
         this.setCostCenterCode(unitCostCenter);
+        this.setAcronym(acronym);
+        
         if (parentUnit != null) {
             this.addParent(parentUnit);
         }

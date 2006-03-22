@@ -29,7 +29,12 @@
 					<fc:regexValidator regex="[0-9]*"/>
 				</h:inputText>
 				<h:message for="costCenter" styleClass="error"/>
-			</h:panelGroup>						
+			</h:panelGroup>	
+			
+			<h:outputText value="<b>#{bundle['message.acronym']}</b>" escape="false"/>
+			<h:panelGroup>
+				<h:inputText size="10" value="#{organizationalStructureBackingBean.unitAcronym}"/>				
+			</h:panelGroup>									
 			
 			<h:outputText value="<b>#{bundle['message.initialDate']}:</b>" escape="false"/>
 			<h:panelGroup>

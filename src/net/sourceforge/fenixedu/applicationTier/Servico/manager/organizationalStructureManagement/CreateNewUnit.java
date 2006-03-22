@@ -21,14 +21,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CreateNewUnit extends Service {
 
     public void run(Integer unitID, Integer parentUnitID, String unitName, String unitCostCenter,
-            Date beginDate, Date endDate, PartyTypeEnum type, Integer departmentID, Integer degreeID)
-            throws ExcepcaoPersistencia, FenixServiceException, DomainException {
+            String acronym, Date beginDate, Date endDate, PartyTypeEnum type, Integer departmentID,
+            Integer degreeID) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
         Unit unit = null;
         if (unitID == null) {
             unit = DomainFactory.makeUnit();
-        } else {            
-            unit = (Unit) persistentObject.readByOID(Unit.class, unitID);
+        } else {
+            unit = (Unit) RootDomainObject.getInstance().readPartyByOID(unitID);
             if (unit == null) {
                 throw new FenixServiceException("error.noUnit");
             }
@@ -39,16 +39,15 @@ public class CreateNewUnit extends Service {
         if (unitCostCenter != null && !unitCostCenter.equals("")) {
             costCenterCode = (Integer.valueOf(unitCostCenter));
         }
-        
-        unit.edit(unitName, costCenterCode, beginDate, endDate, type, parentUnit);
+
+        unit.edit(unitName, costCenterCode, acronym, beginDate, endDate, type, parentUnit);
 
         setDepartment(departmentID, unit);
 
         setDegree(degreeID, unit);
     }
 
-    private void setDegree(Integer degreeID, Unit unit)
-            throws ExcepcaoPersistencia {
+    private void setDegree(Integer degreeID, Unit unit) throws ExcepcaoPersistencia {
 
         Degree degree = null;
         if (degreeID != null
@@ -61,10 +60,9 @@ public class CreateNewUnit extends Service {
             if ((degree.getTipoCurso().equals(DegreeType.DEGREE) && unit.getType().equals(
                     PartyTypeEnum.DEGREE))
                     || (degree.getTipoCurso().equals(DegreeType.MASTER_DEGREE) && unit.getType().equals(
-                            PartyTypeEnum.MASTER_DEGREE))){
-                unit.setDegree(degree);   
-            }                
-            else if(unit.getDegree() != null){
+                            PartyTypeEnum.MASTER_DEGREE))) {
+                unit.setDegree(degree);
+            } else if (unit.getDegree() != null) {
                 unit.removeDegree();
             }
 
@@ -74,32 +72,32 @@ public class CreateNewUnit extends Service {
         }
     }
 
-    private void setDepartment(Integer departmentID, Unit unit)
-            throws ExcepcaoPersistencia {
+    private void setDepartment(Integer departmentID, Unit unit) throws ExcepcaoPersistencia {
 
         Department department = null;
-        if (departmentID != null && unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
+        if (departmentID != null && unit.getType() != null
+                && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
             department = RootDomainObject.getInstance().readDepartmentByOID(departmentID);
             unit.setDepartment(department);
 
         } else if (unit.getDepartment() != null) {
-            unit.removeDepartment();        
+            unit.removeDepartment();
         }
     }
 
-    private Unit setParentUnits(Integer parentUnitID, Unit unit)
-            throws ExcepcaoPersistencia, FenixServiceException {
-        
+    private Unit setParentUnits(Integer parentUnitID, Unit unit) throws ExcepcaoPersistencia,
+            FenixServiceException {
+
         Unit parentUnit = null;
         if (parentUnitID != null) {
-            parentUnit =  (Unit) RootDomainObject.getInstance().readPartyByOID(parentUnitID);
-            if(parentUnit.equals(unit)){
+            parentUnit = (Unit) RootDomainObject.getInstance().readPartyByOID(parentUnitID);
+            if (parentUnit.equals(unit)) {
                 throw new FenixServiceException("error.same.unit");
-            } 
-            if(unit.getParentUnits().contains(parentUnit)){
+            }
+            if (unit.getParentUnits().contains(parentUnit)) {
                 unit.removeParent(parentUnit);
                 parentUnit = null;
-            }            
+            }
         }
         return parentUnit;
     }
