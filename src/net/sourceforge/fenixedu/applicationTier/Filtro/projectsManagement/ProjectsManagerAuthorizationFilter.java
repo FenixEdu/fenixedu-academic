@@ -44,7 +44,7 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
             userNumber = teacher.getTeacherNumber();
         else {
             Person person = Person.readPersonByUsername(username);
-            Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person);
+            Employee employee = person.getEmployee();
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();
         }

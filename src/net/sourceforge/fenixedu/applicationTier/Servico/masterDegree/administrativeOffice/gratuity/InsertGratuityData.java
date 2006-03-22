@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 
@@ -173,12 +172,10 @@ public class InsertGratuityData extends Service {
     private void registerWhoAndWhen(InfoGratuityValues infoGratuityValues, GratuityValues gratuityValues)
             throws ExcepcaoPersistencia {
 		// employee who made register
-		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		Person person = Person.readPersonByUsername(infoGratuityValues.getInfoEmployee()
 				.getPerson().getUsername());
 		if (person != null) {
-			IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
-			Employee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+			Employee employee = person.getEmployee();
 			gratuityValues.setEmployee(employee);
 		}
 

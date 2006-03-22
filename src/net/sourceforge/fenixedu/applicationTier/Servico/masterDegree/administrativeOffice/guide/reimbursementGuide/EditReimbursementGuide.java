@@ -1,6 +1,3 @@
-/*
- * Created on 20/Nov/2003
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
 import java.sql.Timestamp;
@@ -33,10 +30,7 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSitu
 import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -56,23 +50,14 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class EditReimbursementGuide extends Service {
 
-	/**
-	 * @throws FenixServiceException,
-	 *             InvalidGuideSituationServiceException
-	 * @throws ExcepcaoPersistencia
-	 */
-
 	public void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks,
 			IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-		ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentObject
-				.readByOID(ReimbursementGuide.class, reimbursementGuideId);
-
+		ReimbursementGuide reimbursementGuide = rootDomainObject.readReimbursementGuideByOID(reimbursementGuideId);
 		if (reimbursementGuide == null) {
 			throw new NonExistingServiceException();
 		}
 
-		ReimbursementGuideSituation activeSituation = reimbursementGuide
-				.getActiveReimbursementGuideSituation();
+		ReimbursementGuideSituation activeSituation = reimbursementGuide.getActiveReimbursementGuideSituation();
 
 		if (!validateReimbursementGuideSituation(activeSituation, situation)) {
 			throw new InvalidGuideSituationServiceException();
@@ -80,10 +65,8 @@ public class EditReimbursementGuide extends Service {
 		ReimbursementGuideSituation newActiveSituation = DomainFactory
 				.makeReimbursementGuideSituation();
 
-		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
-		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		Person person = Person.readPersonByUsername(userView.getUtilizador());
-		Employee employee = persistentEmployee.readByPerson(person);
+		Employee employee = person.getEmployee();
 
 		newActiveSituation.setEmployee(employee);
 		newActiveSituation.setModificationDate(Calendar.getInstance());
@@ -121,7 +104,7 @@ public class EditReimbursementGuide extends Service {
 			while (iterator.hasNext()) {
 				reimbursementGuideEntry = (ReimbursementGuideEntry) iterator.next();
 
-				if (checkReimbursementGuideEntriesSum(reimbursementGuideEntry, persistentSupport) == false) {
+				if (checkReimbursementGuideEntriesSum(reimbursementGuideEntry) == false) {
 					throw new InvalidReimbursementValueServiceException(
 							"error.exception.masterDegree.invalidReimbursementValue");
 
@@ -238,8 +221,7 @@ public class EditReimbursementGuide extends Service {
 	 *         equal than their guide entry
 	 * @throws ExcepcaoPersistencia
 	 */
-	private boolean checkReimbursementGuideEntriesSum(ReimbursementGuideEntry reimbursementGuideEntry,
-			ISuportePersistente suportePersistente) throws FenixServiceException, ExcepcaoPersistencia {
+	private boolean checkReimbursementGuideEntriesSum(ReimbursementGuideEntry reimbursementGuideEntry) throws FenixServiceException, ExcepcaoPersistencia {
 		GuideEntry guideEntry = reimbursementGuideEntry.getGuideEntry();
 		Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue()
 				* guideEntry.getQuantity().intValue());
@@ -255,10 +237,8 @@ public class EditReimbursementGuide extends Service {
 		while (it.hasNext()) {
 			ReimbursementGuideEntry reimbursementGuideEntryTmp = (ReimbursementGuideEntry) it.next();
 
-			// because of an OJB with cache bug we have to read the guide
-			// entry again
-			reimbursementGuideEntryTmp = (ReimbursementGuideEntry) persistentObject
-					.readByOID(ReimbursementGuideEntry.class, reimbursementGuideEntryTmp.getIdInternal());
+			// because of an OJB with cache bug we have to read the guide entry again
+			reimbursementGuideEntryTmp = rootDomainObject.readReimbursementGuideEntryByOID(reimbursementGuideEntryTmp.getIdInternal());
 
 			if (reimbursementGuideEntryTmp.getReimbursementGuide()
 					.getActiveReimbursementGuideSituation().getReimbursementGuideState().equals(

@@ -1,6 +1,3 @@
-/*
- * Created on 21/Mar/2003
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
 import java.util.Calendar;
@@ -46,19 +43,10 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class CreateReimbursementGuide extends Service {
 
-    /**
-     * @throws FenixServiceException,
-     *             InvalidReimbursementValueServiceException,
-     *             InvalidGuideSituationServiceException,
-     *             InvalidReimbursementValueSumServiceException
-     * @throws ExcepcaoPersistencia
-     */
-
-    public Integer run(Integer guideId, String remarks, List infoReimbursementGuideEntries,
+    public Integer run(Integer guideId, String remarks, List<InfoReimbursementGuideEntry> infoReimbursementGuideEntries,
             IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
-        Guide guide = (Guide) persistentObject.readByOID(Guide.class, guideId);
-
+        Guide guide = rootDomainObject.readGuideByOID(guideId);
         if (!guide.getActiveSituation().getSituation().equals(GuideState.PAYED)) {
             throw new InvalidGuideSituationServiceException(
                     "error.exception.masterDegree.invalidGuideSituation");
@@ -73,8 +61,7 @@ public class CreateReimbursementGuide extends Service {
                 throw new RequiredJustificationServiceException(
                         "error.exception.masterDegree.requiredJustification");
 
-            GuideEntry guideEntry = (GuideEntry) persistentObject.readByOID(
-                    GuideEntry.class, infoReimbursementGuideEntry.getInfoGuideEntry().getIdInternal());
+            GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(infoReimbursementGuideEntry.getInfoGuideEntry().getIdInternal());
             if (checkReimbursementGuideEntriesSum(infoReimbursementGuideEntry, guideEntry) == false)
                 throw new InvalidReimbursementValueServiceException(
                         "error.exception.masterDegree.invalidReimbursementValue");
@@ -103,7 +90,7 @@ public class CreateReimbursementGuide extends Service {
 
         // read employee
         Person person = Person.readPersonByUsername(userView.getUtilizador());
-        Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person);
+        Employee employee = person.getEmployee();
 
         // reimbursement Guide Situation
         ReimbursementGuideSituation reimbursementGuideSituation = DomainFactory.makeReimbursementGuideSituation();

@@ -47,9 +47,7 @@ public class ChangeMasterDegreeThesisData extends Service {
                     "error.exception.masterDegree.externalGuiderAlreadyChosen");
         }
 
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,
-                        studentCurricularPlanID);
-
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
         MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = persistentSupport
                 .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
                         studentCurricularPlanID);
@@ -73,7 +71,7 @@ public class ChangeMasterDegreeThesisData extends Service {
         }
 
         Person person = Person.readPersonByUsername(userView.getUtilizador());
-        Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
+        Employee employee = person.getEmployee();
 
         MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = DomainFactory
                 .makeMasterDegreeThesisDataVersion(storedMasterDegreeThesisDataVersion

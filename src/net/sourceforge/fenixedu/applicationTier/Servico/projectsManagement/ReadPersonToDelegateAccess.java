@@ -1,7 +1,3 @@
-/*
- * Created on Jan 11, 2005
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -13,9 +9,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Susana Fernandes
- */
 public class ReadPersonToDelegateAccess extends Service {
 
     public InfoPerson run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
@@ -30,7 +23,7 @@ public class ReadPersonToDelegateAccess extends Service {
 
     private boolean isTeacherOrEmployee(Person person) throws ExcepcaoPersistencia {
         if (Teacher.readTeacherByUsername(person.getUsername()) == null) {
-            if (persistentSupport.getIPersistentEmployee().readByPerson(person.getIdInternal()) == null) {
+            if (person.getEmployee() == null) {
                 return false;
             }
         }

@@ -25,41 +25,30 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-
-/**
- * @author João Mota 15/Out/2003
- */
 
 public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 
 	public void run(IUserView userView, Integer studentCurricularPlanId, String currentState,
 			Double credits, String startDate, List extraCurricularCourses, String observations,
 			Integer branchId, String specialization) throws FenixServiceException, ExcepcaoPersistencia {
-		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
-				.readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
+		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
 		if (studentCurricularPlan == null) {
 			throw new InvalidArgumentsServiceException();
 		}
 
 		StudentCurricularPlanState newState = StudentCurricularPlanState.valueOf(currentState);
 
-		Employee employee = null;
-		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
-		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-
 		Person person = Person.readPersonByUsername(userView.getUtilizador());
 		if (person == null) {
 			throw new InvalidArgumentsServiceException();
 		}
 
-		employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+        Employee employee = person.getEmployee();
 		if (employee == null) {
 			throw new InvalidArgumentsServiceException();
 		}
 
-		Branch branch = (Branch) persistentObject.readByOID(Branch.class, branchId);
+		Branch branch = rootDomainObject.readBranchByOID(branchId);
 		if (branch == null) {
 			throw new InvalidArgumentsServiceException();
 		}
@@ -156,12 +145,6 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 
 	}
 
-	/**
-	 * @param newState
-	 * @param persistentEnrolment
-	 * @param enrolment
-	 * @throws ExcepcaoPersistencia
-	 */
 	private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState, Enrolment enrolment) throws ExcepcaoPersistencia {
 		if (newState.equals(StudentCurricularPlanState.ACTIVE)) {
 			if (enrolment.getEnrollmentState() == EnrollmentState.ANNULED) {

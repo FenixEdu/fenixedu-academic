@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 /**
@@ -25,13 +24,10 @@ public class ConfirmStudentsFinalEvaluation extends Service {
 
 	public Boolean run(Integer curricularCourseCode, String yearString, IUserView userView)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
-
 		Person person = Person.readPersonByUsername(userView.getUtilizador());
-		Employee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+		Employee employee = person.getEmployee();
 
-		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-				CurricularCourse.class, curricularCourseCode);
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 
 		List enrolments = null;
 		if (yearString != null) {
@@ -40,7 +36,7 @@ public class ConfirmStudentsFinalEvaluation extends Service {
 			enrolments = curricularCourse.getCurriculumModules();
 		}
 
-		List enrolmentEvaluations = new ArrayList();
+		List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
 		Iterator iterEnrolment = enrolments.listIterator();
 		while (iterEnrolment.hasNext()) {
 			Enrolment enrolment = (Enrolment) iterEnrolment.next();

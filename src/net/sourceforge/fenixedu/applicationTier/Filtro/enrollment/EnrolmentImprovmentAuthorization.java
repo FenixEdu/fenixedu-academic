@@ -1,6 +1,3 @@
-/*
- * Created on Nov 25, 2004
- */
 package net.sourceforge.fenixedu.applicationTier.Filtro.enrollment;
 
 import java.util.ArrayList;
@@ -16,24 +13,14 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
-/**
- * @author nmgo
- */
 public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFilter {
 
-    
     private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AccessControlFilter#getNeededRoles()
-     */
+
     protected Collection getNeededRoles() {
-        List roles = new ArrayList();
+        List<InfoRole> roles = new ArrayList<InfoRole>();
 
         InfoRole infoRole = new InfoRole();
         infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
@@ -46,12 +33,6 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
         return roles;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByManyRolesFilter#hasPrevilege(ServidorAplicacao.IUserView,
-     *      java.lang.Object[])
-     */
     protected String hasPrevilege(IUserView id, Object[] arguments) {
         try {
             List roles = getRoleList(id.getRoles());
@@ -100,11 +81,9 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
         String user = id.getUtilizador();
         
         if(user != null) {
-            IPessoaPersistente pessoaPersistente = persistentSupport.getIPessoaPersistente(); 
-            Person pessoa = Person.readPersonByUsername(user);
-            if(pessoa != null) {
-                IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
-                Employee employee = persistentEmployee.readByPerson(pessoa);
+            Person person = Person.readPersonByUsername(user);
+            if(person != null) {
+                Employee employee = person.getEmployee();
                 if(employee != null) {
                     return true;
                 }

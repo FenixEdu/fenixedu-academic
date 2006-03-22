@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 
 /**
  * @author Angela 04/07/2003
@@ -27,20 +26,18 @@ public class AlterStudentEnrolmentEvaluation extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
 
         List<InfoEnrolmentEvaluation> infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
-        IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
 
         Person person = Person.readPersonByUsername(userView.getUtilizador());
         if (person == null)
             throw new NonExistingServiceException();
 
-        Employee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+        Employee employee = person.getEmployee();
 
         Teacher teacher = Teacher.readByNumber(teacherNumber);
         if (teacher == null)
             throw new NonExistingServiceException();
 
-        EnrolmentEvaluation enrolmentEvaluationCopy = (EnrolmentEvaluation) persistentObject
-                .readByOID(EnrolmentEvaluation.class, enrolmentEvaluationCode);
+        EnrolmentEvaluation enrolmentEvaluationCopy = rootDomainObject.readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
         if (enrolmentEvaluationCopy == null)
             throw new NonExistingServiceException();
 

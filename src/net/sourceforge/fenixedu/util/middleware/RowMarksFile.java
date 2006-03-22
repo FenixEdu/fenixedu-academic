@@ -3,20 +3,11 @@ package net.sourceforge.fenixedu.util.middleware;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.lang.StringUtils;
 
-/**
- * @author Tânia Pousão
- *  
- */
 public class RowMarksFile {
     public static final int MAX_COURSECODE = 3;
 
@@ -62,31 +53,7 @@ public class RowMarksFile {
     }
 
     public RowMarksFile(EnrolmentEvaluation enrolmentEvaluation) {
-        
         transform(enrolmentEvaluation);
-        
-        /*Integer code = enrolmentEvaluation.getEnrolment().getStudentCurricularPlan()
-                .getDegreeCurricularPlan().getDegree().getIdInternal();
-        if (code.intValue() == 51)
-            setDegreeCode(new Integer(24));
-        else
-            setDegreeCode(code);
-
-        setCurricularYear(enrolmentEvaluation.getEnrolment().getCurricularCourse()
-                .getCurricularYearByBranchAndSemester(
-                        enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getBranch(),
-                        enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester()).getYear());
-        setCurricularSemester(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester());
-        setCurricularSeason(new Integer(0));
-        setCourseCode(enrolmentEvaluation.getEnrolment().getCurricularCourse().getCode());
-        setMark(enrolmentEvaluation.getGrade());
-        setEvaluationDate(enrolmentEvaluation.getExamDate());
-        setStudentNumber(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent()
-                .getNumber());
-        setTeacherNumber(readEmployee(enrolmentEvaluation.getPersonResponsibleForGrade())
-                .getEmployeeNumber());
-        setSubmitDate(enrolmentEvaluation.getGradeAvailableDate());*/
-
     }
 
     public void transform(EnrolmentEvaluation enrolmentEvaluation) {
@@ -108,18 +75,11 @@ public class RowMarksFile {
         setEvaluationDate(enrolmentEvaluation.getExamDate());
         setStudentNumber(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent()
                 .getNumber());
-        setTeacherNumber(readEmployee(enrolmentEvaluation.getPersonResponsibleForGrade())
-                .getEmployeeNumber());
+        setTeacherNumber(enrolmentEvaluation.getPersonResponsibleForGrade().getEmployee().getEmployeeNumber());
         setSubmitDate(enrolmentEvaluation.getGradeAvailableDate());
         setEnrollmentYear(getExecutionYearYear(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getExecutionYear()));
     }
 
- 
-
-    /**
-     * @param enrolmentEvaluation
-     * @return
-     */
     private Integer translateSeason(EnrolmentEvaluation enrolmentEvaluation) {
         if(enrolmentEvaluation.isNormal())
             return new Integer(0);
@@ -129,25 +89,9 @@ public class RowMarksFile {
         return new Integer(0);
     }
 
-    /**
-     * @param executionYear
-     * @return
-     */
     private String getExecutionYearYear(ExecutionYear executionYear) {
         String[] tokens = executionYear.getYear().split("/");
         return StringUtils.trim(tokens[0]);
-    }
-
-    private Employee readEmployee(Person person) {
-        Employee employee = null;
-        IPersistentEmployee persistentEmployee;
-        try {
-            persistentEmployee = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();
-            employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-        }
-        return employee;
     }
 
     public String toString() {
@@ -345,16 +289,12 @@ public class RowMarksFile {
         teacherNumber = integer;
     }
 
-    /**
-     * @return Returns the enrollmentYear.
-     */
     public String getEnrollmentYear() {
         return enrollmentYear;
     }
-    /**
-     * @param enrollmentYear The enrollmentYear to set.
-     */
+
     public void setEnrollmentYear(String enrollmentYear) {
         this.enrollmentYear = enrollmentYear;
     }
+    
 }
