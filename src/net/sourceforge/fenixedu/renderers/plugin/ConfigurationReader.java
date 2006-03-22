@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.renderers.plugin;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -19,10 +21,15 @@ import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+import org.jdom.JDOMFactory;
 import org.jdom.input.SAXBuilder;
+import org.jdom.input.SAXHandler;
+import org.xml.sax.Attributes;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 public class ConfigurationReader {
     private static final Logger logger = Logger.getLogger(ConfigurationReader.class);
@@ -262,7 +269,7 @@ public class ConfigurationReader {
         return Class.forName(type);
     }
  
-    private Element readConfigRootElement(final ServletContext context, String name, String configFile) throws ServletException {
+    private Element readConfigRootElement(final ServletContext context, String name, final String configFile) throws ServletException {
         
         if (configFile != null) {
             InputStream input = context.getResourceAsStream(configFile);
@@ -277,15 +284,33 @@ public class ConfigurationReader {
             
             try {
                 SAXBuilder build = new SAXBuilder();
+                build.setExpandEntities(true);
                 build.setEntityResolver(new EntityResolver() {
 
+                    // TODO: understand the API better and use something less hackish
                     public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
                         if (systemId == null) {
                             return null;
                         }
+
+                        String entityPath = systemId.substring("file://".length());
                         
-                        // TODO: understand the API better and use something less hackish
-                        return new InputSource(context.getResourceAsStream(systemId.substring("file://".length())));
+                        if (entityPath.startsWith("/WEB-INF")) { // context relative
+                            return new InputSource(context.getResourceAsStream(entityPath));
+                        }
+                        else { // relative to configuration file
+                            File file = new File(context.getRealPath(configFile));
+                            
+                            String currentPath = new File(System.getProperty("user.dir")).getCanonicalPath();
+                            if (currentPath != null && entityPath.startsWith(currentPath + "/")) {
+                                entityPath = entityPath.substring(currentPath.length() + 1);
+                            }
+                            
+                            File entityFile = new File(file.getParentFile(), entityPath);
+                            FileInputStream fileInputStream = new FileInputStream(entityFile);
+                            
+                            return new InputSource(fileInputStream);
+                        }
                     }
                     
                 });
@@ -304,5 +329,4 @@ public class ConfigurationReader {
 
         return null;
     }
-
 }
