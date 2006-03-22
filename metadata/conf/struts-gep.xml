@@ -69,6 +69,11 @@
 			<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
 		</form-bean>
 
+		<form-bean name="competenceCourseStatisticsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="executionYearID" type="java.lang.Integer"/>
+			<form-property name="method" type="java.lang.String"/>
+		</form-bean>	
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -188,7 +193,18 @@
 				handler="net.sourceforge.fenixedu.presentationTier.config.FenixNotAuthorizedExceptionHandler" 
 				/>
 			<forward name="successfull-read" path="view-teaching-report"/>
-	</action>
+		</action>
+
+        <action type="net.sourceforge.fenixedu.presentationTier.Action.gep.CompetenceCourseStatisticsDispatchAction" 
+			path="/competenceCoursesStatistics" 
+			name="competenceCourseStatisticsForm" 
+			input="/competenceCoursesStatistics.do?method=prepare" 
+			parameter="method" 
+			validate="true" 
+			scope="request"
+		>
+			<forward name="chooseExecutionYear" path="chooseExecutionYear"/>
+		</action>
 
 	    <!-- ==================== View Curricular Course Historic ================== -->
        	<action path="/chooseExecutionYearAndDegreeCurricularPlan"

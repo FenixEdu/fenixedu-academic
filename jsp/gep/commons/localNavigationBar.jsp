@@ -33,6 +33,11 @@
 	  		<bean:message key="link.gep.majorDegreeStudentsInformation" bundle="GEP_RESOURCES" />
 	  	</html:link>
 	</li>
+	<li>
+	  	<html:link page="/competenceCoursesStatistics.do?method=prepare">
+	  		<bean:message key="link.gep.ETIsReport" bundle="GEP_RESOURCES" />
+	  	</html:link>
+	</li>
 
 	<li class="navheader">
 		<bean:message key="label.inquiries" bundle="INQUIRIES_RESOURCES"/>

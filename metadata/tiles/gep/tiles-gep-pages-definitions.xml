@@ -38,6 +38,9 @@
     <definition name="view-teaching-report" extends="definition.gep.two-column">
         <put name="body" value="/gesdis/viewTeachingReport.jsp"></put>
     </definition>
+    <definition name="chooseExecutionYear" extends="definition.gep.two-column">
+        <put name="body" value="/gep/courses/viewCompetenceCoursesStatistics.jsp"></put>
+    </definition>    
 	<!-- ==================== View Curricular Course Historic ================== -->
 	<definition name="view-degree-curricular-plan-execution-year" 
 		extends="definition.gep.two-column">
