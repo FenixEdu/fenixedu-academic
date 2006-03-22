@@ -13,6 +13,7 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
     private String onlyStructure;
     private String toOrder;
     private String hideCourses;
+    private String executionYear;
 
     public String getDcp() {
         return dcp;
@@ -68,6 +69,14 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
 
     public void setHideCourses(String hideCourses) {
         this.hideCourses = hideCourses;
+    }
+
+    public String getExecutionYear() {
+        return executionYear;
+    }
+
+    public void setExecutionYear(String executionYear) {
+        this.executionYear = executionYear;
     }
 
     public String getComponentType() {

@@ -1400,7 +1400,13 @@
 			<name>hideCourses</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<description>Indicates if order options are to be available. Valid if onlyStructure is true. Type: java.lang.Boolean. Default: false</description>
+			<description>Indicates if curricular courses are to be displayed or not. Valid if onlyStructure is false. Type: java.lang.Boolean. Default: false</description>
+		</attribute>
+		<attribute>
+			<name>executionYear</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>If present, contexts are filtered accordingly. Type: net.sourceforge.fenixedu.domain.ExecutionYear. Default: false</description>
 		</attribute>
 	</tag>
   <tag>

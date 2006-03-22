@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import javax.faces.context.FacesContext;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -20,13 +21,14 @@ public class UICourseGroup extends UIDegreeModule {
     private Boolean onlyStructure;
     private Boolean toOrder;
     private Boolean hideCourses;
+    private ExecutionYear executionYear;
     
     public UICourseGroup() {
         super();
         this.courseGroup = (CourseGroup) super.degreeModule;
     }
 
-    public UICourseGroup(DegreeModule courseGroup, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, Boolean onlyStructure, Boolean toOrder, Boolean hideCourses) throws IOException {
+    public UICourseGroup(DegreeModule courseGroup, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, Boolean onlyStructure, Boolean toOrder, Boolean hideCourses, ExecutionYear executionYear) throws IOException {
         super(courseGroup, previousContext, toEdit, showRules, depth, tabs);
         
         if (toOrder && (!onlyStructure || !toEdit)) {
@@ -36,6 +38,7 @@ public class UICourseGroup extends UIDegreeModule {
         this.onlyStructure = onlyStructure;
         this.toOrder = toOrder;
         this.hideCourses = hideCourses;
+        this.executionYear = executionYear;
     }
 
     public String getFamily() {
@@ -118,8 +121,8 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void encodeChildCourseGroups() throws IOException {
-        for (Context context : this.courseGroup.getSortedChildContextsWithCourseGroups()) {
-            new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses).encodeBegin(facesContext);
+        for (Context context : this.courseGroup.getSortedChildContextsWithCourseGroupsByExecutionYear(this.executionYear)) {
+            new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses, this.executionYear).encodeBegin(facesContext);
         }
     }
 
@@ -189,7 +192,7 @@ public class UICourseGroup extends UIDegreeModule {
                 writer.endElement("div");
             }
             
-            if (!this.hideCourses && this.courseGroup.getSortedChildContextsWithCurricularCourses().size() > 0) {
+            if (!this.hideCourses && this.courseGroup.getSortedChildContextsWithCurricularCoursesByExecutionYear(executionYear).size() > 0) {
                 encodeChildCurricularCourses(width, courseGroupIndent);
                 //encodeSumsFooter(sums);
             } else {
@@ -340,7 +343,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("class", "showinfo3 mvert0", null);
         writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3)  + "em;", null);
 
-        for (Context context : this.courseGroup.getSortedChildContextsWithCurricularCourses()) {
+        for (Context context : this.courseGroup.getSortedChildContextsWithCurricularCoursesByExecutionYear(executionYear)) {
             new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs + "\t").encodeBegin(facesContext);
         }
         

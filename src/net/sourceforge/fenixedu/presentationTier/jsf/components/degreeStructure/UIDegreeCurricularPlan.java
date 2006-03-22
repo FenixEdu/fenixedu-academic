@@ -13,6 +13,7 @@ import javax.faces.context.ResponseWriter;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
@@ -26,6 +27,7 @@ public class UIDegreeCurricularPlan extends UIInput {
 
     private boolean toEdit;
     private boolean showRules;
+    private ExecutionYear executionYear;
 
     private FacesContext facesContext;
     private ResponseWriter writer;
@@ -52,6 +54,9 @@ public class UIDegreeCurricularPlan extends UIInput {
             final Boolean onlyStructure = (this.getBooleanAttribute("onlyStructure") != null) ? (Boolean) this.getBooleanAttribute("onlyStructure") : Boolean.FALSE;
             final Boolean toOrder = (this.getBooleanAttribute("toOrder") != null) ? (Boolean) this.getBooleanAttribute("toOrder") : Boolean.FALSE;
             final Boolean hideCourses = (this.getBooleanAttribute("hideCourses") != null) ? (Boolean) this.getBooleanAttribute("hideCourses") : Boolean.FALSE;
+            if (this.getBooleanAttribute("executionYear") != null) {
+                executionYear = (ExecutionYear) this.getAttributes().get("executionYear"); 
+            }
             
             if (incorrectUseOfComponent(organizeBy, onlyStructure, toOrder, hideCourses)) {
                 throw new IOException("incorrect.component.usage");
@@ -64,7 +69,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                 dcpBuffer.append("[DCP ").append(dcp.getIdInternal()).append("] ").append(dcp.getName());
                 //System.out.println(dcpBuffer);
 
-                new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder, hideCourses).encodeBegin(facesContext);
+                new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder, hideCourses, executionYear).encodeBegin(facesContext);
             }
         }
     }

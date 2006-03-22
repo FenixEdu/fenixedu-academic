@@ -10,10 +10,8 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
@@ -63,7 +61,7 @@ public class UIDegreeModule extends UIInput {
         if (this.degreeModule.isLeaf()) {
             new UICurricularCourse(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs).encodeBegin(facesContext);
         } else if (!this.degreeModule.isLeaf()) {
-            new UICourseGroup(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE).encodeBegin(facesContext);
+            new UICourseGroup(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, null).encodeBegin(facesContext);
         }
     }
     
