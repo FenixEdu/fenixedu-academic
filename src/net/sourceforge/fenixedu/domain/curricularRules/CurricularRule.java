@@ -5,6 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -79,4 +80,14 @@ public abstract class CurricularRule extends CurricularRule_Base {
     public boolean isValid(ExecutionPeriod executionPeriod) {
     	return (getBegin().isBeforeOrEquals(executionPeriod) && (getEnd() == null || getEnd().isAfterOrEquals(executionPeriod)));
     }
+    
+    public boolean isValid(ExecutionYear executionYear) {
+        for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+            if(isValid(executionPeriod)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }
