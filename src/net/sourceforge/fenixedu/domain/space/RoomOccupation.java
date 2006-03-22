@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -24,16 +25,17 @@ public class RoomOccupation extends RoomOccupation_Base {
 
     public RoomOccupation() {
     	super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public RoomOccupation(OldRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
             int frequency) {
-    	this();
-        this.setRoom(room);
-        this.setStartTime(startTime);
-        this.setEndTime(endTime);
-        this.setDayOfWeek(dayOfWeek);
-        this.setFrequency(new Integer(frequency));
+        this();
+        setRoom(room);
+        setStartTime(startTime);
+        setEndTime(endTime);
+        setDayOfWeek(dayOfWeek);
+        setFrequency(Integer.valueOf(frequency));
     }
 
     public Calendar getStartTime() {
