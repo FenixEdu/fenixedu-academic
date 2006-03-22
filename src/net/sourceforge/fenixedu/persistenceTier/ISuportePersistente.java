@@ -88,7 +88,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranc
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 
 /**
  * @author ars
@@ -286,8 +285,6 @@ public interface ISuportePersistente
 	public IPersistentSmsTransaction getIPersistentSmsTransaction();
 
 	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction();
-
-	public IPersistentTransaction getIPersistentTransaction();
 
 	public IPersistentPaymentTransaction getIPersistentPaymentTransaction();
 

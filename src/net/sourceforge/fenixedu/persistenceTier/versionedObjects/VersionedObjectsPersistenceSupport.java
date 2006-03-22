@@ -119,7 +119,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranc
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailAdressAliasVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingListVO;
@@ -163,7 +162,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentCurr
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ManagementPositionCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.OtherTypeCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.degree.finalProject.TeacherDegreeFinalProjectStudentVO;
@@ -581,10 +579,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentSupportLesson getIPersistentSupportLesson() {
         return new SupportLessonVO();
-    }
-
-    public IPersistentTransaction getIPersistentTransaction() {
-        return new TransactionVO();
     }
 
     public IPersistentCoordinator getIPersistentCoordinator() {

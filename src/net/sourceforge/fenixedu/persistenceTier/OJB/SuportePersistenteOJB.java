@@ -124,7 +124,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.InsuranceTransa
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.PaymentTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.ReimbursementTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.SmsTransactionOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.TransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
@@ -205,7 +204,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranc
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 import net.sourceforge.fenixedu.stm.Transaction;
 
@@ -887,11 +885,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction()
 	{
 		return new InsuranceTransactionOJB();
-	}
-
-	public IPersistentTransaction getIPersistentTransaction()
-	{
-		return new TransactionOJB();
 	}
 
 	public IPersistentExportGrouping getIPersistentExportGrouping()
