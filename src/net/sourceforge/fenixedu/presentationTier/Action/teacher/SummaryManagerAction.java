@@ -178,9 +178,10 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                     "ReadTeachersByExecutionCourseResponsibility", argsReadResponsibleTeachers);
             for (Iterator iter = responsibleTeachers.iterator(); iter.hasNext();) {
                 InfoTeacher infoTeacher = (InfoTeacher) iter.next();
-                if (infoTeacher.getInfoPerson().getUsername().equals(userView.getUtilizador()))
+                if (infoTeacher.getInfoPerson().getUsername().equals(userView.getUtilizador())) {
                     loggedIsResponsible = true;
-                break;
+                    break;
+                }
             }
 
             request.setAttribute("loggedIsResponsible", new Boolean(loggedIsResponsible));
@@ -242,7 +243,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
 
         htmlEditorConfigurations(request, actionForm);
         request.setAttribute("siteView", siteView);
-        
+
         return mapping.findForward("insertSummary");
     }
 
@@ -647,7 +648,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             Object[] args = { executionCourseId, infoSummaryToEdit };
 
             ServiceUtils.executeService(userView, "EditSummary", args);
-            
+
         } catch (Exception e) {
 
             ActionErrors actionErrors = new ActionErrors();

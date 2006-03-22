@@ -176,9 +176,10 @@ public class SummaryManagerAction extends FenixDispatchAction {
                     "ReadTeachersByExecutionCourseResponsibility", argsReadResponsibleTeachers);
             for (Iterator iter = responsibleTeachers.iterator(); iter.hasNext();) {
                 InfoTeacher infoTeacher = (InfoTeacher) iter.next();
-                if (infoTeacher.getTeacherNumber().equals(teacherNumber))
+                if (infoTeacher.getTeacherNumber().equals(teacherNumber)) {
                     loggedIsResponsible = true;
-                break;
+                    break;
+                }
             }
 
             request.setAttribute("loggedIsResponsible", new Boolean(loggedIsResponsible));
