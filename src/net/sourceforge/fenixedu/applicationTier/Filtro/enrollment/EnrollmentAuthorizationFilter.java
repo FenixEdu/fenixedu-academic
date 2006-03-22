@@ -106,9 +106,8 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
                 // check if the student is in the list of secretary enrolments
                 // students
-                SecretaryEnrolmentStudent secretaryEnrolmentStudent = persistentSupport
-                        .getIPersistentSecretaryEnrolmentStudent().readByStudentNumber(
-                                student.getNumber());
+                final SecretaryEnrolmentStudent secretaryEnrolmentStudent = student.getSecretaryEnrolmentStudents().isEmpty() ?
+                        null : student.getSecretaryEnrolmentStudents().iterator().next();
                 if (secretaryEnrolmentStudent != null) {
                     return "error.message.secretaryEnrolmentStudent";
                 }

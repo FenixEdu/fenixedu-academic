@@ -287,8 +287,6 @@ public interface ISuportePersistente
 
 	public IPersistentExtraWorkHistoric getIPersistentExtraWorkHistoric();
 
-	public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent();
-
 	public IPersistentProjectAccess getIPersistentProjectAccess();
 
 	public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes();
