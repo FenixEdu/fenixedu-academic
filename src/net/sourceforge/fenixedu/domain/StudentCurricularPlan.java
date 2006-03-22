@@ -1100,6 +1100,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return results;
     }
     
+    public int countEnrolmentsByCurricularCourse(final CurricularCourse curricularCourse) {
+        int count = 0;
+        for (Enrolment enrolment : this.getEnrolments()) {
+            if (enrolment.getCurricularCourse() == curricularCourse) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
     public List<Enrolment> getEnrolmentsByState(EnrollmentState state){
     	List<Enrolment> results = new ArrayList<Enrolment>();
     	for (Enrolment enrolment : this.getEnrolments()) {
