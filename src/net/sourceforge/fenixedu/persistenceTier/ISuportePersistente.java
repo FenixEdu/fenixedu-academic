@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersis
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
@@ -36,16 +35,11 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFile;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
-import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesCourse;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRoom;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesTeacher;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
-import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkCompensation;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkHistoric;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
@@ -73,21 +67,14 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublicatio
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentDegreeTeachingService;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentInstitutionWorkTime;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentOtherService;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentTeacherMasterDegreeService;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentTeacherPastService;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
 
 /**
  * @author ars
@@ -157,8 +144,6 @@ public interface ISuportePersistente
 	public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy();
 
 	public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy();
-
-	public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice();
 
 	public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency();
 
@@ -230,8 +215,6 @@ public interface ISuportePersistente
 
 	public IPersistentReimbursementGuide getIPersistentReimbursementGuide();
 
-	public IPersistentReimbursementGuideEntry getIPersistentReimbursementGuideEntry();
-
 	public IPersistentOrientation getIPersistentOrientation();
 
 	public IPersistentPublicationsNumber getIPersistentPublicationsNumber();
@@ -282,8 +265,6 @@ public interface ISuportePersistente
 
 	public IPersistentReimbursementTransaction getIPersistentReimbursementTransaction();
 
-	public IPersistentSmsTransaction getIPersistentSmsTransaction();
-
 	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction();
 
 	public IPersistentPaymentTransaction getIPersistentPaymentTransaction();
@@ -296,21 +277,13 @@ public interface ISuportePersistente
 
 	public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes();
 
-	public IPersistentInquiriesCourse getIPersistentInquiriesCourse();
-
 	public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry();
-
-	public IPersistentInquiriesRoom getIPersistentInquiriesRoom();
-
-	public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher();
 
 	public IPersistentCostCenter getIPersistentCostCenter();
 
 	public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter();
 
 	public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests();
-
-	public IPersistentExtraWorkCompensation getIPersistentExtraWorkCompensation();
 
 	public IPersistentExtraWorkHistoric getIPersistentExtraWorkHistoric();
 
@@ -324,21 +297,10 @@ public interface ISuportePersistente
 
 	public IPersistentAuthorship getIPersistentAuthorship();
 
-	public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation();
-
 	public IPersistentCMS getIPersistentCms();
 
 	public IPersistentMailAddressAlias getIPersistentMailAdressAlias();
 
 	public IPersistentMailingList getIPersistentMailingList();
             
-    public IPersistentTeacherMasterDegreeService getIPersistentTeacherMasterDegreeService();
-    
-    public IPersistentDegreeTeachingService getIPersistentDegreeTeachingService();
-    
-    public IPersistentTeacherPastService getIPersistentTeacherPastService();
-    
-    public IPersistentInstitutionWorkTime getIPersistentInstitutionWorkTime();
-    
-    public IPersistentOtherService getIPersistentOtherService();
 }

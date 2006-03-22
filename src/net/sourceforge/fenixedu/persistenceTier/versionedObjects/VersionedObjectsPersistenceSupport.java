@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersis
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
@@ -66,16 +65,11 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFile;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
-import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesCourse;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRoom;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesTeacher;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
-import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkCompensation;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkHistoric;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
@@ -104,21 +98,14 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublicatio
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentDegreeTeachingService;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentInstitutionWorkTime;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentOtherService;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentTeacherMasterDegreeService;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentTeacherPastService;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailAdressAliasVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingListVO;
@@ -149,7 +136,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Publication
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationTypeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationsNumberVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
@@ -157,7 +143,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SecretaryEn
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SentSmsVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SmsTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentCurricularPlanVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
@@ -176,10 +161,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contr
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantSubsidyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantTypeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owner.GrantOwnerVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.InquiriesCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.InquiriesRegistryVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.InquiriesRoomVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.InquiriesTeacherVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesCoursesResVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesSummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesTeachersResVO;
@@ -195,7 +177,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.projectsManagement.ProjectAccessVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CandidacyVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyChoiceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.EquivalencyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.ModalityVO;
@@ -204,13 +185,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.Ext
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OrientationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.ServiceProviderRegimeVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.TeacherPersonalExpectationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.WeeklyOcupationVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.service.DegreeTeachingServiceVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.service.InstitutionWorkTimeVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.service.OtherServiceVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.service.TeacherMasterDegreeServiceVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.service.TeacherPastServiceVO;
+
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     private static final VersionedObjectsPersistenceSupport instance = new VersionedObjectsPersistenceSupport();
@@ -293,20 +269,12 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new PublicationTypeVO();
     }
 
-    public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice() {
-        return new CaseStudyChoiceVO();
-    }
-
     public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate() {
         return null;
     }
 
     public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy() {
         return new CaseStudyVO();
-    }
-
-    public IPersistentSmsTransaction getIPersistentSmsTransaction() {
-        return new SmsTransactionVO();
     }
 
     public IPersistentTutor getIPersistentTutor() {
@@ -481,10 +449,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new EnrolmentPeriodVO();
     }
 
-    public IPersistentExtraWorkCompensation getIPersistentExtraWorkCompensation() {
-        return null;
-    }
-
     public IPersistentGrantContractRegime getIPersistentGrantContractRegime() {
         return new GrantContractRegimeVO();
     }
@@ -555,10 +519,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentExternalActivity getIPersistentExternalActivity() {
         return new ExternalActivityVO();
-    }
-
-    public IPersistentReimbursementGuideEntry getIPersistentReimbursementGuideEntry() {
-        return new ReimbursementGuideEntryVO();
     }
 
     public IPersistentGrantPart getIPersistentGrantPart() {
@@ -657,20 +617,8 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new OldInquiriesCoursesResVO();
     }
 
-    public IPersistentInquiriesCourse getIPersistentInquiriesCourse() {
-        return new InquiriesCourseVO();
-    }
-
     public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry() {
         return new InquiriesRegistryVO();
-    }
-
-    public IPersistentInquiriesRoom getIPersistentInquiriesRoom() {
-        return new InquiriesRoomVO();
-    }
-
-    public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher() {
-        return new InquiriesTeacherVO();
     }
 
     public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher() {
@@ -681,10 +629,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new AuthorshipVO();
     }
    
-    public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation() {
-        return new TeacherPersonalExpectationVO();
-    }
-    
 	public IPersistentCMS getIPersistentCms()
 	{
 		return new CMSVO();
@@ -700,24 +644,4 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 		return new MailingListVO();
 	}	
 	    
-    public IPersistentTeacherMasterDegreeService getIPersistentTeacherMasterDegreeService() {
-        return new TeacherMasterDegreeServiceVO();
-    }
-    
-    public IPersistentDegreeTeachingService getIPersistentDegreeTeachingService() {
-        return new DegreeTeachingServiceVO();
-    }
-    
-    public IPersistentTeacherPastService getIPersistentTeacherPastService() {
-        return new TeacherPastServiceVO();
-    }
-    
-    public IPersistentInstitutionWorkTime getIPersistentInstitutionWorkTime() {
-        return new InstitutionWorkTimeVO();
-    }
-    
-    public IPersistentOtherService getIPersistentOtherService() {
-        return new OtherServiceVO();
-    }  
-    
 }

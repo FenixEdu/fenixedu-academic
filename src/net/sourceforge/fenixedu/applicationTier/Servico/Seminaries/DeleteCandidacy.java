@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -28,14 +27,12 @@ public class DeleteCandidacy extends Service {
 	public void run(Integer id) throws BDException, ExcepcaoPersistencia {
 		IPersistentSeminaryCandidacy persistentCandidacy = persistentSupport
 				.getIPersistentSeminaryCandidacy();
-		IPersistentSeminaryCaseStudyChoice persistentChoice = persistentSupport
-				.getIPersistentSeminaryCaseStudyChoice();
 		Candidacy candidacy = (Candidacy) persistentObject.readByOID(Candidacy.class, id);
 		List choices = candidacy.getCaseStudyChoices();
 		for (Iterator iterator = choices.iterator(); iterator.hasNext();) {
 			CaseStudyChoice choice = (CaseStudyChoice) iterator.next();
 			choice.setCaseStudy(null);
-			persistentChoice.deleteByOID(CaseStudyChoice.class, choice.getIdInternal());
+			persistentObject.deleteByOID(CaseStudyChoice.class, choice.getIdInternal());
 		}
 		candidacy.setCurricularCourse(null);
 		candidacy.setModality(null);

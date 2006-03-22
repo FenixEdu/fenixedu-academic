@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CandidacyOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CaseStudyChoiceOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CaseStudyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.EquivalencyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.ModalityOJB;
@@ -70,17 +69,12 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantTypeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.owner.GrantOwnerOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gratuity.masterDegree.SibsPaymentFileEntryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gratuity.masterDegree.SibsPaymentFileOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.guide.ReimbursementGuideEntryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.guide.ReimbursementGuideOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.InquiriesCourseOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.InquiriesRegistryOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.InquiriesRoomOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.InquiriesTeacherOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesCoursesResOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesSummaryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesTeachersResOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.CostCenterOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.ExtraWorkCompensationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.ExtraWorkHistoricOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.ExtraWorkResquestsOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.MoneyCostCenterOJB;
@@ -108,26 +102,18 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OldPublicationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OrientationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.PublicationsNumberOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.ServiceProviderRegimeOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.TeacherPersonalExpectationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.WeeklyOcupationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.NonAffiliatedTeacherOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.ShiftProfessorshipOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.SupportLessonOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.DegreeTeachingServiceOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.InstitutionWorkTimeOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.OtherServiceOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.TeacherMasterDegreeServiceOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.service.TeacherPastServiceOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.workingTime.TeacherInstitutionWorkingTimeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.GratuityTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.InsuranceTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.PaymentTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.ReimbursementTransactionOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.SmsTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
@@ -152,16 +138,11 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFile;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
-import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesCourse;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRoom;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesTeacher;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
-import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkCompensation;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkHistoric;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
@@ -189,21 +170,14 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublicatio
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentDegreeTeachingService;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentInstitutionWorkTime;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentOtherService;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentTeacherMasterDegreeService;
-import net.sourceforge.fenixedu.persistenceTier.teacher.service.IPersistentTeacherPastService;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 import net.sourceforge.fenixedu.stm.Transaction;
 
@@ -595,13 +569,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new CandidacyOJB();
 	}
 
-	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
-	public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice()
-	{
-		return new CaseStudyChoiceOJB();
-	}
-
-	// by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003)
 	public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency()
 	{
 		return new EquivalencyOJB();
@@ -821,12 +788,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new PeriodOJB();
 	}
 
-	public IPersistentReimbursementGuideEntry getIPersistentReimbursementGuideEntry()
-	{
-		return new ReimbursementGuideEntryOJB();
-
-	}
-
 	public IPersistentSentSms getIPersistentSentSms()
 	{
 		return new SentSmsOJB();
@@ -877,11 +838,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new ReimbursementTransactionOJB();
 	}
 
-	public IPersistentSmsTransaction getIPersistentSmsTransaction()
-	{
-		return new SmsTransactionOJB();
-	}
-
 	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction()
 	{
 		return new InsuranceTransactionOJB();
@@ -907,27 +863,11 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new OldInquiriesCoursesResOJB();
 	}
 
-	public IPersistentInquiriesCourse getIPersistentInquiriesCourse()
-	{
-		return new InquiriesCourseOJB();
-	}
-
 	public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry()
 	{
 		return new InquiriesRegistryOJB();
 	}
 
-	public IPersistentInquiriesRoom getIPersistentInquiriesRoom()
-	{
-		return new InquiriesRoomOJB();
-	}
-
-	public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher()
-	{
-		return new InquiriesTeacherOJB();
-	}
-
-	//
 	public IPersistentPublicationTeacher getIPersistentPublicationTeacher()
 	{
 		return new PublicationTeacherOJB();
@@ -956,11 +896,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent()
 	{
 		return new SecretaryEnrolmentStudentOJB();
-	}
-
-	public IPersistentExtraWorkCompensation getIPersistentExtraWorkCompensation()
-	{
-		return new ExtraWorkCompensationOJB();
 	}
 
 	public IPersistentExtraWorkHistoric getIPersistentExtraWorkHistoric()
@@ -1007,11 +942,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		}
 	}
 
-	public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation()
-	{
-		return new TeacherPersonalExpectationOJB();
-	}
-
 	public IPersistentCMS getIPersistentCms()
 	{
 		return new PersistentCMSOJB();
@@ -1027,24 +957,4 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new PersistentMailingListOJB();
 	}   
     
-    public IPersistentTeacherMasterDegreeService getIPersistentTeacherMasterDegreeService() {
-        return new TeacherMasterDegreeServiceOJB();
-    }
-    
-    public IPersistentDegreeTeachingService getIPersistentDegreeTeachingService() {
-        return new DegreeTeachingServiceOJB();
-    }
-    
-    public IPersistentTeacherPastService getIPersistentTeacherPastService() {
-        return new TeacherPastServiceOJB();
-    }
-    
-    public IPersistentInstitutionWorkTime getIPersistentInstitutionWorkTime() {
-        return new InstitutionWorkTimeOJB();
-    }
-    
-    public IPersistentOtherService getIPersistentOtherService() {
-        return new OtherServiceOJB();
-    }  
-
 }
