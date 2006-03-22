@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -34,8 +33,7 @@ public class ReadMasterDegrees extends Service {
             executionYear = persistentSupport.getIPersistentExecutionYear()
                     .readExecutionYearByName(executionYearString);
         } else {
-            IPersistentExecutionYear executionYearDAO = persistentSupport.getIPersistentExecutionYear();
-            executionYear = executionYearDAO.readCurrentExecutionYear();
+            executionYear = ExecutionYear.readCurrentExecutionYear();
         }
 
         // Read the degrees

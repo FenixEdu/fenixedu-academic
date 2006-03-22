@@ -54,6 +54,10 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         this.removeTeacher();
         super.deleteDomainObject();
     }
+    
+    public boolean isResponsibleFor() {
+        return getResponsibleFor().booleanValue();
+    }
 
     public static List<Professorship> readByDegreeCurricularPlanAndExecutionYear(
             DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear) {

@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 public class ReadExecutionDegreesByExecutionYear extends Service {
@@ -58,10 +57,9 @@ public class ReadExecutionDegreesByExecutionYear extends Service {
 			final ISuportePersistente persistentSupport,
 			final IPersistentExecutionDegree executionDegreeDAO)
 			throws ExcepcaoPersistencia {
+        
 		if (infoExecutionYear == null) {
-			final IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-			final ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
-			return executionDegreeDAO.readByExecutionYear(executionYear.getYear());
+			return executionDegreeDAO.readByExecutionYear(ExecutionYear.readCurrentExecutionYear().getYear());
 		}
 		return executionDegreeDAO.readByExecutionYear(infoExecutionYear.getYear());
 	}

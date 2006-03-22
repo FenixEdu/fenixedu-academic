@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -12,7 +11,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -25,24 +23,20 @@ public class ReadNotClosedPublicExecutionPeriodsByExecutionYear extends Service 
 
     public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException, ExcepcaoPersistencia {
 
-        List result = new ArrayList();
-
+        // remove ExecutionPeriod DAO
         IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-        IPersistentExecutionYear executionYearDAO = persistentSupport.getIPersistentExecutionYear();
-        ExecutionYear executionYear;
-        List executionPeriods;
+        
+        final List<ExecutionPeriod> executionPeriods;
 
+        final ExecutionYear executionYear;
         if (infoExecutionYear == null) {
-            executionYear = executionYearDAO.readCurrentExecutionYear();
-            executionPeriods = executionPeriodDAO
-                    .readNotClosedPublicExecutionPeriodsByExecutionYears(executionYear.getIdInternal());
+            executionYear = ExecutionYear.readCurrentExecutionYear();
+            executionPeriods = executionPeriodDAO.readNotClosedPublicExecutionPeriodsByExecutionYears(executionYear.getIdInternal());
         } else {
-            executionPeriods = executionPeriodDAO
-                    .readNotClosedPublicExecutionPeriodsByExecutionYears(infoExecutionYear
-                            .getIdInternal());
+            executionPeriods = executionPeriodDAO.readNotClosedPublicExecutionPeriodsByExecutionYears(infoExecutionYear.getIdInternal());
         }
-
-        result = (List) CollectionUtils.collect(executionPeriods, new Transformer() {
+        
+        return (List) CollectionUtils.collect(executionPeriods, new Transformer() {
 
             public Object transform(Object input) {
                 ExecutionPeriod executionPeriod = (ExecutionPeriod) input;
@@ -51,7 +45,5 @@ public class ReadNotClosedPublicExecutionPeriodsByExecutionYear extends Service 
                 return infoExecutionPeriod;
             }
         });
-
-        return result;
     }
 }

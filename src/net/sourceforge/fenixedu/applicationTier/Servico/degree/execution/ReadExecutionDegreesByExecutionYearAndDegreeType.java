@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -35,8 +35,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType extends Service {
 
 		String executionYear = null;
         if (infoExecutionYear == null) {
-            IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-            executionYear = persistentExecutionYear.readCurrentExecutionYear().getYear();
+            executionYear = ExecutionYear.readCurrentExecutionYear().getYear();
         } else {
             executionYear = infoExecutionYear.getYear();
         }

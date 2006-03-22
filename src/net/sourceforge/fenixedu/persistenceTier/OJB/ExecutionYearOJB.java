@@ -17,10 +17,6 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class ExecutionYearOJB extends PersistentObjectOJB implements IPersistentExecutionYear {
 
-    public ExecutionYearOJB() {
-        super();
-    }
-
     public ExecutionYear readExecutionYearByName(String year) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("year", year);
@@ -35,13 +31,6 @@ public class ExecutionYearOJB extends PersistentObjectOJB implements IPersistent
         return queryList(ExecutionYear.class, criteria);        
     }
     
-    public ExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("state", PeriodState.CURRENT);
-        return (ExecutionYear) queryObject(ExecutionYear.class, criteria);
-    }
-
-
     public List readNotClosedExecutionYears() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("state", PeriodState.CLOSED);

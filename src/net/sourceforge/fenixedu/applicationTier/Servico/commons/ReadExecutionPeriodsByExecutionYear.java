@@ -10,22 +10,19 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 public class ReadExecutionPeriodsByExecutionYear extends Service {
 
     public List run(InfoExecutionYear infoExecutionYear) throws ExcepcaoPersistencia {
-        final IPersistentExecutionYear executionYearDAO = persistentSupport.getIPersistentExecutionYear();
 
         final ExecutionYear executionYear = (infoExecutionYear != null) ?
-                (ExecutionYear) persistentObject.readByOID(ExecutionYear.class, infoExecutionYear.getIdInternal())
-                : executionYearDAO.readCurrentExecutionYear();
-
+                rootDomainObject.readExecutionYearByOID(infoExecutionYear.getIdInternal())
+                : ExecutionYear.readCurrentExecutionYear();
+                
         final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
         for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
             infoExecutionPeriods.add(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod));
         }
         return infoExecutionPeriods;
     }
-
 }

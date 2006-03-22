@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
@@ -105,9 +104,7 @@ public class SchoolRegistration extends Service {
     private void updateStudentInfo(final Student student)
             throws ExcepcaoPersistencia {
 
-        final IPersistentExecutionYear pExecutionYear = persistentSupport.getIPersistentExecutionYear();
- 
-        final ExecutionYear executionYear = pExecutionYear.readCurrentExecutionYear();
+        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         student.setRegistrationYear(executionYear);
 
         final StudentCurricularPlan scp = student.getActiveStudentCurricularPlan();

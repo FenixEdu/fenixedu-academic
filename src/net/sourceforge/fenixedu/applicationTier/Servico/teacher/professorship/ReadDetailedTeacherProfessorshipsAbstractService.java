@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -76,15 +75,11 @@ public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
         }
     }
 
-    /**
-     * @author jpvl
-     */
     public class NotFoundTeacher extends FenixServiceException {
 
     }
 
-    protected List getDetailedProfessorships(List professorships, final List responsibleFors,
-            ISuportePersistente persistentSupport) {
+    protected List getDetailedProfessorships(List professorships, final List responsibleFors) {
 
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
                 new Professorships2DetailProfessorship());
@@ -92,14 +87,8 @@ public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
         return detailedProfessorshipList;
     }
 
-    /**
-     * @param teacherId
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-    protected Teacher readTeacher(Integer teacherId)
-            throws NotFoundTeacher, ExcepcaoPersistencia {
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);
+    protected Teacher readTeacher(Integer teacherId) throws NotFoundTeacher, ExcepcaoPersistencia {
+        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
         if (teacher == null) {
             throw new NotFoundTeacher();
         }

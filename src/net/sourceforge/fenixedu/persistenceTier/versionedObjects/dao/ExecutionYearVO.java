@@ -39,16 +39,6 @@ public class ExecutionYearVO  extends VersionedObjectsBase implements IPersisten
         }        
         return executionYearsAux;
     }
-    
-    public ExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia {
-        Collection<ExecutionYear> executionYears = readAll(ExecutionYear.class);
-        
-        for(ExecutionYear executionYear : executionYears){
-            if(executionYear.getState().equals(PeriodState.CURRENT))
-                return executionYear;
-        }        
-        return null;
-    }
 
     public List readOpenExecutionYears() throws ExcepcaoPersistencia {
         Collection<ExecutionYear> executionYears = readAll(ExecutionYear.class);

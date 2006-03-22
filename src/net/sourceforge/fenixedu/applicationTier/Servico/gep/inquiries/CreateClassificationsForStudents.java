@@ -87,14 +87,13 @@ public class CreateClassificationsForStudents extends Service {
     public ByteArrayOutputStream run(Integer[] entryGradeLimits, Integer[] approvationRatioLimits,
             Integer[] arithmeticMeanLimits, Integer degreeCurricularPlanID) throws ExcepcaoPersistencia,
             FileNotFoundException {
-        ExecutionYear currentExecutionYear = persistentSupport.getIPersistentExecutionYear()
-                .readCurrentExecutionYear();
+        
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         List<Student> otherYearsStudents = new ArrayList<Student>();
         List<Student> firstYearStudents = new ArrayList<Student>();
 
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-        		.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         List<StudentCurricularPlan> studentCurricularPlans = degreeCurricularPlan
                 .getStudentCurricularPlans();
 

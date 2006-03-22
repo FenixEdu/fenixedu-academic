@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 /**
  * @author Luis Cruz
@@ -38,9 +37,8 @@ public class ReadExecutionDegreesByExecutionYearAndType extends Service {
     }
 
     public List run(final DegreeType typeOfCourse) throws ExcepcaoPersistencia {
-        final IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 
-        final ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         final List<ExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
         final List<InfoExecutionDegree> infoExecutionDegrees = new ArrayList();
         for (final ExecutionDegree executionDegree : executionDegrees) {

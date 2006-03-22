@@ -13,8 +13,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -28,11 +28,10 @@ public class ReadExecutionPeriodsByDegreeCurricularPlan extends Service {
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
         
         // End date of the current year
-        Date end = persistentSupport.getIPersistentExecutionYear().readCurrentExecutionYear().getEndDate();
+        Date end = ExecutionYear.readCurrentExecutionYear().getEndDate();
 
         // Start date of the degree curricular plan
-        Date start = ((DegreeCurricularPlan) (persistentObject.readByOID(
-                DegreeCurricularPlan.class, degreeCurricularPlanID))).getInitialDate();
+        Date start = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID).getInitialDate();
 
         List<ExecutionPeriod> executionPeriods = persistentSupport.getIPersistentExecutionPeriod()
                 .readExecutionPeriodsInTimePeriod(start, end);

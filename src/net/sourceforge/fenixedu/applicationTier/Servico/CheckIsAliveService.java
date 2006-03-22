@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
 
 import org.apache.log4j.Logger;
@@ -61,10 +60,8 @@ public class CheckIsAliveService extends Service {
     }
 
     private void checkFenixDatabaseOps() throws ExcepcaoPersistencia {
-        final IPersistentExecutionYear persistentExecutionYear = persistentSupport
-                .getIPersistentExecutionYear();
 
-        final ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
         if (executionYear == null || executionYear.getIdInternal() == null) {
             logger.fatal("Got a null result checking fenix database.");

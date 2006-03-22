@@ -12,9 +12,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 /**
  * @author Fernanda Quitério 21/Nov/2003
@@ -26,10 +23,6 @@ public class EditCurriculumForCurricularCourse extends Service {
             Integer curricularCourseCode, InfoCurriculum newInfoCurriculum, String username,
             String language) throws FenixServiceException, ExcepcaoPersistencia {
         Boolean result = new Boolean(false);
-
-        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
-        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 
         if (oldCurriculumId == null) {
             throw new FenixServiceException("nullCurriculumCode");
@@ -66,7 +59,7 @@ public class EditCurriculumForCurricularCourse extends Service {
             oldCurriculum.setLastModificationDate(today.getTime());
         }
 
-        ExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         if (!oldCurriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
                 && !oldCurriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {

@@ -74,15 +74,13 @@ public class Teacher extends Teacher_Base {
 
     }
 
-    public List responsibleFors() {
-        List<Professorship> professorships = this.getProfessorships();
-        List<Professorship> res = new ArrayList<Professorship>();
-
-        for (Professorship professorship : professorships) {
-            if (professorship.getResponsibleFor())
-                res.add(professorship);
+    public List<Professorship> responsibleFors() {
+        final List<Professorship> result = new ArrayList<Professorship>();
+        for (final Professorship professorship : this.getProfessorships()) {
+            if (professorship.isResponsibleFor())
+                result.add(professorship);
         }
-        return res;
+        return result;
     }
 
     public Professorship responsibleFor(Integer executionCourseId) {

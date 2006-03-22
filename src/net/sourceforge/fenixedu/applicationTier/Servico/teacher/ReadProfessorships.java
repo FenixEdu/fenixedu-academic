@@ -58,8 +58,7 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
             }
         }
 
-        List detailedProfessorshipList = getDetailedProfessorships(professorshipsList,
-                responsibleForsList, persistentSupport);
+        List detailedProfessorshipList = getDetailedProfessorships(professorshipsList, responsibleForsList);
         return detailedProfessorshipList;
     }
 }

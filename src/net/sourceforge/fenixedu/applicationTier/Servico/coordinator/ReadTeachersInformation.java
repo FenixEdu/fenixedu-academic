@@ -83,7 +83,7 @@ public class ReadTeachersInformation extends Service {
         if (executionYearString != null && !executionYearString.equals("")) {
             executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
         } else {
-            executionYear = persistentExecutionYear.readCurrentExecutionYear();
+            executionYear = ExecutionYear.readCurrentExecutionYear();
         }
         if (executionDegreeId == null) {
             List<ExecutionDegree> executionDegrees = persistentExecutionDegree

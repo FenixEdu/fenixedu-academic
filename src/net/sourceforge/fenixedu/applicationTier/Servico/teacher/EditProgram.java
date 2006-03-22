@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 /**
  * @author Fernanda Quitério
@@ -23,7 +21,7 @@ public class EditProgram extends Service {
     public boolean run(Integer infoExecutionCourseCode, Integer infoCurricularCourseCode,
             InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException,
             ExcepcaoPersistencia {
-        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
+
         IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
         
         // Person who change all information
@@ -58,8 +56,7 @@ public class EditProgram extends Service {
             curriculum = curricularCourse.insertCurriculum("", "", "", "", "", "");
         }
 
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-        ExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
                 && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {

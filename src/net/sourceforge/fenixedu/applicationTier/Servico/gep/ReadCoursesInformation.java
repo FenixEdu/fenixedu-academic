@@ -67,7 +67,7 @@ public class ReadCoursesInformation extends Service {
         if (executionYearString != null) {
             executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
         } else {
-            executionYear = persistentExecutionYear.readCurrentExecutionYear();
+            executionYear = ExecutionYear.readCurrentExecutionYear();
         }
         if (executionDegreeId == null) {
             List<ExecutionDegree> executionDegrees = persistentExecutionDegree
