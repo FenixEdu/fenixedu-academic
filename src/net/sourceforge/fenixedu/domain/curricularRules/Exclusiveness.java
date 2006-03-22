@@ -22,6 +22,8 @@ public class Exclusiveness extends Exclusiveness_Base {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
         
+        checkExecutionPeriods(begin, end);
+        
         setDegreeModuleToApplyRule(degreeModuleToApplyRule);
         setExclusiveDegreeModule(exclusiveDegreeModule);
         setCurricularRuleType(CurricularRuleType.EXCLUSIVENESS);

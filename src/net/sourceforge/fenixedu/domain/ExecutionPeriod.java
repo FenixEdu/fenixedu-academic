@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import net.sourceforge.fenixedu.fileSuport.INode;
+import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -91,5 +94,27 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
     public boolean isBeforeOrEquals(ExecutionPeriod executionPeriod) {
     	return this.compareTo(executionPeriod) <= 0;
     }
-
+    
+    // -------------------------------------------------------------
+    // read static methods 
+    // -------------------------------------------------------------
+    public static ExecutionPeriod readActualExecutionPeriod() {
+        for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+            if (executionPeriod.getState() == PeriodState.CURRENT) {
+                return executionPeriod;
+            }
+        }
+        return null;
+    }
+    
+    public static List<ExecutionPeriod> readNotClosedExecutionPeriods() {
+        List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
+        for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+            if (executionPeriod.getState() != PeriodState.CLOSED) {
+                result.add(executionPeriod);
+            }
+        }
+        return result;
+    }
+    
 }

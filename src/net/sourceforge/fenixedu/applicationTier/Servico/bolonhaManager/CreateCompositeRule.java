@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CreateCompositeRule extends Service {
 
     public void run(Integer degreeModuleToApplyRuleID, LogicOperators logicOperator,
-            Integer[] selectedCurricularRuleIDs) throws FenixServiceException, ExcepcaoPersistencia {
+            Integer[] selectedCurricularRuleIDs, Integer beginExecutionPeriodID,
+            Integer endExecutionPeriodID) throws FenixServiceException, ExcepcaoPersistencia {
 
-        final DegreeModule degreeModuleToApplyRule = (DegreeModule) persistentObject.readByOID(
-                DegreeModule.class, degreeModuleToApplyRuleID);
+        final DegreeModule degreeModuleToApplyRule = rootDomainObject.readDegreeModuleByOID(degreeModuleToApplyRuleID);
         if (degreeModuleToApplyRule == null) {
             throw new FenixServiceException("error.noDegreeModule");
         }
@@ -27,22 +27,31 @@ public class CreateCompositeRule extends Service {
         if (selectedCurricularRuleIDs != null) {
             final CurricularRule[] curricularRules = new CurricularRule[selectedCurricularRuleIDs.length];
             for (int i = 0; i < selectedCurricularRuleIDs.length; i++) {
-                final CurricularRule curricularRule = (CurricularRule) persistentObject.readByOID(
-                        CurricularRule.class, selectedCurricularRuleIDs[i]);
+                final CurricularRule curricularRule = rootDomainObject
+                        .readCurricularRuleByOID(selectedCurricularRuleIDs[i]);
                 if (curricularRule == null) {
                     throw new FenixServiceException("error.invalidCurricularRule");
                 }
                 curricularRules[i] = curricularRule;
             }
 
-            // TODO: this should be modified to receive ExecutionYear, but for
-            // now we just read the '2006/2007'
-            ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
-                    .readExecutionYearByName("2006/2007");
-            ExecutionPeriod begin = executionYear.getExecutionPeriodForSemester(Integer.valueOf(1));
+            final ExecutionPeriod beginExecutionPeriod;
+            if (beginExecutionPeriodID == null) {
+                final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+                final ExecutionYear nextExecutionYear = currentExecutionYear.getNextExecutionYear();
+                if (nextExecutionYear == null) {
+                    throw new FenixServiceException("error.no.next.execution.year");
+                }
+                beginExecutionPeriod = nextExecutionYear.getExecutionPeriodForSemester(Integer.valueOf(1));
+            } else {
+                beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
+            }
 
-            CurricularRulesManager.createCompositeRule(degreeModuleToApplyRule, logicOperator, begin,
-                    null, curricularRules);
+            final ExecutionPeriod endExecutionPeriod = (endExecutionPeriodID == null) ? null
+                    : rootDomainObject.readExecutionPeriodByOID(endExecutionPeriodID);
+
+            CurricularRulesManager.createCompositeRule(degreeModuleToApplyRule, logicOperator,
+                    beginExecutionPeriod, endExecutionPeriod, curricularRules);
         }
     }
 }

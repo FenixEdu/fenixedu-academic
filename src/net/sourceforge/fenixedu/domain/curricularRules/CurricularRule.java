@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class CurricularRule extends CurricularRule_Base {
  
@@ -17,6 +18,12 @@ public abstract class CurricularRule extends CurricularRule_Base {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(getClass().getName());        
+    }
+    
+    protected void edit(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+        checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
+        setBegin(beginExecutionPeriod);
+        setEnd(endExecutionPeriod);
     }
     
     public void delete() {
@@ -33,8 +40,6 @@ public abstract class CurricularRule extends CurricularRule_Base {
         removeContextCourseGroup();
     }
 
-    protected abstract void removeOwnParameters();
-
     public boolean appliesToContext(Context context) {
         return this.appliesToCourseGroup(context);
     }
@@ -50,10 +55,6 @@ public abstract class CurricularRule extends CurricularRule_Base {
     protected boolean belongsToCompositeRule() {        
         return (getParentCompositeRule() != null);
     }
-    
-    public abstract boolean isLeaf();    
-    public abstract List<GenericPair<Object, Boolean>> getLabel();
-    public abstract boolean evaluate(Class<? extends DomainObject> object);
     
     @Override
     public ExecutionPeriod getBegin() {
@@ -89,5 +90,15 @@ public abstract class CurricularRule extends CurricularRule_Base {
         }
         return false;
     }
+
+    protected void checkExecutionPeriods(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) throws DomainException {
+        if (endExecutionPeriod != null && beginExecutionPeriod.isAfter(endExecutionPeriod)) {
+            throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
+        }
+    }
     
+    protected abstract void removeOwnParameters();
+    public abstract boolean isLeaf();    
+    public abstract List<GenericPair<Object, Boolean>> getLabel();
+    public abstract boolean evaluate(Class<? extends DomainObject> object);
 }

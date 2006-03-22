@@ -29,12 +29,15 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
         if (degreeModuleToApplyRule == null || begin == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
+        
+        checkExecutionPeriods(begin, end);
+        
         setDegreeModuleToApplyRule(degreeModuleToApplyRule);
         setContextCourseGroup(contextCourseGroup);
         setBegin(begin);
         setEnd(end);
     }
-    
+
     protected void edit(CourseGroup contextCourseGroup, Integer minimumLimit, Integer maximumLimit) {
         checkLimits(minimumLimit, maximumLimit);
         setContextCourseGroup(contextCourseGroup);

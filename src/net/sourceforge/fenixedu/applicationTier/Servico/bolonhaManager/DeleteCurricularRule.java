@@ -11,9 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteCurricularRule extends Service {
 
     public void run(Integer curricularRuleID) throws FenixServiceException, ExcepcaoPersistencia {
-
-        final CurricularRule curricularRule = (CurricularRule) persistentObject.readByOID(
-                CurricularRule.class, curricularRuleID);
+        final CurricularRule curricularRule = rootDomainObject.readCurricularRuleByOID(curricularRuleID);
         if (curricularRule == null) {
             throw new FenixServiceException("error.noCurricularRule");
         }

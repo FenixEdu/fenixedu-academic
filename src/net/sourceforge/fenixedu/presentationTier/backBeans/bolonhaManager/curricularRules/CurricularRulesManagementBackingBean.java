@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRule
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
@@ -62,6 +63,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     private UISelectItems courseGroupItems;
     private UISelectItems degreeItems;
     private UISelectItems departmentUnitItems;
+    private UISelectItems beginExecutionPeriodItemsForRule;
+    private UISelectItems endExecutionPeriodItemsForRule;
 
     public Integer getDegreeCurricularPlanID() {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
@@ -512,6 +515,66 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         this.departmentUnitItems = departmentUnitItems;
     }
     
+    public Integer getBeginExecutionPeriodID() {
+        return (Integer) getViewState().getAttribute("beginExecutionPeriodID");
+    }
+    
+    public void setBeginExecutionPeriodID(Integer beginExecutionPeriodID) {
+        getViewState().setAttribute("beginExecutionPeriodID", beginExecutionPeriodID);
+    }
+    
+    public Integer getEndExecutionPeriodID() {
+        return (Integer) getViewState().getAttribute("endExecutionPeriodID");
+    }
+    
+    public void setEndExecutionPeriodID(Integer endExecutionPeriodID) {
+        getViewState().setAttribute("endExecutionPeriodID", endExecutionPeriodID);
+    }
+    
+    public UISelectItems getBeginExecutionPeriodItemsForRule() throws FenixFilterException, FenixServiceException {
+        if (beginExecutionPeriodItemsForRule == null) {
+            beginExecutionPeriodItemsForRule = new UISelectItems();
+            beginExecutionPeriodItemsForRule.setValue(readExecutionPeriodItems());
+        }
+        return beginExecutionPeriodItemsForRule;
+    }
+
+    public void setBeginExecutionPeriodItemsForRule(UISelectItems beginExecutionPeriodItemsForRule) {
+        this.beginExecutionPeriodItemsForRule = beginExecutionPeriodItemsForRule;
+    }
+    
+    public UISelectItems getEndExecutionPeriodItemsForRule() throws FenixFilterException, FenixServiceException {
+        if (endExecutionPeriodItemsForRule == null) {
+            endExecutionPeriodItemsForRule = new UISelectItems();
+            final List<SelectItem> values = new ArrayList<SelectItem>(readExecutionPeriodItems());
+            values.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources.getString("opened")));
+            endExecutionPeriodItemsForRule.setValue(values);
+        }
+        return endExecutionPeriodItemsForRule;
+    }
+
+    public void setEndExecutionPeriodItemsForRule(UISelectItems endExecutionPeriodItemsForRule) {
+        this.endExecutionPeriodItemsForRule = endExecutionPeriodItemsForRule;
+    }
+    
+    private List<SelectItem> executionPeriodItems;
+    protected List<SelectItem> readExecutionPeriodItems() throws FenixServiceException, FenixFilterException {
+        if (executionPeriodItems != null) {
+            return executionPeriodItems;
+        }
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+        final List<ExecutionPeriod> notClosedExecutionPeriods = ExecutionPeriod.readNotClosedExecutionPeriods();
+        Collections.sort(notClosedExecutionPeriods);
+        for (final ExecutionPeriod notClosedExecutionPeriod : notClosedExecutionPeriods) {
+            if (notClosedExecutionPeriod.isAfterOrEquals(currentExecutionPeriod)) {                
+                result.add(new SelectItem(notClosedExecutionPeriod.getIdInternal(),
+                        notClosedExecutionPeriod.getName() + " " + notClosedExecutionPeriod.getExecutionYear().getYear()));
+            }
+        }
+        return (executionPeriodItems = result);
+    }
+        
     private Object readDepartmentUnits(String selectedCurricularRuleType) throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (selectedCurricularRuleType != null
@@ -587,10 +650,14 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public String createCurricularRule() {
         try {
             checkSelectedAttributes();
-            final Object[] args = { getDegreeModuleID(),
+            final Object[] args = { 
+                    getDegreeModuleID(),
                     CurricularRuleType.valueOf(getSelectedCurricularRuleType()),
-                    buildCurricularRuleParametersDTO() };
-            ServiceUtils.executeService(getUserView(), "CreateCurricularRule", args);
+                    buildCurricularRuleParametersDTO(),
+                    getBeginExecutionPeriodID(),
+                    (getEndExecutionPeriodID() == null || getEndExecutionPeriodID().equals(NO_SELECTION_INTEGER)) ? null : 
+                        getEndExecutionPeriodID() };
+            ServiceUtils.executeService(getUserView(), "CreateRule", args);
             return "setCurricularRules";
         } catch (FenixActionException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
@@ -655,7 +722,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         parametersDTO.setSelectedDegreeID((getSelectedDegreeID() == null || getSelectedDegreeID().equals(NO_SELECTION_INTEGER)) ? null : getSelectedDegreeID());
         parametersDTO.setSelectedDepartmentUnitID((getSelectedDepartmentUnitID() == null || getSelectedDepartmentUnitID().equals(NO_SELECTION_INTEGER)) ? null : getSelectedDepartmentUnitID());
         parametersDTO.setBolonhaDegreeType((getSelectedDegreeType() == null || getSelectedDegreeType().equals(NO_SELECTION_STRING)) ? null : BolonhaDegreeType.valueOf(getSelectedDegreeType()));
-        // must get these values like this
+        // must get these values like this to prevent override value
         parametersDTO.setMinimumYear((Integer) getViewState().getAttribute("minimumYear"));
         parametersDTO.setMaximumYear((Integer) getViewState().getAttribute("maximumYear"));
         parametersDTO.setCredits((Double) getViewState().getAttribute("credits"));

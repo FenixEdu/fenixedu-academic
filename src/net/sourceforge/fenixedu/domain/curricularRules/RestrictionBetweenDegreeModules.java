@@ -36,6 +36,8 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
             throw new DomainException("curricular.rule.invalid.parameters");
         }
         
+        checkExecutionPeriods(begin, end);
+        
         setDegreeModuleToApplyRule(degreeModuleToApplyRule);
         setBegin(begin);
         setEnd(end);

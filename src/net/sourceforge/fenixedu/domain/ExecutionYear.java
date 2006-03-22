@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.fileSuport.INode;
+import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -91,5 +92,16 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
         Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
         return executionDegrees;
     }
-
+    
+    // -------------------------------------------------------------
+    // read static methods 
+    // -------------------------------------------------------------
+    public static ExecutionYear readCurrentExecutionYear() {
+        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+            if (executionYear.getState() == PeriodState.CURRENT) {
+                return executionYear;
+            }
+        }
+        return null;
+    }
 }

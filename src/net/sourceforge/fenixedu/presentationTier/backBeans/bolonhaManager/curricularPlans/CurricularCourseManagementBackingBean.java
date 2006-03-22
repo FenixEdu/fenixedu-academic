@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -348,6 +350,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     
     public void setExecutionYearID(Integer executionYearID) {
         getViewState().setAttribute("executionYearID", executionYearID);
+    }
+    
+    public ExecutionYear getExecutionYear() throws FenixFilterException, FenixServiceException {
+        return RootDomainObject.getInstance().readExecutionYearByOID(getExecutionYearID());
     }
     
     protected InfoExecutionYear getCurrentExecutionYear() throws FenixFilterException, FenixServiceException {

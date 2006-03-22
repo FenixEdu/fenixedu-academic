@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRule
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -18,63 +19,64 @@ public class CurricularRulesManager {
 
     public static CurricularRule createCurricularRule(DegreeModule degreeModuleToApplyRule,
             ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleType curricularRuleType,
-            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            CurricularRuleParametersDTO parametersDTO, RootDomainObject rootDomainObject)
             throws ExcepcaoPersistencia {
 
         switch (curricularRuleType) {
 
         case PRECEDENCY_APPROVED_DEGREE_MODULE:
             return createRestrictionDoneDegreeModule(degreeModuleToApplyRule, begin, end, parametersDTO,
-                    persistentObject);
+                    rootDomainObject);
 
         case PRECEDENCY_ENROLED_DEGREE_MODULE:
             return createRestrictionEnroledDegreeModule(degreeModuleToApplyRule, begin, end,
-                    parametersDTO, persistentObject);
+                    parametersDTO, rootDomainObject);
 
         case CREDITS_LIMIT:
             return createCreditsLimit(degreeModuleToApplyRule, begin, end, parametersDTO,
-                    persistentObject);
+                    rootDomainObject);
 
         case DEGREE_MODULES_SELECTION_LIMIT:
             return createDegreeModulesSelectionLimit(degreeModuleToApplyRule, begin, end, parametersDTO,
-                    persistentObject);
+                    rootDomainObject);
 
         case ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR:
             return createEnrolmentToBeApprovedByCoordinator(degreeModuleToApplyRule, begin, end,
-                    parametersDTO, persistentObject);
+                    parametersDTO, rootDomainObject);
 
         case PRECEDENCY_BETWEEN_DEGREE_MODULES:
             return createRestrictionBetweenDegreeModules(degreeModuleToApplyRule, begin, end,
-                    parametersDTO, persistentObject);
+                    parametersDTO, rootDomainObject);
 
         case EXCLUSIVENESS:
             return createExclusiveness(degreeModuleToApplyRule, begin, end, parametersDTO,
-                    persistentObject);
+                    rootDomainObject);
 
         case ANY_CURRICULAR_COURSE:
             return createAnyCurricularCourse(degreeModuleToApplyRule, begin, end, parametersDTO,
-                    persistentObject);
-            
+                    rootDomainObject);
+
         case MINIMUM_NUMBER_OF_CREDITS_TO_ENROL:
-            return createMinimumNumberOfCreditsToEnrol(degreeModuleToApplyRule, begin, end, parametersDTO,
-                    persistentObject);
+            return createMinimumNumberOfCreditsToEnrol(degreeModuleToApplyRule, begin, end,
+                    parametersDTO, rootDomainObject);
         default:
             break;
         }
         return null;
     }
 
-    public static CurricularRule createCompositeRule(DegreeModule degreeModuleToApplyRule, LogicOperators logicOperator,
-            ExecutionPeriod begin, ExecutionPeriod end, CurricularRule ... curricularRules) {
+    public static CurricularRule createCompositeRule(DegreeModule degreeModuleToApplyRule,
+            LogicOperators logicOperator, ExecutionPeriod begin, ExecutionPeriod end,
+            CurricularRule... curricularRules) {
         return new CompositeRule(degreeModuleToApplyRule, begin, end, logicOperator, curricularRules);
     }
-    
+
     public static void editCurricularRule(CurricularRule curricularRule,
             CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
             throws ExcepcaoPersistencia {
 
         switch (curricularRule.getCurricularRuleType()) {
-        
+
         case PRECEDENCY_APPROVED_DEGREE_MODULE:
             editRestrictionDoneDegreeModule(curricularRule, parametersDTO, persistentObject);
             break;
@@ -106,7 +108,7 @@ public class CurricularRulesManager {
         case ANY_CURRICULAR_COURSE:
             editAnyCurricularCourse(curricularRule, parametersDTO, persistentObject);
             break;
-            
+
         case MINIMUM_NUMBER_OF_CREDITS_TO_ENROL:
             editMinimumNumberOfCreditsToEnrol(curricularRule, parametersDTO, persistentObject);
             break;
@@ -115,14 +117,14 @@ public class CurricularRulesManager {
             break;
         }
     }
-    
+
     private static CurricularRule createMinimumNumberOfCreditsToEnrol(
             DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin, ExecutionPeriod end,
-            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            CurricularRuleParametersDTO parametersDTO, RootDomainObject rootDomainObject)
             throws ExcepcaoPersistencia {
 
-        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, parametersDTO.getContextCourseGroupID());
+        final CourseGroup contextCourseGroup = (CourseGroup) rootDomainObject
+                .readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
 
         return new MinimumNumberOfCreditsToEnrol(degreeModuleToApplyRule, contextCourseGroup, begin,
                 end, parametersDTO.getMinimumCredits());
@@ -130,32 +132,28 @@ public class CurricularRulesManager {
 
     private static CurricularRule createAnyCurricularCourse(DegreeModule degreeModuleToApplyRule,
             ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO,
-            IPersistentObject persistentObject) throws ExcepcaoPersistencia {
+            RootDomainObject rootDomainObject) throws ExcepcaoPersistencia {
 
-        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, parametersDTO.getContextCourseGroupID());
-
-        final Degree degree = (Degree) persistentObject.readByOID(Degree.class, parametersDTO
-                .getSelectedDegreeID());
-
-        final Unit departmentUnit = (Unit) persistentObject.readByOID(Unit.class, parametersDTO
+        final CourseGroup contextCourseGroup = (CourseGroup) rootDomainObject
+                .readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+        final Degree degree = rootDomainObject.readDegreeByOID(parametersDTO.getSelectedDegreeID());
+        final Unit departmentUnit = (Unit) rootDomainObject.readPartyByOID(parametersDTO
                 .getSelectedDepartmentUnitID());
 
         return new AnyCurricularCourse((CurricularCourse) degreeModuleToApplyRule, contextCourseGroup,
-                begin, end, parametersDTO.getCredits(), parametersDTO.getCurricularPeriodInfoDTO().getOrder(),
-                parametersDTO.getMinimumYear(), parametersDTO.getMaximumYear(), parametersDTO.getBolonhaDegreeType(),
-                degree, departmentUnit);
+                begin, end, parametersDTO.getCredits(), parametersDTO.getCurricularPeriodInfoDTO()
+                        .getOrder(), parametersDTO.getMinimumYear(), parametersDTO.getMaximumYear(),
+                parametersDTO.getBolonhaDegreeType(), degree, departmentUnit);
     }
 
     private static CurricularRule createExclusiveness(DegreeModule firstExclusiveDegreeModule,
             ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO,
-            IPersistentObject persistentObject) throws ExcepcaoPersistencia {
+            RootDomainObject rootDomainObject) throws ExcepcaoPersistencia {
 
-        final DegreeModule secondExclusiveDegreeModule = (DegreeModule) persistentObject.readByOID(
-                DegreeModule.class, parametersDTO.getSelectedDegreeModuleID());
-
-        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, parametersDTO.getContextCourseGroupID());
+        final DegreeModule secondExclusiveDegreeModule = rootDomainObject
+                .readDegreeModuleByOID(parametersDTO.getSelectedDegreeModuleID());
+        final CourseGroup contextCourseGroup = (CourseGroup) rootDomainObject
+                .readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
 
         final Exclusiveness firstRule = new Exclusiveness(firstExclusiveDegreeModule,
                 secondExclusiveDegreeModule, contextCourseGroup, begin, end);
@@ -168,13 +166,13 @@ public class CurricularRulesManager {
 
     private static CurricularRule createRestrictionBetweenDegreeModules(
             DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin, ExecutionPeriod end,
-            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            CurricularRuleParametersDTO parametersDTO, RootDomainObject rootDomainObject)
             throws ExcepcaoPersistencia {
 
-        final DegreeModule precedenceDegreeModule = (DegreeModule) persistentObject.readByOID(
-                DegreeModule.class, parametersDTO.getSelectedDegreeModuleID());
-        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, parametersDTO.getContextCourseGroupID());
+        final DegreeModule precedenceDegreeModule = rootDomainObject.readDegreeModuleByOID(parametersDTO
+                .getSelectedDegreeModuleID());
+        final CourseGroup contextCourseGroup = (CourseGroup) rootDomainObject
+                .readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
 
         return new RestrictionBetweenDegreeModules(degreeModuleToApplyRule, precedenceDegreeModule,
                 parametersDTO.getMinimumCredits(), contextCourseGroup, begin, end);
@@ -182,11 +180,11 @@ public class CurricularRulesManager {
 
     private static CurricularRule createEnrolmentToBeApprovedByCoordinator(
             DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin, ExecutionPeriod end,
-            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            CurricularRuleParametersDTO parametersDTO, RootDomainObject rootDomainObject)
             throws ExcepcaoPersistencia {
 
-        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, parametersDTO.getContextCourseGroupID());
+        final CourseGroup contextCourseGroup = (CourseGroup) rootDomainObject
+                .readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
 
         return new EnrolmentToBeApprovedByCoordinator(degreeModuleToApplyRule, contextCourseGroup,
                 begin, end);
@@ -194,10 +192,10 @@ public class CurricularRulesManager {
 
     private static CurricularRule createCreditsLimit(DegreeModule degreeModuleToApplyRule,
             ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO,
-            IPersistentObject persistentObject) throws ExcepcaoPersistencia {
+            RootDomainObject rootDomainObject) throws ExcepcaoPersistencia {
 
-        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, parametersDTO.getContextCourseGroupID());
+        final CourseGroup contextCourseGroup = (CourseGroup) rootDomainObject
+                .readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
 
         return new CreditsLimit(degreeModuleToApplyRule, contextCourseGroup, begin, end, parametersDTO
                 .getMinimumCredits(), parametersDTO.getMaximumCredits());
@@ -205,11 +203,11 @@ public class CurricularRulesManager {
 
     private static CurricularRule createDegreeModulesSelectionLimit(
             DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin, ExecutionPeriod end,
-            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            CurricularRuleParametersDTO parametersDTO, RootDomainObject rootDomainObject)
             throws ExcepcaoPersistencia {
 
-        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, parametersDTO.getContextCourseGroupID());
+        final CourseGroup contextCourseGroup = (CourseGroup) rootDomainObject
+                .readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
 
         return new DegreeModulesSelectionLimit(degreeModuleToApplyRule, contextCourseGroup, begin, end,
                 parametersDTO.getMinimumLimit(), parametersDTO.getMaximumLimit());
@@ -217,14 +215,14 @@ public class CurricularRulesManager {
 
     private static CurricularRule createRestrictionEnroledDegreeModule(
             DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin, ExecutionPeriod end,
-            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            CurricularRuleParametersDTO parametersDTO, RootDomainObject rootDomainObject)
             throws ExcepcaoPersistencia {
 
-        final DegreeModule enroledDegreeModule = (DegreeModule) persistentObject.readByOID(
-                DegreeModule.class, parametersDTO.getSelectedDegreeModuleID());
-        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, parametersDTO.getContextCourseGroupID());
-        
+        final DegreeModule enroledDegreeModule = rootDomainObject.readDegreeModuleByOID(parametersDTO
+                .getSelectedDegreeModuleID());
+        final CourseGroup contextCourseGroup = (CourseGroup) rootDomainObject
+                .readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+
         return new RestrictionEnroledDegreeModule((CurricularCourse) degreeModuleToApplyRule,
                 enroledDegreeModule, contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO(),
                 begin, end);
@@ -232,33 +230,35 @@ public class CurricularRulesManager {
 
     private static CurricularRule createRestrictionDoneDegreeModule(
             DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin, ExecutionPeriod end,
-            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            CurricularRuleParametersDTO parametersDTO, RootDomainObject rootDomainObject)
             throws ExcepcaoPersistencia {
 
-        final DegreeModule doneDegreeModule = (DegreeModule) persistentObject.readByOID(
-                DegreeModule.class, parametersDTO.getSelectedDegreeModuleID());
-        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, parametersDTO.getContextCourseGroupID());
-        
+        final DegreeModule doneDegreeModule = rootDomainObject.readDegreeModuleByOID(parametersDTO
+                .getSelectedDegreeModuleID());
+        final CourseGroup contextCourseGroup = (CourseGroup) rootDomainObject
+                .readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+
         return new RestrictionDoneDegreeModule((CurricularCourse) degreeModuleToApplyRule,
                 doneDegreeModule, contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO(), begin,
                 end);
     }
-    
-    private static void editMinimumNumberOfCreditsToEnrol(CurricularRule curricularRule, CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject) throws ExcepcaoPersistencia {
-        
+
+    private static void editMinimumNumberOfCreditsToEnrol(CurricularRule curricularRule,
+            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            throws ExcepcaoPersistencia {
+
         final MinimumNumberOfCreditsToEnrol minimumNumberOfCreditsToEnrol = (MinimumNumberOfCreditsToEnrol) curricularRule;
-        
+
         final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
                 CourseGroup.class, parametersDTO.getContextCourseGroupID());
-        
+
         minimumNumberOfCreditsToEnrol.edit(contextCourseGroup, parametersDTO.getMinimumCredits());
     }
 
     private static void editAnyCurricularCourse(CurricularRule curricularRule,
             CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
             throws ExcepcaoPersistencia {
-        
+
         final AnyCurricularCourse anyCurricularCourse = (AnyCurricularCourse) curricularRule;
         final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
                 CourseGroup.class, parametersDTO.getContextCourseGroupID());
@@ -266,7 +266,7 @@ public class CurricularRulesManager {
                 .getSelectedDegreeID());
         final Unit departmentUnit = (Unit) persistentObject.readByOID(Unit.class, parametersDTO
                 .getSelectedDepartmentUnitID());
-        
+
         anyCurricularCourse.edit(contextCourseGroup, parametersDTO.getCredits(), parametersDTO
                 .getCurricularPeriodInfoDTO().getOrder(), parametersDTO.getMinimumYear(), parametersDTO
                 .getMaximumYear(), parametersDTO.getBolonhaDegreeType(), degree, departmentUnit);
@@ -281,7 +281,7 @@ public class CurricularRulesManager {
                 DegreeModule.class, parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
                 CourseGroup.class, parametersDTO.getContextCourseGroupID());
-        
+
         exclusiveness.edit(exclusiveDegreeModule, contextCourseGroup);
     }
 
@@ -294,7 +294,7 @@ public class CurricularRulesManager {
                 DegreeModule.class, parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
                 CourseGroup.class, parametersDTO.getContextCourseGroupID());
-        
+
         restrictionBetweenDegreeModules.edit(precedenceDegreeModule, parametersDTO.getMinimumCredits(),
                 contextCourseGroup);
     }
@@ -306,7 +306,7 @@ public class CurricularRulesManager {
         final EnrolmentToBeApprovedByCoordinator enrolmentToBeApprovedByCoordinator = (EnrolmentToBeApprovedByCoordinator) curricularRule;
         final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
                 CourseGroup.class, parametersDTO.getContextCourseGroupID());
-        
+
         enrolmentToBeApprovedByCoordinator.edit(contextCourseGroup);
     }
 
@@ -317,7 +317,7 @@ public class CurricularRulesManager {
         final DegreeModulesSelectionLimit degreeModulesSelectionLimit = (DegreeModulesSelectionLimit) curricularRule;
         final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
                 CourseGroup.class, parametersDTO.getContextCourseGroupID());
-        
+
         degreeModulesSelectionLimit.edit(contextCourseGroup, parametersDTO.getMinimumLimit(),
                 parametersDTO.getMaximumLimit());
     }
@@ -329,7 +329,7 @@ public class CurricularRulesManager {
         final CreditsLimit creditsLimit = (CreditsLimit) curricularRule;
         final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
                 CourseGroup.class, parametersDTO.getContextCourseGroupID());
-        
+
         creditsLimit.edit(contextCourseGroup, parametersDTO.getMinimumCredits(), parametersDTO
                 .getMaximumCredits());
     }
@@ -343,7 +343,7 @@ public class CurricularRulesManager {
                 DegreeModule.class, parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
                 CourseGroup.class, parametersDTO.getContextCourseGroupID());
-        
+
         restrictionEnroledDegreeModule.edit(enroledDegreeModule, contextCourseGroup, parametersDTO
                 .getCurricularPeriodInfoDTO());
     }
@@ -357,7 +357,7 @@ public class CurricularRulesManager {
                 DegreeModule.class, parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
                 CourseGroup.class, parametersDTO.getContextCourseGroupID());
-        
+
         restrictionDoneDegreeModule.edit(doneDegreeModule, contextCourseGroup, parametersDTO
                 .getCurricularPeriodInfoDTO());
     }

@@ -9245,12 +9245,12 @@
         </filterChains>     
     </service>
     <service>
-    	<name>CreateCurricularRule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCurricularRule</implementationClass>
+    	<name>CreateRule</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateRule</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
@@ -9259,7 +9259,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
@@ -9268,7 +9268,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
     
@@ -9278,7 +9278,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
     <service>

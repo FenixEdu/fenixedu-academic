@@ -23,7 +23,7 @@ public class CompositeRule extends CompositeRule_Base {
         if (degreeModuleToApplyRule == null || begin == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
-
+        checkExecutionPeriods(begin, end);
         checkCompositeRuleType(compositeRuleType, curricularRules);
         init(degreeModuleToApplyRule, begin, end, compositeRuleType, curricularRules);
     }

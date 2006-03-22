@@ -4,11 +4,9 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
-
-<style>
-table.nospace label { width: auto; }
-</style>
-
+	<style>
+		table.nospace label { width: auto; }
+	</style>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 

@@ -20,6 +20,8 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 public class CompositeRulesManagementBackingBean extends CurricularRulesManagementBackingBean {
 
     private UISelectItems curricularRuleItems;
+    private UISelectItems beginExecutionPeriodItemsForCompositeRule;
+    private UISelectItems endExecutionPeriodItemsForCompositeRule;
 
     public Integer[] getSelectedCurricularRuleIDs() {
         return (Integer[]) getViewState().getAttribute("selectedCurricularRuleIDs");
@@ -63,15 +65,45 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
         }
         return result;
     }
+    
+    public UISelectItems getBeginExecutionPeriodItemsForCompositeRule() throws FenixFilterException, FenixServiceException {
+        if (beginExecutionPeriodItemsForCompositeRule == null) {
+            beginExecutionPeriodItemsForCompositeRule = new UISelectItems();
+            beginExecutionPeriodItemsForCompositeRule.setValue(readExecutionPeriodItems());
+        }
+        return beginExecutionPeriodItemsForCompositeRule;
+    }
+
+    public void setBeginExecutionPeriodItemsForCompositeRule(UISelectItems beginExecutionPeriodItemsForCompositeRule) {
+        this.beginExecutionPeriodItemsForCompositeRule = beginExecutionPeriodItemsForCompositeRule;
+    }
+    
+    public UISelectItems getEndExecutionPeriodItemsForCompositeRule() throws FenixFilterException, FenixServiceException {
+        if (endExecutionPeriodItemsForCompositeRule == null) {
+            endExecutionPeriodItemsForCompositeRule = new UISelectItems();
+            final List<SelectItem> values = new ArrayList<SelectItem>(readExecutionPeriodItems());
+            values.add(0, new SelectItem(NO_SELECTION_INTEGER, bolonhaResources.getString("opened")));
+            endExecutionPeriodItemsForCompositeRule.setValue(values);
+        }
+        return endExecutionPeriodItemsForCompositeRule;
+    }
+
+    public void setEndExecutionPeriodItemsForCompositeRule(UISelectItems endExecutionPeriodItemsForCompositeRule) {
+        this.endExecutionPeriodItemsForCompositeRule = endExecutionPeriodItemsForCompositeRule;
+    }
 
     public String createCompositeRule() throws FenixFilterException {
-
         try {
             final Object args[] = { getDegreeModuleID(),
-                    LogicOperators.valueOf(getSelectedLogicOperator()), getSelectedCurricularRuleIDs() };
+                    LogicOperators.valueOf(getSelectedLogicOperator()), getSelectedCurricularRuleIDs(),
+                    getBeginExecutionPeriodID(),
+                    (getEndExecutionPeriodID() == null || getEndExecutionPeriodID().equals(NO_SELECTION_INTEGER)) ? null : 
+                        getEndExecutionPeriodID() };
             ServiceUtils.executeService(getUserView(), "CreateCompositeRule", args);
             removeSelectedCurricularRuleIDs();
             getCurricularRuleItems().setValue(readCurricularRulesLabels());
+        } catch (FenixFilterException e) {
+            addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (DomainException e) {

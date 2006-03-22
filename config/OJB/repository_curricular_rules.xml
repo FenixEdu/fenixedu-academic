@@ -48,6 +48,11 @@
 		column="KEY_CONTEXT_COURSE_GROUP"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="keyRootDomainObject"
+		column="KEY_ROOT_DOMAIN_OBJECT"
+		jdbc-type="INTEGER"
+	/>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -160,6 +165,11 @@
 	<field-descriptor
 		name="keyContextCourseGroup"
 		column="KEY_CONTEXT_COURSE_GROUP"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyRootDomainObject"
+		column="KEY_ROOT_DOMAIN_OBJECT"
 		jdbc-type="INTEGER"
 	/>
 </class-descriptor>

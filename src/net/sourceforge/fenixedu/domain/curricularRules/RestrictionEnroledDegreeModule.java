@@ -33,6 +33,9 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         if (degreeModuleToApplyRule == null || begin == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
+        
+        checkExecutionPeriods(begin, end);
+        
         setDegreeModuleToApplyRule(degreeModuleToApplyRule);
         setBegin(begin);
         setEnd(end);

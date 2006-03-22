@@ -34,6 +34,8 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
             throw new DomainException("curricular.rule.invalid.parameters");
         }
         
+        checkExecutionPeriods(begin, end);
+        
         setDegreeModuleToApplyRule(degreeModuleToApplyRule);
         setContextCourseGroup(contextCourseGroup);
         setBegin(begin);

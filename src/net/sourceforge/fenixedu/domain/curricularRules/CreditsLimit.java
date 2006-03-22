@@ -28,6 +28,8 @@ public class CreditsLimit extends CreditsLimit_Base {
         if (degreeModuleToApplyRule == null || begin == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
+        
+        checkExecutionPeriods(begin, end);
 
         setDegreeModuleToApplyRule(degreeModuleToApplyRule);
         setContextCourseGroup(contextCourseGroup);

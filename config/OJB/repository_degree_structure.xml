@@ -37,11 +37,11 @@
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
     />		
-	
-	
-	
-	
-	
+	<field-descriptor
+		name="keyRootDomainObject"
+		column="KEY_ROOT_DOMAIN_OBJECT"
+		jdbc-type="INTEGER"
+	/>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -85,13 +85,6 @@
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
     />		
-	
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 
@@ -138,16 +131,6 @@
 		column="KEY_CURRICULAR_PERIOD"
 		jdbc-type="INTEGER"
 	/>
-	
-	
-	
-		
-	
-	
-
-	
-	
-					
 </class-descriptor>
 
 
@@ -234,8 +217,6 @@
 	 	jdbc-type="LONGVARCHAR"
 	 	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaBibliographicReferences2SqlBibliographicReferencesFieldConversion"
 	 />
-		
-	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -310,5 +291,4 @@
 		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularPeriodType2SqlCurricularPeriodTypeFieldConversion"
 	/>
-			
 </class-descriptor>

@@ -32,7 +32,10 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         if (curricularCourseToApplyRule.getType() != CurricularCourseType.OPTIONAL_COURSE) {
             throw new DomainException("curricular.rule.invalid.curricular.course.type");
         }
+        
+        checkExecutionPeriods(begin, end);
         checkYears(minimumYear, maximumYear);
+        
         setDegreeModuleToApplyRule(curricularCourseToApplyRule);
         setContextCourseGroup(contextCourseGroup);
         setBegin(begin);
