@@ -267,7 +267,7 @@ public class Enrolment extends Enrolment_Base {
 
         });
     }
-    
+
     public List<EnrolmentEvaluation> getEnrolmentEvaluationsByEnrolmentEvaluationState(final EnrolmentEvaluationState evaluationState){
     	List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
     	for (EnrolmentEvaluation evaluation : result) {
@@ -521,7 +521,11 @@ public class Enrolment extends Enrolment_Base {
     }
 
     public Boolean isFirstTime() {
-        return this.getStudentCurricularPlan().getEnrolments(this.getCurricularCourse()).size() == 1;
+        return getNumberOfTotalEnrolmentsInThisCourse() == 1;
+    }
+    
+    public int getNumberOfTotalEnrolmentsInThisCourse(){
+        return this.getStudentCurricularPlan().countEnrolmentsByCurricularCourse(this.getCurricularCourse());
     }
     
     public CurricularCourse getCurricularCourse() {
