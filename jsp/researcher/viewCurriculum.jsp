@@ -89,7 +89,8 @@
 			</fr:layout>
 		</fr:view>
 		
-		<!-- Event Participation -->
+		<!-- Research Interests -->
+<%--
 		<h3 id='researchInterestsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.researchInterestsTitle"/> </span> </h3>
 		<fr:view name="researchInterests" >
 			<fr:layout>
@@ -97,7 +98,7 @@
 				<fr:property name="eachSchema" value="researchInterest.summary"/>
 			</fr:layout>
 		</fr:view>
-		
+--%>
 		
 		<!-- Event Participation -->
 		<h3 id='eventParticipationTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.eventParticipationTitle"/> </span> </h3>

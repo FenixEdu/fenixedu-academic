@@ -19,3 +19,4 @@ function execute() {
 	echo
 }
 
+execute "Alter Table Research Interest to support MLS" alterTableResearchInterest.sql

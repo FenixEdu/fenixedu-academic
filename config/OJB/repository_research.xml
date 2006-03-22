@@ -151,9 +151,10 @@
 	/>
 	
 	<field-descriptor
-	   name="interest"    
-	   column="INTEREST"  
-		jdbc-type="VARCHAR"
+		name="interest"
+		column="INTEREST"
+		jdbc-type="LONGVARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
 	/>
 	
 	<field-descriptor

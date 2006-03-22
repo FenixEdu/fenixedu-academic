@@ -42,6 +42,7 @@
         </action>
         
         <action path="/interests/interestsManagement" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.InterestsManagementDispatchAction">
+	        <forward name="ViewTranslations" path="interests.viewTranslations"/>
 		    <forward name="Success" path="interests.interestsManagement"/>
 		</action>
         

@@ -52,6 +52,35 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         return prepare(mapping, form, request, response);
     }
 
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        List<ResearchInterest> orderedInterests = getOrderedInterests(request);
+
+        if (orderedInterests.size() > 0) {
+            request.setAttribute("lastOrder", orderedInterests.get(orderedInterests.size() - 1)
+                    .getOrder() + 1);
+        } else {
+            request.setAttribute("lastOrder", 1);
+        }
+
+        request.setAttribute("researchInterests", orderedInterests);
+        request.setAttribute("party", (Party) getUserView(request).getPerson());
+        
+        RenderUtils.invalidateViewState();
+        
+        return mapping.findForward("Success");
+    }
+
+    public ActionForward viewTranslation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Integer oid = Integer.parseInt(request.getParameter("oid"));
+        final ResearchInterest researchInterest = rootDomainObject.readResearchInterestByOID(oid);
+        request.setAttribute("interest", researchInterest.getInterest());
+        
+        return mapping.findForward("ViewTranslations");
+    }
+    
     private void changeOrder(HttpServletRequest request, int direction) throws FenixFilterException, FenixServiceException {
         Integer oid = Integer.parseInt(request.getParameter("oid"));
 
@@ -75,26 +104,6 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         }
     }
     
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        List<ResearchInterest> orderedInterests = getOrderedInterests(request);
-
-        if (orderedInterests.size() > 0) {
-            request.setAttribute("lastOrder", orderedInterests.get(orderedInterests.size() - 1)
-                    .getOrder() + 1);
-        } else {
-            request.setAttribute("lastOrder", 1);
-        }
-
-        request.setAttribute("researchInterests", orderedInterests);
-        request.setAttribute("party", (Party) getUserView(request).getPerson());
-        
-        RenderUtils.invalidateViewState();
-        
-        return mapping.findForward("Success");
-    }
-
     private List<ResearchInterest> getOrderedInterests(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
         List<ResearchInterest> researchInterests = getUserView(request).getPerson()
                 .getResearchInterests();

@@ -2957,7 +2957,7 @@ class net.sourceforge.fenixedu.domain.research.event.Event extends net.sourcefor
 }
 
 class net.sourceforge.fenixedu.domain.research.ResearchInterest extends net.sourceforge.fenixedu.domain.DomainObject {
-	String interest;
+	MultiLanguageString interest;
 	Integer order;
 	Integer keyParty;
 }

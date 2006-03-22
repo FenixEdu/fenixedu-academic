@@ -183,7 +183,7 @@
     
     <plug-in className="net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin">
       <set-property property="config" value="/WEB-INF/fenix-renderers-config.xml"/>
-      <set-property property="schemas" value="/WEB-INF/fenix-renderers-schemas.xml"/>
+      <set-property property="schemas" value="/WEB-INF/schemas/fenix-renderers-schemas.xml"/>
       <set-property property="metaObjectFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory"/>
       <set-property property="userIdentityFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory"/>
       <set-property property="schemaFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory"/>
