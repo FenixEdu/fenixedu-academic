@@ -455,146 +455,100 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		</parallel>
 	</target>
 
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: generateHostDependentProperties
+          
+          Generates a properties file with a definition (or key entry) for each host
+          specified in the ${filter.hostnames} property.
+          
+          Args:
+          	prefix   - the prefix for each host dependent property. This means that the property
+          	           for each host will have the form ${prefix}.${hostname}
+          	destfile - the name of the properties file to be generated. This file will contain
+          	           one lines for each hostname with the format:
+          	           
+          	           ${prefix}.${hostname}=${prefix.hostname}
+          	           
+          	hostnames - the name of the property that contains the list of hostnames
+          				default = filter.hostnames
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="generateHostDependentProperties">
+        <attribute name="hostnames" default="filter.hostnames" />
+        <attribute name="prefix" default="" />
+        <attribute name="destfile" default="" />
+    	
+        <sequential>
+        		<delete file="@{destfile}.xml"/>
+    			<delete file="${build.home.webinf.classes}/@{destfile}"/>
+    			<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
+    			<concat destfile="@{destfile}.xml">
+    				${@{hostnames}}
+    				<filterchain>
+    					<tokenfilter>
+    						<ignoreblank/>
+    						<trim/>
+    						<stringtokenizer delims="," delimsaretokens="true" includeDelims="false"/>
+    						<replaceregex pattern="(.*)" replace="\1${line.seperator}"/>
+    					</tokenfilter>
+    					<tokenfilter>
+    						<replacestring from="," to=""/>
+    						<trim/>
+    						<ignoreblank/>
+    					</tokenfilter>
+    					<prefixlines prefix="@@@{prefix}."/>
+    					<prefixlines prefix="file='${build.home.webinf.classes}/@{destfile}'>"/>
+    					<prefixlines prefix="append='true' "/>
+    					<prefixlines prefix="${character.lessthan}echo "/>
+    					<tokenfilter>
+    						<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
+    						<replaceregex pattern="(.*)"
+    							flags="s"
+    							replace="\1@${allowed-roles.newline.instruction}${character.lessthan}/echo>"/>
+    					</tokenfilter>
+    					<tokenfilter>
+    						<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
+    						<replaceregex pattern="@(.*)@"
+    							flags="s"
+    							replace="\1=${character.dollar}{\1}"/>
+    					</tokenfilter>
+    					<tokenfilter>
+    						<stringtokenizer delims="@@@@@@" delimsaretokens="false" includeDelims="false"/>
+    						<replaceregex pattern="(.*)"
+    							flags="s"
+    							replace="${allowed-roles.build.file.constructor.header}\1${allowed-roles.build.file.constructor.tail}"/>
+    					</tokenfilter>
+    					<escapeunicode/>
+    				</filterchain>
+    			</concat>
+    			<ant antfile="@{destfile}.xml"/>
+    			<delete file="@{destfile}.xml"/>
+        </sequential>
+    </macrodef>
+
 	<target name="write-index-redirect-hostnames-configuration-file">
-		<delete file=".indexRedirectHostnames.properties.xml"/>
-		<delete file="${build.home.webinf.classes}/.indexRedirectHostnames.properties"/>
-		<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
-		<concat destfile=".indexRedirectHostnames.properties.xml">
-			${filter.hostnames}
-			<filterchain>
-				<tokenfilter>
-					<ignoreblank/>
-					<trim/>
-					<stringtokenizer delims="," delimsaretokens="true" includeDelims="false"/>
-					<replaceregex pattern="(.*)" replace="\1${line.seperator}"/>
-				</tokenfilter>
-				<tokenfilter>
-					<replacestring from="," to=""/>
-					<trim/>
-					<ignoreblank/>
-				</tokenfilter>
-				<prefixlines prefix="@index.html.link."/>
-				<prefixlines prefix="file='${build.home.webinf.classes}/.indexRedirectHostnames.properties'>"/>
-				<prefixlines prefix="append='true' "/>
-				<prefixlines prefix="${character.lessthan}echo "/>
-				<tokenfilter>
-					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="(.*)"
-						flags="s"
-						replace="\1@${allowed-roles.newline.instruction}${character.lessthan}/echo>"/>
-				</tokenfilter>
-				<tokenfilter>
-					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="@(.*)@"
-						flags="s"
-						replace="\1=${character.dollar}{\1}"/>
-				</tokenfilter>
-				<tokenfilter>
-					<stringtokenizer delims="@@@@@@" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="(.*)"
-						flags="s"
-						replace="${allowed-roles.build.file.constructor.header}\1${allowed-roles.build.file.constructor.tail}"/>
-				</tokenfilter>
-				<escapeunicode/>
-			</filterchain>
-		</concat>
-		<ant antfile=".indexRedirectHostnames.properties.xml"/>
-		<delete file=".indexRedirectHostnames.properties.xml"/>
+		<generateHostDependentProperties prefix="index.html.link" destfile=".indexRedirectHostnames.properties"/>
 	</target>
 
 	<target name="write-filter-hostnames-configuration-file">
-		<delete file=".authenticationServiceHostnamesFiltering.properties.xml"/>
-		<delete file="${build.home.webinf.classes}/.authenticationServiceHostnamesFiltering.properties"/>
-		<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
-		<concat destfile=".authenticationServiceHostnamesFiltering.properties.xml">
-			${filter.hostnames}
-			<filterchain>
-				<tokenfilter>
-					<ignoreblank/>
-					<trim/>
-					<stringtokenizer delims="," delimsaretokens="true" includeDelims="false"/>
-					<replaceregex pattern="(.*)" replace="\1${line.seperator}"/>
-				</tokenfilter>
-				<tokenfilter>
-					<replacestring from="," to=""/>
-					<trim/>
-					<ignoreblank/>
-				</tokenfilter>
-				<prefixlines prefix="@filter.hostname."/>
-				<prefixlines prefix="file='${build.home.webinf.classes}/.authenticationServiceHostnamesFiltering.properties'>"/>
-				<prefixlines prefix="append='true' "/>
-				<prefixlines prefix="${character.lessthan}echo "/>
-				<tokenfilter>
-					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="(.*)"
-						flags="s"
-						replace="\1@${allowed-roles.newline.instruction}${character.lessthan}/echo>"/>
-				</tokenfilter>
-				<tokenfilter>
-					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="@(.*)@"
-						flags="s"
-						replace="\1=${character.dollar}{\1}"/>
-				</tokenfilter>
-				<tokenfilter>
-					<stringtokenizer delims="@@@@@@" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="(.*)"
-						flags="s"
-						replace="${allowed-roles.build.file.constructor.header}\1${allowed-roles.build.file.constructor.tail}"/>
-				</tokenfilter>
-				<escapeunicode/>
-			</filterchain>
-		</concat>
-		<ant antfile=".authenticationServiceHostnamesFiltering.properties.xml"/>
-		<delete file=".authenticationServiceHostnamesFiltering.properties.xml"/>
+		<generateHostDependentProperties prefix="filter.hostname" destfile=".authenticationServiceHostnamesFiltering.properties"/>
 	</target>
 	
-	
 	<target name="write-cas-serviceUrl-hostnames-configuration-file">
-		<delete file=".casServiceUrlHostnames.properties.xml"/>
-		<delete file="${build.home.webinf.classes}/.casServiceUrlHostnames.properties"/>
-		<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
-		<concat destfile=".casServiceUrlHostnames.properties.xml">
-			${filter.hostnames}
+		<generateHostDependentProperties prefix="cas.serviceUrl" destfile=".casServiceUrlHostnames.properties"/>
+	</target>
+	
+	<target name="write-path-access-control-configuration-file">
+		<copy file="build.properties" tofile="${build.home.webinf.classes}/.hostAccessControl.properties">
 			<filterchain>
-				<tokenfilter>
-					<ignoreblank/>
-					<trim/>
-					<stringtokenizer delims="," delimsaretokens="true" includeDelims="false"/>
-					<replaceregex pattern="(.*)" replace="\1${line.seperator}"/>
-				</tokenfilter>
-				<tokenfilter>
-					<replacestring from="," to=""/>
-					<trim/>
-					<ignoreblank/>
-				</tokenfilter>
-				<prefixlines prefix="@cas.serviceUrl."/>
-				<prefixlines prefix="file='${build.home.webinf.classes}/.casServiceUrlHostnames.properties'>"/>
-				<prefixlines prefix="append='true' "/>
-				<prefixlines prefix="${character.lessthan}echo "/>
-				<tokenfilter>
-					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="(.*)"
-						flags="s"
-						replace="\1@${allowed-roles.newline.instruction}${character.lessthan}/echo>"/>
-				</tokenfilter>
-				<tokenfilter>
-					<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="@(.*)@"
-						flags="s"
-						replace="\1=${character.dollar}{\1}"/>
-				</tokenfilter>
-				<tokenfilter>
-					<stringtokenizer delims="@@@@@@" delimsaretokens="false" includeDelims="false"/>
-					<replaceregex pattern="(.*)"
-						flags="s"
-						replace="${allowed-roles.build.file.constructor.header}\1${allowed-roles.build.file.constructor.tail}"/>
-				</tokenfilter>
-				<escapeunicode/>
+				<linecontainsregexp>
+					<regexp pattern="^host.control.(path|name)."/>
+				</linecontainsregexp>
 			</filterchain>
-		</concat>
-		<ant antfile=".casServiceUrlHostnames.properties.xml"/>
-		<delete file=".casServiceUrlHostnames.properties.xml"/>
+		</copy>
+	</target>
+	
+	<target name="write-all-properties" 
+		depends="write-filter-hostnames-configuration-file,write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file,write-path-access-control-configuration-file">
 	</target>
 	
 	<target name="generate" description="Generate java code">
@@ -665,12 +619,15 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			   deprecation="${compile.deprecation}" 
 			   encoding="${encoding}" 
 			   nowarn="true" />
+		
 		<jar destfile="${lib}/${renderers.lib.name}" basedir="${build.home.webinf.classes}" 
 			 includes="${renderers.package.dir}/**" />
+		<copy file="${lib}/${renderers.lib.name}" todir="${build.home.webinf.libs}"/>
+
 		<delete dir="${build.home.webinf.classes}/${renderers.package.dir}" />
 	</target>
 
-	<target name="base-compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file, generate">
+	<target name="base-compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-all-properties, generate">
 		<javac destdir="${build.home.webinf.classes}" extdirs="${lib}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
@@ -694,11 +651,11 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		</java>
 	</target>
 
-	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain,compile-renderers, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file, generate, base-compile">
+	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain,compile-renderers, write-all-properties, generate, base-compile">
 		<ant antfile="build_accessControl.xml"/>
 	</target>
 
-	<target name="compile-without-access-control" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file, generate, base-compile">
+	<target name="compile-without-access-control" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-all-properties, generate, base-compile">
 		<ant antfile="build_accessControl.xml" target="void-inject"/>
 	</target>
 
