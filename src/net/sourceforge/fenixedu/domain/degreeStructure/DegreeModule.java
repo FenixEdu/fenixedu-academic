@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -74,6 +76,17 @@ public abstract class DegreeModule extends DegreeModule_Base {
         return result;
     }
 
+    public List<CurricularRule> getCurricularRules(ExecutionYear executionYear) {
+        List<CurricularRule> result = new ArrayList<CurricularRule>();
+        for (CurricularRule curricularRule : this.getCurricularRules()) {
+            if (executionYear == null || curricularRule.isValid(executionYear)) {
+                result.add(curricularRule);
+            }
+        }
+        
+        return result;
+    }
+    
     public abstract Double getEctsCredits();
     public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
 	public abstract Boolean getCanBeDeleted();
