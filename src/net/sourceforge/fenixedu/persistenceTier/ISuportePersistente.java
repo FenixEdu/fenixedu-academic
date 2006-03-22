@@ -147,8 +147,6 @@ public interface ISuportePersistente
 
 	public IPersistentMark getIPersistentMark();
 
-	public IPersistentEmployee getIPersistentEmployee();
-
 	public IPersistentSummary getIPersistentSummary();
 
 	public IPersistentSeminaryModality getIPersistentSeminaryModality();
