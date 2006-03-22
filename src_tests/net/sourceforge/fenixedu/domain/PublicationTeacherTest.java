@@ -60,7 +60,7 @@ public class PublicationTeacherTest extends DomainTestBase {
             assertEquals("PublicationTeacher's Area Unexpected", PublicationArea.DIDATIC, publicationTeacher.getPublicationArea());
             
             assertEquals("PublicationTeachers size unexpected", 2, publication.getPublicationTeachersCount());
-            assertEquals("Authorships size unexpected", 1, publication.getPublicationAuthorshipsCount());
+            assertEquals("Authorships size unexpected", 1, publication.getResultAuthorshipsCount());
         } catch (DomainException domainException) {
             fail("The teacher should be allowed to associate himself with the publication");
         }
