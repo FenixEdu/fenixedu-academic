@@ -1,3 +1,6 @@
+/*
+ * Created on 21/Mar/2003
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
 import java.util.Calendar;
@@ -13,11 +16,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.Require
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
@@ -43,7 +44,15 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class CreateReimbursementGuide extends Service {
 
-    public Integer run(Integer guideId, String remarks, List<InfoReimbursementGuideEntry> infoReimbursementGuideEntries,
+    /**
+     * @throws FenixServiceException,
+     *             InvalidReimbursementValueServiceException,
+     *             InvalidGuideSituationServiceException,
+     *             InvalidReimbursementValueSumServiceException
+     * @throws ExcepcaoPersistencia
+     */
+
+    public Integer run(Integer guideId, String remarks, List infoReimbursementGuideEntries,
             IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
         Guide guide = rootDomainObject.readGuideByOID(guideId);
@@ -88,13 +97,9 @@ public class CreateReimbursementGuide extends Service {
         reimbursementGuide.setNumber(reimbursementGuideNumber);
         reimbursementGuide.setGuide(guide);
 
-        // read employee
-        Person person = Person.readPersonByUsername(userView.getUtilizador());
-        Employee employee = person.getEmployee();
-
         // reimbursement Guide Situation
         ReimbursementGuideSituation reimbursementGuideSituation = DomainFactory.makeReimbursementGuideSituation();
-        reimbursementGuideSituation.setEmployee(employee);
+        reimbursementGuideSituation.setEmployee(userView.getPerson().getEmployee());
         reimbursementGuideSituation.setModificationDate(Calendar.getInstance());
         reimbursementGuideSituation.setOfficialDate(Calendar.getInstance());
         reimbursementGuideSituation.setReimbursementGuide(reimbursementGuide);

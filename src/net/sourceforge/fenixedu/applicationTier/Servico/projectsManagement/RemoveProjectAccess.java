@@ -1,3 +1,7 @@
+/*
+ * Created on Jan 11, 2005
+ */
+
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import java.util.Iterator;
@@ -14,6 +18,9 @@ import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentPr
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 
+/**
+ * @author Susana Fernandes
+ */
 public class RemoveProjectAccess extends Service {
 
     public void run(String username, String costCenter, String personUsername, Integer projectCode, String userNumber) throws ExcepcaoPersistencia {
@@ -45,7 +52,7 @@ public class RemoveProjectAccess extends Service {
 
     private Integer getUserNumber(Person person) throws ExcepcaoPersistencia {
         Integer userNumber = null;
-        Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
+        Teacher teacher = person.getTeacher();
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
@@ -55,5 +62,4 @@ public class RemoveProjectAccess extends Service {
         }
         return userNumber;
     }
-
 }

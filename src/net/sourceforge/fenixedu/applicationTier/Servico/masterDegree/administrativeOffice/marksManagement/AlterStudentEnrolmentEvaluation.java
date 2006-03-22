@@ -27,7 +27,7 @@ public class AlterStudentEnrolmentEvaluation extends Service {
 
         List<InfoEnrolmentEvaluation> infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
 
-        Person person = Person.readPersonByUsername(userView.getUtilizador());
+        Person person = userView.getPerson();
         if (person == null)
             throw new NonExistingServiceException();
 

@@ -22,6 +22,12 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 
+/**
+ * 
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ * 
+ */
 public class CreateMasterDegreeThesis extends Service {
 
     public void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle,
@@ -57,8 +63,7 @@ public class CreateMasterDegreeThesis extends Service {
                     "error.exception.masterDegree.dissertationTitleAlreadyChosen");
         }
 
-        Person person = Person.readPersonByUsername(userView.getUtilizador());
-        Employee employee = person.getEmployee();
+        Employee employee = userView.getPerson().getEmployee();
 
         MasterDegreeThesis masterDegreeThesis = DomainFactory.makeMasterDegreeThesis();
         masterDegreeThesis.setStudentCurricularPlan(studentCurricularPlan);

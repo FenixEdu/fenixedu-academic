@@ -15,13 +15,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -56,7 +54,7 @@ public class InsertGratuityData extends Service {
 
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGratuityValues.getInfoExecutionDegree().getIdInternal());
         GratuityValues gratuityValues = executionDegree.getGratuityValues();
-        
+
 		if (gratuityValues == null) // it doesn't exist in database, then
 		// write it
 		{
@@ -175,8 +173,7 @@ public class InsertGratuityData extends Service {
 		Person person = Person.readPersonByUsername(infoGratuityValues.getInfoEmployee()
 				.getPerson().getUsername());
 		if (person != null) {
-			Employee employee = person.getEmployee();
-			gratuityValues.setEmployee(employee);
+			gratuityValues.setEmployee(person.getEmployee());
 		}
 
 		Calendar now = Calendar.getInstance();

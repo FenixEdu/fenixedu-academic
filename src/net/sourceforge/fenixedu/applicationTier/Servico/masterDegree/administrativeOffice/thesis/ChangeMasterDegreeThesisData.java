@@ -70,8 +70,7 @@ public class ChangeMasterDegreeThesisData extends Service {
             }
         }
 
-        Person person = Person.readPersonByUsername(userView.getUtilizador());
-        Employee employee = person.getEmployee();
+        Employee employee = userView.getPerson().getEmployee();
 
         MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = DomainFactory
                 .makeMasterDegreeThesisDataVersion(storedMasterDegreeThesisDataVersion

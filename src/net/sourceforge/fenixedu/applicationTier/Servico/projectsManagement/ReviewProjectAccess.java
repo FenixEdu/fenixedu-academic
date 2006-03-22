@@ -1,3 +1,7 @@
+/*
+ * Created on Jan 11, 2005
+ */
+
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -12,6 +16,9 @@ import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentPr
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 
+/**
+ * @author Susana Fernandes
+ */
 public class ReviewProjectAccess extends Service {
 
     public void run(String username, String costCenter, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
@@ -19,7 +26,7 @@ public class ReviewProjectAccess extends Service {
         Person person = Person.readPersonByUsername(username);
         Role role = Role.getRoleByRoleType(RoleType.PROJECTS_MANAGER);
         if (persistentProjectAccess.countByPersonAndCC(person, false) == 0) {
-            Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
+            Teacher teacher = person.getTeacher();
             if (teacher == null) {
                 Employee employee = person.getEmployee();
                 if (employee != null) {
@@ -35,7 +42,7 @@ public class ReviewProjectAccess extends Service {
 
         role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
         if (persistentProjectAccess.countByPersonAndCC(person, true) == 0) {
-            Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
+            Teacher teacher = person.getTeacher();
             if (teacher == null) {
                 Employee employee = person.getEmployee();
                 if (employee != null) {
@@ -49,5 +56,4 @@ public class ReviewProjectAccess extends Service {
             }
         }
     }
-
 }

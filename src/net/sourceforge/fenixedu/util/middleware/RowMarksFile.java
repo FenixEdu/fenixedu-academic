@@ -8,6 +8,10 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 import org.apache.commons.lang.StringUtils;
 
+/**
+ * @author Tânia Pousão
+ *  
+ */
 public class RowMarksFile {
     public static final int MAX_COURSECODE = 3;
 
@@ -53,6 +57,7 @@ public class RowMarksFile {
     }
 
     public RowMarksFile(EnrolmentEvaluation enrolmentEvaluation) {
+        
         transform(enrolmentEvaluation);
     }
 
@@ -75,7 +80,8 @@ public class RowMarksFile {
         setEvaluationDate(enrolmentEvaluation.getExamDate());
         setStudentNumber(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent()
                 .getNumber());
-        setTeacherNumber(enrolmentEvaluation.getPersonResponsibleForGrade().getEmployee().getEmployeeNumber());
+        setTeacherNumber(enrolmentEvaluation.getPersonResponsibleForGrade().getEmployee()
+                .getEmployeeNumber());
         setSubmitDate(enrolmentEvaluation.getGradeAvailableDate());
         setEnrollmentYear(getExecutionYearYear(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getExecutionYear()));
     }
@@ -296,5 +302,4 @@ public class RowMarksFile {
     public void setEnrollmentYear(String enrollmentYear) {
         this.enrollmentYear = enrollmentYear;
     }
-    
 }

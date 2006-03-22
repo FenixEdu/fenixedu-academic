@@ -16,13 +16,16 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 
+/**
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ */
 public class ChangeMasterDegreeProof extends Service {
 
     public void run(IUserView userView, Integer studentCurricularPlanID, Date proofDate,
@@ -54,8 +57,7 @@ public class ChangeMasterDegreeProof extends Service {
             storedMasterDegreeProofVersion.setCurrentState(new State(State.INACTIVE));
         }
 
-        Person person = Person.readPersonByUsername(userView.getUtilizador());
-        Employee employee = person.getEmployee();
+        Employee employee = userView.getPerson().getEmployee();
 
         List<Teacher> teacherJuries = (List<Teacher>) Teacher.readByNumbers(
                 teacherJuriesNumbers);
