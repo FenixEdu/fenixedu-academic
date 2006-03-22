@@ -89,6 +89,16 @@
 		<appender-ref ref="BasicConsoleAppender"/>
 	</logger>
 
+    <logger name="net.sourceforge.fenixedu.presentationTier.servlets.filters.PathAccessControlFilter" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="BasicConsoleAppender"/>
+    </logger>
+
+    <logger name="net.sourceforge.fenixedu.util.HostAccessControl" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="BasicConsoleAppender"/>
+    </logger>
+    
 	<root>
 		<priority value="warn"/>
 		<appender-ref ref="ConsoleAppender"/>

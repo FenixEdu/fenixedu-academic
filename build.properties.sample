@@ -363,26 +363,36 @@ mail.smtp.name=localhost
 authenticationService=net.sourceforge.fenixedu.applicationTier.Servico.Authenticate
 changePassService=net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword
 password.generator=net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase
+
+#----------------------------------------------
+# Host access control, filter configuration
+#----------------------------------------------
 #
+# Configure the PathAccessControlfilter and the host control mechanism.
 #
-#------------------------------------------------------------------------------
-# End of build.properties.sample file
-#------------------------------------------------------------------------------
+# All properties with the form 
+#
+#	host.control.path.${path}=${host list}
+#
+# will be used as the filter configuration. The host list indicates
+# the hosts that are allowed to access the given servlet paths. IPs
+# are also allowed.
+#
+# Properties with the form
+#
+#   host.control.name.${name}=${host list}
+#
+# will be used in the generic mechains for host control were ${name}
+# is associated with the ${host list}. A request can be verified
+# against the ${host list} with HostAccessControl.isAllowed(name, request).
+#
+# Example:
+# 	host.control.path./login.do=localhost,trusted.example.net
+# 	host.control.name.net.sourceforge.fenixedu.presentationTier.Action.CheckPasswordKerberosAction=localhost,trusted.example.net
+# 	host.control.name.checkPassword=localhost,trusted.example.net
+#
 
-
-## Characters that can't be used directly in ant build files
-line.seperator=\n
-character.lessthan=<
-character.dollar=$
-
-## Complex constructions that contain characters that's can't
-## be used directly in ant build files
-allowed-roles.build.file.constructor.header=<?xml version="1.0" encoding="ISO-8859-15"?>\n \
-		\t<project default="generate-properties-file" name="Auto-Generated-Build-File">\n \
-			\t\t<property file="build.properties"/>\n \
-			\t\t<target name="generate-properties-file"> \n\n
-allowed-roles.build.file.constructor.tail=\n\n\t\t</target>\n\t</project>
-allowed-roles.newline.instruction=${line.seperator}
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.CheckPasswordKerberosAction=login.ist.utl.pt,aqua.ist.utl.pt,flaviae.ist.utl.pt
 
 #----------------------------------------------
 # CAS configuration
@@ -399,3 +409,27 @@ cas.serviceUrl.salad21=https://salad21.ist.utl.pt:8443/ciapl/loginCAS.do
 # Kerberos Password Check Configuration (external systems access)
 #----------------------------------------------------------------
 checkPasswordKerberos.authorizedHosts=127.0.0.1
+
+#------------------------------------------------------------------------------
+# Miscellaneous 
+#------------------------------------------------------------------------------
+
+## Characters that can't be used directly in ant build files
+line.seperator=\n
+character.lessthan=<
+character.dollar=$
+
+## Complex constructions that contain characters that's can't
+## be used directly in ant build files
+allowed-roles.build.file.constructor.header=<?xml version="1.0" encoding="ISO-8859-15"?>\n \
+		\t<project default="generate-properties-file" name="Auto-Generated-Build-File">\n \
+			\t\t<property file="build.properties"/>\n \
+			\t\t<target name="generate-properties-file"> \n\n
+allowed-roles.build.file.constructor.tail=\n\n\t\t</target>\n\t</project>
+allowed-roles.newline.instruction=${line.seperator}
+
+#
+#
+#------------------------------------------------------------------------------
+# End of build.properties.sample file
+#------------------------------------------------------------------------------

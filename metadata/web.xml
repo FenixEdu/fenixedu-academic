@@ -156,8 +156,20 @@
 		<filter-name>HomepageFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.HomepageFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>PathAccessControlFilter</filter-name>
+        <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.PathAccessControlFilter</filter-class>
+        <init-param>
+            <param-name>use-request-path</param-name>
+            <param-value>true</param-value> 
+        </init-param>
+    </filter>
     	
 	<!-- Filter Mapping -->
+    <filter-mapping>
+        <filter-name>PathAccessControlFilter</filter-name>
+        <url-pattern>/*</url-pattern><!-- generate mappings only for paths that have restrictions configured -->
+    </filter-mapping>
 	<filter-mapping>
 		<filter-name>MultipartFilter</filter-name>
 		<url-pattern>*.faces</url-pattern>
@@ -239,6 +251,7 @@
 	    <filter-name>CASFilter</filter-name>
 	    <url-pattern>/login.do</url-pattern>
     </filter-mapping>
+
     <!-- Listeners -->
 	<listener>
 		<listener-class>
