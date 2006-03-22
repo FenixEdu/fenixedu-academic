@@ -6,9 +6,9 @@ import java.util.Locale;
 import javax.faces.context.FacesContext;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
-import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
@@ -27,14 +27,14 @@ public class UICurricularCourse extends UIDegreeModule {
         this.byYears = false;
     }
 
-    public UICurricularCourse(DegreeModule curricularCourse, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs) {
-        super(curricularCourse, previousContext, toEdit, showRules, depth, tabs);
+    public UICurricularCourse(DegreeModule curricularCourse, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, ExecutionYear executionYear) {
+        super(curricularCourse, previousContext, toEdit, showRules, depth, tabs, executionYear);
         this.curricularCourse = (CurricularCourse) super.degreeModule;
         this.byYears = false;
     }
 
-    public UICurricularCourse(DegreeModule curricularCourse, Context previousContext, Boolean toEdit, Boolean showRules) {
-        super(curricularCourse, previousContext, toEdit, showRules, 0, null);
+    public UICurricularCourse(DegreeModule curricularCourse, Context previousContext, Boolean toEdit, Boolean showRules, ExecutionYear executionYear) {
+        super(curricularCourse, previousContext, toEdit, showRules, 0, null, executionYear);
         this.curricularCourse = (CurricularCourse) super.degreeModule;
         this.byYears = true;
     }

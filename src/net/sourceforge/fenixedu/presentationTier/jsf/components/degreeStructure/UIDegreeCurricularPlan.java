@@ -195,7 +195,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                 curricularCourse.getAutonomousWorkHours(curricularPeriod);
                 curricularCourse.getTotalLoad(curricularPeriod);
                 curricularCourse.getEctsCredits(curricularPeriod);
-                new UICurricularCourse(curricularCourse, context, this.toEdit, this.showRules).encodeBegin(facesContext);
+                new UICurricularCourse(curricularCourse, context, this.toEdit, this.showRules, this.executionYear).encodeBegin(facesContext);
                 
                 if (curricularCourse.isAnual()) {
                     remindToEncodeInNextPeriod(curricularPeriod, context);
@@ -205,7 +205,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         
         if (toRepeat.containsKey(curricularPeriod)) {
             for (Context check : toRepeat.get(curricularPeriod)) {
-                new UICurricularCourse(check.getChildDegreeModule(), check, this.toEdit, this.showRules).encodeInNextPeriod(facesContext);
+                new UICurricularCourse(check.getChildDegreeModule(), check, this.toEdit, this.showRules, this.executionYear).encodeInNextPeriod(facesContext);
             }
         }
     }

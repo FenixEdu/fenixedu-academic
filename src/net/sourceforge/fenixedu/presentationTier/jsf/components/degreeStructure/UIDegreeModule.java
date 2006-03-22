@@ -10,6 +10,7 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -22,6 +23,7 @@ public class UIDegreeModule extends UIInput {
 
     protected DegreeModule degreeModule;
     protected Context previousContext;
+    protected ExecutionYear executionYear;
     protected Boolean toEdit;
     protected Boolean showRules = Boolean.FALSE;
     protected int depth;
@@ -37,7 +39,7 @@ public class UIDegreeModule extends UIInput {
         this.setRendererType(null);
     }
 
-    public UIDegreeModule(DegreeModule degreeModule, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs) {
+    public UIDegreeModule(DegreeModule degreeModule, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, ExecutionYear executionYear) {
         this();
         this.degreeModule = degreeModule;
         this.previousContext = previousContext;
@@ -45,6 +47,7 @@ public class UIDegreeModule extends UIInput {
         this.showRules = showRules;
         this.depth = depth;
         this.tabs = tabs;
+        this.executionYear = executionYear;
     }
 
     public String getFamily() {
@@ -59,7 +62,7 @@ public class UIDegreeModule extends UIInput {
         setFromAttributes();
         
         if (this.degreeModule.isLeaf()) {
-            new UICurricularCourse(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs).encodeBegin(facesContext);
+            new UICurricularCourse(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, this.executionYear).encodeBegin(facesContext);
         } else if (!this.degreeModule.isLeaf()) {
             new UICourseGroup(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, null).encodeBegin(facesContext);
         }
@@ -99,9 +102,9 @@ public class UIDegreeModule extends UIInput {
     protected void encodeCurricularRules() throws IOException {
         List<CurricularRule> curricularRulesToEncode = new ArrayList<CurricularRule>();
 
-        for (CurricularRule curricularRule : this.degreeModule.getCurricularRules()) {
+        for (CurricularRule curricularRule : this.degreeModule.getCurricularRules(this.executionYear)) {
             if (curricularRule.appliesToContext(this.previousContext)) {
-                    curricularRulesToEncode.add(curricularRule);
+                curricularRulesToEncode.add(curricularRule);
             } 
         }
 

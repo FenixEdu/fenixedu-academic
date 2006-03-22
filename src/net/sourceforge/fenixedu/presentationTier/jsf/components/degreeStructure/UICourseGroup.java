@@ -21,7 +21,6 @@ public class UICourseGroup extends UIDegreeModule {
     private Boolean onlyStructure;
     private Boolean toOrder;
     private Boolean hideCourses;
-    private ExecutionYear executionYear;
     
     public UICourseGroup() {
         super();
@@ -29,7 +28,7 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     public UICourseGroup(DegreeModule courseGroup, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, Boolean onlyStructure, Boolean toOrder, Boolean hideCourses, ExecutionYear executionYear) throws IOException {
-        super(courseGroup, previousContext, toEdit, showRules, depth, tabs);
+        super(courseGroup, previousContext, toEdit, showRules, depth, tabs, executionYear);
         
         if (toOrder && (!onlyStructure || !toEdit)) {
             throw new IOException("incorrect.component.usage");
@@ -38,7 +37,6 @@ public class UICourseGroup extends UIDegreeModule {
         this.onlyStructure = onlyStructure;
         this.toOrder = toOrder;
         this.hideCourses = hideCourses;
-        this.executionYear = executionYear;
     }
 
     public String getFamily() {
@@ -344,7 +342,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3)  + "em;", null);
 
         for (Context context : this.courseGroup.getSortedChildContextsWithCurricularCoursesByExecutionYear(executionYear)) {
-            new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs + "\t").encodeBegin(facesContext);
+            new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs + "\t", this.executionYear).encodeBegin(facesContext);
         }
         
         writer.endElement("table");
