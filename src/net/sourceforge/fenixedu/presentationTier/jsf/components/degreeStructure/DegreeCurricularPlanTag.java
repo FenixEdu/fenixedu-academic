@@ -97,6 +97,7 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         JsfTagUtils.setString(component,"onlyStructure",this.onlyStructure);
         JsfTagUtils.setString(component,"toOrder",this.toOrder);
         JsfTagUtils.setString(component,"hideCourses",this.hideCourses);
+        JsfTagUtils.setString(component,"executionYear",this.executionYear);
     }
 
     public void release() {
@@ -108,6 +109,7 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         this.onlyStructure = null;
         this.toEdit = null;
         this.hideCourses = null;
+        this.executionYear = null;
     }
 
 }
