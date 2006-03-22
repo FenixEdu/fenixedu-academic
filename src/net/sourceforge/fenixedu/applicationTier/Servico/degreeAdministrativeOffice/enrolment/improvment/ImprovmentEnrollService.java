@@ -15,30 +15,33 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
+/**
+ * @author nmgo
+ */
 public class ImprovmentEnrollService extends Service {
 
     public Object run(Integer studentNumber, String employeeUserName, List enrolmentsIds)
             throws FenixServiceException, ExcepcaoPersistencia {
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+
         Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                 DegreeType.DEGREE);
         if (student == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Person pessoa = Person.readPersonByUsername(employeeUserName);
+        Person person = Person.readPersonByUsername(employeeUserName);
 
         IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         final ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
                 .readActualExecutionPeriod();
 
-        if (pessoa == null) {
+        if (person == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Employee employee = pessoa.getEmployee();
+        Employee employee = person.getEmployee();
         if (employee == null) {
             throw new InvalidArgumentsServiceException();
         }

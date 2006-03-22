@@ -7,18 +7,19 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
+/**
+ * @author nmgo
+ */
 public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFilter {
 
     private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
-
+    
     protected Collection getNeededRoles() {
         List<InfoRole> roles = new ArrayList<InfoRole>();
 
@@ -78,17 +79,10 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
     
     private boolean verifyEmployee(IUserView id) throws ExcepcaoPersistencia{
         
-        String user = id.getUtilizador();
+        if(id != null && id.getPerson() != null && id.getPerson().getEmployee() != null){
+            return true;
+        }
         
-        if(user != null) {
-            Person person = Person.readPersonByUsername(user);
-            if(person != null) {
-                Employee employee = person.getEmployee();
-                if(employee != null) {
-                    return true;
-                }
-            }
-        }      
         return false;
     }
 
