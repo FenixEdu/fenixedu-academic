@@ -9303,6 +9303,13 @@
         <filterChains/>
 	</service>
     <service>
+    	<name>ComputeCurricularCourseStatistics</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCurricularCourseStatistics</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>
+    <service>
     	<name>UpdateDegreeTeachingServices</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.UpdateDegreeTeachingServices</implementationClass>
         <description></description>
