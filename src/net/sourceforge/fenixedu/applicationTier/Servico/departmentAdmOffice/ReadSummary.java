@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
@@ -92,7 +91,7 @@ public class ReadSummary extends Service {
             }
         }
 
-        List rooms = RootDomainObject.getInstance().getOldRooms();
+        List rooms = rootDomainObject.getOldRooms();
         List infoRooms = new ArrayList();
         if (rooms != null && rooms.size() > 0) {
             infoRooms = (List) CollectionUtils.collect(rooms, new Transformer() {

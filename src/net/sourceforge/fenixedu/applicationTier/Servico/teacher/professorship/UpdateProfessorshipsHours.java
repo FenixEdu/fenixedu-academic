@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -35,8 +34,8 @@ public class UpdateProfessorshipsHours extends Service {
             if (value != null) {
                 try {
                     Double ecHours = Double.valueOf(value);
-                    Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
-                    ExecutionCourse executionCourse = RootDomainObject.getInstance()
+                    Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+                    ExecutionCourse executionCourse = rootDomainObject
                             .readExecutionCourseByOID(executionCourseId);
                     Professorship professorship = teacher
                             .getProfessorshipByExecutionCourse(executionCourse);

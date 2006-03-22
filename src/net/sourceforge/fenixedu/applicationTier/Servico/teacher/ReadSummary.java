@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
@@ -51,8 +50,7 @@ public class ReadSummary extends Service {
     public SiteView run(Integer executionCourseId, Integer summaryId, String userLogged)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
-                executionCourseId);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
         if (executionCourse == null) {
             throw new FenixServiceException("no.executioncourse");
@@ -84,7 +82,7 @@ public class ReadSummary extends Service {
                 }
             });
         }
-        
+
         List infoProfessorships = new ArrayList();
 
         // We present only the responsible teacher (by gedl)
@@ -98,7 +96,7 @@ public class ReadSummary extends Service {
             }
         }
 
-        List<OldRoom> rooms = RootDomainObject.getInstance().getOldRooms();
+        List<OldRoom> rooms = rootDomainObject.getOldRooms();
         List<InfoRoom> infoRooms = new ArrayList(rooms.size());
         for (final OldRoom room : rooms) {
             final InfoRoom infoRoom = new InfoRoom();
@@ -108,7 +106,7 @@ public class ReadSummary extends Service {
         }
         Collections.sort(infoRooms, new BeanComparator("nome"));
 
-        Summary summary = RootDomainObject.getInstance().readSummaryByOID(summaryId);
+        Summary summary = rootDomainObject.readSummaryByOID(summaryId);
         if (summary == null) {
             throw new FenixServiceException("no.summary");
         }

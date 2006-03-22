@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -111,7 +110,7 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                ExecutionCourse executionCourse = RootDomainObject.getInstance()
+                ExecutionCourse executionCourse = rootDomainObject
                         .readExecutionCourseByOID(executionCourseID);
                 professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             }

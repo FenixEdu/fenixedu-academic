@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -91,8 +90,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         Teacher teacherLogged = Teacher.readTeacherByUsername(userView.getUtilizador());
         Integer executionCourseID = (Integer) arguments[0];
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
-                executionCourseID);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
         Professorship professorshipLogged = teacherLogged
                 .getProfessorshipByExecutionCourse(executionCourse);
@@ -214,11 +212,11 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
 
     private List getProfessorships(Object[] arguments) throws ExcepcaoPersistencia {
         Summary summary = getSummary(arguments);
-        
+
         if (summary.getShift() == null) {
-            return summary.getExecutionCourse().getProfessorships();                    
+            return summary.getExecutionCourse().getProfessorships();
         }
-        return summary.getShift().getDisciplinaExecucao().getProfessorships();                
+        return summary.getShift().getDisciplinaExecucao().getProfessorships();
     }
 
     /**
@@ -389,7 +387,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                ExecutionCourse executionCourse = RootDomainObject.getInstance()
+                ExecutionCourse executionCourse = rootDomainObject
                         .readExecutionCourseByOID(executionCourseID);
                 professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             }

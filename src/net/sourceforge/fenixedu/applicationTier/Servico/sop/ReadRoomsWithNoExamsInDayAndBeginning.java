@@ -17,7 +17,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -27,7 +26,7 @@ public class ReadRoomsWithNoExamsInDayAndBeginning extends Service {
 
     public List run(Calendar day, Calendar beginning) throws ExcepcaoPersistencia {
         List exams = persistentSupport.getIPersistentExam().readBy(day, beginning);
-        List allRooms = RootDomainObject.getInstance().getOldRooms();
+        List allRooms = rootDomainObject.getOldRooms();
 
         List occupiedRooms = new ArrayList();
         for (int i = 0; i < exams.size(); i++) {

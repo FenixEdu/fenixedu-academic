@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,7 +25,7 @@ public class ReadAvailableRoomsForExam extends Service {
         if (normalCapacity != null) {
             rooms = OldRoom.findOldRoomsWithNormalCapacity(normalCapacity);
         } else if (withLabs.booleanValue()) {
-            rooms = RootDomainObject.getInstance().getOldRooms();
+            rooms = rootDomainObject.getOldRooms();
         } else {
             rooms = OldRoom.findOldRoomsOfAnyOtherType(new TipoSala(TipoSala.LABORATORIO));
         }

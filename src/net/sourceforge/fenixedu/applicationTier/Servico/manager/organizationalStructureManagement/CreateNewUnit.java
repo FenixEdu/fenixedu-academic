@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
@@ -28,7 +27,7 @@ public class CreateNewUnit extends Service {
         if (unitID == null) {
             unit = DomainFactory.makeUnit();
         } else {
-            unit = (Unit) RootDomainObject.getInstance().readPartyByOID(unitID);
+            unit = (Unit) rootDomainObject.readPartyByOID(unitID);
             if (unit == null) {
                 throw new FenixServiceException("error.noUnit");
             }
@@ -55,7 +54,7 @@ public class CreateNewUnit extends Service {
                 && (unit.getType().equals(PartyTypeEnum.DEGREE) || unit.getType().equals(
                         PartyTypeEnum.MASTER_DEGREE))) {
 
-            degree = RootDomainObject.getInstance().readDegreeByOID(degreeID);
+            degree = rootDomainObject.readDegreeByOID(degreeID);
 
             if ((degree.getTipoCurso().equals(DegreeType.DEGREE) && unit.getType().equals(
                     PartyTypeEnum.DEGREE))
@@ -77,7 +76,7 @@ public class CreateNewUnit extends Service {
         Department department = null;
         if (departmentID != null && unit.getType() != null
                 && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
-            department = RootDomainObject.getInstance().readDepartmentByOID(departmentID);
+            department = rootDomainObject.readDepartmentByOID(departmentID);
             unit.setDepartment(department);
 
         } else if (unit.getDepartment() != null) {
@@ -90,7 +89,7 @@ public class CreateNewUnit extends Service {
 
         Unit parentUnit = null;
         if (parentUnitID != null) {
-            parentUnit = (Unit) RootDomainObject.getInstance().readPartyByOID(parentUnitID);
+            parentUnit = (Unit) rootDomainObject.readPartyByOID(parentUnitID);
             if (parentUnit.equals(unit)) {
                 throw new FenixServiceException("error.same.unit");
             }

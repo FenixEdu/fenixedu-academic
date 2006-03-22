@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -32,7 +31,7 @@ public class ReadTeacherExecutionCoursesSitesService extends Service {
         // final IPersistentSite persistentSite =
         // persistentSupport.getIPersistentSite();
 
-        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(infoTeacher.getIdInternal());
+        Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
         final List<Professorship> professorships = teacher.getProfessorships();
         for (final Professorship professorship : professorships) {
             InfoSite infoSite = InfoSiteWithInfoExecutionCourse.newInfoFromDomain(professorship

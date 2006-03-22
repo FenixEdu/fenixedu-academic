@@ -10,7 +10,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -30,11 +29,11 @@ public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends
                     .getIPersistentExecutionPeriod();
             executionPeriod = executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = RootDomainObject.getInstance()
+            executionPeriod = rootDomainObject
                     .readExecutionPeriodByOID(executionPeriodOID);
         }
 
-        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherOID);
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherOID);
         List professorships = teacher.getProfessorships(executionPeriod);
         final List<Professorship> responsibleForsAux = teacher.responsibleFors();
         final List responsibleFors = new ArrayList();

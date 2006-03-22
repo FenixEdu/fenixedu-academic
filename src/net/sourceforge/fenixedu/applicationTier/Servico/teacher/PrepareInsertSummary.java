@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -67,7 +66,7 @@ public class PrepareInsertSummary extends Service {
             }
         }
 
-        final List<OldRoom> rooms = RootDomainObject.getInstance().getOldRooms();
+        final List<OldRoom> rooms = rootDomainObject.getOldRooms();
         final List<InfoRoom> infoRooms = new ArrayList<InfoRoom>(rooms.size());
 
         for (final OldRoom room : rooms) {

@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -53,9 +52,9 @@ public class AcceptTeacherExecutionCourseShiftPercentage extends Service {
                 .getIPersistentTeacherShiftPercentage();
 
         // read professorship
-        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(infoTeacher.getIdInternal());
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
-                infoExecutionCourse.getIdInternal());
+        Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse
+                .getIdInternal());
 
         Professorship professorship = null;
         if (teacher != null) {

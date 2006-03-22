@@ -10,7 +10,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -30,7 +29,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
     public List run(Integer teacherID, Integer executionYearID) throws FenixServiceException,
             ExcepcaoPersistencia {
             
-        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         
         ExecutionYear executionYear = null;
         if (executionYearID == null) {
@@ -39,7 +38,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
             executionYear = persistentExecutionYear.readCurrentExecutionYear();
                     
         } else{
-            executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+            executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
         }
 
         List professorships = teacher.getProfessorships(executionYear);

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -28,7 +27,7 @@ public class EditLesson extends Service {
         InfoLessonServiceResult result = null;
 
         OldRoom salaNova = OldRoom.findOldRoomByName(aulaNova.getInfoSala().getNome());
-        Lesson aula = RootDomainObject.getInstance().readLessonByOID(aulaAntiga.getIdInternal());
+        Lesson aula = rootDomainObject.readLessonByOID(aulaAntiga.getIdInternal());
         Shift shift = aula.getShift();
 
         RoomOccupation roomOccupation = aula.getRoomOccupation();

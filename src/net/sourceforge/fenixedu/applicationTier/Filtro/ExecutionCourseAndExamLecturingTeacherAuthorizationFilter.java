@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -67,7 +66,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                ExecutionCourse executionCourse = RootDomainObject.getInstance()
+                ExecutionCourse executionCourse = rootDomainObject
                         .readExecutionCourseByOID(executionCourseID);
                 professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             }
@@ -89,11 +88,11 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
 
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                        ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
+                        infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                        ExecutionCourse.class, (Integer) argumentos[0]);
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
+                        (Integer) argumentos[0]);
             }
 
             Integer examId;

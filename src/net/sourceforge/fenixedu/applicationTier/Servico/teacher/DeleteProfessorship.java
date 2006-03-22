@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -27,8 +26,8 @@ public class DeleteProfessorship extends Service {
         IPersistentShiftProfessorship shiftProfessorshipDAO = persistentSupport
                 .getIPersistentShiftProfessorship();
 
-        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherCode);
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherCode);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(
                 infoExecutionCourseCode);
 
         Professorship professorshipToDelete = null;

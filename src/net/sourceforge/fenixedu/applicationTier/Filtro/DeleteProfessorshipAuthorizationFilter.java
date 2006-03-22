@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -29,16 +28,18 @@ public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleF
             final Person loggedPerson = id.getPerson();
             final Integer executionCourseID = (Integer) arguments[0];
             final Integer selectedTeacherID = (Integer) arguments[1];
-                        
-            Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(selectedTeacherID);
-            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
-            
+
+            Teacher teacher = rootDomainObject.readTeacherByOID(selectedTeacherID);
+            ExecutionCourse executionCourse = rootDomainObject
+                    .readExecutionCourseByOID(executionCourseID);
+
             Professorship selectedProfessorship = null;
-            if(teacher != null){
+            if (teacher != null) {
                 selectedProfessorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             }
-           
-            if ((id == null) || (selectedProfessorship == null)
+
+            if ((id == null)
+                    || (selectedProfessorship == null)
                     || (id.getRoles() == null)
                     || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                     || isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getTeacher()

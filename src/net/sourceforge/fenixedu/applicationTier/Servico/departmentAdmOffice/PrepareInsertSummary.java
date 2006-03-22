@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -77,9 +76,9 @@ public class PrepareInsertSummary extends Service {
                 }
             });
         }
-        
+
         List infoProfessorships = new ArrayList();
-        List rooms = RootDomainObject.getInstance().getOldRooms();
+        List rooms = rootDomainObject.getOldRooms();
         List infoRooms = new ArrayList();
         if (rooms != null && rooms.size() > 0) {
             infoRooms = (List) CollectionUtils.collect(rooms, new Transformer() {
@@ -92,11 +91,11 @@ public class PrepareInsertSummary extends Service {
         }
         Collections.sort(infoRooms, new BeanComparator("nome"));
 
-        //teacher logged        
+        // teacher logged
         Teacher teacher = Teacher.readByNumber(teacherNumber);
         Integer professorshipSelect = null;
         if (teacher != null) {
-            Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);            
+            Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             if (professorship != null) {
                 professorshipSelect = professorship.getIdInternal();
                 infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));

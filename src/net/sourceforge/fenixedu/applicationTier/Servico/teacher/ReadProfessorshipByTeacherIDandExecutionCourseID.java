@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -28,9 +27,8 @@ public class ReadProfessorshipByTeacherIDandExecutionCourseID extends
     public InfoProfessorship run(Integer teacherID, Integer executionCourseID)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
-                executionCourseID);
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
         Professorship professorship = null;
         if (teacher != null) {

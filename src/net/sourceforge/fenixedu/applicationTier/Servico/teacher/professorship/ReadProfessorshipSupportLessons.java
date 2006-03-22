@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSup
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipSupportLessonsDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -33,9 +32,8 @@ public class ReadProfessorshipSupportLessons extends Service {
 
         ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
 
-        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
-                executionCourseId);
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
         Professorship professorship = null;
         if (teacher != null) {
