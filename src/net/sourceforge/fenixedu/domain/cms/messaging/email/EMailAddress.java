@@ -19,7 +19,7 @@ import javax.mail.internet.InternetAddress;
 public class EMailAddress
 {
 	private String user;
-
+	private static final String validationPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*$";
 	private String domain;
 
 	private String personalName;
@@ -66,13 +66,20 @@ public class EMailAddress
 		return true;
 	}
 
-	public static boolean isValid(String username, String domain)
+	public static boolean isValid(String address)
 	{
 		boolean result = false;
 		try
 		{
-			InternetAddress address = new InternetAddress(new StringBuffer(username).append("@").append(domain).toString());
-			result = true;
+			if (address.startsWith("--"))
+			{
+				int a=2;
+				a++;
+				a--;
+			}
+			InternetAddress javaxAddress = new InternetAddress(address);
+			result = address.matches(EMailAddress.validationPattern);
+			
 		}
 		catch (AddressException e)
 		{
@@ -80,16 +87,27 @@ public class EMailAddress
 		}
 		return result;
 	}
-
-	public static boolean isValid(String address)
+	
+	public static boolean isValid(String personalName, String address)
 	{
 		boolean result = false;
-		if (address != null)
+		try
 		{
-			String[] components = address.split("@");
-			if (components.length == 2) result = EMailAddress.isValid(components[0], components[1]);
+			InternetAddress javaxAddress = new InternetAddress(address,personalName);
+			result = address.matches(EMailAddress.validationPattern);
+		}
+		catch (UnsupportedEncodingException e) {
+			// thats also fine			
 		}
 		return result;
+	}
+
+	public EMailAddress(String address)
+	{
+		String[] components = address.split("@");
+		this.user=components[0];
+		this.domain=components[1];
+
 	}
 
 	public String getPersonalName()
@@ -111,5 +129,13 @@ public class EMailAddress
 		}
 
 		return address;
+	}
+	
+	public String getAddress()
+	{
+		StringBuffer result = new StringBuffer();
+		result.append(this.user).append("@").append(this.domain);
+		
+		return result.toString();
 	}
 }

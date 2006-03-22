@@ -188,4 +188,10 @@
 		<put name="body" value="/coordinator/weeklyWorkLoad.jsp" />
 	</definition>
 
+
+	<definition name="sendMail" extends="definition.coordinator.two-column">
+		<put name="body" value="/cms/messaging/sendMail.jsp" />
+	</definition>
+
+
 </tiles-definitions>

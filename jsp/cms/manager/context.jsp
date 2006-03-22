@@ -4,6 +4,7 @@
 <%@ page import="org.apache.struts.action.ActionMessages" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.StartHiddenActionMessages" %>
 
+
 <script language="JavaScript">
 function check(e)
 {
@@ -18,9 +19,6 @@ else
 }
 </script>
 
-<h2>
-<bean:message bundle="CMS_RESOURCES" key="cms.manager.title.label"/>
-</h2>
 
 <span class="infoMsg">
 		 <%
@@ -39,6 +37,7 @@ else
 						</li>
 					</div>
 				</ul>
+				<% infoMessageNumber++; %>
 			</logic:present>		 
 		</html:messages>
 </span>
@@ -60,6 +59,7 @@ else
 						</li>
 					</div>
 				</ul>
+				<% errorMessageNumber++; %>
 			</logic:present>
 		</html:messages>
 </span>

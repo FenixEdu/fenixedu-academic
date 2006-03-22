@@ -8,6 +8,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.accessControl.AccessControlPredicate;
+import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
@@ -131,7 +132,7 @@ public class CompetenceCoursePredicates {
         Collection<DegreeCurricularPlan> degreeCurricularPlans = ps.getIPersistentObject().readAll(
                 DegreeCurricularPlan.class);
 
-        Collection<Group> groups = new ArrayList<Group>();
+        Collection<IGroup> groups = new ArrayList<IGroup>();
         for (DegreeCurricularPlan plan : degreeCurricularPlans) {
             Group curricularPlanMembersGroup = plan.getCurricularPlanMembersGroup();
             if (curricularPlanMembersGroup != null) {

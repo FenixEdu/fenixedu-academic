@@ -7,35 +7,36 @@ import java.util.List;
 
 import org.apache.commons.collections.iterators.IteratorChain;
 
+import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.domain.Person;
 
 public abstract class NodeGroup extends Group {
     
     private static final long serialVersionUID = 1L;
     
-    private List<Group> children;
+    private List<IGroup> children;
     
     protected NodeGroup() {
         super();
         
-        this.children = new ArrayList<Group>();
+        this.children = new ArrayList<IGroup>();
     }
     
-    public NodeGroup(Group ... groups) {
+    public NodeGroup(IGroup ... groups) {
         this();
         
-        for (Group group : groups) {
+        for (IGroup group : groups) {
             this.children.add(group);
         }
     }
     
-    public NodeGroup(Collection<Group> groups) {
+    public NodeGroup(Collection<IGroup> groups) {
         this();
         
         this.children.addAll(groups);
     }
     
-    protected List<Group> getChildren() {
+    protected List<IGroup> getChildren() {
         return this.children;
     }
 
@@ -44,7 +45,7 @@ public abstract class NodeGroup extends Group {
         IteratorChain chain = new IteratorChain();
         
         for (Iterator iterator = getChildren().iterator(); iterator.hasNext();) {
-            Group group = (Group) iterator.next();
+            IGroup group = (IGroup) iterator.next();
             
             chain.addIterator(group.getElementsIterator());
         }

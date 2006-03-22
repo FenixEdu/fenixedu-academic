@@ -105,10 +105,15 @@
 		<strong><bean:message key="label.coordinator.degreeSite.students"/></strong>
 		<ul>
 			<li>
+				<html:link page="<%= "/mailSender.do?method=start&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+				    <bean:message key="sendMail.students"/>
+				</html:link>			
+			</li>
+			<li>
 				<html:link page="<%= "/students.faces?degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 				    <bean:message key="list.students"/>
 				</html:link>			
-			</li>
+			</li>			
 			<li>
 				<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView&amp;executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 				    <bean:message key="label.coordinator.studentInformation"/>

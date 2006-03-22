@@ -35,6 +35,8 @@ public class SendMailForm extends ValidatorForm
 	private String fromPersonalName;
 
 	private String returnURL;
+	
+	private String group; 
 
 	private Collection<IGroup> groupsToChooseFrom;
 
@@ -118,5 +120,13 @@ public class SendMailForm extends ValidatorForm
 	public void setFromPersonalName(String fromPersonalName)
 	{
 		this.fromPersonalName = fromPersonalName;
+	}
+
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
 	}
 }

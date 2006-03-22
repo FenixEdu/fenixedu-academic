@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.domain.Person;
 
 public final class GroupIntersection extends NodeGroup {
@@ -24,7 +25,7 @@ public final class GroupIntersection extends NodeGroup {
                 while (iterator.hasNext()) {
                     Person person = iterator.next();
                     
-                    for (Group group : getChildren()) {
+                    for (IGroup group : getChildren()) {
                         if (! group.isMember(person)) {
                             continue outter;
                         }
@@ -50,11 +51,11 @@ public final class GroupIntersection extends NodeGroup {
         }
     }
     
-    public GroupIntersection(Group ... groups) {
+    public GroupIntersection(IGroup ... groups) {
         super(groups);
     }
 
-    public GroupIntersection(Collection<Group> groups) {
+    public GroupIntersection(Collection<IGroup> groups) {
         super(groups);
     }
 
@@ -65,7 +66,7 @@ public final class GroupIntersection extends NodeGroup {
 
     @Override
     public boolean isMember(Person person) {
-        for (Group group : getChildren()) {
+        for (IGroup group : getChildren()) {
             if (! group.isMember(person)) {
                 return false;
             }

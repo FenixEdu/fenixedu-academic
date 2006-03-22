@@ -7,12 +7,12 @@ import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonalGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupDifference;
 import net.sourceforge.fenixedu.domain.accessControl.GroupTypes;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -59,8 +59,8 @@ public class DifferenceGroupOperationsManagement extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
         Person person = this.getLoggedPerson(request);
 
-        Collection<Group> includeGroups = new HashSet<Group>();
-        Collection<Group> excludeGroups = new HashSet<Group>();
+        Collection<IGroup> includeGroups = new HashSet<IGroup>();
+        Collection<IGroup> excludeGroups = new HashSet<IGroup>();
         
         for (Iterator iter = person.getPersonalGroupsIterator(); iter.hasNext();) {
             PersonalGroup currentGroup = (PersonalGroup) iter.next();

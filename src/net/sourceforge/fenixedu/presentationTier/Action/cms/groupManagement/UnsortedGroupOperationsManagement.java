@@ -7,12 +7,12 @@ import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonalGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupIntersection;
 import net.sourceforge.fenixedu.domain.accessControl.GroupTypes;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
@@ -63,7 +63,7 @@ public class UnsortedGroupOperationsManagement extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
         Person person = this.getLoggedPerson(request);
 
-        Collection<Group> groups = new HashSet<Group>();
+        Collection<IGroup> groups = new HashSet<IGroup>();
         for (Iterator iter = person.getPersonalGroupsIterator(); iter.hasNext();) {
             PersonalGroup currentGroup = (PersonalGroup) iter.next();
             for (int i = 0; i < groupIds.length; i++) {
@@ -73,7 +73,7 @@ public class UnsortedGroupOperationsManagement extends FenixDispatchAction {
             }
         }
 
-        Group group;
+        IGroup group;
         switch (userGroupType) {
         case UNION_GROUP:
             group = new GroupUnion(groups);

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Collection;
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.collections.iterators.IteratorChain;
@@ -12,11 +13,11 @@ public final class GroupUnion extends NodeGroup {
 
     private static final long serialVersionUID = 1L;
 
-    public GroupUnion(Group ... groups) {
+    public GroupUnion(IGroup ... groups) {
         super(groups);
     }
 
-    public GroupUnion(Collection<Group> groups) {
+    public GroupUnion(Collection<IGroup> groups) {
         super(groups);
     }
 
@@ -24,7 +25,7 @@ public final class GroupUnion extends NodeGroup {
     public Iterator<Person> getElementsIterator() {
         IteratorChain iteratorChain = new IteratorChain();
 
-        for (Group part : this.getChildren()) {
+        for (IGroup part : this.getChildren()) {
             iteratorChain.addIterator(part.getElementsIterator());
         }
 
@@ -33,7 +34,7 @@ public final class GroupUnion extends NodeGroup {
 
     @Override
     public boolean isMember(Person person) {
-        for (Group group : getChildren()) {
+        for (IGroup group : getChildren()) {
             if (group.isMember(person)) {
                 return true;
             }

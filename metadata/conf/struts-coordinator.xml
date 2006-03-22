@@ -53,7 +53,7 @@
        </form-bean>
 
   	  <!-- Bean to Choose the second Master Degree for Study Plan -->
-      <form-bean name="chooseSecondMasterDegreeForm" 
+      <form-bean name="chooseSecondMasterDegreeForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
          <form-property name="page" type="java.lang.Integer" />
@@ -333,6 +333,8 @@
 			<form-property name="executionCourseID" type="java.lang.String" />
 		</form-bean>
 
+       <form-bean name="sendMailForm" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm" dynamic="false"/>
+
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -439,7 +441,18 @@
 		                key="resources.Action.exceptions.NonExistingActionException"
                         handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>	
 	         <forward name="PrepareSuccess" path="df.page.displayStudentListByDegree"/> 
+
 	  </action>
+	  	  		
+ 		<action path="/mailSender"
+            type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SendMailToDegreeCurricularPlanStudents"
+            parameter="method"
+            name="sendMailForm"
+            scope="request">
+            
+            <forward name="sendMail" path="sendMail"/>
+        </action>
+        
 
  	  <!-- Action for the Coordinator to List the Students by CurricularCourse -->
 	  <action path="/listStudentsByCourse"
@@ -857,6 +870,7 @@
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
+    <message-resources parameter="resources.CmsResources" key="CMS_RESOURCES" null="false" />
     
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

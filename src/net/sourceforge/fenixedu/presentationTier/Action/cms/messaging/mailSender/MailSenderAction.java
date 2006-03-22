@@ -7,10 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSende
 
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,9 +18,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.email.SendEMail.SendEMailParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PersonalGroup;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailAddress;
-import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient;
+import net.sourceforge.fenixedu.domain.cms.messaging.email.SendMailReport;
+import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.SendStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.StartHiddenActionMessages;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -42,28 +39,29 @@ import org.apache.struts.util.MessageResources;
  *         <br/> Created on 11:36:35,15/Fev/2006
  * @version $Id$
  */
-public abstract class MailSenderAction extends FenixDispatchAction
-{
+public abstract class MailSenderAction extends FenixDispatchAction {
 	protected abstract List<IGroup> loadPersonalGroupsToChooseFrom(HttpServletRequest request)
 			throws FenixFilterException, FenixServiceException;
 
-	protected abstract List<EMailAddress> getFromAddresses(HttpServletRequest request, ActionForm form)
+	protected abstract EMailAddress getFromAddress(HttpServletRequest request, ActionForm form)
 			throws FenixFilterException, FenixServiceException;
-	
-	protected abstract boolean isUserAllowedToSendMail(HttpServletRequest request, Collection<IGroup> destinationGroups) throws FenixFilterException, FenixServiceException;
+
+	protected abstract IGroup[] getAllowedGroups(HttpServletRequest request, IGroup[] selectedGroups)
+			throws FenixFilterException, FenixServiceException;
+
+	protected abstract IGroup[] getGroupsToSend(ActionForm form, HttpServletRequest request)
+			throws FenixFilterException, FenixServiceException, FenixActionException;
 
 	public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws FenixActionException, FenixFilterException,
-			FenixServiceException
-	{
+			FenixServiceException {
 		Person person = this.getUserView(request).getPerson();
 		SendMailForm form = (SendMailForm) actionForm;
 		List<IGroup> groups = this.loadPersonalGroupsToChooseFrom(request);
 
 		form.setGroupsToChooseFrom(groups);
 		String referer = request.getHeader("Referer");
-		if (referer == null || referer.equals(""))
-		{
+		if (referer == null || referer.equals("")) {
 			referer = this.getReturnUrl(request);
 		}
 		form.setReturnURL(referer);
@@ -74,8 +72,7 @@ public abstract class MailSenderAction extends FenixDispatchAction
 		return mapping.findForward("sendMail");
 	}
 
-	private String getReturnUrl(HttpServletRequest request)
-	{
+	private String getReturnUrl(HttpServletRequest request) {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(request.getRequestURI()).append("?").append(request.getQueryString());
 
@@ -84,58 +81,38 @@ public abstract class MailSenderAction extends FenixDispatchAction
 
 	public ActionForward send(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws FenixActionException, FenixFilterException,
-			FenixServiceException
-	{
+			FenixServiceException {
 		MessageResources resources = this.getResources(request, "CMS_RESOURCES");
 		IUserView userView = this.getUserView(request);
-		Person person = this.getUserView(request).getPerson();
+
 		SendMailForm sendMailForm = (SendMailForm) actionForm;
-		Integer[] ids = sendMailForm.getSelectedPersonalGroupsIds();
-		if (ids==null)
-		{
+
+		IGroup[] groupsToSend = this.getGroupsToSend(actionForm, request);
+
+		if (groupsToSend == null || groupsToSend.length == 0) {
 			ActionMessages errors = new ActionMessages();
 			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.mailSender.selectAtLeastOneGroup"));
-			saveErrors(request,errors);
-			return this.start(mapping,actionForm,request,response);
-		}
-		IGroup[] selectedGroups = new PersonalGroup[ids.length];
-
-		for (PersonalGroup group : person.getPersonalGroups())
-		{
-			for (int i = 0; i < ids.length; i++)
-			{
-				if (group.getIdInternal().equals(ids[i]))
-				{
-					selectedGroups[i] = group;
-					break;
-				}
-			}
+			saveErrors(request, errors);
+			return this.start(mapping, actionForm, request, response);
 		}
 
 		SendEMailParameters parameters = new SendEMailParameters();
 		parameters.subject = sendMailForm.getSubject();
 		parameters.message = sendMailForm.getMessage();
-		parameters.toRecipients = selectedGroups;
-		List<EMailAddress> fromAddresses = this.getFromAddresses(request,actionForm);
-		if (fromAddresses==null || fromAddresses.size()==0)
-		{
+		parameters.toRecipients = groupsToSend;
+		parameters.allowedSenders = this.getAllowedGroups(request, groupsToSend);
+		EMailAddress fromAddress = this.getFromAddress(request, actionForm);
+		if (fromAddress == null) {
 			ActionMessages errors = new ActionMessages();
 			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.mailSender.provideValidFromEMailAddress"));
-			saveErrors(request,errors);
-			return this.start(mapping,actionForm,request,response);			
+			saveErrors(request, errors);
+			return this.start(mapping, actionForm, request, response);
 		}
-		EMailAddress[] addresses = new EMailAddress[fromAddresses.size()];
-		int i=0;
-		for (Iterator iter = fromAddresses.iterator(); iter.hasNext();)
-		{
-			addresses[i]=(EMailAddress) iter.next();
-			parameters.from=addresses;			
-		}
-		
-		try
-		{
-			Collection<Recipient> result = (Collection<Recipient>) ServiceManagerServiceFactory.executeService(userView, "SendEMail", new Object[]
-			{ parameters });
+
+		parameters.from = fromAddress;
+
+		try {
+			SendMailReport result = (SendMailReport) ServiceManagerServiceFactory.executeService(userView, "SendEMail", new Object[] { parameters });
 
 			StringBuffer sent = new StringBuffer();
 			StringBuffer invalidAddress = new StringBuffer();
@@ -147,65 +124,67 @@ public abstract class MailSenderAction extends FenixDispatchAction
 			int transportErrorCount = 0;
 			int sentCount = 0;
 
-			for (Recipient recipient : result)
-			{
-				switch (recipient.getStatus())
-				{
-				case INVALID_ADDRESS:
+			if (result.get(SendStatus.INVALID_ADDRESS) != null) {
+				for (Person person : result.get(SendStatus.INVALID_ADDRESS)) {
 					if (invalidAddressCount == 0) invalidAddress.append("<ul>");
 					invalidAddressCount++;
-					String addressToShow = recipient.getSubject().getEmail();
-					if (addressToShow == null || addressToShow.equals(""))
-					{
+					String addressToShow = person.getEmail();
+					if (addressToShow == null || addressToShow.equals("")) {
 						addressToShow = resources.getMessage(this.getLocale(request), "cms.mailSender.emptyAddress");
 					}
-					invalidAddress.append("<li>").append(recipient.getSubject().getNome()).append(" (").append(addressToShow).append(") </li>");
-					break;
-				case INVALID_PERSONAL_NAME:
+					invalidAddress.append("<li>").append(person.getNome()).append(" (").append(addressToShow).append(") </li>");
+				}
+			}
+
+			if (result.get(SendStatus.INVALID_PERSONAL_NAME) != null) {
+				for (Person person : result.get(SendStatus.INVALID_PERSONAL_NAME)) {
 					if (invalidPersonalNameCount == 0) invalidName.append("<ul> ");
 					invalidPersonalNameCount++;
-					invalidName.append("<li>").append(recipient.getSubject().getNome()).append("</li>");
-					break;
-				case TRANSPORT_ERROR:
+					invalidName.append("<li>").append(person.getNome()).append("</li>");
+				}
+			}
+
+			if (result.get(SendStatus.TRANSPORT_ERROR) != null) {
+				for (Person person : result.get(SendStatus.TRANSPORT_ERROR)) {
+
 					if (transportErrorCount == 0) transportError.append("<ul>");
 					transportErrorCount++;
-					transportError.append("<li>").append(recipient.getSubject().getEmail()).append("</li>");
-					break;
-				case SENT:
+					transportError.append("<li>").append(person.getNome()).append(" (").append(person.getEmail()).append(") </li>");
+				}
+			}
+
+			if (result.get(SendStatus.SENT) != null) {
+				for (Person person : result.get(SendStatus.SENT)) {
 					if (sentCount == 0) sent.append("<ul>");
 					sentCount++;
-					sent.append("<li>").append(recipient.getSubject().getNome()).append(" (").append(recipient.getSubject().getEmail()).append(")</li>");
+					sent.append("<li>").append(person.getNome()).append(" (").append(person.getEmail()).append(")</li>");
 					break;
 				}
 			}
+
 			invalidAddress.append("</ul>");
 			invalidName.append("</ul>");
 			transportError.append("</ul>");
 			sent.append("</ul>");
 			ActionMessages errors = new ActionMessages();
-			if (invalidAddressCount > 0)
-			{
+			if (invalidAddressCount > 0) {
 				errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.mailSender.invalidAddress", invalidAddressCount, invalidAddress));
 			}
-			if (invalidPersonalNameCount > 0)
-			{
+			if (invalidPersonalNameCount > 0) {
 				errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.mailSender.invalidPersonalName", invalidPersonalNameCount, invalidName));
 			}
-			if (transportErrorCount > 0)
-			{
+			if (transportErrorCount > 0) {
 				errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.mailSender.transportError", transportErrorCount, transportError));
 			}
 			saveErrors(request, errors);
 
 			ActionMessages messages = new StartHiddenActionMessages();
-			if (sentCount > 0)
-			{
+			if (sentCount > 0) {
 				messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.mailSender.sent", sentCount, sent));
 			}
 			saveMessages(request, messages);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			throw new FenixActionException(e);
 		}
 
@@ -214,15 +193,12 @@ public abstract class MailSenderAction extends FenixDispatchAction
 
 	public ActionForward goBack(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-			FenixFilterException, FenixServiceException
-	{
+			FenixFilterException, FenixServiceException {
 		SendMailForm sendMailForm = (SendMailForm) actionForm;
-		try
-		{
+		try {
 			response.sendRedirect(response.encodeRedirectURL(sendMailForm.getReturnURL()));
 		}
-		catch (IOException e)
-		{
+		catch (IOException e) {
 			throw new FenixActionException();
 		}
 		return null;

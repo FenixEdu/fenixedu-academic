@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.domain.Person;
 
 public final class GroupDifference extends NodeGroup {
@@ -45,7 +46,7 @@ public final class GroupDifference extends NodeGroup {
     private Group includeGroup;
     private Group excludeGroup;
     
-	public GroupDifference(Collection<Group> includeGroups, Collection<Group> excludeGroups) {
+	public GroupDifference(Collection<IGroup> includeGroups, Collection<IGroup> excludeGroups) {
         super();
         
         this.includeGroup = new GroupUnion(includeGroups);
