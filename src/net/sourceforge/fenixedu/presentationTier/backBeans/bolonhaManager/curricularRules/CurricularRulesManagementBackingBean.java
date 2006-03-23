@@ -515,7 +515,10 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         this.departmentUnitItems = departmentUnitItems;
     }
     
-    public Integer getBeginExecutionPeriodID() {
+    public Integer getBeginExecutionPeriodID() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("beginExecutionPeriodID") == null && getCurricularRule() != null) {
+            setBeginExecutionPeriodID(getCurricularRule().getBegin().getIdInternal());
+        }
         return (Integer) getViewState().getAttribute("beginExecutionPeriodID");
     }
     
@@ -523,7 +526,10 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("beginExecutionPeriodID", beginExecutionPeriodID);
     }
     
-    public Integer getEndExecutionPeriodID() {
+    public Integer getEndExecutionPeriodID() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("endExecutionPeriodID") == null && getCurricularRule() != null) {
+            setEndExecutionPeriodID(getCurricularRule().getEnd().getIdInternal());
+        }
         return (Integer) getViewState().getAttribute("endExecutionPeriodID");
     }
     
@@ -675,7 +681,9 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     
     public String editCurricularRule() {
         try {
-            final Object[] args = { getCurricularRuleID(), buildCurricularRuleParametersDTO()};
+            final Object[] args = { getCurricularRuleID(), getBeginExecutionPeriodID(), 
+                    (getEndExecutionPeriodID() == null || getEndExecutionPeriodID().equals(NO_SELECTION_INTEGER)) ? null : 
+                        getEndExecutionPeriodID() };
             ServiceUtils.executeService(getUserView(), "EditCurricularRule", args);
             return "setCurricularRules";
         } catch (FenixFilterException e) {
@@ -722,7 +730,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         parametersDTO.setSelectedDegreeID((getSelectedDegreeID() == null || getSelectedDegreeID().equals(NO_SELECTION_INTEGER)) ? null : getSelectedDegreeID());
         parametersDTO.setSelectedDepartmentUnitID((getSelectedDepartmentUnitID() == null || getSelectedDepartmentUnitID().equals(NO_SELECTION_INTEGER)) ? null : getSelectedDepartmentUnitID());
         parametersDTO.setBolonhaDegreeType((getSelectedDegreeType() == null || getSelectedDegreeType().equals(NO_SELECTION_STRING)) ? null : BolonhaDegreeType.valueOf(getSelectedDegreeType()));
-        // must get these values like this to prevent override value
+        // must get these values like this to prevent override values
         parametersDTO.setMinimumYear((Integer) getViewState().getAttribute("minimumYear"));
         parametersDTO.setMaximumYear((Integer) getViewState().getAttribute("maximumYear"));
         parametersDTO.setCredits((Double) getViewState().getAttribute("credits"));

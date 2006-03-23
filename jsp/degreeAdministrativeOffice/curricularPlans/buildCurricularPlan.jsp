@@ -78,17 +78,15 @@
 			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
 	
-		<h:outputText value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>" escape="false" />
 		<h:outputText value="<div class='mvert1'>" escape="false"/>
 		<h:messages styleClass="error0" infoClass="success0" layout="table" globalOnly="true"/>
 		<h:outputText value="</div>" escape="false"/>
 		
 		<fc:degreeCurricularPlanRender 
-			dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
-			toEdit="true" 
+			dcp="#{CurricularCourseManagement.degreeCurricularPlan}"
+			toEdit="true"
 			organizeBy="#{CurricularCourseManagement.organizeBy}"
-			executionYear="#{CurricularCourseManagement.executionYear}"
-		/>
+			executionYear="#{CurricularCourseManagement.executionYear}" />
 
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>

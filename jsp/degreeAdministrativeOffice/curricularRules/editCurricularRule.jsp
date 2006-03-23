@@ -4,136 +4,48 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
-<ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+<ft:tilesView definition="definition.degreeAdministrativeOffice.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
 	<h:outputText value="<i>#{bolonhaBundle['bolonhaManager']}</i>" escape="false"/>
-	<h:outputFormat value="<h2>#{bolonhaBundle['edit.param']}</h2>" escape="false">
+	<h:outputFormat value="<h2>#{bolonhaBundle['delete.param']}</h2>" escape="false">
 		<f:param value="#{bolonhaBundle['curricularRule']}"/>
 	</h:outputFormat>
 	
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
 	<h:form>
-		<fc:viewState binding="#{CurricularRulesManagement.viewState}"/>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularRulesManagement.degreeCurricularPlanID}'/>"/>
+		<h:outputText escape="false" value="<input id='executionYearID' name='executionYearID' type='hidden' value='#{CurricularCourseManagement.executionYearID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularRuleID' name='curricularRuleID' type='hidden' value='#{CurricularRulesManagement.curricularRuleID}'/>"/>
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
-		
-		<h:outputText value="<p><strong>#{bolonhaBundle['degreeModule']}: </strong>" escape="false"/>
-		<h:outputText value="<span class='attention'>#{CurricularRulesManagement.degreeModule.name}</span></p>" escape="false"/>
+		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularCourseManagement.showRules}'/>"/>
+		<h:outputText escape="false" value="<input id='hideCourses' name='hideCourses' type='hidden' value='#{CurricularCourseManagement.hideCourses}'/>"/>
+		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
 		
 		<h:outputText value="<div class='simpleblock4'> " escape="false"/>
-		<h:outputText value="<h4 class='first'>#{bolonhaBundle['edit']}:</h4>" escape="false"/>
+		<h:outputText value="<h4 class='first'>#{bolonhaBundle['curricularRule']}: </h4>" escape="false"/>
+		<h:outputText value="<p>#{CurricularRulesManagement.ruleLabel}</p>" escape="false"/>
+		
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
-
-		<h:outputText value="<p><label>#{bolonhaBundle['type.of.rule']}:</label>" escape="false"/>
-		<fc:selectOneMenu value="#{CurricularRulesManagement.selectedCurricularRuleType}" onchange="this.form.submit();"
-				valueChangeListener="#{CurricularRulesManagement.onChangeCurricularRuleTypeDropDown}" disabled="true">
-			<f:selectItems binding="#{CurricularRulesManagement.curricularRuleTypeItems}"/>
-		</fc:selectOneMenu>
+		<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
+		<h:selectOneMenu value="#{CompositeRulesManagement.beginExecutionPeriodID}">
+			<f:selectItems binding="#{CompositeRulesManagement.beginExecutionPeriodItemsForCompositeRule}" />
+		</h:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
-		
-		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' 
-					|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE' 
-					|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_BETWEEN_DEGREE_MODULES'
-					|| CurricularRulesManagement.selectedCurricularRuleType == 'EXCLUSIVENESS'}">
-			<h:outputText value="<p><label>#{bolonhaBundle['curricularCourse']}:</label>" escape="false"/>
-			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeModuleID}">
-				<f:selectItems binding="#{CurricularRulesManagement.degreeModuleItems}"/>
-			</fc:selectOneMenu>
-			<h:outputText value="</p>" escape="false"/> 
-		</h:panelGroup>				
 
-		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'DEGREE_MODULES_SELECTION_LIMIT'}">
-			<h:outputText value="<p><label>#{bolonhaBundle['options']}:</label>" escape="false"/>
-			
-			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
-			<h:inputText id="minimumLimit" maxlength="2" size="4" value="#{CurricularRulesManagement.minimumLimit}"/>
-			<h:outputText value=" " escape="false"/>
-			<h:outputText value="#{bolonhaBundle['maximum']}: " escape="false"/>
-			<h:inputText id="maximumLimit" maxlength="2" size="4" value="#{CurricularRulesManagement.maximumLimit}"/>
-			
-			<h:outputText value="</p>" escape="false"/>
-		</h:panelGroup>
-		
-		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'CREDITS_LIMIT'}">
-			<h:outputText value="<p><label>#{bolonhaBundle['credits']}:</label>" escape="false"/>
-			
-			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
-			<h:inputText id="minimumCredits" maxlength="6" size="4" value="#{CurricularRulesManagement.minimumCredits}"/>
-			<h:outputText value=" " escape="false"/>	
-			<h:outputText value="#{bolonhaBundle['maximum']}: " escape="false"/>
-			<h:inputText id="maximumCredits" maxlength="6" size="4" value="#{CurricularRulesManagement.maximumCredits}"/>
-	
-			<h:outputText value="</p>" escape="false"/>
-		</h:panelGroup>
-		
-		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_BETWEEN_DEGREE_MODULES'}">
-			<h:outputText value="<p><label>#{bolonhaBundle['credits']}:</label>" escape="false"/>
-			<h:inputText id="minimumCreditsForPrecedencyBetweenDegreeModules" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumCredits}"/>
-			<h:outputText value="</p>" escape="false"/>
-		</h:panelGroup>
-		
-		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'ANY_CURRICULAR_COURSE'}">
-			<h:outputText value="<p><label>#{bolonhaBundle['credits']}:</label>" escape="false"/>
-			<h:inputText id="creditsForAnyCurricularCourseRule" maxlength="8" size="4" value="#{CurricularRulesManagement.credits}"/>
-			<h:outputText value="</p>" escape="false"/>
-			<h:outputText value="<p><label>#{bolonhaBundle['years']}:</label>" escape="false"/>
-			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
-			<h:inputText id="minimumYear" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumYear}"/>
-			<h:outputText value=" " escape="false"/>
-			<h:outputText value="#{bolonhaBundle['maximum']}: " escape="false"/>
-			<h:inputText id="maximumYear" maxlength="8" size="4" value="#{CurricularRulesManagement.maximumYear}"/>
-			<h:outputText value="</p>" escape="false"/>
-			<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['semester']}:</label>" escape="false"/>
-			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedSemester}">
-				<f:selectItem itemLabel="#{bolonhaBundle['both']}" itemValue="0"/>
-				<f:selectItem itemLabel="1" itemValue="1"/>
-				<f:selectItem itemLabel="2" itemValue="2"/>
-			</fc:selectOneMenu>
-			<h:outputText value="</p>" escape="false"/>
-			<h:outputText value="<p><label>#{bolonhaBundle['degreeType']}:</label>" escape="false"/>
-			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeType}" onchange="this.form.submit();"
-					valueChangeListener="#{CurricularRulesManagement.onChangeDegreeTypeDropDown}">
-				<f:selectItem itemLabel="IST" itemValue=""/>
-				<f:selectItem itemLabel="#{enumerationBundle['DEGREE']}" itemValue="DEGREE"/>
-				<f:selectItem itemLabel="#{enumerationBundle['MASTER_DEGREE']}" itemValue="MASTER_DEGREE"/>
-				<f:selectItem itemLabel="#{enumerationBundle['INTEGRATED_MASTER_DEGREE']}" itemValue="INTEGRATED_MASTER_DEGREE"/>
-			</fc:selectOneMenu>
-			<h:outputText value="<p><label>#{bolonhaBundle['degree']}:</label>" escape="false"/>
-			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeID}">
-				<f:selectItems binding="#{CurricularRulesManagement.degreeItems}"/>
-			</fc:selectOneMenu>
-			<h:outputText value="</p>" escape="false"/>
-			<h:outputText value="<p><label>#{bolonhaBundle['department']}:</label>" escape="false"/>
-			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDepartmentUnitID}">
-				<f:selectItems binding="#{CurricularRulesManagement.departmentUnitItems}"/>
-			</fc:selectOneMenu>
-			<h:outputText value="</p>" escape="false"/>
-		</h:panelGroup>
-		
-		<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['group']}:</label>" escape="false"/>
-		<fc:selectOneMenu value="#{CurricularRulesManagement.selectedContextCourseGroupID}">
-			<f:selectItems binding="#{CurricularRulesManagement.courseGroupItems}"/>
-		</fc:selectOneMenu>
+		<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
+		<h:selectOneMenu value="#{CompositeRulesManagement.endExecutionPeriodID}">
+			<f:selectItems binding="#{CompositeRulesManagement.endExecutionPeriodItemsForCompositeRule}" />
+		</h:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
-		
-		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' 
-					|| CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE'}">
-			<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['semester']}:</label>" escape="false"/>
-			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedSemester}">
-				<f:selectItem itemLabel="#{bolonhaBundle['both']}" itemValue="0"/>
-				<f:selectItem itemLabel="1" itemValue="1"/>
-				<f:selectItem itemLabel="2" itemValue="2"/>
-			</fc:selectOneMenu>
-			<h:outputText value="</p>" escape="false"/>
-		</h:panelGroup>
-		
-		<h:outputText value="</fieldset></div>" escape="false"/>	
-
+		<h:outputText value="</fieldset>" escape="false"/>
+		<h:outputText value="</div>" escape="false"/>	
+			
+		<h:outputText value="<p class='mtop2'>" escape="false"/>
 		<h:commandButton value="#{bolonhaBundle['save']}" styleClass="inputbutton" action="#{CurricularRulesManagement.editCurricularRule}"/>
 		<h:commandButton immediate="true" value="#{bolonhaBundle['cancel']}" styleClass="inputbutton" action="setCurricularRules"/>
+		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 </ft:tilesView>
