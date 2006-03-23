@@ -12,6 +12,7 @@ public interface MetaSlot extends MetaObject {
     public String getLayout();
     public MetaSlotKey getKey();
     public String getLabelKey();
+    public String getBundle();
     public boolean hasValidator();
     public String getLabel();
     public Class<HtmlValidator> getValidator();

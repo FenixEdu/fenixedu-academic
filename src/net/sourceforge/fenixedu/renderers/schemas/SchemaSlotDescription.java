@@ -13,6 +13,8 @@ public class SchemaSlotDescription {
 
     private String key;
 
+    private String bundle;
+    
     private Properties properties;
 
     private Class<HtmlValidator> validator;
@@ -53,6 +55,14 @@ public class SchemaSlotDescription {
 
     public void setKey(String key) {
         this.key = key;
+    }
+    
+    public String getBundle() {
+        return this.bundle;
+    }
+
+    public void setBundle(String bundle) {
+        this.bundle = bundle;
     }
 
     public Properties getProperties() {
@@ -107,7 +117,7 @@ public class SchemaSlotDescription {
         return this.readOnly;
     }
 
-    public void setReadonly(boolean readOnly) {
+    public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
     }
 }

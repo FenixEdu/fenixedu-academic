@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.renderers.model.DefaultMetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
@@ -10,7 +9,6 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.SimpleMetaSlot;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
-import dml.DomainClass;
 
 public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
     
@@ -79,6 +77,7 @@ public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
         }
         
         metaSlot.setLabelKey(slotDescription.getKey());
+        metaSlot.setBundle(slotDescription.getBundle());
         metaSlot.setSchema(slotDescription.getSchema());
         metaSlot.setLayout(slotDescription.getLayout());
         metaSlot.setValidator(slotDescription.getValidator());

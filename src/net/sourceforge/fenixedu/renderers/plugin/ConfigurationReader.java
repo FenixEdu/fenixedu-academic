@@ -83,9 +83,10 @@ public class ConfigurationReader {
             for (Iterator schemaIterator = schemaElements.iterator(); schemaIterator.hasNext();) {
                 Element schemaElement = (Element) schemaIterator.next();
 
-                String schemaName = schemaElement.getAttributeValue("name");
-                String typeName = schemaElement.getAttributeValue("type");
+                String schemaName         = schemaElement.getAttributeValue("name");
+                String typeName           = schemaElement.getAttributeValue("type");
                 String extendedSchemaName = schemaElement.getAttributeValue("extends");
+                String schemaBundle       = schemaElement.getAttributeValue("bundle");
 
                 Class type;
                 try {
@@ -138,6 +139,7 @@ public class ConfigurationReader {
                     String slotName      = slotElement.getAttributeValue("name");
                     String layout        = slotElement.getAttributeValue("layout");
                     String key           = slotElement.getAttributeValue("key");
+                    String bundle        = slotElement.getAttributeValue("bundle");
                     String slotSchema    = slotElement.getAttributeValue("schema");
                     String validatorName = slotElement.getAttributeValue("validator");
                     String defaultValue  = slotElement.getAttributeValue("default");
@@ -180,17 +182,22 @@ public class ConfigurationReader {
                     
                     boolean readOnly = readOnlyValue == null ? false : Boolean.parseBoolean(readOnlyValue);
                     
+                    if (bundle == null) {
+                        bundle = schemaBundle;
+                    }
+                    
                     SchemaSlotDescription slotDescription = new SchemaSlotDescription(slotName);
 
                     slotDescription.setLayout(layout);
                     slotDescription.setKey(key);
+                    slotDescription.setBundle(bundle);
                     slotDescription.setProperties(properties);
                     slotDescription.setSchema(slotSchema);
                     slotDescription.setValidator(validator);
                     slotDescription.setConverter(converter);
                     slotDescription.setValidatorProperties(validatorProperties);
                     slotDescription.setDefaultValue(defaultValue);
-                    slotDescription.setReadonly(readOnly);
+                    slotDescription.setReadOnly(readOnly);
                     
                     schema.addSlotDescription(slotDescription);
                 }

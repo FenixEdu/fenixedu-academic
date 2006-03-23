@@ -17,6 +17,7 @@ public class SimpleMetaSlot implements MetaSlot {
     private MetaObject metaObject;
     private String name;
     private String labelKey;
+    private String bundle;
     private String schema;
     private String layout;
     private Class<HtmlValidator> validator;
@@ -52,7 +53,7 @@ public class SimpleMetaSlot implements MetaSlot {
     }
 
     public String getLabel() {
-        return RenderUtils.getSlotLabel(getMetaObject().getType(), getName(), getLabelKey());
+        return RenderUtils.getSlotLabel(getMetaObject().getType(), getName(), getBundle(), getLabelKey());
     }
 
     public void setLabelKey(String key) {
@@ -61,6 +62,14 @@ public class SimpleMetaSlot implements MetaSlot {
 
     public String getLabelKey() {
         return this.labelKey;
+    }
+    
+    public void setBundle(String bundle) {
+        this.bundle = bundle;
+    }
+
+    public String getBundle() {
+        return this.bundle;
     }
     
     public void setValidator(Class<HtmlValidator> validator) {
@@ -194,4 +203,5 @@ public class SimpleMetaSlot implements MetaSlot {
     public void commit() {
         // nothing to be done
     }
+
 }

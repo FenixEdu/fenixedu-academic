@@ -80,6 +80,7 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
         }
         
         metaSlot.setLabelKey(slotDescription.getKey());
+        metaSlot.setBundle(slotDescription.getBundle());
         metaSlot.setSchema(slotDescription.getSchema());
         metaSlot.setLayout(slotDescription.getLayout());
         metaSlot.setValidator(slotDescription.getValidator());

@@ -19,13 +19,18 @@
   is an extension of the referred schema. This means that the schema beeing
   defined will include all the slots of the referred schema and can optionally
   override some slot's definitions.
+  
+  The 'bundle' attribute is an abbreviation for the 'bundle' attribute of the
+  inner slot elements. It specifies the bundle for every slot. You can override
+  this in a per-slot basis.
 -->
-<!ELEMENT schema (slot+ | remove+)>
+<!ELEMENT schema (remove*,slot+)>
 
 <!ATTLIST schema
 	name ID #REQUIRED
 	type NMTOKEN #REQUIRED
 	extends IDREF #IMPLIED
+	bundle NMTOKEN #IMPLIED
 >
 
 <!--
@@ -39,28 +44,36 @@
   
   When rendering the slot label a convention is used to automatically find a valid
   entry in the render resources. Nevertheless you can specify, with the 'key' attribute,
-  the exact key that will be used.
+  the exact key that will be used. The 'bundle' attribute has the normal meaning of 
+  overriding the default resource bundle that is used.
   
   The acommodate cases were you need to receive input for the slot, a validator can
   be specified. The validator is the name of the class that will be instantiated to
-  validate the input value.
+  validate the input value. If you want to give properties to the validator you
+  can use an inner validator element.
   
   If no value is associated with the slot, a default value can be given. The value is
   converted from the given string to the type of the slot.
   
-  TODO: cfgi, converter, read-only
+  The 'converter' atrribute accepts a class name of a converter that will be used
+  to convert the value for this slot. This can be used if you want to foce a special
+  input presentation for the slot or convert to a specific value.
+  
+  The 'read-only' attribute allows you to prevent slots from beeing edited in an 
+  input operation.
 -->
-<!ELEMENT slot (property*)>
+<!ELEMENT slot (validator?,property*)>
 
 <!ATTLIST slot
 	name CDATA #REQUIRED
 	layout NMTOKEN #IMPLIED
 	schema IDREF #IMPLIED
 	key NMTOKEN #IMPLIED
+	bundle NMTOKEN #IMPLIED
 	validator NMTOKEN #IMPLIED
 	converter NMTOKEN #IMPLIED
 	default CDATA #IMPLIED
-	read-only CDATA #IMPLIED
+	read-only NMTOKEN #IMPLIED
 >
 
 <!--
@@ -77,6 +90,20 @@
 >
 
 <!--
+	The 'validator' element can be used inside a slot element to configure the 
+	validator used for the slot.
+	
+	The required attribute 'class' indicates the class of the validator.
+	
+	You can used inner property elements.
+-->
+<!ELEMENT validator (property*)>
+
+<!ATTLIST validator
+	class NMTOKEN #REQUIRED
+>
+
+<!--
   The 'property' element allows the configuration of the renderer used to present
   each slot value. Remember that the coosen renderer can be different every time
   so it is the renderer's responsability to undestand the properties passed.
@@ -84,6 +111,6 @@
 <!ELEMENT property EMPTY>
 
 <!ATTLIST property
-	value NMTOKEN #REQUIRED
+	value CDATA #REQUIRED
 	name NMTOKEN #REQUIRED
 >
