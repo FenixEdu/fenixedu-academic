@@ -1,7 +1,3 @@
-/*
- * Created on 3/Set/2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
 import java.beans.XMLEncoder;
@@ -37,7 +33,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseLID;
 import net.sourceforge.fenixedu.util.tests.ResponseNUM;
@@ -48,18 +43,16 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.log4j.Logger;
 
-/**
- * @author Susana Fernandes
- */
-public class InsertStudentTestResponses extends Service {
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
+public class InsertStudentTestResponses extends Service {
     private static final Logger logger = Logger.getLogger(InsertStudentTestResponses.class);
 
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     private String path;
 
-    public InfoSiteStudentTestFeedback run(String userName, Integer studentNumber, Integer distributedTestId, Response[] response, String path)
+    public InfoSiteStudentTestFeedback run(String userName, Integer studentNumber, final Integer distributedTestId, Response[] response, String path)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         String logIdString = StringAppender.append("student n� ", studentNumber.toString(), " testId ", distributedTestId.toString());
@@ -72,8 +65,7 @@ public class InsertStudentTestResponses extends Service {
         if (student.getNumber().compareTo(studentNumber) != 0)
             throw new NotAuthorizedStudentToDoTestException();
 
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,
-                distributedTestId);
+        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null)
             throw new FenixServiceException();
         String event = getLogString(response);
@@ -163,7 +155,7 @@ public class InsertStudentTestResponses extends Service {
                 }
             }
             if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
-                OnlineTest onlineTest = (OnlineTest) persistentSupport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
+                OnlineTest onlineTest = distributedTest.getOnlineTest();
                 Attends attend = persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
                         ((ExecutionCourse) distributedTest.getTestScope().getDomainObject()).getIdInternal());
                 Mark mark = persistentSupport.getIPersistentMark().readBy(onlineTest, attend);
@@ -214,7 +206,7 @@ public class InsertStudentTestResponses extends Service {
 
     private InfoQuestion correctQuestionValues(InfoQuestion infoQuestion, Double questionValue) {
         Double maxValue = new Double(0);
-        for (ResponseProcessing responseProcessing : (List<ResponseProcessing>) infoQuestion.getResponseProcessingInstructions()) {
+        for (ResponseProcessing responseProcessing : infoQuestion.getResponseProcessingInstructions()) {
             if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
                     || responseProcessing.getAction().intValue() == ResponseProcessing.ADD)
                 if (maxValue.compareTo(responseProcessing.getResponseValue()) < 0)
@@ -222,8 +214,8 @@ public class InsertStudentTestResponses extends Service {
         }
         if (maxValue.compareTo(questionValue) != 0) {
             double difValue = questionValue.doubleValue() * Math.pow(maxValue.doubleValue(), -1);
-            for (ResponseProcessing responseProcessing : (List<ResponseProcessing>) infoQuestion.getResponseProcessingInstructions()) {
-                responseProcessing.setResponseValue(new Double(responseProcessing.getResponseValue().doubleValue() * difValue));
+            for (ResponseProcessing responseProcessing : infoQuestion.getResponseProcessingInstructions()) {
+                responseProcessing.setResponseValue(Double.valueOf(responseProcessing.getResponseValue() * difValue));
             }
         }
 
@@ -256,4 +248,5 @@ public class InsertStudentTestResponses extends Service {
 
         return event.toString();
     }
+
 }

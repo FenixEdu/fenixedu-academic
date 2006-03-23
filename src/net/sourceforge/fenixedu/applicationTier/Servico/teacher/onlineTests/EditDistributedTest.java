@@ -1,7 +1,3 @@
-/*
- * Created on 1/Ago/2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.text.DecimalFormat;
@@ -31,23 +27,20 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 
-/**
- * @author Susana Fernandes
- */
 public class EditDistributedTest extends Service {
 
     private String contextPath = new String();
 
-    public Integer run(Integer executionCourseId, Integer distributedTestId, String testInformation, Calendar beginDate, Calendar beginHour,
+    public Integer run(Integer executionCourseId, final Integer distributedTestId, String testInformation, Calendar beginDate, Calendar beginHour,
             Calendar endDate, Calendar endHour, TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback,
             String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
         this.contextPath = contextPath.replace('\\', '/');
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
-                executionCourseId);
+
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
+        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
@@ -60,8 +53,7 @@ public class EditDistributedTest extends Service {
         distributedTest.setTestType(testType);
         distributedTest.setCorrectionAvailability(correctionAvailability);
         distributedTest.setImsFeedback(imsFeedback);
-        // create advisory for students that already have the test to anounce
-        // the date changes
+        // create advisory for students that already have the test to anounce the date changes
 
         CalendarDateComparator dateComparator = new CalendarDateComparator();
         CalendarHourComparator hourComparator = new CalendarHourComparator();
@@ -83,17 +75,16 @@ public class EditDistributedTest extends Service {
         if (change2OtherType) {
             // Change evaluation test to study/inquiry test
             // delete evaluation and marks
-            OnlineTest onlineTest = (OnlineTest) persistentSupport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
+            OnlineTest onlineTest = distributedTest.getOnlineTest();
             persistentSupport.getIPersistentMark().deleteByEvaluation(onlineTest);
-            persistentSupport.getIPersistentOnlineTest().deleteByOID(OnlineTest.class, onlineTest.getIdInternal());
+            persistentObject.deleteByOID(OnlineTest.class, onlineTest.getIdInternal());
         } else if (change2EvaluationType) {
             // Change to evaluation test
             // Create evaluation (onlineTest) and marks
             OnlineTest onlineTest = DomainFactory.makeOnlineTest();
             onlineTest.setDistributedTest(distributedTest);
             onlineTest.addAssociatedExecutionCourses(executionCourse);
-            List<Student> studentList = persistentSupport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(
-                    distributedTest.getIdInternal());
+            List<Student> studentList = persistentSupport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(distributedTest.getIdInternal());
             for (Student student : studentList) {
                 List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion()
                         .readByStudentAndDistributedTest(student.getIdInternal(), distributedTest.getIdInternal());
@@ -150,4 +141,5 @@ public class EditDistributedTest extends Service {
         distributedTestAdvisory.setDistributedTest(distributedTest);
         return distributedTestAdvisory;
     }
+
 }

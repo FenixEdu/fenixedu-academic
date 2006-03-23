@@ -1,7 +1,3 @@
-/*
- * Created on Oct 20, 2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.text.DecimalFormat;
@@ -48,9 +44,6 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 
-/**
- * @author Susana Fernandes
- */
 public class ChangeStudentTestQuestion extends Service {
 
     public List<InfoSiteDistributedTestAdvisory> run(Integer executionCourseId, Integer distributedTestId, Integer oldQuestionId,
@@ -58,7 +51,7 @@ public class ChangeStudentTestQuestion extends Service {
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
 
-        Question oldQuestion = (Question) persistentObject.readByOID(Question.class, oldQuestionId);
+        Question oldQuestion = rootDomainObject.readQuestionByOID(oldQuestionId);
         if (oldQuestion == null)
             throw new InvalidArgumentsServiceException();
 
@@ -67,7 +60,7 @@ public class ChangeStudentTestQuestion extends Service {
 
         List<Question> availableQuestions = new ArrayList<Question>();
         if (newMetadataId != null) {
-            metadata = (Metadata) persistentObject.readByOID(Metadata.class, newMetadataId);
+            metadata = rootDomainObject.readMetadataByOID(newMetadataId);
             if (metadata == null)
                 throw new InvalidArgumentsServiceException();
             availableQuestions.addAll(metadata.getVisibleQuestions());
@@ -82,8 +75,7 @@ public class ChangeStudentTestQuestion extends Service {
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS)
             distributedTestList = persistentStudentTestQuestion.readDistributedTestsByTestQuestion(oldQuestion.getIdInternal());
         else {
-            DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,
-                    distributedTestId);
+            DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
             if (distributedTest == null)
                 throw new InvalidArgumentsServiceException();
             distributedTestList.add(distributedTest);
@@ -97,13 +89,13 @@ public class ChangeStudentTestQuestion extends Service {
             infoSiteDistributedTestAdvisory.setInfoAdvisory(InfoAdvisory.newInfoFromDomain(getAdvisory(distributedTest, path.replace('\\', '/'))));
 
             if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-                Student student = (Student) persistentObject.readByOID(Student.class, studentId);
+                Student student = rootDomainObject.readStudentByOID(studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
                 studentsTestQuestionList.add(persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(oldQuestion.getIdInternal(),
                         student.getIdInternal(), distributedTest.getIdInternal()));
             } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-                Student student = (Student) persistentObject.readByOID(Student.class, studentId);
+                Student student = rootDomainObject.readStudentByOID(studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
                 Integer order = persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(oldQuestion.getIdInternal(),
@@ -137,8 +129,7 @@ public class ChangeStudentTestQuestion extends Service {
                     if (!group.contains(studentTestQuestion.getStudent().getPerson()))
                         group.add(InfoStudent.newInfoFromDomain(studentTestQuestion.getStudent()));
                     if (studentTestQuestion.getDistributedTest().getTestType().equals(new TestType(TestType.EVALUATION))) {
-                        OnlineTest onlineTest = (OnlineTest) persistentSupport.getIPersistentOnlineTest().readByDistributedTest(
-                                studentTestQuestion.getDistributedTest().getIdInternal());
+                        OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
                         Attends attend = persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
                                 studentTestQuestion.getStudent().getIdInternal(),
                                 ((ExecutionCourse) distributedTest.getTestScope().getDomainObject()).getIdInternal());
@@ -163,10 +154,10 @@ public class ChangeStudentTestQuestion extends Service {
         }
 
         if (delete.booleanValue()) {
-            metadata = (Metadata) persistentObject.readByOID(Metadata.class, oldQuestion.getKeyMetadata());
+            metadata = oldQuestion.getMetadata();
             if (metadata == null)
                 throw new InvalidArgumentsServiceException();
-            removeOldTestQuestion(persistentSupport, oldQuestion);
+            removeOldTestQuestion(oldQuestion);
             List metadataQuestions = metadata.getVisibleQuestions();
 
             if (metadataQuestions != null && metadataQuestions.size() <= 1)
@@ -226,8 +217,7 @@ public class ChangeStudentTestQuestion extends Service {
         return false;
     }
 
-    private void removeOldTestQuestion(ISuportePersistente persistentSupport, Question oldQuestion) throws ExcepcaoPersistencia {
-
+    private void removeOldTestQuestion(Question oldQuestion) throws ExcepcaoPersistencia {
         IPersistentTestQuestion persistentTestQuestion = persistentSupport.getIPersistentTestQuestion();
         List<TestQuestion> testQuestionOldList = (List<TestQuestion>) persistentTestQuestion.readByQuestion(oldQuestion.getIdInternal());
         List<Question> availableQuestions = new ArrayList<Question>();
