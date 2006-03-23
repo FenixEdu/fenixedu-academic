@@ -86,7 +86,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
         if (year == null || year.equals("")) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         } else {
-            executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(year);
+            executionYear = ExecutionYear.readExecutionYearByName(year);
         }
         return executionYear;
     }

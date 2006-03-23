@@ -302,8 +302,7 @@ public class EditGuideInformation extends Service {
         // Read the needed information from the DataBase
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
         Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
-        ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(
-                infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
+        ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
         ExecutionDegree executionDegree = persistentSupport.getIPersistentExecutionDegree().readByDegreeCurricularPlanAndExecutionYear(
                 infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),

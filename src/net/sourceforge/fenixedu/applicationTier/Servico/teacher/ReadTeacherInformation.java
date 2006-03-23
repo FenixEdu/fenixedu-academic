@@ -47,7 +47,6 @@ import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
@@ -72,7 +71,6 @@ public class ReadTeacherInformation extends Service {
         Teacher teacher = Teacher.readTeacherByUsername(user);
 
         // if no execution year is persistentSupportecified, the info shown should refer to the previous execution year
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
         ExecutionYear executionYear = null;
         if (argExecutionYear == null || argExecutionYear.equals("")) {
             IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
@@ -92,8 +90,9 @@ public class ReadTeacherInformation extends Service {
             } else {
                 executionYear = actualExecutionPeriod.getExecutionYear();
             }
-        } else
-            executionYear = persistentExecutionYear.readExecutionYearByName(argExecutionYear);
+        } else {
+            executionYear = ExecutionYear.readExecutionYearByName(argExecutionYear);            
+        }
 
         InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
         infoSiteTeacherInformation.setInfoTeacher(infoTeacher);

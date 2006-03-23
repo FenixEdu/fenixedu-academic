@@ -33,7 +33,7 @@ public class ReadCandidateList extends Service {
     public List run(String degreeName, Specialization degreeType, SituationName candidateSituation,
             Integer candidateNumber, String executionYearString) throws ExcepcaoPersistencia {
         // Get the Actual Execution Year
-        final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
+        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
 
         // Read the candidates
         final List result = persistentSupport.getIPersistentMasterDegreeCandidate().readCandidateList(Integer.parseInt(degreeName), degreeType,

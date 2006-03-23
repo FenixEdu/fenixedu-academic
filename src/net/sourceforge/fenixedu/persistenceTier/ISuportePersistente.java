@@ -96,8 +96,6 @@ public interface ISuportePersistente
 
 	public IPersistentExecutionPeriod getIPersistentExecutionPeriod();
 
-	public IPersistentExecutionYear getIPersistentExecutionYear();
-
 	public IPersistentCurriculum getIPersistentCurriculum();
 
 	public IPersistentExam getIPersistentExam();

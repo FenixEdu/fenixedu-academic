@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -59,13 +58,11 @@ public class ReadCoursesInformation extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
                 .getIPersistentExecutionDegree();      
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport
-                .getIPersistentExecutionYear();
 
         List professorships = null;
         ExecutionYear executionYear = null;
         if (executionYearString != null) {
-            executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
+            executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
         } else {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }

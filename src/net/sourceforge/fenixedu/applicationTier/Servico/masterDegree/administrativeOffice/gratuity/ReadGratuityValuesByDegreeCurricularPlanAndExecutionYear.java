@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -42,9 +41,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends Se
 		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
 				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-		IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-		ExecutionYear executionYear = persistentExecutionYear
-				.readExecutionYearByName(executionYearName);
+		final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 
 		if (degreeCurricularPlan == null || executionYear == null) {
 			throw new FenixServiceException("error.impossible.noGratuityValues");

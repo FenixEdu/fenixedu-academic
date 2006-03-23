@@ -26,8 +26,7 @@ public class CreateCourseGroup extends Service {
 
         // TODO: this should be modified to receive ExecutionYear, but for now
         // we just read the '2006/2007'
-        final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
-                .readExecutionYearByName("2006/2007");
+        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName("2006/2007");
         if (executionYear == null) {
             throw new FenixServiceException("error.noExecutionYear");
         }

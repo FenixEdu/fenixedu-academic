@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
@@ -60,12 +59,11 @@ public class ReadTeachersInformation extends Service {
     public List run(Integer executionDegreeId, Boolean basic, String executionYearString) throws FenixServiceException, ExcepcaoPersistencia {
 
         IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 
         List professorships = null;
         ExecutionYear executionYear = null;
         if (executionYearString != null && !executionYearString.equals("")) {
-            executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
+            executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
         } else {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }

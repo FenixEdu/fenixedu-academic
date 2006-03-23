@@ -17,9 +17,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 
@@ -78,8 +76,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
                 // the execution degree wasn't supplied so
                 // we have to show all execution degrees from the choosen year
                 if (executionYearName != null) {
-                    IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-                    ExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
+                    ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
                     if (executionYear != null) {
                         executionDegreeList = executionDegreeDAO.readByExecutionYearAndDegreeType(
                                 executionYear.getYear(), DegreeType.MASTER_DEGREE);

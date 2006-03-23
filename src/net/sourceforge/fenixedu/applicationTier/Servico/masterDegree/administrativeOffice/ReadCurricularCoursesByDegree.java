@@ -22,8 +22,7 @@ public class ReadCurricularCoursesByDegree extends Service {
 
     public List run(String executionYearString, String degreeName) throws FenixServiceException,
             ExcepcaoPersistencia {
-        ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(
-                executionYearString);
+        ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
 
         // Read degree
         ExecutionDegree executionDegree = persistentSupport.getIPersistentExecutionDegree()

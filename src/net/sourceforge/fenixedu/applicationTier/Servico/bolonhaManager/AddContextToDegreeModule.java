@@ -32,8 +32,7 @@ public class AddContextToDegreeModule extends Service {
         }
         // TODO: this should be modified to receive ExecutionYear, but for now
         // we just read the '2006/2007'
-        final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
-                .readExecutionYearByName("2006/2007");
+        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName("2006/2007");
         final ExecutionPeriod beginExecutionPeriod = executionYear.getExecutionPeriodForSemester(Integer
                 .valueOf(1));
 
@@ -47,8 +46,7 @@ public class AddContextToDegreeModule extends Service {
         
         // TODO: this should be modified to receive ExecutionYear, but for now
         // we just read the '2006/2007'
-        final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
-                .readExecutionYearByName("2006/2007");
+        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName("2006/2007");
         final ExecutionPeriod beginExecutionPeriod = executionYear.getExecutionPeriodForSemester(Integer
                 .valueOf(1));
 

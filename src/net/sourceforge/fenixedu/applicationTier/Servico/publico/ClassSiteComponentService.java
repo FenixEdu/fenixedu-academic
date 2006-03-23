@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
@@ -35,11 +34,9 @@ public class ClassSiteComponentService extends Service {
             String executionPeriodName, String degreeInitials, String nameDegreeCurricularPlan,
             String className, Integer curricularYear, Integer classId) throws FenixServiceException, ExcepcaoPersistencia {
         final IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        final IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
         final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
-        ExecutionYear executionYear = persistentExecutionYear
-                .readExecutionYearByName(executionYearName);
+        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 
         ExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
                 executionPeriodName, executionYear.getYear());

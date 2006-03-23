@@ -124,4 +124,13 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
         }
         return result;
     }
+    
+    public static ExecutionYear readExecutionYearByName(final String year) {
+        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+            if (executionYear.getYear().equals(year)) {
+                return executionYear;
+            }
+        }
+        return null;
+    }
 }

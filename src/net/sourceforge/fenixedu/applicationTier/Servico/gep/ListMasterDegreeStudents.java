@@ -33,8 +33,7 @@ public class ListMasterDegreeStudents extends Service {
     private Map<DegreeCurricularPlan, ExecutionDegree> firstExecutionDegrees = new HashMap<DegreeCurricularPlan, ExecutionDegree>();
 
     public Collection run(String executionYearName) throws ExcepcaoPersistencia {
-        final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(
-                executionYearName);
+        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 
         final Collection<InfoStudentCurricularPlanWithFirstTimeEnrolment> infoStudentCurricularPlans = new ArrayList();
         final Collection<StudentCurricularPlan> studentCurricularPlans = new ArrayList();

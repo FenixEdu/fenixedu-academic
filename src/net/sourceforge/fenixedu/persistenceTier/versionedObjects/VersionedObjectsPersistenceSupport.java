@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
@@ -115,7 +114,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPe
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionYearVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExternalPersonVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityTransactionVO;
@@ -517,10 +515,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentWebSiteSection getIPersistentWebSiteSection() {
         return null;
-    }
-
-    public IPersistentExecutionYear getIPersistentExecutionYear() {
-        return new ExecutionYearVO();
     }
 
     public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes() {

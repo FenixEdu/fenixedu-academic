@@ -22,8 +22,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -76,10 +74,8 @@ public class ReadCourseHistoric extends Service {
 		// the historic must only show info regarding the years previous to the
 		// year chosen by the user
 		List<InfoCourseHistoric> infoCourseHistorics = new ArrayList<InfoCourseHistoric>();
-		final IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 		for (CourseHistoric courseHistoric : courseHistorics) {
-			ExecutionYear courseHistoricExecutionYear = persistentExecutionYear
-					.readExecutionYearByName(courseHistoric.getCurricularYear());
+			ExecutionYear courseHistoricExecutionYear = ExecutionYear.readExecutionYearByName(courseHistoric.getCurricularYear());
 			if (courseHistoric.getSemester().equals(semester)
 					&& courseHistoricExecutionYear.getBeginDate().before(executionYear.getBeginDate())) {
 				infoCourseHistorics.add(InfoCourseHistoricWithInfoCurricularCourse

@@ -101,8 +101,7 @@ public class ProcessSibsPaymentFile extends Service {
 
             int year = sibsPaymentFileEntry.getYear().intValue();
             String executionYearName = year + "/" + (year + 1);
-            ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(
-                    executionYearName);
+            ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 
             if (executionYear == null) {
 

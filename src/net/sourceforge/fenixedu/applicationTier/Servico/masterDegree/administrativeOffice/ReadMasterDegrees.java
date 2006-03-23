@@ -21,17 +21,12 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- */
 public class ReadMasterDegrees extends Service {
 
     public List run(String executionYearString) throws FenixServiceException, ExcepcaoPersistencia {
-        // Get the Actual Execution Year
         final ExecutionYear executionYear;
         if (executionYearString != null) {
-            executionYear = persistentSupport.getIPersistentExecutionYear()
-                    .readExecutionYearByName(executionYearString);
+            executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
         } else {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }
