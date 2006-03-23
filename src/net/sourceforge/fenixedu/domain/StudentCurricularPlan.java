@@ -925,6 +925,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public StudentCurricularPlan(Student student, DegreeCurricularPlan degreeCurricularPlan,
             StudentCurricularPlanState studentCurricularPlanState, Date startDate) {
 
+        this.setRootDomainObject(RootDomainObject.getInstance());
         this.setOjbConcreteClass(getClass().getName());
 
         setCurrentState(studentCurricularPlanState);
