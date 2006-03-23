@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.faces.component.UIInput;
@@ -90,13 +91,40 @@ public class UIDegreeModule extends UIInput {
         return facesContext.getViewRoot().getLocale();
     }
 
-    protected void encodeLink(String href, String ... bundleKeys) throws IOException {
+    protected void encodeLink(String page, String aditionalParameters, boolean blank, String ... bundleKeys) throws IOException {
         writer.startElement("a", this);
-        writer.writeAttribute("href", href, null);
+        encodeLinkHref(page, aditionalParameters, blank);
         for (String bundleKey : bundleKeys) {
             writer.write(this.getBundleValue("BolonhaManagerResources", bundleKey));    
         }
         writer.endElement("a");
+    }
+
+    protected void encodeLinkHref(String page, String aditionalParameters, boolean blank) throws IOException {
+        Map requestParameterMap = this.facesContext.getExternalContext().getRequestParameterMap();
+        StringBuilder href = new StringBuilder();
+        href.append(page).append("?");
+        Object dcpId = null;
+        if (requestParameterMap.get("degreeCurricularPlanID") != null) {
+            dcpId = requestParameterMap.get("degreeCurricularPlanID");
+        } else if (requestParameterMap.get("dcpId") != null) {
+            dcpId = requestParameterMap.get("dcpId");
+        }
+        href.append("degreeCurricularPlanID=").append(dcpId);
+        if (this.executionYear != null) {
+            href.append("&executionYearID=").append(this.executionYear.getIdInternal());
+        }
+        if (aditionalParameters != null) {
+            href.append(aditionalParameters);
+        }
+        href.append("&organizeBy=").append(requestParameterMap.get("organizeBy"));
+        href.append("&showRules=").append(requestParameterMap.get("showRules"));
+        href.append("&hideCourses=").append(requestParameterMap.get("hideCourses"));
+        href.append("&action=").append(requestParameterMap.get("action"));
+        writer.writeAttribute("href", href.toString(), null);
+        if (blank) {
+            writer.writeAttribute("target", "_blank", null);
+        }
     }
 
     protected void encodeCurricularRules() throws IOException {
@@ -146,13 +174,11 @@ public class UIDegreeModule extends UIInput {
     private void encodeCurricularRuleOptions(CurricularRule curricularRule) throws IOException {
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright", null);
-        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
-        String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");        
-        //encodeLink("../curricularRules/editCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-        //        .get("degreeCurricularPlanID") + "&curricularRuleID=" + curricularRule.getIdInternal() + organizeBy + hideCourses, "edit");
-        //writer.append(" , ");
-        encodeLink("../curricularRules/deleteCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&curricularRuleID=" + curricularRule.getIdInternal() + organizeBy + hideCourses, "delete");
+        if (this.executionYear != null) {
+            encodeLink("../curricularRules/editCurricularRule.faces", "&curricularRuleID=" + curricularRule.getIdInternal(), false, "edit");
+            writer.append(" , ");
+        }
+        encodeLink("../curricularRules/deleteCurricularRule.faces", "&curricularRuleID=" + curricularRule.getIdInternal(), false, "delete");
         writer.endElement("td");
     }
 

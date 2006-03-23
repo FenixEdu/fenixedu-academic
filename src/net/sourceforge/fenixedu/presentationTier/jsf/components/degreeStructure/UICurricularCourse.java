@@ -98,24 +98,21 @@ public class UICurricularCourse extends UIDegreeModule {
 
     private void encodeName(boolean linkable) throws IOException {
         writer.startElement("td", this);
+
+        String name = null;
+        if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
+            name = this.curricularCourse.getName();
+        } else {
+            name = this.curricularCourse.getNameEn();
+        }
         
         if (linkable) {
             writer.startElement("a", this);
-            String action = "&action=" + ((this.toEdit) ? "build" : (String) this.facesContext.getExternalContext().getRequestParameterMap().get("action")); 
-            String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
-            String showRules = "&showRules=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("showRules");        
-            String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");
-            writer.writeAttribute("href", "viewCurricularCourse.faces?curricularCourseID=" + this.curricularCourse.getIdInternal() + action + organizeBy + showRules + hideCourses, null);
-        }
-        
-        if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
-            writer.append(this.curricularCourse.getName());
-        } else {
-            writer.append(this.curricularCourse.getNameEn());
-        }
-        
-        if (linkable) {
+            this.encodeLinkHref("viewCurricularCourse.faces", "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false);
+            writer.append(name);
             writer.endElement("a");
+        } else {
+            writer.append(name);
         }
         
         writer.endElement("td");
@@ -208,12 +205,9 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
         writer.writeAttribute("align", "right", null);
         writer.writeAttribute("style", "width: 9em;", null);
-        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
-        encodeLink("editCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.curricularCourse.getIdInternal() + organizeBy, "edit");
+        encodeLink("editCurricularCourse.faces", "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false, "edit");
         writer.append(" , ");
-        encodeLink("deleteCurricularCourseContext.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.curricularCourse.getIdInternal() + organizeBy, "delete");
+        encodeLink("deleteCurricularCourseContext.faces", "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false, "delete");
         writer.endElement("td");
     }
 
@@ -221,10 +215,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
         writer.writeAttribute("align", "right", null);
         writer.writeAttribute("style", "width: 9em;", null);
-        String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
-        String hideCourses = "&hideCourses=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("hideCourses");        
-        encodeLink("../curricularRules/createCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&degreeModuleID=" + this.curricularCourse.getIdInternal() + organizeBy + hideCourses, "setCurricularRule");
+        encodeLink("../curricularRules/createCurricularRule.faces", "&degreeModuleID=" + this.curricularCourse.getIdInternal(), false, "setCurricularRule");
         writer.endElement("td");
     }
 

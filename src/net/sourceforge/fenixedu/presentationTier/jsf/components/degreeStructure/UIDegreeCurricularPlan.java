@@ -170,16 +170,9 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
         if (!this.showRules) {
-            String organizeBy = "&organizeBy=" + (String) this.facesContext.getExternalContext().getRequestParameterMap().get("organizeBy");
-            encodeLink("createCurricularCourse.faces?degreeCurricularPlanID="
-                    + this.facesContext.getExternalContext().getRequestParameterMap().get(
-                            "degreeCurricularPlanID") + "&curricularYearID=" + curricularPeriod.getParent().getOrder()
-                    + "&curricularSemesterID=" + curricularPeriod.getOrder() + organizeBy, "create.curricular.course");
+            encodeLink("createCurricularCourse.faces", "&curricularYearID=" + curricularPeriod.getParent().getOrder() + "&curricularSemesterID=" + curricularPeriod.getOrder(), false, "create.curricular.course");
             writer.append(" , ");
-            encodeLink("associateCurricularCourse.faces?degreeCurricularPlanID=" 
-                    + this.facesContext.getExternalContext().getRequestParameterMap().get(
-                            "degreeCurricularPlanID") + "&curricularYearID=" + curricularPeriod.getParent().getOrder()
-                    + "&curricularSemesterID=" + curricularPeriod.getOrder() + organizeBy, "associate.curricular.course");
+            encodeLink("associateCurricularCourse.faces", "&curricularYearID=" + curricularPeriod.getParent().getOrder() + "&curricularSemesterID=" + curricularPeriod.getOrder(), false, "associate.curricular.course");
         }
         writer.endElement("th");
     }
@@ -283,11 +276,40 @@ public class UIDegreeCurricularPlan extends UIInput {
         return bundle.getString(bundleKey);
     }
 
-    private void encodeLink(String href, String bundleKey) throws IOException {
+    private void encodeLink(String page, String aditionalParameters, boolean blank, String ... bundleKeys) throws IOException {
         writer.startElement("a", this);
-        writer.writeAttribute("href", href, null);
-        writer.write(this.getBundleValue("BolonhaManagerResources", bundleKey));
+        encodeLinkHref(page, aditionalParameters, blank);
+        for (String bundleKey : bundleKeys) {
+            writer.write(this.getBundleValue("BolonhaManagerResources", bundleKey));    
+        }
         writer.endElement("a");
+    }
+
+    private void encodeLinkHref(String page, String aditionalParameters, boolean blank) throws IOException {
+        Map requestParameterMap = this.facesContext.getExternalContext().getRequestParameterMap();
+        StringBuilder href = new StringBuilder();
+        href.append(page).append("?");
+        Object dcpId = null;
+        if (requestParameterMap.get("degreeCurricularPlanID") != null) {
+            dcpId = requestParameterMap.get("degreeCurricularPlanID");
+        } else if (requestParameterMap.get("dcpId") != null) {
+            dcpId = requestParameterMap.get("dcpId");
+        }
+        href.append("degreeCurricularPlanID=").append(dcpId);
+        if (this.executionYear != null) {
+            href.append("&executionYearID=").append(this.executionYear.getIdInternal());
+        }
+        if (aditionalParameters != null) {
+            href.append(aditionalParameters);
+        }
+        href.append("&organizeBy=").append(requestParameterMap.get("organizeBy"));
+        href.append("&showRules=").append(requestParameterMap.get("showRules"));
+        href.append("&hideCourses=").append(requestParameterMap.get("hideCourses"));
+        href.append("&action=").append(requestParameterMap.get("action"));
+        writer.writeAttribute("href", href.toString(), null);
+        if (blank) {
+            writer.writeAttribute("target", "_blank", null);
+        }
     }
 
     private void encodeSubtitles() throws IOException {
