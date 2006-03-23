@@ -83,7 +83,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     }
 
     public Boolean isActive() {
-        return this.getEndDate() == null;
+        return isActive(new Date());
     }
     
     public boolean getActive (){
