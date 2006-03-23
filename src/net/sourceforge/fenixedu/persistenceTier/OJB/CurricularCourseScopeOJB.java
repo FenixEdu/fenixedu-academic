@@ -19,7 +19,7 @@ import org.apache.ojb.broker.query.Criteria;
 public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
         IPersistentCurricularCourseScope {
 
-    public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+   /* public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
 			Integer curricularCourseId, Integer curricularSemesterId, Integer branchId)
     		throws ExcepcaoPersistencia {
 
@@ -29,9 +29,9 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
         criteria.addEqualTo("keyBranch", branchId);
         return (CurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
 
-    }
+    }*/
 
-    public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
+   /* public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
 			Integer curricularCourseId, Integer curricularSemesterId, Integer branchId,
 			Calendar endDate) throws ExcepcaoPersistencia {
 
@@ -46,25 +46,25 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
         }
         return (CurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
 
-    }
+    }*/
 
-    public List readActiveCurricularCourseScopesByCurricularCourse(Integer curricularCourseId)
+    /*public List readActiveCurricularCourseScopesByCurricularCourse(Integer curricularCourseId)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("keyCurricularCourse", curricularCourseId);
         crit.addIsNull("end");
         List result = queryList(CurricularCourseScope.class, crit);
         return result;
-    }
+    }*/
 
-    public List readActiveCurricularCourseScopesByDegreeCurricularPlanId(
+   /* public List readActiveCurricularCourseScopesByDegreeCurricularPlanId(
             final Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
         final Criteria crit = new Criteria();
         crit.addEqualTo("curricularCourse.keyDegreeCurricularPlan", degreeCurricularPlanId);
         crit.addIsNull("end");
         final List result = queryList(CurricularCourseScope.class, crit);
         return result;
-    }
+    }*/
 
     public List readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
             Integer curricularCourseId, Date beginDate, Date endDate)
