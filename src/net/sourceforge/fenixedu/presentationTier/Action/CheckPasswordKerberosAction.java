@@ -5,10 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 
@@ -27,7 +27,7 @@ public class CheckPasswordKerberosAction extends FenixAction {
 
         // check hosts accessing this action
         if (! HostAccessControl.isAllowed(this, request)) {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedActionException("error.NotAuthorized");
         }
         
         if (request.getMethod().equalsIgnoreCase("post")) {
