@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.base;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,11 +14,11 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
+import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -117,5 +118,9 @@ public abstract class FenixDispatchAction extends DispatchAction {
     	final String value = dynaActionForm.getString(string);
     	return value == null || value.length() == 0 ? null : Integer.valueOf(value);
 	}
+    
+    protected Locale getLocaleFromRequest(HttpServletRequest request) {
+        return (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
+    }
 
 }
