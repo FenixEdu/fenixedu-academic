@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -28,8 +27,7 @@ public class GetAllThemes extends Service {
 	public List run() throws BDException, ExcepcaoPersistencia {
 		List seminariesInfo = new LinkedList();
 
-		IPersistentSeminaryTheme persistentTheme = persistentSupport.getIPersistentSeminaryTheme();
-		List themes = persistentTheme.readAll();
+		List themes = Theme.getAllThemes();
 		for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
 
 			InfoTheme infoTheme = InfoTheme.newInfoFromDomain((Theme) iterator.next());

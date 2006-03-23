@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CaseStudyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.EquivalencyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.ModalityOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.SeminaryOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.ThemeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailAddressAliasOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailingListOJB;
@@ -112,7 +111,6 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCa
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
@@ -525,12 +523,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup()
 	{
 		return new CurricularCourseGroupOJB();
-	}
-
-	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
-	public IPersistentSeminaryTheme getIPersistentSeminaryTheme()
-	{
-		return new ThemeOJB();
 	}
 
 	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)

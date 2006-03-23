@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCa
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
@@ -123,8 +122,6 @@ public interface ISuportePersistente
 	public IPersistentSummary getIPersistentSummary();
 
 	public IPersistentSeminaryModality getIPersistentSeminaryModality();
-
-	public IPersistentSeminaryTheme getIPersistentSeminaryTheme();
 
 	public IPersistentSeminary getIPersistentSeminary();
 

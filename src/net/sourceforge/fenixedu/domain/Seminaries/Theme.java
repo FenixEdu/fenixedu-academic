@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
@@ -18,7 +20,21 @@ public class Theme extends Theme_Base {
 
 	public Theme() {
 		super();
+        
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
+    public static List<Theme> getAllThemes() {
+        return RootDomainObject.getInstance().getThemes();
+    }
+    
+    public static Theme getById(Integer id) {
+        for (Theme theme : getAllThemes()) {
+            if (theme.getIdInternal().equals(id)) {
+                return theme;
+            }
+        }
+        
+        return null;
+    }
 }

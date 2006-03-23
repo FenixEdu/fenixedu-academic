@@ -8,8 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -20,10 +18,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetThemeById extends Service {
 
-	public InfoTheme run(Integer themeID) throws BDException, ExcepcaoPersistencia {
+	public InfoTheme run(Integer themeID) {
 		InfoTheme infoTheme = null;
 		if (themeID != null) {
-			Theme theme = (Theme) persistentObject.readByOID(Theme.class, themeID);
+			Theme theme = Theme.getById(themeID);
 
 			infoTheme = InfoTheme.newInfoFromDomain(theme);
 

@@ -51,7 +51,7 @@ public class WriteCandidacy extends Service {
         if (modality.getIdInternal().equals(infoCandidacy.getInfoModality().getIdInternal())) {
             candidacy.setTheme(null);
         } else {
-            final Theme readTheme = (Theme) persistentObject.readByOID(Theme.class, infoCandidacy.getTheme().getIdInternal());
+            final Theme readTheme = Theme.getById(infoCandidacy.getTheme().getIdInternal());
             candidacy.setTheme(readTheme);
         }
         if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue()) {
