@@ -54,7 +54,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             final Boolean onlyStructure = (this.getBooleanAttribute("onlyStructure") != null) ? (Boolean) this.getBooleanAttribute("onlyStructure") : Boolean.FALSE;
             final Boolean toOrder = (this.getBooleanAttribute("toOrder") != null) ? (Boolean) this.getBooleanAttribute("toOrder") : Boolean.FALSE;
             final Boolean hideCourses = (this.getBooleanAttribute("hideCourses") != null) ? (Boolean) this.getBooleanAttribute("hideCourses") : Boolean.FALSE;
-            if (this.getBooleanAttribute("executionYear") != null) {
+            if (this.getAttributes().get("executionYear") != null) {
                 executionYear = (ExecutionYear) this.getAttributes().get("executionYear"); 
             }
             
