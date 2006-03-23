@@ -128,7 +128,8 @@
 			dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
 			organizeBy="#{CurricularCourseManagement.organizeBy}"
 			showRules="#{CurricularCourseManagement.showRules}"
-			hideCourses="#{CurricularCourseManagement.hideCourses}"/>
+			hideCourses="#{CurricularCourseManagement.hideCourses}" 
+			executionYear="#{CurricularCourseManagement.executionYear}"/>
 	
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>

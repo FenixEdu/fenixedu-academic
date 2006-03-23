@@ -60,7 +60,8 @@
 			dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
 			onlyStructure="true" 
 			toEdit="true" 
-			toOrder="#{CurricularCourseManagement.toOrder}"/>
+			toOrder="#{CurricularCourseManagement.toOrder}"
+			executionYear="#{CurricularCourseManagement.executionYear}" />
 		
 		<h:outputText value="<br/><p>" escape="false"/>
 

@@ -1859,13 +1859,6 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/degreeAdministrativeOffice/curricularPlans/deleteCourseGroup.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>editCurricularPlanStructure</from-outcome>
-			<to-view-id>/degreeAdministrativeOffice/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
 		<from-view-id>/degreeAdministrativeOffice/curricularPlans/setCurricularRules.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>buildCurricularPlan</from-outcome>
@@ -1881,13 +1874,6 @@
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/degreeAdministrativeOffice/curricularRules/editCurricularRule.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>setCurricularRules</from-outcome>
-			<to-view-id>/degreeAdministrativeOffice/curricularPlans/setCurricularRules.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/degreeAdministrativeOffice/curricularRules/deleteCurricularRule.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>setCurricularRules</from-outcome>
 			<to-view-id>/degreeAdministrativeOffice/curricularPlans/setCurricularRules.jsp</to-view-id>

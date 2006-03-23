@@ -21,12 +21,12 @@
 	<h:form>
 		<fc:viewState binding="#{CurricularRulesManagement.viewState}"/>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularRulesManagement.degreeCurricularPlanID}'/>"/>
-		<h:outputText escape="false" value="<input id='executionYearID' name='executionYearID' type='hidden' value='#{CurricularCourseManagement.executionYearID}'/>"/>
+		<h:outputText escape="false" value="<input id='executionYearID' name='executionYearID' type='hidden' value='#{CurricularRulesManagement.executionYearID}'/>"/>
 		<h:outputText escape="false" value="<input id='degreeModuleID' name='degreeModuleID' type='hidden' value='#{CurricularRulesManagement.degreeModuleID}'/>"/>
-		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
-		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularCourseManagement.showRules}'/>"/>
-		<h:outputText escape="false" value="<input id='hideCourses' name='hideCourses' type='hidden' value='#{CurricularCourseManagement.hideCourses}'/>"/>
-		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
+		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularRulesManagement.organizeBy}'/>"/>
+		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularRulesManagement.showRules}'/>"/>
+		<h:outputText escape="false" value="<input id='hideCourses' name='hideCourses' type='hidden' value='#{CurricularRulesManagement.hideCourses}'/>"/>
+		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularRulesManagement.action}'/>"/>
 		
 		<h:outputText value="<p><strong>#{bolonhaBundle['degreeModule.to.apply.rule']}:</strong> " escape="false"/>
 		<h:outputText value="<span class='attention'>#{CurricularRulesManagement.degreeModule.name}</span><p/>" escape="false"/>
@@ -214,12 +214,12 @@
 				<h:outputText value="#{bolonhaBundle['new.rule']}" />
 				<f:param name="type" value="rule" />
 				<f:param name="degreeCurricularPlanID" value="#{CurricularRulesManagement.degreeCurricularPlanID}" />
-				<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}"/>
+				<f:param name="executionYearID" value="#{CurricularRulesManagement.executionYearID}"/>
 				<f:param name="degreeModuleID" value="#{CurricularRulesManagement.degreeModuleID}" />
-				<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
-				<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
-				<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
-				<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+				<f:param name="organizeBy" value="#{CurricularRulesManagement.organizeBy}"/>
+				<f:param name="showRules" value="#{CurricularRulesManagement.showRules}"/>
+				<f:param name="hideCourses" value="#{CurricularRulesManagement.hideCourses}"/>
+				<f:param name="action" value="#{CurricularRulesManagement.action}"/>
 			</h:outputLink>
 			<h:outputText value="</p>" escape="false"/>
 
@@ -228,12 +228,12 @@
 				<h:outputText value="#{bolonhaBundle['createCompositeRule']}" />
 				<f:param name="type" value="compositeRule" />
 				<f:param name="degreeCurricularPlanID" value="#{CurricularRulesManagement.degreeCurricularPlanID}" />
-				<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}"/>
+				<f:param name="executionYearID" value="#{CurricularRulesManagement.executionYearID}"/>
 				<f:param name="degreeModuleID" value="#{CurricularRulesManagement.degreeModuleID}" />
-				<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
-				<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
-				<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
-				<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+				<f:param name="organizeBy" value="#{CurricularRulesManagement.organizeBy}"/>
+				<f:param name="showRules" value="#{CurricularRulesManagement.showRules}"/>
+				<f:param name="hideCourses" value="#{CurricularRulesManagement.hideCourses}"/>
+				<f:param name="action" value="#{CurricularRulesManagement.action}"/>
 			</h:outputLink>
 
 			<h:outputText value="</p><br/>" escape="false"/>

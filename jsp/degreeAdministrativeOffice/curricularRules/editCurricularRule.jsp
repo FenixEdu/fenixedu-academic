@@ -17,27 +17,28 @@
 
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularRulesManagement.degreeCurricularPlanID}'/>"/>
-		<h:outputText escape="false" value="<input id='executionYearID' name='executionYearID' type='hidden' value='#{CurricularCourseManagement.executionYearID}'/>"/>
+		<h:outputText escape="false" value="<input id='executionYearID' name='executionYearID' type='hidden' value='#{CurricularRulesManagement.executionYearID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularRuleID' name='curricularRuleID' type='hidden' value='#{CurricularRulesManagement.curricularRuleID}'/>"/>
-		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
-		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularCourseManagement.showRules}'/>"/>
-		<h:outputText escape="false" value="<input id='hideCourses' name='hideCourses' type='hidden' value='#{CurricularCourseManagement.hideCourses}'/>"/>
-		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
+		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularRulesManagement.organizeBy}'/>"/>
+		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularRulesManagement.showRules}'/>"/>
+		<h:outputText escape="false" value="<input id='hideCourses' name='hideCourses' type='hidden' value='#{CurricularRulesManagement.hideCourses}'/>"/>
+		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularRulesManagement.action}'/>"/>
 		
 		<h:outputText value="<div class='simpleblock4'> " escape="false"/>
 		<h:outputText value="<h4 class='first'>#{bolonhaBundle['curricularRule']}: </h4>" escape="false"/>
-		<h:outputText value="<p>#{CurricularRulesManagement.ruleLabel}</p>" escape="false"/>
+		<h:outputText value="<p>#{CurricularRulesManagement.ruleLabel}</p><br/>" escape="false"/>
 		
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+		
 		<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
-		<h:selectOneMenu value="#{CompositeRulesManagement.beginExecutionPeriodID}">
-			<f:selectItems binding="#{CompositeRulesManagement.beginExecutionPeriodItemsForCompositeRule}" />
+		<h:selectOneMenu value="#{CurricularRulesManagement.beginExecutionPeriodID}">
+			<f:selectItems binding="#{CurricularRulesManagement.beginExecutionPeriodItemsForRule}" />
 		</h:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 
 		<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
-		<h:selectOneMenu value="#{CompositeRulesManagement.endExecutionPeriodID}">
-			<f:selectItems binding="#{CompositeRulesManagement.endExecutionPeriodItemsForCompositeRule}" />
+		<h:selectOneMenu value="#{CurricularRulesManagement.endExecutionPeriodID}">
+			<f:selectItems binding="#{CurricularRulesManagement.endExecutionPeriodItemsForRule}" />
 		</h:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 		<h:outputText value="</fieldset>" escape="false"/>

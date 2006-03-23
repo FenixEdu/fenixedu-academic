@@ -70,16 +70,28 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
     }
     
+    public Integer getExecutionYearID() {
+        return getAndHoldIntegerParameter("executionYearID");
+    }
+    
     public String getOrganizeBy() {
         return getAndHoldStringParameter("organizeBy");
     }
     
-    public String getType() {
-        return getAndHoldStringParameter("type");
+    public String getShowRules() {
+        return getAndHoldStringParameter("showRules");
     }
-
+    
     public String getHideCourses() {
         return getAndHoldStringParameter("hideCourses");
+    }
+    
+    public String getAction() {
+        return getAndHoldStringParameter("action");
+    }
+    
+    public String getType() {
+        return getAndHoldStringParameter("type");
     }
 
     public Integer getDegreeModuleID() throws FenixFilterException, FenixServiceException {
@@ -528,7 +540,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     
     public Integer getEndExecutionPeriodID() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("endExecutionPeriodID") == null && getCurricularRule() != null) {
-            setEndExecutionPeriodID(getCurricularRule().getEnd().getIdInternal());
+            setEndExecutionPeriodID((getCurricularRule().getEnd() == null) ? 
+                    Integer.valueOf(0) : getCurricularRule().getEnd().getIdInternal());
         }
         return (Integer) getViewState().getAttribute("endExecutionPeriodID");
     }

@@ -26,7 +26,8 @@
 	
 		<fc:degreeCurricularPlanRender 
 			dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
-			onlyStructure="true"/>
+			onlyStructure="true"
+			executionYear="#{CurricularCourseManagement.executionYear}" />
 		
 		<h:outputText value="<br/><p>" escape="false"/>
 
