@@ -96,7 +96,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublicatio
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
@@ -181,7 +180,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.Ext
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OrientationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.ServiceProviderRegimeVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.WeeklyOcupationVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
@@ -431,10 +429,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentOnlineTest getIPersistentOnlineTest() {
         return new OnlineTestVO();
-    }
-
-    public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation() {
-        return new WeeklyOcupationVO();
     }
 
     public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {

@@ -59,7 +59,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublicatio
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
@@ -68,9 +67,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranc
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 
-/**
- * @author ars
- */
 public interface ISuportePersistente
 {
 	public void iniciarTransaccao() throws ExcepcaoPersistencia;
@@ -196,8 +192,6 @@ public interface ISuportePersistente
 	public IPersistentExternalPerson getIPersistentExternalPerson();
 
 	public IPersistentCoordinator getIPersistentCoordinator();
-
-	public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation();
 
 	public IPersistentExternalActivity getIPersistentExternalActivity();
 
