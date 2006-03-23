@@ -5434,9 +5434,7 @@ relation TutorTeacher {
 
 
 relation WeeklyOcupationTeacher {
-    net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation playsRole weeklyOcupations {
-		multiplicity *;
-	}
+    net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation playsRole weeklyOcupation;
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
