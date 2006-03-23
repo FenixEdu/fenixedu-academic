@@ -205,4 +205,245 @@
     </attribute>
   </tag>
 
+  <tag>
+    <name>edit</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.TemplateEditObjectTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Renders a generic input presentation of an object.
+    </description>
+
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        The 'id' of the input context. This attribute allows multiple edit tags to be used
+        in the same page.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Specifies the name of the page attribute to fetch. This attribute is related to
+        'scope'.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
+        naming convention for bean properties. If this attribute is not specified then the
+        object refered with the attribute 'name' will be used.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+            The scope where the object will be searched. If no scope is specified the object will be
+            searched using PageContext.findAttribute(name).
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>layout</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Indicates wich specific layout will be used to render the object.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>schema</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Selects one of the predefined schemas by name. The name specified in this attribute
+        will be used to obtain a schema to use when rendering the object.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>action</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         Specifies the target of the form. This attribute is similar with the action attribute
+         of the Struts html:form taglib.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>nested</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         Indicates if the tag is beeing used inside. This controls if a form tag is generated or not.
+      </description>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>destination</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.EditLinkTag</tag-class>
+    <body-content>empty</body-content>
+    <description>
+      Configures the destination when everything is ok.
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+            The name of the destination.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>path</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+            The destination path.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>module</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+            The destination module. The module is used as a prefix of path.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>redirect</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Issue redirect to destination?
+      </description>
+    </attribute>
+  </tag>
+
+<tag>
+    <name>hidden</name>
+    <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixHiddenSlotTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Permites the user to supply slots that are context dependant and are nor present
+      in the schema or provided by the user.
+    </description>
+
+    <attribute>
+      <name>slot</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        The target slot wich value is beiing supplied.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Specifies the name of the page attribute to fetch. This attribute is related to
+        'scope'.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
+        naming convention for bean properties. If this attribute is not specified then the
+        object refered with the attribute 'name' will be used.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>oid</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        The identification number of the object.
+        If the attribute 'name' is not specified this attribute together with the attribute 'type'
+        specify the identification of the persistent object that will be rendered.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        The Java type of the object.
+        If the attribute 'name' is not specified this attribute together with the attribute 'oid'
+        specify the identification of the persitent object that will be rendered.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+            The scope where the object will be searched. If no scope is specified the object will be
+            searched using PageContext.findAttribute(name).
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        The custom value that will be used as the slot's value.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>converter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        The converter used to convert the value given to the destination value.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>multiple</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.Boolean</type>
+      <description>
+        Indicates that that all values for the slot should be collected in a list.
+      </description>
+    </attribute>
+  </tag>
 </taglib>

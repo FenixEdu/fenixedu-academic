@@ -190,16 +190,6 @@
     </attribute>
     
     <attribute>
-      <name>template</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-      <description>
-        	The JSP template to use when rendering the object. If both 'template' and 'layout' attributes
-        	are specified, the behaviour is undefined.
-      </description>
-    </attribute>
-    
-    <attribute>
       <name>action</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
