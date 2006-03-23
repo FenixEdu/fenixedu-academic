@@ -15,6 +15,7 @@ public abstract class CurricularCourseGroup extends CurricularCourseGroup_Base {
     public CurricularCourseGroup() {
         super();
         this.setOjbConcreteClass(this.getClass().getName());
+        this.setRootDomainObject(RootDomainObject.getInstance());
     }
 	
 	public void delete() throws DomainException {
