@@ -26,9 +26,12 @@
          name="keyCurriculumGroup"
          column="KEY_CURRICULUM_GROUP"
          jdbc-type="INTEGER"
-    />			
-
-    
+    />
+    <field-descriptor
+		name="keyRootDomainObject"
+		column="KEY_ROOT_DOMAIN_OBJECT"
+		jdbc-type="INTEGER"
+	/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup" table="CURRICULUM_MODULE">
@@ -88,7 +91,12 @@
          name="keyCurriculumGroup"
          column="KEY_CURRICULUM_GROUP"
          jdbc-type="INTEGER"
-    />					
+    />
+    <field-descriptor
+		name="keyRootDomainObject"
+		column="KEY_ROOT_DOMAIN_OBJECT"
+		jdbc-type="INTEGER"
+	/>				
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.Credits" table="CURRICULUM_MODULE">
