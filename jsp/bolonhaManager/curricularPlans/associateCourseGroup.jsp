@@ -11,12 +11,6 @@
 	<h:outputText value="<h2>#{bolonhaBundle['associate.course.group']}</h2>" escape="false"/>
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
-<%--
-		<h:outputText value="<div class='simpleblock1'>" escape="false"/>
-		<h:outputText value="Esta funcionalidade permite fazer uma ligação de um grupo existente a outro grupo, assim o grupo passa a estar associado a dois grupos." escape="false"/>
-		<h:outputText value="</div>" escape="false"/>
---%>
-
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'/>"/>		
 		<h:outputText escape="false" value="<input id='parentCourseGroupID' name='parentCourseGroupID' type='hidden' value='#{CourseGroupManagement.parentCourseGroupID}'/>"/>
