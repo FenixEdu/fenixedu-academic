@@ -51,10 +51,9 @@ public class ReadTeacherCreditsSheet extends Service {
             ExcepcaoPersistencia {
         ExecutionPeriod executionPeriod;
         if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
-            executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
-                    executionPeriodId);
+            executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
         }
         return executionPeriod;
     }

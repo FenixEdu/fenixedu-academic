@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
@@ -25,44 +24,29 @@ import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCred
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-/**
- * @author jpvl
- */
 public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService extends Service {
 
-    /**
-     * @author jpvl
-     */
     public class TeacherNotFound extends FenixServiceException {
-
     }
 
-    /**
-     * @author jpvl
-     */
     public class ExecutionPeriodNotFound extends FenixServiceException {
-
     }
 
     public TeacherOtherTypeCreditLineDTO run(Integer teacherId, Integer executionPeriodId)
             throws FenixServiceException, ExcepcaoPersistencia {
         TeacherOtherTypeCreditLineDTO teacherOtherTypeCreditLineDTO = new TeacherOtherTypeCreditLineDTO();
-        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
         IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = persistentSupport.getIPersistentOtherTypeCreditLine();
 
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);
-
+        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
         if (teacher == null) {
             throw new TeacherNotFound();
         }
 
-        ExecutionPeriod executionPeriod = null;
-
+        final ExecutionPeriod executionPeriod;
         if (executionPeriodId == null || executionPeriodId.intValue() == 0) {
-            executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
-                    executionPeriodId);
+            executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
         }
 
         if (executionPeriod == null) {
@@ -90,29 +74,14 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService extends S
         return teacherOtherTypeCreditLineDTO;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return OtherTypeCreditLine.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
         return persistentSupport.getIPersistentOtherTypeCreditLine();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.DomainObject)
-     */
     protected InfoObject clone2InfoObject(DomainObject domainObject) {
         return InfoOtherTypeCreditLine.newInfoFromDomain(((OtherTypeCreditLine) domainObject));
     }

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 /**
  * 
@@ -19,11 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 public class ReadClassesForCurrentAndPreviousPeriodByDegree extends Service {
 
     public Object run(Integer degreeOID) throws ExcepcaoPersistencia {
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
-                .getIPersistentExecutionPeriod();
-
-        ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
-                .readActualExecutionPeriod();
+        ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         ExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod
                 .getPreviousExecutionPeriod();
 

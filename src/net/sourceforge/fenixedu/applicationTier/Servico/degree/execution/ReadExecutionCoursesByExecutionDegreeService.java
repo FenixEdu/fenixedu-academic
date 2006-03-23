@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -25,19 +24,15 @@ public class ReadExecutionCoursesByExecutionDegreeService extends Service {
 
     public List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
         IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
-        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-        ExecutionPeriod executionPeriod = null;
-
+        
+        final ExecutionPeriod executionPeriod;
         if (executionPeriodId == null) {
-            executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
-                    executionPeriodId);
+            executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
         }
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, executionDegreeId);
-
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
         if (executionDegree == null) {
             throw new NonExistingExecutionDegree();
         }

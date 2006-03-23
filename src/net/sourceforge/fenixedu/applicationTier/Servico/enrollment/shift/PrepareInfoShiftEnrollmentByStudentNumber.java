@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -100,9 +99,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
         infoShiftEnrollment.setNumberCourseUnenrolledShifts(calculeNumberCoursesUnenrolledShifts(
                 attendingExecutionCourses, infoShiftEnrollment.getInfoShiftEnrollment()));
 
-        // read current execution period
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         if (executionPeriod == null) {
             throw new FenixServiceException("errors.impossible.operation");
         }

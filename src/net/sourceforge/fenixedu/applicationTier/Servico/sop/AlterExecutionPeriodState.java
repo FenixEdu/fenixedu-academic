@@ -14,8 +14,8 @@ public class AlterExecutionPeriodState extends Service {
 
 	public void run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState)
 			throws FenixServiceException, ExcepcaoPersistencia {
+        
 		final IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-
 		final ExecutionPeriod executionPeriod = executionPeriodDAO.readBySemesterAndExecutionYear(
 				infoExecutionPeriod.getSemester(), ExecutionYear.readExecutionYearByName(
 						infoExecutionPeriod.getInfoExecutionYear().getYear()).getYear());
@@ -23,12 +23,10 @@ public class AlterExecutionPeriodState extends Service {
 		if (executionPeriod == null) {
 			throw new InvalidArgumentsServiceException();
 		}
-
 		if (periodState.getStateCode().equals(PeriodState.CURRENT)) {
 			// Deactivate the current
-			executionPeriodDAO.readActualExecutionPeriod().setState(new PeriodState(PeriodState.OPEN));
+			ExecutionPeriod.readActualExecutionPeriod().setState(new PeriodState(PeriodState.OPEN));
 		}
-
 		executionPeriod.setState(periodState);
 	}
 

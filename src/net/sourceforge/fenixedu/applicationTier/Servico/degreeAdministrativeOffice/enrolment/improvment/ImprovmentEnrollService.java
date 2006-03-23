@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
@@ -31,11 +30,8 @@ public class ImprovmentEnrollService extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        Person person = Person.readPersonByUsername(employeeUserName);
-
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        final ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
-                .readActualExecutionPeriod();
+        final Person person = Person.readPersonByUsername(employeeUserName);
+        final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 
         if (person == null) {
             throw new InvalidArgumentsServiceException();
@@ -57,7 +53,6 @@ public class ImprovmentEnrollService extends Service {
             enrollment
                     .createEnrolmentEvaluationForImprovement(employee, currentExecutionPeriod, student);
         }
-
-        return new Boolean(true);
+        return Boolean.TRUE;
     }
 }

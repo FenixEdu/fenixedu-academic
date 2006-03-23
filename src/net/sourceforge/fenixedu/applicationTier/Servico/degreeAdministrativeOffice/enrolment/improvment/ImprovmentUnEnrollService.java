@@ -9,27 +9,21 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
-/**
- * @author nmgo
- */
 public class ImprovmentUnEnrollService extends Service {
 
     public Object run(Integer studentNumber, List<Integer> enrolmentsIds)
 			throws FenixServiceException, ExcepcaoPersistencia, DomainException {
-		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 		
 		for (Integer enrolmentId : enrolmentsIds) {
-            
-            Enrolment enrolment = (Enrolment) persistentObject.readByOID(Enrolment.class,enrolmentId);
+            final Enrolment enrolment = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrolmentId);
             if (enrolment == null) {
                 throw new InvalidArgumentsServiceException();
             }
-
-			enrolment.unEnrollImprovement(persistentExecutionPeriod.readActualExecutionPeriod());
+			enrolment.unEnrollImprovement(ExecutionPeriod.readActualExecutionPeriod());
         }
 
         return new Boolean(true);

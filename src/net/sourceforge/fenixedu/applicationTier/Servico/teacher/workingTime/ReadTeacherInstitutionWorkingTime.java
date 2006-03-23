@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -34,17 +33,15 @@ public class ReadTeacherInstitutionWorkingTime extends Service {
 
         IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = persistentSupport
                 .getIPersistentTeacherInstitutionWorkingTime();
-        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
 
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoTeacher.getIdInternal());
+        Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
         InfoTeacher infoTeacher2 = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
 
         ExecutionPeriod executionPeriod = null;
         if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
-            executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
-                    executionPeriodId);
+            executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
         }
         InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 

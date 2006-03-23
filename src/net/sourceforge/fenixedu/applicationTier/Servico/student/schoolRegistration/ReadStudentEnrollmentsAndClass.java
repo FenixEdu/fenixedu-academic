@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -36,8 +35,6 @@ public class ReadStudentEnrollmentsAndClass extends Service {
     public List run(IUserView userView) throws ExcepcaoPersistencia {
         IPersistentStudentCurricularPlan pSCP = persistentSupport
                 .getIStudentCurricularPlanPersistente();
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
-                .getIPersistentExecutionPeriod();
 
         String user = userView.getUtilizador();
         Integer studentNumber = new Integer(user.substring(1));
@@ -45,7 +42,7 @@ public class ReadStudentEnrollmentsAndClass extends Service {
         StudentCurricularPlan scp = pSCP.readActiveStudentCurricularPlan(studentNumber,
                 DegreeType.DEGREE);
         List studentEnrollments = scp.getEnrolments();
-        ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         
         List studentShifts = new ArrayList();
         List<Shift> shifts = scp.getStudent().getShifts();

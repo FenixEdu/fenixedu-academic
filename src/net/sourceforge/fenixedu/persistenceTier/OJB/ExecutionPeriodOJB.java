@@ -17,17 +17,6 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExecutionPeriod {
      
-    public ExecutionPeriodOJB() {
-        super();
-    }
-
-    public ExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("state", PeriodState.CURRENT);
-        return (ExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
-
-    }
-
     public ExecutionPeriod readByNameAndExecutionYear(String executionPeriodName,
             String year) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();

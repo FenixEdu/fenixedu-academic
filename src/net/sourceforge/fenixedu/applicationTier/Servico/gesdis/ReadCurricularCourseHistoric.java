@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -27,32 +26,19 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
  * 
  */
 public class ReadCurricularCourseHistoric extends Service {
-	/**
-	 * 
-	 */
-	public ReadCurricularCourseHistoric() {
-		super();
-	}
 
 	public InfoSiteCourseHistoric run(Integer curricularCourseId) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
-		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-				CurricularCourse.class, curricularCourseId);
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 
-		ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+		ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 		Integer semester = executionPeriod.getSemester();
 		// TODO: corrigir o calculo do semestre
-		semester = new Integer(semester.intValue() == 2 ? 1 : 2);
+		semester = Integer.valueOf(semester.intValue() == 2 ? 1 : 2);
 		return getInfoSiteCourseHistoric(curricularCourse, semester);
 	}
 
-	/**
-	 * @param curricularCourse
-	 * @param persistentSupport
-	 * @return
-	 */
 	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(CurricularCourse curricularCourse, Integer semester)
             throws ExcepcaoPersistencia {
 		InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();

@@ -145,8 +145,7 @@ public class RegisterCandidate extends Service {
 
     private void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate, StudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
         List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
-        ExecutionPeriod executionPeriod = persistentSupport.getIPersistentExecutionPeriod()
-                .readActualExecutionPeriod();
+        ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
             DomainFactory.makeEnrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(),
                     executionPeriod, EnrollmentCondition.FINAL, userView.getUtilizador());

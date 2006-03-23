@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
@@ -175,8 +174,7 @@ public class ReadTeachersInformation extends Service {
         infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(teacher.getIdInternal(), OldPublicationType.CIENTIFIC));
         infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(teacher.getIdInternal(), OldPublicationType.DIDACTIC));
 
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
         return infoSiteTeacherInformation;
     }

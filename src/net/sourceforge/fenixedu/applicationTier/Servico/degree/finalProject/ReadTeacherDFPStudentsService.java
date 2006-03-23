@@ -37,7 +37,7 @@ public class ReadTeacherDFPStudentsService extends Service {
 
         InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoTeacher.getIdInternal());
+        Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
         InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
 
         IPersistentTeacherDegreeFinalProjectStudent teacherDfpStudentDAO = persistentSupport
@@ -65,21 +65,14 @@ public class ReadTeacherDFPStudentsService extends Service {
 
     }
 
-    /**
-     * @param infoExecutionPeriodParam
-     * @param executionPeriodDAO
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
     private ExecutionPeriod getExecutionPeriod(Integer executionPeriodId,
             IPersistentExecutionPeriod executionPeriodDAO) throws ExcepcaoPersistencia {
-        ExecutionPeriod executionPeriod;
+        
+        final ExecutionPeriod executionPeriod;
         if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
-            executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-
+            executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
-                    executionPeriodId);
+            executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
         }
         return executionPeriod;
     }

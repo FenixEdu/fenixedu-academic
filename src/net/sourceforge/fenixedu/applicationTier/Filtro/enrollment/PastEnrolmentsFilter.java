@@ -22,7 +22,7 @@ public class PastEnrolmentsFilter extends Filtro {
         Student student = null;
         if (args[1] != null) {
             Integer studentCurricularPlanID = (Integer) args[1];
-            StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+            StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
             student = studentCurricularPlan.getStudent();
         } else if (args.length > 2 && args[2] != null) {
             Integer studentNumber = (Integer) args[2];
@@ -33,7 +33,7 @@ public class PastEnrolmentsFilter extends Filtro {
 			throw new NotAuthorizedFilterException("noAuthorization");
 		}
 		
-		ExecutionPeriod actualExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod().readActualExecutionPeriod();
+		ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 		ExecutionPeriod previousExecutionPeriod = actualExecutionPeriod.getPreviousExecutionPeriod();
 		ExecutionPeriod beforePreviousExecutionPeriod = previousExecutionPeriod.getPreviousExecutionPeriod();
 		

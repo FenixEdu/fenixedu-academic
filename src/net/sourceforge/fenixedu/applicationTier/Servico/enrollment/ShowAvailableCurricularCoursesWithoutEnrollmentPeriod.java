@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
@@ -204,11 +203,6 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod extends
 		return enrolmentPeriod;
 	}
 
-	/**
-	 * @param studentNumber
-	 * @return IStudent
-	 * @throws ExcepcaoPersistencia
-	 */
 	protected Student getStudent(Integer studentNumber)
 			throws ExcepcaoPersistencia {
 		IPersistentStudent studentDAO = persistentSupport
@@ -218,11 +212,6 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod extends
 				DegreeType.DEGREE);
 	}
 
-	/**
-	 * @param student
-	 * @return IStudentCurricularPlan
-	 * @throws ExcepcaoPersistencia
-	 */
 	protected StudentCurricularPlan getStudentCurricularPlan(Student student)
 			throws ExcepcaoPersistencia {
 		IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport
@@ -232,18 +221,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod extends
 				.getNumber(), student.getDegreeType());
 	}
 
-	protected ExecutionPeriod getExecutionPeriod(
-			ExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-
-		ExecutionPeriod executionPeriod2Return = executionPeriod;
-
-		if (executionPeriod == null) {
-			IPersistentExecutionPeriod executionPeriodDAO = persistentSupport
-					.getIPersistentExecutionPeriod();
-			executionPeriod2Return = executionPeriodDAO
-					.readActualExecutionPeriod();
-		}
-
-		return executionPeriod2Return;
+	protected ExecutionPeriod getExecutionPeriod(ExecutionPeriod executionPeriod) {
+        return (executionPeriod == null) ? ExecutionPeriod.readActualExecutionPeriod() : executionPeriod;
 	}
 }

@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -45,10 +44,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 		InfoTeacher infoTeacher = new InfoTeacher();
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
 	
-		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-
-		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-				CurricularCourse.class, curricularCourseCode);
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 
 		List enrolments = null;
 		if (yearString != null) {
@@ -109,7 +105,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 		if (infoEnrolmentEvaluations.size() == 0) {
 			throw new NonExistingServiceException();
 		}
-		ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+		final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 		infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();

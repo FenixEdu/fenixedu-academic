@@ -25,7 +25,7 @@ public class AlterExecutionPeriodState extends Service {
 
         if (periodState.getStateCode().equals(PeriodState.CURRENT.getStateCode())) {
             // Deactivate the current
-            ExecutionPeriod currentExecutionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
             currentExecutionPeriod.setState(new PeriodState(PeriodState.OPEN));
         }
 

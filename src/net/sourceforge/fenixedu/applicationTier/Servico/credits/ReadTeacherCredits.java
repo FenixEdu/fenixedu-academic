@@ -12,21 +12,14 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCreditsWithTeache
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
-/**
- * @author jpvl
- * 
- */
 public class ReadTeacherCredits extends Service {
 
     public List run(Integer teacherOID) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
 
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherOID);
-        ExecutionPeriod startExecutionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, new Integer(2));
-        ExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherOID);
+        final ExecutionPeriod startExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(Integer.valueOf(2));
+        ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 
         InfoTeacherWithPerson infoTeacher = new InfoTeacherWithPerson();
         infoTeacher.copyFromDomain(teacher);

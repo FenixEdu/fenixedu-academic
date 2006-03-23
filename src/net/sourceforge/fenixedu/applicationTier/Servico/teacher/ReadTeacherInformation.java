@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
@@ -73,9 +72,7 @@ public class ReadTeacherInformation extends Service {
         // if no execution year is persistentSupportecified, the info shown should refer to the previous execution year
         ExecutionYear executionYear = null;
         if (argExecutionYear == null || argExecutionYear.equals("")) {
-            IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-            ExecutionPeriod actualExecutionPeriod = persistentExecutionPeriod
-                    .readActualExecutionPeriod();
+            ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
             ExecutionPeriod previousExecutionPeriod = actualExecutionPeriod
                     .getPreviousExecutionPeriod();
             if (previousExecutionPeriod != null) {

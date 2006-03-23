@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -39,7 +38,6 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
         IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
         if (curricularCourseCode == null) {
             throw new FenixServiceException("nullCurricularCourse");
@@ -65,8 +63,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
                     }
                 });
 
-        //selects execution courses for current execution period
-        final ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
        
         List<ExecutionCourse> associatedExecutionCourses = new ArrayList<ExecutionCourse>();
         List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();

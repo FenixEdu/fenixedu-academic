@@ -10,11 +10,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoEx
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.TeacherCreditsDetailsDTO;
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.tools.Profiler;
 
 public class ReadDepartmentTeachersCreditsDetailsService extends Service {
@@ -23,9 +21,7 @@ public class ReadDepartmentTeachersCreditsDetailsService extends Service {
         Profiler.getInstance();
         Profiler.resetInstance();
 
-        final IPersistentExecutionPeriod executionPeriodDAO = persistentSupport
-                .getIPersistentExecutionPeriod();
-        final ExecutionPeriod executionPeriod = readExecutionPeriod(searchParameters, executionPeriodDAO);
+        final ExecutionPeriod executionPeriod = readExecutionPeriod(searchParameters);
 
         final InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = (InfoExecutionPeriodWithInfoExecutionYear) InfoExecutionPeriodWithInfoExecutionYear
                 .newInfoFromDomain(executionPeriod);
@@ -48,8 +44,7 @@ public class ReadDepartmentTeachersCreditsDetailsService extends Service {
         return list;
     }
 
-    private ExecutionPeriod readExecutionPeriod(HashMap searchParameters,
-            IPersistentExecutionPeriod executionPeriodDAO) throws ExcepcaoPersistencia {
+    private ExecutionPeriod readExecutionPeriod(HashMap searchParameters) {
         final ExecutionPeriod executionPeriod;
         Integer executionPeriodId = null;
         try {
@@ -58,22 +53,16 @@ public class ReadDepartmentTeachersCreditsDetailsService extends Service {
         }
 
         if (executionPeriodId == null) {
-            executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
-                    executionPeriodId);
+            executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
         }
         return executionPeriod;
     }
 
-    protected List<Teacher> doSearch(HashMap searchParameters) throws ExcepcaoPersistencia {
-        Integer departmentId = Integer.valueOf((String) searchParameters.get("idInternal"));
-
-        final Department department = (Department) persistentObject.readByOID(Department.class,
-                departmentId);
-
-        List<Teacher> teachers = department.getCurrentTeachers();
-        return teachers;
+    protected List<Teacher> doSearch(HashMap searchParameters) {
+        final Integer departmentId = Integer.valueOf((String) searchParameters.get("idInternal"));
+        return rootDomainObject.readDepartmentByOID(departmentId).getCurrentTeachers();
     }
 
 }

@@ -21,16 +21,6 @@ import net.sourceforge.fenixedu.util.PeriodState;
  */
 public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersistentExecutionPeriod {
 
-    public ExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia {
-        Collection executionPeriods = readAll(ExecutionPeriod.class);
-        for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
-            ExecutionPeriod element = (ExecutionPeriod) iter.next();
-            if (element.getState().equals(PeriodState.CURRENT))
-                return element;
-        }
-        return null;
-    }
-
     public ExecutionPeriod readByNameAndExecutionYear(String executionPeriodName, String year)
             throws ExcepcaoPersistencia {
         Collection executionPeriods = readAll(ExecutionPeriod.class);

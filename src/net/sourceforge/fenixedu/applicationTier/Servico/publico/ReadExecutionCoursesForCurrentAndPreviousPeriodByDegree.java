@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 /**
  * 
@@ -25,17 +24,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends Service
 {
 
-    public Object run(Integer degreeOID) throws ExcepcaoPersistencia
-    {
+    public Object run(Integer degreeOID) throws ExcepcaoPersistencia {
         List executionCourseViews = new ArrayList();
 
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
-        		.getIPersistentExecutionPeriod();
-
-        ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         ExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
 
-        Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeOID);
+        Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
         List<DegreeCurricularPlan> degreeCurricularPlans = degree.getDegreeCurricularPlans();
 
         Set processedExecutionCourses = new HashSet();

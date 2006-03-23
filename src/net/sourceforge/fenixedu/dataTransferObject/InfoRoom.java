@@ -124,10 +124,6 @@ public class InfoRoom extends InfoObject implements Comparable {
         }
     }
 
-    /**
-     * @param sala
-     * @return
-     */
     public static InfoRoom newInfoFromDomain(OldRoom sala) {
         InfoRoom infoRoom = null;
         if (sala != null) {

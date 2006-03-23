@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 /**
  * @author David Santos Jan 26, 2004
@@ -23,14 +22,13 @@ public class WriteEnrollment extends Service {
             Integer curricularCourseID, Integer executionPeriodID,
             CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView)
             throws ExcepcaoPersistencia {
-        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
 
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, curricularCourseID);
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
 
         ExecutionPeriod executionPeriod = null;
         if (executionPeriodID == null) {
-            executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         } else {
             executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,executionPeriodID);
         }
@@ -39,13 +37,12 @@ public class WriteEnrollment extends Service {
 
         if (enrollment == null) {
 
-            Enrolment enrolmentToWrite;
             if (enrollmentClass == null || enrollmentClass.intValue() == 1 || enrollmentClass.intValue() == 0) {
-                enrolmentToWrite = DomainFactory.makeEnrolment(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
+                DomainFactory.makeEnrolment(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
             } else if (enrollmentClass.intValue() == 2) {
-                enrolmentToWrite = DomainFactory.makeEnrolmentInOptionalCurricularCourse(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
+                DomainFactory.makeEnrolmentInOptionalCurricularCourse(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
             } else {
-                enrolmentToWrite = DomainFactory.makeEnrolmentInExtraCurricularCourse(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
+                DomainFactory.makeEnrolmentInExtraCurricularCourse(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
             }
 
 		} else {
@@ -55,7 +52,6 @@ public class WriteEnrollment extends Service {
                 enrollment.setEnrollmentState(EnrollmentState.ENROLLED);
             }
         }
-
         return (enrollment != null) ? enrollment.getIdInternal() : null;
     }
 
