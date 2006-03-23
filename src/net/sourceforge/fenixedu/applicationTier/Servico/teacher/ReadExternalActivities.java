@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteExternalActiv
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -30,9 +29,7 @@ public class ReadExternalActivities extends Service {
         Teacher teacher = Teacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
-        IPersistentExternalActivity persistentExternalActivity = persistentSupport
-                .getIPersistentExternalActivity();
-        List externalActivities = persistentExternalActivity.readByTeacherId(teacher.getIdInternal());
+        List<ExternalActivity> externalActivities = teacher.getAssociatedExternalActivities();
 
         List result = (List) CollectionUtils.collect(externalActivities, new Transformer() {
             public Object transform(Object o) {
