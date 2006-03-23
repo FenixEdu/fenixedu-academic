@@ -21,3 +21,4 @@ function execute() {
 
 execute "Alter Table Research Interest to support MLS" alterTableResearchInterest.sql
 execute "Fix StudentCurricularPlan Table" fixStudentCurricularPlanTable.sql
+execute "Fix ExecutionYear Table" fixExecutionYearTable.sql
