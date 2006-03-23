@@ -206,8 +206,10 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.writeAttribute("align", "right", null);
         writer.writeAttribute("style", "width: 9em;", null);
         encodeLink("editCurricularCourse.faces", "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false, "edit");
-        writer.append(" , ");
-        encodeLink("deleteCurricularCourseContext.faces", "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false, "delete");
+        if (this.executionYear == null) {
+            writer.append(" , ");
+            encodeLink("deleteCurricularCourseContext.faces", "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false, "delete");
+        }
         writer.endElement("td");
     }
 
