@@ -30,7 +30,7 @@
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
-			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+			<f:param name="action" value="build"/>
 			<f:param name="toOrder" value="false"/>
 		</h:outputLink>
 		<h:outputText value="</li>" escape="false"/>
@@ -44,7 +44,7 @@
 				<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 				<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 				<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
-				<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+				<f:param name="action" value="build"/>
 			</h:outputLink>
 		<h:outputText value="</li>" escape="false"/>
 		</h:panelGroup>
@@ -61,7 +61,7 @@
 				<f:param name="organizeBy" value="groups"/>
 				<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 				<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
-				<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+				<f:param name="action" value="build"/>
 			</h:outputLink>
 			<h:outputText value="<span class='highlight3'>#{bolonhaBundle['groups']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}" escape="false"/>
 			<h:outputText value=" , " escape="false"/>
@@ -72,7 +72,7 @@
 				<f:param name="organizeBy" value="years"/>
 				<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 				<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
-				<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+				<f:param name="action" value="build"/>
 			</h:outputLink>
 			<h:outputText value="<span class='highlight3'>#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'years'}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
