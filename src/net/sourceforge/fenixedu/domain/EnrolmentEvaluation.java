@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.util.MarkType;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
 
-    private static final String RECTIFICATION = "RECTIFICAï¿½ï¿½O";
+    private static final String RECTIFICATION = "RECTIFICAÇÃO";
 
 	public EnrolmentEvaluation() {
 		super();
