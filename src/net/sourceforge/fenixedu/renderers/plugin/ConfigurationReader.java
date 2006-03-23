@@ -21,15 +21,10 @@ import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.JDOMFactory;
 import org.jdom.input.SAXBuilder;
-import org.jdom.input.SAXHandler;
-import org.xml.sax.Attributes;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
-import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 public class ConfigurationReader {
     private static final Logger logger = Logger.getLogger(ConfigurationReader.class);
@@ -302,22 +297,19 @@ public class ConfigurationReader {
 
                         String entityPath = systemId.substring("file://".length());
                         
-                        if (entityPath.startsWith("/WEB-INF")) { // context relative
-                            return new InputSource(context.getResourceAsStream(entityPath));
+                        // relative to configuration file
+                        File file = new File(context.getRealPath(configFile));
+                        
+                        // remove home path automatically appended 
+                        String currentPath = new File(System.getProperty("user.dir")).getCanonicalPath();
+                        if (currentPath != null && entityPath.startsWith(currentPath + File.pathSeparator)) {
+                            entityPath = entityPath.substring(currentPath.length() + 1);
                         }
-                        else { // relative to configuration file
-                            File file = new File(context.getRealPath(configFile));
-                            
-                            String currentPath = new File(System.getProperty("user.dir")).getCanonicalPath();
-                            if (currentPath != null && entityPath.startsWith(currentPath + "/")) {
-                                entityPath = entityPath.substring(currentPath.length() + 1);
-                            }
-                            
-                            File entityFile = new File(file.getParentFile(), entityPath);
-                            FileInputStream fileInputStream = new FileInputStream(entityFile);
-                            
-                            return new InputSource(fileInputStream);
-                        }
+                        
+                        File entityFile = new File(file.getParentFile(), entityPath);
+                        FileInputStream fileInputStream = new FileInputStream(entityFile);
+                        
+                        return new InputSource(fileInputStream);
                     }
                     
                 });
