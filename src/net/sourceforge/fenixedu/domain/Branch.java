@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -152,4 +153,49 @@ public class Branch extends Branch_Base {
 				return ccs.getBranch().equals(commonBranch);
 			}}) != null);
 	}
+	
+	public List<CurricularCourseGroup> readCurricularCourseGroupsByAreaType(AreaType areaType){
+		List<CurricularCourseGroup> result = new ArrayList<CurricularCourseGroup>();
+		for (CurricularCourseGroup curricularCourseGroup : this.getCurricularCourseGroups()) {
+			if((curricularCourseGroup instanceof AreaCurricularCourseGroup) && curricularCourseGroup.getAreaType().equals(areaType)) {
+				result.add(curricularCourseGroup);
+			}
+		}
+		return result;
+	}
+	
+	public CurricularCourseGroup readCurricularCourseGroupByCurricularCourseAndAreaType(CurricularCourse curricularCourse, AreaType areaType){
+		List<CurricularCourseGroup> areaCurricularCourseGroups = readCurricularCourseGroupsByAreaType(areaType);
+		for (CurricularCourseGroup group : areaCurricularCourseGroups) {
+			for (CurricularCourse course : group.getCurricularCourses()) {
+				if(course.equals(curricularCourse)) {
+					return group;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public CurricularCourseGroup readCurricularCourseGroupByScientificAreaAndAreaType(ScientificArea scientificArea, AreaType areaType){
+		List<CurricularCourseGroup> areaCurricularCourseGroups = readCurricularCourseGroupsByAreaType(areaType);
+		for (CurricularCourseGroup group : areaCurricularCourseGroups) {
+			for (ScientificArea area : group.getScientificAreas()) {
+				if(area.equals(scientificArea)) {
+					return group;
+				}
+			}
+		}
+		return null;
+	}
+
+	public List<CurricularCourseGroup> getOptionalCurricularCourseGroups(){
+		List<CurricularCourseGroup> result = new ArrayList<CurricularCourseGroup>();
+		for (CurricularCourseGroup curricularCourseGroup : this.getCurricularCourseGroups()) {
+			if(curricularCourseGroup instanceof OptionalCurricularCourseGroup) {
+				result.add(curricularCourseGroup);
+			}
+		}
+		return result;
+	}
+
 }

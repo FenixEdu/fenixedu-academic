@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
@@ -143,10 +142,6 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
             StudentCurricularPlan studentCurricularPlan, HashMap creditsInSecundaryAreaGroups,
             HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                .getIPersistentCurricularCourseGroup();
-
         Integer curricularCourseCredits = new Integer(curricularCourse.getCredits().intValue());
 
         HashMap creditsInAreaGroups = null;
@@ -166,8 +161,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         }
 
         if (creditsInAreaGroups != null && branch != null && areaType != null) {
-            CurricularCourseGroup curricularCourseGroup = curricularCourseGroupDAO
-                    .readByBranchAndCurricularCourseAndAreaType(branch.getIdInternal(), curricularCourse.getIdInternal(), areaType);
+        	CurricularCourseGroup curricularCourseGroup = branch.readCurricularCourseGroupByCurricularCourseAndAreaType(curricularCourse, areaType);
 
             sumInHashMap(creditsInAreaGroups, curricularCourseGroup.getIdInternal(),
                     curricularCourseCredits);
@@ -176,27 +170,16 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
     private boolean curricularCourseBelongsToSpecializationArea(CurricularCourse curricularCourse,
             StudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                .getIPersistentCurricularCourseGroup();
 
-        CurricularCourseGroup curricularCourseGroup = curricularCourseGroupDAO
-                .readByBranchAndCurricularCourseAndAreaType(studentCurricularPlan.getBranch().getIdInternal(),
-                        curricularCourse.getIdInternal(), AreaType.SPECIALIZATION);
-
+        CurricularCourseGroup curricularCourseGroup = studentCurricularPlan.getBranch().readCurricularCourseGroupByCurricularCourseAndAreaType(curricularCourse, AreaType.SPECIALIZATION);
+        
         return curricularCourseGroup != null;
     }
 
     private boolean curricularCourseBelongsToSecundaryArea(CurricularCourse curricularCourse,
             StudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                .getIPersistentCurricularCourseGroup();
-
-        CurricularCourseGroup curricularCourseGroup = curricularCourseGroupDAO
-                .readByBranchAndCurricularCourseAndAreaType(studentCurricularPlan.getSecundaryBranch().getIdInternal(),
-                        curricularCourse.getIdInternal(), AreaType.SECONDARY);
-
+        CurricularCourseGroup curricularCourseGroup = studentCurricularPlan.getSecundaryBranch().readCurricularCourseGroupByCurricularCourseAndAreaType(curricularCourse, AreaType.SECONDARY);
+        
         return curricularCourseGroup != null;
     }
 
@@ -218,10 +201,6 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
             HashMap creditsInScientificAreas, HashMap creditsInSpecializationAreaGroups,
             HashMap creditsInSecundaryAreaGroups, HashMap clashingGroups) throws ExcepcaoPersistencia {
         
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                .getIPersistentCurricularCourseGroup();
-
         if (!creditsInScientificAreas.entrySet().isEmpty()) {
             List entriesInHashMapToRemove = new ArrayList();
 
@@ -233,13 +212,9 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
                 ScientificArea scientificArea = RootDomainObject.getInstance().readScientificAreaByOID(scientificAreaID);
 
-                CurricularCourseGroup specializationGroup = curricularCourseGroupDAO
-                        .readByBranchAndScientificAreaAndAreaType(studentCurricularPlan.getBranch().getIdInternal(),
-                                scientificArea.getIdInternal(), AreaType.SPECIALIZATION);
-
-                CurricularCourseGroup secundaryGroup = curricularCourseGroupDAO
-                        .readByBranchAndScientificAreaAndAreaType(studentCurricularPlan.getSecundaryBranch().getIdInternal(),
-								scientificArea.getIdInternal(), AreaType.SECONDARY);
+                CurricularCourseGroup specializationGroup = studentCurricularPlan.getBranch().readCurricularCourseGroupByScientificAreaAndAreaType(scientificArea, AreaType.SPECIALIZATION);
+                
+                CurricularCourseGroup secundaryGroup = studentCurricularPlan.getSecundaryBranch().readCurricularCourseGroupByScientificAreaAndAreaType(scientificArea, AreaType.SECONDARY);
 
                 if ((specializationGroup != null) && (secundaryGroup != null)) {
                     List groups = new ArrayList();
@@ -354,9 +329,6 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private Integer calculateCreditsInSecundaryArea(StudentCurricularPlan studentCurricularPlan,
             HashMap creditsInSecundaryAreaGroups, int creditsInAnySecundaryArea)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                .getIPersistentCurricularCourseGroup();
         int areaCredits = 0;
 
         if (!creditsInSecundaryAreaGroups.entrySet().isEmpty()) {
@@ -366,8 +338,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
                 Integer credits = (Integer) mapEntry.getValue();
                 Integer groupID = (Integer) mapEntry.getKey();
 
-                CurricularCourseGroup group = (CurricularCourseGroup) curricularCourseGroupDAO
-                        .readByOID(CurricularCourseGroup.class, groupID);
+                CurricularCourseGroup group = RootDomainObject.getInstance().readCurricularCourseGroupByOID(groupID);
 
                 if (credits.intValue() > group.getMaximumCredits().intValue()) {
                     areaCredits += group.getMaximumCredits().intValue();
@@ -387,9 +358,6 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
     private Integer calculateCreditsInSpecializationArea(StudentCurricularPlan studentCurricularPlan,
             HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                .getIPersistentCurricularCourseGroup();
         int areaCredits = 0;
 
         if (!creditsInSpecializationAreaGroups.entrySet().isEmpty()) {
@@ -399,8 +367,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
                 Integer credits = (Integer) mapEntry.getValue();
                 Integer groupID = (Integer) mapEntry.getKey();
 
-                CurricularCourseGroup group = (CurricularCourseGroup) curricularCourseGroupDAO
-                        .readByOID(CurricularCourseGroup.class, groupID);
+                CurricularCourseGroup group = RootDomainObject.getInstance().readCurricularCourseGroupByOID(groupID);
 
                 if (credits.intValue() > group.getMaximumCredits().intValue()) {
                     areaCredits += group.getMaximumCredits().intValue();
@@ -463,9 +430,6 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
     private boolean isSpecializationAreaDone(StudentCurricularPlan studentCurricularPlan,
             HashMap creditsInSpecializationAreaGroups) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                .getIPersistentCurricularCourseGroup();
 
         if (!creditsInSpecializationAreaGroups.entrySet().isEmpty()) {
             int areaCredits = 0;
@@ -476,8 +440,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
                 Integer otherCredits = (Integer) mapEntry.getValue();
                 Integer groupID = (Integer) mapEntry.getKey();
 
-                CurricularCourseGroup otherGroup = (CurricularCourseGroup) curricularCourseGroupDAO
-                        .readByOID(CurricularCourseGroup.class, groupID);
+                CurricularCourseGroup otherGroup = RootDomainObject.getInstance().readCurricularCourseGroupByOID(groupID);
 
                 if (otherCredits.intValue() < otherGroup.getMinimumCredits().intValue()) {
                     return false;
@@ -499,9 +462,6 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private boolean isSecundaryAreaDone(StudentCurricularPlan studentCurricularPlan,
             HashMap creditsInSecundaryAreaGroups, int creditsInAnySecundaryArea)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                .getIPersistentCurricularCourseGroup();
 
         if (!creditsInSecundaryAreaGroups.entrySet().isEmpty()) {
             int areaCredits = 0;
@@ -512,9 +472,8 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
                 Integer otherCredits = (Integer) mapEntry.getValue();
                 Integer groupID = (Integer) mapEntry.getKey();
 
-                CurricularCourseGroup otherGroup = (CurricularCourseGroup) curricularCourseGroupDAO
-                        .readByOID(CurricularCourseGroup.class, groupID);
-
+                CurricularCourseGroup otherGroup = RootDomainObject.getInstance().readCurricularCourseGroupByOID(groupID);
+                
                 if (otherCredits.intValue() >= otherGroup.getMaximumCredits().intValue()) {
                     return true;
                 }
@@ -538,14 +497,10 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private List selectSecundaryAreaCurricularCoursesFromGroupsNotFull(
             StudentCurricularPlan studentCurricularPlan, HashMap creditsInSecundaryAreaGroups,
             int creditsInAnySecundaryArea) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                .getIPersistentCurricularCourseGroup();
-
+        
         List<CurricularCourse> secundaryAreaCurricularCourses = new ArrayList<CurricularCourse>();
 
-        List groups = curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan
-                .getSecundaryBranch().getIdInternal(), AreaType.SECONDARY);
+        List<CurricularCourseGroup> groups = studentCurricularPlan.getSecundaryBranch().readCurricularCourseGroupsByAreaType(AreaType.SECONDARY);
 
         int size = groups.size();
         for (int i = 0; i < size; i++) {
@@ -562,14 +517,9 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private List selectSpecializationAreaCurricularCoursesFromGroupsNotFull(
             StudentCurricularPlan studentCurricularPlan, HashMap creditsInSpecializationAreaGroups)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                .getIPersistentCurricularCourseGroup();
-
         List<CurricularCourse> specializationAreaCurricularCourses = new ArrayList<CurricularCourse>();
 
-        List groups = curricularCourseGroupDAO.readByBranchAndAreaType(
-                studentCurricularPlan.getBranch().getIdInternal(), AreaType.SPECIALIZATION);
+        List<CurricularCourseGroup> groups = studentCurricularPlan.getBranch().readCurricularCourseGroupsByAreaType(AreaType.SPECIALIZATION); 
 
         int size = groups.size();
         for (int i = 0; i < size; i++) {

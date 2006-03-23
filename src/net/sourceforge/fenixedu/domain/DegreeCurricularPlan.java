@@ -32,10 +32,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.MarkType;
 
@@ -415,29 +411,29 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return result;
     }
+    
+    public List<CurricularCourseScope> getActiveCurricularCourseScopes(){
+    	final List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
+    	for (final CurricularCourse course : getCurricularCourses()) {
+			result.addAll(course.getActiveScopes());
+		}
+    	return result;
+    }
 
     public List getSpecialListOfCurricularCourses() {
         return new ArrayList();
     }
 
     public List getAllOptionalCurricularCourseGroups() {
-
-        List groups = new ArrayList();
-
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-            IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                    .getIPersistentCurricularCourseGroup();
-
-            groups = curricularCourseGroupDAO
-                    .readAllOptionalCurricularCourseGroupsFromDegreeCurricularPlan(this.getIdInternal());
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new RuntimeException(e);
-        }
-
-        return groups;
+    	List<CurricularCourseGroup> result = new ArrayList<CurricularCourseGroup>();
+    	for (Branch branch : this.getAreas()) {
+			for (CurricularCourseGroup curricularCourseGroup : branch.getCurricularCourseGroups()) {
+				if(curricularCourseGroup instanceof OptionalCurricularCourseGroup) {
+					result.add(curricularCourseGroup);
+				}
+			}
+		}
+    	return result;
     }
 
     public boolean isGradeValid(String grade) {
@@ -633,4 +629,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     	}
     	return result;
     }
+    
+ 
 }

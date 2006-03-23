@@ -10,10 +10,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAc
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.SpecificLEECEnrollmentRule;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 /**
@@ -47,32 +43,24 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base {
 
         List curricularCourses = new ArrayList();
 
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                    .getIPersistentCurricularCourseGroup();
-
-            List groups = curricularCourseGroupDAO.readByBranchAndAreaType(area.getIdInternal(), areaType);
-
-            int groupsSize = groups.size();
-
-            for (int i = 0; i < groupsSize; i++) {
-                CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) groups.get(i);
-
-                List courses = curricularCourseGroup.getCurricularCourses();
-
-                int coursesSize = courses.size();
-                for (int j = 0; j < coursesSize; j++) {
-                    CurricularCourse curricularCourse = (CurricularCourse) courses.get(j);
-                    if (!curricularCourses.contains(curricularCourse)) {
-                        curricularCourses.add(curricularCourse);
-                    }
-                }
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new RuntimeException(e);
+        List<CurricularCourseGroup> groups = area.readCurricularCourseGroupsByAreaType(areaType);
+        
+        int groupsSize = groups.size();
+        
+        for (int i = 0; i < groupsSize; i++) {
+        	CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) groups.get(i);
+        	
+        	List courses = curricularCourseGroup.getCurricularCourses();
+        	
+        	int coursesSize = courses.size();
+        	for (int j = 0; j < coursesSize; j++) {
+        		CurricularCourse curricularCourse = (CurricularCourse) courses.get(j);
+        		if (!curricularCourses.contains(curricularCourse)) {
+        			curricularCourses.add(curricularCourse);
+        		}
+        	}
         }
+
 
         return curricularCourses;
     }
