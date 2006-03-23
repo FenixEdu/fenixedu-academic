@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
  * @author mrsp and jdnf
@@ -27,28 +26,6 @@ public class ExecutionYearVO  extends VersionedObjectsBase implements IPersisten
         }        
         
         return null;
-    }
-    
-    public List readNotClosedExecutionYears() throws ExcepcaoPersistencia {
-        Collection<ExecutionYear> executionYears = readAll(ExecutionYear.class);
-        List executionYearsAux = new ArrayList();
-        
-        for(ExecutionYear executionYear : executionYears){
-            if(!executionYear.getState().equals(PeriodState.CLOSED))
-                executionYearsAux.add(executionYear);
-        }        
-        return executionYearsAux;
-    }
-
-    public List readOpenExecutionYears() throws ExcepcaoPersistencia {
-        Collection<ExecutionYear> executionYears = readAll(ExecutionYear.class);
-        List executionYearsAux = new ArrayList();
-        
-        for(ExecutionYear executionYear : executionYears){
-            if(executionYear.getState().equals(PeriodState.OPEN))
-                executionYearsAux.add(executionYear);
-        }        
-        return executionYearsAux;
     }
 
     public List readExecutionYearsInPeriod(Date start, Date end) throws ExcepcaoPersistencia {

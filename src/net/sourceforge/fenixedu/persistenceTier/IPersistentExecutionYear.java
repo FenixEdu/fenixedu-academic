@@ -14,10 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 public interface IPersistentExecutionYear extends IPersistentObject {
 
     public ExecutionYear readExecutionYearByName(String year) throws ExcepcaoPersistencia;
-
-    public List readNotClosedExecutionYears() throws ExcepcaoPersistencia;
-
-    public List readOpenExecutionYears() throws ExcepcaoPersistencia;
     
     public List readExecutionYearsInPeriod(Date start, Date end) throws ExcepcaoPersistencia;
 }

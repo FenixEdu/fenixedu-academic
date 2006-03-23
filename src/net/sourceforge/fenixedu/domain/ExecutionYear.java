@@ -104,4 +104,24 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
         }
         return null;
     }
+
+    public static List<ExecutionYear> readOpenExecutionYears() {
+        final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
+        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+            if (executionYear.getState() == PeriodState.OPEN) {
+                result.add(executionYear);
+            }
+        }
+        return result;
+    }
+    
+    public static List<ExecutionYear> readNotClosedExecutionYears() {
+        final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
+        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+            if (executionYear.getState() != PeriodState.CLOSED) {
+                result.add(executionYear);
+            }
+        }
+        return result;
+    }
 }
