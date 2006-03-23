@@ -199,8 +199,6 @@ public interface ISuportePersistente
 
 	public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime();
 
-	public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup();
-
 	public IPersistentGratuitySituation getIPersistentGratuitySituation();
 
 	public IPersistentTutor getIPersistentTutor();

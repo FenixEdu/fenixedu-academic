@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
@@ -498,12 +497,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime()
 	{
 		return new TeacherInstitutionWorkingTimeOJB();
-	}
-
-	// Nuno Correia & Ricardo Rodrigues
-	public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup()
-	{
-		return new CurricularCourseGroupOJB();
 	}
 
 	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)

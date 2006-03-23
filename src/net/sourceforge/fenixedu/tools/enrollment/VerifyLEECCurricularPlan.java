@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCour
 import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -69,11 +68,7 @@ public class VerifyLEECCurricularPlan {
      */
     private static void printItForThisAreaWithScopes(Branch branch, AreaType areaType)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
-                .getIPersistentCurricularCourseGroup();
-
-        List groups = curricularCourseGroupDAO.readByBranchAndAreaType(branch.getIdInternal(), areaType);
+        List<CurricularCourseGroup> groups = branch.readCurricularCourseGroupsByAreaType(areaType);
         Iterator iterator1 = groups.iterator();
         while (iterator1.hasNext()) {
             CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) iterator1.next();
