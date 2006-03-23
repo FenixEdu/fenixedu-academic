@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
@@ -35,8 +34,6 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
     public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode)
             throws FenixServiceException, ExcepcaoPersistencia {
         IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
-        IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
-                .getIPersistentCurricularCourseScope();
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
         if (curricularCourseCode == null) {
@@ -49,9 +46,8 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
             throw new NonExistingServiceException();
         }
         //selects active curricular course scopes
-        List activeCurricularCourseScopes = persistentCurricularCourseScope
-                .readActiveCurricularCourseScopesByCurricularCourse(curricularCourse.getIdInternal());
-
+        List<CurricularCourseScope> activeCurricularCourseScopes = curricularCourse.getActiveScopes(); 
+         
         activeCurricularCourseScopes = (List) CollectionUtils.select(activeCurricularCourseScopes,
                 new Predicate() {
                     public boolean evaluate(Object arg0) {

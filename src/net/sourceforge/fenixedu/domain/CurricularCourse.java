@@ -144,6 +144,16 @@ public class CurricularCourse extends CurricularCourse_Base {
 
         return result;
     }
+    
+    public List<CurricularCourseScope> getActiveScopes(){
+    	final List<CurricularCourseScope> activeScopes = new ArrayList<CurricularCourseScope>();
+    	for (CurricularCourseScope scope : this.getScopes()) {
+			if(scope.isActive()) {
+				activeScopes.add(scope);
+			}
+		}
+    	return activeScopes;
+    }
 
     public List<CurricularCourseScope> getActiveScopesInExecutionPeriod(
             final ExecutionPeriod executionPeriod) {

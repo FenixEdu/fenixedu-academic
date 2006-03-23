@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -29,13 +30,11 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
     protected List readActiveCurricularCourseScopes(final Integer degreeCurricularPlanId)
             throws ExcepcaoPersistencia {
         List infoActiveScopes = null;
-        IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
-                .getIPersistentCurricularCourseScope();
 
         if (degreeCurricularPlanId != null) {
 
-            List allActiveScopes = persistentCurricularCourseScope
-                    .readActiveCurricularCourseScopesByDegreeCurricularPlanId(degreeCurricularPlanId);
+            DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+            List<CurricularCourseScope> allActiveScopes =  degreeCurricularPlan.getActiveCurricularCourseScopes();
 
             if (allActiveScopes != null && allActiveScopes.size() > 0) {
                 infoActiveScopes = new ArrayList();

@@ -45,9 +45,7 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends Service
         while (iterator.hasNext()) {
             curricularCourse = (CurricularCourse) iterator.next();
 
-            List curricularCourseScopes = persistentSupport
-                    .getIPersistentCurricularCourseScope()
-                    .readActiveCurricularCourseScopesByCurricularCourse(curricularCourse.getIdInternal());
+            List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getActiveScopes();
 
             if (curricularCourseScopes != null) {
                 iteratorScopes = curricularCourseScopes.listIterator();
