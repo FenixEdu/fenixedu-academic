@@ -78,7 +78,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.Mone
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestAdvisoryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.MetadataOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.OnlineTestOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.QuestionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.StudentTestLogOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.StudentTestQuestionOJB;
@@ -142,7 +141,6 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentOnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
@@ -581,11 +579,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentStudentTestLog getIPersistentStudentTestLog()
 	{
 		return new StudentTestLogOJB();
-	}
-
-	public IPersistentOnlineTest getIPersistentOnlineTest()
-	{
-		return new OnlineTestOJB();
 	}
 
 	public IPersistentTestScope getIPersistentTestScope()

@@ -74,7 +74,6 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentOnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
@@ -162,7 +161,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.O
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.DistributedTestAdvisoryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.DistributedTestVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.MetadataVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.OnlineTestVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.QuestionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.StudentTestLogVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.StudentTestQuestionVO;
@@ -420,10 +418,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentGratuitySituation getIPersistentGratuitySituation() {
         return new GratuitySituationVO();
-    }
-
-    public IPersistentOnlineTest getIPersistentOnlineTest() {
-        return new OnlineTestVO();
     }
 
     public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {

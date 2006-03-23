@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentOnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
@@ -145,22 +144,16 @@ public interface ISuportePersistente
 
 	public IPersistentStudentTestLog getIPersistentStudentTestLog();
 
-	public IPersistentOnlineTest getIPersistentOnlineTest();
-
 	public IPersistentTestScope getIPersistentTestScope();
 
 	public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory();
 
-	// by Barbosa (October 28th, 2003)
 	public IPersistentGrantOwner getIPersistentGrantOwner();
 
-	// by Barbosa (November 18th, 2003)
 	public IPersistentGrantContract getIPersistentGrantContract();
 
-	// by Barbosa (November 19th, 2003)
 	public IPersistentGrantType getIPersistentGrantType();
 
-	// by Barbosa (November 20th, 2003)
 	public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher();
 
 	public IPersistentGrantCostCenter getIPersistentGrantCostCenter();
