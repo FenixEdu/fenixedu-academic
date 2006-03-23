@@ -19,7 +19,10 @@
 			<h:outputText value="#{bolonhaBundle['manage.groups']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="toOrder" value="false"/>
-			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>			
+			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+			<f:param name="action" value="build"/>
 		</h:outputLink>
 		<h:outputText value=" , " escape="false"/>
 		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['order.groups']}</span>" rendered="#{CurricularCourseManagement.toOrder == 'true'}" escape="false"/>
@@ -28,6 +31,9 @@
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="toOrder" value="true"/>
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>			
+			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+			<f:param name="action" value="build"/>
 		</h:outputLink>
 	</h:panelGroup>
 	<h:outputText value="</li>" escape="false"/>

@@ -16,6 +16,9 @@
 		<h:outputText escape="false" value="<input id='pos' name='pos' type='hidden' value='#{CourseGroupManagement.position}'/>"/>		
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
 		<h:outputText escape="false" value="<input id='toOrder' name='toOrder' type='hidden' value='#{CurricularCourseManagement.toOrder}'/>"/>
+		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
+		<h:outputText escape="false" value="<input id='hideCourses' name='hideCourses' type='hidden' value='#{CurricularCourseManagement.hideCourses}'/>"/>		
+		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularCourseManagement.showRules}'/>"/>
 
 		<h:outputText value="<p>#{bolonhaBundle['group']}: " escape="false"/>
 		<h:outputText value="<b>#{CourseGroupManagement.name}</b></p><br/>" escape="false"/>
