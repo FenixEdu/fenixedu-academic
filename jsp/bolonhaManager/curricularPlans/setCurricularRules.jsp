@@ -16,8 +16,9 @@
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
 		<h:outputText value="<ul><li>" escape="false"/>
-		<h:commandLink value="#{bolonhaBundle['return']}"
-			action="buildCurricularPlan"/>
+		<h:commandLink value="#{bolonhaBundle['return']}" action="buildCurricularPlan">
+			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>			
+		</h:commandLink>
 		<h:outputText value="</li></ul>" escape="false"/>
 	</h:form>
 	
