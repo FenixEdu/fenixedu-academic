@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCa
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
@@ -370,10 +369,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentGuide getIPersistentGuide() {
         return new GuideVO();
-    }
-
-    public IPersistentSeminaryTheme getIPersistentSeminaryTheme() {
-        return null;
     }
 
     public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {
