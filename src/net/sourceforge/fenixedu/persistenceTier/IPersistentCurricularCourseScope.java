@@ -12,16 +12,16 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 
 public interface IPersistentCurricularCourseScope extends IPersistentObject {
 
-    public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+    /*public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
             Integer curricularCourseId, Integer curricularSemesterId, Integer branchId)
-            throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;*/
 
-    public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
+    /*public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
             Integer curricularCourseId, Integer curricularSemesterId, Integer branchId,
-            Calendar endDate) throws ExcepcaoPersistencia;
+            Calendar endDate) throws ExcepcaoPersistencia;*/
 
-    public List readActiveCurricularCourseScopesByCurricularCourse(Integer curricularCourseId)
-            throws ExcepcaoPersistencia;
+    /*public List readActiveCurricularCourseScopesByCurricularCourse(Integer curricularCourseId)
+            throws ExcepcaoPersistencia;*/
 
     public List readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
             Integer curricularCourseId, Date beginDate, Date endDate)
@@ -43,7 +43,7 @@ public interface IPersistentCurricularCourseScope extends IPersistentObject {
      * @param degreeCurricularPlanId
      * @return
      */
-    public List readActiveCurricularCourseScopesByDegreeCurricularPlanId(Integer degreeCurricularPlanId)
-            throws ExcepcaoPersistencia;
+    /*public List readActiveCurricularCourseScopesByDegreeCurricularPlanId(Integer degreeCurricularPlanId)
+            throws ExcepcaoPersistencia;*/
 
 }
