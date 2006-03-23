@@ -392,7 +392,7 @@ password.generator=net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswo
 # 	host.control.name.checkPassword=localhost,trusted.example.net
 #
 
-host.control.name.net.sourceforge.fenixedu.presentationTier.Action.CheckPasswordKerberosAction=login.ist.utl.pt,aqua.ist.utl.pt,flaviae.ist.utl.pt
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.CheckPasswordKerberosAction=127.0.0.1
 
 #----------------------------------------------
 # CAS configuration
