@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
+import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 
 /**
  * @author Susana Fernandes
@@ -28,7 +29,7 @@ public class InfoQuestion extends InfoObject {
 
     // This is the list with all of the instructions for the response
     // processing.
-    private List responseProcessingInstructions;
+    private List<ResponseProcessing> responseProcessingInstructions;
 
     // This is the list with ONE correct response (to use with fenix correction
     // formulas)
@@ -120,7 +121,7 @@ public class InfoQuestion extends InfoObject {
         this.questionType = questionType;
     }
 
-    public List getResponseProcessingInstructions() {
+    public List<ResponseProcessing> getResponseProcessingInstructions() {
         return responseProcessingInstructions;
     }
 
