@@ -1,10 +1,3 @@
-/*
- * Interface.java
- * 
- * Created on 19 de Agosto de 2002, 1:09
- */
-
-
 package net.sourceforge.fenixedu.persistenceTier;
 
 
@@ -55,7 +48,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuest
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestScope;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
@@ -246,8 +238,6 @@ public interface ISuportePersistente
 	public IPersistentSentSms getIPersistentSentSms();
 
 	public IPersistentPeriod getIPersistentPeriod();
-
-	public IPersistentPublication getIPersistentPublication();
 
 	public IPersistentPublicationType getIPersistentPublicationType();
 
