@@ -57,7 +57,7 @@
 					<f:param name="organizeBy" value="groups"/>
 					<f:param name="showRules" value="false"/>
 					<f:param name="hideCourses" value="false"/>					
-					<f:param name="action" value="view"/>				
+					<f:param name="action" value="build"/>
 				</h:outputLink>
 				<h:outputText value="</td></tr>" escape="false"/>
 			</fc:dataRepeater>
