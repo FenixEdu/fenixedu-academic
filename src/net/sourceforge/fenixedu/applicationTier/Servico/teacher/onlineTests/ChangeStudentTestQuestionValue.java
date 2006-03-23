@@ -1,7 +1,3 @@
-/*
- * Created on Oct 20, 2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.text.DecimalFormat;
@@ -33,16 +29,12 @@ import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
-/**
- * @author Susana Fernandes
- */
 public class ChangeStudentTestQuestionValue extends Service {
     public List<InfoSiteDistributedTestAdvisory> run(Integer executionCourseId, Integer distributedTestId, Double newValue, Integer questionId,
             Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
@@ -77,15 +69,13 @@ public class ChangeStudentTestQuestionValue extends Service {
                     && studentTestQuestion.getDistributedTest().getTestType().equals(new TestType(TestType.EVALUATION))) {
                 studentTestQuestion.setTestQuestionMark(getNewQuestionMark(studentTestQuestion, newValue, path.replace('\\', '/')));
 
-                OnlineTest onlineTest = (OnlineTest) persistentSupport.getIPersistentOnlineTest().readByDistributedTest(
-                        studentTestQuestion.getDistributedTest().getIdInternal());
-                ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                        ExecutionCourse.class, executionCourseId);
+                OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
+                ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
                 Attends attend = persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
                         studentTestQuestion.getStudent().getIdInternal(), executionCourse.getIdInternal());
                 Mark mark = persistentSupport.getIPersistentMark().readBy(onlineTest, attend);
                 if (mark != null) {
-                    mark.setMark(getNewStudentMark(persistentSupport, studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent()));
+                    mark.setMark(getNewStudentMark(studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent()));
                 }
             }
             studentTestQuestion.setTestQuestionValue(newValue);
@@ -102,7 +92,7 @@ public class ChangeStudentTestQuestionValue extends Service {
         return infoSiteDistributedTestAdvisoryList;
     }
 
-    private String getNewStudentMark(ISuportePersistente persistentSupport, DistributedTest dt, Student s) throws ExcepcaoPersistencia {
+    private String getNewStudentMark(DistributedTest dt, Student s) throws ExcepcaoPersistencia {
         double totalMark = 0;
         List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
                 s.getIdInternal(), dt.getIdInternal());
@@ -161,4 +151,5 @@ public class ChangeStudentTestQuestionValue extends Service {
 
         return infoQuestion;
     }
+
 }

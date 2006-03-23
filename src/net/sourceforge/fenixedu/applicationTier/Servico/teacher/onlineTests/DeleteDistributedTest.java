@@ -1,7 +1,3 @@
-/*
- * Created on 24/Set/2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.Iterator;
@@ -15,22 +11,17 @@ import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
-/**
- * @author Susana Fernandes
- */
 public class DeleteDistributedTest extends Service {
-    public void run(Integer executionCourseId, Integer distributedTestId) throws ExcepcaoPersistencia {
-        IPersistentDistributedTest persistentDistributedTest = persistentSupport.getIPersistentDistributedTest();
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
+    public void run(Integer executionCourseId, final Integer distributedTestId) throws ExcepcaoPersistencia {
+        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 
         persistentSupport.getIPersistentQuestion().cleanQuestions(distributedTest);
         persistentSupport.getIPersistentMetadata().cleanMetadatas();
 
         if (distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
-            OnlineTest onlineTest = (OnlineTest) persistentSupport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
+            OnlineTest onlineTest = distributedTest.getOnlineTest();
             Iterator<ExecutionCourse> executionCourseIterator = onlineTest.getAssociatedExecutionCoursesIterator();
             while (executionCourseIterator.hasNext()) {
                 executionCourseIterator.next();
@@ -41,11 +32,11 @@ public class DeleteDistributedTest extends Service {
             while (marksIterator.hasNext()) {
                 Mark mark = marksIterator.next();
                 marksIterator.remove();
-                persistentSupport.getIPersistentMark().deleteByOID(Mark.class, mark.getIdInternal());
+                persistentObject.deleteByOID(Mark.class, mark.getIdInternal());
             }
             // persistentSupport.getIPersistentMark().deleteByEvaluation(onlineTest);
             distributedTest.removeOnlineTest();
-            persistentSupport.getIPersistentOnlineTest().deleteByOID(OnlineTest.class, onlineTest.getIdInternal());
+            persistentObject.deleteByOID(OnlineTest.class, onlineTest.getIdInternal());
         }
 
         distributedTest.removeTestScope();
@@ -62,8 +53,7 @@ public class DeleteDistributedTest extends Service {
         while (distributedTestAdvisoryIterator.hasNext()) {
             DistributedTestAdvisory distributedTestAdvisory = distributedTestAdvisoryIterator.next();
             distributedTestAdvisoryIterator.remove();
-            persistentSupport.getIPersistentDistributedTestAdvisory().deleteByOID(DistributedTestAdvisory.class,
-                    distributedTestAdvisory.getIdInternal());
+            persistentObject.deleteByOID(DistributedTestAdvisory.class, distributedTestAdvisory.getIdInternal());
         }
 
         Iterator<StudentTestLog> studentTestLogsIterator = distributedTest.getStudentsLogsIterator();
@@ -71,10 +61,11 @@ public class DeleteDistributedTest extends Service {
             StudentTestLog studentTestLog = studentTestLogsIterator.next();
             studentTestLogsIterator.remove();
             studentTestLog.removeStudent();
-            persistentSupport.getIPersistentStudentTestLog().deleteByOID(StudentTestLog.class, studentTestLog.getIdInternal());
+            persistentObject.deleteByOID(StudentTestLog.class, studentTestLog.getIdInternal());
         }
 
-        persistentDistributedTest.deleteByOID(DistributedTest.class, distributedTest.getIdInternal());
+        persistentObject.deleteByOID(DistributedTest.class, distributedTest.getIdInternal());
 
     }
+
 }
