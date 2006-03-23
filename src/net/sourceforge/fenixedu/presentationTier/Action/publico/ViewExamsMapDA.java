@@ -10,7 +10,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +29,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -57,7 +55,6 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
         	
           Integer degreeId = getFromRequest("degreeID", request);
           request.setAttribute("degreeID", degreeId);
-          String language = getLocaleLanguageFromRequest(request);
           Integer executionDegreeId = getFromRequest("executionDegreeID", request);
           request.setAttribute("executionDegreeID", executionDegreeId);
 
@@ -95,7 +92,7 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
             
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
             infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
-            infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+            infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
      
             infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
             infoExamsMap.setInfoExecutionDegree(infoExecutionDegree);
@@ -168,12 +165,5 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
 		   return infoExamsMap;
 	   
 		}
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
-
-        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-        return  locale.getLanguage();
-
-    }
-	
 
 }

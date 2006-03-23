@@ -6,8 +6,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,7 +21,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -67,7 +64,6 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
         Integer degreeId = Integer.valueOf(request.getParameter("degreeID"));
         request.setAttribute("degreeID", degreeId);
         Integer classId = null;
-        String language = getLocaleLanguageFromRequest(request);
         
         if (classIdString != null) {
             classId = new Integer(classIdString);
@@ -86,7 +82,7 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
         }
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
         infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
-        infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+        infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
  
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree
@@ -108,10 +104,5 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
         return mapping.findForward("Sucess");
 
     }
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
-        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-        return  locale.getLanguage();
-
-    }
 }

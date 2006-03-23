@@ -1,10 +1,5 @@
-/*
- * Created 2004/11/7
- * 
- */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -31,14 +26,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-/**
- * @author Luis Cruz
- */
 public class ShowClassesDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward listClasses(ActionMapping mapping, ActionForm actionForm,
@@ -46,8 +37,7 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
         final Integer degreeOID = new Integer(request.getParameter("degreeOID"));
         request.setAttribute("degreeID", degreeOID);
 
-        final String language = getLocaleLanguageFromRequest(request);
-        getInfoDegreeCurricularPlan(request, degreeOID, language);
+        getInfoDegreeCurricularPlan(request, degreeOID);
 
         final IUserView userView = SessionUtils.getUserView(request);
         final Integer executionPeriodID = ((InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD)).getIdInternal();
@@ -112,19 +102,11 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
     	return classView;
 	}
 
-    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID,String language)
-            throws FenixServiceException, FenixFilterException {
+    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID) throws FenixServiceException, FenixFilterException {
         Object[] args = { degreeOID };
-
-        InfoDegree infoDegree = (InfoDegree) ServiceManagerServiceFactory.executeService(null,
-                "ReadDegreeByOID", args);
-        infoDegree.prepareEnglishPresentation(language);
+        InfoDegree infoDegree = (InfoDegree) ServiceManagerServiceFactory.executeService(null, "ReadDegreeByOID", args);
+        infoDegree.prepareEnglishPresentation(getLocale(request));
         request.setAttribute("infoDegree", infoDegree);
     }
 
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
-        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-        return  locale.getLanguage();
-
-    }
 }

@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.Curriculum;
 
@@ -130,12 +131,12 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
         }
         return result;
     }
-    public void prepareEnglishPresentation(String language) {
-        if (language.equals("en")){        
+    public void prepareEnglishPresentation(Locale locale) {
+        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {        
             this.generalObjectives  = this.generalObjectivesEn;
             this.operacionalObjectives = this.operacionalObjectivesEn;
             this.program = this.programEn;
-           // this.infoCurricularCourse.prepareEnglishPresentation(language);
+           // this.infoCurricularCourse.prepareEnglishPresentation(locale);
         }
     }
     public String toString() {

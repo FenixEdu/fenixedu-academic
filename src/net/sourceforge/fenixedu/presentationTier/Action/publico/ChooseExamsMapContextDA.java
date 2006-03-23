@@ -125,7 +125,6 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 			
             Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
                 
-            String language = getLocaleLanguageFromRequest(request);
 			InfoExecutionDegree infoExecutionDegree = null;   
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
             if (infoExecutionDegreeList.size() == 1) {
@@ -133,7 +132,7 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 				infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(0);
        
                 infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
-                infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+                infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
          
                 infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         
@@ -195,10 +194,5 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
         }
         return false;
     }
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
-        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-        return  locale.getLanguage();
-
-    }
 }

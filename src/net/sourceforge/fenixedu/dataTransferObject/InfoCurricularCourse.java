@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
@@ -586,8 +587,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         this.nameEn = nameEn;
     }
     
-    public void prepareEnglishPresentation(String language) {
-        if (language.equals("en")){        
+    public void prepareEnglishPresentation(Locale locale) {
+        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {        
             if (!(this.nameEn==null)&&!(this.nameEn.length()==0)&&!(this.nameEn=="")){
                 this.name = this.nameEn;
            }

@@ -35,27 +35,17 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-/**
- * @author Tânia Pousão Create on 11/Nov/2003
- */
 public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
+    private static final ActionErrors errors = new ActionErrors();
+    
     public ActionForward showDescription(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
         
-      //  Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
-      //  Locale locale2 = request.getLocale();
-        String language = getLocaleLanguageFromRequest(request);
-      
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-        // request.setAttribute("executionPeriodOID", executionPeriodOId);
 
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
-
-        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-      //  request.setAttribute("inEnglish", inEnglish);
 
         Integer index = getFromRequest("index", request);
         request.setAttribute("index", index);
@@ -68,13 +58,10 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         // degree
         if (degreeId == null) {
 
-            // degree information
-            Object[] args = { executionDegreeId };
-
             InfoExecutionDegree infoExecutionDegree = null;
             try {
-                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                        null, "ReadExecutionDegreeByOID", args);
+                final Object[] args = { executionDegreeId };
+                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(null, "ReadExecutionDegreeByOID", args);
             } catch (FenixServiceException e) {
                 errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
             }
@@ -99,12 +86,10 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
                 return (new ActionForward(mapping.getInput()));
             }
 
-            Object[] args2 = { infoExecutionYear };
-            
             List executionPeriods = null;
             try {
-                executionPeriods = (List) ServiceManagerServiceFactory.executeService(null,
-                        "ReadExecutionPeriodsByExecutionYear", args2);
+                final Object[] args2 = { infoExecutionYear };
+                executionPeriods = (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionPeriodsByExecutionYear", args2);
             } catch (FenixServiceException e) {
                 errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
             }
@@ -118,58 +103,42 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
             Collections.sort(executionPeriods, new BeanComparator("endDate"));
 
-            InfoExecutionPeriod infoExecutionPeriod = ((InfoExecutionPeriod) executionPeriods
-                    .get(executionPeriods.size() - 1));
+            InfoExecutionPeriod infoExecutionPeriod = ((InfoExecutionPeriod) executionPeriods.get(executionPeriods.size() - 1));
             executionPeriodOId = infoExecutionPeriod.getIdInternal();
 
             request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-            request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod
-                    .getIdInternal().toString());
+            request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
             request.setAttribute("schoolYear", infoExecutionYear.getYear());
-
         }
 
-        // degree information
-        Object[] args = { degreeId };
-
-        InfoDegreeInfo infoDegreeInfo = null;
         try {
-            infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null,
-                    "ReadDegreeInfoByDegree", args);
+            Object[] args = { degreeId };
+            InfoDegreeInfo infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null, "ReadDegreeInfoByDegree", args);
+            infoDegreeInfo.prepareEnglishPresentation(getLocale(request));
+            request.setAttribute("infoDegreeInfo", infoDegreeInfo);
         } catch (FenixServiceException e) {
             errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
             saveErrors(request, errors);
-            // return (new ActionForward(mapping.getInput()));
         }
 
-        // execution degrees of this degree
-        List executionDegreeList = null;
-        Object[] args1 = { executionPeriodOId, degreeId };
         try {
-            executionDegreeList = (List) ServiceManagerServiceFactory.executeService(null,
-                    "ReadExecutionDegreesByDegreeAndExecutionPeriod", args1);
+            Object[] args1 = { executionPeriodOId, degreeId };
+            List executionDegreeList = (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionDegreesByDegreeAndExecutionPeriod", args1);
+            request.setAttribute("infoExecutionDegrees", executionDegreeList);
         } catch (FenixServiceException e) {
             errors.add("impossibleDegreeSite", new ActionError("error.impossibleExecutionDegreeList"));
             saveErrors(request, errors);
         }
 
-        request.setAttribute("infoDegreeInfo", infoDegreeInfo);
-        request.setAttribute("infoExecutionDegrees", executionDegreeList);
-       
-//        // done by the boce
-        infoDegreeInfo.prepareEnglishPresentation(language);
+        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
-
       
         return mapping.findForward("showDescription");
-
     }
 
     public ActionForward showAccessRequirements(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        
-        String language = getLocaleLanguageFromRequest(request);
         
         getFromRequest("executionPeriodOID", request);
         Integer degreeId = getFromRequest("degreeID", request);
@@ -195,7 +164,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         }
 
         // done by the boce
-        infoDegreeInfo.prepareEnglishPresentation(language);
+        infoDegreeInfo.prepareEnglishPresentation(getLocale(request));
         request.setAttribute("inEnglish", inEnglish);
         request.setAttribute("infoDegreeInfo", infoDegreeInfo);
         
@@ -206,8 +175,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
     public ActionForward showProfessionalStatus(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        
-        String language = getLocaleLanguageFromRequest(request);
         
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
@@ -228,7 +195,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
         }
 
-        infoDegreeInfo.prepareEnglishPresentation(language);        
+        infoDegreeInfo.prepareEnglishPresentation(getLocale(request));        
         request.setAttribute("infoDegreeInfo", infoDegreeInfo);
         
         return mapping.findForward("showProfessionalStatus");
@@ -242,7 +209,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
-        String language = getLocaleLanguageFromRequest(request);
         Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
@@ -266,8 +232,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
 
-//      done by the boce
-        infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+        infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
         return mapping.findForward("showCurricularPlans");
         
 
@@ -512,11 +477,4 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
     }
     
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
-
-        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-        return  locale.getLanguage();
-
-    }
-
 }

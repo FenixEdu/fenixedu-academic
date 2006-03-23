@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -183,8 +184,8 @@ public class InfoDegree extends InfoObject implements Comparable {
         this.nameEn = nameEn;
     }
 
-    public void prepareEnglishPresentation(String language) {
-        if (language.equals("en")) {
+    public void prepareEnglishPresentation(Locale locale) {
+        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
             if (!(this.nameEn == null) && !(this.nameEn.length() == 0) && !(this.nameEn == "")) {
                 this.nome = this.nameEn;
             }

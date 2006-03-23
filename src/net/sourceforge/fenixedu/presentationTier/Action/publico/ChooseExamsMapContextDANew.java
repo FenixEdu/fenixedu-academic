@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +32,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -124,8 +122,6 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
             request.setAttribute("degreeID", degreeId);
 			Integer indice = (Integer)chooseExamContextoForm.get("indice");
 
-            String language = getLocaleLanguageFromRequest(request);
-            
 			List executionPeriodsLabelValueList = new ArrayList();
 		    executionPeriodsLabelValueList = getList(degreeCurricularPlanId);
 		    if (executionPeriodsLabelValueList.size() > 1) {			
@@ -203,7 +199,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
                             .next();
 
                     if (infoDegreeCurricularPlanElem.getIdInternal().equals(degreeCurricularPlanId)) {
-                        infoDegreeCurricularPlanElem.prepareEnglishPresentation(language);
+                        infoDegreeCurricularPlanElem.prepareEnglishPresentation(getLocale(request));
                         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlanElem);
                         break;
                     }
@@ -316,10 +312,5 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 				
             return executionPeriodsLabelValueList;
     }
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
-        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-        return  locale.getLanguage();
-
-    }
 }

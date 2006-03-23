@@ -42,8 +42,6 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
         Integer executionDegreeId = getFromRequest("executionDegreeID", request);
         request.setAttribute("executionDegreeID", executionDegreeId); 
-        String language = getLocaleLanguageFromRequest(request);
-
         
         Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
@@ -165,15 +163,14 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-        infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+        infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
         infoExecutionDegree1.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
         if (curricularYear.intValue() != 0) {
 
-            Object[] args = { infoExecutionDegree, selectedExecutionPeriod, curricularYear ,language};
+            Object[] args = { infoExecutionDegree, selectedExecutionPeriod, curricularYear, getLocale(request) };
             try {
-                activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService(null,
-                        "ReadActiveDegreeCurricularPlanByID", args);
+                activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService(null, "ReadActiveDegreeCurricularPlanByID", args);
             } catch (FenixServiceException e) {
 //                errors
 //                        .add("impossibleCurricularPlan", new ActionError(
@@ -183,10 +180,9 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
             }
         } else {
 
-            Object[] args = { degreeCurricularPlanId, executionPeriodOId ,language,""};
+            Object[] args = { degreeCurricularPlanId, executionPeriodOId , getLocale(request),""};
             try {
-                activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService(null,
-                        "ReadActiveDegreeCurricularPlanByID", args);
+                activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService(null, "ReadActiveDegreeCurricularPlanByID", args);
             } catch (FenixServiceException e) {
 //                errors
 //                        .add("impossibleCurricularPlan", new ActionError(
@@ -249,10 +245,5 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         }
         return parameterBoolean;
     }
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
-        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-        return  locale.getLanguage();
-
-    }
 }

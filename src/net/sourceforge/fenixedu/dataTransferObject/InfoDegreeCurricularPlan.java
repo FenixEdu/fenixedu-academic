@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
@@ -285,10 +286,10 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         this.descriptionEn = descriptionEn;
     }
 
-    public void prepareEnglishPresentation(String language) {
-        if (language.equals("en")) {
+    public void prepareEnglishPresentation(Locale locale) {
+        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
             this.description = this.descriptionEn;
-            this.infoDegree.prepareEnglishPresentation(language);
+            this.infoDegree.prepareEnglishPresentation(locale);
         }
     }
 

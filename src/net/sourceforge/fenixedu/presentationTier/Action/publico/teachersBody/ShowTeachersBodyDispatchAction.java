@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -151,7 +149,6 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
         Integer semester = (Integer)executionDegreeForm.get("semester");
         Integer teacherType = (Integer)executionDegreeForm.get("teacherType");
         String searchDetails = (String)executionDegreeForm.get("searchDetails");
-        String language = getLocaleLanguageFromRequest(request);
         try {
 
             Object[] args = { executionDegreeId, semester, teacherType };
@@ -160,7 +157,6 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
                     "ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod", args);
             
             if((detailedProfessorShipsListofLists != null) && (!detailedProfessorShipsListofLists.isEmpty())) {
-            	
 
                 Collections.sort(detailedProfessorShipsListofLists, new Comparator() {
 
@@ -185,7 +181,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             InfoExecutionDegree degree = (InfoExecutionDegree) ServiceUtils.executeService(null, "ReadExecutionDegreeByOID", oid);
             
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = degree.getInfoDegreeCurricularPlan();
-            infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+            infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
             degree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
             
             request.setAttribute("searchType", "Consulta Por Curso");
@@ -257,10 +253,5 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
         return mapping.findForward("showProfessorships");
     }
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
-        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-        return  locale.getLanguage();
-
-    }
 }

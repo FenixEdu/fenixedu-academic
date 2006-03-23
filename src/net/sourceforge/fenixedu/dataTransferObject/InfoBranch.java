@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.domain.Branch;
@@ -219,8 +220,8 @@ public class InfoBranch extends InfoObject {
         this.nameEn = nameEn;
     }
     
-    public void prepareEnglishPresentation(String language) {
-        if (language.equals("en")){ 
+    public void prepareEnglishPresentation(Locale locale) {
+        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) { 
             if (!(this.nameEn==null)&&!(this.nameEn.length()==0)&&!(this.nameEn=="")){
                 this.name = this.nameEn;
             }

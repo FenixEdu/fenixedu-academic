@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 
@@ -361,8 +362,8 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
     }
 
     
-    public void prepareEnglishPresentation(String language) {
-        if (language.equals("en")){
+    public void prepareEnglishPresentation(Locale locale) {
+        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
             this.additionalInfo = this.additionalInfoEn;
             this.classifications = this.classificationsEn;
             this.description = this.descriptionEn;
@@ -373,7 +374,7 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
             this.testIngression = this.testIngressionEn;    
             this.recognitions = this.recognitionsEn;
             this.qualificationLevel = this.qualificationLevelEn;
-            this.infoDegree.prepareEnglishPresentation(language);
+            this.infoDegree.prepareEnglishPresentation(locale);
   
         }
     }

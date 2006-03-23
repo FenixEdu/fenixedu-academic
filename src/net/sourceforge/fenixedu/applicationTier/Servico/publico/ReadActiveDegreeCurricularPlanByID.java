@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCurricularPlanBaseService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -28,7 +29,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlanBaseService {
 
-    public List run(Integer degreeCurricularPlanId, Integer executionPeriodId, String language,
+    public List run(Integer degreeCurricularPlanId, Integer executionPeriodId, Locale locale,
             String arg) throws FenixServiceException, ExcepcaoPersistencia {
 
         if (degreeCurricularPlanId == null) {
@@ -37,7 +38,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
         if (executionPeriodId == null) {
             return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
-                    .readActiveCurricularCourseScopes(degreeCurricularPlanId), language);
+                    .readActiveCurricularCourseScopes(degreeCurricularPlanId), locale);
         }
 
         ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
@@ -48,12 +49,12 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
         return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
                 .readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlanId, executionPeriod
-                        .getExecutionYear()), language);
+                        .getExecutionYear()), locale);
     }
 
 
     public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
-            Integer curricularYear, String language) throws FenixServiceException, ExcepcaoPersistencia {
+            Integer curricularYear, Locale locale) throws FenixServiceException, ExcepcaoPersistencia {
         final ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, infoExecutionDegree.getIdInternal());
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
@@ -63,7 +64,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
         if (infoExecutionPeriod == null) {
             return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
-                    .readActiveCurricularCourseScopes(degreeCurricularPlan.getIdInternal()), language);
+                    .readActiveCurricularCourseScopes(degreeCurricularPlan.getIdInternal()), locale);
         }
         ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
                 ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
@@ -73,11 +74,11 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
         return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
                 .readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(
-                        executionPeriod, executionDegree, curricularYear), language);
+                        executionPeriod, executionDegree, curricularYear), locale);
     }
 
     
-    private List groupScopesByCurricularYearAndCurricularCourseAndBranch(List scopes, String language) {
+    private List groupScopesByCurricularYearAndCurricularCourseAndBranch(List scopes, Locale locale) {
         List result = new ArrayList();
         List temp = new ArrayList();
 
@@ -102,9 +103,9 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
                 InfoCurricularYear scopeYear = scope.getInfoCurricularSemester().getInfoCurricularYear();
                 InfoCurricularCourse scopeCurricularCourse = scope.getInfoCurricularCourse();
                 InfoBranch infoBranch = scope.getInfoBranch();
-                infoBranch.prepareEnglishPresentation(language);
+                infoBranch.prepareEnglishPresentation(locale);
                 scope.setInfoBranch(infoBranch);
-                scopeCurricularCourse.prepareEnglishPresentation(language);
+                scopeCurricularCourse.prepareEnglishPresentation(locale);
                 if (year == null) {
                     year = scopeYear;
                 }

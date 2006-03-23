@@ -62,8 +62,6 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 
         Integer curricularYear = (Integer) indexForm.get("curYear");
         
-        String language = getLocaleLanguageFromRequest(request);
-
         indexForm.set("indice", indexForm.get("indice"));
         indexForm.set("curYear", curricularYear);
         Object[] args = { curricularCourseId };
@@ -112,9 +110,9 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
             comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
             Collections.sort(infoCurriculum.getInfoCurricularCourse().getInfoScopes(), comparatorChain);
         }
-        infoCurriculum.getInfoCurricularCourse().getInfoDegreeCurricularPlan().getInfoDegree().prepareEnglishPresentation(language);
-        infoCurriculum.getInfoCurricularCourse().prepareEnglishPresentation(language);
-        infoCurriculum.prepareEnglishPresentation(language);
+        infoCurriculum.getInfoCurricularCourse().getInfoDegreeCurricularPlan().getInfoDegree().prepareEnglishPresentation(getLocale(request));
+        infoCurriculum.getInfoCurricularCourse().prepareEnglishPresentation(getLocale(request));
+        infoCurriculum.prepareEnglishPresentation(getLocale(request));
         request.setAttribute("infoCurriculum", infoCurriculum);
 
         
@@ -195,10 +193,5 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 
         return parameterBoolean;
     }
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
-        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-        return  locale.getLanguage();
-
-    }
 }

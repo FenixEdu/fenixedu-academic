@@ -310,10 +310,9 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             return mapping.findForward("Licenciatura execucao inexistente");
         }
 
-        String language = getLocaleLanguageFromRequest(request);
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
         infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
-        infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+        infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
 
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
@@ -431,13 +430,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             }
         }
         return executionPeriodsLabelValueList;
-    }
-
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
-
-        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-        return locale.getLanguage();
-
     }
 
 }

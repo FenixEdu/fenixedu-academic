@@ -1,14 +1,9 @@
-/*
- * Created 2004/11/5
- * 
- */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.text.Collator;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,14 +20,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-/**
- * @author Luis Cruz
- */
 public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward listSites(ActionMapping mapping, ActionForm actionForm,
@@ -40,10 +31,9 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
 
         Integer degreeOID = new Integer(request.getParameter("degreeOID"));
         request.setAttribute("degreeID", degreeOID);
-        String language = getLocaleLanguageFromRequest(request);
         List executionCourseViews = getExecutionCourseViews(request, degreeOID);
         
-        getInfoDegreeCurricularPlan(request, degreeOID,language);
+        getInfoDegreeCurricularPlan(request, degreeOID);
 
         InfoExecutionPeriod infoExecutionPeriod = getPreviouseExecutionPeriod(request);
         organizeExecutionCourseViews(request, executionCourseViews, infoExecutionPeriod);
@@ -51,11 +41,6 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
         return mapping.findForward("show-exeution-course-site-list");
     }
 
-    /**
-     * @param request
-     * @param executionCourseViews
-     * @param previousExecutionPeriod
-     */
     private void organizeExecutionCourseViews(HttpServletRequest request, List executionCourseViews,
             InfoExecutionPeriod previousExecutionPeriod) {
 
@@ -127,9 +112,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
 
     private List getExecutionCourseViews(HttpServletRequest request, Integer degreeOID) throws FenixServiceException, FenixFilterException {
         Object[] args = { degreeOID };
-
-        List executionCourseViews = (List) ServiceManagerServiceFactory.executeService(
-                null, "ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree", args);
+        List executionCourseViews = (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree", args);
         BeanComparator beanComparator = new BeanComparator("executionCourseName", Collator.getInstance());
         Collections.sort(executionCourseViews, beanComparator);
 
@@ -137,19 +120,11 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
         return executionCourseViews;        
     }
 
-    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID,String language) throws FenixServiceException, FenixFilterException {
+    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID) throws FenixServiceException, FenixFilterException {
         Object[] args = { degreeOID };
-
-        InfoDegree infoDegree = (InfoDegree)
-        		ServiceManagerServiceFactory.executeService(null, "ReadDegreeByOID", args);
-        infoDegree.prepareEnglishPresentation(language);
+        InfoDegree infoDegree = (InfoDegree) ServiceManagerServiceFactory.executeService(null, "ReadDegreeByOID", args);
+        infoDegree.prepareEnglishPresentation(getLocale(request));
         request.setAttribute("infoDegree", infoDegree);
     }
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
-        Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
-
-        return  locale.getLanguage();
-
-    }
 }
