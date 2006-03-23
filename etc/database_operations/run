@@ -19,6 +19,15 @@ function execute() {
 	echo
 }
 
+function executeWithTempFile() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password $DB < $2 > tmp.sql
+	mysql -u$USER -f -p$password $DB < tmp.sql	
+	rm tmp.sql
+	echo
+}
+
 execute "Alter Table Research Interest to support MLS" alterTableResearchInterest.sql
 execute "Fix StudentCurricularPlan Table" fixStudentCurricularPlanTable.sql
 execute "Fix ExecutionYear Table" fixExecutionYearTable.sql
+executeWithTempFile "Fix Person Accounts" fixPersonAccounts.sql
