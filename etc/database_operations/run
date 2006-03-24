@@ -27,5 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Add new Roles" addRoles.sql
 execute "Create Identification Table" createIdentificationTable.sql

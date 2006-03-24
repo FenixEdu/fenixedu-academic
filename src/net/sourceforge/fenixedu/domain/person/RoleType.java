@@ -72,14 +72,15 @@ public enum RoleType {
     CMS_MANAGER,
 
     SPACE_MANAGER,
-    
-    RESEARCHER;
+
+    RESEARCHER,
+
+    PEDAGOGICAL_COUNCIL;
 
     public String getName() {
-        return name();    
-
+        return name();
     }
-    
+
     public static List<RoleType> getRolesImportance(){
         List<RoleType> rolesImportance = new ArrayList<RoleType>();
         rolesImportance.add(RoleType.TEACHER);

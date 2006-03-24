@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +21,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -112,9 +115,13 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final ExecutionPeriod selectedExecutionPeriod = findExecutionPeriod(executionPeriods, executionPeriodID);
         dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
 
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan)
-            setDomainObjectInRequest(dynaActionForm, request, DegreeCurricularPlan.class, "degreeCurricularPlanID", "executionCourse");
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
+        final Collection<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
+        for (final ExecutionDegree executionDegree : selectedExecutionPeriod.getExecutionYear().getExecutionDegreesSortedByDegreeName()) {
+            if (executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso() == DegreeType.DEGREE) {
+                executionDegrees.add(executionDegree);
+            }
+        }
+        request.setAttribute("executionDegrees", executionDegrees);
 
         final Set<CurricularYear> curricularYears = new TreeSet<CurricularYear>();
         request.setAttribute("curricularYears", curricularYears);
@@ -130,7 +137,10 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final CurricularYear selecctedCurricularYear = (CurricularYear)
                 setDomainObjectInRequest(dynaActionForm, request, CurricularYear.class, "curricularYearID", "selecctedCurricularYear");
 
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan)
+        setDomainObjectInRequest(dynaActionForm, request, DegreeCurricularPlan.class, "degreeCurricularPlanID", "executionCourse");
         if (degreeCurricularPlan != null) {
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
         	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
         		for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
         			final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
