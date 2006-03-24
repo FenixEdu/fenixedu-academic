@@ -66,7 +66,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
     public boolean isExamOfExecutionCourseTheStudentAttends(Integer examOID, String studentsUsername) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", examOID);
-        criteria.addEqualTo("associatedExecutionCourses.attendingStudents.person.user.username",
+        criteria.addEqualTo("associatedExecutionCourses.attendingStudents.person.user.identifications.username",
                 studentsUsername);
         return count(Exam.class, criteria) != 0;
     }

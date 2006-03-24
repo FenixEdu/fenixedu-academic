@@ -28,7 +28,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
 	public Student readByUsername(String username) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
-        crit.addEqualTo("person.user.username", username);
+        crit.addEqualTo("person.user.identifications.username", username);
 
         Student student = (Student) queryObject(Student.class, crit);
 

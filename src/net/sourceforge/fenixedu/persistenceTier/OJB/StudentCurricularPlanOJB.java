@@ -30,7 +30,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
     public StudentCurricularPlan readActiveStudentCurricularPlan(String username, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("student.person.user.username", username);
+        crit.addEqualTo("student.person.user.identifications.username", username);
         crit.addEqualTo("student.degreeType", degreeType);
         crit.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE);
         return (StudentCurricularPlan) queryObject(StudentCurricularPlan.class, crit);
@@ -79,7 +79,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
 
     public List readByUsername(String username) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("student.person.user.username", username);
+        crit.addEqualTo("student.person.user.identifications.username", username);
         return queryList(StudentCurricularPlan.class, crit);
 
     }

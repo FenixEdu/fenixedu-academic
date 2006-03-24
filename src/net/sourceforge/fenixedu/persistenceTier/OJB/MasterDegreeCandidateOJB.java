@@ -31,7 +31,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 
 	public List readMasterDegreeCandidatesByUsername(String username) throws ExcepcaoPersistencia {
 		Criteria crit = new Criteria();
-		crit.addEqualTo("person.user.username", username);
+		crit.addEqualTo("person.user.identifications.username", username);
 		return queryList(MasterDegreeCandidate.class, crit);
 	}
 
@@ -135,7 +135,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 		Person person = (Person) readByOID(Person.class, personID);
 
 		Criteria crit = new Criteria();
-		crit.addEqualTo("person.username", person.getUsername());
+		crit.addEqualTo("person.user.identifications.username", person.getUsername());
 		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
 		crit.addEqualTo("candidateNumber", number);
 		return (MasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);

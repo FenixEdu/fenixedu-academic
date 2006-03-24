@@ -43,7 +43,7 @@ public class ShiftProfessorshipOJB extends PersistentObjectOJB implements IPersi
         Teacher teacher = teacherShiftPercentage.getProfessorship().getTeacher();
 
         criteria.addEqualTo("professorShip.teacher.teacherNumber", teacher.getTeacherNumber());
-        criteria.addEqualTo("professorShip.teacher.person.user.username", teacher.getPerson().getUsername());
+        criteria.addEqualTo("professorShip.teacher.person.user.identifications.username", teacher.getPerson().getUsername());
         criteria.addEqualTo("professorShip.executionCourse.sigla", executionCourse.getSigla());
         criteria.addEqualTo("professorShip.executionCourse.executionPeriod.name", executionCourse
                 .getExecutionPeriod().getName());

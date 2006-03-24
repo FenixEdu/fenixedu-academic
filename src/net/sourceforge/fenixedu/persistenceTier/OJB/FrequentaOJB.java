@@ -31,7 +31,7 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
 
     public List readByUsername(String username) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("aluno.person.user.username", username);
+        crit.addEqualTo("aluno.person.user.identifications.username", username);
         return queryList(Attends.class, crit);
     }
 
