@@ -52,7 +52,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.credits.OtherTypeCreditLineO
 import net.sourceforge.fenixedu.persistenceTier.OJB.degree.finalProject.TeacherDegreeFinalProjectStudentOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.GaugingTestResultOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
-import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractMovementOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractRegimeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantCostCenterOJB;
@@ -115,7 +114,6 @@ import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPos
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantInsurance;
@@ -671,36 +669,16 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new GrantContractRegimeOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantContractRegime()
-	 */
 	public IPersistentGrantInsurance getIPersistentGrantInsurance()
 	{
 		return new GrantInsuranceOJB();
 	}
 
-	public IPersistentGrantContractMovement getIPersistentGrantContractMovement()
-	{
-		return new GrantContractMovementOJB();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTutor()
-	 */
 	public IPersistentTutor getIPersistentTutor()
 	{
 		return new TutorOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentDelegate()
-	 */
 	public IPersistentDelegate getIPersistentDelegate()
 	{
 		return new DelegateOJB();
@@ -711,11 +689,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new OtherTypeCreditLineOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentManagementPosistionCreditLine()
-	 */
 	public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine()
 	{
 		return new ManagementPositionCreditLineOJB();

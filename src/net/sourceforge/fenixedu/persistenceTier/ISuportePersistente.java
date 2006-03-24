@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPos
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantInsurance;
@@ -164,8 +163,6 @@ public interface ISuportePersistente
 	public IPersistentGrantContractRegime getIPersistentGrantContractRegime();
 
 	public IPersistentGrantInsurance getIPersistentGrantInsurance();
-
-	public IPersistentGrantContractMovement getIPersistentGrantContractMovement();
 
 	public IPersistentWebSiteSection getIPersistentWebSiteSection();
 
