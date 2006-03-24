@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -25,113 +24,54 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimburs
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-/**
- * 
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- * 
- */
 public class ReadAllTransactionsByGratuitySituationID extends Service {
 
     public List run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
-
-        List infoTransactionList = new ArrayList();
-
-        List paymentTransactionList = new ArrayList();
-
-        List reimbursementTransactionList = new ArrayList();
-
-        GratuitySituation gratuitySituation = (GratuitySituation) persistentObject
-                .readByOID(GratuitySituation.class, gratuitySituationID);
-
-        List insuranceTransactionList = persistentSupport.getIPersistentInsuranceTransaction()
+        GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
+        List<InsuranceTransaction> insuranceTransactionList = persistentSupport.getIPersistentInsuranceTransaction()
                 .readAllByExecutionYearAndStudent(
                         gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear().getIdInternal(),
                         gratuitySituation.getStudentCurricularPlan().getStudent().getIdInternal());
 
-        // read insurance transactions
-        for (Iterator iter = insuranceTransactionList.iterator(); iter.hasNext();) {
-            InsuranceTransaction insuranceTransaction = (InsuranceTransaction) iter.next();
-            paymentTransactionList.add(insuranceTransaction);
+        List<PaymentTransaction> paymentTransactionList = new ArrayList<PaymentTransaction>();
+        paymentTransactionList.addAll(insuranceTransactionList);
+        paymentTransactionList.addAll(gratuitySituation.getTransactionList());
 
-        }
-
-        List gratuityTransactionList = persistentSupport.getIPersistentGratuityTransaction()
-                .readAllByGratuitySituation(gratuitySituation.getIdInternal());
-
-        // read gratuity transactions
-        for (Iterator iter = gratuityTransactionList.iterator(); iter.hasNext();) {
-
-            GratuityTransaction gratuityTransaction = (GratuityTransaction) iter.next();
-            paymentTransactionList.add(gratuityTransaction);
-        }
-
-        IPersistentReimbursementTransaction reimbursementTransactionDAO = persistentSupport
-                .getIPersistentReimbursementTransaction();
-
-        // read reimbursement transactions
-        for (Iterator iter = paymentTransactionList.iterator(); iter.hasNext();) {
-
-            PaymentTransaction paymentTransaction = (PaymentTransaction) iter.next();
-
+        IPersistentReimbursementTransaction reimbursementTransactionDAO = persistentSupport.getIPersistentReimbursementTransaction();
+        List<ReimbursementTransaction> reimbursementTransactionList = new ArrayList<ReimbursementTransaction>();
+        for (PaymentTransaction paymentTransaction : paymentTransactionList) {
             GuideEntry guideEntry = paymentTransaction.getGuideEntry();
 
             if ((guideEntry != null)
-                    && ((guideEntry.getDocumentType().equals(DocumentType.INSURANCE) || (guideEntry
-                            .getDocumentType().equals(DocumentType.GRATUITY))))) {
+                    && ((guideEntry.getDocumentType().equals(DocumentType.INSURANCE) 
+                            || (guideEntry.getDocumentType().equals(DocumentType.GRATUITY))))) {
 
-                List reimbursementGuideEntryList = guideEntry.getReimbursementGuideEntries();
+                for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry.getReimbursementGuideEntries()) {
+                    ReimbursementGuide reimbursementGuide = reimbursementGuideEntry.getReimbursementGuide();
 
-                if (reimbursementGuideEntryList == null) {
-                    continue;
-                }
-
-                for (Iterator iterator = reimbursementGuideEntryList.iterator(); iterator.hasNext();) {
-                    ReimbursementGuideEntry reimbursementGuideEntry = (ReimbursementGuideEntry) iterator
-                            .next();
-
-                    // we have to read again because of OJB bug
-                    ReimbursementGuideEntry newReimbursementGuideEntry = (ReimbursementGuideEntry) persistentObject.readByOID(
-                                    ReimbursementGuideEntry.class,
-                                    reimbursementGuideEntry.getIdInternal());
-
-                    ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentObject.readByOID(
-                                    ReimbursementGuide.class,
-                                    reimbursementGuideEntry.getKeyReimbursementGuide());
-
-                    if (reimbursementGuide.getActiveReimbursementGuideSituation()
-                            .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED) == false) {
-                        // reimbursement is not payed, so there is no
-                        // transaction
+                    if (!reimbursementGuide.getActiveReimbursementGuideSituation().getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {
+                        // reimbursement is not payed, so there is notransaction
                         continue;
-
                     }
-                    ReimbursementTransaction reimbursementTransaction = reimbursementTransactionDAO
-                            .readByReimbursementGuideEntry(newReimbursementGuideEntry.getIdInternal());
 
+                    ReimbursementTransaction reimbursementTransaction = reimbursementGuideEntry.getReimbursementTransaction();
                     if (reimbursementTransaction == null) {
-                        throw new NonExistingServiceException(
-                                "Database is inconsistent because this reimbursement guide entry is supposed to have a reimbursement transaction");
+                        throw new NonExistingServiceException("Database is inconsistent because this reimbursement guide entry is supposed to have a reimbursement transaction");
                     }
-
                     reimbursementTransactionList.add(reimbursementTransaction);
                 }
             }
 
         }
 
-        for (Iterator iter = insuranceTransactionList.iterator(); iter.hasNext();) {
-            InsuranceTransaction insuranceTransaction = (InsuranceTransaction) iter.next();
+        List<InfoTransaction> infoTransactionList = new ArrayList<InfoTransaction>();
+        for (InsuranceTransaction insuranceTransaction : insuranceTransactionList) {
             infoTransactionList.add(InfoTransaction.newInfoFromDomain(insuranceTransaction));
         }
-
-        for (Iterator iter = gratuityTransactionList.iterator(); iter.hasNext();) {
-            GratuityTransaction gratuityTransaction = (GratuityTransaction) iter.next();
+        for (GratuityTransaction gratuityTransaction : gratuitySituation.getTransactionList()) {
             infoTransactionList.add(InfoTransaction.newInfoFromDomain(gratuityTransaction));
         }
-
-        for (Iterator iter = reimbursementTransactionList.iterator(); iter.hasNext();) {
-            ReimbursementTransaction reimbursementTransaction = (ReimbursementTransaction) iter.next();
+        for (ReimbursementTransaction reimbursementTransaction : reimbursementTransactionList) {
             infoTransactionList.add(InfoTransaction.newInfoFromDomain(reimbursementTransaction));
         }
 
@@ -141,6 +81,6 @@ public class ReadAllTransactionsByGratuitySituationID extends Service {
         Collections.sort(infoTransactionList, chainComparator);
 
         return infoTransactionList;
-
     }
+    
 }
