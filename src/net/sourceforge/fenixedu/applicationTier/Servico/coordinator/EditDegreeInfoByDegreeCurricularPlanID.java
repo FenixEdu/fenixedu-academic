@@ -10,20 +10,14 @@ import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * 
- * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
- */
 public class EditDegreeInfoByDegreeCurricularPlanID extends Service {
-    public void run(Integer degreeCurricularPlanID, InfoDegreeInfo infoDegreeInfo)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    
+    public void run(Integer degreeCurricularPlanID, InfoDegreeInfo infoDegreeInfo) throws FenixServiceException, ExcepcaoPersistencia {
         if (degreeCurricularPlanID == null) {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
 
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
-                        degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         DegreeInfo degreeInfo = DomainFactory.makeDegreeInfo();
 
@@ -45,8 +39,7 @@ public class EditDegreeInfoByDegreeCurricularPlanID extends Service {
         degreeInfo.setQualificationLevel(infoDegreeInfo.getQualificationLevel());
         degreeInfo.setRecognitions(infoDegreeInfo.getRecognitions());
 
-        // update information in english that it will be displayed in degree
-        // site.
+        // update information in english that it will be displayed in degree site.
         degreeInfo.setDescriptionEn(infoDegreeInfo.getDescriptionEn());
         degreeInfo.setObjectivesEn(infoDegreeInfo.getObjectivesEn());
         degreeInfo.setHistoryEn(infoDegreeInfo.getHistoryEn());
@@ -62,6 +55,6 @@ public class EditDegreeInfoByDegreeCurricularPlanID extends Service {
         degreeInfo.setLastModificationDate(Calendar.getInstance().getTime());
 
         degreeCurricularPlan.getDegree().addDegreeInfos(degreeInfo);
-
     }
+    
 }
