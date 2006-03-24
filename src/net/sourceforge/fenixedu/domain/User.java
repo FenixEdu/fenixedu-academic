@@ -1,47 +1,34 @@
 package net.sourceforge.fenixedu.domain;
 
-
-/** 
+/**
  * @author mrsp
  * @author shezad
  */
 
 public class User extends User_Base {
-    
+
     public User() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-    }    
-    
-    public User(String username){
-        this();
-        this.setUsername(username);        
-    }
-    
-    public User(String username, String istUsername, Boolean isPassInKerberos, String password, Person person){
-        this(username);        
-        this.setPerson(person);
-        this.setPassword(password);
-        this.setIstUsername(istUsername);
-        this.setIsPassInKerberos(isPassInKerberos);
     }
 
-    public static User readUserByUsername(final String username) {
+    public static User readUserByUserUId(final String userUId) {
         for (final User user : RootDomainObject.getInstance().getUsers()) {
-            if (user.getUsername().equalsIgnoreCase(username)) {
+            if (user.getUserUId() != null && user.getUserUId().equalsIgnoreCase(userUId)) {
                 return user;
             }
         }
         return null;
     }
-
-    public static User readUserByIstUsername(final String istUsername) {
-        for (final User user : RootDomainObject.getInstance().getUsers()) {
-            if (user.getIstUsername() != null && user.getIstUsername().equalsIgnoreCase(istUsername)) {
-                return user;
-            }
+    
+    public Login readUserLoginIdentification(){
+        
+        /// In present exist only one Person Login Identification
+        for (Identification identification : this.getIdentifications()) {
+            if (identification instanceof Login) {
+                return (Login)identification;                
+            }     
         }
         return null;
     }
-
 }

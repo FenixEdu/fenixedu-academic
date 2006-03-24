@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -32,7 +32,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 		final String nameToMatch = name.replaceAll("%", ".*");
 		final List persons = new ArrayList();
 
-		for (final Person person : RootDomainObject.readAllPersons())
+		for (final Person person : Party.readAllPersons())
 		{
 			if (person.getNome().toLowerCase().matches(nameToMatch.toLowerCase()))
 			{
@@ -64,7 +64,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 			final IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia
 	{
 
-		for (final Person person : RootDomainObject.readAllPersons())
+		for (final Person person : Party.readAllPersons())
 		{
 			if (person.getNumeroDocumentoIdentificacao().equals(numeroDocumentoIdentificacao)
 					&& person.getIdDocumentType().equals(tipoDocumentoIdentificacao))
@@ -92,7 +92,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 
 		List<Person> filteredPersons = new ArrayList<Person>();
 
-		for (final Person person : RootDomainObject.readAllPersons())
+		for (final Person person : Party.readAllPersons())
 		{
 			if (name != null && name.length() > 0 && !person.getNome().matches(nameToMatch))
 			{
@@ -152,7 +152,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 		final String documentIdNumberToMatch = documentIdNumber.replaceAll("%", ".*");
 
 		int count = 0;
-		for (final Person person : RootDomainObject.readAllPersons())
+		for (final Person person : Party.readAllPersons())
 		{
 			if (name != null && name.length() > 0 && !person.getNome().matches(nameToMatch))
 			{
@@ -190,7 +190,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 	public List<Person> readPersonsBySubName(String subName) throws ExcepcaoPersistencia
 	{
 
-		final List<Person> persons = RootDomainObject.readAllPersons();
+		final List<Person> persons = Party.readAllPersons();
 
 		final String stringToMatch = subName.replace("%", ".*").replace(" ", ".*");
 
@@ -214,7 +214,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 			final String identificationDocumentNumber) throws ExcepcaoPersistencia
 	{
 
-		Collection<Person> persons = RootDomainObject.readAllPersons();
+		Collection<Person> persons = Party.readAllPersons();
 
 		return CollectionUtils.select(persons, new Predicate()
 		{
@@ -244,7 +244,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 	public boolean emailOwnedByFenixPerson(Collection<String> emails)
 	{
 		boolean result = false;
-		Collection<Person> persons = RootDomainObject.readAllPersons();
+		Collection<Person> persons = Party.readAllPersons();
 		for (String email : emails)
 		{
 			for (Person person : persons)

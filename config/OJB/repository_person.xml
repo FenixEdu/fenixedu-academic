@@ -268,25 +268,10 @@
         jdbc-type="INTEGER"
     />
 	<field-descriptor
-	    name="username"
-	    column="USERNAME"
+	    name="userUId"
+	    column="USER_UID"
 	    jdbc-type="VARCHAR"
 	/>
-	<field-descriptor
-	    name="istUsername"
-	    column="IST_USERNAME"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	    name="password"
-	    column="PASSWORD"
-	    jdbc-type="VARCHAR"
-	/>
-    <field-descriptor
-        name="isPassInKerberos"
-        column="IS_PASS_KERBEROS"
-        jdbc-type="BIT"
-    /> 
 	<field-descriptor
 	    name="lastLoginHost"
 	    column="LAST_LOGIN_HOST"
@@ -306,10 +291,123 @@
 	    name="currentLoginDateTime"
 	    column="CURRENT_LOGIN_DATE_TIME"
 	    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-	/>
+	/>	  
 	<field-descriptor
         name="keyPerson"
         column="KEY_PERSON"
         jdbc-type="INTEGER"
     />  
 </class-descriptor>
+
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.Identification 
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.Identification" table="IDENTIFICATION">
+	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.Login"/>
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>	
+	<field-descriptor 
+	    name="ojbConcreteClass"
+	    column="CLASS_NAME"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+        name="beginDate"
+        column="BEGIN_DATE"
+        jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+    />
+	<field-descriptor
+	    name="endDate"
+	    column="END_DATE"
+	    jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+	/>
+	<field-descriptor
+        name="active"
+        column="ACTIVE"
+        jdbc-type="INTEGER"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
+    />
+    <field-descriptor 
+	   name="keyUser"    
+	   column="KEY_USER"  
+	   jdbc-type="INTEGER"
+    />	
+    <field-descriptor
+        name="keyRootDomainObject"
+        column="KEY_ROOT_DOMAIN_OBJECT"
+        jdbc-type="INTEGER"
+    />
+	  
+</class-descriptor>
+
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.Login 
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.Login" table="IDENTIFICATION">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor 
+	    name="ojbConcreteClass"
+	    column="CLASS_NAME"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+        name="beginDate"
+        column="BEGIN_DATE"
+        jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+    />
+	<field-descriptor
+	    name="endDate"
+	    column="END_DATE"
+	    jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+	/>
+	<field-descriptor
+        name="active"
+        column="ACTIVE"
+        jdbc-type="INTEGER"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
+    />
+    <field-descriptor 
+	   name="keyUser"    
+	   column="KEY_USER"  
+	   jdbc-type="INTEGER"
+    />	
+    <field-descriptor
+        name="keyRootDomainObject"
+        column="KEY_ROOT_DOMAIN_OBJECT"
+        jdbc-type="INTEGER"
+    />
+	<field-descriptor
+	    name="username"
+	    column="USERNAME"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+	    name="password"
+	    column="PASSWORD"
+	    jdbc-type="VARCHAR"
+	/>
+    <field-descriptor
+        name="isPassInKerberos"
+        column="IS_PASS_KERBEROS"
+        jdbc-type="BIT"
+    /> 
+</class-descriptor>
+

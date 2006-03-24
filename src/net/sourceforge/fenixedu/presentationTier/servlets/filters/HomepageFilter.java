@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -56,7 +56,7 @@ public class HomepageFilter implements Filter {
         final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
 
         if (homepageURL != null && homepageURL.length() > 0) {
-        	for (final Person person : RootDomainObject.readAllPersons()) {
+        	for (final Person person : Party.readAllPersons()) {
         		final Homepage homepage = person.getHomepage();
         		if (homepage != null && homepage.getMyUrl().equalsIgnoreCase(homepageURL)) {
         			response.sendRedirect(context + "/publico/viewHomepage.do?method=show&homepageID=" + homepage.getIdInternal());

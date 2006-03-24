@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
@@ -45,7 +45,7 @@ public class ProjectAccessVO extends VersionedObjectsBase implements IPersistent
 
     public List<ProjectAccess> readByPersonUsernameAndCoordinatorAndDate(String username, Integer coordinatorCode) throws ExcepcaoPersistencia {
         Integer personId = null;
-        for (final Person person : RootDomainObject.readAllPersons()) {
+        for (final Person person : Party.readAllPersons()) {
             if (person.getUsername().equalsIgnoreCase(username)) {
                 personId = person.getIdInternal();
             }
@@ -65,7 +65,7 @@ public class ProjectAccessVO extends VersionedObjectsBase implements IPersistent
 
     public List<Integer> readProjectCodesByPersonUsernameAndDateAndCC(String username, String cc) throws ExcepcaoPersistencia {
         Integer personId = null;
-        for (final Person person : RootDomainObject.readAllPersons()) {
+        for (final Person person : Party.readAllPersons()) {
             if (person.getUsername().equalsIgnoreCase(username)) {
                 personId = person.getIdInternal();
             }
@@ -90,7 +90,7 @@ public class ProjectAccessVO extends VersionedObjectsBase implements IPersistent
 
     public List<Integer> readCCCodesByPersonUsernameAndDate(String username) throws ExcepcaoPersistencia {
         Integer personId = null;
-        for (final Person person : RootDomainObject.readAllPersons()) {
+        for (final Person person : Party.readAllPersons()) {
             if (person.getUsername().equalsIgnoreCase(username)) {
                 personId = person.getIdInternal();
             }
@@ -114,7 +114,7 @@ public class ProjectAccessVO extends VersionedObjectsBase implements IPersistent
     public List<Integer> readProjectCodesByPersonUsernameAndCoordinator(String username, Integer coordinatorCode, boolean all)
             throws ExcepcaoPersistencia {
         Integer personId = null;
-        for (final Person person : RootDomainObject.readAllPersons()) {
+        for (final Person person : Party.readAllPersons()) {
             if (person.getUsername().equalsIgnoreCase(username)) {
                 personId = person.getIdInternal();
             }
@@ -135,7 +135,7 @@ public class ProjectAccessVO extends VersionedObjectsBase implements IPersistent
 
     public List<Integer> readCoordinatorsCodesByPersonUsernameAndDatesAndCC(String username, String cc) throws ExcepcaoPersistencia {
         Integer personId = null;
-        for (final Person person : RootDomainObject.readAllPersons()) {
+        for (final Person person : Party.readAllPersons()) {
             if (person.getUsername().equalsIgnoreCase(username)) {
                 personId = person.getIdInternal();
             }
@@ -164,7 +164,7 @@ public class ProjectAccessVO extends VersionedObjectsBase implements IPersistent
 
     public boolean hasPersonProjectAccess(String personUsername, Integer projectCode) {
         Integer personId = null;
-        for (final Person person : RootDomainObject.readAllPersons()) {
+        for (final Person person : Party.readAllPersons()) {
             if (person.getUsername().equalsIgnoreCase(personUsername)) {
                 personId = person.getIdInternal();
             }

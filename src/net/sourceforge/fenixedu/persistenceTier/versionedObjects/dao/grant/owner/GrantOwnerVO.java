@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
@@ -58,7 +58,7 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
     public GrantOwner readGrantOwnerByPersonID(String idNumber, IDDocumentType idType)
             throws ExcepcaoPersistencia {
 
-        List<Person> persons = RootDomainObject.readAllPersons();
+        List<Person> persons = Party.readAllPersons();
 
         for (Person person : persons) {
             if (person.getNumeroDocumentoIdentificacao().equals(idNumber)

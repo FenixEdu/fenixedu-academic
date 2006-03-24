@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
@@ -102,7 +102,7 @@ public class EditGrantOwner extends Service {
         // Generate the GrantOwner's Person Username
         if (person.getUsername() == null || person.getUsername().length() == 0)
             person.changeUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()),
-                    RootDomainObject.readAllPersons());
+                    Party.readAllPersons());
         return grantOwner.getIdInternal();
     }
 }

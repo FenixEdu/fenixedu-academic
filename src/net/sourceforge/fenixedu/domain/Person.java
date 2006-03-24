@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -51,7 +52,7 @@ public class Person extends Person_Base {
     }
 
     public Person(InfoPerson personToCreate, Country country) {
-        
+
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         if (personToCreate.getIdInternal() != null) {
@@ -61,10 +62,20 @@ public class Person extends Person_Base {
         checkConditionsToCreateNewPerson(personToCreate.getUsername(), personToCreate
                 .getNumeroDocumentoIdentificacao(), personToCreate.getTipoDocumentoIdentificacao(), this);
 
-        setUser(new User(personToCreate.getUsername()));
+        createUserAndLoginEntity(personToCreate.getUsername());
+
         setProperties(personToCreate);
         setPais(country);
         setIsPassInKerberos(Boolean.FALSE);
+    }
+
+    private void createUserAndLoginEntity(String username) {
+        User personUser = new User();
+        Login personIdentificationLogin = new Login();
+
+        personUser.setPerson(this);
+        personIdentificationLogin.setUser(personUser);
+        personIdentificationLogin.setUsername(username);
     }
 
     public Person(String name, String identificationDocumentNumber,
@@ -75,7 +86,8 @@ public class Person extends Person_Base {
         checkConditionsToCreateNewPerson(username, identificationDocumentNumber,
                 identificationDocumentType, this);
 
-        setUser(new User(username));
+        createUserAndLoginEntity(username);
+
         setNome(name);
         setDocumentIdNumber(identificationDocumentNumber);
         setIdDocumentType(identificationDocumentType);
@@ -125,7 +137,8 @@ public class Person extends Person_Base {
         setRootDomainObject(RootDomainObject.getInstance());
         checkConditionsToCreateNewPerson(username, documentIDNumber, documentType, this);
 
-        setUser(new User(username));
+        createUserAndLoginEntity(username);
+
         setNome(name);
         setGender(gender);
         setAddress(address);
@@ -152,13 +165,14 @@ public class Person extends Person_Base {
             String email, String enderecoWeb, String numContribuinte, String profissao, String username,
             Country pais, String codigoFiscal, Boolean availableEmail, Boolean availableWebSite,
             String workPhone) {
-        
+
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         checkConditionsToCreateNewPerson(username, numeroDocumentoIdentificacao,
                 tipoDocumentoIdentificacao, this);
 
-        setUser(new User(username));
+        createUserAndLoginEntity(username);
+
         setDocumentIdNumber(numeroDocumentoIdentificacao);
         setIdDocumentType(tipoDocumentoIdentificacao);
         setEmissionLocationOfDocumentId(localEmissaoDocumentoIdentificacao);
@@ -237,7 +251,7 @@ public class Person extends Person_Base {
     private void checkConditionsToCreateNewPerson(final String username, final String documentIDNumber,
             final IDDocumentType documentType, Person thisPerson) {
 
-        List<Person> persons = RootDomainObject.readAllPersons();
+        List<Person> persons = Party.readAllPersons();
         if ((documentIDNumber != null && documentType != null && checkIfDocumentNumberIdAndDocumentIdTypeExists(
                 documentIDNumber, documentType, persons, thisPerson))
                 || (username != null && checkIfUsernameExists(username, persons, thisPerson))) {
@@ -265,36 +279,47 @@ public class Person extends Person_Base {
         return false;
     }
 
+    private Login getLoginIdentification() {
+        User personUser = getUser();
+        if (personUser != null) {
+            return personUser.readUserLoginIdentification();
+        }
+        return null;
+    }
+
     public String getUsername() {
-        return (getUser() != null) ? getUser().getUsername() : null;
+        Login login = getLoginIdentification();
+        return (login != null) ? login.getUsername() : null;
     }
 
     public void setUsername(String username) {
-        getUser().setUsername(username);
+        getLoginIdentification().setUsername(username);
     }
 
     public String getPassword() {
-        return (getUser() != null) ? getUser().getPassword() : null;
+        Login login = getLoginIdentification();
+        return (login != null) ? login.getPassword() : null;
     }
 
     public void setPassword(String password) {
-        getUser().setPassword(password);
+        getLoginIdentification().setPassword(password);
     }
 
     public void setIstUsername(String istUsername) {
-        getUser().setIstUsername(istUsername);
+        getUser().setUserUId(istUsername);
     }
 
-    public String getIstUsername() {
-        return (getUser() != null) ? getUser().getIstUsername() : null;
+    public String getIstUsername() {        
+        return (getUser() != null) ? getUser().getUserUId() : null;
     }
 
-    public void setIsPassInKerberos(Boolean isPassInKerberos) {
-        getUser().setIsPassInKerberos(isPassInKerberos);
+    public void setIsPassInKerberos(Boolean isPassInKerberos) {        
+        getLoginIdentification().setIsPassInKerberos(isPassInKerberos);
     }
 
     public Boolean getIsPassInKerberos() {
-        return (getUser() != null) ? getUser().getIsPassInKerberos() : null;
+        Login login = getLoginIdentification();
+        return (login != null) ? login.getIsPassInKerberos() : null;
     }
 
     public void changeUsername(String newUsername, List<Person> persons) {
@@ -764,12 +789,16 @@ public class Person extends Person_Base {
     }
 
     public static Person readPersonByUsername(final String username) {
-        final User user = User.readUserByUsername(username);
+        final Login login = Login.readLoginByUsername(username);
+        User user = null;
+        if (login != null) {
+            user = login.getUser();
+        }
         return user != null ? user.getPerson() : null;
     }
 
     public static Person readPersonByIstUsername(final String istUsername) {
-        final User user = User.readUserByIstUsername(istUsername);
+        final User user = User.readUserByUserUId(istUsername);
         return user != null ? user.getPerson() : null;
     }
 

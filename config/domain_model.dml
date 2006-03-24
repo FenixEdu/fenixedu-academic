@@ -1451,6 +1451,20 @@ class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.
     String myUrl;
 }
 
+class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+    YearMonthDay beginDate;
+    YearMonthDay endDate;
+    Boolean	active;    
+    Integer keyUser;		
+}
+
+	class net.sourceforge.fenixedu.domain.Login extends net.sourceforge.fenixedu.domain.Identification {				
+		String username;
+		String password;
+		Boolean isPassInKerberos;
+	}
+  
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
     Integer keyExecutionCourse;
@@ -2972,10 +2986,7 @@ class net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad extends net.sourcef
 
 class net.sourceforge.fenixedu.domain.User extends net.sourceforge.fenixedu.domain.DomainObject{
 	Integer keyPerson;	
-	Boolean isPassInKerberos;
-	String username;
-	String istUsername;
-	String password;
+	String userUId;
 	String lastLoginHost;
 	String currentLoginHost;
 	DateTime lastLoginDateTime;
@@ -6130,6 +6141,13 @@ relation UserPerson{
     net.sourceforge.fenixedu.domain.User playsRole user;
 }
 
+relation UserIdentification{
+    net.sourceforge.fenixedu.domain.User playsRole user;
+    net.sourceforge.fenixedu.domain.Identification playsRole identifications {
+	   multiplicity *;    
+    }
+}
+
 relation CurriculumGroupStudentCurricularPlan {
 	net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup playsRole root;
 	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole parentStudentCurricularPlan;
@@ -7790,6 +7808,13 @@ relation RootDomainObjectResearchInterest {
 relation RootDomainObjectOldRoom {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.space.OldRoom playsRole oldRooms {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectIdentification {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Identification playsRole identifications {
 		multiplicity *;
 	}
 }

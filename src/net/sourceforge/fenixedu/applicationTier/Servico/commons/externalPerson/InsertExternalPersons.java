@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -22,7 +22,7 @@ public class InsertExternalPersons extends Service {
 
         List<ExternalPerson> externalPersons = new ArrayList<ExternalPerson>();
 
-        List<Unit> institutions = RootDomainObject.readAllUnits();
+        List<Unit> institutions = Party.readAllUnits();
 
         // generate new identification number
         String lastDocumentIdNumber = persistentSupport.getIPersistentExternalPerson()
