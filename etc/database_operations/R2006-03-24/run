@@ -26,3 +26,7 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Fix StudentCurricularPlan Table" fixStudentCurricularPlanTable.sql
+execute "Fix ExecutionYear Table" fixExecutionYearTable.sql
+executeWithTempFile "Fix Person Accounts" fixPersonAccounts.sql
