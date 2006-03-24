@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
@@ -111,8 +110,6 @@ public interface ISuportePersistente
 	public IPersistentSummary getIPersistentSummary();
 
 	public IPersistentSeminaryModality getIPersistentSeminaryModality();
-
-	public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy();
 
 	public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy();
 

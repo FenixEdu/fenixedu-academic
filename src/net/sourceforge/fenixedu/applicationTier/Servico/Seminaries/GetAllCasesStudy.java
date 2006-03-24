@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -28,9 +27,7 @@ public class GetAllCasesStudy extends Service {
 	public List run() throws BDException, ExcepcaoPersistencia {
 		List infoCases = new LinkedList();
 
-		IPersistentSeminaryCaseStudy persistentCaseStudy = persistentSupport
-				.getIPersistentSeminaryCaseStudy();
-		List cases = persistentCaseStudy.readAll();
+		List cases = CaseStudy.getAllCaseStudies();
 
 		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
 			CaseStudy caseStudy = (CaseStudy) iterator.next();

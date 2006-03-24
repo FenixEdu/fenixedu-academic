@@ -64,7 +64,7 @@ public class WriteCandidacy extends Service {
             
             caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
 
-            final CaseStudy caseStudy = (CaseStudy) persistentObject.readByOID(CaseStudy.class, infoCaseStudyChoice.getCaseStudy().getIdInternal());
+            final CaseStudy caseStudy = CaseStudy.getById(infoCaseStudyChoice.getCaseStudy().getIdInternal());
             caseStudyChoice.setCaseStudy(caseStudy);
 
             caseStudyChoice.setCandidacy(candidacy);

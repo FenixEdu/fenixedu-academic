@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CandidacyOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CaseStudyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.ModalityOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailAddressAliasOJB;
@@ -96,7 +95,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.workingTime.TeacherI
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.InsuranceTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.ReimbursementTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
@@ -420,11 +418,21 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new OrientationOJB();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationsNumber()
+	 */
 	public IPersistentPublicationsNumber getIPersistentPublicationsNumber()
 	{
 		return new PublicationsNumberOJB();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentOldPublication()
+	 */
 	public IPersistentOldPublication getIPersistentOldPublication()
 	{
 		return new OldPublicationOJB();
@@ -460,16 +468,17 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new TeacherDegreeFinalProjectStudentOJB();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacherInstitutionWorkingTime()
+	 */
 	public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime()
 	{
 		return new TeacherInstitutionWorkingTimeOJB();
 	}
 
-	public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy()
-	{
-		return new CaseStudyOJB();
-	}
-
+	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
 	public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy()
 	{
 		return new CandidacyOJB();

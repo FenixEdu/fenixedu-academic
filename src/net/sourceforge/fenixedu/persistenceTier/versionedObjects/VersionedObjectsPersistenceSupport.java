@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
@@ -153,7 +152,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.projectsManagement.ProjectAccessVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CandidacyVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.ModalityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OrientationVO;
@@ -230,10 +228,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate() {
         return null;
-    }
-
-    public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy() {
-        return new CaseStudyVO();
     }
 
     public IPersistentTutor getIPersistentTutor() {

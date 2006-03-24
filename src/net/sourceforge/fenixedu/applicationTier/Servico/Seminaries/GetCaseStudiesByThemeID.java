@@ -12,8 +12,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
+import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -26,12 +26,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
 public class GetCaseStudiesByThemeID extends Service {
 
 	public List run(Integer themeID) throws BDException, ExcepcaoPersistencia {
-		List infoCases = new LinkedList();
-
-		IPersistentSeminaryCaseStudy persistentCaseStudy = persistentSupport
-				.getIPersistentSeminaryCaseStudy();
-		List cases = persistentCaseStudy.readByThemeID(themeID);
-
+		List cases = Theme.getById(themeID).getCaseStudies();
+        
+        List infoCases = new LinkedList();
 		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
 			CaseStudy caseStudy = (CaseStudy) iterator.next();
 			infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
