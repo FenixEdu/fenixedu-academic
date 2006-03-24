@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.joda.time.YearMonthDay;
+
 public class Login extends Login_Base {
 
     public Login() {
@@ -10,6 +12,7 @@ public class Login extends Login_Base {
         this();
         this.setUser(user);
         this.setUsername(username);
+        this.setBeginDate(new YearMonthDay());
     }
 
     public static Login readLoginByUsername(String username) {
