@@ -11,6 +11,11 @@ public class User extends User_Base {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
+    
+    public User(Person person){
+        this();
+        this.setPerson(person);
+    }
 
     public static User readUserByUserUId(final String userUId) {
         for (final User user : RootDomainObject.getInstance().getUsers()) {

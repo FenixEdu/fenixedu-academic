@@ -101,14 +101,14 @@ public class CreateMasterDegreeCandidate extends Service {
                 // Generate Person Username
                 String username = MasterDegreeCandidate.generateUsernameForNewCandidate(
                         masterDegreeCandidate, persons);
-                person.changeUsername(username, persons);
+                person.changeUsername(username);
             }
             if (person.getUsername().startsWith("B")) {
                 // Generate Person Username
                 person.getPersonRoles().add(personRole);
                 String username = MasterDegreeCandidate.generateUsernameForNewCandidate(
                         masterDegreeCandidate, persons);
-                person.changeUsername(username, persons);
+                person.changeUsername(username);
             }
         }
 

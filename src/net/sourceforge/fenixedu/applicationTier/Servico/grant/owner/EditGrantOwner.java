@@ -101,8 +101,7 @@ public class EditGrantOwner extends Service {
 
         // Generate the GrantOwner's Person Username
         if (person.getUsername() == null || person.getUsername().length() == 0)
-            person.changeUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()),
-                    Party.readAllPersons());
+            person.changeUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()));
         return grantOwner.getIdInternal();
     }
 }

@@ -69,13 +69,8 @@ public class Person extends Person_Base {
         setIsPassInKerberos(Boolean.FALSE);
     }
 
-    private void createUserAndLoginEntity(String username) {
-        User personUser = new User();
-        Login personIdentificationLogin = new Login();
-
-        personUser.setPerson(this);
-        personIdentificationLogin.setUser(personUser);
-        personIdentificationLogin.setUsername(username);
+    private void createUserAndLoginEntity(String username) {        
+        new Login(new User(this), username);        
     }
 
     public Person(String name, String identificationDocumentNumber,
@@ -250,18 +245,17 @@ public class Person extends Person_Base {
 
     private void checkConditionsToCreateNewPerson(final String username, final String documentIDNumber,
             final IDDocumentType documentType, Person thisPerson) {
-
-        List<Person> persons = Party.readAllPersons();
+               
         if ((documentIDNumber != null && documentType != null && checkIfDocumentNumberIdAndDocumentIdTypeExists(
-                documentIDNumber, documentType, persons, thisPerson))
-                || (username != null && checkIfUsernameExists(username, persons, thisPerson))) {
+                documentIDNumber, documentType, thisPerson))
+                || (username != null && checkIfUsernameExists(username, thisPerson))) {
             throw new DomainException("error.person.existent.username.or.docIdAndType");
         }
     }
 
-    public static boolean checkIfUsernameExists(String username, List<Person> persons, Person thisPerson) {
-        for (Person person : persons) {
-            if (!person.equals(thisPerson) && username.equals(person.getUsername())) {
+    public static boolean checkIfUsernameExists(String username, Person thisPerson) {        
+        for (Login login : Identification.readAllLogins()) {
+            if (username.equalsIgnoreCase(login.getUsername())) {
                 return true;
             }
         }
@@ -269,8 +263,9 @@ public class Person extends Person_Base {
     }
 
     public static boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
-            final IDDocumentType documentType, List<Person> persons, Person thisPerson) {
-        for (final Person person : persons) {
+            final IDDocumentType documentType, Person thisPerson) {
+        
+        for (final Person person : Party.readAllPersons()) {
             if (!person.equals(thisPerson) && person.getDocumentIdNumber().equals(documentIDNumber)
                     && person.getIdDocumentType().equals(documentType)) {
                 return true;
@@ -304,15 +299,7 @@ public class Person extends Person_Base {
     public void setPassword(String password) {
         getLoginIdentification().setPassword(password);
     }
-
-    public void setIstUsername(String istUsername) {
-        getUser().setUserUId(istUsername);
-    }
-
-    public String getIstUsername() {        
-        return (getUser() != null) ? getUser().getUserUId() : null;
-    }
-
+    
     public void setIsPassInKerberos(Boolean isPassInKerberos) {        
         getLoginIdentification().setIsPassInKerberos(isPassInKerberos);
     }
@@ -322,7 +309,15 @@ public class Person extends Person_Base {
         return (login != null) ? login.getIsPassInKerberos() : null;
     }
 
-    public void changeUsername(String newUsername, List<Person> persons) {
+    public void setIstUsername(String istUsername) {
+        getUser().setUserUId(istUsername);
+    }
+
+    public String getIstUsername() {        
+        return (getUser() != null) ? getUser().getUserUId() : null;
+    }
+
+    public void changeUsername(String newUsername) {
         if (newUsername == null || newUsername.equals("")) {
             throw new DomainException("error.person.nullOrEmptyUsername");
         }
@@ -331,7 +326,7 @@ public class Person extends Person_Base {
             throw new DomainException("error.person.unExistingUser");
         }
 
-        if (checkIfUsernameExists(newUsername, persons, this)) {
+        if (checkIfUsernameExists(newUsername, this)) {
             throw new DomainException("error.person.existingUsername");
         }
 

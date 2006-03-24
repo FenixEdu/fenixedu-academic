@@ -301,16 +301,11 @@ public class PersonTest extends DomainTestBase {
 		Person person3 = new Person(infoPerson3, country);
 		person3.setUsername("user3");
 
-		List<Person> persons = new ArrayList<Person>();
-		persons.add(person);
-		persons.add(person2);
-		persons.add(person3);
-
-		person.changeUsername("newUsername", persons);
+		person.changeUsername("newUsername");
 		assertEquals(person.getUsername(), "newUsername");
 
 		try {
-			person.changeUsername("user2", persons);
+			person.changeUsername("user2");
 			fail("Username already exists - should have thrown a DomainException");
 		} catch (DomainException domainException) {
 			// caught expected exception
@@ -318,7 +313,7 @@ public class PersonTest extends DomainTestBase {
 		assertEquals(person.getUsername(), "newUsername");
 
 		try {
-			person.changeUsername("", persons);
+			person.changeUsername("");
 			fail("Empty username - should have thrown a DomainException");
 		} catch (DomainException domainException) {
 			// caught expected exception
@@ -326,7 +321,7 @@ public class PersonTest extends DomainTestBase {
 		assertEquals(person.getUsername(), "newUsername");
 
 		try {
-			person.changeUsername(null, persons);
+			person.changeUsername(null);
 			fail("Null username - should have thrown a DomainException");
 		} catch (DomainException domainException) {
 			// caught expected exception
