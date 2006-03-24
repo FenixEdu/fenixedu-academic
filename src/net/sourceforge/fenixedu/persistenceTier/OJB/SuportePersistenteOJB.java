@@ -81,7 +81,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestQuestionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestScopeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.projectsManagement.ProjectAccessOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.publication.AuthorshipOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAttributeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationFormatOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTeacherOJB;
@@ -139,7 +138,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestScope;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
@@ -779,11 +777,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher()
 	{
 		return new NonAffiliatedTeacherOJB();
-	}
-
-	public IPersistentAuthorship getIPersistentAuthorship()
-	{
-		return new AuthorshipOJB();
 	}
 
 	public static void fixDescriptors()

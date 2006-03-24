@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestScope;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
@@ -244,8 +243,6 @@ public interface ISuportePersistente
 	public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes();
 
 	public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher();
-
-	public IPersistentAuthorship getIPersistentAuthorship();
 
 	public IPersistentCMS getIPersistentCms();
 
