@@ -28,7 +28,7 @@ public class InfoGuide extends InfoObject {
 
     private InfoContributor infoContributor;
 
-    private List infoGuideEntries;
+    private List<InfoGuideEntry> infoGuideEntries;
 
     private GuideRequester guideRequester;
 
@@ -123,7 +123,7 @@ public class InfoGuide extends InfoObject {
     /**
      * @return
      */
-    public List getInfoGuideEntries() {
+    public List<InfoGuideEntry> getInfoGuideEntries() {
         return infoGuideEntries;
     }
 
