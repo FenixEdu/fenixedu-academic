@@ -91,7 +91,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.student.DelegateOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OldPublicationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OrientationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.PublicationsNumberOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.ServiceProviderRegimeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.NonAffiliatedTeacherOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.ShiftProfessorshipOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.SupportLessonOJB;
@@ -151,7 +150,6 @@ import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
@@ -415,11 +413,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new CoordinatorOJB();
 	}
 
-	public IPersistentServiceProviderRegime getIPersistentServiceProviderRegime()
-	{
-		return new ServiceProviderRegimeOJB();
-	}
-
 	public IPersistentShiftProfessorship getIPersistentShiftProfessorship()
 	{
 		return new ShiftProfessorshipOJB();
@@ -435,21 +428,11 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new OrientationOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationsNumber()
-	 */
 	public IPersistentPublicationsNumber getIPersistentPublicationsNumber()
 	{
 		return new PublicationsNumberOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentOldPublication()
-	 */
 	public IPersistentOldPublication getIPersistentOldPublication()
 	{
 		return new OldPublicationOJB();

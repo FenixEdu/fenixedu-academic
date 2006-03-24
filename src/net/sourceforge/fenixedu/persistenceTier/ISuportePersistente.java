@@ -52,7 +52,6 @@ import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
@@ -172,8 +171,6 @@ public interface ISuportePersistente
 	public IPersistentExternalPerson getIPersistentExternalPerson();
 
 	public IPersistentCoordinator getIPersistentCoordinator();
-
-	public IPersistentServiceProviderRegime getIPersistentServiceProviderRegime();
 
 	public IPersistentShiftProfessorship getIPersistentShiftProfessorship();
 

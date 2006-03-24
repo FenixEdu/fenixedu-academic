@@ -87,7 +87,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
@@ -165,7 +164,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.SeminaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OrientationVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.ServiceProviderRegimeVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
@@ -343,10 +341,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentGrantOwner getIPersistentGrantOwner() {
         return new GrantOwnerVO();
-    }
-
-    public IPersistentServiceProviderRegime getIPersistentServiceProviderRegime() {
-        return new ServiceProviderRegimeVO();
     }
 
     public IPersistentGuide getIPersistentGuide() {
