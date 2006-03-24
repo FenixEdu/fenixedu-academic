@@ -24,10 +24,6 @@ public class Modality extends Modality_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-    public static Modality getById(Integer modalityID) {
-        return RootDomainObject.getInstance().readModalityByOID(modalityID);
-    }
-
     public static List<Modality> getAllModalities() {
         return RootDomainObject.getInstance().getModalitys();
     }

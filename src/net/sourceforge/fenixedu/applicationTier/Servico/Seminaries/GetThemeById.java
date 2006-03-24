@@ -21,8 +21,7 @@ public class GetThemeById extends Service {
 	public InfoTheme run(Integer themeID) {
 		InfoTheme infoTheme = null;
 		if (themeID != null) {
-			Theme theme = Theme.getById(themeID);
-
+			Theme theme = rootDomainObject.readThemeByOID(themeID);
 			infoTheme = InfoTheme.newInfoFromDomain(theme);
 
 		}

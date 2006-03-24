@@ -20,8 +20,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
 public class DeleteCandidacy extends Service {
 
 	public void run(Integer id) throws BDException, ExcepcaoPersistencia {
-		Candidacy candidacy = Candidacy.getById(id);
-        
+		Candidacy candidacy = rootDomainObject.readCandidacyByOID(id);
         candidacy.delete();
 	}
 

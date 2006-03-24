@@ -97,7 +97,4 @@ public abstract class DegreeModule extends DegreeModule_Base {
     protected abstract void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
     protected abstract void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
 
-    public static DegreeModule getById(Integer id) {
-        return RootDomainObject.getInstance().readDegreeModuleByOID(id);
-    }
 }

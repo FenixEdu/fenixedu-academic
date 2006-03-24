@@ -825,8 +825,4 @@ public class CurricularCourse extends CurricularCourse_Base {
         return false;
     }
 
-    public static CurricularCourse getById(Integer id) {
-        return (CurricularCourse) DegreeModule.getById(id);
-    }
-
 }

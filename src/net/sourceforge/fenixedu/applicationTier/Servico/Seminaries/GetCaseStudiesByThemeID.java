@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
 public class GetCaseStudiesByThemeID extends Service {
 
 	public List run(Integer themeID) throws BDException, ExcepcaoPersistencia {
-		List cases = Theme.getById(themeID).getCaseStudies();
+		List cases = rootDomainObject.readThemeByOID(themeID).getCaseStudies();
         
         List infoCases = new LinkedList();
 		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {

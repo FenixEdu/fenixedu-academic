@@ -54,18 +54,18 @@ public class ReadCandidacies extends Service {
         //
         // case[1-5]Id => case study ids in the desired order
         
-        Modality modality = modalityID.intValue() == -1 ? null : Modality.getById(modalityID);
-        Seminary seminary = seminaryID.intValue() == -1 ? null : Seminary.getById(seminaryID);
-        Theme theme       = themeID.intValue() == -1 ? null : Theme.getById(themeID);
+        Modality modality = modalityID.intValue() == -1 ? null : rootDomainObject.readModalityByOID(modalityID);
+        Seminary seminary = seminaryID.intValue() == -1 ? null : rootDomainObject.readSeminaryByOID(seminaryID);
+        Theme theme       = themeID.intValue() == -1 ? null : rootDomainObject.readThemeByOID(themeID);
         
-        DegreeCurricularPlan degreeCurricularPlan = degreeCurricularPlanID.intValue() == -1 ? null : DegreeCurricularPlan.getById(degreeCurricularPlanID);
-        CurricularCourse curricularCourse = curricularCourseID.intValue() == -1 ? null : CurricularCourse.getById(curricularCourseID);
+        DegreeCurricularPlan degreeCurricularPlan = degreeCurricularPlanID.intValue() == -1 ? null : rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        CurricularCourse curricularCourse = curricularCourseID.intValue() == -1 ? null : (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
 
-        CaseStudy caseStudy1 = case1Id.intValue() == -1 ? null : CaseStudy.getById(case1Id);
-        CaseStudy caseStudy2 = case2Id.intValue() == -1 ? null : CaseStudy.getById(case2Id);
-        CaseStudy caseStudy3 = case3Id.intValue() == -1 ? null : CaseStudy.getById(case3Id);
-        CaseStudy caseStudy4 = case4Id.intValue() == -1 ? null : CaseStudy.getById(case4Id);
-        CaseStudy caseStudy5 = case5Id.intValue() == -1 ? null : CaseStudy.getById(case5Id);
+        CaseStudy caseStudy1 = case1Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case1Id);
+        CaseStudy caseStudy2 = case2Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case2Id);
+        CaseStudy caseStudy3 = case3Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case3Id);
+        CaseStudy caseStudy4 = case4Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case4Id);
+        CaseStudy caseStudy5 = case5Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case5Id);
         
         List<Candidacy> filteredCandidacies = new ArrayList<Candidacy>();
         

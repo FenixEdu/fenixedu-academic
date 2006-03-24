@@ -27,8 +27,5 @@ public class Theme extends Theme_Base {
     public static List<Theme> getAllThemes() {
         return RootDomainObject.getInstance().getThemes();
     }
-    
-    public static Theme getById(Integer id) {
-        return RootDomainObject.getInstance().readThemeByOID(id);
-    }
+
 }

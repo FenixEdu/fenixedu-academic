@@ -51,7 +51,7 @@ public class WriteCandidacy extends Service {
         if (modality.getIdInternal().equals(infoCandidacy.getInfoModality().getIdInternal())) {
             candidacy.setTheme(null);
         } else {
-            final Theme readTheme = Theme.getById(infoCandidacy.getTheme().getIdInternal());
+            final Theme readTheme = rootDomainObject.readThemeByOID(infoCandidacy.getTheme().getIdInternal());
             candidacy.setTheme(readTheme);
         }
         if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue()) {
@@ -64,7 +64,7 @@ public class WriteCandidacy extends Service {
             
             caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
 
-            final CaseStudy caseStudy = CaseStudy.getById(infoCaseStudyChoice.getCaseStudy().getIdInternal());
+            final CaseStudy caseStudy = rootDomainObject.readCaseStudyByOID(infoCaseStudyChoice.getCaseStudy().getIdInternal());
             caseStudyChoice.setCaseStudy(caseStudy);
 
             caseStudyChoice.setCandidacy(candidacy);

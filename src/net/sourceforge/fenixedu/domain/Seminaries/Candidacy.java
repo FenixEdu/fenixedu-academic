@@ -27,10 +27,6 @@ public class Candidacy extends Candidacy_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-    public static Candidacy getById(Integer id) {
-        return RootDomainObject.getInstance().readCandidacyByOID(id);
-    }
-
     public void delete() {
         for (CaseStudyChoice choice : getCaseStudyChoices()) {
             choice.delete();

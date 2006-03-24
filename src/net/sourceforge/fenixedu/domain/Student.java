@@ -285,8 +285,4 @@ public class Student extends Student_Base {
     	return result;
     }
 
-    public static Student getById(Integer idInternal) {
-        return RootDomainObject.getInstance().readStudentByOID(idInternal);
-    }
-
 }
