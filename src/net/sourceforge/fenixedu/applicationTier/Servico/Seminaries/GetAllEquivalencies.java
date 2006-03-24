@@ -1,42 +1,25 @@
-/*
- * Created on 3/Set/2003, 15:35:33
- *
- *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalencyWithCurricularCourse;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
-/**
- * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- * 
- * 
- * Created at 3/Set/2003, 15:35:33
- * 
- */
 public class GetAllEquivalencies extends Service {
 
-	public List run() throws BDException, ExcepcaoPersistencia {
-		List infoEquivalencies = new LinkedList();
+	public List<InfoEquivalency> run() throws ExcepcaoPersistencia { 
+		List<InfoEquivalency> result = new LinkedList<InfoEquivalency>();
 
-		IPersistentSeminaryCurricularCourseEquivalency persistentEquivalency = persistentSupport
-				.getIPersistentSeminaryCurricularCourseEquivalency();
-		List equivalencies = persistentEquivalency.readAll();
-		for (Iterator iterator = equivalencies.iterator(); iterator.hasNext();) {
-			CourseEquivalency equivalency = (CourseEquivalency) iterator.next();
-
-			infoEquivalencies.add(InfoEquivalencyWithCurricularCourse.newInfoFromDomain(equivalency));
+		List<CourseEquivalency> courseEquivalencies = rootDomainObject.getCourseEquivalencys();
+		for (CourseEquivalency courseEquivalency : courseEquivalencies) {
+            result.add(InfoEquivalencyWithCurricularCourse.newInfoFromDomain(courseEquivalency));
 		}
 
-		return infoEquivalencies;
+		return result;
 	}
+    
 }

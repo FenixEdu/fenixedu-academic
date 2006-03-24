@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersis
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
@@ -123,8 +122,6 @@ public interface ISuportePersistente
 	public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy();
 
 	public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy();
-
-	public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency();
 
 	public IPersistentMetadata getIPersistentMetadata();
 

@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CandidacyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CaseStudyOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.EquivalencyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.ModalityOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.SeminaryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
@@ -104,7 +103,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.ReimbursementTr
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
@@ -503,21 +501,14 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new SeminaryOJB();
 	}
 
-	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
 	public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy()
 	{
 		return new CaseStudyOJB();
 	}
 
-	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
 	public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy()
 	{
 		return new CandidacyOJB();
-	}
-
-	public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency()
-	{
-		return new EquivalencyOJB();
 	}
 
 	public IPersistentMetadata getIPersistentMetadata()
