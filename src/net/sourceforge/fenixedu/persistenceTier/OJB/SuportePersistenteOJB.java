@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CandidacyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CaseStudyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.ModalityOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.SeminaryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailAddressAliasOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailingListOJB;
@@ -96,7 +95,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.Suppor
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.workingTime.TeacherInstitutionWorkingTimeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.InsuranceTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.ReimbursementTransactionOJB;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
@@ -462,20 +460,9 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new TeacherDegreeFinalProjectStudentOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacherInstitutionWorkingTime()
-	 */
 	public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime()
 	{
 		return new TeacherInstitutionWorkingTimeOJB();
-	}
-
-	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
-	public IPersistentSeminary getIPersistentSeminary()
-	{
-		return new SeminaryOJB();
 	}
 
 	public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy()

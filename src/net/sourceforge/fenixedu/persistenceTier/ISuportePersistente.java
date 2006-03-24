@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
@@ -112,8 +111,6 @@ public interface ISuportePersistente
 	public IPersistentSummary getIPersistentSummary();
 
 	public IPersistentSeminaryModality getIPersistentSeminaryModality();
-
-	public IPersistentSeminary getIPersistentSeminary();
 
 	public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy();
 

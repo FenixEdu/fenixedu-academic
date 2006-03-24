@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
@@ -156,7 +155,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.projectsMan
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CandidacyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.ModalityVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.SeminaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OrientationVO;
 
@@ -400,10 +398,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public Integer getNumberCachedItems() {
         return null;
-    }
-
-    public IPersistentSeminary getIPersistentSeminary() {
-        return new SeminaryVO();
     }
 
     public IPersistentGrantType getIPersistentGrantType() {
