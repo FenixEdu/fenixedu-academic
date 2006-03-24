@@ -89,7 +89,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsN
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
@@ -107,7 +106,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionCo
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExternalPersonVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeProofVersionVO;
@@ -174,10 +172,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public static VersionedObjectsPersistenceSupport getInstance() {
         return instance;
-    }
-
-    public IPersistentGratuityTransaction getIPersistentGratuityTransaction() {
-        return new GratuityTransactionVO();
     }
 
     public IPersistentTestScope getIPersistentTestScope() {
