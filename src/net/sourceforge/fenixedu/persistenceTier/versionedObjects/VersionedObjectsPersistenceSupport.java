@@ -92,7 +92,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersisten
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailAdressAliasVO;
@@ -260,10 +259,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentDelegate getIPersistentDelegate() {
-        return null;
-    }
-
-    public IPersistentPaymentTransaction getIPersistentPaymentTransaction() {
         return null;
     }
 

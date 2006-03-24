@@ -97,7 +97,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.Suppor
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.workingTime.TeacherInstitutionWorkingTimeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.GratuityTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.InsuranceTransactionOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.PaymentTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.ReimbursementTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
@@ -155,7 +154,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersisten
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 import net.sourceforge.fenixedu.stm.Transaction;
@@ -771,11 +769,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests()
 	{
 		return new ExtraWorkResquestsOJB();
-	}
-
-	public IPersistentPaymentTransaction getIPersistentPaymentTransaction()
-	{
-		return new PaymentTransactionOJB();
 	}
 
 	public IPersistentProjectAccess getIPersistentProjectAccess()

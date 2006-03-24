@@ -57,7 +57,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersisten
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 
 public interface ISuportePersistente
@@ -223,8 +222,6 @@ public interface ISuportePersistente
 	public IPersistentReimbursementTransaction getIPersistentReimbursementTransaction();
 
 	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction();
-
-	public IPersistentPaymentTransaction getIPersistentPaymentTransaction();
 
 	public IPersistentPublicationTeacher getIPersistentPublicationTeacher();
 
