@@ -5,14 +5,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import java.util.Iterator;
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -25,22 +20,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
 public class DeleteCandidacy extends Service {
 
 	public void run(Integer id) throws BDException, ExcepcaoPersistencia {
-		IPersistentSeminaryCandidacy persistentCandidacy = persistentSupport
-				.getIPersistentSeminaryCandidacy();
-		Candidacy candidacy = (Candidacy) persistentObject.readByOID(Candidacy.class, id);
-		List choices = candidacy.getCaseStudyChoices();
-		for (Iterator iterator = choices.iterator(); iterator.hasNext();) {
-			CaseStudyChoice choice = (CaseStudyChoice) iterator.next();
-			choice.setCaseStudy(null);
-			persistentObject.deleteByOID(CaseStudyChoice.class, choice.getIdInternal());
-		}
-		candidacy.setCurricularCourse(null);
-		candidacy.setModality(null);
-		candidacy.setSeminary(null);
-		candidacy.setStudent(null);
-		candidacy.setTheme(null);
-		candidacy.getCaseStudyChoices().clear();
-		persistentCandidacy.deleteByOID(Candidacy.class, id);
+		Candidacy candidacy = Candidacy.getById(id);
+        
+        candidacy.delete();
 	}
 
 }

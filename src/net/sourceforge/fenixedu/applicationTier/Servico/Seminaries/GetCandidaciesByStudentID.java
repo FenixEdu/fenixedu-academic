@@ -11,10 +11,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -29,9 +29,7 @@ public class GetCandidaciesByStudentID extends Service {
 	public List run(Integer id) throws BDException, ExcepcaoPersistencia {
 		List candidaciesInfo = new LinkedList();
 
-		IPersistentSeminaryCandidacy persistentSeminaryCandidacy = persistentSupport
-				.getIPersistentSeminaryCandidacy();
-		List candidacies = persistentSeminaryCandidacy.readByStudentID(id);
+		List candidacies = Student.getById(id).getAssociatedCandidancies();
 		for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
 			Candidacy candidacy = (Candidacy) iterator.next();
 

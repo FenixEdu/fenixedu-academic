@@ -116,4 +116,8 @@ public class Seminary extends Seminary_Base {
         }
     }
 
+    public static Seminary getById(Integer id) {
+        return RootDomainObject.getInstance().readSeminaryByOID(id);
+    }
+
 }

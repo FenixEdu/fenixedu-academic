@@ -36,8 +36,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
@@ -151,8 +149,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestScopeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.projectsManagement.ProjectAccessVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CandidacyVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.ModalityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OrientationVO;
 
@@ -232,10 +228,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentTutor getIPersistentTutor() {
         return null;
-    }
-
-    public IPersistentSeminaryModality getIPersistentSeminaryModality() {
-        return new ModalityVO();
     }
 
     public IPersistentGrantInsurance getIPersistentGrantInsurance() {
@@ -440,10 +432,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentGrantPart getIPersistentGrantPart() {
         return new GrantPartVO();
-    }
-
-    public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy() {
-        return new CandidacyVO();
     }
 
     public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter() {

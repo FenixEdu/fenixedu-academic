@@ -21,14 +21,19 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
+import net.sourceforge.fenixedu.domain.Seminaries.Modality;
+import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
+import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -42,15 +47,79 @@ public class ReadCandidacies extends Service {
 
 	public List run(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id,
 			Integer case2Id, Integer case3Id, Integer case4Id, Integer case5Id,
-			Integer curricularCourseID, Integer degreeID, Boolean approved) throws BDException, ExcepcaoPersistencia {
-		List infoCandidacies = new LinkedList();
+			Integer curricularCourseID, Integer degreeCurricularPlanID, Boolean approved) throws BDException, ExcepcaoPersistencia {
+        
+        // IDs == -1 => not selected
+        // approved == nulll => not selected
+        //
+        // case[1-5]Id => case study ids in the desired order
+        
+        Modality modality = modalityID.intValue() == -1 ? null : Modality.getById(modalityID);
+        Seminary seminary = seminaryID.intValue() == -1 ? null : Seminary.getById(seminaryID);
+        Theme theme       = themeID.intValue() == -1 ? null : Theme.getById(themeID);
+        
+        DegreeCurricularPlan degreeCurricularPlan = degreeCurricularPlanID.intValue() == -1 ? null : DegreeCurricularPlan.getById(degreeCurricularPlanID);
+        CurricularCourse curricularCourse = curricularCourseID.intValue() == -1 ? null : CurricularCourse.getById(curricularCourseID);
 
-		IPersistentSeminaryCandidacy persistentCandidacy = persistentSupport
-				.getIPersistentSeminaryCandidacy();
-		List candidacies = persistentCandidacy.readByUserInput(modalityID, seminaryID, themeID, case1Id,
-				case2Id, case3Id, case4Id, case5Id, curricularCourseID, degreeID, approved);
-		for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
-			Candidacy candidacy = (Candidacy) iterator.next();
+        CaseStudy caseStudy1 = case1Id.intValue() == -1 ? null : CaseStudy.getById(case1Id);
+        CaseStudy caseStudy2 = case2Id.intValue() == -1 ? null : CaseStudy.getById(case2Id);
+        CaseStudy caseStudy3 = case3Id.intValue() == -1 ? null : CaseStudy.getById(case3Id);
+        CaseStudy caseStudy4 = case4Id.intValue() == -1 ? null : CaseStudy.getById(case4Id);
+        CaseStudy caseStudy5 = case5Id.intValue() == -1 ? null : CaseStudy.getById(case5Id);
+        
+        List<Candidacy> filteredCandidacies = new ArrayList<Candidacy>();
+        
+        outter: 
+        for (Candidacy candidacy : Candidacy.getAllCandidacies()) {
+            if (modality != null && !candidacy.getModality().equals(modality)) {
+                continue;
+            }
+            
+            if (seminary != null && !candidacy.getSeminary().equals(seminary)) {
+                continue;
+            }
+            
+            if (curricularCourseID != null && !candidacy.getCurricularCourse().equals(curricularCourse)) {
+                continue;
+            }
+            
+            if (theme != null) {
+                if (!candidacy.getTheme().equals(theme) && !(candidacy.getModality().getIdInternal().intValue() == 1)) {
+                    continue;
+                }
+            }
+            
+            if (approved != null && !candidacy.getApproved().equals(approved)) {
+                continue;
+            }
+            
+            if (degreeCurricularPlan != null && !degreeCurricularPlan.getCurricularCourses().contains(candidacy.getCurricularCourse())) {
+                continue;
+            }
+         
+            CaseStudy choices[] = { caseStudy1, caseStudy2, caseStudy3, caseStudy4, caseStudy5 };
+            for (int i = 0; i < choices.length; i++) {
+                CaseStudy caseStudy = choices[i];
+
+                if (caseStudy == null) {
+                    continue;
+                }
+                
+                for (CaseStudyChoice choice : candidacy.getCaseStudyChoices()) {
+                    if (choice.getOrder() != null) {
+                        if (choice.getOrder() == i && !choice.getCaseStudy().equals(caseStudy)) {
+                            continue outter; // the case study in that order is not what the user requested
+                        }
+                    }
+                }
+            }
+            
+            filteredCandidacies.add(candidacy);
+        }
+        
+        List infoCandidacies = new LinkedList();
+        
+        for (Candidacy candidacy : filteredCandidacies) {
 			Student student = candidacy.getStudent();
 			StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
 			List enrollments = studentCurricularPlan.getEnrolments();

@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -55,7 +56,7 @@ public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
         try
         {
             StudentCurricularPlan scp = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,SCPIDInternal);
-            List candidacies = persistentSupport.getIPersistentSeminaryCandidacy().readByStudentID(scp.getStudent().getIdInternal());
+            List candidacies = Student.getById(scp.getStudent().getIdInternal()).getAssociatedCandidancies();
             if (candidacies != null && candidacies.size() > 0)
                 result = true;
         }

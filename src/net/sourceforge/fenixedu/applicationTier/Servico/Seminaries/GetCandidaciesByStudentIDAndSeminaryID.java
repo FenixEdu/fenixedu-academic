@@ -5,16 +5,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -26,21 +25,21 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCandidaciesByStudentIDAndSeminaryID extends Service {
 
-	public List run(Integer studentID, Integer seminaryID) throws BDException, ExcepcaoPersistencia {
-		List candidaciesInfo = new LinkedList();
+    public List run(Integer studentID, Integer seminaryID) throws BDException, ExcepcaoPersistencia {
+        List candidaciesInfo = new LinkedList();
 
-		IPersistentSeminaryCandidacy persistentSeminaryCandidacy = persistentSupport
-				.getIPersistentSeminaryCandidacy();
-		List candidacies = persistentSeminaryCandidacy.readByStudentIDAndSeminaryID(studentID,
-				seminaryID);
-		for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
-			Candidacy candidacy = (Candidacy) iterator.next();
-			InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(candidacy);
-			Seminary seminary = candidacy.getSeminary();
-			infoCandidacy.setSeminaryName(seminary.getName());
-			candidaciesInfo.add(infoCandidacy);
-		}
+        Student student = Student.getById(studentID);
+        Seminary seminary = Seminary.getById(seminaryID);
 
-		return candidaciesInfo;
-	}
+        List<Candidacy> candidacies = Candidacy.getByStudentAndSeminary(student, seminary);
+
+        for (Candidacy candidacy : candidacies) {
+            InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(candidacy);
+            infoCandidacy.setSeminaryName(seminary.getName());
+
+            candidaciesInfo.add(infoCandidacy);
+        }
+
+        return candidaciesInfo;
+    }
 }

@@ -29,12 +29,6 @@ public class Theme extends Theme_Base {
     }
     
     public static Theme getById(Integer id) {
-        for (Theme theme : getAllThemes()) {
-            if (theme.getIdInternal().equals(id)) {
-                return theme;
-            }
-        }
-        
-        return null;
+        return RootDomainObject.getInstance().readThemeByOID(id);
     }
 }

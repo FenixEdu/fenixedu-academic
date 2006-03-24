@@ -629,6 +629,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     	}
     	return result;
     }
+
+    public static DegreeCurricularPlan getById(Integer id) {
+        return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(id);
+    }
     
  
 }

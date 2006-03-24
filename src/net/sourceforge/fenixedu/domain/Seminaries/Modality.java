@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
@@ -18,7 +20,16 @@ public class Modality extends Modality_Base {
 
 	public Modality() {
 		super();
+        
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
+
+    public static Modality getById(Integer modalityID) {
+        return RootDomainObject.getInstance().readModalityByOID(modalityID);
+    }
+
+    public static List<Modality> getAllModalities() {
+        return RootDomainObject.getInstance().getModalitys();
+    }
 
 }

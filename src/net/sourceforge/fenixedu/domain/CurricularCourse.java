@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -822,6 +823,10 @@ public class CurricularCourse extends CurricularCourse_Base {
             }
         }
         return false;
+    }
+
+    public static CurricularCourse getById(Integer id) {
+        return (CurricularCourse) DegreeModule.getById(id);
     }
 
 }

@@ -35,13 +35,7 @@ public class CaseStudy extends CaseStudy_Base {
         return RootDomainObject.getInstance().getCaseStudys();
     }
 
-    public static CaseStudy getById(Integer idInternal) {
-        for (CaseStudy caseStudy : RootDomainObject.getInstance().getCaseStudys()) {
-            if (caseStudy.getIdInternal().equals(idInternal)) {
-                return caseStudy;
-            }
-        }
-        
-        return null;
+    public static CaseStudy getById(Integer id) {
+        return RootDomainObject.getInstance().readCaseStudyByOID(id);
     }
 }

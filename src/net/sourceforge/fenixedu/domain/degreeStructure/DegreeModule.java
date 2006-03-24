@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -95,4 +96,8 @@ public abstract class DegreeModule extends DegreeModule_Base {
     protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
     protected abstract void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
     protected abstract void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
+
+    public static DegreeModule getById(Integer id) {
+        return RootDomainObject.getInstance().readDegreeModuleByOID(id);
+    }
 }

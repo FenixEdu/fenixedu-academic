@@ -39,8 +39,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.CandidacyOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries.ModalityOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailAddressAliasOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailingListOJB;
@@ -94,8 +92,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.Suppor
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.workingTime.TeacherInstitutionWorkingTimeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.InsuranceTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.ReimbursementTransactionOJB;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
@@ -358,11 +354,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new SummaryOJB();
 	}
 
-	public IPersistentSeminaryModality getIPersistentSeminaryModality()
-	{
-		return new ModalityOJB();
-	}
-
 	public IPersistentGrantOwner getIPersistentGrantOwner()
 	{
 		return new GrantOwnerOJB();
@@ -476,12 +467,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime()
 	{
 		return new TeacherInstitutionWorkingTimeOJB();
-	}
-
-	// by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
-	public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy()
-	{
-		return new CandidacyOJB();
 	}
 
 	public IPersistentMetadata getIPersistentMetadata()

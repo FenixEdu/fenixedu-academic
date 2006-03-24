@@ -5,7 +5,12 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Student;
 
 
 /**
@@ -21,5 +26,45 @@ public class Candidacy extends Candidacy_Base {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
+
+    public static Candidacy getById(Integer id) {
+        return RootDomainObject.getInstance().readCandidacyByOID(id);
+    }
+
+    public void delete() {
+        for (CaseStudyChoice choice : getCaseStudyChoices()) {
+            choice.delete();
+        }
+        
+        removeCurricularCourse();
+        removeModality();
+        removeSeminary();
+        removeStudent();
+        removeTheme();
+        
+        deleteDomainObject();
+    }
+
+    public static List<Candidacy> getByStudentAndSeminary(Student student, Seminary seminary) {
+        List<Candidacy> candidacies = new ArrayList<Candidacy>();
+        
+        for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacys()) {
+            if (! candidacy.getStudent().equals(student)) {
+                continue;
+            }
+            
+            if (! candidacy.getSeminary().equals(student)) {
+                continue;
+            }
+            
+            candidacies.add(candidacy);
+        }
+        
+        return candidacies;
+    }
+
+    public static List<Candidacy> getAllCandidacies() {
+        return RootDomainObject.getInstance().getCandidacys();
+    }
 
 }

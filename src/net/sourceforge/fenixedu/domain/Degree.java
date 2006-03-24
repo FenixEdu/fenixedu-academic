@@ -260,4 +260,8 @@ public class Degree extends Degree_Base {
     	}
     	return result;
     }
+
+    public static Degree getById(Integer id) {
+        return RootDomainObject.getInstance().readDegreeByOID(id);
+    }
 }

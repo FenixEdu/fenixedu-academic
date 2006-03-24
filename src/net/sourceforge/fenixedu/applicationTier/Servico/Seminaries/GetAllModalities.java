@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
 import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -28,9 +27,7 @@ public class GetAllModalities extends Service {
 	public List run() throws BDException, ExcepcaoPersistencia {
 		List infoCases = new LinkedList();
 
-		IPersistentSeminaryModality persistentModality = persistentSupport
-				.getIPersistentSeminaryModality();
-		List cases = persistentModality.readAll();
+		List cases = Modality.getAllModalities();
 
 		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
 			Modality modality = (Modality) iterator.next();
