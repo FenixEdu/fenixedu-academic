@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -42,19 +41,15 @@ public class EditGuideInformation extends Service {
             String othersRemarks, Integer othersQuantity, Double othersPrice)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        // This will be the flag that indicates if a change has been made to the
-        // Guide
+        // This will be the flag that indicates if a change has been made to the Guide
         // No need to anything if there's no change ...
         boolean change = false;
-
         
         // Safety check to see if the Guide can be changed
         this.chekIfChangeable(infoGuide);
 
         // Read The Guide
-
-        Guide guide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
-                infoGuide.getYear(), infoGuide.getVersion());
+        Guide guide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(), infoGuide.getYear(), infoGuide.getVersion());
 
         // check if it's needed to change the Contributor
         if ((contributorNumber != null)
@@ -74,13 +69,11 @@ public class EditGuideInformation extends Service {
         // they won't appear in the new guide version if the guide has been
         // payed
 
-        Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
-        List newInfoGuideEntries = new ArrayList();
-        List guideEntriesToRemove = new ArrayList();
+        List<InfoGuideEntry> newInfoGuideEntries = new ArrayList<InfoGuideEntry>();
+        List<InfoGuideEntry> guideEntriesToRemove = new ArrayList<InfoGuideEntry>();
 
         int quantityListIndex = 0;
-        while (iterator.hasNext()) {
-            InfoGuideEntry infoGuideEntry = (InfoGuideEntry) iterator.next();
+        for (InfoGuideEntry infoGuideEntry : infoGuide.getInfoGuideEntries()) {
             if ((quantityList[quantityListIndex] == null)
                     || (quantityList[quantityListIndex].length() == 0)
                     || (quantityList[quantityListIndex].equals("0"))) {
@@ -113,64 +106,44 @@ public class EditGuideInformation extends Service {
         if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.NON_PAYED)) {
             // If there's a change ...
             if (change) {
-
                 // fill in the last field in the Others Guide Entry if necessary
                 if (othersGuideEntry != null) {
                     othersGuideEntry.setGuide(guide);
                 }
                 // Remove the Guide entries wich have been deleted
-                Iterator entryIterator = guideEntriesToRemove.iterator();
-                while (entryIterator.hasNext()) {
-                    InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
-
-                    GuideEntry guideEntry = (GuideEntry) persistentObject.readByOID(
-                            GuideEntry.class, infoGuideEntry.getIdInternal());
-
-                    PaymentTransaction paymentTransaction = persistentSupport.getIPersistentPaymentTransaction()
-                            .readByGuideEntryID(guideEntry.getIdInternal());
+                for (InfoGuideEntry infoGuideEntry : guideEntriesToRemove) {
+                    GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(infoGuideEntry.getIdInternal());
+                    PaymentTransaction paymentTransaction = guideEntry.getPaymentTransaction();
 
                     if (paymentTransaction != null) {
-                        paymentTransaction.getPersonAccount().getPaymentTransactions().remove(
-                                paymentTransaction);
-                        persistentSupport.getIPersistentPaymentTransaction().deleteByOID(PaymentTransaction.class,
-                                paymentTransaction.getIdInternal());
+                        paymentTransaction.getPersonAccount().getPaymentTransactions().remove(paymentTransaction);
+                        persistentObject.deleteByOID(PaymentTransaction.class, paymentTransaction.getIdInternal());
                     }
 
                     if (guideEntry.getReimbursementGuideEntries() != null) {
-                        for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry
-                                .getReimbursementGuideEntries()) {
-                            reimbursementGuideEntry.getReimbursementGuide()
-                                    .getReimbursementGuideEntries().remove(reimbursementGuideEntry);
-                            persistentSupport.getIPersistentGuideEntry().deleteByOID(ReimbursementGuideEntry.class,
-                                    reimbursementGuideEntry.getIdInternal());
+                        for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry.getReimbursementGuideEntries()) {
+                            reimbursementGuideEntry.getReimbursementGuide().getReimbursementGuideEntries().remove(reimbursementGuideEntry);
+                            persistentObject.deleteByOID(ReimbursementGuideEntry.class, reimbursementGuideEntry.getIdInternal());
                         }
                     }
                     guideEntry.getGuide().getGuideEntries().remove(guideEntry);
-
-                    persistentSupport.getIPersistentGuideEntry().deleteByOID(GuideEntry.class,
-                            infoGuideEntry.getIdInternal());
+                    persistentObject.deleteByOID(GuideEntry.class, infoGuideEntry.getIdInternal());
                 }
 
                 // Update the remaing guide entries
-                entryIterator = newInfoGuideEntries.iterator();
-                while (entryIterator.hasNext()) {
-                    InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
-
-                    GuideEntry guideEntry = persistentSupport.getIPersistentGuideEntry()
-                            .readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide,
-                                    infoGuideEntry.getGraduationType(),
-                                    infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
+                for (InfoGuideEntry infoGuideEntry : newInfoGuideEntries) {
+                    GuideEntry guideEntry = persistentSupport.getIPersistentGuideEntry().readByGuideAndGraduationTypeAndDocumentTypeAndDescription(
+                            guide,
+                            infoGuideEntry.getGraduationType(),
+                            infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
                     guideEntry.setQuantity(infoGuideEntry.getQuantity());
-
                 }
                 guide.setContributor(contributor);
-
             }
 
         } else if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
             // If there's a change ...
             if (change) {
-
                 // Create a new Guide Version
                 Guide newGuideVersion = this.createNewGuideVersion(infoGuide);
 
@@ -196,8 +169,7 @@ public class EditGuideInformation extends Service {
                     personAccount = DomainFactory.makePersonAccount(guide.getPerson());
                 }
 
-                IPersistentGratuitySituation persistentGratuitySituation = persistentSupport
-                        .getIPersistentGratuitySituation();
+                IPersistentGratuitySituation persistentGratuitySituation = persistentSupport.getIPersistentGratuitySituation();
 
                 // Write the Guide Entries
                 for (InfoGuideEntry infoGuideEntry : (List<InfoGuideEntry>) newInfoGuideEntries) {
@@ -209,17 +181,15 @@ public class EditGuideInformation extends Service {
                     guideEntry.setGuide(newGuideVersion);
 
                     Person studentPerson = guide.getPerson();
-                    Student student = persistentSupport.getIPersistentStudent().readByUsername(
-                            studentPerson.getUsername());
+                    Student student = persistentSupport.getIPersistentStudent().readByUsername(studentPerson.getUsername());
                     ExecutionDegree executionDegree = guide.getExecutionDegree();
 
                     // Write Gratuity Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
-
                         executionDegree = guide.getExecutionDegree();
                         gratuitySituation = persistentGratuitySituation
-                                .readGratuitySituationByExecutionDegreeAndStudent(executionDegree
-                                        .getIdInternal(), student.getIdInternal());
+                                .readGratuitySituationByExecutionDegreeAndStudent(
+                                        executionDegree.getIdInternal(), student.getIdInternal());
 
                         paymentTransaction = DomainFactory.makeGratuityTransaction(guideEntry.getPrice(),
                                 new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry
@@ -231,9 +201,7 @@ public class EditGuideInformation extends Service {
                         // Update GratuitySituation
                         Double remainingValue = gratuitySituation.getRemainingValue();
 
-                        gratuitySituation.setRemainingValue(new Double(remainingValue.doubleValue()
-                                + paymentTransaction.getValue().doubleValue()));
-
+                        gratuitySituation.setRemainingValue(remainingValue + paymentTransaction.getValue());
                     }
 
                     // Write Insurance Transaction
@@ -244,19 +212,15 @@ public class EditGuideInformation extends Service {
                                 TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, guide.getPerson(),
                                 personAccount, guideEntry, executionDegree.getExecutionYear(), student);
                     }
-
                 }
 
                 // Update the version number for the next Database Access
                 infoGuide.setVersion(newGuideVersion.getVersion());
 
-                // CREATE TRANSACTIONS!!!!!!!!!!!!!!!!!!!!!(Gratuity or
-                // Insurance)
+                // CREATE TRANSACTIONS!!!!!!!!!!!!!!!!!!!!!(Gratuity or Insurance)
 
                 // UPDATE remainigValue ou GRATUITY_SITUATION!!!!!
-
             }
-
         }
 
         // If there's no change
@@ -266,8 +230,10 @@ public class EditGuideInformation extends Service {
         Guide newGuide = null;
         InfoGuide result = null;
 
-        newGuide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
-                infoGuide.getYear(), infoGuide.getVersion());
+        newGuide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(
+                infoGuide.getNumber(),
+                infoGuide.getYear(), 
+                infoGuide.getVersion());
         // Update the Guide Total
         InfoGuide infoGuideTemp = new InfoGuide();
         infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);
@@ -279,26 +245,21 @@ public class EditGuideInformation extends Service {
         newGuide.setTotal(result.getTotal());
 
         return result;
-
     }
 
-    private void chekIfChangeable(InfoGuide infoGuide) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        
+    private void chekIfChangeable(InfoGuide infoGuide) throws FenixServiceException, ExcepcaoPersistencia {
         // Annuled Guides cannot be changed
         if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED))
             throw new InvalidChangeServiceException("Situation of Guide Is Annulled");
 
-        List<Guide> guides = persistentSupport.getIPersistentGuide()
-                .readByNumberAndYear(infoGuide.getNumber(), infoGuide.getYear());
+        List<Guide> guides = persistentSupport.getIPersistentGuide().readByNumberAndYear(infoGuide.getNumber(), infoGuide.getYear());
 
         // If it's not the latest version ...
         if (guides.size() != infoGuide.getVersion().intValue())
             throw new InvalidChangeServiceException("Not the Latest Version");
     }
 
-    private Guide createNewGuideVersion(InfoGuide infoGuide) throws 
-            ExcepcaoPersistencia {
+    private Guide createNewGuideVersion(InfoGuide infoGuide) throws ExcepcaoPersistencia {
         // Read the needed information from the DataBase
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
         Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
