@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
@@ -51,16 +52,25 @@ public class CreateNewUnit extends Service {
         Degree degree = null;
         if (degreeID != null
                 && unit.getType() != null
-                && (unit.getType().equals(PartyTypeEnum.DEGREE) || unit.getType().equals(
-                        PartyTypeEnum.MASTER_DEGREE))) {
+                && (unit.getType().equals(PartyTypeEnum.DEGREE)
+                        || unit.getType().equals(PartyTypeEnum.MASTER_DEGREE) || unit.getType().equals(
+                        PartyTypeEnum.INTEGRATED_MASTER_DEGREE))) {
 
             degree = rootDomainObject.readDegreeByOID(degreeID);
 
-            if ((degree.getTipoCurso().equals(DegreeType.DEGREE) && unit.getType().equals(
-                    PartyTypeEnum.DEGREE))
-                    || (degree.getTipoCurso().equals(DegreeType.MASTER_DEGREE) && unit.getType().equals(
-                            PartyTypeEnum.MASTER_DEGREE))) {
+            if ((((degree.isBolonhaDegree() && degree.getBolonhaDegreeType().equals(
+                    BolonhaDegreeType.DEGREE)) || (!degree.isBolonhaDegree() && degree.getTipoCurso()
+                    .equals(DegreeType.DEGREE))) && unit.getType().equals(PartyTypeEnum.DEGREE))
+                    || (((degree.isBolonhaDegree() && degree.getBolonhaDegreeType().equals(
+                            BolonhaDegreeType.MASTER_DEGREE)) || (!degree.isBolonhaDegree() && degree
+                            .getTipoCurso().equals(DegreeType.MASTER_DEGREE))) && unit.getType().equals(
+                            PartyTypeEnum.MASTER_DEGREE))
+                    || ((degree.isBolonhaDegree() && degree.getBolonhaDegreeType().equals(
+                            BolonhaDegreeType.INTEGRATED_MASTER_DEGREE)) && unit.getType().equals(
+                            PartyTypeEnum.INTEGRATED_MASTER_DEGREE))) {
+
                 unit.setDegree(degree);
+
             } else if (unit.getDegree() != null) {
                 unit.removeDegree();
             }

@@ -22,7 +22,7 @@ public class InsertExternalPerson extends Service {
             throw new ExistingServiceException(
                     "error.exception.commons.externalPerson.existingExternalPerson");
 
-        Unit institutionLocation = (Unit) persistentObject.readByOID(Unit.class, institutionID);
+        Unit institutionLocation = (Unit) rootDomainObject.readPartyByOID(institutionID);
 
         // generate new identification number
         String lastDocumentIdNumber = persistentSupport.getIPersistentExternalPerson()

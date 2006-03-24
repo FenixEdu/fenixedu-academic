@@ -20,11 +20,9 @@ public class ExternalPerson extends ExternalPerson_Base {
 
     public ExternalPerson(String name, Gender gender, String address, String phone, String mobile,
             String homepage, String email, String documentIdNumber, Unit institution) {
-    	this();
-
-        String username = "e" + documentIdNumber;
-
-        Person person = new Person(username, name, gender, address, phone, mobile, homepage, email,
+    	
+        this();        
+        Person person = Person.createPersonToExternalPerson(name, gender, address, phone, mobile, homepage, email,
                 documentIdNumber, IDDocumentType.EXTERNAL);
         
         setPerson(person);

@@ -8,20 +8,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class UnitUtils {
 
-    public static final String IST_UNIT_NAME = "Instituto Superior Técnico (IST)";
-    public static final String EXTERNAL_INSTITUTION_UNIT_NAME = "Instituições Externas";          
-    
-    public static List<Unit> readAllExternalInstitutionUnits() throws ExcepcaoPersistencia {        
-        List<Unit> allUnits = RootDomainObject.readAllUnits(); 
+    public static final String IST_UNIT_NAME = getLabel("ist.unit.name");
+
+    public static final String EXTERNAL_INSTITUTION_UNIT_NAME = getLabel("external.instituions.name");
+
+    public static List<Unit> readAllExternalInstitutionUnits() throws ExcepcaoPersistencia {
+        List<Unit> allUnits = RootDomainObject.readAllUnits();
         List<Unit> allExternalUnits = new ArrayList<Unit>();
 
         for (Unit unit : allUnits) {
@@ -32,34 +31,34 @@ public class UnitUtils {
         return allExternalUnits;
     }
 
-    public static Unit readExternalInstitutionUnitByName(String name) throws ExcepcaoPersistencia{
-        List<Unit> allUnits = RootDomainObject.readAllUnits();        
+    public static Unit readExternalInstitutionUnitByName(String name) throws ExcepcaoPersistencia {
+        List<Unit> allUnits = RootDomainObject.readAllUnits();
         Unit externalUnit = null;
-        
+
         for (Unit unit : allUnits) {
             if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)
                     && unit.getName().equals(name)) {
                 externalUnit = unit;
             }
         }
-        
+
         return externalUnit;
     }
-        
-    public static Unit readUnitWithoutParentstByName(String name) throws ExcepcaoPersistencia{        
+
+    public static Unit readUnitWithoutParentstByName(String name) throws ExcepcaoPersistencia {
         List<Unit> allUnitsWithoutParent = readAllUnitsWithoutParents();
         for (Unit unit : allUnitsWithoutParent) {
-            if(unit.getName().equals(name)){
+            if (unit.getName().equals(name)) {
                 return unit;
             }
         }
         return null;
-    }           
-    
+    }
+
     public static List<Unit> readAllUnitsWithoutParents() throws ExcepcaoPersistencia {
-        List<Unit> allUnits = RootDomainObject.readAllUnits();        
+        List<Unit> allUnits = RootDomainObject.readAllUnits();
         List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
-        
+
         for (Unit unit : allUnits) {
             if (unit.getParentUnits().isEmpty()) {
                 allUnitsWithoutParent.add(unit);
@@ -67,7 +66,7 @@ public class UnitUtils {
         }
         return allUnitsWithoutParent;
     }
-    
+
     public static List<Unit> readAllDepartmentUnits() {
         final List<Unit> result = new ArrayList<Unit>();
         final Date now = Calendar.getInstance().getTime();
@@ -78,16 +77,22 @@ public class UnitUtils {
         }
         return result;
     }
-           
-    public static AccountabilityType readAccountabilityTypeByType(AccountabilityTypeEnum typeEnum) throws ExcepcaoPersistencia{
-        final ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentObject persistentObject = suportePersistente.getIPersistentObject();        
-        List<AccountabilityType> allAccountabilityTypes = (List<AccountabilityType>) persistentObject.readAll(AccountabilityType.class);
+
+    public static AccountabilityType readAccountabilityTypeByType(AccountabilityTypeEnum typeEnum)
+            throws ExcepcaoPersistencia {
+
+        List<AccountabilityType> allAccountabilityTypes = RootDomainObject.getInstance()
+                .getAccountabilityTypes();
         for (AccountabilityType accountabilityType : allAccountabilityTypes) {
-            if(accountabilityType.getType().equals(typeEnum)){
+            if (accountabilityType.getType().equals(typeEnum)) {
                 return accountabilityType;
             }
         }
         return null;
+    }
+
+    private static String getLabel(String key) {
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources");
+        return bundle.getString(key);
     }
 }

@@ -334,6 +334,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         for (Degree degree : allDegrees) {
             selectItem = new SelectItem();
+            
             if (degree.getTipoCurso() != null) {
                 if (degree.getTipoCurso().equals(DegreeType.DEGREE)) {
                     selectItem.setLabel("(L) " + degree.getNome());
