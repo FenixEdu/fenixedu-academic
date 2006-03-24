@@ -189,6 +189,16 @@ public class TabularInputRenderer extends InputRenderer {
         this.collectionRenderer.setSuffixes(suffixes);
     }
 
+    /**
+     * Allows you choose the order of the objects in the table. 
+     * See {@link CollectionRenderer#setSortBy(String)}.
+     * 
+     * @property
+     */
+    public void setSortBy(String sortBy) {
+        this.collectionRenderer.setSortBy(sortBy);
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         this.collectionRenderer.setContext(getContext());

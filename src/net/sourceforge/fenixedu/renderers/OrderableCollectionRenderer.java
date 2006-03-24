@@ -283,6 +283,19 @@ public class OrderableCollectionRenderer extends InputRenderer {
         this.contextRelative = contextRelative;
     }
 
+    /**
+     * Allows you to choose the initial sorting of the table. See {@link CollectionRenderer#setSortBy(String)}
+     * for details about the syntax accepted.
+     * 
+     * Note that although the you can specify an initial sorting based one several columns
+     * the user will only be able to sort by one column at a time.
+     * 
+     * @property
+     */
+    public void setSortBy(String sortBy) {
+        this.collectionRenderer.setSortBy(sortBy);
+    }
+
     private String getImagePath(String path) {
         if (isContextRelative()) {
             return getContext().getViewState().getRequest().getContextPath() + path;    

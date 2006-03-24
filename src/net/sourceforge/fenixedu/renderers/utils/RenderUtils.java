@@ -3,6 +3,9 @@ package net.sourceforge.fenixedu.renderers.utils;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 
@@ -14,6 +17,7 @@ import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
@@ -256,6 +260,103 @@ public class RenderUtils {
 
     public static String getContextRelativePath(String path) {
         return getContextRelativePath(RenderersRequestProcessor.getCurrentRequest(), path);
+    }
+
+    /**
+     * Sorts a collection according to criteria encoded as a string. The criteria as the form
+     * <pre>
+     *  criteria := single(,single)*
+     *  single := slot(=order)?
+     *  order := asc(ending)?|desc(ending)?
+     *  slot := &lt;a slot name&gt;
+     * </pre>
+     * 
+     * So if you want to order a list of persons alfabetically by name and from the youngest to
+     * the oldes we could use <code>"name=asc,dateOfBirth=desc"</code>.
+     * 
+     * @param criteria the used criteria
+     * @return the a new collection with the elements sorted by the criteria
+     */
+    public static List<Object> sortCollectionWithCriteria(Collection<? extends Object> collection, String criteria) {
+        if (collection == null) {
+            return null;
+        }
+
+        List<Object> result = new ArrayList<Object>(collection);
+
+        if (criteria == null) {
+            return result; 
+        }
+        
+        String[] singleCriterias = criteria.split(",");
+        
+        if (singleCriterias.length == 0) {
+            return result;
+        }
+        
+        Comparator<Object> comparator = null;
+        
+        for (int i = 0; i < singleCriterias.length; i++) {
+            String singleCriteria = singleCriterias[i].trim();
+            
+            if (singleCriteria.length() > 0) {
+                String slot;
+                String order;
+                
+                int orderIndex = singleCriteria.indexOf("=");
+                if (orderIndex != -1) {
+                    slot = singleCriteria.substring(0, orderIndex);
+                    order = singleCriteria.substring(orderIndex + 1);
+                }
+                else {
+                    slot = singleCriteria;
+                    order = null;
+                }
+                
+                boolean ascending = order == null || order.startsWith("asc");
+                comparator = createCompositeComparator(comparator, slot, ascending);
+            }
+        }
+        
+        if (comparator != null) {
+            Collections.sort(result, comparator);
+        }
+        
+        return result;
+    }
+    
+    private static Comparator<Object> createCompositeComparator(final Comparator<Object> comparator, final String slot, final boolean ascending) {
+        return new Comparator<Object>() {
+
+            public int compare(Object o1, Object o2) {
+                int slotComparison;
+                
+                if (comparator != null) {
+                    slotComparison = comparator.compare(o1, o2);;
+                }
+                else {
+                    slotComparison = 0;
+                }
+
+                if (slotComparison != 0) {
+                    return slotComparison;
+                }
+                
+                if (ascending) {
+                    slotComparison = compareSlots(o1, o2, slot);
+                }
+                else {
+                    slotComparison = compareSlots(o2, o1, slot);
+                }
+                
+                return slotComparison;
+            }
+
+            private int compareSlots(Object o1, Object o2, String slot) {
+                return new BeanComparator(slot).compare(o1, o2);
+            }
+            
+        };
     }
 
     //

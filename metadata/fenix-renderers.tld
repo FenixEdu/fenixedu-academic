@@ -365,6 +365,16 @@
         	are specified, the behaviour is undefined.
       </description>
     </attribute>
+    
+    <attribute>
+      <name>sortBy</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+            The criteria used to sort the List to be presented. This attribute has no meaning if
+            any other type of object is beeing presented.
+      </description>
+    </attribute>
   </tag>
   
   <tag>

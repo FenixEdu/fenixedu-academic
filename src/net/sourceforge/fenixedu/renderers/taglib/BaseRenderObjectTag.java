@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.renderers.taglib;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.jsp.JspException;
@@ -26,6 +28,8 @@ public abstract class BaseRenderObjectTag extends TagSupport {
     private String schema;
 
     private Properties properties;
+    
+    private String sortBy;
     
     public BaseRenderObjectTag() {
         super();
@@ -91,6 +95,14 @@ public abstract class BaseRenderObjectTag extends TagSupport {
 
     public void setSchema(String schema) {
         this.schema = schema;
+    }
+
+    public String getSortBy() {
+        return this.sortBy;
+    }
+
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
     }
 
     public String getSchema() {
@@ -162,6 +174,11 @@ public abstract class BaseRenderObjectTag extends TagSupport {
             throw new RuntimeException("cannot present the null value, name='" + getName() + "' property='" + getProperty() + "' scope='" + getScope() + "'");
         }
         
+        // TODO: cfgi, verify if this is more usefull than problematic
+        if (object instanceof List) {
+            object = sortCollection((Collection) object);
+        }
+        
         String layout = getLayout();
         String schema = getSchema();
         Properties properties = getRenderProperties();
@@ -177,6 +194,15 @@ public abstract class BaseRenderObjectTag extends TagSupport {
         
         release(); // force release
         return EVAL_PAGE;
+    }
+
+    protected Collection sortCollection(Collection collection) {
+        if (getSortBy() != null) {
+            return RenderUtils.sortCollectionWithCriteria(collection, getSortBy());
+        }
+        else {
+            return collection;
+        }
     }
 
     protected abstract PresentationContext createPresentationContext(Object object, String layout, String schema, Properties properties);

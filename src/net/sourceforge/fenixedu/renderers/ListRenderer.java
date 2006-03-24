@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.ListLayout;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 /**
  * This renderer provides a basic presentation for a {@link java.util.List}. There is
@@ -33,8 +34,8 @@ public class ListRenderer extends OutputRenderer {
 
     private String eachLayout;
 
-    private boolean eachInline = true;
-
+    private String sortBy;
+    
     /**
      * The css classes to apply in each object's presentation.
      * 
@@ -87,9 +88,26 @@ public class ListRenderer extends OutputRenderer {
         this.eachSchema = eachSchema;
     }
 
+    public String getSortBy() {
+        return this.sortBy;
+    }
+
+    /**
+     * Allows you to choose the order in wich the elements will be presented.-
+     * See {@link net.sourceforge.fenixedu.renderers.utils.RenderUtils#sortCollectionWithCriteria(Collection, String)}
+     * for more details.
+     * 
+     * @property
+     */
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
-        return new ListRendererLayout((Collection) object);
+        Collection sortedCollection = RenderUtils.sortCollectionWithCriteria((Collection) object, getSortBy());
+        
+        return new ListRendererLayout((Collection) sortedCollection);
     }
 
     class ListRendererLayout extends ListLayout {

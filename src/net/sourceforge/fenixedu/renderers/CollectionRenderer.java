@@ -110,6 +110,8 @@ public class CollectionRenderer extends OutputRenderer {
     private Map<String, TableLink> links;
     
     private List<TableLink> sortedLinks;
+
+    private String sortBy;
     
     public CollectionRenderer() {
         super();
@@ -410,13 +412,30 @@ public class CollectionRenderer extends OutputRenderer {
         getTableLink(name).setOrder(value);
     }
 
+    public String getSortBy() {
+        return this.sortBy;
+    }
+
+    /**
+     * With this property you can set the criteria used to sort the collection
+     * beeing presented. The accepted syntax for the criteria can be seen in
+     * {@link RenderUtils#sortCollectionWithCriteria(Collection, String)}.
+     * 
+     * @property
+     */
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+
     protected int getNumberOfLinks() {
         return this.links.size();
     }
     
     @Override
     protected Layout getLayout(Object object, Class type) {
-        return new CollectionTabularLayout((Collection) object);
+        Collection sortedCollection = RenderUtils.sortCollectionWithCriteria((Collection) object, getSortBy());
+        
+        return new CollectionTabularLayout(sortedCollection);
     }
     
     public class CollectionTabularLayout extends TabularLayout {
