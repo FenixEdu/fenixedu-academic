@@ -1,7 +1,3 @@
-/*
- * Created on 3/Set/2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
@@ -36,9 +32,6 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
-/**
- * @author Susana Fernandes
- */
 public class SimulateTest extends Service {
 
     private String path = new String();
@@ -49,7 +42,7 @@ public class SimulateTest extends Service {
 
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         this.path = path.replace('\\', '/');
-        Test test = (Test) persistentObject.readByOID(Test.class, testId);
+        Test test = rootDomainObject.readTestByOID(testId);
         if (test == null)
             throw new FenixServiceException();
 
@@ -58,11 +51,10 @@ public class SimulateTest extends Service {
         int notResponseNumber = 0;
         List<String> errors = new ArrayList<String>();
 
-        TestScope testScope = persistentSupport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
+        TestScope testScope = TestScope.readByDomainObject(TestScope.class, executionCourseId);
 
         if (testScope == null) {
-            ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
-                    executionCourseId);
+            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();
             testScope = DomainFactory.makeTestScope(executionCourse);
@@ -85,10 +77,6 @@ public class SimulateTest extends Service {
         for (InfoStudentTestQuestion infoStudentTestQuestion : infoStudentTestQuestionList) {
             if (infoStudentTestQuestion.getResponse().isResponsed()) {
                 responseNumber++;
-                try {
-                } catch (Exception e) {
-                    throw new FenixServiceException(e);
-                }
 
                 IQuestionCorrectionStrategyFactory questionCorrectionStrategyFactory = QuestionCorrectionStrategyFactory.getInstance();
                 IQuestionCorrectionStrategy questionCorrectionStrategy = questionCorrectionStrategyFactory
@@ -102,7 +90,6 @@ public class SimulateTest extends Service {
                         infoStudentTestQuestion = questionCorrectionStrategy.getMark(infoStudentTestQuestion);
                     }
                     totalMark += infoStudentTestQuestion.getTestQuestionMark().doubleValue();
-
                 } else {
                     notResponseNumber++;
                     responseNumber--;
@@ -113,16 +100,13 @@ public class SimulateTest extends Service {
                         infoStudentTestQuestion.setResponse(new ResponseSTR());
                     else if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.NUM)
                         infoStudentTestQuestion.setResponse(new ResponseNUM());
-
                 }
-
             } else
                 notResponseNumber++;
-
         }
 
-        infoSiteStudentTestFeedback.setResponseNumber(new Integer(responseNumber));
-        infoSiteStudentTestFeedback.setNotResponseNumber(new Integer(notResponseNumber));
+        infoSiteStudentTestFeedback.setResponseNumber(Integer.valueOf(responseNumber));
+        infoSiteStudentTestFeedback.setNotResponseNumber(Integer.valueOf(notResponseNumber));
         infoSiteStudentTestFeedback.setErrors(errors);
 
         infoSiteStudentTestFeedback.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
@@ -130,7 +114,7 @@ public class SimulateTest extends Service {
     }
 
     private InfoQuestion correctQuestionValues(InfoQuestion infoQuestion, Double questionValue) {
-        Double maxValue = new Double(0);
+        Double maxValue = Double.valueOf(0);
         for (ResponseProcessing responseProcessing : (List<ResponseProcessing>) infoQuestion.getResponseProcessingInstructions()) {
             if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
                     || responseProcessing.getAction().intValue() == ResponseProcessing.ADD)
@@ -138,9 +122,9 @@ public class SimulateTest extends Service {
                     maxValue = responseProcessing.getResponseValue();
         }
         if (maxValue.compareTo(questionValue) != 0) {
-            double difValue = questionValue.doubleValue() * Math.pow(maxValue.doubleValue(), -1);
+            double difValue = questionValue * Math.pow(maxValue, -1);
             for (ResponseProcessing responseProcessing : (List<ResponseProcessing>) infoQuestion.getResponseProcessingInstructions()) {
-                responseProcessing.setResponseValue(new Double(responseProcessing.getResponseValue().doubleValue() * difValue));
+                responseProcessing.setResponseValue(Double.valueOf(responseProcessing.getResponseValue() * difValue));
             }
         }
 
@@ -159,11 +143,11 @@ public class SimulateTest extends Service {
             infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
             infoStudentTestQuestion.setTestQuestionOrder(testQuestionExample.getTestQuestionOrder());
             infoStudentTestQuestion.setTestQuestionValue(testQuestionExample.getTestQuestionValue());
-            infoStudentTestQuestion.setOldResponse(new Integer(0));
+            infoStudentTestQuestion.setOldResponse(Integer.valueOf(0));
             infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
-            infoStudentTestQuestion.setTestQuestionMark(new Double(0));
+            infoStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
             infoStudentTestQuestion.setResponse(null);
-            Question question = (Question) persistentObject.readByOID(Question.class, new Integer(questionCodes[i]));
+            Question question = rootDomainObject.readQuestionByOID(Integer.valueOf(questionCodes[i]));
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -172,8 +156,7 @@ public class SimulateTest extends Service {
             try {
                 infoStudentTestQuestion.setOptionShuffle(optionShuffle[i]);
                 infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, this.path);
-                infoStudentTestQuestion.setQuestion(correctQuestionValues(infoStudentTestQuestion.getQuestion(), new Double(infoStudentTestQuestion
-                        .getTestQuestionValue().doubleValue())));
+                infoStudentTestQuestion.setQuestion(correctQuestionValues(infoStudentTestQuestion.getQuestion(), Double.valueOf(infoStudentTestQuestion.getTestQuestionValue())));
                 infoStudentTestQuestion.setResponse(responses[i]);
             } catch (Exception e) {
                 throw new FenixServiceException(e);
@@ -182,4 +165,5 @@ public class SimulateTest extends Service {
         }
         return infoStudentTestQuestionList;
     }
+
 }

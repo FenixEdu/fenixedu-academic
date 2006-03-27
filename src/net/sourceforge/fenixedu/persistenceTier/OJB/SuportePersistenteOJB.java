@@ -68,7 +68,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.StudentTestLogOJ
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.StudentTestQuestionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestQuestionOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestScopeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.projectsManagement.ProjectAccessOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAttributeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationFormatOJB;
@@ -118,7 +117,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTe
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestScope;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
@@ -460,11 +458,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new StudentTestLogOJB();
 	}
 
-	public IPersistentTestScope getIPersistentTestScope()
-	{
-		return new TestScopeOJB();
-	}
-
 	public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory()
 	{
 		return new DistributedTestAdvisoryOJB();
@@ -485,13 +478,11 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		this.iniciarTransaccao();
 	}
 
-	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
 	public void commitTransaction()
 	{
 		this.confirmarTransaccao();
 	}
 
-	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
 	public void abortTransaction() throws StorageException
 	{
 		this.cancelarTransaccao();

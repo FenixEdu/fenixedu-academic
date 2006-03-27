@@ -1,7 +1,3 @@
-/*
- * Created on 28/Jul/2003
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.Calendar;
@@ -15,17 +11,14 @@ import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Susana Fernandes
- */
 public class InsertTest extends Service {
 
     public Integer run(Integer executionCourseId, String title, String information) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
-        TestScope testScope = persistentSupport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
+        TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
         if (testScope == null) {
             testScope = DomainFactory.makeTestScope(ExecutionCourse.class.getName(), executionCourseId);
         }
@@ -38,4 +31,5 @@ public class InsertTest extends Service {
         test.setTestScope(testScope);
         return test.getIdInternal();
     }
+
 }

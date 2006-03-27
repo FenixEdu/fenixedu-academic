@@ -1,7 +1,3 @@
-/*
- * Created on 1/Ago/2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
@@ -26,23 +22,18 @@ import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
-/**
- * @author Susana Fernandes
- */
 public class GenetareStudentTestForSimulation extends Service {
     public List run(Integer executionCourseId, Integer testId, String path, TestType testType, CorrectionAvailability correctionAvailability,
             Boolean imsfeedback, String testInformation) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
-        final Test test = (Test) persistentObject.readByOID(Test.class, testId);
+        final Test test = rootDomainObject.readTestByOID(testId);
         if (test == null)
             throw new InvalidArgumentsServiceException();
 
-        TestScope testScope = persistentSupport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
-
+        TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
         if (testScope == null) {
-            final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                    ExecutionCourse.class, executionCourseId);
+            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();
             testScope = DomainFactory.makeTestScope(executionCourse);
@@ -60,7 +51,6 @@ public class GenetareStudentTestForSimulation extends Service {
 
         List<TestQuestion> testQuestionList = persistentSupport.getIPersistentTestQuestion().readByTest(testId);
         for (TestQuestion testQuestionExample : testQuestionList) {
-
             List<Question> questionList = new ArrayList<Question>();
             questionList.addAll(testQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
@@ -68,9 +58,9 @@ public class GenetareStudentTestForSimulation extends Service {
             infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
             infoStudentTestQuestion.setTestQuestionOrder(testQuestionExample.getTestQuestionOrder());
             infoStudentTestQuestion.setTestQuestionValue(testQuestionExample.getTestQuestionValue());
-            infoStudentTestQuestion.setOldResponse(new Integer(0));
+            infoStudentTestQuestion.setOldResponse(Integer.valueOf(0));
             infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
-            infoStudentTestQuestion.setTestQuestionMark(new Double(0));
+            infoStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
             infoStudentTestQuestion.setResponse(null);
 
             if (questionList.size() == 0)

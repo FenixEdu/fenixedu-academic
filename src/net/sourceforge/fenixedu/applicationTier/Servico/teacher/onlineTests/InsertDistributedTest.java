@@ -1,7 +1,3 @@
-/*
- * Created on 19/Ago/2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.text.MessageFormat;
@@ -28,15 +24,11 @@ import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 
-/**
- * @author Susana Fernandes
- */
 public class InsertDistributedTest extends Service {
 
     private String contextPath = new String();
@@ -45,13 +37,13 @@ public class InsertDistributedTest extends Service {
             Calendar endHour, TestType testType, CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
             List<InfoStudent> infoStudentList, String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
         this.contextPath = contextPath.replace('\\', '/');
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
         DistributedTest distributedTest = DomainFactory.makeDistributedTest();
 
-        Test test = (Test) persistentObject.readByOID(Test.class, testId);
+        Test test = rootDomainObject.readTestByOID(testId);
         if (test == null)
             throw new InvalidArgumentsServiceException();
 
@@ -66,30 +58,28 @@ public class InsertDistributedTest extends Service {
         distributedTest.setImsFeedback(imsFeedback);
         distributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
-        TestScope testScope = persistentSupport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
+        TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
 
         if (testScope == null) {
             testScope = DomainFactory.makeTestScope(executionCourse);
         }
         distributedTest.setTestScope(testScope);
 
-        IPersistentTestQuestion persistentTestQuestion = persistentSupport.getIPersistentTestQuestion();
-
-        List<TestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
+        List<TestQuestion> testQuestionList = persistentSupport.getIPersistentTestQuestion().readByTest(testId);
 
         for (TestQuestion testQuestion : testQuestionList) {
             List<Question> questionList = new ArrayList<Question>();
             questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
 
             for (InfoStudent infoStudent : infoStudentList) {
-                Student student = (Student) persistentObject.readByOID(Student.class, infoStudent.getIdInternal());
+                Student student = rootDomainObject.readStudentByOID(infoStudent.getIdInternal());
                 StudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
                 studentTestQuestion.setStudent(student);
                 studentTestQuestion.setDistributedTest(distributedTest);
                 studentTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
                 studentTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
                 studentTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
-                studentTestQuestion.setTestQuestionMark(new Double(0));
+                studentTestQuestion.setTestQuestionMark(Double.valueOf(0));
                 studentTestQuestion.setResponse(null);
 
                 if (questionList.size() == 0)
@@ -118,7 +108,6 @@ public class InsertDistributedTest extends Service {
         distributedTestAdvisory.setDistributedTest(distributedTest);
 
         return advisory.getIdInternal();
-
     }
 
     private Question getStudentQuestion(List<Question> questions) {
@@ -152,4 +141,5 @@ public class InsertDistributedTest extends Service {
         
         return advisory;
     }
+
 }
