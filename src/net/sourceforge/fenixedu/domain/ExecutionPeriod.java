@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.fileSuport.INode;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.joda.time.DateMidnight;
@@ -111,6 +114,16 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
         List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
         for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
             if (executionPeriod.getState() != PeriodState.CLOSED) {
+                result.add(executionPeriod);
+            }
+        }
+        return result;
+    }
+    
+    public static List<ExecutionPeriod> readPublicExecutionPeriods() throws ExcepcaoPersistencia {
+        List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
+        for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+            if (executionPeriod.getState() != PeriodState.NOT_OPEN) {
                 result.add(executionPeriod);
             }
         }

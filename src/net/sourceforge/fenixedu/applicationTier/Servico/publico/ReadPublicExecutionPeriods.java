@@ -8,30 +8,21 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
 public class ReadPublicExecutionPeriods extends Service {
 
-	public List run() throws FenixServiceException, ExcepcaoPersistencia {
-		List result = new ArrayList();
-
-		IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-
-		List executionPeriods = executionPeriodDAO.readPublic();
-
-		if (executionPeriods != null) {
-			for (int i = 0; i < executionPeriods.size(); i++) {
-				result.add(InfoExecutionPeriodWithInfoExecutionYear
-						.newInfoFromDomain((ExecutionPeriod) executionPeriods.get(i)));
-			}
-		}
-
+	public List<InfoExecutionPeriod> run() throws FenixServiceException, ExcepcaoPersistencia {
+		final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
+		for (final ExecutionPeriod executionPeriod : ExecutionPeriod.readPublicExecutionPeriods()) {
+            result.add(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod));
+        }
 		return result;
 	}
 }
