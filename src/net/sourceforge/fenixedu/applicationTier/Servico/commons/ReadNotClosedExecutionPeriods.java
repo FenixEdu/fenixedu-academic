@@ -9,21 +9,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 public class ReadNotClosedExecutionPeriods extends Service {
 
-    public List run() throws FenixServiceException, ExcepcaoPersistencia {
-        final IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-
-        final List<ExecutionPeriod> executionPeriods = executionPeriodDAO.readNotClosedExecutionPeriods();
-        final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>(executionPeriods.size());
-
-        for (final ExecutionPeriod executionPeriod : executionPeriods) {
+    public List<InfoExecutionPeriod> run() throws FenixServiceException, ExcepcaoPersistencia {
+        final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
+        for (final ExecutionPeriod executionPeriod : ExecutionPeriod.readNotClosedExecutionPeriods()) {
         	result.add(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod));
         }
-
         return result;
     }
-
 }

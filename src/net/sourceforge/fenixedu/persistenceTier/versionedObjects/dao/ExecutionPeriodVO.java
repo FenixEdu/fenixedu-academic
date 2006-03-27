@@ -65,18 +65,6 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
                 executionYear.getExecutionPeriods() : new ArrayList(0);
     }
 
-    public List readNotClosedExecutionPeriods() throws ExcepcaoPersistencia {
-        Collection executionPeriods = readAll(ExecutionPeriod.class);
-        List executionPeriodsAux = new ArrayList();
-
-        for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
-            ExecutionPeriod element = (ExecutionPeriod) iter.next();
-            if (!element.getState().equals(PeriodState.CLOSED))
-                executionPeriodsAux.add(element);
-        }
-        return executionPeriodsAux;
-    }
-
     public List readNotClosedPublicExecutionPeriods() throws ExcepcaoPersistencia {
         Collection executionPeriods = readAll(ExecutionPeriod.class);
         List executionPeriodsAux = new ArrayList();

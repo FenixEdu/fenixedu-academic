@@ -51,12 +51,6 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         return queryList(ExecutionPeriod.class, criteria);
     }
 
-    public List readNotClosedExecutionPeriods() throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addNotEqualTo("state", PeriodState.CLOSED);
-        return queryList(ExecutionPeriod.class, criteria);
-    }
-
     public List readNotClosedPublicExecutionPeriods() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("state", PeriodState.CLOSED);
