@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
@@ -25,8 +26,7 @@ public class ApproveCandidates extends Service {
             CandidateSituation candidateSituationOld = masterDegreeCandidate
                     .getActiveCandidateSituation();
 
-            CandidateSituation candidateSituationOldFromBD = (CandidateSituation)persistentObject.readByOID(CandidateSituation.class,
-                            candidateSituationOld.getIdInternal());
+            CandidateSituation candidateSituationOldFromBD = RootDomainObject.getInstance().readCandidateSituationByOID(candidateSituationOld.getIdInternal());
             candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
 
             if ((substitutes[i] != null) && (substitutes[i].length() > 0)) {

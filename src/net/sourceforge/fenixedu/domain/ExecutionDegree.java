@@ -6,11 +6,15 @@
 
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import net.sourceforge.fenixedu.util.SituationName;
+import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -99,6 +103,27 @@ public class ExecutionDegree extends ExecutionDegree_Base {
 		}
 		return null;
 	}
+
+    public List<CandidateSituation> getCandidateSituationsInSituation(List<SituationName> situationNames) {
+        List<CandidateSituation> result = new ArrayList<CandidateSituation>();
+
+        for (MasterDegreeCandidate candidate : getMasterDegreeCandidates()) {
+            for (CandidateSituation situation : candidate.getSituations()) {
+
+                if (situation.getValidation().getState() == null || situation.getValidation().getState() != State.ACTIVE) {
+                    continue;
+                }
+                
+                if (situationNames != null && !situationNames.contains(situation.getSituation())) {
+                    continue;
+                }
+
+                result.add(situation);
+            }
+        }
+        
+        return result;
+    }
 	
 	public Coordinator getCoordinatorByTeacher(Teacher teacher) {
 		for (Coordinator coordinator : getCoordinatorsList()) {

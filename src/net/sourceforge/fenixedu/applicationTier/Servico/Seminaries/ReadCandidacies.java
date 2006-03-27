@@ -83,6 +83,7 @@ public class ReadCandidacies extends Service {
                 continue;
             }
             
+            // TODO: converte Modality into a enumeration
             if (theme != null) {
                 if (!candidacy.getTheme().equals(theme) && !(candidacy.getModality().getIdInternal().intValue() == 1)) {
                     continue;

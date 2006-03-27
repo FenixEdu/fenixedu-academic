@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
@@ -86,7 +85,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimburs
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailAdressAliasVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingListVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseScopeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurriculumVO;
@@ -365,10 +363,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentQuestion getIPersistentQuestion() {
         return new QuestionVO();
-    }
-
-    public IPersistentCandidateSituation getIPersistentCandidateSituation() {
-        return new CandidateSituationVO();
     }
 
     public Integer getNumberCachedItems() {

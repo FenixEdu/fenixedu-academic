@@ -80,8 +80,6 @@ public interface ISuportePersistente
 
 	public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate();
 
-	public IPersistentCandidateSituation getIPersistentCandidateSituation();
-
 	public IPersistentExecutionPeriod getIPersistentExecutionPeriod();
 
 	public IPersistentCurriculum getIPersistentCurriculum();

@@ -11,27 +11,30 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.SituationName;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ReadCandidatesForSelection extends Service {
 
-	public List run(Integer executionDegreeID, List situations)
+	public List run(Integer executionDegreeID, List<Integer> situations)
 			throws FenixServiceException, ExcepcaoPersistencia {
-
-		List resultTemp = null;
 
 		// Read the candidates
 
 		ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
 				.readByOID(ExecutionDegree.class, executionDegreeID);
 
-		resultTemp = persistentSupport.getIPersistentCandidateSituation()
-				.readActiveSituationsByExecutionDegreeAndNames(
-						executionDegree.getIdInternal(), situations);
-
-		if ((resultTemp == null) || (resultTemp.size() == 0)) {
+        
+        List<SituationName> situationNames = new ArrayList<SituationName>();
+        for (Integer situationNameCode : situations) {
+            situationNames.add(new SituationName(situationNameCode));
+        }
+        
+        List<CandidateSituation> resultTemp = executionDegree.getCandidateSituationsInSituation(situationNames);
+        
+		if (resultTemp.isEmpty()) {
 			throw new NonExistingServiceException();
 		}
 
