@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ShowAvailable
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
@@ -280,10 +280,12 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
     protected boolean verifyCoordinator(Teacher teacher, Object[] arguments)
             throws ExcepcaoPersistencia {
-    	
-        IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
-        Coordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
-                teacher.getIdInternal(), (Integer) arguments[0]);
+
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) arguments[0]);
+        if(executionDegree == null) {
+        	return false;
+        }
+        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
         if (coordinator == null) {
             return false;
         }

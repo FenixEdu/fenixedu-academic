@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
@@ -188,10 +187,8 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @throws ExcepcaoPersistencia
      */
     private List getExecutionDegreesOfThisCoordinator(String username) throws ExcepcaoPersistencia {       
-        IPersistentCoordinator coordinatorDAO = persistentSupport.getIPersistentCoordinator();
-
         Teacher teacher = Teacher.readTeacherByUsername(username);
-        return coordinatorDAO.readExecutionDegreesByTeacher(teacher.getIdInternal());
+        return teacher.getCoordinatedExecutionDegrees();
     }
 
     /**

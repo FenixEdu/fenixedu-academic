@@ -28,15 +28,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadCoordinatedDegrees extends Service {
 
 	public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
-		List plans = null;
-
         // Read the Teacher
 
 		Teacher teacher = Teacher.readTeacherByUsername(userView.getUtilizador());
 		if (teacher == null) {
 			throw new ExcepcaoInexistente("No Teachers Found !!");
 		}
-		plans = persistentSupport.getIPersistentCoordinator().readCurricularPlansByTeacher(teacher.getIdInternal());
+		
+		List<DegreeCurricularPlan> plans = teacher.getCoordinatedDegreeCurricularPlans();
 
 		if (plans == null) {
 			throw new ExcepcaoInexistente("No Degrees Found !!");

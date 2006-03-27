@@ -97,9 +97,7 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
                 }
 
                 //modified by Tânia Pousão
-                Coordinator coordinator = persistentSupport.getIPersistentCoordinator()
-                        .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
-                                masterDegreeCandidate.getExecutionDegree().getIdInternal());
+                Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(teacher);
                 if (coordinator != null) {
                     return true;
                 }

@@ -8,9 +8,9 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -66,10 +66,9 @@ public class ResponsibleDegreeCoordinatorAuthorizationFilter extends Authorizati
         }
         try {            
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-            IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
 
-            Coordinator coordinator = persistentCoordinator
-                    .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), (Integer) argumentos[0]);
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
+            Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
 
             result = (coordinator != null) && coordinator.getResponsible().booleanValue();
 

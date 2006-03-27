@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -97,9 +98,8 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
                 }
 
                 //modified by Tânia Pousão
-                Coordinator coordinator = persistentSupport.getIPersistentCoordinator()
-                        .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
-                                masterDegreeCandidate.getExecutionDegree().getIdInternal());
+                Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(teacher);
+
                 if (coordinator == null) {
                     return false;
                 }

@@ -117,8 +117,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
                 // IMPORTANT: It's assumed that the coordinator for a Degree is
                 // ALWAYS the same
                 //modified by Tânia Pousão
-                List coodinatorsList = persistentSupport.getIPersistentCoordinator()
-                        .readCoordinatorsByExecutionDegree(((ExecutionDegree) executionDegrees.get(0)).getIdInternal());
+                List<Coordinator> coodinatorsList = ((ExecutionDegree) executionDegrees.get(0)).getCoordinatorsList();
                 if (coodinatorsList == null) {
                     return false;
                 }

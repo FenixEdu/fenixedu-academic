@@ -11,13 +11,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 
 /**
  * @author Tânia Pousão
@@ -154,9 +154,11 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
     private boolean verifyCoordinatorLEEC(Teacher teacher, Object[] arguments)
             throws ExcepcaoPersistencia {
 
-        IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
-        Coordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
-                teacher.getIdInternal(), (Integer) arguments[0]);
+    	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) arguments[0]);
+    	if(executionDegree == null) {
+    		return false;
+    	}
+    	Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
         if (coordinator == null) {
             return false;
         }

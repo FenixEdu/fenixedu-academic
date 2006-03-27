@@ -121,9 +121,8 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                                 .next();
 
                         // modified by Tânia Pousão
-                        Coordinator coordinator = persistentSupport.getIPersistentCoordinator()
-                                .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
-                                        executionDegree.getIdInternal());
+                        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+
                         if (coordinator != null) {
                             return true;
                         }

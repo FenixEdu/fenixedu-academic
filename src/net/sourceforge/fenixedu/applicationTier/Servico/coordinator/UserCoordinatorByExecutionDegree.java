@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -16,9 +17,9 @@ public class UserCoordinatorByExecutionDegree extends Service {
         final Teacher teacher = Teacher.readTeacherByUsername(
                 teacherUserName);
 
-        final Coordinator coordinator = persistentSupport.getIPersistentCoordinator()
-                .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
-                        executionDegreeCode);
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
+        final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+        
         if (coordinator == null) {
             throw new FenixServiceException("error.exception.notAuthorized");
         }

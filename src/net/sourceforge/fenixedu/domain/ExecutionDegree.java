@@ -100,4 +100,13 @@ public class ExecutionDegree extends ExecutionDegree_Base {
 		return null;
 	}
 	
+	public Coordinator getCoordinatorByTeacher(Teacher teacher) {
+		for (Coordinator coordinator : getCoordinatorsList()) {
+			if(coordinator.getTeacher().equals(teacher)) {
+				return coordinator;
+			}
+		}
+		return null;
+	}
+	
 }

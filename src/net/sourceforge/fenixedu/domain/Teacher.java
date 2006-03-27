@@ -5,8 +5,10 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
@@ -298,6 +300,23 @@ public class Teacher extends Teacher_Base {
             }
         });
     }
+    
+    public List<DegreeCurricularPlan> getCoordinatedDegreeCurricularPlans(){
+    	Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+    	for (Coordinator coordinator : getCoordinators()) {
+			result.add(coordinator.getExecutionDegree().getDegreeCurricularPlan());
+		}
+    	return new ArrayList<DegreeCurricularPlan>(result);
+    }
+    
+    public List<ExecutionDegree> getCoordinatedExecutionDegrees(){
+    	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+    	for (Coordinator coordinator : getCoordinators()) {
+			result.add(coordinator.getExecutionDegree());
+		}
+    	return result;
+    }
+
 
     /***************************************************************************
      * OTHER METHODS *

@@ -7,10 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -74,14 +73,16 @@ public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFi
         try {            
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             
-           	IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
-            Coordinator coordinator = persistentCoordinator
-                    .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), (Integer) argumentos[0]);
-            if (coordinator != null && coordinator.getExecutionDegree() != null
-                    && coordinator.getExecutionDegree().getDegreeCurricularPlan() != null
-                    && coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree() != null) {
-                degreeCode = coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla();
-            }
+
+           	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
+           	if(executionDegree != null) {
+           		Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+           		if (coordinator != null && coordinator.getExecutionDegree() != null
+           				&& coordinator.getExecutionDegree().getDegreeCurricularPlan() != null
+           				&& coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree() != null) {
+           			degreeCode = coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla();
+           		}
+           	}
         } catch (Exception e) {
             e.printStackTrace();
             return false;

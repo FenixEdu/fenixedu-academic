@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
@@ -20,8 +19,6 @@ public class LoggedCoordinatorCanEdit extends Service {
     public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
         Boolean result = new Boolean(false);
-        
-        IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
 
         if (executionDegreeCode == null) {
             throw new FenixServiceException("nullExecutionDegreeCode");
@@ -47,8 +44,7 @@ public class LoggedCoordinatorCanEdit extends Service {
             throw new NonExistingServiceException();
         }
 
-        Coordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
-                teacher.getIdInternal(), executionDegree.getIdInternal());
+        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
 
         // if user is coordinator and is the current coordinator and
         // curricular course is not basic

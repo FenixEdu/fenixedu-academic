@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
@@ -139,14 +138,11 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
                         continue;
                     }
 
-                    IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
-
                     for (Iterator executionDegreeIterator = executionDegrees.iterator(); executionDegreeIterator
                             .hasNext();) {
                         ExecutionDegree executionDegree = (ExecutionDegree) executionDegreeIterator
                                 .next();
-                        List coordinatorsList = persistentCoordinator
-                                .readCoordinatorsByExecutionDegree(executionDegree.getIdInternal());
+                        List<Coordinator> coordinatorsList = executionDegree.getCoordinatorsList();
 
                         if (coordinatorsList == null || coordinatorsList.isEmpty()) {
                             continue;

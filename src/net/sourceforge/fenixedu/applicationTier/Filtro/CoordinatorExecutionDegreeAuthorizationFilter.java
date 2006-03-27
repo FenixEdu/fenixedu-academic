@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -93,8 +94,12 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
                     return false;
                 }
                 Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-                Coordinator coordinator = persistentSupport.getIPersistentCoordinator()
-                        .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), executionDegreeID);
+                ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+                if(executionDegree == null) {
+                	return false;
+                }
+                Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+
                 if (coordinator != null) {
                     return true;
                 }

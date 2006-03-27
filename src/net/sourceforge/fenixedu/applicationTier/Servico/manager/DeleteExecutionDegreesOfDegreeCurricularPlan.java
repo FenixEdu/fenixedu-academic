@@ -117,9 +117,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					// Coordinator
 					List<Coordinator> coordinators = executionDegree.getCoordinatorsList();
 					for (Coordinator coordinator : coordinators) {
-						coordinator.setExecutionDegree(null);
-						persistentSupport.getIPersistentCoordinator().deleteByOID(Coordinator.class,
-								coordinator.getIdInternal());
+						coordinator.delete();
 					}
 					executionDegree.getCoordinatorsList().clear();
 					// Campus

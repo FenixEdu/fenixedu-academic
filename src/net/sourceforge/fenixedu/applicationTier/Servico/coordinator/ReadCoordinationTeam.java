@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinatorWithInfoPerson
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 
 /**
  * 
@@ -25,15 +24,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 public class ReadCoordinationTeam extends Service {
 
     public List run(Integer executionDegreeId) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
-
         ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeId);
         if (executionDegree == null) {
             throw new FenixServiceException("errors.invalid.execution.degree");
         }
-        List coordinators = persistentCoordinator.readCoordinatorsByExecutionDegree(executionDegree
-                .getIdInternal());
+        List<Coordinator> coordinators = executionDegree.getCoordinatorsList();
         Iterator iterator = coordinators.iterator();
         List infoCoordinators = new ArrayList();
         while (iterator.hasNext()) {

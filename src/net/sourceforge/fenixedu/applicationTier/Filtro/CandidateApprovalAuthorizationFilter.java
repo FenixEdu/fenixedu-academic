@@ -79,9 +79,8 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
                     		.readByOID(MasterDegreeCandidate.class, new Integer(ids[i]));
 
                     //modified by Tânia Pousão
-                    Coordinator coordinator = persistentSupport.getIPersistentCoordinator()
-                            .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
-                                    masterDegreeCandidate.getExecutionDegree().getIdInternal());
+                    Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(teacher);
+
                     if (coordinator == null) {
                         return false;
                     }

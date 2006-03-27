@@ -117,8 +117,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
                 // ALWAYS the same
 
                 //modified by Tânia Pousão
-                List coodinatorsList = persistentSupport.getIPersistentCoordinator()
-                        .readCoordinatorsByExecutionDegree(executionDegree.getIdInternal());
+                List<Coordinator> coodinatorsList = executionDegree.getCoordinatorsList();
                 if (coodinatorsList == null) {
                     return false;
                 }

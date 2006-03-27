@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
@@ -198,9 +197,8 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                     if (executionDegree == null) {
                         return "noAuthorization";
                     }
-                    IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
-                    List coordinatorsList = persistentCoordinator
-                            .readCoordinatorsByExecutionDegree(executionDegree.getIdInternal());
+                    
+                    List<Coordinator> coordinatorsList = executionDegree.getCoordinatorsList();
                     if (coordinatorsList == null) {
                         return "noAuthorization";
                     }
