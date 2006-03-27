@@ -8371,7 +8371,7 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ManagerAuthorization"/>
+			<chain name="ManagerOrCientificCouncilAuthentication"/>
 		</filterChains>
 	</service>	
 	<service>
