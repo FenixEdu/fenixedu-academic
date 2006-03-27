@@ -158,8 +158,8 @@ public class InsertStudentTestResponses extends Service {
                 OnlineTest onlineTest = distributedTest.getOnlineTest();
                 Attends attend = persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
                         ((ExecutionCourse) distributedTest.getTestScope().getDomainObject()).getIdInternal());
-                Mark mark = persistentSupport.getIPersistentMark().readBy(onlineTest, attend);
-
+                Mark mark = onlineTest.getMarkByAttend(attend);
+                
                 if (mark == null) {
                     mark = DomainFactory.makeMark();
                     mark.setAttend(attend);

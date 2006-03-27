@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 
 /**
  * @author Fernanda Quitério
@@ -39,8 +38,7 @@ public class PublishMarks extends Service {
         }
 
         // publish marks
-        IPersistentMark persistentMark = persistentSupport.getIPersistentMark();
-        List marksList = persistentMark.readBy(evaluation);
+        List<Mark> marksList = evaluation.getMarks();
         ListIterator iterMarks = marksList.listIterator();
         while (iterMarks.hasNext()) {
 

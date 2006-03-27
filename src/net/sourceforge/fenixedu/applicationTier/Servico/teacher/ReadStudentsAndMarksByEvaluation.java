@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -59,8 +58,7 @@ public class ReadStudentsAndMarksByEvaluation extends Service {
         List attendList = frequentaPersistente.readByExecutionCourse(executionCourseCode);
 
         //Marks
-        IPersistentMark persistentMark = persistentSupport.getIPersistentMark();
-        List marksList = persistentMark.readBy(evaluation);
+        List<Mark> marksList = evaluation.getMarks();
 
         List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
             public Object transform(Object input) {

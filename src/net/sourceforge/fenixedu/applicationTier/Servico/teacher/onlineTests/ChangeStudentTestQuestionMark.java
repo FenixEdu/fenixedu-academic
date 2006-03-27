@@ -98,7 +98,7 @@ public class ChangeStudentTestQuestionMark extends Service {
                     ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
                     Attends attend = persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
                             studentTestQuestion.getStudent().getIdInternal(), executionCourse.getIdInternal());
-                    Mark mark = persistentSupport.getIPersistentMark().readBy(onlineTest, attend);
+                    Mark mark = onlineTest.getMarkByAttend(attend);
                     final String markValue = getNewStudentMark(studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent());
                     if (mark == null) {
                         mark = DomainFactory.makeMark(attend, onlineTest, markValue);

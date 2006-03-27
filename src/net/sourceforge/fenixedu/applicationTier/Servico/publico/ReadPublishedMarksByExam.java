@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -61,8 +60,7 @@ public class ReadPublishedMarksByExam extends Service {
         List attendList = attendDAO.readByExecutionCourse(executionCourse.getIdInternal());
 
         //Marks
-        IPersistentMark markDAO = persistentSupport.getIPersistentMark();
-        marksList = markDAO.readBy(evaluation);
+        marksList = evaluation.getMarks();
 
         List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
             public Object transform(Object input) {

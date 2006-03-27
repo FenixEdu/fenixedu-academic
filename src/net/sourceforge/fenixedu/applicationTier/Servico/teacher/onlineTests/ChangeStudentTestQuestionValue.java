@@ -73,7 +73,7 @@ public class ChangeStudentTestQuestionValue extends Service {
                 ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
                 Attends attend = persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
                         studentTestQuestion.getStudent().getIdInternal(), executionCourse.getIdInternal());
-                Mark mark = persistentSupport.getIPersistentMark().readBy(onlineTest, attend);
+                Mark mark = onlineTest.getMarkByAttend(attend);
                 if (mark != null) {
                     mark.setMark(getNewStudentMark(studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent()));
                 }

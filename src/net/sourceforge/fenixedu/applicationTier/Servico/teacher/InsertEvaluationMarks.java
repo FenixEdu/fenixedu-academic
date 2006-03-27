@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
@@ -50,7 +49,6 @@ public class InsertEvaluationMarks extends Service {
         HashMap newHashMarks = new HashMap();
 
         IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
-        IPersistentMark persistentMark = persistentSupport.getIPersistentMark();
 
         //Site
     	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseCode);
@@ -81,7 +79,7 @@ public class InsertEvaluationMarks extends Service {
                     marksErrorsInvalidMark.add(infoMark);
                 } else {
                     newHashMarks.put(attend.getAluno().getNumber().toString(), mark);
-                    Mark domainMark = persistentMark.readBy(evaluation, attend);
+                    Mark domainMark = evaluation.getMarkByAttend(attend);
                     //verify if the student has already a mark
                     if (domainMark == null) {
                         domainMark = DomainFactory.makeMark();
@@ -97,9 +95,9 @@ public class InsertEvaluationMarks extends Service {
 
                 }
             } else {
-                Mark domainMark = persistentMark.readBy(evaluation, attend);
+                Mark domainMark = evaluation.getMarkByAttend(attend);
                 if (domainMark != null) {
-                    persistentMark.delete(domainMark);
+                	domainMark.delete();
                 }
             }
         }

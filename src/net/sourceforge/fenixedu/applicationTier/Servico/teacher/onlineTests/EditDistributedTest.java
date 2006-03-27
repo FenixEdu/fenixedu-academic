@@ -76,8 +76,9 @@ public class EditDistributedTest extends Service {
             // Change evaluation test to study/inquiry test
             // delete evaluation and marks
             OnlineTest onlineTest = distributedTest.getOnlineTest();
-            persistentSupport.getIPersistentMark().deleteByEvaluation(onlineTest);
-            persistentObject.deleteByOID(OnlineTest.class, onlineTest.getIdInternal());
+            onlineTest.delete();
+            /*persistentSupport.getIPersistentMark().deleteByEvaluation(onlineTest);
+            persistentObject.deleteByOID(OnlineTest.class, onlineTest.getIdInternal());*/
         } else if (change2EvaluationType) {
             // Change to evaluation test
             // Create evaluation (onlineTest) and marks
