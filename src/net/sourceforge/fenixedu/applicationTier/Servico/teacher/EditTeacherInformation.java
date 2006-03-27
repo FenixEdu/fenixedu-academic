@@ -25,12 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 public class EditTeacherInformation extends Service {
-	
-    /**
-     * Executes the service.
-     * 
-     * @throws ExcepcaoPersistencia
-     */
+
     public Boolean run(InfoServiceProviderRegime infoServiceProviderRegime,
             InfoWeeklyOcupation infoWeeklyOcupation, List<InfoOrientation> infoOrientations,
             List<InfoPublicationsNumber> infoPublicationsNumbers) throws ExcepcaoPersistencia {
@@ -67,17 +62,12 @@ public class EditTeacherInformation extends Service {
 
 	private void editWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation, Teacher teacher) throws ExcepcaoPersistencia {
         // Weekly Ocupation
-        WeeklyOcupation weeklyOcupation = (WeeklyOcupation) persistentObject.readByOID(
-                WeeklyOcupation.class, infoWeeklyOcupation.getIdInternal());
-
+        WeeklyOcupation weeklyOcupation = teacher.getWeeklyOcupation();
         if (weeklyOcupation == null) {
 			weeklyOcupation = DomainFactory.makeWeeklyOcupation(teacher, infoWeeklyOcupation);
-
 		} else {
 			weeklyOcupation.edit(infoWeeklyOcupation);
         }
-
-		
 	}
 
 	private void editOrientations(List<InfoOrientation> infoOrientations, Teacher teacher) throws ExcepcaoPersistencia {
