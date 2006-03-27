@@ -69,8 +69,8 @@ public class Person extends Person_Base {
         setIsPassInKerberos(Boolean.FALSE);
     }
 
-    private void createUserAndLoginEntity(String username) {        
-        new Login(new User(this), username);        
+    private void createUserAndLoginEntity(String username) {
+        new Login(new User(this), username);
     }
 
     public Person(String name, String identificationDocumentNumber,
@@ -149,7 +149,7 @@ public class Person extends Person_Base {
         setMaritalStatus(MaritalStatus.UNKNOWN);
         setIsPassInKerberos(Boolean.FALSE);
     }
-   
+
     public void edit(InfoPerson personToEdit, Country country) {
         checkConditionsToCreateNewPerson(personToEdit.getUsername(), personToEdit
                 .getNumeroDocumentoIdentificacao(), personToEdit.getTipoDocumentoIdentificacao(), this);
@@ -190,7 +190,7 @@ public class Person extends Person_Base {
 
     private void checkConditionsToCreateNewPerson(final String username, final String documentIDNumber,
             final IDDocumentType documentType, Person thisPerson) {
-               
+
         if ((documentIDNumber != null && documentType != null && checkIfDocumentNumberIdAndDocumentIdTypeExists(
                 documentIDNumber, documentType, thisPerson))
                 || (username != null && checkIfUsernameExists(username, thisPerson))) {
@@ -198,9 +198,10 @@ public class Person extends Person_Base {
         }
     }
 
-    public static boolean checkIfUsernameExists(String username, Person thisPerson) {        
+    public static boolean checkIfUsernameExists(String username, Person thisPerson) {
         for (Login login : Identification.readAllLogins()) {
-            if (username.equalsIgnoreCase(login.getUsername())) {
+            if (!login.getUsername().equalsIgnoreCase(thisPerson.getUsername())
+                    && username.equalsIgnoreCase(login.getUsername())) {
                 return true;
             }
         }
@@ -209,7 +210,7 @@ public class Person extends Person_Base {
 
     public static boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
             final IDDocumentType documentType, Person thisPerson) {
-        
+
         for (final Person person : Party.readAllPersons()) {
             if (!person.equals(thisPerson) && person.getDocumentIdNumber().equals(documentIDNumber)
                     && person.getIdDocumentType().equals(documentType)) {
@@ -244,8 +245,8 @@ public class Person extends Person_Base {
     public void setPassword(String password) {
         getLoginIdentification().setPassword(password);
     }
-    
-    public void setIsPassInKerberos(Boolean isPassInKerberos) {        
+
+    public void setIsPassInKerberos(Boolean isPassInKerberos) {
         getLoginIdentification().setIsPassInKerberos(isPassInKerberos);
     }
 
@@ -258,7 +259,7 @@ public class Person extends Person_Base {
         getUser().setUserUId(istUsername);
     }
 
-    public String getIstUsername() {        
+    public String getIstUsername() {
         return (getUser() != null) ? getUser().getUserUId() : null;
     }
 
