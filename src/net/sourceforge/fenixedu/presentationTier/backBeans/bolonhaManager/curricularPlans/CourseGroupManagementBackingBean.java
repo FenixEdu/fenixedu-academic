@@ -6,47 +6,30 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curri
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-public class CourseGroupManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
-    private final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
-    private final Integer NO_SELECTION = 0;    
-    
+public class CourseGroupManagementBackingBean extends CurricularCourseManagementBackingBean {
     private String name = null;
     private String nameEn = null;
     private Integer courseGroupID;
     private List<SelectItem> courseGroups = null;
-    private Integer beginExecutionPeriodID = null;
-    private Integer endExecutionPeriodID = null;
-
-    public Integer getDegreeCurricularPlanID() {
-        return getAndHoldIntegerParameter("degreeCurricularPlanID");
-    }
 
     public Integer getParentCourseGroupID() {
         return getAndHoldIntegerParameter("parentCourseGroupID");
-    }
-
-    public Integer getContextID() {
-        return getAndHoldIntegerParameter("contextID");
     }
 
     public Integer getCourseGroupID() {
@@ -77,11 +60,6 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
         this.nameEn = nameEn;
     }
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException,
-            FenixServiceException {
-        return (DegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class, getDegreeCurricularPlanID());
-    }
-
     public CourseGroup getCourseGroup(Integer courseGroupID) throws FenixFilterException, FenixServiceException {
         return (CourseGroup) readDomainObject(CourseGroup.class, courseGroupID);
     }
@@ -98,35 +76,20 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
         return resultLabels;
     }
     
-    public Integer getBeginExecutionPeriodID() {
-        return beginExecutionPeriodID;
-    }
-    
-    public void setBeginExecutionPeriodID(Integer beginExecutionPeriodID) {
-        this.beginExecutionPeriodID = beginExecutionPeriodID;
-    }
-    
-    public Integer getEndExecutionPeriodID() throws FenixFilterException, FenixServiceException {
-        return endExecutionPeriodID;
-    }
-    
-    public void setEndExecutionPeriodID(Integer endExecutionPeriodID) {
-        this.endExecutionPeriodID = endExecutionPeriodID;
-    }
-
     public String createCourseGroup() throws FenixFilterException {
         try {
-            final Object args[] = { getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn() };
+            final Object args[] = { getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(),
+                    getNameEn(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
             ServiceUtils.executeService(getUserView(), "CreateCourseGroup", args);
-            addInfoMessage(bolonhaResources.getString("courseGroupCreated"));
+            addInfoMessage(bolonhaBundle.getString("courseGroupCreated"));
             return "editCurricularPlanStructure";
         } catch (FenixFilterException e) {
-            this.addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         } catch (final DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
         }
         return "";
     }
@@ -135,15 +98,15 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
         try {
             final Object args[] = { getCourseGroupID(), getName(), getNameEn() };
             ServiceUtils.executeService(getUserView(), "EditCourseGroup", args);
-            addInfoMessage(bolonhaResources.getString("courseGroupEdited"));
+            addInfoMessage(bolonhaBundle.getString("courseGroupEdited"));
             return "editCurricularPlanStructure";
         } catch (FenixFilterException e) {
-            this.addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         } catch (final DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
         }
         return "";
     }
@@ -152,15 +115,15 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
         try {
             final Object args[] = { getCourseGroupID(), getContextID() };
             ServiceUtils.executeService(getUserView(), "DeleteContextFromDegreeModule", args);
-            addInfoMessage(bolonhaResources.getString("courseGroupDeleted"));
+            addInfoMessage(bolonhaBundle.getString("courseGroupDeleted"));
             return "editCurricularPlanStructure";
         } catch (FenixFilterException e) {
-                this.addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+                this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
                 return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
-            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         } catch (final DomainException e) {
-            addErrorMessage(domainResources.getString(e.getMessage()));
+            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
         }
         return "";
     }
@@ -170,19 +133,19 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
             checkCourseGroup();
             Object args[] = { getCourseGroup(getCourseGroupID()), getCourseGroup(getParentCourseGroupID()) };
             ServiceUtils.executeService(getUserView(), "AddContextToCourseGroup", args);
-            addInfoMessage(bolonhaResources.getString("courseGroupAssociated"));
+            addInfoMessage(bolonhaBundle.getString("courseGroupAssociated"));
             return "editCurricularPlanStructure";
         } catch (FenixActionException e) {
-            this.addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         } catch (FenixFilterException e) {
-            this.addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (FenixServiceException e) {
-            this.addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         } catch (DomainException e) {
-            this.addErrorMessage(domainResources.getString(e.getMessage()));
+            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
         } catch (Exception e) {
-            this.addErrorMessage(bolonhaResources.getString("general.error"));
+            this.addErrorMessage(bolonhaBundle.getString("general.error"));
             return "editCurricularPlanStructure";
         }        
         return "";
@@ -209,7 +172,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
             }
         }
         Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
+        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         return result;
     }
     
@@ -221,15 +184,15 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
         try {
             Object args[] = { getContextID(), getPosition() };
             ServiceUtils.executeService(getUserView(), "OrderDegreeModule", args);
-            addInfoMessage(bolonhaResources.getString("courseGroupMoved"));
+            addInfoMessage(bolonhaBundle.getString("courseGroupMoved"));
             return "editCurricularPlanStructure";
         } catch (FenixFilterException e) {
-            this.addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (DomainException e) {
-            this.addErrorMessage(domainResources.getString(e.getMessage()));
+            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
         } catch (Exception e) {
-            this.addErrorMessage(bolonhaResources.getString("general.error"));
+            this.addErrorMessage(bolonhaBundle.getString("general.error"));
             return "editCurricularPlanStructure";
         }        
         return "";

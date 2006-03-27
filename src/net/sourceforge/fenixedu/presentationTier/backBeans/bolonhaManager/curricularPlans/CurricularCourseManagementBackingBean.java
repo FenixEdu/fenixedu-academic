@@ -40,10 +40,10 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 import org.apache.commons.beanutils.BeanComparator;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle bolonhaBundle = getResourceBundle("resources/BolonhaManagerResources");
-    private final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
-    private final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
-    private final Integer NO_SELECTION = 0;    
+    protected final ResourceBundle bolonhaBundle = getResourceBundle("resources/BolonhaManagerResources");
+    protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
+    protected final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
+    protected final Integer NO_SELECTION = 0;    
     
     private Integer competenceCourseID = null;
     private Integer courseGroupID = null;    
@@ -590,7 +590,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
-    private Integer getFinalEndExecutionPeriodID() {
+    protected Integer getFinalEndExecutionPeriodID() {
         return (getViewState().getAttribute("endExecutionPeriodID") == null || getViewState()
                 .getAttribute("endExecutionPeriodID").equals(NO_SELECTION)) ? null
                 : (Integer) getViewState().getAttribute("endExecutionPeriodID");

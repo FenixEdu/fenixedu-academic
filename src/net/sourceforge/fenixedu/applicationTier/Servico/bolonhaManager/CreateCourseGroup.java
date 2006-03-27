@@ -11,29 +11,33 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CreateCourseGroup extends Service {
 
     public void run(final Integer degreeCurricularPlanID, final Integer parentCourseGroupID,
-            final String name, final String nameEn) throws ExcepcaoPersistencia, FenixServiceException {
+            final String name, final String nameEn, final Integer beginExecutionPeriodID,
+            final Integer endExecutionPeriodID) throws ExcepcaoPersistencia, FenixServiceException {
 
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.noDegreeCurricularPlan");
         }
-        final CourseGroup parentCourseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, parentCourseGroupID);
+        final CourseGroup parentCourseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(parentCourseGroupID);
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
 
-        // TODO: this should be modified to receive ExecutionYear, but for now
-        // we just read the '2006/2007'
-        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName("2006/2007");
-        if (executionYear == null) {
-            throw new FenixServiceException("error.noExecutionYear");
+        final ExecutionPeriod beginExecutionPeriod;
+        if (beginExecutionPeriodID == null) {
+            final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+            final ExecutionYear nextExecutionYear = currentExecutionYear.getNextExecutionYear();
+            if (nextExecutionYear == null) {
+                throw new FenixServiceException("error.no.next.execution.year");
+            }
+            beginExecutionPeriod = nextExecutionYear.getExecutionPeriodForSemester(Integer.valueOf(1));
+        } else {
+            beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
         }
-        final ExecutionPeriod beginExecutionPeriod = executionYear.getExecutionPeriodForSemester(Integer
-                .valueOf(1));
 
-        degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, null, beginExecutionPeriod, null);
+        final ExecutionPeriod endExecutionPeriod = (endExecutionPeriodID == null) ? null
+                : rootDomainObject.readExecutionPeriodByOID(endExecutionPeriodID);
+
+        degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, null, beginExecutionPeriod, endExecutionPeriod);
     }
-    
 }
