@@ -5,7 +5,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -47,7 +50,7 @@ public class InsertExercise extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        List<List> allXmlList = getListOfExercisesList(xmlZipFile);
+        Collection<List<LabelValueBean>> allXmlList = getListOfExercisesList(xmlZipFile);
         for (List<LabelValueBean> xmlFilesList : allXmlList) {
             if (xmlFilesList == null || xmlFilesList.size() == 0) {
                 throw new InvalidXMLFilesException();
@@ -95,10 +98,10 @@ public class InsertExercise extends Service {
         return badXmls;
     }
 
-    private List<List> getListOfExercisesList(FormFile xmlZipFile) {
-        List<List> allXmlList = new ArrayList<List>();
-        List<LabelValueBean> xmlList = new ArrayList<LabelValueBean>();
+    private Collection<List<LabelValueBean>> getListOfExercisesList(FormFile xmlZipFile) {
+        List<List<LabelValueBean>> allXmlList = new ArrayList<List<LabelValueBean>>();
 
+        Map<String, List<LabelValueBean>> xmlListMap = new HashMap<String, List<LabelValueBean>>();
         try {
             if (xmlZipFile.getContentType().equals("application/x-zip-compressed")
                     || xmlZipFile.getContentType().equals("application/zip")) {
@@ -106,28 +109,32 @@ public class InsertExercise extends Service {
                 for (ZipEntry entry = zipFile.getNextEntry(); entry != null; entry = zipFile
                         .getNextEntry()) {
                     if (entry.isDirectory()) {
-                        // Se for uma directoria é um novo exercicio (nova lista
-                        // de exercicios)
-                        if (xmlList != null && xmlList.size() != 0) {
-                            allXmlList.add(xmlList);
-                        }
-                        xmlList = new ArrayList<LabelValueBean>();
+                        throw new RuntimeException("unsupported.if.this.happens.rethink");
                     }
+                    final int posSlash = entry.getName().indexOf('/');
+                    final List<LabelValueBean> labelValueBeans;
+                    final String dirName = (posSlash > 0) ? entry.getName().substring(0, posSlash) : "";
+                    if (xmlListMap.containsKey(dirName)) {
+                        labelValueBeans = xmlListMap.get(dirName);
+                    } else {
+                        labelValueBeans = new ArrayList<LabelValueBean>();
+                        xmlListMap.put(dirName, labelValueBeans);
+                    }
+
                     final StringBuilder stringBuilder = new StringBuilder();
                     final byte[] b = new byte[1000];
-                    for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder
-                            .append(new String(b, 0, readed, "ISO-8859-1"))) {
-                        // nothing to do :o)
+                    for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder .append(new String(b, 0, readed, "ISO-8859-1"))) {
+                            // nothing to do :o)
                     }
                     if (stringBuilder.length() <= FILE_SIZE_LIMIT) {
-                        xmlList.add(new LabelValueBean(entry.getName(), stringBuilder.toString()));
+                        labelValueBeans.add(new LabelValueBean(entry.getName(), stringBuilder.toString()));
                     } else {
-                        xmlList.add(new LabelValueBean(entry.getName(), null));
+                        labelValueBeans.add(new LabelValueBean(entry.getName(), null));
                     }
                 }
                 zipFile.close();
             } else {
-                // é 1 exercicio com 1 variação (1 xml)
+                List<LabelValueBean> xmlList = new ArrayList<LabelValueBean>();
                 if (xmlZipFile.getContentType().equals("text/xml")
                         || xmlZipFile.getContentType().equals("application/xml")) {
                     if (xmlZipFile.getFileSize() <= FILE_SIZE_LIMIT) {
@@ -137,13 +144,12 @@ public class InsertExercise extends Service {
                         xmlList.add(new LabelValueBean(xmlZipFile.getFileName(), null));
                     }
                 }
+                xmlListMap.put("", xmlList);
             }
         } catch (Exception e) {
             return null;
         }
-        if (xmlList != null && xmlList.size() != 0) {
-            allXmlList.add(xmlList);
-        }
-        return allXmlList;
+
+        return xmlListMap.values();
     }
 }
