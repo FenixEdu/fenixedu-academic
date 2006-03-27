@@ -21,4 +21,9 @@ public class OnlineTest extends OnlineTest_Base {
 	public EvaluationType getEvaluationType() {
 		return EvaluationType.ONLINE_TEST_TYPE;
 	}
+	
+	public void delete() {
+		setDistributedTest(null);
+		super.delete();
+	}
 }
