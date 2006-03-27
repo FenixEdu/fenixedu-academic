@@ -100,7 +100,7 @@ public class InfoPrice extends InfoObject {
         price = double1;
     }
 
-    public static Object newInfoFromDoaim(Price price2) {
+    public static InfoPrice newInfoFromDoaim(Price price2) {
         InfoPrice infoPrice = new InfoPrice();
         infoPrice.setDescription(price2.getDescription());
         infoPrice.setDocumentType(price2.getDocumentType());

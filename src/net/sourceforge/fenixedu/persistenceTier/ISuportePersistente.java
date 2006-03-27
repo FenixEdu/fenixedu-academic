@@ -80,8 +80,6 @@ public interface ISuportePersistente
 
 	public IPersistentExam getIPersistentExam();
 
-	public IPersistentPrice getIPersistentPrice();
-
 	public IPersistentGuideEntry getIPersistentGuideEntry();
 
 	public IPersistentGuide getIPersistentGuide();

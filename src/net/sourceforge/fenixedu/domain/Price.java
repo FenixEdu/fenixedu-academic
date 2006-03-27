@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
-
-/**
- * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- */
+import java.util.ArrayList;
+import java.util.List;
 
 public class Price extends Price_Base {
 
@@ -22,4 +19,28 @@ public class Price extends Price_Base {
         this.setPrice(price);
     }
 
+    // -------------------------------------------------------------
+    // read static methods 
+    // -------------------------------------------------------------
+
+    public static Price readByGraduationTypeAndDocumentTypeAndDescription(GraduationType graduationType,
+            DocumentType documentType, String description) {
+        for (final Price price : RootDomainObject.getInstance().getPricesSet()) {
+            if (price.getGraduationType() == graduationType && price.getDocumentType() == documentType
+                    && price.getDescription().equals(description)) {
+                return price;
+            }
+        }
+        return null;
+    }
+
+    public static List<Price> readByGraduationTypeAndDocumentTypes(GraduationType graduationType, List<DocumentType> documentTypes) {
+        final List<Price> result = new ArrayList<Price>();
+        for (final Price price : RootDomainObject.getInstance().getPricesSet()) {
+            if (price.getGraduationType() == graduationType && documentTypes.contains(price.getDocumentType())) {
+                result.add(price);
+            }
+        }
+        return result;
+    }
 }

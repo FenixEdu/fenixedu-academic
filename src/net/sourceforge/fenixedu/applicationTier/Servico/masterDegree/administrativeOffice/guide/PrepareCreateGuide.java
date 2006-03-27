@@ -93,7 +93,7 @@ public class PrepareCreateGuide extends Service {
 			// changed to keys to resource bundles
 			String description = getDescription(graduationType);
 
-			price = persistentSupport.getIPersistentPrice().readByGraduationTypeAndDocumentTypeAndDescription(
+			price = Price.readByGraduationTypeAndDocumentTypeAndDescription(
 					GraduationType.MASTER_DEGREE, DocumentType.APPLICATION_EMOLUMENT, description);
 
 			if (price == null) {
