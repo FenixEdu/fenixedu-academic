@@ -1,7 +1,3 @@
-/*
- * Created on 05/Jan/2004
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico.teachersBody;
 
 import java.util.ArrayList;
@@ -25,40 +21,32 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-/**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 19/Dez/2003
- *  
- */
 public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod extends Service {
 
-    public List run(Integer departmentId, Integer executionYearId, Integer semester, Integer teacherType)
+    public List run(Integer departmentId, Integer executionYearID, Integer semester, Integer teacherType)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        //Execution Year
         ExecutionYear executionYear = null;
-        if (executionYearId != null) {
-
-            executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class,
-                    executionYearId);
+        if (executionYearID != null) {
+            executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+        }
+        
+        final ExecutionPeriod executionPeriod = executionYear.readExecutionPeriodForSemester(semester);
+        if (executionPeriod == null) {
+            throw new FenixServiceException("error.noExecutionPeriod");
         }
 
-        //Execution period
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        ExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
-                semester, executionYear.getYear());
-
-        //Departement
-
-        Department department = (Department) persistentObject
-                .readByOID(Department.class, departmentId);
+        final Department department = rootDomainObject.readDepartmentByOID(departmentId);
+        if (department == null) {
+            throw new FenixServiceException("error.noDepartment");
+        } 
         
-        List teachers = department.getCurrentTeachers();
+        final List<Teacher> teachers = department.getCurrentTeachers();
 
         Iterator iter = teachers.iterator();
       

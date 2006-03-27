@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
@@ -33,13 +32,11 @@ public class ClassSiteComponentService extends Service {
     public Object run(ISiteComponent bodyComponent, String executionYearName,
             String executionPeriodName, String degreeInitials, String nameDegreeCurricularPlan,
             String className, Integer curricularYear, Integer classId) throws FenixServiceException, ExcepcaoPersistencia {
-        final IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+   
         final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
-
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 
-        ExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
-                executionPeriodName, executionYear.getYear());
+        ExecutionPeriod executionPeriod = ExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear.getYear());
 
         ExecutionDegree executionDegree = executionDegreeDAO
                 .readByDegreeCurricularPlanAndExecutionYear(nameDegreeCurricularPlan, degreeInitials,
@@ -53,7 +50,7 @@ public class ClassSiteComponentService extends Service {
             }
         } else {
 
-            domainClass = (SchoolClass) persistentObject.readByOID(SchoolClass.class, classId);
+            domainClass = rootDomainObject.readSchoolClassByOID(classId);
         }
         bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
         SiteView siteView = new SiteView(bodyComponent);

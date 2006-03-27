@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
@@ -89,7 +88,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoExecuc
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionCourseVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExternalPersonVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
@@ -422,10 +420,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests() {
         return null;
-    }
-
-    public IPersistentExecutionPeriod getIPersistentExecutionPeriod() {
-        return new ExecutionPeriodVO();
     }
 
     public IPersistentExecutionCourse getIPersistentExecutionCourse() {

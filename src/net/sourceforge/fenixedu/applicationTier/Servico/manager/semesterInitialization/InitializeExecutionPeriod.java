@@ -24,16 +24,16 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class InitializeExecutionPeriod {
 
@@ -109,10 +109,8 @@ public class InitializeExecutionPeriod {
 
     private static void initializeNextExecutionPeriod(final Integer semester, final String executionYear, final Set<String> curricularCourseCodes)
             throws ExcepcaoPersistencia {
-    	final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-    	final IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
-        final ExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(semester, executionYear);
+        final ExecutionPeriod executionPeriod = ExecutionPeriod.readBySemesterAndExecutionYear(semester, executionYear);
         final ExecutionPeriod newExecutionPeriod = executionPeriod.getNextExecutionPeriod().getNextExecutionPeriod();
 
         logger.info(StringAppender.append("Initializing period [semester ", newExecutionPeriod

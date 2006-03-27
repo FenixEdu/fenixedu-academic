@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
@@ -272,17 +271,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new MasterDegreeCandidateOJB();
 	}
 
-	/**
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentExecutionPeriod()
-	 */
-	public IPersistentExecutionPeriod getIPersistentExecutionPeriod()
-	{
-		return new ExecutionPeriodOJB();
-	}
-
-	/**
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentCurriculum()
-	 */
 	public IPersistentCurriculum getIPersistentCurriculum()
 	{
 		return new CurriculumOJB();

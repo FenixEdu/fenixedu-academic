@@ -12,12 +12,6 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-/**
- * Created on 11/Fev/2003
- * 
- * @author Jo�o Mota ciapl Dominio
- * 
- */
 public class ExecutionYear extends ExecutionYear_Base implements INode, Comparable {
 
     public ExecutionYear() {
@@ -78,7 +72,13 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
         return getYear().compareTo(executionYear.getYear());
     }
     
-    public ExecutionPeriod getExecutionPeriodForSemester(Integer semester) {
+    public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
+        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
+        Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+        return executionDegrees;
+    }
+    
+    public ExecutionPeriod readExecutionPeriodForSemester(Integer semester) {
         for (final ExecutionPeriod executionPeriod : this.getExecutionPeriods()) {
             if (executionPeriod.getSemester().equals(semester)) {
                 return executionPeriod;
@@ -86,11 +86,24 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
         }
         return null;
     }
-
-    public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
-        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
-        Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
-        return executionDegrees;
+    
+    public List<ExecutionPeriod> readNotClosedPublicExecutionPeriods() {
+        final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
+        for (final ExecutionPeriod executionPeriod : this.getExecutionPeriodsSet()) {
+            if (executionPeriod.getState() != PeriodState.NOT_OPEN && executionPeriod.getState() != PeriodState.CLOSED) {
+                result.add(executionPeriod);
+            }
+        }
+        return result;
+    }
+    
+    public ExecutionPeriod readExecutionPeriodByName(final String name) {
+        for (final ExecutionPeriod executionPeriod : getExecutionPeriodsSet()) {
+            if (executionPeriod.getName().equals(name)) {
+                return executionPeriod;
+            }
+        }
+        return null;
     }
     
     // -------------------------------------------------------------

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 /**
  * @author jpvl
@@ -29,9 +28,7 @@ public class ReadTeacherDFPStudentsService extends Service {
             throws ExcepcaoPersistencia {
         TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO = new TeacherDegreeFinalProjectStudentsDTO();
 
-        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-
-        ExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId, executionPeriodDAO);
+        ExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId);
 
         Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
         InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
@@ -54,8 +51,7 @@ public class ReadTeacherDFPStudentsService extends Service {
 
     }
 
-    private ExecutionPeriod getExecutionPeriod(Integer executionPeriodId,
-            IPersistentExecutionPeriod executionPeriodDAO) throws ExcepcaoPersistencia {
+    private ExecutionPeriod getExecutionPeriod(Integer executionPeriodId) throws ExcepcaoPersistencia {
         
         final ExecutionPeriod executionPeriod;
         if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {

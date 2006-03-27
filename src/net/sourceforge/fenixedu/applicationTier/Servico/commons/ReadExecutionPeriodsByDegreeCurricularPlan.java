@@ -17,34 +17,20 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * 
- * @author <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali</a>
- * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
- * 
- */
 public class ReadExecutionPeriodsByDegreeCurricularPlan extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
+
+        // Start date of the DegreeCurricularPlan
+        final Date startDate = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID).getInitialDate();
         
         // End date of the current year
-        Date end = ExecutionYear.readCurrentExecutionYear().getEndDate();
+        final Date endDate = ExecutionYear.readCurrentExecutionYear().getEndDate();
 
-        // Start date of the degree curricular plan
-        Date start = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID).getInitialDate();
-
-        List<ExecutionPeriod> executionPeriods = persistentSupport.getIPersistentExecutionPeriod()
-                .readExecutionPeriodsInTimePeriod(start, end);
-
-        final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>(
-                executionPeriods.size());
-        for (final ExecutionPeriod executionPeriod : executionPeriods) {
-            infoExecutionPeriods.add(InfoExecutionPeriodWithInfoExecutionYear
-                    .newInfoFromDomain(executionPeriod));
+        final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
+        for (final ExecutionPeriod executionPeriod : ExecutionPeriod.readExecutionPeriodsInTimePeriod(startDate, endDate)) {
+            infoExecutionPeriods.add(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod));
         }
-
         return infoExecutionPeriods;
-
     }
-
 }

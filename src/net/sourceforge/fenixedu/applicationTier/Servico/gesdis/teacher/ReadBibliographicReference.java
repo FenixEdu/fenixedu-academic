@@ -18,31 +18,31 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 public class ReadBibliographicReference extends Service {
 
     public List run(InfoExecutionCourse infoExecutionCourse, Boolean optional)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
-                .getIPersistentExecutionPeriod();
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
 
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(infoExecutionCourse
                 .getInfoExecutionPeriod().getInfoExecutionYear().getYear());
 
-        final ExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
-                infoExecutionCourse.getInfoExecutionPeriod().getName(), executionYear.getYear());
+        final ExecutionPeriod executionPeriod = executionYear
+                .readExecutionPeriodByName(infoExecutionCourse.getInfoExecutionPeriod().getName());
+
         final ExecutionCourse executionCourse = persistentExecutionCourse
                 .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
                         executionPeriod.getIdInternal());
 
         final List<InfoBibliographicReference> infoBibliographicReferences = new ArrayList<InfoBibliographicReference>();
-        for (final BibliographicReference bibliographicReference : executionCourse.getAssociatedBibliographicReferences()) {
+        for (final BibliographicReference bibliographicReference : executionCourse
+                .getAssociatedBibliographicReferences()) {
             if (optional == null || bibliographicReference.getOptional().equals(optional)) {
-                infoBibliographicReferences.add(InfoBibliographicReference.newInfoFromDomain(bibliographicReference));
+                infoBibliographicReferences.add(InfoBibliographicReference
+                        .newInfoFromDomain(bibliographicReference));
             }
         }
         return infoBibliographicReferences;

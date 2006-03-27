@@ -170,12 +170,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public void approve(ExecutionYear beginExecutionYear) {
         if (beginExecutionYear == null) {
             throw new DomainException("error.invalid.execution.year");
-        } else if (beginExecutionYear.getExecutionPeriodForSemester(Integer.valueOf(1)) == null) {
+        } else if (beginExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1)) == null) {
             throw new DomainException("error.invalid.execution.period");
         }
         checkIfCurricularCoursesBelongToApprovedCompetenceCourses();
         initBeginExecutionPeriodForDegreeCurricularPlan(getRoot(), beginExecutionYear
-                .getExecutionPeriodForSemester(Integer.valueOf(1)));
+                .readExecutionPeriodForSemester(Integer.valueOf(1)));
         setCurricularStage(CurricularStage.APPROVED);
     }
     

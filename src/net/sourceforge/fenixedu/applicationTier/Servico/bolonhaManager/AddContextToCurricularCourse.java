@@ -45,7 +45,7 @@ public class AddContextToCurricularCourse extends Service {
             if (nextExecutionYear == null) {
                 throw new FenixServiceException("error.no.next.execution.year");
             }
-            beginExecutionPeriod = nextExecutionYear.getExecutionPeriodForSemester(Integer.valueOf(1));
+            beginExecutionPeriod = nextExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
         } else {
             beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
         }

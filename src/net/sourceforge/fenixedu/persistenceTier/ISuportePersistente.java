@@ -78,8 +78,6 @@ public interface ISuportePersistente
 
 	public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate();
 
-	public IPersistentExecutionPeriod getIPersistentExecutionPeriod();
-
 	public IPersistentCurriculum getIPersistentCurriculum();
 
 	public IPersistentExam getIPersistentExam();

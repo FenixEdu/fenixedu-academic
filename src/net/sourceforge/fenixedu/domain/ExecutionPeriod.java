@@ -137,4 +137,33 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
         }
         return result;
     }
+    
+    public static List<ExecutionPeriod> readExecutionPeriodsInTimePeriod(final Date beginDate, final Date endDate) {
+        final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
+        for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+            if (executionPeriod.getBeginDate().before(endDate) && executionPeriod.getEndDate().after(beginDate)) {
+                result.add(executionPeriod);
+            }
+        }
+        return result;
+    }
+    
+    public static ExecutionPeriod readByNameAndExecutionYear(String name, String year) {
+        for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+            if (executionPeriod.getName().equals(name) && executionPeriod.getExecutionYear().getYear().equals(year)) {
+                return executionPeriod;
+            }
+        }
+        return null;
+    }
+    
+    public static ExecutionPeriod readBySemesterAndExecutionYear(Integer semester, String year) {
+        for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+            if (executionPeriod.getSemester().equals(semester) && executionPeriod.getExecutionYear().getYear().equals(year)) {
+                return executionPeriod;
+            }
+        }
+        return null;
+    }
 }
+

@@ -1,9 +1,3 @@
-/*
- * Created on Oct 28, 2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico.teachersBody;
 
 import java.util.ArrayList;
@@ -25,47 +19,30 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-/**
- * @author João e Rita
- * 
- */
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod extends Service {
-
-    /**
-     * 
-     */
-    public ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod() {
-    }
 
     public List run(Integer executionDegreeId, Integer semester, Integer teacherType)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
-                .getIPersistentExecutionPeriod();
         
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, executionDegreeId);
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 
         List professorships;
         if (semester.intValue() == 0)
             professorships = Professorship.readByDegreeCurricularPlanAndExecutionYear(executionDegree
                     .getDegreeCurricularPlan(), executionDegree.getExecutionYear());
         else {
-            ExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
-                    semester, executionDegree.getExecutionYear().getYear());
+            ExecutionPeriod executionPeriod = executionDegree.getExecutionYear().readExecutionPeriodForSemester(semester);
             professorships = Professorship.readByDegreeCurricularPlanAndExecutionPeriod(executionDegree
                     .getDegreeCurricularPlan(), executionPeriod);
         }
 
         List responsibleFors = getResponsibleForsByDegree(executionDegree);
 
-        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors,
-                persistentSupport, teacherType);
+        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, teacherType);
 
         // Cleaning out possible null elements inside the list
         Iterator itera = detailedProfessorships.iterator();
@@ -140,8 +117,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
         return responsibleFors;
     }
 
-    protected List getDetailedProfessorships(List professorships, final List responsibleFors,
-            ISuportePersistente persistentSupport, final Integer teacherType) {
+    protected List getDetailedProfessorships(List professorships, final List responsibleFors, final Integer teacherType) {
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
                 new Transformer() {
 

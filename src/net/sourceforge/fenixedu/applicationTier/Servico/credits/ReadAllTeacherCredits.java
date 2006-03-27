@@ -29,11 +29,8 @@ public class ReadAllTeacherCredits extends Service {
 
     public List<CreditLineDTO> run(Integer teacherID) throws ExcepcaoPersistencia {
 
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
-                teacherID);
-
-        List<ExecutionPeriod> allExecutionPeriods = (List<ExecutionPeriod>) persistentSupport
-                .getIPersistentExecutionPeriod().readAll(ExecutionPeriod.class);
+        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+        List<ExecutionPeriod> allExecutionPeriods = rootDomainObject.getExecutionPeriods();
         ExecutionPeriod executionPeriod = (ExecutionPeriod) CollectionUtils.find(allExecutionPeriods,
                 new Predicate() {
                     public boolean evaluate(Object arg0) {
@@ -42,7 +39,7 @@ public class ReadAllTeacherCredits extends Service {
                     }
                 });
 
-        List<Category> categories = (List<Category>) persistentObject.readAll(Category.class);
+        List<Category> categories = rootDomainObject.getCategorys();
         List<Category> monitorCategories = (List<Category>) CollectionUtils.select(categories, new Predicate(){
             public boolean evaluate(Object object) {
                 Category category = (Category) object;

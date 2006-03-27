@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -30,18 +29,21 @@ import org.apache.commons.collections.Predicate;
 public class CriarTurma extends Service {
 
     public Object run(final InfoClass infoClass) throws ExcepcaoPersistencia, ExistingServiceException {
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoClass.getInfoExecutionDegree().getIdInternal());
-        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoClass.getInfoExecutionPeriod().getIdInternal());
-        final Set<SchoolClass> classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionPeriod, infoClass.getAnoCurricular());
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoClass
+                .getInfoExecutionDegree().getIdInternal());
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoClass
+                .getInfoExecutionPeriod().getIdInternal());
+        final Set<SchoolClass> classes = executionDegree
+                .findSchoolClassesByExecutionPeriodAndCurricularYear(executionPeriod, infoClass
+                        .getAnoCurricular());
 
-        final SchoolClass existingClass = (SchoolClass) CollectionUtils.find(classes,
-                new Predicate() {
-                    public boolean evaluate(Object arg0) {
-                        final SchoolClass schoolClass = (SchoolClass) arg0;
-                        return infoClass.getNome().equalsIgnoreCase(schoolClass.getNome());
-                    }
+        final SchoolClass existingClass = (SchoolClass) CollectionUtils.find(classes, new Predicate() {
+            public boolean evaluate(Object arg0) {
+                final SchoolClass schoolClass = (SchoolClass) arg0;
+                return infoClass.getNome().equalsIgnoreCase(schoolClass.getNome());
+            }
 
-                });
+        });
 
         if (existingClass != null) {
             throw new ExistingServiceException("Duplicate Entry: " + infoClass.getNome());
@@ -50,19 +52,18 @@ public class CriarTurma extends Service {
         SchoolClass schoolClass = DomainFactory.makeSchoolClass();
         schoolClass.setNome(infoClass.getNome());
         schoolClass.setAnoCurricular(infoClass.getAnoCurricular());
-        
-        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();        
-        schoolClass.setExecutionDegree(
-                executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(
-                		infoClass.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(), 
-                		infoClass.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getSigla(), 
-                		infoClass.getInfoExecutionDegree().getInfoExecutionYear().getYear()));
 
-        final IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-        schoolClass.setExecutionPeriod(
-                executionPeriodDAO.readByNameAndExecutionYear(
-                		infoClass.getInfoExecutionPeriod().getName(), 
-                		infoClass.getInfoExecutionPeriod().getInfoExecutionYear().getYear()));
+        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport
+                .getIPersistentExecutionDegree();
+        schoolClass.setExecutionDegree(executionDegreeDAO
+                .readByDegreeCurricularPlanAndExecutionYear(infoClass.getInfoExecutionDegree()
+                        .getInfoDegreeCurricularPlan().getName(), infoClass.getInfoExecutionDegree()
+                        .getInfoDegreeCurricularPlan().getInfoDegree().getSigla(), infoClass
+                        .getInfoExecutionDegree().getInfoExecutionYear().getYear()));
+
+        schoolClass.setExecutionPeriod(ExecutionPeriod.readByNameAndExecutionYear(infoClass
+                .getInfoExecutionPeriod().getName(), infoClass.getInfoExecutionPeriod()
+                .getInfoExecutionYear().getYear()));
 
         return InfoClass.newInfoFromDomain(schoolClass);
     }

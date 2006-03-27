@@ -1,6 +1,3 @@
-/*
- * Created on Oct 11, 2004
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric;
 
 import java.util.ArrayList;
@@ -26,35 +23,20 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-/**
- * @author nmgo
- * @author lmre
- */
 public class ReadCurriculumHistoricReport extends Service {
 
     public InfoCurriculumHistoricReport run(Integer curricularCourseID, Integer semester,
             Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
 
-        // read ExecutionYear
-        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                ExecutionYear.class, executionYearID);
+        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+        final ExecutionPeriod executionPeriod = executionYear.readExecutionPeriodForSemester(semester);
 
-        // read ExecutionPeriod
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
-                .getIPersistentExecutionPeriod();
-        ExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
-                semester, executionYear.getYear());
-
-        // read CurricularCourse
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, curricularCourseID);
-        // read all enrollments
-        List<Enrolment> enrollments = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
+        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+        final List<Enrolment> enrollments = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
 
         InfoCurriculumHistoricReport infoCurriculumHistoricReport = createInfoCurriculumHistoricReport(enrollments);
 
@@ -70,11 +52,6 @@ public class ReadCurriculumHistoricReport extends Service {
         return infoCurriculumHistoricReport;
     }
 
-    /**
-     * @param enrollments
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
     private InfoCurriculumHistoricReport createInfoCurriculumHistoricReport(List enrollments)
             throws FenixServiceException, ExcepcaoPersistencia {
 
@@ -141,10 +118,6 @@ public class ReadCurriculumHistoricReport extends Service {
         return infoCurriculumHistoricReport;
     }
 
-    /**
-     * @param infoEnrolment
-     * @param evaluations
-     */
     private void setInfoEnrolmentByEnrolmentEvaluationType(InfoEnrolment infoEnrolment, List evaluations) {
         List normalEnrolmentEvaluations = new ArrayList();
         List specialSeasonEnrolmentEvaluations = new ArrayList();
@@ -180,10 +153,6 @@ public class ReadCurriculumHistoricReport extends Service {
                 .setInfoEquivalenceEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(equivalenceEnrolmentEvaluations));
     }
 
-    /**
-     * @param normalEnrolmentEvaluations
-     * @return
-     */
     private InfoEnrolmentEvaluation getLatestInfoEnrolmentEvaluation(List enrolmentEvaluations) {
         return (enrolmentEvaluations.isEmpty()) ? null : InfoEnrolmentEvaluation
                 .newInfoFromDomain((EnrolmentEvaluation) Collections.max(enrolmentEvaluations));

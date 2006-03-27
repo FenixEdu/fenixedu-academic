@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -46,10 +45,9 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ReadTeacherCreditsSheet extends Service {
 
-    private ExecutionPeriod readExecutionPeriod(Integer executionPeriodId,
-            IPersistentExecutionPeriod executionPeriodDAO) throws FenixServiceException,
+    private ExecutionPeriod readExecutionPeriod(Integer executionPeriodId) throws FenixServiceException,
             ExcepcaoPersistencia {
-        ExecutionPeriod executionPeriod;
+        final ExecutionPeriod executionPeriod;
         if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
             executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         } else {
@@ -76,13 +74,6 @@ public class ReadTeacherCreditsSheet extends Service {
         return infoMasterDegreeProfessorships;
     }
 
-    /**
-     * @param persistentSupport
-     * @param infoCredits
-     * @param infoTeacher
-     * @param infoExecutionPeriod
-     * @return
-     */
     private List readInfoShiftProfessorships(Teacher teacher, ExecutionPeriod executionPeriod) {
         List professorships = teacher.getProfessorships();
         List shiftProfessorships = new ArrayList();
@@ -104,13 +95,6 @@ public class ReadTeacherCreditsSheet extends Service {
         return infoShiftProfessorships;
     }
 
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @param infoCredits
-     * @param persistentSupport
-     * @return
-     */
     private List readInfoSupportLessonList(Teacher teacher, ExecutionPeriod executionPeriod) {
 
         List professorships = teacher.getProfessorships();
@@ -138,13 +122,6 @@ public class ReadTeacherCreditsSheet extends Service {
         return infoSupportLessonList;
     }
 
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @param infoCredits
-     * @param persistentSupport
-     * @return
-     */
     private List readInfoTeacherInstitutionWorkingTime(Teacher teacher, ExecutionPeriod executionPeriod) {
         List<InfoTeacherInstitutionWorkTime> infoTeacherInstitutionWorkingTimeList = new ArrayList<InfoTeacherInstitutionWorkTime>();
         for (TeacherInstitutionWorkTime item : teacher.getInstitutionWorkTimePeriods()) {
@@ -169,13 +146,6 @@ public class ReadTeacherCreditsSheet extends Service {
         return teacher;
     }
 
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @param infoCredits
-     * @param persistentSupport
-     * @return
-     */
     private List readTeacherDegreeFinalProjectStudentList(Teacher teacher,
             ExecutionPeriod executionPeriod) {
 
@@ -196,8 +166,7 @@ public class ReadTeacherCreditsSheet extends Service {
 
         TeacherCreditsSheetDTO teacherCreditsSheetDTO = new TeacherCreditsSheetDTO();
 
-        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-        ExecutionPeriod executionPeriod = readExecutionPeriod(executionPeriodId, executionPeriodDAO);
+        ExecutionPeriod executionPeriod = readExecutionPeriod(executionPeriodId);
         Teacher teacher = readTeacher(infoTeacherParam.getTeacherNumber());
 
         List infoMasterDegreeProfessorships = readInfoMasterDegreeProfessorships(teacher,
