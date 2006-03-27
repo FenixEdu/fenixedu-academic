@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
@@ -772,4 +773,15 @@ public class Teacher extends Teacher_Base {
         }
         return professorships;
     }
+
+    public Set<TeacherDegreeFinalProjectStudent> findTeacherDegreeFinalProjectStudentsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+        final Set<TeacherDegreeFinalProjectStudent> teacherDegreeFinalProjectStudents = new HashSet<TeacherDegreeFinalProjectStudent>();
+        for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : getDegreeFinalProjectStudents()) {
+            if (executionPeriod == teacherDegreeFinalProjectStudent.getExecutionPeriod()) {
+                teacherDegreeFinalProjectStudents.add(teacherDegreeFinalProjectStudent);
+            }
+        }
+        return teacherDegreeFinalProjectStudents;
+    }
+
 }

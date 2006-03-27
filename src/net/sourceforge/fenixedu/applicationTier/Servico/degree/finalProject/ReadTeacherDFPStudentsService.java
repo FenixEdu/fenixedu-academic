@@ -4,7 +4,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -17,10 +19,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 /**
  * @author jpvl
@@ -35,29 +33,20 @@ public class ReadTeacherDFPStudentsService extends Service {
 
         ExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId, executionPeriodDAO);
 
-        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
-
         Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
         InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
 
-        IPersistentTeacherDegreeFinalProjectStudent teacherDfpStudentDAO = persistentSupport
-                .getIPersistentTeacherDegreeFinalProjectStudent();
-
-        List teacherDFPStudentList = teacherDfpStudentDAO.readByTeacherAndExecutionPeriod(teacher
-                .getIdInternal(), executionPeriod.getIdInternal());
-
-        List infoteacherDFPStudentList = (List) CollectionUtils.collect(teacherDFPStudentList,
-                new Transformer() {
-
-                    public Object transform(Object input) {
-                        TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) input;
-                        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain(
-                                teacherDegreeFinalProjectStudent);
-                        return infoTeacherDegreeFinalProjectStudent;
-                    }
-                });
+        final Set<TeacherDegreeFinalProjectStudent> teacherDegreeFinalProjectStudents =
+                teacher.findTeacherDegreeFinalProjectStudentsByExecutionPeriod(executionPeriod);
+        final List infoteacherDFPStudentList = new ArrayList();
+        for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : teacherDegreeFinalProjectStudents) {
+            final InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent =
+                InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain(teacherDegreeFinalProjectStudent);
+            infoteacherDFPStudentList.add(infoTeacherDegreeFinalProjectStudent);
+        }
 
         teacherDfpStudentsDTO.setInfoTeacher(infoTeacher2);
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
         teacherDfpStudentsDTO.setInfoExecutionPeriod(infoExecutionPeriod);
         teacherDfpStudentsDTO.setInfoTeacherDegreeFinalProjectStudentList(infoteacherDFPStudentList);
 
