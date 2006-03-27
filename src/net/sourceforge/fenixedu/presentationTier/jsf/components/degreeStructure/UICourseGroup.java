@@ -282,7 +282,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("class", "aright", null);
         writer.append("(");
         String createAssociateAditionalParameters = "&parentCourseGroupID=" + this.courseGroup.getIdInternal() + "&toOrder=false";
-        String editDeleteaditionalParameters = "&courseGroupID=" + this.courseGroup.getIdInternal() + "&toOrder=false";
+        String editDeleteaditionalParameters = "&courseGroupID=" + this.courseGroup.getIdInternal() + "&contextID=" + this.previousContext.getIdInternal() + "&toOrder=false";
         encodeLink("createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
         writer.append(" , ");
         encodeLink("associateCourseGroup.faces", createAssociateAditionalParameters, false, "associate.course.group");
@@ -290,7 +290,7 @@ public class UICourseGroup extends UIDegreeModule {
         encodeLink("editCourseGroup.faces", editDeleteaditionalParameters, false, "edit");
         if (this.executionYear == null) {
             writer.append(" , ");
-            encodeLink("deleteCourseGroup.faces", editDeleteaditionalParameters + "&contextID=" + this.previousContext.getIdInternal(), false, "delete");
+            encodeLink("deleteCourseGroup.faces", editDeleteaditionalParameters, false, "delete");
         }
         writer.append(") ");
         writer.endElement("td");
