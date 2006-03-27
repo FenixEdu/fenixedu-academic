@@ -33,7 +33,9 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     private String name = null;
     private String nameEn = null;
     private Integer courseGroupID;
-    public List<SelectItem> courseGroups = null;
+    private List<SelectItem> courseGroups = null;
+    private Integer beginExecutionPeriodID = null;
+    private Integer endExecutionPeriodID = null;
 
     public Integer getDegreeCurricularPlanID() {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
@@ -95,6 +97,22 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
         }
         return resultLabels;
     }
+    
+    public Integer getBeginExecutionPeriodID() {
+        return beginExecutionPeriodID;
+    }
+    
+    public void setBeginExecutionPeriodID(Integer beginExecutionPeriodID) {
+        this.beginExecutionPeriodID = beginExecutionPeriodID;
+    }
+    
+    public Integer getEndExecutionPeriodID() throws FenixFilterException, FenixServiceException {
+        return endExecutionPeriodID;
+    }
+    
+    public void setEndExecutionPeriodID(Integer endExecutionPeriodID) {
+        this.endExecutionPeriodID = endExecutionPeriodID;
+    }
 
     public String createCourseGroup() throws FenixFilterException {
         try {
@@ -151,7 +169,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
         try {
             checkCourseGroup();
             Object args[] = { getCourseGroup(getCourseGroupID()), getCourseGroup(getParentCourseGroupID()) };
-            ServiceUtils.executeService(getUserView(), "AddContextToDegreeModule", args);
+            ServiceUtils.executeService(getUserView(), "AddContextToCourseGroup", args);
             addInfoMessage(bolonhaResources.getString("courseGroupAssociated"));
             return "editCurricularPlanStructure";
         } catch (FenixActionException e) {

@@ -47,7 +47,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public CurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
             CurricularStage curricularStage, CompetenceCourse competenceCourse,
             CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
-            ExecutionPeriod beginExecutionPeriod) {
+            ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
 
         this();
         setWeigth(weight);
@@ -56,7 +56,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         setCurricularStage(curricularStage);
         setCompetenceCourse(competenceCourse);
         setType(CurricularCourseType.NORMAL_COURSE);
-        new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, null);
+        new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
     /**
@@ -65,14 +65,14 @@ public class CurricularCourse extends CurricularCourse_Base {
      */
     public CurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn,
             CurricularStage curricularStage, CurricularPeriod curricularPeriod,
-            ExecutionPeriod beginExecutionPeriod) {
+            ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
 
         this();
         setName(name);
         setNameEn(nameEn);
         setCurricularStage(curricularStage);
         setType(CurricularCourseType.OPTIONAL_COURSE);
-        new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, null);
+        new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
     public GradeScale getGradeScaleChain() {
@@ -745,9 +745,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     protected void checkContextsFor(final CourseGroup parentCourseGroup,
-            final CurricularPeriod curricularPeriod) {
+            final CurricularPeriod curricularPeriod, final Context ignoreContext) {
         for (final Context context : this.getParentContexts()) {
-            if (context.getParentCourseGroup() == parentCourseGroup
+            if (context != ignoreContext && context.getParentCourseGroup() == parentCourseGroup
                     && context.getCurricularPeriod() == curricularPeriod) {
                 throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
             }

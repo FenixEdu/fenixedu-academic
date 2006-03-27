@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -10,20 +11,16 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditContextFromCurricularCourse extends Service {
+public class AddContextToCurricularCourse extends Service {
 
-    public void run(CurricularCourse curricularCourse, Context context, CourseGroup courseGroup,
-            Integer year, Integer semester, Integer beginExecutionPeriodID,
-            Integer endExecutionPeriodID) throws ExcepcaoPersistencia, FenixServiceException {
+    public void run(CurricularCourse curricularCourse, CourseGroup courseGroup, Integer beginExecutionPeriodID,
+            Integer endExecutionPeriodID, Integer year, Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
 
-        CurricularPeriod degreeCurricularPeriod = context.getParentCourseGroup()
-                .getParentDegreeCurricularPlan().getDegreeStructure();
-
+        CurricularPeriod degreeCurricularPeriod = courseGroup.getParentDegreeCurricularPlan()
+                .getDegreeStructure();
         CurricularPeriod curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(
                 new CurricularPeriodInfoDTO(year, CurricularPeriodType.YEAR),
                 new CurricularPeriodInfoDTO(semester, CurricularPeriodType.SEMESTER));
@@ -33,12 +30,13 @@ public class EditContextFromCurricularCourse extends Service {
                     year, CurricularPeriodType.YEAR), new CurricularPeriodInfoDTO(semester,
                     CurricularPeriodType.SEMESTER));
         }
+        
+        final ExecutionPeriod beginExecutionPeriod = getBeginExecutionPeriod(beginExecutionPeriodID);
+        final ExecutionPeriod endExecutionPeriod = getEndExecutionPeriod(endExecutionPeriodID);
 
-        curricularCourse.editContext(context, courseGroup, curricularPeriod,
-                getBeginExecutionPeriod(beginExecutionPeriodID),
-                getEndExecutionPeriod(endExecutionPeriodID));
+        curricularCourse.addContext(courseGroup, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
-    
+
     private ExecutionPeriod getBeginExecutionPeriod(Integer beginExecutionPeriodID) throws FenixServiceException {
         final ExecutionPeriod beginExecutionPeriod;
         if (beginExecutionPeriodID == null) {

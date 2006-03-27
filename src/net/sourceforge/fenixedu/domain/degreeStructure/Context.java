@@ -19,10 +19,14 @@ public class Context extends Context_Base implements Comparable<Context> {
     public Context(CourseGroup courseGroup, DegreeModule degreeModule,
             CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod,
             ExecutionPeriod endExecutionPeriod) {
+        
         this();
         if (courseGroup == null || degreeModule == null || beginExecutionPeriod == null) {
             throw new DomainException("error.incorrectContextValues");
         }
+        
+        checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
+
         super.setParentCourseGroup(courseGroup);
         super.setChildDegreeModule(degreeModule);
         super.setCurricularPeriod(curricularPeriod);
@@ -30,10 +34,17 @@ public class Context extends Context_Base implements Comparable<Context> {
         super.setEndExecutionPeriod(endExecutionPeriod);
     }
     
-    public void edit(CourseGroup courseGroup, DegreeModule degreeModule, CurricularPeriod curricularPeriod) {
+    public void edit(CourseGroup courseGroup, DegreeModule degreeModule,
+            CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod,
+            ExecutionPeriod endExecutionPeriod) {
+        
+        checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
+     
         setParentCourseGroup(courseGroup);
         setChildDegreeModule(degreeModule);
         setCurricularPeriod(curricularPeriod);
+        setBeginExecutionPeriod(beginExecutionPeriod);
+        setEndExecutionPeriod(endExecutionPeriod);
     }
 
     public void delete() {
@@ -91,5 +102,11 @@ public class Context extends Context_Base implements Comparable<Context> {
 			}
 		}
     	return false;
+    }
+    
+    protected void checkExecutionPeriods(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+        if (endExecutionPeriod != null && beginExecutionPeriod.isAfter(endExecutionPeriod)) {
+            throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
+        }
     }
 }

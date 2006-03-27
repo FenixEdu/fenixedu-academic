@@ -3,15 +3,14 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
-<ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+<ft:tilesView definition="definition.degreeAdministrativeOffice.masterPage" attributeName="body-inline">
+	<style>
+		table.nospace label {
+			width: auto;
+		}
+	</style>	
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
-	
-<style>
-table.nospace label {
-width: auto;
-}
-</style>	
 
 	<h:outputText value="<em>#{CurricularCourseManagement.degreeCurricularPlan.name}" escape="false"/>
 	<h:outputText value=" (#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</em>" escape="false"/>	
@@ -24,12 +23,12 @@ width: auto;
 	<h:form>
 		<fc:viewState binding="#{CurricularCourseManagement.viewState}"/>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
+		<h:outputText escape="false" value="<input id='executionYearID' name='executionYearID' type='hidden' value='#{CurricularCourseManagement.executionYearID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularYearID' name='curricularYearID' type='hidden' value='#{CurricularCourseManagement.curricularYearID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularSemesterID' name='curricularSemesterID' type='hidden' value='#{CurricularCourseManagement.curricularSemesterID}'/>"/>
 		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
 		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularCourseManagement.showRules}'/>"/>
 		<h:outputText escape="false" value="<input id='hideCourses' name='hideCourses' type='hidden' value='#{CurricularCourseManagement.hideCourses}'/>"/>
-		
 		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
 		
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
@@ -107,15 +106,28 @@ width: auto;
 		<h:outputText value="</p>" escape="false"/>
 		
 		<h:outputText value="<p><label>#{bolonhaBundle['curricularYear']}:</label>" escape="false"/>
-		<h:selectOneMenu value="#{CurricularCourseManagement.curricularYearID}">
+		<fc:selectOneMenu value="#{CurricularCourseManagement.curricularYearID}">
 			<f:selectItems value="#{CurricularCourseManagement.curricularYears}" />
-		</h:selectOneMenu>
+		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 			
 		<h:outputText value="<p><label>#{bolonhaBundle['semester']}:</label>" escape="false"/>
 		<fc:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
 			<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
 		</fc:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
+		<fc:selectOneMenu value="#{CurricularCourseManagement.beginExecutionPeriodID}">
+			<f:selectItems value="#{CurricularCourseManagement.beginExecutionPeriodItems}" />
+		</fc:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
+		<fc:selectOneMenu value="#{CurricularCourseManagement.endExecutionPeriodID}">
+			<f:selectItems value="#{CurricularCourseManagement.endExecutionPeriodItems}" />
+		</fc:selectOneMenu>
+
 		<h:outputText value="</p></fieldset></div>" escape="false"/>		
 
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['create']}"

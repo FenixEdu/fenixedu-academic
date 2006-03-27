@@ -9178,7 +9178,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
@@ -9187,25 +9187,35 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
-    	<name>AddContextToDegreeModule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToDegreeModule</implementationClass>
+    	<name>AddContextToCurricularCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCurricularCourse</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
         	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
+        <service>
+    	<name>AddContextToCourseGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCourseGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
+        </filterChains>     
+    </service>
+    
     <service>
     	<name>EditContextFromCurricularCourse</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditContextFromCurricularCourse</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserAuthorization"></chain>
         </filterChains>     
     </service>
      <service>

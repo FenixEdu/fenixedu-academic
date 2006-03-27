@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -31,17 +30,19 @@ public abstract class DegreeModule extends DegreeModule_Base {
     public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
             ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
         
-        checkContextsFor(parentCourseGroup, curricularPeriod);
+        checkContextsFor(parentCourseGroup, curricularPeriod, null);
         checkOwnRestrictions(parentCourseGroup, curricularPeriod);
         return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
     
-    public void editContext(Context context, CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod) {
-        if (context.getParentCourseGroup() != parentCourseGroup || context.getCurricularPeriod() != curricularPeriod) {
-            checkContextsFor(parentCourseGroup, curricularPeriod);
-            checkOwnRestrictions(parentCourseGroup, curricularPeriod);
-            context.edit(parentCourseGroup, this, curricularPeriod);
-        }
+    public void editContext(Context context, CourseGroup parentCourseGroup,
+            CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod,
+            ExecutionPeriod endExecutionPeriod) {
+        
+        checkContextsFor(parentCourseGroup, curricularPeriod, context);
+        checkOwnRestrictions(parentCourseGroup, curricularPeriod);
+        context.edit(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod,
+                endExecutionPeriod);
     }
     
     public void deleteContext(Context context) {        
@@ -89,12 +90,13 @@ public abstract class DegreeModule extends DegreeModule_Base {
     
     public abstract Double getEctsCredits();
     public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
-	public abstract Boolean getCanBeDeleted();
-	public abstract boolean isLeaf();
+    public abstract Boolean getCanBeDeleted();
+    public abstract boolean isLeaf();
     public abstract boolean isRoot();
     public abstract DegreeCurricularPlan getParentDegreeCurricularPlan();
-    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
+    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup,
+            final CurricularPeriod curricularPeriod, final Context context);
     protected abstract void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
-    protected abstract void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
-
+    protected abstract void checkOwnRestrictions(final CourseGroup parentCourseGroup,
+            final CurricularPeriod curricularPeriod);
 }

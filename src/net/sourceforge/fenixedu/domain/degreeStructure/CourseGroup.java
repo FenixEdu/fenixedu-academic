@@ -144,9 +144,11 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
     
-    protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
+    protected void checkContextsFor(final CourseGroup parentCourseGroup,
+            final CurricularPeriod curricularPeriod, final Context ignoreContext) {
+     
         for (final Context context : this.getParentContexts()) {
-            if (context.getParentCourseGroup() == parentCourseGroup) {
+            if (context != ignoreContext && context.getParentCourseGroup() == parentCourseGroup) {
                 throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
             }
         }

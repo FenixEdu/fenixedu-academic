@@ -91,7 +91,7 @@ public abstract class CurricularRule extends CurricularRule_Base {
         return false;
     }
 
-    protected void checkExecutionPeriods(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) throws DomainException {
+    protected void checkExecutionPeriods(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
         if (endExecutionPeriod != null && beginExecutionPeriod.isAfter(endExecutionPeriod)) {
             throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
         }
