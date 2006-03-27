@@ -12,17 +12,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class AddContextToCourseGroup extends Service {
     
-    public void run(CourseGroup courseGroup, CourseGroup parentCourseGroup, Integer beginExecutionPeriodID,
-            Integer endExecutionPeriodID) throws ExcepcaoPersistencia, FenixServiceException {
-        
+    public void run(CourseGroup courseGroup, CourseGroup parentCourseGroup,
+            Integer beginExecutionPeriodID, Integer endExecutionPeriodID) throws ExcepcaoPersistencia,
+            FenixServiceException {
+
         if (courseGroup == null || parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
-        
-        final ExecutionPeriod beginExecutionPeriod = getBeginExecutionPeriod(beginExecutionPeriodID);
-        final ExecutionPeriod endExecutionPeriod = getEndExecutionPeriod(endExecutionPeriodID);
-
-        courseGroup.addContext(parentCourseGroup, null, beginExecutionPeriod, endExecutionPeriod);
+        courseGroup.addContext(parentCourseGroup, null, getBeginExecutionPeriod(beginExecutionPeriodID),
+                getEndExecutionPeriod(endExecutionPeriodID));
     }
 
     private ExecutionPeriod getBeginExecutionPeriod(Integer beginExecutionPeriodID) throws FenixServiceException {
@@ -33,7 +31,7 @@ public class AddContextToCourseGroup extends Service {
             if (nextExecutionYear == null) {
                 throw new FenixServiceException("error.no.next.execution.year");
             }
-            beginExecutionPeriod = nextExecutionYear.getExecutionPeriodForSemester(Integer.valueOf(1));
+            beginExecutionPeriod = nextExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
         } else {
             beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
         }
@@ -41,9 +39,6 @@ public class AddContextToCourseGroup extends Service {
     }
     
     private ExecutionPeriod getEndExecutionPeriod(Integer endExecutionPeriodID) {
-        final ExecutionPeriod endExecutionPeriod = (endExecutionPeriodID == null) ? null
-                : rootDomainObject.readExecutionPeriodByOID(endExecutionPeriodID);
-        return endExecutionPeriod;
+        return (endExecutionPeriodID == null) ? null : rootDomainObject.readExecutionPeriodByOID(endExecutionPeriodID);
     }
-
 }

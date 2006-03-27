@@ -36,10 +36,11 @@ public class CourseGroup extends CourseGroup_Base {
         return false;
     }
 
-    public void edit(String name, String nameEn) {
+    public void edit(String name, String nameEn, Context context, ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
         this.checkDuplicateBrotherNames(name, nameEn);
         setName(StringFormatter.prettyPrint(name));
         setNameEn(StringFormatter.prettyPrint(nameEn));
+        context.edit(beginExecutionPeriod, endExecutionPeriod);
     }
 
     public Boolean getCanBeDeleted() {

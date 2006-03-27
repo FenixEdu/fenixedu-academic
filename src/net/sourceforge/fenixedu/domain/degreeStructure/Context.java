@@ -34,15 +34,18 @@ public class Context extends Context_Base implements Comparable<Context> {
         super.setEndExecutionPeriod(endExecutionPeriod);
     }
     
-    public void edit(CourseGroup courseGroup, DegreeModule degreeModule,
+    public void edit(CourseGroup parentCourseGroup, DegreeModule degreeModule,
             CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod,
             ExecutionPeriod endExecutionPeriod) {
         
-        checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
-     
-        setParentCourseGroup(courseGroup);
+        edit(beginExecutionPeriod, endExecutionPeriod);
+        setParentCourseGroup(parentCourseGroup);
         setChildDegreeModule(degreeModule);
         setCurricularPeriod(curricularPeriod);
+    }
+    
+    protected void edit(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+        checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
         setBeginExecutionPeriod(beginExecutionPeriod);
         setEndExecutionPeriod(endExecutionPeriod);
     }

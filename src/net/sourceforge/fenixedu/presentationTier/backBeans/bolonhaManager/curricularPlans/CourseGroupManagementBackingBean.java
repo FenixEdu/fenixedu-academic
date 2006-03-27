@@ -96,7 +96,8 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
 
     public String editCourseGroup() throws FenixFilterException {
         try {
-            final Object args[] = { getCourseGroupID(), getName(), getNameEn() };
+            final Object args[] = { getCourseGroupID(), getContextID(), getName(), getNameEn(),
+                    getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
             ServiceUtils.executeService(getUserView(), "EditCourseGroup", args);
             addInfoMessage(bolonhaBundle.getString("courseGroupEdited"));
             return "editCurricularPlanStructure";
@@ -131,7 +132,9 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String addContext() {
         try {
             checkCourseGroup();
-            Object args[] = { getCourseGroup(getCourseGroupID()), getCourseGroup(getParentCourseGroupID()) };
+            Object args[] = { getCourseGroup(getCourseGroupID()),
+                    getCourseGroup(getParentCourseGroupID()), getBeginExecutionPeriodID(),
+                    getFinalEndExecutionPeriodID() };
             ServiceUtils.executeService(getUserView(), "AddContextToCourseGroup", args);
             addInfoMessage(bolonhaBundle.getString("courseGroupAssociated"));
             return "editCurricularPlanStructure";
