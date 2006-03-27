@@ -26,6 +26,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-execute "Add new Roles" addRoles.sql
-execute "Create Identification Table" createIdentificationTable.sql
