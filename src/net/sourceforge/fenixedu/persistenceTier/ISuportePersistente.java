@@ -97,13 +97,9 @@ public interface ISuportePersistente
 
 	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
 
-	public IPersistentRestriction getIPersistentRestriction();
-
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 
 	public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage();
-
-	public IPersistentMark getIPersistentMark();
 
 	public IPersistentSummary getIPersistentSummary();
 
@@ -154,8 +150,6 @@ public interface ISuportePersistente
 	public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion();
 
 	public IPersistentExternalPerson getIPersistentExternalPerson();
-
-	public IPersistentCoordinator getIPersistentCoordinator();
 
 	public IPersistentShiftProfessorship getIPersistentShiftProfessorship();
 

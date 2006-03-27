@@ -7,7 +7,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
@@ -22,14 +21,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideEntry;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -329,11 +326,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new CurricularCourseScopeOJB();
 	}
 
-	public IPersistentRestriction getIPersistentRestriction()
-	{
-		return new RestrictionOJB();
-	}
-
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod()
 	{
 		return new PersistentEnrolmentPeriod();
@@ -342,11 +334,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage()
 	{
 		return new ShiftProfessorshipOJB();
-	}
-
-	public IPersistentMark getIPersistentMark()
-	{
-		return new MarkOJB();
 	}
 
 	public IPersistentSummary getIPersistentSummary()
@@ -387,11 +374,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentExternalPerson getIPersistentExternalPerson()
 	{
 		return new ExternalPersonOJB();
-	}
-
-	public IPersistentCoordinator getIPersistentCoordinator()
-	{
-		return new CoordinatorOJB();
 	}
 
 	public IPersistentShiftProfessorship getIPersistentShiftProfessorship()
