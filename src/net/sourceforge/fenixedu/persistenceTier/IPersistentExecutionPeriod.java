@@ -21,8 +21,6 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
     public ExecutionPeriod readBySemesterAndExecutionYear(Integer semester, String year)
             throws ExcepcaoPersistencia;
 
-    public List readByExecutionYear(Integer executionYear) throws ExcepcaoPersistencia;
-
     public List readExecutionPeriodsInTimePeriod(Date start, Date end) throws ExcepcaoPersistencia;
 	
 	public List readNotClosedPublicExecutionPeriodsByExecutionYears(Integer executionYear) throws ExcepcaoPersistencia; 

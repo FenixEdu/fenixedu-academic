@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -37,7 +36,6 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
         InfoCurriculum infoCurriculum = null;
 
         IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
@@ -48,8 +46,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
         if (stringExecutionYear == null || stringExecutionYear.length() == 0) {
             throw new FenixServiceException("nullExecutionYearName");
         }
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
         }
@@ -65,7 +62,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
         if (curriculumExecutionYear != null) {
             List allCurricularCourseScopes = new ArrayList();
             List allExecutionCourses = new ArrayList();
-            List executionPeriods = persistentExecutionPeriod.readByExecutionYear(executionYear.getIdInternal());
+            List executionPeriods = executionYear.getExecutionPeriods();
             Iterator iterExecutionPeriods = executionPeriods.iterator();
             while (iterExecutionPeriods.hasNext()) {
                 ExecutionPeriod executionPeriod = (ExecutionPeriod) iterExecutionPeriods.next();

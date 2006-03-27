@@ -47,12 +47,6 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
         return null;
     }
 
-    public List readByExecutionYear(Integer executionYearID) throws ExcepcaoPersistencia {
-        ExecutionYear executionYear = (ExecutionYear) readByOID(ExecutionYear.class, executionYearID);
-        return (executionYear != null) ? 
-                executionYear.getExecutionPeriods() : new ArrayList(0);
-    }
-
     public List readNotClosedPublicExecutionPeriods() throws ExcepcaoPersistencia {
         Collection executionPeriods = readAll(ExecutionPeriod.class);
         List executionPeriodsAux = new ArrayList();

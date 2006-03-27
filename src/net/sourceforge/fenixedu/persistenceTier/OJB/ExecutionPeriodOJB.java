@@ -38,12 +38,6 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         return (ExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
     }
 
-    public List readByExecutionYear(Integer executionYear) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionYear.idInternal", executionYear);
-        return queryList(ExecutionPeriod.class, criteria);
-    }
-
     public List readNotClosedPublicExecutionPeriods() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("state", PeriodState.CLOSED);
