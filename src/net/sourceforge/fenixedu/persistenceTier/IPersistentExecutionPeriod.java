@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
  *  
  */
 public interface IPersistentExecutionPeriod extends IPersistentObject {
-
-    public List readNotClosedPublicExecutionPeriods() throws ExcepcaoPersistencia;
    
     public ExecutionPeriod readByNameAndExecutionYear(String executionPeriodName,
             String year) throws ExcepcaoPersistencia;
