@@ -15,5 +15,11 @@ public class Coordinator extends Coordinator_Base {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
+	
+	public void delete() {
+		setExecutionDegree(null);
+		setTeacher(null);
+		super.deleteDomainObject();
+	}
 
 }
