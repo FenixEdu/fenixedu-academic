@@ -445,16 +445,13 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             FenixActionException {
 
         final CurricularCourseType curricularCourseType = CurricularCourseType.valueOf(getSelectedCurricularCourseType());
-        final Integer endExecutionPeriodID = (getEndExecutionPeriodID() == null || getEndExecutionPeriodID()
-                .equals(NO_SELECTION)) ? null : getEndExecutionPeriodID();
-
         if (curricularCourseType.equals(CurricularCourseType.NORMAL_COURSE)) {
 
             checkCompetenceCourse();
             return new Object[] { new CreateCurricularCourse.CreateCurricularCourseArgs(getWeight(),
                     getPrerequisites(), getPrerequisitesEn(), getCompetenceCourseID(),
                     getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID(),
-                    getDegreeCurricularPlanID(), getBeginExecutionPeriodID(), endExecutionPeriodID) };
+                    getDegreeCurricularPlanID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID()) };
 
         } else if (curricularCourseType.equals(CurricularCourseType.OPTIONAL_COURSE)) {
 
@@ -462,7 +459,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             return new Object[] { new CreateCurricularCourse.CreateOptionalCurricularCourseArgs(
                     getDegreeCurricularPlanID(), getCourseGroupID(), getName(), getNameEn(),
                     getCurricularYearID(), getCurricularSemesterID(), getBeginExecutionPeriodID(),
-                    endExecutionPeriodID) };
+                    getFinalEndExecutionPeriodID()) };
 
         }
         return null;
@@ -543,8 +540,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                     getCurricularCourse(),
                     getCourseGroup(),
                     getBeginExecutionPeriodID(),
-                    (getEndExecutionPeriodID() == null || getEndExecutionPeriodID().equals(NO_SELECTION)) ? null
-                            : getEndExecutionPeriodID(),
+                    getFinalEndExecutionPeriodID(),
                     getCurricularYearID(),
                     getCurricularSemesterID() };
             
@@ -580,11 +576,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                     getCourseGroup(),
                     getCurricularYearID(),
                     getCurricularSemesterID(),
-                    // must get ExecutionPeriods like this to prevent reset value
-                    getViewState().getAttribute("beginExecutionPeriodID"),
-                    (getViewState().getAttribute("endExecutionPeriodID") == null || getViewState()
-                            .getAttribute("endExecutionPeriodID").equals(NO_SELECTION)) ? null
-                            : getViewState().getAttribute("endExecutionPeriodID") };
+                    getBeginExecutionPeriodID(),
+                    getFinalEndExecutionPeriodID() };
             ServiceUtils.executeService(getUserView(), "EditContextFromCurricularCourse", args);
             setContextID(0); // resetContextID
         } catch (FenixServiceException e) {
@@ -595,6 +588,12 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         }
         return "";
+    }
+
+    private Integer getFinalEndExecutionPeriodID() {
+        return (getViewState().getAttribute("endExecutionPeriodID") == null || getViewState()
+                .getAttribute("endExecutionPeriodID").equals(NO_SELECTION)) ? null
+                : (Integer) getViewState().getAttribute("endExecutionPeriodID");
     }
     
     public void tryDeleteContext(ActionEvent event) throws FenixFilterException, FenixServiceException {

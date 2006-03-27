@@ -665,6 +665,12 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         }
         Collections.sort(result, new BeanComparator("label"));
     }
+    
+    private Integer getFinalEndExecutionPeriodID() {
+        return (getViewState().getAttribute("endExecutionPeriodID") == null || getViewState()
+                .getAttribute("endExecutionPeriodID").equals(NO_SELECTION_INTEGER)) ? null
+                : (Integer) getViewState().getAttribute("endExecutionPeriodID");
+    }
 
     public String createCurricularRule() {
         try {
@@ -674,8 +680,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                     CurricularRuleType.valueOf(getSelectedCurricularRuleType()),
                     buildCurricularRuleParametersDTO(),
                     getBeginExecutionPeriodID(),
-                    (getEndExecutionPeriodID() == null || getEndExecutionPeriodID().equals(NO_SELECTION_INTEGER)) ? null : 
-                        getEndExecutionPeriodID() };
+                    getFinalEndExecutionPeriodID() };
             ServiceUtils.executeService(getUserView(), "CreateRule", args);
             return "setCurricularRules";
         } catch (FenixActionException e) {
@@ -694,9 +699,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     
     public String editCurricularRule() {
         try {
-            final Object[] args = { getCurricularRuleID(), getBeginExecutionPeriodID(), 
-                    (getEndExecutionPeriodID() == null || getEndExecutionPeriodID().equals(NO_SELECTION_INTEGER)) ? null : 
-                        getEndExecutionPeriodID() };
+            final Object[] args = { getCurricularRuleID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
             ServiceUtils.executeService(getUserView(), "EditCurricularRule", args);
             return "setCurricularRules";
         } catch (FenixFilterException e) {
