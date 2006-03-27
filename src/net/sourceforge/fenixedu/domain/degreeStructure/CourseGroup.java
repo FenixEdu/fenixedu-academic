@@ -333,4 +333,14 @@ public class CourseGroup extends CourseGroup_Base {
 		}
     	return false;
     }
+    
+    public Collection<Context> getContextsWithCurricularCourseByCurricularPeriod(CurricularPeriod curricularPeriod, ExecutionPeriod executionPeriod){
+    	Collection<Context> result = new HashSet<Context>();
+    	for (Context context : this.getChildContextsSet()) {
+			if(context.getChildDegreeModule().isLeaf() && context.getCurricularPeriod() != null && context.getCurricularPeriod().equals(curricularPeriod) && context.isValid(executionPeriod)) {
+				result.add(context);
+			}
+		}
+    	return result;
+    }
 }
