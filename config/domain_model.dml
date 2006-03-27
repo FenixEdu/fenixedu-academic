@@ -2413,6 +2413,7 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyPerson;
 	Integer keyServiceProviderRegime;
 	Integer keyPublicationsNumber;
+	Integer keyWeeklyOcupation;
 }
 class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCategory;
