@@ -65,17 +65,14 @@
 	    	</td>
 			
 		</tr>
-    
-    	<tr>
-			<td><bean:message key="message.groupPropertiesShiftType"/>
-			<br><br></td>
+
+		<tr>
+			<td><bean:message key="message.groupPropertiesShiftType"/></td>
 			<td>
-			<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.ShiftType" bundle="ENUMERATION_RESOURCES"/>
-			 <html:select property="shiftType" >
-				<html:options collection="values" property="value" labelProperty="label"/>
-				</html:select>
-			</td>
-			
+			<html:select property="shiftType" >
+				<html:options collection="shiftTypeValues" property="value" labelProperty="label"/>
+			</html:select>
+			</td>		
 		</tr>
 
 	    <tr>

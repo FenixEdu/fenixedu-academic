@@ -1558,20 +1558,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         readSiteView(request, null, null, null, null);
         List shiftTypeValues = new ArrayList();
 
-        shiftTypeValues.add(new Integer(1));
-        shiftTypeValues.add(new Integer(2));
-        shiftTypeValues.add(new Integer(3));
-        shiftTypeValues.add(new Integer(4));
-        shiftTypeValues.add(new Integer(5));
-        List shiftTypeNames = new ArrayList();
-        shiftTypeNames.add("Te�rico");
-        shiftTypeNames.add("Pr�tico");
-        shiftTypeNames.add("Te�rico-Pr�tico");
-        shiftTypeNames.add("Laboratorial");
-        shiftTypeNames.add("Sem Turno");
+        shiftTypeValues.add(new LabelValueBean("TEORICA", ShiftType.TEORICA.name()));
+        shiftTypeValues.add(new LabelValueBean("PRATICA", ShiftType.PRATICA.name()));
+        shiftTypeValues.add(new LabelValueBean("TEORICO_PRATICA", ShiftType.TEORICO_PRATICA.name()));
+        shiftTypeValues.add(new LabelValueBean("LABORATORIAL", ShiftType.LABORATORIAL.name()));
+        shiftTypeValues.add(new LabelValueBean("SEM TURNO", "SEM TURNO"));
 
         request.setAttribute("shiftTypeValues", shiftTypeValues);
-        request.setAttribute("shiftTypeNames", shiftTypeNames);
         return mapping.findForward("insertGroupProperties");
     }
 
