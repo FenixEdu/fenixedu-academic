@@ -294,7 +294,7 @@ public class RenderUtils {
             return result;
         }
         
-        Comparator<Object> comparator = null;
+        Comparator<Object> comparator = null; // TODO: change to a comparator chain
         
         for (int i = 0; i < singleCriterias.length; i++) {
             String singleCriteria = singleCriterias[i].trim();

@@ -97,7 +97,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -416,9 +415,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoCurriculum(InfoCurriculum component, Site site,
 			Integer curricularCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
-				CurricularCourse.class, curricularCourseCode);
+		CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseCode);
 		IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
 		Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse

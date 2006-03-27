@@ -40,13 +40,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode extends Servic
         }
         DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         if (degreeCurricularPlan != null) {
-
-            String name = degreeCurricularPlan.getName();
-            String degreeName = degreeCurricularPlan.getDegree().getNome();
-            String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
-
-            List allCurricularCourses = persistentSupport.getIPersistentCurricularCourse()
-                    .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
+            List allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
 
             if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
 

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurr
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -164,17 +163,11 @@ public class VerifyLEECCurricularPlan {
     private static void printItForPrecedences(DegreeCurricularPlan degreeCurricularPlan)
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourse curricularCourseDAO = persistentSuport
-                .getIPersistentCurricularCourse();
 
         System.out.println("PRECED�NCIAS:");
 
-		String name = degreeCurricularPlan.getName();
-		String degreeName = degreeCurricularPlan.getDegree().getNome();
-		String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
-		
-        List curricularCourses = curricularCourseDAO
-                .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
+        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>(degreeCurricularPlan.getCurricularCourses());
+
         sortCurricularCourses(curricularCourses);
         Iterator iterator1 = curricularCourses.iterator();
         while (iterator1.hasNext()) {

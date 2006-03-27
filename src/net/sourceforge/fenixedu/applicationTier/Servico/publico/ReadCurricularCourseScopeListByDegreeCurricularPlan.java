@@ -25,12 +25,7 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends Service
         DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
                         idDegreeCurricularPlan);
 
-        String name = degreeCurricularPlan.getName();
-        String degreeName = degreeCurricularPlan.getDegree().getNome();
-        String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
-
-        allCurricularCourses = persistentSupport.getIPersistentCurricularCourse()
-                .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
+        allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
 
         if (allCurricularCourses == null || allCurricularCourses.isEmpty())
             return allCurricularCourses;

@@ -23,9 +23,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSCDegrees;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -86,15 +88,23 @@ public class ScientificCouncilComponentBuilder {
 		if (degreeCurricularPlan == null) {
 			throw new InvalidArgumentsServiceException();
 		}
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 
-		List nonBasicCurricularCourses = persistentCurricularCourse
-				.readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(degreeCurricularPlan
-						.getIdInternal(), new Boolean(false));
+        List<CurricularCourse> nonBasicCurricularCourses = new ArrayList<CurricularCourse>(); 
+        List<CurricularCourse>    basicCurricularCourses = new ArrayList<CurricularCourse>(); 
 
-		List basicCurricularCourses = persistentCurricularCourse
-				.readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(degreeCurricularPlan
-						.getIdInternal(), new Boolean(true));
+        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+            if (! CurricularStage.OLD.equals(curricularCourse.getCurricularStage())) {
+                continue;
+            }
+            
+            if (curricularCourse.getBasic()) {
+                basicCurricularCourses.add(curricularCourse);
+            }
+            else {
+                nonBasicCurricularCourses.add(curricularCourse);
+            }
+        }
+
 		Iterator iter = nonBasicCurricularCourses.iterator();
 		Iterator iter1 = basicCurricularCourses.iterator();
 		List infoNonBasicCurricularCourses = new ArrayList();
@@ -137,14 +147,9 @@ public class ScientificCouncilComponentBuilder {
 		if (degreeCurricularPlan == null) {
 			throw new InvalidArgumentsServiceException();
 		}
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 
-		String name = degreeCurricularPlan.getName();
-		String degreeName = degreeCurricularPlan.getDegree().getNome();
-		String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
-
-		List curricularCourses = persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(
-				name, degreeName, degreeSigla);
+		List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+            
 		Iterator iter = curricularCourses.iterator();
 		List infoCurricularCourses = new ArrayList();
 		while (iter.hasNext()) {

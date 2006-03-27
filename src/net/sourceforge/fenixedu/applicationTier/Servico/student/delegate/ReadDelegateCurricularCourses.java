@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.delegate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,11 +15,16 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoD
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -57,19 +63,69 @@ public class ReadDelegateCurricularCourses extends SearchService {
 
         // if he's a degree delegate then he can read all curricular courses
         // report
-        final IPersistentCurricularCourse persistentCurricularCourse = persistentSupport
-                .getIPersistentCurricularCourse();
-        List curricularCourses = null;
+        
+        List<CurricularCourse> curricularCourses;
         if (delegate.getType().booleanValue()) {
-            curricularCourses = persistentCurricularCourse
-                    .readExecutedCurricularCoursesByDegreeAndExecutionYear(delegate.getDegree()
-                            .getIdInternal(), delegate.getExecutionYear().getIdInternal());
+            curricularCourses = getCurricularCourses(delegate, null);
         } else {
             Integer year = new Integer(delegate.getYearType().getValue());
-            curricularCourses = persistentCurricularCourse
-                    .readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(delegate.getDegree()
-                            .getIdInternal(), year, delegate.getExecutionYear().getIdInternal());
+            curricularCourses = getCurricularCourses(delegate, year);
         }
+        
+        return curricularCourses;
+    }
+
+    private List<CurricularCourse> getCurricularCourses(Delegate delegate, Integer year) {
+        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
+        
+        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
+            if (! (degreeModule instanceof CurricularCourse)) {
+                continue;
+            }
+            
+            CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
+            
+            if (! DegreeCurricularPlanState.ACTIVE.equals(curricularCourse.getDegreeCurricularPlan().getState())) {
+                continue;
+            }
+            
+            if (! CurricularStage.OLD.equals(curricularCourse.getCurricularStage())) {
+                continue;
+            }
+            
+            if (! delegate.getDegree().equals(curricularCourse.getDegreeCurricularPlan().getDegree())) {
+                continue;
+            }
+            
+            boolean rightExecutionYear = false;
+            for (ExecutionCourse associatedExecutionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+                if (delegate.getExecutionYear().equals(associatedExecutionCourse.getExecutionPeriod().getExecutionYear())) {
+                    rightExecutionYear = true;
+                    break;
+                }
+            }
+            
+            if (! rightExecutionYear) {
+                continue;
+            }
+            
+            if (year != null) {
+                boolean rightYear = false;
+                for (CurricularCourseScope scope : curricularCourse.getScopes()) {
+                    if (year.equals(scope.getCurricularSemester().getCurricularYear().getYear())) {
+                        rightYear = true;
+                        break;
+                    }
+                }
+                
+                if (! rightYear) {
+                    continue;
+                }
+            }
+
+            curricularCourses.add(curricularCourse);
+        }
+        
         return curricularCourses;
     }
 

@@ -64,8 +64,6 @@ public interface ISuportePersistente
 
 	public IFrequentaPersistente getIFrequentaPersistente();
 
-	public IPersistentCurricularCourse getIPersistentCurricularCourse();
-
 	public IPersistentExecutionCourse getIPersistentExecutionCourse();
 
 	public IPessoaPersistente getIPessoaPersistente();

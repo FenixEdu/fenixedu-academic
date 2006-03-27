@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 
 import org.apache.commons.collections.Predicate;
@@ -34,8 +34,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan extends Service {
 
         while (iter.hasNext()) {
 			Integer curricularCourseId = (Integer) iter.next();
-			CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                    CurricularCourse.class, curricularCourseId);
+			CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
             if (curricularCourse != null) {
                 //delete curriculum
                 Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
