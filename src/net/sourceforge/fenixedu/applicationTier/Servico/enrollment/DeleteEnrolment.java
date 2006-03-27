@@ -8,11 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -27,7 +25,6 @@ public class DeleteEnrolment extends Service {
     public void run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer enrolmentID)
             throws FenixServiceException, DomainException, ExcepcaoPersistencia {
 
-        IPersistentRestriction persistentRestriction = persistentSupport.getIPersistentRestriction();
         final Enrolment enrollment1 = (Enrolment) persistentObject.readByOID(Enrolment.class, enrolmentID);
 
         List<Enrolment> enrollments2Delete = new ArrayList<Enrolment>();
@@ -50,12 +47,9 @@ public class DeleteEnrolment extends Service {
                 }));
 
         if (enrollment1 != null) {
-            List restrictions = persistentRestriction.readByCurricularCourseAndRestrictionClass(
-                    enrollment1.getCurricularCourse().getIdInternal(),
-
-                    RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class);
+        	List<RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse> restrictions = enrollment1.getCurricularCourse().getRestrictionsHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse();
             if (restrictions != null) {
-                Iterator<Restriction> iter = restrictions.iterator();
+                Iterator<RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse> iter = restrictions.iterator();
                 while (iter.hasNext()) {
                     final RestrictionByCurricularCourse restriction = (RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) iter
                             .next();

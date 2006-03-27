@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.precedences.Restriction;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -209,6 +211,16 @@ public class CurricularCourse extends CurricularCourse_Base {
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------
+
+    public List<RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse> getRestrictionsHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse() {
+        List<RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse> result = new ArrayList<RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse>();
+        for (final Restriction restriction : getRestrictionsByCurricularCourse()) {
+            if(restriction instanceof RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) {
+            	result.add((RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) restriction);
+            }
+        }
+        return result;
+    }
 
     public CurricularYear getCurricularYearByBranchAndSemester(final Branch branch,
             final Integer semester) {
