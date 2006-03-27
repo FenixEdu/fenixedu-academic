@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -31,8 +30,6 @@ public class ReadLastSummary extends Service {
     public InfoSummary run(Integer executionCourseId, Integer shiftId, Integer lessonID)
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoSummary summary = null;
-
-        IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
 
         Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftId);
         if (shift == null)
@@ -48,8 +45,7 @@ public class ReadLastSummary extends Service {
             throw new FenixServiceException("no.executioncourse");
         }
 
-        List summaries = persistentSummary.readByShift(executionCourse.getIdInternal(), shift
-                .getIdInternal());
+        List summaries = shift.getAssociatedSummaries();
         if (summaries != null && summaries.size() > 0) {
             Comparator comparator = new BeanComparator("summaryDate.time");
             Collections.sort(summaries, comparator);

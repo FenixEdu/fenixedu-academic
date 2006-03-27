@@ -149,62 +149,7 @@ public class Person extends Person_Base {
         setMaritalStatus(MaritalStatus.UNKNOWN);
         setIsPassInKerberos(Boolean.FALSE);
     }
-
-    public Person(String numeroDocumentoIdentificacao, IDDocumentType tipoDocumentoIdentificacao,
-            String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
-            Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
-            Date nascimento, String nomePai, String nomeMae, String freguesiaNaturalidade,
-            String concelhoNaturalidade, String distritoNaturalidade, String morada, String localidade,
-            String codigoPostal, String localidadeCodigoPostal, String freguesiaMorada,
-            String concelhoMorada, String distritoMorada, String telefone, String telemovel,
-            String email, String enderecoWeb, String numContribuinte, String profissao, String username,
-            Country pais, String codigoFiscal, Boolean availableEmail, Boolean availableWebSite,
-            String workPhone) {
-
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        checkConditionsToCreateNewPerson(username, numeroDocumentoIdentificacao,
-                tipoDocumentoIdentificacao, this);
-
-        createUserAndLoginEntity(username);
-
-        setDocumentIdNumber(numeroDocumentoIdentificacao);
-        setIdDocumentType(tipoDocumentoIdentificacao);
-        setEmissionLocationOfDocumentId(localEmissaoDocumentoIdentificacao);
-        setEmissionDateOfDocumentId(dataEmissaoDocumentoIdentificacao);
-        setExpirationDateOfDocumentId(dataValidadeDocumentoIdentificacao);
-        setNome(nome);
-        setGender(sex);
-        setMaritalStatus(estadoCivil);
-        setDateOfBirth(nascimento);
-        setNameOfFather(nomePai);
-        setNameOfMother(nomeMae);
-        setParishOfBirth(freguesiaNaturalidade);
-        setDistrictSubdivisionOfBirth(concelhoNaturalidade);
-        setDistrictOfBirth(distritoNaturalidade);
-        setAddress(morada);
-        setArea(localidade);
-        setAreaCode(codigoPostal);
-        setAreaOfAreaCode(localidadeCodigoPostal);
-        setParishOfResidence(freguesiaMorada);
-        setDistrictSubdivisionOfResidence(concelhoMorada);
-        setDistrictOfResidence(distritoMorada);
-        setPhone(telefone);
-        setMobile(telemovel);
-        setEmail(email);
-        setWebAddress(enderecoWeb);
-        setSocialSecurityNumber(numContribuinte);
-        setProfession(profissao);
-        setPais(pais);
-        setFiscalCode(codigoFiscal);
-        setAvailableEmail(Boolean.FALSE);
-        setAvailableWebSite(Boolean.FALSE);
-        setAvailablePhoto(Boolean.FALSE);
-        setAvailableEmail(availableEmail);
-        setAvailableWebSite(availableWebSite);
-        setWorkPhone(workPhone);
-    }
-
+   
     public void edit(InfoPerson personToEdit, Country country) {
         checkConditionsToCreateNewPerson(personToEdit.getUsername(), personToEdit
                 .getNumeroDocumentoIdentificacao(), personToEdit.getTipoDocumentoIdentificacao(), this);

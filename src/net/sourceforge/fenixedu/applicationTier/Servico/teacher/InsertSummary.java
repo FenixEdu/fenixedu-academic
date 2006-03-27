@@ -41,11 +41,10 @@ public class InsertSummary extends Service {
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
-        final Shift shift = SummaryUtils.getShift(persistentSupport, null, infoSummary);
-        final OldRoom room = SummaryUtils.getRoom(persistentSupport, null, shift, infoSummary);
+        final Shift shift = SummaryUtils.getShift(null, infoSummary);
+        final OldRoom room = SummaryUtils.getRoom(null, shift, infoSummary);
 
-        final Professorship professorship = SummaryUtils.getProfessorship(persistentSupport,
-                infoSummary);
+        final Professorship professorship = SummaryUtils.getProfessorship(infoSummary);
         if (professorship != null) {
             final Summary summary = executionCourse.createSummary(infoSummary.getTitle(), infoSummary
                     .getSummaryText(), infoSummary.getStudentsNumber(), infoSummary.getIsExtraLesson(),
@@ -55,7 +54,7 @@ public class InsertSummary extends Service {
             return true;
         }
 
-        final Teacher teacher = SummaryUtils.getTeacher(persistentSupport, infoSummary);
+        final Teacher teacher = SummaryUtils.getTeacher(infoSummary);
         if (teacher != null) {
             if (!executionCourse.teacherLecturesExecutionCourse(teacher)) {
                 final Summary summary = executionCourse.createSummary(infoSummary.getTitle(),
@@ -64,8 +63,7 @@ public class InsertSummary extends Service {
                 shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
                         .getSummaryHour().getTime(), room, true);
                 return true;
-            }
-            else{
+            } else {
                 throw new FenixServiceException("error.summary.teacher.invalid");
             }
         }

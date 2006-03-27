@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 
 public class DeleteShift extends Service {
 
@@ -50,10 +49,8 @@ public class DeleteShift extends Service {
                 throw new FenixServiceException("error.deleteShift.with.studentGroups");
             }
 
-            // if the shift has summaries it can't be deleted
-            IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
-            List summariesShift = persistentSummary.readByShift(shift.getDisciplinaExecucao()
-                    .getIdInternal(), shift.getIdInternal());
+            // if the shift has summaries it can't be deleted            
+            List summariesShift = shift.getAssociatedSummaries();
             if (summariesShift != null && summariesShift.size() > 0) {
                 throw new FenixServiceException("error.deleteShift.with.summaries");
             }

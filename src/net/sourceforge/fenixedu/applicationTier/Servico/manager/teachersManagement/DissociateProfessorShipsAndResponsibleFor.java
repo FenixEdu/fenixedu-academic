@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 
 public class DissociateProfessorShipsAndResponsibleFor extends Service {
 
@@ -73,10 +72,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends Service {
                 if ((shiftProfessorships == null || shiftProfessorships.isEmpty())
                         && (supportLessons == null || supportLessons.isEmpty())) {
 
-                    final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
-                    List<Summary> summaryList = persistentSummary.readByTeacher(professorship
-                            .getExecutionCourse().getIdInternal(), professorship.getTeacher()
-                            .getTeacherNumber());
+                    List<Summary> summaryList = professorship.getAssociatedSummaries();
                     if (summaryList != null && !summaryList.isEmpty()) {
                         for (Summary summary : summaryList) {
                             summary.removeProfessorship();

@@ -642,8 +642,7 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
             }
         }
 
-        private boolean consistentAnswers(final Attends attends, final int weekIndex) {
-        	final ExecutionPeriod executionPeriod = attends.getDisciplinaExecucao().getExecutionPeriod();
+        private boolean consistentAnswers(final Attends attends, final int weekIndex) {        	
         	int weeklyTotal = 0;
         	for (final Attends someAttends : attends.getAluno().getAssociatedAttends()) {
         		for (final WeeklyWorkLoad weeklyWorkLoad : someAttends.getWeeklyWorkLoads()) {
@@ -848,4 +847,26 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
     	return schoolClasses;
     }
 
+    public List<Summary> readSummariesByShiftType(ShiftType summaryType) {
+        List<Summary> summaries = new ArrayList<Summary>();
+        for (Summary summary : this.getAssociatedSummaries()) {
+            if (summary.getSummaryType().equals(summaryType)) {
+                summaries.add(summary);
+            }
+        }
+        return summaries;
+    }
+    
+    public List<Summary> readSummariesOfTeachersWithoutProfessorship() {
+
+        List<Summary> summaries = new ArrayList<Summary>();
+        for (Summary summary : this.getAssociatedSummaries()) {
+            if (!summary.hasProfessorship()
+                    && (summary.hasTeacher() || (summary.getTeacherName() != null || !summary
+                            .getTeacher().equals("")))) {
+                summaries.add(summary);
+            }
+        }
+        return summaries;
+    }
 }

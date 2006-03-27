@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -98,24 +97,18 @@ public class ReadSummaries extends Service {
             });
         }
 
-        IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
+        List summaries = readSummariesByType(executionCourse, summaryType);
 
-        List summaries = readSummariesByType(executionCourseId, summaryType, persistentSummary);
+        summaries = readSummariesByShift(executionCourseId, shiftId, executionCourse, summaries);
 
-        summaries = readSummariesByShift(executionCourseId, shiftId, executionCourse, persistentSummary,
-                summaries);
+        summaries = readTeacherSummaries(executionCourseId, professorShiftId, summaries);
 
-        summaries = readTeacherSummaries(executionCourseId, professorShiftId, persistentSummary,
-                summaries);
+        summaries = readSummariesOfOtherTeachers(executionCourse, professorShiftId, summaries);
 
-        summaries = readSummariesOfOtherTeachers(executionCourseId, professorShiftId, persistentSummary,
-                summaries);
+        summaries = readSummariesOfOtherTeachersIfResponsible(executionCourse, professorShiftId,
+                persistentSupport, summaries, professorships, summaryType);
 
-        summaries = readSummariesOfOtherTeachersIfResponsible(executionCourseId, professorShiftId,
-                persistentSupport, persistentSummary, summaries, professorships, summaryType);
-
-        summaries = readAllSummaries(executionCourseId, summaryType, shiftId, professorShiftId,
-                persistentSummary, summaries);
+        summaries = readAllSummaries(executionCourse, summaryType, shiftId, professorShiftId, summaries);
 
         List result = new ArrayList();
         if (summaries != null && summaries.size() > 0) {
@@ -143,35 +136,30 @@ public class ReadSummaries extends Service {
         return siteView;
     }
 
-    protected List readAllSummaries(Integer executionCourseId, String summaryType, Integer shiftId,
-            Integer professorShiftId, IPersistentSummary persistentSummary, List summaries)
-            throws ExcepcaoPersistencia {
+    protected List readAllSummaries(ExecutionCourse executionCourse, String summaryType,
+            Integer shiftId, Integer professorShiftId, List summaries) throws ExcepcaoPersistencia {
+        
         if ((summaryType == null || summaryType.equals("0"))
                 && (shiftId == null || shiftId.intValue() == 0)
                 && (professorShiftId == null || professorShiftId.intValue() == 0)) {
-            summaries = persistentSummary.readByExecutionCourseShifts(executionCourseId);
-
-            List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourseId);
-
-            summaries = allSummaries(summaries, summariesByExecutionCourse);
+            
+            summaries = executionCourse.getAssociatedSummaries();
         }
         return summaries;
     }
 
     protected List readSummariesByShift(Integer executionCourseId, Integer shiftId,
-            ExecutionCourse executionCourse, IPersistentSummary persistentSummary, List summaries)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            ExecutionCourse executionCourse, List summaries) throws ExcepcaoPersistencia,
+            FenixServiceException {
         if (shiftId != null && shiftId.intValue() > 0) {
             Shift shiftSelected = (Shift) persistentObject.readByOID(Shift.class, shiftId);
             if (shiftSelected == null) {
                 throw new FenixServiceException("no.shift");
             }
 
-            List summariesByShift = persistentSummary.readByShift(executionCourseId, shiftSelected
-                    .getIdInternal());
+            List summariesByShift = shiftSelected.getAssociatedSummaries();
 
-            List summariesByExecutionCourseByShift = findLesson(persistentSummary, executionCourse,
-                    shiftSelected);
+            List summariesByExecutionCourseByShift = findLesson(executionCourse, shiftSelected);
 
             if (summaries != null) {
                 summaries = (List) CollectionUtils.intersection(summaries, allSummaries(
@@ -183,26 +171,19 @@ public class ReadSummaries extends Service {
         return summaries;
     }
 
-    protected List readSummariesByType(Integer executionCourseId, String summaryType,
-            IPersistentSummary persistentSummary) throws ExcepcaoPersistencia {
+    protected List readSummariesByType(ExecutionCourse executionCourse, String summaryType)
+            throws ExcepcaoPersistencia {
         List summaries = null;
         if (summaryType != null && !summaryType.equals("0")) {
             ShiftType sumaryType = ShiftType.valueOf(summaryType);
 
-            List summariesBySummaryType = persistentSummary.readByExecutionCourseShiftsAndTypeLesson(
-                    executionCourseId, sumaryType);
-
-            List summariesByExecutionCourseBySummaryType = persistentSummary
-                    .readByExecutionCourseAndType(executionCourseId, sumaryType);
-
-            summaries = allSummaries(summariesBySummaryType, summariesByExecutionCourseBySummaryType);
+            summaries = executionCourse.readSummariesByShiftType(sumaryType);
         }
         return summaries;
     }
 
     protected List readTeacherSummaries(Integer executionCourseId, Integer professorShiftId,
-            IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia,
-            FenixServiceException {
+            List summaries) throws ExcepcaoPersistencia, FenixServiceException {
 
         if (professorShiftId != null && professorShiftId.intValue() > 0) {
             Professorship professorshipSelected = (Professorship) persistentObject.readByOID(
@@ -212,8 +193,7 @@ public class ReadSummaries extends Service {
                 throw new FenixServiceException("no.shift");
             }
 
-            List summariesByProfessorship = persistentSummary.readByTeacher(executionCourseId,
-                    professorshipSelected.getTeacher().getTeacherNumber());
+            List summariesByProfessorship = professorshipSelected.getAssociatedSummaries();
 
             if (summaries != null) {
                 summaries = (List) CollectionUtils.intersection(summaries, summariesByProfessorship);
@@ -224,20 +204,19 @@ public class ReadSummaries extends Service {
         return summaries;
     }
 
-    protected List readSummariesOfOtherTeachersIfResponsible(Integer executionCourseId,
-            Integer professorShiftId, ISuportePersistente persistentSupport,
-            IPersistentSummary persistentSummary, List summaries, List<Professorship> professorships,
-            String summaryType) throws ExcepcaoPersistencia {
+    protected List readSummariesOfOtherTeachersIfResponsible(ExecutionCourse executionCourse,
+            Integer professorShiftId, ISuportePersistente persistentSupport, List summaries,
+            List<Professorship> professorships, String summaryType) throws ExcepcaoPersistencia {
 
         Professorship professorship = getProfessorship(professorShiftId, professorships);
 
         if ((professorship != null) && (professorShiftId != null) && (professorShiftId.intValue() > 0)) {
 
-            Professorship responsibleFor = professorship.getTeacher().responsibleFor(executionCourseId);
+            Professorship responsibleFor = professorship.getTeacher().responsibleFor(
+                    executionCourse.getIdInternal());
 
             if (responsibleFor != null && responsibleFor.getResponsibleFor()) {
-                List<Summary> summariesByTeacher = persistentSummary
-                        .readByOtherTeachers(executionCourseId);
+                List<Summary> summariesByTeacher = executionCourse.readSummariesOfTeachersWithoutProfessorship();
 
                 if (summaryType != null && !summaryType.equals("0")) {
                     ShiftType sumaryType = ShiftType.valueOf(summaryType);
@@ -263,10 +242,10 @@ public class ReadSummaries extends Service {
         return summaries;
     }
 
-    protected List readSummariesOfOtherTeachers(Integer executionCourseId, Integer professorShiftId,
-            IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia {
+    protected List readSummariesOfOtherTeachers(ExecutionCourse executionCourse,
+            Integer professorShiftId, List summaries) throws ExcepcaoPersistencia {
         if (professorShiftId != null && professorShiftId.equals(new Integer(-1))) {
-            List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourseId);
+            List summariesByTeacher = executionCourse.readSummariesOfTeachersWithoutProfessorship();
 
             if (summaries != null) {
                 summaries = (List) CollectionUtils.intersection(summaries, summariesByTeacher);
@@ -288,11 +267,10 @@ public class ReadSummaries extends Service {
         return professorship;
     }
 
-    public static List findLesson(IPersistentSummary persistentSummary, ExecutionCourse executionCourse,
-            Shift shift) throws ExcepcaoPersistencia {
+    public static List findLesson(ExecutionCourse executionCourse, Shift shift)
+            throws ExcepcaoPersistencia {
 
-        List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse
-                .getIdInternal());
+        List summariesByExecutionCourse = executionCourse.getAssociatedSummaries();
 
         // copy the list
         List summariesByShift = new ArrayList();

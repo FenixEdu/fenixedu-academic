@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
  * @author Jo�o Mota
@@ -76,8 +75,8 @@ public class SummaryUtils {
         return null;
     }
 
-    public static Teacher getTeacher(final ISuportePersistente persistentSupport,
-            final InfoSummary infoSummary) throws ExcepcaoPersistencia, FenixServiceException {
+    public static Teacher getTeacher(final InfoSummary infoSummary) throws ExcepcaoPersistencia,
+            FenixServiceException {
         if (infoSummary.getInfoTeacher() != null
                 && infoSummary.getInfoTeacher().getTeacherNumber() != null) {
             final Teacher teacher = Teacher
@@ -90,8 +89,8 @@ public class SummaryUtils {
         return null;
     }
 
-    public static Professorship getProfessorship(final ISuportePersistente persistentSupport,
-            final InfoSummary infoSummary) throws FenixServiceException, ExcepcaoPersistencia {
+    public static Professorship getProfessorship(final InfoSummary infoSummary)
+            throws FenixServiceException, ExcepcaoPersistencia {
         if (infoSummary.getInfoProfessorship() != null
                 && infoSummary.getInfoProfessorship().getIdInternal() != null) {
             final Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(
@@ -104,8 +103,8 @@ public class SummaryUtils {
         return null;
     }
 
-    public static Shift getShift(final ISuportePersistente persistentSupport, final Summary summary,
-            final InfoSummary infoSummary) throws ExcepcaoPersistencia, FenixServiceException {
+    public static Shift getShift(final Summary summary, final InfoSummary infoSummary)
+            throws ExcepcaoPersistencia, FenixServiceException {
 
         Shift shift = null;
         if (summary != null
@@ -121,9 +120,8 @@ public class SummaryUtils {
         return shift;
     }
 
-    public static OldRoom getRoom(final ISuportePersistente persistentSupport, final Summary summary,
-            final Shift shift, InfoSummary infoSummary) throws ExcepcaoPersistencia,
-            FenixServiceException {
+    public static OldRoom getRoom(final Summary summary, final Shift shift, InfoSummary infoSummary)
+            throws ExcepcaoPersistencia, FenixServiceException {
         OldRoom room = null;
         if (infoSummary.getIsExtraLesson()) {
             if (summary != null
@@ -131,7 +129,8 @@ public class SummaryUtils {
                             infoSummary.getInfoRoom().getIdInternal())) {
                 room = summary.getRoom();
             } else {
-                room = RootDomainObject.getInstance().readOldRoomByOID(infoSummary.getInfoRoom().getIdInternal());
+                room = RootDomainObject.getInstance().readOldRoomByOID(
+                        infoSummary.getInfoRoom().getIdInternal());
             }
         } else {
             Lesson lesson = findlesson(shift, infoSummary);

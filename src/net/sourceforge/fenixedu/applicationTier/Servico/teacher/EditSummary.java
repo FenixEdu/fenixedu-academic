@@ -37,25 +37,24 @@ public class EditSummary extends Service {
 
         final Summary summary = (Summary) persistentObject.readByOID(Summary.class, infoSummary
                 .getIdInternal());
-        
+
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
-        
-        final Shift shift = SummaryUtils.getShift(persistentSupport, summary, infoSummary);
-        final OldRoom room = SummaryUtils.getRoom(persistentSupport, summary, shift, infoSummary);
-               
+
+        final Shift shift = SummaryUtils.getShift(summary, infoSummary);
+        final OldRoom room = SummaryUtils.getRoom(summary, shift, infoSummary);
+
         shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
                 .getSummaryHour().getTime(), room, !summary.getShift().equals(shift));
 
-        final Professorship professorship = SummaryUtils.getProfessorship(persistentSupport,
-                infoSummary);
+        final Professorship professorship = SummaryUtils.getProfessorship(infoSummary);
         if (professorship != null) {
             summary.edit(infoSummary.getTitle(), infoSummary.getSummaryText(), infoSummary
                     .getStudentsNumber(), infoSummary.getIsExtraLesson(), professorship);
             return;
         }
 
-        final Teacher teacher = SummaryUtils.getTeacher(persistentSupport, infoSummary);
+        final Teacher teacher = SummaryUtils.getTeacher(infoSummary);
         if (teacher != null) {
             if (!executionCourse.teacherLecturesExecutionCourse(teacher)) {
                 summary.edit(infoSummary.getTitle(), infoSummary.getSummaryText(), infoSummary

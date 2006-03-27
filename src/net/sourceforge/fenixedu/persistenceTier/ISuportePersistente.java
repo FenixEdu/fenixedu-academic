@@ -98,9 +98,7 @@ public interface ISuportePersistente
 
 	public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage();
 
-	public IPersistentSummary getIPersistentSummary();
-
-	public IPersistentMetadata getIPersistentMetadata();
+    public IPersistentMetadata getIPersistentMetadata();
 
 	public IPersistentQuestion getIPersistentQuestion();
 

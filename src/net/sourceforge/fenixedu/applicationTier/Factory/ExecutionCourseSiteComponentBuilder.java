@@ -71,7 +71,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -139,8 +138,6 @@ public class ExecutionCourseSiteComponentBuilder {
 
         ExecutionCourse executionCourse = site.getExecutionCourse();
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         // execution courses's lesson types for display to filter summary
         List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
 
@@ -171,19 +168,9 @@ public class ExecutionCourseSiteComponentBuilder {
             });
         }
 
-        IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
         List summaries = null;
         if (component.getShiftType() != null) {
-            List summariesBySummaryType = persistentSummary.readByExecutionCourseShiftsAndTypeLesson(
-                    executionCourse.getIdInternal(), component.getShiftType());
-
-            // read summary also by execution course key
-            // and add to the last list
-            List summariesByExecutionCourseBySummaryType = persistentSummary
-                    .readByExecutionCourseAndType(executionCourse.getIdInternal(), component
-                            .getShiftType());
-
-            summaries = allSummaries(summariesBySummaryType, summariesByExecutionCourseBySummaryType);
+            summaries = executionCourse.readSummariesByShiftType(component.getShiftType());
         }
 
         if (component.getShiftId() != null && component.getShiftId().intValue() > 0) {
@@ -192,11 +179,9 @@ public class ExecutionCourseSiteComponentBuilder {
                 throw new FenixServiceException("no.shift");
             }
 
-            List summariesByShift = persistentSummary.readByShift(executionCourse.getIdInternal(),
-                    shiftSelected.getIdInternal());
+            List summariesByShift = shiftSelected.getAssociatedSummaries();
 
-            List summariesByExecutionCourseByShift = findLesson(persistentSummary, executionCourse,
-                    shiftSelected);
+            List summariesByExecutionCourseByShift = findLesson(executionCourse, shiftSelected);
 
             if (summaries != null) {
                 summaries = (List) CollectionUtils.intersection(summaries, allSummaries(
@@ -214,8 +199,7 @@ public class ExecutionCourseSiteComponentBuilder {
                 throw new FenixServiceException("no.shift");
             }
 
-            List summariesByProfessorship = persistentSummary.readByTeacher(executionCourse
-                    .getIdInternal(), professorshipSelected.getTeacher().getTeacherNumber());
+            List summariesByProfessorship = professorshipSelected.getAssociatedSummaries();
 
             if (summaries != null) {
                 summaries = (List) CollectionUtils.intersection(summaries, summariesByProfessorship);
@@ -225,8 +209,7 @@ public class ExecutionCourseSiteComponentBuilder {
         }
 
         if (component.getTeacherId() != null && component.getTeacherId().equals(new Integer(-1))) {
-            List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourse
-                    .getIdInternal());
+            List summariesByTeacher = executionCourse.readSummariesOfTeachersWithoutProfessorship();
 
             if (summaries != null) {
                 summaries = (List) CollectionUtils.intersection(summaries, summariesByTeacher);
@@ -238,11 +221,8 @@ public class ExecutionCourseSiteComponentBuilder {
         if ((component.getShiftType() == null)
                 && (component.getShiftId() == null || component.getShiftId().intValue() == 0)
                 && (component.getTeacherId() == null || component.getTeacherId().intValue() == 0)) {
-            summaries = persistentSummary.readByExecutionCourseShifts(executionCourse.getIdInternal());
-            List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse
-                    .getIdInternal());
 
-            summaries = allSummaries(summaries, summariesByExecutionCourse);
+            summaries = executionCourse.getAssociatedSummaries();
         }
 
         List result = new ArrayList();
@@ -297,9 +277,8 @@ public class ExecutionCourseSiteComponentBuilder {
         return lessonTypes;
     }
 
-    private List findLesson(IPersistentSummary persistentSummary, ExecutionCourse executionCourse,
-            Shift shift) throws ExcepcaoPersistencia {
-        return ReadSummaries.findLesson(persistentSummary, executionCourse, shift);
+    private List findLesson(ExecutionCourse executionCourse, Shift shift) throws ExcepcaoPersistencia {
+        return ReadSummaries.findLesson(executionCourse, shift);
     }
 
     private List allSummaries(List summaries, List summariesByExecutionCourse) {

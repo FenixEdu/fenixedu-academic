@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 
 /**
  * @author Manuel Pinto e João Figueiredo
@@ -30,33 +29,31 @@ public class EditSummary extends Service {
                 || infoSummary.getIsExtraLesson() == null || infoSummary.getSummaryDate() == null) {
             throw new FenixServiceException("error.summary.impossible.edit");
         }
-        final Summary summary = (Summary) persistentObject.readByOID(Summary.class, infoSummary
-                .getIdInternal());
-        
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseId);
-        
-        final Shift shift = SummaryUtils.getShift(persistentSupport, summary, infoSummary);
-        final OldRoom room = SummaryUtils.getRoom(persistentSupport, summary, shift, infoSummary);
+        final Summary summary = rootDomainObject.readSummaryByOID(infoSummary.getIdInternal());
+
+        final ExecutionCourse executionCourse = rootDomainObject
+                .readExecutionCourseByOID(executionCourseId);
+
+        final Shift shift = SummaryUtils.getShift(summary, infoSummary);
+        final OldRoom room = SummaryUtils.getRoom(summary, shift, infoSummary);
 
         shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
                 .getSummaryHour().getTime(), room, !summary.getShift().equals(shift));
 
-        final Professorship professorship = SummaryUtils.getProfessorship(persistentSupport, infoSummary);
+        final Professorship professorship = SummaryUtils.getProfessorship(infoSummary);
         if (professorship != null) {
             summary.edit(infoSummary.getTitle(), infoSummary.getSummaryText(), infoSummary
                     .getStudentsNumber(), infoSummary.getIsExtraLesson(), professorship);
             return;
         }
 
-        final Teacher teacher = SummaryUtils.getTeacher(persistentSupport, infoSummary);
+        final Teacher teacher = SummaryUtils.getTeacher(infoSummary);
         if (teacher != null) {
             if (!executionCourse.teacherLecturesExecutionCourse(teacher)) {
                 summary.edit(infoSummary.getTitle(), infoSummary.getSummaryText(), infoSummary
                         .getStudentsNumber(), infoSummary.getIsExtraLesson(), teacher);
                 return;
-            }
-            else{
+            } else {
                 throw new FenixServiceException("error.summary.teacher.invalid");
             }
         }
@@ -67,7 +64,7 @@ public class EditSummary extends Service {
                     .getStudentsNumber(), infoSummary.getIsExtraLesson(), teacherName);
             return;
         }
-       
+
         throw new FenixServiceException("error.summary.no.teacher");
     }
 }

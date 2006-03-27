@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
@@ -328,12 +327,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new ShiftProfessorshipOJB();
 	}
 
-	public IPersistentSummary getIPersistentSummary()
-	{
-		return new SummaryOJB();
-	}
-
-	public IPersistentGrantOwner getIPersistentGrantOwner()
+    public IPersistentGrantOwner getIPersistentGrantOwner()
 	{
 		return new GrantOwnerOJB();
 	}
