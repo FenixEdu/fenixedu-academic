@@ -92,6 +92,11 @@
 		name="keyRootDomainObject"
     	column="KEY_ROOT_DOMAIN_OBJECT"
     	jdbc-type="INTEGER"/>
-    	
-	
+
+      <field-descriptor
+         name="keyWeeklyOcupation"
+         column="KEY_WEEKLY_OCCUPATION"
+         jdbc-type="INTEGER"/>
+
+
 </class-descriptor>
