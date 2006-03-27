@@ -30,7 +30,8 @@ public abstract class Evaluation extends Evaluation_Base {
     }
     
     public void delete() {        
-        this.getAssociatedExecutionCourses().clear();        
+        this.getAssociatedExecutionCourses().clear();
+		for (; !getMarks().isEmpty(); getMarks().get(0).delete());
         super.deleteDomainObject();
     }
 
@@ -43,4 +44,13 @@ public abstract class Evaluation extends Evaluation_Base {
 	}
 
 	public abstract EvaluationType getEvaluationType() ;
+	
+	public Mark getMarkByAttend(Attends attends) {
+		for (Mark mark : getMarks()) {
+			if(mark.getAttend().equals(attends)) {
+				return mark;
+			}
+		}
+		return null;
+	}
 }

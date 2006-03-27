@@ -230,11 +230,10 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         if (hasAnyWrittenEvaluationEnrolments()) {
             throw new DomainException("error.notAuthorizedWrittenEvaluationDelete.withStudent");
         }
-        getAssociatedExecutionCourses().clear();
+        //getAssociatedExecutionCourses().clear();
         deleteAllRoomOccupations();
         getAssociatedCurricularCourseScope().clear();
-
-        super.deleteDomainObject();
+        super.delete();
     }
 
     public List<OldRoom> getAssociatedRooms() {
