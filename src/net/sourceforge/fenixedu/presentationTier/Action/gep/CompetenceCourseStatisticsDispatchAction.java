@@ -63,22 +63,25 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
                 toProcessDegreeCurricularPlans);
 
         StringBuilder result = new StringBuilder();
+        result
+                .append("CurricularCourse Code\tCurricularCourse Name\tExecutionCourse ID\tExecutionCourse Name\tCurricular Plan ID\tCurricular Plan Name\tSemester\tYear\tFirst Enrolments\tSecond Enrolments\tAll Enrolments\n");
+
         List<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan
                 .readByDegreeTypeAndState(DegreeType.DEGREE, DegreeCurricularPlanState.ACTIVE);
-        
+
         for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
             toProcessDegreeCurricularPlans.add(degreeCurricularPlan.getName());
         }
-        
-        for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {            
-            toProcessDegreeCurricularPlans.remove(degreeCurricularPlan.getName());                        
+
+        for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+            toProcessDegreeCurricularPlans.remove(degreeCurricularPlan.getName());
             processingDegreeCurricularPlans.add(degreeCurricularPlan.getName());
-            
+
             Object[] args = { degreeCurricularPlan.getIdInternal(), executionYearID };
             result.append((String) executeService(request, "ComputeCurricularCourseStatistics", args));
-            
-            processingDegreeCurricularPlans.clear();            
-            processedDegreeCurricularPlans.add(degreeCurricularPlan.getName());            
+
+            processingDegreeCurricularPlans.clear();
+            processedDegreeCurricularPlans.add(degreeCurricularPlan.getName());
         }
 
         String currentDate = new SimpleDateFormat("dd-MMM-yy.HH-mm").format(new Date());
