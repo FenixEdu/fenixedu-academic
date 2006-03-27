@@ -740,24 +740,42 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 			return total;
         }
 
+        private int getNumberWeeksForAverageCalculation() {
+            if (!getAttendsSet().isEmpty()) {
+                final Attends attends = findAttendsWithEnrolment();
+                if (attends != null) {
+                    int currentWeekOffset = attends.calculateCurrentWeekOffset();
+                    if (currentWeekOffset > 0 && currentWeekOffset < numberOfWeeks) {
+                        return currentWeekOffset;
+                    }
+                }
+            }
+            return numberOfWeeks;
+        }
+
         public double getContactAverageTotalAverage() {
-        	return Math.round(getContactAverageTotal() / numberOfWeeks);
+            final int numberOfWeeks = getNumberWeeksForAverageCalculation();
+        	return numberOfWeeks > 0 ? Math.round(getContactAverageTotal() / numberOfWeeks) : 0;
         }
 
         public double getAutonomousStudyAverageTotalAverage() {
-        	return Math.round(getAutonomousStudyAverageTotal() / numberOfWeeks);
+            final int numberOfWeeks = getNumberWeeksForAverageCalculation();
+        	return numberOfWeeks > 0 ? Math.round(getAutonomousStudyAverageTotal() / getNumberWeeksForAverageCalculation()) : 0;
         }
 
         public double getOtherAverageTotalAverage() {
-        	return Math.round(getOtherAverageTotal() / numberOfWeeks);
+            final int numberOfWeeks = getNumberWeeksForAverageCalculation();
+        	return numberOfWeeks > 0 ? Math.round(getOtherAverageTotal() / getNumberWeeksForAverageCalculation()) : 0;
         }
 
         public double getTotalAverageTotalAverage() {
-        	return Math.round(getTotalAverageTotal() / numberOfWeeks);
+            final int numberOfWeeks = getNumberWeeksForAverageCalculation();
+        	return numberOfWeeks > 0 ? Math.round(getTotalAverageTotal() / getNumberWeeksForAverageCalculation()) : 0;
         }
 
         public double getNumberResponsesTotalAverage() {
-        	return Math.round((0.0 + getNumberResponsesTotal()) / numberOfWeeks);
+            final int numberOfWeeks = getNumberWeeksForAverageCalculation();
+        	return numberOfWeeks > 0 ? Math.round((0.0 + getNumberResponsesTotal()) / getNumberWeeksForAverageCalculation()) : 0;
         }
 
 	}
