@@ -885,7 +885,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 		}
 		
 		class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
-			Integer givenCredits;
+			Double givenCredits;
 		}
 	
 		class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
