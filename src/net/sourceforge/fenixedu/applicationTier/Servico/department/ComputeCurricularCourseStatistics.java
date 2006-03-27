@@ -92,8 +92,9 @@ public class ComputeCurricularCourseStatistics extends Service {
                     }
 
                     // Add to result
-                    result.format("%s\t%s\t%s\t%s\t%d\t%d\t%d\t%d\t%d\n", curricularCourse.getCode(),
-                            curricularCourse.getName(), executionCourse.getSigla(), enrolmentDCP
+                    result.format("%s\t%s\t%d\t%s\t%d\t%s\t%d\t%d\t%d\t%d\t%d\n", curricularCourse
+                            .getCode(), curricularCourse.getName(), executionCourse.getIdInternal(),
+                            executionCourse.getSigla(), enrolmentDCP.getIdInternal(), enrolmentDCP
                                     .getName(), semester, year, firstEnrolledCount, secondEnrolledCount,
                             dcpEnrolments.size());
                 }
