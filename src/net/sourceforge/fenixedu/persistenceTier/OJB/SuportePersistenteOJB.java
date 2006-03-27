@@ -58,7 +58,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.InquiriesRegistryO
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesCoursesResOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesSummaryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesTeachersResOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.CostCenterOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.ExtraWorkResquestsOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.MoneyCostCenterOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestAdvisoryOJB;
@@ -109,7 +108,6 @@ import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRe
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
-import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
@@ -684,11 +682,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentPublicationTeacher getIPersistentPublicationTeacher()
 	{
 		return new PublicationTeacherOJB();
-	}
-
-	public IPersistentCostCenter getIPersistentCostCenter()
-	{
-		return new CostCenterOJB();
 	}
 
 	public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter()
