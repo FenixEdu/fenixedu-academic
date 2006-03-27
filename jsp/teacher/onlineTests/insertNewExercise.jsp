@@ -22,12 +22,6 @@
 <span class="error"><html:errors/></span>
 	<table>
 		<tr>
-			<td><bean:message key="label.metadataFile"/></td>
-		</tr>
-		<tr>
-			<td><html:file property="metadataFile" size="50"/></td>
-		<tr/>
-		<tr>
 			<td><bean:message key="label.xmlZipFile"/></td>
 		</tr>
 		<tr>

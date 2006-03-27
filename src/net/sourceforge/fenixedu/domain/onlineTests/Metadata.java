@@ -26,15 +26,26 @@ public class Metadata extends Metadata_Base {
 
         try {
             if (metadataFile != null && metadataFile.getFileData().length != 0) {
-                ParseMetadata parseMetadata = new ParseMetadata();
-                setMetadataFile(new String(metadataFile.getFileData(), "ISO-8859-1"));
-                parseMetadata.parseMetadata(this, path);
+                parseAndSetMetadataFile(new String(metadataFile.getFileData(), "ISO-8859-1"), path);
             }
         } catch (final Exception ex) {
             ex.printStackTrace();
             throw new DomainException("failled.metadata.file.parse");
         }
 
+    }
+
+    public void parseAndSetMetadataFile(String metadataFile, String path) {
+        try {
+            if (metadataFile != null && metadataFile.length() != 0) {
+                ParseMetadata parseMetadata = new ParseMetadata();
+                setMetadataFile(metadataFile);
+                parseMetadata.parseMetadata(this, path);
+            }
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+            throw new DomainException("failled.metadata.file.parse");
+        }
     }
 
     public Calendar getLearningTime() {
@@ -61,6 +72,5 @@ public class Metadata extends Metadata_Base {
         }
         return visibleQuestions;
     }
-
 
 }

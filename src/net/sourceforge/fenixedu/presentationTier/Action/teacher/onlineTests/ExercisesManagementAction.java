@@ -618,7 +618,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         String path = getServlet().getServletContext().getRealPath("/");
         List badXmls = null;
         try {
-            Object[] args = { executionCourseId, metadataFile, xmlZipFile, path };
+            Object[] args = { executionCourseId, xmlZipFile, path };
             badXmls = (List) ServiceUtils.executeService(userView, "InsertExercise", args);
         } catch (InvalidMetadataException e) {
             error(request, "FileNotExist", "error.badMetadataFile");

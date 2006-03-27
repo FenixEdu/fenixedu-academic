@@ -35,88 +35,115 @@ public class InsertExercise extends Service {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    public List<String> run(Integer executionCourseId, FormFile metadataFile, FormFile xmlZipFile, String path) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public List<String> run(Integer executionCourseId, FormFile xmlZipFile, String path)
+            throws FenixServiceException, ExcepcaoPersistencia {
         List<String> badXmls = new ArrayList<String>();
         int xmlNumber = 0;
         String replacedPath = path.replace('\\', '/');
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = (ExecutionCourse) rootDomainObject
+                .readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
-        Metadata metadata = null;
-        try {
-            metadata = DomainFactory.makeMetadata(executionCourse, metadataFile, replacedPath);
-        } catch (DomainException e) {
-            throw new InvalidMetadataException();
-        }
 
-        List<LabelValueBean> xmlFilesList = getXmlFilesList(xmlZipFile);
-        if (xmlFilesList == null || xmlFilesList.size() == 0) {
-            throw new InvalidXMLFilesException();
-        }
+        List<List> allXmlList = getListOfExercisesList(xmlZipFile);
+        for (List<LabelValueBean> xmlFilesList : allXmlList) {
+            if (xmlFilesList == null || xmlFilesList.size() == 0) {
+                throw new InvalidXMLFilesException();
+            }
 
-        for (LabelValueBean labelValueBean : xmlFilesList) {
-            String xmlFile = labelValueBean.getValue();
-            String xmlFileName = labelValueBean.getLabel();
-
+            Metadata metadata = null;
             try {
-                ParseQuestion parseQuestion = new ParseQuestion();
+                metadata = DomainFactory.makeMetadata(executionCourse, null, replacedPath);
+            } catch (DomainException e) {
+                throw new InvalidMetadataException();
+            }
 
-                parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), replacedPath);
-                Question question = DomainFactory.makeQuestion();
-                question.setMetadata(metadata);
-                question.setXmlFile(xmlFile);
-                question.setXmlFileName(xmlFileName);
-                question.setVisibility(new Boolean("true"));
-                xmlNumber++;
-            } catch (DomainException domainException) {
-                throw domainException;
-            } catch (SAXParseException e) {
-                badXmls.add(xmlFileName);
-            } catch (ParseQuestionException e) {
-                badXmls.add(xmlFileName + e);
-            } catch (Exception e) {
-                badXmls.add(xmlFileName);
+            for (LabelValueBean labelValueBean : xmlFilesList) {
+                String xmlFile = labelValueBean.getValue();
+                String xmlFileName = labelValueBean.getLabel();
+
+                try {
+                    ParseQuestion parseQuestion = new ParseQuestion();
+
+                    parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), replacedPath);
+                    Question question = DomainFactory.makeQuestion();
+                    question.setMetadata(metadata);
+                    question.setXmlFile(xmlFile);
+                    question.setXmlFileName(xmlFileName);
+                    question.setVisibility(new Boolean("true"));
+                    xmlNumber++;
+                } catch (DomainException domainException) {
+                    throw domainException;
+                } catch (SAXParseException e) {
+                    try {
+                        metadata.parseAndSetMetadataFile(xmlFile, replacedPath);
+                    } catch (DomainException e1) {
+                        badXmls.add(xmlFileName);
+                    }
+                } catch (ParseQuestionException e) {
+                    badXmls.add(xmlFileName + e);
+                } catch (Exception e) {
+                    badXmls.add(xmlFileName);
+                }
             }
         }
-
         if (xmlNumber == 0) {
             throw new InvalidXMLFilesException();
         }
-
         return badXmls;
     }
 
-    private List<LabelValueBean> getXmlFilesList(FormFile xmlZipFile) {
-        List<LabelValueBean> xmlFilesList = new ArrayList<LabelValueBean>();
-        ZipInputStream zipFile = null;
+    private List<List> getListOfExercisesList(FormFile xmlZipFile) {
+        List<List> allXmlList = new ArrayList<List>();
+        List<LabelValueBean> xmlList = new ArrayList<LabelValueBean>();
 
         try {
-            if (xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml")) {
-                if (xmlZipFile.getFileSize() <= FILE_SIZE_LIMIT) {
-                    xmlFilesList.add(new LabelValueBean(xmlZipFile.getFileName(), new String(xmlZipFile.getFileData(), "ISO-8859-1")));
-                    // changeDocumentType(new String(xmlZipFile.getFileData(),
-                    // "ISO-8859-1"), false)));
-                }
-            } else {
-                zipFile = new ZipInputStream(xmlZipFile.getInputStream());
-                for (ZipEntry entry = zipFile.getNextEntry(); entry != null; entry = zipFile.getNextEntry()) {
+            if (xmlZipFile.getContentType().equals("application/x-zip-compressed")
+                    || xmlZipFile.getContentType().equals("application/zip")) {
+                ZipInputStream zipFile = new ZipInputStream(xmlZipFile.getInputStream());
+                for (ZipEntry entry = zipFile.getNextEntry(); entry != null; entry = zipFile
+                        .getNextEntry()) {
+                    if (entry.isDirectory()) {
+                        // Se for uma directoria é um novo exercicio (nova lista
+                        // de exercicios)
+                        if (xmlList != null && xmlList.size() != 0) {
+                            allXmlList.add(xmlList);
+                        }
+                        xmlList = new ArrayList<LabelValueBean>();
+                    }
                     final StringBuilder stringBuilder = new StringBuilder();
                     final byte[] b = new byte[1000];
-                    for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder.append(new String(b, 0, readed, "ISO-8859-1"))) {
+                    for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder
+                            .append(new String(b, 0, readed, "ISO-8859-1"))) {
                         // nothing to do :o)
                     }
                     if (stringBuilder.length() <= FILE_SIZE_LIMIT) {
-                        xmlFilesList.add(new LabelValueBean(entry.getName(), stringBuilder.toString()));
+                        xmlList.add(new LabelValueBean(entry.getName(), stringBuilder.toString()));
+                    } else {
+                        xmlList.add(new LabelValueBean(entry.getName(), null));
                     }
                 }
                 zipFile.close();
+            } else {
+                // é 1 exercicio com 1 variação (1 xml)
+                if (xmlZipFile.getContentType().equals("text/xml")
+                        || xmlZipFile.getContentType().equals("application/xml")) {
+                    if (xmlZipFile.getFileSize() <= FILE_SIZE_LIMIT) {
+                        xmlList.add(new LabelValueBean(xmlZipFile.getFileName(), new String(xmlZipFile
+                                .getFileData(), "ISO-8859-1")));
+                    } else {
+                        xmlList.add(new LabelValueBean(xmlZipFile.getFileName(), null));
+                    }
+                }
             }
         } catch (Exception e) {
             return null;
         }
-        return xmlFilesList;
+        if (xmlList != null && xmlList.size() != 0) {
+            allXmlList.add(xmlList);
+        }
+        return allXmlList;
     }
 }
