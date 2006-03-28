@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
@@ -217,6 +218,49 @@ public class Degree extends Degree_Base {
     	}
     	return result;
     }
+    
+    public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYear(ExecutionYear executionYear){
+    	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+    	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
+			if(degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
+				for (CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
+					if(course.getCurricularStage() != null && course.getCurricularStage().equals(CurricularStage.OLD)) {
+						for (ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+							if(executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+								result.add(course);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+    	return result;
+    }
+    
+    public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYearAndYear(ExecutionYear executionYear, Integer curricularYear){
+    	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+    	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
+			if(degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
+				for (CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
+					if(course.getCurricularStage() != null && course.getCurricularStage().equals(CurricularStage.OLD)) {
+						xpto: for (ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+							if(executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+								for (CurricularCourseScope curricularCourseScope : course.getScopes()) {
+									if(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(curricularYear)) {
+										result.add(course);
+										break xpto;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+    	return result;
+    }
+
     
     // -------------------------------------------------------------
     // read static methods 

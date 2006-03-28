@@ -289,6 +289,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return curricularCourses;
     }
+    
+    public List<CurricularCourse> getCurricularCoursesByBasicAttribute(Boolean basic){
+    	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
+    	for (CurricularCourse curricularCourse : getCurricularCourses()) {
+            if(curricularCourse.getCurricularStage() != null && curricularCourse.getCurricularStage().equals(CurricularStage.OLD) && curricularCourse.getBasic().equals(basic)) {
+            	curricularCourses.add(curricularCourse);
+            }
+        }
+        return curricularCourses;
+    }
 
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
