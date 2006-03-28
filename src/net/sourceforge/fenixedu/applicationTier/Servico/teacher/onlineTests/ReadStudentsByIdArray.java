@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -24,34 +25,36 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class ReadStudentsByIdArray extends Service {
 
-    public List<InfoStudent> run(Integer executionCourseId, String[] selected, Boolean insertByShifts) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public List<InfoStudent> run(Integer executionCourseId, String[] selected, Boolean insertByShifts)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         List<InfoStudent> studentList = new ArrayList<InfoStudent>();
         if (selected != null && selected.length != 0) {
             if (insertByShifts.booleanValue())
                 studentList = returnStudentsFromShiftsArray(persistentSupport, selected);
             else
-                studentList = returnStudentsFromStudentsArray(persistentSupport, selected, executionCourseId);
+                studentList = returnStudentsFromStudentsArray(persistentSupport, selected,
+                        executionCourseId);
         }
         return studentList;
     }
 
-    public List<InfoStudent> run(Integer executionCourseId, ArrayList lavelValueBeanList) throws FenixServiceException, ExcepcaoPersistencia {
+    public List<InfoStudent> run(Integer executionCourseId, ArrayList lavelValueBeanList)
+            throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoStudent> studentList = new ArrayList<InfoStudent>();
         for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
             if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
                 Integer number = new Integer(lvb.getValue());
-                studentList.add(InfoStudent.newInfoFromDomain((Student) persistentSupport.getIPersistentStudent().readAllBetweenNumbers(number,
-                        number).get(0)));
+                studentList.add(InfoStudent.newInfoFromDomain((Student) persistentSupport
+                        .getIPersistentStudent().readAllBetweenNumbers(number, number).get(0)));
             }
         }
 
         return studentList;
     }
 
-    private List<InfoStudent> returnStudentsFromShiftsArray(ISuportePersistente persistentSupport, String[] shifts) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    private List<InfoStudent> returnStudentsFromShiftsArray(ISuportePersistente persistentSupport,
+            String[] shifts) throws FenixServiceException, ExcepcaoPersistencia {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (int i = 0; i < shifts.length; i++) {
@@ -70,21 +73,23 @@ public class ReadStudentsByIdArray extends Service {
         return infoStudentList;
     }
 
-    private List<InfoStudent> returnStudentsFromStudentsArray(ISuportePersistente persistentSupport, String[] students, Integer executionCourseId)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    private List<InfoStudent> returnStudentsFromStudentsArray(ISuportePersistente persistentSupport,
+            String[] students, Integer executionCourseId) throws FenixServiceException,
+            ExcepcaoPersistencia {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         List<InfoStudent> studentsList = new ArrayList<InfoStudent>();
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
         for (int i = 0; i < students.length; i++) {
             if (students[i].equals(bundle.getString("label.allStudents"))) {
-                List<Attends> attendList = persistentSupport.getIFrequentaPersistente().readByExecutionCourse(executionCourseId);
+                List<Attends> attendList = executionCourse.getAttends();
                 for (Attends attend : attendList) {
                     studentsList.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
                 }
                 break;
             }
-            InfoStudent infoStudent = InfoStudent.newInfoFromDomain((Student) persistentObject.readByOID(Student.class,
-                    new Integer(students[i])));
+            InfoStudent infoStudent = InfoStudent.newInfoFromDomain(rootDomainObject
+                    .readStudentByOID(new Integer(students[i])));
             if (!studentsList.contains(infoStudent))
                 studentsList.add(infoStudent);
 

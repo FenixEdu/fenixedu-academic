@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -22,7 +23,8 @@ public class ReadStudentsWithoutDistributedTest extends Service {
 
     public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        List<Attends> attendList = persistentSupport.getIFrequentaPersistente().readByExecutionCourse(executionCourseId);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        List<Attends> attendList =executionCourse.getAttends();
         List<Student> studentList = persistentSupport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(distributedTestId);
         for (Attends attend : attendList) {
             if (!studentList.contains(attend.getAluno()))

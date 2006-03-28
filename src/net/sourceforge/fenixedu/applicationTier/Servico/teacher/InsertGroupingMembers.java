@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author joaosa & rmalo
@@ -27,64 +25,59 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 public class InsertGroupingMembers extends Service {
 
-	public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, List studentCodes)
-			throws FenixServiceException, ExcepcaoPersistencia {
+    public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, List studentCodes)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-		IFrequentaPersistente persistentAttend = null;
+        List students = new ArrayList();
 
-		List students = new ArrayList();
+        Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
+                groupPropertiesCode);
 
-		persistentAttend = persistentSupport.getIFrequentaPersistente();
+        if (groupProperties == null) {
+            throw new ExistingServiceException();
+        }
 
-		Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
-				groupPropertiesCode);
+        Iterator iterator = studentCodes.iterator();
 
-		if (groupProperties == null) {
-			throw new ExistingServiceException();
-		}
+        while (iterator.hasNext()) {
+            Student student = (Student) persistentObject.readByOID(Student.class, (Integer) iterator
+                    .next());
+            students.add(student);
+        }
 
-		Iterator iterator = studentCodes.iterator();
+        Iterator iterAttends = groupProperties.getAttends().iterator();
 
-		while (iterator.hasNext()) {
-			Student student = (Student) persistentObject.readByOID(Student.class, (Integer) iterator
-					.next());
-			students.add(student);
-		}
+        while (iterAttends.hasNext()) {
+            Attends existingAttend = (Attends) iterAttends.next();
+            Student existingAttendStudent = existingAttend.getAluno();
 
-		Iterator iterAttends = groupProperties.getAttends().iterator();
+            Iterator iteratorStudents = students.iterator();
 
-		while (iterAttends.hasNext()) {
-			Attends existingAttend = (Attends) iterAttends.next();
-			Student existingAttendStudent = existingAttend.getAluno();
+            while (iteratorStudents.hasNext()) {
 
-			Iterator iteratorStudents = students.iterator();
+                Student student = (Student) iteratorStudents.next();
+                if (student.equals(existingAttendStudent)) {
+                    throw new InvalidSituationServiceException();
+                }
+            }
+        }
 
-			while (iteratorStudents.hasNext()) {
+        Iterator iterStudents1 = students.iterator();
 
-				Student student = (Student) iteratorStudents.next();
-				if (student.equals(existingAttendStudent)) {
-					throw new InvalidSituationServiceException();
-				}
-			}
-		}
+        while (iterStudents1.hasNext()) {
+            Attends attend = null;
+            Student student = (Student) iterStudents1.next();
 
-		Iterator iterStudents1 = students.iterator();
+            List listaExecutionCourses = new ArrayList();
+            listaExecutionCourses.addAll(groupProperties.getExecutionCourses());
+            Iterator iterExecutionCourse = listaExecutionCourses.iterator();
+            while (iterExecutionCourse.hasNext() && attend == null) {
+                ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourse.next();
+                attend = student.readAttendByExecutionCourse(executionCourse);
+            }
+            groupProperties.addAttends(attend);
+        }
 
-		while (iterStudents1.hasNext()) {
-			Attends attend = null;
-			Student student = (Student) iterStudents1.next();
-
-			List listaExecutionCourses = new ArrayList();
-			listaExecutionCourses.addAll(groupProperties.getExecutionCourses());
-			Iterator iterExecutionCourse = listaExecutionCourses.iterator();
-			while (iterExecutionCourse.hasNext() && attend == null) {
-				ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourse.next();
-				attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
-						executionCourse.getIdInternal());
-			}
-			groupProperties.addAttends(attend);
-		}
-
-		return Boolean.TRUE;
-	}
+        return Boolean.TRUE;
+    }
 }

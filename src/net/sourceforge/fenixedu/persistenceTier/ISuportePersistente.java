@@ -61,9 +61,7 @@ public interface ISuportePersistente
 	public void clearCache();
 
 	public Integer getNumberCachedItems();
-
-	public IFrequentaPersistente getIFrequentaPersistente();
-
+	
 	public IPersistentExecutionCourse getIPersistentExecutionCourse();
 
 	public IPessoaPersistente getIPessoaPersistente();

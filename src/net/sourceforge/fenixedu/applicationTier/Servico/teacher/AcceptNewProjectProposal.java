@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.util.ProposalState;
 
@@ -45,10 +44,8 @@ public class AcceptNewProjectProposal extends Service {
 		}
 
 		IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
-		IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
-
-		Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
-				groupPropertiesId);
+        
+		Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesId);
 
 		if (grouping == null) {
 			throw new NotAuthorizedException();
@@ -79,7 +76,7 @@ public class AcceptNewProjectProposal extends Service {
 		}
 
 		ExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
-		List attendsAux = persistentAttend.readByExecutionCourse(executionCourse.getIdInternal());
+		List attendsAux = executionCourse.getAttends();
 		Iterator iterAttends = attendsAux.iterator();
 		while (iterAttends.hasNext()) {
 			Attends attend = (Attends) iterAttends.next();

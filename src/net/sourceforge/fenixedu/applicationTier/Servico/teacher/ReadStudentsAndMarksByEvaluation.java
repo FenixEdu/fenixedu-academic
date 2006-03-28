@@ -23,14 +23,13 @@ import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class ReadStudentsAndMarksByEvaluation extends Service {
 
@@ -39,32 +38,29 @@ public class ReadStudentsAndMarksByEvaluation extends Service {
 
         InfoEvaluation infoEvaluation = new InfoEvaluation();
 
-        //Execution Course
+        // Execution Course
+        final ExecutionCourse executionCourse = rootDomainObject
+                .readExecutionCourseByOID(executionCourseCode);
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseCode);
-
-        //Site
+        // Site
         final Site site = executionCourse.getSite();
 
-        //Evaluation
-
-        Evaluation evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class, evaluationCode);
+        // Evaluation
+        Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
-        //Attends
-        IFrequentaPersistente frequentaPersistente = persistentSupport.getIFrequentaPersistente();
-        List attendList = frequentaPersistente.readByExecutionCourse(executionCourseCode);
+        // Attends
+        List attendList = executionCourse.getAttends();
 
-        //Marks
+        // Marks
         List<Mark> marksList = evaluation.getMarks();
 
         List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
             public Object transform(Object input) {
                 Attends attend = (Attends) input;
                 InfoFrequenta infoAttend = InfoFrequentaWithAll.newInfoFromDomain(attend);
-                //Melhoria Alterar isto depois: isto está feio assim
+                // Melhoria Alterar isto depois: isto está feio assim
                 if (attend.getEnrolment() != null) {
                     if (!attend.getEnrolment().getExecutionPeriod().equals(
                             executionCourse.getExecutionPeriod())) {

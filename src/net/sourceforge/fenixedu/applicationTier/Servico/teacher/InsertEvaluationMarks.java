@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
@@ -48,17 +47,15 @@ public class InsertEvaluationMarks extends Service {
         List attendList = null;
         HashMap newHashMarks = new HashMap();
 
-        IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
-
         //Site
-    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseCode);
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
         site = executionCourse.getSite();
 
         //Evaluation
-        evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class, evaluationCode);
+        evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
 
         //Attend List
-        attendList = persistentAttend.readByExecutionCourse(executionCourseCode);
+        attendList = executionCourse.getAttends();
 
         marksErrorsInvalidMark = new ArrayList();
         ListIterator iterAttends = attendList.listIterator();

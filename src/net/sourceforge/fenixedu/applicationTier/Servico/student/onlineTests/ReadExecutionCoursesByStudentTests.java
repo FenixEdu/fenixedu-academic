@@ -21,15 +21,17 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTe
 public class ReadExecutionCoursesByStudentTests extends Service {
 
     public Object run(String userName) throws ExcepcaoPersistencia {
-        final IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport.getIPersistentStudentTestQuestion();
+        final IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
+                .getIPersistentStudentTestQuestion();
 
         final Student student = persistentSupport.getIPersistentStudent().readByUsername(userName);
-        final List<Attends> attends = persistentSupport.getIFrequentaPersistente().readByStudentNumber(student.getNumber(), student.getDegreeType());
+        final List<Attends> attends = student.getAssociatedAttends();
 
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
         for (Attends attend : attends) {
             final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
-            if (persistentStudentTestQuestion.countStudentTestByStudentAndExecutionCourse(executionCourse.getIdInternal(), student.getIdInternal()) != 0) {
+            if (persistentStudentTestQuestion.countStudentTestByStudentAndExecutionCourse(
+                    executionCourse.getIdInternal(), student.getIdInternal()) != 0) {
                 infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
         }

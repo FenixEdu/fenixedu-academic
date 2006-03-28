@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
@@ -46,9 +45,7 @@ public class ReadShiftsToEnroll extends Service {
         		throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
-        IFrequentaPersistente frequentaPersistente = persistentSupport.getIFrequentaPersistente();
-        List attendList = frequentaPersistente
-                .readByStudentNumberInCurrentExecutionPeriod(studentNumber);
+        List attendList = student.readAttendsInCurrentExecutionPeriod();
 
         List infoNewShiftEnrollments = new ArrayList();
         for (Iterator iter = attendList.iterator(); iter.hasNext();) {

@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.util.ProposalState;
 
 /**
@@ -42,8 +41,7 @@ public class NewProjectProposal extends Service {
         if (groupPropertiesId == null) {
             return result;
         }
-        IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
-      
+ 
         Grouping groupProperties = (Grouping) persistentObject.readByOID(
                 Grouping.class, groupPropertiesId);
         ExecutionCourse goalExecutionCourse = (ExecutionCourse) persistentObject.readByOID(
@@ -154,7 +152,7 @@ public class NewProjectProposal extends Service {
                 groupingStudentNumbers.add(attend.getAluno().getNumber());
             }
             
-            Iterator iterAttends2 = persistentAttend.readByExecutionCourse(goalExecutionCourse.getIdInternal()).iterator();
+            Iterator iterAttends2 = goalExecutionCourse.getAttendsIterator();
             while (iterAttends2.hasNext()) {
                 Attends attend = (Attends) iterAttends2.next();
                 if (!groupingStudentNumbers.contains(attend.getAluno().getNumber())) {

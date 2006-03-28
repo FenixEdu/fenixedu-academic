@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -28,14 +27,13 @@ public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername exte
 
     public StudentGroupAttendacyInformation run(Integer executionCourseID, String username)
             throws BDException, ExcepcaoPersistencia {
-        IFrequentaPersistente persistentAttendacy = persistentSupport.getIFrequentaPersistente();
+        
         Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
 
         ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseID);
 
-        Attends attendacy = persistentAttendacy.readByAlunoAndDisciplinaExecucao(student
-                .getIdInternal(), executionCourse.getIdInternal());
+        Attends attendacy = student.readAttendByExecutionCourse(executionCourse);
         if (attendacy == null)
             return null; // the student is not enrolled on this course
 

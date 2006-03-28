@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -32,7 +33,8 @@ public class ReadDistributedTestMarksToString extends Service {
 
     public String run(Integer executionCourseId, Integer distributedTestId)
             throws FenixServiceException, ExcepcaoPersistencia {
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
+        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(
+                DistributedTest.class, distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
@@ -101,13 +103,15 @@ public class ReadDistributedTestMarksToString extends Service {
         IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
                 .getIPersistentStudentTestQuestion();
 
-        List<Student> studentsFromAttendsList = (List) CollectionUtils.collect(persistentSupport
-                .getIFrequentaPersistente().readByExecutionCourse(executionCourseId), new Transformer() {
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        List<Student> studentsFromAttendsList = (List) CollectionUtils.collect(executionCourse
+                .getAttends(), new Transformer() {
 
             public Object transform(Object input) {
                 return ((Attends) input).getAluno();
             }
         });
+
         List<Integer> distributedTestIdsList = new ArrayList<Integer>();
         CollectionUtils.addAll(distributedTestIdsList, distributedTestCodes);
         List<Student> studentsFromTestsList = persistentStudentTestQuestion

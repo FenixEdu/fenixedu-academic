@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /*
@@ -64,17 +63,14 @@ public class DeleteStudentAttendingCourse extends Service {
 
     private void deleteAttend(final ISuportePersistente persistentSupport, final Student student,
             final ExecutionCourse executionCourse) throws FenixServiceException, ExcepcaoPersistencia {
-
-        final IFrequentaPersistente persistentAttends = persistentSupport.getIFrequentaPersistente();
-        final Attends attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student
-                .getIdInternal(), executionCourse.getIdInternal());
+        
+        final Attends attend = student.readAttendByExecutionCourse(executionCourse);
 
         if (attend != null) {
             checkIfHasStudentGroups(attend);
             checkIfIsEnrolled(attend);
             checkStudentShifts(student, executionCourse);
-
-            persistentAttends.deleteByOID(Attends.class, attend.getIdInternal());
+            attend.delete();
         }
     }
 

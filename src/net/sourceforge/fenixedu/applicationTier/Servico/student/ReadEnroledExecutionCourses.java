@@ -16,17 +16,18 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 public class ReadEnroledExecutionCourses extends Service {
 
     private boolean checkPeriodEnrollment(final Grouping grouping) {
-        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                .getInstance();
+        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                .getGroupEnrolmentStrategyInstance(grouping);
         return strategy.checkEnrolmentDate(grouping, Calendar.getInstance());
-        
+
     }
 
     private boolean checkPeriodEnrollment(List<Grouping> allGroupProperties) {
@@ -54,12 +55,10 @@ public class ReadEnroledExecutionCourses extends Service {
     public List run(String username) throws ExcepcaoPersistencia {
         List allInfoExecutionCourses = new ArrayList();
 
-        IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         Student student = persistentStudent.readByUsername(username);
-        List allAttend = persistentAttend.readByStudentNumber(student.getNumber(), student
-                .getDegreeType());
+        List allAttend = student.getAssociatedAttends();
 
         Iterator iter = allAttend.iterator();
         allInfoExecutionCourses = new ArrayList();
@@ -70,7 +69,8 @@ public class ReadEnroledExecutionCourses extends Service {
                 List allGroupProperties = executionCourse.getGroupings();
                 boolean result = checkPeriodEnrollment(allGroupProperties);
                 if (result && checkStudentInAttendsSet(allGroupProperties, student)) {
-                    final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+                    final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+                            .newInfoFromDomain(executionCourse);
                     final List<InfoGrouping> infoGroupings = new ArrayList<InfoGrouping>();
                     for (final Grouping grouping : executionCourse.getGroupings()) {
                         if (checkPeriodEnrollment(grouping)) {

@@ -42,16 +42,18 @@ public class ReadExamsByStudent extends Service {
         Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
 
         if (student != null) {
-        	List examsStudentRooms = student.getWrittenEvaluationEnrolments();
+            List examsStudentRooms = student.getWrittenEvaluationEnrolments();
             Iterator iter = examsStudentRooms.iterator();
             List<Exam> examsEnrolled = new ArrayList<Exam>();
 
             while (iter.hasNext()) {
-                WrittenEvaluationEnrolment writtenEvaluationEnrolment = (WrittenEvaluationEnrolment) iter.next();
+                WrittenEvaluationEnrolment writtenEvaluationEnrolment = (WrittenEvaluationEnrolment) iter
+                        .next();
 
                 InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = new InfoWrittenEvaluationEnrolment();
                 infoWrittenEvaluationEnrolment.setIdInternal(writtenEvaluationEnrolment.getIdInternal());
-                InfoExam infoExam = InfoExam.newInfoFromDomain((Exam)writtenEvaluationEnrolment.getWrittenEvaluation());
+                InfoExam infoExam = InfoExam.newInfoFromDomain((Exam) writtenEvaluationEnrolment
+                        .getWrittenEvaluation());
                 infoWrittenEvaluationEnrolment.setInfoExam(infoExam);
                 infoWrittenEvaluationEnrolment.getInfoExam().setInfoExecutionCourses(
                         (List) CollectionUtils.collect(writtenEvaluationEnrolment.getWrittenEvaluation()
@@ -61,7 +63,8 @@ public class ReadExamsByStudent extends Service {
                                 return InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) arg0);
                             }
                         }));
-                InfoStudent infoStudent = InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment.getStudent());
+                InfoStudent infoStudent = InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment
+                        .getStudent());
                 infoWrittenEvaluationEnrolment.setInfoStudent(infoStudent);
                 if (writtenEvaluationEnrolment.getRoom() != null) {
                     InfoRoom infoRoom = InfoRoom.newInfoFromDomain(writtenEvaluationEnrolment.getRoom());
@@ -71,8 +74,7 @@ public class ReadExamsByStudent extends Service {
                 examsEnrolled.add((Exam) writtenEvaluationEnrolment.getWrittenEvaluation());
             }
 
-            List attends = persistentSupport.getIFrequentaPersistente().readByStudentNumber(student.getNumber(),
-                    student.getDegreeType());
+            List attends = student.getAssociatedAttends();
 
             Iterator examsToEnrollIterator = attends.iterator();
             while (examsToEnrollIterator.hasNext()) {

@@ -11,8 +11,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -22,10 +23,15 @@ public class ReadAttendsByStudentIdAndExecutionPeriodId extends Service {
 
     public List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> run(Integer studentId, Integer executionPeriodId,
             Boolean onlyEnrolledCourses, Boolean onlyAttendsWithTeachers) throws ExcepcaoPersistencia {
-        final IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
 
-        final List<Attends> attendsList = persistentAttend.readByStudentIdAndExecutionPeriodId(
-                studentId, executionPeriodId);
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
+        Student student = rootDomainObject.readStudentByOID(studentId);
+        
+        List<Attends> attendsList = new ArrayList();
+        if(student != null){
+            attendsList = student.readAttendsByExecutionPeriod(executionPeriod);
+        }
+        
         final List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> infoAttendsList =
 			new ArrayList<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers>(attendsList.size());
 

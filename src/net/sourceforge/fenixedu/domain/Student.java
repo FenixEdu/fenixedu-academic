@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.util.EntryPhase;
+import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StudentState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -33,8 +34,8 @@ public class Student extends Student_Base {
     private transient Integer approvedEnrollmentsNumber = 0;
 
     public Student() {
-    	super();
-    	setRootDomainObject(RootDomainObject.getInstance());
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
         this.setSpecialSeason(Boolean.FALSE);
     }
 
@@ -202,7 +203,8 @@ public class Student extends Student_Base {
         for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
             for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
                 if (enrolment.getCondition() != EnrollmentCondition.INVISIBLE
-                        && (currentExecutionYear == null || enrolment.getExecutionPeriod().getExecutionYear() != currentExecutionYear)) {
+                        && (currentExecutionYear == null || enrolment.getExecutionPeriod()
+                                .getExecutionYear() != currentExecutionYear)) {
                     enrollmentsNumber++;
                     if (enrolment.getEnrollmentState() == EnrollmentState.APROVED) {
                         actualApprovedEnrollmentsNumber++;
@@ -256,33 +258,66 @@ public class Student extends Student_Base {
             }
         });
     }
-    
+
     public List<Advise> getAdvisesByType(final AdviseType adviseType) {
-        return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate(){
+        return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate() {
             public boolean evaluate(Object arg0) {
-                Advise advise = (Advise) arg0;                
+                Advise advise = (Advise) arg0;
                 return advise.getAdviseType().equals(adviseType);
-            }});
+            }
+        });
     }
 
     public Set<Attends> getOrderedAttends() {
-    	final Set<Attends> result = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR);
-    	result.addAll(getAssociatedAttends());
-    	return result;
-    }
-    
-    public int countCompletedCoursesForActiveUndergraduateCurricularPlan() {
-    	return getActiveStudentCurricularPlan().getAprovedEnrolments().size();
-    }
-        
-    public List<StudentCurricularPlan> getStudentCurricularPlansByStateAndType(StudentCurricularPlanState state, DegreeType type){
-    	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-    	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
-			if(studentCurricularPlan.getCurrentState().equals(state) && studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(type)) {
-				result.add(studentCurricularPlan);
-			}
-		}
-    	return result;
+        final Set<Attends> result = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR);
+        result.addAll(getAssociatedAttends());
+        return result;
     }
 
+    public int countCompletedCoursesForActiveUndergraduateCurricularPlan() {
+        return getActiveStudentCurricularPlan().getAprovedEnrolments().size();
+    }
+
+    public List<StudentCurricularPlan> getStudentCurricularPlansByStateAndType(
+            StudentCurricularPlanState state, DegreeType type) {
+        List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+            if (studentCurricularPlan.getCurrentState().equals(state)
+                    && studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso()
+                            .equals(type)) {
+                result.add(studentCurricularPlan);
+            }
+        }
+        return result;
+    }
+
+    public List<Attends> readAttendsInCurrentExecutionPeriod() {
+        List<Attends> attends = new ArrayList<Attends>();
+        for (Attends attend : this.getAssociatedAttends()) {
+            if (attend.getDisciplinaExecucao().getExecutionPeriod().getState().equals(
+                    PeriodState.CURRENT)) {
+                attends.add(attend);
+            }
+        }
+        return attends;
+    }
+
+    public List<Attends> readAttendsByExecutionPeriod(ExecutionPeriod executionPeriod) {
+        List<Attends> attends = new ArrayList<Attends>();
+        for (Attends attend : this.getAssociatedAttends()) {
+            if (attend.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
+                attends.add(attend);
+            }
+        }
+        return attends;
+    }
+
+    public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {        
+        for (Attends attend : this.getAssociatedAttends()) {
+            if (attend.getDisciplinaExecucao().equals(executionCourse)) {
+                return attend;
+            }
+        }
+        return null;
+    }
 }

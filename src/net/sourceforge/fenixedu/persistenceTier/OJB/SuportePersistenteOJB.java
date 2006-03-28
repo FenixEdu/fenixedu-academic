@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
@@ -227,11 +226,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public void cancelarTransaccao()
 	{
 		Transaction.abort();
-	}
-
-	public IFrequentaPersistente getIFrequentaPersistente()
-	{
-		return new FrequentaOJB();
 	}
 
 	public IPersistentExecutionCourse getIPersistentExecutionCourse()

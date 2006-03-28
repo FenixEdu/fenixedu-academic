@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
@@ -212,10 +211,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentGrantCostCenter getIPersistentGrantCostCenter() {
         return new GrantCostCenterVO();
-    }
-
-    public IFrequentaPersistente getIFrequentaPersistente() {
-        return null;
     }
 
     public void confirmarTransaccao() throws ExcepcaoPersistencia {

@@ -177,10 +177,6 @@ public class ReadSummaries extends Service {
                 && (shiftId == null || shiftId.intValue() == 0)) {
 
             summaries = executionCourse.getAssociatedSummaries();
-
-            // List summariesByExecutionCourse =
-            // executionCourse.getAssociatedSummaries();
-            // summaries = allSummaries(summaries, summariesByExecutionCourse);
         }
         return summaries;
     }

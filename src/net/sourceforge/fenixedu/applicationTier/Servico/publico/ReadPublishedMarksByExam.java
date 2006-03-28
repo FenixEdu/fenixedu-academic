@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -44,20 +43,19 @@ public class ReadPublishedMarksByExam extends Service {
         InfoEvaluation infoEvaluation = null;
 
         //Site
-        site = (Site) persistentObject.readByOID(Site.class, siteCode);
+        site = rootDomainObject.readSiteByOID(siteCode);
 
         //Execution Course
         ExecutionCourse executionCourse = site.getExecutionCourse();
 
         // Evaluation
 
-        evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class, evaluationCode);
+        evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
         //Attends
-        IFrequentaPersistente attendDAO = persistentSupport.getIFrequentaPersistente();
-        List attendList = attendDAO.readByExecutionCourse(executionCourse.getIdInternal());
+        List attendList = executionCourse.getAttends();
 
         //Marks
         marksList = evaluation.getMarks();
