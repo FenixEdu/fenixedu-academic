@@ -52,7 +52,11 @@ public class ReadDelegateCurricularCourses extends SearchService {
 
         final String user = (String) searchParameters.get("user");
         final Student student = persistentSupport.getIPersistentStudent().readByUsername(user);
-        final Delegate delegate = persistentSupport.getIPersistentDelegate().readByStudent(student);
+        
+        Delegate delegate = null;
+        if (! student.getDelegate().isEmpty()) {
+            delegate = student.getDelegate().get(0);
+        }
 
         // if he's a degree delegate then he can read all curricular courses
         // report

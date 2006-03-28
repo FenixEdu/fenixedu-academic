@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicati
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
@@ -153,8 +152,6 @@ public interface ISuportePersistente
 	public IPersistentGratuitySituation getIPersistentGratuitySituation();
 
 	public IPersistentTutor getIPersistentTutor();
-
-	public IPersistentDelegate getIPersistentDelegate();
 
 	public IPersistentOtherTypeCreditLine getIPersistentOtherTypeCreditLine();
 

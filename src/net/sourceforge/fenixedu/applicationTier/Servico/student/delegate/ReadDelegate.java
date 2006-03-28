@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -22,12 +21,15 @@ import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 public class ReadDelegate extends Service {
  
     public InfoDelegate run(HashMap hashMap) throws ExcepcaoPersistencia {
-        final IPersistentDelegate persistentDelegate = persistentSupport.getIPersistentDelegate();
         final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         final String user = (String) hashMap.get("user");
         final Student student = persistentStudent.readByUsername(user);
-        final Delegate delegate = persistentDelegate.readByStudent(student);
+        
+        Delegate delegate = null;
+        if (! student.getDelegate().isEmpty()) {
+            delegate = student.getDelegate().get(0);
+        }
 
         return InfoDelegate.newInfoFromDomain(delegate);
     }

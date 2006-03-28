@@ -70,7 +70,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationForma
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTeacherOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTypeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.sms.SentSmsOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.student.DelegateOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OldPublicationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OrientationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.PublicationsNumberOJB;
@@ -119,7 +118,6 @@ import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicati
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
@@ -543,11 +541,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentTutor getIPersistentTutor()
 	{
 		return new TutorOJB();
-	}
-
-	public IPersistentDelegate getIPersistentDelegate()
-	{
-		return new DelegateOJB();
 	}
 
 	public IPersistentOtherTypeCreditLine getIPersistentOtherTypeCreditLine()

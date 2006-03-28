@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 import net.sourceforge.fenixedu.util.DelegateYearType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -49,10 +48,14 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
             IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-            IPersistentDelegate persistentDelegate = persistentSupport.getIPersistentDelegate();
 
             Student student = persistentStudent.readByUsername(id.getUtilizador());
-            Delegate delegate = persistentDelegate.readByStudent(student);
+            
+            Delegate delegate = null;
+            if (! student.getDelegate().isEmpty()) {
+                delegate = student.getDelegate().get(0);
+            }
+            
             StudentCourseReport studentCourseReport = (StudentCourseReport) persistentObject
                     .readByOID(StudentCourseReport.class, objectId);
             CurricularCourse curricularCourse = studentCourseReport.getCurricularCourse();
@@ -67,7 +70,7 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
             Iterator iter = years.iterator();
             while (iter.hasNext()) {
                 Integer year = (Integer) iter.next();
-                List delegates = persistentDelegate.readByDegreeAndExecutionYearAndYearType(
+                List delegates = Delegate.getAllByDegreeAndExecutionYearAndYearType(
                         curricularCourse.getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear(),
                         DelegateYearType.getEnum(year.intValue()));
 

@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 import net.sourceforge.fenixedu.util.DelegateYearType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -48,14 +47,18 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
             IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-            IPersistentDelegate persistentDelegate = persistentSupport.getIPersistentDelegate();
 
             Student student = persistentStudent.readByUsername(id.getUtilizador());
-            Delegate delegate = persistentDelegate.readByStudent(student);
+            
+            Delegate delegate = null;
+            if (! student.getDelegate().isEmpty()) {
+                delegate = student.getDelegate().get(0);
+            }
+            
             CurricularCourse curricularCourse = (CurricularCourse) persistentObject
                     .readByOID(CurricularCourse.class, objectId);
 
-            List degreeDelegates = persistentDelegate.readDegreeDelegateByDegreeAndExecutionYear(
+            List degreeDelegates = Delegate.getAllByDegreeAndExecutionYear(
                     curricularCourse.getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear());
 
             // if it's a degree delegate then it's allowed
@@ -73,7 +76,7 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
             Iterator iter = years.iterator();
             while (iter.hasNext()) {
                 Integer year = (Integer) iter.next();
-                List delegates = persistentDelegate.readByDegreeAndExecutionYearAndYearType(
+                List delegates = Delegate.getAllByDegreeAndExecutionYearAndYearType(
                         curricularCourse.getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear(),
                         DelegateYearType.getEnum(year.intValue()));
 
