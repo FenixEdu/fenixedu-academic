@@ -98,8 +98,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
 
     public List getAllEnrollments() {
-        
-        List allEnrollments = new ArrayList();
+        List<Enrolment> allEnrollments = new ArrayList<Enrolment>();
         addNonInvisibleEnrolments(allEnrollments, getEnrolments());
 
         for (final StudentCurricularPlan studentCurricularPlan : getStudent()
@@ -110,7 +109,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
 
         return allEnrollments;
-
     }
 
     private void addNonInvisibleEnrolments(List<Enrolment> allEnrollments,
@@ -122,12 +120,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
     }
 
-    public List getCurricularCoursesToEnroll(ExecutionPeriod executionPeriod)
+    public List<CurricularCourse2Enroll> getCurricularCoursesToEnroll(ExecutionPeriod executionPeriod)
             throws FenixDomainException {
 
         calculateStudentAcumulatedEnrollments(executionPeriod);
 
-        List setOfCurricularCoursesToEnroll = getCommonBranchAndStudentBranchesCourses(executionPeriod);
+        List<CurricularCourse2Enroll> setOfCurricularCoursesToEnroll = getCommonBranchAndStudentBranchesCourses(executionPeriod);
 
         setOfCurricularCoursesToEnroll = initAcumulatedEnrollments(setOfCurricularCoursesToEnroll);
 
@@ -175,7 +173,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getStudentEnrollmentsWithEnrolledState().size();
     }
 
-    protected boolean isApproved(CurricularCourse curricularCourse, List approvedCourses) {
+    protected boolean isApproved(CurricularCourse curricularCourse, List<CurricularCourse> approvedCourses) {
         return hasEquivalenceIn(curricularCourse, approvedCourses)
                 || hasEquivalenceInNotNeedToEnroll(curricularCourse);
         // || hasEquivalenceIn(curricularCourse,
@@ -201,7 +199,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
-    protected boolean hasEquivalenceIn(CurricularCourse curricularCourse, List otherCourses) {
+    protected boolean hasEquivalenceIn(CurricularCourse curricularCourse, List<CurricularCourse> otherCourses) {
         if (otherCourses.isEmpty()) {
             return false;
         }
@@ -222,7 +220,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isCurricularCourseApprovedInCurrentOrPreviousPeriod(final CurricularCourse course,
             final ExecutionPeriod executionPeriod) {
         final List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
-        final List approvedCurricularCourses = new ArrayList();
+        final List<CurricularCourse> approvedCurricularCourses = new ArrayList<CurricularCourse>();
 
         for (Iterator iter = studentApprovedEnrollments.iterator(); iter.hasNext();) {
             Enrolment enrolment = (Enrolment) iter.next();
@@ -232,7 +230,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
 
         return isApproved(course, approvedCurricularCourses);
-
     }
 
     public boolean isCurricularCourseApprovedWithoutEquivalencesInCurrentOrPreviousPeriod(
@@ -261,7 +258,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isCurricularCourseApproved(CurricularCourse curricularCourse) {
         List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
 
-        List result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer() {
+        List<CurricularCourse> result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer() {
             public Object transform(Object obj) {
                 Enrolment enrollment = (Enrolment) obj;
 
@@ -338,11 +335,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 }));
     }
 
-    public List getAllStudentEnrollmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
-
+    public List<Enrolment> getAllStudentEnrollmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
         calculateStudentAcumulatedEnrollments(executionPeriod);
         return initAcumulatedEnrollments((List) CollectionUtils.select(getEnrolments(), new Predicate() {
-
             public boolean evaluate(Object arg0) {
 
                 return ((Enrolment) arg0).getExecutionPeriod().equals(executionPeriod);
@@ -413,14 +408,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             ExecutionPeriod currentExecutionPeriod) {
 
         boolean result = true;
-        List curricularCoursesFromCommonBranches = new ArrayList();
-        List commonAreas = getDegreeCurricularPlan().getCommonAreas();
+        List<CurricularCourse> curricularCoursesFromCommonBranches = new ArrayList<CurricularCourse>();
+        List<Branch> commonAreas = getDegreeCurricularPlan().getCommonAreas();
         int commonAreasSize = commonAreas.size();
 
         for (int i = 0; i < commonAreasSize; i++) {
             Branch area = (Branch) commonAreas.get(i);
-            curricularCoursesFromCommonBranches.addAll(getDegreeCurricularPlan()
-                    .getCurricularCoursesFromArea(area, AreaType.BASE));
+            curricularCoursesFromCommonBranches.addAll(getDegreeCurricularPlan().getCurricularCoursesFromArea(area, AreaType.BASE));
         }
         if (!curricularCoursesFromCommonBranches.contains(curricularCourse)) {
 
@@ -529,7 +523,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public List initAcumulatedEnrollments(List elements) {
-
         if (getAcumulatedEnrollmentsMap() != null) {
             List result = new ArrayList();
             int size = elements.size();
@@ -537,23 +530,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             for (int i = 0; i < size; i++) {
                 try {
                     Enrolment enrollment = (Enrolment) elements.get(i);
-                    enrollment.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(enrollment
-                            .getCurricularCourse()));
+                    enrollment.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(enrollment.getCurricularCourse()));
                     result.add(enrollment);
                 } catch (ClassCastException e) {
-                    CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) elements
-                            .get(i);
-                    curricularCourse2Enroll
-                            .setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(curricularCourse2Enroll
-                                    .getCurricularCourse()));
+                    //FIXME shouldn't this be done in a clearer way?...
+                    
+                    CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) elements.get(i);
+                    curricularCourse2Enroll.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(curricularCourse2Enroll.getCurricularCourse()));
                     result.add(curricularCourse2Enroll);
+                    //FIXME is this correct? adding a CurricularCourse2Enroll to a list of Enrolments?
                 }
             }
 
             return result;
         }
         return elements;
-
     }
 
     protected Set getCurricularCoursesInCurricularCourseEquivalences(
@@ -604,9 +595,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 curricularCourse2.getCurricularCourseUniqueKeyForEnrollment());
     }
 
-    protected boolean isThisCurricularCoursesInTheList(final CurricularCourse curricularCourse,
-            List curricularCourses) {
-
+    protected boolean isThisCurricularCoursesInTheList(final CurricularCourse curricularCourse, List<CurricularCourse> curricularCourses) {
         /*
          * CurricularCourse curricularCourseFound = (CurricularCourse)
          * CollectionUtils.find( curricularCourses, new Predicate() { public
@@ -616,8 +605,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
          * .equals(curricularCourse.getCurricularCourseUniqueKeyForEnrollment()); }
          * });
          */
-
-        for (CurricularCourse otherCourse : (List<CurricularCourse>) curricularCourses) {
+        for (CurricularCourse otherCourse : curricularCourses) {
             if ((curricularCourse == otherCourse) || haveSameCompetence(curricularCourse, otherCourse)) {
                 return true;
             }
@@ -717,9 +705,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getDegreeCurricularPlan().getListOfEnrollmentRules(this, executionPeriod);
     }
 
-    protected List getStudentNotNeedToEnrollCurricularCourses() {
-
-        return (List) CollectionUtils.collect(getNotNeedToEnrollCurricularCourses(), new Transformer() {
+    protected List<CurricularCourse> getStudentNotNeedToEnrollCurricularCourses() {
+        return (List<CurricularCourse>) CollectionUtils.collect(getNotNeedToEnrollCurricularCourses(), new Transformer() {
             public Object transform(Object obj) {
                 NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) obj;
                 return notNeedToEnrollInCurricularCourse.getCurricularCourse();
@@ -727,35 +714,31 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         });
     }
 
-    protected List getCommonBranchAndStudentBranchesCourses(ExecutionPeriod executionPeriod) {
-
-        Set curricularCourses = new HashSet();
+    protected List<CurricularCourse2Enroll> getCommonBranchAndStudentBranchesCourses(ExecutionPeriod executionPeriod) {
+        Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         List commonAreas = degreeCurricularPlan.getCommonAreas();
         int commonAreasSize = commonAreas.size();
 
         for (int i = 0; i < commonAreasSize; i++) {
             Branch area = (Branch) commonAreas.get(i);
-            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(area,
-                    AreaType.BASE));
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(area, AreaType.BASE));
         }
 
         if (getBranch() != null) {
-            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getBranch(),
-                    AreaType.SPECIALIZATION));
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getBranch(), AreaType.SPECIALIZATION));
         }
 
         if (getSecundaryBranch() != null) {
-            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(
-                    getSecundaryBranch(), AreaType.SECONDARY));
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getSecundaryBranch(), AreaType.SECONDARY));
         }
 
         curricularCourses.addAll(degreeCurricularPlan.getTFCs());
 
-        List allCurricularCourses = new ArrayList(curricularCourses.size());
+        List<CurricularCourse> allCurricularCourses = new ArrayList<CurricularCourse>(curricularCourses.size());
         allCurricularCourses.addAll(curricularCourses);
 
-        List result = new ArrayList();
+        List<CurricularCourse2Enroll> result = new ArrayList<CurricularCourse2Enroll>();
         int curricularCoursesSize = curricularCourses.size();
 
         for (int i = 0; i < curricularCoursesSize; i++) {
@@ -786,8 +769,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         List allOptionalCurricularCourseGroups = getDegreeCurricularPlan()
                 .getAllOptionalCurricularCourseGroups();
 
-        List curricularCoursesToRemove = new ArrayList();
-        List curricularCoursesToKeep = new ArrayList();
+        List<CurricularCourse> curricularCoursesToRemove = new ArrayList<CurricularCourse>();
+        List<CurricularCourse> curricularCoursesToKeep = new ArrayList<CurricularCourse>();
 
         int size = allOptionalCurricularCourseGroups.size();
         for (int i = 0; i < size; i++) {
@@ -833,14 +816,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
     }
 
-    /**
-     * @param curricularCoursesToRemove
-     * @param curricularCoursesToKeep
-     * @param optionalCurricularCourseGroup
-     * @param executionPeriod
-     */
-    protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
-            List curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup,
+    protected void selectOptionalCoursesToBeRemoved(List<CurricularCourse> curricularCoursesToRemove,
+            List<CurricularCourse> curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup,
             ExecutionPeriod executionPeriod) {
         int count = 0;
 
@@ -874,7 +851,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             }
         }
 
-        List studentNotNeedToEnrollCourses = getStudentNotNeedToEnrollCurricularCourses();
+        List<CurricularCourse> studentNotNeedToEnrollCourses = getStudentNotNeedToEnrollCurricularCourses();
 
         if (isThisCurricularCoursesInTheList(curricularCourse, studentNotNeedToEnrollCourses)) {
             return true;

@@ -319,8 +319,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    public List getCurricularCoursesFromArea(Branch area, AreaType areaType) {
-
+    public List<CurricularCourse> getCurricularCoursesFromArea(Branch area, AreaType areaType) {
         List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
 
         List scopes = area.getScopes();
@@ -357,7 +356,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return null;
     }
 
-    public List getCommonAreas() {
+    public List<Branch> getCommonAreas() {
         return (List) CollectionUtils.select(getAreas(), new Predicate() {
             public boolean evaluate(Object obj) {
                 Branch branch = (Branch) obj;
@@ -370,9 +369,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         });
     }
 
-    public List getTFCs() {
-
-        List curricularCourses = (List) CollectionUtils.select(getCurricularCourses(), new Predicate() {
+    public List<CurricularCourse> getTFCs() {
+        List<CurricularCourse> curricularCourses = (List<CurricularCourse>) CollectionUtils.select(getCurricularCourses(), new Predicate() {
             public boolean evaluate(Object obj) {
                 CurricularCourse cc = (CurricularCourse) obj;
                 return cc.getType().equals(CurricularCourseType.TFC_COURSE);
