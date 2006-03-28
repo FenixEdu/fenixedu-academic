@@ -2815,6 +2815,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord extends 
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Schedule extends net.sourceforge.fenixedu.domain.DomainObject {
+	Interval validInterval;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.NormalWorkPeriod extends net.sourceforge.fenixedu.domain.DomainObject{
@@ -5888,10 +5889,10 @@ relation AssiduousnessHasAssiduousnessRecord {
 }               
 
 relation AssiduousnessHasSchedule {
-	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedule {
+	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedules {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecord {
+	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness {
 		multiplicity 1;
  	}
 }
