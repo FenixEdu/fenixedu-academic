@@ -37,8 +37,6 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
-    private static final ActionErrors errors = new ActionErrors();
-    
     public ActionForward showDescription(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         
@@ -63,12 +61,15 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
                 final Object[] args = { executionDegreeId };
                 infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(null, "ReadExecutionDegreeByOID", args);
             } catch (FenixServiceException e) {
+                final ActionErrors errors = new ActionErrors();
                 errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
             }
             if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
                     || infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null) {
+                final ActionErrors errors = new ActionErrors();
                 errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
             }
+            final ActionErrors errors = new ActionErrors();
             if (!errors.isEmpty()) {
                 saveErrors(request, errors);
                 return (new ActionForward(mapping.getInput()));
@@ -117,6 +118,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
             infoDegreeInfo.prepareEnglishPresentation(getLocale(request));
             request.setAttribute("infoDegreeInfo", infoDegreeInfo);
         } catch (FenixServiceException e) {
+            final ActionErrors errors = new ActionErrors();
             errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
             saveErrors(request, errors);
         }
@@ -126,6 +128,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
             List executionDegreeList = (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionDegreesByDegreeAndExecutionPeriod", args1);
             request.setAttribute("infoExecutionDegrees", executionDegreeList);
         } catch (FenixServiceException e) {
+            final ActionErrors errors = new ActionErrors();
             errors.add("impossibleDegreeSite", new ActionError("error.impossibleExecutionDegreeList"));
             saveErrors(request, errors);
         }
