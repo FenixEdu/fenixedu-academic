@@ -90,14 +90,14 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             labelList.add(new GenericPair<Object, Boolean>("label.in", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
             labelList.add(new GenericPair<Object, Boolean>(getCurricularPeriodOrder(), false));
-            labelList.add(new GenericPair<Object, Boolean>("ï¿½ ", false));
+            labelList.add(new GenericPair<Object, Boolean>("º ", false));
             labelList.add(new GenericPair<Object, Boolean>("SEMESTER", true));
         }
         if (getMinimumYear() != null && getMaximumYear() != null) {
             if (getMinimumYear().compareTo(getMaximumYear()) == 0) {
                 labelList.add(new GenericPair<Object, Boolean>(", ", false));
                 labelList.add(new GenericPair<Object, Boolean>("label.of", true));
-                labelList.add(new GenericPair<Object, Boolean>("ï¿½ ", false));
+                labelList.add(new GenericPair<Object, Boolean>("º ", false));
                 labelList.add(new GenericPair<Object, Boolean>(getMinimumYear(), false));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
                 labelList.add(new GenericPair<Object, Boolean>("label.year", true));
@@ -106,11 +106,11 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
                 labelList.add(new GenericPair<Object, Boolean>("label.of", true));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
                 labelList.add(new GenericPair<Object, Boolean>(getMinimumYear(), false));
-                labelList.add(new GenericPair<Object, Boolean>("ï¿½ ", false));
+                labelList.add(new GenericPair<Object, Boolean>("º ", false));
                 labelList.add(new GenericPair<Object, Boolean>("label.to1", true));
                 labelList.add(new GenericPair<Object, Boolean>(" ", false));
                 labelList.add(new GenericPair<Object, Boolean>(getMaximumYear(), false));
-                labelList.add(new GenericPair<Object, Boolean>("ï¿½ ", false));
+                labelList.add(new GenericPair<Object, Boolean>("º ", false));
                 labelList.add(new GenericPair<Object, Boolean>("label.year", true));
             }
         }
@@ -160,10 +160,12 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     public boolean evaluate(Class< ? extends DomainObject> object) {
         // TODO Auto-generated method stub
         /**
-         * ? getDegree() == null 
+         * ? if getDegree() == null 
          *      ? getBolonhaDegreeType() == null ? any degree from IST
-         *      ? getBolonhaDegreeType() == null ? any degree from DEGREE / MASTER_DEGREE / INTEGRATED_MASTER_DEGREE
-         *       
+         *      ? getBolonhaDegreeType() != null ? any degree from DEGREE / MASTER_DEGREE / INTEGRATED_MASTER_DEGREE
+         * ? else use selected degree
+         * 
+         * if departmentUnit != null ? curricular courses from competence courses that belong to that department      
          */
         return false;
     }
