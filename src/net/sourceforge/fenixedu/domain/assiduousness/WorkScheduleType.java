@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
@@ -24,6 +25,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     
     public  WorkScheduleType() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public static WorkScheduleType createWorkSchedule(DTO presentationDTO) throws FenixDomainException {

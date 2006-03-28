@@ -1,18 +1,9 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
-import java.util.EnumSet;
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
-import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
-import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import net.sourceforge.fenixedu.util.WeekDay;
 
-import org.joda.time.DateTime;
 import org.joda.time.Duration;
-import org.joda.time.Interval;
-import org.joda.time.YearMonthDay;
 
 /**
  *
