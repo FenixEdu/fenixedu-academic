@@ -111,4 +111,16 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         }
         deleteDomainObject();
     }
+    
+    public static OccupationPeriod readByDatesAndNextOccupationPeriod(Date startDate, Date endDate, OccupationPeriod nextOccupationPeriod) {
+        for (OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriods()) {
+            if (occupationPeriod.getStart().equals(startDate)
+                    && occupationPeriod.getEnd().equals(endDate) 
+                    && (nextOccupationPeriod == null || (nextOccupationPeriod != null && occupationPeriod.getNextPeriod().equals(nextOccupationPeriod)))) {
+                        return occupationPeriod;
+            }
+        }
+        return null;
+    }
+    
 }
