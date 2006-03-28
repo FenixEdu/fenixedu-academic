@@ -694,8 +694,11 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
-	
-	
+	<field-descriptor
+		name="keyRootDomainObject"
+		column="KEY_ROOT_DOMAIN_OBJECT"
+		jdbc-type="INTEGER"
+	/>
 </class-descriptor>
 
 
