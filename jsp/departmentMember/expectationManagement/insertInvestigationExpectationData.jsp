@@ -146,13 +146,13 @@
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.common.finalDegreeWorkYear']}" />
 					</f:facet>
-					<h:outputText value="#{finalDegreeWork.executionDegree.executionYear.year}" />
+					<h:outputText value="#{finalDegreeWork.scheduleing.executionDegrees[0].executionYear.year}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.common.finalDegreeWorkDegree']}" />
 					</f:facet>
-					<h:outputText value="#{finalDegreeWork.executionDegree.degreeCurricularPlan.degree.sigla}" />
+					<h:outputText value="#{finalDegreeWork.scheduleing.executionDegrees[0].degreeCurricularPlan.degree.sigla}" />
 				</h:column>
 			</h:dataTable>
 		</h:panelGrid>
