@@ -2835,7 +2835,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.Meal extends net.sourceforge
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule extends net.sourceforge.fenixedu.domain.DomainObject {
-	Interval validInterval;
+	Boolean exception;
 	DateTime creationDate;
 }
 
@@ -2880,6 +2880,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.ClockUnit extends net.source
         String acronym;
         String name;
 }
+
 class net.sourceforge.fenixedu.domain.assiduousness.Justification extends net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord {	
 		DateTime startDate;
 		JustificationMotiveType motiveType; // OC, JH, Saldo
