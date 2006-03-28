@@ -837,86 +837,18 @@ public class CurricularCourse extends CurricularCourse_Base {
         return false;
     }
 
-    public static List<CurricularCourse> getCurricularCourses(String degreeCurricularPlanName, String degreeName, String degreeAcronym) {
-        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
-        
-        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
-            if (! (degreeModule instanceof CurricularCourse)) {
-                continue;
-            }
-            
-            CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-
-            if (! CurricularStage.OLD.equals(curricularCourse.getCurricularStage())) {
-                continue;
-            }
-            
-            if (! degreeCurricularPlanName.equals(curricularCourse.getDegreeCurricularPlan().getName())) {
-                continue;
-            }
-
-            if (! degreeName.equals(curricularCourse.getDegreeCurricularPlan().getDegree().getNome())) {
-                continue;
-            }
-
-            if (! degreeAcronym.equals(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla())) {
-                continue;
-            }
-            
-            curricularCourses.add(curricularCourse);
-        }
-        
-        return curricularCourses;
+    public static List<CurricularCourse> readByCurricularStage(CurricularStage curricularStage){
+    	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+    	for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
+			if(degreeModule instanceof CurricularCourse) {
+				CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
+				if(curricularCourse.getCurricularStage() != null && curricularCourse.getCurricularStage().equals(curricularStage)) {
+					result.add(curricularCourse);
+				}
+			}
+		}
+    	return result;
     }
+    
 
-    public static CurricularCourse getCurricularCourseByDegreeCurricularPlanAndNameAndCode(DegreeCurricularPlan degreeCurricularPlan, String name, String code) {
-        
-        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
-            if (! (degreeModule instanceof CurricularCourse)) {
-                continue;
-            }
-            
-            CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-            
-            if (! name.equals(curricularCourse.getName())) {
-                continue;
-            }
-            
-            if (! code.equals(curricularCourse.getCode())) {
-                continue;
-            }
-            
-            if (! degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
-                continue;
-            }
-            
-            if (! CurricularStage.OLD.equals(curricularCourse.getCurricularStage())) {
-                continue;
-            }
-            
-            return curricularCourse;
-        }
-        
-        return null;
-    }
-
-    public static List<CurricularCourse> getByCurricularStage(CurricularStage stage) {
-        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
-        
-        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
-            if (! (degreeModule instanceof CurricularCourse)) {
-                continue;
-            }
-            
-            CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-            
-            if (! stage.equals(curricularCourse.getCurricularStage())) {
-                continue;
-            }
-            
-            curricularCourses.add(curricularCourse);
-        }
-        
-        return curricularCourses;
-    }
 }

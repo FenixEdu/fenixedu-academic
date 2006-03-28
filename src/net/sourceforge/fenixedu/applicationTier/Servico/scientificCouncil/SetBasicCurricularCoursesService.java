@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -30,19 +28,8 @@ public class SetBasicCurricularCoursesService extends Service {
 
 		DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
-		List<CurricularCourse> basicCurricularCourses = new ArrayList<CurricularCourse>();
-        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-            if (! CurricularStage.OLD.equals(curricularCourse.getCurricularStage())) {
-                continue;
-            }
-            
-            if (! curricularCourse.getBasic()) {
-                continue;
-            }
-            
-            basicCurricularCourses.add(curricularCourse);
-        }
-        
+		List<CurricularCourse> basicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.TRUE);
+
 		Iterator itBCCourses = basicCurricularCourses.iterator();
 		CurricularCourse basicCourse;
 

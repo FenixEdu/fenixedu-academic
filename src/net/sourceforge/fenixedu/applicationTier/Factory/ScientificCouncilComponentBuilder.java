@@ -88,23 +88,9 @@ public class ScientificCouncilComponentBuilder {
 		if (degreeCurricularPlan == null) {
 			throw new InvalidArgumentsServiceException();
 		}
-
-        List<CurricularCourse> nonBasicCurricularCourses = new ArrayList<CurricularCourse>(); 
-        List<CurricularCourse>    basicCurricularCourses = new ArrayList<CurricularCourse>(); 
-
-        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-            if (! CurricularStage.OLD.equals(curricularCourse.getCurricularStage())) {
-                continue;
-            }
-            
-            if (curricularCourse.getBasic()) {
-                basicCurricularCourses.add(curricularCourse);
-            }
-            else {
-                nonBasicCurricularCourses.add(curricularCourse);
-            }
-        }
-
+		List<CurricularCourse> nonBasicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.FALSE); 
+		List<CurricularCourse> basicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.TRUE);
+		
 		Iterator iter = nonBasicCurricularCourses.iterator();
 		Iterator iter1 = basicCurricularCourses.iterator();
 		List infoNonBasicCurricularCourses = new ArrayList();
@@ -149,7 +135,7 @@ public class ScientificCouncilComponentBuilder {
 		}
 
 		List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
-            
+		
 		Iterator iter = curricularCourses.iterator();
 		List infoCurricularCourses = new ArrayList();
 		while (iter.hasNext()) {

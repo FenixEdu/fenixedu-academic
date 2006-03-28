@@ -31,7 +31,7 @@ public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID extends Ser
                         degreeCurricularPlanID);
 
         if (degreeCurricularPlan != null) {
-            List allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
+            List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses(); 
 
             if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
                 infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(degreeCurricularPlan,
