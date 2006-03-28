@@ -2,11 +2,29 @@ package net.sourceforge.fenixedu.util;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Language;
 
 public class MultiLanguageString {
+    
+    private static InheritableThreadLocal<Locale> locale = new InheritableThreadLocal<Locale>();
+
+    public static Locale getLocale()
+    {
+        return MultiLanguageString.locale.get();
+    }
+
+    public static void setLocale(Locale locale)
+    {
+        MultiLanguageString.locale.set(locale);
+    }
+    
+    
+    
 	private Map<Language, String> contentsMap;
 
 	public MultiLanguageString() {
@@ -20,18 +38,39 @@ public class MultiLanguageString {
 	public Collection<Language> getAllLanguages() {
 		return contentsMap.keySet();
 	}
+
+    private Language getUserLanguage() {
+        return getLocale() != null ? Language.valueOf(getLocale().getLanguage()) : null;
+    }
+
+    private Language getSystemLanguage() {
+        return Language.getApplicationLanguage();
+    }
     
     public String getContent() {
-        //In a future version this should return the content in the LOCALE language
-        //only if that language has no content the Application Language should be used
-        return getContent(Language.getApplicationLanguage());
+        final Language userLanguage = getUserLanguage();
+        if (userLanguage != null && hasLanguage(userLanguage)) {
+            return getContent(userLanguage);
+        }
+        final Language systemLanguage = getSystemLanguage();
+        if (systemLanguage != null && hasLanguage(systemLanguage)) {
+            return getContent(systemLanguage);
+        }
+
+        return contentsMap.isEmpty() ? null : contentsMap.values().iterator().next();
     }
 	
     public void setContent(String text) {
-        //In a future version the content should be set to the LOCALE language and the
-        //Application languange at the same time.
-        setContent(Language.getApplicationLanguage(), text);
+        final Language userLanguage = getUserLanguage();
+        if (userLanguage != null) {
+            setContent(userLanguage, text);
+        }
+        final Language systemLanguage = getSystemLanguage();
+        if (userLanguage != systemLanguage && !hasLanguage(systemLanguage)) {
+            setContent(systemLanguage, text);
+        }
     }
+
 	public String getContent(Language language) {
 		return contentsMap.get(language);
 	}
@@ -45,13 +84,7 @@ public class MultiLanguageString {
 	}
 	
 	public boolean hasLanguage(Language language) {
-		String result = contentsMap.get(language);
-		if (result == null) {
-			return false;
-		}
-		else {
-			return true;
-		}
+        return contentsMap.containsKey(language);
 	}
 
 	public String exportAsString() {

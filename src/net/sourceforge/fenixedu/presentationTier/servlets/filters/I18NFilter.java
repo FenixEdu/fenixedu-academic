@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
 import org.apache.struts.Globals;
 
 /**
@@ -61,21 +63,29 @@ public class I18NFilter implements Filter {
             }
             httpSession.removeAttribute(Globals.LOCALE_KEY);
             httpSession.setAttribute(Globals.LOCALE_KEY, locale);
-
+            
             request.removeAttribute(Globals.LOCALE_KEY);
             request.setAttribute(Globals.LOCALE_KEY, locale);
+            
+            MultiLanguageString.setLocale(locale);
         } else {
-            HttpSession httpSession = request.getSession(false);
-            if (httpSession != null && httpSession.getAttribute(Globals.LOCALE_KEY) == null) {
-                final Locale locale = new Locale("pt", "PT");
-                httpSession.setAttribute(Globals.LOCALE_KEY, locale);
-
-                request.removeAttribute(Globals.LOCALE_KEY);
-                request.setAttribute(Globals.LOCALE_KEY, locale);
+            HttpSession httpSession = request.getSession(true);
+            if (httpSession.getAttribute(Globals.LOCALE_KEY) == null) {
+                setDefaultLocale(request, httpSession);
             }
         }
 
         chain.doFilter(request, response);
+    }
+
+    public static void setDefaultLocale(final HttpServletRequest request, HttpSession httpSession) {
+        final Locale locale = new Locale("pt", "PT");
+        httpSession.setAttribute(Globals.LOCALE_KEY, locale);
+
+        request.removeAttribute(Globals.LOCALE_KEY);
+        request.setAttribute(Globals.LOCALE_KEY, locale);
+        
+        MultiLanguageString.setLocale(locale);
     }
 
 }

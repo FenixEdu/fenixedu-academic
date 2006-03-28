@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.I18NFilter;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -127,6 +128,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         // Store the UserView into the session and return
         newSession.setAttribute(SessionConstants.U_VIEW, userView);
         newSession.setAttribute(SessionConstants.SESSION_IS_VALID, Boolean.TRUE);
+        
+        I18NFilter.setDefaultLocale(request, newSession);
 
         return newSession;
     }
