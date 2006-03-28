@@ -199,28 +199,6 @@ public class Person extends Person_Base {
         }
     }
 
-    public static boolean checkIfUsernameExists(String username, Person thisPerson) {
-        for (Login login : Identification.readAllLogins()) {
-            if (!login.getUsername().equalsIgnoreCase(thisPerson.getUsername())
-                    && username.equalsIgnoreCase(login.getUsername())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
-            final IDDocumentType documentType, Person thisPerson) {
-
-        for (final Person person : Party.readAllPersons()) {
-            if (!person.equals(thisPerson) && person.getDocumentIdNumber().equals(documentIDNumber)
-                    && person.getIdDocumentType().equals(documentType)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private Login getLoginIdentification() {
         User personUser = getUser();
         if (personUser != null) {
@@ -1091,8 +1069,30 @@ public class Person extends Person_Base {
     }
     
     // -------------------------------------------------------------
-    // read static methods 
+    // static methods 
     // -------------------------------------------------------------
+    
+    public static boolean checkIfUsernameExists(String username, Person thisPerson) {
+        for (Login login : Identification.readAllLogins()) {
+            if (!login.getUsername().equalsIgnoreCase(thisPerson.getUsername())
+                    && username.equalsIgnoreCase(login.getUsername())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
+            final IDDocumentType documentType, Person thisPerson) {
+
+        for (final Person person : Party.readAllPersons()) {
+            if (!person.equals(thisPerson) && person.getDocumentIdNumber().equals(documentIDNumber)
+                    && person.getIdDocumentType().equals(documentType)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static Person readPersonByUsername(final String username) {
         final Login login = Login.readLoginByUsername(username);
@@ -1118,4 +1118,15 @@ public class Person extends Person_Base {
         return result;
     }
 
+    public static Person readByDocumentIdNumberAndIdDocumentType(final String documentIdNumber,
+            final IDDocumentType idDocumentType) {
+        
+        for (final Person person : Party.readAllPersons()) {
+            if (person.getDocumentIdNumber().equalsIgnoreCase(documentIdNumber)
+                    && person.getIdDocumentType() == idDocumentType) {
+                return person;
+            }
+        }
+        return null;
+    }
 }

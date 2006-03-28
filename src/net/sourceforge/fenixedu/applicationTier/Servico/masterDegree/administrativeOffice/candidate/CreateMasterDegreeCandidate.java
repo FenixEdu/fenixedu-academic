@@ -43,8 +43,7 @@ public class CreateMasterDegreeCandidate extends Service {
                 .getIPersistentMasterDegreeCandidate();
 
         // Read the Execution of this degree in the current execution Year
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, executionDegreeID);
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
 
         MasterDegreeCandidate masterDegreeCandidateFromDB = masterDegreeCandidateDAO
                 .readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
@@ -77,8 +76,8 @@ public class CreateMasterDegreeCandidate extends Service {
         masterDegreeCandidate.setCandidateNumber(number);
 
         // Check if the person Exists
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
-                identificationDocumentNumber, identificationDocumentType);
+        Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
+                identificationDocumentType);
 
         List<Person> persons = Party.readAllPersons();
 

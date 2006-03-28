@@ -60,22 +60,6 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 
 	}
 
-	public Person lerPessoaPorNumDocIdETipoDocId(final String numeroDocumentoIdentificacao,
-			final IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia
-	{
-
-		for (final Person person : Party.readAllPersons())
-		{
-			if (person.getNumeroDocumentoIdentificacao().equals(numeroDocumentoIdentificacao)
-					&& person.getIdDocumentType().equals(tipoDocumentoIdentificacao))
-			{
-				return person;
-			}
-		}
-		return null;
-
-	}
-
 	/*
 	 * This method return a list with elements returned by the limited search.
 	 */
@@ -220,24 +204,6 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 			Integer numberOfElementsInSpan) throws ExcepcaoPersistencia
 	{
 		return null;
-	}
-
-	public boolean emailOwnedByFenixPerson(Collection<String> emails)
-	{
-		boolean result = false;
-		Collection<Person> persons = Party.readAllPersons();
-		for (String email : emails)
-		{
-			for (Person person : persons)
-			{
-				if (email.equalsIgnoreCase(person.getEmail()))
-				{
-					result = true;
-					break;
-				}
-			}
-		}
-		return result;
 	}
 
 }

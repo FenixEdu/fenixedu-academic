@@ -164,8 +164,7 @@ public class ChooseGuide extends Service {
 			throws Exception {
 
 		// Check if person exists
-
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
+        Person person = Person.readByDocumentIdNumberAndIdDocumentType(
                 identificationDocumentNumber, identificationDocumentType);
 
 		if (person == null) {

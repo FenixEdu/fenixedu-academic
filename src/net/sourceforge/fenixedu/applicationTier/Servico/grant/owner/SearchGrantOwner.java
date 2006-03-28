@@ -57,7 +57,7 @@ public class SearchGrantOwner extends Service {
 			if (onlyGrantOwner.booleanValue())
 				grantOwner = persistentGrantOwner.readGrantOwnerByPersonID(IdNumber, IdType);
 			else
-				person = persistentPerson.lerPessoaPorNumDocIdETipoDocId(IdNumber, IdType);
+				person = Person.readByDocumentIdNumberAndIdDocumentType(IdNumber, IdType);
 		}
 		Integer numberOfResultsByName = null;
 		// Search by name IF search by ID has failed

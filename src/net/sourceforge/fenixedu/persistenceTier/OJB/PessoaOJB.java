@@ -6,11 +6,9 @@
 
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
@@ -26,14 +24,6 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
         Criteria criteria = new Criteria();
         criteria.addLike("name", name);
         return new Integer(count(Person.class, criteria));
-    }
-
-    public Person lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
-            IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("documentIdNumber", numeroDocumentoIdentificacao);
-        criteria.addEqualTo("idDocumentType", tipoDocumentoIdentificacao);
-        return (Person) queryObject(Person.class, criteria);
     }
 
     public List<Person> readPersonsBySubName(String subName) throws ExcepcaoPersistencia {
@@ -55,16 +45,4 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
 
     }
 
-	public boolean emailOwnedByFenixPerson(Collection<String> emails) throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		for (String email: emails)
-		{
-			Criteria thisEmailCriteria = new Criteria();
-			thisEmailCriteria.addEqualTo("email",email);
-			criteria.addOrCriteria(thisEmailCriteria);			
-		}
-		
-		return queryList(Person.class,criteria).size()>0;
-	}
 }
