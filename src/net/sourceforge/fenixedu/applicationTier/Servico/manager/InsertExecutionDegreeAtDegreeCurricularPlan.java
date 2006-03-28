@@ -1,6 +1,3 @@
-/*
- * Created on 14/Ago/2003
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
@@ -8,7 +5,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -20,54 +16,32 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
-/**
- * @author lmac1
- */
 public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 
-	public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException,
-			ExcepcaoPersistencia {
-
-		ExecutionYear executionYear = null;
-
-		try {
-			Campus campus = (Campus) persistentObject.readByOID(Campus.class, infoExecutionDegree
-					.getInfoCampus().getIdInternal());
-			if (campus == null) {
-				throw new NonExistingServiceException("message.nonExistingCampus", null);
-			}
-
-			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-					.readByOID(DegreeCurricularPlan.class, infoExecutionDegree
-							.getInfoDegreeCurricularPlan().getIdInternal());
-
-			if (degreeCurricularPlan == null) {
-				throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
-			}
-			executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class,
-					infoExecutionDegree.getInfoExecutionYear().getIdInternal());
-
-			if (executionYear == null) {
-
-				throw new NonExistingServiceException("message.non.existing.execution.year", null);
-			}
-
-			ExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
-			executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
-			executionDegree.setExecutionYear(executionYear);
-			executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
-			executionDegree.setCampus(campus);
-
-			setPeriods(executionDegree, infoExecutionDegree);
-
-		} catch (ExistingPersistentException existingException) {
-			throw new ExistingServiceException(
-					"O curso em execução referente ao ano lectivo em execução "
-							+ executionYear.getYear(), existingException);
+	public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException, ExcepcaoPersistencia {
+		final Campus campus = rootDomainObject.readCampusByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
+		if (campus == null) {
+			throw new NonExistingServiceException("message.nonExistingCampus", null);
 		}
+
+		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+		if (degreeCurricularPlan == null) {
+			throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
+		}
+
+        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
+		if (executionYear == null) {
+			throw new NonExistingServiceException("message.non.existing.execution.year", null);
+		}
+
+		ExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
+		executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
+		executionDegree.setExecutionYear(executionYear);
+		executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
+		executionDegree.setCampus(campus);
+
+		setPeriods(executionDegree, infoExecutionDegree);
 	}
 
 	private void setPeriods(ExecutionDegree executionDegree, InfoExecutionDegree infoExecutionDegree)
@@ -75,22 +49,18 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 		InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree.getInfoPeriodExamsFirstSemester();
 		setCompositePeriod(executionDegree, infoPeriodExamsFirstSemester, 11);
 
-		InfoPeriod infoPeriodExamsSecondSemester = infoExecutionDegree
-				.getInfoPeriodExamsSecondSemester();
+		InfoPeriod infoPeriodExamsSecondSemester = infoExecutionDegree.getInfoPeriodExamsSecondSemester();
 		setCompositePeriod(executionDegree, infoPeriodExamsSecondSemester, 12);
 
-		InfoPeriod infoPeriodLessonsFirstSemester = infoExecutionDegree
-				.getInfoPeriodLessonsFirstSemester();
+		InfoPeriod infoPeriodLessonsFirstSemester = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
 		setCompositePeriod(executionDegree, infoPeriodLessonsFirstSemester, 21);
 
-		InfoPeriod infoPeriodLessonsSecondSemester = infoExecutionDegree
-				.getInfoPeriodLessonsSecondSemester();
+		InfoPeriod infoPeriodLessonsSecondSemester = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
 		setCompositePeriod(executionDegree, infoPeriodLessonsSecondSemester, 22);
 	}
 
 	private void setCompositePeriod(ExecutionDegree executionDegree, InfoPeriod infoPeriod,
 			int periodToAssociateExecutionDegree) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentPeriod periodDAO = persistentSupport.getIPersistentPeriod();
 		List<InfoPeriod> infoPeriodList = new ArrayList<InfoPeriod>();
 
 		infoPeriodList.add(infoPeriod);
@@ -102,12 +72,12 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 
 		// inicializacao
 		int infoPeriodListSize = infoPeriodList.size();
-
 		InfoPeriod infoPeriodNew = infoPeriodList.get(infoPeriodListSize - 1);
 
-		OccupationPeriod period = (OccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate()
-				.getTime(), infoPeriodNew.getEndDate().getTime(), null);
-
+		OccupationPeriod period = OccupationPeriod.readByDatesAndNextOccupationPeriod(
+                infoPeriodNew.getStartDate().getTime(), 
+                infoPeriodNew.getEndDate().getTime(), 
+                null);
 		if (period == null) {
 			Calendar startDate = infoPeriodNew.getStartDate();
 			Calendar endDate = infoPeriodNew.getEndDate();
@@ -116,15 +86,13 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 
 		// iteracoes
 		for (int i = infoPeriodListSize - 2; i >= 0; i--) {
-			Integer keyNextPeriod = period.getIdInternal();
-
-			OccupationPeriod nextPeriod = period;
-
-			infoPeriodNew = infoPeriodList.get(i);
-
-			period = (OccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate()
-					.getTime(), infoPeriodNew.getEndDate().getTime(), keyNextPeriod);
-
+            infoPeriodNew = infoPeriodList.get(i);
+            
+            OccupationPeriod nextPeriod = period;
+			period = OccupationPeriod.readByDatesAndNextOccupationPeriod(
+                    infoPeriodNew.getStartDate().getTime(), 
+                    infoPeriodNew.getEndDate().getTime(), 
+                    nextPeriod);
 			if (period == null) {
 				Calendar startDate = infoPeriodNew.getStartDate();
 				Calendar endDate = infoPeriodNew.getEndDate();

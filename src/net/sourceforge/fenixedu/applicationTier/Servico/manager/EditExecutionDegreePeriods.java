@@ -11,29 +11,23 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 
 public class EditExecutionDegreePeriods extends Service {
 
     public void run(InfoExecutionDegree infoExecutionDegree) throws ExcepcaoPersistencia {
 
-        final ExecutionDegree oldExecutionDegree = (ExecutionDegree) persistentObject.readByOID(ExecutionDegree.class,
-                        infoExecutionDegree.getIdInternal());
+        final ExecutionDegree oldExecutionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
-        OccupationPeriod periodLessonsFirstSemester = setCompositePeriod(infoExecutionDegree
-                .getInfoPeriodLessonsFirstSemester());
+        OccupationPeriod periodLessonsFirstSemester = setCompositePeriod(infoExecutionDegree.getInfoPeriodLessonsFirstSemester());
         oldExecutionDegree.setPeriodLessonsFirstSemester(periodLessonsFirstSemester);
 
-        OccupationPeriod periodLessonsSecondSemester = setCompositePeriod(infoExecutionDegree
-                .getInfoPeriodLessonsSecondSemester());
+        OccupationPeriod periodLessonsSecondSemester = setCompositePeriod(infoExecutionDegree.getInfoPeriodLessonsSecondSemester());
         oldExecutionDegree.setPeriodLessonsSecondSemester(periodLessonsSecondSemester);
 
-        OccupationPeriod periodExamsFirstSemester = setCompositePeriod(infoExecutionDegree
-                .getInfoPeriodExamsFirstSemester());
+        OccupationPeriod periodExamsFirstSemester = setCompositePeriod(infoExecutionDegree.getInfoPeriodExamsFirstSemester());
         oldExecutionDegree.setPeriodExamsFirstSemester(periodExamsFirstSemester);
 
-        OccupationPeriod periodExamsSecondSemester = setCompositePeriod(infoExecutionDegree
-                .getInfoPeriodExamsSecondSemester());
+        OccupationPeriod periodExamsSecondSemester = setCompositePeriod(infoExecutionDegree.getInfoPeriodExamsSecondSemester());
         oldExecutionDegree.setPeriodExamsSecondSemester(periodExamsSecondSemester);
     }
 
@@ -50,10 +44,10 @@ public class EditExecutionDegreePeriods extends Service {
         int infoPeriodListSize = infoPeriodList.size();
         InfoPeriod infoPeriodNew = infoPeriodList.get(infoPeriodListSize - 1);
 
-        final IPersistentPeriod periodDAO = persistentSupport.getIPersistentPeriod();
-        OccupationPeriod period = (OccupationPeriod) periodDAO.readByCalendarAndNextPeriod(
-                infoPeriodNew.getStartDate().getTime(), infoPeriodNew.getEndDate().getTime(), null);
-
+        OccupationPeriod period = OccupationPeriod.readByDatesAndNextOccupationPeriod(
+                infoPeriodNew.getStartDate().getTime(), 
+                infoPeriodNew.getEndDate().getTime(),
+                null);
         if (period == null) {
             Calendar startDate = infoPeriodNew.getStartDate();
             Calendar endDate = infoPeriodNew.getEndDate();
@@ -61,15 +55,13 @@ public class EditExecutionDegreePeriods extends Service {
         }
 
         for (int i = infoPeriodListSize - 2; i >= 0; i--) {
-            Integer keyNextPeriod = period.getIdInternal();
-
-            OccupationPeriod nextPeriod = period;
-
             infoPeriodNew = infoPeriodList.get(i);
-
-            period = (OccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew
-                    .getStartDate().getTime(), infoPeriodNew.getEndDate().getTime(), keyNextPeriod);
-
+            
+            OccupationPeriod nextPeriod = period;
+            period = OccupationPeriod.readByDatesAndNextOccupationPeriod(
+                    infoPeriodNew.getStartDate().getTime(), 
+                    infoPeriodNew.getEndDate().getTime(), 
+                    nextPeriod);
             if (period == null) {
                 Calendar startDate = infoPeriodNew.getStartDate();
                 Calendar endDate = infoPeriodNew.getEndDate();

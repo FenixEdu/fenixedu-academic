@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.Season;
 
 public class EditWrittenEvaluation extends Service {
@@ -35,22 +33,19 @@ public class EditWrittenEvaluation extends Service {
             List<String> curricularCourseScopeIDs, List<String> roomIDs, Integer writtenEvaluationOID,
             Season examSeason, String writtenTestDescription) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(
-                WrittenEvaluation.class, writtenEvaluationOID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationOID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
 
-        final List<ExecutionCourse> executionCoursesToAssociate = readExecutionCourses(
-                persistentSupport, executionCourseIDs);
-        final List<CurricularCourseScope> curricularCourseScopeToAssociate = readCurricularCourseScopes(
-                persistentSupport, curricularCourseScopeIDs);
+        final List<ExecutionCourse> executionCoursesToAssociate = readExecutionCourses(executionCourseIDs);
+        final List<CurricularCourseScope> curricularCourseScopeToAssociate = readCurricularCourseScopes(curricularCourseScopeIDs);
 
         List<OldRoom> roomsToAssociate = null; 
         OccupationPeriod period = null; 
         if (roomIDs != null) {
-            roomsToAssociate = readRooms(persistentSupport, roomIDs);
-            period = readPeriod(persistentSupport, writtenEvaluation, writtenEvaluationDate); 
+            roomsToAssociate = readRooms(roomIDs);
+            period = readPeriod(writtenEvaluation, writtenEvaluationDate); 
         }
 
         if (examSeason != null) {
@@ -67,8 +62,7 @@ public class EditWrittenEvaluation extends Service {
         }
     }
 
-    private OccupationPeriod readPeriod(final ISuportePersistente persistentSupport,
-            final WrittenEvaluation writtenEvaluation, final Date writtenEvaluationDate)
+    private OccupationPeriod readPeriod(final WrittenEvaluation writtenEvaluation, final Date writtenEvaluationDate)
             throws ExcepcaoPersistencia {
         OccupationPeriod period = null;
         if (!writtenEvaluation.getAssociatedRoomOccupation().isEmpty()) {
@@ -81,8 +75,10 @@ public class EditWrittenEvaluation extends Service {
             }
         }
         if (period == null) {
-            final IPersistentPeriod persistentPeriod = persistentSupport.getIPersistentPeriod();
-            period = (OccupationPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate, writtenEvaluationDate, null);
+            period = OccupationPeriod.readByDatesAndNextOccupationPeriod(
+                    writtenEvaluationDate, 
+                    writtenEvaluationDate, 
+                    null);
             if (period == null) {
                 period = DomainFactory.makeOccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
             }
@@ -90,12 +86,10 @@ public class EditWrittenEvaluation extends Service {
         return period;
     }
 
-    private List<OldRoom> readRooms(final ISuportePersistente persistentSupport, final List<String> roomIDs)
-            throws ExcepcaoPersistencia, FenixServiceException {
-
+    private List<OldRoom> readRooms(final List<String> roomIDs)throws ExcepcaoPersistencia, FenixServiceException {
         final List<OldRoom> result = new ArrayList<OldRoom>();
         for (final String roomID : roomIDs) {
-            final OldRoom room = (OldRoom) persistentObject.readByOID(OldRoom.class, Integer.valueOf(roomID));
+            final OldRoom room = rootDomainObject.readOldRoomByOID(Integer.valueOf(roomID));
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }
@@ -104,8 +98,7 @@ public class EditWrittenEvaluation extends Service {
         return result;
     }
 
-    private List<CurricularCourseScope> readCurricularCourseScopes(
-            final ISuportePersistente persistentSupport, final List<String> curricularCourseScopeIDs)
+    private List<CurricularCourseScope> readCurricularCourseScopes(final List<String> curricularCourseScopeIDs)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         if (curricularCourseScopeIDs.isEmpty()) {
@@ -113,8 +106,7 @@ public class EditWrittenEvaluation extends Service {
         }
         final List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
         for (final String curricularCourseScopeID : curricularCourseScopeIDs) {
-            final CurricularCourseScope curricularCourseScope = (CurricularCourseScope) persistentObject
-                    .readByOID(CurricularCourseScope.class, Integer.valueOf(curricularCourseScopeID));
+            final CurricularCourseScope curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(Integer.valueOf(curricularCourseScopeID));
             if (curricularCourseScope == null) {
                 throw new FenixServiceException("error.InvalidCurricularCourseScope");
             }
@@ -123,16 +115,13 @@ public class EditWrittenEvaluation extends Service {
         return result;
     }
 
-    private List<ExecutionCourse> readExecutionCourses(final ISuportePersistente persistentSupport,
-            final List<String> executionCourseIDs) throws ExcepcaoPersistencia, FenixServiceException {
-
+    private List<ExecutionCourse> readExecutionCourses(final List<String> executionCourseIDs) throws ExcepcaoPersistencia, FenixServiceException {
         if (executionCourseIDs.isEmpty()) {
             throw new FenixServiceException("error.invalidExecutionCourse");
         }
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final String executionCourseID : executionCourseIDs) {
-            final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
-                    .readByOID(ExecutionCourse.class, Integer.valueOf(executionCourseID));
+            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
             if (executionCourse == null) {
                 throw new FenixServiceException("error.invalidExecutionCourse");
             }
