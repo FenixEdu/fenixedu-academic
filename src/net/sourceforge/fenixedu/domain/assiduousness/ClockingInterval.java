@@ -55,21 +55,21 @@ public class ClockingInterval {
         return timePointList;
     }
     
-    // Converts list of clocking intervals to a TimePoint list
-    // Gives a different attribute (from WORKED_ATTRIBUTES) to each pair of points
-    public static List<TimePoint> toTimePoint(List<ClockingInterval> clockingIntervalList) {
-        List<TimePoint> pointList = new ArrayList<TimePoint>();
-        Iterator<AttributeType> attributesIterator = DomainConstants.WORKED_ATTRIBUTES.getAttributes().iterator(); // to iterate over the WORKED attributes; gross but works...
-        for (ClockingInterval clockingInterval: clockingIntervalList) {
-            if (attributesIterator.hasNext()) {
-                AttributeType attribute = attributesIterator.next();
-                // TODO encapsulate this somehow
-                List<TimePoint> clockingIntervalToTimePoint = clockingInterval.toTimePoint(attribute);
-                pointList.addAll(clockingIntervalToTimePoint);
-            }
-        }
-        return pointList;
-    }    
+//    // Converts list of clocking intervals to a TimePoint list
+//    // Gives a different attribute (from WORKED_ATTRIBUTES) to each pair of points
+//    public static List<TimePoint> toTimePoint(List<ClockingInterval> clockingIntervalList) {
+//        List<TimePoint> pointList = new ArrayList<TimePoint>();
+//        Iterator<AttributeType> attributesIterator = DomainConstants.WORKED_ATTRIBUTES.getAttributes().iterator(); // to iterate over the WORKED attributes; gross but works...
+//        for (ClockingInterval clockingInterval: clockingIntervalList) {
+//            if (attributesIterator.hasNext()) {
+//                AttributeType attribute = attributesIterator.next();
+//                // TODO encapsulate this somehow
+//                List<TimePoint> clockingIntervalToTimePoint = clockingInterval.toTimePoint(attribute);
+//                pointList.addAll(clockingIntervalToTimePoint);
+//            }
+//        }
+//        return pointList;
+//    }    
     
     public String toString() {
         return new String(getClockIn().toString() + " - " + getClockOut().toString());

@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
-import net.sourceforge.fenixedu.domain.assiduousness.util.WeekDays;
+import net.sourceforge.fenixedu.util.WeekDay;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 /**
  * @author velouria
@@ -43,73 +43,18 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
     	super();
     	setRootDomainObject(RootDomainObject.getInstance());
     }
-
-//    // change to static
-//	public FlexibleSchedule(Employee employee,  NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriods, List<Regime> regimes, Meal mealPeriod, 
-//	        TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) {
-//	    this.setEmployee(employee);
-//        this.setNormalWorkPeriod(normalWorkPeriod);
-//        this.setFixedPeriod(fixedPeriods);
-//        this.setMeal(mealPeriod);
-//        this.addRegimesToWorkSchedule(regimes);
-//        this.setWorkDay(workDay);
-//        this.setValidFromTo(validFromTo);
-//        this.setExceptionSchedule(exception);
-//        this.setWorkWeek(workWeek);
-//        this.setTemplateSchedule(template);
-//        this.setAcronym(acronym);
-//	}
-
-    public static FlexibleSchedule makeFlexibleScheduleTemplate(NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriods, List<AssiduousnessRegime> regimes, Meal mealPeriod, 
-            TimeInterval workDay, WorkWeek workWeek, String acronym) {
+    
+    public static FlexibleSchedule makeFlexibleSchedule(NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriods, Meal mealPeriod, 
+            TimeInterval workDay, String acronym) {
         FlexibleSchedule flexibleSchedule = new FlexibleSchedule();
         flexibleSchedule.setNormalWorkPeriod(normalWorkPeriod);
         flexibleSchedule.setFixedPeriod(fixedPeriods);
         flexibleSchedule.setMeal(mealPeriod);
-//        flexibleSchedule.addRegimesToWorkSchedule(regimes);
         flexibleSchedule.setWorkDay(workDay);
-        flexibleSchedule.setWorkWeek(workWeek);
         flexibleSchedule.setAcronym(acronym);
-        flexibleSchedule.turnTemplateSchedule();
-        flexibleSchedule.setExceptionSchedule(false);
         return flexibleSchedule;
     }
-    
-    public static FlexibleSchedule makeFlexibleSchedule(Employee employee, NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriods, List<AssiduousnessRegime> regimes, Meal mealPeriod, 
-            TimeInterval workDay,
-            Interval validFromTo, WorkWeek workWeek, boolean exception, String acronym) {
-        FlexibleSchedule flexibleSchedule = new FlexibleSchedule();
-//        flexibleSchedule.setEmployee(employee);
-        flexibleSchedule.setNormalWorkPeriod(normalWorkPeriod);
-        flexibleSchedule.setFixedPeriod(fixedPeriods);
-        flexibleSchedule.setMeal(mealPeriod);
-//        flexibleSchedule.addRegimesToWorkSchedule(regimes);
-        flexibleSchedule.setWorkDay(workDay);
-        flexibleSchedule.setExceptionSchedule(exception);
-        flexibleSchedule.setValidFromTo(validFromTo);
-        flexibleSchedule.setWorkWeek(workWeek);
-        flexibleSchedule.setAcronym(acronym);
-        flexibleSchedule.turnWorkSchedule();
-        return flexibleSchedule;
-    }
-    
-    public static FlexibleSchedule makeFlexibleSchedule(NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriods, List<AssiduousnessRegime> regimes, Meal mealPeriod, TimeInterval workDay,
-            Interval validFromTo, WorkWeek workWeek, boolean exception, String acronym) {
-        FlexibleSchedule flexibleSchedule = new FlexibleSchedule();
-        flexibleSchedule.setNormalWorkPeriod(normalWorkPeriod);
-        flexibleSchedule.setFixedPeriod(fixedPeriods);
-        flexibleSchedule.setMeal(mealPeriod);
-//        flexibleSchedule.addRegimesToWorkSchedule(regimes);
-        flexibleSchedule.setWorkDay(workDay);
-        flexibleSchedule.setExceptionSchedule(exception);
-        flexibleSchedule.setValidFromTo(validFromTo);
-        flexibleSchedule.setWorkWeek(workWeek);
-        flexibleSchedule.setAcronym(acronym);
-        flexibleSchedule.turnWorkSchedule();
-        return flexibleSchedule;
-    }
-    
-    
+        
     // TODO verify this...
     // method 
     public static FlexibleSchedule createFlexibleSchedule(DTO presentationDTO) throws FenixDomainException {
@@ -134,13 +79,14 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
      * TODO find a better name
      */
     public static FlexibleSchedule initFlexibleSchedule(DTO presentationDTO) throws FenixDomainException {
-        Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
-        Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
-        Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
-        
-        Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay, (Integer)presentationDTO.get(PresentationConstants.END_YEAR), 
-                (Integer)presentationDTO.get(PresentationConstants.END_MONTH), (Integer)presentationDTO.get(PresentationConstants.END_DAY));
-                
+
+//        Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
+//        Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
+//        Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
+//        
+//        Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay, (Integer)presentationDTO.get(PresentationConstants.END_YEAR), 
+//                (Integer)presentationDTO.get(PresentationConstants.END_MONTH), (Integer)presentationDTO.get(PresentationConstants.END_DAY));
+//                
         // expediente
         TimeInterval workDay = createWorkDay((Integer)presentationDTO.get(PresentationConstants.START_WORK_DAY_HOURS),
                 (Integer)presentationDTO.get(PresentationConstants.START_WORK_DAY_MINUTES),
@@ -180,25 +126,22 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
                     ((Integer)presentationDTO.get(PresentationConstants.END_MEAL_BREAK_HOURS)),
                     ((Integer)presentationDTO.get(PresentationConstants.END_MEAL_BREAK_MINUTES)), false, new InvalidMealBreakIntervalException());
         
-        // workdays
-        EnumSet<WeekDays> workDays = createWorkDays(((Boolean) presentationDTO.get(PresentationConstants.WORK_EVERYDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_MONDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_TUESDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_WEDNESDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_THURSDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_FRIDAY)).booleanValue());
-        
-        // regime
-        List<AssiduousnessRegime> regimes = (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
+//        // workdays
+//        EnumSet<WeekDay> workDays = createWorkDays(((Boolean) presentationDTO.get(PresentationConstants.WORK_EVERYDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_MONDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_TUESDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_WEDNESDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_THURSDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_FRIDAY)).booleanValue());
+//        
+//        // regime
+//        List<AssiduousnessRegime> regimes = (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
 
         NormalWorkPeriod normalWorkPeriod = new NormalWorkPeriod(normalWorkPeriod1, normalWorkPeriod2);
         FixedPeriod fixedPeriods = new FixedPeriod(fixedPeriod1, fixedPeriod2);
-        Employee employee = (Employee)presentationDTO.get(PresentationConstants.EMPLOYEE);
         Meal mealPeriod = new Meal(mealBreak);
-        WorkWeek workWeek = new WorkWeek(workDays);
 
-        FlexibleSchedule flexibleSchedule = makeFlexibleSchedule(employee, normalWorkPeriod, fixedPeriods, regimes, mealPeriod, workDay, validFromTo, 
-                workWeek, ((Boolean)presentationDTO.get(PresentationConstants.EXCEPTION_TIMETABLE)).booleanValue(), "xpto");
+        FlexibleSchedule flexibleSchedule = makeFlexibleSchedule(normalWorkPeriod, fixedPeriods, mealPeriod, workDay, null);
         return flexibleSchedule;
     }
 
@@ -240,15 +183,10 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
         return true;
     }
     
-    
     public ScheduleType getType() {
         return ScheduleType.FLEXIBLE;
     }
-    
-//    public String getName() {
-//        return "Flexivel";
-//    }
-    
+
 }
 
 

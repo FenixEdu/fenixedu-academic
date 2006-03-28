@@ -4,15 +4,12 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.EnumSet;
-import java.util.List;
 
 import org.joda.time.Duration;
-import org.joda.time.Interval;
 
 import net.sourceforge.fenixedu.presentationTier.util.DTO;
 import net.sourceforge.fenixedu.presentationTier.util.PresentationConstants;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidNormalWorkPeriod1IntervalException;
@@ -20,12 +17,12 @@ import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidNormalWor
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.NormalWorkPeriod1StartsBeforeWorkDayException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.NormalWorkPeriod2EndsAfterWorkDayException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.NormalWorkPeriodExceedsLegalDayDurationException;
+import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidMealBreakIntervalException;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
-import net.sourceforge.fenixedu.domain.assiduousness.util.WeekDays;
 
 /**
  * @author velouria
@@ -38,17 +35,11 @@ public class ScheduleExemption extends ScheduleExemption_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public static ScheduleExemption fillScheduleExemption(Employee employee,  NormalWorkPeriod normalWorkPeriod, List<AssiduousnessRegime> regimes, Meal mealPeriod, TimeInterval workDay, Interval validFromTo, 
-            WorkWeek workWeek, boolean exception) {
+	public static ScheduleExemption fillScheduleExemption(NormalWorkPeriod normalWorkPeriod,Meal mealPeriod, TimeInterval workDay) {
         ScheduleExemption newScheduleExemption = new ScheduleExemption();
-//        newScheduleExemption.setEmployee(employee);
         newScheduleExemption.setNormalWorkPeriod(normalWorkPeriod);
         newScheduleExemption.setMeal(mealPeriod);
-//        newScheduleExemption.addRegimesToWorkSchedule(regimes);
         newScheduleExemption.setWorkDay(workDay);
-        newScheduleExemption.setValidFromTo(validFromTo);
-        newScheduleExemption.setExceptionSchedule(exception);
-        newScheduleExemption.setWorkWeek(workWeek);
         return newScheduleExemption;
 	}
 
@@ -68,13 +59,13 @@ public class ScheduleExemption extends ScheduleExemption_Base {
     
 	public static ScheduleExemption createScheduleExemption(DTO presentationDTO) throws FenixDomainException {
 	    
-	    /** criacao dos objectos **/
-	    Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
-	    Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
-	    Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
-	    
-	    Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay, (Integer)presentationDTO.get(PresentationConstants.END_YEAR), 
-	            (Integer)presentationDTO.get(PresentationConstants.END_MONTH), (Integer)presentationDTO.get(PresentationConstants.END_DAY));
+//	    /** criacao dos objectos **/
+//	    Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
+//	    Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
+//	    Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
+//	    
+//	    Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay, (Integer)presentationDTO.get(PresentationConstants.END_YEAR), 
+//	            (Integer)presentationDTO.get(PresentationConstants.END_MONTH), (Integer)presentationDTO.get(PresentationConstants.END_DAY));
 	    	    
 	    // expediente
 	    TimeInterval workDay = createWorkDay((Integer)presentationDTO.get(PresentationConstants.START_WORK_DAY_HOURS),
@@ -103,13 +94,13 @@ public class ScheduleExemption extends ScheduleExemption_Base {
                     ((Integer)presentationDTO.get(PresentationConstants.START_MEAL_BREAK_MINUTES)),
                     ((Integer)presentationDTO.get(PresentationConstants.END_MEAL_BREAK_HOURS)),
                     ((Integer)presentationDTO.get(PresentationConstants.END_MEAL_BREAK_MINUTES)),
-                    ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_MEAL_BREAK)).booleanValue(), new InvalidNormalWorkPeriod2IntervalException());
+                    ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_MEAL_BREAK)).booleanValue(), new InvalidMealBreakIntervalException());
         
         // workdays
-        EnumSet<WeekDays> workDays = createWorkDays(true, true, true, true, true, true);
-        
-        // regime
-        List<AssiduousnessRegime> regimes = (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
+////        EnumSet<WeekDay> workDays = createWorkDays(true, true, true, true, true, true);
+////        
+//        // regime
+//        List<AssiduousnessRegime> regimes = (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
         
 	    /** verificacoes que dependem de varios objectos simultaneamente **/
 	    NormalWorkPeriod regularSchedule = null;
@@ -137,11 +128,8 @@ public class ScheduleExemption extends ScheduleExemption_Base {
 	        }
 	    }
 	    
-	    Employee employee = (Employee)presentationDTO.get(PresentationConstants.EMPLOYEE);
 	    Meal mealPeriod = new Meal(mealBreak);
-	    WorkWeek workWeek = new WorkWeek(workDays);
-	    ScheduleExemption scheduleExemption = fillScheduleExemption(employee, regularSchedule, regimes, mealPeriod, workDay, validFromTo, workWeek,
-                    ((Boolean)presentationDTO.get(PresentationConstants.EXCEPTION_TIMETABLE)).booleanValue());
+	    ScheduleExemption scheduleExemption = fillScheduleExemption(regularSchedule, mealPeriod, workDay);
 	    return scheduleExemption;
 	}
 

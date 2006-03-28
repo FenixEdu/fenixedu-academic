@@ -4,15 +4,12 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.EnumSet;
-import java.util.List;
 
 import org.joda.time.Duration;
-import org.joda.time.Interval;
 
 import net.sourceforge.fenixedu.presentationTier.util.DTO;
 import net.sourceforge.fenixedu.presentationTier.util.PresentationConstants;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.FixedPeriodsExceedPlatformsDurationException;
@@ -23,12 +20,8 @@ import net.sourceforge.fenixedu.domain.exceptions.assiduousness.NormalWorkPeriod
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.NormalWorkPeriodExceedsLegalDayDurationException;
 import net.sourceforge.fenixedu.domain.exceptions.assiduousness.NormalWorkSchedule1StartsAfterFixedPeriod1;
 
-import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
-import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
-import net.sourceforge.fenixedu.domain.assiduousness.util.WeekDays;
-import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime;
 
 /**
  * @author velouria
@@ -41,37 +34,16 @@ public class ContinuousSchedule extends ContinuousSchedule_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public static ContinuousSchedule makeContinuousSchedule(Employee employee,  NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriod, List<AssiduousnessRegime> regimes, 
-			TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) {
+	public static ContinuousSchedule makeContinuousSchedule(NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriod, TimeInterval workDay,String acronym) {
 		ContinuousSchedule newContinuousSchedule = new ContinuousSchedule();
- //       newContinuousSchedule.setEmployee(employee);
         newContinuousSchedule.setNormalWorkPeriod(normalWorkPeriod);
         newContinuousSchedule.setFixedPeriod(fixedPeriod);
- //       newContinuousSchedule.addRegimesToWorkSchedule(regimes);
         newContinuousSchedule.setWorkDay(workDay);
-        newContinuousSchedule.setValidFromTo(validFromTo);
-        newContinuousSchedule.setExceptionSchedule(exception);
-        newContinuousSchedule.setWorkWeek(workWeek); 
         newContinuousSchedule.setAcronym(acronym);
-        newContinuousSchedule.setTemplateSchedule(template);
         return newContinuousSchedule;
     	}
-    
-    public static ContinuousSchedule makeContinuousScheduleTemplate(NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriod, List<AssiduousnessRegime> regimes, TimeInterval workDay, 
-            WorkWeek workWeek, String acronym) {
-        ContinuousSchedule continuousSchedule = new ContinuousSchedule();
-        continuousSchedule.setNormalWorkPeriod(normalWorkPeriod);
-        continuousSchedule.setFixedPeriod(fixedPeriod);
-//        continuousSchedule.addRegimesToWorkSchedule(regimes);
-        continuousSchedule.setWorkDay(workDay);
-        continuousSchedule.setExceptionSchedule(false);
-        continuousSchedule.setWorkWeek(workWeek);
-        continuousSchedule.setTemplateSchedule(true);
-        continuousSchedule.setAcronym(acronym);
-        return continuousSchedule;
-    }
 
-    public Duration checkNormalWorkPeriodAccordingToRules(Duration normalWorkPeriodWorked) {
+	public Duration checkNormalWorkPeriodAccordingToRules(Duration normalWorkPeriodWorked) {
         return normalWorkPeriodWorked;
     }
 
@@ -84,20 +56,22 @@ public class ContinuousSchedule extends ContinuousSchedule_Base {
 
     
 //////////////////////
-// Presentation stuff - TODO this will eventually be changed to JSF
+// Presentation stuff
 /////////////////////
     
+	// TODO change this
 	// validates and builds a schedule with data got from the presentation
     public static ContinuousSchedule createContinuousSchedule(DTO presentationDTO) throws FenixDomainException {
 	    
 	    /** criacao dos objectos **/
         // data validade - usada como data nos TimeIntervals do horario
-	    Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
-	    Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
-	    Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
-	    
-	    Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay, (Integer)presentationDTO.get(PresentationConstants.END_YEAR), 
-	            (Integer)presentationDTO.get(PresentationConstants.END_MONTH), (Integer)presentationDTO.get(PresentationConstants.END_DAY));
+    		// TODO deixou de fazer sentido com a restruturacao
+//	    Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
+//	    Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
+//	    Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
+//	    
+//	    Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay, (Integer)presentationDTO.get(PresentationConstants.END_YEAR), 
+//	            (Integer)presentationDTO.get(PresentationConstants.END_MONTH), (Integer)presentationDTO.get(PresentationConstants.END_DAY));
 	    
 	    // expediente
 	    TimeInterval workDay = createWorkDay((Integer)presentationDTO.get(PresentationConstants.START_WORK_DAY_HOURS),
@@ -119,16 +93,17 @@ public class ContinuousSchedule extends ContinuousSchedule_Base {
                     (Integer)presentationDTO.get(PresentationConstants.END_FIXED_PERIOD_1_HOURS),
                     (Integer)presentationDTO.get(PresentationConstants.END_FIXED_PERIOD_1_MINUTES), false, new InvalidNormalWorkPeriod2IntervalException());
 
-	    // workdays
-        EnumSet<WeekDays> workDays = createWorkDays(((Boolean) presentationDTO.get(PresentationConstants.WORK_EVERYDAY)).booleanValue(), 
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_MONDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_TUESDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_WEDNESDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_THURSDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_FRIDAY)).booleanValue());
+//	    // workdays
+//        EnumSet<WeekDay> workDays = createWorkDays(((Boolean) presentationDTO.get(PresentationConstants.WORK_EVERYDAY)).booleanValue(), 
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_MONDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_TUESDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_WEDNESDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_THURSDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_FRIDAY)).booleanValue());
         
         // regime
-        List<AssiduousnessRegime> regimes = (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
+        // TODO deixou de fazer sentido
+        //        List<AssiduousnessRegime> regimes = (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
         
         // TODO ver se isto e' preciso ou nao... penso que nao pq ja se faz a verificacao com o regular schedule...
         // Se duracao do expediente for menor que a duracao do expediente minimo
@@ -184,15 +159,12 @@ public class ContinuousSchedule extends ContinuousSchedule_Base {
             throw new NormalWorkSchedule1StartsAfterFixedPeriod1();
 	    }
 	    
-	    Employee employee = (Employee)presentationDTO.get(PresentationConstants.EMPLOYEE);
-	    WorkWeek workWeek = new WorkWeek(workDays);
+	    // TODO deixou de fazer sentido
+//	    Employee employee = (Employee)presentationDTO.get(PresentationConstants.EMPLOYEE);
+//	    WorkWeek workWeek = new WorkWeek(workDays);
         // TODO ir buscar isto a appresentacao
-	    ContinuousSchedule continuousSchedule = makeContinuousSchedule(employee, normalWorkSchedule, fixedPeriods, regimes, workDay, validFromTo, workWeek,
-	                ((Boolean)presentationDTO.get(PresentationConstants.EXCEPTION_TIMETABLE)).booleanValue(), false, "xpto");
+	    ContinuousSchedule continuousSchedule = makeContinuousSchedule(normalWorkSchedule, fixedPeriods, workDay, null);
 	    return continuousSchedule;
 	}
 
-//    public String getName() {
-//        return "Jornada";
-//    }
 }

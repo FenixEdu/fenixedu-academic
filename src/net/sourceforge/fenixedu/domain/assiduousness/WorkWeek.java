@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.assiduousness;
 
-import net.sourceforge.fenixedu.domain.assiduousness.util.WeekDays;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import java.io.Serializable;
 import java.util.EnumSet;
@@ -16,35 +16,35 @@ import java.util.EnumSet;
 
 public class WorkWeek implements Serializable {
     
-    public static final WorkWeek WORK_WEEK = new WorkWeek(EnumSet.range(WeekDays.MONDAY, WeekDays.FRIDAY));
+    public static final WorkWeek WORK_WEEK = new WorkWeek(EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY));
 
     // set containing the week days
-    private EnumSet<WeekDays> days;
+    private EnumSet<WeekDay> days;
 
-    public WorkWeek(EnumSet<WeekDays> newDays) {
+    public WorkWeek(EnumSet<WeekDay> newDays) {
     		days = newDays;
     }
 
-    public WorkWeek(WeekDays... newDays) {
-        EnumSet<WeekDays> myDays = EnumSet.noneOf(WeekDays.class);
-        for (WeekDays day : newDays) {
+    public WorkWeek(WeekDay... newDays) {
+        EnumSet<WeekDay> myDays = EnumSet.noneOf(WeekDay.class);
+        for (WeekDay day : newDays) {
           myDays.add(day);
         }
         days = myDays;
       }
 
-    public EnumSet<WeekDays> getDays() {
+    public EnumSet<WeekDay> getDays() {
         return days;
     }
     
-    public boolean worksAt(WeekDays day) {
+    public boolean worksAt(WeekDay day) {
         return getDays().contains(day);
     }
 
     // counts how many days per week the employee works
     public int workDaysPerWeek() {
         int workDays = 0;
-        for (WeekDays day: getDays()) {
+        for (WeekDay day: getDays()) {
             if (getDays().contains(day)) {
                 workDays++;
             }
@@ -58,7 +58,7 @@ public class WorkWeek implements Serializable {
 
     // This work week contains workWeek 
     public boolean contains(WorkWeek otherWorkWeek) {
-        for (WeekDays otherWorkWeekDay : otherWorkWeek.getDays()) {
+        for (WeekDay otherWorkWeekDay : otherWorkWeek.getDays()) {
             if (getDays().contains(otherWorkWeekDay))
                 return true;
         }
@@ -67,7 +67,7 @@ public class WorkWeek implements Serializable {
     
     // TRASH
     public void printf() {
-        for (WeekDays day: getDays()) {
+        for (WeekDay day: getDays()) {
             System.out.println(day.toString());
         }
     }

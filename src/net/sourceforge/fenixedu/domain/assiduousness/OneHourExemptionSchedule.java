@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
-import net.sourceforge.fenixedu.domain.assiduousness.util.WeekDays;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 /**
  * @author velouria@velouria.org
@@ -45,38 +45,17 @@ public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public static OneHourExemptionSchedule makeOneHourExemptionSchedule(Employee employee,  NormalWorkPeriod regularSchedule, FixedPeriod fixedPlatforms, List<AssiduousnessRegime> regimes, Meal mealPeriod, Duration consecutiveWork, 
-            TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) {
+	public static OneHourExemptionSchedule makeOneHourExemptionSchedule(NormalWorkPeriod regularSchedule, FixedPeriod fixedPlatforms, Meal mealPeriod, 
+            TimeInterval workDay, String acronym) {
         OneHourExemptionSchedule newOneHourExemptionSchedule = new OneHourExemptionSchedule();
-//        newOneHourExemptionSchedule.setEmployee(employee);
         newOneHourExemptionSchedule.setNormalWorkPeriod(regularSchedule);
         newOneHourExemptionSchedule.setFixedPeriod(fixedPlatforms);
         newOneHourExemptionSchedule.setMeal(mealPeriod);
-//        newOneHourExemptionSchedule.addRegimesToWorkSchedule(regimes);
         newOneHourExemptionSchedule.setWorkDay(workDay);
-        newOneHourExemptionSchedule.setValidFromTo(validFromTo);
-        newOneHourExemptionSchedule.setExceptionSchedule(exception);
-        newOneHourExemptionSchedule.setWorkWeek(workWeek);
         newOneHourExemptionSchedule.setAcronym(acronym);
-        newOneHourExemptionSchedule.setTemplateSchedule(template);
         return newOneHourExemptionSchedule;
     }
     
-    public static OneHourExemptionSchedule makeOneHourExemptionScheduleTemplate(NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPlatforms, List<AssiduousnessRegime> regimes, Meal mealPeriod, 
-            Duration consecutiveWork, TimeInterval workDay, WorkWeek workWeek, String acronym) {
-        OneHourExemptionSchedule oneHourExemptionSchedule = new OneHourExemptionSchedule();
-        oneHourExemptionSchedule.setNormalWorkPeriod(normalWorkPeriod);
-        oneHourExemptionSchedule.setFixedPeriod(fixedPlatforms);
-//        oneHourExemptionSchedule.addRegimesToWorkSchedule(regimes);
-        oneHourExemptionSchedule.setWorkDay(workDay);
-        oneHourExemptionSchedule.setMeal(mealPeriod);
-        oneHourExemptionSchedule.setExceptionSchedule(false);
-        oneHourExemptionSchedule.setWorkWeek(workWeek);
-        oneHourExemptionSchedule.setTemplateSchedule(true);
-        oneHourExemptionSchedule.setAcronym(acronym);
-        return oneHourExemptionSchedule;
-    }
-
     // Returns the schedule Attributes
     public Attributes getAttributes() {
         EnumSet<AttributeType> attributeSet = EnumSet.of(AttributeType.NORMAL_WORK_PERIOD_1, AttributeType.NORMAL_WORK_PERIOD_2, AttributeType.FIXED_PERIOD_1, AttributeType.FIXED_PERIOD_2);
@@ -89,14 +68,14 @@ public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
 
 	
 	public static OneHourExemptionSchedule createOneHourExemptionSchedule(DTO presentationDTO) throws FenixDomainException {
-	    
-	    /** criacao dos objectos **/
-	    Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
-	    Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
-	    Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
-	    
-	    Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay, (Integer)presentationDTO.get(PresentationConstants.END_YEAR), 
-	            (Integer)presentationDTO.get(PresentationConstants.END_MONTH), (Integer)presentationDTO.get(PresentationConstants.END_DAY));
+//	    
+//	    /** criacao dos objectos **/
+//	    Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
+//	    Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
+//	    Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
+//	    
+//	    Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay, (Integer)presentationDTO.get(PresentationConstants.END_YEAR), 
+//	            (Integer)presentationDTO.get(PresentationConstants.END_MONTH), (Integer)presentationDTO.get(PresentationConstants.END_DAY));
 	    	    
         // expediente
         TimeInterval workDay = createWorkDay((Integer)presentationDTO.get(PresentationConstants.START_WORK_DAY_HOURS),
@@ -105,9 +84,6 @@ public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
                 (Integer)presentationDTO.get(PresentationConstants.END_WORK_DAY_MINUTES),
                 ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_WORK_DAY)).booleanValue());
 	            
-	    // consecutive work
-	    Duration consecutiveWork = new Duration(((Long)presentationDTO.get(PresentationConstants.CONSECUTIVE_WORK)).longValue());
-
 	    // horario normal 1	    	    
 	    TimeInterval normalWorkSchedule1 = createTimeInterval(((Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_1_HOURS)),
                 ((Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_1_MINUTES)),
@@ -143,16 +119,16 @@ public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
                     ((Integer)presentationDTO.get(PresentationConstants.END_MEAL_BREAK_MINUTES)),
                     ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_MEAL_BREAK)).booleanValue(), new InvalidMealBreakIntervalException());
         
-        // workdays
-        EnumSet<WeekDays> workDays = createWorkDays(((Boolean) presentationDTO.get(PresentationConstants.WORK_EVERYDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_MONDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_TUESDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_WEDNESDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_THURSDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_FRIDAY)).booleanValue());
-
-        // regime
-        List<AssiduousnessRegime> regimes = (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
+//        // workdays
+//        EnumSet<WeekDay> workDays = createWorkDays(((Boolean) presentationDTO.get(PresentationConstants.WORK_EVERYDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_MONDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_TUESDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_WEDNESDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_THURSDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_FRIDAY)).booleanValue());
+//
+//        // regime
+//        List<AssiduousnessRegime> regimes = (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
         
 	    /** verificacoes que dependem de varios objectos simultaneamente **/
 	    NormalWorkPeriod regularSchedule = null;
@@ -165,14 +141,6 @@ public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
 	        if (regularSchedule.getTotalNormalWorkPeriodDuration().compareTo(DomainConstants.EXEMPTION_1HOUR_DAY_DURATION) != 0) {
 	            System.out.println("erro: hn e' maior que trabalho flexivel permitido");
 	            throw new NormalWorkPeriodExceedsLegalDayDurationException();
-	        }
-	        // verificar se horario normal1 e 2 nao sao maiores que o trabalho consecutivo
-	        // TODO verificatr isto
-	        if ((normalWorkSchedule1.getDuration().isShorterThan(consecutiveWork)) || (normalWorkSchedule2.getDuration().isLongerThan(consecutiveWork))) {
-	            System.out.println("erro: hn1 ou hn2 e' maior que trabalho consecutivo");
-//	            System.out.println(regularSchedule1.length() + " " + consecutiveWork);
-//	            System.out.println(regularSchedule2.length() + " " + consecutiveWork);
-	            throw new NormalWorkPeriodExceedsConsecutiveWorkPeriodException();
 	        }
 	        if (workDay != null) {
 	            // Se inicio de expediente for depois do horario normal 1 da' erro!
@@ -211,12 +179,10 @@ public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
             }
         }
 
-	    Employee employee = (Employee)presentationDTO.get(PresentationConstants.EMPLOYEE);
 	    Meal mealPeriod = new Meal(mealBreak);
-	    WorkWeek workWeek = new WorkWeek(workDays);
         // TODO mudar isto com dados apresentacao
-	    OneHourExemptionSchedule oneHourExemptionSchedule = makeOneHourExemptionSchedule(employee,  regularSchedule, fixedPlatforms, regimes, mealPeriod, consecutiveWork, 
-                workDay, validFromTo, workWeek, ((Boolean)presentationDTO.get(PresentationConstants.EXCEPTION_TIMETABLE)).booleanValue(), false, "xpto");
+	    OneHourExemptionSchedule oneHourExemptionSchedule = makeOneHourExemptionSchedule(regularSchedule, fixedPlatforms, mealPeriod, 
+                workDay, null);
 	    return oneHourExemptionSchedule;
 	}
 

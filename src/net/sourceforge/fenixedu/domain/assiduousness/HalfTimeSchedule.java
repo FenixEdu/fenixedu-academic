@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
-import net.sourceforge.fenixedu.domain.assiduousness.util.WeekDays;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 /**
  * @author velouria@velouria.org
@@ -35,19 +35,12 @@ public class HalfTimeSchedule extends HalfTimeSchedule_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public static HalfTimeSchedule fillHalfTimeSchedule(Employee employee,  NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPlatforms, List<AssiduousnessRegime> regimes, 
-			Meal mealPeriod, Duration consecutiveWork, TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) {
+	public static HalfTimeSchedule fillHalfTimeSchedule(NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPlatforms, Meal mealPeriod, TimeInterval workDay, String acronym) {
         HalfTimeSchedule newHalfTimeSchedule = new HalfTimeSchedule();
-//        newHalfTimeSchedule.setEmployee(employee);
         newHalfTimeSchedule.setNormalWorkPeriod(normalWorkPeriod);
         newHalfTimeSchedule.setFixedPeriod(fixedPlatforms);
         newHalfTimeSchedule.setMeal(mealPeriod);
-//        newHalfTimeSchedule.addRegimesToWorkSchedule(regimes);
         newHalfTimeSchedule.setWorkDay(workDay);
-        newHalfTimeSchedule.setValidFromTo(validFromTo);
-        newHalfTimeSchedule.setExceptionSchedule(exception);
-        newHalfTimeSchedule.setWorkWeek(workWeek);
-        newHalfTimeSchedule.setTemplateSchedule(template);
         newHalfTimeSchedule.setAcronym(acronym);
         return newHalfTimeSchedule;
     }
@@ -67,13 +60,13 @@ public class HalfTimeSchedule extends HalfTimeSchedule_Base {
     
     public static HalfTimeSchedule createHalfTimeSchedule(DTO presentationDTO) throws FenixDomainException {
 	    
-	    /** criacao dos objectos **/
-	    Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
-	    Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
-	    Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
-	    
-	    Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay, (Integer)presentationDTO.get(PresentationConstants.END_YEAR), 
-	            (Integer)presentationDTO.get(PresentationConstants.END_MONTH), (Integer)presentationDTO.get(PresentationConstants.END_DAY));
+//	    /** criacao dos objectos **/
+//	    Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
+//	    Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
+//	    Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
+//	    
+//	    Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay, (Integer)presentationDTO.get(PresentationConstants.END_YEAR), 
+//	            (Integer)presentationDTO.get(PresentationConstants.END_MONTH), (Integer)presentationDTO.get(PresentationConstants.END_DAY));
 	    	    
 	    // expediente
 	    TimeInterval workDay = createWorkDay((Integer)presentationDTO.get(PresentationConstants.START_WORK_DAY_HOURS),
@@ -82,9 +75,6 @@ public class HalfTimeSchedule extends HalfTimeSchedule_Base {
                 (Integer)presentationDTO.get(PresentationConstants.END_WORK_DAY_MINUTES),
                 ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_WORK_DAY)).booleanValue());
 	            
-	    // consecutive work
-	    Duration consecutiveWork = new Duration(((Long)presentationDTO.get(PresentationConstants.CONSECUTIVE_WORK)).longValue());
-
 	    // horario normal 1	    
 	    TimeInterval normalWorkPeriod1 = createTimeInterval(((Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_1_HOURS)),
                 ((Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_1_MINUTES)),
@@ -122,16 +112,16 @@ public class HalfTimeSchedule extends HalfTimeSchedule_Base {
 	        }
 	    }
 	    
-        // workdays
-        EnumSet<WeekDays> workDays = createWorkDays(((Boolean) presentationDTO.get(PresentationConstants.WORK_EVERYDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_MONDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_TUESDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_WEDNESDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_THURSDAY)).booleanValue(),
-                ((Boolean)presentationDTO.get(PresentationConstants.WORK_FRIDAY)).booleanValue());
-	    
-        // regime
-        List<AssiduousnessRegime> regimes = (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
+//        // workdays
+//        EnumSet<WeekDay> workDays = createWorkDays(((Boolean) presentationDTO.get(PresentationConstants.WORK_EVERYDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_MONDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_TUESDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_WEDNESDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_THURSDAY)).booleanValue(),
+//                ((Boolean)presentationDTO.get(PresentationConstants.WORK_FRIDAY)).booleanValue());
+//	    
+//        // regime
+//        List<AssiduousnessRegime> regimes = (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
  
 
 	    /** verificacoes que dependem de varios objectos simultaneamente **/
@@ -161,11 +151,8 @@ public class HalfTimeSchedule extends HalfTimeSchedule_Base {
 	        }
 	    }
 	    
-	    Employee employee = (Employee)presentationDTO.get(PresentationConstants.EMPLOYEE);
-	    WorkWeek workWeek = new WorkWeek(workDays);
         // TODO alterar isto da appresentacao
-	    HalfTimeSchedule halfTimeSchedule = fillHalfTimeSchedule(employee,  regularSchedule, fixedPeriods, regimes, mealPeriod, consecutiveWork, workDay, validFromTo, workWeek,
-	                ((Boolean)presentationDTO.get(PresentationConstants.EXCEPTION_TIMETABLE)).booleanValue(), false, "xtop");
+	    HalfTimeSchedule halfTimeSchedule = fillHalfTimeSchedule(regularSchedule, fixedPeriods, mealPeriod, workDay, null);
 	    return halfTimeSchedule;
 	}
     

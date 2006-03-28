@@ -15,7 +15,7 @@ public class DailyBalance extends DailyBalance_Base {
     // Nao tem horario associado neste dia (possivelmente fim-de-semana
     public DailyBalance(YearMonthDay date) {
     	this();
-        setWorkSchedule(null);
+//        setWorkSchedule(null);
         setDate(date);
         setFixedPeriodAbsence(Duration.ZERO);
         setNormalWorkPeriod1Balance(Duration.ZERO);
@@ -26,7 +26,7 @@ public class DailyBalance extends DailyBalance_Base {
     
     public DailyBalance(WorkSchedule workSchedule, YearMonthDay date) {
     	this();
-        setWorkSchedule(workSchedule);
+//        setWorkSchedule(workSchedule);
         setDate(date);
         setFixedPeriodAbsence(Duration.ZERO);
         setNormalWorkPeriod1Balance(Duration.ZERO);
