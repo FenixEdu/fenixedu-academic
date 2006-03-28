@@ -438,7 +438,14 @@
 	</schema>
 
 	<schema name="person.homepage.manage" type="net.sourceforge.fenixedu.domain.homepage.Homepage">
-		<slot name="myUrl"/>
+		<slot name="activated"/>
+		<slot name="name"/>
+		<slot name="showUnit"/>
+		<slot name="showPhoto"/>
+		<slot name="showEmail"/>
+		<slot name="showTelephone"/>
+		<slot name="showAlternativeHomepage"/>
+		<slot name="showResearchUnitHomepage"/>
 	</schema>
 
 	<schema name="person.homepage.blog.manage" type="net.sourceforge.fenixedu.domain.homepage.Blog">

@@ -1448,6 +1448,14 @@ class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu
 class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Integer keyBlog;
+	Boolean activated;
+	String name;
+	Boolean showUnit;
+	Boolean showPhoto;
+	Boolean showEmail;
+	Boolean showTelephone;
+	Boolean showAlternativeHomepage;
+	Boolean showResearchUnitHomepage;
     String myUrl;
 }
 

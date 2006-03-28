@@ -6,6 +6,32 @@
 
 <h2><bean:message key="title.manage.homepage"/></h2>
 
+<br/>
+
+<bean:message key="message.homepage.info"/>
+
+<br/>
+<br/>
+
+<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
+
+<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="UserView" property="person.homepage.myUrl"/></bean:define>
+<bean:message key="person.homepage.url"/>
+
+<logic:notPresent name="UserView" property="person.homepage">
+	<bean:write name="homepageURL"/>
+</logic:notPresent>
+
+<logic:present name="UserView" property="person.homepage">
+	<logic:notPresent name="UserView" property="person.homepage.activated">
+			<bean:write name="homepageURL"/>
+	</logic:notPresent>
+	<logic:present name="UserView" property="person.homepage.activated">
+			<html:link href="<%= homepageURL %>"><bean:write name="homepageURL"/></html:link>
+	</logic:present>
+</logic:present>
+
 <logic:notPresent name="UserView" property="person.homepage">
 	<fr:create type="net.sourceforge.fenixedu.domain.homepage.Homepage" schema="person.homepage.manage">
 		<fr:layout name="tabular">
@@ -17,17 +43,6 @@
 </logic:notPresent>
 
 <logic:present name="UserView" property="person.homepage">
-
-	<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
-	<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-
-	<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="UserView" property="person.homepage.myUrl"/></bean:define>
-	<bean:message key="person.homepage.url"/>
-	<html:link href="<%= homepageURL %>"><bean:write name="homepageURL"/></html:link>
-	
-	<br/>
-	<br/>
-
 	<fr:edit name="UserView" property="person.homepage"
 			type="net.sourceforge.fenixedu.domain.homepage.Homepage"
 			schema="person.homepage.manage">
@@ -36,29 +51,4 @@
 			<fr:property name="columnClasses" value="listClasses" />
 		</fr:layout>
 	</fr:edit>
-
-	<br/>
-	<br/>
-
-	<logic:notPresent name="UserView" property="person.homepage.blog">
-		<fr:create type="net.sourceforge.fenixedu.domain.homepage.Blog" schema="person.homepage.blog.manage">
-			<fr:layout name="tabular">
-				<fr:hidden slot="homepage" name="UserView" property="person.homepage"/>
-				<fr:property name="classes" value="style1" />
-				<fr:property name="columnClasses" value="listClasses" />
-			</fr:layout>
-		</fr:create>
-	</logic:notPresent>
-
-	<logic:present name="UserView" property="person.homepage.blog">
-		<fr:edit name="UserView" property="person.homepage.blog"
-				type="net.sourceforge.fenixedu.domain.homepage.Blog"
-				schema="person.homepage.blog.manage">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="style1" />
-				<fr:property name="columnClasses" value="listClasses" />
-			</fr:layout>
-		</fr:edit>
-	</logic:present>
-
 </logic:present>
