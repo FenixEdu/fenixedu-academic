@@ -42,7 +42,7 @@ public class Project extends Project_Base {
         }
         else { 
             hasTitle = false;
-            translation.setTitle(this.getTitle().getContent(Language.getDefaultLanguage()));
+            translation.setTitle(this.getTitle().getContent(Language.getApplicationLanguage()));
         }
         
         if (this.getProjectAbstract().hasLanguage(language)) {
@@ -50,7 +50,7 @@ public class Project extends Project_Base {
         }
         else {
             hasAbstract = false;
-            translation.setProjectAbstract(this.getProjectAbstract().getContent(Language.getDefaultLanguage()));
+            translation.setProjectAbstract(this.getProjectAbstract().getContent(Language.getApplicationLanguage()));
         }
         
         if (!hasTitle && !hasAbstract) {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.renderers.model;
 
-public class SimpleCreationMetaObject extends SimpleMetaObject {
+public class SimpleCreationMetaObject extends SimpleMetaObject implements CreationMetaObject {
 
     public SimpleCreationMetaObject(Object object) {
         super(object);

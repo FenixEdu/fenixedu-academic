@@ -12,12 +12,12 @@
 				<fr:property name="subLayout" value="values"/>
 				<fr:property name="subSchema" value="researchInterest.summary"/>
 
-				<fr:property name="link(translations)" value="/interests/interestsManagement.do?method=viewTranslation"/>
+				<fr:property name="link(translations)" value="/interests/interestsManagement.do?method=manageTranslations"/>
 				<fr:property name="param(translations)" value="idInternal/oid"/>
-				<fr:property name="key(translations)" value="researcher.interestsManagement.viewTranslation"/>
+				<fr:property name="key(translations)" value="researcher.interestsManagement.manageTranslations"/>
 				<fr:property name="bundle(translations)" value="RESEARCHER_RESOURCES"/>
 				<fr:property name="order(translations)" value="0"/>
-
+				
 				<fr:property name="link(down)" value="/interests/interestsManagement.do?method=down"/>
 				<fr:property name="param(down)" value="idInternal/oid"/>
 				<fr:property name="key(down)" value="researcher.interestsManagement.down"/>

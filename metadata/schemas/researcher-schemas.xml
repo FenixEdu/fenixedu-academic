@@ -20,6 +20,11 @@
 	<slot name="interest"/>
 </schema>	
 
+<schema name="researchInterestTranslation.simpleCreate" type="net.sourceforge.fenixedu.domain.research.ResearchInterest$ResearchInterestTranslation">
+	<slot name="language"/>
+	<slot name="interest"/>
+</schema>
+
 <schema name="projectParticipation.create-defaults" type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
 	<slot name="project.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="75"/>
@@ -33,4 +38,9 @@
 	<slot name="project.endDate"/> -->
 	<slot name="project.projectType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>	
+
+<schema name="researchInterestTranslation" type="net.sourceforge.fenixedu.domain.research.ResearchInterest$ResearchInterestTranslation">
+	<slot name="language"/>
+	<slot name="interest"/>
 </schema>	

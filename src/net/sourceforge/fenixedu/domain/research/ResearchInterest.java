@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.research;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -21,13 +25,34 @@ public class ResearchInterest extends ResearchInterest_Base {
         deleteDomainObject();
     }
 
+    public void addTranslation(ResearchInterestTranslation translation){
+        this.getInterest().setContent(translation.getLanguage(), translation.getInterest());
+    }
+    
+    public void removeTranslation(Language language) {
+        if(!this.getInterest().hasLanguage(language)) {
+            throw new DomainException("errors.researchInterest.inexistantTranslation");
+        }
+        if(this.getInterest().getAllLanguages().size() == 1) {
+            throw new DomainException("errors.researchInterest.lastTranslation");
+        }
+        this.getInterest().removeContent(language);
+    }
+   
+    public List<ResearchInterestTranslation> getAllTranslations() {
+        List<ResearchInterestTranslation> result = new ArrayList<ResearchInterestTranslation>();
+        for(Language language: this.getInterest().getAllLanguages()){
+            result.add(this.getTranslation(language));
+        }
+        return result;
+    }
+    
     /**
      * This method is responsible for creating the logic of what is a
      * translation If the researchInterest hasn't got a given attribute in the
      * wanted language a domainException is thrown.
      * 
-     * @param language
-     *            the language we want the translation
+     * @param language the language we want the translation
      * @return the researchInteresttranslation in the given language
      */
     public ResearchInterestTranslation getTranslation(Language language) {
@@ -41,7 +66,7 @@ public class ResearchInterest extends ResearchInterest_Base {
         return translation;
     }
 
-    public class ResearchInterestTranslation {
+    public static class ResearchInterestTranslation implements Serializable{
         private Language language;
 
         private String interest;
@@ -62,7 +87,11 @@ public class ResearchInterest extends ResearchInterest_Base {
             this.interest = interest;
         }
 
-        ResearchInterestTranslation(Language language) {
+        public ResearchInterestTranslation() {
+            interest = new String();
+        }
+        
+        public ResearchInterestTranslation(Language language) {
             this.language = language;
             interest = new String();
         }

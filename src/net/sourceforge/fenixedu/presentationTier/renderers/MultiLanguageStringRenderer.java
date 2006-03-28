@@ -44,7 +44,7 @@ public class MultiLanguageStringRenderer extends StringRenderer {
             return value;
         }
         
-        return mlString.getContent(Language.getDefaultLanguage());
+        return mlString.getContent(Language.getApplicationLanguage());
     }
 
     private Language getUsedLanguage(String language) {
@@ -56,7 +56,7 @@ public class MultiLanguageStringRenderer extends StringRenderer {
         Locale locale = request.getLocale();
 
         if (locale == null) {
-            return Language.getDefaultLanguage();
+            return Language.getApplicationLanguage();
         }
         
         return Language.valueOf(locale.getLanguage().toLowerCase());

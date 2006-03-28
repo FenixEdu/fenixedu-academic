@@ -74,7 +74,6 @@ Documentation:
   
     <renderer type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringRenderer"/>
     <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer"/>
-    <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="complete" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer"/>
     
     <renderer type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
     <renderer type="int" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>

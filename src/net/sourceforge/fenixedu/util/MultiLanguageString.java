@@ -22,11 +22,15 @@ public class MultiLanguageString {
 	}
     
     public String getContent() {
-        return getContent(Language.getDefaultLanguage());
+        //In a future version this should return the content in the LOCALE language
+        //only if that language has no content the Application Language should be used
+        return getContent(Language.getApplicationLanguage());
     }
 	
     public void setContent(String text) {
-        setContent(Language.getDefaultLanguage(), text);
+        //In a future version the content should be set to the LOCALE language and the
+        //Application languange at the same time.
+        setContent(Language.getApplicationLanguage(), text);
     }
 	public String getContent(Language language) {
 		return contentsMap.get(language);
