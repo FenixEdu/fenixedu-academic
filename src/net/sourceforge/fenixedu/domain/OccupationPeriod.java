@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.util.CalendarUtil;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 /**
  * @author Ana e Ricardo
@@ -114,8 +115,8 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     
     public static OccupationPeriod readByDatesAndNextOccupationPeriod(Date startDate, Date endDate, OccupationPeriod nextOccupationPeriod) {
         for (OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriods()) {
-            if (occupationPeriod.getStart().equals(startDate)
-                    && occupationPeriod.getEnd().equals(endDate) 
+            if (DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getStart(), startDate)
+                    && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getEnd(), endDate) 
                     && (nextOccupationPeriod == null || (nextOccupationPeriod != null && occupationPeriod.getNextPeriod().equals(nextOccupationPeriod)))) {
                         return occupationPeriod;
             }
