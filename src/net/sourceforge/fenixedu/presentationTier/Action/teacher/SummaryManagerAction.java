@@ -198,6 +198,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             ActionErrors errors = new ActionErrors();
             errors.add("error", new ActionError("Can't find course's responsible teacher"));
             saveErrors(request, errors);
@@ -210,6 +211,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             siteView = (SiteView) ServiceManagerServiceFactory.executeService(userView,
                     "PrepareInsertSummary", args);
         } catch (Exception e) {
+            e.printStackTrace();
             ActionErrors errors = new ActionErrors();
             errors.add("error", new ActionError("error.summary.impossible.insert"));
             saveErrors(request, errors);
@@ -233,6 +235,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             choosenLesson(request, (InfoSummary) request.getAttribute("summaryToInsert"));
             preSelectTeacherLogged(request, form, (InfoSiteSummaries) siteView.getComponent());
         } catch (Exception e) {
+            e.printStackTrace();
             return showSummaries(mapping, form, request, response);
         }
 

@@ -4,6 +4,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,7 +46,7 @@ public class ReadLastSummary extends Service {
             throw new FenixServiceException("no.executioncourse");
         }
 
-        List summaries = shift.getAssociatedSummaries();
+        List summaries = new ArrayList(shift.getAssociatedSummaries());
         if (summaries != null && summaries.size() > 0) {
             Comparator comparator = new BeanComparator("summaryDate.time");
             Collections.sort(summaries, comparator);
