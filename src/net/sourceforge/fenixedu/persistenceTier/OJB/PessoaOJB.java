@@ -55,13 +55,6 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
 
     }
 
-    public Collection<Person> readByIdentificationDocumentNumber(String identificationDocumentNumber)
-            throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("documentIdNumber", identificationDocumentNumber);
-        return queryList(Person.class, criteria);
-    }
-
 	public boolean emailOwnedByFenixPerson(Collection<String> emails) throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();

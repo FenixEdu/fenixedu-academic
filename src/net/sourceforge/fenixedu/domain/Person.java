@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -729,20 +730,6 @@ public class Person extends Person_Base {
         return true;
     }
 
-    public static Person readPersonByUsername(final String username) {
-        final Login login = Login.readLoginByUsername(username);
-        User user = null;
-        if (login != null) {
-            user = login.getUser();
-        }
-        return user != null ? user.getPerson() : null;
-    }
-
-    public static Person readPersonByIstUsername(final String istUsername) {
-        final User user = User.readUserByUserUId(istUsername);
-        return user != null ? user.getPerson() : null;
-    }
-
     private static class PersonRoleListener extends dml.runtime.RelationAdapter<Role, Person> {
         /**
          * This method is called transparently to the programmer when he adds a
@@ -1101,6 +1088,34 @@ public class Person extends Person_Base {
     @Deprecated
     public void setTelemovel(String telemovel) {
         super.setMobile(telemovel);
+    }
+    
+    // -------------------------------------------------------------
+    // read static methods 
+    // -------------------------------------------------------------
+
+    public static Person readPersonByUsername(final String username) {
+        final Login login = Login.readLoginByUsername(username);
+        User user = null;
+        if (login != null) {
+            user = login.getUser();
+        }
+        return (user != null) ? user.getPerson() : null;
+    }
+
+    public static Person readPersonByIstUsername(final String istUsername) {
+        final User user = User.readUserByUserUId(istUsername);
+        return (user != null) ? user.getPerson() : null;
+    }
+    
+    public static Collection<Person> readByDocumentIdNumber(final String documentIdNumber) {
+        Collection<Person> result = new ArrayList<Person>();
+        for (final Person person : Party.readAllPersons()) {
+            if (person.getDocumentIdNumber().equalsIgnoreCase(documentIdNumber)) {
+                result.add(person);
+            }
+        }
+        return result;
     }
 
 }

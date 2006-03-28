@@ -210,25 +210,6 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 		});
 	}
 
-	public Collection<Person> readByIdentificationDocumentNumber(
-			final String identificationDocumentNumber) throws ExcepcaoPersistencia
-	{
-
-		Collection<Person> persons = Party.readAllPersons();
-
-		return CollectionUtils.select(persons, new Predicate()
-		{
-
-			public boolean evaluate(Object arg0)
-			{
-				Person person = (Person) arg0;
-				return person.getNumeroDocumentoIdentificacao().equalsIgnoreCase(identificationDocumentNumber);
-			}
-
-		});
-
-	}
-
 	public Integer CountPersonByDepartment(String name, List<Teacher> teacher, Integer startIndex,
 			Integer numberOfElementsInSpan) throws ExcepcaoPersistencia
 	{
