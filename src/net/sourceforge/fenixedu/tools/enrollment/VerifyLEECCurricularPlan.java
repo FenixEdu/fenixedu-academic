@@ -162,12 +162,8 @@ public class VerifyLEECCurricularPlan {
      */
     private static void printItForPrecedences(DegreeCurricularPlan degreeCurricularPlan)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         System.out.println("PRECED�NCIAS:");
-
-        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>(degreeCurricularPlan.getCurricularCourses());
-
+        List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses(); 
         sortCurricularCourses(curricularCourses);
         Iterator iterator1 = curricularCourses.iterator();
         while (iterator1.hasNext()) {
