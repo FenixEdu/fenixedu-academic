@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 
 /**
  * @author joaosa & rmalo
@@ -34,38 +33,24 @@ public class RejectNewProjectProposal extends Service {
 	public Boolean run(Integer executionCourseId, Integer groupPropertiesId, String rejectorUserName)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		Boolean result = Boolean.FALSE;
-
 		if (groupPropertiesId == null) {
-			return result;
+			return Boolean.FALSE;
 		}
-
-		IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
 		
-		Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
-				groupPropertiesId);
-
+		final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesId);
 		if (groupProperties == null) {
 			throw new NotAuthorizedException();
 		}
-
-		ExportGrouping groupPropertiesExecutionCourse = persistentExportGrouping.readBy(
-				groupPropertiesId, executionCourseId);
-
+        
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+		final ExportGrouping groupPropertiesExecutionCourse = executionCourse.getExportGrouping(groupProperties);
 		if (groupPropertiesExecutionCourse == null) {
 			throw new ExistingServiceException();
 		}
 
-		Person receiverPerson = Teacher.readTeacherByUsername(rejectorUserName).getPerson();
-
-		ExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
+		final Person receiverPerson = Teacher.readTeacherByUsername(rejectorUserName).getPerson();
 		groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);
 		groupPropertiesExecutionCourse.getProposalState().setState(3);
-		executionCourse.removeExportGroupings(groupPropertiesExecutionCourse);
-		groupProperties.removeExportGroupings(groupPropertiesExecutionCourse);
-
-		persistentExportGrouping.deleteByOID(ExportGrouping.class, groupPropertiesExecutionCourse
-				.getIdInternal());
 
 		List group = new ArrayList();
 
@@ -118,10 +103,10 @@ public class RejectNewProjectProposal extends Service {
 			person.getAdvisories().add(advisory);
 			advisory.getPeople().add(person);
 		}
+        
+        groupPropertiesExecutionCourse.delete();
 
-		result = Boolean.TRUE;
-
-		return result;
+		return Boolean.TRUE;
 	}
 
 	private Advisory createRejectAdvisory(ExecutionCourse executionCourse, Person senderPerson,
@@ -140,7 +125,7 @@ public class RejectNewProjectProposal extends Service {
 		advisory.setSubject("Proposta Enviada Rejeitada");
 
 		String msg;
-		msg = new String("A proposta de co-avaliaï¿½ï¿½o do agrupamento "
+		msg = new String("A proposta de co-avaliação do agrupamento "
 				+ groupPropertiesExecutionCourse.getGrouping().getName() + ", enviada pelo docente "
 				+ senderPerson.getNome() + " da disciplina "
 				+ groupPropertiesExecutionCourse.getSenderExecutionCourse().getNome()

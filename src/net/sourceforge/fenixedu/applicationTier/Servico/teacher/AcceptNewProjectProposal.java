@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.util.ProposalState;
 
 /**
@@ -37,22 +36,17 @@ public class AcceptNewProjectProposal extends Service {
 	public Boolean run(Integer executionCourseId, Integer groupPropertiesId,
 			String acceptancePersonUserName) throws FenixServiceException, ExcepcaoPersistencia {
 
-		Boolean result = Boolean.FALSE;
-
 		if (groupPropertiesId == null) {
-			return result;
+			return Boolean.FALSE;
 		}
 
-		IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
-        
-		Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesId);
-
+		final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesId);
 		if (grouping == null) {
 			throw new NotAuthorizedException();
 		}
-
-		ExportGrouping groupPropertiesExecutionCourse = persistentExportGrouping.readBy(
-				groupPropertiesId, executionCourseId);
+        
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+		final ExportGrouping groupPropertiesExecutionCourse = executionCourse.getExportGrouping(grouping);
 
 		if (groupPropertiesExecutionCourse == null) {
 			throw new ExistingServiceException();
@@ -75,7 +69,6 @@ public class AcceptNewProjectProposal extends Service {
 			attendsStudentNumbers.add(attend.getAluno().getNumber());
 		}
 
-		ExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
 		List attendsAux = executionCourse.getAttends();
 		Iterator iterAttends = attendsAux.iterator();
 		while (iterAttends.hasNext()) {
@@ -145,9 +138,8 @@ public class AcceptNewProjectProposal extends Service {
 
 		groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(2)));
 		groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);
-		result = Boolean.TRUE;
 
-		return result;
+		return Boolean.TRUE;
 	}
 
 	private Advisory createAcceptAdvisory(ExecutionCourse executionCourse,
@@ -168,7 +160,7 @@ public class AcceptNewProjectProposal extends Service {
 
 		String msg;
 		msg = new String(
-				"A proposta de co-avaliaï¿½ï¿½o do agrupamento "
+				"A proposta de co-avaliação do agrupamento "
 						+ groupPropertiesExecutionCourse.getGrouping().getName()
 						+ ", enviada pelo docente "
 						+ senderPerson.getNome()
@@ -179,8 +171,8 @@ public class AcceptNewProjectProposal extends Service {
 						+ " da disciplina "
 						+ executionCourse.getNome()
 						+ "!"
-						+ "<br>A partir deste momento poder-se-ï¿½ dirijir ï¿½ ï¿½rea de gestï¿½o de grupos da disciplina "
-						+ personExecutionCourse.getNome() + " para gerir a nova co-avaliaï¿½ï¿½o.");
+						+ "<br>A partir deste momento poder-se-á dirijir à área de gestão de grupos da disciplina "
+						+ personExecutionCourse.getNome() + " para gerir a nova co-avaliação.");
 
 		advisory.setMessage(msg);
 		return advisory;

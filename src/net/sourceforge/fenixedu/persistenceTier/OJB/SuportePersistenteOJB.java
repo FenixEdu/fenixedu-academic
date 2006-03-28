@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
@@ -606,11 +605,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction()
 	{
 		return new InsuranceTransactionOJB();
-	}
-
-	public IPersistentExportGrouping getIPersistentExportGrouping()
-	{
-		return new ExportGroupingOJB();
 	}
 
 	public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary()

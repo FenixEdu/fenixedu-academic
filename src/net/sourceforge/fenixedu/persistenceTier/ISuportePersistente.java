@@ -181,8 +181,6 @@ public interface ISuportePersistente
 
 	public IPersistentPublicationTeacher getIPersistentPublicationTeacher();
 
-	public IPersistentExportGrouping getIPersistentExportGrouping();
-
 	public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary();
 
 	public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes();

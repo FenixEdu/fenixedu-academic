@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 
 /**
  * @author joaosa & rmalo
@@ -33,12 +32,13 @@ public class DeleteProjectProposal extends Service {
 
     public boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
             String withdrawalPersonUsername) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
+        
+       
 
         Person withdrawalPerson = Teacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
-        Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class, groupPropertiesCode);
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseCode);
-        ExecutionCourse startExecutionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, objectCode);
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        ExecutionCourse startExecutionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
 
         if (groupProperties == null) {
             throw new InvalidArgumentsServiceException("error.noGroupProperties");
@@ -47,16 +47,11 @@ public class DeleteProjectProposal extends Service {
             throw new InvalidArgumentsServiceException("error.noExecutionCourse");
         }
 
-        ExportGrouping groupingExecutionCourse = persistentExportGrouping
-                .readBy(groupProperties.getIdInternal(), executionCourse.getIdInternal());
+        ExportGrouping groupingExecutionCourse = executionCourse.getExportGrouping(groupProperties);
 
         if (groupingExecutionCourse == null) {
             throw new InvalidArgumentsServiceException("error.noProjectProposal");
         }
-
-        groupProperties.removeExportGroupings(groupingExecutionCourse);
-        executionCourse.removeExportGroupings(groupingExecutionCourse);
-        persistentExportGrouping.deleteByOID(ExportGrouping.class, groupingExecutionCourse.getIdInternal());
 
         // List teachers to advise
         List group = new ArrayList();
@@ -107,7 +102,8 @@ public class DeleteProjectProposal extends Service {
             person.getAdvisories().add(advisory);
             advisory.getPeople().add(person);
         }
-
+        groupingExecutionCourse.delete();
+        
         return true;
     }
 

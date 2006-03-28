@@ -310,5 +310,18 @@ public class Grouping extends Grouping_Base {
         }
         return max;
     }
+    
+    public ExportGrouping getExportGrouping(final ExecutionCourse executionCourse) {
+        for (final ExportGrouping exportGrouping : this.getExportGroupingsSet()) {
+            if (exportGrouping.getExecutionCourse() == executionCourse) {
+                return exportGrouping;
+            }
+        }
+        return null;
+    }
+    
+    public boolean hasExportGrouping(final ExecutionCourse executionCourse) {
+        return getExportGrouping(executionCourse) != null;
+    }
 
 }
