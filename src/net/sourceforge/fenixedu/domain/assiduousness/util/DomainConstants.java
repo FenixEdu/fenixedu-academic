@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.domain.assiduousness.util;
 import java.util.EnumSet;
 
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -166,7 +167,7 @@ public class DomainConstants {
     public final static TimeOfDay TIMELINE_START = new TimeOfDay(0, 0, 0);
     public final static TimeOfDay TIMELINE_END = new TimeOfDay(23, 59, 59);
     
-    public final static WorkWeek WORKDAYS = new WorkWeek(EnumSet.range(WeekDays.MONDAY, WeekDays.FRIDAY));
+    public final static WorkWeek WORKDAYS = new WorkWeek(EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY));
 
     // Marcacoes
     // TODO um bocado foleiro...

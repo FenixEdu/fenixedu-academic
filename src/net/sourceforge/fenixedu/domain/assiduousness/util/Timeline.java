@@ -41,10 +41,10 @@ public class Timeline {
     
     
     public void plotList(List<TimePoint> pointList) {
-        int i = 1;
+//        int i = 1;
         for (TimePoint point: pointList) {
             plotPoint(point);
-            i = i +1;
+ //           i = i +1;
         }
     }
    
@@ -65,7 +65,8 @@ public class Timeline {
             if (newPoint.isAtSameTime(currentPoint)) {
                 if (insideIntervals.contains(newPoint.getPointAttributes())) { // the interval is open and we're going to close it right away
                     pointClosesInterval(insideIntervals, newPoint, i);
-                    currentPoint.getPointAttributes().removeAttributes(newPoint.getPointAttributes().getAttributes()); // remove the newPoint attributes from the current point 
+                    // TODO verificar isto! - apaguei, em principio e' redundante
+//                    currentPoint.getPointAttributes().removeAttributes(newPoint.getPointAttributes().getAttributes()); // remove the newPoint attributes from the current point 
                     currentPoint.getPointAttributes().addAttributes(newPoint.getPointAttributes().getAttributes()); // since the time is the same we will not add the new point but use the current 
                 } else { // the interval is not open, let's create it
                     pointOpensInterval(insideIntervals, newPoint, i);
@@ -84,6 +85,7 @@ public class Timeline {
                 break; // get off the for loop
             } else { // is after
                 // caso em q o intervalo ja esta' aberto
+            	// faz o update do atributo no ponto
                 for (AttributeType attribute: currentPoint.getPointAttributes().getAttributes()) {
                     if (insideIntervals.contains(attribute)) { 
                         newPoint.getIntervalAttributes().removeAttribute(attribute); // removes the current point attribute to new point interval attributes
@@ -125,7 +127,7 @@ public class Timeline {
         removeIntervalAttributeFromNextPoints(position, point.getPointAttributes()); // remove the attribute from this and the next points
     }
     
-    // As the point closes the interval, this method adds the point's attribute to the open intervals set and to all subsequent point's attribute sets
+    // As the point opens the interval, this method adds the point's attribute to the open intervals set and to all subsequent point's attribute sets
     // part of plotPoint
     private void pointOpensInterval(Attributes insideIntervals, TimePoint point, int position) {
         insideIntervals.addAttributes(point.getPointAttributes().getAttributes()); // adds the point's attribute to the openInterval set
@@ -316,18 +318,6 @@ public class Timeline {
     public Duration calculateDurationAllIntervalsByAttributes(Attributes attributes) {
         return calculateDurationAllIntervalsByAttributesFromTime(DomainConstants.TIMELINE_START, attributes);
     }
-
-    
-    
-    public Duration calculateFixedPeriod(AttributeType fixedPeriodAttribute) {
-        List<TimePoint> pointList = new ArrayList<TimePoint>();
-        for (TimePoint point: getTimePoints()) {
-            if (point.hasAttributes(fixedPeriodAttribute, DomainConstants.WORKED_ATTRIBUTES)) {
-                pointList.add(point);
-            }
-        }
-        return this.calculateDurationPointList(pointList);
-    }
     
     // Returns a list will all points that contain the specified attributes
     public List<TimePoint> getAllAttributePoints(Attributes attributes) {
@@ -339,7 +329,22 @@ public class Timeline {
         }
         return pointList;
     }
+
     
+    
+    	//
+    // METODOS ESPECIFICOS PARA A ASSIDUIDADE
+    //
+    
+    public Duration calculateFixedPeriod(AttributeType fixedPeriodAttribute) {
+        List<TimePoint> pointList = new ArrayList<TimePoint>();
+        for (TimePoint point: getTimePoints()) {
+            if (point.hasAttributes(fixedPeriodAttribute, DomainConstants.WORKED_ATTRIBUTES)) {
+                pointList.add(point);
+            }
+        }
+        return this.calculateDurationPointList(pointList);
+    }    
 
     // Calcula a duracao do periodo em q o funcionario saiu para almoco durante o periodo de almoco.
     // 2 casos, um em que sai depois do periodo de almoco comecar, e outro q entra ja almocado.
@@ -378,7 +383,7 @@ public class Timeline {
         } else { // nao ha fim de refeicao, employee bazou ou nao fez refeicao
             System.out.println("nao ha fim de ref");
             // calcula a duracao do periodo em q o funcionario saiu para o almoco e o fim do almoco definido no horario.
-            return this.calculateBreakPeriod();
+            return calculateBreakPeriod();
             //return null;
         }
     }    
@@ -433,21 +438,30 @@ public class Timeline {
         return null;
     }
 
-  // Returns the time the employee worked during Normal Work Period 1 or 2 time interval. The clockings should be done during the Normal Work Period 1 or 2.
-  // TODO verify this!
-  public Duration calculateNormalWorkPeriod(AttributeType normalWorkPeriodAttribute) {
-      Duration totalDuration = Duration.ZERO;
-      // get the workedAttributes during the normal work period
-      Attributes overlappedAttributes = findAttributesIntervalThatOverlapFromAttributes(normalWorkPeriodAttribute, DomainConstants.WORKED_ATTRIBUTES);
-      // since the worked times are not overlapped lets calculate each duration
-      for (AttributeType attribute: overlappedAttributes.getAttributes()) {
-          TimeInterval attributeInterval = findIntervalByAttribute(attribute);
-          totalDuration = totalDuration.plus(attributeInterval.getDuration());
-      }
-      return totalDuration;
-  }
+    // Returns the time the employee worked during Normal Work Period 1 or 2 time interval. The clockings should be done during the Normal Work Period 1 or 2.
+    // TODO verify this!
+    public Duration calculateNormalWorkPeriod(AttributeType normalWorkPeriodAttribute) {
+    		Duration totalDuration = Duration.ZERO;
+    		// get the workedAttributes during the normal work period
+    		Attributes overlappedAttributes = findAttributesIntervalThatOverlapFromAttributes(normalWorkPeriodAttribute, DomainConstants.WORKED_ATTRIBUTES);
+    		// since the worked times are not overlapped lets calculate each duration
+    		for (AttributeType attribute: overlappedAttributes.getAttributes()) {
+    			TimeInterval attributeInterval = findIntervalByAttribute(attribute);
+    			totalDuration = totalDuration.plus(attributeInterval.getDuration());
+    		}
+    		return totalDuration;
+    }
 
-    
+
+    	// Returns the first point the employee worked (corresponding to the 1st clocking of the day)
+    public TimePoint findFirstWorkStart() {
+    		for (TimePoint point: getTimePoints()) {
+    			if (point.getPointAttributes().equals(AttributeType.WORKED1)) {
+    				return point;
+    			}
+    		}
+    		return null;
+    }
     
     public void print() {
         for (TimePoint point: getTimePoints()) {

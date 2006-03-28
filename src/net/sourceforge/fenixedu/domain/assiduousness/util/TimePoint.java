@@ -7,12 +7,14 @@ public class TimePoint {
     private TimeOfDay timePoint;
     private Attributes pointAttributes;
     private Attributes intervalAttributes;
+    private Object entity;
 
     public TimePoint(TimeOfDay timePoint) {
         setPoint(timePoint);
         pointAttributes = new Attributes(AttributeType.NULL);
 //        this.pointAttributes = new Attributes(AttributeType.NULL);
         intervalAttributes = new Attributes();
+        entity = null;
     }
 
     // Sets the attribute interval to the same point attribute
@@ -20,6 +22,7 @@ public class TimePoint {
         setPoint(timePoint);
         pointAttributes = new Attributes(attribute);
         intervalAttributes = new Attributes();
+        entity = null;
     }
 
     
@@ -30,7 +33,19 @@ public class TimePoint {
         if (attributeToInterval != null) {
             intervalAttributes.addAttribute(attributeToInterval);
         }
+        entity = null;
     }
+
+    public TimePoint(TimeOfDay timePoint, AttributeType attribute, AttributeType attributeToInterval, Object object) {
+        setPoint(timePoint);
+        pointAttributes = new Attributes(attribute);
+        intervalAttributes = new Attributes();
+        if (attributeToInterval != null) {
+            intervalAttributes.addAttribute(attributeToInterval);
+        }
+        entity = object;
+    }
+
     
     public TimeOfDay getPoint() {
         return timePoint;
@@ -54,6 +69,14 @@ public class TimePoint {
 
     public void setPointAttributes(Attributes newPointAttributes) {
         pointAttributes = newPointAttributes;
+    }
+
+    public void setEntity(Object object) {
+    		entity = object;
+    }
+    
+    public Object getEntity() {
+    		return entity;
     }
 
     public boolean isAfter(TimePoint timePoint) {

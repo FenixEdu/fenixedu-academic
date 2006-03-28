@@ -1,26 +1,26 @@
 package net.sourceforge.fenixedu.domain.assiduousness.util;
 
-import net.sourceforge.fenixedu.domain.assiduousness.util.WeekDays;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 public class DateUtilities {
 
     
-    public static WeekDays convertToWeekDays(int weekday) {
+    public static WeekDay convertToWeekDays(int weekday) {
         switch (weekday) {
         case 1:
-            return WeekDays.MONDAY;
+            return WeekDay.MONDAY;
         case 2:
-            return WeekDays.TUESDAY;
+            return WeekDay.TUESDAY;
         case 3:
-            return WeekDays.WEDNESDAY;
+            return WeekDay.WEDNESDAY;
         case 4:
-            return WeekDays.THURSDAY;
+            return WeekDay.THURSDAY;
         case 5:
-            return WeekDays.FRIDAY;
+            return WeekDay.FRIDAY;
         case 6:
-            return WeekDays.SATURDAY;
+            return WeekDay.SATURDAY;
         case 7:    
-            return WeekDays.SUNDAY;
+            return WeekDay.SUNDAY;
         default:
             return null;
         }

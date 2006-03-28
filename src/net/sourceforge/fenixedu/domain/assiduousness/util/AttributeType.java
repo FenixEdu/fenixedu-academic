@@ -12,5 +12,7 @@ public enum AttributeType {
     WORKED2,
     WORKED3,
     WORKED4,
-    WORKED5; // 10
+    WORKED5, // 10
+    //
+    IRREGULAR;
 }
