@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -351,4 +352,14 @@ public class Unit extends Unit_Base {
             }
         }
     }
+
+	public NonAffiliatedTeacher findNonAffiliatedTeacherByName(final String name) {
+		for (final NonAffiliatedTeacher nonAffiliatedTeacher : getAssociatedNonAffiliatedTeachersSet()) {
+			if (nonAffiliatedTeacher.getName().equalsIgnoreCase(name)) {
+				return nonAffiliatedTeacher;
+			}
+		}
+		return null;
+	}
+
 }

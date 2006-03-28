@@ -68,7 +68,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
-import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
@@ -435,10 +434,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new InquiriesRegistryVO();
     }
 
-    public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher() {
-        return null;
-    }
-    
 	public IPersistentCMS getIPersistentCms()
 	{
 		return new CMSVO();

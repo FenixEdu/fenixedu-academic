@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
-import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
@@ -194,8 +193,6 @@ public interface ISuportePersistente
 	public IPersistentProjectAccess getIPersistentProjectAccess();
 
 	public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes();
-
-	public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher();
 
 	public IPersistentCMS getIPersistentCms();
 
