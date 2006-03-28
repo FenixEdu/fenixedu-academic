@@ -18,7 +18,7 @@ public class ReadDegreeInfoByDegree extends Service {
             throw new FenixServiceException("error.impossibleDegreeSite");
         }
 
-        final Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
+        final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
         if (degree == null || degree.getDegreeInfos().isEmpty()) {
             throw new FenixServiceException("error.impossibleDegreeSite");
         }
