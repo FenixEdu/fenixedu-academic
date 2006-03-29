@@ -160,8 +160,6 @@ public interface ISuportePersistente
 
 	public IPersistentSentSms getIPersistentSentSms();
 
-	public IPersistentPeriod getIPersistentPeriod();
-
 	public IPersistentPublicationType getIPersistentPublicationType();
 
 	public IPersistentPublicationAttribute getIPersistentPublicationAttribute();

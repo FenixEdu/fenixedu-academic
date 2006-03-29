@@ -19,7 +19,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 
 		Iterator iter = executionDegreesIds.iterator();
 
-		List undeletedExecutionDegreesYears = new ArrayList();
+		List<String> undeletedExecutionDegreesYears = new ArrayList<String>();
 		List classes;
 		Integer executionDegreeId;
 		ExecutionDegree executionDegree;
@@ -34,8 +34,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 
 			executionDegreeId = (Integer) iter.next();
 
-			executionDegree = (ExecutionDegree) persistentObject.readByOID(
-					ExecutionDegree.class, executionDegreeId);
+			executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 			if (executionDegree != null) {
 				classes = executionDegree.getSchoolClasses();
 
@@ -76,7 +75,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					if ((executionDegree.getPeriodLessonsFirstSemester() != null)
 							&& (executionDegree.getPeriodLessonsFirstSemester()
 									.getExecutionDegreesForLessonsFirstSemester().size() == 1)) {
-						persistentSupport.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
+						persistentObject.deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodLessonsFirstSemester().getIdInternal());
 					}
 
@@ -86,7 +85,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					if ((executionDegree.getPeriodLessonsSecondSemester() != null)
 							&& (executionDegree.getPeriodLessonsSecondSemester()
 									.getExecutionDegreesForLessonsSecondSemester().size() == 1)) {
-						persistentSupport.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
+						persistentObject.deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodLessonsSecondSemester().getIdInternal());
 					}
 
@@ -96,7 +95,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					if ((executionDegree.getPeriodExamsFirstSemester() != null)
 							&& (executionDegree.getPeriodExamsFirstSemester()
 									.getExecutionDegreesForExamsFirstSemester().size() == 1)) {
-						persistentSupport.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
+						persistentObject.deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodExamsFirstSemester().getIdInternal());
 					}
 
@@ -106,7 +105,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					if ((executionDegree.getPeriodExamsSecondSemester() != null)
 							&& (executionDegree.getPeriodExamsSecondSemester()
 									.getExecutionDegreesForExamsSecondSemester().size() == 1)) {
-						persistentSupport.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
+						persistentObject.deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodExamsSecondSemester().getIdInternal());
 					}
 
@@ -124,8 +123,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					executionDegree.getCampus().getExecutionDegrees().remove(executionDegree);
 					executionDegree.setCampus(null);
 
-					persistentSupport.getIPersistentExecutionDegree().deleteByOID(ExecutionDegree.class,
-							executionDegree.getIdInternal());
+					persistentObject.deleteByOID(ExecutionDegree.class,executionDegree.getIdInternal());
 				} else
 					undeletedExecutionDegreesYears.add(executionDegree.getExecutionYear().getYear());
 			}
