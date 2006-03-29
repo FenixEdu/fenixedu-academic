@@ -123,9 +123,6 @@ public class InsertExercise extends Service {
                 ZipInputStream zipFile = new ZipInputStream(xmlZipFile.getInputStream());
                 for (ZipEntry entry = zipFile.getNextEntry(); entry != null; entry = zipFile
                         .getNextEntry()) {
-                    if (entry.isDirectory()) {
-                        throw new RuntimeException("unsupported.if.this.happens.rethink");
-                    }
                     final int posSlash = entry.getName().lastIndexOf('/');
                     final List<LabelValueBean> labelValueBeans;
                     final String dirName = (posSlash > 0) ? entry.getName().substring(0, posSlash) : "";
