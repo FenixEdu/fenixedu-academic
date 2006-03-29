@@ -41,11 +41,9 @@ public class GenerateAnnoucementsRSS extends RSSAction{
 			item.setTitle(announcement.getTitle());
 			item.setDate(announcement.getLastModifiedDate());
 			item.setDescription(announcement.getInformation());
-			String context = PropertiesManager.getProperty("app.context");
-			if(context == null) {
-				context = "";
-			}
-			item.setLink(new URL(request.getScheme(), request.getServerName(), request.getServerPort(), "/" + context + "/publico/viewSite.do?method=announcements&objectCode=" + executionCourse.getSite().getIdInternal() + "&executionPeriodOID=" + executionCourse.getExecutionPeriod().getIdInternal() + "#" + announcement.getIdInternal()));
+			String appContext = PropertiesManager.getProperty("app.context");
+            String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+			item.setLink(new URL(request.getScheme(), request.getServerName(), request.getServerPort(), context + "/publico/viewSite.do?method=announcements&objectCode=" + executionCourse.getSite().getIdInternal() + "&executionPeriodOID=" + executionCourse.getExecutionPeriod().getIdInternal() + "#" + announcement.getIdInternal()));
 			channel.addItem(item);
 		}
     	return channel;
