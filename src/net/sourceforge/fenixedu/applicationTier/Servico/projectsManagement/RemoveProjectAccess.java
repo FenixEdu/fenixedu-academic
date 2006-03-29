@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import java.util.Iterator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -14,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 
@@ -33,8 +33,9 @@ public class RemoveProjectAccess extends Service {
             isCostCenter = true;
         }
 
-        IPersistentProjectAccess persistentProjectAccess = persistentSupport.getIPersistentProjectAccess();
-        if (persistentProjectAccess.countByPersonAndCC(person, isCostCenter) == 1) {
+        List<ProjectAccess> projectAccesses = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, true);
+        
+        if (projectAccesses.size() == 1) {
             IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
             if (persistentSupportOracle.getIPersistentProject().countUserProject(getUserNumber(person)) == 0) {
                 Iterator iter = person.getPersonRolesIterator();
@@ -46,8 +47,9 @@ public class RemoveProjectAccess extends Service {
                 }
             }
         }
-        ProjectAccess projectAccess = persistentProjectAccess.readByPersonIdAndProjectAndDate(person.getIdInternal(), projectCode);
-        persistentProjectAccess.delete(projectAccess);
+        
+        ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode);
+        projectAccess.delete();
     }
 
     private Integer getUserNumber(Person person) throws ExcepcaoPersistencia {

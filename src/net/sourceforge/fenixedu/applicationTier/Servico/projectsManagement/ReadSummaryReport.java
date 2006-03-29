@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoCoordi
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummaryReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryReportLine;
+import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
@@ -32,8 +33,17 @@ public class ReadSummaryReport extends Service {
         if (Integer.valueOf(userNumber).equals(coordinatorCode)) {
             lines = p.getIPersistentSummaryReport().readByCoordinatorCode(ReportType.SUMMARY, coordinatorCode);
         } else {
-            List<Integer> projectCodes = persistentSupport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(username,
-                    coordinatorCode, false);
+            List<Integer> projectCodes = new ArrayList<Integer>();
+            
+            List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndCoordinator(username, coordinatorCode, false);
+            for (ProjectAccess access : accesses) {
+                Integer keyProject = access.getKeyProject();
+                
+                if (! projectCodes.contains(keyProject)) {
+                    projectCodes.add(keyProject);
+                }
+            }
+            
             if (projectCodes != null && projectCodes.size() != 0)
                 lines = p.getIPersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY, coordinatorCode, projectCodes);
         }

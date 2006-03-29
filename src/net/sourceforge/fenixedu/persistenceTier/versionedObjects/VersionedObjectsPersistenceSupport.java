@@ -57,7 +57,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTe
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
@@ -122,7 +121,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.StudentTestQuestionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestQuestionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.projectsManagement.ProjectAccessVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OrientationVO;
 
@@ -230,10 +228,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime() {
         return null;
-    }
-
-    public IPersistentProjectAccess getIPersistentProjectAccess() {
-        return new ProjectAccessVO();
     }
 
     public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine() {

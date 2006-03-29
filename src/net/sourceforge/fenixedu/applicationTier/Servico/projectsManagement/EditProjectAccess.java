@@ -5,9 +5,10 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 
 public class EditProjectAccess extends Service {
 
@@ -15,11 +16,15 @@ public class EditProjectAccess extends Service {
             Calendar beginDate, Calendar endDate, String userNumber) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        final IPersistentProjectAccess persistentProjectAccess = persistentSupport.getIPersistentProjectAccess();
-        final ProjectAccess projectAccess = persistentProjectAccess.readByPersonIdAndProjectAndDate(
-                personId, projectCode);
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personId);
+        final ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode);
+        
         if (projectAccess == null) {
-            throw new InvalidArgumentsServiceException();
+            throw new InvalidArgumentsServiceException("project not found");
+        }
+        
+        if (! projectAccess.getEnd().after(Calendar.getInstance().getTime())) {
+            throw new InvalidArgumentsServiceException("end date has passed");
         }
         
         projectAccess.setBeginDate(beginDate);

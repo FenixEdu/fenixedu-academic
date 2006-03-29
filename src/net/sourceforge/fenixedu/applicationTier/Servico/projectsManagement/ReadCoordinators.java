@@ -10,6 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
+import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 
@@ -27,8 +28,17 @@ public class ReadCoordinators extends Service {
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         Integer thisCoordinator = new Integer(userNumber);
 
-        List<Integer> coordinatorsCodes = persistentSupport.getIPersistentProjectAccess().readCoordinatorsCodesByPersonUsernameAndDatesAndCC(username,
-                costCenter);
+        List<Integer> coordinatorsCodes = new ArrayList<Integer>();
+        
+        List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter);
+        for (ProjectAccess access : accesses) {
+            Integer keyProjectCoordinator = access.getKeyProjectCoordinator();
+            
+            if (! coordinatorsCodes.contains(keyProjectCoordinator)) {
+                coordinatorsCodes.add(keyProjectCoordinator);
+            }
+        }
+        
         if (thisCoordinator != null && !coordinatorsCodes.contains(thisCoordinator))
             coordinatorsCodes.add(thisCoordinator);
         for (int coord = 0; coord < coordinatorsCodes.size(); coord++) {

@@ -10,6 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.domain.projectsManagement.Project;
+import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
@@ -21,7 +22,18 @@ public class ReadProjectWithoutPersonAccess extends Service {
 
     public List run(String userName, String costCenter, String newUserName, String userNumber) throws ExcepcaoPersistencia {
         Integer coordinatorId = new Integer(userNumber);
-        List projectCodes = persistentSupport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(newUserName, coordinatorId, true);
+        
+        List<Integer> projectCodes = new ArrayList<Integer>();
+        
+        List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(userName, costCenter);
+        for (ProjectAccess access : accesses) {
+            Integer keyProject = access.getKeyProject();
+            
+            if (! projectCodes.contains(keyProject)) {
+                projectCodes.add(keyProject);
+            }
+        }
+        
         IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
         List<Project> projectList = persistentSupportOracle.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes);
         List<InfoProject> infoProjects = new ArrayList<InfoProject>();

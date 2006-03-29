@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRevenu
 import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectBudgetaryBalanceReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRevenueReportLine;
+import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
@@ -30,10 +31,11 @@ public class ReadReport extends Service {
             throws ExcepcaoPersistencia {
         InfoProjectReport infoReport = new InfoProjectReport();
         List<IReportLine> infoLines = new ArrayList<IReportLine>();
+        
+               
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         if (projectCode != null
-                && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || persistentSupport.getIPersistentProjectAccess()
-                        .hasPersonProjectAccess(userView, projectCode))) {
+                && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || ProjectAccess.getByUsernameAndProjectCode(userView, projectCode) != null)) {
             infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
             if (reportType.equals(ReportType.REVENUE)) {
                 List<IRevenueReportLine> lines = p.getIPersistentRevenueReport().getCompleteReport(reportType, projectCode);

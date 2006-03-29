@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjec
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummaryEURReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummaryPTEReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.IExpensesReportLine;
+import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesResume;
@@ -35,8 +36,8 @@ public class ReadExpensesReport extends Service {
         InfoExpensesReport infoReport = new InfoExpensesReport();
         if (coordID != null
                 && projectCode != null
-                && (p.getIPersistentProject().isUserProject(coordID, projectCode) || persistentSupport.getIPersistentProjectAccess()
-                        .hasPersonProjectAccess(username, projectCode))) {
+                && (p.getIPersistentProject().isUserProject(coordID, projectCode) 
+                        || ProjectAccess.getByUsernameAndProjectCode(username, projectCode) != null)) {
             List infoLines = new ArrayList();
             infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
             List lines = null;

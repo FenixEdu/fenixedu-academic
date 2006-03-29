@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTe
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
@@ -187,8 +186,6 @@ public interface ISuportePersistente
 	public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter();
 
 	public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests();
-
-	public IPersistentProjectAccess getIPersistentProjectAccess();
 
 	public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes();
 

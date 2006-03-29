@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectAccess;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
@@ -27,7 +29,7 @@ public class ReadProjectAccesses extends Service {
         if (persistentSupportOracle.getIPersistentProject().countUserProject(new Integer(userNumber)) == 0)
             throw new InvalidArgumentsServiceException();
 
-        List<ProjectAccess> projectAcessesList = persistentSupport.getIPersistentProjectAccess().readByCoordinator(new Integer(userNumber));
+        List<ProjectAccess> projectAcessesList = ProjectAccess.getAllByCoordinator(new Integer(userNumber));
         List<InfoProjectAccess> infoProjectAcessesList = new ArrayList<InfoProjectAccess>();
         for (ProjectAccess projectAccess : projectAcessesList) {
             InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(projectAccess);
@@ -41,9 +43,10 @@ public class ReadProjectAccesses extends Service {
 
     public List run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
         Integer personCoordinator = new Integer(userNumber);
-        List<ProjectAccess> projectAcessesList = persistentSupport.getIPersistentProjectAccess().readByPersonUsernameAndCoordinatorAndDate(username,
-                personCoordinator);
+        
+        List<ProjectAccess> projectAcessesList = ProjectAccess.getAllByPersonUsernameAndCoordinator(username, personCoordinator, true);
         List<InfoProjectAccess> infoProjectAcessesList = new ArrayList<InfoProjectAccess>();
+
         IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
         for (ProjectAccess projectAccess : projectAcessesList) {
             InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(projectAccess);
@@ -51,14 +54,16 @@ public class ReadProjectAccesses extends Service {
                     infoProjectAccess.getKeyProject())));
             infoProjectAcessesList.add(infoProjectAccess);
         }
+        
         return infoProjectAcessesList;
     }
 
     public InfoProjectAccess run(String username, String costCenter, Integer personCode, Integer projectCode, String userNumber)
             throws ExcepcaoPersistencia {
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personCode);
+        
         IPersistentSuportOracle spOracle = PersistentSuportOracle.getInstance();
-        InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(persistentSupport.getIPersistentProjectAccess().readByPersonIdAndProjectAndDate(
-                personCode, projectCode));
+        InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(ProjectAccess.getByPersonAndProject(person, projectCode));
         infoProjectAccess.setInfoProject(InfoProject.newInfoFromDomain(spOracle.getIPersistentProject()
                 .readProject(infoProjectAccess.getKeyProject())));
         return infoProjectAccess;
