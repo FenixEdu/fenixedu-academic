@@ -113,10 +113,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
         Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
         if (curricularPlanMembersGroup != null) {
-            Iterator<Person> personIterator = curricularPlanMembersGroup.getElementsIterator();
-            
-            while (personIterator.hasNext()) {
-                Person person = personIterator.next();
+            for(Person person: curricularPlanMembersGroup.getElements()){
                 result.add(new SelectItem(person.getIdInternal(), person.getNome() + " (" + person.getUsername() + ")"));
             }
         }
@@ -129,10 +126,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
         Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
         if (curricularPlanMembersGroup != null) {
-            Iterator<Person> personIterator = curricularPlanMembersGroup.getElementsIterator();
-            
-            while (personIterator.hasNext()) {
-                Person person = personIterator.next();
+            for(Person person: curricularPlanMembersGroup.getElements()){
                 result.add(person.getNome() + " (" + person.getUsername() + ")");
             }
         }

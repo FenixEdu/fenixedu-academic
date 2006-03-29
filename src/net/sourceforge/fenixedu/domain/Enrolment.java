@@ -44,6 +44,16 @@ public class Enrolment extends Enrolment_Base {
     	createEnrolmentLog(studentCurricularPlan.getStudent(), EnrolmentAction.ENROL);
     }
     
+    public boolean isSpecialSeason()
+    {
+    	boolean result=false;
+    	for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluations()) {
+			result |= enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SPECIAL_SEASON);
+		}
+    	
+    	return result;
+    }
+    
     //new student structure methods
     public Enrolment(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             EnrollmentCondition enrolmentCondition, String createdBy) {

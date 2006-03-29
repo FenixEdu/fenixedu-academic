@@ -474,7 +474,7 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 		else
 			return (double) executionCourseStudentNumber / numShifts;
 	}
-
+	
 	public List<EnrolmentEvaluation> getActiveEnrollmentEvaluations() {
 		List<EnrolmentEvaluation> results = new ArrayList<EnrolmentEvaluation>();
 

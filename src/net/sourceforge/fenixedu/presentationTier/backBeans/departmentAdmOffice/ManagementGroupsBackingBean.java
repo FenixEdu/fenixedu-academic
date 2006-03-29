@@ -69,11 +69,8 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         List<SelectItem> result = new ArrayList<SelectItem>();
 
         Group competenceCoursesManagementGroup = getDepartment().getCompetenceCourseMembersGroup();
-        if (competenceCoursesManagementGroup != null) {
-            Iterator<Person> personIterator = competenceCoursesManagementGroup.getElementsIterator();
-            
-            while (personIterator.hasNext()) {
-                Person person = personIterator.next();
+        if (competenceCoursesManagementGroup != null) {            
+            for(Person person: competenceCoursesManagementGroup.getElements()) {
                 result.add(new SelectItem(person.getIdInternal(), person.getNome() + " (" + person.getUsername() + ")"));
             }
         }

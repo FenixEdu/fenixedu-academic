@@ -43,8 +43,19 @@ public abstract class MailSenderAction extends FenixDispatchAction {
 	protected abstract List<IGroup> loadPersonalGroupsToChooseFrom(HttpServletRequest request)
 			throws FenixFilterException, FenixServiceException;
 
-	protected abstract EMailAddress getFromAddress(HttpServletRequest request, ActionForm form)
-			throws FenixFilterException, FenixServiceException;
+	protected EMailAddress getFromAddress(HttpServletRequest request, ActionForm form)
+			throws FenixFilterException, FenixServiceException {
+		SendMailForm sendMailForm = (SendMailForm) form;
+		EMailAddress address = new EMailAddress();
+		if (EMailAddress.isValid(sendMailForm.getFromAddress())) {
+			String[] components = sendMailForm.getFromAddress().split("@");
+			address.setUser(components[0]);
+			address.setDomain(components[1]);
+			address.setPersonalName(sendMailForm.getFromPersonalName());
+		}
+
+		return address;
+	}
 
 	protected abstract IGroup[] getAllowedGroups(HttpServletRequest request, IGroup[] selectedGroups)
 			throws FenixFilterException, FenixServiceException;
@@ -188,7 +199,7 @@ public abstract class MailSenderAction extends FenixDispatchAction {
 			throw new FenixActionException(e);
 		}
 
-		return this.start(mapping, actionForm, request, response);
+		return mapping.findForward("sendMail");
 	}
 
 	public ActionForward goBack(ActionMapping mapping, ActionForm actionForm,

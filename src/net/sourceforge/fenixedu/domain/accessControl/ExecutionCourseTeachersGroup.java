@@ -1,19 +1,20 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.iterators.TransformIterator;
 
 public class ExecutionCourseTeachersGroup extends ExecutionCourseGroup {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4575035849468586468L;
 
-    private class ProfessorshipPersonTransformer implements Transformer {
+	private class ProfessorshipPersonTransformer implements Transformer {
 
         public Object transform(Object arg0) {
             Professorship professorship = (Professorship) arg0;
@@ -32,8 +33,13 @@ public class ExecutionCourseTeachersGroup extends ExecutionCourseGroup {
     }
 
     @Override
-    public Iterator<Person> getElementsIterator() {
-        return new TransformIterator(this.getExecutionCourse().getProfessorshipsIterator(),
-                new ProfessorshipPersonTransformer());
+    public Set<Person> getElements() {
+    	Set<Person> elements = super.buildSet();
+    	Collection<Professorship> professorships = this.getExecutionCourse().getProfessorships();
+    	Collection<Person> persons = CollectionUtils.collect(professorships,new ProfessorshipPersonTransformer());
+    	
+    	elements.addAll(persons);
+    	
+    	return super.freezeSet(elements);
     }
 }

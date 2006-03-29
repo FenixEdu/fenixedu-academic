@@ -243,7 +243,7 @@ function cleanSelect(checkboxes) {
 	<tr valign="top">
 		<td colspan="3">
 		
-			<html:link page="/sendMailToAllStudents.do" name="sendMailLinkParameters">
+			<html:link page="/mailSender.do" name="sendMailLinkParameters">
 				<bean:message key="link.sendEmailToAllStudents"/>
 			</html:link>
 		</td>

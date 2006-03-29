@@ -435,6 +435,7 @@
             <form-property name="themeID" type="java.lang.Integer" />
             <form-property name="approved" type="java.lang.String" />
         </form-bean>
+       <form-bean name="sendMailFormCms" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm" dynamic="false"/>        
         <form-bean name="sendMailForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 	        <form-property name="page" type="java.lang.Integer" />
             <form-property name="shiftCode" type="java.lang.String" />
@@ -1713,11 +1714,11 @@
             path="/getTabSeparatedStudentList" scope="request">
         </action>
         <!--- by gedl, 17-9-2003 -->
-        <action type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SendMailToAllStudents" 
-            path="/sendMailToAllStudents" name="sendMailForm" parameter="method" scope="request" validate="true">
-            <forward name="showEmailForm" path="showEmailForm"/>
-            <forward name="mailSent" path="/studentsByCurricularCourse.do?method=prepare"/>
-            <forward name="mailCandidaciesSent" path="/showCandidacies.do"/>
+        <action type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SendMailToSelectedStudents" 
+            path="/mailSender" name="sendMailFormCms" parameter="method" scope="request" validate="true">
+
+            <forward name="sendMail" path="sendMail"/>
+
         </action>
         <!--- by gedl, 25-9-2003 -->
         <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.SelectCandidacies" path="/selectCandidacies" 
@@ -2216,6 +2217,7 @@
     <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>    
+    <message-resources parameter="resources.CmsResources" key="CMS_RESOURCES" null="false" />
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

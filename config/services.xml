@@ -29,6 +29,15 @@
 		<filterChains />
 	</service>
 	<service>
+		<name>ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
+		</filterChains>
+	</service>	
+	<service>
 		<name>Autenticacao</name>
 		<implementationClass>@authenticationService@</implementationClass>
 		<description />

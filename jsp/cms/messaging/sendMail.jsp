@@ -17,7 +17,7 @@
 	<bean:define id="groups" name="sendMailForm" property="groupsToChooseFrom"/>
 </logic:present>
 
-<html:form method="get" action="/mailSender">
+<html:form method="post" action="/mailSender">
 	<html:hidden property="method" value="send"/>
 	<html:hidden property="returnURL"/>
 	<html:hidden property="group"/>

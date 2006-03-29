@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.domain.cms.messaging.email;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -17,9 +18,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.RecipientType;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.SendStatus;
-
-import org.apache.commons.collections.iterators.IteratorChain;
-
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
@@ -38,7 +36,6 @@ public class EMailSender {
 	public class SenderNotAllowed extends Exception {
 
 	}
-
 
 	private static String bundleFile = new String("SMTPConfiguration");
 
@@ -71,12 +68,14 @@ public class EMailSender {
 	}
 
 	public void addRecipient(RecipientType type, Person... persons) {
+		System.out.println("Entrei no addRecipieit");
 		for (Person person : persons) {
 			Recipient recipient = new Recipient();
 			recipient.setType(type);
 			recipient.setSubject(person);
 			this.recipients.add(recipient);
 		}
+		System.out.println("vou sair do addRecipieit");
 	}
 
 	public void addRecipient(RecipientType type, Collection<Recipient> recipients) {
@@ -92,12 +91,13 @@ public class EMailSender {
 	}
 
 	public void addRecipient(RecipientType type, IGroup... groups) {
-		IteratorChain iteratorChain = new IteratorChain();
+
+		int i = 0;
 		for (IGroup group : groups) {
-			iteratorChain.addIterator(group.getElementsIterator());
-		}
-		while (iteratorChain.hasNext())
-			this.addRecipient(type, (Person) iteratorChain.next());
+			for (Person person : group.getElements()) {
+				this.addRecipient(type, person);
+			}
+		}		
 	}
 
 	public SendMailReport send(EMailAddress from) throws SenderNotAllowed {
@@ -141,7 +141,6 @@ public class EMailSender {
 				bccList.add(recipient.getSubject());
 			}
 		}
-
 
 		Collection<String> bccEmails = new ArrayList<String>();
 		for (Person person : bccList) {

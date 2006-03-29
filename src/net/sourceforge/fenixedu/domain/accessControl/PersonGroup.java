@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 
@@ -15,11 +13,12 @@ public class PersonGroup extends DomainBackedGroup<Person> {
     }
 
     @Override
-    public Iterator<Person> getElementsIterator() {
-        List<Person> singlePersonList = new ArrayList<Person>();
-        singlePersonList.add(getObject());
+    public Set<Person> getElements() {
+        Set<Person> elements = super.buildSet();
         
-        return singlePersonList.iterator();
+        elements.add(getObject());
+        
+        return super.freezeSet(elements);
     }
 
     public Person getPerson() {

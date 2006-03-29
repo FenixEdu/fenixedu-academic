@@ -2,54 +2,15 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.IGroup;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
 
 public final class GroupIntersection extends NodeGroup {
 
     private static final long serialVersionUID = 1L;
-
-    private class IntersectionIterator implements Iterator<Person> {
-        private Iterator<Person> iterator;
-        
-        IntersectionIterator() {
-            List<Person> persons = new ArrayList<Person>();
-            
-            if (! getChildren().isEmpty()) {
-                Iterator<Person> iterator = getChildren().get(0).getElementsIterator();
-                
-                outter: 
-                while (iterator.hasNext()) {
-                    Person person = iterator.next();
-                    
-                    for (IGroup group : getChildren()) {
-                        if (! group.isMember(person)) {
-                            continue outter;
-                        }
-                    }
-                    
-                    persons.add(person);
-                }
-            }
-            
-            this.iterator = persons.iterator();
-        }
-        
-        public boolean hasNext() {
-            return this.iterator.hasNext();
-        }
-
-        public Person next() {
-            return this.iterator.next();
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException("Groups are immutable");
-        }
-    }
     
     public GroupIntersection(IGroup ... groups) {
         super(groups);
@@ -60,8 +21,24 @@ public final class GroupIntersection extends NodeGroup {
     }
 
     @Override
-    public Iterator<Person> getElementsIterator() {
-        return new IntersectionIterator();
+    public Set<Person> getElements() {
+        Set<Person> elements = super.buildSet();
+        Collection<Person> elementsCollection = new ArrayList<Person>(); 
+        int childrenCount = this.getChildren().size();
+        if (childrenCount<2)
+        {
+        	throw new UnsupportedOperationException("An intersection is mathematically defined only for two or more sets");        	
+        }
+        else
+        {
+        	elementsCollection.addAll(this.getChildren().get(0).getElements());
+        	for (IGroup group : this.getChildren()) {
+				elementsCollection = CollectionUtils.intersection(elementsCollection,group.getElements());
+			}
+        }
+        elements.addAll(elementsCollection);
+        
+        return super.freezeSet(elements);
     }
 
     @Override

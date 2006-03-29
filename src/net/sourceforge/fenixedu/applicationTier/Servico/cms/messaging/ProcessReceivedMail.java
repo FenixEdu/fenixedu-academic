@@ -114,10 +114,9 @@ public class ProcessReceivedMail extends CmsService
         }
         
 		Group group = mailingList.getGroup();
-		Iterator<Person> persons = group.getElementsIterator();
         
-		while (persons.hasNext()) {
-			Person person = persons.next();
+		for(Person person: group.getElements())
+		{
 			Address[] senders = mailMessage.getFrom();
             
 			for (int i = 0; i < senders.length; i++) {

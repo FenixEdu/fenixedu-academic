@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Iterator;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -33,9 +33,9 @@ public class PersonalGroup extends PersonalGroup_Base implements IGroup{
 		return this.getGroup().allows(userView);
 	}
 
-	public Iterator<Person> getElementsIterator()
+	public Set<Person> getElements()
 	{
-		return this.getGroup().getElementsIterator();
+		return this.getGroup().getElements();
 	}
  
 }

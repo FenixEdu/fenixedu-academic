@@ -12,11 +12,14 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
+
+import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * A <code>Group</code> is a dynamic aggregation of persons. It works as a predicate that selects a
@@ -53,44 +56,38 @@ public abstract class Group implements Serializable,IGroup {
         return this.creationDate;
     }
 
-    public abstract java.util.Iterator<Person> getElementsIterator();
+    public abstract java.util.Set<Person> getElements();
 
     /**
      * Provides a standard implementation to <code>count()</code><br/> It accesses the elements
-     * iterator and counts how many sucessfull <code>next()<code> can be called on it<br/>
+     * set and invokes the <code>size()</code> method.
      * If any group subclassing this class can provide a more efficient way of calculating its size, then override this method
      */
     public int getElementsCount() {
-        int elementsCount = 0;
-
-        Iterator iterator = this.getElementsIterator();
-        while (iterator.hasNext()) {
-            elementsCount++;
-            iterator.next();
-        }
-
-        return elementsCount;
+        return this.getElements().size();
     }
 
+    /**
+     * Provides a standard implementation to <code>isMember()</code><br/> It accesses the elements
+     * set and invokes the <code>contains()</code> method.
+     * If any group subclassing this class can provide a more efficient way of calculating wether the person is member of the group, then override this method
+     */
     public boolean isMember(Person person) {
-        Iterator<Person> persons = getElementsIterator();
-        
-        while (persons.hasNext()) {
-            if (person.equals(persons.next())) {
-                return true;
-            }
-        }
-
-        return false;
+        return this.getElements().contains(person);
     }
 
     public boolean allows(IUserView userView) {
-        Person person = userView.getPerson();
-
-        if (person == null) {
-            return false;
-        }
-
-        return isMember(person);
+    	return this.isMember(userView.getPerson());
+    }
+    
+    protected Set<Person> freezeSet(Set<Person> elements)
+    {
+    	return UnmodifiableSet.decorate(elements);
+    }
+    
+    protected Set<Person> buildSet()
+    {
+    	//todo externalize this
+    	return new HashSet<Person>();
     }
 }

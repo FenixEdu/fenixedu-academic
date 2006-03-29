@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.accessControl;
 
-import java.util.Iterator;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
@@ -21,5 +21,5 @@ public interface IGroup
 	public int getElementsCount();
 	public boolean isMember(Person person);
 	public boolean allows(IUserView userView);
-	public Iterator<Person> getElementsIterator();
+	public Set<Person> getElements();
 }

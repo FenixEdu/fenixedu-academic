@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.Iterator;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -23,7 +24,10 @@ public class RoleGroup extends DomainBackedGroup<Role> {
     }
 
     @Override
-    public Iterator<Person> getElementsIterator() {
-        return this.getRole().getAssociatedPersons().iterator();
+    public Set<Person> getElements() {
+    	Set<Person> elements = new HashSet<Person>();
+    	elements.addAll(this.getRole().getAssociatedPersons());
+
+    	return elements;
     }
 }

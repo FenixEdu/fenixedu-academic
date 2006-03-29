@@ -2,13 +2,9 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.iterators.IteratorChain;
-
 import net.sourceforge.fenixedu.accessControl.IGroup;
-import net.sourceforge.fenixedu.domain.Person;
 
 public abstract class NodeGroup extends Group {
     
@@ -38,19 +34,6 @@ public abstract class NodeGroup extends Group {
     
     protected List<IGroup> getChildren() {
         return this.children;
-    }
-
-    @Override
-    public Iterator<Person> getElementsIterator() {
-        IteratorChain chain = new IteratorChain();
-        
-        for (Iterator iterator = getChildren().iterator(); iterator.hasNext();) {
-            IGroup group = (IGroup) iterator.next();
-            
-            chain.addIterator(group.getElementsIterator());
-        }
-
-        return chain;
     }
     
     @Override

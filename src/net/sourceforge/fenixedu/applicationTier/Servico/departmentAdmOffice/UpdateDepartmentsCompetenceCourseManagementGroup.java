@@ -29,9 +29,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup extends Service {
             group = new FixedSetGroup();
         }
         
-        Iterator<Person> iterator = group.getElementsIterator();
-        while (iterator.hasNext()) {
-            Person person = iterator.next();
+        for(Person person: group.getElements()) {
             
             if (! toRemove.contains(person)) {
                 finalList.add(person);

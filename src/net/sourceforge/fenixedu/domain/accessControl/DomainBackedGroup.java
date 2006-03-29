@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.Iterator;
-
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Person;
 
 public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGroup {
     
@@ -16,11 +13,6 @@ public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGrou
         super();
         
         this.reference = new DomainReference<T>(object);
-    }
-
-    @Override
-    public Iterator<Person> getElementsIterator() {
-        return null;
     }
 
     public T getObject() {

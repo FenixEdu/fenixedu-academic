@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.iterators.TransformIterator;
 
 public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup
 {
@@ -34,10 +35,14 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup
 	}
 
 	@Override
-	public Iterator<Person> getElementsIterator()
+	public Set<Person> getElements()
 	{
-		return new TransformIterator(this.getExecutionCourse().getAttendsIterator(), new AttendPersonTransformer());
+		Set<Person> elements = super.buildSet();		
+		Collection<Attends> attendss = this.getExecutionCourse().getAttends();
+		Collection<Person> persons = CollectionUtils.collect(attendss,new AttendPersonTransformer());
+		elements.addAll(persons);
 		
+		return super.freezeSet(elements);
 	}
 
 }

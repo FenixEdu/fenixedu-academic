@@ -151,10 +151,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         Group competenceCoursesManagementGroup = getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
         if (competenceCoursesManagementGroup != null) {
             result = new ArrayList<String>();
-            Iterator<Person> personIterator = competenceCoursesManagementGroup.getElementsIterator();
 
-            while (personIterator.hasNext()) {
-                Person person = personIterator.next();
+            for (Person person: competenceCoursesManagementGroup.getElements()) {                
                 result.add(person.getNome() + " (" + person.getUsername() + ")");
             }
         }

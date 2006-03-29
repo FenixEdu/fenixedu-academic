@@ -1,13 +1,11 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.domain.Person;
-
-import org.apache.commons.collections.iterators.IteratorChain;
-import org.apache.commons.collections.iterators.UniqueFilterIterator;
 
 public final class GroupUnion extends NodeGroup {
 
@@ -20,16 +18,17 @@ public final class GroupUnion extends NodeGroup {
     public GroupUnion(Collection<IGroup> groups) {
         super(groups);
     }
-
+   
     @Override
-    public Iterator<Person> getElementsIterator() {
-        IteratorChain iteratorChain = new IteratorChain();
-
-        for (IGroup part : this.getChildren()) {
-            iteratorChain.addIterator(part.getElementsIterator());
-        }
-
-        return new UniqueFilterIterator(iteratorChain);
+    public Set<Person> getElements() {
+    	Set<Person> elements = new HashSet<Person>();
+    	
+    	for (IGroup child : this.getChildren()) {
+			elements.addAll(child.getElements());
+		}
+    	
+    	return elements;
+    	
     }
 
     @Override

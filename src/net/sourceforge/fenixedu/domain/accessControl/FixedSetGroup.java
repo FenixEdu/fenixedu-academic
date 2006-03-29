@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
@@ -27,7 +28,7 @@ public class FixedSetGroup extends LeafGroup {
         }
     }
     
-    public FixedSetGroup(List<Person> persons) {
+    public FixedSetGroup(Collection<Person> persons) {
         this();
         
         for (Person person : persons) {
@@ -36,14 +37,14 @@ public class FixedSetGroup extends LeafGroup {
     }
     
     @Override
-    public Iterator<Person> getElementsIterator() {
-        List<Person> persons = new ArrayList<Person>();
+    public Set<Person> getElements() {
+        Set<Person> elements = super.buildSet();
         
         for (DomainReference<Person> reference : this.persons) {
-            persons.add(reference.getObject());
+            elements.add(reference.getObject());
         }
         
-        return persons.iterator();
+        return super.freezeSet(elements);
     }
 
     @Override

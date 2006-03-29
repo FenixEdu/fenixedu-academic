@@ -38,7 +38,7 @@ public class StartupServlet extends HttpServlet {
 
         SuportePersistenteOJB.fixDescriptors();
 
-        RootDomainObject.init();
+//        RootDomainObject.init();
 
         try {
             try {

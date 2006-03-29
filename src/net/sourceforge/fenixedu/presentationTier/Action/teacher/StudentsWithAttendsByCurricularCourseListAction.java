@@ -6,8 +6,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,12 +22,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.Transformer;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -99,6 +104,18 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
             
             infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
             
+            List alreadyInsertedStudents = new ArrayList();
+            List attendsWithoutDuplicatedStudents = new ArrayList();
+            for (Object obj : infoDTO.getInfoAttends()) {
+            	Attends attends = (Attends)obj;
+				if (!alreadyInsertedStudents.contains(attends.getAluno()))
+				{
+					alreadyInsertedStudents.add(attends.getAluno());
+					attendsWithoutDuplicatedStudents.add(attends);
+				}
+			}
+            infoDTO.setInfoAttends(attendsWithoutDuplicatedStudents);
+            
             Collections.sort(infoDTO.getInfoAttends(), new BeanComparator("infoAttends.aluno.number"));
 
         } catch (FenixServiceException e) {
@@ -116,10 +133,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         }
         
         
-        Map sendMailParameters = new HashMap();
-        sendMailParameters.put("objectCode",infoDTO.getInfoExecutionCourse().getIdInternal());
-        sendMailParameters.put("method","prepare");
-        request.setAttribute("sendMailLinkParameters",sendMailParameters);
+
         
         String cbCoursesString[] = new String[checkedCoursesIds.length];
         for (int i = 0; i < checkedCoursesIds.length; i++){
@@ -130,19 +144,36 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         for (int i = 0; i < checkedShiftIds.length; i++){
             cbShiftsString[i] = checkedShiftIds[i].toString();
         }
+
         
-        Map spreadSheetParameters = new HashMap();
-        spreadSheetParameters.put("objectCode",infoDTO.getInfoExecutionCourse().getIdInternal());
-        spreadSheetParameters.put("method","prepare");
-        spreadSheetParameters.put("coursesIDs",cbCoursesString);
-        spreadSheetParameters.put("enrollmentType",enrollmentType);
-        spreadSheetParameters.put("shiftIDs",cbShiftsString);
-        request.setAttribute("spreadSheetLinkArgs",spreadSheetParameters);
+        Map selectionForSendMailLink = this.getSelection(infoDTO, cbCoursesString,cbShiftsString,enrollmentType);
+        selectionForSendMailLink.put("method","start");
+        request.setAttribute("sendMailLinkParameters",selectionForSendMailLink);
+        Map selectionForSpreadSheet = this.getSelection(infoDTO, cbCoursesString,cbShiftsString,enrollmentType);
+        selectionForSpreadSheet.put("method","prepare");
+        request.setAttribute("spreadSheetLinkArgs",selectionForSpreadSheet);
         
         return mapping.findForward("success");
     }
     
-    public ActionForward prepare(ActionMapping mapping, ActionForm form,
+    /**
+	 * @param enrollmentType 
+     * @return
+	 */
+	private Map getSelection(InfoForReadStudentsWithAttendsByExecutionCourse infoDTO,  String cbCoursesString[],String cbShiftsString[], String[] enrollmentType) {
+		Map selectionParameters = new HashMap();
+		selectionParameters.put("objectCode",infoDTO.getInfoExecutionCourse().getIdInternal());
+		selectionParameters.put("method","prepare");
+		selectionParameters.put("coursesIDs",cbCoursesString);
+		selectionParameters.put("enrollmentType",enrollmentType);
+		selectionParameters.put("shiftIDs",cbShiftsString);
+
+        
+        return selectionParameters;
+        
+	}
+
+	public ActionForward prepare(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer executionCourseID = null;
@@ -172,8 +203,21 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
                     userView, "ReadStudentsWithAttendsByExecutionCourse", args);
 
             infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
-                        
+                       
+            List alreadyInsertedStudents = new ArrayList();
+            List attendsWithoutDuplicatedStudents = new ArrayList();
+            for (Object obj : infoDTO.getInfoAttends()) {
+            	Attends attends = (Attends)obj;
+				if (!alreadyInsertedStudents.contains(attends.getAluno()))
+				{
+					alreadyInsertedStudents.add(attends.getAluno());
+					attendsWithoutDuplicatedStudents.add(attends);
+				}
+			}
+            infoDTO.setInfoAttends(attendsWithoutDuplicatedStudents);
+            
             Collections.sort(infoDTO.getInfoAttends(), new BeanComparator("infoAttends.aluno.number"));
+            
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -219,7 +263,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         
         Map sendMailParameters = new HashMap();
         sendMailParameters.put("objectCode",infoDTO.getInfoExecutionCourse().getIdInternal());
-        sendMailParameters.put("method","prepare");
+        sendMailParameters.put("method","start");
         request.setAttribute("sendMailLinkParameters",sendMailParameters);
         
         Map spreadSheetParameters = new HashMap();
