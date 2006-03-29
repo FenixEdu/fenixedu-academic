@@ -44,23 +44,68 @@
 	<br/>
 	<br/>
 
-	<bean:message key="label.homepage.name" bundle="HOMEPAGE_RESOURCES"/> <html:text property="name"/>
+	<bean:message key="label.homepage.name" bundle="HOMEPAGE_RESOURCES"/>
+	<html:text property="name"/>
 	<br/>
-	<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/> <html:checkbox property="showUnit" value="true"/>
+	<bean:message key="label.homepage.showPhoto" bundle="HOMEPAGE_RESOURCES"/>
+	<html:checkbox property="showPhoto" value="true"/>
 	<br/>
-	<bean:message key="label.homepage.showPhoto" bundle="HOMEPAGE_RESOURCES"/> <html:checkbox property="showPhoto" value="true"/>
+	<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>
+	<html:checkbox property="showUnit" value="true"/>
+	<logic:present name="UserView" property="person.employee.currentContract.workingUnit">
+		<bean:write name="UserView" property="person.employee.currentContract.workingUnit.name"/>
+	</logic:present>
+	<logic:iterate id="student" name="UserView" property="person.students">
+		<logic:present name="student" property="activeStudentCurricularPlan">
+			<bean:write name="student" property="activeStudentCurricularPlan.degreeCurricularPlan.degree.presentationName"/>
+		</logic:present>
+	</logic:iterate>
 	<br/>
-	<bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/> <html:checkbox property="showEmail" value="true"/> <bean:write  name="UserView" property="person.email"/>
+	<logic:present name="UserView" property="person.teacher">
+		<logic:present name="UserView" property="person.employee.currentContract">
+			<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>
+			<html:checkbox property="showCategory" value="true"/>
+			<logic:present name="UserView" property="person.teacher">
+				<bean:write name="UserView" property="person.teacher.category.longName"/>
+			</logic:present>
+			<br/>
+		</logic:present>
+	</logic:present>
+	<bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>
+	<html:checkbox property="showEmail" value="true"/>
+	<bean:write name="UserView" property="person.email"/>
 	<br/>
-	<bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/> <html:checkbox property="showTelephone" value="true"/>
+	<bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>
+	<html:checkbox property="showTelephone" value="true"/>
+	<bean:write name="UserView" property="person.phone"/>
 	<br/>
-	<bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/> <html:checkbox property="showAlternativeHomepage" value="true"/>
+	<bean:message key="label.homepage.showWorkTelephone" bundle="HOMEPAGE_RESOURCES"/>
+	<html:checkbox property="showWorkTelephone" value="true"/>
+	<bean:write name="UserView" property="person.workPhone"/>
 	<br/>
-	<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/> <html:checkbox property="showResearchUnitHomepage" value="true"/>
+	<bean:message key="label.homepage.showMobileTelephone" bundle="HOMEPAGE_RESOURCES"/>
+	<html:checkbox property="showMobileTelephone" value="true"/>
+	<bean:write name="UserView" property="person.mobile"/>
 	<br/>
+	<bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/>
+	<html:checkbox property="showAlternativeHomepage" value="true"/>
+	<bean:write name="UserView" property="person.webAddress"/>
+	<br/>
+	<logic:present name="UserView" property="person.teacher">
+		<logic:present name="UserView" property="person.employee.currentContract">
+			<bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>
+			<html:checkbox property="showCurrentExecutionCourses" value="true"/>
+			<br/>
+			
+		</logic:present>
+	</logic:present>
+<!--
+	<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>
+	<html:checkbox property="showResearchUnitHomepage" value="true"/>
+	<br/>
+-->
 
 	<html:submit><bean:message key="person.homepage.submit" bundle="HOMEPAGE_RESOURCES"/></html:submit>
-
 </html:form>
 
 <br/>

@@ -1452,11 +1452,15 @@ class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.
 	Boolean activated;
 	String name;
 	Boolean showUnit;
+	Boolean showCategory;
 	Boolean showPhoto;
 	Boolean showEmail;
 	Boolean showTelephone;
+	Boolean showWorkTelephone;
+	Boolean showMobileTelephone;
 	Boolean showAlternativeHomepage;
 	Boolean showResearchUnitHomepage;
+	Boolean showCurrentExecutionCourses;
     String myUrl;
 }
 

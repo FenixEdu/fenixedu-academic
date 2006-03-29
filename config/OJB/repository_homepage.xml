@@ -47,6 +47,16 @@
 	    jdbc-type="BIT"
 	/>
 	<field-descriptor
+	    name="showWorkTelephone"
+	    column="SHOW_WORK_TELEPHONE"
+	    jdbc-type="BIT"
+	/>
+	<field-descriptor
+	    name="showMobileTelephone"
+	    column="SHOW_MOBILE_TELEPHONE"
+	    jdbc-type="BIT"
+	/>
+	<field-descriptor
 	    name="showAlternativeHomepage"
 	    column="SHOW_ALTERNATIVE_HOMEPAGE"
 	    jdbc-type="BIT"
@@ -54,6 +64,11 @@
 	<field-descriptor
 	    name="showResearchUnitHomepage"
 	    column="SHOW_RESEARCH_UNIT_HOMEPAGE"
+	    jdbc-type="BIT"
+	/>
+	<field-descriptor
+	    name="showCategory"
+	    column="SHOW_CATEGORY"
 	    jdbc-type="BIT"
 	/>
 </class-descriptor>

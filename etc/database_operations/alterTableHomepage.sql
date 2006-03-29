@@ -7,3 +7,7 @@ alter table HOMEPAGE add column SHOW_EMAIL tinyint(1) NOT NULL default '0';
 alter table HOMEPAGE add column SHOW_TELEPHONE tinyint(1) NOT NULL default '0';
 alter table HOMEPAGE add column SHOW_ALTERNATIVE_HOMEPAGE tinyint(1) NOT NULL default '0';
 alter table HOMEPAGE add column SHOW_RESEARCH_UNIT_HOMEPAGE tinyint(1) NOT NULL default '0';
+alter table HOMEPAGE add column SHOW_WORK_TELEPHONE tinyint(1) NOT NULL default '0';
+alter table HOMEPAGE add column SHOW_MOBILE_TELEPHONE tinyint(1) NOT NULL default '0';
+alter table HOMEPAGE add column SHOW_CATEGORY tinyint(1) NOT NULL default '0';
+alter table HOMEPAGE add column SHOW_CURRENT_EXECUTION_COURSES tinyint(1) NOT NULL default '0';

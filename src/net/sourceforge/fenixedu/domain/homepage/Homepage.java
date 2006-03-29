@@ -1,9 +1,17 @@
 package net.sourceforge.fenixedu.domain.homepage;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.util.PeriodState;
 
 public class Homepage extends Homepage_Base {
 
@@ -22,5 +30,22 @@ public class Homepage extends Homepage_Base {
 		}
 		super.setMyUrl(myUrl);
 	}
+
+    public SortedSet<ExecutionCourse> getCurrentExecutionCourses() {
+        final SortedSet<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+        final Teacher teacher = getPerson().getTeacher();
+        if (teacher != null) {
+            for (final Professorship professorship : teacher.getProfessorshipsSet()) {
+                final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+                final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+                final ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
+                if (executionPeriod.getState().equals(PeriodState.CURRENT)
+                        || (nextExecutionPeriod != null && nextExecutionPeriod.getState().equals(PeriodState.CURRENT))) {
+                    executionCourses.add(executionCourse);
+                }
+            }
+        }
+        return executionCourses;
+    }
 
 }

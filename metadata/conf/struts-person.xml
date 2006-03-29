@@ -92,11 +92,15 @@
         <form-property name="activated" type="java.lang.String" />
         <form-property name="name" type="java.lang.String" />
         <form-property name="showUnit" type="java.lang.String" />
+        <form-property name="showCategory" type="java.lang.String" />
         <form-property name="showPhoto" type="java.lang.String" />
         <form-property name="showEmail" type="java.lang.String" />
         <form-property name="showTelephone" type="java.lang.String" />
+        <form-property name="showWorkTelephone" type="java.lang.String" />
+        <form-property name="showMobileTelephone" type="java.lang.String" />
         <form-property name="showAlternativeHomepage" type="java.lang.String" />
         <form-property name="showResearchUnitHomepage" type="java.lang.String" />
+        <form-property name="showCurrentExecutionCourses" type="java.lang.String" />
       </form-bean>
     </form-beans>
 

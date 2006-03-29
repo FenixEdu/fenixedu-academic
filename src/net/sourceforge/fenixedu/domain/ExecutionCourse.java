@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.util.ProposalState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
@@ -33,9 +34,12 @@ import org.joda.time.Period;
 public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 
 	public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new BeanComparator("nome", Collator.getInstance());
+    public static final Comparator<ExecutionCourse> EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new ComparatorChain();
 
     static {
-        CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
+        CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());        
+        ((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("executionPeriod"));
+        ((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("nome", Collator.getInstance()));
     }
 
 	public ExecutionCourse() {
