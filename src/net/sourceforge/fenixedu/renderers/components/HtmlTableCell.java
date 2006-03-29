@@ -34,7 +34,7 @@ public class HtmlTableCell extends HtmlComponent {
     private String height;
     private String align;
     private String valign;
-
+    
     public HtmlTableCell() {
         this(CellType.DATA);
     }

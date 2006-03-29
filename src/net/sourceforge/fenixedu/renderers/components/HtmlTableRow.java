@@ -32,6 +32,8 @@ public class HtmlTableRow extends HtmlComponent {
     public HtmlTableCell createCell() {
         HtmlTableCell cell = new HtmlTableCell();
         
+        cell.setScope("col");
+        
         addCell(cell);
         return cell;
     }
