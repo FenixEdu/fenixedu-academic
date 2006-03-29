@@ -97,15 +97,12 @@
 		column="KEY_COST_CENTER"
 		jdbc-type="INTEGER"
 	/>
-	 
-	 
-	 		
-	    
-	  
-	  
-	
-	
-   </class-descriptor>
+ 	<field-descriptor
+		name="keyGrantInsurance"
+		column="KEY_GRANT_INSURANCE"
+		jdbc-type="INTEGER"
+	/>
+</class-descriptor>
    
    
 
