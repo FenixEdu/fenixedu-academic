@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 /**
  * @author Fernanda Quitério 25/09/2003
@@ -28,21 +27,19 @@ public class AddItem extends ManageWebSiteItem {
 
         IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
                 .getIPersistentWebSiteSection();
-        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
-        WebSiteSection webSiteSection = (WebSiteSection) persistentObject.readByOID(WebSiteSection.class,
-                sectionCode);
+        WebSiteSection webSiteSection = rootDomainObject.readWebSiteSectionByOID(sectionCode);
+        
         InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(webSiteSection);
         InfoWebSite infoWebSite = InfoWebSite.newInfoFromDomain(webSiteSection.getWebSite());
         infoWebSiteSection.setInfoWebSite(infoWebSite);
-
 
         checkData(infoWebSiteItem, webSiteSection);
 
         WebSiteItem webSiteItem = DomainFactory.makeWebSiteItem();
 
-        fillWebSiteItemForDB(infoWebSiteItem, user, persistentPerson, persistentWebSiteSection,
-                webSiteSection, webSiteItem);
+        fillWebSiteItemForDB(infoWebSiteItem, user, persistentWebSiteSection, webSiteSection,
+                webSiteItem);
 
         List webSiteSections = persistentWebSiteSection.readByWebSite(webSiteSection.getWebSite());
         Iterator iterSections = webSiteSections.iterator();

@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 
@@ -31,7 +30,6 @@ public class SearchGrantOwner extends Service {
 	public List run(String name, String IdNumber, IDDocumentType IdType, Integer grantOwnerNumber,
 			Boolean onlyGrantOwner, Integer startIndex) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		IPessoaPersistente persistentPerson = null;
 		IPersistentGrantOwner persistentGrantOwner = null;
 		List grantOwnerList = new ArrayList();
 		List personList = new ArrayList();
@@ -39,7 +37,6 @@ public class SearchGrantOwner extends Service {
 		GrantOwner grantOwner = null;
 		Person person = null;
 
-		persistentPerson = persistentSupport.getIPessoaPersistente();
 		persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
 
 		// Search by Grant Owner Number
@@ -70,9 +67,8 @@ public class SearchGrantOwner extends Service {
 							tempNumberOfElementInSpan);
 					numberOfResultsByName = persistentGrantOwner.countAllGrantOwnerByName(name);
 				} else {
-					personList = persistentPerson.findPersonByName(name, startIndex,
-							tempNumberOfElementInSpan);
-					numberOfResultsByName = persistentPerson.countAllPersonByName(name);
+					personList = Person.findByName(name, startIndex, tempNumberOfElementInSpan);
+					numberOfResultsByName = Person.countAllByName(name);
 				}
 			}
 		} else if (grantOwner != null) {

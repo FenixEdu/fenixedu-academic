@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 /**
  * @author Fernanda Quitério 30/09/2003
@@ -28,16 +27,13 @@ public class EditWebSiteItem extends ManageWebSiteItem {
         Boolean result = Boolean.FALSE;
         IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
                 .getIPersistentWebSiteSection();
-        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
-        WebSiteSection webSiteSection = (WebSiteSection) persistentObject.readByOID(
-                WebSiteSection.class, sectionCode);
+        WebSiteSection webSiteSection = rootDomainObject.readWebSiteSectionByOID(sectionCode);
         InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(webSiteSection);
 
         checkData(infoWebSiteItem, webSiteSection);
 
-        WebSiteItem webSiteItem = (WebSiteItem) persistentObject.readByOID(WebSiteItem.class,
-                infoWebSiteItem.getIdInternal());
+        WebSiteItem webSiteItem = rootDomainObject.readWebSiteItemByOID(infoWebSiteItem.getIdInternal());
 
         InfoWebSiteItem infoItemFromDB = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
         Calendar calendarItemFromDB = Calendar.getInstance();
@@ -50,8 +46,7 @@ public class EditWebSiteItem extends ManageWebSiteItem {
             result = Boolean.TRUE;
         }
 
-        fillWebSiteItemForDB(infoWebSiteItem, user, persistentPerson, persistentWebSiteSection,
-                webSiteSection, webSiteItem);
+        fillWebSiteItemForDB(infoWebSiteItem, user, persistentWebSiteSection, webSiteSection, webSiteItem);
 
         return result;
     }

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -1120,7 +1121,6 @@ public class Person extends Person_Base {
 
     public static Person readByDocumentIdNumberAndIdDocumentType(final String documentIdNumber,
             final IDDocumentType idDocumentType) {
-        
         for (final Person person : Party.readAllPersons()) {
             if (person.getDocumentIdNumber().equalsIgnoreCase(documentIdNumber)
                     && person.getIdDocumentType() == idDocumentType) {
@@ -1128,5 +1128,30 @@ public class Person extends Person_Base {
             }
         }
         return null;
+    }
+    
+    // used by grant owner
+    public static List<Person> findByName(final String name, final Integer startIndex, final Integer numberOfElementsInSpan) {
+        if (name == null) {
+            return Collections.EMPTY_LIST;
+        }
+        final List<Person> personsList = findByName(name);
+        return (startIndex != null && numberOfElementsInSpan != null) ?
+                personsList.subList(startIndex, startIndex + numberOfElementsInSpan) : personsList;
+    }
+    
+    public static Integer countAllByName(final String name) {
+        return Integer.valueOf(findByName(name).size());
+    }
+
+    public static List<Person> findByName(final String name) {
+        final List<Person> result = new ArrayList<Person>();
+        final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
+        for (final Person person : Party.readAllPersons()) {
+            if (person.getName().toLowerCase().matches(nameToMatch)) {
+                result.add(person);
+            }
+        }
+        return result;
     }
 }

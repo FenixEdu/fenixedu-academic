@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.person.InfoSiteQualifications
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -21,10 +20,9 @@ import org.apache.commons.collections.Transformer;
 public class ReadQualifications extends Service {
 
     public InfoSiteQualifications run(String user) throws ExcepcaoPersistencia {
-        final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-        final Person person = Person.readPersonByUsername(user);
 
-        List<Qualification> qualifications = person.getAssociatedQualifications();
+        final Person person = Person.readPersonByUsername(user);
+        final List<Qualification> qualifications = person.getAssociatedQualifications();
 
         List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer() {
             public Object transform(Object o) {

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -27,8 +26,6 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
             throw new NotAuthorizedFilterException("authentication.not.provided");
         }
 
-        // final String studentCurricularPlanId = (String)
-        // request.getServiceParameters().parametersArray()[1];
         final StudentCurricularPlanIDDomainType studentCurricularPlanIDDomainType = (StudentCurricularPlanIDDomainType) request
                 .getServiceParameters().parametersArray()[1];
         final Integer studentCurricularPlanId = studentCurricularPlanIDDomainType.getId();
@@ -37,8 +34,6 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
         } else if (studentCurricularPlanId.intValue() < 0) {
             return;
         }
-
-        final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
         final Person person = Person.readPersonByUsername(userView.getUtilizador());
         final Teacher teacher = person.getTeacher();

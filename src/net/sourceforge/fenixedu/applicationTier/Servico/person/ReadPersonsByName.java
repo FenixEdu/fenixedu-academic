@@ -7,12 +7,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 public class ReadPersonsByName extends Service {
 
     public List<InfoPerson> run(String stringtoSearch) throws ExcepcaoPersistencia {
-        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
         String names[] = stringtoSearch.split(" ");
         StringBuilder authorName = new StringBuilder("%");
@@ -21,14 +19,11 @@ public class ReadPersonsByName extends Service {
             authorName.append(names[i]);
             authorName.append("%");
         }
-        List<Person> persons = persistentPerson.readPersonsBySubName(authorName.toString());
-
-        List<InfoPerson> infoPersons = new ArrayList<InfoPerson>(persons.size());
-
-        for (Person individualPerson : persons) {
+        
+        final List<InfoPerson> infoPersons = new ArrayList<InfoPerson>();
+        for (final Person individualPerson : Person.findByName(authorName.toString())) {
             infoPersons.add(InfoPerson.newInfoFromDomain(individualPerson));
         }
-
         return infoPersons;
 
     }

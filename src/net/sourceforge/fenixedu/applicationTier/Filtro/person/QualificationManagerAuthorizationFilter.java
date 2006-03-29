@@ -14,36 +14,23 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
-/**
- * @author Barbosa
- * @author Pica
- */
 public class QualificationManagerAuthorizationFilter extends Filtro {
 
     public QualificationManagerAuthorizationFilter() {
     }
 
-    //Role Type of teacher
     protected RoleType getRoleTypeTeacher() {
         return RoleType.TEACHER;
     }
 
-    //Role Type of Grant Owner Manager
     protected RoleType getRoleTypeGrantOwnerManager() {
         return RoleType.GRANT_OWNER_MANAGER;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
@@ -86,21 +73,11 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         }
     }
 
-    /**
-     * Verifies if the qualification user is a grant owner
-     * 
-     * @param arguments
-     * @return true or false
-     */
     private boolean isGrantOwner(InfoQualification infoQualification) {
         try {
             IPersistentGrantOwner persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
-
-            //Try to read the grant owner from de database
-            GrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(infoQualification
-                    .getInfoPerson().getIdInternal());
-
-            return grantOwner != null;
+            GrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(infoQualification.getInfoPerson().getIdInternal());
+            return (grantOwner != null);
         } catch (ExcepcaoPersistencia e) {
             return false;
         } catch (Exception e) {
@@ -108,31 +85,13 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         }
     }
 
-    /**
-     * Verifies if the qualification to be changed is owned by the user that is
-     * running the service
-     * 
-     * @param arguments
-     * @return true or false
-     */
     private boolean isOwnQualification(String username, InfoQualification infoQualification) {
-        try {
-            IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-            Person person = Person.readPersonByUsername(username);
-
-            boolean isNew = (infoQualification.getIdInternal() == null)
-                    || (infoQualification.getIdInternal().equals(new Integer(0)));
-            if (isNew)
-                return true;
-
-            Qualification qualification = (Qualification) persistentObject.readByOID(
-                    Qualification.class, infoQualification.getIdInternal());
-
-            return qualification.getPerson().equals(person);
-        } catch (ExcepcaoPersistencia e) {
-            return false;
-        } catch (Exception e) {
-            return false;
+        boolean isNew = (infoQualification.getIdInternal() == null)
+                || (infoQualification.getIdInternal().equals(Integer.valueOf(0)));
+        if (isNew) {
+            return true;
         }
+        final Qualification qualification = rootDomainObject.readQualificationByOID(infoQualification.getIdInternal());
+        return qualification.getPerson() == Person.readPersonByUsername(username);
     }
 }

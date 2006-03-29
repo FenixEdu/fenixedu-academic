@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 
 /**
@@ -26,7 +25,6 @@ public class readGaugingTestsResults extends Service {
 
 	public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 		IPersistentGaugingTestResult persistentGaugingTestResult = persistentSupport.getIPersistentGaugingTestResult();
-		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		Person person = Person.readPersonByUsername(userView.getUtilizador());
 
 		IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();

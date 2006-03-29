@@ -61,8 +61,6 @@ public interface ISuportePersistente
 	
 	public IPersistentExecutionCourse getIPersistentExecutionCourse();
 
-	public IPessoaPersistente getIPessoaPersistente();
-
 	public IPersistentExecutionDegree getIPersistentExecutionDegree();
 
 	public IPersistentStudent getIPersistentStudent();

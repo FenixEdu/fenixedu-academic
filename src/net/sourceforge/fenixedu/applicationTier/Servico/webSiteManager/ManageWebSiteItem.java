@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.StringTokenizer;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -15,19 +16,14 @@ import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 import org.apache.commons.lang.StringUtils;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 13/04/2004
  * 
  */
 abstract public class ManageWebSiteItem extends Service {
-
-	// infoItem with an infoSection
 
 	protected void checkData(InfoWebSiteItem infoWebSiteItem, WebSiteSection webSiteSection)
 			throws FenixServiceException {
@@ -66,7 +62,7 @@ abstract public class ManageWebSiteItem extends Service {
 	}
 
 	protected void fillWebSiteItemForDB(InfoWebSiteItem infoWebSiteItem, String user,
-			IPessoaPersistente persistentPerson, IPersistentWebSiteSection persistentWebSiteSection,
+			IPersistentWebSiteSection persistentWebSiteSection,
 			WebSiteSection webSiteSection, WebSiteItem webSiteItem) throws FenixServiceException, ExcepcaoPersistencia {
 		Person person = Person.readPersonByUsername(user);
 		webSiteItem.setEditor(person);

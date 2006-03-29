@@ -4,11 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author João Mota
@@ -30,15 +26,6 @@ public class InfoTeacherWithPerson extends InfoTeacher {
             infoTeacher.copyFromDomain(teacher);
         }
         return infoTeacher;
-    }
-
-    public void copyToDomain(InfoTeacher infoTeacher, Teacher teacher) throws ExcepcaoPersistencia {
-        super.copyToDomain(infoTeacher, teacher);
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Person person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
-                infoTeacher.getInfoPerson().getIdInternal());
-
-        teacher.setPerson(person);
     }
 
 }

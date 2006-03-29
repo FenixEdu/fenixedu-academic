@@ -7,13 +7,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.research.result.Authorship;
 import net.sourceforge.fenixedu.domain.research.result.Publication;
 import net.sourceforge.fenixedu.domain.research.result.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -187,55 +186,33 @@ public class InfoPublication extends PublicationDTO {
         List authorsList = new ArrayList();
         while(it.hasNext()){
             InfoAuthor infoAuthor = (InfoAuthor) it.next();
-            
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            Person author = (Person) sp.getIPessoaPersistente().readByOID(Person.class,infoAuthor.getInfoPessoa().getIdInternal());
-            
+            Person author = (Person) RootDomainObject.getInstance().readPartyByOID(infoAuthor.getInfoPessoa().getIdInternal());
             infoAuthor.copyToDomain(infoAuthor, author);
             authorsList.add(author);
         }
         return authorsList;
     }
 	
-	/**
-	 * @return Returns the infoPublicationType.
-	 */
 	public InfoPublicationType getInfoPublicationType() {
 		return infoPublicationType;
 	}
 
-	/**
-	 * @param infoPublicationType The infoPublicationType to set.
-	 */
 	public void setInfoPublicationType(InfoPublicationType infoPublicationType) {
 		this.infoPublicationType = infoPublicationType;
 	}
 
-	/**
-	 * @return Returns the infoPublicationAuthors.
-	 */
-    
 	public List<InfoPublicationAuthor> getInfoPublicationAuthors() {
 		return infoPublicationAuthors;
 	}
 
-	/**
-	 * @return Returns the infoPublicationTeachers.
-	 */
 	public List getInfoPublicationTeachers() {
 		return infoPublicationTeachers;
 	}
-
-	/**
-	 * @param infoPublicationAuthors The infoPublicationAuthors to set.
-	 */
+	
 	public void setInfoPublicationAuthors(List<InfoPublicationAuthor> infoPublicationAuthors) {
 		this.infoPublicationAuthors = infoPublicationAuthors;
 	}
 
-	/**
-	 * @param infoPublicationTeachers The infoPublicationTeachers to set.
-	 */
 	public void setInfoPublicationTeachers(List infoPublicationTeachers) {
 		this.infoPublicationTeachers = infoPublicationTeachers;
 	}
