@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 public abstract class DeleteDomainObjectService extends Service {
     
@@ -30,7 +29,7 @@ public abstract class DeleteDomainObjectService extends Service {
 
 	protected abstract Class getDomainObjectClass();
 
-	protected abstract IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) throws ExcepcaoPersistencia;
+	protected abstract IPersistentObject getIPersistentObject() throws ExcepcaoPersistencia;
 
 	protected abstract void deleteDomainObject(DomainObject domainObject) throws ExcepcaoPersistencia;
 
