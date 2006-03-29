@@ -1,13 +1,7 @@
-/*
- * Created on 7/Mar/2004
- */
 package net.sourceforge.fenixedu.domain.credits;
 
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 
-/**
- * @author jpvl
- */
 public class ManagementPositionCreditLine extends ManagementPositionCreditLine_Base {
 
     public ManagementPositionCreditLine() {
@@ -16,6 +10,10 @@ public class ManagementPositionCreditLine extends ManagementPositionCreditLine_B
 
 	protected CreditsEvent getCreditEventGenerated() {
         return CreditsEvent.MANAGEMENT_POSITION;
+    }
+
+    public void delete() {
+        super.deleteDomainObject();
     }
     
 }
