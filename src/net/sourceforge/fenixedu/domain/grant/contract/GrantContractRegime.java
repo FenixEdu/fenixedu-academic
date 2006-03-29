@@ -1,6 +1,3 @@
-/*
- * Created on May 5, 2004
- */
 package net.sourceforge.fenixedu.domain.grant.contract;
 
 import java.util.Calendar;
@@ -8,10 +5,6 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-/**
- * @author Pica
- * @author Barbosa
- */
 public class GrantContractRegime extends GrantContractRegime_Base {
 
     public GrantContractRegime() {
@@ -31,6 +24,10 @@ public class GrantContractRegime extends GrantContractRegime_Base {
             return true;
         }
         return false;
+    }
+
+    public void delete() {
+        super.deleteDomainObject();
     }
 
 }
