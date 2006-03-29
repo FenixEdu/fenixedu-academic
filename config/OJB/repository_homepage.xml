@@ -7,11 +7,6 @@
          autoincrement="true"
 	/>
 	<field-descriptor
-	    name="myUrl"
-	    column="MY_URL"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
         name="keyPerson"
         column="KEY_PERSON"
         jdbc-type="INTEGER"
@@ -21,6 +16,46 @@
         column="KEY_BLOG"
         jdbc-type="INTEGER"
     />
+	<field-descriptor
+	    name="activated"
+	    column="ACTIVATED"
+	    jdbc-type="BIT"
+	/>
+	<field-descriptor
+	    name="name"
+	    column="NAME"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+	    name="showUnit"
+	    column="SHOW_UNIT"
+	    jdbc-type="BIT"
+	/>
+	<field-descriptor
+	    name="showPhoto"
+	    column="SHOW_PHOTO"
+	    jdbc-type="BIT"
+	/>
+	<field-descriptor
+	    name="showEmail"
+	    column="SHOW_EMAIL"
+	    jdbc-type="BIT"
+	/>
+	<field-descriptor
+	    name="showTelephone"
+	    column="SHOW_TELEPHONE"
+	    jdbc-type="BIT"
+	/>
+	<field-descriptor
+	    name="showAlternativeHomepage"
+	    column="SHOW_ALTERNATIVE_HOMEPAGE"
+	    jdbc-type="BIT"
+	/>
+	<field-descriptor
+	    name="showResearchUnitHomepage"
+	    column="SHOW_RESEARCH_UNIT_HOMEPAGE"
+	    jdbc-type="BIT"
+	/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.homepage.Blog" table="BLOG">

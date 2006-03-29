@@ -9770,4 +9770,12 @@
 			<chain name="CoordinatorOrDepartmentAdminOfficeAuthorization" />
 		</filterChains>
 	</service>    
+	<service>
+		<name>SubmitHomepage</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.SubmitHomepage</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>    
 </serviceDefinitions>
