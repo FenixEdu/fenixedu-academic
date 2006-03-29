@@ -39,6 +39,8 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.sun.faces.el.impl.parser.ParseException;
+
 /**
  * @author Susana Fernandes
  */
@@ -50,20 +52,30 @@ public class ParseQuestion extends DefaultHandler {
 
     private List listQuestion, listOptions, listResponse, listFeedback;
 
-    private String responseId = new String();
+    private String responseId = "";
 
     private boolean question = false, option = false, response = false, feedback = false;
+
+    private static final Element NOT_ELEMENT = new Element(null, "not", "not", null);
+
+    private static final Element SLASH_NOT_ELEMENT = new Element(null, "/not", "/not", null);
 
     public void MySAXParserBean() {
     }
 
-    public InfoQuestion parseQuestion(String file, InfoQuestion infoQuestion, String path) throws Exception, ParseQuestionException {
-        parseFile(file, path);
+    public InfoQuestion parseQuestion(String file, InfoQuestion infoQuestion, String path)
+            throws ParseQuestionException, ParseException {
+        try {
+            parseFile(file, path);
+        } catch (Exception e) {
+            throw new ParseException();
+        }
         infoQuestion = list2Question(infoQuestion);
         return infoQuestion;
     }
 
-    public InfoStudentTestQuestion parseStudentTestQuestion(InfoStudentTestQuestion infoStudentTestQuestion, String path) throws Exception,
+    public InfoStudentTestQuestion parseStudentTestQuestion(
+            InfoStudentTestQuestion infoStudentTestQuestion, String path) throws Exception,
             ParseQuestionException {
         parseFile(infoStudentTestQuestion.getQuestion().getXmlFile(), path);
         infoStudentTestQuestion.setQuestion(list2Question(infoStudentTestQuestion.getQuestion()));
@@ -76,12 +88,12 @@ public class ParseQuestion extends DefaultHandler {
                 infoStudentTestQuestion.setOptionShuffle(shuffleOptions(shuffle));
             }
 
-            infoStudentTestQuestion.getQuestion()
-                    .setOptions(
-                            shuffleStudentTestQuestionOptions(infoStudentTestQuestion.getOptionShuffle(), infoStudentTestQuestion.getQuestion()
-                                    .getOptions()));
+            infoStudentTestQuestion.getQuestion().setOptions(
+                    shuffleStudentTestQuestionOptions(infoStudentTestQuestion.getOptionShuffle(),
+                            infoStudentTestQuestion.getQuestion().getOptions()));
             infoStudentTestQuestion.getQuestion().setResponseProcessingInstructions(
-                    newResponseList(infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions(), infoStudentTestQuestion.getQuestion()
+                    newResponseList(infoStudentTestQuestion.getQuestion()
+                            .getResponseProcessingInstructions(), infoStudentTestQuestion.getQuestion()
                             .getOptions()));
             if (infoStudentTestQuestion.getResponse() == null) {
                 infoStudentTestQuestion.setResponse(new ResponseLID());
@@ -111,7 +123,8 @@ public class ParseQuestion extends DefaultHandler {
     // return shuffleOptions(shuffle);
     // }
 
-    public void parseFile(String file, String path) throws ParserConfigurationException, IOException, SAXException {
+    public void parseFile(String file, String path) throws ParserConfigurationException, IOException,
+            SAXException {
         listQuestion = new ArrayList();
         listOptions = new ArrayList();
         listResponse = new ArrayList();
@@ -145,7 +158,8 @@ public class ParseQuestion extends DefaultHandler {
         current = new Element(uri, localName, qName, new AttributesImpl(attributes));
         if (qName.equals("presentation")) {
             question = true;
-        } else if (qName.equals("response_lid") || qName.equals("response_str") || qName.equals("response_num")) {
+        } else if (qName.equals("response_lid") || qName.equals("response_str")
+                || qName.equals("response_num")) {
             question = false;
             option = true;
         } else if (qName.equals("resprocessing")) {
@@ -168,7 +182,7 @@ public class ParseQuestion extends DefaultHandler {
         else if (feedback)
             listFeedback.add(current);
 
-        text = new String();
+        text = "";
     }
 
     public void endElement(String uri, String localName, String qName) {
@@ -266,18 +280,21 @@ public class ParseQuestion extends DefaultHandler {
                 } else
                     throw new ParseQuestionException(tag, true);
             } else if ((tag.startsWith("mat") && !tag.equals("material")) || tag.startsWith("response_")) {
-                if ((tag.equals("response_lid")) || (tag.equals("response_str")) || (tag.equals("response_num"))) {
+                if ((tag.equals("response_lid")) || (tag.equals("response_str"))
+                        || (tag.equals("response_num"))) {
                     responseId = atts.getValue("ident");
                     questions++;
                     if (questions > 1)
-                        throw new ParseQuestionException("O sistema ainda não suporta perguntas com alíneas.");
+                        throw new ParseQuestionException(
+                                "O sistema ainda não suporta perguntas com alíneas.");
 
                     infoQuestion.setQuestionType(new QuestionType(tag));
 
                     if (atts.getIndex("rcardinality") != -1) {
                         if (atts.getValue("rcardinality").equals("Ordered"))
                             throw new ParseQuestionException(tag, "rcardinality=Ordered");
-                        infoQuestion.getQuestionType().setCardinalityType(new CardinalityType(atts.getValue("rcardinality")));
+                        infoQuestion.getQuestionType().setCardinalityType(
+                                new CardinalityType(atts.getValue("rcardinality")));
                     }
                 } else if ((tag.equals("response_label")) || (tag.equals("response_na"))) {
 
@@ -342,7 +359,8 @@ public class ParseQuestion extends DefaultHandler {
 
                 if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
                         || responseProcessing.getAction().intValue() == ResponseProcessing.ADD) {
-                    if (infoQuestion.getQuestionValue() == null || (infoQuestion.getQuestionValue().compareTo(value) < 0))
+                    if (infoQuestion.getQuestionValue() == null
+                            || (infoQuestion.getQuestionValue().compareTo(value) < 0))
                         infoQuestion.setQuestionValue(value);
                 } else if (responseProcessing.getAction().intValue() == ResponseProcessing.SUBTRACT) {
                     if (infoQuestion.getQuestionValue() == null)
@@ -368,10 +386,11 @@ public class ParseQuestion extends DefaultHandler {
                 responseProcessing = new ResponseProcessing(responseProcessingId);
                 responseProcessing.setResponseConditions(new ArrayList());
             } else if (tag.startsWith("var")) {
-                if (tag.equals("varequal") || tag.equals("varlt") || tag.equals("varlte") || tag.equals("vargt") || tag.equals("vargte")
-                        || tag.equals("varsubstring")) {
+                if (tag.equals("varequal") || tag.equals("varlt") || tag.equals("varlte")
+                        || tag.equals("vargt") || tag.equals("vargte") || tag.equals("varsubstring")) {
                     if (!atts.getValue("respident").equals(responseId))
-                        throw new ParseQuestionException("Exercício Inválido (identificadores inválidos)");
+                        throw new ParseQuestionException(
+                                "Exercício Inválido (identificadores inválidos)");
                     if (or == 0 && and == 0) {
                         String tagName = tag;
                         if (not)
@@ -381,13 +400,15 @@ public class ParseQuestion extends DefaultHandler {
                                 tagName = tagName.concat("ignorecase");
                         }
                         if (infoQuestion.getQuestionType().getType().intValue() == QuestionType.LID
-                                && infoQuestion.getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE)
+                                && infoQuestion.getQuestionType().getCardinalityType().getType()
+                                        .intValue() == CardinalityType.SINGLE)
                             if (getNumberOfVarEquals(responseProcessing.getResponseConditions()) > 0)
                                 throw new ParseQuestionException(
                                         "Uma das soluções indicadas no ficheiro tem mais do que uma resposta, e uma pergunta de escolha simples apenas admite uma resposta.");
 
-                        responseProcessing.getResponseConditions()
-                                .add(new ResponseCondition(tagName, element.getValue(), atts.getValue("respident")));
+                        responseProcessing.getResponseConditions().add(
+                                new ResponseCondition(tagName, element.getValue(), atts
+                                        .getValue("respident")));
                     }
                 } else
                     throw new ParseQuestionException(tag, true);
@@ -398,13 +419,15 @@ public class ParseQuestion extends DefaultHandler {
                     not = true;
             } else if (tag.equals("and")) {
                 if (and == 0 && or == 0)
-                    auxList.addAll(resolveAndCondition(newResponseList, i, new ArrayList(), responseProcessingId));
+                    auxList.addAll(resolveAndCondition(newResponseList, i, new ArrayList(),
+                            responseProcessingId));
                 and++;
             } else if (tag.equals("/and")) {
                 and--;
             } else if (tag.equals("or")) {
                 if (or == 0 && and == 0)
-                    auxList.addAll(resolveOrCondition(newResponseList, i, new ArrayList(), responseProcessingId));
+                    auxList.addAll(resolveOrCondition(newResponseList, i, new ArrayList(),
+                            responseProcessingId));
                 or++;
             } else if (tag.equals("/or")) {
                 or--;
@@ -433,7 +456,7 @@ public class ParseQuestion extends DefaultHandler {
         ListIterator it = listFeedback.listIterator();
         List auxList = new ArrayList();
         List responses = infoQuestion.getResponseProcessingInstructions();
-        String ident = new String();
+        String ident = "";
         while (it.hasNext()) {
             Element element = (Element) it.next();
             String tag = element.getQName();
@@ -575,15 +598,17 @@ public class ParseQuestion extends DefaultHandler {
                 while (itOption.hasNext()) {
                     QuestionOption option = (QuestionOption) itOption.next();
                     if (option.getOptionId().equals(response))
-                        newResponseCondition = new ResponseCondition(ResponseCondition.getConditionString(responseCondition.getCondition()),
+                        newResponseCondition = new ResponseCondition(ResponseCondition
+                                .getConditionString(responseCondition.getCondition()),
                                 new Integer(index).toString(), responseCondition.getResponseLabelId());
                     else
                         index++;
                 }
                 newResponseConditionList.add(newResponseCondition);
             }
-            ResponseProcessing newResponseProcessing = new ResponseProcessing(newResponseConditionList, responseProcessing.getResponseValue(),
-                    responseProcessing.getAction(), responseProcessing.getFeedback(), responseProcessing.isFenixCorrectResponse());
+            ResponseProcessing newResponseProcessing = new ResponseProcessing(newResponseConditionList,
+                    responseProcessing.getResponseValue(), responseProcessing.getAction(),
+                    responseProcessing.getFeedback(), responseProcessing.isFenixCorrectResponse());
             newResponseProcessingList.add(newResponseProcessing);
         }
         return newResponseProcessingList;
@@ -597,11 +622,13 @@ public class ParseQuestion extends DefaultHandler {
             int previewsAction = 0;
             for (int i = 0; itResponseProcessing.hasNext(); i++) {
                 ResponseProcessing responseProcessing = (ResponseProcessing) itResponseProcessing.next();
-                if (responseProcessing.getResponseValue() != null && responseProcessing.getAction() != null) {
+                if (responseProcessing.getResponseValue() != null
+                        && responseProcessing.getAction() != null) {
 
                     if ((responseProcessing.getResponseValue().doubleValue() > maxValue)
                             || (responseProcessing.getResponseValue().doubleValue() == maxValue && previewsAction == 0)
-                            || (responseProcessing.getResponseValue().doubleValue() == maxValue && previewsAction != ResponseProcessing.SET && responseProcessing
+                            || (responseProcessing.getResponseValue().doubleValue() == maxValue
+                                    && previewsAction != ResponseProcessing.SET && responseProcessing
                                     .getAction().intValue() == ResponseProcessing.SET)) {
                         maxValue = responseProcessing.getResponseValue().doubleValue();
                         fenixCorrectResponseIndex = i;
@@ -610,7 +637,8 @@ public class ParseQuestion extends DefaultHandler {
                 }
             }
             if (fenixCorrectResponseIndex != -1)
-                ((ResponseProcessing) infoQuestion.getResponseProcessingInstructions().get(fenixCorrectResponseIndex)).setFenixCorrectResponse(true);
+                ((ResponseProcessing) infoQuestion.getResponseProcessingInstructions().get(
+                        fenixCorrectResponseIndex)).setFenixCorrectResponse(true);
         }
         return infoQuestion;
     }
@@ -623,7 +651,8 @@ public class ParseQuestion extends DefaultHandler {
         if (infoQuestion.getResponseProcessingInstructions().size() > 1) {
             newRpList.add(infoQuestion.getResponseProcessingInstructions().get(0));
             for (int i = 1; i < infoQuestion.getResponseProcessingInstructions().size(); i++) {
-                ResponseProcessing responseProcessing = (ResponseProcessing) infoQuestion.getResponseProcessingInstructions().get(i);
+                ResponseProcessing responseProcessing = (ResponseProcessing) infoQuestion
+                        .getResponseProcessingInstructions().get(i);
                 if (!responseProcessing.isThisConditionListInResponseProcessingList(newRpList, isLID))
                     newRpList.add(responseProcessing);
             }
@@ -672,9 +701,9 @@ public class ParseQuestion extends DefaultHandler {
                 if ((not % 2) == 0)
                     resultList.add(element);
                 else {
-                    resultList.add(new Element(null, "not", "not", null));
+                    resultList.add(NOT_ELEMENT);
                     resultList.add(element);
-                    resultList.add(new Element(null, "/not", "/not", null));
+                    resultList.add(SLASH_NOT_ELEMENT);
                 }
             } else if (tag.equals("not")) {
                 not++;
@@ -705,7 +734,8 @@ public class ParseQuestion extends DefaultHandler {
         return resultList;
     }
 
-    private List resolveAndCondition(List listResponse, int index, List oldResponseList, int id) throws ParseQuestionException {
+    private List resolveAndCondition(List listResponse, int index, List oldResponseList, int id)
+            throws ParseQuestionException {
         ListIterator it = listResponse.listIterator(index);
         boolean not = false;
         List newResponseList = new ArrayList();
@@ -716,10 +746,11 @@ public class ParseQuestion extends DefaultHandler {
             Attributes atts = element.getAttributes();
 
             if (tag.startsWith("var") && or == 0) {
-                if (tag.equals("varequal") || tag.equals("varlt") || tag.equals("varlte") || tag.equals("vargt") || tag.equals("vargte")
-                        || tag.equals("varsubstring")) {
+                if (tag.equals("varequal") || tag.equals("varlt") || tag.equals("varlte")
+                        || tag.equals("vargt") || tag.equals("vargte") || tag.equals("varsubstring")) {
                     if (!atts.getValue("respident").equals(responseId))
-                        throw new ParseQuestionException("Exercício Inválido (identificadores inválidos)");
+                        throw new ParseQuestionException(
+                                "Exercício Inválido (identificadores inválidos)");
                     String tagName = tag;
                     if (not)
                         tagName = new String("not").concat(tagName);
@@ -727,7 +758,8 @@ public class ParseQuestion extends DefaultHandler {
                         if (atts.getValue("case").equals("Nocase"))
                             tagName = tagName.concat("ignorecase");
                     }
-                    ResponseCondition rc = new ResponseCondition(tagName, element.getValue(), atts.getValue("respident"));
+                    ResponseCondition rc = new ResponseCondition(tagName, element.getValue(), atts
+                            .getValue("respident"));
 
                     if (newResponseList.size() != 0) {
                         Iterator newResponseListIt = newResponseList.iterator();
@@ -747,7 +779,8 @@ public class ParseQuestion extends DefaultHandler {
                 }
             } else if (tag.equals("or")) {
                 if (or == 0)
-                    newResponseList.addAll(resolveOrCondition(listResponse, index + i, newResponseList, id));
+                    newResponseList.addAll(resolveOrCondition(listResponse, index + i, newResponseList,
+                            id));
                 or++;
             } else if ((tag.equals("not") || tag.equals("/not")) && or == 0) {
                 if (not)
@@ -766,7 +799,8 @@ public class ParseQuestion extends DefaultHandler {
         return oldResponseList;
     }
 
-    private List resolveOrCondition(List listResponse, int index, List oldResponseList, int id) throws ParseQuestionException {
+    private List resolveOrCondition(List listResponse, int index, List oldResponseList, int id)
+            throws ParseQuestionException {
         ListIterator it = listResponse.listIterator(index);
         boolean not = false;
         List newResponseList = new ArrayList();
@@ -777,10 +811,11 @@ public class ParseQuestion extends DefaultHandler {
             Attributes atts = element.getAttributes();
 
             if (tag.startsWith("var") && and == 0) {
-                if (tag.equals("varequal") || tag.equals("varlt") || tag.equals("varlte") || tag.equals("vargt") || tag.equals("vargte")
-                        || tag.equals("varsubstring")) {
+                if (tag.equals("varequal") || tag.equals("varlt") || tag.equals("varlte")
+                        || tag.equals("vargt") || tag.equals("vargte") || tag.equals("varsubstring")) {
                     if (!atts.getValue("respident").equals(responseId))
-                        throw new ParseQuestionException("Exercício Inválido (identificadores inválidos)");
+                        throw new ParseQuestionException(
+                                "Exercício Inválido (identificadores inválidos)");
                     String tagName = tag;
                     if (not)
                         tagName = new String("not").concat(tagName);
@@ -791,16 +826,19 @@ public class ParseQuestion extends DefaultHandler {
                     if (oldResponseList.size() != 0) {
                         Iterator oldResponseListIt = oldResponseList.iterator();
                         while (oldResponseListIt.hasNext()) {
-                            ResponseProcessing responseProcessing = (ResponseProcessing) oldResponseListIt.next();
+                            ResponseProcessing responseProcessing = (ResponseProcessing) oldResponseListIt
+                                    .next();
                             responseProcessing.getResponseConditions().add(
-                                    new ResponseCondition(tagName, element.getValue(), atts.getValue("respident")));
+                                    new ResponseCondition(tagName, element.getValue(), atts
+                                            .getValue("respident")));
                             newResponseList.add(responseProcessing);
                         }
                     } else {
                         ResponseProcessing responseProcessing = new ResponseProcessing(id);
                         responseProcessing.setResponseConditions(new ArrayList());
-                        responseProcessing.getResponseConditions()
-                                .add(new ResponseCondition(tagName, element.getValue(), atts.getValue("respident")));
+                        responseProcessing.getResponseConditions().add(
+                                new ResponseCondition(tagName, element.getValue(), atts
+                                        .getValue("respident")));
                         newResponseList.add(responseProcessing);
                     }
                 }

@@ -5,14 +5,10 @@
 
 package net.sourceforge.fenixedu.utilTests;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.StringReader;
-import java.net.MalformedURLException;
 import java.util.Calendar;
 import java.util.Vector;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -20,11 +16,12 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.DefaultHandler;
+
+import com.sun.faces.el.impl.parser.ParseException;
 
 /**
  * @author Susana Fernandes
@@ -37,28 +34,29 @@ public class ParseMetadata extends DefaultHandler {
 
     private Element current = null;
 
-    public Metadata parseMetadata(Metadata metadata, String path) throws IOException, ParserConfigurationException, SAXException {
+    public Metadata parseMetadata(Vector<Element> vector, Metadata metadata) {
+        this.vector = vector;
+        return vector2Metadata(vector, metadata);
+    }
+
+    public Vector<Element> parseMetadata(String metadataFile, String path) throws ParseException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setValidating(true);
-        SAXParser saxParser = spf.newSAXParser();
-        XMLReader reader = saxParser.getXMLReader();
-        reader.setContentHandler(this);
-        reader.setErrorHandler(this);
         try {
-            StringReader sr = new StringReader(metadata.getMetadataFile());
+            SAXParser saxParser = spf.newSAXParser();
+            XMLReader reader = saxParser.getXMLReader();
+            reader.setContentHandler(this);
+            reader.setErrorHandler(this);
+            StringReader sr = new StringReader(metadataFile);
             InputSource input = new InputSource(sr);
             MetadataResolver resolver = new MetadataResolver(path);
             reader.setEntityResolver(resolver);
             reader.parse(input);
-        } catch (MalformedURLException e) {
-            throw e;
-        } catch (FileNotFoundException e) {
-            throw e;
-        } catch (IOException e) {
-            throw e;
+        } catch (Exception e) {
+            throw new ParseException();
         }
 
-        return vector2Metadata(vector, metadata);
+        return vector;
     }
 
     public void error(SAXParseException e) throws SAXParseException {
@@ -133,7 +131,8 @@ public class ParseMetadata extends DefaultHandler {
                 author = false;
                 secondarysubject = false;
                 typicallearningtime = true;
-            } else if ((tag.equals("value")) && (difficulty == true || mainsubject == true || secondarysubject == true)) {
+            } else if ((tag.equals("value"))
+                    && (difficulty == true || mainsubject == true || secondarysubject == true)) {
                 value = true;
             } else if ((tag.equals("langstring")) && difficulty == true && value == true) {
                 metadata.setDifficulty(element.getValue());

@@ -26,7 +26,8 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.upload.FormFile;
 import org.apache.struts.util.LabelValueBean;
-import org.xml.sax.SAXParseException;
+
+import com.sun.faces.el.impl.parser.ParseException;
 
 /**
  * @author Susana Fernandes
@@ -35,16 +36,17 @@ public class InsertExerciseVariation extends Service {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    public List run(Integer executionCourseId, Integer metadataId, FormFile xmlZipFile, String path) throws FenixServiceException,
-            NotExecuteException, ExcepcaoPersistencia {
+    public List run(Integer executionCourseId, Integer metadataId, FormFile xmlZipFile, String path)
+            throws FenixServiceException, NotExecuteException, ExcepcaoPersistencia {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = (ExecutionCourse) rootDomainObject
+                .readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Metadata metadata = (Metadata) persistentObject.readByOID(Metadata.class, metadataId);
+        Metadata metadata = (Metadata) rootDomainObject.readMetadataByOID(metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -67,7 +69,7 @@ public class InsertExerciseVariation extends Service {
                 question.setXmlFile(xmlFile);
                 question.setXmlFileName(persistentQuestion.correctFileName(xmlFileName, metadataId));
                 question.setVisibility(new Boolean("true"));
-            } catch (SAXParseException e) {
+            } catch (ParseException e) {
                 badXmls.add(xmlFileName);
             } catch (ParseQuestionException e) {
                 badXmls.add(xmlFileName + e);
@@ -84,16 +86,20 @@ public class InsertExerciseVariation extends Service {
         ZipInputStream zipFile = null;
 
         try {
-            if (xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml")) {
+            if (xmlZipFile.getContentType().equals("text/xml")
+                    || xmlZipFile.getContentType().equals("application/xml")) {
                 if (xmlZipFile.getFileSize() <= FILE_SIZE_LIMIT) {
-                    xmlFilesList.add(new LabelValueBean(xmlZipFile.getFileName(), new String(xmlZipFile.getFileData(), "ISO-8859-1")));
+                    xmlFilesList.add(new LabelValueBean(xmlZipFile.getFileName(), new String(xmlZipFile
+                            .getFileData(), "ISO-8859-1")));
                 }
             } else {
                 zipFile = new ZipInputStream(xmlZipFile.getInputStream());
-                for (ZipEntry entry = zipFile.getNextEntry(); entry != null; entry = zipFile.getNextEntry()) {
+                for (ZipEntry entry = zipFile.getNextEntry(); entry != null; entry = zipFile
+                        .getNextEntry()) {
                     final StringBuilder stringBuilder = new StringBuilder();
                     final byte[] b = new byte[1000];
-                    for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder.append(new String(b, 0, readed, "ISO-8859-1"))) {
+                    for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder
+                            .append(new String(b, 0, readed, "ISO-8859-1"))) {
                         // nothing to do :o)
                     }
                     if (stringBuilder.length() <= FILE_SIZE_LIMIT) {

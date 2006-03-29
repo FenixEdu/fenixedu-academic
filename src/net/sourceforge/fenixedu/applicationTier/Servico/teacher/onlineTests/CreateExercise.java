@@ -27,76 +27,68 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestion;
  */
 public class CreateExercise extends Service {
 
-	public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
-			QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject,
-			Calendar learningTime, String level, InfoQuestion infoQuestion, String questionText,
-			String secondQuestionText, String[] options, String[] correctOptions, String[] shuffle,
-			String correctFeedbackText, String wrongFeedbackText, Boolean breakLineBeforeResponseBox,
-			Boolean breakLineAfterResponseBox, String path) throws FenixServiceException,
-			ExcepcaoPersistencia {
+    public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
+            QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject,
+            Calendar learningTime, String level, InfoQuestion infoQuestion, String questionText,
+            String secondQuestionText, String[] options, String[] correctOptions, String[] shuffle,
+            String correctFeedbackText, String wrongFeedbackText, Boolean breakLineBeforeResponseBox,
+            Boolean breakLineAfterResponseBox, String path) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
-		if (executionCourse == null) {
-			throw new InvalidArgumentsServiceException();
-		}
-		Metadata metadata = null;
-		if (metadataId == null) {
-			metadata = DomainFactory.makeMetadata(executionCourse, null, null);
-			metadata.setAuthor(author);
-			metadata.setDescription(description);
-			metadata.setDifficulty(questionDifficultyType.getTypeString());
-			metadata.setExecutionCourse(executionCourse);
-			metadata.setLearningTime(learningTime);
-			metadata.setMainSubject(mainSubject);
-			metadata.setSecondarySubject(secondarySubject);
-			metadata.setLevel(level);
-			metadata.setVisibility(new Boolean(true));
-		} else {
-			metadata = (Metadata) persistentObject.readByOID(Metadata.class,
-					metadataId);
-			if (metadata == null) {
-				throw new InvalidArgumentsServiceException();
-			}
-		}
-		IPersistentQuestion persistentQuestion = persistentSupport.getIPersistentQuestion();
-		Question question = DomainFactory.makeQuestion();
-		question.setMetadata(metadata);
-		question.setVisibility(new Boolean(true));
-		try {
-			question.setXmlFile(getQuestion(infoQuestion, questionText, secondQuestionText, options,
-					shuffle, correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
-					breakLineAfterResponseBox));
-		} catch (UnsupportedEncodingException e) {
-			throw new FenixServiceException(e);
-		}
-		final List<Question> visibleQuestions = metadata.getVisibleQuestions();
-		if (metadataId == null)
-			question.setXmlFileName("Pergunta" + visibleQuestions.size() + ".xml");
-		else
-			question.setXmlFileName(persistentQuestion.correctFileName("Pergunta"
-					+ visibleQuestions.size() + ".xml", metadataId));
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        if (executionCourse == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+        Metadata metadata = null;
+        if (metadataId == null) {
+            metadata = DomainFactory.makeMetadata(executionCourse, author, description,
+                    questionDifficultyType.getTypeString(), learningTime, mainSubject, secondarySubject,
+                    level);
+        } else {
+            metadata = (Metadata) rootDomainObject.readMetadataByOID(metadataId);
+            if (metadata == null) {
+                throw new InvalidArgumentsServiceException();
+            }
+        }
+        IPersistentQuestion persistentQuestion = persistentSupport.getIPersistentQuestion();
+        Question question = DomainFactory.makeQuestion();
+        question.setMetadata(metadata);
+        question.setVisibility(new Boolean(true));
+        try {
+            question.setXmlFile(getQuestion(infoQuestion, questionText, secondQuestionText, options,
+                    shuffle, correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
+                    breakLineAfterResponseBox));
+        } catch (UnsupportedEncodingException e) {
+            throw new FenixServiceException(e);
+        }
+        final List<Question> visibleQuestions = metadata.getVisibleQuestions();
+        if (metadataId == null)
+            question.setXmlFileName("Pergunta" + visibleQuestions.size() + ".xml");
+        else
+            question.setXmlFileName(persistentQuestion.correctFileName("Pergunta"
+                    + visibleQuestions.size() + ".xml", metadataId));
 
-		infoQuestion.setXmlFile(question.getXmlFile());
-		ParseQuestion parse = new ParseQuestion();
-		try {
-			infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, path);
-		} catch (Exception e) {
-			throw new FenixServiceException(e);
-		}
-		return true;
-	}
+        infoQuestion.setXmlFile(question.getXmlFile());
+        ParseQuestion parse = new ParseQuestion();
+        try {
+            infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, path);
+        } catch (Exception e) {
+            throw new FenixServiceException(e);
+        }
+        return true;
+    }
 
-	private String getQuestion(InfoQuestion infoQuestion, String questionText,
-			String secondQuestionText, String[] options, String[] shuffle, String correctFeedbackText,
-			String wrongFeedbackText, Boolean breakLineBeforeResponseBox,
-			Boolean breakLineAfterResponseBox) throws UnsupportedEncodingException {
-		String xmlFile = new String();
-		XMLQuestion xmlQuestion = new XMLQuestion();
-		xmlFile = new String(xmlQuestion.getXmlQuestion(questionText, secondQuestionText,
-				infoQuestion.getQuestionType(), options, shuffle,
-				infoQuestion.getResponseProcessingInstructions(), correctFeedbackText,
-				wrongFeedbackText, breakLineBeforeResponseBox, breakLineAfterResponseBox).getBytes(),
-				"ISO-8859-1");
-		return xmlFile;
-	}
+    private String getQuestion(InfoQuestion infoQuestion, String questionText,
+            String secondQuestionText, String[] options, String[] shuffle, String correctFeedbackText,
+            String wrongFeedbackText, Boolean breakLineBeforeResponseBox,
+            Boolean breakLineAfterResponseBox) throws UnsupportedEncodingException {
+        String xmlFile = new String();
+        XMLQuestion xmlQuestion = new XMLQuestion();
+        xmlFile = new String(xmlQuestion.getXmlQuestion(questionText, secondQuestionText,
+                infoQuestion.getQuestionType(), options, shuffle,
+                infoQuestion.getResponseProcessingInstructions(), correctFeedbackText,
+                wrongFeedbackText, breakLineBeforeResponseBox, breakLineAfterResponseBox).getBytes(),
+                "ISO-8859-1");
+        return xmlFile;
+    }
 }

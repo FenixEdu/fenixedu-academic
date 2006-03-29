@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.utilTests.Element;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
-
-import org.apache.struts.upload.FormFile;
 
 /**
  * @author Susana Fernandes
@@ -18,33 +18,36 @@ import org.apache.struts.upload.FormFile;
 
 public class Metadata extends Metadata_Base {
 
-    public Metadata(final ExecutionCourse executionCourse, final FormFile metadataFile, final String path) {
+    public Metadata(final ExecutionCourse executionCourse, final String author,
+            final String description, final String difficulty, final Calendar learningTime,
+            final String mainSubject, final String secondarySubject, final String level) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setVisibility(Boolean.TRUE);
         setExecutionCourse(executionCourse);
-
-        try {
-            if (metadataFile != null && metadataFile.getFileData().length != 0) {
-                parseAndSetMetadataFile(new String(metadataFile.getFileData(), "ISO-8859-1"), path);
-            }
-        } catch (final Exception ex) {
-            ex.printStackTrace();
-            throw new DomainException("failled.metadata.file.parse");
-        }
-
+        setAuthor(author);
+        setDescription(description);
+        setDifficulty(difficulty);
+        setLearningTime(learningTime);
+        setMainSubject(mainSubject);
+        setSecondarySubject(secondarySubject);
+        setLevel(level);
     }
 
-    public void parseAndSetMetadataFile(String metadataFile, String path) {
-        try {
-            if (metadataFile != null && metadataFile.length() != 0) {
+    public Metadata(final ExecutionCourse executionCourse, String file, final Vector<Element> vector) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setVisibility(Boolean.TRUE);
+        setExecutionCourse(executionCourse);
+        if (file != null) {
+            setMetadataFile(file);
+            try {
                 ParseMetadata parseMetadata = new ParseMetadata();
-                setMetadataFile(metadataFile);
-                parseMetadata.parseMetadata(this, path);
+                parseMetadata.parseMetadata(vector, this);
+            } catch (final Exception ex) {
+                ex.printStackTrace();
+                throw new DomainException("failled.metadata.file.parse");
             }
-        } catch (final Exception ex) {
-            ex.printStackTrace();
-            throw new DomainException("failled.metadata.file.parse");
         }
     }
 

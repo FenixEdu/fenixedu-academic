@@ -9,13 +9,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidMetadataException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.domain.DomainFactory;
@@ -24,12 +24,15 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.utilTests.Element;
+import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.upload.FormFile;
 import org.apache.struts.util.LabelValueBean;
-import org.xml.sax.SAXParseException;
+
+import com.sun.faces.el.impl.parser.ParseException;
 
 /**
  * @author Susana Fernandes
@@ -41,9 +44,8 @@ public class InsertExercise extends Service {
     public List<String> run(Integer executionCourseId, FormFile xmlZipFile, String path)
             throws FenixServiceException, ExcepcaoPersistencia {
         List<String> badXmls = new ArrayList<String>();
-        int xmlNumber = 0;
         String replacedPath = path.replace('\\', '/');
-
+        boolean createAny = false;
         ExecutionCourse executionCourse = (ExecutionCourse) rootDomainObject
                 .readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
@@ -52,55 +54,68 @@ public class InsertExercise extends Service {
 
         Collection<List<LabelValueBean>> allXmlList = getListOfExercisesList(xmlZipFile);
         for (List<LabelValueBean> xmlFilesList : allXmlList) {
+            List<Question> questionList = new ArrayList<Question>();
+            List<LabelValueBean> metadatas = new ArrayList<LabelValueBean>();
             if (xmlFilesList == null || xmlFilesList.size() == 0) {
                 throw new InvalidXMLFilesException();
             }
-
-            Metadata metadata = null;
-            try {
-                metadata = DomainFactory.makeMetadata(executionCourse, null, replacedPath);
-            } catch (DomainException e) {
-                throw new InvalidMetadataException();
-            }
-
             for (LabelValueBean labelValueBean : xmlFilesList) {
                 String xmlFile = labelValueBean.getValue();
                 String xmlFileName = labelValueBean.getLabel();
-
                 try {
                     ParseQuestion parseQuestion = new ParseQuestion();
-
                     parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), replacedPath);
                     Question question = DomainFactory.makeQuestion();
-                    question.setMetadata(metadata);
                     question.setXmlFile(xmlFile);
                     question.setXmlFileName(xmlFileName);
                     question.setVisibility(new Boolean("true"));
-                    xmlNumber++;
+                    questionList.add(question);
                 } catch (DomainException domainException) {
                     throw domainException;
-                } catch (SAXParseException e) {
-                    try {
-                        metadata.parseAndSetMetadataFile(xmlFile, replacedPath);
-                    } catch (DomainException e1) {
-                        badXmls.add(xmlFileName);
-                    }
+                } catch (ParseException e) {
+                    metadatas.add(labelValueBean);
                 } catch (ParseQuestionException e) {
                     badXmls.add(xmlFileName + e);
-                } catch (Exception e) {
-                    badXmls.add(xmlFileName);
                 }
             }
+
+            if (questionList.size() != 0) {
+                Metadata metadata = null;
+                for (LabelValueBean labelValueBean : metadatas) {
+                    String xmlFile = labelValueBean.getValue();
+                    String xmlFileName = labelValueBean.getLabel();
+                    ParseMetadata parse = new ParseMetadata();
+                    try {
+                        Vector<Element> vector = parse.parseMetadata(xmlFile, path);
+                        if (metadata == null) {
+                            metadata = DomainFactory.makeMetadata(executionCourse, xmlFile, vector);
+                        } else {
+                            badXmls.add(xmlFileName
+                                    + ": Já foi assumido outro ficheiro como ficheiro de metadata.");
+                        }
+                    } catch (ParseException e) {
+                        badXmls.add(xmlFileName);
+                    }
+                }
+                if (metadata == null) {
+                    metadata = DomainFactory.makeMetadata(executionCourse, null, null);
+                }
+                metadata.getQuestions().addAll(questionList);
+                createAny = true;
+            } else {
+                for (LabelValueBean labelValueBean : metadatas) {
+                    badXmls.add(labelValueBean.getLabel());
+                }
+            }
+
         }
-        if (xmlNumber == 0) {
+        if (!createAny) {
             throw new InvalidXMLFilesException();
         }
         return badXmls;
     }
 
     private Collection<List<LabelValueBean>> getListOfExercisesList(FormFile xmlZipFile) {
-        List<List<LabelValueBean>> allXmlList = new ArrayList<List<LabelValueBean>>();
-
         Map<String, List<LabelValueBean>> xmlListMap = new HashMap<String, List<LabelValueBean>>();
         try {
             if (xmlZipFile.getContentType().equals("application/x-zip-compressed")
@@ -111,7 +126,7 @@ public class InsertExercise extends Service {
                     if (entry.isDirectory()) {
                         throw new RuntimeException("unsupported.if.this.happens.rethink");
                     }
-                    final int posSlash = entry.getName().indexOf('/');
+                    final int posSlash = entry.getName().lastIndexOf('/');
                     final List<LabelValueBean> labelValueBeans;
                     final String dirName = (posSlash > 0) ? entry.getName().substring(0, posSlash) : "";
                     if (xmlListMap.containsKey(dirName)) {
@@ -123,11 +138,13 @@ public class InsertExercise extends Service {
 
                     final StringBuilder stringBuilder = new StringBuilder();
                     final byte[] b = new byte[1000];
-                    for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder .append(new String(b, 0, readed, "ISO-8859-1"))) {
-                            // nothing to do :o)
+                    for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder
+                            .append(new String(b, 0, readed, "ISO-8859-1"))) {
+                        // nothing to do :o)
                     }
                     if (stringBuilder.length() <= FILE_SIZE_LIMIT) {
-                        labelValueBeans.add(new LabelValueBean(entry.getName(), stringBuilder.toString()));
+                        labelValueBeans
+                                .add(new LabelValueBean(entry.getName(), stringBuilder.toString()));
                     } else {
                         labelValueBeans.add(new LabelValueBean(entry.getName(), null));
                     }
