@@ -19,12 +19,6 @@ import net.sourceforge.fenixedu.util.StudentState;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-/**
- * @author dcs-rjao
- * 
- * 24/Mar/2003
- */
-
 public class Student extends Student_Base {
 
     private transient Double approvationRatio;
@@ -55,6 +49,10 @@ public class Student extends Student_Base {
         setFlunked(Boolean.FALSE);
         setRequestedChangeDegree(Boolean.FALSE);
         setRequestedChangeBranch(Boolean.FALSE);
+    }
+    
+    public void delete() {
+        super.deleteDomainObject();
     }
 
     public StudentCurricularPlan getActiveStudentCurricularPlan() {
@@ -320,4 +318,5 @@ public class Student extends Student_Base {
         }
         return null;
     }
+
 }
