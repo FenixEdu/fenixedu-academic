@@ -37,7 +37,12 @@
 				<bean:write name="homepageURL"/>
 		</logic:notPresent>
 		<logic:present name="UserView" property="person.homepage.activated">
+			<logic:equal name="UserView" property="person.homepage.activated" value="true">
 				<html:link href="<%= homepageURL %>"><bean:write name="homepageURL"/></html:link>
+			</logic:equal>
+			<logic:equal name="UserView" property="person.homepage.activated" value="false">
+				<bean:write name="homepageURL"/>
+			</logic:equal>
 		</logic:present>
 	</logic:present>
 
@@ -95,8 +100,13 @@
 		<logic:present name="UserView" property="person.employee.currentContract">
 			<bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>
 			<html:checkbox property="showCurrentExecutionCourses" value="true"/>
+			<logic:iterate id="executionCourse" name="UserView" property="person.homepage.currentExecutionCourses" length="1">
+				<bean:write name="executionCourse" property="nome"/>
+			</logic:iterate>
+			<logic:iterate id="executionCourse" name="UserView" property="person.homepage.currentExecutionCourses" offset="1">
+				, <bean:write name="executionCourse" property="nome"/>
+			</logic:iterate>
 			<br/>
-			
 		</logic:present>
 	</logic:present>
 <!--
@@ -108,6 +118,7 @@
 	<html:submit><bean:message key="person.homepage.submit" bundle="HOMEPAGE_RESOURCES"/></html:submit>
 </html:form>
 
+<!--
 <br/>
 <br/>
 
@@ -131,3 +142,4 @@
 		</fr:layout>
 	</fr:edit>
 </logic:present>
+-->
