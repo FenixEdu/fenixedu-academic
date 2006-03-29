@@ -17,6 +17,13 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/exam_map.css" />
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/gesdis-print.css" />
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/dotist_print.css" />
+	<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+	<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
+
+	<bean:define id="linkRSS" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %><%= "/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%></bean:define>
+	<bean:define id="executionCourseName" name="siteView" property="commonComponent.executionCourse.nome"/>
+
+<link rel="alternate" type="application/rss+xml" title="<%= executionCourseName%>" href="<%= linkRSS%>">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
 
 	

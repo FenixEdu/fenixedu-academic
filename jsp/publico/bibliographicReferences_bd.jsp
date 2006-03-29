@@ -18,7 +18,7 @@
 		<h2><bean:message key="message.recommendedBibliography"/></h2>
 		<logic:iterate id="bibliographicReference" name="component" property="bibliographicReferences">
 			<logic:notEqual name="bibliographicReference" property="optional" value="true">
-				<div id="info-lst">
+				<div class="info-lst">
 					<table cellpadding="2" cellspacing="2">
 						<tr>
 							<td width="70px"><strong><bean:message key="label.bibliography.title" /></strong></td>
@@ -53,7 +53,7 @@
 		<h2><bean:message key="message.optionalBibliography"/></h2>
          <logic:iterate id="bibliographicReference" name="component" property="bibliographicReferences">
             <logic:notEqual name="bibliographicReference" property="optional" value="false">
-				<div id="info-lst">
+				<div class="info-lst">
 					<table cellpadding="1" cellspacing="2">
 						<tr>
 							<td width="70px"><strong><bean:message key="label.bibliography.title" /></strong></td>

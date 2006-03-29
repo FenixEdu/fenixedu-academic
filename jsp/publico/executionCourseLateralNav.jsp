@@ -48,10 +48,35 @@
 		</logic:notPresent>		
 	</logic:notEmpty>
 	
+	<li>
+	<bean:define id="imageURL" type="java.lang.String">
+		background: url(<%= request.getContextPath() %>/images/rss_ico.gif) 10px 3px no-repeat; padding-left: 32px;
+	</bean:define>
+	<html:link page="<%= "/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>" style="<%=imageURL%>">
+	<bean:message  key="link.announcements"/>
+	</html:link>
+	</li>
+	<%--
+	<a href="<%= "/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>" style="background: url(<%= request.getContextPath() %>/images/rss_ico.gif) 10px 3px no-repeat; padding-left: 32px;"><bean:message  key="link.announcements"/></a>
+	<html:link page="<%= "/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>">
+	background: url(<%= request.getContextPath() %>/images/rss_ico.gif) 0px 10px no-repeat;
+	<img src="<%= request.getContextPath() %>/images/rss_ico.gif"/>
+	<bean:message  key="link.announcements"/>
+	</html:link>
+	--%>
+	
+	
 	<logic:notEmpty name="component" property="mail" >	
 		<bean:define id="siteMail" name="component" property="mail" />
 		<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>">
 			<div class="email"><p><bean:write name="siteMail" /></p></div>
 		</html:link>
 	</logic:notEmpty>
+	
+	
 </ul>
+
+
+
+	
+	

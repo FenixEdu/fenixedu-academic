@@ -755,6 +755,13 @@
     		<forward name="not-found-homepage" path="not-found-homepage"/>
 		</action>
 
+	<!-- =========== RSS ======================== -->
+	<action path="/announcementsRSS"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.publico.rss.GenerateAnnoucementsRSS"
+    		>
+	</action>
+
+
      </action-mappings>     
     
     <!-- ========== Controller Configuration ================================ -->
