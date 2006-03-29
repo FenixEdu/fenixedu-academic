@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.homepage;
 
+import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -14,6 +17,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 public class Homepage extends Homepage_Base {
+
+	public static final Comparator HOMEPAGE_COMPARATOR_BY_NAME = new BeanComparator("name");
 
 	public Homepage() {
 		super();

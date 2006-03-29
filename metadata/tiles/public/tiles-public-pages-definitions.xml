@@ -150,6 +150,9 @@
 	<definition name="view-homepage" extends="definition.public.homepage">
 		<put name="body" value="/publico/homepage/home.jsp"/>
 	</definition>	
+	<definition name="list-homepages" extends="definition.public.homepage">
+		<put name="body" value="/publico/homepage/list.jsp"/>
+	</definition>	
 	<definition name="not-found-homepage" extends="definition.public.homepage">
 		<put name="body" value="/publico/homepage/notFound.jsp"/>
 	</definition>	

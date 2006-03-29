@@ -71,6 +71,11 @@
 	    column="SHOW_CATEGORY"
 	    jdbc-type="BIT"
 	/>
+	<field-descriptor
+	    name="showCurrentExecutionCourses"
+	    column="SHOW_CURRENT_EXECUTION_COURSES"
+	    jdbc-type="BIT"
+	/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.homepage.Blog" table="BLOG">

@@ -752,6 +752,7 @@
     			parameter="method"
     			>
     		<forward name="view-homepage" path="view-homepage"/>
+    		<forward name="list-homepages" path="list-homepages"/>
     		<forward name="not-found-homepage" path="not-found-homepage"/>
 		</action>
 

@@ -5,7 +5,7 @@
 
 <ul class="treemenu">
 	<li>
-		<html:link page="/l1">
+		<html:link page="/viewHomepage.do?method=list">
 			Homepage listings
 		</html:link>
     </li>
