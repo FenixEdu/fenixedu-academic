@@ -85,12 +85,12 @@ public class CreateMasterDegreeCandidate extends Service {
 
         if (person == null) {            
             //Generate Person Username
-            String username = MasterDegreeCandidate.generateUsernameForNewCandidate(
-                    masterDegreeCandidate, persons);
+//            String username = MasterDegreeCandidate.generateUsernameForNewCandidate(
+//                    masterDegreeCandidate, persons);
             
             // Create the new Person
             person = DomainFactory.makePerson(name, identificationDocumentNumber,
-                    identificationDocumentType, Gender.MALE, username);          
+                    identificationDocumentType, Gender.MALE, "T" + System.currentTimeMillis());          
             
             // Give the Person Role
             person.getPersonRoles().add(personRole);
