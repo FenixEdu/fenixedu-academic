@@ -18,7 +18,7 @@ public class Patent extends Patent_Base {
  
     public Patent(MultiLanguageString title, MultiLanguageString description, Integer patentNumber,
     		PatentType patentType, PatentStatus patentStatus, Partial registrationDate, Partial approvalDate, 
-    		Country country, String local, Integer numberPages, PatentFormat format, String language, String url,
+    		Country country, String local, Integer numberPages, FormatType format, String language, String url,
     	    List<Person> authors) {
     	this();
     	
@@ -48,7 +48,7 @@ public class Patent extends Patent_Base {
     
     public void edit(MultiLanguageString title, MultiLanguageString description, Integer patentNumber,
     		PatentType patentType, PatentStatus patentStatus, Partial registrationDate, Partial approvalDate, 
-    		Country country, String local, Integer numberPages, PatentFormat format, String language, String url,
+    		Country country, String local, Integer numberPages, FormatType format, String language, String url,
     	    List<Person> authors) {
     	
     	if (title == null || patentType == null || patentStatus == null || registrationDate == null || approvalDate == null ||
