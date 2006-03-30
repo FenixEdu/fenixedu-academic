@@ -27,7 +27,7 @@ public class RootDomainObject extends RootDomainObject_Base {
     public static RootDomainObject getInstance() {
         if (instance == null) {
             init();
-        } 
+        }
         return instance;
     }
 

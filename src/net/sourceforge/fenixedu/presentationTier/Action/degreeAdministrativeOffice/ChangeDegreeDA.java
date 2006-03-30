@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +27,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -206,6 +208,14 @@ public class ChangeDegreeDA extends FenixDispatchAction {
         final String[] enrolementsToDelete = (String[]) actionForm.get("enrolementsToDelete");
         final String newStudentCurricularPlanStartDate = (String) actionForm.get("newStudentCurricularPlanStartDate");
 
+        if (!validDate(newStudentCurricularPlanStartDate)) {
+            final ActionMessages actionMessages = new ActionMessages();
+            final ActionMessage actionMessage = new ActionMessage("error.invalid.date");
+            actionMessages.add(ActionMessages.GLOBAL_MESSAGE, actionMessage);
+            saveMessages(request, actionMessages);
+            return prepare(mapping, form, request, response);
+        }
+
         final Set<String> enrolements = new HashSet<String>();
 
         final Set<Integer> enrolementsToTransferIds = new HashSet<Integer>(enrolementsToTransfer.length);
@@ -253,6 +263,10 @@ public class ChangeDegreeDA extends FenixDispatchAction {
         ServiceUtils.executeService(userView, "ChangeDegree", args);
 
         return mapping.findForward("showSucessPage");
+    }
+
+    private boolean validDate(final String date) {
+        return date != null && date.length() == 10 && date.charAt(2) == '/' && date.charAt(5) == '/';
     }
 
 }

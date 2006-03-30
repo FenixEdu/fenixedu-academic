@@ -453,5 +453,9 @@
 		<slot name="about"/>
 	</schema>
 
+	<schema name="student.curricular.plan.start.date" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan">
+		<slot name="startDate"/>
+	</schema>
+
 	&researcher;
 </schemas>
