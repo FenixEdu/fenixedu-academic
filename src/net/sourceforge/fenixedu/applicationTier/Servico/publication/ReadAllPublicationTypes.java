@@ -8,15 +8,11 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationTy
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationTypeWithAttributesAndSubtypes;
 import net.sourceforge.fenixedu.domain.research.result.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 
 public class ReadAllPublicationTypes extends Service {
 
     public List<InfoPublicationType> run(String user) throws ExcepcaoPersistencia {
-        IPersistentPublicationType persistentPublicationType = persistentSupport
-                .getIPersistentPublicationType();
-        
-        List<PublicationType> publicationTypeList = (List<PublicationType>) persistentPublicationType.readAll(PublicationType.class);
+        List<PublicationType> publicationTypeList = rootDomainObject.getPublicationTypes();
 
         List<InfoPublicationType> result = new ArrayList<InfoPublicationType>();
         for (PublicationType publicationType : publicationTypeList) {
@@ -25,4 +21,5 @@ public class ReadAllPublicationTypes extends Service {
 
         return result;
     }
+    
 }

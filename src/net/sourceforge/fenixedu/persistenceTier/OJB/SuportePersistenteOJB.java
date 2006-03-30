@@ -54,7 +54,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestQuestionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAttributeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationFormatOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTeacherOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTypeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.sms.SentSmsOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OldPublicationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.OrientationOJB;
@@ -94,7 +93,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuest
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
@@ -416,10 +414,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentSentSms getIPersistentSentSms() {
         return new SentSmsOJB();
-    }
-
-    public IPersistentPublicationType getIPersistentPublicationType() {
-        return new PublicationTypeOJB();
     }
 
     public IPersistentPublicationAttribute getIPersistentPublicationAttribute() {
