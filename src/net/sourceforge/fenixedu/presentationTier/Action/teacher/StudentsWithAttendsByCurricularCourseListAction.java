@@ -6,10 +6,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +18,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -103,9 +99,6 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
             
             infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
             
-            List alreadyInsertedStudents = new ArrayList();
-            List attendsWithoutDuplicatedStudents = new ArrayList();
-            
             Collections.sort(infoDTO.getInfoAttends(), new BeanComparator("infoAttends.aluno.number"));
 
         } catch (FenixServiceException e) {
@@ -121,10 +114,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         } else {
             request.setAttribute("viewPhoto", Boolean.FALSE);
         }
-        
-        
-
-        
+                
         String cbCoursesString[] = new String[checkedCoursesIds.length];
         for (int i = 0; i < checkedCoursesIds.length; i++){
             cbCoursesString[i] = checkedCoursesIds[i].toString();
