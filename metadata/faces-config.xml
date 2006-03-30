@@ -568,6 +568,18 @@
 			<from-outcome>success</from-outcome>
 			<to-view-id>/manager/degree/insertExecutionDegreesSuccess.jsp</to-view-id>
 		</navigation-case>			
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/manager/degree/insertExecutionDegreesSuccess.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/manager/degree/insertExecutionDegreesSuccess.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/manager/degree/chooseDegreeType.jsp</to-view-id>
+		</navigation-case>			
 	</navigation-rule>
 	
 	<!-- Navigation rules from department member subapplication -->

@@ -625,6 +625,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getDegree().getPresentationName() + " " + getName();
     }
     
+    public boolean hasAnyExecutionDegreeFor(ExecutionYear executionYear) {
+        for (final ExecutionDegree executionDegree : this.getExecutionDegreesSet()) {
+            if (executionDegree.getExecutionYear() == executionYear) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     
     // -------------------------------------------------------------
     // read static methods 
@@ -651,5 +660,4 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     	}
     	return result;
     }
-
 }

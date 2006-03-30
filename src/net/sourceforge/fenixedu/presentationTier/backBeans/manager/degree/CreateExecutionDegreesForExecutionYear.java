@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.manager.degree;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.component.UISelectItems;
@@ -9,10 +10,13 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.domain.Campus;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Data;
@@ -25,83 +29,48 @@ import net.sourceforge.fenixedu.util.Data;
 public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
     private String chosenDegreeType;
-
     private Integer[] choosenDegreeCurricularPlansIDs;
-
-    // private UISelectMany selectMany;
-
+    private Integer[] choosenBolonhaDegreeCurricularPlansIDs;
     private UISelectItems degreeCurricularPlansSelectItems;
-
+    public UISelectItems bolonhaDegreeCurricularPlansSelectItems;
     private Integer choosenExecutionYearID;
-
     private String campus;
-
     private Boolean temporaryExamMap;
-
     private Integer lessonSeason1BeginDay;
-
     private Integer lessonSeason1BeginMonth;
-
     private Integer lessonSeason1BeginYear;
-
     private Integer lessonSeason1EndDay;
-
     private Integer lessonSeason1EndMonth;
-
     private Integer lessonSeason1EndYear;
-
     private Integer lessonSeason2BeginDay;
-
     private Integer lessonSeason2BeginMonth;
-
     private Integer lessonSeason2BeginYear;
-
     private Integer lessonSeason2EndDay;
-
     private Integer lessonSeason2EndMonth;
-
     private Integer lessonSeason2EndYear;
-
     private Integer examsSeason1BeginDay;
-
     private Integer examsSeason1BeginMonth;
-
     private Integer examsSeason1BeginYear;
-
     private Integer examsSeason1EndDay;
-
     private Integer examsSeason1EndMonth;
-
     private Integer examsSeason1EndYear;
-
     private Integer examsSeason2BeginDay;
-
     private Integer examsSeason2BeginMonth;
-
     private Integer examsSeason2BeginYear;
-
     private Integer examsSeason2EndDay;
-
     private Integer examsSeason2EndMonth;
-
     private Integer examsSeason2EndYear;
 
     public CreateExecutionDegreesForExecutionYear() {
         super();
-        // this.selectMany = (UISelectMany)
-        // FacesContext.getCurrentInstance().getApplication()
-        // .createComponent(UISelectMany.COMPONENT_TYPE);
-
     }
 
-    public List getDegreeTypes() {
-
-        List<SelectItem> degreeTypes = new ArrayList<SelectItem>(DegreeType.values().length);
-        for (DegreeType degreeType : DegreeType.values()) {
-            degreeTypes.add(new SelectItem(degreeType.name(), degreeType.name()));
+    public List<SelectItem> getDegreeTypes() {
+        final List<SelectItem> result = new ArrayList<SelectItem>(BolonhaDegreeType.values().length);
+        for (final BolonhaDegreeType bolonhaDegreeType : BolonhaDegreeType.values()) {
+            result.add(new SelectItem(bolonhaDegreeType.name(), bolonhaDegreeType.name()));
         }
-
-        return degreeTypes;
+        return result;
     }
 
     public String getChosenDegreeType() {
@@ -112,61 +81,97 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
         this.chosenDegreeType = chosenDegreeType;
     }
 
-    public UISelectItems getDegreeCurricularPlansSelectItems() throws FenixFilterException,
-            FenixServiceException {
+    public UISelectItems getDegreeCurricularPlansSelectItems() {
 
         if (this.degreeCurricularPlansSelectItems == null) {
 
-            DegreeType degreeType = (getChosenDegreeType() != null) ? DegreeType
-                    .valueOf(getChosenDegreeType()) : null;
-            Object[] args = { degreeType };
-            List degreeCurricularPlans = (List) ServiceUtils.executeService(getUserView(),
-                    "ReadActiveDegreeCurricularPlansByDegreeType", args);
+            final DegreeType degreeType = getDegreeType(getChosenDegreeType());
 
-            List<SelectItem> items = new ArrayList<SelectItem>(degreeCurricularPlans.size());
-            for (InfoDegreeCurricularPlan degreeCurricularPlan : (List<InfoDegreeCurricularPlan>) degreeCurricularPlans) {
-                String label = degreeCurricularPlan.getInfoDegree().getNome() + " - "
-                        + degreeCurricularPlan.getName();
-                items.add(new SelectItem(degreeCurricularPlan.getIdInternal(), label));
+            final List<SelectItem> result;
+            if (degreeType == null) {
+                result = Collections.EMPTY_LIST;
+            } else {
+                result = new ArrayList<SelectItem>();
+                for (final DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan
+                        .readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE)) {
+
+                    result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), degreeCurricularPlan
+                            .getDegree().getName()
+                            + " - " + degreeCurricularPlan.getName()));
+
+                }
             }
-            
             this.degreeCurricularPlansSelectItems = new UISelectItems();
-            this.degreeCurricularPlansSelectItems.setValue(items);
+            this.degreeCurricularPlansSelectItems.setValue(result);
         }
-        
+
         return this.degreeCurricularPlansSelectItems;
     }
 
     public void setDegreeCurricularPlansSelectItems(UISelectItems degreeCurricularPlansSelectItems) {
-
         this.degreeCurricularPlansSelectItems = degreeCurricularPlansSelectItems;
     }
 
+    public UISelectItems getBolonhaDegreeCurricularPlansSelectItems() {
+        if (this.bolonhaDegreeCurricularPlansSelectItems == null) {
+
+            final BolonhaDegreeType bolonhaDegreeType = BolonhaDegreeType.valueOf(getChosenDegreeType());
+            final List<SelectItem> result = new ArrayList<SelectItem>();
+            for (final DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
+                    .getDegreeCurricularPlans()) { // Active? (for now doesn't
+                                                    // exist in BolonhaDegree)
+                if (degreeCurricularPlan.getDegree().isBolonhaDegree()
+                        && degreeCurricularPlan.getDegree().getBolonhaDegreeType() == bolonhaDegreeType) {
+                    result.add((new SelectItem(degreeCurricularPlan.getIdInternal(),
+                            degreeCurricularPlan.getDegree().getName() + " - "
+                                    + degreeCurricularPlan.getName())));
+                }
+            }
+
+            this.bolonhaDegreeCurricularPlansSelectItems = new UISelectItems();
+            this.bolonhaDegreeCurricularPlansSelectItems.setValue(result);
+        }
+        return this.bolonhaDegreeCurricularPlansSelectItems;
+    }
+    
+    public void setBolonhaDegreeCurricularPlansSelectItems(UISelectItems bolonhaDegreeCurricularPlansSelectItems) {
+        this.bolonhaDegreeCurricularPlansSelectItems = bolonhaDegreeCurricularPlansSelectItems;
+    }
+
+    private DegreeType getDegreeType(final String chosenDegreeType) {
+        final BolonhaDegreeType bolonhaDegreeType = BolonhaDegreeType.valueOf(chosenDegreeType);
+
+        switch (bolonhaDegreeType) {
+
+        case DEGREE:
+            return DegreeType.DEGREE;
+
+        case MASTER_DEGREE:
+            return DegreeType.MASTER_DEGREE;
+
+        default:
+            break;
+        }
+        return null;
+    }
+
     public List getExecutionYears() throws FenixFilterException, FenixServiceException {
-
-        List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(
-                getUserView(), "ReadNotClosedExecutionYears", null);
-
-        List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
-        for (InfoExecutionYear executionYear : executionYears) {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
             result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
         }
-
-        setChoosenExecutionYearID(executionYears.get(executionYears.size() - 1).getIdInternal());
-
+        if (result.size() > 0) {
+            setChoosenExecutionYearID((Integer) result.get(result.size() - 1).getValue());
+        }
         return result;
     }
 
     public List getAllCampus() throws FenixFilterException, FenixServiceException {
-
-        List<InfoCampus> allCampus = (List<InfoCampus>) ServiceUtils.executeService(getUserView(),
-                "ReadAllCampus", null);
-
-        List<SelectItem> result = new ArrayList<SelectItem>(allCampus.size());
-        for (InfoCampus campus : allCampus) {
+        final List<SelectItem> result = new ArrayList<SelectItem>(RootDomainObject.getInstance()
+                .getCampussCount());
+        for (final Campus campus : RootDomainObject.getInstance().getCampuss()) {
             result.add(new SelectItem(campus.getName(), campus.getName()));
         }
-
         return result;
     }
 
@@ -204,8 +209,9 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
         examsSeason2EndDate.set(getExamsSeason2EndYear(), getExamsSeason2EndMonth(),
                 getExamsSeason2EndDay());
 
-        Object[] args = { getChoosenDegreeCurricularPlansIDs(), getChoosenExecutionYearID(),
-                getCampus(), getTemporaryExamMap(), lessonSeason1BeginDate, lessonSeason1EndDate,
+        Object[] args = { getChoosenDegreeCurricularPlansIDs(),
+                getChoosenBolonhaDegreeCurricularPlansIDs(), getChoosenExecutionYearID(), getCampus(),
+                getTemporaryExamMap(), lessonSeason1BeginDate, lessonSeason1EndDate,
                 lessonSeason2BeginDate, lessonSeason2EndDate, examsSeason1BeginDate,
                 examsSeason1EndDate, examsSeason2BeginDate, examsSeason2EndDate };
 
@@ -232,6 +238,15 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
     public void setChoosenDegreeCurricularPlansIDs(Integer[] choosenDegreeCurricularPlansIDs) {
         this.choosenDegreeCurricularPlansIDs = choosenDegreeCurricularPlansIDs;
+    }
+
+    public Integer[] getChoosenBolonhaDegreeCurricularPlansIDs() {
+        return choosenBolonhaDegreeCurricularPlansIDs;
+    }
+
+    public void setChoosenBolonhaDegreeCurricularPlansIDs(
+            Integer[] choosenBolonhaDegreeCurricularPlansIDs) {
+        this.choosenBolonhaDegreeCurricularPlansIDs = choosenBolonhaDegreeCurricularPlansIDs;
     }
 
     public Integer getChoosenExecutionYearID() {
@@ -449,26 +464,5 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     public void setTemporaryExamMap(Boolean temporaryExamMap) {
         this.temporaryExamMap = temporaryExamMap;
     }
-
-    // public UISelectMany getSelectMany() {
-    //        
-    // try {
-    // UISelectItems selectItems = new UISelectItems();
-    // selectItems.setValue(getDegreeCurricularPlans());
-    // selectItems.setId("dcps");
-    // this.selectMany.getChildren().clear();
-    // this.selectMany.getChildren().add(selectItems);
-    // } catch (FenixFilterException e) {
-    // e.printStackTrace();
-    // } catch (FenixServiceException e) {
-    // e.printStackTrace();
-    // }
-    //        
-    // return selectMany;
-    // }
-    //
-    // public void setSelectMany(UISelectMany selectMany) {
-    // this.selectMany = selectMany;
-    // }
 
 }

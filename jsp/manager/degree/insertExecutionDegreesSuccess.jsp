@@ -3,8 +3,12 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/ManagerResources" var="managerResources"/>
 
 	<h:outputText value="Os cursos de execução foram criados!" style="text-align:center; font:bold;" />
+	
+	<br/><br/>
+	<h:commandButton action="back" immediate="true" value="#{managerResources['label.return']}" />
 	
 </ft:tilesView>
 

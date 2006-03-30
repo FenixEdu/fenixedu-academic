@@ -260,6 +260,10 @@ public class Degree extends Degree_Base {
 		}
     	return result;
     }
+    
+    public String getName() {
+        return this.getNome();
+    }
 
     
     // -------------------------------------------------------------

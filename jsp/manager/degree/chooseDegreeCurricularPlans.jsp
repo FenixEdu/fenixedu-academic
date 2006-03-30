@@ -3,37 +3,45 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
-
+	<f:loadBundle basename="resources/ManagerResources" var="managerResources"/>
 	<h:form>
 		<h:inputHidden value="#{createExecutionDegrees.chosenDegreeType}" />
 						
-		<h:outputText value="Escolha o(s) Plano(s) Curricular(es):" />:
+		<h:outputText value="<strong>Escolha o(s) Plano(s) Curricular(es) Antigos:</strong>" escape="false" />
 		<h:selectManyCheckbox value="#{createExecutionDegrees.choosenDegreeCurricularPlansIDs}" layout="pageDirection" >
 			<f:selectItems binding="#{createExecutionDegrees.degreeCurricularPlansSelectItems}" />
 		</h:selectManyCheckbox>
-
-		<p/>
 		
+		<br/>
+		
+		<h:outputText value="<strong>Escolha o(s) Plano(s) Curricular(es) Novos:</strong>" escape="false" />
+		<h:selectManyCheckbox value="#{createExecutionDegrees.choosenBolonhaDegreeCurricularPlansIDs}" layout="pageDirection" >
+			<f:selectItems binding="#{createExecutionDegrees.bolonhaDegreeCurricularPlansSelectItems}" />
+		</h:selectManyCheckbox>
+
+		<br/>
+		
+		<p>
 		<h:panelGrid columns="2">
-			<h:outputText value="Ano lectivo de execução:" />
+			<h:outputText value="<strong>Ano lectivo de execução:</strong>" escape="false" />
 			<h:selectOneMenu value="#{createExecutionDegrees.choosenExecutionYearID}">
 				<f:selectItems value="#{createExecutionDegrees.executionYears}" />
 			</h:selectOneMenu>
 						
-			<h:outputText value="Campus:" />
+			<h:outputText value="<strong>Campus:</strong>" escape="false" />
 			<h:selectOneMenu value="#{createExecutionDegrees.campus}" >
 				<f:selectItems value="#{createExecutionDegrees.allCampus}" />
 			</h:selectOneMenu>
 				
-			<h:outputText value="Mapa de exames temporário:" />
+			<h:outputText value="<strong>Mapa de exames temporário:<strong>" escape="false" />
 			<h:selectBooleanCheckbox value="#{createExecutionDegrees.temporaryExamMap}" />		
 		</h:panelGrid>
-						
 		<p/>
 		
+		<br/>
+		<p>
 		<h:panelGrid columns="12">
-		 
-		 	<h:outputText value="Periodo Aulas 1º Semestre:" />
+		 	<h:outputText value="<strong>Periodo Aulas 1º Semestre:</strong>" escape="false"/>
 			<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason1BeginDay}">
 				<f:selectItems value="#{createExecutionDegrees.days}" />
 			</h:selectOneMenu>
@@ -58,7 +66,7 @@
 				<f:selectItems value="#{createExecutionDegrees.years}" />
 			</h:selectOneMenu>
 			
-		 	<h:outputText value="Periodo Exames 1º Semestre:" />
+		 	<h:outputText value="<strong>Periodo Exames 1º Semestre:</strong>" escape="false"/>
 			<h:selectOneMenu value="#{createExecutionDegrees.examsSeason1BeginDay}">
 				<f:selectItems value="#{createExecutionDegrees.days}" />
 			</h:selectOneMenu>
@@ -83,7 +91,7 @@
 				<f:selectItems value="#{createExecutionDegrees.years}" />
 			</h:selectOneMenu>					
 		
-		 	<h:outputText value="Periodo Aulas 2º Semestre:" />
+		 	<h:outputText value="<strong>Periodo Aulas 2º Semestre:<strong>" escape="false" />
 			<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2BeginDay}">
 				<f:selectItems value="#{createExecutionDegrees.days}" />
 			</h:selectOneMenu>
@@ -108,7 +116,7 @@
 				<f:selectItems value="#{createExecutionDegrees.years}" />
 			</h:selectOneMenu>
 		
-		 	<h:outputText value="Periodo Exames 2º Semestre:" />
+		 	<h:outputText value="<strong>Periodo Exames 2º Semestre:</strong>" escape="false" />
 			<h:selectOneMenu value="#{createExecutionDegrees.examsSeason2BeginDay}">
 				<f:selectItems value="#{createExecutionDegrees.days}" />
 			</h:selectOneMenu>
@@ -132,13 +140,11 @@
 			<h:selectOneMenu value="#{createExecutionDegrees.examsSeason2EndYear}">
 				<f:selectItems value="#{createExecutionDegrees.years}" />
 			</h:selectOneMenu>	
-					
 		</h:panelGrid>
-		
 		<p/>
 			
-		<h:commandButton action="#{createExecutionDegrees.createExecutionDegrees}" value="Criar" />
-
+		<h:commandButton action="#{createExecutionDegrees.createExecutionDegrees}" value="#{managerResources['label.create']}"
+				styleClass="inputbutton"/>
 	</h:form>
 
 </ft:tilesView>

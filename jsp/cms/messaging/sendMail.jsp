@@ -25,7 +25,7 @@
 	<%
 	java.util.Map parameters =  request.getParameterMap();
 	StringBuffer hiddenField = new StringBuffer();
-	for(Object key: parameters.keySet())
+	for(Object key : parameters.keySet())
 	{
 		if (!key.equals("method") && !key.equals("returnURL") && !key.equals("group") && key instanceof String)
 		{

@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Campus;
@@ -19,7 +21,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CreateExecutionDegreesForExecutionYear extends Service {
 
-    public void run(final Integer[] degreeCurricularPlansIDs, final Integer executionYearID,
+    public void run(final Integer[] degreeCurricularPlansIDs,
+            final Integer[] bolonhaDegreeCurricularPlansIDs, final Integer executionYearID,
             final String campusName, final Boolean temporaryExamMap,
             final Calendar lessonSeason1BeginDate, final Calendar lessonSeason1EndDate,
             final Calendar lessonSeason2BeginDate, final Calendar lessonSeason2EndDate,
@@ -27,9 +30,7 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
             final Calendar examsSeason2BeginDate, final Calendar examsSeason2EndDate)
             throws ExcepcaoPersistencia {
 
-        final ExecutionYear executionYear = (ExecutionYear) persistentObject
-                .readByOID(ExecutionYear.class, executionYearID);
-
+        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
         final Campus campus = readCampusByName(campusName);
 
         final OccupationPeriod lessonSeason1 = createPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
@@ -37,36 +38,30 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
         final OccupationPeriod examsSeason1 = createPeriod(examsSeason1BeginDate, examsSeason1EndDate);
         final OccupationPeriod examsSeason2 = createPeriod(examsSeason2BeginDate, examsSeason2EndDate);
 
-        for (Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
-
-            final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
-                            degreeCurricularPlanID);
-
-            ExecutionDegree storedExecutionDegree = persistentSupport.getIPersistentExecutionDegree()
-                    .readByDegreeCurricularPlanIDAndExecutionYear(degreeCurricularPlanID,
-                            executionYear.getYear());
-
-            if (storedExecutionDegree != null) {
+        final Set<Integer> allDegreeCurricularPlanIDs = new HashSet<Integer>();
+        allDegreeCurricularPlanIDs.addAll(Arrays.asList(degreeCurricularPlansIDs));
+        allDegreeCurricularPlanIDs.addAll(Arrays.asList(bolonhaDegreeCurricularPlansIDs));
+        
+        for (final Integer degreeCurricularPlanID : allDegreeCurricularPlanIDs) {
+            final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+            if (degreeCurricularPlan == null || degreeCurricularPlan.hasAnyExecutionDegreeFor(executionYear)) {
                 continue;
             }
-
             createExecutionDegree(executionYear, campus, degreeCurricularPlan, temporaryExamMap,
                     examsSeason1, examsSeason2, lessonSeason1, lessonSeason2);
-
         }
-
     }
 
     private Campus readCampusByName(String campusName) throws ExcepcaoPersistencia {
-    	for (Campus campus : ((Collection<Campus>) persistentObject.readAll(Campus.class))) {
-    		if (campus.getName().equalsIgnoreCase(campusName)) {
-    			return campus;
-    		}
-    	}
-    	return null;
-	}
+        for (Campus campus : rootDomainObject.getCampuss()) {
+            if (campus.getName().equalsIgnoreCase(campusName)) {
+                return campus;
+            }
+        }
+        return null;
+    }
 
-	private OccupationPeriod createPeriod(final Calendar startDate, final Calendar endDate) {
+    private OccupationPeriod createPeriod(final Calendar startDate, final Calendar endDate) {
         final OccupationPeriod period = DomainFactory.makeOccupationPeriod();
 
         period.setStartDate(startDate);
@@ -79,11 +74,11 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
     protected void createExecutionDegree(
 
     final ExecutionYear executionYear, Campus campus, DegreeCurricularPlan degreeCurricularPlan,
-            Boolean temporaryExamMap, OccupationPeriod periodExamsSeason1, OccupationPeriod periodExamsSeason2,
-            OccupationPeriod periodLessonSeason1, OccupationPeriod periodLessonSeason2) {
+            Boolean temporaryExamMap, OccupationPeriod periodExamsSeason1,
+            OccupationPeriod periodExamsSeason2, OccupationPeriod periodLessonSeason1,
+            OccupationPeriod periodLessonSeason2) {
 
         final ExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
-
         executionDegree.setCampus(campus);
         executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
         executionDegree.setExecutionYear(executionYear);
@@ -93,7 +88,6 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
         executionDegree.setPeriodLessonsSecondSemester(periodLessonSeason2);
         executionDegree.setScheduling(null);
         executionDegree.setTemporaryExamMap(temporaryExamMap);
-
     }
 
 }
