@@ -323,12 +323,10 @@ public class FileSuport implements IFileSuport {
      */
     public void storeFile(String fileName, String path, byte[] fileData, String contentType,
             String linkName) throws SlideException {
-        
-        throw new SlideException("Operation not available");
-        /*if (!existsPath("/files" + path)) {
+        if (!existsPath("/files" + path)) {
             createPath("/files" + path);
         }
-        addContents(fileData, "/files" + path + "/" + fileName, contentType, linkName);*/
+        addContents(fileData, "/files" + path + "/" + fileName, contentType, linkName);
     }
 
     /**
@@ -364,9 +362,6 @@ public class FileSuport implements IFileSuport {
     }
 
     public void deleteFile(String filePath) throws SlideException {
-        
-        throw new SlideException("Operation not available");
-        /*
         Structure structure = getStructure();
         Content content = getContent();
         if (!filePath.startsWith("/files")) {
@@ -387,7 +382,7 @@ public class FileSuport implements IFileSuport {
             throw new SlideException("runtime exception");
         } catch (Exception e) {
             throw new SlideException("runtime exception");
-        }*/
+        }
     }
 
     /*
@@ -541,10 +536,7 @@ public class FileSuport implements IFileSuport {
      * @see fileSuport.IFileSuport#storeFile(fileSuport.FileSuportObject)
      */
     public boolean storeFile(FileSuportObject file) throws SlideException {
-        
-        throw new SlideException("Operation not available");
-        
-        /*boolean result = false;
+        boolean result = false;
         FileSuportObject fileInDb = null;
         try {
             fileInDb = retrieveFile(file.getUri() + "/" + file.getFileName());
@@ -557,7 +549,7 @@ public class FileSuport implements IFileSuport {
                     .getLinkName());
             result = true;
         }
-        return result;*/
+        return result;
     }
 
     /*
@@ -592,10 +584,7 @@ public class FileSuport implements IFileSuport {
      * @see fileSuport.IFileSuport#updateFile(java.lang.String)
      */
     public boolean updateFile(FileSuportObject file) throws SlideException {
-        
-        throw new SlideException("Operation not available");
-        
-        /*boolean result = false;
+        boolean result = false;
         FileSuportObject fileInDb = null;
         String path = file.getUri() + "/" + file.getFileName();
         try {
@@ -614,6 +603,6 @@ public class FileSuport implements IFileSuport {
             result = true;
 
         }
-        return result;*/
+        return result;
     }
 }
