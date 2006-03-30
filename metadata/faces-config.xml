@@ -570,7 +570,7 @@
 		</navigation-case>			
 		<navigation-case>
 			<from-outcome>back</from-outcome>
-			<to-view-id>/manager/degree/insertExecutionDegreesSuccess.jsp</to-view-id>
+			<to-view-id>/manager/degree/chooseDegreeType.jsp</to-view-id>
 		</navigation-case>			
 	</navigation-rule>
 	

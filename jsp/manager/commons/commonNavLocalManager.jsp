@@ -48,12 +48,12 @@
 	  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.bolonhaCurricularPlansManagement" />
 	  	</html:link>  
 </strong></p>
-<p><strong>&raquo; 
-	  	<html:link module="/manager" module="/manager" page="/degree/chooseDegreeType.faces">
-	  		Criação de Cursos de Execução
-	  	</html:link>  
-</strong></p>
 
+<p><strong>&raquo; 
+	<html:link module="/manager" page="/executionDegreeManagement.do">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement" />
+	</html:link>
+</strong></p>
 <p><strong>&raquo; 
 	<html:link module="/manager" module="/manager" page="/manageExecutionPeriods.do?method=prepare">
 		Gestão de Periodos Execução

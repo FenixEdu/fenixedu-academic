@@ -525,4 +525,10 @@
     	<put name="body" value="/manager/personManagement/createPersonSuccess.jsp" />
     </definition>
     
+    <!-- ========== ExecutionDegree Management ========== -->
+    <definition name="df.executionDegreeManagement.page.firstPage" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionDegreeManagement/welcomeScreen.jsp" />
+		<put name="navLocal" value="/manager/executionDegreeManagement/mainMenu.jsp" />
+	</definition>
+    
 </tiles-definitions>

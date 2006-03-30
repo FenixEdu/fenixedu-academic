@@ -1911,6 +1911,12 @@
 		<forward name="Prepare" path="createPerson" />
 		<forward name="Success" path="createPersonSuccess" />
 	</action>
+	
+	<!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
+	
+	<action path="/executionDegreeManagement"
+			type="org.apache.struts.actions.ForwardAction"
+			forward="df.executionDegreeManagement.page.firstPage" />
 
 	</action-mappings>
 

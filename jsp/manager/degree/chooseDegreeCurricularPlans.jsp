@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
-<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+<ft:tilesView definition="df.executionDegreeManagement.page.firstPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/ManagerResources" var="managerResources"/>
 	<h:form>
 		<h:inputHidden value="#{createExecutionDegrees.chosenDegreeType}" />
@@ -143,8 +143,10 @@
 		</h:panelGrid>
 		<p/>
 			
-		<h:commandButton action="#{createExecutionDegrees.createExecutionDegrees}" value="#{managerResources['label.create']}"
-				styleClass="inputbutton"/>
+		<h:commandButton action="#{createExecutionDegrees.createExecutionDegrees}"
+			value="#{managerResources['label.create']}" styleClass="inputbutton"/>
+				
+		<h:commandButton action="back" value="#{managerResources['label.return']}" immediate="true" styleClass="inputbutton"/>
 	</h:form>
 
 </ft:tilesView>
