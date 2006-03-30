@@ -79,6 +79,7 @@
 
 			<copy todir="${build.home.webinf.classes}">
 				<fileset dir="${config}"/>
+				<fileset file="build.properties"/>
 			</copy>
 
 			<copy todir="${build.home.webinf}">

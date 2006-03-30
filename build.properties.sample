@@ -227,6 +227,15 @@ cache.cluster.multicast.ip=231.12.21.132
 #
 #
 #------------------------------------------------------------------------------
+# HTTP Response Cache Configuration
+#------------------------------------------------------------------------------
+#
+#	response.cache.timeout : public pages cache timeout; subject to change in the manager interface
+#
+response.cache.timeout=600
+#
+#
+#------------------------------------------------------------------------------
 # SMS Configuration
 #------------------------------------------------------------------------------
 #

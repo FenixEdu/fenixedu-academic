@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.presentationTier.mapping.MappingUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.ResponseCacheOSCacheImpl;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.ResponseContentEntry;
@@ -48,17 +49,18 @@ public class FenixCacheFilter implements Filter,CommitListener {
         this.filterConfig = filterConfig;
         this.servletContext = filterConfig.getServletContext();
 
-        int time = 300;
+        int time;
         try {
-            time = Integer.parseInt(filterConfig.getInitParameter("time"));
+            time = PropertiesManager.getIntegerProperty("response.cache.timeout");
         } catch (Exception e) {
+            time = 300;
         }
 
         excludePattern = filterConfig.getInitParameter("exclude-url-pattern");
 
         ResponseCacheOSCacheImpl.getInstance().setRefreshTimeout(time);
 
-	TopLevelTransaction.addCommitListener(this);
+        TopLevelTransaction.addCommitListener(this);
     }
 
     public void destroy() {

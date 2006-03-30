@@ -18,8 +18,9 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
     static {
         try {
             loadProperties(properties, "/configuration.properties");
+            loadProperties(properties, "/build.properties");
         } catch (IOException e) {
-            throw new RuntimeException("Unable to load properties file.", e);
+            throw new RuntimeException("Unable to load properties files.", e);
         }
     }
 
