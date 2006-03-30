@@ -15,7 +15,8 @@ public class CreditsInScientificArea extends CreditsInScientificArea_Base {
 		removeScientificArea();
 		removeEnrolment();
 		removeStudentCurricularPlan();
-		super.deleteDomainObject();
+		removeRootDomainObject();
+        super.deleteDomainObject();
 	}
     
 }

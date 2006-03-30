@@ -130,6 +130,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public void delete() {
         super.delete();
         removeCompetenceCourse();
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

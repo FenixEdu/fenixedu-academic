@@ -29,6 +29,7 @@ public abstract class CurricularRule extends CurricularRule_Base {
     public void delete() {
         removeOwnParameters();
         removeCommonParameters();
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
     

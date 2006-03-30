@@ -150,6 +150,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         getDepartments().clear();
         removeCompetenceCourseGroupUnit();
         for (;!getCompetenceCourseInformations().isEmpty();getCompetenceCourseInformations().get(0).delete());
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

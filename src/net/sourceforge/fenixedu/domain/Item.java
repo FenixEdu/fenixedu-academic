@@ -44,6 +44,7 @@ public class Item extends Item_Base implements INode {
             }                       
         }
         
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

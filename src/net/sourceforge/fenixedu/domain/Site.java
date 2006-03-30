@@ -127,7 +127,8 @@ public class Site extends Site_Base {
     public void delete() {
     	if(canBeDeleted()) {
     		setExecutionCourse(null);
-    		super.deleteDomainObject();
+    		removeRootDomainObject();
+        super.deleteDomainObject();
     	}
     }
 

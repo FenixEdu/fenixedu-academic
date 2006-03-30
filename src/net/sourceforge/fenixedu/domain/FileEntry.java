@@ -28,6 +28,7 @@ public class FileEntry extends FileEntry_Base {
     
     public void delete(){
         this.removePerson();
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
     

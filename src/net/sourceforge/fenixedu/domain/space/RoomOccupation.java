@@ -330,6 +330,7 @@ public class RoomOccupation extends RoomOccupation_Base {
             period.deleteIfEmpty();
         }
 
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

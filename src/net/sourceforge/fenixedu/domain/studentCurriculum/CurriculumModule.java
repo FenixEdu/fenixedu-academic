@@ -17,7 +17,8 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public void delete() {
     	removeDegreeModule();
     	removeCurriculumGroup();
-    	super.deleteDomainObject();
+    	removeRootDomainObject();
+        super.deleteDomainObject();
     }
     
     public abstract StringBuilder print(String tabs);

@@ -32,7 +32,8 @@ public class ExternalActivity extends ExternalActivity_Base {
 
 	public void delete() {
 		removeTeacher();
-		super.deleteDomainObject();
+		removeRootDomainObject();
+        super.deleteDomainObject();
 	}
 
 	public void edit(InfoExternalActivity infoExternalActivity) {

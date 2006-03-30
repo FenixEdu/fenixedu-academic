@@ -55,6 +55,7 @@ public class Student extends Student_Base {
     }
 
     public void delete() {
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

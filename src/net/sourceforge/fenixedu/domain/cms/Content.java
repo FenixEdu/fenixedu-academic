@@ -53,7 +53,8 @@ public abstract class Content extends Content_Base implements Comparable<Content
 			}
 		}
 
-		super.deleteDomainObject();
+		removeRootDomainObject();
+        super.deleteDomainObject();
 	}
 
 	@Override

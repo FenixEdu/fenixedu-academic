@@ -8,7 +8,8 @@ public class GratuityValues extends GratuityValues_Base {
 	}
 
 	public void delete() {
-	    super.deleteDomainObject();
+	    removeRootDomainObject();
+        super.deleteDomainObject();
     }
     
     public Double calculateTotalValueForMasterDegree() {

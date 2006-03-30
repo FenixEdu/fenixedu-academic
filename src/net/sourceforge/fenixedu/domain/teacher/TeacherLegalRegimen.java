@@ -31,6 +31,7 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
     public void delete(){
         removeCategory();
         removeTeacher();
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
     

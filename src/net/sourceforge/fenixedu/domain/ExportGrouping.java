@@ -25,6 +25,7 @@ public class ExportGrouping extends ExportGrouping_Base {
     public void delete(){
         this.setExecutionCourse(null);
         this.setGrouping(null);        
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

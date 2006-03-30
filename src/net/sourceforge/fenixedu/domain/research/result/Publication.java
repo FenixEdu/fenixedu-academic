@@ -70,6 +70,7 @@ public class Publication extends Publication_Base {
             authorship.delete();
         }
         
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
     

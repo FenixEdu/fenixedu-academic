@@ -82,7 +82,8 @@ public class Patent extends Patent_Base {
             iterator.remove();
             authorship.delete();
         }
-    	super.deleteDomainObject();
+    	removeRootDomainObject();
+        super.deleteDomainObject();
     }
     
 }

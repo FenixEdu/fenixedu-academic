@@ -15,6 +15,7 @@ public class PersonalGroup extends PersonalGroup_Base implements IGroup{
     public void delete() {
         removePerson();
 
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 	

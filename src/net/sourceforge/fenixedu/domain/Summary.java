@@ -100,6 +100,7 @@ public class Summary extends Summary_Base {
         removeRoom();
         removeShift();       
         removeTeacher();
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

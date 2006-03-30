@@ -17,6 +17,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
     public void delete() {
         this.removeTeacher();
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

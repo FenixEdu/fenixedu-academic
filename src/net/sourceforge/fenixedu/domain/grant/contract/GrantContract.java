@@ -10,6 +10,7 @@ public class GrantContract extends GrantContract_Base {
 	}
 
     public void delete() {
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

@@ -32,6 +32,7 @@ public abstract class Evaluation extends Evaluation_Base {
     public void delete() {        
         this.getAssociatedExecutionCourses().clear();
 		for (; !getMarks().isEmpty(); getMarks().get(0).delete());
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

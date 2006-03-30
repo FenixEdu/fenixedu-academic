@@ -52,6 +52,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         }
         this.removeExecutionCourse();
         this.removeTeacher();
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
     

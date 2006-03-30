@@ -45,6 +45,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     public void delete() {       
         removeCompetenceCourse();
         for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().get(0).delete());
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
     

@@ -45,6 +45,7 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
     
     public void delete() {
         removeCompetenceCourseInformation();
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
     

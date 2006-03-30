@@ -17,7 +17,8 @@ public class MailAddressAlias extends MailAddressAlias_Base {
 			MailingListAlias.remove(this, mailingList);
 		}		
 		
-		super.deleteDomainObject();
+		removeRootDomainObject();
+        super.deleteDomainObject();
 	}
     
 }

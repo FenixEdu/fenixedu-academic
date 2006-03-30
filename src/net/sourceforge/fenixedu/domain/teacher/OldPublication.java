@@ -22,7 +22,8 @@ public class OldPublication extends OldPublication_Base {
 
 	public void delete() {
 		removeTeacher();
-		super.deleteDomainObject();
+		removeRootDomainObject();
+        super.deleteDomainObject();
 	}
 
 	public void edit(InfoOldPublication infoOldPublication, Teacher teacher) {

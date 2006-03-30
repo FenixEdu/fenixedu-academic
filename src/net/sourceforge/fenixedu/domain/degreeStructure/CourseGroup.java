@@ -52,7 +52,8 @@ public class CourseGroup extends CourseGroup_Base {
             removeParentDegreeCurricularPlan();
             super.delete();
             for (;!getParticipatingContextCurricularRules().isEmpty();getParticipatingContextCurricularRules().get(0).delete());
-            super.deleteDomainObject();
+            removeRootDomainObject();
+        super.deleteDomainObject();
         } else {
             throw new DomainException("courseGroup.notEmptyCourseGroupContexts");
         }

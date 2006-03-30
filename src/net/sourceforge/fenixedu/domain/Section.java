@@ -156,6 +156,7 @@ public class Section extends Section_Base implements INode {
             }
         }
         
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 }

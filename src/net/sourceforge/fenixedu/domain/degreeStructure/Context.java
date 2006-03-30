@@ -56,6 +56,7 @@ public class Context extends Context_Base implements Comparable<Context> {
         removeParentCourseGroup();
         removeBeginExecutionPeriod();
         removeEndExecutionPeriod();
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
     

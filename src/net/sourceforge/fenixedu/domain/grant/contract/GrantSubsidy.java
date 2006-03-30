@@ -11,6 +11,7 @@ public class GrantSubsidy extends GrantSubsidy_Base {
 
     public void delete() {
         for (;!getAssociatedGrantParts().isEmpty();getAssociatedGrantParts().get(0).delete());
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

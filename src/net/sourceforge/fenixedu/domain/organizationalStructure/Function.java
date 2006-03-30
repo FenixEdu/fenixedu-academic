@@ -39,7 +39,8 @@ public class Function extends Function_Base {
         if (!hasAnyPersonFunctions() && !hasAnyInherentFunctions()) {            
             removeParentInherentFunction();
             removeUnit();
-            super.deleteDomainObject();
+            removeRootDomainObject();
+        super.deleteDomainObject();
         } else {
             throw new DomainException("error.delete.function");
         }

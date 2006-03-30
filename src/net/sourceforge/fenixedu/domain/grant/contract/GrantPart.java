@@ -10,6 +10,7 @@ public class GrantPart extends GrantPart_Base {
 	}
 
     public void delete() {
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

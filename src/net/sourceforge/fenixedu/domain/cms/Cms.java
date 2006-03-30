@@ -24,6 +24,7 @@ public class Cms extends Cms_Base {
 		}
     	
     	this.getConfiguration().delete();    	
-    	super.deleteDomainObject();
+    	removeRootDomainObject();
+        super.deleteDomainObject();
     }
 }

@@ -19,6 +19,7 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
         removeDistributedTest();
         removeQuestion();
         removeStudent();
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

@@ -36,6 +36,7 @@ public class PublicationTeacher extends PublicationTeacher_Base {
         removePublication();
         removeTeacher();
         setPublicationArea(null);
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
  

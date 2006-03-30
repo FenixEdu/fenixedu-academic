@@ -28,6 +28,7 @@ public class EvaluationMethod extends EvaluationMethod_Base {
     public void delete() {
         setExecutionCourse(null);
         deleteDomainObject();
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

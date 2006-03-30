@@ -10,6 +10,7 @@ public class GrantInsurance extends GrantInsurance_Base {
 	}
 
     public void delete() {
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

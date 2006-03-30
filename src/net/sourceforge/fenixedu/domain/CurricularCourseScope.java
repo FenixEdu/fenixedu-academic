@@ -117,7 +117,8 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 			removeCurricularCourse();
 			removeBranch();
 			
-			super.deleteDomainObject();
+			removeRootDomainObject();
+        super.deleteDomainObject();
         } else {
             throw new DomainException("error.curricular.course.scope.has.written.evaluations");
         }

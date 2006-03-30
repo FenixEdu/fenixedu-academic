@@ -232,7 +232,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 		removeEmployee();
 		removeEnrolment();
 		
-		super.deleteDomainObject();
+		removeRootDomainObject();
+        super.deleteDomainObject();
 	}
 	
 	public void insertStudentFinalEvaluationForMasterDegree(String grade, Person responsibleFor, Date examDate) 

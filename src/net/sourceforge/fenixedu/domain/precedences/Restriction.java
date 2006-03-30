@@ -19,7 +19,8 @@ public abstract class Restriction extends Restriction_Base {
 	
 	public void delete() {
 		removePrecedence();
-		super.deleteDomainObject();
+		removeRootDomainObject();
+        super.deleteDomainObject();
 	}
 
 	public abstract CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);

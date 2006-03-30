@@ -34,6 +34,7 @@ public class Announcement extends Announcement_Base {
 
     public void delete() {
         setSite(null);        
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

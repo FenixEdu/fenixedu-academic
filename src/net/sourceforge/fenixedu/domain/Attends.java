@@ -69,7 +69,8 @@ public class Attends extends Attends_Base {
             removeAluno();
             removeDisciplinaExecucao();
             removeEnrolment();
-            super.deleteDomainObject();
+            removeRootDomainObject();
+        super.deleteDomainObject();
         } else
             throw new DomainException("error.attends.cant.delete");
     }

@@ -300,6 +300,7 @@ public class Grouping extends Grouping_Base {
             exportGrouping.delete();
         }
         
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

@@ -14,7 +14,8 @@ public class CreditsInAnySecundaryArea extends CreditsInAnySecundaryArea_Base {
 	public void delete() {
 		removeEnrolment();
 		removeStudentCurricularPlan();
-		super.deleteDomainObject();
+		removeRootDomainObject();
+        super.deleteDomainObject();
 	}
 
 }

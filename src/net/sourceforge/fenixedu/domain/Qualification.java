@@ -25,7 +25,8 @@ public class Qualification extends Qualification_Base {
 	public void delete() {
 		removePerson();
 		removeCountry();
-		super.deleteDomainObject();
+		removeRootDomainObject();
+        super.deleteDomainObject();
 	}
 	
 	public void edit(InfoQualification infoQualification, Country country) {

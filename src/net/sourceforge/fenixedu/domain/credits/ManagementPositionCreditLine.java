@@ -13,6 +13,7 @@ public class ManagementPositionCreditLine extends ManagementPositionCreditLine_B
     }
 
     public void delete() {
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
     

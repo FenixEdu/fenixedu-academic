@@ -10,6 +10,7 @@ public class GrantOrientationTeacher extends GrantOrientationTeacher_Base {
 	}
 
     public void delete() {
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 

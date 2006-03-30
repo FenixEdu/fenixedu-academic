@@ -19,6 +19,7 @@ public class MailQueue extends MailQueue_Base {
             MailingListQueueOutgoingMails.remove(this, mailMessage);
         }
 		
+        removeRootDomainObject();
         super.deleteDomainObject();
     }
 }

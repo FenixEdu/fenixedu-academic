@@ -28,7 +28,8 @@ public abstract class Career extends Career_Base {
 	
 	public void delete() {
 		removeTeacher();
-		super.deleteDomainObject();
+		removeRootDomainObject();
+        super.deleteDomainObject();
 	}
 		
     public static List<Career> readAllByTeacherIdAndCareerType(Teacher teacher, CareerType careerType){

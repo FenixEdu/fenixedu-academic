@@ -318,7 +318,8 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 
 			getNonAffiliatedTeachers().clear();
 
-			super.deleteDomainObject();
+			removeRootDomainObject();
+        super.deleteDomainObject();
 		} else {
 			throw new DomainException("error.execution.course.cant.delete");
         }
