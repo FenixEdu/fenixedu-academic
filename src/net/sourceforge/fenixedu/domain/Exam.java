@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.Season;
 
 public class Exam extends Exam_Base {
@@ -82,6 +85,72 @@ public class Exam extends Exam_Base {
 
     public boolean getIsExamsMapPublished() {
         return isExamsMapPublished();
+    }
+
+    public static List<Exam> getAllByRoomAndExecutionPeriod(String room, String executionPeriod, String year) {
+        List<Exam> result = new ArrayList<Exam>();
+        
+        outter:
+        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+            if (! (evaluation instanceof Exam)) {
+                continue;
+            }
+            
+            Exam exam = (Exam) evaluation;
+            
+            for (RoomOccupation occupation : exam.getAssociatedRoomOccupation()) {
+                if (! occupation.getRoom().getNome().equals(room)) {
+                    continue outter;
+                }
+            }
+            
+            for (ExecutionCourse course : exam.getAssociatedExecutionCourses()) {
+                if (! course.getExecutionPeriod().getName().equals(executionPeriod)) {
+                    continue outter;
+                }
+                
+                if (! course.getExecutionPeriod().getExecutionYear().getYear().equals(year)) {
+                    continue outter;
+                }
+            }
+            
+            result.add(exam);
+        }
+        
+        return result;
+    }
+
+    public static List<Exam> getAllByDate(Calendar examDay, Calendar examStartTime) {
+        return getAllByDate(examDay, examStartTime, null);
+    }
+
+    public static List<Exam> getAllByDate(Calendar examDay, Calendar examStartTime, Calendar examEndTime) {
+        List<Exam> result = new ArrayList<Exam>();
+        
+        outter:
+        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+            if (! (evaluation instanceof Exam)) {
+                continue;
+            }
+            
+            Exam exam = (Exam) evaluation;
+        
+            if (! examDay.equals(exam.getDay())) {
+                continue;
+            }
+            
+            if (examStartTime != null && !examStartTime.equals(exam.getBeginning())) {
+                continue;
+            }
+            
+            if (examEndTime != null && !examEndTime.equals(exam.getEnd())) {
+                continue;
+            }
+            
+            result.add(exam);
+        }
+
+        return result;
     }
 
 }

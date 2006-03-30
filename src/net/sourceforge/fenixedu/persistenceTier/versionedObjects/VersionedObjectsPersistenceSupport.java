@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
@@ -71,7 +70,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularC
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurriculumVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoExecucaoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPeriodVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExternalPersonVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
@@ -133,10 +131,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentPublicationsNumber getIPersistentPublicationsNumber() {
         return new PublicationsNumberVO();
-    }
-
-    public IPersistentExam getIPersistentExam() {
-        return new ExamVO();
     }
 
     public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher() {

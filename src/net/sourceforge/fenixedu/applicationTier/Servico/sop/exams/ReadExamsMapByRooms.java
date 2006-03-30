@@ -52,8 +52,7 @@ public class ReadExamsMapByRooms extends Service {
             infoRoomExamsMap.setStartSeason2(null);
             infoRoomExamsMap.setEndSeason2(endSeason2);
 
-            final List<Exam> exams = persistentSupport.getIPersistentExam()
-                    .readByRoomAndExecutionPeriod(infoRoom.getNome(), infoExecutionPeriod.getName(),
+            final List<Exam> exams = Exam.getAllByRoomAndExecutionPeriod(infoRoom.getNome(), infoExecutionPeriod.getName(),
                             infoExecutionPeriod.getInfoExecutionYear().getYear());
             infoRoomExamsMap.setExams(getInfoExams(exams));
 

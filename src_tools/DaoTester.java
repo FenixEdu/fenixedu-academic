@@ -1,5 +1,5 @@
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.ObjectFenixOJB;
@@ -32,8 +32,7 @@ public class DaoTester extends ObjectFenixOJB {
     }
 
     private void doTest() throws ExcepcaoPersistencia {
-        IPersistentExam persistentExam = persistentSupport.getIPersistentExam();
-        persistentExam.readByRoomAndExecutionPeriod("Ga1", "2 Semestre", "2004/2005");
+        Exam.getAllByRoomAndExecutionPeriod("Ga1", "2 Semestre", "2004/2005");
     }
 
 }

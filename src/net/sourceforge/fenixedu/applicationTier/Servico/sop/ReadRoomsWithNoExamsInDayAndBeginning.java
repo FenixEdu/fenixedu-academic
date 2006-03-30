@@ -25,7 +25,7 @@ import org.apache.commons.collections.CollectionUtils;
 public class ReadRoomsWithNoExamsInDayAndBeginning extends Service {
 
     public List run(Calendar day, Calendar beginning) throws ExcepcaoPersistencia {
-        List exams = persistentSupport.getIPersistentExam().readBy(day, beginning);
+        List exams = Exam.getAllByDate(day, beginning);
         List allRooms = rootDomainObject.getOldRooms();
 
         List occupiedRooms = new ArrayList();
