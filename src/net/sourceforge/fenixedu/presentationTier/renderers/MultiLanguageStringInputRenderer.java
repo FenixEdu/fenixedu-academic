@@ -10,7 +10,9 @@ public class MultiLanguageStringInputRenderer extends StringInputRenderer {
 
     @Override
     protected HtmlComponent createTextField(Object object, Class type) {
-        HtmlTextInput input = (HtmlTextInput) super.createTextField(object, type);
+        MultiLanguageString mls = (MultiLanguageString) object;
+        
+        HtmlTextInput input = (HtmlTextInput) super.createTextField(mls.getContent(), type);
         input.setConverter(new MultiLanguageStringConverter());
         
         return input;
