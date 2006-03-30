@@ -12,7 +12,7 @@ public class MultiLanguageTextInputRenderer extends TextAreaInputRenderer {
     protected HtmlComponent renderComponent(Layout layout, Object object, Class type) {
         MultiLanguageString mls = (MultiLanguageString) object;
         
-        HtmlTextArea textArea = (HtmlTextArea) super.renderComponent(layout, mls.getContent(), type);
+        HtmlTextArea textArea = (HtmlTextArea) super.renderComponent(layout, mls == null ? null : mls.getContent(), type);
         textArea.setConverter(new MultiLanguageStringInputRenderer.MultiLanguageStringConverter());
         
         return textArea;
