@@ -20,17 +20,16 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.Transformer;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -203,21 +202,11 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
                     userView, "ReadStudentsWithAttendsByExecutionCourse", args);
 
             infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
-                       
-            List alreadyInsertedStudents = new ArrayList();
-            List attendsWithoutDuplicatedStudents = new ArrayList();
-            for (Object obj : infoDTO.getInfoAttends()) {
-            	Attends attends = (Attends)obj;
-				if (!alreadyInsertedStudents.contains(attends.getAluno()))
-				{
-					alreadyInsertedStudents.add(attends.getAluno());
-					attendsWithoutDuplicatedStudents.add(attends);
-				}
-			}
-            infoDTO.setInfoAttends(attendsWithoutDuplicatedStudents);
+            // remove duplicated attends
+            final Set<InfoFrequenta> attends = new HashSet<InfoFrequenta>(infoDTO.getInfoAttends());
+            infoDTO.setInfoAttends(new ArrayList<InfoFrequenta>(attends));
             
             Collections.sort(infoDTO.getInfoAttends(), new BeanComparator("infoAttends.aluno.number"));
-            
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

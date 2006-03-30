@@ -81,20 +81,18 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
     public Object run(Integer executionCourseCode, List curricularPlansIds, List enrollmentTypeFilters,
             List shiftIds) throws FenixServiceException, ExcepcaoPersistencia {
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
-                .readByOID(ExecutionCourse.class, executionCourseCode);
-        InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
-                .newInfoFromDomain(executionCourse);
+        
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(executionCourse);
 
         final Site site = executionCourse.getSite();
-
         List attends = executionCourse.getAttends();
 
         List allDegreeCurricularPlans = getDegreeCurricularPlansFromAttends(attends);
         List allShifts = executionCourse.getAssociatedShifts();
         List groupProperties = executionCourse.getGroupings();
 
-        Map studentGroupsMap = getStudentGroupsMapFromGroupPropertiesList(groupProperties, persistentSupport);
+        Map studentGroupsMap = getStudentGroupsMapFromGroupPropertiesList(groupProperties);
 
         InfoAttendsSummary infoAttendsSummary = new InfoAttendsSummary();
         int[] enrollmentDistribution = new int[10];
@@ -434,8 +432,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
         return result;
     }
 
-    private Map getStudentGroupsMapFromGroupPropertiesList(List groupPropertiesList,
-            ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
+    private Map getStudentGroupsMapFromGroupPropertiesList(List groupPropertiesList) throws ExcepcaoPersistencia {
 
         Map result = new HashMap();
         List allStudentsGroups = new ArrayList();
