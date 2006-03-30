@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
 
-import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
@@ -134,8 +133,6 @@ public interface ISuportePersistente
 	public IPersistentPublicationsNumber getIPersistentPublicationsNumber();
 
 	public IPersistentOldPublication getIPersistentOldPublication();
-
-	public IPersistentGaugingTestResult getIPersistentGaugingTestResult();
 
 	public IPersistentSupportLesson getIPersistentSupportLesson();
 

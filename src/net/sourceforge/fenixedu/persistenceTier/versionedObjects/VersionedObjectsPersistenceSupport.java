@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
@@ -226,10 +225,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentSentSms getIPersistentSentSms() {
         return new SentSmsVO();
-    }
-
-    public IPersistentGaugingTestResult getIPersistentGaugingTestResult() {
-        return null;
     }
 
     public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary() {

@@ -31,8 +31,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailAddressAliasOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailingListOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.credits.ManagementPositionCreditLineOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.GaugingTestResultOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractRegimeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantCostCenterOJB;
@@ -325,51 +323,21 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new OrientationOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationsNumber()
-	 */
 	public IPersistentPublicationsNumber getIPersistentPublicationsNumber()
 	{
 		return new PublicationsNumberOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentOldPublication()
-	 */
 	public IPersistentOldPublication getIPersistentOldPublication()
 	{
 		return new OldPublicationOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGaugingTestResult()
-	 */
-	public IPersistentGaugingTestResult getIPersistentGaugingTestResult()
-	{
-		return new GaugingTestResultOJB();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSupportLesson()
-	 */
 	public IPersistentSupportLesson getIPersistentSupportLesson()
 	{
 		return new SupportLessonOJB();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacherInstitutionWorkingTime()
-	 */
 	public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime()
 	{
 		return new TeacherInstitutionWorkingTimeOJB();
