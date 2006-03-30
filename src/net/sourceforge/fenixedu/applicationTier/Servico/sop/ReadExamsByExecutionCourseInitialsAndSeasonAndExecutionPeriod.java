@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.Season;
 
@@ -32,10 +33,9 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod exten
 	public InfoViewExamByDayAndShift run(String executionCourseInitials, Season season,
 			InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
 		InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
-
-		ExecutionCourse executionCourse = persistentSupport.getIPersistentExecutionCourse()
-				.readByExecutionCourseInitialsAndExecutionPeriodId(executionCourseInitials,
-						infoExecutionPeriod.getIdInternal());
+		
+		ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+		ExecutionCourse executionCourse = executionPeriod.getExecutionCourseByInitials(executionCourseInitials); 
 
 		List<Exam> associatedExams = new ArrayList();
 		List<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();

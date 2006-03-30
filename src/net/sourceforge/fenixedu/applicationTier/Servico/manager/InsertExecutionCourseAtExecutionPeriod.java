@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 /**
@@ -25,19 +24,13 @@ public class InsertExecutionCourseAtExecutionPeriod extends Service {
         ExecutionPeriod executionPeriod = null;
         ExecutionCourse existentExecutionCourse = null;
         try {
-            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                    ExecutionPeriod.class, infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+        	executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
             if (executionPeriod == null) {
                 throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
             }
 
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                    .getIPersistentExecutionCourse();
-
-            existentExecutionCourse = persistentExecutionCourse
-                    .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
-                            executionPeriod.getIdInternal());
+            existentExecutionCourse = executionPeriod.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
 
             if (existentExecutionCourse != null) {
                 throw new ExistingPersistentException();

@@ -17,15 +17,11 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 public class ReadBibliographicReference extends Service {
 
     public List run(InfoExecutionCourse infoExecutionCourse, Boolean optional)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
 
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(infoExecutionCourse
                 .getInfoExecutionPeriod().getInfoExecutionYear().getYear());
@@ -33,9 +29,7 @@ public class ReadBibliographicReference extends Service {
         final ExecutionPeriod executionPeriod = executionYear
                 .readExecutionPeriodByName(infoExecutionCourse.getInfoExecutionPeriod().getName());
 
-        final ExecutionCourse executionCourse = persistentExecutionCourse
-                .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
-                        executionPeriod.getIdInternal());
+        final ExecutionCourse executionCourse = executionPeriod.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
 
         final List<InfoBibliographicReference> infoBibliographicReferences = new ArrayList<InfoBibliographicReference>();
         for (final BibliographicReference bibliographicReference : executionCourse

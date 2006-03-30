@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -28,28 +27,20 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
 		List infoExecutionCourseList = new ArrayList();
 
 		List executionCourseList = null;
-		IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
 
 		if (executionPeriodId == null) {
 			throw new FenixServiceException("nullExecutionPeriodId");
 		}
 
-		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-				ExecutionPeriod.class, executionPeriodId);
-
+		ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId); 
+			
 		if (executionDegreeId == null && curricularYear == null) {
-			executionCourseList = executionCourseDAO
-					.readByExecutionPeriodWithNoCurricularCourses(executionPeriod.getIdInternal());
+			executionCourseList = executionPeriod.getExecutionCoursesWithNoCurricularCourses();
 
 		} else {
-			ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-					ExecutionDegree.class, executionDegreeId);
+			ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 
-			executionCourseList = executionCourseDAO
-					.readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,
-							executionPeriod.getSemester(), executionDegree.getDegreeCurricularPlan()
-									.getName(), executionDegree.getDegreeCurricularPlan().getDegree()
-									.getSigla(), executionPeriod.getIdInternal());
+			executionCourseList = executionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionPeriod, curricularYear, executionPeriod.getSemester());
 		}
 
 		CollectionUtils.collect(executionCourseList, new Transformer() {

@@ -93,9 +93,7 @@ public class GroupSiteComponentBuilder {
 		List projects = null;
 		Grouping groupProperties;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
-				.readByOID(ExecutionCourse.class, executionCourseCode);
+		ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
 
 		List executionCourseProjects = executionCourse.getGroupings();
 

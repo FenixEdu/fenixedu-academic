@@ -336,6 +336,19 @@ public class CurricularCourse extends CurricularCourse_Base {
 
         return !result.isEmpty();
     }
+    
+    public boolean hasScopeInGivenSemester(final Integer semester) {
+        List scopes = this.getScopes();
+
+        List result = (List) CollectionUtils.select(scopes, new Predicate() {
+            public boolean evaluate(Object obj) {
+                CurricularCourseScope curricularCourseScope = (CurricularCourseScope) obj;
+                return curricularCourseScope.getCurricularSemester().getSemester().equals(semester);
+            }
+        });
+
+        return !result.isEmpty();
+    }
 
     public boolean hasActiveScopeInGivenSemesterForGivenBranch(
             final CurricularSemester curricularSemester, final Branch branch) {
@@ -838,7 +851,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return false;
     }
     
-    public List<Context> getParentContextsByExecutionYear(ExecutionYear executionYear) {
+	public List<Context> getParentContextsByExecutionYear(ExecutionYear executionYear) {
         final List<Context> result = new ArrayList<Context>();
         for (final Context context : this.getParentContexts()) {
             if (executionYear == null || context.isValid(executionYear)) {
@@ -847,6 +860,17 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
+    
+    
+    public boolean hasScopeForCurricularYear(final CurricularYear curricularYear) {
+        for (final CurricularCourseScope scope : getScopes()) {
+            if (scope.getCurricularSemester().getCurricularYear().equals(curricularYear)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public static List<CurricularCourse> readByCurricularStage(CurricularStage curricularStage){
     	List<CurricularCourse> result = new ArrayList<CurricularCourse>();

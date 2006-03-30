@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
@@ -25,8 +24,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 public class DeleteExecutionCourses extends Service {
 
     public List run(final List executionCourseIDs) throws FenixServiceException, ExcepcaoPersistencia {
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
 
         final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
 
@@ -34,16 +31,14 @@ public class DeleteExecutionCourses extends Service {
             final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
                     .readByOID(ExecutionCourse.class, executionCourseID);
 
-            if (!deleteExecutionCourses(persistentSupport, persistentExecutionCourse, executionCourse)) {
+            if (!deleteExecutionCourses(persistentSupport, executionCourse)) {
                 undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
             }
         }
         return undeletedExecutionCoursesCodes;
     }
 
-    private boolean deleteExecutionCourses(final ISuportePersistente persistentSupport,
-            final IPersistentExecutionCourse persistentExecutionCourse,
-            final ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    private boolean deleteExecutionCourses(final ISuportePersistente persistentSupport, final ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
         if (canBeDeleted(executionCourse)) {
             executionCourse.setExecutionPeriod(null);
@@ -51,8 +46,7 @@ public class DeleteExecutionCourses extends Service {
             dereferenceCurricularCourses(executionCourse);
             deleteExecutionCourseProperties(persistentSupport, executionCourse);
             deleteNonAffiliatedTeachers(executionCourse);
-            persistentExecutionCourse
-                    .deleteByOID(ExecutionCourse.class, executionCourse.getIdInternal());
+            persistentObject.deleteByOID(ExecutionCourse.class, executionCourse.getIdInternal());
             return true;
         }
         return false;

@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 /**
  * @author tfc130
@@ -20,11 +20,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 public class ReadCurricularCourseListOfExecutionCourse extends Service {
 
     public Object run(InfoExecutionCourse infoExecCourse) throws ExcepcaoPersistencia {
-        final IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
-
-        ExecutionCourse executionCourse = executionCourseDAO
-                .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecCourse.getSigla(),
-                        infoExecCourse.getInfoExecutionPeriod().getIdInternal());
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecCourse.getInfoExecutionPeriod().getIdInternal());
+        ExecutionCourse executionCourse = executionPeriod.getExecutionCourseByInitials(infoExecCourse.getSigla());
 
         List<InfoCurricularCourse> infoCurricularCourseList = new ArrayList<InfoCurricularCourse>();
         if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {

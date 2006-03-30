@@ -274,6 +274,52 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return null;
     }
+    
+    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(ExecutionPeriod executionPeriod){
+    	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+    	for (CurricularCourse curricularCourse : this.getCurricularCourses()) {
+			for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+				if(executionCourse.getExecutionPeriod().equals(executionPeriod)) {
+					result.add(executionCourse);
+				}
+			}
+		}
+    	return result;
+    }
+    
+    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndYear(ExecutionPeriod executionPeriod, Integer curricularYear, Integer semester){
+    	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+    	for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
+    		for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+				if(curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(curricularYear)) {
+					for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+						if(executionCourse.getExecutionPeriod().equals(executionPeriod)) {
+							result.add(executionCourse);
+						}
+					}
+					break;
+				}
+			}
+		}
+    	return result;
+    }
+    
+    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndCurricularYearAndName(ExecutionPeriod executionPeriod, Integer curricularYear, Integer semester){
+    	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+    	for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
+    		for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+				if(curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(curricularYear)) {
+					for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+						if(executionCourse.getExecutionPeriod().equals(executionPeriod)) {
+							result.add(executionCourse);
+						}
+					}
+					break;
+				}
+			}
+		}
+    	return result;
+    }
 
     public List<CurricularCourse> getCurricularCoursesWithExecutionIn(ExecutionYear executionYear) {
         List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
@@ -662,4 +708,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     	}
     	return result;
     }
+    
+    public static DegreeCurricularPlan readByNameAndDegreeSigla(String name, String degreeSigla) {
+    	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlans()) {
+			if(degreeCurricularPlan.getName().equalsIgnoreCase(name) && degreeCurricularPlan.getDegree().getSigla().equalsIgnoreCase(degreeSigla)) {
+				return degreeCurricularPlan;
+			}
+		}
+    	return null;
+    }
+
 }

@@ -80,16 +80,11 @@ public class ReadFilteredExamsMap extends Service {
 
     private List<InfoExecutionCourse> obtainInfoExecutionCourses(List<Integer> curricularYears, InfoExecutionPeriod infoExecutionPeriod, ExecutionDegree executionDegree) throws ExcepcaoPersistencia {
         List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>();
-
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
         for (Integer curricularYear : curricularYears) {
             // Obtain list of execution courses
-            List<ExecutionCourse> executionCourses = persistentSupport.getIPersistentExecutionCourse()
-                    .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                            curricularYear, infoExecutionPeriod.getSemester(),
-                            executionDegree.getDegreeCurricularPlan().getName(),
-                            executionDegree.getDegreeCurricularPlan().getDegree().getSigla(),
-                            infoExecutionPeriod.getIdInternal());
-
+        	List<ExecutionCourse> executionCourses = executionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionPeriod, curricularYear, infoExecutionPeriod.getSemester());
+        	
             // For each execution course obtain curricular courses and exams
             for (ExecutionCourse executionCourse : executionCourses) {
                 InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriodAndExams.newInfoFromDomain(executionCourse);

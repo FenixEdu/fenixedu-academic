@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,8 +23,8 @@ public class CreateCourseReports extends Service {
     public void run(Integer executionPeriodID) throws ExcepcaoPersistencia {
         Set<Integer> courseReportsExecutionCoursesIDs = new HashSet<Integer>();
 
-        List<ExecutionCourse> executionCourses = persistentSupport.getIPersistentExecutionCourse()
-                .readByExecutionPeriod(executionPeriodID);
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+        List<ExecutionCourse> executionCourses = executionPeriod.getAssociatedExecutionCourses();
 
         for (ExecutionCourse executionCourse : executionCourses) {
             if (executionCourse.getCourseReport() == null) {

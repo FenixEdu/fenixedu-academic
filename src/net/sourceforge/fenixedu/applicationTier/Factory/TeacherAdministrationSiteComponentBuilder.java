@@ -850,9 +850,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		List projects = null;
 		Grouping groupProperties;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
-				.readByOID(ExecutionCourse.class, executionCourseCode);
+		ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
 
 		List executionCourseProjects = new ArrayList();
 		List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
@@ -904,9 +902,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 		List projects = null;
 		Grouping groupProperties;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
-				.readByOID(ExecutionCourse.class, executionCourseCode);
+
+		ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
 
 		List executionCourseProjects = new ArrayList();
 		List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
@@ -956,9 +953,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		List projects = null;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
-				.readByOID(ExecutionCourse.class, executionCourseCode);
+		ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
 
 		List executionCourseSentedProjects = new ArrayList();
 		List groupPropertiesList = executionCourse.getGroupings();

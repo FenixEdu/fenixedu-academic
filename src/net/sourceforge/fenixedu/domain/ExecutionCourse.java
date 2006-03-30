@@ -887,4 +887,34 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
     public boolean hasExportGrouping(final Grouping grouping) {
         return getExportGrouping(grouping) != null;
     }
+    
+    public boolean hasCurricularCourseWithScopeInGivenCurricularYear(CurricularYear curricularYear) {
+    	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
+			if(curricularCourse.hasScopeForCurricularYear(curricularYear)) {
+				return true;
+			}
+		}
+    	return false;
+	}
+
+    public boolean hasCurricularCourseInGivenDCP(DegreeCurricularPlan degreeCurricularPlan) {
+    	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
+			if(curricularCourse.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+				return true;
+			}
+		}
+    	return false;
+    }
+
+    public boolean hasCurricularCourseWithScopeInGivenSemester(Integer semester) {
+    	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
+			if(curricularCourse.hasScopeInGivenSemester(semester)) {
+				return true;
+			}
+		}
+    	return false;
+    }
+    
+     
+
 }

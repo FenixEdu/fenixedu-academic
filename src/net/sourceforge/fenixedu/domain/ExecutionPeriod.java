@@ -95,6 +95,46 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
     	return this.compareTo(executionPeriod) <= 0;
     }
     
+    public ExecutionCourse getExecutionCourseByInitials(String courseInitials) {
+    	for (ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
+			if(executionCourse.getSigla().equalsIgnoreCase(courseInitials)) {
+				return executionCourse;
+			}
+		}
+    	return null;
+    }
+    
+    public List<ExecutionCourse> getExecutionCoursesWithNoCurricularCourses(){
+    	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+    	for (ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
+			if(!executionCourse.hasAnyAssociatedCurricularCourses()) {
+				result.add(executionCourse);
+			}
+		}
+    	return result;
+    }
+    
+    public List<ExecutionCourse> getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(DegreeCurricularPlan degreeCurricularPlan,
+    		Integer semester, CurricularYear curricularYear, String name){
+    	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+    	for (ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
+			if(executionCourse.hasCurricularCourseWithScopeInGivenSemester(semester)) {
+				if(name != null && name.length() != 0 && !executionCourse.getNome().matches(name.replaceAll("%", ".*"))) {
+					continue;
+				}
+				if(degreeCurricularPlan != null && !executionCourse.hasCurricularCourseInGivenDCP(degreeCurricularPlan)) {
+					continue;
+				}
+				if(curricularYear != null && !executionCourse.hasCurricularCourseWithScopeInGivenCurricularYear(curricularYear)) {
+					continue;
+				}
+				result.add(executionCourse);
+			}
+		}
+    	return result;
+    }
+
+    
     // -------------------------------------------------------------
     // read static methods 
     // -------------------------------------------------------------

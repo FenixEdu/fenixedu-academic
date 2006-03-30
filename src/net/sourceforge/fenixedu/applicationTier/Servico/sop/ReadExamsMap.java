@@ -20,9 +20,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExamsMap extends Service {
@@ -66,57 +68,55 @@ public class ReadExamsMap extends Service {
 
 		// List of execution courses
 		List infoExecutionCourses = new ArrayList();
+		
+		DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(infoExecutionDegree.getInfoDegreeCurricularPlan().getName(), infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
 
-		// Obtain execution courses and associated information
-		// of the given execution degree for each curricular year persistentSupportecified
-		for (int i = 0; i < curricularYears.size(); i++) {
-			// Obtain list os execution courses
-			List executionCourses = persistentSupport
-					.getIPersistentExecutionCourse()
-					.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-							(Integer) curricularYears.get(i),
-							infoExecutionPeriod.getSemester(),
-							infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
-							infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),
-							infoExecutionPeriod.getIdInternal());
-
-			// For each execution course obtain curricular courses and
-			// exams
-			for (int j = 0; j < executionCourses.size(); j++) {
-				InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
-						.newInfoFromDomain((ExecutionCourse) executionCourses.get(j));
-
-				infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
-
-				List associatedInfoCurricularCourses = new ArrayList();
-				List associatedCurricularCourses = ((ExecutionCourse) executionCourses.get(j))
-						.getAssociatedCurricularCourses();
-				// Curricular courses
-				for (int k = 0; k < associatedCurricularCourses.size(); k++) {
-					InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
-							.newInfoFromDomain((CurricularCourse) associatedCurricularCourses.get(k));
-					associatedInfoCurricularCourses.add(infoCurricularCourse);
-				}
-				infoExecutionCourse.setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
-
-				List associatedInfoExams = new ArrayList();
-				List<Exam> associatedExams = new ArrayList();
-				List<Evaluation> associatedEvaluations = ((ExecutionCourse) executionCourses.get(j))
-						.getAssociatedEvaluations();
-				for (Evaluation evaluation : associatedEvaluations) {
-					if (evaluation instanceof Exam) {
-						associatedExams.add((Exam) evaluation);
+		if(degreeCurricularPlan != null) {
+			ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+			// Obtain execution courses and associated information
+			// of the given execution degree for each curricular year persistentSupportecified
+			for (int i = 0; i < curricularYears.size(); i++) {
+				// Obtain list os execution courses
+				List<ExecutionCourse> executionCourses = degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionPeriod, (Integer) curricularYears.get(i), infoExecutionPeriod.getSemester()); 
+	
+				// For each execution course obtain curricular courses and
+				// exams
+				for (int j = 0; j < executionCourses.size(); j++) {
+					InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+							.newInfoFromDomain((ExecutionCourse) executionCourses.get(j));
+	
+					infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
+	
+					List associatedInfoCurricularCourses = new ArrayList();
+					List associatedCurricularCourses = ((ExecutionCourse) executionCourses.get(j))
+							.getAssociatedCurricularCourses();
+					// Curricular courses
+					for (int k = 0; k < associatedCurricularCourses.size(); k++) {
+						InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
+								.newInfoFromDomain((CurricularCourse) associatedCurricularCourses.get(k));
+						associatedInfoCurricularCourses.add(infoCurricularCourse);
 					}
+					infoExecutionCourse.setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
+	
+					List associatedInfoExams = new ArrayList();
+					List<Exam> associatedExams = new ArrayList();
+					List<Evaluation> associatedEvaluations = ((ExecutionCourse) executionCourses.get(j))
+							.getAssociatedEvaluations();
+					for (Evaluation evaluation : associatedEvaluations) {
+						if (evaluation instanceof Exam) {
+							associatedExams.add((Exam) evaluation);
+						}
+					}
+	
+					// Exams
+					for (int k = 0; k < associatedExams.size(); k++) {
+						InfoExam infoExam = InfoExam.newInfoFromDomain((Exam) associatedExams.get(k));
+						associatedInfoExams.add(infoExam);
+					}
+					infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);
+	
+					infoExecutionCourses.add(infoExecutionCourse);
 				}
-
-				// Exams
-				for (int k = 0; k < associatedExams.size(); k++) {
-					InfoExam infoExam = InfoExam.newInfoFromDomain((Exam) associatedExams.get(k));
-					associatedInfoExams.add(infoExam);
-				}
-				infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);
-
-				infoExecutionCourses.add(infoExecutionCourse);
 			}
 		}
 

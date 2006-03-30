@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -23,8 +22,7 @@ public class ReadExecutionCoursesByExecutionDegreeService extends Service {
     }
 
     public List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
-        
+
         final ExecutionPeriod executionPeriod;
         if (executionPeriodId == null) {
             executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
@@ -37,9 +35,7 @@ public class ReadExecutionCoursesByExecutionDegreeService extends Service {
             throw new NonExistingExecutionDegree();
         }
 
-        List executionCourseList = executionCourseDAO.readByExecutionDegreeAndExecutionPeriod(
-                executionDegree.getDegreeCurricularPlan().getIdInternal(), executionPeriod
-                        .getIdInternal());
+        List<ExecutionCourse> executionCourseList =  executionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(executionPeriod);
 
         List infoExecutionCourseList = (List) CollectionUtils.collect(executionCourseList, new Transformer() {
 

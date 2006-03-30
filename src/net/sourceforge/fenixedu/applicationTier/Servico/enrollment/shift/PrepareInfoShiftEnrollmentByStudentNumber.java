@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -234,14 +233,10 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
     private List readInfoExecutionCoursesOfdegree(ISuportePersistente persistentSupport,
             ExecutionPeriod executionPeriod, InfoExecutionDegree infoExecutionDegree)
             throws ExcepcaoPersistencia, FenixServiceException {
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree
                 .getIdInternal());
 
-        List executionCourseList = persistentExecutionCourse.readByExecutionPeriodAndExecutionDegree(
-                executionPeriod.getIdInternal(), executionDegree.getDegreeCurricularPlan().getName(),
-                executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
+        List<ExecutionCourse> executionCourseList = executionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(executionPeriod); 
 
         ListIterator listIterator = executionCourseList.listIterator();
         List infoExecutionCourseList = new ArrayList();

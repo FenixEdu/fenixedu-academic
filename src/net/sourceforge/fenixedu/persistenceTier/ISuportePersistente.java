@@ -50,8 +50,6 @@ public interface ISuportePersistente {
 
     public Integer getNumberCachedItems();
 
-    public IPersistentExecutionCourse getIPersistentExecutionCourse();
-
     public IPersistentExecutionDegree getIPersistentExecutionDegree();
 
     public IPersistentStudentCurricularPlan getIStudentCurricularPlanPersistente();

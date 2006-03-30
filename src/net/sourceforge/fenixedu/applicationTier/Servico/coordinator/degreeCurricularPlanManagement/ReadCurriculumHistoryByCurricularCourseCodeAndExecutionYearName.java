@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -38,7 +37,6 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
         IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
         IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
         if (curricularCourseCode == null) {
             throw new FenixServiceException("nullCurricularCourse");
@@ -91,14 +89,12 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
 
             }
 
-            infoCurriculum = createInfoCurriculum(curriculumExecutionYear, persistentExecutionCourse,
-                    allCurricularCourseScopes, allExecutionCourses);
+            infoCurriculum = createInfoCurriculum(curriculumExecutionYear, allCurricularCourseScopes, allExecutionCourses);
         }
         return infoCurriculum;
     }
 
-    private InfoCurriculum createInfoCurriculum(Curriculum curriculum,
-            IPersistentExecutionCourse persistentExecutionCourse, List allCurricularCourseScopes,
+    private InfoCurriculum createInfoCurriculum(Curriculum curriculum, List allCurricularCourseScopes,
             List allExecutionCourses) throws ExcepcaoPersistencia {
 
         InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse

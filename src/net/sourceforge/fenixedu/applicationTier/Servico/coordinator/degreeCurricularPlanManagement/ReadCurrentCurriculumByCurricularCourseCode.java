@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -34,7 +33,6 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
     public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode)
             throws FenixServiceException, ExcepcaoPersistencia {
         IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
         if (curricularCourseCode == null) {
             throw new FenixServiceException("nullCurricularCourse");
@@ -80,13 +78,11 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
             infoCurriculum.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         }
 
-        infoCurriculum = createInfoCurriculum(infoCurriculum, persistentExecutionCourse,
-                activeCurricularCourseScopes, associatedExecutionCourses);
+        infoCurriculum = createInfoCurriculum(infoCurriculum, activeCurricularCourseScopes, associatedExecutionCourses);
         return infoCurriculum;
     }
 
-    private InfoCurriculum createInfoCurriculum(InfoCurriculum infoCurriculum,
-            IPersistentExecutionCourse persistentExecutionCourse, List activeCurricularCourseScopes,
+    private InfoCurriculum createInfoCurriculum(InfoCurriculum infoCurriculum, List activeCurricularCourseScopes,
             List associatedExecutionCourses) throws ExcepcaoPersistencia {
 
         List scopes = new ArrayList();

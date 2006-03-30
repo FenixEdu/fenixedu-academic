@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -42,23 +43,23 @@ public class SearchExecutionCourses extends Service {
 
         List result = null;
 
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
-                .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+        
         ExecutionDegree executionDegree = null;
-
         if (infoExecutionDegree != null) {
-            executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                    ExecutionDegree.class, infoExecutionDegree.getIdInternal());
+            executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
         }
 
-        Integer curricularYearID = (infoCurricularYear != null) ? infoCurricularYear.getIdInternal()
-                : null;
+        CurricularYear curricularYear = null;
+        if(infoCurricularYear != null) {
+        	curricularYear = rootDomainObject.readCurricularYearByOID(infoCurricularYear.getIdInternal());
+        }
 
-        List executionCourses = persistentSupport.getIPersistentExecutionCourse()
-                .readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
-                        executionPeriod.getIdInternal(),
-                        executionDegree.getDegreeCurricularPlan().getIdInternal(), curricularYearID,
-                        executionCourseName, executionPeriod.getSemester());
+        
+        List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+        if(executionPeriod != null) {
+        	executionCourses = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionDegree.getDegreeCurricularPlan(), executionPeriod.getSemester(), curricularYear, executionCourseName);
+        }
 
         result = (List) CollectionUtils.collect(executionCourses, new Transformer() {
 
