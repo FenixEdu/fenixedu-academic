@@ -991,7 +991,15 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             saveErrors(request, actionErrors);
             return prepareFileUpload(mapping, form, request, response);
 
+        } catch (Exception e1) {
+            e1.printStackTrace();
+            actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", file
+                    .getFileName()));
+            saveErrors(request, actionErrors);
+            return prepareFileUpload(mapping, form, request, response);
+
         }
+        
         if (!serviceResult.booleanValue()) {
             actionErrors.add("fileTooBig", new ActionError("errors.fileTooBig", file.getFileName()));
             saveErrors(request, actionErrors);
@@ -1019,10 +1027,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object[] args = { itemCode, fileName };
+        
         try {
             ServiceUtils.executeService(userView, "DeleteItemFile", args);
-        } catch (FenixServiceException e1) {
-
+        } catch (Exception e1) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("unableToDeleteFile", new ActionError("errors.unableToDeleteFile",fileName));
+            saveErrors(request, actionErrors);
         }
 
         return viewSection(mapping, form, request, response);

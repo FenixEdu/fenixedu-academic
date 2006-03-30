@@ -119,6 +119,8 @@ public class InsertApplicationDocumentsAction extends FenixDispatchAction {
             serviceResult = (Boolean[]) ServiceUtils.executeService(userView,
                     "StoreApplicationDocuments", args1);
         } catch (Exception e) {
+            actionErrors.add("error.Exception",new ActionError("error.Exception"));
+            saveErrors(request, actionErrors);
             return mapping.findForward("chooseFile");
         }
 
