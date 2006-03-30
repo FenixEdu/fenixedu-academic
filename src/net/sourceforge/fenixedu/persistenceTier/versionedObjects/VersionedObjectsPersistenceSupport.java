@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEnt
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
@@ -88,7 +87,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contr
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantPaymentEntityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantSubsidyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owner.GrantOwnerVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.InquiriesRegistryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesCoursesResVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesSummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesTeachersResVO;
@@ -346,10 +344,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
         return new OldInquiriesCoursesResVO();
-    }
-
-    public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry() {
-        return new InquiriesRegistryVO();
     }
 
     public IPersistentCMS getIPersistentCms() {

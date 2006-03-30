@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEnt
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
@@ -148,8 +147,6 @@ public interface ISuportePersistente {
     public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary();
 
     public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes();
-
-    public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry();
 
     public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter();
 

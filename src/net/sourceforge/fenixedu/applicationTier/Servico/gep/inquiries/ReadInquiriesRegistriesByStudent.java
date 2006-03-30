@@ -1,8 +1,3 @@
-/*
- * Created on 13/Abr/2005 - 16:20:23
- * 
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,14 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
 
-/**
- * @author João Fialho & Rita Ferreira
- * 
- */
 public class ReadInquiriesRegistriesByStudent extends Service {
 
     public List<InfoInquiriesRegistry> run(InfoStudent infoStudent) throws FenixServiceException,
@@ -31,13 +22,10 @@ public class ReadInquiriesRegistriesByStudent extends Service {
             throw new FenixServiceException("nullInfoStudent");
         }
 
-        IPersistentInquiriesRegistry inquiriesRegistryDAO = persistentSupport.getIPersistentInquiriesRegistry();
-        List<InquiriesRegistry> inquiriesRegistries = inquiriesRegistryDAO.readByStudentId(infoStudent
-                .getIdInternal());
+        Student student = rootDomainObject.readStudentByOID(infoStudent.getIdInternal());
+        List<InquiriesRegistry> inquiriesRegistries = student.getAssociatedInquiriesRegistries();
 
-        List<InfoInquiriesRegistry> infoInquiriesRegistries = new ArrayList<InfoInquiriesRegistry>(
-                inquiriesRegistries.size());
-
+        List<InfoInquiriesRegistry> infoInquiriesRegistries = new ArrayList<InfoInquiriesRegistry>(inquiriesRegistries.size());
         for (InquiriesRegistry inquiriesRegistry : inquiriesRegistries) {
             infoInquiriesRegistries.add(InfoInquiriesRegistry.newInfoFromDomain(inquiriesRegistry));
         }

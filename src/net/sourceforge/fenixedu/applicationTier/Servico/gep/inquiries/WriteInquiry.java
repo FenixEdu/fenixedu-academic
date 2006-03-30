@@ -1,11 +1,5 @@
-/*
- * Created on 11/Abr/2005 - 16:20:23
- * 
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -29,17 +23,10 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
-/**
- * @author João Fialho & Rita Ferreira
- * 
- */
+
 public class WriteInquiry extends Service {
 	
-    public void run(final InfoInquiry inquiry, final InfoStudent infoStudent)
-            throws FenixServiceException, ExcepcaoPersistencia {
-
+    public void run(final InfoInquiry inquiry, final InfoStudent infoStudent) throws FenixServiceException, ExcepcaoPersistencia {
         if (inquiry == null) {
             throw new FenixServiceException("nullInquiry");
         }
@@ -53,49 +40,37 @@ public class WriteInquiry extends Service {
         final InquiriesCourse inquiriesCourse = writeInquiriesCourse(inquiry, iic, infoStudent);
 
         // Writting the inquiries teacher
-
-        List inquiriesTeachersList = inquiry.getInquiriesTeachersList();
+        List<InfoInquiriesTeacher> inquiriesTeachersList = inquiry.getInquiriesTeachersList();
         if (inquiriesTeachersList != null) {
-            Iterator teacherIter = inquiriesTeachersList.iterator();
-            while (teacherIter.hasNext()) {
-                InfoInquiriesTeacher iit = (InfoInquiriesTeacher) teacherIter.next();
-                writeInquiriesTeacher(iit, inquiriesCourse);
+            for (InfoInquiriesTeacher infoInquiriesTeacher : inquiriesTeachersList) {
+                writeInquiriesTeacher(infoInquiriesTeacher, inquiriesCourse);
             }
         }
 
         // Writting the inquiries room
-        List inquiriesRoomsList = inquiry.getInquiriesRoomsList();
+        List<InfoInquiriesRoom> inquiriesRoomsList = inquiry.getInquiriesRoomsList();
         if (inquiriesRoomsList != null) {
-            Iterator roomIter = inquiriesRoomsList.iterator();
-            while (roomIter.hasNext()) {
-                InfoInquiriesRoom iir = (InfoInquiriesRoom) roomIter.next();
-                writeInquiriesRoom(iir, inquiriesCourse);
+            for (InfoInquiriesRoom infoInquiriesRoom : inquiriesRoomsList) {
+                writeInquiriesRoom(infoInquiriesRoom, inquiriesCourse);
             }
         }
 
         // updating the registry
-        IPersistentInquiriesRegistry inquiriesRegistryDAO = persistentSupport.getIPersistentInquiriesRegistry();
-        writeInquiriesRegistry(inquiriesRegistryDAO, inquiriesCourse, infoStudent);
+        writeInquiriesRegistry(inquiriesCourse, infoStudent);
     }
 
     private InquiriesCourse writeInquiriesCourse(final InfoInquiry ii, final InfoInquiriesCourse iic, final InfoStudent infoStudent)
             throws ExcepcaoPersistencia {
 		
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, ii.getExecutionCourse().getIdInternal());
-		ExecutionDegree executionDegreeCourse = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, iic.getExecutionDegreeCourse().getIdInternal());
-        ExecutionDegree executionDegreeStudent = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, ii.getExecutionDegreeStudent().getIdInternal());
-		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, ii.getExecutionPeriod().getIdInternal());
-        Student student = (Student) persistentObject.readByOID(
-                Student.class, infoStudent.getIdInternal());
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(ii.getExecutionCourse().getIdInternal());
+		ExecutionDegree executionDegreeCourse = rootDomainObject.readExecutionDegreeByOID(iic.getExecutionDegreeCourse().getIdInternal());
+        ExecutionDegree executionDegreeStudent = rootDomainObject.readExecutionDegreeByOID(ii.getExecutionDegreeStudent().getIdInternal());
+		ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(ii.getExecutionPeriod().getIdInternal());
+        Student student = rootDomainObject.readStudentByOID(infoStudent.getIdInternal());
 
 		SchoolClass schoolClass = null;
         if (iic.getStudentSchoolClass() != null) {
-			schoolClass = (SchoolClass) persistentObject.readByOID(
-                    SchoolClass.class, iic.getStudentSchoolClass().getIdInternal());
+			schoolClass = rootDomainObject.readSchoolClassByOID(iic.getStudentSchoolClass().getIdInternal());
         }
 
 		return DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse, executionDegreeStudent, executionPeriod, schoolClass, iic,
@@ -103,42 +78,28 @@ public class WriteInquiry extends Service {
     }
 
     private void writeInquiriesTeacher(final InfoInquiriesTeacher iit, final InquiriesCourse inquiriesCourse) throws ExcepcaoPersistencia {
-
         for (ShiftType shiftType : iit.getClassTypes()) {
 
 			InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes = iit
                     .getTeacherOrNonAffiliatedTeacher();
             if (infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getTeacher() != null) {
-				Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
-						infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getIdInternal());
+				Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getIdInternal());
 				inquiriesCourse.createInquiriesTeacher(teacher, shiftType, iit);
-				
-
             } else if (infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getNonAffiliatedTeacher() != null) {
-				NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) persistentObject.readByOID(
-						NonAffiliatedTeacher.class, infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getIdInternal());
+				NonAffiliatedTeacher nonAffiliatedTeacher = rootDomainObject.readNonAffiliatedTeacherByOID(infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getIdInternal());
 				inquiriesCourse.createInquiriesTeacher(nonAffiliatedTeacher, shiftType, iit);
             }
-
         }
-
     }
 
     private void writeInquiriesRoom(final InfoInquiriesRoom iir, final InquiriesCourse inquiriesCourse) throws ExcepcaoPersistencia {
-		OldRoom room = (OldRoom) persistentObject.readByOID(OldRoom.class, iir.getRoom().getIdInternal());
+		OldRoom room = rootDomainObject.readOldRoomByOID(iir.getRoom().getIdInternal());
 		inquiriesCourse.createInquiriesRoom(room, iir);
-
     }
 
-    private InquiriesRegistry writeInquiriesRegistry(
-            final IPersistentInquiriesRegistry inquiriesRegistryDAO,
-            final InquiriesCourse inquiriesCourse, final InfoStudent infoStudent) throws ExcepcaoPersistencia {
-		
-
-        Student student = (Student) persistentObject.readByOID(Student.class, infoStudent
-                .getIdInternal());
-
+    private InquiriesRegistry writeInquiriesRegistry(final InquiriesCourse inquiriesCourse, final InfoStudent infoStudent) throws ExcepcaoPersistencia {
+        Student student = rootDomainObject.readStudentByOID(infoStudent.getIdInternal());
         return DomainFactory.makeInquiriesRegistry(inquiriesCourse.getExecutionCourse(), inquiriesCourse.getExecutionPeriod(), student);
-
     }
+    
 }
