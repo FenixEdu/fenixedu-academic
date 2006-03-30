@@ -34,9 +34,9 @@ public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
         studentCurricularPlan2.addEnrolments(enrolmentStudent3);
         
         CurricularCourse curricularCourse = new CurricularCourse();
-        curricularCourse.addEnrolments(enrolmentStudent1);
-        curricularCourse.addEnrolments(enrolmentStudent2);
-        curricularCourse.addEnrolments(enrolmentStudent3);
+//        curricularCourse.addEnrolments(enrolmentStudent1);
+//        curricularCourse.addEnrolments(enrolmentStudent2);
+//        curricularCourse.addEnrolments(enrolmentStudent3);
         
         executionCourse.addAssociatedCurricularCourses(curricularCourse);
         executionCourse.setExecutionPeriod(executionPeriod);
