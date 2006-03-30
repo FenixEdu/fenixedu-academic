@@ -1,6 +1,3 @@
-/*
- * Created on Jan 24, 2004
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
@@ -10,23 +7,17 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 
-/**
- * @author pica
- * @author barbosa
- */
 public class EditGrantType extends EditDomainObjectService {
 
     @Override
     protected DomainObject readObjectByUnique(InfoObject infoObject) throws ExcepcaoPersistencia {
-        IPersistentGrantType pgs = persistentSupport.getIPersistentGrantType();
         InfoGrantType infoGrantType = (InfoGrantType) infoObject;
-        return pgs.readGrantTypeBySigla(infoGrantType.getSigla());
+        return GrantType.readBySigla(infoGrantType.getSigla());
     }
 
     public void run(InfoGrantType infoGrantType) throws Exception {
-        super.run(new Integer(0), infoGrantType);
+        super.run(Integer.valueOf(0), infoGrantType);
     }
 
 	@Override
@@ -52,4 +43,5 @@ public class EditGrantType extends EditDomainObjectService {
 		grantType.setSource(infoGrantType.getSource());
 		grantType.setState(infoGrantType.getState());
 	}
+    
 }
