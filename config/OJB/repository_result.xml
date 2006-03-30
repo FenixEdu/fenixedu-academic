@@ -177,9 +177,9 @@
 	/>
     <field-descriptor
 		name="format"
-		column="FORMAT"
+		column="FORMAT_TYPE"
 		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.PatentFormat2SqlPatentFormatConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.FormatType2SqlFormatTypeConversion"
 	/>
 	<field-descriptor
 		name="numberPages"
