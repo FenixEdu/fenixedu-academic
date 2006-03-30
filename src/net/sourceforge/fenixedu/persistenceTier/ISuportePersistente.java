@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
@@ -79,9 +78,7 @@ public interface ISuportePersistente {
 
     public IPersistentQuestion getIPersistentQuestion();
 
-    public IPersistentTest getIPersistentTest();
-
-    public IPersistentTestQuestion getIPersistentTestQuestion();
+	public IPersistentTestQuestion getIPersistentTestQuestion();
 
     public IPersistentDistributedTest getIPersistentDistributedTest();
 

@@ -49,7 +49,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
@@ -107,7 +106,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.StudentTestLogVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.StudentTestQuestionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestQuestionVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OldPublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher.OrientationVO;
 
@@ -223,10 +221,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {
         return new DistributedTestAdvisoryVO();
-    }
-
-    public IPersistentTest getIPersistentTest() {
-        return new TestVO();
     }
 
     public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity() {
