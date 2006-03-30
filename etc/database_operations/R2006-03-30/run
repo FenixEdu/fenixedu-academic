@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+executeWithTempFile "Alter table homepage" alterTableHomepage.sql
+executeWithTempFile "Add Key Grant Insurance to Grant Subsidy" addKeyGrantInsuranceToGrantSubsidy.sql
