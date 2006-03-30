@@ -39,7 +39,7 @@ public class ReadExamsByStudent extends Service {
         List infoExamsToEnroll = new ArrayList();
         List infoWrittenEvaluationEnrolmentList = new ArrayList();
 
-        Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
+        Student student = Student.readByUsername(username);
 
         if (student != null) {
             List examsStudentRooms = student.getWrittenEvaluationEnrolments();

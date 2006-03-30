@@ -1,6 +1,6 @@
 /**
-* Aug 7, 2005
-*/
+ * Aug 7, 2005
+ */
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import java.util.ArrayList;
@@ -23,38 +23,41 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 /**
  * @author Ricardo Rodrigues
- *
+ * 
  */
 
 public class ReadClassTimeTableByStudent extends Service {
-    
-    public List run(final String username, final Integer classID, final Integer executionCourseID) throws ExcepcaoPersistencia {
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        
-        Student student = persistentStudent.readByUsername(username);
-        SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(SchoolClass.class, classID);
-        
+
+    public List run(final String username, final Integer classID, final Integer executionCourseID)
+            throws ExcepcaoPersistencia {
+
+        Student student = Student.readByUsername(username);
+        SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(classID);
+
         List studentAttends = student.getAssociatedAttends();
-        
+
         List classShifts = new ArrayList();
         for (Iterator iter = schoolClass.getAssociatedShifts().iterator(); iter.hasNext();) {
             final Shift shift = (Shift) iter.next();
-            if(CollectionUtils.exists(studentAttends,new Predicate(){
+            if (CollectionUtils.exists(studentAttends, new Predicate() {
                 public boolean evaluate(Object arg0) {
                     Attends attends = (Attends) arg0;
-                    boolean result = shift.getDisciplinaExecucao().equals(attends.getDisciplinaExecucao());
-                    if(executionCourseID != null){
-                        result = result & shift.getDisciplinaExecucao().getIdInternal().equals(executionCourseID);
+                    boolean result = shift.getDisciplinaExecucao().equals(
+                            attends.getDisciplinaExecucao());
+                    if (executionCourseID != null) {
+                        result = result
+                                & shift.getDisciplinaExecucao().getIdInternal()
+                                        .equals(executionCourseID);
                     }
                     return result;
-                }})){
+                }
+            })) {
                 classShifts.add(shift);
             }
         }
@@ -124,5 +127,3 @@ public class ReadClassTimeTableByStudent extends Service {
     }
 
 }
-
-

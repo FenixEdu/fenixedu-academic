@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -8,6 +9,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
@@ -16,6 +18,7 @@ import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StudentState;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -50,7 +53,7 @@ public class Student extends Student_Base {
         setRequestedChangeDegree(Boolean.FALSE);
         setRequestedChangeBranch(Boolean.FALSE);
     }
-    
+
     public void delete() {
         super.deleteDomainObject();
     }
@@ -310,7 +313,7 @@ public class Student extends Student_Base {
         return attends;
     }
 
-    public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {        
+    public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
         for (Attends attend : this.getAssociatedAttends()) {
             if (attend.getDisciplinaExecucao().equals(executionCourse)) {
                 return attend;
@@ -319,4 +322,84 @@ public class Student extends Student_Base {
         return null;
     }
 
+    public static Student readByUsername(String username) {
+        for (Student student : RootDomainObject.getInstance().getStudents()) {
+            if (student.getPerson() != null
+                    && student.getPerson().getUsername().equalsIgnoreCase(username)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public static Student readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType) {
+        for (Student student : RootDomainObject.getInstance().getStudents()) {
+            if (student.getNumber().equals(number) && student.getDegreeType().equals(degreeType)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public static List<Student> readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
+            String studentName, String docIdNumber, IDDocumentType idType, Integer studentNumber) {
+
+        List<Student> students = new ArrayList();
+        for (Student student : RootDomainObject.getInstance().getStudents()) {
+            Person person = student.getPerson();
+            if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)
+                    && ((studentName != null && person.getName().equals(studentName)) || studentName == null)
+                    && ((docIdNumber != null && person.getDocumentIdNumber().equals(docIdNumber)) || docIdNumber == null)
+                    && ((idType != null && person.getIdDocumentType().equals(idType)) || idType == null)
+                    && ((studentNumber != null && student.getNumber().equals(studentNumber)) || studentNumber == null)) {
+
+                students.add(student);
+            }
+        }
+        return students;
+    }
+
+    public static List<Student> readAllStudentsBetweenNumbers(Integer fromNumber, Integer toNumber) {
+        int fromNumberInt = fromNumber.intValue();
+        int toNumberInt = toNumber.intValue();
+
+        int studentNumberInt;
+        List<Student> students = new ArrayList();
+        for (Student student : RootDomainObject.getInstance().getStudents()) {
+            studentNumberInt = student.getNumber().intValue();
+            if (studentNumberInt >= fromNumberInt && studentNumberInt <= toNumberInt) {
+                students.add(student);
+            }
+        }
+        return students;
+    }
+
+    public static List<Student> readStudentsByDegreeType(DegreeType degreeType) {
+        List<Student> students = new ArrayList();
+        for (Student student : RootDomainObject.getInstance().getStudents()) {
+            if (student.getDegreeType().equals(degreeType)) {
+                students.add(student);
+            }
+        }
+        return students;
+    }
+
+    public static Integer generateStudentNumber(DegreeType degreeType) {
+        Integer number = Integer.valueOf(0);
+        List<Student> students = readStudentsByDegreeType(degreeType);
+        Collections.sort(students, new BeanComparator("number"));
+        
+        if (!students.isEmpty()) {
+            number = students.get(0).getNumber();
+        }
+        
+        // FIXME: ISTO E UMA SOLUCAO TEMPORARIA DEVIDO A EXISTIREM ALUNOS
+        // NA SECRETARIA QUE
+        // POR UM MOTIVO OU OUTRO NAO SE ENCONTRAM NA BASE DE DADOS
+        if (degreeType.equals(DegreeType.MASTER_DEGREE) && (number.intValue() < 5411)) {
+            number = Integer.valueOf(5411);
+        }
+        
+        return Integer.valueOf(number.intValue() + 1);
+    }
 }

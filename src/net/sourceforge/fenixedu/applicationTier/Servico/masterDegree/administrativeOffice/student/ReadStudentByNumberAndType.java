@@ -32,8 +32,7 @@ public class ReadStudentByNumberAndType extends Service {
         // saber como é feita de facto a distinção
         // dos aluno, referente ao tipo, a partir da página de login.
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
-                degreeType);
+        Student student = Student.readStudentByNumberAndDegreeType(number, degreeType);
 
         if (student != null) {
             infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);

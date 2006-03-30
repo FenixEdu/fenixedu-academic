@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author Luis Cruz
@@ -25,7 +24,6 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
             FenixServiceException {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         Scheduleing scheduleing = persistentFinalDegreeWork
                 .readFinalDegreeWorkScheduleing(executionDegreeOID);
@@ -46,10 +44,11 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
             throw new OutOfCandidacyPeriodException(start + " - " + end);
         }
 
-        Student student = persistentStudent.readByUsername(userView.getUtilizador());
+        Student student = Student.readByUsername(userView.getUtilizador());
 
-        int numberOfCompletedCourses = student.countCompletedCoursesForActiveUndergraduateCurricularPlan();
-        
+        int numberOfCompletedCourses = student
+                .countCompletedCoursesForActiveUndergraduateCurricularPlan();
+
         Integer numberOfNecessaryCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
         if (numberOfCompletedCourses < numberOfNecessaryCompletedCourses.intValue()) {
             throw new InsufficientCompletedCoursesException(numberOfNecessaryCompletedCourses.toString());

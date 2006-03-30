@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -57,12 +56,9 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
         InfoShiftEnrollment infoShiftEnrollment = new InfoShiftEnrollment();
 
         // read student to enroll
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                DegreeType.DEGREE);
+        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
         if (student == null) {
-            student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                    DegreeType.MASTER_DEGREE);
+            student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
         }
         if (student == null) {
             throw new FenixServiceException("errors.impossible.operation");
@@ -130,9 +126,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
             DegreeType tipoCurso, List attendingExecutionCourses) throws ExcepcaoPersistencia {
         List infoAttendingCourses = null;
 
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-
-        Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, tipoCurso);
+        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, tipoCurso);
         List attendList = new ArrayList();
         if (student != null) {
             attendList = student.getAssociatedAttends();

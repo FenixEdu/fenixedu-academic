@@ -15,12 +15,11 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class InsertTutorShipWithManyStudent extends InsertTutorShip {
 
@@ -32,7 +31,7 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
 
         List<Integer> studentsErrors = new ArrayList<Integer>();
         try {
-            //execution degree
+            // execution degree
             ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, executionDegreeId);
             String degreeCode = null;
@@ -41,33 +40,31 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
                 degreeCode = executionDegree.getDegreeCurricularPlan().getDegree().getSigla();
             }
 
-            //teacher            
+            // teacher
             Teacher teacher = Teacher.readByNumber(teacherNumber);
             if (teacher == null) {
                 throw new NonExistingServiceException("error.tutor.unExistTeacher");
             }
 
-            //students in the range [studentNumberFirst, studentNumberSecond]
+            // students in the range [studentNumberFirst, studentNumberSecond]
             for (int i = studentNumberFirst.intValue(); i <= studentNumberSecond.intValue(); i++) {
-                IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
                 Integer studentNumber = new Integer(i);
-                Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                Student student = Student.readStudentByNumberAndDegreeType(studentNumber,
                         DegreeType.DEGREE);
                 if (student == null) {
-                    //student doesn't exists...
+                    // student doesn't exists...
                     studentsErrors.add(studentNumber);
                     continue;
                 }
 
                 if (verifyStudentAlreadyTutor(student, teacher).booleanValue()) {
-                    //student already with tutor...
+                    // student already with tutor...
                     studentsErrors.add(studentNumber);
                     continue;
                 }
 
-                if (!verifyStudentOfThisDegree(student, DegreeType.DEGREE, degreeCode)
-                        .booleanValue()) {
-                    //student doesn't belong to this degree
+                if (!verifyStudentOfThisDegree(student, DegreeType.DEGREE, degreeCode).booleanValue()) {
+                    // student doesn't belong to this degree
                     studentsErrors.add(studentNumber);
                     continue;
                 }
@@ -89,7 +86,7 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
 
         }
 
-        //return student's number list that unchained an error
+        // return student's number list that unchained an error
         return studentsErrors;
     }
 }

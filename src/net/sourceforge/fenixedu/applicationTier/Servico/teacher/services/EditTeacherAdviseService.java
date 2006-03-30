@@ -29,36 +29,40 @@ public class EditTeacherAdviseService extends Service {
 
     public void run(Integer teacherID, Integer executionPeriodID, final Integer studentNumber,
             Double percentage, AdviseType adviseType) throws ExcepcaoPersistencia, FenixServiceException {
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
-                teacherID);
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID);
-        
-        List<Student> students = persistentSupport.getIPersistentStudent().readAll();
-        Student student = (Student) CollectionUtils.find(students, new Predicate(){
+
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+
+        List<Student> students = rootDomainObject.getStudents();
+        Student student = (Student) CollectionUtils.find(students, new Predicate() {
             public boolean evaluate(Object arg0) {
-                Student tempStudent = (Student) arg0; 
+                Student tempStudent = (Student) arg0;
                 return tempStudent.getNumber().equals(studentNumber);
-            }});
-        
-        if(student == null){
+            }
+        });
+
+        if (student == null) {
             throw new FenixServiceException("errors.invalid.student-number");
         }
-        
+
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-        if(teacherService == null){
-            teacherService = DomainFactory.makeTeacherService(teacher,executionPeriod);
+        if (teacherService == null) {
+            teacherService = DomainFactory.makeTeacherService(teacher, executionPeriod);
         }
         List<Advise> advises = student.getAdvisesByTeacher(teacher);
         Advise advise = null;
-        if(advises == null || advises.isEmpty()){
-            advise = DomainFactory.makeAdvise(teacher,student,adviseType,executionPeriod,executionPeriod);
+        if (advises == null || advises.isEmpty()) {
+            advise = DomainFactory.makeAdvise(teacher, student, adviseType, executionPeriod,
+                    executionPeriod);
         } else {
             advise = advises.iterator().next();
         }
 
-        TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionPeriod);        
-        if(teacherAdviseService == null){
-            teacherAdviseService = DomainFactory.makeTeacherAdviseService(teacherService,advise,percentage);
+        TeacherAdviseService teacherAdviseService = advise
+                .getTeacherAdviseServiceByExecutionPeriod(executionPeriod);
+        if (teacherAdviseService == null) {
+            teacherAdviseService = DomainFactory.makeTeacherAdviseService(teacherService, advise,
+                    percentage);
         } else {
             teacherAdviseService.updatePercentage(percentage);
         }

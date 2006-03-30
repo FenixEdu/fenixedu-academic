@@ -13,11 +13,10 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class EstablishFinalDegreeWorkStudentGroup extends Service {
 
@@ -25,12 +24,11 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
             FenixServiceException {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         Group group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(username);
         if (group == null) {
             group = DomainFactory.makeGroup();
-            Student student = persistentStudent.readByUsername(username);
+            Student student = Student.readByUsername(username);
             if (student != null) {
                 GroupStudent groupStudent = DomainFactory.makeGroupStudent();
                 groupStudent.setStudent(student);

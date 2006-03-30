@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author David Santos in Mar 1, 2004
@@ -63,16 +62,13 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends
         return isNonMaster;
     }
 
-    private boolean verifyStudentIsFromMasterDegree(Object[] arguments)
-            throws ExcepcaoPersistencia {
+    private boolean verifyStudentIsFromMasterDegree(Object[] arguments) throws ExcepcaoPersistencia {
         boolean isFromMasterDegree = false;
 
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
-                IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-                Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                        DEGREE_TYPE);
+                Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
                 if (student != null) {
                     isFromMasterDegree = true;
                 }

@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 /**
@@ -25,21 +24,20 @@ import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentExc
  * @author Ricardo Rodrigues
  */
 public class GenerateNewStudentsPasswordsService extends Service {
-    
+
     public List run(Integer fromNumber, Integer toNumber) throws ExistingPersistentException,
             ExcepcaoPersistencia {
 
         List infoPersonList = new ArrayList();
 
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        List studentsList = persistentStudent.readAllBetweenNumbers(fromNumber, toNumber);
+        List studentsList = Student.readAllStudentsBetweenNumbers(fromNumber, toNumber);
         Set<Student> studentsUniqueList = new HashSet(studentsList);
 
         for (Student student : studentsUniqueList) {
 
             Person person = student.getPerson();
             boolean isFirstTimeStudent = person.hasRole(RoleType.FIRST_TIME_STUDENT);
-                        
+
             if (isFirstTimeStudent) {
                 String password = GeneratePassword.getInstance().generatePassword(person);
 

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentByUsername extends Service {
 
     public Object run(String username) throws ExcepcaoPersistencia {
-        final Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
+        final Student student = Student.readByUsername(username);
 
         if (student != null) {
             return InfoStudent.newInfoFromDomain(student);

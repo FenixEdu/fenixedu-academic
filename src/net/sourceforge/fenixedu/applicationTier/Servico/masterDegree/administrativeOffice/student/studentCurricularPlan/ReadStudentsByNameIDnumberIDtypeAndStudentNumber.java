@@ -20,8 +20,8 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber extends Service {
     public List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber)
             throws ExcepcaoPersistencia {
 
-        List masterDegreeStudents = persistentSupport.getIPersistentStudent()
-                .readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(studentName, idNumber,
+        List masterDegreeStudents = Student
+                .readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(studentName, idNumber,
                         idType, studentNumber);
 
         return (List) CollectionUtils.collect(masterDegreeStudents, new Transformer() {
@@ -32,6 +32,6 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber extends Service {
             }
 
         });
-        
+
     }
 }

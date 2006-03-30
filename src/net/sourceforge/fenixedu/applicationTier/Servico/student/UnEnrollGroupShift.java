@@ -34,15 +34,13 @@ public class UnEnrollGroupShift extends Service {
 
     public boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Grouping groupProperties = (Grouping) persistentObject.readByOID(
-                Grouping.class, groupPropertiesCode);
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-                StudentGroup.class, studentGroupCode);
+        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
         if (studentGroup == null)
             throw new InvalidArgumentsServiceException();
@@ -52,7 +50,7 @@ public class UnEnrollGroupShift extends Service {
             throw new InvalidStudentNumberServiceException();
         }
 
-        Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
+        Student student = Student.readByUsername(username);
 
         IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();

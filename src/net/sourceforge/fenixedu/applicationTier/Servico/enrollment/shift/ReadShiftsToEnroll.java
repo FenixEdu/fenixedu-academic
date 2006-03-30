@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author Ricardo Rodrigues
@@ -29,20 +28,18 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 public class ReadShiftsToEnroll extends Service {
 
     public List run(Integer studentNumber) throws ExcepcaoPersistencia, FenixServiceException {
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                DegreeType.DEGREE);
+
+        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
         if (student == null) {
-            student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                    DegreeType.MASTER_DEGREE);
+            student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
         }
         if (student == null) {
             throw new FenixServiceException("errors.impossible.operation");
         }
 
         if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
-        	if(student.getInterruptedStudies().equals(Boolean.FALSE))
-        		throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
+            if (student.getInterruptedStudies().equals(Boolean.FALSE))
+                throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
         List attendList = student.readAttendsInCurrentExecutionPeriod();
@@ -62,12 +59,6 @@ public class ReadShiftsToEnroll extends Service {
         return infoNewShiftEnrollments;
     }
 
-    /**
-     * @param infoNewShiftEnrollment
-     * @param student
-     * @param disciplinaExecucao
-     * @param student
-     */
     private void setShifts(InfoNewShiftEnrollment infoNewShiftEnrollment,
             ExecutionCourse executionCourse, Student student) {
         for (Iterator iter = executionCourse.getAssociatedShifts().iterator(); iter.hasNext();) {

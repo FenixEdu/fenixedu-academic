@@ -6,23 +6,22 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 public class UnEnrollStudentInWrittenEvaluation extends Service {
 
-	public void run(String username, Integer writtenEvaluationOID) throws FenixServiceException,
-			ExcepcaoPersistencia {
-		final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-		final Student student = persistentStudent.readByUsername(username);
+    public void run(String username, Integer writtenEvaluationOID) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-		final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(
-				WrittenEvaluation.class, writtenEvaluationOID);
+        final Student student = Student.readByUsername(username);
 
-		if (writtenEvaluation == null || student == null) {
-			throw new InvalidArgumentsServiceException();
-		}
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject
+                .readEvaluationByOID(writtenEvaluationOID);
 
-		writtenEvaluation.unEnrolStudent(student);
-	}
+        if (writtenEvaluation == null || student == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+
+        writtenEvaluation.unEnrolStudent(student);
+    }
 
 }

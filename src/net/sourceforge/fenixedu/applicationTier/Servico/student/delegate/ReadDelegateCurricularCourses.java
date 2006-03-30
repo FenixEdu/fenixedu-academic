@@ -32,13 +32,15 @@ public class ReadDelegateCurricularCourses extends SearchService {
     @Override
     protected InfoObject newInfoFromDomain(DomainObject object) {
         CurricularCourse curricularCourse = (CurricularCourse) object;
-        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
+        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+                .newInfoFromDomain(curricularCourse);
 
         List infoScopes = (List) CollectionUtils.collect(curricularCourse.getScopes(),
                 new Transformer() {
                     public Object transform(Object arg0) {
                         CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
-                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear.newInfoFromDomain(curricularCourseScope);
+                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
+                                .newInfoFromDomain(curricularCourseScope);
                     }
 
                 });
@@ -51,10 +53,10 @@ public class ReadDelegateCurricularCourses extends SearchService {
     protected List doSearch(HashMap searchParameters) throws ExcepcaoPersistencia {
 
         final String user = (String) searchParameters.get("user");
-        final Student student = persistentSupport.getIPersistentStudent().readByUsername(user);
-        
+        final Student student = Student.readByUsername(user);
+
         Delegate delegate = null;
-        if (! student.getDelegate().isEmpty()) {
+        if (!student.getDelegate().isEmpty()) {
             delegate = student.getDelegate().get(0);
         }
 
@@ -62,10 +64,12 @@ public class ReadDelegateCurricularCourses extends SearchService {
         // report
         List curricularCourses = null;
         if (delegate.getType().booleanValue()) {
-        	curricularCourses = delegate.getDegree().getExecutedCurricularCoursesByExecutionYear(delegate.getExecutionYear());
+            curricularCourses = delegate.getDegree().getExecutedCurricularCoursesByExecutionYear(
+                    delegate.getExecutionYear());
         } else {
             Integer year = new Integer(delegate.getYearType().getValue());
-            curricularCourses = delegate.getDegree().getExecutedCurricularCoursesByExecutionYearAndYear(delegate.getExecutionYear(), year);
+            curricularCourses = delegate.getDegree().getExecutedCurricularCoursesByExecutionYearAndYear(
+                    delegate.getExecutionYear(), year);
         }
         return curricularCourses;
     }

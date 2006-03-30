@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentByNumberAndDegreeType extends Service {
 
     public Object run(Integer number, DegreeType degreeType) throws ExcepcaoPersistencia {
-        final Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
-                degreeType);
-
+        
+        final Student student = Student.readStudentByNumberAndDegreeType(number, degreeType);
+        
         if (student != null) {
             return InfoStudentWithInfoPerson.newInfoFromDomain(student);
         }

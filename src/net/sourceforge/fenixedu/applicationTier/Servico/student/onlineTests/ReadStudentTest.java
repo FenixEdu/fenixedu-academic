@@ -25,21 +25,24 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestion;
  */
 public class ReadStudentTest extends Service {
 
-    public List<InfoStudentTestQuestion> run(String userName, Integer distributedTestId, Boolean log, String path) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public List<InfoStudentTestQuestion> run(String userName, Integer distributedTestId, Boolean log,
+            String path) throws FenixServiceException, ExcepcaoPersistencia {
+        
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
-        Student student = persistentSupport.getIPersistentStudent().readByUsername(userName);
+        
+        Student student = Student.readByUsername(userName);
         if (student == null)
             throw new FenixServiceException();
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,
-                distributedTestId);
+        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(
+                DistributedTest.class, distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
-                student.getIdInternal(), distributedTest.getIdInternal());
+        List<StudentTestQuestion> studentTestQuestionList = persistentSupport
+                .getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
+                        student.getIdInternal(), distributedTest.getIdInternal());
         if (studentTestQuestionList.size() == 0)
             throw new InvalidArgumentsServiceException();
 
@@ -47,7 +50,8 @@ public class ReadStudentTest extends Service {
             InfoStudentTestQuestion infoStudentTestQuestion;
             ParseQuestion parse = new ParseQuestion();
             try {
-                infoStudentTestQuestion = InfoStudentTestQuestionWithAll.newInfoFromDomain(studentTestQuestion);
+                infoStudentTestQuestion = InfoStudentTestQuestionWithAll
+                        .newInfoFromDomain(studentTestQuestion);
                 infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, path);
                 if (studentTestQuestion.getOptionShuffle() == null) {
                     studentTestQuestion.setOptionShuffle(infoStudentTestQuestion.getOptionShuffle());

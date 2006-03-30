@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -177,8 +176,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @throws ExcepcaoPersistencia
      */
     private Student getStudent(Integer studentNumber, DegreeType degreeType) throws ExcepcaoPersistencia {
-        IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
-        return studentDAO.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        return Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
     }
 
     /**
@@ -186,7 +184,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return List
      * @throws ExcepcaoPersistencia
      */
-    private List getExecutionDegreesOfThisCoordinator(String username) throws ExcepcaoPersistencia {       
+    private List getExecutionDegreesOfThisCoordinator(String username) throws ExcepcaoPersistencia {
         Teacher teacher = Teacher.readTeacherByUsername(username);
         return teacher.getCoordinatedExecutionDegrees();
     }
@@ -196,8 +194,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return IStudentCurricularPlan
      * @throws ExcepcaoPersistencia
      */
-    private StudentCurricularPlan getStudentCurricularPlan(Student student)
-            throws ExcepcaoPersistencia {
+    private StudentCurricularPlan getStudentCurricularPlan(Student student) throws ExcepcaoPersistencia {
         IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport
                 .getIStudentCurricularPlanPersistente();
         return studentCurricularPlanDAO.readActiveByStudentNumberAndDegreeType(student.getNumber(),

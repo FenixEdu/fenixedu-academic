@@ -11,13 +11,12 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 import org.apache.commons.collections.Predicate;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class RemoveStudentFromFinalDegreeWorkStudentGroup extends Service {
 
@@ -29,10 +28,9 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup extends Service {
             throws ExcepcaoPersistencia, FenixServiceException {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-        Group group = (Group) persistentObject.readByOID(Group.class, groupOID);
-        Student student = persistentStudent.readByUsername(username);
+        Group group = rootDomainObject.readGroupByOID(groupOID);
+        Student student = Student.readByUsername(username);
         if (group == null || student == null || group.getGroupStudents() == null
                 || student.getIdInternal().equals(studentToRemoveID)) {
             return false;

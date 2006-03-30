@@ -28,10 +28,9 @@ public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername exte
     public StudentGroupAttendacyInformation run(Integer executionCourseID, String username)
             throws BDException, ExcepcaoPersistencia {
         
-        Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
+        Student student = Student.readByUsername(username);
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseID);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
         Attends attendacy = student.readAttendByExecutionCourse(executionCourse);
         if (attendacy == null)

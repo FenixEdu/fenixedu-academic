@@ -15,12 +15,11 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
- *  
+ * 
  */
 public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
 
@@ -32,12 +31,11 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
         List degreeNames = new ArrayList();
         List allStudentsData = new ArrayList();
 
-        IPersistentStudent pStudent = persistentSupport.getIPersistentStudent();
-        List studentsList = pStudent.readAllBetweenNumbers(fromNumber, toNumber);
+        List studentsList = Student.readAllStudentsBetweenNumbers(fromNumber, toNumber);
 
         for (int iter = 0; iter < studentsList.size(); iter++) {
             Student student = (Student) studentsList.get(iter);
-            //TODO se ele está inscrito no semestre actual é porque já pagou as
+            // TODO se ele está inscrito no semestre actual é porque já pagou as
             // propinas...
             if (student.getPayedTuition().booleanValue() && studentHasEnrollments(student)) {
                 InfoStudent infoStudentWithInfoPerson = InfoStudentWithInfoPerson
@@ -53,12 +51,12 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
         return allStudentsData;
     }
 
-    private boolean studentHasEnrollments(Student student)
-            throws ExcepcaoPersistencia {
+    private boolean studentHasEnrollments(Student student) throws ExcepcaoPersistencia {
 
         ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        
-        List<Enrolment> enrollments = student.getActiveStudentCurricularPlan().getEnrolmentsByExecutionPeriod(executionPeriod); 
+
+        List<Enrolment> enrollments = student.getActiveStudentCurricularPlan()
+                .getEnrolmentsByExecutionPeriod(executionPeriod);
 
         for (int iter = 0; iter < enrollments.size(); iter++) {
             Enrolment enrollment = (Enrolment) enrollments.get(iter);

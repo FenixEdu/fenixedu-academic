@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 public class ReadEnroledExecutionCourses extends Service {
@@ -55,9 +54,7 @@ public class ReadEnroledExecutionCourses extends Service {
     public List run(String username) throws ExcepcaoPersistencia {
         List allInfoExecutionCourses = new ArrayList();
 
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-
-        Student student = persistentStudent.readByUsername(username);
+        Student student = Student.readByUsername(username);
         List allAttend = student.getAssociatedAttends();
 
         Iterator iter = allAttend.iterator();

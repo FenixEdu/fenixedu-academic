@@ -22,22 +22,21 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
             InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        final Student student = (Student) persistentSupport.getIPersistentStudent()
-                .readStudentByNumberAndDegreeType(
-                        infoTeacherDegreeFinalProjectStudent.getInfoStudent().getNumber(),
-                        DegreeType.DEGREE);
+        final Student student = Student.readStudentByNumberAndDegreeType(
+                infoTeacherDegreeFinalProjectStudent.getInfoStudent().getNumber(), DegreeType.DEGREE);
         if (student == null) {
             throw new FenixServiceException("message.student-not-found");
         }
 
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
-                        infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod().getIdInternal());
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
+                ExecutionPeriod.class, infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod()
+                        .getIdInternal());
         if (executionPeriod == null) {
             throw new FenixServiceException("message.execution-period-not-found");
         }
 
         final InfoTeacher infoTeacher = infoTeacherDegreeFinalProjectStudent.getInfoTeacher();
-        final Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoTeacher.getIdInternal());
+        final Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
         if (teacher == null) {
             throw new FenixServiceException("message.teacher-not-found");
         }
@@ -56,9 +55,8 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
 
     }
 
-    private void checkStudentFinalDegreeProjectPercentage(final Student student,
-            final Teacher teacher, final ExecutionPeriod executionPeriod, Double percentage)
-            throws StudentPercentageExceed {
+    private void checkStudentFinalDegreeProjectPercentage(final Student student, final Teacher teacher,
+            final ExecutionPeriod executionPeriod, Double percentage) throws StudentPercentageExceed {
 
         for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : student
                 .getTeacherDegreeFinalProjectStudent()) {

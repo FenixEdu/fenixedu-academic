@@ -11,28 +11,26 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 public class CreateStudentCurricularPlan extends Service {
 
-public void run(final Integer studentNumber, final DegreeType degreeType,
+    public void run(final Integer studentNumber, final DegreeType degreeType,
             final StudentCurricularPlanState studentCurricularPlanState,
             final Integer degreeCurricularPlanId, final Date startDate) throws ExcepcaoPersistencia,
             FenixServiceException {
 
-        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-    
-        final Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        final Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (student == null) {
             throw new NonExistingServiceException("exception.student.does.not.exist");
         }
 
         final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
-		if (degreeCurricularPlan == null) {
-			throw new NonExistingServiceException("exception.degree.curricular.plan.does.not.exist");
-		}
+        if (degreeCurricularPlan == null) {
+            throw new NonExistingServiceException("exception.degree.curricular.plan.does.not.exist");
+        }
 
-		DomainFactory.makeStudentCurricularPlan(student, degreeCurricularPlan, studentCurricularPlanState, startDate);
+        DomainFactory.makeStudentCurricularPlan(student, degreeCurricularPlan,
+                studentCurricularPlanState, startDate);
     }
 }

@@ -17,12 +17,10 @@ public class ReadStudentByNumberAndAllDegreeTypes extends Service {
     public Object run(Integer number) throws ExcepcaoPersistencia {
         InfoStudent infoStudent = null;
 
-        Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
-                DegreeType.DEGREE);
+        Student student = Student.readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);
 
         if (student == null) {
-            student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
-                    DegreeType.MASTER_DEGREE);
+            student = Student.readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE);
         }
         if (student != null) {
             infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);

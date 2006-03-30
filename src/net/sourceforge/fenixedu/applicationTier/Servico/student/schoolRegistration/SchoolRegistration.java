@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author Nuno Correia
@@ -32,14 +31,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
  */
 public class SchoolRegistration extends Service {
 
-    public Boolean run(final IUserView userView, final InfoPerson infoPerson, final InfoResidenceCandidacy infoResidenceCandidacy) 
-            throws ExcepcaoPersistencia {
-        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+    public Boolean run(final IUserView userView, final InfoPerson infoPerson,
+            final InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         final String username = userView.getUtilizador();
-        final Student student = persistentStudent.readByUsername(username);
+        final Student student = Student.readByUsername(username);
 
-        
         final Person person = student.getPerson();
 
         if (isStudentRegistered(person)) {
@@ -61,18 +58,21 @@ public class SchoolRegistration extends Service {
             throws ExcepcaoPersistencia {
 
         final Country country;
-        if (infoPerson.getInfoPais() != null && infoPerson.getInfoPais().getNationality() != null){
+        if (infoPerson.getInfoPais() != null && infoPerson.getInfoPais().getNationality() != null) {
             country = Country.readCountryByNationality(infoPerson.getInfoPais().getNationality());
         } else {
-            //If the person country is undefined it is set to default "PORTUGUESA NATURAL DO CONTINENTE" 
-            //In a not distance future this will not be needed since the coutry can never be null
+            // If the person country is undefined it is set to default
+            // "PORTUGUESA NATURAL DO CONTINENTE"
+            // In a not distance future this will not be needed since the coutry
+            // can never be null
             country = Country.readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
         }
-        
-        person.edit(infoPerson,country);
+
+        person.edit(infoPerson, country);
         person.setPassword(PasswordEncryptor.encryptPassword(infoPerson.getPassword()));
 
-        final Role studentRole = findRole((List<Role>) persistentObject.readAll(Role.class), RoleType.STUDENT);
+        final Role studentRole = findRole((List<Role>) persistentObject.readAll(Role.class),
+                RoleType.STUDENT);
         final Role firstTimeStudentRole = findRole(person.getPersonRoles(), RoleType.FIRST_TIME_STUDENT);
 
         person.addPersonRoles(studentRole);
@@ -88,8 +88,8 @@ public class SchoolRegistration extends Service {
         return null;
     }
 
-    private void writeResidenceCandidacy(final Student student, final InfoResidenceCandidacy infoResidenceCandidacy) 
-            throws ExcepcaoPersistencia {
+    private void writeResidenceCandidacy(final Student student,
+            final InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         if (infoResidenceCandidacy != null) {
             final ResidenceCandidacies residenceCandidacy = DomainFactory.makeResidenceCandidacies();
@@ -101,15 +101,15 @@ public class SchoolRegistration extends Service {
         }
     }
 
-    private void updateStudentInfo(final Student student)
-            throws ExcepcaoPersistencia {
+    private void updateStudentInfo(final Student student) throws ExcepcaoPersistencia {
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         student.setRegistrationYear(executionYear);
 
         final StudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
         final Date actualDate = Calendar.getInstance().getTime();
-        //update the dates, since this objects were already created and only now the student is a registrated student in the campus
+        // update the dates, since this objects were already created and only
+        // now the student is a registrated student in the campus
         scp.setStartDate(actualDate);
         scp.setWhen(actualDate);
 

@@ -28,12 +28,10 @@ public class CreateGratuityTransaction extends Service {
 
     public void run(Integer guideEntryID, IUserView userView) throws ExcepcaoPersistencia {
 
-        GuideEntry guideEntry = (GuideEntry) persistentObject.readByOID(GuideEntry.class,
-                guideEntryID);
+        GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
 
         Guide guide = guideEntry.getGuide();
-        Student student = persistentSupport.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson().getIdInternal(),
-                DegreeType.MASTER_DEGREE);
+        Student student = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
         GratuitySituation gratuitySituation = persistentSupport.getIPersistentGratuitySituation()
                 .readGratuitySituationByExecutionDegreeAndStudent(guide.getExecutionDegree().getIdInternal(), student.getIdInternal());
         PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();

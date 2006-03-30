@@ -16,11 +16,10 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
@@ -52,11 +51,11 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
 
             if (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
 
-                //verify if the degree type is MASTER_DEGREE_OBJ
+                // verify if the degree type is MASTER_DEGREE_OBJ
                 if (!verifyDegreeType(arguments, MASTER_DEGREE_TYPE)) {
                     return new String("error.masterDegree.type");
                 }
-                //verify if the student to enroll is a master degree student
+                // verify if the student to enroll is a master degree student
                 if (!verifyStudentType(arguments, MASTER_DEGREE_TYPE)) {
                     return new String("error.student.degree.master");
                 }
@@ -64,12 +63,12 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
 
             if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
                     || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                //verify if the degree type is LICENCIATURA_OBJ
+                // verify if the degree type is LICENCIATURA_OBJ
                 if (!verifyDegreeType(arguments, DEGREE_TYPE)) {
                     return new String("error.degree.type");
                 }
 
-                //verify if the student to enroll is a non master degree
+                // verify if the student to enroll is a non master degree
                 // student
                 if (!verifyStudentType(arguments, DEGREE_TYPE)) {
                     return new String("error.student.degree.nonMaster");
@@ -100,9 +99,7 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
-                IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-                Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                        degreeType);
+                Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
                 if (student != null) {
                     isRightType = true; // right student curricular plan
                 }

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.apache.struts.util.MessageResources;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -19,8 +17,9 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.util.EMail;
+
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author asnr and scpo
@@ -34,14 +33,13 @@ public class UnEnrollStudentInGroup extends Service {
         return (server != null) ? server : "mail.adm";
     }
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
+    private static final MessageResources messages = MessageResources
+            .getMessageResources("resources/GlobalResources");
 
     public Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException,
             ExcepcaoPersistencia {
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-        StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-                StudentGroup.class, studentGroupCode);
+        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
         final List<String> emails = new ArrayList<String>();
         for (final Attends attends : studentGroup.getAttends()) {
@@ -52,7 +50,7 @@ public class UnEnrollStudentInGroup extends Service {
             throw new InvalidSituationServiceException();
         }
 
-        Student student = persistentStudent.readByUsername(userName);
+        Student student = Student.readByUsername(userName);
 
         Grouping groupProperties = studentGroup.getGrouping();
 
@@ -61,25 +59,23 @@ public class UnEnrollStudentInGroup extends Service {
         if (attend == null) {
             throw new NotAuthorizedException();
         }
-        
+
         IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
-        
+
         IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                 .getGroupEnrolmentStrategyInstance(groupProperties);
 
-        boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(attend,
-                studentGroup);
-        
+        boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(attend, studentGroup);
+
         studentGroup.removeAttends(attend);
-                               
+
         if (resultEmpty) {
             groupProperties.removeStudentGroups(studentGroup);
             studentGroup.setShift(null);
             persistentObject.deleteByOID(StudentGroup.class, studentGroup.getIdInternal());
             return Boolean.FALSE;
         }
-
 
         final StringBuilder executionCourseNames = new StringBuilder();
         for (final ExecutionCourse executionCourse : groupProperties.getExecutionCourses()) {
@@ -88,10 +84,10 @@ public class UnEnrollStudentInGroup extends Service {
             }
             executionCourseNames.append(executionCourse.getNome());
         }
-        EMail.send(mailServer(), "Fenix System", messages.getMessage("suporte.mail"),
-                messages.getMessage("message.subject.grouping.change"), emails, new ArrayList(), new ArrayList(),
-                messages.getMessage("message.body.grouping.change.unenrolment", student.getNumber().toString(),
-                        studentGroup.getGroupNumber().toString()));
+        EMail.send(mailServer(), "Fenix System", messages.getMessage("suporte.mail"), messages
+                .getMessage("message.subject.grouping.change"), emails, new ArrayList(),
+                new ArrayList(), messages.getMessage("message.body.grouping.change.unenrolment", student
+                        .getNumber().toString(), studentGroup.getGroupNumber().toString()));
 
         return Boolean.TRUE;
     }

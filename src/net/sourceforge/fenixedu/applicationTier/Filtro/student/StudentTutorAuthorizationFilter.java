@@ -24,101 +24,92 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
  * @author André Fernandes / João Brito
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * 
+ * TODO To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Style - Code Templates
  */
-public class StudentTutorAuthorizationFilter extends AccessControlFilter
-{
-    
-        public StudentTutorAuthorizationFilter()
-        {    
-        }
-        
-        /* (non-Javadoc)
-         * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-         */
-        public void execute(ServiceRequest request, ServiceResponse response)
-                throws FilterException, Exception
-        {
-            IUserView id = (IUserView) request.getRequester();
-            String messageException;
+public class StudentTutorAuthorizationFilter extends AccessControlFilter {
 
-            if (id == null || id.getRoles() == null
-                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType()))
-            {
-                throw new NotAuthorizedFilterException();
+    public StudentTutorAuthorizationFilter() {
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *      pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+            Exception {
+        IUserView id = (IUserView) request.getRequester();
+        String messageException;
+
+        if (id == null || id.getRoles() == null
+                || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())) {
+            throw new NotAuthorizedFilterException();
+        }
+        messageException = studentTutor(id, request.getServiceParameters().parametersArray());
+        if (messageException != null)
+            throw new NotAuthorizedFilterException(messageException);
+
+    }
+
+    /*
+     * (String username, StudentCurricularPlanIDDomainType curricularPlanID,
+     * EnrollmentStateSelectionType criterio)
+     */
+    // devolve null se tudo OK
+    // noAuthorization se algum prob
+    private String studentTutor(IUserView id, Object[] arguments) {
+        try {
+            String username = (String) arguments[0];
+
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+
+            Student student = Student.readByUsername(username);
+            if (student == null) {
+                return "noAuthorization";
             }
-            messageException = studentTutor(id, request.getServiceParameters().parametersArray());
-            if (messageException != null)
-                throw new NotAuthorizedFilterException(messageException);
 
-        }
-
-        /*
-        (String username, StudentCurricularPlanIDDomainType curricularPlanID, EnrollmentStateSelectionType criterio)
-        */
-        //devolve null se tudo OK
-        // noAuthorization se algum prob
-        private String studentTutor(IUserView id, Object[] arguments)
-    	{
-    	    try 
-    	    {
-    	        String username = (String)arguments[0];
-
-    	        Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-    	        
-    	        Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
-    	        if (student == null) 
-		        {
-		            return "noAuthorization";
-		        }
-    	        
-    	        List allStudents = student.getPerson().getStudents();
-    	        if (allStudents == null || allStudents.isEmpty()) 
-		        {
-		            return "noAuthorization";
-		        }
-    	        
-		        if (teacher == null) 
-		        {
-		            return "noAuthorization";
-		        }
-
-		        if (!verifyStudentTutor(teacher, allStudents)) {
-		            return "error.enrollment.notStudentTutor+" + student.getNumber().toString();
-		        }
-    	    }
-    	    catch (Exception exception)
-    	    {
-    	        exception.printStackTrace();
-    	        return "noAuthorization";
-    	    }
-    	    return null;
-    	}
-    	
-        /*
-         * devolve true se teacher for tutor de algum dos students da lista
-         */
-        private boolean verifyStudentTutor(Teacher teacher, List students) throws ExcepcaoPersistencia
-        {
-            Student student;
-            Tutor tutor;
-            
-            for (Iterator it = students.iterator(); it.hasNext();)
-            {
-                student = (Student)it.next();
-                tutor = persistentSupport.getIPersistentTutor().readTutorByTeacherAndStudent(teacher, student);
-
-                if (tutor != null)
-                    return true;
+            List allStudents = student.getPerson().getStudents();
+            if (allStudents == null || allStudents.isEmpty()) {
+                return "noAuthorization";
             }
-            return false;
+
+            if (teacher == null) {
+                return "noAuthorization";
+            }
+
+            if (!verifyStudentTutor(teacher, allStudents)) {
+                return "error.enrollment.notStudentTutor+" + student.getNumber().toString();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return "noAuthorization";
         }
-        
-    	protected RoleType getRoleType()
-    	{
-    	    return RoleType.TEACHER;
-    	}
+        return null;
+    }
+
+    /*
+     * devolve true se teacher for tutor de algum dos students da lista
+     */
+    private boolean verifyStudentTutor(Teacher teacher, List students) throws ExcepcaoPersistencia {
+        Student student;
+        Tutor tutor;
+
+        for (Iterator it = students.iterator(); it.hasNext();) {
+            student = (Student) it.next();
+            tutor = persistentSupport.getIPersistentTutor().readTutorByTeacherAndStudent(teacher,
+                    student);
+
+            if (tutor != null)
+                return true;
+        }
+        return false;
+    }
+
+    protected RoleType getRoleType() {
+        return RoleType.TEACHER;
+    }
 
 }

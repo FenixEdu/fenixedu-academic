@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -47,19 +46,18 @@ public class ReadCurricularCoursesToEnroll extends Service {
 
     private static final int MAX_CURRICULAR_SEMESTERS = 2;
 
-    protected List findCurricularCourses(List curricularCourses, StudentCurricularPlan studentCurricularPlan,
-    		ExecutionPeriod executionPeriod) {
-    	final List result = new ArrayList();
-    	for (final CurricularCourse curricularCourse : (List<CurricularCourse>) curricularCourses) {
-    		if (!studentCurricularPlan
-                    .isCurricularCourseApprovedInCurrentOrPreviousPeriod(
-                            (CurricularCourse) curricularCourse, executionPeriod)
+    protected List findCurricularCourses(List curricularCourses,
+            StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+        final List result = new ArrayList();
+        for (final CurricularCourse curricularCourse : (List<CurricularCourse>) curricularCourses) {
+            if (!studentCurricularPlan.isCurricularCourseApprovedInCurrentOrPreviousPeriod(
+                    (CurricularCourse) curricularCourse, executionPeriod)
                     && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(
                             (CurricularCourse) curricularCourse, executionPeriod)) {
-    			result.add(curricularCourse);
-    		}
-    	}
-    	return result;
+                result.add(curricularCourse);
+            }
+        }
+        return result;
     }
 
     public Object run(InfoStudent infoStudent, DegreeType degreeType, Integer executionPeriodID,
@@ -69,8 +67,8 @@ public class ReadCurricularCoursesToEnroll extends Service {
 
         IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, executionPeriodID);
+        final ExecutionPeriod executionPeriod = rootDomainObject
+                .readExecutionPeriodByOID(executionPeriodID);
 
         if (infoStudent == null || infoStudent.getNumber() == null) {
             throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
@@ -83,8 +81,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
         }
 
         // Execution Degree
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, executionDegreeID);
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
         if (executionDegree == null) {
             throw new FenixServiceException("error.degree.noData");
         }
@@ -104,8 +101,8 @@ public class ReadCurricularCoursesToEnroll extends Service {
         final List curricularSemestersListFinal = verifySemesters(curricularSemestersList);
 
         curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getCurricularCourses();
-        curricularCoursesFromDegreeCurricularPlan = findCurricularCourses(curricularCoursesFromDegreeCurricularPlan,
-        		studentCurricularPlan, executionPeriod);
+        curricularCoursesFromDegreeCurricularPlan = findCurricularCourses(
+                curricularCoursesFromDegreeCurricularPlan, studentCurricularPlan, executionPeriod);
         if (!((curricularYearsList == null || curricularYearsList.size() <= 0) && (curricularSemestersList == null || curricularSemestersList
                 .size() <= 0))) {
 
@@ -245,9 +242,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
      * @throws ExcepcaoPersistencia
      */
     protected Student getStudent(Integer studentNumber) throws ExcepcaoPersistencia {
-        IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
-
-        return studentDAO.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+        return Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
     }
 
     /**

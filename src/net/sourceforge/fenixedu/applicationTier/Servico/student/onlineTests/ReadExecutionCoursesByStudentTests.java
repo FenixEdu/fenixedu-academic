@@ -24,7 +24,7 @@ public class ReadExecutionCoursesByStudentTests extends Service {
         final IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
                 .getIPersistentStudentTestQuestion();
 
-        final Student student = persistentSupport.getIPersistentStudent().readByUsername(userName);
+        final Student student = Student.readByUsername(userName);
         final List<Attends> attends = student.getAssociatedAttends();
 
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();

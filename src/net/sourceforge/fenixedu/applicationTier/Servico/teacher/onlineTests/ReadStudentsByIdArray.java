@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -31,10 +30,9 @@ public class ReadStudentsByIdArray extends Service {
         List<InfoStudent> studentList = new ArrayList<InfoStudent>();
         if (selected != null && selected.length != 0) {
             if (insertByShifts.booleanValue())
-                studentList = returnStudentsFromShiftsArray(persistentSupport, selected);
+                studentList = returnStudentsFromShiftsArray(selected);
             else
-                studentList = returnStudentsFromStudentsArray(persistentSupport, selected,
-                        executionCourseId);
+                studentList = returnStudentsFromStudentsArray(selected, executionCourseId);
         }
         return studentList;
     }
@@ -45,23 +43,23 @@ public class ReadStudentsByIdArray extends Service {
         for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
             if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
                 Integer number = new Integer(lvb.getValue());
-                studentList.add(InfoStudent.newInfoFromDomain((Student) persistentSupport
-                        .getIPersistentStudent().readAllBetweenNumbers(number, number).get(0)));
+                studentList.add(InfoStudent.newInfoFromDomain(Student.readAllStudentsBetweenNumbers(
+                        number, number).get(0)));
             }
         }
 
         return studentList;
     }
 
-    private List<InfoStudent> returnStudentsFromShiftsArray(ISuportePersistente persistentSupport,
-            String[] shifts) throws FenixServiceException, ExcepcaoPersistencia {
+    private List<InfoStudent> returnStudentsFromShiftsArray(String[] shifts)
+            throws FenixServiceException, ExcepcaoPersistencia {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (int i = 0; i < shifts.length; i++) {
             if (shifts[i].equals(bundle.getString("label.allShifts"))) {
                 continue;
             }
-            Shift shift = (Shift) persistentObject.readByOID(Shift.class, new Integer(shifts[i]));
+            Shift shift = rootDomainObject.readShiftByOID(new Integer(shifts[i]));
             List<Student> studentList = shift.getStudents();
             for (Student student : studentList) {
                 InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
@@ -73,9 +71,8 @@ public class ReadStudentsByIdArray extends Service {
         return infoStudentList;
     }
 
-    private List<InfoStudent> returnStudentsFromStudentsArray(ISuportePersistente persistentSupport,
-            String[] students, Integer executionCourseId) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    private List<InfoStudent> returnStudentsFromStudentsArray(String[] students,
+            Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         List<InfoStudent> studentsList = new ArrayList<InfoStudent>();
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);

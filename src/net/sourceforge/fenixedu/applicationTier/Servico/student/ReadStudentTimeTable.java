@@ -19,15 +19,14 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 public class ReadStudentTimeTable extends Service {
 
     public List run(String username) throws ExcepcaoPersistencia {
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        Student student = persistentStudent.readByUsername(username);
+
+        Student student = Student.readByUsername(username);
         ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        
+
         List studentShifts = new ArrayList();
         List<Shift> shifts = student.getShifts();
         for (Shift shift : shifts) {
@@ -85,7 +84,7 @@ public class ReadStudentTimeTable extends Service {
         }
         return infoLesson;
     }
-    
+
     private InfoRoom copyISala2InfoRoom(OldRoom sala) {
         InfoRoom infoRoom = null;
         if (sala != null) {

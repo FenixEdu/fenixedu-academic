@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.student.InfoDelegate;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -19,15 +18,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
  * 
  */
 public class ReadDelegate extends Service {
- 
+
     public InfoDelegate run(HashMap hashMap) throws ExcepcaoPersistencia {
-        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         final String user = (String) hashMap.get("user");
-        final Student student = persistentStudent.readByUsername(user);
-        
+        final Student student = Student.readByUsername(user);
+
         Delegate delegate = null;
-        if (! student.getDelegate().isEmpty()) {
+        if (!student.getDelegate().isEmpty()) {
             delegate = student.getDelegate().get(0);
         }
 

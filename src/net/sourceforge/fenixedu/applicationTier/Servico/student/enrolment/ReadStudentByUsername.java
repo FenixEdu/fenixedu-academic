@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentByUsername extends Service {
     
     public Student run(String studentUsername) throws ExcepcaoPersistencia, FenixServiceException {
-        final Student student = persistentSupport.getIPersistentStudent().readByUsername(studentUsername);
+        final Student student = Student.readByUsername(studentUsername);
         if (student == null) {
             throw new FenixServiceException("error.noStudent");
         }

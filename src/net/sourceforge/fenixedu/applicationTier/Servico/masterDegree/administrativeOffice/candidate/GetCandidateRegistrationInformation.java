@@ -22,39 +22,41 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class GetCandidateRegistrationInformation extends Service {
 
-	public InfoCandidateRegistration run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
-		InfoCandidateRegistration infoCandidateRegistration = null;
+    public InfoCandidateRegistration run(Integer candidateID) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        InfoCandidateRegistration infoCandidateRegistration = null;
 
-		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
-						candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject
+                .readByOID(MasterDegreeCandidate.class, candidateID);
 
-		Student student = persistentSupport.getIPersistentStudent().readByPersonAndDegreeType(
-				masterDegreeCandidate.getPerson().getIdInternal(), DegreeType.MASTER_DEGREE);
+        Student student = masterDegreeCandidate.getPerson().readStudentByDegreeType(
+                DegreeType.MASTER_DEGREE);
 
-		StudentCurricularPlan studentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente()
-				.readActiveStudentCurricularPlan(student.getNumber(), DegreeType.MASTER_DEGREE);
+        StudentCurricularPlan studentCurricularPlan = persistentSupport
+                .getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
+                        student.getNumber(), DegreeType.MASTER_DEGREE);
 
-		infoCandidateRegistration = new InfoCandidateRegistration();
+        infoCandidateRegistration = new InfoCandidateRegistration();
 
-		infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
-				.newInfoFromDomain(masterDegreeCandidate));
-		infoCandidateRegistration
-				.setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree
-						.newInfoFromDomain(studentCurricularPlan));
+        infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
+                .newInfoFromDomain(masterDegreeCandidate));
+        infoCandidateRegistration
+                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree
+                        .newInfoFromDomain(studentCurricularPlan));
 
-		if (studentCurricularPlan.getEnrolments().size() == 0) {
-			infoCandidateRegistration.setEnrolments(null);
-		} else {
-			infoCandidateRegistration.setEnrolments(new ArrayList());
-			Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
-			while (iterator.hasNext()) {
-				Enrolment enrolment = (Enrolment) iterator.next();
-				InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-						.newInfoFromDomain(enrolment);
-				infoCandidateRegistration.getEnrolments().add(infoEnrolment);
-			}
-		}
+        if (studentCurricularPlan.getEnrolments().size() == 0) {
+            infoCandidateRegistration.setEnrolments(null);
+        } else {
+            infoCandidateRegistration.setEnrolments(new ArrayList());
+            Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
+            while (iterator.hasNext()) {
+                Enrolment enrolment = (Enrolment) iterator.next();
+                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
+                        .newInfoFromDomain(enrolment);
+                infoCandidateRegistration.getEnrolments().add(infoEnrolment);
+            }
+        }
 
-		return infoCandidateRegistration;
-	}
+        return infoCandidateRegistration;
+    }
 }

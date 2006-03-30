@@ -21,7 +21,7 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  * 
  * 
  * Created at 26/Ago/2003, 13:35:57
- *  
+ * 
  */
 public class CandidacyAccessFilter extends Filtro {
     public CandidacyAccessFilter() {
@@ -46,12 +46,12 @@ public class CandidacyAccessFilter extends Filtro {
 
     boolean checkCoordinatorRole(IUserView id, Object[] arguments) throws Exception {
         boolean result = true;
-        //        Collection roles = id.getRoles();
-        //        Iterator iter = roles.iterator();
-        //        while (iter.hasNext())
-        //        {
-        //            InfoRole role = (InfoRole) iter.next();
-        //        }
+        // Collection roles = id.getRoles();
+        // Iterator iter = roles.iterator();
+        // while (iter.hasNext())
+        // {
+        // InfoRole role = (InfoRole) iter.next();
+        // }
         if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(id.getRoles(),
                 getRoleType())))
                 || (id == null) || (id.getRoles() == null)) {
@@ -64,10 +64,9 @@ public class CandidacyAccessFilter extends Filtro {
         boolean result = true;
         Integer candidacyID = (Integer) arguments[0];
 
-        Student student = persistentSupport.getIPersistentStudent().readByUsername(id.getUtilizador());
+        Student student = Student.readByUsername(id.getUtilizador());
         if (student != null) {
-            Candidacy candidacy = (Candidacy) persistentObject.readByOID(Candidacy.class,
-                    candidacyID);
+            Candidacy candidacy = rootDomainObject.readCandidacyByOID(candidacyID);
             //
             if ((candidacy != null)
                     && (candidacy.getStudent().getIdInternal().intValue() != student.getIdInternal()

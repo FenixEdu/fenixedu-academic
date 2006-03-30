@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author nmgo
@@ -19,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFilter {
 
     private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
-    
+
     protected Collection getNeededRoles() {
         List<InfoRole> roles = new ArrayList<InfoRole>();
 
@@ -40,12 +39,13 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
 
             if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
                     || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                //verify if the user is employee
+                // verify if the user is employee
                 if (!verifyEmployee(id)) {
                     return "noAuthorization";
                 }
 
-                //verify if the student to enroll is a non master degree student
+                // verify if the student to enroll is a non master degree
+                // student
                 if (!verifyStudentType(arguments, DEGREE_TYPE)) {
                     return "error.student.degree.nonMaster";
                 }
@@ -65,9 +65,7 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = (Integer) arguments[0];
             if (studentNumber != null) {
-                IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-                Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                        degreeType);
+                Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
                 if (student != null) {
                     isRightType = true; // right student curricular plan
                 }
@@ -76,13 +74,13 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
 
         return isRightType;
     }
-    
-    private boolean verifyEmployee(IUserView id) throws ExcepcaoPersistencia{
-        
-        if(id != null && id.getPerson() != null && id.getPerson().getEmployee() != null){
+
+    private boolean verifyEmployee(IUserView id) throws ExcepcaoPersistencia {
+
+        if (id != null && id.getPerson() != null && id.getPerson().getEmployee() != null) {
             return true;
         }
-        
+
         return false;
     }
 

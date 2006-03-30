@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.util.DelegateYearType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -26,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
 public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
@@ -47,17 +45,16 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
      */
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
-            IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-            Student student = persistentStudent.readByUsername(id.getUtilizador());
-            
+            Student student = Student.readByUsername(id.getUtilizador());
+
             Delegate delegate = null;
-            if (! student.getDelegate().isEmpty()) {
+            if (!student.getDelegate().isEmpty()) {
                 delegate = student.getDelegate().get(0);
             }
-            
-            StudentCourseReport studentCourseReport = (StudentCourseReport) persistentObject
-                    .readByOID(StudentCourseReport.class, objectId);
+
+            StudentCourseReport studentCourseReport = rootDomainObject
+                    .readStudentCourseReportByOID(objectId);
             CurricularCourse curricularCourse = studentCourseReport.getCurricularCourse();
             List scopes = curricularCourse.getScopes();
             List years = (List) CollectionUtils.collect(scopes, new Transformer() {
@@ -70,15 +67,13 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
             Iterator iter = years.iterator();
             while (iter.hasNext()) {
                 Integer year = (Integer) iter.next();
-                List delegates = Delegate.getAllByDegreeAndExecutionYearAndYearType(
-                        curricularCourse.getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear(),
+                List delegates = Delegate.getAllByDegreeAndExecutionYearAndYearType(curricularCourse
+                        .getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear(),
                         DelegateYearType.getEnum(year.intValue()));
 
                 if (delegates.contains(delegate))
                     return true;
             }
-            return false;
-        } catch (ExcepcaoPersistencia e) {
             return false;
         } catch (Exception e) {
             return false;

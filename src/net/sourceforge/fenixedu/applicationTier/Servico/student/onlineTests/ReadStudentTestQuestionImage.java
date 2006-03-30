@@ -25,20 +25,20 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class ReadStudentTestQuestionImage extends Service {
 
-    public String run(String userName, Integer distributedTestId, Integer questionId, Integer imageId, String feedbackId, String path)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    public String run(String userName, Integer distributedTestId, Integer questionId, Integer imageId,
+            String feedbackId, String path) throws FenixServiceException, ExcepcaoPersistencia {
         path = path.replace('\\', '/');
-        Student student = persistentSupport.getIPersistentStudent().readByUsername(userName);
+        Student student = Student.readByUsername(userName);
         if (student == null)
             throw new FenixServiceException();
 
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,
-                distributedTestId);
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null)
             throw new FenixServiceException();
 
-        List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
-                student.getIdInternal(), distributedTest.getIdInternal());
+        List<StudentTestQuestion> studentTestQuestionList = persistentSupport
+                .getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
+                        student.getIdInternal(), distributedTest.getIdInternal());
 
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyQuestion().equals(questionId)) {
@@ -46,12 +46,14 @@ public class ReadStudentTestQuestionImage extends Service {
                 InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest
                         .newInfoFromDomain(studentTestQuestion);
                 try {
-                    infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, path);
+                    infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion,
+                            path);
                 } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }
                 int imgIndex = 0;
-                for (LabelValueBean lvb : (List<LabelValueBean>) infoStudentTestQuestion.getQuestion().getQuestion()) {
+                for (LabelValueBean lvb : (List<LabelValueBean>) infoStudentTestQuestion.getQuestion()
+                        .getQuestion()) {
                     if (lvb.getLabel().startsWith("image/")) {
                         imgIndex++;
                         if (imgIndex == imageId.intValue())
@@ -61,7 +63,8 @@ public class ReadStudentTestQuestionImage extends Service {
                 Iterator optionit = infoStudentTestQuestion.getQuestion().getOptions().iterator();
 
                 while (optionit.hasNext()) {
-                    List<LabelValueBean> optionContent = ((QuestionOption) optionit.next()).getOptionContent();
+                    List<LabelValueBean> optionContent = ((QuestionOption) optionit.next())
+                            .getOptionContent();
                     for (LabelValueBean lvb : optionContent) {
                         if (lvb.getLabel().startsWith("image/")) {
                             imgIndex++;
@@ -72,8 +75,9 @@ public class ReadStudentTestQuestionImage extends Service {
                 }
 
                 if (feedbackId != null) {
-                    for (LabelValueBean lvb : (List<LabelValueBean>) ((ResponseProcessing) infoStudentTestQuestion.getQuestion()
-                            .getResponseProcessingInstructions().get(new Integer(feedbackId).intValue())).getFeedback()) {
+                    for (LabelValueBean lvb : (List<LabelValueBean>) ((ResponseProcessing) infoStudentTestQuestion
+                            .getQuestion().getResponseProcessingInstructions().get(
+                                    new Integer(feedbackId).intValue())).getFeedback()) {
                         if (lvb.getLabel().startsWith("image/")) {
                             imgIndex++;
                             if (imgIndex == imageId.intValue())

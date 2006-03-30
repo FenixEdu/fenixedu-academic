@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesF
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
@@ -80,8 +80,7 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
         StudentCurricularPlan studentCurricularPlan = null;
         if (arguments[1] != null) {
 
-            studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(
-                    StudentCurricularPlan.class, (Integer) arguments[1]);
+            studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) arguments[1]);
         } else {
             studentCurricularPlan = persistentStudentCurricularPlan
                     .readActiveByStudentNumberAndDegreeType((Integer) arguments[2],
@@ -90,9 +89,8 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
         return studentCurricularPlan;
     }
 
-    protected Student readStudent(IUserView id) throws ExcepcaoPersistencia {
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        return persistentStudent.readByUsername(id.getUtilizador());
+    protected Student readStudent(IUserView id) throws ExcepcaoPersistencia {        
+        return Student.readByUsername(id.getUtilizador());
     }
 
     protected Student readStudent(Object[] arguments)

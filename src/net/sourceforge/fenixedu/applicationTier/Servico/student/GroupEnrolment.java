@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author asnr and scpo
@@ -35,26 +34,24 @@ public class GroupEnrolment extends Service {
 
     public boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
             String studentUsername) throws FenixServiceException, ExcepcaoPersistencia {
-        final Grouping grouping = (Grouping) persistentObject.readByOID(
-                Grouping.class, groupingID);
+        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupingID);
         if (grouping == null) {
             throw new NonExistingServiceException();
         }
 
-        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        final Student userStudent = persistentStudent.readByUsername(studentUsername);
+        final Student userStudent = Student.readByUsername(studentUsername);
 
         final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
         final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                 .getGroupEnrolmentStrategyInstance(grouping);
-        
+
         if (grouping.getStudentAttend(studentUsername) == null) {
             throw new NoChangeMadeServiceException();
         }
         Shift shift = null;
         if (shiftID != null) {
-            shift = (Shift) persistentObject.readByOID(Shift.class, shiftID);
+            shift = rootDomainObject.readShiftByOID(shiftID);
         }
         Integer result = strategy.enrolmentPolicyNewGroup(grouping, studentUsernames.size() + 1, shift);
 

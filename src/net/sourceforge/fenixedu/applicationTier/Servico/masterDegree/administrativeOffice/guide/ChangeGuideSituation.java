@@ -46,8 +46,8 @@ public class ChangeGuideSituation extends Service {
             throws ExcepcaoInexistente, FenixServiceException, ExistingPersistentException,
             ExcepcaoPersistencia {
 
-        Guide guide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear,
-                guideVersion);
+        Guide guide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber,
+                guideYear, guideVersion);
 
         if (guide == null) {
             throw new ExcepcaoInexistente("Unknown Guide !!");
@@ -103,11 +103,9 @@ public class ChangeGuideSituation extends Service {
                 IPersistentGratuitySituation persistentGratuitySituation = persistentSupport
                         .getIPersistentGratuitySituation();
 
-                Person employeePerson = Person.readPersonByUsername(
-                        userView.getUtilizador());
+                Person employeePerson = Person.readPersonByUsername(userView.getUtilizador());
                 Person studentPerson = guide.getPerson();
-                Student student = persistentSupport.getIPersistentStudent().readByPersonAndDegreeType(
-                        studentPerson.getIdInternal(), DegreeType.MASTER_DEGREE);
+                Student student = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
                 ExecutionDegree executionDegree = guide.getExecutionDegree();
 
                 // Iterate Guide Entries to create Transactions
@@ -139,7 +137,8 @@ public class ChangeGuideSituation extends Service {
                     // Write Insurance Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE)) {
 
-                        List insuranceTransactionList = persistentSupport.getIPersistentInsuranceTransaction()
+                        List insuranceTransactionList = persistentSupport
+                                .getIPersistentInsuranceTransaction()
                                 .readAllNonReimbursedByExecutionYearAndStudent(
                                         executionDegree.getExecutionYear().getIdInternal(),
                                         student.getIdInternal());
@@ -149,10 +148,9 @@ public class ChangeGuideSituation extends Service {
                                     "error.message.transaction.insuranceTransactionAlreadyExists");
                         }
 
-                        DomainFactory.makeInsuranceTransaction(
-                                guideEntry.getPrice(), new Timestamp(Calendar.getInstance()
-                                        .getTimeInMillis()), guideEntry.getDescription(), guide
-                                        .getPaymentType(), TransactionType.INSURANCE_PAYMENT,
+                        DomainFactory.makeInsuranceTransaction(guideEntry.getPrice(), new Timestamp(
+                                Calendar.getInstance().getTimeInMillis()), guideEntry.getDescription(),
+                                guide.getPaymentType(), TransactionType.INSURANCE_PAYMENT,
                                 Boolean.FALSE, guide.getPerson(), personAccount, guideEntry,
                                 executionDegree.getExecutionYear(), student);
 

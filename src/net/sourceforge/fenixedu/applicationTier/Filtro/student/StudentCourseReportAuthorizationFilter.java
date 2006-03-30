@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.util.DelegateYearType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -25,7 +23,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
 public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
@@ -46,20 +44,19 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
      */
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
-            IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-            Student student = persistentStudent.readByUsername(id.getUtilizador());
-            
+            Student student = Student.readByUsername(id.getUtilizador());
+
             Delegate delegate = null;
-            if (! student.getDelegate().isEmpty()) {
+            if (!student.getDelegate().isEmpty()) {
                 delegate = student.getDelegate().get(0);
             }
-            
-            CurricularCourse curricularCourse = (CurricularCourse) persistentObject
-                    .readByOID(CurricularCourse.class, objectId);
 
-            List degreeDelegates = Delegate.getAllByDegreeAndExecutionYear(
-                    curricularCourse.getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear());
+            CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
+                    .readDegreeModuleByOID(objectId);
+
+            List degreeDelegates = Delegate.getAllByDegreeAndExecutionYear(curricularCourse
+                    .getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear());
 
             // if it's a degree delegate then it's allowed
             if (degreeDelegates.contains(delegate))
@@ -76,15 +73,13 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
             Iterator iter = years.iterator();
             while (iter.hasNext()) {
                 Integer year = (Integer) iter.next();
-                List delegates = Delegate.getAllByDegreeAndExecutionYearAndYearType(
-                        curricularCourse.getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear(),
+                List delegates = Delegate.getAllByDegreeAndExecutionYearAndYearType(curricularCourse
+                        .getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear(),
                         DelegateYearType.getEnum(year.intValue()));
 
                 if (delegates.contains(delegate))
                     return true;
             }
-            return false;
-        } catch (ExcepcaoPersistencia e) {
             return false;
         } catch (Exception e) {
             return false;

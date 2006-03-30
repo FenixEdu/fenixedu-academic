@@ -12,20 +12,21 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class readGaugingTestsResults extends Service {
 
-	public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-		Person person = Person.readPersonByUsername(userView.getUtilizador());
+    public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException,
+            ExcepcaoPersistencia {
+       
+        Person person = Person.readPersonByUsername(userView.getUtilizador());
 
-		Student student = persistentSupport.getIPersistentStudent().readByPersonAndDegreeType(person.getIdInternal(),DegreeType.DEGREE);
-		if (student == null) {
-			return null;
-		}
-		
+        Student student = person.readStudentByDegreeType(DegreeType.DEGREE);
+        if (student == null) {
+            return null;
+        }
+        
         GaugingTestResult gaugingTestsResult = student.getAssociatedGaugingTestResult();
 		if (gaugingTestsResult != null) {
 			return InfoGaugingTestResult.newInfoFromDomain(gaugingTestsResult);
 		}
 
 		return null;
-	}
-
+    }
 }

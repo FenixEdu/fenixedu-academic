@@ -38,28 +38,28 @@ import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class EditGroupShift extends Service {
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
+    private static final MessageResources messages = MessageResources
+            .getMessageResources("resources/GlobalResources");
 
     public boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
-                groupingID);
+
+        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-                StudentGroup.class, studentGroupID);
+        final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Shift shift = (Shift) persistentObject.readByOID(Shift.class, newShiftID);
+        final Shift shift = rootDomainObject.readShiftByOID(newShiftID);
         if (grouping.getShiftType() == null || !grouping.getShiftType().equals(shift.getTipo())) {
             throw new InvalidStudentNumberServiceException();
         }
 
-        final Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
+        final Student student = Student.readByUsername(username);
 
         IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
@@ -100,7 +100,8 @@ public class EditGroupShift extends Service {
         return found;
     }
 
-    private void informStudents(final StudentGroup studentGroup, final Student student, final Grouping grouping) {
+    private void informStudents(final StudentGroup studentGroup, final Student student,
+            final Grouping grouping) {
         final List<String> emails = new ArrayList<String>();
         for (final Attends attends : studentGroup.getAttends()) {
             emails.add(attends.getAluno().getPerson().getEmail());
@@ -114,8 +115,9 @@ public class EditGroupShift extends Service {
             executionCourseNames.append(executionCourse.getNome());
         }
         EmailSender.send("Fenix System", messages.getMessage("suporte.mail"), emails, null, null,
-        		messages.getMessage("message.subject.grouping.change"),
-        		messages.getMessage("message.body.grouping.change.shift", student.getNumber().toString(), studentGroup.getGroupNumber().toString()));
+                messages.getMessage("message.subject.grouping.change"), messages.getMessage(
+                        "message.body.grouping.change.shift", student.getNumber().toString(),
+                        studentGroup.getGroupNumber().toString()));
     }
 
 }

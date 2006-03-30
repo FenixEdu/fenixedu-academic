@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -26,10 +25,9 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
             FenixServiceException {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-        Group group = (Group) persistentObject.readByOID(Group.class, groupOID);
-        Student student = persistentStudent.readByUsername(username);
+        Group group = rootDomainObject.readGroupByOID(groupOID);
+        Student student = Student.readByUsername(username);
         if (group == null
                 || student == null
                 || group.getGroupStudents() == null
@@ -49,7 +47,8 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
             throw new MaximumNumberOfStudentsReachedException(scheduleing.getMaximumNumberOfStudents()
                     .toString());
         } else {
-        	int numberOfCompletedCourses = student.countCompletedCoursesForActiveUndergraduateCurricularPlan();
+            int numberOfCompletedCourses = student
+                    .countCompletedCoursesForActiveUndergraduateCurricularPlan();
 
             if (numberOfCompletedCourses < scheduleing.getMinimumNumberOfCompletedCourses().intValue()) {
                 throw new MinimumNumberOfCompletedCoursesNotReachedException(scheduleing

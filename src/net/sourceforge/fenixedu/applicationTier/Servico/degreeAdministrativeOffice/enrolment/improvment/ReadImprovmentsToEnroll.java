@@ -37,14 +37,14 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadImprovmentsToEnroll extends Service {
 
-    public Object run(Integer studentNumber, Integer executionPeriodID) throws FenixServiceException, ExcepcaoPersistencia {
+    public Object run(Integer studentNumber, Integer executionPeriodID) throws FenixServiceException,
+            ExcepcaoPersistencia {
         List previousExecPeriodAprovedEnrol = new ArrayList();
         List beforePreviousExecPeriodAprovedEnrol = new ArrayList();
         List beforeBeforePreviousExecPeriodAprovedEnrol = new ArrayList();
 
         // Read Execution Periods
-        ExecutionPeriod actualExecPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, executionPeriodID);
+        ExecutionPeriod actualExecPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
         if (actualExecPeriod == null) {
             throw new InvalidArgumentsServiceException("error.executionPeriod.notExist");
         }
@@ -55,8 +55,7 @@ public class ReadImprovmentsToEnroll extends Service {
                 .getPreviousExecutionPeriod();
 
         // Read Student
-        Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber,
-                DegreeType.DEGREE);
+        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
 
         if (student == null) {
             throw new InvalidArgumentsServiceException("error.student.notExist");
@@ -103,12 +102,14 @@ public class ReadImprovmentsToEnroll extends Service {
                 .addAll(removeImprovedEnrolmentAndGetImprovmentsOfCurrentPeriod(actualExecPeriod,
                         beforeBeforePreviousExecPeriodAprovedEnrol));
 
-        // From Before Before Previous OccupationPeriod remove the ones with scope in
+        // From Before Before Previous OccupationPeriod remove the ones with
+        // scope in
         // Previous OccupationPeriod
         removeFromBeforeBeforePrevioupersistentSupporteriod(beforeBeforePreviousExecPeriodAprovedEnrol,
                 previousExecPeriod);
 
-        // From previous OccupationPeriod remove the ones that not take place in the
+        // From previous OccupationPeriod remove the ones that not take place in
+        // the
         // Current OccupationPeriod
         previousExecPeriodAprovedEnrol = removeNotInCurrentExecutionPeriod(
                 previousExecPeriodAprovedEnrol, actualExecPeriod);
@@ -122,8 +123,8 @@ public class ReadImprovmentsToEnroll extends Service {
                 alreadyImprovedEnrolmentsInCurrentExecutionPeriod);
     }
 
-    private void removeFromBeforeBeforePrevioupersistentSupporteriod(List beforeBeforePreviousExecPeriodAprovedEnrol,
-            final ExecutionPeriod previousExecPeriod) {
+    private void removeFromBeforeBeforePrevioupersistentSupporteriod(
+            List beforeBeforePreviousExecPeriodAprovedEnrol, final ExecutionPeriod previousExecPeriod) {
         CollectionUtils.filter(beforeBeforePreviousExecPeriodAprovedEnrol, new Predicate() {
 
             public boolean evaluate(Object arg0) {

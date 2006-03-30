@@ -31,15 +31,13 @@ public class CreateInsuranceTransaction extends Service {
     public void run(Integer guideEntryID, IUserView userView) throws ExcepcaoPersistencia,
             ExistingServiceException {
 
-        GuideEntry guideEntry = (GuideEntry) persistentObject.readByOID(GuideEntry.class,
-                guideEntryID);
+        GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
         Guide guide = guideEntry.getGuide();
 
         IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
                 .getIPersistentInsuranceTransaction();
 
-        Student student = persistentSupport.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson().getIdInternal(),
-                DegreeType.MASTER_DEGREE);
+        Student student = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
         Person responsible = Person.readPersonByUsername(userView.getUtilizador());
 
         List insuranceTransactionList = insuranceTransactionDAO

@@ -31,24 +31,23 @@ public class EnrollGroupShift extends Service {
 
     public boolean run(Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode,
             String username) throws FenixServiceException, ExcepcaoPersistencia {
-        Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
-                groupPropertiesCode);
+
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-                StudentGroup.class, studentGroupCode);
+        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
         if (studentGroup == null)
             throw new InvalidArgumentsServiceException();
 
-        Shift shift = (Shift) persistentObject.readByOID(Shift.class, newShiftCode);
+        Shift shift = rootDomainObject.readShiftByOID(newShiftCode);
         if (groupProperties.getShiftType() == null || studentGroup.getShift() != null
                 || (!groupProperties.getShiftType().equals(shift.getTipo()))) {
             throw new InvalidStudentNumberServiceException();
         }
 
-        Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
+        Student student = Student.readByUsername(username);
 
         IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();

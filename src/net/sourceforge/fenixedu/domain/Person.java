@@ -1068,11 +1068,11 @@ public class Person extends Person_Base {
     public void setTelemovel(String telemovel) {
         super.setMobile(telemovel);
     }
-    
+
     // -------------------------------------------------------------
-    // static methods 
+    // static methods
     // -------------------------------------------------------------
-    
+
     public static boolean checkIfUsernameExists(String username, Person thisPerson) {
         for (Login login : Identification.readAllLogins()) {
             if (!login.getUsername().equalsIgnoreCase(thisPerson.getUsername())
@@ -1108,7 +1108,7 @@ public class Person extends Person_Base {
         final User user = User.readUserByUserUId(istUsername);
         return (user != null) ? user.getPerson() : null;
     }
-    
+
     public static Collection<Person> readByDocumentIdNumber(final String documentIdNumber) {
         Collection<Person> result = new ArrayList<Person>();
         for (final Person person : Party.readAllPersons()) {
@@ -1129,17 +1129,18 @@ public class Person extends Person_Base {
         }
         return null;
     }
-    
+
     // used by grant owner
-    public static List<Person> findByName(final String name, final Integer startIndex, final Integer numberOfElementsInSpan) {
+    public static List<Person> findByName(final String name, final Integer startIndex,
+            final Integer numberOfElementsInSpan) {
         if (name == null) {
             return Collections.EMPTY_LIST;
         }
         final List<Person> personsList = findByName(name);
-        return (startIndex != null && numberOfElementsInSpan != null) ?
-                personsList.subList(startIndex, startIndex + numberOfElementsInSpan) : personsList;
+        return (startIndex != null && numberOfElementsInSpan != null) ? personsList.subList(startIndex,
+                startIndex + numberOfElementsInSpan) : personsList;
     }
-    
+
     public static Integer countAllByName(final String name) {
         return Integer.valueOf(findByName(name).size());
     }
@@ -1153,5 +1154,14 @@ public class Person extends Person_Base {
             }
         }
         return result;
+    }
+
+    public Student readStudentByDegreeType(DegreeType degreeType) {
+        for (Student student : this.getStudents()) {
+            if (student.getDegreeType().equals(degreeType)) {
+                return student;
+            }
+        }
+        return null;
     }
 }

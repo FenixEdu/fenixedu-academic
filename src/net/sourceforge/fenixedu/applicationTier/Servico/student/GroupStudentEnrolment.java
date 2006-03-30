@@ -42,12 +42,12 @@ public class GroupStudentEnrolment extends Service {
 
     public Boolean run(Integer studentGroupCode, String username) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-                StudentGroup.class, studentGroupCode);
+        
+        final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
-        final Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
+        final Student student = Student.readByUsername(username);
         if (student == null) {
             throw new InvalidArgumentsServiceException();
         }

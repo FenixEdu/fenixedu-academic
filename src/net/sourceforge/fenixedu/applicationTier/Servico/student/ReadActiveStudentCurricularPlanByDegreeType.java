@@ -12,12 +12,11 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class ReadActiveStudentCurricularPlanByDegreeType extends Service {
 
@@ -27,11 +26,11 @@ public class ReadActiveStudentCurricularPlanByDegreeType extends Service {
 
     public InfoStudentCurricularPlan run(IUserView userView, DegreeType degreeType)
             throws ExcepcaoPersistencia {
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+
         IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
 
-        Student student = persistentStudent.readByUsername(userView.getUtilizador());
+        Student student = Student.readByUsername(userView.getUtilizador());
         StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
                 .readActiveByStudentNumberAndDegreeType(student.getNumber(), degreeType);
 

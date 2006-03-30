@@ -20,19 +20,17 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author Ricardo Rodrigues
- *  
+ * 
  */
 public class ReadInfoRegistrationDeclaration extends Service {
 
     public InfoRegistrationDeclaration run(Integer studentNumber, DegreeType degreeType)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-        Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (student == null) {
             throw new NonExistingStudentServiceException();
         }
@@ -68,13 +66,13 @@ public class ReadInfoRegistrationDeclaration extends Service {
 
         return new InfoRegistrationDeclaration(degreeName, infoExecutionYear, infoPerson);
     }
-    
+
     public class NonExistingStudentServiceException extends NonExistingServiceException {
     }
 
     public class NonExistingActiveSCPServiceException extends NonExistingServiceException {
     }
-    
+
     public class NonExistingEnrollmentServiceException extends NonExistingServiceException {
     }
 

@@ -12,8 +12,7 @@ public class ReadStudentByNumber extends Service {
     public Object run(Integer number, DegreeType degreeType) throws ExcepcaoPersistencia {
 
         InfoStudent infoStudent = null;
-        Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
-                degreeType);
+        Student student = Student.readStudentByNumberAndDegreeType(number, degreeType);
 
         if (student != null) {
             infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);

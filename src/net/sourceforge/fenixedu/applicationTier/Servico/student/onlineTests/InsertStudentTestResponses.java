@@ -61,7 +61,7 @@ public class InsertStudentTestResponses extends Service {
 
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         this.path = path.replace('\\', '/');
-        Student student = persistentSupport.getIPersistentStudent().readByUsername(userName);
+        Student student = Student.readByUsername(userName);
         if (student == null)
             throw new FenixServiceException();
         if (student.getNumber().compareTo(studentNumber) != 0)

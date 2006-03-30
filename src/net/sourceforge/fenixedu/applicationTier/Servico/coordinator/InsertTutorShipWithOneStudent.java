@@ -12,12 +12,11 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class InsertTutorShipWithOneStudent extends InsertTutorShip {
 
@@ -30,7 +29,7 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
         Boolean result = Boolean.FALSE;
         try {
 
-            //execution degree
+            // execution degree
             ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, executionDegreeId);
             String degreeCode = null;
@@ -39,32 +38,29 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
                 degreeCode = executionDegree.getDegreeCurricularPlan().getDegree().getSigla();
             }
 
-            //teacher           
+            // teacher
             Teacher teacher = Teacher.readByNumber(teacherNumber);
             if (teacher == null) {
                 throw new NonExistingServiceException("error.tutor.unExistTeacher");
             }
 
-            //student
-            IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-            Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                    DegreeType.DEGREE);
+            // student
+            Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
             if (student == null) {
                 throw new NonExistingServiceException("error.tutor.unExistStudent");
             }
 
             if (verifyStudentAlreadyTutor(student, teacher).booleanValue()) {
-                //student already with tutor...
+                // student already with tutor...
                 throw new FenixServiceException("error.tutor.studentAlreadyWithTutor");
             }
 
-            if (!verifyStudentOfThisDegree(student, DegreeType.DEGREE, degreeCode)
-                    .booleanValue()) {
-                //student doesn't belong to this degree
+            if (!verifyStudentOfThisDegree(student, DegreeType.DEGREE, degreeCode).booleanValue()) {
+                // student doesn't belong to this degree
                 throw new FenixServiceException("error.tutor.studentNoDegree");
             }
 
-            IPersistentTutor persistentTutor =  persistentSupport.getIPersistentTutor();
+            IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
             Tutor tutor = persistentTutor.readTutorByTeacherAndStudent(teacher, student);
             if (tutor == null) {
                 tutor = DomainFactory.makeTutor();

@@ -17,7 +17,7 @@ import pt.utl.ist.berserk.ServiceResponse;
  * 
  * 
  * Created at 26/Ago/2003, 13:35:57
- *  
+ * 
  */
 public class CandidacyOwnershipFilter extends Filtro {
     public CandidacyOwnershipFilter() {
@@ -32,15 +32,13 @@ public class CandidacyOwnershipFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         Integer candidacyID = (Integer) getServiceCallArguments(request)[0];
 
-        Student student = persistentSupport.getIPersistentStudent().readByUsername(
-                getRemoteUser(request).getUtilizador());
-        Candidacy candidacy = (Candidacy) persistentObject.readByOID(Candidacy.class, candidacyID);
+        Student student = Student.readByUsername(getRemoteUser(request).getUtilizador());
+        Candidacy candidacy = rootDomainObject.readCandidacyByOID(candidacyID);
         //
         if ((candidacy != null)
                 && (candidacy.getStudent().getIdInternal().intValue() != student.getIdInternal()
                         .intValue()))
             throw new NotAuthorizedException();
-
 
     }
 }

@@ -17,12 +17,11 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class EnrollmentLEECWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
     private static String DEGREE_LEEC_CODE = new String("LEEC");
@@ -44,17 +43,17 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
 
     protected String hasPrevilege(IUserView id, Object[] arguments) {
         try {
-            //verify if the degree type is LICENCIATURA_OBJ
+            // verify if the degree type is LICENCIATURA_OBJ
             if (!verifyDegreeTypeIsNonMaster(arguments)) {
                 return new String("error.degree.type");
             }
 
-            //verify if the student to enroll is a non master degree student
+            // verify if the student to enroll is a non master degree student
             if (!verifyStudentNonMasterDegree(arguments)) {
                 return new String("error.student.degree.nonMaster");
             }
 
-            //verify if the student to enroll is a LEEC degree student
+            // verify if the student to enroll is a LEEC degree student
             if (!verifyStudentLEEC(arguments)) {
                 return new String("error.student.degree.nonMaster");
             }
@@ -76,18 +75,15 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
         return isNonMaster;
     }
 
-    private boolean verifyStudentNonMasterDegree(Object[] arguments)
-            throws ExcepcaoPersistencia {
+    private boolean verifyStudentNonMasterDegree(Object[] arguments) throws ExcepcaoPersistencia {
         boolean isNonMaster = false;
 
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
-                IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-                Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                        DEGREE_TYPE);
+                Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
                 if (student != null) {
-                    isNonMaster = true; //non master student
+                    isNonMaster = true; // non master student
                 }
             }
         }
@@ -95,9 +91,8 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
         return isNonMaster;
     }
 
-    //with student number and degree type
-    private boolean verifyStudentLEEC(Object[] arguments)
-            throws ExcepcaoPersistencia {
+    // with student number and degree type
+    private boolean verifyStudentLEEC(Object[] arguments) throws ExcepcaoPersistencia {
         boolean isLEEC = false;
 
         if (arguments != null && arguments[0] != null) {

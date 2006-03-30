@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVers
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
@@ -90,7 +89,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SentSmsVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentCurricularPlanVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ManagementPositionCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractRegimeVO;
@@ -193,10 +191,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentExternalPerson getIPersistentExternalPerson() {
         return new ExternalPersonVO();
-    }
-
-    public IPersistentStudent getIPersistentStudent() {
-        return new StudentVO();
     }
 
     public IPersistentSibsPaymentFile getIPersistentSibsPaymentFile() {
@@ -399,19 +393,16 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new InquiriesRegistryVO();
     }
 
-	public IPersistentCMS getIPersistentCms()
-	{
-		return new CMSVO();
-	}
+    public IPersistentCMS getIPersistentCms() {
+        return new CMSVO();
+    }
 
-	public IPersistentMailAddressAlias getIPersistentMailAdressAlias()
-	{
-		return new MailAdressAliasVO();
-	}
-	
-	public IPersistentMailingList getIPersistentMailingList()
-	{
-		return new MailingListVO();
-	}	
-	    
+    public IPersistentMailAddressAlias getIPersistentMailAdressAlias() {
+        return new MailAdressAliasVO();
+    }
+
+    public IPersistentMailingList getIPersistentMailingList() {
+        return new MailingListVO();
+    }
+
 }

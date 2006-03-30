@@ -52,8 +52,8 @@ public class ProcessSibsPaymentFile extends Service {
 
         }
 
-        final SibsPaymentFile storedPaymentFile = persistentSupport.getIPersistentSibsPaymentFile().readByFilename(
-                filename);
+        final SibsPaymentFile storedPaymentFile = persistentSupport.getIPersistentSibsPaymentFile()
+                .readByFilename(filename);
         if (storedPaymentFile != null) {
             throw new DuplicateSibsPaymentFileProcessingServiceException(
                     "error.exception.duplicateSibsPaymentFileProcessing");
@@ -64,8 +64,8 @@ public class ProcessSibsPaymentFile extends Service {
         buildTransactionsAndStoreFile(sibsPaymentFile, userView);
     }
 
-    private void buildTransactionsAndStoreFile(SibsPaymentFile sibsPaymentFile,
-            IUserView userView) throws ExcepcaoPersistencia {
+    private void buildTransactionsAndStoreFile(SibsPaymentFile sibsPaymentFile, IUserView userView)
+            throws ExcepcaoPersistencia {
 
         List<SibsPaymentFileEntry> sibsPaymentFileEntries = sibsPaymentFile.getSibsPaymentFileEntries();
 
@@ -76,7 +76,8 @@ public class ProcessSibsPaymentFile extends Service {
         // lets build transactions for the entries in file
         final IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
                 .getIPersistentInsuranceTransaction();
-        final IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
+        final IPersistentGratuitySituation gratuitySituationDAO = persistentSupport
+                .getIPersistentGratuitySituation();
         for (int i = 0; i < totalPaymentEntries; i++) {
 
             SibsPaymentFileEntry sibsPaymentFileEntry = sibsPaymentFileEntries.get(i);
@@ -92,12 +93,13 @@ public class ProcessSibsPaymentFile extends Service {
             // if (isSmsPayment())) {
             // do persistentSupportecific code if any
             // }
-            // else { do persistentSupportecific code to insurance and gratuities }
+            // else { do persistentSupportecific code to insurance and
+            // gratuities }
 
             // DegreeType should be changed in future to support Degree Student
             // gratuity
-            Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(
-                    sibsPaymentFileEntry.getStudentNumber(), DegreeType.MASTER_DEGREE);
+            Student student = Student.readStudentByNumberAndDegreeType(sibsPaymentFileEntry
+                    .getStudentNumber(), DegreeType.MASTER_DEGREE);
 
             int year = sibsPaymentFileEntry.getYear().intValue();
             String executionYearName = year + "/" + (year + 1);
@@ -111,8 +113,7 @@ public class ProcessSibsPaymentFile extends Service {
                 continue;
             }
 
-            Person responsiblePerson = Person.readPersonByUsername(
-                    userView.getUtilizador());
+            Person responsiblePerson = Person.readPersonByUsername(userView.getUtilizador());
 
             PersonAccount personAccount = student.getPerson().getAssociatedPersonAccount();
             if (personAccount == null) {
@@ -138,9 +139,9 @@ public class ProcessSibsPaymentFile extends Service {
                         // create the insurance transaction payment for the
                         // execution year
                         DomainFactory.makeInsuranceTransaction(sibsPaymentFileEntry.getPayedValue(),
-                                        new Timestamp(new Date().getTime()), null, PaymentType.SIBS,
-                                        TransactionType.INSURANCE_PAYMENT, new Boolean(false),
-                                        responsiblePerson, personAccount, null, executionYear, student);
+                                new Timestamp(new Date().getTime()), null, PaymentType.SIBS,
+                                TransactionType.INSURANCE_PAYMENT, new Boolean(false),
+                                responsiblePerson, personAccount, null, executionYear, student);
                     }
                 }
                 continue;
@@ -160,8 +161,8 @@ public class ProcessSibsPaymentFile extends Service {
                     continue;
                 }
 
-                ExecutionDegree candidateExecutionDegree = persistentSupport.getIPersistentExecutionDegree()
-                        .readByDegreeCurricularPlanAndExecutionYear(
+                ExecutionDegree candidateExecutionDegree = persistentSupport
+                        .getIPersistentExecutionDegree().readByDegreeCurricularPlanAndExecutionYear(
                                 studentCurricularPlan.getDegreeCurricularPlan().getName(),
                                 studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla(),
                                 executionYear.getYear());
@@ -223,8 +224,8 @@ public class ProcessSibsPaymentFile extends Service {
 
     }
 
-    private void findDuplicatesAndMarkThem(List<SibsPaymentFileEntry> sibsPaymentFileEntries, int totalPaymentEntries)
-            throws ExcepcaoPersistencia {
+    private void findDuplicatesAndMarkThem(List<SibsPaymentFileEntry> sibsPaymentFileEntries,
+            int totalPaymentEntries) throws ExcepcaoPersistencia {
         for (int i = 0; i < totalPaymentEntries; i++) {
 
             SibsPaymentFileEntry sibsPaymentFileEntry = sibsPaymentFileEntries.get(i);
@@ -240,10 +241,11 @@ public class ProcessSibsPaymentFile extends Service {
                 // if (isSmsPayment())) {
                 // do persistentSupportecific code if any
                 // }
-                // else { do persistentSupportecific code to insurance and gratuities }
+                // else { do persistentSupportecific code to insurance and
+                // gratuities }
 
-                markDuplicateGratuityAndInsurancePayments(sibsPaymentFileEntry,
-                        sibsPaymentFileEntries, totalPaymentEntries, i);
+                markDuplicateGratuityAndInsurancePayments(sibsPaymentFileEntry, sibsPaymentFileEntries,
+                        totalPaymentEntries, i);
             }
         }
     }
@@ -276,9 +278,9 @@ public class ProcessSibsPaymentFile extends Service {
         return transactionType;
     }
 
-    private void markDuplicateGratuityAndInsurancePayments(
-            SibsPaymentFileEntry sibsPaymentFileEntry, List sibsPaymentFileEntries,
-            int totalPaymentEntries, int currentIndex) throws ExcepcaoPersistencia {
+    private void markDuplicateGratuityAndInsurancePayments(SibsPaymentFileEntry sibsPaymentFileEntry,
+            List sibsPaymentFileEntries, int totalPaymentEntries, int currentIndex)
+            throws ExcepcaoPersistencia {
 
         // first check if the gratuity or insurance payment is repeated inside
         // the file

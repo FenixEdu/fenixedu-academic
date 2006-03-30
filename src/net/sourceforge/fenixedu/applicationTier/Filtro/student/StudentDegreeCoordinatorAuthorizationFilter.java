@@ -67,7 +67,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
             String username = (String) arguments[0];
             IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport.getIPersistentFinalDegreeWork();
 
-            Student student1 = persistentSupport.getIPersistentStudent().readByUsername(username);
+            Student student1 = Student.readByUsername(username);
 
             List students = student1.getPerson().getStudents();
 
