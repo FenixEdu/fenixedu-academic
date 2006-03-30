@@ -105,15 +105,6 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
             
             List alreadyInsertedStudents = new ArrayList();
             List attendsWithoutDuplicatedStudents = new ArrayList();
-            for (Object obj : infoDTO.getInfoAttends()) {
-            	Attends attends = (Attends)obj;
-				if (!alreadyInsertedStudents.contains(attends.getAluno()))
-				{
-					alreadyInsertedStudents.add(attends.getAluno());
-					attendsWithoutDuplicatedStudents.add(attends);
-				}
-			}
-            infoDTO.setInfoAttends(attendsWithoutDuplicatedStudents);
             
             Collections.sort(infoDTO.getInfoAttends(), new BeanComparator("infoAttends.aluno.number"));
 
@@ -202,9 +193,6 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
                     userView, "ReadStudentsWithAttendsByExecutionCourse", args);
 
             infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
-            // remove duplicated attends
-            final Set<InfoFrequenta> attends = new HashSet<InfoFrequenta>(infoDTO.getInfoAttends());
-            infoDTO.setInfoAttends(new ArrayList<InfoFrequenta>(attends));
             
             Collections.sort(infoDTO.getInfoAttends(), new BeanComparator("infoAttends.aluno.number"));
 
