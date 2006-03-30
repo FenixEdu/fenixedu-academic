@@ -13,7 +13,7 @@ public class DeleteOtherTypeCreditLineService extends DeleteDomainObjectService 
     }
 
     protected IPersistentObject getIPersistentObject() {
-        return persistentSupport.getIPersistentOtherTypeCreditLine();
+        return persistentObject;
     }
 	
 	protected void deleteDomainObject(DomainObject domainObject) throws ExcepcaoPersistencia {

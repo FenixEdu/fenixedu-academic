@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
-import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
@@ -145,8 +144,6 @@ public interface ISuportePersistente
 	public IPersistentGratuitySituation getIPersistentGratuitySituation();
 
 	public IPersistentTutor getIPersistentTutor();
-
-	public IPersistentOtherTypeCreditLine getIPersistentOtherTypeCreditLine();
 
 	public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine();
 
