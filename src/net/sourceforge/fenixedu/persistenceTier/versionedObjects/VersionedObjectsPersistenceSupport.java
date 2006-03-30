@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
-import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
@@ -76,7 +75,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SentSmsVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentCurricularPlanVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ManagementPositionCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractRegimeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantCostCenterVO;
@@ -166,10 +164,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime() {
         return null;
-    }
-
-    public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine() {
-        return new ManagementPositionCreditLineVO();
     }
 
     public IPersistentShiftProfessorship getIPersistentShiftProfessorship() {

@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailAddressAliasOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailingListOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.credits.ManagementPositionCreditLineOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractRegimeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantCostCenterOJB;
@@ -64,7 +63,6 @@ import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
-import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
@@ -395,10 +393,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentGrantContractRegime getIPersistentGrantContractRegime() {
         return new GrantContractRegimeOJB();
-    }
-
-    public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine() {
-        return new ManagementPositionCreditLineOJB();
     }
 
     public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork() {

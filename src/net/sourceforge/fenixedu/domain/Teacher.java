@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
+import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
@@ -782,6 +783,17 @@ public class Teacher extends Teacher_Base {
             }
         }
         return teacherDegreeFinalProjectStudents;
+    }
+
+    public List<ManagementPositionCreditLine> getManagementPositionsFor(ExecutionPeriod executionPeriod) {
+        final List<ManagementPositionCreditLine> result = new ArrayList<ManagementPositionCreditLine>();
+        for (final ManagementPositionCreditLine managementPositionCreditLine : this.getManagementPositions()) {
+            if (managementPositionCreditLine.getStart().before(executionPeriod.getEndDate()) 
+                    && managementPositionCreditLine.getEnd().after(executionPeriod.getBeginDate())) {
+                result.add(managementPositionCreditLine);
+            }
+        }
+        return result;
     }
 
 }

@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -225,11 +224,7 @@ public class ReadTeacherCreditsSheet extends Service {
     }
 
     private List readManagementPositions(Teacher teacher, ExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-        IPersistentManagementPositionCreditLine managementPosistionCreditLineDAO = persistentSupport
-                .getIPersistentManagementPositionCreditLine();
-
-        List managementPositions = managementPosistionCreditLineDAO.readByTeacherAndExecutionPeriod(
-                teacher.getIdInternal(), executionPeriod.getBeginDate(), executionPeriod.getEndDate());
+        final List<ManagementPositionCreditLine> managementPositions = teacher.getManagementPositionsFor(executionPeriod);
 
         List infoManagementPositions = (List) CollectionUtils.collect(managementPositions,
                 new Transformer() {
