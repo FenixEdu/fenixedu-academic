@@ -49,11 +49,9 @@ public class ProcessSibsPaymentFile extends Service {
         if (filename.trim().length() == 0) {
             throw new DuplicateSibsPaymentFileProcessingServiceException(
                     "error.exception.duplicateSibsPaymentFileProcessing");
-
         }
 
-        final SibsPaymentFile storedPaymentFile = persistentSupport.getIPersistentSibsPaymentFile()
-                .readByFilename(filename);
+        final SibsPaymentFile storedPaymentFile = SibsPaymentFile.readByFilename(filename);
         if (storedPaymentFile != null) {
             throw new DuplicateSibsPaymentFileProcessingServiceException(
                     "error.exception.duplicateSibsPaymentFileProcessing");

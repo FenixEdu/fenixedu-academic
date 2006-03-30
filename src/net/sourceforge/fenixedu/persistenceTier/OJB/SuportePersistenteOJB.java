@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantPaymentE
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantSubsidyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.owner.GrantOwnerOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gratuity.masterDegree.SibsPaymentFileEntryOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.gratuity.masterDegree.SibsPaymentFileOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.guide.ReimbursementGuideOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.InquiriesRegistryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesCoursesResOJB;
@@ -77,7 +76,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
-import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFile;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
@@ -430,10 +428,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentPublicationFormat getIPersistentPublicationFormat() {
         return new PublicationFormatOJB();
-    }
-
-    public IPersistentSibsPaymentFile getIPersistentSibsPaymentFile() {
-        return new SibsPaymentFileOJB();
     }
 
     public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry() {

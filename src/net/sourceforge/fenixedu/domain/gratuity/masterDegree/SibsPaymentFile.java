@@ -1,15 +1,7 @@
-/*
- * Created on Apr 22, 2004
- */
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-
-/**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
- *         (naat@mega.ist.utl.pt)
- */
 public class SibsPaymentFile extends SibsPaymentFile_Base {
 
 	public SibsPaymentFile() {
@@ -21,5 +13,14 @@ public class SibsPaymentFile extends SibsPaymentFile_Base {
 		this();
 		setFilename(filename);
 	}
+
+    public static SibsPaymentFile readByFilename(String filename) {
+        for (SibsPaymentFile sibsPaymentFile : RootDomainObject.getInstance().getSibsPaymentFiles()) {
+            if (sibsPaymentFile.getFilename().equals(filename)) {
+                return sibsPaymentFile;
+            }
+        }
+        return null;
+    }
 
 }
