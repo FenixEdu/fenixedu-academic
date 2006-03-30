@@ -76,8 +76,6 @@ public interface ISuportePersistente {
 
     public IPersistentQuestion getIPersistentQuestion();
 
-    public IPersistentTest getIPersistentTest();
-
     public IPersistentTestQuestion getIPersistentTestQuestion();
 
     public IPersistentDistributedTest getIPersistentDistributedTest();
