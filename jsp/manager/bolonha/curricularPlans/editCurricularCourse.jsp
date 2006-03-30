@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
-<ft:tilesView definition="definition.degreeAdministrativeOffice.masterPage" attributeName="body-inline">
+<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
@@ -140,7 +140,7 @@
 			<h:outputText value="<br/>" escape="false"/>
 		</h:panelGroup>
 
-		<h:dataTable value="#{CurricularCourseManagement.curricularCourseParentContexts}" var="context">
+		<h:dataTable value="#{CurricularCourseManagement.curricularCourse.parentContexts}" var="context">
 			<h:column>
 				<h:panelGroup rendered="#{context.idInternal != CurricularCourseManagement.contextID}">
 					<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
@@ -201,7 +201,7 @@
 					<h:outputText value="</p>" escape="false"/>
 					
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
-					<h:outputText escape="false" value="<input id='contextID' name='contextID' type='hidden' value='#{CurricularCourseManagement.contextID}'/>"/>
+					<h:outputText escape="false" value="<input id='contextID' name='contextID' type='hidden' value='#{context.idInternal}'/>"/>
 					<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['update']}"
 							action="#{CurricularCourseManagement.editContext}"/>
 					<h:outputText value=" " escape="false"/>							

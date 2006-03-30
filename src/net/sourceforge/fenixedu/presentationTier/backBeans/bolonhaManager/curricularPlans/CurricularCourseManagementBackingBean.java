@@ -412,7 +412,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         }
         return result;
     }
-
+    
+    public List<Context> getCurricularCourseParentContexts() throws FenixFilterException, FenixServiceException {
+        return getCurricularCourse().getParentContextsByExecutionYear(getExecutionYear());
+    }
 
     public String createCurricularCourse() throws FenixFilterException {        
         try {

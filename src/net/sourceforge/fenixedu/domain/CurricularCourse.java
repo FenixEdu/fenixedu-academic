@@ -837,6 +837,16 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return false;
     }
+    
+    public List<Context> getParentContextsByExecutionYear(ExecutionYear executionYear) {
+        final List<Context> result = new ArrayList<Context>();
+        for (final Context context : this.getParentContexts()) {
+            if (executionYear == null || context.isValid(executionYear)) {
+                result.add(context);
+            }
+        }
+        return result;
+    }
 
     public static List<CurricularCourse> readByCurricularStage(CurricularStage curricularStage){
     	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
@@ -850,6 +860,5 @@ public class CurricularCourse extends CurricularCourse_Base {
 		}
     	return result;
     }
-    
 
 }

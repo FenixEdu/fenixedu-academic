@@ -41,17 +41,7 @@
 
 		</h:panelGroup>
 
-<%--
-		<h:outputText value="<span class='attention'>#{bolonhaBundle['confirm.delete.participating.curricularRules']}</span>" escape="false"/>
-		<h:panelGroup rendered="#{CurricularCourseManagement.toDelete}">
-			<h:outputText value="<p class='mvert1'><span class='attention'>" escape="false"/>
-			<h:outputText value="#{bolonhaBundle['deleteLastCurricularCourseContext']}" escape="false"/>
-			<h:outputText value="</span></p>" escape="false"/>
-		</h:panelGroup>
---%>
-	
 		<h:outputText value="<p class='mtop2 mbottom2'><span class='warning0'>#{bolonhaBundle['confirmDeleteMessage']}</span></p>" escape="false"/>
-
 		
 		<h:outputText value="<p>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['yes']}"

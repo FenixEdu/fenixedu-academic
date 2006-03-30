@@ -43,7 +43,11 @@
 	  		Consulta de Currículo
 	  	</html:link>  
 </strong></p>
-
+<p><strong>&raquo; 
+	  	<html:link module="/manager" page="/bolonha/curricularPlans/curricularPlansManagement.faces">
+	  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.bolonhaCurricularPlansManagement" />
+	  	</html:link>  
+</strong></p>
 <p><strong>&raquo; 
 	  	<html:link module="/manager" module="/manager" page="/degree/chooseDegreeType.faces">
 	  		Criação de Cursos de Execução

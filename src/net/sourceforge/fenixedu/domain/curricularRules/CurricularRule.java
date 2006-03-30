@@ -39,6 +39,7 @@ public abstract class CurricularRule extends CurricularRule_Base {
         removeEnd();
         removeParentCompositeRule();
         removeContextCourseGroup();
+        removeRootDomainObject();
     }
 
     public boolean appliesToContext(Context context) {
