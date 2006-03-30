@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -37,7 +36,6 @@ public class ReadAllTransactionsByGratuitySituationID extends Service {
         paymentTransactionList.addAll(insuranceTransactionList);
         paymentTransactionList.addAll(gratuitySituation.getTransactionList());
 
-        IPersistentReimbursementTransaction reimbursementTransactionDAO = persistentSupport.getIPersistentReimbursementTransaction();
         List<ReimbursementTransaction> reimbursementTransactionList = new ArrayList<ReimbursementTransaction>();
         for (PaymentTransaction paymentTransaction : paymentTransactionList) {
             GuideEntry guideEntry = paymentTransaction.getGuideEntry();

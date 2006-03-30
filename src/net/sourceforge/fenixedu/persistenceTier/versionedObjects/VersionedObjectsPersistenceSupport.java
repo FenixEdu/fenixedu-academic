@@ -64,7 +64,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsN
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailAdressAliasVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingListVO;
@@ -84,7 +83,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Publication
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationTypeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationsNumberVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SentSmsVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileVO;
@@ -139,10 +137,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentExam getIPersistentExam() {
         return new ExamVO();
-    }
-
-    public IPersistentReimbursementTransaction getIPersistentReimbursementTransaction() {
-        return new ReimbursementTransactionVO();
     }
 
     public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher() {

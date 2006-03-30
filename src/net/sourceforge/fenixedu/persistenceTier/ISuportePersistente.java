@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsN
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 
 public interface ISuportePersistente {
     
@@ -157,8 +156,6 @@ public interface ISuportePersistente {
     public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry();
 
     public IPersistentObject getIPersistentObject();
-
-    public IPersistentReimbursementTransaction getIPersistentReimbursementTransaction();
 
     public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction();
 
