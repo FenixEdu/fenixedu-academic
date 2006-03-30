@@ -116,6 +116,9 @@
 			key="error.NotAuthorized"
 			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
+		<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
+			key="" 
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
 	</global-exceptions>
     
     <!-- ========== Global Forward Definitions =============================== -->
@@ -293,7 +296,8 @@
         		type="net.sourceforge.fenixedu.presentationTier.Action.person.ManageHomepageDA"
         		name="homepageForm"
         		scope="request"
-        		parameter="method">
+        		parameter="method"
+        		input="/manageHomepage.do?method=prepare">
           <forward name="show-manage-homepage" path="show-manage-homepage"/>
         </action>
     </action-mappings>

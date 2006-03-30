@@ -13,6 +13,8 @@
 <br/>
 <br/>
 
+<span class="error"><html:errors/></span>
+
 <html:form action="/manageHomepage">
 	<html:hidden property="method" value="submitHomepage"/>
 
@@ -79,6 +81,8 @@
 	<bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>
 	<html:checkbox property="showEmail" value="true"/>
 	<bean:write name="UserView" property="person.email"/>
+	<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&personID=<bean:write name="UserView" property="person.idInternal"/></bean:define>
+	<html:img align="middle" src="<%= emailURL %>"/>
 	<br/>
 	<bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>
 	<html:checkbox property="showTelephone" value="true"/>

@@ -8,12 +8,15 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.utl.ist.fenix.tools.image.TextPngCreator;
 
 public class ViewHomepageDA extends FenixContextDispatchAction {
 
@@ -51,6 +54,27 @@ public class ViewHomepageDA extends FenixContextDispatchAction {
     	}
     	request.setAttribute("homepages", homepages);
         return mapping.findForward("list-homepages");
+    }
+
+    public ActionForward emailPng(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        final String email = getEmailString(request);
+        final byte[] pngFile = TextPngCreator.createPng("UpperHand", 25, "000000", email);
+        response.setContentType("image/png");
+        response.getOutputStream().write(pngFile);
+        response.getOutputStream().close();
+        return null;
+    }
+
+    private String getEmailString(final HttpServletRequest request) {
+        final String personIDString = request.getParameter("personID");
+        if (personIDString != null && personIDString.length() > 0) {
+            final Person person = (Person) rootDomainObject.readPartyByOID(Integer.valueOf(personIDString));
+            if (person != null && person.getHomepage() != null && person.getHomepage().getActivated().booleanValue() && person.getHomepage().getShowEmail().booleanValue()) {
+                return person.getEmail();
+            }
+        }
+        return "";
     }
 
 }
