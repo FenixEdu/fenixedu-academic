@@ -160,6 +160,15 @@ public class Degree extends Degree_Base {
         }
     }
 
+    @Override
+    public String getSigla() {
+        if (isBolonhaDegree()) {
+            return getAcronym();
+        } else {
+            return super.getSigla();
+        }
+    }
+    
     public DegreeCurricularPlan getNewDegreeCurricularPlan() {
         DegreeCurricularPlan degreeCurricularPlan = null;
 
