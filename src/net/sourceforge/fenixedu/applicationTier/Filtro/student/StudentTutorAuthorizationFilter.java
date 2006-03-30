@@ -93,18 +93,13 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter {
     /*
      * devolve true se teacher for tutor de algum dos students da lista
      */
-    private boolean verifyStudentTutor(Teacher teacher, List students) throws ExcepcaoPersistencia {
-        Student student;
-        Tutor tutor;
-
-        for (Iterator it = students.iterator(); it.hasNext();) {
-            student = (Student) it.next();
-            tutor = persistentSupport.getIPersistentTutor().readTutorByTeacherAndStudent(teacher,
-                    student);
-
-            if (tutor != null)
+    private boolean verifyStudentTutor(Teacher teacher, List<Student> students) throws ExcepcaoPersistencia {
+        for (Student student : students) {
+            if (student.hasAssociatedTutor()) {
                 return true;
+            }
         }
+    
         return false;
     }
 

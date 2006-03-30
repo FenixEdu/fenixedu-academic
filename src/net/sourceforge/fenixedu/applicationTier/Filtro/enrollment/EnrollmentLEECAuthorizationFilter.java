@@ -103,7 +103,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                         return "noAuthorization";
                     }
 
-                    if (!verifyStudentTutor(teacher, student)) {
+                    if (!student.hasAssociatedTutor()) {
                         return new String("error.enrollment.notStudentTutor+"
                                 + student.getNumber().toString());
                     }

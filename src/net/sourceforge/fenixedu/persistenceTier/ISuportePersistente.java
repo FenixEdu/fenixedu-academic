@@ -77,7 +77,9 @@ public interface ISuportePersistente {
 
     public IPersistentQuestion getIPersistentQuestion();
 
-	public IPersistentTestQuestion getIPersistentTestQuestion();
+    public IPersistentTest getIPersistentTest();
+
+    public IPersistentTestQuestion getIPersistentTestQuestion();
 
     public IPersistentDistributedTest getIPersistentDistributedTest();
 
@@ -128,8 +130,6 @@ public interface ISuportePersistente {
     public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime();
 
     public IPersistentGratuitySituation getIPersistentGratuitySituation();
-
-    public IPersistentTutor getIPersistentTutor();
 
     public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine();
 

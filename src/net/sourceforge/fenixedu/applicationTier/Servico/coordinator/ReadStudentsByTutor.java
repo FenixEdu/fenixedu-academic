@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 
 /**
  * @author Tânia Pousão
@@ -53,9 +52,8 @@ public class ReadStudentsByTutor extends Service {
         List teacherAndStudentsList = new ArrayList();
         teacherAndStudentsList.add(InfoTeacherWithPerson.newInfoFromDomain(teacherDB));
 
-        IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
-        List<Tutor> tutorStudents = persistentTutor.readStudentsByTeacher(null, tutorNumber);
-        if (tutorStudents == null || tutorStudents.size() <= 0) {
+        List<Tutor> tutorStudents = Tutor.getAllTutorsByTeacherNumber(tutorNumber);
+        if (tutorStudents == null || tutorStudents.isEmpty()) {
             return teacherAndStudentsList;
         }
 

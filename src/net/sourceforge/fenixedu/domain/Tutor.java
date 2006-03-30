@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Tutor extends Tutor_Base {
@@ -19,6 +22,24 @@ public class Tutor extends Tutor_Base {
         } else {
             throw new DomainException("tutor.cant.delete");
         }
+    }
+
+    public static List<Tutor> getAllTutorsByTeacherNumber(Integer tutorNumber) {
+        List<Tutor> result = new ArrayList<Tutor>();
+        
+        if (tutorNumber == null) {
+            return result;
+        }
+        
+        for (Tutor tutor : RootDomainObject.getInstance().getTutors()) {
+            if (! tutorNumber.equals(tutor.getTeacher().getTeacherNumber())) {
+                continue;
+            }
+            
+            result.add(tutor);
+        }
+        
+        return result;
     }
 
 }

@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -159,7 +158,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
                         return "noAuthorization";
                     }
 
-                    if (!verifyStudentTutor(teacher, student)) {
+                    if (! student.hasAssociatedTutor()) {
                         return new String("error.enrollment.notStudentTutor+"
                                 + student.getNumber().toString());
                     }
@@ -172,7 +171,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
                         return "noAuthorization";
                     }
                     if (insideEnrollmentPeriod(studentCurricularPlan)) {
-                        Tutor tutor = verifyStudentWithTutor(studentCurricularPlan.getStudent());
+                        Tutor tutor = studentCurricularPlan.getStudent().getAssociatedTutor();
                         if (tutor != null) {
                             return new String("error.enrollment.student.withTutor+"
                                     + tutor.getTeacher().getTeacherNumber().toString() + "+"
@@ -253,27 +252,11 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
      */
     protected Tutor verifyStudentWithTutor(Student student)
             throws ExcepcaoPersistencia {
-        IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
-        return persistentTutor.readTeachersByStudent(student);
+        return student.getAssociatedTutor();
     }
 
     protected Teacher readTeacher(IUserView id) throws ExcepcaoPersistencia {
         return Teacher.readTeacherByUsername(id.getUtilizador());
-    }
-
-    /**
-     * @param teacher
-     * @param arguments
-     * @param sp
-     * @return
-     */
-    protected boolean verifyStudentTutor(Teacher teacher, Student student)
-            throws ExcepcaoPersistencia {
-        IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
-
-        Tutor tutor = persistentTutor.readTutorByTeacherAndStudent(teacher, student);
-
-        return (tutor != null);
     }
 
     protected boolean verifyCoordinator(Teacher teacher, Object[] arguments)

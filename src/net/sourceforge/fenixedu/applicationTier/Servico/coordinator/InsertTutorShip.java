@@ -25,15 +25,13 @@ public class InsertTutorShip extends Service {
     public Boolean verifyStudentAlreadyTutor(Student student, Teacher teacher)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        boolean result = false;
-
-        Tutor tutor = persistentSupport.getIPersistentTutor().readTeachersByStudent(student);
+        Tutor tutor = student.getAssociatedTutor();
 
         if (tutor != null && !(tutor.getTeacher() == teacher)) {
-            result = true;
+            return true;
         }
 
-        return new Boolean(result);
+        return false;
     }
 
 }

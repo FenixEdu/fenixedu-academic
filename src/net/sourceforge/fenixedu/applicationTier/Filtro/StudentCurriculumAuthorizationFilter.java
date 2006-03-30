@@ -302,9 +302,11 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
     }
 
     private boolean verifyStudentTutor(Teacher teacher, Student student) throws ExcepcaoPersistencia {
-        Tutor tutor = persistentSupport.getIPersistentTutor().readTutorByTeacherAndStudent(teacher, student);
-
-        return (tutor != null);
+        if (student.getAssociatedTutor() == null) {
+            return false;
+        }
+        
+        return student.getAssociatedTutor().getTeacher().equals(teacher);
     }
 
     private StudentCurricularPlan readStudentCurricularPlan(Integer studentCurricularPlanID,

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 
 /**
  * @author Tânia Pousão
@@ -69,8 +68,7 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
                     continue;
                 }
 
-                IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
-                Tutor tutor = persistentTutor.readTutorByTeacherAndStudent(teacher, student);
+                Tutor tutor = student.getAssociatedTutor();
                 if (tutor == null) {
                     tutor = DomainFactory.makeTutor();
                     tutor.setTeacher(teacher);

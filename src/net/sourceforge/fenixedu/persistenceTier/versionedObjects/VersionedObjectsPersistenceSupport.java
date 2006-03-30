@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDat
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -154,10 +153,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate() {
-        return null;
-    }
-
-    public IPersistentTutor getIPersistentTutor() {
         return null;
     }
 

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTutorWithInfoStudent;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 
 /**
  * @author joaosa and rmalo
@@ -32,11 +31,9 @@ public class ViewStudentsByTutor extends Service {
         List infoTutorStudents = new ArrayList();        
         Teacher teacher = Teacher.readTeacherByUsername(userName);
 
-        IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
-        List<Tutor> tutorStudents = persistentTutor.readStudentsByTeacher(teacher.getIdInternal(),
-                teacher.getTeacherNumber());
+        List<Tutor> tutorStudents = teacher.getAssociatedTutors();
 
-        if (tutorStudents == null) {
+        if (tutorStudents == null || tutorStudents.isEmpty()) {
             return infoTutorStudents;
         }
 
