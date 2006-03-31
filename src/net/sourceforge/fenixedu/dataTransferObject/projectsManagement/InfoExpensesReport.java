@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
@@ -16,6 +15,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.Region;
+
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 /**
  * @author Susana Fernandes

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.department.professorship;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship;;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship;
 
 /**
  * @author jpvl

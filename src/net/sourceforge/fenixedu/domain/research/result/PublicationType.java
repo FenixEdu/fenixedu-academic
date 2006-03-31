@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.research.result;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;

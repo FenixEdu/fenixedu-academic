@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 import net.sourceforge.fenixedu.domain.assiduousness.util.CardState;
+
+import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 public class CardState2SqlVarcharConverter implements FieldConversion {
 	

@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.tools;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Modifier;
 import java.util.Formatter;

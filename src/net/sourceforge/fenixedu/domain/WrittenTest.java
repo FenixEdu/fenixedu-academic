@@ -7,13 +7,13 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Date;
 import java.util.List;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+
+import org.joda.time.YearMonthDay;
 
 /**
  * @author Ana e Ricardo

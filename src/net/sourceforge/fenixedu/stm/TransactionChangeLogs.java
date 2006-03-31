@@ -15,12 +15,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import jvstm.VBoxBody;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.accesslayer.LookupException;
+
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class TransactionChangeLogs {
 

@@ -6,8 +6,6 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.util.kerberos.Script;
 
-import org.apache.commons.lang.RandomStringUtils;
-
 import com.Ostermiller.util.PasswordVerifier;
 import com.Ostermiller.util.RandPass;
 

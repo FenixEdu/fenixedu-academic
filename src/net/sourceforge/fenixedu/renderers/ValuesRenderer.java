@@ -2,10 +2,7 @@ package net.sourceforge.fenixedu.renderers;
 
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.FlowLayout;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;

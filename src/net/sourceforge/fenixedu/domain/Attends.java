@@ -18,7 +18,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;

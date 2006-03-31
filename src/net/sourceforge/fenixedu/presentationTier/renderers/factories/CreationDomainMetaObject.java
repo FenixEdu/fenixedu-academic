@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.UpdateObjects.ObjectChange;
 import net.sourceforge.fenixedu.renderers.model.CreationMetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;

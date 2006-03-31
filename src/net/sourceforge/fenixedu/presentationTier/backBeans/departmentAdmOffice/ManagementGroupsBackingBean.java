@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.event.ActionEvent;

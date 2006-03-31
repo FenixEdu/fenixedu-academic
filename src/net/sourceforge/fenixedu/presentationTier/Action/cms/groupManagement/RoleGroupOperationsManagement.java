@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,8 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonalGroup;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupDifference;
 import net.sourceforge.fenixedu.domain.accessControl.GroupTypes;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;

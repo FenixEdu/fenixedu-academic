@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteFirstPage;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteObjectives;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProgram;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRSS;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
@@ -242,6 +243,20 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         return mapping.findForward("sucess");
 
     }
+    
+    public ActionForward rss(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+        ISiteComponent rssComponent = new InfoSiteRSS();
+
+        SiteView siteView = readSiteView(request, null, null, null, null);
+
+        siteView.setComponent(rssComponent);
+        
+        request.setAttribute("siteView", siteView);
+
+        return mapping.findForward("sucess");
+    }
+
 
     public ActionForward curricularCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,

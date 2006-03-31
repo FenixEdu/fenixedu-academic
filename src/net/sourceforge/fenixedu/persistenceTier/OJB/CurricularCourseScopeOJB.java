@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 

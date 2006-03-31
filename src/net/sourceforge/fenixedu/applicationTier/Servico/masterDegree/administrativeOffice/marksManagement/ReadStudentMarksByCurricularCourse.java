@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -61,8 +62,14 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 		// in case student has school part concluded his curricular plan is
 		// not in active state
 
-		List studentCurricularPlans = persistentSupport.getIStudentCurricularPlanPersistente()
-				.readByStudentNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
+		
+		List<StudentCurricularPlan> studentCurricularPlans = null;
+		Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
+		if(student == null) {
+			throw new ExistingServiceException();
+		} 
+		
+		studentCurricularPlans = student.getStudentCurricularPlans();
 
 		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(
 				studentCurricularPlans, new Predicate() {

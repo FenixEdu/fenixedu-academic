@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;

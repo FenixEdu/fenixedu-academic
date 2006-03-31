@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import org.joda.time.DateTime;
-import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 import java.sql.Timestamp;
+
+import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
+import org.joda.time.DateTime;
 
 public class DateTime2SqlTimestampConverter implements FieldConversion{
 	

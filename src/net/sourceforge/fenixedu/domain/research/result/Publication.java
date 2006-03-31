@@ -8,9 +8,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.publication.PublicationDTO;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;

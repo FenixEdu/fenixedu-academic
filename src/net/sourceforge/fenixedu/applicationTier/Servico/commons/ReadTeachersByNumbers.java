@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;

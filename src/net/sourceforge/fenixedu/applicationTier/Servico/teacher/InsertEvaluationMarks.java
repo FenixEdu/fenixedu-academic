@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
  * @author Fernanda Quitério
@@ -132,15 +131,8 @@ public class InsertEvaluationMarks extends Service {
 
     private boolean isValidMark(Evaluation evaluation, String mark, Student student) {
         StudentCurricularPlan studentCurricularPlan = null;
-
-        try {
-            IPersistentStudentCurricularPlan curricularPlanPersistente = persistentSupport
-                    .getIStudentCurricularPlanPersistente();
-
-            studentCurricularPlan = curricularPlanPersistente.readActiveStudentCurricularPlan(student
-                    .getNumber(), student.getDegreeType());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(student != null) {
+        	studentCurricularPlan = student.getActiveStudentCurricularPlan();
         }
 
         DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();

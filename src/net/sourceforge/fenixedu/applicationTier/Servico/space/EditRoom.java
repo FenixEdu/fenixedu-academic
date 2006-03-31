@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.space.Floor;
-import net.sourceforge.fenixedu.domain.space.FloorInformation;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomInformation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

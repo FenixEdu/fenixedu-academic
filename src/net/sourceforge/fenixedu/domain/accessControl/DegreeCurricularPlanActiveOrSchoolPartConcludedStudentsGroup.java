@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -15,8 +14,6 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.iterators.FilterIterator;
-import org.apache.commons.collections.iterators.TransformIterator;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>

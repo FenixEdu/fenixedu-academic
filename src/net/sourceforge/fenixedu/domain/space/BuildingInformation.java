@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class BuildingInformation extends BuildingInformation_Base {

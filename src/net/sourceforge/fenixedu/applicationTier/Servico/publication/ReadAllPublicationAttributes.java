@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSiteAttributes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 
 public class ReadAllPublicationAttributes extends Service {

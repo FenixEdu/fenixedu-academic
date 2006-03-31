@@ -32,9 +32,10 @@ public class GetCandidateRegistrationInformation extends Service {
         Student student = masterDegreeCandidate.getPerson().readStudentByDegreeType(
                 DegreeType.MASTER_DEGREE);
 
-        StudentCurricularPlan studentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
-                        student.getNumber(), DegreeType.MASTER_DEGREE);
+        StudentCurricularPlan studentCurricularPlan = null;
+        if(student != null) {
+        	studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        }
 
         infoCandidateRegistration = new InfoCandidateRegistration();
 

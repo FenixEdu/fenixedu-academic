@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -37,6 +36,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
+
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatchAction {
 

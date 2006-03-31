@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.Collections;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;

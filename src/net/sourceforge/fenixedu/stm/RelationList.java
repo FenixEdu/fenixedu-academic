@@ -1,13 +1,12 @@
 package net.sourceforge.fenixedu.stm;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
-
 import java.lang.ref.SoftReference;
 import java.util.AbstractList;
 import java.util.Iterator;
 import java.util.Set;
 
 import jvstm.PerTxBox;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import dml.runtime.Relation;
 
 public class RelationList<E1,E2> extends AbstractList<E2> implements VersionedSubject,Set<E2>,dml.runtime.RelationBaseSet<E2> {

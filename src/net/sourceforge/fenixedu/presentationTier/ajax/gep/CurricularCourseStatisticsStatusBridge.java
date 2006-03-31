@@ -8,10 +8,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import uk.ltd.getahead.dwr.ExecutionContext;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import uk.ltd.getahead.dwr.ExecutionContext;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

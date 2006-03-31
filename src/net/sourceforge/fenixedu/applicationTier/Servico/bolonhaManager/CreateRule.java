@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRuleParametersDTO;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 

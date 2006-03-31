@@ -20,13 +20,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 

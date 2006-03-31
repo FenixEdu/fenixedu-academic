@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
 import org.joda.time.YearMonthDay;
 
 public class Building extends Building_Base {

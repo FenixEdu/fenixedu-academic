@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
