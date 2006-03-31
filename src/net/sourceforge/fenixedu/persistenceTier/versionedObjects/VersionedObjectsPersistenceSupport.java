@@ -34,8 +34,6 @@ import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGu
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
-import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
-import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
@@ -252,10 +250,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new GrantPartVO();
     }
 
-    public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter() {
-        return null;
-    }
-
     public IPersistentSupportLesson getIPersistentSupportLesson() {
         return new SupportLessonVO();
     }
@@ -269,10 +263,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentObject getIPersistentObject() {
-        return null;
-    }
-
-    public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests() {
         return null;
     }
 

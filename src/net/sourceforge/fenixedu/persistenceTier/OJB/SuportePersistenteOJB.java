@@ -38,8 +38,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.guide.ReimbursementGuideOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesCoursesResOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesSummaryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesTeachersResOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.ExtraWorkResquestsOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.MoneyCostCenterOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestAdvisoryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.MetadataOJB;
@@ -71,8 +69,6 @@ import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGu
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
-import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
-import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
@@ -388,14 +384,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
         return new OldInquiriesCoursesResOJB();
-    }
-
-    public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter() {
-        return new MoneyCostCenterOJB();
-    }
-
-    public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests() {
-        return new ExtraWorkResquestsOJB();
     }
 
     public static void fixDescriptors() {
