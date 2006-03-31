@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StudentState;
@@ -346,11 +345,12 @@ public class Student extends Student_Base {
     public static List<Student> readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
             String studentName, String docIdNumber, IDDocumentType idType, Integer studentNumber) {
 
-        List<Student> students = new ArrayList();
+        final List<Student> students = new ArrayList();
+        final String studentNameToMatch = (studentName == null) ? null : studentName.replaceAll("%", ".*").toLowerCase();
         for (Student student : RootDomainObject.getInstance().getStudents()) {
             Person person = student.getPerson();
             if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)
-                    && ((studentName != null && person.getName().equals(studentName)) || studentName == null)
+                    && ((studentNameToMatch != null && person.getName().toLowerCase().matches(studentNameToMatch)) || studentNameToMatch == null)
                     && ((docIdNumber != null && person.getDocumentIdNumber().equals(docIdNumber)) || docIdNumber == null)
                     && ((idType != null && person.getIdDocumentType().equals(idType)) || idType == null)
                     && ((studentNumber != null && student.getNumber().equals(studentNumber)) || studentNumber == null)) {
@@ -404,5 +404,4 @@ public class Student extends Student_Base {
         
         return Integer.valueOf(number.intValue() + 1);
     }
-
 }
