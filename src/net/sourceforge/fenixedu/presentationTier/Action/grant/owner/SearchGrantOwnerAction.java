@@ -1,7 +1,3 @@
-/*
- * Created on 03/Dec/2003
- */
-
 package net.sourceforge.fenixedu.presentationTier.Action.grant.owner;
 
 import java.util.Collection;
@@ -19,14 +15,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
-/**
- * @author Barbosa
- * @author Pica
- */
 public class SearchGrantOwnerAction extends SearchAction {
-    protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form)
-            throws Exception {
 
+    protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form) throws Exception {
         DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
         String name = (String) searchGrantOwnerForm.get("name");
         String idNumber = (String) searchGrantOwnerForm.get("idNumber");
@@ -52,9 +43,7 @@ public class SearchGrantOwnerAction extends SearchAction {
         return args;
     }
 
-    protected Collection treateServiceResult(SearchActionMapping mapping, HttpServletRequest request,
-            Collection result) throws Exception {
-
+    protected Collection treateServiceResult(SearchActionMapping mapping, HttpServletRequest request, Collection result) throws Exception {
         if (result != null && result.size() == 3) {
             Iterator iterator = result.iterator();
             Object object0 = iterator.next();
@@ -65,8 +54,7 @@ public class SearchGrantOwnerAction extends SearchAction {
                 List infoListGrantOwner = (List) iterator.next();
 
                 if (hasBeforeSpan(startIndex, numberOfElementsOfSearch)) {
-                    request.setAttribute("beforeSpan", getBeforeSpan(startIndex,
-                            numberOfElementsOfSearch));
+                    request.setAttribute("beforeSpan", getBeforeSpan(startIndex, numberOfElementsOfSearch));
                 }
                 if (hasNextSpan(startIndex, numberOfElementsOfSearch)) {
                     request.setAttribute("nextSpan", getNextSpan(startIndex, numberOfElementsOfSearch));
@@ -77,6 +65,7 @@ public class SearchGrantOwnerAction extends SearchAction {
                 request.setAttribute("numberOfPages", getTotalNumberOfPages(numberOfElementsOfSearch));
             }
         }
+        
         return result;
     }
 
@@ -87,39 +76,27 @@ public class SearchGrantOwnerAction extends SearchAction {
     }
 
     private boolean hasNextSpan(Integer startIndex, Integer numberOfElementsInResult) {
-
-        if ((startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1) < numberOfElementsInResult
-                .intValue()) {
-            return true;
-        }
-        return false;
+        return (startIndex + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN - 1) < numberOfElementsInResult;
     }
 
     private boolean hasBeforeSpan(Integer startIndex, Integer numberOfElementsInResult) {
-        if ((startIndex.intValue() - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() + 1) > 0) {
-            return true;
-        }
-        return false;
+        return (startIndex - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN + 1) > 0;
     }
 
     private Integer getNextSpan(Integer startIndex, Integer numberOfElementsInResult) {
-
-        return new Integer(startIndex.intValue()
-                + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue());
+        return Integer.valueOf(startIndex + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN);
     }
 
     private Integer getBeforeSpan(Integer startIndex, Integer numberOfElementsInResult) {
-        return new Integer(startIndex.intValue()
-                - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue());
+        return Integer.valueOf(startIndex - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN);
     }
 
     private Integer getActualPage(Integer startIndex) {
-        return new Integer((startIndex.intValue() / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN
-                .intValue()) + 1);
+        return Integer.valueOf((startIndex / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN) + 1);
     }
 
     private Integer getTotalNumberOfPages(Integer numberOfElements) {
-        return new Integer((numberOfElements.intValue() / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN
-                .intValue()) + 1);
+        return Integer.valueOf((numberOfElements / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN) + 1);
     }
+    
 }
