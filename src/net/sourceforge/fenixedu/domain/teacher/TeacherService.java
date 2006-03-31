@@ -57,7 +57,8 @@ public class TeacherService extends TeacherService_Base {
                 });
     }
 
-    public List<DegreeTeachingService> getDegreeTeachingServiceByProfessorship(final Professorship professorship) {
+    public List<DegreeTeachingService> getDegreeTeachingServiceByProfessorship(
+            final Professorship professorship) {
         return (List<DegreeTeachingService>) CollectionUtils.select(getDegreeTeachingServices(),
                 new Predicate() {
                     public boolean evaluate(Object arg0) {
@@ -79,7 +80,7 @@ public class TeacherService extends TeacherService_Base {
     public Double getCredits() {
         double credits = getMasterDegreeServiceCredits();
         credits += getTeachingDegreeCredits();
-        //credits += getPastServiceCredits();
+        // credits += getPastServiceCredits();
         credits += getOtherServiceCredits();
         credits += getTeacherAdviseServiceCredits();
         return round(credits);
@@ -88,8 +89,10 @@ public class TeacherService extends TeacherService_Base {
     public Double getTeachingDegreeCredits() {
         double credits = 0;
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
-            credits += degreeTeachingService.getShift().hours()
-                    * (degreeTeachingService.getPercentage().doubleValue() / 100);
+            if (!degreeTeachingService.getProfessorship().getExecutionCourse().isMasterDegreeOnly()) {
+                credits += degreeTeachingService.getShift().hours()
+                        * (degreeTeachingService.getPercentage().doubleValue() / 100);
+            }
         }
         return round(credits);
     }
