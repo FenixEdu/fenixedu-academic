@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -49,7 +52,8 @@ public class GenetareStudentTestForSimulation extends Service {
         infoDistributedTest.setTestInformation(testInformation);
         infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
-        List<TestQuestion> testQuestionList = persistentSupport.getIPersistentTestQuestion().readByTest(testId);
+        List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+        Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         for (TestQuestion testQuestionExample : testQuestionList) {
             List<Question> questionList = new ArrayList<Question>();
             questionList.addAll(testQuestionExample.getQuestion().getMetadata().getVisibleQuestions());

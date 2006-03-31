@@ -4,7 +4,9 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -18,7 +20,8 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author Susana Fernandes
@@ -35,7 +38,7 @@ public class DeleteExercise extends Service {
         IPersistentQuestion persistentQuestion = persistentSupport.getIPersistentQuestion();
         IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport.getIPersistentStudentTestQuestion();
         for (Question question : questionList) {
-            List<TestQuestion> testQuestionList = persistentSupport.getIPersistentTestQuestion().readByQuestion(question.getIdInternal());
+            List<TestQuestion> testQuestionList = question.getTestQuestions();
             for (TestQuestion testQuestion : testQuestionList) {
                 removeTestQuestionFromTest(persistentSupport, testQuestion);
             }
@@ -55,12 +58,11 @@ public class DeleteExercise extends Service {
     }
 
     private void removeTestQuestionFromTest(ISuportePersistente persistentSupport, TestQuestion testQuestion) throws ExcepcaoPersistencia {
-        IPersistentTestQuestion persistentTestQuestion = persistentSupport.getIPersistentTestQuestion();
-
-        Test test = (Test) persistentObject.readByOID(Test.class, testQuestion.getKeyTest());
+        Test test = testQuestion.getTest();
         if (test == null)
             throw new ExcepcaoPersistencia();
-        List<TestQuestion> testQuestionList = persistentTestQuestion.readByTest(test.getIdInternal());
+        List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+        Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         Integer questionOrder = testQuestion.getTestQuestionOrder();
         if (testQuestionList != null) {
             for (TestQuestion iterTestQuestion : testQuestionList) {
@@ -70,7 +72,7 @@ public class DeleteExercise extends Service {
                 }
             }
         }
-        persistentTestQuestion.deleteByOID(TestQuestion.class, testQuestion.getIdInternal());
+        persistentObject.deleteByOID(TestQuestion.class, testQuestion.getIdInternal());
         test.setLastModifiedDate(Calendar.getInstance().getTime());
     }
 }

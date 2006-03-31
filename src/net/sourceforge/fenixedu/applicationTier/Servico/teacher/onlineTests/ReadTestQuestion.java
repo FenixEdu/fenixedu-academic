@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestQuestionWithInfoQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
@@ -26,8 +28,9 @@ public class ReadTestQuestion extends Service {
 	public InfoTestQuestion run(Integer executionCourseId, Integer testId, Integer questionId,
 			String path) throws FenixServiceException, ExcepcaoPersistencia {
 		this.path = path.replace('\\', '/');
-		TestQuestion testQuestion = persistentSupport.getIPersistentTestQuestion()
-				.readByTestAndQuestion(testId, questionId);
+        final Test test = rootDomainObject.readTestByOID(testId);
+        final Question question = rootDomainObject.readQuestionByOID(questionId);
+        final TestQuestion testQuestion = test.getTestQuestion(question);
 		InfoTestQuestion infoTestQuestion = InfoTestQuestionWithInfoQuestion
 				.newInfoFromDomain(testQuestion);
 		ParseQuestion parse = new ParseQuestion();

@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -136,7 +139,9 @@ public class SimulateTest extends Service {
             InvalidArgumentsServiceException, FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 
-        List<TestQuestion> testQuestionList = persistentSupport.getIPersistentTestQuestion().readByTest(testId);
+        Test test = (Test) persistentObject.readByOID(Test.class, testId);
+        List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+        Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         for (int i = 0; i < testQuestionList.size(); i++) {
             TestQuestion testQuestionExample = testQuestionList.get(i);
             InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();

@@ -4,7 +4,9 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -17,9 +19,10 @@ import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author Susana Fernandes
@@ -52,9 +55,8 @@ public class InsertTestQuestion extends Service {
 			if (test == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			IPersistentTestQuestion persistentTestQuestion = persistentSupport
-					.getIPersistentTestQuestion();
-			List<TestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
+			List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+            Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
 			if (testQuestionList != null) {
 				if (questionOrder == null || questionOrder.equals(new Integer(-1))) {
 					questionOrder = new Integer(testQuestionList.size() + 1);

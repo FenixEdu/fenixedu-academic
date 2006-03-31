@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
@@ -233,9 +232,7 @@ public class ChangeStudentTestQuestion extends Service {
     }
 
     private void removeOldTestQuestion(Question oldQuestion) throws ExcepcaoPersistencia {
-        IPersistentTestQuestion persistentTestQuestion = persistentSupport.getIPersistentTestQuestion();
-        List<TestQuestion> testQuestionOldList = (List<TestQuestion>) persistentTestQuestion
-                .readByQuestion(oldQuestion.getIdInternal());
+        List<TestQuestion> testQuestionOldList = oldQuestion.getTestQuestions();
         List<Question> availableQuestions = new ArrayList<Question>();
         availableQuestions.addAll(oldQuestion.getMetadata().getVisibleQuestions());
         availableQuestions.remove(oldQuestion);

@@ -67,4 +67,13 @@ public class Test extends Test_Base {
         setLastModifiedDate(Calendar.getInstance().getTime());
     }
 
+    public TestQuestion getTestQuestion(final Question question) {
+        for (final TestQuestion testQuestion : getTestQuestions()) {
+            if (testQuestion.getQuestion() == question) {
+                return testQuestion;
+            }
+        }
+        return null;
+    }
+
 }

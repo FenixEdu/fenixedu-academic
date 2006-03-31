@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.time.DateFormatUtils;
 
 public class InsertDistributedTest extends Service {
@@ -65,8 +67,8 @@ public class InsertDistributedTest extends Service {
         }
         distributedTest.setTestScope(testScope);
 
-        List<TestQuestion> testQuestionList = persistentSupport.getIPersistentTestQuestion().readByTest(testId);
-
+        List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+        Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         for (TestQuestion testQuestion : testQuestionList) {
             List<Question> questionList = new ArrayList<Question>();
             questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
