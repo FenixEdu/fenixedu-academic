@@ -1148,14 +1148,13 @@ public class Person extends Person_Base {
     }
 
     // used by grant owner
-    public static List<Person> findByName(final String name, final Integer startIndex,
-            final Integer numberOfElementsInSpan) {
-        if (name == null) {
-            return Collections.EMPTY_LIST;
-        }
+    public static List<Person> findByName(final String name, final Integer startIndex, final Integer numberOfElementsInSpan) {
         final List<Person> personsList = findByName(name);
-        return (startIndex != null && numberOfElementsInSpan != null) ? personsList.subList(startIndex,
-                startIndex + numberOfElementsInSpan) : personsList;
+        if (startIndex != null && numberOfElementsInSpan != null && !personsList.isEmpty()) {
+            int finalIndex = Math.min(personsList.size(), startIndex + numberOfElementsInSpan);
+            return personsList.subList(startIndex, finalIndex);
+        }
+        return Collections.EMPTY_LIST;
     }
 
     public static Integer countAllByName(final String name) {
@@ -1164,10 +1163,12 @@ public class Person extends Person_Base {
 
     public static List<Person> findByName(final String name) {
         final List<Person> result = new ArrayList<Person>();
-        final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
-        for (final Person person : Party.readAllPersons()) {
-            if (person.getName().toLowerCase().matches(nameToMatch)) {
-                result.add(person);
+        if (name != null) {
+            final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
+            for (final Person person : Party.readAllPersons()) {
+                if (person.getName().toLowerCase().matches(nameToMatch)) {
+                    result.add(person);
+                }
             }
         }
         return result;
