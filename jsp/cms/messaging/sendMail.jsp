@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-
 <style>
 	.floatedli {
 	float: left;
@@ -19,28 +18,9 @@
 
 <html:form method="post" action="/mailSender">
 	<html:hidden property="method" value="send"/>
-	<html:hidden property="returnURL"/>
 	<html:hidden property="group"/>
-	
-	<%
-	java.util.Map parameters =  request.getParameterMap();
-	StringBuffer hiddenField = new StringBuffer();
-	for(Object key : parameters.keySet())
-	{
-		if (!key.equals("method") && !key.equals("returnURL") && !key.equals("group") && key instanceof String)
-		{
-			String keyString = (String) key;
-			Object value = request.getParameter(keyString);
-			if (value instanceof String)
-			{
-				String valueString = (String) value;
-				hiddenField.delete(0,hiddenField.length());
-				hiddenField.append("<input type=\"hidden\" name=\"").append(keyString).append("\" value=\"").append(valueString).append("\">");
-				out.write(hiddenField.toString());
-			}
-		}
-	}
-	 %>
+	<html:hidden property="returnURL"/>
+	<html:hidden property="state"/>
 
 <logic:present name="groups">
 	<div style="width:800px">
@@ -71,8 +51,10 @@
 	Enviar
 </html:submit>
 
-<html:submit onclick="this.form.method.value='goBack';this.form.submit();">
-	Voltar
-</html:submit>
+<logic:notEmpty name="sendMailForm" property="returnURL">
+	<html:submit onclick="this.form.method.value='goBack';this.form.submit();">
+		Voltar
+	</html:submit>
+</logic:notEmpty>
 
 </html:form>

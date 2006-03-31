@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.Person;
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
  *         <br/> Created on 11:48:24,8/Fev/2006
+ *         <br>
+ *         In the current version all recipients are added to BCC despite of the specified RecipientType
  * @version $Id$
  */
 public class Recipient

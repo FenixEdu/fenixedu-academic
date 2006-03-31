@@ -6,7 +6,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -40,18 +46,49 @@ import org.apache.struts.util.MessageResources;
  * @version $Id$
  */
 public abstract class MailSenderAction extends FenixDispatchAction {
+
+	protected String serializeParameters(HashMap arguments) throws FenixActionException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			ObjectOutputStream dos = new ObjectOutputStream(baos);
+			dos.writeObject(arguments);
+		}
+		catch (IOException e) {
+			throw new FenixActionException(e);
+		}
+		byte[] parametersArray = baos.toByteArray();
+		String parametersString = new String(Base64.encodeBase64(parametersArray));
+		return parametersString;
+	}
+
+	protected HashMap deserializeParameters(String parameters) throws FenixActionException {
+		byte[] decodedParameters = Base64.decodeBase64(parameters.getBytes());
+		ByteArrayInputStream byteInputStream = new ByteArrayInputStream(decodedParameters);
+		try {
+			ObjectInputStream stream = new ObjectInputStream(byteInputStream);
+			HashMap parametersMap = (HashMap) stream.readObject();
+			return parametersMap;
+		}
+		catch (IOException e) {
+			throw new FenixActionException(e);
+		}
+		catch (ClassNotFoundException e) {
+			throw new FenixActionException(e);
+		}
+	}
+
 	protected abstract List<IGroup> loadPersonalGroupsToChooseFrom(HttpServletRequest request)
 			throws FenixFilterException, FenixServiceException;
 
-	protected EMailAddress getFromAddress(HttpServletRequest request, ActionForm form)
-			throws FenixFilterException, FenixServiceException {
-		SendMailForm sendMailForm = (SendMailForm) form;
+	protected EMailAddress getFromAddress(HttpServletRequest request) throws FenixFilterException,
+			FenixServiceException {
+		Person person = this.getUserView(request).getPerson();
 		EMailAddress address = new EMailAddress();
-		if (EMailAddress.isValid(sendMailForm.getFromAddress())) {
-			String[] components = sendMailForm.getFromAddress().split("@");
+		if (EMailAddress.isValid(person.getEmail())) {
+			String[] components = person.getEmail().split("@");
 			address.setUser(components[0]);
 			address.setDomain(components[1]);
-			address.setPersonalName(sendMailForm.getFromPersonalName());
+			address.setPersonalName(person.getNome());
 		}
 
 		return address;
@@ -66,28 +103,56 @@ public abstract class MailSenderAction extends FenixDispatchAction {
 	public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws FenixActionException, FenixFilterException,
 			FenixServiceException {
-		Person person = this.getUserView(request).getPerson();
 		SendMailForm form = (SendMailForm) actionForm;
 		List<IGroup> groups = this.loadPersonalGroupsToChooseFrom(request);
 
 		form.setGroupsToChooseFrom(groups);
 		String referer = request.getHeader("Referer");
-		if (referer == null || referer.equals("")) {
-			referer = this.getReturnUrl(request);
+		if (referer!=null && !referer.equals("")) {
+			form.setReturnURL(this.getReturnUrl(request, referer));
 		}
-		form.setReturnURL(referer);
 
-		form.setFromAddress(person.getEmail());
-		form.setFromPersonalName(person.getNome());
+		EMailAddress address = this.getFromAddress(request);
+		form.setFromAddress(address.getAddress());
+		form.setFromPersonalName(address.getPersonalName());
 
 		return mapping.findForward("sendMail");
 	}
 
-	private String getReturnUrl(HttpServletRequest request) {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(request.getRequestURI()).append("?").append(request.getQueryString());
-
-		return buffer.toString();
+	private String getReturnUrl(HttpServletRequest request, String referer) {
+		java.util.Map parameters = request.getParameterMap();
+		StringBuffer hiddenField = new StringBuffer();
+		int indexOfInterrogationMark = referer.indexOf("?");
+		if (indexOfInterrogationMark == -1) {
+			hiddenField.append(referer);
+			hiddenField.append("?");
+		}
+		else {
+			hiddenField.append(referer.substring(0, indexOfInterrogationMark));
+		}
+		int total = 0;
+		for (Object key : parameters.keySet()) {
+			if (total > 0) {
+				hiddenField.append("&");
+			}
+			if (!key.equals("returnMethod") && !key.equals("method") && !key.equals("returnURL")
+					&& !key.equals("group") && key instanceof String) {
+				String keyString = (String) key;
+				Object value = parameters.get(key);
+				if (value.getClass().isArray()) {
+					String[] values = (String[]) value;
+					for (int i = 0; i < values.length; i++) {
+						if (i > 0) {
+							hiddenField.append("&");
+						}
+						hiddenField.append(keyString).append("=").append(values[i]);
+						total++;
+					}
+				}
+			}
+		}
+		hiddenField.append("method=").append(request.getParameter("returnMethod"));
+		return hiddenField.toString();
 	}
 
 	public ActionForward send(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -112,8 +177,10 @@ public abstract class MailSenderAction extends FenixDispatchAction {
 		parameters.message = sendMailForm.getMessage();
 		parameters.toRecipients = groupsToSend;
 		parameters.allowedSenders = this.getAllowedGroups(request, groupsToSend);
-		EMailAddress fromAddress = this.getFromAddress(request, actionForm);
-		if (fromAddress == null) {
+		EMailAddress fromAddress = new EMailAddress();
+		fromAddress.setAddress(sendMailForm.getFromAddress());
+		fromAddress.setPersonalName(sendMailForm.getFromPersonalName());
+		if (sendMailForm.getFromAddress() == null || !fromAddress.isValid()) {
 			ActionMessages errors = new ActionMessages();
 			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.mailSender.provideValidFromEMailAddress"));
 			saveErrors(request, errors);
@@ -169,7 +236,6 @@ public abstract class MailSenderAction extends FenixDispatchAction {
 					if (sentCount == 0) sent.append("<ul>");
 					sentCount++;
 					sent.append("<li>").append(person.getNome()).append(" (").append(person.getEmail()).append(")</li>");
-					break;
 				}
 			}
 

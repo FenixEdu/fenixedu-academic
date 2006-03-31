@@ -68,14 +68,12 @@ public class EMailSender {
 	}
 
 	public void addRecipient(RecipientType type, Person... persons) {
-		System.out.println("Entrei no addRecipieit");
 		for (Person person : persons) {
 			Recipient recipient = new Recipient();
 			recipient.setType(type);
 			recipient.setSubject(person);
 			this.recipients.add(recipient);
 		}
-		System.out.println("vou sair do addRecipieit");
 	}
 
 	public void addRecipient(RecipientType type, Collection<Recipient> recipients) {
@@ -146,9 +144,9 @@ public class EMailSender {
 		for (Person person : bccList) {
 			bccEmails.add(person.getEmail());
 		}
-		Collection<String> sent = EmailSender.send(from.getPersonalName(), from.getAddress(), null, null, bccEmails, message.getSubject(), message.getText());
+		Collection<String> notSent = EmailSender.send(from.getPersonalName(), from.getAddress(), null, null, bccEmails, message.getSubject(), message.getText());
 		for (Person person : bccList) {
-			if (!sent.contains(person.getEmail())) {
+			if (!notSent.contains(person.getEmail())) {
 				report.add(SendStatus.SENT, person);
 			}
 			else {

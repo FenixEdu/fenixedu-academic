@@ -478,8 +478,7 @@
 	</definition>
 	
 	<definition name="sendMail" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/navbar.jsp"/>
-	    <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+ 		<put name="navLocal" value="/teacher/navbar.jsp"/>
 		<put name="body" value="/cms/messaging/sendMail.jsp" />
 	</definition>
 </tiles-definitions>

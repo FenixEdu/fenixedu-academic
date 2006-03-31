@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonalGroup;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
-import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailAddress;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm;
 
@@ -43,21 +42,6 @@ public class PersonalGroupsMailSender extends MailSenderAction {
 		}
 
 		return groups;
-	}
-
-	@Override
-	protected EMailAddress getFromAddress(HttpServletRequest request, ActionForm form)
-			throws FenixFilterException, FenixServiceException {
-		SendMailForm sendMailForm = (SendMailForm) form;
-		EMailAddress address = new EMailAddress();
-		if (EMailAddress.isValid(sendMailForm.getFromAddress())) {
-			String[] components = sendMailForm.getFromAddress().split("@");
-			address.setUser(components[0]);
-			address.setDomain(components[1]);
-			address.setPersonalName(sendMailForm.getFromPersonalName());
-		}
-
-		return address;
 	}
 
 	@Override

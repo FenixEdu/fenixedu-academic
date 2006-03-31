@@ -112,7 +112,7 @@
 	<tr valign="top">
 	       <td colspan="3">
 		<%Map sendMailParameters = new TreeMap(request.getParameterMap());
-              sendMailParameters.put("method","prepare");
+              sendMailParameters.put("returnMethod","prepare");
 		request.setAttribute("sendMailParameters",sendMailParameters);%>
 		<bean:define id="sendMailLinkParameters" type="java.util.Map" name="sendMailParameters"/>
 		   <html:link page="/sendMailToAllStudents.do" name="sendMailLinkParameters">

@@ -435,30 +435,7 @@
             <form-property name="themeID" type="java.lang.Integer" />
             <form-property name="approved" type="java.lang.String" />
         </form-bean>
-       <form-bean name="sendMailFormCms" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm" dynamic="false"/>        
-        <form-bean name="sendMailForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	        <form-property name="page" type="java.lang.Integer" />
-            <form-property name="shiftCode" type="java.lang.String" />
-            <form-property name="studentGroupCode" type="java.lang.String" />
-            <form-property name="objectCode" type="java.lang.String" />
-            <form-property name="text" type="java.lang.String" />
-            <form-property name="from" type="java.lang.String" />
-            <form-property name="fromName" type="java.lang.String" />
-            <form-property name="method" type="java.lang.String" />
-            <form-property name="subject" type="java.lang.String" />
-            <form-property name="candidaciesSend" type="java.lang.String" />
-            <form-property name="seminaryID" type="java.lang.Integer" />
-            <form-property name="case1ID" type="java.lang.Integer" />
-            <form-property name="case2ID" type="java.lang.Integer" />
-            <form-property name="case3ID" type="java.lang.Integer" />
-            <form-property name="case4ID" type="java.lang.Integer" />
-            <form-property name="case5ID" type="java.lang.Integer" />
-            <form-property name="degreeID" type="java.lang.Integer" />
-            <form-property name="modalityID" type="java.lang.Integer" />
-            <form-property name="courseID" type="java.lang.Integer" />
-            <form-property name="themeID" type="java.lang.Integer" />
-            <form-property name="approved" type="java.lang.String" />
-        </form-bean>
+       <form-bean name="sendMailForm" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm" dynamic="false"/>        
 	   <form-bean name="studentsByCurricularCourseForm" 
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="shiftIDs" type="java.lang.Integer[]" />
@@ -1715,7 +1692,7 @@
         </action>
         <!--- by gedl, 17-9-2003 -->
         <action type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SendMailToSelectedStudents" 
-            path="/mailSender" name="sendMailFormCms" parameter="method" scope="request" validate="true">
+            path="/mailSender" name="sendMailForm" parameter="method" scope="request" validate="true">
 
             <forward name="sendMail" path="sendMail"/>
 
