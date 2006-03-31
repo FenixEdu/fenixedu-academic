@@ -70,9 +70,9 @@ public class CreateMasterDegreeCandidate extends Service {
         masterDegreeCandidate.setExecutionDegree(executionDegree);
 
         // Generate the Candidate's number
-        Integer number = persistentSupport.getIPersistentMasterDegreeCandidate().generateCandidateNumber(
-                executionDegree.getExecutionYear().getYear(),
-                executionDegree.getDegreeCurricularPlan().getDegree().getSigla(), degreeType);
+        Integer number = persistentSupport.getIPersistentMasterDegreeCandidate()
+                .generateCandidateNumber(executionDegree.getExecutionYear().getYear(),
+                        executionDegree.getDegreeCurricularPlan().getDegree().getSigla(), degreeType);
         masterDegreeCandidate.setCandidateNumber(number);
 
         // Check if the person Exists
@@ -83,43 +83,21 @@ public class CreateMasterDegreeCandidate extends Service {
 
         Role personRole = Role.getRoleByRoleType(RoleType.PERSON);
 
-        if (person == null) {            
-            //Generate Person Username
-//            String username = MasterDegreeCandidate.generateUsernameForNewCandidate(
-//                    masterDegreeCandidate, persons);
-            
+        if (person == null) {
             // Create the new Person
             person = DomainFactory.makePerson(name, identificationDocumentNumber,
-                    identificationDocumentType, Gender.MALE, "T" + System.currentTimeMillis());          
-            
-            // Give the Person Role
-            person.getPersonRoles().add(personRole);
-            
-        } else {
-            if (person.getUsername().startsWith("INA")) {
-                // Generate Person Username
-                String username = MasterDegreeCandidate.generateUsernameForNewCandidate(
-                        masterDegreeCandidate, persons);
-                person.changeUsername(username);
-            }
-            if (person.getUsername().startsWith("B")) {
-                // Generate Person Username
-                person.getPersonRoles().add(personRole);
-                String username = MasterDegreeCandidate.generateUsernameForNewCandidate(
-                        masterDegreeCandidate, persons);
-                person.changeUsername(username);
-            }
+                    identificationDocumentType, Gender.MALE, "T" + System.currentTimeMillis());
         }
 
         if (!person.hasRole(RoleType.PERSON)) {
             person.addPersonRoles(personRole);
         }
 
-        if (!person.hasRole(RoleType.MASTER_DEGREE_CANDIDATE)) {
-            person.addPersonRoles(Role.getRoleByRoleType(
-                    RoleType.MASTER_DEGREE_CANDIDATE));
-        }
         masterDegreeCandidate.setPerson(person);
+
+        if (!person.hasRole(RoleType.MASTER_DEGREE_CANDIDATE)) {
+            person.addPersonRoles(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_CANDIDATE));
+        }
 
         // Return the new Candidate
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
