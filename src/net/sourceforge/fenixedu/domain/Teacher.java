@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
+import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
@@ -36,6 +37,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.OldPublicationType;
+import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.State;
 
@@ -816,6 +818,15 @@ public class Teacher extends Teacher_Base {
             }
         }
         return result;
+    }
+
+    public Orientation readOrientationByType(OrientationType orientationType) {
+        for (final Orientation orientation : this.getAssociatedOrientationsSet()) {
+            if (orientation.getOrientationType() == orientationType) {
+                return orientation;
+            }
+        }
+        return null;
     }
 
 }

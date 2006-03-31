@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 import net.sourceforge.fenixedu.util.OrientationType;
@@ -329,8 +328,7 @@ public class ReadTeacherInformation extends Service {
     }
 
     private InfoOrientation getInfoOrientation(Teacher teacher, OrientationType orientationType) throws ExcepcaoPersistencia {
-        IPersistentOrientation persistentOrientation = persistentSupport.getIPersistentOrientation();
-        Orientation orientation = persistentOrientation.readByTeacherIdAndOrientationType(teacher .getIdInternal(), orientationType);
+        Orientation orientation = teacher.readOrientationByType(orientationType);
         InfoOrientation infoOrientation = null;
         if (orientation != null) {
             infoOrientation = InfoOrientation.newInfoFromDomain(orientation);
