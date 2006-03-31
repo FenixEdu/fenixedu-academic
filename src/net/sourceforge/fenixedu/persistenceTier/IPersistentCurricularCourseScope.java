@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 
 /**
  * @author dcs-rjao 24/Mar/2003

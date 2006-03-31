@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVers
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -164,10 +163,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentExecutionDegree getIPersistentExecutionDegree() {
         return new CursoExecucaoOJB();
-    }
-
-    public IPersistentStudentCurricularPlan getIStudentCurricularPlanPersistente() {
-        return new StudentCurricularPlanOJB();
     }
 
     public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate() {

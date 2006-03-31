@@ -8,16 +8,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 public class InsertTutorShip extends Service {
 
     public Boolean verifyStudentOfThisDegree(Student student, DegreeType degreeType, String degreeCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-        StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
-                .readActiveByStudentNumberAndDegreeType(student.getNumber(), degreeType);
+        StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
 
         return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(degreeCode);
     }

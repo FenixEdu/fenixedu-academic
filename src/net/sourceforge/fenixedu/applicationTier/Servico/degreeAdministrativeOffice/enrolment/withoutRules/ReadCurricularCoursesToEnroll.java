@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -65,16 +64,17 @@ public class ReadCurricularCoursesToEnroll extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
         final ExecutionPeriod executionPeriod = rootDomainObject
                 .readExecutionPeriodByOID(executionPeriodID);
 
         if (infoStudent == null || infoStudent.getNumber() == null) {
             throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
         }
-        final StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
-                .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(), degreeType);
+        Student student = Student.readStudentByNumberAndDegreeType(infoStudent.getNumber(), degreeType);
+        StudentCurricularPlan studentCurricularPlan = null;
+        if(student != null) {
+        	studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+        }
 
         if (studentCurricularPlan == null) {
             throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
@@ -245,17 +245,4 @@ public class ReadCurricularCoursesToEnroll extends Service {
         return Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
     }
 
-    /**
-     * @param student
-     * @return IStudentCurricularPlan
-     * @throws ExcepcaoPersistencia
-     */
-    protected StudentCurricularPlan getStudentCurricularPlan(Student student)
-            throws ExcepcaoPersistencia {
-        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-
-        return studentCurricularPlanDAO.readActiveStudentCurricularPlan(student.getNumber(), student
-                .getDegreeType());
-    }
 }

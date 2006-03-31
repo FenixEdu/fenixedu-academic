@@ -18,10 +18,10 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -33,14 +33,12 @@ import org.apache.commons.collections.Predicate;
 public class ReadStudentEnrollmentsAndClass extends Service {
 
     public List run(IUserView userView) throws ExcepcaoPersistencia {
-        IPersistentStudentCurricularPlan pSCP = persistentSupport
-                .getIStudentCurricularPlanPersistente();
+        Student student = userView.getPerson().getStudentByType(DegreeType.DEGREE);
+        StudentCurricularPlan scp = null;
+        if(student != null) {
+        	scp = student.getActiveStudentCurricularPlan();
+        }
 
-        String user = userView.getUtilizador();
-        Integer studentNumber = new Integer(user.substring(1));
-
-        StudentCurricularPlan scp = pSCP.readActiveStudentCurricularPlan(studentNumber,
-                DegreeType.DEGREE);
         List studentEnrollments = scp.getEnrolments();
         final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         

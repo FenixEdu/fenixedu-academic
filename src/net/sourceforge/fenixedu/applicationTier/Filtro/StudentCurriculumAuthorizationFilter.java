@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
@@ -21,7 +20,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -113,10 +111,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 
         // Read The DegreeCurricularPlan
         try {
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
-
-            studentCurricularPlan = readStudentCurricularPlan(studentCurricularPlanID,
-                    persistentStudentCurricularPlan);
+        	studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
         } catch (Exception e) {
             return "noAuthorization";
@@ -307,13 +302,5 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         }
         
         return student.getAssociatedTutor().getTeacher().equals(teacher);
-    }
-
-    private StudentCurricularPlan readStudentCurricularPlan(Integer studentCurricularPlanID,
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan)
-            throws ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
-                .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
-        return studentCurricularPlan;
     }
 }

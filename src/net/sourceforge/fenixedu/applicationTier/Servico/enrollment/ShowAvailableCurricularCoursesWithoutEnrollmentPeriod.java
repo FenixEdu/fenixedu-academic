@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -46,7 +45,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod extends Servi
         Student student = getStudent(studentNumber);
 
         if (student != null) {
-            StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+            StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
 
             if (studentCurricularPlan != null) {
                 //					
@@ -187,14 +186,11 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod extends Servi
         return Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
     }
 
-    protected StudentCurricularPlan getStudentCurricularPlan(Student student)
+    /*protected StudentCurricularPlan getStudentCurricularPlan(Student student)
             throws ExcepcaoPersistencia {
-        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport
-                .getIStudentCurricularPlanPersistente();
 
-        return studentCurricularPlanDAO.readActiveStudentCurricularPlan(student.getNumber(), student
-                .getDegreeType());
-    }
+        return stude
+    }*/
 
     protected ExecutionPeriod getExecutionPeriod(ExecutionPeriod executionPeriod) {
         return (executionPeriod == null) ? ExecutionPeriod.readActualExecutionPeriod() : executionPeriod;

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -32,16 +31,13 @@ public class ReadSpecializationAndSecundaryAreasByStudent extends Service {
         List finalSpecializationAreas = new ArrayList();
         List finalSecundaryAreas = new ArrayList();
 
-        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-
         Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
 
         if (student == null) {
             throw new ExistingServiceException("student");
         }
-        StudentCurricularPlan studentCurricularPlan = studentCurricularPlanDAO
-                .readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
+        
+        StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
 
         if (studentCurricularPlan == null) {
             throw new ExistingServiceException("studentCurricularPlan");

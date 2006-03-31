@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
  * @author Tânia Pousão
@@ -98,11 +97,11 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
-                IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                        .getIStudentCurricularPlanPersistente();
-
-                StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
-                        .readActiveByStudentNumberAndDegreeType(studentNumber, DEGREE_TYPE);
+                Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
+                StudentCurricularPlan studentCurricularPlan = null;
+                if(student != null) {
+                	studentCurricularPlan = student.getActiveStudentCurricularPlan();
+                }
                 if (studentCurricularPlan != null
                         && studentCurricularPlan.getDegreeCurricularPlan() != null
                         && studentCurricularPlan.getDegreeCurricularPlan().getDegree() != null) {

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -24,8 +25,11 @@ public class ReadStudentCurricularPlansForSeminaries extends Service {
 
     public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException,
             ExcepcaoPersistencia {
-        List studentCurricularPlans = persistentSupport.getIStudentCurricularPlanPersistente().readByUsername(
-                userView.getUtilizador());
+    	Student student = Student.readByUsername(userView.getUtilizador());
+    	List<StudentCurricularPlan> studentCurricularPlans = null;
+    	if(student != null) {
+    		studentCurricularPlans = student.getStudentCurricularPlans();
+    	}
 
         if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {
             throw new NonExistingServiceException();

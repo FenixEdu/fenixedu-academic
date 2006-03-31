@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -26,11 +26,12 @@ public class ReadActiveStudentCurricularPlanByNumberAndType extends Service {
 
     public InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan run(
             Integer studentNumber, DegreeType degreeType) throws ExcepcaoPersistencia {
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
 
-        StudentCurricularPlan scp = persistentStudentCurricularPlan
-                .readActiveByStudentNumberAndDegreeType(studentNumber, degreeType);
+    	Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        StudentCurricularPlan scp = null;
+        if(student != null) {
+        	scp = student.getActiveOrConcludedStudentCurricularPlan();
+        }
 
         InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan infoSCP = 
             InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan.newInfoFromDomain(scp);

@@ -12,9 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -87,20 +85,9 @@ public class StudentShiftEnrollmentAuthorizationFilter extends Filtro {
         StudentCurricularPlan studentCurricularPlan = null;
 
         try {
-            Student student = (Student) persistentObject.readByOID(Student.class,
-                    infoStudent.getIdInternal());
+            Student student = rootDomainObject.readStudentByOID(infoStudent.getIdInternal());
 
-            Integer studentNumber = student.getNumber();
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                    .getIStudentCurricularPlanPersistente();
-
-            studentCurricularPlan = persistentStudentCurricularPlan
-                    .readActiveByStudentNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
-            if (studentCurricularPlan == null) {
-                studentCurricularPlan = persistentStudentCurricularPlan
-                        .readActiveByStudentNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
-            }
-
+            studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
         } catch (Exception e) {
             return "noAuthorization";
         }

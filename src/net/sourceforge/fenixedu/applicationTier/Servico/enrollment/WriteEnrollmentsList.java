@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
  * @author Tânia Pousão
@@ -35,10 +35,12 @@ public class WriteEnrollmentsList extends Service {
             throw new FenixServiceException("");
         }
 
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-        StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
-                .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(), degreeType);
+        Student student  = Student.readStudentByNumberAndDegreeType(infoStudent.getNumber(), degreeType);
+        StudentCurricularPlan studentCurricularPlan = null;
+        if(student != null) {
+        	studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        }
+
         if (studentCurricularPlan == null) {
             throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
         }

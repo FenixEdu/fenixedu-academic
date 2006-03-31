@@ -30,7 +30,7 @@ public class ShowAvailableCurricularCourses extends
         Student student = getStudent(studentNumber);
 
             if (student != null) {
-                StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+                StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
 
                 if (studentCurricularPlan != null) {
                 	if(checkSpecialSeason(studentCurricularPlan)) {

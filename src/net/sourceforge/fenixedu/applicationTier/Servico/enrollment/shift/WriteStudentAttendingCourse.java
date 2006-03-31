@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 public class WriteStudentAttendingCourse extends Service {
 
@@ -26,9 +25,6 @@ public class WriteStudentAttendingCourse extends Service {
     public Boolean run(InfoStudent infoStudent, Integer executionCourseId) throws FenixServiceException,
             ExcepcaoPersistencia {
         
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-
         Student student = rootDomainObject.readStudentByOID(infoStudent.getIdInternal());
         infoStudent.setNumber(student.getNumber());
 
@@ -37,8 +33,7 @@ public class WriteStudentAttendingCourse extends Service {
         }
 
         if (executionCourseId != null) {
-            StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(infoStudent,
-                    persistentStudentCurricularPlan);
+            StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(infoStudent);
 
             ExecutionCourse executionCourse = findExecutionCourse(executionCourseId);
 
@@ -92,19 +87,20 @@ public class WriteStudentAttendingCourse extends Service {
         return executionCourse;
     }
 
-    private StudentCurricularPlan findStudentCurricularPlan(InfoStudent infoStudent,
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan)
-            throws FenixServiceException, ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
-                .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(), DegreeType.DEGREE);
-
+    private StudentCurricularPlan findStudentCurricularPlan(InfoStudent infoStudent) throws FenixServiceException{
+    	
+    	Student student = Student.readStudentByNumberAndDegreeType(infoStudent.getNumber(), DegreeType.DEGREE);
+    	StudentCurricularPlan studentCurricularPlan = null;
+    	if(student != null) {
+    		studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+    	}
         if (studentCurricularPlan == null) {
-
-            studentCurricularPlan = persistentStudentCurricularPlan
-                    .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(),
-                            DegreeType.MASTER_DEGREE);
-
+        	student = Student.readStudentByNumberAndDegreeType(infoStudent.getNumber(), DegreeType.MASTER_DEGREE);
+        	if(student != null) {
+        		studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+        	}
         }
+        
         if (studentCurricularPlan == null) {
 
             throw new FenixServiceException("noStudent");

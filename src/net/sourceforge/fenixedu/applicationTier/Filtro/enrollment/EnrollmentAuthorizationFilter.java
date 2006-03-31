@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -208,18 +207,13 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
     protected StudentCurricularPlan readStudentCurricularPlan(Object[] arguments)
             throws ExcepcaoPersistencia {
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-
         StudentCurricularPlan studentCurricularPlan = null;
         if (arguments[1] != null) {
+        	studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) arguments[1]);
 
-            studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(
-                    StudentCurricularPlan.class, (Integer) arguments[1]);
         } else {
-            studentCurricularPlan = persistentStudentCurricularPlan
-                    .readActiveByStudentNumberAndDegreeType((Integer) arguments[2],
-                            DegreeType.DEGREE);
+        	Student student = Student.readStudentByNumberAndDegreeType((Integer) arguments[2], DegreeType.DEGREE);
+        	studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
         }
         return studentCurricularPlan;
     }

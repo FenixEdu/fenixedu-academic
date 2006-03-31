@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVers
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -61,7 +60,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegre
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SentSmsVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentCurricularPlanVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractRegimeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractVO;
@@ -109,10 +107,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion() {
         return new StudentTestQuestionVO();
-    }
-
-    public IPersistentStudentCurricularPlan getIStudentCurricularPlanPersistente() {
-        return new StudentCurricularPlanVO();
     }
 
     public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate() {

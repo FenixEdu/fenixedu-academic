@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -46,28 +45,25 @@ public class ReadStudentCurricularInformation extends Service {
     public List run(final Integer studentNumber, final DegreeType degreeType) throws ExcepcaoPersistencia {
         final List infoStudentCurricularPlans = new ArrayList();
 
-        final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-
         InfoStudent infoStudent = null;
 
-        final List studentCurricularPlans = persistentStudentCurricularPlan
-                .readByStudentNumberAndDegreeType(studentNumber, degreeType);
-        for (final Iterator iterator = studentCurricularPlans.iterator(); iterator.hasNext();) {
-            final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator
-                    .next();
-            final Student student = studentCurricularPlan.getStudent();
-
-            if (infoStudent == null) {
-                infoStudent = constructInfoStudent(student);
-            }
-
-            final InfoStudentCurricularPlan infoStudentCurricularPlan = constructInfoStudentCurricularPlan(studentCurricularPlan);
-            infoStudentCurricularPlan.setInfoStudent(infoStudent);
-
-            infoStudentCurricularPlans.add(infoStudentCurricularPlan);
+        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        if(student != null) {
+        	final List<StudentCurricularPlan> studentCurricularPlans = student.getStudentCurricularPlans(); 
+	        for (final Iterator iterator = studentCurricularPlans.iterator(); iterator.hasNext();) {
+	            final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator
+	                    .next();
+	
+	            if (infoStudent == null) {
+	                infoStudent = constructInfoStudent(student);
+	            }
+	
+	            final InfoStudentCurricularPlan infoStudentCurricularPlan = constructInfoStudentCurricularPlan(studentCurricularPlan);
+	            infoStudentCurricularPlan.setInfoStudent(infoStudent);
+	
+	            infoStudentCurricularPlans.add(infoStudentCurricularPlan);
+	        }
         }
-
         return infoStudentCurricularPlans;
     }
 

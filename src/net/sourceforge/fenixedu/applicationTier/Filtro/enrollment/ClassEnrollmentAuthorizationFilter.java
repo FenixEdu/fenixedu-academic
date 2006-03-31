@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -35,19 +35,21 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
         IUserView id = getRemoteUser(request);
 
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
         IPersistentEnrolmentPeriod persistentEnrolmentPeriod = persistentSupport
                 .getIPersistentEnrolmentPeriod();
 
         StudentCurricularPlan studentCurricularPlan = null;
-
-        studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(id
-                .getUtilizador(), DegreeType.DEGREE);
+        
+        Student student = id.getPerson().getStudentByType(DegreeType.DEGREE);
+        if(student != null) {
+        	studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        }
 
         if (studentCurricularPlan == null) {
-            studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(id
-                    .getUtilizador(), DegreeType.MASTER_DEGREE);
+        	student = id.getPerson().getStudentByType(DegreeType.MASTER_DEGREE);
+        	if(student != null) {
+        		studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        	}
         }
 
         if (studentCurricularPlan != null) {

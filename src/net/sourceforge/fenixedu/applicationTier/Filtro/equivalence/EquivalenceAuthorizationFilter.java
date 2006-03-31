@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -163,7 +162,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
                     }
                 });
 
-        StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+        StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
 
         return degreeCurricularPlansOfThisCoordinator.contains(studentCurricularPlan
                 .getDegreeCurricularPlan());
@@ -189,26 +188,14 @@ public class EquivalenceAuthorizationFilter extends Filtro {
         return teacher.getCoordinatedExecutionDegrees();
     }
 
-    /**
-     * @param student
-     * @return IStudentCurricularPlan
-     * @throws ExcepcaoPersistencia
-     */
-    private StudentCurricularPlan getStudentCurricularPlan(Student student) throws ExcepcaoPersistencia {
-        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-        return studentCurricularPlanDAO.readActiveByStudentNumberAndDegreeType(student.getNumber(),
-                student.getDegreeType());
-    }
-
+ 
     /**
      * @param student
      * @return true/false
      * @throws ExcepcaoPersistencia
      */
     private boolean isThisStudentsDegreeTheOne(Student student) throws ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
-
+        StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
         return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(
                 DEGREE_ACRONYM);
     }

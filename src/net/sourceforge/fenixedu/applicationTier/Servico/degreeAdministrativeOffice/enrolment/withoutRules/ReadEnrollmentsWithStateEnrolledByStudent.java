@@ -21,11 +21,11 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -41,15 +41,15 @@ public class ReadEnrollmentsWithStateEnrolledByStudent extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
         ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
                 ExecutionPeriod.class, executionPeriodID);
 
         StudentCurricularPlan studentCurricularPlan = null;
         if (infoStudent != null && infoStudent.getNumber() != null) {
-            studentCurricularPlan = persistentStudentCurricularPlan
-                    .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(), degreeType);
+        	Student student = Student.readStudentByNumberAndDegreeType(infoStudent.getNumber(), degreeType);
+        	if(student != null) {
+        		studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+        	}
         }
         if (studentCurricularPlan == null) {
             throw new FenixServiceException("error.student.curriculum.noCurricularPlans");

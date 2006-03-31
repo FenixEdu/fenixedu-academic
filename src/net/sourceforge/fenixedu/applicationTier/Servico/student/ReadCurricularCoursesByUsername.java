@@ -10,8 +10,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
@@ -26,10 +28,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class ReadCurricularCoursesByUsername extends Service {
 
-	public List run(String username) throws BDException, ExcepcaoPersistencia {
+	public List run(String username) throws BDException, ExcepcaoPersistencia, NonExistingServiceException {
 		List curricularCourses = new LinkedList();
 
-		List curricularPlans = persistentSupport.getIStudentCurricularPlanPersistente().readByUsername(username);
+    	Student student = Student.readByUsername(username);
+    	if(student == null) {
+    		throw new NonExistingServiceException();
+    	}
+		List<StudentCurricularPlan> curricularPlans = student.getStudentCurricularPlans();
 		for (Iterator iterator = curricularPlans.iterator(); iterator.hasNext();) {
 			StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 			for (Iterator curricularCoursesIterator = studentCurricularPlan.getDegreeCurricularPlan()

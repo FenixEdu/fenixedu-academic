@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -93,10 +92,7 @@ public class PrepareDegreesListByStudentNumber extends Service {
         }
 
         // read the execution degree belongs to student
-        IPersistentStudentCurricularPlan persistentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-        StudentCurricularPlan studentCurricularPlan = persistentCurricularPlan
-                .readActiveByStudentNumberAndDegreeType(student.getNumber(), degreeType);
+        StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
         // execution degree isn't find, then it is chosen the list's first
         if (studentCurricularPlan == null || studentCurricularPlan.getDegreeCurricularPlan() == null
                 || studentCurricularPlan.getDegreeCurricularPlan().getDegree() == null

@@ -13,14 +13,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesF
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
  * @author João Mota
@@ -74,17 +72,15 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
 
     protected StudentCurricularPlan readStudentCurricularPlan(Object[] arguments)
             throws ExcepcaoPersistencia {
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-
         StudentCurricularPlan studentCurricularPlan = null;
         if (arguments[1] != null) {
 
             studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) arguments[1]);
         } else {
-            studentCurricularPlan = persistentStudentCurricularPlan
-                    .readActiveByStudentNumberAndDegreeType((Integer) arguments[2],
-                            DegreeType.DEGREE);
+        	Student student = Student.readStudentByNumberAndDegreeType((Integer) arguments[2], DegreeType.DEGREE);
+        	if(student != null) {
+        		studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+        	}
         }
         return studentCurricularPlan;
     }

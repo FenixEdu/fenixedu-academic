@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
@@ -67,7 +68,21 @@ public class Student extends Student_Base {
         }
         return null;
     }
+    
+    public StudentCurricularPlan getActiveOrConcludedStudentCurricularPlan() {
+    	StudentCurricularPlan concludedStudentCurricularPlan = null;
+        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
+            if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
+                return studentCurricularPlan;
+            }
+            if(concludedStudentCurricularPlan == null && studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.SCHOOLPARTCONCLUDED) {
+            	concludedStudentCurricularPlan = studentCurricularPlan;
+            }
+        }
+        return concludedStudentCurricularPlan;
+    }
 
+    
     public boolean attends(final ExecutionCourse executionCourse) {
         for (final Attends attends : getAssociatedAttends()) {
             if (attends.getDisciplinaExecucao() == executionCourse) {
@@ -292,7 +307,29 @@ public class Student extends Student_Base {
         }
         return result;
     }
+    
+    public List<StudentCurricularPlan> getStudentCurricularPlansBySpecialization(Specialization specialization) {
+        List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+            if (studentCurricularPlan.getSpecialization() != null && studentCurricularPlan.getSpecialization().equals(specialization)) {
+                result.add(studentCurricularPlan);
+            }
+        }
+        return result;
+    }
 
+    public List<StudentCurricularPlan> getStudentCurricularPlansBySpecializationAndState(Specialization specialization, StudentCurricularPlanState state) {
+        List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+            if (studentCurricularPlan.getSpecialization() != null && studentCurricularPlan.getSpecialization().equals(specialization) 
+            		&& studentCurricularPlan.getCurrentState() != null && studentCurricularPlan.getCurrentState().equals(state)) {
+                result.add(studentCurricularPlan);
+            }
+        }
+        return result;
+    }
+
+    
     public List<Attends> readAttendsInCurrentExecutionPeriod() {
         List<Attends> attends = new ArrayList<Attends>();
         for (Attends attend : this.getAssociatedAttends()) {
