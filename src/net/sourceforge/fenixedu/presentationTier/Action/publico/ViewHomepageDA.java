@@ -37,8 +37,6 @@ public class ViewHomepageDA extends FenixContextDispatchAction {
     public ActionForward list(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
     	final SortedMap<String, SortedSet<Homepage>> homepages = new TreeMap<String, SortedSet<Homepage>>();
-    	final SortedSet<Homepage> others = new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME);
-    	homepages.put("?", others);
     	for (int i = (int) 'A'; i <= (int) 'Z'; i++) {
     		homepages.put("" + ((char) i), new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME));
     	}
@@ -47,12 +45,18 @@ public class ViewHomepageDA extends FenixContextDispatchAction {
     		final SortedSet<Homepage> sortedSet;
     		if (homepages.containsKey(key)) {
     			sortedSet = homepages.get(key);
-    		} else {
-    			sortedSet = others;
+    			sortedSet.add(homepage);
     		}
-    		sortedSet.add(homepage);
     	}
     	request.setAttribute("homepages", homepages);
+
+    	final String selectedPage = request.getParameter("selectedPage");
+    	if (selectedPage != null) {
+    		request.setAttribute("selectedPage", selectedPage);
+    	} else {
+    		request.setAttribute("selectedPage", "");
+    	}
+
         return mapping.findForward("list-homepages");
     }
 
@@ -64,6 +68,12 @@ public class ViewHomepageDA extends FenixContextDispatchAction {
         response.getOutputStream().write(pngFile);
         response.getOutputStream().close();
         return null;
+    }
+
+    public ActionForward stats(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	request.setAttribute("homepages", rootDomainObject.getHomepages());
+    	return mapping.findForward("homepage-stats");
     }
 
     private String getEmailString(final HttpServletRequest request) {

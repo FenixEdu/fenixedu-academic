@@ -6,7 +6,7 @@
 <ul class="treemenu">
 	<li>
 		<html:link page="/viewHomepage.do?method=list">
-			Homepage listings
+			<bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.listings"/>
 		</html:link>
     </li>
 	<li>
@@ -20,8 +20,8 @@
 		</html:link>
     </li>
 	<li>
-		<html:link page="/l1">
-			Statistics
+		<html:link page="/viewHomepage.do?method=stats">
+			<bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.statistics"/>
 		</html:link>
     </li>
 </ul>

@@ -753,6 +753,7 @@
     			>
     		<forward name="view-homepage" path="view-homepage"/>
     		<forward name="list-homepages" path="list-homepages"/>
+    		<forward name="homepage-stats" path="homepage-stats"/>
     		<forward name="not-found-homepage" path="not-found-homepage"/>
 		</action>
 
