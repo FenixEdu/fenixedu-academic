@@ -140,9 +140,7 @@ public class EditGuideInformation extends Service {
 
                 // Update the remaing guide entries
                 for (InfoGuideEntry infoGuideEntry : newInfoGuideEntries) {
-                    GuideEntry guideEntry = persistentSupport.getIPersistentGuideEntry()
-                            .readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide,
-                                    infoGuideEntry.getGraduationType(),
+                    GuideEntry guideEntry = guide.getEntry(infoGuideEntry.getGraduationType(),
                                     infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
                     guideEntry.setQuantity(infoGuideEntry.getQuantity());
                 }

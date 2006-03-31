@@ -41,4 +41,24 @@ public class Guide extends Guide_Base {
         
     }
 
+    public GuideEntry getEntry(GraduationType graduationType, DocumentType documentType, String description) {
+        for (GuideEntry entry : getGuideEntries()) {
+            if (graduationType == null || !graduationType.equals(entry.getGraduationType())) {
+                continue;
+            }
+            
+            if (documentType == null || !documentType.equals(entry.getDocumentType())) {
+                continue;
+            }
+            
+            if (description == null || !description.equals(entry.getDescription())) {
+                continue;
+            }
+            
+            return entry;
+        }
+        
+        return null;
+    }
+
 }

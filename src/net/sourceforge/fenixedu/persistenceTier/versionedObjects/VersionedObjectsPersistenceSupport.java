@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
@@ -179,10 +178,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentPublicationAttribute getIPersistentPublicationAttribute() {
-        return null;
-    }
-
-    public IPersistentGuideEntry getIPersistentGuideEntry() {
         return null;
     }
 
