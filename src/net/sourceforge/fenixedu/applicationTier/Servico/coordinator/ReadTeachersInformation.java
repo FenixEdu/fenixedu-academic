@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PublicationType;
@@ -324,8 +323,7 @@ public class ReadTeachersInformation extends Service {
     }
 
     private InfoPublicationsNumber getInfoPublicationsNumber(Teacher teacher, PublicationType publicationType) throws ExcepcaoPersistencia {
-        IPersistentPublicationsNumber persistentPublicationsNumber = persistentSupport.getIPersistentPublicationsNumber();
-        PublicationsNumber publicationsNumber = persistentPublicationsNumber.readByTeacherIdAndPublicationType(teacher.getIdInternal(), publicationType);
+        PublicationsNumber publicationsNumber = teacher.readPublicationsNumberByType(publicationType);
         InfoPublicationsNumber infoPublicationsNumber = null;
         if (publicationsNumber != null) {
             infoPublicationsNumber = InfoPublicationsNumber.newInfoFromDomain(publicationsNumber);

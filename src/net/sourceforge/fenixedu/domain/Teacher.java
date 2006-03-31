@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
+import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
@@ -39,6 +40,7 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PublicationArea;
+import net.sourceforge.fenixedu.util.PublicationType;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -803,7 +805,7 @@ public class Teacher extends Teacher_Base {
     public List<PublicationTeacher> readPublicationsByPublicationArea(PublicationArea publicationArea) {
         final List<PublicationTeacher> result = new ArrayList<PublicationTeacher>();
         for (final PublicationTeacher publicationTeacher : this.getTeacherPublicationsSet()) {
-            if (publicationTeacher.getPublicationArea() == publicationArea) {
+            if (publicationTeacher.getPublicationArea().equals(publicationArea)) {
                 result.add(publicationTeacher);
             }
         }
@@ -813,7 +815,7 @@ public class Teacher extends Teacher_Base {
     public List<OldPublication> readOldPublicationsByType(OldPublicationType oldPublicationType) {
         final List<OldPublication> result = new ArrayList<OldPublication>();
         for (final OldPublication oldPublication : this.getAssociatedOldPublicationsSet()) {
-            if (oldPublication.getOldPublicationType() == oldPublicationType) {
+            if (oldPublication.getOldPublicationType().equals(oldPublicationType)) {
                 result.add(oldPublication);
             }
         }
@@ -822,8 +824,17 @@ public class Teacher extends Teacher_Base {
 
     public Orientation readOrientationByType(OrientationType orientationType) {
         for (final Orientation orientation : this.getAssociatedOrientationsSet()) {
-            if (orientation.getOrientationType() == orientationType) {
+            if (orientation.getOrientationType().equals(orientationType)) {
                 return orientation;
+            }
+        }
+        return null;
+    }
+
+    public PublicationsNumber readPublicationsNumberByType(PublicationType publicationType) {
+        for (final PublicationsNumber publicationsNumber : this.getAssociatedPublicationsNumbersSet()) {
+            if (publicationsNumber.getPublicationType().equals(publicationType)) {
+                return publicationsNumber;
             }
         }
         return null;

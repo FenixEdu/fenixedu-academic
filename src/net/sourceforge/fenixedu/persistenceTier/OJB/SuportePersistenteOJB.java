@@ -51,7 +51,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestQuestionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAttributeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationFormatOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.sms.SentSmsOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.PublicationsNumberOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.ShiftProfessorshipOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.SupportLessonOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.workingTime.TeacherInstitutionWorkingTimeOJB;
@@ -85,7 +84,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuest
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
@@ -238,10 +236,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentReimbursementGuide getIPersistentReimbursementGuide() {
         return new ReimbursementGuideOJB();
-    }
-
-    public IPersistentPublicationsNumber getIPersistentPublicationsNumber() {
-        return new PublicationsNumberOJB();
     }
 
     public IPersistentSupportLesson getIPersistentSupportLesson() {

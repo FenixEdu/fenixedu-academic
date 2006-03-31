@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuest
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
@@ -107,8 +106,6 @@ public interface ISuportePersistente {
     public IPersistentShiftProfessorship getIPersistentShiftProfessorship();
 
     public IPersistentReimbursementGuide getIPersistentReimbursementGuide();
-
-    public IPersistentPublicationsNumber getIPersistentPublicationsNumber();
 
     public IPersistentSupportLesson getIPersistentSupportLesson();
 
