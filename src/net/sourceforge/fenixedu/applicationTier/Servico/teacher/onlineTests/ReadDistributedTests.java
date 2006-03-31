@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -19,10 +20,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadDistributedTests extends Service {
 
     public List<InfoDistributedTest> run(Integer executionCourseId) throws ExcepcaoPersistencia {
-        List<DistributedTest> distributedTests = persistentSupport.getIPersistentDistributedTest().readByTestScope(ExecutionCourse.class.getName(),
+        final TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class,
                 executionCourseId);
         List<InfoDistributedTest> infoDistributedTestList = new ArrayList<InfoDistributedTest>();
-        for (DistributedTest distributedTest : distributedTests) {
+        for (DistributedTest distributedTest : testScope.getDistributedTests()) {
             infoDistributedTestList.add(InfoDistributedTest.newInfoFromDomain(distributedTest));
         }
         return infoDistributedTestList;

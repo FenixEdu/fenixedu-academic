@@ -17,7 +17,7 @@ public class TestScope extends TestScope_Base {
     private DomainObject domainObject;
 
     public TestScope() {
-    	setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public TestScope(DomainObject object) {
@@ -41,14 +41,15 @@ public class TestScope extends TestScope_Base {
     public DomainObject getDomainObject() {
         return domainObject;
     }
-    
+
     public static TestScope readByDomainObject(Class clazz, Integer idInternal) {
         for (final TestScope testScope : RootDomainObject.getInstance().getTestScopes()) {
-            if (testScope.getClass().equals(clazz.getName()) && testScope.getKeyClass().equals(idInternal)) {
+            if (testScope.getClassName().equals(clazz.getName())
+                    && testScope.getKeyClass().equals(idInternal)) {
                 return testScope;
             }
         }
         return null;
     }
-    
+
 }
