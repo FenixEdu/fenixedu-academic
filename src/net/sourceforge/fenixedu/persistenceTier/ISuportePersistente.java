@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuest
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
@@ -113,8 +112,6 @@ public interface ISuportePersistente {
     public IPersistentOrientation getIPersistentOrientation();
 
     public IPersistentPublicationsNumber getIPersistentPublicationsNumber();
-
-    public IPersistentOldPublication getIPersistentOldPublication();
 
     public IPersistentSupportLesson getIPersistentSupportLesson();
 

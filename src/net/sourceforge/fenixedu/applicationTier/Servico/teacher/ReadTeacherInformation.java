@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.util.OldPublicationType;
@@ -136,8 +135,8 @@ public class ReadTeacherInformation extends Service {
         infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(getInfoPublicationsNumber(teacher, PublicationType.AUTHOR_BOOK));
         infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(getInfoPublicationsNumber(teacher, PublicationType.MAG_ARTICLE));
         infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(getInfoPublicationsNumber(teacher, PublicationType.COMUNICATION));
-        infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(teacher.getIdInternal(), OldPublicationType.CIENTIFIC));
-        infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(teacher.getIdInternal(), OldPublicationType.DIDACTIC));
+        infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(teacher, OldPublicationType.CIENTIFIC));
+        infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(teacher, OldPublicationType.DIDACTIC));
         infoSiteTeacherInformation.setInfoDidaticPublications(getInfoPublications(teacher, PublicationConstants.DIDATIC));
         infoSiteTeacherInformation.setInfoCientificPublications(getInfoPublications(teacher, PublicationConstants.CIENTIFIC));
 
@@ -317,10 +316,8 @@ public class ReadTeacherInformation extends Service {
         return oldestCareers;
     }
 
-    private List getInfoOldPublications(Integer teacherId, OldPublicationType oldPublicationType) throws ExcepcaoPersistencia {
-        IPersistentOldPublication persistentOldPublication = persistentSupport.getIPersistentOldPublication();
-        List oldCientificPublications = persistentOldPublication.readAllByTeacherIdAndOldPublicationType(teacherId, oldPublicationType);
-
+    private List getInfoOldPublications(Teacher teacher, OldPublicationType oldPublicationType) throws ExcepcaoPersistencia {
+        List oldCientificPublications = teacher.readOldPublicationsByType(oldPublicationType);
         List infoOldPublications = (List) CollectionUtils.collect(oldCientificPublications,
                 new Transformer() {
                     public Object transform(Object o) {
