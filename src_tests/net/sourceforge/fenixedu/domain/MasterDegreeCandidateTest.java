@@ -60,23 +60,4 @@ public class MasterDegreeCandidateTest extends DomainTestBase {
         
     }
 
-
-    public void testGenerateUsername() {
-        
-        String username;
-        
-        username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, new ArrayList());
-        assertEquals(username, "1MASabc");
-        
-        username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, onePerson);
-        assertEquals(username, "1MASabc1");
-        
-        username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, twoPersons);
-        assertEquals(username, "1MASabc2");
-        
-        username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, allPersons);
-        assertEquals(username, "1MASabc3");
-        
-    }
-
 }
