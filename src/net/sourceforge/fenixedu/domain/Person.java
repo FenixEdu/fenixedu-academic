@@ -7,8 +7,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -24,6 +28,7 @@ import net.sourceforge.fenixedu.domain.research.result.Authorship;
 import net.sourceforge.fenixedu.domain.research.result.Patent;
 import net.sourceforge.fenixedu.domain.research.result.Publication;
 import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
 public class Person extends Person_Base {
@@ -167,7 +172,10 @@ public class Person extends Person_Base {
                 .getNumeroDocumentoIdentificacao(), updatedPersonalData.getTipoDocumentoIdentificacao(),
                 this);
         updateProperties(updatedPersonalData);
-        setPais((Country) valueToUpdate(getPais(), country));
+        if (country != null) {
+            setPais(country);
+        }
+//        setPais((Country) valueToUpdate(getPais(), country));
     }
 
     public void editPersonalContactInformation(InfoPerson personToEdit) {
@@ -193,10 +201,15 @@ public class Person extends Person_Base {
     private void checkConditionsToCreateNewPerson(final String username, final String documentIDNumber,
             final IDDocumentType documentType, Person thisPerson) {
 
-        if ((documentIDNumber != null && documentType != null && checkIfDocumentNumberIdAndDocumentIdTypeExists(
-                documentIDNumber, documentType, thisPerson))
-                || (username != null && checkIfUsernameExists(username, thisPerson))) {
-            throw new DomainException("error.person.existent.username.or.docIdAndType");
+        if (documentIDNumber != null
+                && documentType != null
+                && checkIfDocumentNumberIdAndDocumentIdTypeExists(documentIDNumber, documentType,
+                        thisPerson)) {
+            throw new DomainException("error.person.existent.docIdAndType");
+        }
+
+        if (username != null && checkIfUsernameExists(username, thisPerson)) {
+            throw new DomainException("error.person.existent.username");
         }
     }
 
@@ -478,7 +491,11 @@ public class Person extends Person_Base {
         // setAvailableWebSite((Boolean) valueToUpdate(getAvailableWebSite(),
         // infoPerson
         // .getAvailableWebSite()));
-        setWorkPhone(valueToUpdate(getWorkPhone(), infoPerson.getWorkPhone()));
+        if(!StringUtils.isNumeric(getWorkPhone())){
+            setWorkPhone(infoPerson.getWorkPhone());
+        }else{
+            setWorkPhone(valueToUpdate(getWorkPhone(), infoPerson.getWorkPhone()));    
+        }       
 
         // setPassword(valueToUpdate(getPassword(),
         // PasswordEncryptor.encryptPassword(GeneratePassword
@@ -1069,7 +1086,7 @@ public class Person extends Person_Base {
         super.setMobile(telemovel);
     }
 
-    // -------------------------------------------------------------
+   // -------------------------------------------------------------
     // static methods
     // -------------------------------------------------------------
 
@@ -1164,4 +1181,5 @@ public class Person extends Person_Base {
         }
         return null;
     }
+
 }
