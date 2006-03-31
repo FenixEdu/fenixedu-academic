@@ -72,15 +72,17 @@ public enum RoleType {
     CMS_MANAGER,
 
     SPACE_MANAGER,
-
+    
     RESEARCHER,
+    
+    ALUMNI,
 
     PEDAGOGICAL_COUNCIL;
 
     public String getName() {
-        return name();
+        return name();    
     }
-
+    
     public static List<RoleType> getRolesImportance(){
         List<RoleType> rolesImportance = new ArrayList<RoleType>();
         rolesImportance.add(RoleType.TEACHER);
@@ -89,6 +91,8 @@ public enum RoleType {
         rolesImportance.add(RoleType.GRANT_OWNER);
         rolesImportance.add(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
         rolesImportance.add(RoleType.PROJECTS_MANAGER);
+        rolesImportance.add(RoleType.MASTER_DEGREE_CANDIDATE);
+        rolesImportance.add(RoleType.ALUMNI);
         rolesImportance.add(RoleType.PERSON);
         return rolesImportance;
     }
