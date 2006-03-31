@@ -10,11 +10,11 @@ public class HtmlTextArea extends HtmlSimpleValueComponent {
     private Integer columns;
     private boolean readOnly;
     
-    public int getColumns() {
+    public Integer getColumns() {
         return this.columns;
     }
 
-    public void setColumns(int colums) {
+    public void setColumns(Integer colums) {
         this.columns = colums;
     }
 
@@ -26,11 +26,11 @@ public class HtmlTextArea extends HtmlSimpleValueComponent {
         this.readOnly = readOnly;
     }
 
-    public int getRows() {
+    public Integer getRows() {
         return this.rows;
     }
 
-    public void setRows(int rows) {
+    public void setRows(Integer rows) {
         this.rows = rows;
     }
 
