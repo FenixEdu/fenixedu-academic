@@ -6,14 +6,7 @@
 
 <style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style> <!-- Import new CSS for this section: #navlateral  -->
 
-<logic:present name="siteView">
-	<bean:define id="component" name="siteView" property="commonComponent"/>
-	<bean:define id="executionCourse" name="component" property="executionCourse"/>
-	<bean:define id="objectCode" name="executionCourse" property="idInternal"/>
-</logic:present>
-<logic:notPresent name="siteView">
-	<bean:define id="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>"/>
-</logic:notPresent>
+<bean:define id="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>"/>
 
 <br/>
 <ul>
