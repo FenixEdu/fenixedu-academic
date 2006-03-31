@@ -101,4 +101,13 @@ public class Employee extends Employee_Base {
         }
         return false;
     }    
+    
+    public static Employee readByNumber(final Integer employeeNumber) {
+        for (final Employee employee : RootDomainObject.getInstance().getEmployees()) {
+            if (employee.getEmployeeNumber().equals(employeeNumber)) {
+                return employee;
+            }
+        }
+        return null;
+    }
 }
