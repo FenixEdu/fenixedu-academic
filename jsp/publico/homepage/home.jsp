@@ -41,7 +41,7 @@
 		<logic:equal name="homepage" property="showEmail" value="true">
 			<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
 			<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-			<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&personID=<bean:write name="UserView" property="person.idInternal"/></bean:define>
+			<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&personID=<bean:write name="homepage" property="person.idInternal"/></bean:define>
 			<html:img align="middle" src="<%= emailURL %>"/>
 			<br/>
 		</logic:equal>
