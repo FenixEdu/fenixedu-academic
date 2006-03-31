@@ -29,8 +29,7 @@ public class ReadCurriculum extends Service {
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }
-        curriculum = persistentSupport.getIPersistentCurriculum().readCurriculumByCurricularCourse(
-                curricularCourse.getIdInternal());
+        curriculum = curricularCourse.findLatestCurriculum();
 
         if (curriculum == null) {
             return null;

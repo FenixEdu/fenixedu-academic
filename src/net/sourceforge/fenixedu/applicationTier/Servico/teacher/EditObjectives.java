@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 
 /**
  * @author Fernanda Quitério
@@ -22,7 +21,6 @@ public class EditObjectives extends Service {
     public boolean run(Integer infoExecutionCourseCode, Integer infoCurricularCourseCode,
             InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException,
             ExcepcaoPersistencia {
-        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
         // Person who change all information        
         Person person = Person.readPersonByUsername(username);
@@ -47,8 +45,7 @@ public class EditObjectives extends Service {
         }
 
         // Curriculum       
-        Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
-                .getIdInternal());
+        Curriculum curriculum = curricularCourse.findLatestCurriculum();
 
         if (curriculum == null) {                    
             curriculum = curricularCourse.insertCurriculum("", "", "", "", "", "");

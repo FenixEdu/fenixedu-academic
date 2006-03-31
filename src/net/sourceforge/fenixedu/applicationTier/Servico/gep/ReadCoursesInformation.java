@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -289,7 +288,6 @@ public class ReadCoursesInformation extends Service {
 
     private List getInfoCurriculums(List curricularCourses, ISuportePersistente persistentSupport,
             ExecutionYear executionYear) throws ExcepcaoPersistencia {
-        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
         List infoCurriculums = new ArrayList();
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
@@ -299,9 +297,7 @@ public class ReadCoursesInformation extends Service {
                     .newInfoFromDomain(curricularCourse);
             List infoScopes = getInfoScopes(curricularCourse.getScopes(), persistentSupport);
             infoCurricularCourse.setInfoScopes(infoScopes);
-            Curriculum curriculum = persistentCurriculum
-                    .readCurriculumByCurricularCourseAndExecutionYear(curricularCourse.getIdInternal(),
-                            executionYear.getEndDate());
+            Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionYear.getEndDate());
             InfoCurriculum infoCurriculum = null;
             if (curriculum == null) {
                 infoCurriculum = new InfoCurriculum();

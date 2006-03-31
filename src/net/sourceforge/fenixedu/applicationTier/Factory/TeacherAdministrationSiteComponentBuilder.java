@@ -97,7 +97,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -307,7 +306,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 			throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
@@ -316,8 +314,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		while (iter.hasNext()) {
 			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-			Curriculum curriculum = persistentCurriculum
-					.readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
+			Curriculum curriculum = curricularCourse.findLatestCurriculum();
 
 			if (curriculum != null) {
 
@@ -340,7 +337,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoSitePrograms(InfoSitePrograms component, Site site)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
@@ -349,8 +345,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		while (iter.hasNext()) {
 			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-			Curriculum curriculum = persistentCurriculum
-					.readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
+			Curriculum curriculum = curricularCourse.findLatestCurriculum();
 
 			if (curriculum != null) {
 				InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse
@@ -373,7 +368,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoEvaluationMethods(InfoSiteEvaluationMethods component, Site site)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
@@ -382,8 +376,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		while (iter.hasNext()) {
 			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-			Curriculum curriculum = persistentCurriculum
-					.readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
+            Curriculum curriculum = curricularCourse.findLatestCurriculum();
 
 			if (curriculum != null) {
 				infoEvaluationMethods.add(InfoCurriculum.newInfoFromDomain(curriculum));
@@ -416,10 +409,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 			Integer curricularCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseCode);
-		IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
-		Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
-				.getIdInternal());
+        Curriculum curriculum = curricularCourse.findLatestCurriculum();
 		InfoCurriculum infoCurriculum = null;
 
 		if (curriculum != null) {

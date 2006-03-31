@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -34,7 +33,6 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
             String stringExecutionYear) throws FenixServiceException, ExcepcaoPersistencia {
         InfoCurriculum infoCurriculum = null;
 
-        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
         IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
 
@@ -54,9 +52,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
             throw new NonExistingServiceException("noExecutionYear");
         }
 
-        Curriculum curriculumExecutionYear = persistentCurriculum
-                .readCurriculumByCurricularCourseAndExecutionYear(curricularCourse.getIdInternal(),
-                        executionYear.getEndDate());
+        Curriculum curriculumExecutionYear = curricularCourse.findLatestCurriculumModifiedBefore(executionYear.getEndDate());
         if (curriculumExecutionYear != null) {
             List allCurricularCourseScopes = new ArrayList();
             List allExecutionCourses = new ArrayList();

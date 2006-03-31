@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -480,6 +482,30 @@ public class CurricularCourse extends CurricularCourse_Base {
         return latestCurriculum;
     }
 
+    public Curriculum findLatestCurriculumModifiedBefore(Date date) {
+        Curriculum latestCurriculum = null;
+        
+        for (Curriculum curriculum : getAssociatedCurriculums()) {
+            if (curriculum.getLastModificationDate().compareTo(date) == 1) {
+                // modified after date
+                continue;
+            }
+            
+            if (latestCurriculum == null) {
+                latestCurriculum = curriculum;
+                continue;
+            }
+            
+            Date currentLastModificationDate = latestCurriculum.getLastModificationDate();
+            if (currentLastModificationDate.before(curriculum.getLastModificationDate())) {
+                latestCurriculum = curriculum;
+            }
+        }
+        
+        return latestCurriculum;
+    }
+
+    
     @Override
     public Double getTheoreticalHours() {
         Double result = 0.0;

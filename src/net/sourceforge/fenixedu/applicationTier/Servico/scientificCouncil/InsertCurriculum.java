@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 
 /**
  * @author João Mota
@@ -26,16 +26,13 @@ public class InsertCurriculum extends Service {
             String generalObjectivesEn, Boolean basic) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, curricularCourseId);
+        CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
 
         if (curricularCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Curriculum curriculumFromDB = persistentCurriculum
-                .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
+        Curriculum curriculumFromDB = curricularCourse.findLatestCurriculum();
 
         if (curriculumFromDB != null) {
             throw new InvalidArgumentsServiceException();

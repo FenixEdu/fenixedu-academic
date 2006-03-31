@@ -55,7 +55,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -389,7 +388,6 @@ public class ReadCourseInformation extends Service {
 
     private List getInfoCurriculums(List curricularCourses)
             throws ExcepcaoPersistencia {
-        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
         List infoCurriculums = new ArrayList();
         Iterator iter = curricularCourses.iterator();
@@ -400,8 +398,7 @@ public class ReadCourseInformation extends Service {
                     .newInfoFromDomain(curricularCourse);
             List infoScopes = getInfoScopes(curricularCourse.getScopes());
             infoCurricularCourse.setInfoScopes(infoScopes);
-            Curriculum curriculum = persistentCurriculum
-                    .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
+            Curriculum curriculum = curricularCourse.findLatestCurriculum();
             InfoCurriculum infoCurriculum = null;
             if (curriculum == null) {
                 infoCurriculum = new InfoCurriculum();

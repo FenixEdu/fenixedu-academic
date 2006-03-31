@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 
 import org.apache.commons.collections.Predicate;
 
@@ -27,7 +26,6 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan extends Service {
 
     // delete a set of curricularCourses
     public List run(List curricularCoursesIds) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
         Iterator iter = curricularCoursesIds.iterator();
         List undeletedCurricularCourses = new ArrayList();
@@ -37,12 +35,13 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan extends Service {
 			CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
             if (curricularCourse != null) {
                 //delete curriculum
-                Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
+                Curriculum curriculum =curricularCourse.findLatestCurriculum();
                 
 				if (curriculum != null) {
                     curricularCourse.removeAssociatedCurriculums(curriculum);
 					curriculum.removePersonWhoAltered();
-                    persistentCurriculum.deleteByOID(Curriculum.class, curriculum.getIdInternal());
+                    
+                    curriculum.delete();
                 }
 
                 if (!curricularCourse.hasAnyAssociatedExecutionCourses()) {

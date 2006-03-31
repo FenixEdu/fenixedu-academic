@@ -40,4 +40,12 @@ public class Curriculum extends Curriculum_Base {
         Calendar today = Calendar.getInstance();
         this.setLastModificationDate(today.getTime());
     }
+
+    public void delete() {
+        removeCurricularCourse();
+        removePersonWhoAltered();
+        removeRootDomainObject();
+        
+        deleteDomainObject();
+    }
 }

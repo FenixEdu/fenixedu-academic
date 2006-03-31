@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 
 /**
  * @author Fernanda Quitério
@@ -22,8 +21,6 @@ public class EditProgram extends Service {
             InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
-        
         // Person who change all information
         Person person = Person.readPersonByUsername(username);
         if (person == null) {
@@ -48,8 +45,7 @@ public class EditProgram extends Service {
         }
 
         // Curriculum       
-        Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
-                .getIdInternal());
+        Curriculum curriculum = curricularCourse.findLatestCurriculum();
 
         // information doesn't exists, so it's necessary create it
         if (curriculum == null) {

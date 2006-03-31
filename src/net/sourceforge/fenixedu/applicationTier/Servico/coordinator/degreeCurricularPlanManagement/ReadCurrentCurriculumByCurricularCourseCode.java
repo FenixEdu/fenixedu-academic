@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -32,7 +31,6 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
 
     public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
         if (curricularCourseCode == null) {
             throw new FenixServiceException("nullCurricularCourse");
@@ -65,10 +63,8 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
             if(executionCourse.getExecutionPeriod().equals(executionPeriod))
                 associatedExecutionCourses.add(executionCourse);
         }
-        
 
-        Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
-                .getIdInternal());
+        Curriculum curriculum = curricularCourse.findLatestCurriculum();
         InfoCurriculum infoCurriculum = null; 
         if (curriculum != null) {
             infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);            

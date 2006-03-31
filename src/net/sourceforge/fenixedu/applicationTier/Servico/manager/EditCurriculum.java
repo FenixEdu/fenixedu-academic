@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 
 /**
  * @author lmac1
@@ -25,8 +24,6 @@ public class EditCurriculum extends Service {
 
     public void run(InfoCurriculum infoCurriculum, String language, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
-
         CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, infoCurriculum.getInfoCurricularCourse().getIdInternal());
 
@@ -39,8 +36,7 @@ public class EditCurriculum extends Service {
             throw new NonExistingServiceException();
         }
 
-        Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
-                .getIdInternal());
+        Curriculum curriculum = curricularCourse.findLatestCurriculum();
 
         if (curriculum == null) {
             curriculum = DomainFactory.makeCurriculum();
