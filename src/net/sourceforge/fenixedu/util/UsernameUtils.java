@@ -70,9 +70,6 @@ public class UsernameUtils extends FenixUtil {
     }
 
     private static String generateNewUsername(String oldUsername, RoleType roleType, Person person) {
-        if (oldUsername.startsWith("INA") || roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE)) {
-            return oldUsername;
-        }
 
         if (roleType.equals(RoleType.TEACHER)) {
             if (person.getTeacher() != null) {
@@ -106,6 +103,14 @@ public class UsernameUtils extends FenixUtil {
             }
         } else if (roleType.equals(RoleType.PROJECTS_MANAGER) || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
             return "G" + person.getIdInternal();
+        } else if (roleType.equals(RoleType.ALUMNI)) {
+            Student student = person.getStudentByType(DegreeType.DEGREE);
+            if (student != null) {
+                return "L" + student.getNumber();
+            }
+            throw new DomainException("error.person.addingInvalidRole", RoleType.ALUMNI.getName());
+        } else if (roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE)) {
+            return "C" + person.getIdInternal();
         } else if (roleType.equals(RoleType.PERSON)) {
             return "P" + person.getIdInternal();
         }
