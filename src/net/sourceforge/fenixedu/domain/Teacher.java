@@ -753,7 +753,7 @@ public class Teacher extends Teacher_Base {
         }
         return selectedTeachers;
     }
-
+    
     public List<Professorship> getProfessorships(ExecutionPeriod executionPeriod) {
         List<Professorship> professorships = new ArrayList<Professorship>();
         for (Professorship professorship : this.getProfessorships()) {
@@ -791,6 +791,16 @@ public class Teacher extends Teacher_Base {
             if (managementPositionCreditLine.getStart().before(executionPeriod.getEndDate()) 
                     && managementPositionCreditLine.getEnd().after(executionPeriod.getBeginDate())) {
                 result.add(managementPositionCreditLine);
+            }
+        }
+        return result;
+    }
+    
+    public List<PublicationTeacher> readPublicationsByPublicationArea(PublicationArea publicationArea) {
+        final List<PublicationTeacher> result = new ArrayList<PublicationTeacher>();
+        for (final PublicationTeacher publicationTeacher : this.getTeacherPublicationsSet()) {
+            if (publicationTeacher.getPublicationArea() == publicationArea) {
+                result.add(publicationTeacher);
             }
         }
         return result;

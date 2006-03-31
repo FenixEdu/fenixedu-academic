@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTe
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
@@ -68,7 +67,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeProofVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisDataVersionVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationTeacherVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationsNumberVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SentSmsVO;
@@ -200,10 +198,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentPublicationAttribute getIPersistentPublicationAttribute() {
         return null;
-    }
-
-    public IPersistentPublicationTeacher getIPersistentPublicationTeacher() {
-        return new PublicationTeacherVO();
     }
 
     public IPersistentGuideEntry getIPersistentGuideEntry() {
