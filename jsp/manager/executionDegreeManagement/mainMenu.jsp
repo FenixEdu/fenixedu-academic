@@ -11,8 +11,7 @@
 	
 	<p><strong>&raquo; 
   	<html:link module="/manager" page="/degree/chooseDegreeType.faces">
-  		Criação de Cursos de Execução
+  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.createExecutionDegrees"/>
   	</html:link>
 	</strong></p>
-
 </div>
