@@ -16,9 +16,12 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 
@@ -68,6 +71,12 @@ public class ChangeMasterDegreeProof extends Service {
                 storedMasterDegreeThesis, employee, new Date(), proofDate, thesisDeliveryDate,
                 finalResult, attachedCopiesNumber, new State(State.ACTIVE), teacherJuries,
                 externalJuries);
+        
+        if(finalResult.equals(MasterDegreeClassification.APPROVED)){
+            Person person = studentCurricularPlan.getStudent().getPerson();
+            person.addPersonRoles(Role.getRoleByRoleType(RoleType.ALUMNI));
+            person.removeRoleByType(RoleType.STUDENT);
+        }
 
     }
 
