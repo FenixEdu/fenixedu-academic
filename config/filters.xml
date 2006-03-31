@@ -74,6 +74,12 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
+        <name>AlumniAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AlumniAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>        
+    <filter>
         <name>TeacherAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter</implementationClass>
         <description/>

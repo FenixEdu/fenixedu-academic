@@ -1,0 +1,13 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<tiles-definitions>
+    <definition name="index" extends="alumni.masterPage">
+        <put name="body" value="/alumni/index.jsp"></put>
+    </definition>
+	<definition name="df.page.showStudentCurriculum" extends="alumni.masterPage" >
+		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>	
+	<definition name="df.page.notAuthorized" extends="alumni.masterPage" >
+		<put name="body" value="/student/notAuthorized_bd.jsp" />
+	</definition>		    
+</tiles-definitions>
