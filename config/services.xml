@@ -3636,32 +3636,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>AcceptTeacherExecutionCourseShiftPercentage</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.credits.AcceptTeacherExecutionCourseShiftPercentage</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="CreditsServiceWithInfoTeacherArgumentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadTeacherCredits</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadTeacherCredits</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadTeacherCreditsSheet</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadTeacherCreditsSheet</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>ReadProfessorships</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadProfessorships</implementationClass>
 		<description />
@@ -3717,16 +3691,6 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 			<chain name="CreditsServiceWithTeacherIdArgumentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>EditSupportLessonByOID</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.EditSupportLessonByOID</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="EditSupportLessonAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -3795,46 +3759,6 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 			<chain name="ReadDeleteTeacherDegreeFinalProjectStudentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>EditTeacherInstitutionWorkingTimeByOID</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.workingTime.EditTeacherInstitutionWorkingTimeByOID</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="EditTeacherInstitutionWorkingTimeAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadTeacherInstitutionWorkingTimeByOID</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.workingTime.ReadTeacherInstitutionWorkingTimeByOID</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ReadDeleteTeacherInstitutionWorkingTimeAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>DeleteTeacherInstitutionWorkingTimeByOID</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.workingTime.DeleteTeacherInstitutionWorkingTimeByOID</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ReadDeleteTeacherInstitutionWorkingTimeAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadTeacherInstitutionWorkingTime</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.workingTime.ReadTeacherInstitutionWorkingTime</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="CreditsServiceWithInfoTeacherArgumentAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -6256,78 +6180,7 @@
 		<filterChains>
 			<chain name="MasterOrCoordinatorDegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
-	</service>
-	<service>
-		<name>EditOtherTypeCreditLineService</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.credits.otherTypeCreditLine.EditOtherTypeCreditLineService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="CreditsServiceWithOtherCreditLineIdFirstArgumentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>DeleteOtherTypeCreditLineService</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.credits.otherTypeCreditLine.DeleteOtherTypeCreditLineService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="CreditsServiceWithOtherCreditLineIdFirstArgumentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.credits.otherTypeCreditLine.ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="CreditsServiceWithTeacherIdArgumentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadOtherTypeCreditLineByOidService</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.credits.otherTypeCreditLine.ReadOtherTypeCreditLineByOidService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="CreditsServiceWithOtherCreditLineIdFirstArgumentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadTeacherManagementPositions</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.credits.managementPosition.ReadTeacherManagementPositionsService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>
-	</service>
-	<service>
-		<name>EditManagementPositionService</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.credits.managementPosition.EditManagementPositionCreditLineService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadManagementPositionByOidService</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.credits.managementPosition.ReadManagementPositionCreditLineByOidService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>
-	</service>
-	<service>
-		<name>DeleteManagementPositionService</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.credits.managementPosition.DeleteManagementPositionCreditLineService</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>
-	</service>
-
-
+	</service>	
 	<service>
 		<name>ReadStudentByNumberAndAllDegreeTypes</name>
 		<implementationClass> 
