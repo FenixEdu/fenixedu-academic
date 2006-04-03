@@ -6,17 +6,19 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 public class ReadExecutionDegreesByDegree extends Service {
 
     public List run(Integer idDegree) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentExecutionDegree cursoExecucaoPersistente = persistentSupport.getIPersistentExecutionDegree();
 
-        List<ExecutionDegree> allExecutionDegrees = cursoExecucaoPersistente.readExecutionsDegreesByDegree(idDegree,CurricularStage.OLD);
+        Degree degree = RootDomainObject.getInstance().readDegreeByOID(idDegree);
+        
+        List<ExecutionDegree> allExecutionDegrees = ExecutionDegree.getAllByDegreeAndCurricularStage(degree, CurricularStage.OLD);
         if (allExecutionDegrees == null || allExecutionDegrees.isEmpty()) {
             throw new FenixServiceException();
         }

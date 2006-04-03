@@ -7,6 +7,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /*
@@ -21,12 +23,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionDegreesOfTypeDegree extends Service {
 
 	public List run() throws ExcepcaoPersistencia {
-		List executionDegrees = null;
-		List infoExecutionDegrees = new ArrayList();
-		executionDegrees = persistentSupport
-				.getIPersistentExecutionDegree()
-				.readExecutionDegreesOfTypeDegree();
-
+		String year = ExecutionYear.readCurrentExecutionYear().getYear();
+        List executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(year, DegreeType.DEGREE);
+        
+        List infoExecutionDegrees = new ArrayList();
+        
 		if (executionDegrees != null) {
 			Iterator iterator = executionDegrees.iterator();
 			while (iterator.hasNext()) {

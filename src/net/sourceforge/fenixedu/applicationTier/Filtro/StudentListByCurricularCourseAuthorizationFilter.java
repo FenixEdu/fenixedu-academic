@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -120,13 +119,8 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 
             // Read The ExecutionDegree
             try {
-                IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
-                        .getIPersistentExecutionDegree();
-
-                List executionDegrees = persistentExecutionDegree
-                        .readByDegreeCurricularPlan(curricularCourse.getDegreeCurricularPlan()
-                                .getIdInternal());
-                if (executionDegrees == null) {
+                List executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegrees();
+                if (executionDegrees == null || executionDegrees.isEmpty()) {
                     return false;
                 }
                 // IMPORTANT: It's assumed that the coordinator for a Degree is

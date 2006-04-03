@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadFilteredExamsMap extends Service {
@@ -41,7 +42,7 @@ public class ReadFilteredExamsMap extends Service {
         result.setInfoExecutionPeriod(infoExecutionPeriod);
         result.setCurricularYears(curricularYears);
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree().readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
         this.obtainExamSeasonInfo(result, infoExecutionPeriod.getSemester(), executionDegree);
 

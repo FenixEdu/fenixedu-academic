@@ -229,8 +229,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
         // read master degree and persistentSupportecialization execution
         // degrees
-        List executionDegreeList = persistentSupport.getIPersistentExecutionDegree()
-                .readByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.MASTER_DEGREE);
+        List executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.MASTER_DEGREE);
 
         List gratuityLetterFileEntries = new ArrayList();
 

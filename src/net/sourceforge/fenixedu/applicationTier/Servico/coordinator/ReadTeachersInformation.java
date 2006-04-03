@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PublicationType;
@@ -54,17 +53,16 @@ public class ReadTeachersInformation extends Service {
 
     public List run(Integer executionDegreeId, Boolean basic, String executionYearString) throws FenixServiceException, ExcepcaoPersistencia {
 
-        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-
         List professorships = null;
         ExecutionYear executionYear = null;
+        
         if (executionYearString != null && !executionYearString.equals("")) {
             executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
         } else {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }
         if (executionDegreeId == null) {
-            List<ExecutionDegree> executionDegrees = persistentExecutionDegree.readByExecutionYear(executionYear.getYear());
+            List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear.getYear());
             List<DegreeCurricularPlan> degreeCurricularPlans = getDegreeCurricularPlans(executionDegrees);
             ExecutionYear executionDegressExecutionYear = (!degreeCurricularPlans.isEmpty()) ? executionDegrees.get(0).getExecutionYear() : null;
 

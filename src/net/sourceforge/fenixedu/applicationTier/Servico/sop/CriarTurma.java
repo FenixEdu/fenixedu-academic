@@ -16,12 +16,12 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -53,12 +53,11 @@ public class CriarTurma extends Service {
         schoolClass.setNome(infoClass.getNome());
         schoolClass.setAnoCurricular(infoClass.getAnoCurricular());
 
-        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport
-                .getIPersistentExecutionDegree();
-        schoolClass.setExecutionDegree(executionDegreeDAO
-                .readByDegreeCurricularPlanAndExecutionYear(infoClass.getInfoExecutionDegree()
-                        .getInfoDegreeCurricularPlan().getName(), infoClass.getInfoExecutionDegree()
-                        .getInfoDegreeCurricularPlan().getInfoDegree().getSigla(), infoClass
+        DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(infoClass.getInfoExecutionDegree()
+                .getInfoDegreeCurricularPlan().getName(), infoClass.getInfoExecutionDegree()
+                .getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
+        
+        schoolClass.setExecutionDegree(ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, infoClass
                         .getInfoExecutionDegree().getInfoExecutionYear().getYear()));
 
         schoolClass.setExecutionPeriod(ExecutionPeriod.readByNameAndExecutionYear(infoClass

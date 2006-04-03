@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 /*
  * 
@@ -27,8 +26,6 @@ public class ReadExecutionDegreesByExecutionPeriodId extends Service {
 
         List infoExecutionDegreeList = null;
 
-        IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
-
         if (executionPeriodId == null) {
             throw new FenixServiceException("nullId");
         }
@@ -36,7 +33,7 @@ public class ReadExecutionDegreesByExecutionPeriodId extends Service {
         ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
                 ExecutionPeriod.class, executionPeriodId);
 
-        List executionDegrees = executionDegreeDAO.readByExecutionYear(executionPeriod
+        List executionDegrees = ExecutionDegree.getAllByExecutionYear(executionPeriod
                 .getExecutionYear().getYear());
 
         Iterator iterator = executionDegrees.iterator();

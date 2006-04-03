@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -109,14 +108,10 @@ public class ReadEnrollmentsWithStateEnrolledByStudent extends Service {
 
     private boolean isStudentCurricularPlanFromChosenExecutionYear(
             StudentCurricularPlan studentCurricularPlan, String year) throws ExcepcaoPersistencia {
-        IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
         if (executionYear != null) {
-            ExecutionDegree executionDegree = executionDegreeDAO
-                    .readByDegreeCurricularPlanAndExecutionYear(studentCurricularPlan
-                            .getDegreeCurricularPlan().getName(), studentCurricularPlan
-                            .getDegreeCurricularPlan().getDegree().getSigla(), executionYear.getYear());
+            ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(studentCurricularPlan.getDegreeCurricularPlan(), executionYear.getYear());
 
             return executionDegree != null;
         }

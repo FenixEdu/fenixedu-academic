@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -211,9 +210,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
 
     private List readInfoExecutionDegrees(ISuportePersistente persistentSupport,
             ExecutionYear executionYear) throws ExcepcaoPersistencia, FenixServiceException {
-        IPersistentExecutionDegree presistentExecutionDegree = persistentSupport
-                .getIPersistentExecutionDegree();
-        List executionDegrees = presistentExecutionDegree.readByExecutionYearAndDegreeType(executionYear
+        List executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear
                 .getYear(), DegreeType.DEGREE);
         if (executionDegrees == null || executionDegrees.size() <= 0) {
             throw new FenixServiceException("errors.impossible.operation");

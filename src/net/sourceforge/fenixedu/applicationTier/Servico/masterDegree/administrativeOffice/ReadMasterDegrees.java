@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadMasterDegrees extends Service {
@@ -32,7 +33,7 @@ public class ReadMasterDegrees extends Service {
         }
 
         // Read the degrees
-        final List result = persistentSupport.getIPersistentExecutionDegree().readMasterDegrees(executionYear.getYear());
+        final List result = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.MASTER_DEGREE);
         if (result == null || result.size() == 0) {
             throw new NonExistingServiceException();
         }

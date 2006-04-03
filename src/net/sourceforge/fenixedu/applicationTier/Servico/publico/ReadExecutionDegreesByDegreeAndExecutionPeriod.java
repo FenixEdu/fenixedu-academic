@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 /**
  * @author Tânia Pousão Create on 13/Nov/2003
@@ -55,9 +54,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends Service {
 		}
 
 		// Execution degrees
-		IPersistentExecutionDegree persistentExecutionDegre = persistentSupport.getIPersistentExecutionDegree();
-		List executionDegreeList = persistentExecutionDegre.readByDegreeAndExecutionYear(degree
-				.getIdInternal(), executionYear.getYear(), CurricularStage.OLD);
+		List executionDegreeList = ExecutionDegree.getAllByDegreeAndExecutionYear(degree, executionYear.getYear(), CurricularStage.OLD);
 		if (executionDegreeList == null || executionDegreeList.size() <= 0) {
 			throw new FenixServiceException("error.impossibleDegreeSite");
 		}

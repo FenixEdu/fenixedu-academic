@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -106,11 +105,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
 
             // Read The ExecutionDegree
             try {
-                IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-
-                List executionDegrees = persistentExecutionDegree
-                        .readByDegreeCurricularPlan(curricularCourseScope.getCurricularCourse()
-                                .getDegreeCurricularPlan().getIdInternal());
+                List executionDegrees = curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getExecutionDegrees();
                 if (executionDegrees == null) {
                     return false;
                 }

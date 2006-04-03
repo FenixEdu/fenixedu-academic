@@ -10,8 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -23,8 +24,12 @@ import org.apache.commons.collections.Transformer;
 public class ReadActiveDegreeCurricularPlansByExecutionYear extends Service {
 
     public List run(Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-        List executionDegrees = persistentExecutionDegree.readByExecutionYearOID(executionYearID);
+        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+        
+        List executionDegrees = null;
+        if (executionYear != null) {
+            executionDegrees = executionYear.getExecutionDegrees();
+        }
 
         if (executionDegrees == null) {
             throw new FenixServiceException("nullDegree");

@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 public class ReadNonMasterExecutionDegreesByExecutionYear extends Service {
 
@@ -32,8 +31,7 @@ public class ReadNonMasterExecutionDegreesByExecutionYear extends Service {
         }
 
         // remove ExecutionDegree DAO
-        IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
-        List<ExecutionDegree> executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(yearToSearch,
+        List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(yearToSearch,
                 DegreeType.DEGREE);
         
         final List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();

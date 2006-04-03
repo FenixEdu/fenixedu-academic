@@ -9,10 +9,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 /**
  * @author Leonor Almeida
@@ -28,17 +28,11 @@ public class ReadCourseInformationCoordinatorAuthorizationFilter extends DomainO
      */
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
-            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-            ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                    ExecutionCourse.class, objectId);
-            List executionDegrees = persistentExecutionDegree.readByExecutionCourseAndByTeacher(
-                    executionCourse.getIdInternal(), teacher.getIdInternal());
+            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(objectId);
+            List executionDegrees = ExecutionDegree.getAllByExecutionCourseAndTeacher(executionCourse, teacher); 
 
             return !executionDegrees.isEmpty();
-        } catch (ExcepcaoPersistencia e) {
-            return false;
         } catch (Exception e) {
             return false;
         }

@@ -155,9 +155,9 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
         try {
             int semester = executionPeriod.getSemester().intValue();
 
-            List executionDegreesList = persistentSupport.getIPersistentExecutionDegree().readByExecutionYear(
-                    executionPeriod.getExecutionYear().getYear());
-            ExecutionDegree executionDegree = (ExecutionDegree) executionDegreesList.get(0);
+            String year = executionPeriod.getExecutionYear().getYear();
+            List<ExecutionDegree> executionDegreesList = ExecutionDegree.getAllByExecutionYear(year);
+            ExecutionDegree executionDegree = executionDegreesList.get(0);
 
             Calendar startSeason1 = null;
             Calendar endSeason2 = null;

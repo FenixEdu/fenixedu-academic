@@ -21,15 +21,12 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 public class ReadExecutionDegreesByExecutionYearId extends Service {
 
     public List run(Integer executionYearId) throws ExcepcaoPersistencia {
 
         List infoExecutionDegreeList = null;
-
-        IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
         ExecutionYear executionYear = null;
         if (executionYearId == null) {
@@ -39,7 +36,7 @@ public class ReadExecutionDegreesByExecutionYearId extends Service {
                     executionYearId);
         }
 
-        List executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear.getYear());
+        List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear.getYear());
 
         if (executionDegrees != null && executionDegrees.size() > 0) {
             Iterator iterator = executionDegrees.iterator();

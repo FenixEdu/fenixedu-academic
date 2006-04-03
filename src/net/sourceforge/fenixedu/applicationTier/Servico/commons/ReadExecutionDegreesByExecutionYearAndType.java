@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 /**
  * @author Luis Cruz
@@ -26,12 +25,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 public class ReadExecutionDegreesByExecutionYearAndType extends Service {
 
     public List run(Integer executionYearOID, DegreeType typeOfCourse) throws ExcepcaoPersistencia {
-        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
-
         final ExecutionYear executionYear = (ExecutionYear) persistentObject
                 .readByOID(ExecutionYear.class, executionYearOID);
 
-        final List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear
+        final List executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear
                 .getYear(), typeOfCourse);
         return getInfoExecutionDegrees(executionDegrees);
     }
@@ -52,10 +49,7 @@ public class ReadExecutionDegreesByExecutionYearAndType extends Service {
 
     public List run(Degree degree, ExecutionYear executionYear, String tmp)
             throws ExcepcaoPersistencia {
-        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
-
-        final List executionDegrees = executionDegreeDAO.readByDegreeAndExecutionYear(degree
-                .getIdInternal(), executionYear.getYear(), CurricularStage.OLD);
+        final List executionDegrees = ExecutionDegree.getAllByDegreeAndExecutionYear(degree, executionYear.getYear(), CurricularStage.OLD);
         return getInfoExecutionDegrees(executionDegrees);
     }
 

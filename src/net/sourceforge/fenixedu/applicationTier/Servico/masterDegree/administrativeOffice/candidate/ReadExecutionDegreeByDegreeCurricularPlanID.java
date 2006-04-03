@@ -38,8 +38,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
         DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
-        executionDegrees = persistentSupport.getIPersistentExecutionDegree().readByDegreeCurricularPlan(
-                degreeCurricularPlan.getIdInternal());
+        executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
         infoExecutionDegreeList = new ArrayList();
 

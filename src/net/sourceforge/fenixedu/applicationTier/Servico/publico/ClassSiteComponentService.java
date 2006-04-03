@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
@@ -33,13 +33,12 @@ public class ClassSiteComponentService extends Service {
             String executionPeriodName, String degreeInitials, String nameDegreeCurricularPlan,
             String className, Integer curricularYear, Integer classId) throws FenixServiceException, ExcepcaoPersistencia {
    
-        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 
         ExecutionPeriod executionPeriod = ExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear.getYear());
 
-        ExecutionDegree executionDegree = executionDegreeDAO
-                .readByDegreeCurricularPlanAndExecutionYear(nameDegreeCurricularPlan, degreeInitials,
+        DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan, degreeInitials);
+        ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan,
                         executionYear.getYear());
         PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
         SchoolClass domainClass;

@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 public class ReadExecutionDegreesByExecutionYearAndDegreeInitials extends Service {
 
@@ -22,10 +22,8 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials extends Servic
             final String degreeInitials, final String nameDegreeCurricularPlan)
             throws ExcepcaoPersistencia {
 
-        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
-
-        final ExecutionDegree executionDegree = executionDegreeDAO
-                .readByDegreeCurricularPlanAndExecutionYear(nameDegreeCurricularPlan, degreeInitials,
+        DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan, degreeInitials);
+        final ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan,
                         infoExecutionYear.getYear());
         final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
                 .newInfoFromDomain(executionDegree);

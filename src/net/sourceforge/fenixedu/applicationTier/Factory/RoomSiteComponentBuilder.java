@@ -184,8 +184,7 @@ public class RoomSiteComponentBuilder {
 
             int semester = executionPeriod.getSemester().intValue();
 
-            List executionDegreesList = persistentSupport.getIPersistentExecutionDegree().readByExecutionYear(
-                    executionPeriod.getExecutionYear().getYear());
+            List executionDegreesList = ExecutionDegree.getAllByExecutionYear(executionPeriod.getExecutionYear().getYear());
             ExecutionDegree executionDegree = (ExecutionDegree) executionDegreesList.get(0);
 
             Calendar startSeason1 = null;

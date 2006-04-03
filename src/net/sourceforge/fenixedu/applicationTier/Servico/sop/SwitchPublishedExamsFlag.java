@@ -16,18 +16,14 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 public class SwitchPublishedExamsFlag extends Service {
 
     public void run(final Integer executionPeriodOID) throws ExcepcaoPersistencia {
-        final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
-                .getIPersistentExecutionDegree();
-
         final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
                 ExecutionPeriod.class, executionPeriodOID);
         final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-        final List<ExecutionDegree> executionDegrees = persistentExecutionDegree.readByExecutionYearOID(executionYear.getIdInternal());
+        final List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear.getYear());
 
         if (!executionDegrees.isEmpty()) {
             final Boolean examsPublicationState = new Boolean(!executionDegrees.get(0)

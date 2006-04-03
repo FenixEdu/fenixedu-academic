@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
@@ -80,12 +81,7 @@ public class CreateGuideFromTransactions extends Service {
         }
 
         // Get the Execution Degree
-        ExecutionDegree executionDegree = persistentSupport.getIPersistentExecutionDegree()
-                .readByDegreeCurricularPlanAndExecutionYear(
-                        infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
-                        infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
-                                .getSigla(),
-                        infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
 
         Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());

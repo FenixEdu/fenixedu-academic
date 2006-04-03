@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -16,9 +18,10 @@ public class EditGuideInformationInManager extends Service {
     public void run(Integer guideID, Integer degreeCurricularPlanID, String executionYear, String newPaymentType)
             throws ExcepcaoPersistencia {
         Guide guide = (Guide) persistentObject.readByOID(Guide.class, guideID);
-        ExecutionDegree cursoExecucao = persistentSupport.getIPersistentExecutionDegree()
-                .readByDegreeCurricularPlanIDAndExecutionYear(degreeCurricularPlanID, executionYear);
-
+        
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        ExecutionDegree cursoExecucao = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear); 
+            
         guide.setPaymentType(PaymentType.valueOf(newPaymentType));
         guide.setExecutionDegree(cursoExecucao);
 

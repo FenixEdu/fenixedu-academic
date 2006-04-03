@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -60,14 +59,11 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
 
     protected boolean verifyCondition(IUserView id, String user) {
         try {
-            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
-                    .getIPersistentExecutionDegree();
-         
             Teacher teacher = Teacher.readTeacherByUsername(user);
             Teacher coordinator = Teacher.readTeacherByUsername(id.getUtilizador());
 
-            List<ExecutionDegree> executionDegrees = persistentExecutionDegree.readByTeacher(coordinator
-                    .getIdInternal());
+            List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllCoordinatedByTeacher(coordinator);
+            
             List<DegreeCurricularPlan> degreeCurricularPlans = getDegreeCurricularPlans(executionDegrees);
             ExecutionYear executionDegressExecutionYearID = (!degreeCurricularPlans.isEmpty()) ? executionDegrees
                     .get(0).getExecutionYear()
@@ -81,8 +77,6 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
                 if (professorship.getTeacher().equals(teacher))
                     return true;
             }
-            return false;
-        } catch (ExcepcaoPersistencia e) {
             return false;
         } catch (Exception e) {
             return false;

@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
@@ -58,7 +57,6 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
         HashMap result = null;
 
         try {
-            IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
             IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
 
             IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
@@ -78,7 +76,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
                 if (executionYearName != null) {
                     ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
                     if (executionYear != null) {
-                        executionDegreeList = executionDegreeDAO.readByExecutionYearAndDegreeType(
+                        executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(
                                 executionYear.getYear(), DegreeType.MASTER_DEGREE);
                     }
                 }

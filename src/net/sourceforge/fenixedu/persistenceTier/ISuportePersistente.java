@@ -42,8 +42,6 @@ public interface ISuportePersistente {
 
     public Integer getNumberCachedItems();
 
-    public IPersistentExecutionDegree getIPersistentExecutionDegree();
-
     public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate();
 
     public IPersistentGuide getIPersistentGuide();

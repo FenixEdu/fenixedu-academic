@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -76,8 +77,8 @@ public class ReadExamsMapByRooms extends Service {
     private InfoPeriod calculateExamsSeason(final ISuportePersistente persistentSupport,
             final String year, final int semester) throws ExcepcaoPersistencia {
 
-        final List<ExecutionDegree> executionDegreesList = persistentSupport
-                .getIPersistentExecutionDegree().readByExecutionYear(year);
+        ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
+        final List<ExecutionDegree> executionDegreesList = executionYear.getExecutionDegrees();
 
         Calendar startSeason1 = null, endSeason2 = null;
         Calendar startExams, endExams;

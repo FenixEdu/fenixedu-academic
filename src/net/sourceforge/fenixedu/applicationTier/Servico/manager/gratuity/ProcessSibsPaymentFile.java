@@ -159,11 +159,8 @@ public class ProcessSibsPaymentFile extends Service {
                     continue;
                 }
 
-                ExecutionDegree candidateExecutionDegree = persistentSupport
-                        .getIPersistentExecutionDegree().readByDegreeCurricularPlanAndExecutionYear(
-                                studentCurricularPlan.getDegreeCurricularPlan().getName(),
-                                studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla(),
-                                executionYear.getYear());
+                ExecutionDegree candidateExecutionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(
+                                studentCurricularPlan.getDegreeCurricularPlan(), executionYear.getYear());
 
                 if (candidateExecutionDegree != null) {
                     executionDegrees.add(candidateExecutionDegree);

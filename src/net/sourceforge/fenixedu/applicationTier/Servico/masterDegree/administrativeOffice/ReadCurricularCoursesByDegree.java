@@ -25,9 +25,8 @@ public class ReadCurricularCoursesByDegree extends Service {
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
 
         // Read degree
-        ExecutionDegree executionDegree = persistentSupport.getIPersistentExecutionDegree()
-                .readByDegreeCurricularPlanNameAndExecutionYear(degreeName,
-                        executionYear.getIdInternal());
+        ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanNameAndExecutionYear(degreeName,
+                        executionYear);
 
         if (executionDegree == null || executionDegree.getDegreeCurricularPlan() == null
                 || executionDegree.getDegreeCurricularPlan().getCurricularCourses() == null

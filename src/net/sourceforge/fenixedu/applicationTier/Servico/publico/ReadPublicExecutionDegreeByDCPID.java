@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -26,12 +28,10 @@ public class ReadPublicExecutionDegreeByDCPID extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
 
-        List executionDegrees = null;
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+        
         List result = new ArrayList();
-
-        executionDegrees = persistentSupport.getIPersistentExecutionDegree()
-                .readByDegreeCurricularPlan(degreeCurricularPlanID);
-
         result = (List) CollectionUtils.collect(executionDegrees, new Transformer() {
 
             public Object transform(Object input) {
@@ -48,11 +48,10 @@ public class ReadPublicExecutionDegreeByDCPID extends Service {
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID)
             throws ExcepcaoPersistencia {
 
-        ExecutionDegree executionDegree = null;
-
-        executionDegree = persistentSupport.getIPersistentExecutionDegree()
-                .readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(degreeCurricularPlanID,
-                        executionYearID);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+        
+        ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear.getYear());
 
         if (executionDegree == null) {
             return null;

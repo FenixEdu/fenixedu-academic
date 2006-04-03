@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
@@ -276,12 +277,7 @@ public class EditGuideInformation extends Service {
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(infoGuide
                 .getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
-        ExecutionDegree executionDegree = persistentSupport.getIPersistentExecutionDegree()
-                .readByDegreeCurricularPlanAndExecutionYear(
-                        infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
-                        infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
-                                .getSigla(), executionYear.getYear());
-
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal()); 
         Guide guide = DomainFactory.makeGuide();
 
         // Set the fields

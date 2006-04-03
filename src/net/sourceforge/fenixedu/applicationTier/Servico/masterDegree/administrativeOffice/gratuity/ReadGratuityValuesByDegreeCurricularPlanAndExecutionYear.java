@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -48,10 +47,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends Se
 		}
 
 		// read execution degree
-		IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-		ExecutionDegree executionDegree = persistentExecutionDegree
-				.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan.getName(),
-						degreeCurricularPlan.getDegree().getSigla(), executionYear.getYear());
+		ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear.getYear());
 
 		if (executionDegree == null) {
 			throw new FenixServiceException("error.impossible.noGratuityValues");
