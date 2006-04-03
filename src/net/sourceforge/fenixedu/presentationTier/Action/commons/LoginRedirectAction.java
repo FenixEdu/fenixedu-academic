@@ -17,11 +17,13 @@ public class LoginRedirectAction extends Action {
     	final HttpSession session = request.getSession(false);
 
     	final String originalURI = (String) session.getAttribute("ORIGINAL_URI");
-        final int seperatorIndex = originalURI.indexOf('?');
-        final int endIndex = (seperatorIndex > 0) ? seperatorIndex : originalURI.length();
-        request.setAttribute("REDIRECT_URL", originalURI.substring(0, endIndex));
-        session.removeAttribute("ORIGINAL_URI");
+        if (originalURI != null) {
+            final int seperatorIndex = originalURI.indexOf('?');
+            final int endIndex = (seperatorIndex > 0) ? seperatorIndex : originalURI.length();
+            request.setAttribute("REDIRECT_URL", originalURI.substring(0, endIndex));
+        }
 
+        session.removeAttribute("ORIGINAL_URI");
         transferFromSessionToRequest(request, session, "ORIGINAL_PARAMETER_MAP");
         transferFromSessionToRequest(request, session, "ORIGINAL_ATTRIBUTE_MAP");
 
