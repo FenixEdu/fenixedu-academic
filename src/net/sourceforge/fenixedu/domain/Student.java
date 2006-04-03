@@ -427,6 +427,7 @@ public class Student extends Student_Base {
         Integer number = Integer.valueOf(0);
         List<Student> students = readStudentsByDegreeType(degreeType);
         Collections.sort(students, new BeanComparator("number"));
+        Collections.reverse(students);
         
         if (!students.isEmpty()) {
             number = students.get(0).getNumber();
