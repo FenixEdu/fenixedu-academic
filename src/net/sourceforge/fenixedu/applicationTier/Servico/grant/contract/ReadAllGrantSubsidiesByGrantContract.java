@@ -11,12 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 /**
  * @author Barbosa
@@ -26,23 +23,18 @@ import org.apache.commons.collections.Transformer;
 public class ReadAllGrantSubsidiesByGrantContract extends Service {
 
 	public List run(Integer idContract) throws FenixServiceException, ExcepcaoPersistencia {
-		List subsidies = null;
-		IPersistentGrantSubsidy pgs = null;
-
-		pgs = persistentSupport.getIPersistentGrantSubsidy();
-		subsidies = pgs.readAllSubsidiesByGrantContract(idContract);
+        GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
+		List<GrantSubsidy> subsidies = grantContract.getAssociatedGrantSubsidies();
 
 		if (subsidies == null)
 			return new ArrayList();
 
-		List infoSubsidyList = (List) CollectionUtils.collect(subsidies, new Transformer() {
-			public Object transform(Object input) {
-				GrantSubsidy grantSubsidy = (GrantSubsidy) input;
-				InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract
-						.newInfoFromDomain(grantSubsidy);
-				return infoGrantSubsidy;
-			}
-		});
+        final List infoSubsidyList = new ArrayList();
+        for (final GrantSubsidy grantSubsidy : grantContract.getAssociatedGrantSubsidiesSet()) {
+            InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract
+            .newInfoFromDomain(grantSubsidy);
+            infoSubsidyList.add(infoGrantSubsidy);
+        }
 		return infoSubsidyList;
 	}
 }

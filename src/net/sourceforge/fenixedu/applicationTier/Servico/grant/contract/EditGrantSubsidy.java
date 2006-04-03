@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
-import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 
 public class EditGrantSubsidy extends EditDomainObjectService {
 
@@ -59,10 +58,7 @@ public class EditGrantSubsidy extends EditDomainObjectService {
          * If this is a active subsidy, set all others to state 0 (Desactive)
          */
         if (grantSubsidy.getState().equals(InfoGrantSubsidy.getActiveStateValue())) {
-            IPersistentGrantSubsidy persistentGrantSubsidy = persistentSupport.getIPersistentGrantSubsidy();
-            List<GrantSubsidy> activeSubsidy = persistentGrantSubsidy
-                    .readAllSubsidiesByGrantContractAndState(grantSubsidy.getGrantContract()
-                            .getIdInternal(), InfoGrantSubsidy.getActiveStateValue());
+            Set<GrantSubsidy> activeSubsidy = grantContract.findGrantSubsidiesByState(InfoGrantSubsidy.getActiveStateValue());
             if (activeSubsidy != null && !activeSubsidy.isEmpty()) {
                 // Desactivate the Subsidy
                 for (GrantSubsidy grantSubsidyTemp : activeSubsidy) {

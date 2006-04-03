@@ -6,14 +6,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -27,12 +28,8 @@ public class ReadAllGrantSubsidiesByGrantContractAndState extends Service {
 
 	public List run(Integer idContract, Integer state) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		List subsidies = null;
-		IPersistentGrantSubsidy persistentGrantSubsidy = null;
-
-		persistentGrantSubsidy = persistentSupport.getIPersistentGrantSubsidy();
-		subsidies = persistentGrantSubsidy.readAllSubsidiesByGrantContractAndState(idContract, state);
-
+        final GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
+		final Set<GrantSubsidy> subsidies = grantContract.findGrantSubsidiesByState(state);
 		if (subsidies == null)
 			return new ArrayList();
 

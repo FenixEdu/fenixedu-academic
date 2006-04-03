@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 
 /**
  * @author Pica
@@ -104,9 +103,7 @@ public class ShowGrantOwner extends Service {
 		}
 		newInfoListGrantContract.setInfoGrantContractRegimes(infoContractRegimes);
 		// read the contract subsidies
-		IPersistentGrantSubsidy persistentGrantSubsidy = persistentSupport.getIPersistentGrantSubsidy();
-		List contractSubsidies = persistentGrantSubsidy.readAllSubsidiesByGrantContract(grantContract
-				.getIdInternal());
+		List contractSubsidies = grantContract.getAssociatedGrantSubsidies();
 		Iterator subsidiesIter = contractSubsidies.iterator();
 		while (subsidiesIter.hasNext()) {
 			InfoListGrantSubsidy newInfoListGrantSubsidy = new InfoListGrantSubsidy();

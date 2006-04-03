@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientatio
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
@@ -73,8 +72,6 @@ public interface ISuportePersistente {
     public IPersistentGrantPart getIPersistentGrantPart();
 
     public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity();
-
-    public IPersistentGrantSubsidy getIPersistentGrantSubsidy();
 
     public IPersistentGrantContractRegime getIPersistentGrantContractRegime();
 
