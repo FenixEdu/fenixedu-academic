@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
@@ -30,6 +31,8 @@ public class FenixBackingBean {
 
     private UIViewState viewState;
 
+    protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+    
     public FenixBackingBean() {
         final FacesContext facesContext = FacesContext.getCurrentInstance();
 
@@ -55,7 +58,6 @@ public class FenixBackingBean {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-
 
     protected HttpServletRequest getRequest() {
         return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -122,12 +124,14 @@ public class FenixBackingBean {
         addMessage(FacesMessage.SEVERITY_WARN, message);
     }
 
+    @Deprecated
     public List readAllDomainObjects(final Class clazz) throws FenixFilterException,
             FenixServiceException {
         return (List) ServiceUtils
                 .executeService(getUserView(), "ReadAllDomainObjects", new Object[] { clazz });
     }
 
+    @Deprecated
     public DomainObject readDomainObject(final Class clazz, final Integer idInternal)
             throws FenixFilterException, FenixServiceException {
         return (DomainObject) ServiceUtils.executeService(getUserView(), "ReadDomainObject",
