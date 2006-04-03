@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -62,7 +61,6 @@ abstract public class ManageWebSiteItem extends Service {
 	}
 
 	protected void fillWebSiteItemForDB(InfoWebSiteItem infoWebSiteItem, String user,
-			IPersistentWebSiteSection persistentWebSiteSection,
 			WebSiteSection webSiteSection, WebSiteItem webSiteItem) throws FenixServiceException, ExcepcaoPersistencia {
 		Person person = Person.readPersonByUsername(user);
 		webSiteItem.setEditor(person);

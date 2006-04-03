@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 
 /**
  * @author Fernanda Quitério 30/09/2003
@@ -25,8 +24,6 @@ public class EditWebSiteItem extends ManageWebSiteItem {
             throws FenixServiceException, ExcepcaoPersistencia {
 
         Boolean result = Boolean.FALSE;
-        IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
-                .getIPersistentWebSiteSection();
 
         WebSiteSection webSiteSection = rootDomainObject.readWebSiteSectionByOID(sectionCode);
         InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(webSiteSection);
@@ -46,7 +43,7 @@ public class EditWebSiteItem extends ManageWebSiteItem {
             result = Boolean.TRUE;
         }
 
-        fillWebSiteItemForDB(infoWebSiteItem, user, persistentWebSiteSection, webSiteSection, webSiteItem);
+        fillWebSiteItemForDB(infoWebSiteItem, user, webSiteSection, webSiteItem);
 
         return result;
     }

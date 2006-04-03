@@ -13,5 +13,14 @@ public class WebSite extends WebSite_Base {
         this.setStyle("");
         this.setOjbConcreteClass(this.getClass().getName());
     }
+    
+    public WebSiteSection getWebSiteSectionByName(final String name) {
+    	for (final WebSiteSection webSiteSection : this.getAssociatedWebSiteSections()) {
+			if(webSiteSection.getName().equalsIgnoreCase(name)) {
+				return webSiteSection;
+			}
+		}
+    	return null;
+    }
 
 }

@@ -80,10 +80,6 @@ public interface ISuportePersistente {
 
     public IPersistentGrantContractRegime getIPersistentGrantContractRegime();
 
-    public IPersistentWebSiteSection getIPersistentWebSiteSection();
-
-    public IPersistentWebSiteItem getIPersistentWebSiteItem();
-
     public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion();
 
     public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion();

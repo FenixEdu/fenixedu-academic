@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVers
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
@@ -175,10 +173,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new GrantContractVO();
     }
 
-    public IPersistentWebSiteItem getIPersistentWebSiteItem() {
-        return null;
-    }
-
     public IPersistentGratuitySituation getIPersistentGratuitySituation() {
         return new GratuitySituationVO();
     }
@@ -237,10 +231,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentSupportLesson getIPersistentSupportLesson() {
         return new SupportLessonVO();
-    }
-
-    public IPersistentWebSiteSection getIPersistentWebSiteSection() {
-        return null;
     }
 
     public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes() {

@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -33,9 +31,6 @@ public class ReadWebSiteBySectionCode extends Service {
         List infoWebSiteSections = new ArrayList();
         List infoWebSiteItems = new ArrayList();
 
-        IPersistentWebSiteSection persistentWebSiteSection = persistentSupport.getIPersistentWebSiteSection();
-        IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
-
         WebSiteSection webSiteSection;
         webSiteSection = (WebSiteSection) persistentObject.readByOID(WebSiteSection.class,
                 webSiteSectionCode);
@@ -44,13 +39,13 @@ public class ReadWebSiteBySectionCode extends Service {
             throw new NonExistingServiceException();
         }
 
-        List webSiteSections = persistentWebSiteSection.readByWebSite(webSiteSection.getWebSite());
+        List<WebSiteSection> webSiteSections = webSiteSection.getWebSite().getAssociatedWebSiteSections(); 
         Iterator iterSections = webSiteSections.iterator();
         while (iterSections.hasNext()) {
             WebSiteSection section = (WebSiteSection) iterSections.next();
             InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(section);
 
-            List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
+            List<WebSiteItem> webSiteItems = section.getIncludedWebSiteItems(); 
             infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
                 public Object transform(Object arg0) {
                     WebSiteItem webSiteItem = (WebSiteItem) arg0;

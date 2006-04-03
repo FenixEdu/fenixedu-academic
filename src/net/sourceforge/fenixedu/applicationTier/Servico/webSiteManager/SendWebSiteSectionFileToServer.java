@@ -17,11 +17,10 @@ import java.util.TreeMap;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.util.Ftp;
 import net.sourceforge.fenixedu.util.Mes;
 
@@ -40,15 +39,10 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 
 	public Boolean run(final Integer sectionCode, InfoWebSiteItem lastInfoWebSiteItem)
 			throws FenixServiceException, ExcepcaoPersistencia {
-
-		IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
-				.getIPersistentWebSiteSection();
-		IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
-
-		List sections = new ArrayList();
+		List<WebSiteSection> sections = new ArrayList();
 		if (sectionCode == null) {
 			// in case of configuration we have to update all sections
-			sections = persistentWebSiteSection.readAll();
+			sections = RootDomainObject.getInstance().getWebSiteSections();
 		} else {
 			WebSiteSection webSiteSectionTmp;
 			webSiteSectionTmp = (WebSiteSection) persistentObject.readByOID(
@@ -59,8 +53,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 		while (iterSections.hasNext()) {
 			WebSiteSection webSiteSection = (WebSiteSection) iterSections.next();
 
-			List webSiteItems = persistentWebSiteItem
-					.readPublishedWebSiteItemsByWebSiteSection(webSiteSection);
+			List<WebSiteItem> webSiteItems = webSiteSection.getPublishedWebSiteItems(); 
 			final InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection
 					.newInfoFromDomain(webSiteSection);
 			List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {

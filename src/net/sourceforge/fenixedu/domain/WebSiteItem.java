@@ -11,5 +11,12 @@ public class WebSiteItem extends WebSiteItem_Base {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
+	
+	public void delete() {
+		removeRootDomainObject();
+		removeEditor();
+		removeWebSiteSection();
+		super.deleteDomainObject();
+	}
 
 }

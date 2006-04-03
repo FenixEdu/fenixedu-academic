@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.WebSite;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -30,10 +28,6 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public class ReadWebSiteByObjectCode extends Service {
 
     public InfoWebSite run(Integer webSiteCode) throws FenixServiceException, ExcepcaoPersistencia {
-        final IPersistentWebSiteSection persistentWebSiteSection = persistentSupport.getIPersistentWebSiteSection();
-        final IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
-
-
         final List infoWebSiteSections = new ArrayList();
 
         final WebSite webSite = (WebSite) persistentObject.readByOID(WebSite.class, webSiteCode);
@@ -42,14 +36,14 @@ public class ReadWebSiteByObjectCode extends Service {
             throw new NonExistingServiceException("message.nonExistingWebSite", null);
         }
 
-        List webSiteSections = persistentWebSiteSection.readByWebSite(webSite);
+        List<WebSiteSection> webSiteSections = webSite.getAssociatedWebSiteSections(); 
         Iterator iterSections = webSiteSections.iterator();
         while (iterSections.hasNext()) {
             WebSiteSection section = (WebSiteSection) iterSections.next();
 
             InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(section);
 
-            List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
+            List<WebSiteItem> webSiteItems = section.getIncludedWebSiteItems(); 
             List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
                 public Object transform(Object arg0) {
                     WebSiteItem webSiteItem = (WebSiteItem) arg0;

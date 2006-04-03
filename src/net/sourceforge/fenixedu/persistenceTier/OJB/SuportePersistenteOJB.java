@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVers
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailAddressAliasOJB;
@@ -242,14 +240,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {
         return new DistributedTestAdvisoryOJB();
-    }
-
-    public IPersistentWebSiteSection getIPersistentWebSiteSection() {
-        return new WebSiteSectionOJB();
-    }
-
-    public IPersistentWebSiteItem getIPersistentWebSiteItem() {
-        return new WebSiteItemOJB();
     }
 
     public void beginTransaction() {

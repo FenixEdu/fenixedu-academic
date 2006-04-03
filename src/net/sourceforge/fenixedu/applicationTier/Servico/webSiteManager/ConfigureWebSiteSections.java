@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSite;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 
 /**
  * @author Fernanda Quitério 22/Abr/2004
@@ -20,8 +19,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 public class ConfigureWebSiteSections extends Service {
 
 	public boolean run(InfoWebSite infoWebSite) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
-				.getIPersistentWebSiteSection();
 		WebSiteSection webSiteSection = null;
 		Iterator iterSections = infoWebSite.getSections().iterator();
 		while (iterSections.hasNext()) {
@@ -34,8 +31,7 @@ public class ConfigureWebSiteSections extends Service {
 				throw new NonExistingServiceException("website");
 			}
 
-			WebSiteSection repeatedWebSiteSection = persistentWebSiteSection.readByWebSiteAndName(
-					webSite, infoWebSiteSection.getName());
+			WebSiteSection repeatedWebSiteSection = webSite.getWebSiteSectionByName(infoWebSiteSection.getName());
 
 			if (repeatedWebSiteSection != null
 					&& !repeatedWebSiteSection.getIdInternal()

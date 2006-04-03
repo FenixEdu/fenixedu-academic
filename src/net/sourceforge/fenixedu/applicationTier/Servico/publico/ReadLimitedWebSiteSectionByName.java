@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -33,20 +31,15 @@ public class ReadLimitedWebSiteSectionByName extends Service {
 	public Object run(String sectionName) throws ExcepcaoInexistente, FenixServiceException,
 			ExcepcaoPersistencia {
 
-		WebSiteSection webSiteSection = null;
 		InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
 
-		IPersistentWebSiteSection persistentWebSiteSection = persistentSupport.getIPersistentWebSiteSection();
-		IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
-
-		webSiteSection = persistentWebSiteSection.readByName(sectionName);
+		WebSiteSection webSiteSection = WebSiteSection.readByName(sectionName);
 
 		if (webSiteSection == null) {
 			throw new NonExistingServiceException();
 		}
 
-		List webSiteItems = persistentWebSiteItem
-				.readPublishedWebSiteItemsByWebSiteSection(webSiteSection);
+		List<WebSiteItem> webSiteItems = webSiteSection.getPublishedWebSiteItems(); 
 
 		if (webSiteItems == null || webSiteItems.size() == 0) {
 			throw new NonExistingServiceException();
