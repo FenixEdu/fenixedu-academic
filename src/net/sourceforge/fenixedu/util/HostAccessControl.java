@@ -111,13 +111,13 @@ public class HostAccessControl {
 
             for (InetAddress allowedHost : hostList) {
                 if (remoteAddress.equals(allowedHost)) {
-                    logger.info(name + " allowed[" + remoteAddress + "]: matches group " + hostList);
+                    logger.debug(name + " allowed[" + remoteAddress + "]: matches group " + hostList);
                     
                     return true;
                 }
             }
             
-            logger.info(name + " denied["+ remoteAddress + "]: is not member of " + hostList);
+            logger.warn(name + " denied["+ remoteAddress + "]: is not member of " + hostList);
         } catch (UnknownHostException e) {
             logger.warn(name + " denied["+ address + "]: could not find host");
         }
