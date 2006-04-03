@@ -22,7 +22,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
         } 
         
         if (percentage == 0 || percentage > 100 || percentage < 0) {
-            throw new DomainException("error.invalid.teachingDegree.percentage");
+            throw new DomainException("message.invalid.professorship.percentage");
         }
         
         setTeacherService(teacherService);

@@ -155,7 +155,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
         while (entryInterator.hasNext()) {
             Map.Entry entry = (Map.Entry) entryInterator.next();
             String percentage = (String) entry.getValue();
-            if ((percentage != null) && (!(percentage.length() == 0))) {
+            if ((percentage != null) && (percentage.length() != 0)) {
                 percentage = percentage.replace(',', '.');
                 Integer shiftID = Integer.valueOf((String) entry.getKey());
                 ShiftIDTeachingPercentage shiftIDPercentage = new ShiftIDTeachingPercentage(shiftID,

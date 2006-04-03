@@ -450,19 +450,6 @@
                 
         <!-- ======================================================================== -->
         <!-- =======  USE CASE : Edit Teacher execution course professor ship =========== -->
-      
-        <action path="/teacherSearchForShiftManagement" input="search-for-shift-management" 
-            name="teacherSearchForm" scope="request" parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
-            <set-property property="serviceName" value="FindTeachersService"/>
-            <set-property property="objectAttribute" value="infoTeacher"/>
-            <set-property property="listAttribute" value="infoTeacherList"/>
-            <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
-            <forward name="search-form" path="search-for-shift-management"/>
-            <forward name="list-one" path="/showTeacherProfessorships.do"/>
-            <forward name="list-many" path="view-teachers-for-lessons-management"/>
-        </action>
         <action path="/showTeacherProfessorships" input="show-teacher-professorships" 
             name="executionPeriodForm" scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.department.ReadTeacherProfessorshipsByExecutionPeriodAction">
@@ -473,29 +460,7 @@
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForShiftManagement.do?method=searchForm&amp;page=0"/>                
             <forward name="list-professorships" path="show-teacher-professorships"/>
-        </action>
-        <action path="/manageTeacherShiftProfessorships" 
-            input="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm" 
-            name="teacherExecutionCourseShiftProfessorshipForm" scope="request" parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.department.ManageShiftProfessorships">
-            <exception 
-                type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
-                key="message.overlapping.institution.working.period" 
-                path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingLessonPeriod" 
-                key="message.overlapping.lesson.period" 
-                path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingSupportLessonPeriod" 
-                key="message.overlapping.support.lesson.period" 
-                path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>
-            <exception 
-                type="net.sourceforge.fenixedu.applicationTier.Servico.credits.AcceptTeacherExecutionCourseShiftPercentage$InvalidProfessorshipPercentage" 
-                key="message.invalid.professorship.percentage" 
-                path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>
-            <forward name="show-form" path="show-shift-professorships-percentages"/>
-            <forward name="successfull-edit" 
-                path="/teacherSearchForShiftManagement.do?page=0&amp;method=doSearch"/>
-        </action>        
+        </action>       
         
         
         <action path="/degreeTeachingServiceManagement" 
@@ -541,20 +506,7 @@
 			<forward name="successfull-edit" path="/supportLessonsManagement.do?method=showSupportLessons&amp;page=0"/>
 			<forward name="successfull-delete" path="/supportLessonsManagement.do?method=showSupportLessons&amp;page=0"/>
         </action>        
-        
-        
-        <action path="/teacherSearchForSupportLessonsManagement" 
-            input="search-for-support-lessons-management" name="teacherSearchForm" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
-            <set-property property="serviceName" value="FindTeachersService"/>
-            <set-property property="objectAttribute" value="infoTeacher"/>
-            <set-property property="listAttribute" value="infoTeacherList"/>
-            <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
-            <forward name="search-form" path="search-for-support-lessons-management"/>
-            <forward name="list-one" path="/showTeacherProfessorshipsForSupportLessonsManagement.do"/>
-            <forward name="list-many" path="view-teachers-for-lessons-management"/>
-        </action>
+                        
         <action path="/showTeacherProfessorshipsForSupportLessonsManagement" 
             input="show-teacher-professorships" name="professorshipForm" scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.department.ReadTeacherProfessorshipsByExecutionPeriodAction">
@@ -569,45 +521,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.department.supportLessons.ReadTeacherSupportLessonsAction">
             <forward name="list-support-lessons" path="show-teacher-execution-course-support-lessons1"/>
         </action>
-        <action path="/manageSupportLesson" name="supportLessonForm" 
-            input="/manageSupportLesson.do?method=prepareEdit&amp;page=0" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.CRUDSupportLessonAction" 
-            parameter="method" scope="request" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" validate="true">
-            <set-property property="editService" value="EditSupportLessonByOID"/>
-            <set-property property="deleteService" value="DeleteSupportLessonByOID"/>
-            <set-property property="readService" value="ReadSupportLessonByOID"/>
-            <set-property property="oidProperty" value="idInternal"/>
-            <set-property property="requestAttribute" value="infoSupportLesson" />
-            <set-property property="infoObjectClassName" 
-                value="net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson" />
-            <exception 
-                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.EditSupportLessonByOID$InvalidPeriodException" 
-                key="message.invalidPeriod" 
-                path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>
-            <exception 
-                type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
-                key="message.overlapping.institution.working.period" 
-                path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingLessonPeriod" 
-                key="message.overlapping.lesson.period" 
-                path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingSupportLessonPeriod" 
-                key="message.overlapping.support.lesson.period" 
-                path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException" 
-                key="message.support.lesson.already.exists" 
-                path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>
-				
 
-            <forward name="show-form" path="edit-support-lesson1"/>
-            <forward name="successfull-edit" 
-                path="/manageTeacherExecutionCourseSupportLessons.do?page=0"/>
-            <forward name="successfull-read" 
-                path="/manageTeacherExecutionCourseSupportLessons.do?page=0"/>
-            <forward name="successfull-delete" 
-                path="/manageTeacherExecutionCourseSupportLessons.do?page=0"/>
-        </action>
         <!-- =======================================================================  -->
         <!-- =======  USE CASE : Edit Teacher DEGREE FINAL PROJECT STUDENT =========== -->
         <action path="/teacherAdviseServiceManagement" 
@@ -629,59 +543,7 @@
 			<forward name="search-teacher-form" path="search-for-advise-service"/>   
             <forward name="list-teacher-advise-services" path="list-teacher-advise-services"/>
 		</action>
-		
-		        
-        <action path="/teacherSearchForDFPStudentManagement" input="search-for-dfp-student-management" 
-            name="teacherSearchForm" scope="request" parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
-            <set-property property="serviceName" value="FindTeachersService"/>
-            <set-property property="objectAttribute" value="infoTeacher"/>
-            <set-property property="listAttribute" value="infoTeacherList"/>
-            <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
-            <forward name="search-form" path="search-for-dfp-student-management"/>
-            <forward name="list-one" path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
-            <forward name="list-many" path="view-teachers-for-lessons-management"/>
-        </action>
-        <action path="/manageTeacherDFPStudent" name="teacherDegreeFinalProjectStudentForm" 
-            input="/manageTeacherDFPStudent.do?method=list&amp;page=0" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.degree.finalProject.CRUDTeacherDegreeFinalProjectStudent" 
-            parameter="method" scope="request" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" validate="true">
-            <set-property property="editService" value="EditTeacherDegreeFinalProjectStudentByOID"/>
-            <set-property property="deleteService" value="DeleteTeacherDegreeFinalProjectStudentByOID"/>
-            <set-property property="readService" value="ReadTeacherDegreeFinalProjectStudentByOID"/>
-            <set-property property="oidProperty" value="idInternal"/>
-            <set-property property="requestAttribute" value="infoTeacherDegreeFinalProjectStudent" />
-            <set-property property="infoObjectClassName" 
-                value="net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent" />
-
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException" 
-                key="message.teacherDegreeFinalProjectStudent.student-already-setted" 
-                path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
-
-            <exception type="net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException" 
-                key="message.teacher-not-belong-to-department" 
-                path="/teacherSearchForDFPStudentManagement.do?method=searchForm&amp;page=0"/>
-            <exception 
-                type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
-                key="message.overlapping.institution.working.period" 
-                path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingLessonPeriod" 
-                key="message.overlapping.lesson.period" 
-                path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
-
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingSupportLessonPeriod" 
-                key="message.overlapping.support.lesson.period" 
-                path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
-
-            <forward name="show-form" path="/manageTeacherDFPStudent.do?page=0&amp;method=list"/>
-            <forward name="successfull-edit" path="/manageTeacherDFPStudent.do?page=0&amp;method=list"/>
-            <forward name="successfull-read" path=""/>
-            <forward name="successfull-delete" 
-                path="/manageTeacherDFPStudent.do?page=0&amp;method=list"/>
-            <forward name="list-teacher-degree-final-project-students" path="show-teacher-dfp-students"/>
-        </action>
+				               
         <!-- =======================================================================  -->
         <!-- =======  USE CASE : Edit Teacher WORK SERVICE ================================== -->
         <action path="/institutionWorkingTimeManagement" 
@@ -706,59 +568,7 @@
             <forward name="successfull-edit" path="/institutionWorkingTimeManagement.do?method=showWorkingTimePeriods&amp;page=0"/>              
             <forward name="successfull-delete" path="/institutionWorkingTimeManagement.do?method=showWorkingTimePeriods&amp;page=0"/>            
 		</action>
-		
-		
-						
-        <action path="/teacherSearchForTeacherInstitutionWorkingTimeManagement" 
-            input="search-for-institution-working-time-management" name="teacherSearchForm" 
-            scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
-            <set-property property="serviceName" value="FindTeachersService"/>
-            <set-property property="objectAttribute" value="infoTeacher"/>
-            <set-property property="listAttribute" value="infoTeacherList"/>
-            <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
-            <forward name="search-form" path="search-for-institution-working-time-management"/>
-            <forward name="list-one" 
-                path="/manageTeacherInstitutionWorkingTime.do?method=list&amp;page=0"/>
-            <forward name="list-many" path=""/>
-        </action>
-        <action path="/manageTeacherInstitutionWorkingTime" name="teacherInstitutionWorkingTimeForm" 
-            input="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.workingTime.CRUDTeacherInstitutionWorkingTimeAction" 
-            parameter="method" scope="request" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" validate="true">
-            <set-property property="editService" value="EditTeacherInstitutionWorkingTimeByOID"/>
-            <set-property property="deleteService" value="DeleteTeacherInstitutionWorkingTimeByOID"/>
-            <set-property property="readService" value="ReadTeacherInstitutionWorkingTimeByOID"/>
-            <set-property property="oidProperty" value="idInternal"/>
-            <set-property property="requestAttribute" value="infoTeacherInstitutionWorkingTime" />
-            <set-property property="infoObjectClassName" 
-                value="net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime" />           
-            <exception 
-                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.workingTime.EditTeacherInstitutionWorkingTimeByOID$InvalidPeriodException" 
-                key="message.invalidPeriod" 
-                path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>
-            <exception 
-                type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
-                key="message.overlapping.institution.working.period" 
-                path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingLessonPeriod" 
-                key="message.overlapping.lesson.period" 
-                path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingSupportLessonPeriod" 
-                key="message.overlapping.support.lesson.period" 
-                path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>
-            <forward name="show-form" path="edit-teacher-institution-working-time"/>
-            <forward name="successfull-edit" 
-                path="/manageTeacherInstitutionWorkingTime.do?page=0&amp;method=list"/>
-            <forward name="successfull-read" path=""/>
-            <forward name="successfull-delete" 
-                path="/manageTeacherInstitutionWorkingTime.do?page=0&amp;method=list"/>
-            <forward name="list-teacher-institution-working-time" 
-                path="list-teacher-institution-working-time"/>
-            <forward name="notAuthorized"
-            	path="/teacherSearchForTeacherInstitutionWorkingTimeManagement.do?method=searchForm&amp;page=0"/>
-        </action>
+										        
         <!-- =======================================================================  -->
         <!-- =======  USE CASE : List deparment teachers ===================================== -->
        	<action path="/prepareListDepartmentTeachersCredits"
@@ -773,18 +583,7 @@
             input="/index.do" scope="request">
             <forward name="successfull-prepare" path="/listDepartmentTeachers.do?method=doSearch"/>
         </action>
-        <action path="/listDepartmentTeachers" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.department.ListDepartmentTeachersAction" 
-            name="searchTeachersDepartmentForm" input="/index.do" scope="request" parameter="method" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
-            <set-property property="serviceName" value="ReadDepartmentTeachersCreditsDetailsService"/>
-            <set-property property="objectAttribute" value="infoTeacher"/>
-            <set-property property="listAttribute" value="infoTeacherList"/>
-            <set-property property="notFoundMessageKey" value="message.not-found-teachers"/>
-            <forward name="search-form" path=""/>
-            <forward name="list-one" path="listDepartmentTeachers"/>
-            <forward name="list-many" path="listDepartmentTeachers"/>
-        </action>
+        
         <!-- =======================================================================  -->
         <!-- =======  USE CASE : Read Teacher Credits Sheet =================================== -->
         <action path="/showTeacherCredits" 
@@ -802,28 +601,9 @@
             <forward name="teacher-not-found" path="/showTeacherCredits.do?method=prepareTeacherSearch&amp;page=0"/> 
 			<forward name="search-teacher-form" path="search-for-teacher-credits"/>   
             <forward name="show-teacher-credits" path="show-teacher-credits"/>
-        </action>                
+        </action>                                                
         
         
-        
-        
-        <action path="/teacherSearchForTeacherCreditsSheet" 
-            input="search-for-institution-working-time-management" name="teacherSearchForm" 
-            scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
-            <set-property property="serviceName" value="FindTeachersService"/>
-            <set-property property="objectAttribute" value="infoTeacher"/>
-            <set-property property="listAttribute" value="infoTeacherList"/>
-            <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
-            <forward name="search-form" path="searchForTeacherCreditsSheet"/>
-            <forward name="list-one" path="/showTeacherCreditsSheet.do"/>
-            <forward name="list-many" path=""/>
-        </action>
-        <action path="/showTeacherCreditsSheet" 
-		name="executionPeriodForm"
-            type="net.sourceforge.fenixedu.presentationTier.Action.credits.ReadTeacherCreditsSheetAction">
-            <forward name="successfull-read" path="showTeacherCreditsSheet"/>
-        </action>
         <!-- =======================================================================  -->
         <!-- =======================================================================  -->
         <!-- =======  USE CASE : Read Teacher Other Type Credits =================== -->
@@ -846,47 +626,7 @@
 			<forward name="successful-edit" path="/otherServiceManagement.do?method=showOtherServices&amp;page=0"/>
 			<forward name="successful-delete" path="/otherServiceManagement.do?method=showOtherServices&amp;page=0"/>			
 		</action>
-        
-        
-        
-        <action path="/teacherSearchForOtherTypeCreditLine" 
-            input="search-for-otherTypeCreditLine" name="teacherSearchForm" 
-            scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
-            <set-property property="serviceName" value="FindTeachersService"/>
-            <set-property property="objectAttribute" value="infoTeacher"/>
-            <set-property property="listAttribute" value="infoTeacherList"/>
-            <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
-            <forward name="search-form" path="searchForOtherTypeCreditLine"/>
-            <forward name="list-one" path="/showOtherTypeCreditLines.do"/>
-            <forward name="list-many" path=""/>
-        </action>
-        <action path="/showOtherTypeCreditLines"
-			name="executionPeriodForm"
-            type="net.sourceforge.fenixedu.presentationTier.Action.credits.ReadTeacherOtherTypeCreditLinesAction">
-            <forward name="successfull-read" path="showOhterTypeCreditLines"/>
-        </action>
-		<!-- =======================================================================  -->        
-        <!-- =======  USE CASE : Edit and Delete Teacher Other Type Credits ======== -->                                
-        <action path="/crudOtherTypeCreditLine" name="otherTypeCreditLineForm" 
-            input="/crudOtherTypeCreditLine.do?method=prepareEdit&amp;page=0" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.credits.CRUDOtherTypeCreditLineAction" 
-            parameter="method" scope="request" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" validate="true">
-            <set-property property="editService" value="EditOtherTypeCreditLineService"/>
-            <set-property property="deleteService" value="DeleteOtherTypeCreditLineService"/>
-            <set-property property="readService" value="ReadOtherTypeCreditLineByOidService"/>
-            <set-property property="oidProperty" value="idInternal"/>
-            <set-property property="requestAttribute" value="infoOtherTypeCreditLine" />
-            <set-property property="infoObjectClassName" 
-                value="net.sourceforge.fenixedu.dataTransferObject.credits.InfoOtherTypeCreditLine" />
-            <forward name="show-form" path="editOtherTypeCreditLine"/>
-            <forward name="successfull-edit" 
-                path="/teacherSearchForOtherTypeCreditLine.do?method=doSearch"/>
-            <forward name="successfull-read" path=""/>
-            <forward name="successfull-delete" 
-                path="/teacherSearchForOtherTypeCreditLine.do?method=doSearch"/>
-        </action>		
+                                		
 		<!-- =======================================================================  -->        
 
 	    <!-- ==================== View Curricular Course Historic ================== -->
