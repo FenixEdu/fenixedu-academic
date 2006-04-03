@@ -7,6 +7,7 @@
 		controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.PublicTilesComponentController" 
 		page="/layout/publicGesDisLayout_2col.jsp" >
 		<put name="title" value=".Instituto Superior Técnico" />	
+	 	<put name="rss" value="/commons/blank.jsp"/>
 	  	<put name="serviceName" value="Instituto Superior Técnico" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
