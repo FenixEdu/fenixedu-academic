@@ -52,8 +52,8 @@
 		<bean:define id="imageURL" type="java.lang.String">
 			background: url(<%= request.getContextPath() %>/images/rss_ico.gif) 10px 3px no-repeat; padding-left: 32px;
 		</bean:define>
-		<html:link page="<%= "/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>" style="<%=imageURL%>">
-			<bean:message  key="link.announcements"/>
+		<html:link page="<%= "/viewSite.do" + "?method=rss&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" style="<%=imageURL%>">
+			<bean:message  key="label.rss"/>
 		</html:link>
 	</li>
 	
