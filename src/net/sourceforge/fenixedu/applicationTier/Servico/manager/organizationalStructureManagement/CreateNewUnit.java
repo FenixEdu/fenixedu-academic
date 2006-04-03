@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,7 +23,7 @@ public class CreateNewUnit extends Service {
 
     public void run(Integer unitID, Integer parentUnitID, String unitName, String unitCostCenter,
             String acronym, Date beginDate, Date endDate, PartyTypeEnum type, Integer departmentID,
-            Integer degreeID) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
+            Integer degreeID, AccountabilityType accountabilityType) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
         Unit unit = null;
         if (unitID == null) {
@@ -40,7 +41,7 @@ public class CreateNewUnit extends Service {
             costCenterCode = (Integer.valueOf(unitCostCenter));
         }
 
-        unit.edit(unitName, costCenterCode, acronym, beginDate, endDate, type, parentUnit);
+        unit.edit(unitName, costCenterCode, acronym, beginDate, endDate, type, parentUnit, accountabilityType);
 
         setDepartment(departmentID, unit);
 

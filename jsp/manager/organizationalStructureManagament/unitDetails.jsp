@@ -81,13 +81,15 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<fc:commandLink action="prepareChooseParentUnit" value="#{bundle['message.subUnit']}"/> 				
+				<fc:commandLink action="prepareChooseParentUnit" value="#{bundle['message.subUnit']}"/>					
 			</h:column>
 			<h:column rendered="#{!empty organizationalStructureBackingBean.unit.parentUnits}">	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
-				<fc:commandLink action="prepareChooseParentUnitToRemove" value="#{bundle['message.topUnit']}"/> 				
+				<fc:commandLink action="prepareChooseParentUnitToRemove" value="#{bundle['message.topUnit']}">
+					<f:param id="isToRemoveParentUnit" name="isToRemoveParentUnit" value="true"/>
+				</fc:commandLink> 				
 			</h:column>					
 		</h:dataTable>									
 					
@@ -143,6 +145,12 @@
 				<h:outputFormat value="{0, date, dd/MM/yyyy}" rendered="#{!empty unit.endDate}">
 					<f:param value="#{unit.endDate}"/>
 				</h:outputFormat>					
+			</h:column>	
+			<h:column>	
+				<f:facet name="header">
+					<h:outputText value="#{bundle['title.relation.type']}" />
+				</f:facet>								
+				<h:outputText value="#{organizationalStructureBackingBean.unitRelationsAccountabilityTypes[unit.idInternal]}" escape="false"/>									
 			</h:column>	
 			<h:column>	
 				<f:facet name="header">

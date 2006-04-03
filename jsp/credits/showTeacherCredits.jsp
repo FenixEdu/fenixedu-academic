@@ -472,13 +472,13 @@
 				</td>
 				<td class="listClasses">
 					<dt:format patternId="datePattern">
-						<bean:write name="personFunction" property="beginDate.time"/>
+						<bean:write name="personFunction" property="beginDateInDateType.time"/>
 					</dt:format>
 				</td>
 				<td class="listClasses">
 					<logic:notEmpty name="personFunction" property="endDate">
 						<dt:format patternId="datePattern">
-							<bean:write name="personFunction" property="endDate.time"/>
+							<bean:write name="personFunction" property="endDateInDateType.time"/>
 						</dt:format>
 					</logic:notEmpty>
 					<logic:empty name="personFunction" property="endDate">

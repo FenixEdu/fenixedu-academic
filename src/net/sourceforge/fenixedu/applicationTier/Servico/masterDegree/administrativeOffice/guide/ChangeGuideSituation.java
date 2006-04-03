@@ -46,7 +46,7 @@ public class ChangeGuideSituation extends Service {
             throws ExcepcaoInexistente, FenixServiceException, ExistingPersistentException,
             ExcepcaoPersistencia {
 
-        Guide guide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber,
+        Guide guide = Guide.readByNumberAndYearAndVersion(guideNumber,
                 guideYear, guideVersion);
 
         if (guide == null) {

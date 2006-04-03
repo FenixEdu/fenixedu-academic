@@ -31,6 +31,7 @@ public class Contract extends Contract_Base {
         removeMailingUnit();
         removeSalaryUnit();
         removeWorkingUnit();
+        removeRootDomainObject();
         deleteDomainObject();
     }
 }

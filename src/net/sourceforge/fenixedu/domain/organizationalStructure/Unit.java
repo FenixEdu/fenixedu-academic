@@ -15,11 +15,9 @@ import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class Unit extends Unit_Base {
@@ -69,8 +67,8 @@ public class Unit extends Unit_Base {
     }
 
     private boolean isUnitDepartment(Unit unit) {
-        return (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT)
-                && unit.getDepartment() != null);
+        return (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT) && unit
+                .getDepartment() != null);
     }
 
     public List<Unit> getInactiveSubUnits(Date currentDate) {
@@ -129,8 +127,8 @@ public class Unit extends Unit_Base {
         }
     }
 
-    public void edit(String unitName, Integer unitCostCenter, String acronym, Date beginDate, Date endDate,
-            PartyTypeEnum type, Unit parentUnit) throws ExcepcaoPersistencia {
+    public void edit(String unitName, Integer unitCostCenter, String acronym, Date beginDate,
+            Date endDate, PartyTypeEnum type, Unit parentUnit, AccountabilityType accountabilityType) {
 
         this.setName(unitName);
         this.setBeginDate(beginDate);
@@ -138,19 +136,18 @@ public class Unit extends Unit_Base {
         this.setType(type);
         this.setCostCenterCode(unitCostCenter);
         this.setAcronym(acronym);
-        
-        if (parentUnit != null) {
-            this.addParent(parentUnit);
-        }
+
+        if (parentUnit != null && accountabilityType != null) {
+            this.addParent(parentUnit, accountabilityType);
+        }    
         if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.endDateBeforeBeginDate");
         }
     }
 
     public boolean isActive(Date currentDate) {
-        return (this.getEndDate() == null
-                || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(), currentDate) || this
-                        .getEndDate().after(currentDate)));
+        return (this.getEndDate() == null || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(),
+                currentDate) || this.getEndDate().after(currentDate)));
     }
 
     public void delete() {
@@ -165,11 +162,12 @@ public class Unit extends Unit_Base {
             }
 
             for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
-                    .get(0).delete());
+                    .get(0).delete())
+                ;
 
             removeDepartment();
             removeDegree();
-            RootDomainObject.getInstance().removePartys(this);
+            removeRootDomainObject();
             deleteDomainObject();
         } else {
             throw new DomainException("error.delete.unit");
@@ -215,15 +213,16 @@ public class Unit extends Unit_Base {
         }
         return result;
     }
-    
+
     public Double getScientificAreaUnitEctsCredits(List<Context> contexts) {
         double result = 0.0;
         for (Context context : contexts) {
             if (context.getChildDegreeModule().isLeaf()) {
                 CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-                
-                if (!curricularCourse.isOptional() && curricularCourse.getCompetenceCourse().getScientificAreaUnit().equals(this)) {
-                    result += curricularCourse.getCompetenceCourse().getEctsCredits();    
+
+                if (!curricularCourse.isOptional()
+                        && curricularCourse.getCompetenceCourse().getScientificAreaUnit().equals(this)) {
+                    result += curricularCourse.getCompetenceCourse().getEctsCredits();
                 }
             }
         }
@@ -247,8 +246,7 @@ public class Unit extends Unit_Base {
         for (Employee employee : employees) {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null
-                    && !teacher.getAllLegalRegimensWithoutEndSituations(begin,
-                            end).isEmpty()) {
+                    && !teacher.getAllLegalRegimensWithoutEndSituations(begin, end).isEmpty()) {
                 teachers.add(teacher);
             }
         }
@@ -258,10 +256,8 @@ public class Unit extends Unit_Base {
     public Teacher getTeacherByPeriod(Integer teacherNumber, Date begin, Date end) {
         for (Employee employee : getWorkingEmployees(begin, end)) {
             Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null
-                    && teacher.getTeacherNumber().equals(teacherNumber)
-                    && !teacher.getAllLegalRegimensWithoutEndSituations(begin,
-                            end).isEmpty()) {
+            if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)
+                    && !teacher.getAllLegalRegimensWithoutEndSituations(begin, end).isEmpty()) {
                 return teacher;
             }
         }
@@ -325,14 +321,12 @@ public class Unit extends Unit_Base {
         return false;
     }
 
-    public Accountability addParent(Unit parentUnit) throws ExcepcaoPersistencia {
-        return new Accountability(parentUnit, this, UnitUtils
-                .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+    public Accountability addParent(Unit parentUnit, AccountabilityType accountabilityType) {
+        return new Accountability(parentUnit, this, accountabilityType);
     }
-    
-    public Accountability addChild(Unit childUnit) throws ExcepcaoPersistencia {
-        return new Accountability(this, childUnit, UnitUtils
-                .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+
+    public Accountability addChild(Unit childUnit, AccountabilityType accountabilityType) {
+        return new Accountability(this, childUnit, accountabilityType);
     }
 
     public void removeParent(Unit parentUnit) {
@@ -343,7 +337,7 @@ public class Unit extends Unit_Base {
             }
         }
     }
-    
+
     public void removeChild(Unit childUnit) {
         for (Accountability accountability : this.getChilds()) {
             if (accountability.getChildParty().equals(childUnit)) {
@@ -353,13 +347,26 @@ public class Unit extends Unit_Base {
         }
     }
 
-	public NonAffiliatedTeacher findNonAffiliatedTeacherByName(final String name) {
-		for (final NonAffiliatedTeacher nonAffiliatedTeacher : getAssociatedNonAffiliatedTeachersSet()) {
-			if (nonAffiliatedTeacher.getName().equalsIgnoreCase(name)) {
-				return nonAffiliatedTeacher;
-			}
-		}
-		return null;
-	}
+    public NonAffiliatedTeacher findNonAffiliatedTeacherByName(final String name) {
+        for (final NonAffiliatedTeacher nonAffiliatedTeacher : getAssociatedNonAffiliatedTeachersSet()) {
+            if (nonAffiliatedTeacher.getName().equalsIgnoreCase(name)) {
+                return nonAffiliatedTeacher;
+            }
+        }
+        return null;
+    }
 
+    public AccountabilityTypeEnum getRelationType(Unit withUnit){
+        for (Accountability accountability : getParents()) {
+            if(accountability.getParentParty().equals(withUnit)){
+                return accountability.getAccountabilityType().getType();
+            }
+        }
+        for (Accountability accountability : getChilds()) {
+            if(accountability.getChildParty().equals(withUnit)){
+                return accountability.getAccountabilityType().getType();
+            }
+        }
+        return null;
+    }
 }

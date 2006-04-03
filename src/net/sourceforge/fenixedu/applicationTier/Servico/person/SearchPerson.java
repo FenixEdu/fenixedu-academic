@@ -192,7 +192,7 @@ public class SearchPerson extends Service {
 
             return verifyParameter(person.getEmail(), searchParameters.getEmail())
                     && verifyParameter(person.getUsername(), searchParameters.getUsername())
-                    && verifyParameter(person.getNumeroDocumentoIdentificacao(), searchParameters
+                    && verifyParameter(person.getDocumentIdNumber(), searchParameters
                             .getDocumentIdNumber())
                     && verifyNameEquality(searchParameters.getNameWords(), person)
                     && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(),

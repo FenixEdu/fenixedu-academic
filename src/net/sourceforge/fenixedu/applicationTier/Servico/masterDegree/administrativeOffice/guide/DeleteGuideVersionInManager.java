@@ -27,7 +27,7 @@ public class DeleteGuideVersionInManager extends Service {
             throw new InvalidChangeServiceException();
         }
 
-        persistentSupport.getIPersistentGuide().deleteByOID(Guide.class, guide.getIdInternal());
+        persistentSupport.getIPersistentObject().deleteByOID(Guide.class, guide.getIdInternal());
 
     }
 

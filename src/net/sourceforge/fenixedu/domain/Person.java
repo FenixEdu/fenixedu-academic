@@ -7,16 +7,15 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -28,8 +27,10 @@ import net.sourceforge.fenixedu.domain.research.result.Authorship;
 import net.sourceforge.fenixedu.domain.research.result.Patent;
 import net.sourceforge.fenixedu.domain.research.result.Publication;
 import net.sourceforge.fenixedu.domain.research.result.Result;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.UsernameUtils;
+
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.YearMonthDay;
 
 public class Person extends Person_Base {
 
@@ -564,59 +565,65 @@ public class Person extends Person_Base {
     }
 
     public List<PersonFunction> getActiveFunctions() {
-
         List<PersonFunction> activeFunctions = new ArrayList<PersonFunction>();
-
-        for (PersonFunction personFunction : this.getPersonFunctions()) {
-            if (personFunction.isActive(Calendar.getInstance().getTime())) {
-                activeFunctions.add(personFunction);
+        for (Accountability accountability : getParents()) {
+            if (accountability.isPersonFunction() && accountability.isActive(new YearMonthDay())) {
+                activeFunctions.add((PersonFunction) accountability);
             }
         }
         return activeFunctions;
     }
 
     public List<PersonFunction> getInactiveFunctions() {
-
         List<PersonFunction> inactiveFunctions = new ArrayList<PersonFunction>();
-
-        for (PersonFunction personFunction : this.getPersonFunctions()) {
-            if (!personFunction.isActive(Calendar.getInstance().getTime())) {
-                inactiveFunctions.add(personFunction);
+        for (Accountability accountability : getParents()) {
+            if (accountability.isPersonFunction() && !accountability.isActive(new YearMonthDay())) {
+                inactiveFunctions.add((PersonFunction) accountability);
             }
         }
         return inactiveFunctions;
     }
 
     public List<Function> getActiveInherentFunctions() {
-
         List<Function> inherentFunctions = new ArrayList<Function>();
-        for (PersonFunction personFunction : this.getActiveFunctions()) {
-            inherentFunctions.addAll(personFunction.getFunction().getInherentFunctions());
+        for (PersonFunction accountability : getActiveFunctions()) {
+            inherentFunctions.addAll(accountability.getFunction().getInherentFunctions());
         }
         return inherentFunctions;
     }
 
     public boolean containsActiveFunction(Function function) {
-
-        for (PersonFunction person_Function : this.getActiveFunctions()) {
-            if (person_Function.getFunction().equals(function)) {
+        for (PersonFunction accountability : getActiveFunctions()) {
+            if (accountability.getFunction().equals(function)) {
                 return true;
             }
         }
         return false;
     }
 
-    public List<PersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
-
+    public List<PersonFunction> getPersonFuntions(YearMonthDay begin, YearMonthDay end) {
         List<PersonFunction> result = new ArrayList<PersonFunction>();
-
-        for (PersonFunction personFunction : getPersonFunctions()) {
-            if (personFunction.belongsToPeriod(beginDate, endDate)) {
-                result.add(personFunction);
+        for (Accountability accountability : getParents()) {
+            if (accountability.isPersonFunction() && accountability.belongsToPeriod(begin, end)) {
+                result.add((PersonFunction) accountability);
             }
         }
-
         return result;
+    }
+
+    public List<PersonFunction> getPersonFunctions() {
+        List<PersonFunction> result = new ArrayList<PersonFunction>();
+        for (Accountability accountability : getParents()) {
+            if (accountability.isPersonFunction()) {
+                result.add((PersonFunction) accountability);
+            }
+        }
+        return result;
+    }
+
+    public PersonFunction addPersonFunction(Function function) {
+        return new PersonFunction(function.getUnit(), this, AccountabilityType
+                .readAccountabilityTypeByType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION));
     }
 
     /**
@@ -668,7 +675,7 @@ public class Person extends Person_Base {
         if (getExportGroupingReceiversCount() > 0) {
             return false;
         }
-        if (getPersonFunctionsCount() > 0) {
+        if (getPersonFunctions().size() > 0) {
             return false;
         }
         if (getAssociatedQualificationsCount() > 0) {
@@ -1181,6 +1188,5 @@ public class Person extends Person_Base {
             }
         }
         return null;
-    }
-
+    }       
 }

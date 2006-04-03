@@ -67,7 +67,6 @@
 <!ENTITY cmsMessaging SYSTEM "cms/repository_cms_messaging.xml">
 <!ENTITY contract SYSTEM "repository_contract.xml">
 <!ENTITY function SYSTEM "repository_function.xml">
-<!ENTITY personFunction SYSTEM "repository_person_function.xml">
 <!ENTITY teacherServiceExemption SYSTEM "repository_teacher_service_exemption.xml">
 <!ENTITY cmsWebsite SYSTEM "cms/repository_cms_website.xml">
 <!ENTITY qualification SYSTEM "repository_qualification.xml">
@@ -156,7 +155,6 @@
 	&person_function;
 	&teacherServiceExemption;
 	&cmsWebsite;
-	&personFunction;
 	&teacherServiceExemption;
 	&qualification;
 	&fileEntry;

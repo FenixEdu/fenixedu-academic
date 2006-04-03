@@ -57,6 +57,12 @@
 				<h:outputFormat value="{0, date, dd/MM/yyyy}" rendered="#{!empty organizationalStructureBackingBean.unit.endDate}">
 					<f:param value="#{organizationalStructureBackingBean.unit.endDate}"/>
 				</h:outputFormat>					
+			</h:column>
+			<h:column>	
+				<f:facet name="header">
+					<h:outputText value="#{bundle['title.relation.type']}" />
+				</f:facet>								
+				<h:outputText value="#{organizationalStructureBackingBean.unitRelationsAccountabilityTypes[unit.idInternal]}" escape="false"/>									
 			</h:column>	
 			<h:column>
 				<f:facet name="header">

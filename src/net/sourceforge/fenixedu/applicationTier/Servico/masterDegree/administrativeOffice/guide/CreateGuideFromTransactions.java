@@ -52,7 +52,7 @@ public class CreateGuideFromTransactions extends Service {
         // Get the Guide Number
         Integer guideNumber = null;
 
-        guideNumber = persistentSupport.getIPersistentGuide().generateGuideNumber(infoGuide.getYear());
+        guideNumber = Guide.generateGuideNumber(infoGuide.getYear());
 
         infoGuide.setNumber(guideNumber);
 
@@ -81,9 +81,11 @@ public class CreateGuideFromTransactions extends Service {
         }
 
         // Get the Execution Degree
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGuide
+                .getInfoExecutionDegree().getIdInternal());
 
-        Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
+        Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor()
+                .getContributorNumber());
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
 
         guide.setExecutionDegree(executionDegree);
@@ -101,8 +103,8 @@ public class CreateGuideFromTransactions extends Service {
 
         while (iterator.hasNext()) {
             transactionId = (Integer) iterator.next();
-            transaction = (PaymentTransaction) persistentObject.readByOID(
-                    Transaction.class, transactionId);
+            transaction = (PaymentTransaction) persistentObject.readByOID(Transaction.class,
+                    transactionId);
 
             if (transaction == null) {
                 throw new ExcepcaoInexistente();

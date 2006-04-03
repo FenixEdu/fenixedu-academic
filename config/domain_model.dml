@@ -1834,14 +1834,6 @@ class net.sourceforge.fenixedu.domain.OccupationPeriod extends net.sourceforge.f
     Integer keyPreviousPeriod;
 }
 
-class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction extends net.sourceforge.fenixedu.domain.DomainObject {
-	Double credits;
-	Integer keyPerson;
-	Integer keyFunction;
-	Date beginDate;
-	Date endDate;
-}
-
 class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double balance;
 	Integer keyPerson;
@@ -2566,11 +2558,19 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule ext
 	Integer keyAllowedChildPartyType;
 }	 
  
-class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability extends net.sourceforge.fenixedu.domain.DomainObject {	
+	YearMonthDay beginDate;
+	YearMonthDay endDate;
 	Integer keyParentParty;
 	Integer keyChildParty;
 	Integer keyAccountabilityType;
+	String ojbConcreteClass;
 }
+  
+	class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
+		Integer keyFunction;
+		Double credits;	
+	}  
 	  	  
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
@@ -5766,20 +5766,6 @@ relation FunctionParentInherentFunction {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole parentInherentFunction;
 }
 
-relation PersonPersonFunction {
-	net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction playsRole personFunctions  {
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.Person playsRole person;
-}
-
-relation FunctionPersonFunction {
-	net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction playsRole personFunctions  {
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole function;
-}
-
 relation TeacherExpectationDefinitionPeriodExecutionYear {
 	net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod playsRole teacherExpectationDefinitionPeriods  {
     	multiplicity *;
@@ -6045,6 +6031,13 @@ relation AnyCurricularCourseDepartmentUnit {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole departmentUnit;
+}
+
+relation PersonFunctionFunction {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole function;	 
+	net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction playsRole accountabilities {
+	   multiplicity *;
+	}
 }
 
 relation AccountabilityAccountabilityType {
@@ -7010,13 +7003,6 @@ relation RootDomainObjectDepartment {
 relation RootDomainObjectTeacherLegalRegimen {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen playsRole teacherLegalRegimens {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectPersonFunction {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction playsRole personFunctions {
 		multiplicity *;
 	}
 }

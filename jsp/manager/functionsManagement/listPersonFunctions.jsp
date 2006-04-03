@@ -58,7 +58,7 @@
 					<h:outputText value="#{bundle['label.beginDate']}" />
 				</f:facet>				
 				<h:outputFormat value="{0, date, dd/MM/yyyy}">
-					<f:param value="#{person_function.beginDate}"/>
+					<f:param value="#{person_function.beginDateInDateType}"/>
 				</h:outputFormat>
 			</h:column>
 			<h:column>
@@ -66,7 +66,7 @@
 					<h:outputText value="#{bundle['label.endDate']}" />
 				</f:facet>				
 				<h:outputFormat rendered="#{!empty person_function.endDate}" value="{0, date, dd/MM/yyyy}">
-					<f:param value="#{person_function.endDate}"/>
+					<f:param value="#{person_function.endDateInDateType}"/>
 				</h:outputFormat>
 			</h:column>
 			<h:column>
@@ -149,7 +149,7 @@
 					<h:outputText value="#{bundle['label.beginDate']}" />
 				</f:facet>				
 				<h:outputFormat value="{0, date, dd/MM/yyyy}">
-					<f:param value="#{person_function.beginDate}"/>
+					<f:param value="#{person_function.beginDateInDateType}"/>
 				</h:outputFormat>
 			</h:column>
 			<h:column>
@@ -157,7 +157,7 @@
 					<h:outputText value="#{bundle['label.endDate']}" />
 				</f:facet>				
 				<h:outputFormat rendered="#{!empty person_function.endDate}" value="{0, date, dd/MM/yyyy}">
-					<f:param value="#{person_function.endDate}"/>
+					<f:param value="#{person_function.endDateInDateType}"/>
 				</h:outputFormat>
 			</h:column>
 			<h:column>

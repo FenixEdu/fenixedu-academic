@@ -37,6 +37,7 @@ public class CreditLineDTO {
 
     public CreditLineDTO(ExecutionPeriod executionPeriod, TeacherService teacherService,
             double managementCredits, double exemptionCredits, int lessonHours) {
+        
         setExecutionPeriod(executionPeriod);
         if (teacherService != null) {
             setTeachingDegreeCredits(teacherService.getTeachingDegreeCredits());

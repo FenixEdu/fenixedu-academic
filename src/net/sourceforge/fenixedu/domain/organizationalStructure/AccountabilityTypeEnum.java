@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 public enum AccountabilityTypeEnum {
 
-    MANAGEMENT_FUNCTIONS,
+    MANAGEMENT_FUNCTION,
     ORGANIZATIONAL_STRUCTURE;
         
     public String getName() {

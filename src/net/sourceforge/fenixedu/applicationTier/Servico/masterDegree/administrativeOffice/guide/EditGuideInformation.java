@@ -51,8 +51,8 @@ public class EditGuideInformation extends Service {
         this.chekIfChangeable(infoGuide);
 
         // Read The Guide
-        Guide guide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(
-                infoGuide.getNumber(), infoGuide.getYear(), infoGuide.getVersion());
+        Guide guide = Guide.readByNumberAndYearAndVersion(infoGuide.getNumber(), infoGuide.getYear(),
+                infoGuide.getVersion());
 
         // check if it's needed to change the Contributor
         if ((contributorNumber != null)
@@ -142,7 +142,7 @@ public class EditGuideInformation extends Service {
                 // Update the remaing guide entries
                 for (InfoGuideEntry infoGuideEntry : newInfoGuideEntries) {
                     GuideEntry guideEntry = guide.getEntry(infoGuideEntry.getGraduationType(),
-                                    infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
+                            infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
                     guideEntry.setQuantity(infoGuideEntry.getQuantity());
                 }
                 guide.setContributor(contributor);
@@ -240,8 +240,8 @@ public class EditGuideInformation extends Service {
         Guide newGuide = null;
         InfoGuide result = null;
 
-        newGuide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(
-                infoGuide.getNumber(), infoGuide.getYear(), infoGuide.getVersion());
+        newGuide = Guide.readByNumberAndYearAndVersion(infoGuide.getNumber(), infoGuide.getYear(),
+                infoGuide.getVersion());
         // Update the Guide Total
         InfoGuide infoGuideTemp = new InfoGuide();
         infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);
@@ -261,8 +261,7 @@ public class EditGuideInformation extends Service {
         if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED))
             throw new InvalidChangeServiceException("Situation of Guide Is Annulled");
 
-        List<Guide> guides = persistentSupport.getIPersistentGuide().readByNumberAndYear(
-                infoGuide.getNumber(), infoGuide.getYear());
+        List<Guide> guides = Guide.readByNumberAndYear(infoGuide.getNumber(), infoGuide.getYear());
 
         // If it's not the latest version ...
         if (guides.size() != infoGuide.getVersion().intValue())
@@ -274,10 +273,12 @@ public class EditGuideInformation extends Service {
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
         Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor()
                 .getContributorNumber());
+       
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(infoGuide
                 .getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal()); 
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
+                infoGuide.getInfoExecutionDegree().getIdInternal());
         Guide guide = DomainFactory.makeGuide();
 
         // Set the fields

@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.FunctionsManagementBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.YearMonthDay;
 
 public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBackingBean {
 
@@ -40,26 +41,26 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
             setErrorMessage("error.duplicate.function");
         } else {
 
-            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");            
+            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             Double credits = Double.valueOf(this.getCredits());
 
             Date beginDate_ = null, endDate_ = null;
             try {
-                if(this.getBeginDate() != null){
+                if (this.getBeginDate() != null) {
                     beginDate_ = format.parse(this.getBeginDate());
-                }else{
+                } else {
                     setErrorMessage("error.notBeginDate");
                     return "";
                 }
                 if (this.getEndDate() != null) {
                     endDate_ = format.parse(this.getEndDate());
-                }else{
+                } else {
                     setErrorMessage("error.notEndDate");
                     return "";
                 }
 
                 final Object[] argsToRead = { this.getFunctionID(), this.getPersonID(), credits,
-                        beginDate_, endDate_ };
+                        YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_) };
                 ServiceUtils.executeService(getUserView(), "AssociateNewFunctionToPerson", argsToRead);
                 setErrorMessage("message.success");
                 return "success";
@@ -76,12 +77,12 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     }
 
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
-        
+
         StringBuilder buffer = new StringBuilder();
         List<Unit> allUnits = UnitUtils.readAllUnitsWithoutParents();
 
         Collections.sort(allUnits, new BeanComparator("name"));
-        
+
         Date currentDate = Calendar.getInstance().getTime();
         for (Unit unit : allUnits) {
             if (unit.getName().equals(UnitUtils.IST_UNIT_NAME) && unit.isActive(currentDate)) {
@@ -99,26 +100,26 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     }
 
     private void getUnitsList(Unit parentUnit, StringBuilder buffer) {
-        
+
         openLITag(buffer);
-        
+
         if (parentUnit.hasAnySubUnits()) {
             putImage(parentUnit, buffer);
         }
 
         buffer.append("<a href=\"").append(getContextPath()).append(
-                "/manager/functionsManagement/chooseFunction.faces?personID=").append(
-                personID).append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
-                parentUnit.getName()).append("</a>").append("</li>");
-        
+                "/manager/functionsManagement/chooseFunction.faces?personID=").append(personID).append(
+                "&unitID=").append(parentUnit.getIdInternal()).append("\">")
+                .append(parentUnit.getName()).append("</a>").append("</li>");
+
         if (parentUnit.hasAnySubUnits()) {
-           openULTag(parentUnit, buffer);                                 
+            openULTag(parentUnit, buffer);
         }
 
         List<Unit> subUnits = new ArrayList<Unit>();
         subUnits.addAll(parentUnit.getSubUnits());
         Collections.sort(subUnits, new BeanComparator("name"));
-        
+
         for (Unit subUnit : subUnits) {
             if (subUnit.isActive(Calendar.getInstance().getTime())) {
                 getUnitsList(subUnit, buffer);
@@ -126,7 +127,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         }
 
         if (parentUnit.hasAnySubUnits()) {
-           closeULTag(buffer);
+            closeULTag(buffer);
         }
     }
 

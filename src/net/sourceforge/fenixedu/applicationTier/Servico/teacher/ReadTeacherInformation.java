@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -55,6 +56,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
+import org.joda.time.YearMonthDay;
 
 public class ReadTeacherInformation extends Service {
 
@@ -65,12 +67,12 @@ public class ReadTeacherInformation extends Service {
 
         Teacher teacher = Teacher.readTeacherByUsername(user);
 
-        // if no execution year is persistentSupportecified, the info shown should refer to the previous execution year
+        // if no execution year is persistentSupportecified, the info shown
+        // should refer to the previous execution year
         ExecutionYear executionYear = null;
         if (argExecutionYear == null || argExecutionYear.equals("")) {
             ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-            ExecutionPeriod previousExecutionPeriod = actualExecutionPeriod
-                    .getPreviousExecutionPeriod();
+            ExecutionPeriod previousExecutionPeriod = actualExecutionPeriod.getPreviousExecutionPeriod();
             if (previousExecutionPeriod != null) {
                 while (previousExecutionPeriod.getExecutionYear().equals(
                         actualExecutionPeriod.getExecutionYear())) {
@@ -84,13 +86,14 @@ public class ReadTeacherInformation extends Service {
                 executionYear = actualExecutionPeriod.getExecutionYear();
             }
         } else {
-            executionYear = ExecutionYear.readExecutionYearByName(argExecutionYear);            
+            executionYear = ExecutionYear.readExecutionYearByName(argExecutionYear);
         }
 
         InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
         infoSiteTeacherInformation.setInfoTeacher(infoTeacher);
         infoSiteTeacherInformation.setInfoQualifications(getInfoQualifications(teacher));
-        infoSiteTeacherInformation.setInfoProfessionalCareers(getInfoCareers(teacher, CareerType.PROFESSIONAL));
+        infoSiteTeacherInformation.setInfoProfessionalCareers(getInfoCareers(teacher,
+                CareerType.PROFESSIONAL));
         infoSiteTeacherInformation.setInfoTeachingCareers(getInfoCareers(teacher, CareerType.TEACHING));
 
         ServiceProviderRegime serviceProviderRegime = teacher.getServiceProviderRegime();
@@ -106,8 +109,11 @@ public class ReadTeacherInformation extends Service {
         }
 
         infoSiteTeacherInformation.setInfoExternalActivities(getInfoExternalActivities(teacher));
-        infoSiteTeacherInformation.setInfoLecturingExecutionCourses(getInfoLecturingExecutionCourses(teacher, executionYear));
-        infoSiteTeacherInformation.setInfoResponsibleExecutionCourses(getInfoResponsibleExecutionCourses(teacher, executionYear));
+        infoSiteTeacherInformation.setInfoLecturingExecutionCourses(getInfoLecturingExecutionCourses(
+                teacher, executionYear));
+        infoSiteTeacherInformation
+                .setInfoResponsibleExecutionCourses(getInfoResponsibleExecutionCourses(teacher,
+                        executionYear));
 
         WeeklyOcupation weeklyOcupation = teacher.getWeeklyOcupation();
         if (weeklyOcupation == null) {
@@ -120,36 +126,55 @@ public class ReadTeacherInformation extends Service {
             infoWeeklyOcupation.setOther(Integer.valueOf(0));
             infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
         } else {
-            InfoWeeklyOcupation infoWeeklyOcupation = InfoWeeklyOcupation.newInfoFromDomain(weeklyOcupation);
+            InfoWeeklyOcupation infoWeeklyOcupation = InfoWeeklyOcupation
+                    .newInfoFromDomain(weeklyOcupation);
             infoWeeklyOcupation.setInfoTeacher(infoTeacher);
             infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
         }
 
-        infoSiteTeacherInformation.setInfoDegreeOrientation(getInfoOrientation(teacher, OrientationType.DEGREE));
-        infoSiteTeacherInformation.setInfoMasterOrientation(getInfoOrientation(teacher, OrientationType.MASTER));
-        infoSiteTeacherInformation.setInfoPhdOrientation(getInfoOrientation(teacher, OrientationType.PHD));
-        infoSiteTeacherInformation.setInfoArticleChapterPublicationsNumber(getInfoPublicationsNumber(teacher, PublicationType.ARTICLES_CHAPTERS));
-        infoSiteTeacherInformation.setInfoEditBookPublicationsNumber(getInfoPublicationsNumber(teacher, PublicationType.EDITOR_BOOK));
-        infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(getInfoPublicationsNumber(teacher, PublicationType.AUTHOR_BOOK));
-        infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(getInfoPublicationsNumber(teacher, PublicationType.MAG_ARTICLE));
-        infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(getInfoPublicationsNumber(teacher, PublicationType.COMUNICATION));
-        infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(teacher, OldPublicationType.CIENTIFIC));
-        infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(teacher, OldPublicationType.DIDACTIC));
-        infoSiteTeacherInformation.setInfoDidaticPublications(getInfoPublications(teacher, PublicationConstants.DIDATIC));
-        infoSiteTeacherInformation.setInfoCientificPublications(getInfoPublications(teacher, PublicationConstants.CIENTIFIC));
+        infoSiteTeacherInformation.setInfoDegreeOrientation(getInfoOrientation(teacher,
+                OrientationType.DEGREE));
+        infoSiteTeacherInformation.setInfoMasterOrientation(getInfoOrientation(teacher,
+                OrientationType.MASTER));
+        infoSiteTeacherInformation
+                .setInfoPhdOrientation(getInfoOrientation(teacher, OrientationType.PHD));
+        infoSiteTeacherInformation.setInfoArticleChapterPublicationsNumber(getInfoPublicationsNumber(
+                teacher, PublicationType.ARTICLES_CHAPTERS));
+        infoSiteTeacherInformation.setInfoEditBookPublicationsNumber(getInfoPublicationsNumber(teacher,
+                PublicationType.EDITOR_BOOK));
+        infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(getInfoPublicationsNumber(
+                teacher, PublicationType.AUTHOR_BOOK));
+        infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(getInfoPublicationsNumber(
+                teacher, PublicationType.MAG_ARTICLE));
+        infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(getInfoPublicationsNumber(
+                teacher, PublicationType.COMUNICATION));
+        infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(teacher,
+                OldPublicationType.CIENTIFIC));
+        infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(teacher,
+                OldPublicationType.DIDACTIC));
+        infoSiteTeacherInformation.setInfoDidaticPublications(getInfoPublications(teacher,
+                PublicationConstants.DIDATIC));
+        infoSiteTeacherInformation.setInfoCientificPublications(getInfoPublications(teacher,
+                PublicationConstants.CIENTIFIC));
 
-        // FIXME possible cause of error: this execution period is used for what?
-        infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionYear.getExecutionPeriods().get(0)));
+        // FIXME possible cause of error: this execution period is used for
+        // what?
+        infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
+                .newInfoFromDomain(executionYear.getExecutionPeriods().get(0)));
         infoSiteTeacherInformation.setPersonFunctions(getPersonFunctions(teacher, executionYear));
-        
+
         return new SiteView(infoSiteTeacherInformation);
     }
 
-    private List<PersonFunction> getPersonFunctions(Teacher teacher, ExecutionYear executionYear) {       
-        return teacher.getPersonFuntions(executionYear.getBeginDate(), executionYear.getEndDate());        
+    private List<PersonFunction> getPersonFunctions(Teacher teacher, ExecutionYear executionYear) {
+        Date beginDate = executionYear.getBeginDate();
+        Date endDate = executionYear.getEndDate();
+        return teacher.getPersonFuntions(YearMonthDay.fromDateFields(beginDate), YearMonthDay
+                .fromDateFields(endDate));
     }
 
-    private List getInfoResponsibleExecutionCourses(Teacher teacher, final ExecutionYear wantedExecutionYear) throws ExcepcaoPersistencia {
+    private List getInfoResponsibleExecutionCourses(Teacher teacher,
+            final ExecutionYear wantedExecutionYear) throws ExcepcaoPersistencia {
         List responsiblesFor = teacher.responsibleFors();
 
         // filter only the execution courses of the wanted execution year
@@ -199,8 +224,9 @@ public class ReadTeacherInformation extends Service {
         return infoExternalActivities;
     }
 
-    private List getInfoLecturingExecutionCourses(Teacher teacher, final ExecutionYear wantedExecutionYear) throws ExcepcaoPersistencia {
-        
+    private List getInfoLecturingExecutionCourses(Teacher teacher,
+            final ExecutionYear wantedExecutionYear) throws ExcepcaoPersistencia {
+
         List professorships = teacher.getProfessorships();
 
         // filter only the execution courses of the wanted execution year
@@ -229,7 +255,8 @@ public class ReadTeacherInformation extends Service {
                         });
                 InfoExecutionCourse infoExecutionCourse;
 
-                infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(executionCourse);
+                infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
+                        .newInfoFromDomain(executionCourse);
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }
@@ -245,7 +272,7 @@ public class ReadTeacherInformation extends Service {
                 return InfoQualification.newInfoFromDomain(qualification);
             }
         });
-        
+
         Collections.sort(infoQualifications, new Comparator() {
 
             public int compare(Object o1, Object o2) {
@@ -259,25 +286,24 @@ public class ReadTeacherInformation extends Service {
                     return 1;
                 } else {
                     String[] strings1 = infoQualification1.getYear().split("/");
-                    String[] strings2 = infoQualification2.getYear().split("/");                    
-                    
+                    String[] strings2 = infoQualification2.getYear().split("/");
+
                     if (Integer.valueOf(getYear(strings1)) < Integer.valueOf(getYear(strings2))) {
-                        return -1;                     
+                        return -1;
                     } else if (Integer.valueOf(getYear(strings1)) > Integer.valueOf(getYear(strings2))) {
-                        return 1;                        
+                        return 1;
                     } else if (infoQualification1.getYear().equals(infoQualification2.getYear())) {
                         return 0;
                     }
                 }
                 return 0;
             }
-        
+
             private String getYear(String[] strings1) {
                 String year1 = null;
-                if(strings1.length == 1){
+                if (strings1.length == 1) {
                     year1 = strings1[0];
-                }
-                else if(strings1.length == 2){
+                } else if (strings1.length == 2) {
                     year1 = strings1[1];
                 }
                 return year1;
@@ -314,7 +340,8 @@ public class ReadTeacherInformation extends Service {
         return oldestCareers;
     }
 
-    private List getInfoOldPublications(Teacher teacher, OldPublicationType oldPublicationType) throws ExcepcaoPersistencia {
+    private List getInfoOldPublications(Teacher teacher, OldPublicationType oldPublicationType)
+            throws ExcepcaoPersistencia {
         List oldCientificPublications = teacher.readOldPublicationsByType(oldPublicationType);
         List infoOldPublications = (List) CollectionUtils.collect(oldCientificPublications,
                 new Transformer() {
@@ -326,7 +353,8 @@ public class ReadTeacherInformation extends Service {
         return infoOldPublications;
     }
 
-    private InfoOrientation getInfoOrientation(Teacher teacher, OrientationType orientationType) throws ExcepcaoPersistencia {
+    private InfoOrientation getInfoOrientation(Teacher teacher, OrientationType orientationType)
+            throws ExcepcaoPersistencia {
         Orientation orientation = teacher.readOrientationByType(orientationType);
         InfoOrientation infoOrientation = null;
         if (orientation != null) {
@@ -340,7 +368,8 @@ public class ReadTeacherInformation extends Service {
         return infoOrientation;
     }
 
-    private InfoPublicationsNumber getInfoPublicationsNumber(Teacher teacher, PublicationType publicationType) throws ExcepcaoPersistencia {
+    private InfoPublicationsNumber getInfoPublicationsNumber(Teacher teacher,
+            PublicationType publicationType) throws ExcepcaoPersistencia {
         PublicationsNumber publicationsNumber = teacher.readPublicationsNumberByType(publicationType);
         InfoPublicationsNumber infoPublicationsNumber = null;
         if (publicationsNumber != null) {
@@ -354,7 +383,8 @@ public class ReadTeacherInformation extends Service {
         return infoPublicationsNumber;
     }
 
-    private List getInfoPublications(Teacher teacher, Integer typePublication) throws ExcepcaoPersistencia {
+    private List getInfoPublications(Teacher teacher, Integer typePublication)
+            throws ExcepcaoPersistencia {
         PublicationArea publicationArea = null;
         if (PublicationConstants.CIENTIFIC.equals(typePublication)) {
             publicationArea = PublicationArea.CIENTIFIC;
@@ -364,7 +394,8 @@ public class ReadTeacherInformation extends Service {
 
         List<InfoPublication> infoPublications = new ArrayList<InfoPublication>();
 
-        List<PublicationTeacher> publicationsTeacher = teacher.readPublicationsByPublicationArea(publicationArea);
+        List<PublicationTeacher> publicationsTeacher = teacher
+                .readPublicationsByPublicationArea(publicationArea);
         for (PublicationTeacher publicationTeacher : publicationsTeacher) {
             Publication publication = publicationTeacher.getPublication();
 
@@ -375,5 +406,4 @@ public class ReadTeacherInformation extends Service {
 
         return infoPublications;
     }
-
 }

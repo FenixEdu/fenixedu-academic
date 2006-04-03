@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.credits;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,6 +39,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author Ricardo Rodrigues
@@ -83,10 +85,9 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
                 return mapping.findForward("teacher-not-found");
             }
         } else {
-            teacher = (Teacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "ReadDomainTeacherByOID", new Object[] { teacherID });
+            teacher = rootDomainObject.readTeacherByOID(teacherID);
         }
-        
+
         request.setAttribute("teacher", teacher);
         request.setAttribute("executionPeriod", executionPeriod);
         setTeachingServicesAndSupportLessons(request, teacher, executionPeriod);
@@ -106,26 +107,31 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
                     new BeanComparator("start"));
             request.setAttribute("serviceExemptions", orderedServiceExemptions);
         }
-        List<PersonFunction> personFuntions = teacher.getPersonFuntions(executionPeriod.getBeginDate(),
-                executionPeriod.getEndDate());
+
+        Date beginDate = executionPeriod.getBeginDate();
+        Date endDate = executionPeriod.getEndDate();
+        List<PersonFunction> personFuntions = teacher.getPersonFuntions(YearMonthDay
+                .fromDateFields(beginDate), YearMonthDay.fromDateFields(endDate));
+
         if (!personFuntions.isEmpty()) {
             Iterator orderedPersonFuntions = new OrderedIterator(personFuntions.iterator(),
                     new BeanComparator("beginDate"));
             request.setAttribute("personFunctions", orderedPersonFuntions);
         }
 
-        List<Category> categories = (List<Category>) ServiceUtils.executeService(userView,
-                "ReadAllDomainObjects", new Object[] { Category.class });
-        List<Category> monitorCategories = (List<Category>) CollectionUtils.select(categories, new Predicate(){
-            public boolean evaluate(Object object) {
-                Category category = (Category) object;
-                return category.getCode().equals("MNL") || category.getCode().equals("MNT");
-            }});
+        List<Category> categories = rootDomainObject.getCategorys();
+        List<Category> monitorCategories = (List<Category>) CollectionUtils.select(categories,
+                new Predicate() {
+                    public boolean evaluate(Object object) {
+                        Category category = (Category) object;
+                        return category.getCode().equals("MNL") || category.getCode().equals("MNT");
+                    }
+                });
         double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
         double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionPeriod);
         int mandatoryLessonHours = 0;
         Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
-        if(!monitorCategories.contains(category)){
+        if (!monitorCategories.contains(category)) {
             mandatoryLessonHours = teacher.getMandatoryLessonHours(executionPeriod);
         }
         CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService,
@@ -139,13 +145,14 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
      * @param teacherService
      */
     private void setMasterDegreeServices(HttpServletRequest request, TeacherService teacherService) {
-        if(!teacherService.getMasterDegreeServices().isEmpty()){
-            request.setAttribute("masterDegreeServices",teacherService.getMasterDegreeServices());
-        }        
+        if (!teacherService.getMasterDegreeServices().isEmpty()) {
+            request.setAttribute("masterDegreeServices", teacherService.getMasterDegreeServices());
+        }
     }
 
     private void setTeachingServicesAndSupportLessons(HttpServletRequest request, Teacher teacher,
             ExecutionPeriod executionPeriod) {
+
         List<Professorship> professorships = teacher
                 .getDegreeProfessorshipsByExecutionPeriod(executionPeriod);
 
@@ -181,8 +188,8 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
     private void setAdviseServices(HttpServletRequest request, TeacherService teacherService) {
         if (!teacherService.getTeacherAdviseServices().isEmpty()) {
-            List<TeacherAdviseService> tfcAdvises = (List<TeacherAdviseService>) CollectionUtils
-                    .select(teacherService.getTeacherAdviseServices(), new Predicate() {
+            List<TeacherAdviseService> tfcAdvises = (List<TeacherAdviseService>) CollectionUtils.select(
+                    teacherService.getTeacherAdviseServices(), new Predicate() {
                         public boolean evaluate(Object arg0) {
                             TeacherAdviseService teacherAdviseService = (TeacherAdviseService) arg0;
                             return teacherAdviseService.getAdvise().getAdviseType().equals(

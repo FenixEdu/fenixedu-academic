@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -21,9 +22,13 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -40,7 +45,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String unitName, unitCostCenter, unitTypeName, unitBeginDate, unitEndDate, unitAcronym;
 
-    private String functionName, functionTypeName, functionBeginDate, functionEndDate;
+    private String functionName, functionTypeName, functionBeginDate, functionEndDate,
+            unitRelationTypeValue;
 
     private String listingTypeValueToUnits, listingTypeValueToFunctions, departmentID, degreeID;
 
@@ -52,6 +58,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private HtmlInputHidden unitIDHidden, chooseUnitIDHidden, functionIDHidden,
             listingTypeValueToFunctionsHidden, listingTypeValueToUnitsHidden;
+
+    private HashMap<Integer, String> unitRelationsAccountabilityTypes;
+
+    private Boolean toRemoveParentUnit;
 
     public OrganizationalStructureBackingBean() {
         if (getRequestParameter("unitID") != null
@@ -72,6 +82,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 && !getRequestParameter("principalFunctionID").toString().equals("")) {
             this.principalFunctionID = Integer.valueOf(getRequestParameter("principalFunctionID")
                     .toString());
+        }
+        if (getRequestParameter("isToRemoveParentUnit") != null
+                && !getRequestParameter("isToRemoveParentUnit").toString().equals("")) {
+            this.toRemoveParentUnit = Boolean.valueOf(getRequestParameter("isToRemoveParentUnit")
+                    .toString());
+        } else {
+            this.toRemoveParentUnit = false;
         }
     }
 
@@ -334,7 +351,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         for (Degree degree : allDegrees) {
             selectItem = new SelectItem();
-            
+
             if (degree.getTipoCurso() != null) {
                 if (degree.getTipoCurso().equals(DegreeType.DEGREE)) {
                     selectItem.setLabel("(L) " + degree.getNome());
@@ -413,6 +430,25 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return list;
     }
 
+    public List<SelectItem> getUnitRelationTypes() {
+        List<SelectItem> list = new ArrayList<SelectItem>();
+
+        ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
+
+        SelectItem selectItem = null;
+        for (AccountabilityTypeEnum type : AccountabilityTypeEnum.values()) {
+            selectItem = new SelectItem();
+            selectItem.setLabel(bundle.getString(type.getName()));
+            selectItem.setValue(type.getName());
+            list.add(selectItem);
+        }
+        Collections.sort(list, new BeanComparator("label"));
+
+        addDefaultSelectedItem(list, bundle);
+
+        return list;
+    }
+
     private void addDefaultSelectedItem(List<SelectItem> list, ResourceBundle bundle) {
         SelectItem firstItem = new SelectItem();
         firstItem.setLabel(bundle.getString("dropDown.Default"));
@@ -436,12 +472,18 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         final Object[] argsToRead = { null, null, this.getUnitName(), this.getUnitCostCenter(),
                 this.getUnitAcronym(), datesResult.getBeginDate(), datesResult.getEndDate(), type,
-                parameters.getDepartmentID(), parameters.getDegreeID() };
+                parameters.getDepartmentID(), parameters.getDegreeID(), null };
 
         return executeCreateNewUnitService(argsToRead, "listAllUnits");
     }
 
     public String createSubUnit() throws FenixFilterException, FenixServiceException {
+
+        if (getUnitRelationTypeValue().equals("#")) {
+            ResourceBundle bundle = getResourceBundle("resources/ManagerResources");
+            addErrorMessage(bundle.getString("error.no.unit.relation.type"));
+            return "";
+        }
 
         if (verifyCostCenterCode()) {
             return "";
@@ -452,12 +494,16 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
+        AccountabilityType accountabilityType = AccountabilityType
+                .readAccountabilityTypeByType(AccountabilityTypeEnum.valueOf(getUnitRelationTypeValue()));
+
         PartyTypeEnum type = getUnitType();
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { null, this.getUnit().getIdInternal(), this.getUnitName(),
                 this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
-                datesResult.getEndDate(), type, parameters.getDepartmentID(), parameters.getDegreeID() };
+                datesResult.getEndDate(), type, parameters.getDepartmentID(), parameters.getDegreeID(),
+                accountabilityType };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -478,7 +524,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), null, this.getUnitName(),
                 this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
-                datesResult.getEndDate(), type, parameters.getDepartmentID(), parameters.getDegreeID() };
+                datesResult.getEndDate(), type, parameters.getDepartmentID(), parameters.getDegreeID(),
+                null };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -493,6 +540,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String associateParentUnit() throws FenixFilterException, FenixServiceException {
 
+        if (getUnitRelationTypeValue().equals("#")) {
+            ResourceBundle bundle = getResourceBundle("resources/ManagerResources");
+            addErrorMessage(bundle.getString("error.no.unit.relation.type"));
+            return "";
+        }
+
+        AccountabilityType accountabilityType = AccountabilityType
+                .readAccountabilityTypeByType(AccountabilityTypeEnum.valueOf(getUnitRelationTypeValue()));
+
         String costCenterCodeString = getValidCosteCenterCode();
 
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 2);
@@ -500,7 +556,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         final Object[] argsToRead = { this.getUnit().getIdInternal(),
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
                 this.getUnitAcronym(), this.getUnit().getBeginDate(), this.getUnit().getEndDate(),
-                this.getUnit().getType(), parameters.getDepartmentID(), parameters.getDegreeID() };
+                this.getUnit().getType(), parameters.getDepartmentID(), parameters.getDegreeID(),
+                accountabilityType };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -514,7 +571,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         final Object[] argsToRead = { this.getUnit().getIdInternal(),
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
                 this.getUnitAcronym(), this.getUnit().getBeginDate(), this.getUnit().getEndDate(),
-                this.getUnit().getType(), parameters.getDepartmentID(), parameters.getDegreeID() };
+                this.getUnit().getType(), parameters.getDepartmentID(), parameters.getDegreeID(), null };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -803,10 +860,42 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 && this.getUnitIDHidden().getValue() != null
                 && !this.getUnitIDHidden().getValue().equals("")) {
 
-            this.unit = (Unit) readDomainObject(Unit.class, Integer.valueOf(this.getUnitIDHidden()
-                    .getValue().toString()));
+            this.unit = (Unit) RootDomainObject.getInstance().readPartyByOID(
+                    Integer.valueOf(this.getUnitIDHidden().getValue().toString()));
+
+            if (toRemoveParentUnit) {
+                getParentUnitsRelationTypes();
+            } else{
+                getSubUnitsRelationTypes();  
+            }
         }
         return unit;
+    }
+
+    private void getParentUnitsRelationTypes() {
+        ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
+        getUnitRelationsAccountabilityTypes().clear();
+        for (Accountability accountability : unit.getParents()) {
+            if (accountability.getParentParty() instanceof Unit) {
+                getUnitRelationsAccountabilityTypes().put(
+                        accountability.getParentParty().getIdInternal(),
+                        bundle.getString(accountability.getAccountabilityType().getType()
+                                .getName()));
+            }
+        }
+    }
+    
+    private void getSubUnitsRelationTypes() {
+        ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
+        getUnitRelationsAccountabilityTypes().clear();
+        for (Accountability accountability : unit.getChilds()) {
+            if (accountability.getChildParty() instanceof Unit) {
+                getUnitRelationsAccountabilityTypes().put(
+                        accountability.getChildParty().getIdInternal(),
+                        bundle.getString(accountability.getAccountabilityType().getType()
+                                .getName()));
+            }
+        }
     }
 
     public void setUnit(Unit unit) {
@@ -1024,6 +1113,34 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void setDepartmentID(String departmentID) {
         this.departmentID = departmentID;
+    }
+
+    public String getUnitRelationTypeValue() {
+        return unitRelationTypeValue;
+    }
+
+    public void setUnitRelationTypeValue(String unitRelationTypeValue) {
+        this.unitRelationTypeValue = unitRelationTypeValue;
+    }
+
+    public HashMap<Integer, String> getUnitRelationsAccountabilityTypes() {
+        if (unitRelationsAccountabilityTypes == null) {
+            unitRelationsAccountabilityTypes = new HashMap<Integer, String>();
+        }
+        return unitRelationsAccountabilityTypes;
+    }
+
+    public void setUnitRelationsAccountabilityTypes(
+            HashMap<Integer, String> unitRelationsAccountabilityTypes) {
+        this.unitRelationsAccountabilityTypes = unitRelationsAccountabilityTypes;
+    }
+
+    public Boolean getToRemoveParentUnit() {
+        return toRemoveParentUnit;
+    }
+
+    public void setToRemoveParentUnit(Boolean toRemoveParentUnit) {
+        this.toRemoveParentUnit = toRemoveParentUnit;
     }
 
     public class PrepareDatesResult {

@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
@@ -49,7 +48,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularC
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExternalPersonVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeProofVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisDataVersionVO;
@@ -151,10 +149,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentGrantOwner getIPersistentGrantOwner() {
         return new GrantOwnerVO();
-    }
-
-    public IPersistentGuide getIPersistentGuide() {
-        return new GuideVO();
     }
 
     public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {

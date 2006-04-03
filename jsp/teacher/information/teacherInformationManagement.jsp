@@ -429,14 +429,18 @@
 							</logic:notEmpty>
 						</td>				
 						<td class="listClasses">
+							<bean:define id="beginDate" type="org.joda.time.YearMonthDay" name="personFunction" property="beginDate"/>
+							<bean:define id="beginDateTime" ><%= beginDate.toDateTimeAtCurrentTime().toDate().getTime() %></bean:define>
 							<dt:format patternId="datePattern">
-								<bean:write name="personFunction" property="beginDate.time"/>
+								<bean:write name="beginDateTime"/>
 							</dt:format>
 						</td>
 						<logic:notEmpty name="personFunction" property="endDate">
 							<td class="listClasses">
+								<bean:define id="endDate" type="org.joda.time.YearMonthDay" name="personFunction" property="endDate"/>
+								<bean:define id="endDateTime" ><%= endDate.toDateTimeAtCurrentTime().toDate().getTime() %></bean:define>
 								<dt:format patternId="datePattern">
-									<bean:write name="personFunction" property="endDate.time"/>
+									<bean:write name="endDateTime"/>
 								</dt:format>
 							</td>
 						</logic:notEmpty>

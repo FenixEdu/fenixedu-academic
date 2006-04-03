@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.function;
 
+import java.util.Date;
 import java.util.List;
+
+import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -25,8 +28,10 @@ public class ReadPersonFunctionsByPersonIDAndExecutionYearID extends Service {
         if (executionYearID != null) {
             ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                     ExecutionYear.class, executionYearID);
-            personFunctions = person.getPersonFuntions(executionYear.getBeginDate(), executionYear
-                    .getEndDate());
+            Date beginDate = executionYear.getBeginDate();
+            Date endDate = executionYear.getEndDate();
+            personFunctions = person.getPersonFuntions(YearMonthDay.fromDateFields(beginDate),
+                    YearMonthDay.fromDateFields(endDate));
 
         } else {
             personFunctions = person.getPersonFunctions();

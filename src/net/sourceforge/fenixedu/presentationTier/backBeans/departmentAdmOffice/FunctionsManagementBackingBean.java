@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -43,6 +44,7 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.YearMonthDay;
 
 import sun.text.Normalizer;
 
@@ -121,8 +123,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
             DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             Double credits = Double.valueOf(this.getCredits());
-
             Date beginDate_ = null, endDate_ = null;
+
             try {
                 if (this.getBeginDate() != null) {
                     beginDate_ = format.parse(this.getBeginDate());
@@ -138,7 +140,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 }
 
                 final Object[] argsToRead = { this.getFunctionID(), this.getPersonID(), credits,
-                        beginDate_, endDate_ };
+                        YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_) };
                 ServiceUtils.executeService(getUserView(), "AssociateNewFunctionToPerson", argsToRead);
                 setErrorMessage("message.success");
                 return "success";
@@ -175,15 +177,16 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             }
 
             if (this.getPerson().getInactiveFunctions().contains(this.getPersonFunction())
-                    && this.getPerson().containsActiveFunction(this.getFunction()) && 
-                    (DateFormatUtil.isAfter("yyyyMMdd", endDate_, Calendar.getInstance().getTime()) || 
-                            DateFormatUtil.equalDates("yyyyMMdd", endDate_, Calendar.getInstance().getTime()))) {
+                    && this.getPerson().containsActiveFunction(this.getFunction())
+                    && (DateFormatUtil.isAfter("yyyyMMdd", endDate_, Calendar.getInstance().getTime()) || DateFormatUtil
+                            .equalDates("yyyyMMdd", endDate_, Calendar.getInstance().getTime()))) {
 
                 setErrorMessage("error.duplicate.function");
             } else {
 
                 final Object[] argsToRead = { this.getPersonFunctionID(), this.getFunctionID(),
-                        beginDate_, endDate_, credits };
+                        YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_),
+                        credits };
                 ServiceUtils.executeService(getUserView(), "EditPersonFunction", argsToRead);
                 setErrorMessage("message.success");
                 return "alterFunction";
@@ -730,8 +733,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             this.beginDate = this.beginDateHidden.getValue().toString();
 
         } else if (this.beginDate == null && this.getPersonFunctionID() != null) {
-            this.beginDate = DateFormatUtil
-                    .format("dd/MM/yyyy", this.getPersonFunction().getBeginDate());
+            this.beginDate = DateFormatUtil.format("dd/MM/yyyy", this.getPersonFunction()
+                    .getBeginDateInDateType());
 
         } else if (this.beginDate == null && this.getPersonFunctionID() == null
                 && (this.beginDateHidden == null || this.beginDateHidden.getValue() == null)
@@ -775,13 +778,14 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         } else if (this.endDate == null && this.getPersonFunctionID() != null
                 && this.getPersonFunction().getEndDate() != null) {
-            this.endDate = DateFormatUtil.format("dd/MM/yyyy", this.getPersonFunction().getEndDate());
+            this.endDate = DateFormatUtil.format("dd/MM/yyyy", this.getPersonFunction()
+                    .getEndDateInDateType());
 
         } else if (this.endDate == null && this.getPersonFunctionID() == null
                 && (this.endDateHidden == null || this.endDateHidden.getValue() == null)
                 && this.getExecutionPeriod() != null) {
 
-            ExecutionPeriod executionPeriod = (ExecutionPeriod) readDomainObject(ExecutionPeriod.class,
+            ExecutionPeriod executionPeriod = RootDomainObject.getInstance().readExecutionPeriodByOID(
                     this.executionPeriod);
 
             ExecutionPeriod executionPeriodWithDuration = getDurationEndDate(executionPeriod);
@@ -918,9 +922,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public PersonFunction getPersonFunction() throws FenixFilterException, FenixServiceException {
         if (this.personFunction == null) {
-            final Object[] argsToRead = { PersonFunction.class, this.getPersonFunctionID() };
-            this.personFunction = (PersonFunction) ServiceUtils.executeService(null, "ReadDomainObject",
-                    argsToRead);
+            this.personFunction = (PersonFunction) RootDomainObject.getInstance()
+                    .readAccountabilityByOID(this.getPersonFunctionID());
         }
         return personFunction;
     }

@@ -38,8 +38,8 @@ public class CreateGuide extends Service {
             GuideState situationOfGuide, String paymentType) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        GuideSituation guideSituation = null;
-
+		GuideSituation guideSituation = null;
+		
         // Check the Guide Situation
         if (situationOfGuide.equals(GuideState.ANNULLED))
             throw new InvalidSituationServiceException();
@@ -61,7 +61,7 @@ public class CreateGuide extends Service {
         infoGuide.setTotal(CalculateGuideTotal.calculate(infoGuide));
 
         // Get the Guide Number
-        Integer guideNumber = persistentSupport.getIPersistentGuide().generateGuideNumber(infoGuide.getYear());
+        Integer guideNumber = Guide.generateGuideNumber(infoGuide.getYear());
         infoGuide.setNumber(guideNumber);
 
         // Create the new Guide Situation
@@ -74,12 +74,12 @@ public class CreateGuide extends Service {
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        Person person = (Person) persistentObject.readByOID(Person.class,
-                infoGuide.getInfoPerson().getIdInternal());
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
-                .readByOID(ExecutionDegree.class, infoGuide.getInfoExecutionDegree().getIdInternal());
-        Contributor contributor = (Contributor) persistentObject.readByOID(
-                Contributor.class, infoGuide.getInfoContributor().getIdInternal());
+        Person person = (Person) rootDomainObject.readPartyByOID(infoGuide.getInfoPerson()
+                .getIdInternal());
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGuide
+                .getInfoExecutionDegree().getIdInternal());
+        Contributor contributor = rootDomainObject.readContributorByOID(infoGuide.getInfoContributor()
+                .getIdInternal());
 
         Guide guide = DomainFactory.makeGuide();
         guide.setExecutionDegree(executionDegree);
@@ -92,7 +92,7 @@ public class CreateGuide extends Service {
         guide.setPaymentType(infoGuide.getPaymentType());
         guide.setRemarks(infoGuide.getRemarks());
         guide.setTotal(infoGuide.getTotal());
-        guide.setVersion(infoGuide.getVersion());        
+        guide.setVersion(infoGuide.getVersion());
         guide.setYear(infoGuide.getYear());
 
         if (situationOfGuide.equals(GuideState.PAYED)) {
@@ -103,21 +103,21 @@ public class CreateGuide extends Service {
         // Write the new Entries of the Guide
         for (InfoGuideEntry infoGuideEntryIter : (List<InfoGuideEntry>) infoGuide.getInfoGuideEntries()) {
             GuideEntry guideEntry = DomainFactory.makeGuideEntry();
-            
+
             guideEntry.setDescription(infoGuideEntryIter.getDescription());
             guideEntry.setDocumentType(infoGuideEntryIter.getDocumentType());
             guideEntry.setGraduationType(infoGuideEntryIter.getGraduationType());
             guideEntry.setPrice(infoGuideEntryIter.getPrice());
             guideEntry.setQuantity(infoGuideEntryIter.getQuantity());
-            
+
             guide.addGuideEntries(guideEntry);
-            
+
         }
 
         // Write the New Guide Situation
-        guideSituation = DomainFactory.makeGuideSituation(situationOfGuide, remarks, calendar.getTime(), guide,
-                new State(State.ACTIVE));
-        
+        guideSituation = DomainFactory.makeGuideSituation(situationOfGuide, remarks, calendar.getTime(),
+                guide, new State(State.ACTIVE));
+
         InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
         result.setInfoGuideEntries(infoGuide.getInfoGuideEntries());
         result.setInfoGuideSituation(infoGuideSituation);

@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class UnitUtils {
@@ -76,20 +75,7 @@ public class UnitUtils {
             }
         }
         return result;
-    }
-
-    public static AccountabilityType readAccountabilityTypeByType(AccountabilityTypeEnum typeEnum)
-            throws ExcepcaoPersistencia {
-
-        List<AccountabilityType> allAccountabilityTypes = RootDomainObject.getInstance()
-                .getAccountabilityTypes();
-        for (AccountabilityType accountabilityType : allAccountabilityTypes) {
-            if (accountabilityType.getType().equals(typeEnum)) {
-                return accountabilityType;
-            }
-        }
-        return null;
-    }
+    }    
 
     private static String getLabel(String key) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources");

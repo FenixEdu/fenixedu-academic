@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.research.result.Publication;
 import net.sourceforge.fenixedu.domain.research.result.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
+import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
@@ -46,6 +47,7 @@ import net.sourceforge.fenixedu.util.State;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.YearMonthDay;
 
 public class Teacher extends Teacher_Base {
 
@@ -300,6 +302,7 @@ public class Teacher extends Teacher_Base {
 
     public List<Professorship> getDegreeProfessorshipsByExecutionPeriod(
             final ExecutionPeriod executionPeriod) {
+        
         return (List<Professorship>) CollectionUtils.select(getProfessorships(), new Predicate() {
             public boolean evaluate(Object arg0) {
                 Professorship professorship = (Professorship) arg0;
@@ -308,23 +311,22 @@ public class Teacher extends Teacher_Base {
             }
         });
     }
-    
-    public List<DegreeCurricularPlan> getCoordinatedDegreeCurricularPlans(){
-    	Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
-    	for (Coordinator coordinator : getCoordinators()) {
-			result.add(coordinator.getExecutionDegree().getDegreeCurricularPlan());
-		}
-    	return new ArrayList<DegreeCurricularPlan>(result);
-    }
-    
-    public List<ExecutionDegree> getCoordinatedExecutionDegrees(){
-    	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-    	for (Coordinator coordinator : getCoordinators()) {
-			result.add(coordinator.getExecutionDegree());
-		}
-    	return result;
+
+    public List<DegreeCurricularPlan> getCoordinatedDegreeCurricularPlans() {
+        Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+        for (Coordinator coordinator : getCoordinators()) {
+            result.add(coordinator.getExecutionDegree().getDegreeCurricularPlan());
+        }
+        return new ArrayList<DegreeCurricularPlan>(result);
     }
 
+    public List<ExecutionDegree> getCoordinatedExecutionDegrees() {
+        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+        for (Coordinator coordinator : getCoordinators()) {
+            result.add(coordinator.getExecutionDegree());
+        }
+        return result;
+    }
 
     /***************************************************************************
      * OTHER METHODS *
@@ -430,7 +432,7 @@ public class Teacher extends Teacher_Base {
         return serviceExemptions;
     }
 
-    public List<PersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
+    public List<PersonFunction> getPersonFuntions(YearMonthDay beginDate, YearMonthDay endDate) {
         return getPerson().getPersonFuntions(beginDate, endDate);
     }
 
@@ -490,7 +492,8 @@ public class Teacher extends Teacher_Base {
 
         List<PersonFunction> list = new ArrayList<PersonFunction>();
         for (PersonFunction personFunction : this.getPerson().getPersonFunctions()) {
-            if (personFunction.belongsToPeriod(begin, end)) {
+            if (personFunction.belongsToPeriod(YearMonthDay.fromDateFields(begin), YearMonthDay
+                    .fromDateFields(end))) {
                 list.add(personFunction);
             }
         }
@@ -629,8 +632,8 @@ public class Teacher extends Teacher_Base {
         return teacherServiceExemption;
     }
 
-    public List<net.sourceforge.fenixedu.domain.teacher.Advise> getAdvisesByAdviseTypeAndExecutionYear(
-            net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType, ExecutionYear executionYear) {
+    public List<Advise> getAdvisesByAdviseTypeAndExecutionYear(AdviseType adviseType,
+            ExecutionYear executionYear) {
 
         List<Advise> result = new ArrayList<Advise>();
         Date executionYearStartDate = executionYear.getBeginDate();
@@ -654,10 +657,9 @@ public class Teacher extends Teacher_Base {
         return result;
     }
 
-    public List<net.sourceforge.fenixedu.domain.teacher.Advise> getAdvisesByAdviseType(
-            net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType) {
+    public List<Advise> getAdvisesByAdviseType(AdviseType adviseType) {
+        
         List<Advise> result = new ArrayList<Advise>();
-
         for (Advise advise : this.getAdvises()) {
             if (advise.getAdviseType() == adviseType) {
                 result.add(advise);
@@ -724,7 +726,8 @@ public class Teacher extends Teacher_Base {
 
         List<PersonFunction> list = new ArrayList<PersonFunction>();
         for (PersonFunction personFunction : this.getPerson().getPersonFunctions()) {
-            if (personFunction.belongsToPeriod(begin, end)) {
+            if (personFunction.belongsToPeriod(YearMonthDay.fromDateFields(begin), YearMonthDay
+                    .fromDateFields(end))) {
                 list.add(personFunction);
             }
         }
@@ -781,7 +784,8 @@ public class Teacher extends Teacher_Base {
         return professorships;
     }
 
-    public Set<TeacherDegreeFinalProjectStudent> findTeacherDegreeFinalProjectStudentsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    public Set<TeacherDegreeFinalProjectStudent> findTeacherDegreeFinalProjectStudentsByExecutionPeriod(
+            final ExecutionPeriod executionPeriod) {
         final Set<TeacherDegreeFinalProjectStudent> teacherDegreeFinalProjectStudents = new HashSet<TeacherDegreeFinalProjectStudent>();
         for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : getDegreeFinalProjectStudents()) {
             if (executionPeriod == teacherDegreeFinalProjectStudent.getExecutionPeriod()) {

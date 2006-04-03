@@ -44,8 +44,6 @@ public interface ISuportePersistente {
 
     public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate();
 
-    public IPersistentGuide getIPersistentGuide();
-
     public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
 
     public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();

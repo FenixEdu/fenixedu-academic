@@ -26,25 +26,23 @@ public class ChooseGuideByPersonID extends Service {
 	public List run(Integer personID) throws Exception {
 
 		// Check if person exists
-		Person person = (Person) persistentObject.readByOID(Person.class, personID);
+		Person person = (Person) rootDomainObject.readPartyByOID(personID);
 
 		if (person == null) {
 			throw new NonExistingServiceException();
 		}
 
-        List guides = persistentSupport.getIPersistentGuide().readByPerson(
-                person.getNumeroDocumentoIdentificacao(), person.getIdDocumentType());
-
+        List guides = person.getGuides();
+        if ((guides == null) || (guides.size() == 0)) {
+            return null;
+        }
+        
 		BeanComparator numberComparator = new BeanComparator("number");
 		BeanComparator versionComparator = new BeanComparator("version");
 		ComparatorChain chainComparator = new ComparatorChain();
 		chainComparator.addComparator(numberComparator);
 		chainComparator.addComparator(versionComparator);
-		Collections.sort(guides, chainComparator);
-
-		if ((guides == null) || (guides.size() == 0)) {
-			return null;
-		}
+		Collections.sort(guides, chainComparator);		
 
 		return getLatestVersions(guides);
 	}

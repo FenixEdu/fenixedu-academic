@@ -112,12 +112,19 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Accountability -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability" table="ACCOUNTABILITY">
 	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction"/>
+	
 	<field-descriptor 
          name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
+	/>
+	<field-descriptor 
+	    name="ojbConcreteClass"
+	    column="CLASS_NAME"
+	    jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
 	   name="keyParentParty"    
@@ -134,7 +141,75 @@
 	   column="KEY_ACCOUNTABILITY_TYPE"  
 	   jdbc-type="INTEGER"
     />
+    <field-descriptor
+        name="beginDate"
+        column="BEGIN_DATE"
+        jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+    />
+	<field-descriptor
+	    name="endDate"
+	    column="END_DATE"
+	    jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+	/>	
+	
+</class-descriptor>
 
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Person_Function -->
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" table="ACCOUNTABILITY">
+	
+	<field-descriptor 
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+	/>
+	<field-descriptor 
+	    name="ojbConcreteClass"
+	    column="CLASS_NAME"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+	   name="keyParentParty"    
+	   column="KEY_PARENT_PARTY"  
+	   jdbc-type="INTEGER"
+    />	
+    <field-descriptor
+	   name="keyChildParty"    
+	   column="KEY_CHILD_PARTY"  
+	   jdbc-type="INTEGER"
+    />
+    <field-descriptor
+	   name="keyAccountabilityType"    
+	   column="KEY_ACCOUNTABILITY_TYPE"  
+	   jdbc-type="INTEGER"
+    />
+    <field-descriptor
+        name="beginDate"
+        column="BEGIN_DATE"
+        jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+    />
+	<field-descriptor
+	    name="endDate"
+	    column="END_DATE"
+	    jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+	/>	
+	<field-descriptor 
+	   name="keyFunction"    
+	   column="KEY_FUNCTION"  
+	   jdbc-type="INTEGER"
+    />
+	<field-descriptor  
+	   name="credits"    
+	   column="CREDITS"  
+	   jdbc-type="DOUBLE"
+    />		
+    
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule -->

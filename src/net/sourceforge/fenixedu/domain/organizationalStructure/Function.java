@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -36,13 +38,23 @@ public class Function extends Function_Base {
     }
 
     public void delete() {
-        if (!hasAnyPersonFunctions() && !hasAnyInherentFunctions()) {            
+        if (!hasAnyAccountabilities() && !hasAnyInherentFunctions()) {            
             removeParentInherentFunction();
             removeUnit();
             removeRootDomainObject();
-        super.deleteDomainObject();
+            super.deleteDomainObject();
         } else {
             throw new DomainException("error.delete.function");
         }
+    }
+    
+    public List<PersonFunction> getPersonFunctions(){
+        List<PersonFunction> personFunctions = new ArrayList();
+        for (Accountability accountability : getAccountabilities()) {
+            if(accountability.isPersonFunction()){
+                personFunctions.add((PersonFunction) accountability);
+            }
+        }
+        return personFunctions;
     }
 }

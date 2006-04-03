@@ -11,6 +11,8 @@
 		<h:inputHidden binding="#{organizationalStructureBackingBean.unitIDHidden}"/>
 		<h:inputHidden binding="#{organizationalStructureBackingBean.chooseUnitIDHidden}"/>	
 		
+		<h:messages infoClass="success0" errorClass="error0" globalOnly="true" layout="table"/>
+		
 		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}"
 				value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>
 										
@@ -59,8 +61,15 @@
 					<f:param value="#{unit.endDate}"/>
 				</h:outputFormat>					
 			</h:column>										
-		</h:dataTable>				
-		
+		</h:dataTable>			
+				
+		<h:outputText value="<br/>" escape="false" />			
+		<h:outputText value="<b>#{bundle['title.relation.type']}</b>:" escape="false" />		
+		<fc:selectOneMenu value="#{organizationalStructureBackingBean.unitRelationTypeValue}">
+			<f:selectItems value="#{organizationalStructureBackingBean.unitRelationTypes}"/>				
+		</fc:selectOneMenu>
+		<h:outputText value="<br/><br/>" escape="false" />	
+						
 		<h:outputText value="<br/>" escape="false" />								
 		<h:commandButton action="#{organizationalStructureBackingBean.associateParentUnit}" value="#{bundle['button.choose']}" 
 			styleClass="inputbutton"/> 		

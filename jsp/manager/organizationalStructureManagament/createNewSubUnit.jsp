@@ -20,6 +20,8 @@
 		</h:panelGrid>	
 	
 		<h:outputText value="<br/>" escape="false" />
+
+		<h:messages infoClass="success0" errorClass="error0" globalOnly="true" layout="table"/>
 	
 		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}"
 				value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>
@@ -75,7 +77,12 @@
 				<f:selectItems value="#{organizationalStructureBackingBean.degrees}"/>				
 			</fc:selectOneMenu>
 			
-		</h:panelGrid>
+			<h:outputText value="<b>#{bundle['title.relation.type']}:</b>" escape="false" />		
+			<fc:selectOneMenu value="#{organizationalStructureBackingBean.unitRelationTypeValue}">
+				<f:selectItems value="#{organizationalStructureBackingBean.unitRelationTypes}"/>				
+			</fc:selectOneMenu>
+		
+		</h:panelGrid>				
 		
 		<h:outputText value="<br/>" escape="false" />	
 		<h:panelGrid columns="2">

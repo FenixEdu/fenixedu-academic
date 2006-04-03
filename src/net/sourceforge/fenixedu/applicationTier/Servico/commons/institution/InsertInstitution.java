@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -17,21 +19,22 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class InsertInstitution extends Service {
 
-    public Unit run(String institutionName) throws ExcepcaoPersistencia,
-            FenixServiceException {
+    public Unit run(String institutionName) throws ExcepcaoPersistencia, FenixServiceException {
 
         Unit institution = UnitUtils.readExternalInstitutionUnitByName(institutionName);
-        
+
         if (institution != null) {
             throw new ExistingServiceException(
                     "error.exception.commons.institution.institutionAlreadyExists");
         }
 
-        Unit externalIntitutionsUnit = UnitUtils.readUnitWithoutParentstByName(UnitUtils.EXTERNAL_INSTITUTION_UNIT_NAME);            
-        if(externalIntitutionsUnit == null){
-            throw new FenixServiceException("error.exception.commons.institution.rootInstitutionNotFound");
+        Unit externalIntitutionsUnit = UnitUtils
+                .readUnitWithoutParentstByName(UnitUtils.EXTERNAL_INSTITUTION_UNIT_NAME);
+        if (externalIntitutionsUnit == null) {
+            throw new FenixServiceException(
+                    "error.exception.commons.institution.rootInstitutionNotFound");
         }
-        
+
         Unit newInstitution = makeNewUnit(institutionName, externalIntitutionsUnit);
         return newInstitution;
     }
@@ -40,8 +43,9 @@ public class InsertInstitution extends Service {
         Unit institutionUnit = DomainFactory.makeUnit();
         institutionUnit.setName(unitName);
         institutionUnit.setBeginDate(Calendar.getInstance().getTime());
-        institutionUnit.setType(PartyTypeEnum.EXTERNAL_INSTITUTION);  
-        institutionUnit.addParent(externalIntitutionsUnit);        
+        institutionUnit.setType(PartyTypeEnum.EXTERNAL_INSTITUTION);
+        institutionUnit.addParent(externalIntitutionsUnit, AccountabilityType
+                .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
         return institutionUnit;
     }
 }

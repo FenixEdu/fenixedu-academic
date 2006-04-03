@@ -4,11 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
-import java.util.Date;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -16,28 +13,29 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.RulesRepository;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
+import org.joda.time.YearMonthDay;
+
 
 public class AssociateNewFunctionToPerson extends Service {
 
     public void run(Integer functionID, Integer personID, Double credits,
-            Date beginDate, Date endDate) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
+            YearMonthDay begin, YearMonthDay end) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
-        Person person = (Person) persistentObject.readByOID(Person.class, personID);
+        Person person = (Person) rootDomainObject.readPartyByOID(personID);
         
         if(person == null){
             throw new FenixServiceException("error.noPerson");
         }
                        
-        Function function = (Function) persistentObject.readByOID(Function.class, functionID);
+        Function function = rootDomainObject.readFunctionByOID(functionID);
         
         if(function == null){
             throw new FenixServiceException("error.noFunction");
         }
         
         if(RulesRepository.isElegible(person, function.getUnit(), function.getName())){                      
-            PersonFunction personFunction = DomainFactory.makePersonFunction();
-            personFunction.setPerson(person);
-            personFunction.edit(function, beginDate, endDate, credits);                      
+            PersonFunction personFunction = person.addPersonFunction(function);                        
+            personFunction.edit(function, begin, end, credits);                      
         }
         else{
             throw new FenixServiceException("error.associateFunction");
