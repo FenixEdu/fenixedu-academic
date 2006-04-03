@@ -88,7 +88,7 @@ public class CreateDeclaration extends Service {
         List infoStudentCurricularPlanList = new ArrayList();
 
         Student student = Student.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
-        if(student != null) {
+        if(student == null) {
         	return null;
         }
         for (Iterator iter = states.iterator(); iter.hasNext();) {
