@@ -14,7 +14,6 @@
 
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
-		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.curricularYearIdHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.calendarPeriodHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.dayHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.monthHidden}"/>

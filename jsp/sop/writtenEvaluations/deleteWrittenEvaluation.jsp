@@ -21,7 +21,6 @@
 
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
-		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.curricularYearIdHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.calendarPeriodHidden}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
@@ -32,7 +31,7 @@
 			
 			<h:outputText value="#{bundleSOP['property.context.degree']}: #{SOPEvaluationManagementBackingBean.executionDegreeLabel}" escape="false"/>
 			
-			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: #{SOPEvaluationManagementBackingBean.curricularYear}" escape="false"/>
+			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: " escape="false"/>
 			
 			<h:outputText value="#{bundleSOP['property.aula.disciplina']}: #{SOPEvaluationManagementBackingBean.executionCourse.nome}" escape="false"/>
 		</h:panelGrid>

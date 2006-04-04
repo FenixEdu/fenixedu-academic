@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -67,6 +68,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     protected HtmlInputHidden curricularYearIdHidden;
     protected Integer calendarPeriod;
     protected HtmlInputHidden calendarPeriodHidden;
+    private Integer[] curricularYearIDs;
     private String chooseMessage = messages.getMessage("label.choose.message");
     private HtmlInputHidden dayHidden;
     private HtmlInputHidden monthHidden;
@@ -547,10 +549,27 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public Integer[] getCurricularYearIDs() {
-        return (Integer[]) getViewState().getAttribute("curricularYearIDs");
+        if (curricularYearIDs == null) {
+            curricularYearIDs = (Integer[]) getViewState().getAttribute("curricularYearIDs");
+        }
+        if (curricularYearIDs == null) {
+            final String[] curricularYearIDStrings = getRequestParameterValues("curricularYearIDs");
+            System.out.println("curricularYearIDStrings" + curricularYearIDStrings);
+            System.out.println("getRequestParameter(\"curricularYearIDs\")" + getRequestParameter("curricularYearIDs"));
+            if (curricularYearIDStrings != null) {
+                curricularYearIDs = new Integer[curricularYearIDStrings.length];
+                for (int i = 0; i < curricularYearIDStrings.length; i++) {
+                    if (curricularYearIDStrings[i] != null && curricularYearIDStrings[i].length() > 0 && !curricularYearIDStrings[i].equals("null")) {
+                        curricularYearIDs[i] = Integer.valueOf(curricularYearIDStrings[i]);
+                    }
+                }
+            }
+        }
+        return curricularYearIDs;
     }
 
     public void setCurricularYearIDs(Integer[] curricularYearIDs) {
+        this.curricularYearIDs = curricularYearIDs;
         getViewState().setAttribute("curricularYearIDs", curricularYearIDs);
     }
 
@@ -654,7 +673,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         linkParameters.put("evaluationID", writtenEvaluation.getIdInternal().toString());
         linkParameters.put("executionPeriodID", this.executionPeriodID.toString());
         linkParameters.put("executionDegreeID", this.executionDegreeID.toString());
-        linkParameters.put("curricularYearID", this.getCurricularYearID().toString());
+        for (final Integer curricularYearID : getCurricularYearIDs()) {
+            linkParameters.put("curricularYearIDs", curricularYearID.toString());
+        }
         linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
         if (this.getExecutionPeriodOID() != null) {
             linkParameters.put("executionPeriodOID", this.getExecutionPeriodOID().toString());
@@ -680,19 +701,18 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return stringBuilder.toString();
     }
 
-    // END Build of Calendar
-
-    // BEGIN Build of Lists
     private List<ExecutionCourse> getExecutionCourses() {
         try {
-            final Object args[] = { this.getExecutionDegree().getDegreeCurricularPlan().getIdInternal(),
-                    this.getExecutionPeriodID(), this.getCurricularYearID() };
-            List<ExecutionCourse> executionCourses = new ArrayList(
-                    (List) ServiceManagerServiceFactory
+            final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+            for (final Integer curricularYearID : getCurricularYearIDs()) {
+                final Object args[] = { this.getExecutionDegree().getDegreeCurricularPlan().getIdInternal(),
+                    this.getExecutionPeriodID(), curricularYearID };
+                    executionCourses.addAll((Collection<ExecutionCourse>) ServiceManagerServiceFactory
                             .executeService(
                                     getUserView(),
                                     "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear",
                                     args));
+            }
             Collections.sort(executionCourses, new BeanComparator("sigla"));
             return executionCourses;
         } catch (Exception e) {
@@ -1316,8 +1336,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 "selectedCurricularYearID");
 
         if (selectedCurricularYearID == null) {
-            selectedCurricularYearID = Integer.valueOf((String) this.getCurricularYearIdHidden()
-                    .getValue());
+            selectedCurricularYearID = getCurricularYearIDs()[0];
             setSelectedCurricularYearID(selectedCurricularYearID);
         }
 

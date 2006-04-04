@@ -19,7 +19,6 @@
 
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
-		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.curricularYearIdHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.calendarPeriodHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.dayHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.monthHidden}"/>
@@ -33,7 +32,7 @@
 			
 			<h:outputText value="#{bundleSOP['property.context.degree']}: #{SOPEvaluationManagementBackingBean.executionDegreeLabel}" escape="false"/>
 			
-			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: #{SOPEvaluationManagementBackingBean.curricularYear}" escape="false"/>
+			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: " escape="false"/>
 			
 			<h:outputText value="#{bundleSOP['property.courses']}: " escape="false"/>
 			<h:dataTable value="#{SOPEvaluationManagementBackingBean.associatedExecutionCourses}" var="associatedExecutionCourseID">

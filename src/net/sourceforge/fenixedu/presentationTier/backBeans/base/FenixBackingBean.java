@@ -68,8 +68,11 @@ public class FenixBackingBean {
     }
 
     protected String getRequestParameter(String parameterName) {
-        return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-                .get(parameterName);
+        return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(parameterName);
+    }
+
+    protected String[] getRequestParameterValues(String parameterName) {
+        return (String[]) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterValuesMap().get(parameterName);
     }
 
     protected Object getRequestAttribute(String attributeName) {
