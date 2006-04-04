@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 
 public class CourseGroup extends CourseGroup_Base {
 
-    public static List<CourseGroup> readAll() {
+    public static List<CourseGroup> readCourseGroups() {
         List<CourseGroup> result = new ArrayList<CourseGroup>();
         
         for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {

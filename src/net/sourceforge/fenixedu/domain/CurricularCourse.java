@@ -28,7 +28,19 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
 public class CurricularCourse extends CurricularCourse_Base {
-
+    
+    public static List<CurricularCourse> readCurricularCourses() {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+        
+        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
+            if (degreeModule instanceof CurricularCourse) {
+                result.add((CurricularCourse) degreeModule);
+            }
+        }
+        
+        return result;
+    }
+    
     protected CurricularCourse() {
         super();
         this.setOjbConcreteClass(CurricularCourse.class.getName());
@@ -895,21 +907,9 @@ public class CurricularCourse extends CurricularCourse_Base {
         return false;
     }
 
-    public static List<CurricularCourse> readAll() {
-        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-        
-        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
-            if (degreeModule instanceof CurricularCourse) {
-                result.add((CurricularCourse) degreeModule);
-            }
-        }
-        
-        return result;
-    }
-    
     public static List<CurricularCourse> readByCurricularStage(CurricularStage curricularStage){
     	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-    	for (CurricularCourse curricularCourse : CurricularCourse.readAll()) {
+    	for (CurricularCourse curricularCourse : CurricularCourse.readCurricularCourses()) {
 			if(curricularCourse.getCurricularStage() != null && curricularCourse.getCurricularStage().equals(curricularStage)) {
 				result.add(curricularCourse);
 			}
