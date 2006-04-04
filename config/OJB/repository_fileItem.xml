@@ -1,0 +1,48 @@
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.FileItem -->
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.FileItem" table="FILE_ITEM">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="filename"
+		column="FILENAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="displayName"
+		column="DISPLAY_NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="mimeType"
+		column="MIME_TYPE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="checksum"
+		column="CHECKSUM"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="checksumAlgorithm"
+		column="CHECKSUM_ALGORITHM"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="size"
+		column="SIZE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="dspaceBitstreamIdentification"
+		column="DSPACE_BITSTREAM_IDENTIFICATION"
+		jdbc-type="VARCHAR"
+	/>
+		
+</class-descriptor>

@@ -82,7 +82,7 @@
 <!ENTITY weeklyWorkLoad SYSTEM "repository_weeklyWorkLoad.xml">
 <!ENTITY studentCurriculum SYSTEM "repository_student_curriculum.xml">
 <!ENTITY homepage SYSTEM "repository_homepage.xml">
-    
+<!ENTITY fileItem SYSTEM "repository_fileItem.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -168,8 +168,9 @@
     &party;
     &weeklyWorkLoad;
     &studentCurriculum;
-	&homepage;
-    
+    &homepage;
+    &fileItem;
+
     <!-- Middleware -->
     <!--&middleware;-->
     
