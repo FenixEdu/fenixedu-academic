@@ -71,10 +71,6 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         return orderedResult; 
     } 
     
-    public Boolean getCanBuild() {
-        return Boolean.TRUE;
-    }
-    
     public Integer getDegreeId() {
         return (degreeId == null) ? (degreeId = getAndHoldIntegerParameter("degreeId")) : degreeId;
     }
