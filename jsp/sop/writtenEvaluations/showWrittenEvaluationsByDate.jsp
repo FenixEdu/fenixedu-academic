@@ -118,6 +118,10 @@
 										+ "="
 										+ pageContext.findAttribute("executionPeriodID")
 										+ "&amp;"
+										+ "executionPeriodOID"
+										+ "="
+										+ pageContext.findAttribute("executionPeriodID")
+										+ "&amp;"
 										+ "executionCourseID"
 										+ "="
 										+ pageContext.findAttribute("executionCourseID")
