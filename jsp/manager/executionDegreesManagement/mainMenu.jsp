@@ -9,7 +9,7 @@
 	</strong></p>
 	
 	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement"/></h3>
-
+	<%-- 
 	<p><strong>&raquo; 
   	<html:link module="/manager" page="/degree/chooseDegreeType.faces">
   		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.createExecutionDegrees"/>
@@ -21,5 +21,5 @@
   		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.editExecutionDegrees"/>
   	</html:link>
 	</strong></p>
-
+	--%>
 </div>
