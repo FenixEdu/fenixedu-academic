@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +24,16 @@ public class Guide extends Guide_Base {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
+
+    public final static Comparator<Guide> yearAndNumberComparator = new Comparator<Guide>() {
+        public int compare(Guide g1, Guide g2) {
+            Integer yearComparation = g1.getYear().compareTo(g2.getYear());
+            if (yearComparation == 0) {
+                return g1.getNumber().compareTo(g2.getNumber());
+            }
+            return yearComparation;
+        }
+    };
 
     public GuideSituation getActiveSituation() {
         if (this.getGuideSituations() != null) {
@@ -71,18 +82,10 @@ public class Guide extends Guide_Base {
     }
 
     public static Integer generateGuideNumber(Integer year) {
-        Integer guideNumber = Integer.valueOf(0);
-        List<Guide> guides = new ArrayList();
-        for (Guide guide : RootDomainObject.getInstance().getGuides()) {
-            if (guide.getYear().equals(year)) {
-                guides.add(guide);
-            }
-        }
-        if (!guides.isEmpty()) {
-            Collections.sort(guides, new BeanComparator("number"));
-            guideNumber = guides.get(0).getNumber();
-        }
-        return Integer.valueOf(guideNumber.intValue() + 1);
+        return Collections
+                .max(RootDomainObject.getInstance().getGuides(), Guide.yearAndNumberComparator)
+                .getNumber() + 1;
+
     }
 
     public static Guide readByNumberAndYearAndVersion(Integer number, Integer year, Integer version) {
@@ -102,7 +105,7 @@ public class Guide extends Guide_Base {
                 guides.add(guide);
             }
         }
-        Collections.sort(guides, new ReverseComparator(new BeanComparator("version")));
+        Collections.sort(guides, new BeanComparator("version"));
         return guides;
     }
 
@@ -117,23 +120,17 @@ public class Guide extends Guide_Base {
     }
 
     public static List<Guide> readByYearAndState(Integer guideYear, GuideState situationOfGuide) {
-        Set<Guide> guides = new HashSet();
-        boolean toInsert = false;
+        
+        List<Guide> result = new ArrayList<Guide>();       
         for (Guide guide : RootDomainObject.getInstance().getGuides()) {
-            if (guideYear != null && guide.getYear().equals(guideYear)) {
-                toInsert = true;
-            }
-            for (GuideSituation guideSituation : guide.getGuideSituations()) {
-                if (guideSituation.getState().equals(State.ACTIVE)
-                        && guideSituation.getSituation().equals(situationOfGuide)) {
-                    toInsert = true;
+            GuideSituation activeSituation = guide.getActiveSituation();
+            if (activeSituation != null && activeSituation.getSituation().equals(situationOfGuide)) {
+                if (guideYear == null || (guideYear != null && guide.getYear().equals(guideYear))) {
+                    result.add(guide);                    
                 }
             }
-            if (toInsert) {
-                guides.add(guide);
-                toInsert = false;
-            }            
         }
-        return new ArrayList(guides);
+        return result;
+        
     }
 }

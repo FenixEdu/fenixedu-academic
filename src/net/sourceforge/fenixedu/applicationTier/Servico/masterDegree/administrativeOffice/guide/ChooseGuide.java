@@ -167,9 +167,9 @@ public class ChooseGuide extends Service {
         if (person == null) {
             throw new NonExistingServiceException();
         }
-               
-        List guides = person.getGuides();
-        if ((guides == null) || (guides.size() == 0)) {
+                       
+        List<Guide> guides = new ArrayList<Guide>(person.getGuides());
+        if (guides.size() == 0) {
             return null;
         }
         

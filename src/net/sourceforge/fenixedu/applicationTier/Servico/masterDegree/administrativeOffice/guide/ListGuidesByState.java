@@ -19,9 +19,7 @@ import net.sourceforge.fenixedu.domain.GuideState;
 public class ListGuidesByState extends Service {
 
     public List run(Integer guideYear, GuideState situationOfGuide) throws Exception {
-        List guides = new ArrayList();
-
-        guides = Guide.readByYearAndState(guideYear, situationOfGuide);
+        List guides = Guide.readByYearAndState(guideYear, situationOfGuide);
 
         Iterator iterator = guides.iterator();
 
