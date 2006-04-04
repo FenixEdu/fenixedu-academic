@@ -186,7 +186,7 @@ public class ScientificCouncilComponentBuilder {
 	private ISiteComponent getInfoSiteSCDegrees(InfoSiteSCDegrees component)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		List<Degree> degrees = Degree.readAllFromOldDegreeStructure();
+		List<Degree> degrees = Degree.readOldDegrees();
 		Iterator degreeIterator = degrees.iterator();
 		List infoDegrees = new ArrayList();
 		while (degreeIterator.hasNext()) {

@@ -30,7 +30,7 @@ public class EditDegree extends Service {
                 || !degreeToEdit.getNome().equalsIgnoreCase(name)
                 || !degreeToEdit.getBolonhaDegreeType().equals(bolonhaDegreeType)) {
 
-        	final List<Degree> degrees = Degree.readAllFromNewDegreeStructure();
+        	final List<Degree> degrees = Degree.readBolonhaDegrees();
             
             // assert unique degree code and unique pair name/type
             for (Degree degree : degrees) {

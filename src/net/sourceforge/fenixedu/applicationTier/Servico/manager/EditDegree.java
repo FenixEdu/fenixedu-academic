@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditDegree extends Service {
@@ -27,7 +28,7 @@ public class EditDegree extends Service {
                 || !degreeToEdit.getNome().equalsIgnoreCase(infoDegree.getNome())
                 || !degreeToEdit.getTipoCurso().equals(infoDegree.getTipoCurso())) {
             
-        	final List<Degree> degrees = Degree.readAllFromOldDegreeStructure();
+        	final List<Degree> degrees = Degree.readOldDegrees();
             
             // assert unique degree code and unique pair name/type
             for (Degree degree : degrees) {
@@ -43,7 +44,7 @@ public class EditDegree extends Service {
                 }
             }
         }
-        degreeToEdit.edit(infoDegree.getNome(), infoDegree.getNameEn(), infoDegree.getSigla(), infoDegree
+        degreeToEdit.edit(infoDegree.getNome(), infoDegree.getNameEn(), infoDegree.getSigla(), (DegreeType) infoDegree
                 .getTipoCurso(), infoDegree.getGradeScale());
     }
 

@@ -16,7 +16,7 @@ public class ReadDegrees extends Service {
     }
 
     public List run(final DegreeType degreeType) throws ExcepcaoPersistencia {
-    	final List<Degree> degrees = Degree.readAllFromOldDegreeStructure();
+    	final List<Degree> degrees = Degree.readOldDegrees();
         final List<InfoDegree> infoDegrees = new ArrayList<InfoDegree>(degrees.size());
         for (final Degree degree : degrees) {
         	if (degreeType == null || degreeType == degree.getTipoCurso()) {

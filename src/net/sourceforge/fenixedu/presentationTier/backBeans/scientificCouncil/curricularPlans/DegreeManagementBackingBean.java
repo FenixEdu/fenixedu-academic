@@ -40,13 +40,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     private String prevailingScientificArea;
 
     public List<Degree> getBolonhaDegrees() throws FenixFilterException, FenixServiceException {
-        final List<Degree> result = new ArrayList<Degree>();
-        final List<Degree> allDegrees = readAllDomainObjects(Degree.class);
-        for (final Degree degree : allDegrees) {
-            if (degree.isBolonhaDegree()) {
-                result.add(degree);
-            }
-        }
+        final List<Degree> result = Degree.readBolonhaDegrees();
+        
         final ComparatorChain chainComparator = new ComparatorChain();
         chainComparator.addComparator(new BeanComparator("bolonhaDegreeType"), false);
         chainComparator.addComparator(new BeanComparator("nome"), false);
@@ -57,15 +52,12 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     
     public List<Degree> getFilteredBolonhaDegrees() throws FenixFilterException, FenixServiceException {
         final Set<Degree> result = new HashSet<Degree>();
-        final List<Degree> allDegrees = readAllDomainObjects(Degree.class);
-        for (final Degree degree : allDegrees) {
-            if (degree.isBolonhaDegree()) {
-                for (final DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
-                    if (dcp.getCurricularStage().equals(CurricularStage.PUBLISHED) 
-                            || dcp.getCurricularStage().equals(CurricularStage.APPROVED) 
-                            || dcp.getCurricularPlanMembersGroup().isMember(this.getUserView().getPerson())) {
-                        result.add(degree);    
-                    }
+        for (final Degree degree : Degree.readBolonhaDegrees()) {
+            for (final DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+                if (dcp.getCurricularStage().equals(CurricularStage.PUBLISHED) 
+                        || dcp.getCurricularStage().equals(CurricularStage.APPROVED) 
+                        || dcp.getCurricularPlanMembersGroup().isMember(this.getUserView().getPerson())) {
+                    result.add(degree);    
                 }
             }
         }
@@ -92,7 +84,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
     
     public Degree getDegree() throws FenixFilterException, FenixServiceException {
-        return (degree == null) ? (degree = (Degree) readDomainObject(Degree.class, getDegreeId())) : degree;
+        return (degree == null) ? (degree = rootDomainObject.readDegreeByOID(getDegreeId())) : degree;
     }
     
     public String getName() throws FenixFilterException, FenixServiceException {

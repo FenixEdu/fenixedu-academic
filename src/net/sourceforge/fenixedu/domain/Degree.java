@@ -279,7 +279,7 @@ public class Degree extends Degree_Base {
     	return null;
     }
     
-    public static List<Degree> readAllFromOldDegreeStructure(){
+    public static List<Degree> readOldDegrees(){
     	List<Degree> result = new ArrayList<Degree>();
     	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
     		if(!degree.isBolonhaDegree()) {
@@ -289,7 +289,7 @@ public class Degree extends Degree_Base {
     	return result;
     }
     
-    public static List<Degree> readAllFromNewDegreeStructure(){
+    public static List<Degree> readBolonhaDegrees(){
     	List<Degree> result = new ArrayList<Degree>();
     	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
     		if(degree.isBolonhaDegree()) {

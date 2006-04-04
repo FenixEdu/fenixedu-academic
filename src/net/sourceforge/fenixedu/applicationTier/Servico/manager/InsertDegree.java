@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertDegree extends Service {
@@ -19,7 +20,7 @@ public class InsertDegree extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final List<Degree> degrees = Degree.readAllFromOldDegreeStructure();
+        final List<Degree> degrees = Degree.readOldDegrees();
                 
         // assert unique degree code and unique pair name/type
         for (Degree degree : degrees) {
@@ -34,7 +35,7 @@ public class InsertDegree extends Service {
         }
 
         DomainFactory.makeDegree(infoDegree.getNome(), infoDegree.getNameEn(),
-				infoDegree.getSigla(), infoDegree.getTipoCurso(), infoDegree.getGradeScale(), DegreeCurricularPlan.class.getName());
+				infoDegree.getSigla(), (DegreeType) infoDegree.getTipoCurso(), infoDegree.getGradeScale(), DegreeCurricularPlan.class.getName());
     }
 
 }
