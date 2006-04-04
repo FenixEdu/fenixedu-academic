@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
@@ -27,13 +30,18 @@ import net.sourceforge.fenixedu.domain.research.result.Authorship;
 import net.sourceforge.fenixedu.domain.research.result.Patent;
 import net.sourceforge.fenixedu.domain.research.result.Publication;
 import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.sms.SentSms;
+import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class Person extends Person_Base {
 
+    final static Comparator PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE = new BeanComparator("sendDate");
     static {
         Role.PersonRole.addListener(new PersonRoleListener());
     }
@@ -513,15 +521,6 @@ public class Person extends Person_Base {
 
     }
 
-    private Object valueToUpdate(Object actualValue, Object newValue) {
-
-        if (actualValue == null) {
-            return newValue;
-        }
-        return actualValue;
-
-    }
-
     private String valueToUpdateIfNewNotNull(String actualValue, String newValue) {
 
         if (newValue == null || newValue.length() == 0) {
@@ -862,6 +861,26 @@ public class Person extends Person_Base {
             }
         }
     }
+    
+    public SortedSet<SentSms> getSentSmsSortedBySendDate() {
+        final SortedSet<SentSms> sentSmsSortedBySendDate = new TreeSet<SentSms>(new ReverseComparator(
+                PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE));
+        sentSmsSortedBySendDate.addAll(this.getSentSmsSet());
+        return sentSmsSortedBySendDate;
+    }
+    
+    public int countSentSmsBetween(final Date startDate, final Date endDate) {
+        int count = 0;
+        for (final SentSms sentSms : this.getSentSmsSet()) {
+            if (sentSms.getDeliveryType() != SmsDeliveryType.NOT_SENT_TYPE
+                && (sentSms.getSendDate().after(startDate) || sentSms.getSendDate().equals(startDate)) 
+                && sentSms.getSendDate().before(endDate)) {
+                
+                count++;
+            }
+        }
+        return count;
+    }
 
     @Deprecated
     public String getCodigoFiscal() {
@@ -1188,5 +1207,5 @@ public class Person extends Person_Base {
             }
         }
         return null;
-    }       
+    }
 }

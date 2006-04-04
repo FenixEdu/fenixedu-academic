@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
-import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 
 public interface ISuportePersistente {
@@ -72,8 +71,6 @@ public interface ISuportePersistente {
     public IPersistentGratuitySituation getIPersistentGratuitySituation();
 
     public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork();
-
-    public IPersistentSentSms getIPersistentSentSms();
 
     public IPersistentPublicationAttribute getIPersistentPublicationAttribute();
 

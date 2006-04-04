@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsLimitReachedServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -26,20 +24,12 @@ import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
  */
 public class CountSentSmsByPersonAndDatePeriod extends Service {
 
-	public Integer run(IUserView userView, Date startDate, Date endDate) throws FenixServiceException,
-			ExcepcaoPersistencia {
-		IPersistentSentSms persistentSentSms = persistentSupport.getIPersistentSentSms();
-
-		Person person = Person.readPersonByUsername(userView.getUtilizador());
-
-		Integer numberOfSms = persistentSentSms.countByPersonAndDatePeriod(person.getIdInternal(),
-				startDate, endDate);
-
-		if (numberOfSms.intValue() >= SmsUtil.getInstance().getMonthlySmsLimit()) {
+	public Integer run(IUserView userView, Date startDate, Date endDate) throws FenixServiceException {
+		final Person person = Person.readPersonByUsername(userView.getUtilizador());
+		int numberOfSms = person.countSentSmsBetween(startDate, endDate);
+		if (numberOfSms >= SmsUtil.getInstance().getMonthlySmsLimit()) {
 			throw new SmsLimitReachedServiceException("error.person.sendSmsLimitReached");
 		}
-
-		return new Integer(SmsUtil.getInstance().getMonthlySmsLimit() - numberOfSms.intValue());
+		return Integer.valueOf(SmsUtil.getInstance().getMonthlySmsLimit() - numberOfSms);
 	}
-
 }
