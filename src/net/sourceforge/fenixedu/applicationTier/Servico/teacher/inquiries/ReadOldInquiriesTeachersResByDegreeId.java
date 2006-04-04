@@ -9,9 +9,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -23,14 +23,13 @@ import org.apache.commons.collections.Transformer;
 public class ReadOldInquiriesTeachersResByDegreeId extends Service {
 
 	public List run(Integer degreeId) throws FenixServiceException, ExcepcaoPersistencia {
-		List oldInquiriesTeachersResList = null;
+		Degree degree = rootDomainObject.readDegreeByOID(degreeId);
 
-		if (degreeId == null) {
+		if (degree == null) {
 			throw new FenixServiceException("nullDegreeId");
 		}
-		IPersistentOldInquiriesTeachersRes poits = persistentSupport.getIPersistentOldInquiriesTeachersRes();
-
-		oldInquiriesTeachersResList = poits.readByDegreeId(degreeId);
+		
+		List<OldInquiriesTeachersRes> oldInquiriesTeachersResList = degree.getAssociatedOldInquiriesTeachersRes();
 
 		CollectionUtils.transform(oldInquiriesTeachersResList, new Transformer() {
 

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -22,12 +21,10 @@ public class ReadOldInquiryTeachersResById extends Service {
 	public InfoOldInquiriesTeachersRes run(Integer internalId) throws FenixServiceException, ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		InfoOldInquiriesTeachersRes oldInquiriesTeachersRes = null;
 
-		if (internalId == null) {
+		OldInquiriesTeachersRes oits = rootDomainObject.readOldInquiriesTeachersResByOID(internalId);
+		if (oits == null) {
 			throw new FenixServiceException("nullInternalId");
 		}
-		IPersistentOldInquiriesTeachersRes poits = persistentSupport.getIPersistentOldInquiriesTeachersRes();
-
-		OldInquiriesTeachersRes oits = poits.readByInternalId(internalId);
 
 		oldInquiriesTeachersRes = new InfoOldInquiriesTeachersRes();
 		oldInquiriesTeachersRes.copyFromDomain(oits);

@@ -9,9 +9,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -25,12 +27,17 @@ public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricula
 
 	public List run(Integer executionPeriodId, Integer degreeId, Integer curricularYear,
 			String courseCode, Integer teacherNumber) throws FenixServiceException, ExcepcaoPersistencia {
-		List oldInquiriesTeachersResList = null;
 
-		if (executionPeriodId == null) {
+		ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
+		
+		Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+		
+		Teacher teacher = Teacher.readByNumber(teacherNumber);
+
+		if (executionPeriod == null) {
 			throw new FenixServiceException("nullExecutionPeriodId");
 		}
-		if (degreeId == null) {
+		if (degree == null) {
 			throw new FenixServiceException("nullDegreeId");
 		}
 		if (curricularYear == null) {
@@ -39,14 +46,11 @@ public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricula
 		if (courseCode == null) {
 			throw new FenixServiceException("nullCourseCode");
 		}
-		if (teacherNumber == null) {
+		if (teacher == null) {
 			throw new FenixServiceException("nullTeacherNumber");
 		}
-		IPersistentOldInquiriesTeachersRes poits = persistentSupport.getIPersistentOldInquiriesTeachersRes();
-
-		oldInquiriesTeachersResList = poits
-				.readByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber(
-						executionPeriodId, degreeId, curricularYear, courseCode, teacherNumber);
+		
+		List<OldInquiriesTeachersRes> oldInquiriesTeachersResList = degree.getOldInquiriesTeachersResByExecutionPeriodAndCurricularYearAndCourseCodeAndTeacher(executionPeriod, curricularYear, courseCode, teacher);
 
 		CollectionUtils.transform(oldInquiriesTeachersResList, new Transformer() {
 
