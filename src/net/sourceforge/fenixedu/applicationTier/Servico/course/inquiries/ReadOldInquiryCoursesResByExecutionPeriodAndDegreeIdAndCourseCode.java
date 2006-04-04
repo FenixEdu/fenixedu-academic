@@ -9,9 +9,11 @@ import java.lang.reflect.InvocationTargetException;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -22,21 +24,21 @@ public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode e
     public InfoOldInquiriesCoursesRes run(Integer executionPeriodId, Integer degreeId, String courseCode)
             throws FenixServiceException, ExcepcaoPersistencia, NoSuchMethodException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         InfoOldInquiriesCoursesRes oldInquiriesCoursesRes = null;
+        
+        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
+        ExecutionPeriod executionPeriod = RootDomainObject.getInstance().readExecutionPeriodByOID(executionPeriodId);
 
-        if (executionPeriodId == null) {
+        if (executionPeriod == null) {
             throw new FenixServiceException("nullExecutionPeriodId");
         }
-        if (degreeId == null) {
+        if (degree == null) {
             throw new FenixServiceException("nullDegreeId");
         }
         if (courseCode == null) {
             throw new FenixServiceException("nullCourseCode");
         }
 
-        IPersistentOldInquiriesCoursesRes poics = persistentSupport.getIPersistentOldInquiriesCoursesRes();
-
-        OldInquiriesCoursesRes oics = poics.readByExecutionPeriodAndDegreeIdAndCourseCode(
-                executionPeriodId, degreeId, courseCode);
+        OldInquiriesCoursesRes oics = degree.getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(courseCode, executionPeriod);
 
         oldInquiriesCoursesRes = new InfoOldInquiriesCoursesRes();
         oldInquiriesCoursesRes.copyFromDomain(oics);
