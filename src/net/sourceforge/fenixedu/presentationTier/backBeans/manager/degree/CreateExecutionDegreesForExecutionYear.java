@@ -118,8 +118,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
             final BolonhaDegreeType bolonhaDegreeType = BolonhaDegreeType.valueOf(getChosenDegreeType());
             final List<SelectItem> result = new ArrayList<SelectItem>();
             for (final DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
-                    .getDegreeCurricularPlans()) { // Active? (for now doesn't
-                                                    // exist in BolonhaDegree)
+                    .getDegreeCurricularPlans()) { // Active? (for now doesn't exist in BolonhaDegree)
                 if (degreeCurricularPlan.getDegree().isBolonhaDegree()
                         && degreeCurricularPlan.getDegree().getBolonhaDegreeType() == bolonhaDegreeType) {
                     result.add((new SelectItem(degreeCurricularPlan.getIdInternal(),

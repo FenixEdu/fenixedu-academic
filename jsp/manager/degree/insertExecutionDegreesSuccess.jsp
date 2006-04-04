@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
-<ft:tilesView definition="df.executionDegreeManagement.page.firstPage" attributeName="body-inline">
+<ft:tilesView definition="df.executionDegreeManagement.firstPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/ManagerResources" var="managerResources"/>
 
 	<h:outputText value="Os cursos de execução foram criados!" style="text-align:center; font:bold;" />

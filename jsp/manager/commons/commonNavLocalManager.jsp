@@ -50,7 +50,7 @@
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link module="/manager" page="/executionDegreeManagement.do">
+	<html:link module="/manager" page="/executionDegreesManagementMainPage.do">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement" />
 	</html:link>
 </strong></p>

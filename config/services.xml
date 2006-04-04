@@ -1198,6 +1198,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>EditBolonhaExecutionDegree</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.executionDegreesManagement.EditExecutionDegree</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>ReadExecutionCoursesByCurricularCourse</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCoursesByCurricularCourse</implementationClass>

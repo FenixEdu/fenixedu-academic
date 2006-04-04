@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
-<ft:tilesView definition="df.executionDegreeManagement.page.firstPage" attributeName="body-inline">
+<ft:tilesView definition="df.executionDegreeManagement.firstPage" attributeName="body-inline">
 	<h:form>
 		<h:panelGrid columns="1">
 			<h:outputText value="Escolha o tipo de Graduação:" />

@@ -599,6 +599,28 @@
 			<form-property name="gender" type="java.lang.String" />
 			<form-property name="maritalStatus" type="java.lang.String" />
 		</form-bean>
+		
+		<!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->	
+		<form-bean name="executionDegreesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="degreeType" type="java.lang.String" />
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" />
+			<form-property name="executionDegreeID" type="java.lang.Integer" />
+			<form-property name="coordinatorNumber" type="java.lang.Integer" />
+			<form-property name="responsibleCoordinatorsIDs" type="java.lang.Integer[]" />
+			<form-property name="removeCoordinatorsIDs" type="java.lang.Integer[]" />
+			<form-property name="executionYearID" type="java.lang.Integer" />
+			<form-property name="campusID" type="java.lang.Integer" />
+			<form-property name="temporaryExamMap" type="java.lang.String" />
+			<form-property name="periodLessonsFirstSemesterBegin" type="java.lang.String" />
+			<form-property name="periodLessonsFirstSemesterEnd" type="java.lang.String" />
+			<form-property name="periodExamsFirstSemesterBegin" type="java.lang.String" />
+			<form-property name="periodExamsFirstSemesterEnd" type="java.lang.String" />
+			<form-property name="periodLessonsSecondSemesterBegin" type="java.lang.String" />
+			<form-property name="periodLessonsSecondSemesterEnd" type="java.lang.String" />
+			<form-property name="periodExamsSecondSemesterBegin" type="java.lang.String" />
+			<form-property name="periodExamsSecondSemesterEnd" type="java.lang.String" />
+		</form-bean>
 				
     </form-beans>
     
@@ -1913,10 +1935,22 @@
 	</action>
 	
 	<!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
-	
-	<action path="/executionDegreeManagement"
+	<action path="/executionDegreesManagementMainPage"
 			type="org.apache.struts.actions.ForwardAction"
-			forward="df.executionDegreeManagement.page.firstPage" />
+			forward="df.executionDegreeManagement.firstPage" />
+			
+	<action path="/executionDegreesManagement"
+			input="executionDegreesManagementMainPage.do"
+			name="executionDegreesManagementForm"
+			scope="request"
+			parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionDegreesManagement.ExecutionDegreesManagementDispatchAction">
+			
+		<forward name="executionDegreeManagement" path="df.executionDegreeManagement" />
+		<forward name="manageCoordinators" path="df.executionDegreeManagement.manageCoordinators" />
+		<forward name="insertCoordinator" path="df.executionDegreeManagement.insertCoordinator" />
+		<forward name="editExecutionDegree" path="df.executionDegreeManagement.editExecutionDegree" />
+	</action>
 
 	</action-mappings>
 

@@ -526,9 +526,29 @@
     </definition>
     
     <!-- ========== ExecutionDegree Management ========== -->
-    <definition name="df.executionDegreeManagement.page.firstPage" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/executionDegreeManagement/welcomeScreen.jsp" />
-		<put name="navLocal" value="/manager/executionDegreeManagement/mainMenu.jsp" />
+    <definition name="df.executionDegreeManagement.firstPage" extends="definition.manager.masterPage" >
+   		<put name="navLocal" value="/manager/executionDegreesManagement/mainMenu.jsp" />
+		<put name="body" value="/manager/executionDegreesManagement/welcomeScreen.jsp" />
+	</definition>
+	
+	<definition name="df.executionDegreeManagement" extends="definition.manager.masterPage" >
+		<put name="navLocal" value="/manager/executionDegreesManagement/mainMenu.jsp" />
+		<put name="body" value="/manager/executionDegreesManagement/executionDegreesManagement.jsp" />
+	</definition>
+	
+	<definition name="df.executionDegreeManagement.manageCoordinators" extends="definition.manager.masterPage" >
+		<put name="navLocal" value="/manager/executionDegreesManagement/mainMenu.jsp" />
+		<put name="body" value="/manager/executionDegreesManagement/manageCoordinators.jsp" />
+	</definition>
+	
+	<definition name="df.executionDegreeManagement.insertCoordinator" extends="definition.manager.masterPage" >
+		<put name="navLocal" value="/manager/executionDegreesManagement/mainMenu.jsp" />
+		<put name="body" value="/manager/executionDegreesManagement/insertCoordinator.jsp" />
+	</definition>
+	
+	<definition name="df.executionDegreeManagement.editExecutionDegree" extends="definition.manager.masterPage" >
+		<put name="navLocal" value="/manager/executionDegreesManagement/mainMenu.jsp" />
+		<put name="body" value="/manager/executionDegreesManagement/editExecutionDegree.jsp" />
 	</definition>
     
 </tiles-definitions>

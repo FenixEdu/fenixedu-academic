@@ -3,10 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -18,43 +15,35 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class AddCoordinator extends Service {
 
-    public Boolean run(Integer executionDegreeId, Integer teacherNumber) throws FenixServiceException,
-            ExcepcaoPersistencia {        
-        Teacher teacher = Teacher.readByNumber(teacherNumber);
+    public Boolean run(Integer executionDegreeId, Integer teacherNumber) throws FenixServiceException, ExcepcaoPersistencia {
+        
+        final Teacher teacher = Teacher.readByNumber(teacherNumber);
         if (teacher == null) {
-            throw new NonExistingServiceException();
+            throw new FenixServiceException("error.noTeacher");
         }
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, executionDegreeId);
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
         if (executionDegree == null) {
-            throw new InvalidArgumentsServiceException();
+            throw new FenixServiceException("error.noExecutionDegree");
         }
+        
         Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
-
         if (coordinator == null) {
-            coordinator = DomainFactory.makeCoordinator();
-            coordinator.setExecutionDegree(executionDegree);
-            coordinator.setTeacher(teacher);
-            coordinator.setResponsible(new Boolean(false));
+            coordinator = DomainFactory.makeCoordinator(executionDegree, teacher, Boolean.FALSE);
             // verify if the teacher already was coordinator
-            List<ExecutionDegree> executionDegreesTeacherList = teacher.getCoordinatedExecutionDegrees();
-            if (executionDegreesTeacherList == null || executionDegreesTeacherList.size() <= 0) {
-                // Role Coordinator
-                Role role = Role.getRoleByRoleType(RoleType.COORDINATOR);
-
-                Person person = teacher.getPerson();
-
+            final List<ExecutionDegree> executionDegreesTeacherList = teacher.getCoordinatedExecutionDegrees();
+            if (executionDegreesTeacherList == null || executionDegreesTeacherList.isEmpty()) {
+                final Role role = Role.getRoleByRoleType(RoleType.COORDINATOR);
+                final Person person = teacher.getPerson();
                 if (!person.getPersonRoles().contains(role)) {
                     person.getPersonRoles().add(role);
                 }
-
             }
         } else {
-            throw new ExistingServiceException();
+            throw new FenixServiceException("error.impossibleInsertCoordinator");
         }
-        return new Boolean(true);
-
+        
+        return Boolean.TRUE;
     }
 
 }

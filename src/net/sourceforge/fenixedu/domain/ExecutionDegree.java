@@ -9,12 +9,14 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
@@ -47,8 +49,59 @@ public class ExecutionDegree extends ExecutionDegree_Base {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
+    
+    public void edit(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap,
+            Date periodLessonsFirstSemesterBegin, Date periodLessonsFirstSemesterEnd,
+            Date periodExamsFirstSemesterBegin, Date periodExamsFirstSemesterEnd,
+            Date periodLessonsSecondSemesterBegin, Date periodLessonsSecondSemesterEnd,
+            Date periodExamsSecondSemesterBegin, Date periodExamsSecondSemesterEnd) {
+     
+        checkPeriodDates(periodLessonsFirstSemesterBegin,
+                periodLessonsFirstSemesterEnd, periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd,
+                periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd, periodExamsSecondSemesterBegin,
+                periodExamsSecondSemesterEnd);
+        
+        setExecutionYear(executionYear);
+        setCampus(campus);
+        setTemporaryExamMap(temporaryExamMap);
+        getPeriodLessonsFirstSemester().setStart(periodLessonsFirstSemesterBegin);
+        getPeriodLessonsFirstSemester().setEnd(periodLessonsFirstSemesterEnd);
+        getPeriodExamsFirstSemester().setStart(periodExamsFirstSemesterBegin);
+        getPeriodExamsFirstSemester().setEnd(periodExamsFirstSemesterEnd);
+        getPeriodLessonsSecondSemester().setStart(periodLessonsSecondSemesterBegin);
+        getPeriodLessonsSecondSemester().setEnd(periodLessonsSecondSemesterEnd);
+        getPeriodExamsSecondSemester().setStart(periodExamsSecondSemesterBegin);
+        getPeriodExamsSecondSemester().setEnd(periodExamsSecondSemesterEnd);
+    }
 
-	public boolean isFirstYear() {
+	private void checkPeriodDates(Date periodLessonsFirstSemesterBegin,
+            Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,
+            Date periodExamsFirstSemesterEnd, Date periodLessonsSecondSemesterBegin,
+            Date periodLessonsSecondSemesterEnd, Date periodExamsSecondSemesterBegin,
+            Date periodExamsSecondSemesterEnd) {
+        
+        if (periodLessonsFirstSemesterBegin == null || periodLessonsFirstSemesterEnd == null
+                || periodLessonsFirstSemesterBegin.after(periodLessonsFirstSemesterEnd)) {
+            throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
+        }
+
+        if (periodExamsFirstSemesterBegin == null || periodExamsFirstSemesterEnd == null
+                || periodExamsFirstSemesterBegin.after(periodExamsFirstSemesterEnd)) {
+            throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
+        }
+
+        if (periodLessonsSecondSemesterBegin == null || periodLessonsSecondSemesterEnd == null
+                || periodLessonsSecondSemesterBegin.after(periodLessonsSecondSemesterEnd)) {
+            throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
+        }
+
+        if (periodExamsSecondSemesterBegin == null || periodExamsSecondSemesterEnd == null
+                || periodExamsSecondSemesterBegin.after(periodExamsSecondSemesterEnd)) {
+            throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
+        }
+    }
+
+    public boolean isFirstYear() {
 
         List<ExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
 
@@ -97,7 +150,6 @@ public class ExecutionDegree extends ExecutionDegree_Base {
 	}
 
 	public SchoolClass findSchoolClassesByExecutionPeriodAndName(final ExecutionPeriod executionPeriod, final String name) {
-		final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
 		for (final SchoolClass schoolClass : getSchoolClasses()) {
 			if (schoolClass.getExecutionPeriod() == executionPeriod && schoolClass.getNome().equals(name)) {
 				return schoolClass;
