@@ -56,19 +56,15 @@ public class EMailAddress {
 	}
 
 	public boolean isValid() {
-		return true;
+		return EMailAddress.isValid(this.getAddress());
 	}
 
 	public static boolean isValid(String address) {
 		boolean result = false;
 		try {
-			if (address.startsWith("--")) {
-				int a = 2;
-				a++;
-				a--;
-			}
 			InternetAddress javaxAddress = new InternetAddress(address);
 			result = address.matches(EMailAddress.validationPattern);
+			result &= (address != null);
 
 		}
 		catch (AddressException e) {
@@ -90,9 +86,7 @@ public class EMailAddress {
 	}
 
 	public EMailAddress(String address) {
-		String[] components = address.split("@");
-		this.user = components[0];
-		this.domain = components[1];
+		this.setAddress(address);
 
 	}
 
@@ -115,7 +109,13 @@ public class EMailAddress {
 
 	public String getAddress() {
 		StringBuffer result = new StringBuffer();
-		result.append(this.user).append("@").append(this.domain);
+		if (this.user != null) {
+			result.append(this.user);
+		}
+		result.append("@");
+		if (this.domain != null) {
+			result.append(this.domain);
+		}
 
 		return result.toString();
 	}
@@ -123,6 +123,8 @@ public class EMailAddress {
 	public void setAddress(String address) {
 		String[] components = address.split("@");
 		this.user = components[0];
-		this.domain = components[1];
+		if (components.length == 2) {
+			this.domain = components[1];
+		}
 	}
 }

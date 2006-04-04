@@ -1695,8 +1695,14 @@
             path="/mailSender" name="sendMailForm" parameter="method" scope="request" validate="true">
 
             <forward name="sendMail" path="sendMail"/>
-
         </action>
+        
+        <action type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SendMailToWorkGroupStudents" 
+            path="/sendMailToWorkGroupStudents" name="sendMailForm" parameter="method" scope="request" validate="true">
+
+            <forward name="sendMail" path="sendMail"/>
+        </action>
+                
         <!--- by gedl, 25-9-2003 -->
         <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.SelectCandidacies" path="/selectCandidacies" 
             name="selectCandidaciesForm" parameter="method" scope="request">

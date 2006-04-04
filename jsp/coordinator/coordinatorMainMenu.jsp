@@ -57,6 +57,15 @@
 			<br/><br/>
 			<strong><bean:message key="link.coordinator.student"/></strong>
 			<ul>
+			<li>
+					<bean:define id="link21">/mailSender.do?method=start&degreeCurricularPlanID=
+	        		</bean:define>
+		        	<bean:define id="listStudentsForCoordinator">
+    					<bean:write name="link21"/><bean:write name="degreeCurricularPlanID"/>
+    				</bean:define> 	
+					<html:link page="<%= pageContext.findAttribute("listStudentsForCoordinator").toString() %>">
+					<bean:message key="link.sendEmailToAllStudents" /></html:link>
+				</li>			
 				<li>
 					<bean:define id="link2">/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&degreeCurricularPlanID=
 	        		</bean:define>

@@ -18,6 +18,7 @@ import org.apache.struts.validator.DynaValidatorForm;
  */
 public class CmsConfigurationForm extends DynaValidatorForm
 {
+	@Override
 	 public void reset(ActionMapping mapping, HttpServletRequest request) {
 		 this.set("filterNonTextualAttachments",false);
 	 }

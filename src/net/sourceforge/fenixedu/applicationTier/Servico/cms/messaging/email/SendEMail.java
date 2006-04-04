@@ -30,19 +30,22 @@ public class SendEMail extends CmsService
 		public String message;
 		public IGroup[] toRecipients;
 		public IGroup[] allowedSenders;
+		public EMailAddress[] copyTo;
+		public boolean copyToSender;
 	}
 		
 	public SendMailReport run(SendEMailParameters parameters) throws SenderNotAllowed
 	{
 		EMailSender sender = new EMailSender(parameters.allowedSenders);
-		sender.addRecipient(RecipientType.TO,parameters.toRecipients);
+		sender.addRecipient(RecipientType.BCC,parameters.toRecipients);
+		sender.addRecipient(RecipientType.BCC,parameters.copyTo);
 		
 		EMailMessage message = new EMailMessage();
 		message.setSubject(parameters.subject);
 		message.setText(parameters.message);
 		
 		sender.setMessage(message);	
-		return sender.send(parameters.from);
+		return sender.send(parameters.from,parameters.copyToSender);
 		
 		
 	}

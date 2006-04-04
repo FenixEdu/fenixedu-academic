@@ -260,10 +260,10 @@
 	<table width="75%" cellpadding="0" border="0">
 	<tbody>
 	 <% Map sendMailParameters = new TreeMap(request.getParameterMap());
-        sendMailParameters.put("method","prepare");
+        sendMailParameters.put("method","start");
 		request.setAttribute("sendMailParameters",sendMailParameters);%>
 	<bean:define id="sendMailLinkParameters" type="java.util.Map" name="sendMailParameters"/>
-	   <html:link page="/sendMailToAllStudents.do" name="sendMailLinkParameters">
+	   <html:link page="/sendMailToWorkGroupStudents.do" name="sendMailLinkParameters">
 			<bean:message key="link.sendEmailToAllStudents"/><br/><br/>
 	   </html:link>
 	<br/>

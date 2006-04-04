@@ -10,17 +10,18 @@
 	}
 </style>
 
+<bean:define id="sendMailActioName" name="sendMailForm" property="sendMailActioName"/>
 <jsp:include page="/cms/manager/context.jsp"/>
 
 <logic:present name="groupsToChooseFrom">
 	<bean:define id="groups" name="sendMailForm" property="groupsToChooseFrom"/>
 </logic:present>
 
-<html:form method="post" action="/mailSender">
+<html:form method="post" action="<%=sendMailActioName.toString()%>">
 	<html:hidden property="method" value="send"/>
 	<html:hidden property="group"/>
 	<html:hidden property="returnURL"/>
-	<html:hidden property="state"/>
+	<html:hidden property="previousRequestParameters"/>
 
 <logic:present name="groups">
 	<div style="width:800px">
@@ -41,7 +42,9 @@
 	<br/>
 	<fieldset class="lfloat2">
 	<p><label>Nome do Remetente:</label><html:text property="fromPersonalName" size="50"/></p>	
-	<p><label>Endereço do Remetente:</label> <html:text property="fromAddress" size="50"/></p>	
+	<p><label>Endereço do Remetente:</label> <html:text property="fromAddress" size="50"/></p>
+	<p><label>Cópia para:</label> <html:text property="copyTo" size="50"/><font size="-2"> (separe os endereços por vírgulas)</font></p>
+	<p><label>Cópia para o remetente</label><html:checkbox property="copyToSender"/>(assinale caso deseje receber uma cópia da mensagem no endereço do remetente)</p> 
 	<p><label>Assunto:</label> <html:text property="subject" size="50"/></p>
 	<p><label>Mensagem:</label> <html:textarea rows="20" cols="100" property="message"/></p>
 	</fieldset>

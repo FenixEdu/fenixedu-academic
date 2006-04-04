@@ -24,6 +24,10 @@ else
 		 <%
 				int infoMessageNumber =0;
 				ActionMessages infoMessages = (ActionMessages) request.getAttribute(org.apache.struts.Globals.MESSAGE_KEY);
+				if (infoMessages != null)
+				{
+				System.out.println("Info:" + infoMessages.getClass());
+				}
 		 %>
 		<html:messages id="infoMsg" message="true" bundle="CMS_RESOURCES">
 			<logic:present name="infoMsg">
@@ -46,6 +50,10 @@ else
 		 <%
 				int errorMessageNumber =0;
 				ActionMessages errorMessages = (ActionMessages) request.getAttribute(org.apache.struts.Globals.ERROR_KEY);
+				if(errorMessages != null)
+				{
+				System.out.println("Error:" + errorMessages.getClass());
+				}
 		 %>
 		<html:messages id="errorMsg" message="false" bundle="CMS_RESOURCES">
 			<logic:present name="errorMsg">

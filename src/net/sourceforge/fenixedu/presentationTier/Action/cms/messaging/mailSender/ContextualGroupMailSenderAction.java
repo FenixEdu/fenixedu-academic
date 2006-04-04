@@ -27,12 +27,12 @@ import org.apache.struts.action.ActionForm;
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
  *         <br/> Created on 16:02:27,23/Mar/2006
- * @version $Id$
+ * @version $Id: ContextualGroupMailSenderAction.java,v 1.1 2006/03/29 17:15:55
+ *          gedl Exp $
  */
 public abstract class ContextualGroupMailSenderAction extends MailSenderAction {
 
-	@Override
-	protected IGroup[] getGroupsToSend(ActionForm form, HttpServletRequest request)
+	protected IGroup[] serializeGroups(ActionForm form, HttpServletRequest request)
 			throws FenixFilterException, FenixServiceException, FenixActionException {
 		SendMailForm sendMailForm = (SendMailForm) form;
 
@@ -54,13 +54,12 @@ public abstract class ContextualGroupMailSenderAction extends MailSenderAction {
 		}
 	}
 
-	@Override
 	protected List<IGroup> loadPersonalGroupsToChooseFrom(HttpServletRequest request)
 			throws FenixFilterException, FenixServiceException {
 		return null; // we don't want to display person's personal groups
 	}
 
-	protected String getSerializedGroup(IGroup group) throws FenixActionException {
+	protected String serializeGroup(IGroup group) throws FenixActionException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 			ObjectOutputStream dos = new ObjectOutputStream(baos);

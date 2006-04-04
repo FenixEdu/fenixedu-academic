@@ -67,42 +67,57 @@ public class EMailSender {
 	}
 
 	public void addRecipient(RecipientType type, Person... persons) {
-		for (Person person : persons) {
-			Recipient recipient = new Recipient();
-			recipient.setType(type);
-			recipient.setSubject(person);
-			this.recipients.add(recipient);
+		if (persons != null) {
+			for (Person person : persons) {
+				PersonRecipient recipient = new PersonRecipient(person);
+				recipient.setType(type);
+				this.recipients.add(recipient);
+			}
 		}
 	}
 
 	public void addRecipient(RecipientType type, Collection<Recipient> recipients) {
-		this.recipients.addAll(recipients);
+		if (recipients != null) {
+			this.recipients.addAll(recipients);
+		}
 	}
 
 	public void addRecipient(RecipientType type, List<IGroup> list) {
-		IGroup[] groups = new IGroup[list.size()];
-		for (int i = 0; i < groups.length; i++) {
-			groups[i] = list.get(i);
+		if (list != null) {
+			IGroup[] groups = new IGroup[list.size()];
+			for (int i = 0; i < groups.length; i++) {
+				groups[i] = list.get(i);
+			}
+			this.addRecipient(type, groups);
 		}
-		this.addRecipient(type, groups);
 	}
 
 	public void addRecipient(RecipientType type, IGroup... groups) {
-
-		int i = 0;
-		for (IGroup group : groups) {
-			for (Person person : group.getElements()) {
-				this.addRecipient(type, person);
+		if (groups != null) {
+			for (IGroup group : groups) {
+				for (Person person : group.getElements()) {
+					this.addRecipient(type, person);
+				}
 			}
-		}		
+		}
 	}
 
-	public SendMailReport send(EMailAddress from) throws SenderNotAllowed {
+	public void addRecipient(RecipientType type, EMailAddress... recipients) {
+		if (recipients != null) {
+			for (EMailAddress address : recipients) {
+				AddressRecipient recipient = new AddressRecipient(address);
+				recipient.setType(type);
+				this.recipients.add(recipient);
+			}
+		}
+	}
+
+	public SendMailReport send(EMailAddress from, boolean copyToSender) throws SenderNotAllowed {
 		if (!checkIfSenderIsAllowed()) {
 			throw new SenderNotAllowed();
 		}
 
-		return this.sendToAll(message, from);
+		return this.sendToAll(message, from, copyToSender);
 
 	}
 
@@ -122,29 +137,60 @@ public class EMailSender {
 		// all degree curricular plan students
 	}
 
-	private SendMailReport sendToAll(EMailMessage message, EMailAddress from) {
+	private SendMailReport sendToAll(EMailMessage message, EMailAddress from, boolean copyToSender) {
 
 		SendMailReport report = new SendMailReport();
-		Collection<Person> bccList = new ArrayList<Person>();
+		Collection<Person> bccListPerson = new ArrayList<Person>();
+		Collection<EMailAddress> bccListAddress = new ArrayList<EMailAddress>();
 
+		if (copyToSender) {
+			bccListAddress.add(from);
+		}
+		
 		for (Recipient recipient : this.recipients) {
-			if (!EMailAddress.isValid(recipient.getSubject().getEmail())) {
-				report.add(SendStatus.INVALID_ADDRESS, recipient.getSubject());
+			if (!recipient.getAddress().isValid()) {
+				if (recipient instanceof PersonRecipient) {
+					report.add(SendStatus.INVALID_ADDRESS, ((PersonRecipient) recipient).getSubject());
+				}
+				else if (recipient instanceof AddressRecipient) {
+					report.add(SendStatus.INVALID_ADDRESS, recipient.getAddress());
+				}
 			}
-			else if (!EMailAddress.isValid(recipient.getSubject().getNome(), recipient.getSubject().getEmail())) {
-				report.add(SendStatus.INVALID_PERSONAL_NAME, recipient.getSubject());
+			else if (recipient instanceof PersonRecipient
+					&& !EMailAddress.isValid(((PersonRecipient) recipient).getSubject().getNome(), ((PersonRecipient) recipient).getSubject().getEmail())) {
+				report.add(SendStatus.INVALID_PERSONAL_NAME, ((PersonRecipient) recipient).getSubject());
 			}
 			else {
-				bccList.add(recipient.getSubject());
+				if (recipient instanceof PersonRecipient) {
+					bccListPerson.add(((PersonRecipient) recipient).getSubject());
+				}
+				else if (recipient instanceof AddressRecipient) {
+					bccListAddress.add(((AddressRecipient) recipient).getAddress());
+				}
+
 			}
 		}
 
 		Collection<String> bccEmails = new ArrayList<String>();
-		for (Person person : bccList) {
+		for (Person person : bccListPerson) {
 			bccEmails.add(person.getEmail());
 		}
+		for (EMailAddress address : bccListAddress) {
+			bccEmails.add(address.getAddress());
+		}
+
 		Collection<String> notSent = EmailSender.send(from.getPersonalName(), from.getAddress(), null, null, bccEmails, message.getSubject(), message.getText());
-		for (Person person : bccList) {
+		
+		for (EMailAddress address : bccListAddress) {
+			if (!notSent.contains(address.getAddress())) {
+				report.add(SendStatus.SENT, address);
+			}
+			else {
+				report.add(SendStatus.TRANSPORT_ERROR, address);
+			}
+		}
+		
+		for (Person person : bccListPerson) {
 			if (!notSent.contains(person.getEmail())) {
 				report.add(SendStatus.SENT, person);
 			}
@@ -152,7 +198,6 @@ public class EMailSender {
 				report.add(SendStatus.TRANSPORT_ERROR, person);
 			}
 		}
-
 		return report;
 	}
 

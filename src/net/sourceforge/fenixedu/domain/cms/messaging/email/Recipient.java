@@ -8,8 +8,6 @@ package net.sourceforge.fenixedu.domain.cms.messaging.email;
 
 import javax.mail.Message;
 
-import net.sourceforge.fenixedu.domain.Person;
-
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
  *         <br/> Created on 11:48:24,8/Fev/2006
@@ -17,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Person;
  *         In the current version all recipients are added to BCC despite of the specified RecipientType
  * @version $Id$
  */
-public class Recipient
+public abstract class Recipient
 {
 	public enum RecipientType
 	{
@@ -45,7 +43,6 @@ public class Recipient
 		INVALID_ADDRESS;
 	}
 	
-	private Person subject;
 	private SendStatus status;
 	private RecipientType type;
 	
@@ -64,11 +61,6 @@ public class Recipient
 		this.type = type;
 	}
 
-	public Recipient(Person person)
-	{
-		this.subject = person;
-	}
-
 	public SendStatus getStatus()
 	{
 		return status;
@@ -78,14 +70,8 @@ public class Recipient
 	{
 		this.status = status;
 	}
+	
+	public abstract EMailAddress getAddress();
 
-	public Person getSubject()
-	{
-		return subject;
-	}
-
-	public void setSubject(Person subject)
-	{
-		this.subject = subject;
-	}		
+			
 }

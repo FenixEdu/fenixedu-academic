@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSende
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,8 +22,11 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionForm;
+
+import pt.ist.utl.fenix.utils.Pair;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -58,18 +62,16 @@ public class PersonalGroupsMailSender extends MailSenderAction {
 	}
 
 	@Override
-	protected IGroup[] getGroupsToSend(ActionForm form, HttpServletRequest request) throws FenixFilterException,
-			FenixServiceException {
-
-		Person person = this.getUserView(request).getPerson();
-		SendMailForm sendMailForm = (SendMailForm) form;
-		Integer[] ids = sendMailForm.getSelectedPersonalGroupsIds();
-		if (ids ==null || ids.length==0)
-		{
+	protected IGroup[] getGroupsToSend(IUserView userView, SendMailForm form,
+			Map previousRequestParameters) throws FenixFilterException, FenixServiceException,
+			FenixActionException {
+		Person person = userView.getPerson();
+		Integer[] ids = form.getSelectedPersonalGroupsIds();
+		if (ids == null || ids.length == 0) {
 			return new PersonalGroup[0];
 		}
 		IGroup[] groupsToSend = new PersonalGroup[ids.length];
-		
+
 		for (PersonalGroup group : person.getPersonalGroups()) {
 			for (int i = 0; i < ids.length; i++) {
 				if (group.getIdInternal().equals(ids[i])) {
@@ -78,7 +80,18 @@ public class PersonalGroupsMailSender extends MailSenderAction {
 				}
 			}
 		}
-		
+
 		return groupsToSend;
+	}
+
+	@Override
+	protected Pair<String, Object>[] getStateRequestAttributes(IUserView userView,
+			ActionForm actionForm, Map previousRequestParameters) throws FenixActionException,
+			FenixFilterException, FenixServiceException {
+		return null;
+	}
+
+	protected String getNoFromAddressWarningMessageKey() {
+		return "cms.mailSender.fillPersonEMailAddress";
 	}
 }

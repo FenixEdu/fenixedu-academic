@@ -21,22 +21,39 @@ import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.SendStatus;
  */
 public class SendMailReport {
 
-	private Map<SendStatus,Collection<Person>> report = new HashMap<SendStatus,Collection<Person>>();
+	private Map<SendStatus,Collection<Person>> personReport = new HashMap<SendStatus,Collection<Person>>();
+	private Map<SendStatus,Collection<EMailAddress>> addressReport = new HashMap<SendStatus,Collection<EMailAddress>>();
 	
 	public void add(SendStatus status,Person person)
 	{
-		Collection<Person> currentValues = this.report.get(status);
+		Collection<Person> currentValues = this.personReport.get(status);
 		if (currentValues == null)
 		{
 			currentValues = new ArrayList<Person>();
-			this.report.put(status,currentValues);
+			this.personReport.put(status,currentValues);
 		}
 		currentValues.add(person);
 	}
 	
-	public Collection<Person> get(SendStatus status)
+	public void add(SendStatus status,EMailAddress address)
 	{
-		return this.report.get(status);
+		Collection<EMailAddress> currentValues = this.addressReport.get(status);
+		if (currentValues == null)
+		{
+			currentValues = new ArrayList<EMailAddress>();
+			this.addressReport.put(status,currentValues);
+		}
+		currentValues.add(address);
+	}
+	
+	public Collection<Person> getPersonReport(SendStatus status)
+	{
+		return this.personReport.get(status);
+	}
+	
+	public Collection<EMailAddress> getAddressReport(SendStatus status)
+	{
+		return this.addressReport.get(status);
 	}
 	
 }

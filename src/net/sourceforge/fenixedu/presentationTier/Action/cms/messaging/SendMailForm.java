@@ -8,8 +8,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.cms.messaging;
 
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.sourceforge.fenixedu.accessControl.IGroup;
 
+import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.ValidatorForm;
 
 /**
@@ -21,6 +24,8 @@ public class SendMailForm extends ValidatorForm
 {
 	private static final long serialVersionUID = -1157986221367409679L;
 
+	private boolean copyToSender;
+	
 	private String subject;
 
 	private String message;
@@ -33,9 +38,13 @@ public class SendMailForm extends ValidatorForm
 
 	private String returnURL;
 	
+	private String copyTo;
+	
 	private String group;
 	
-	private String state;
+	private String sendMailActioName;
+	
+	private String previousRequestParameters;
 
 	private Collection<IGroup> groupsToChooseFrom;
 
@@ -129,11 +138,43 @@ public class SendMailForm extends ValidatorForm
 		this.group = group;
 	}
 
-	public String getState() {
-		return state;
+
+
+	public String getPreviousRequestParameters() {
+		return previousRequestParameters;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setPreviousRequestParameters(String previousRequestParameters) {
+		this.previousRequestParameters = previousRequestParameters;
+	}
+
+	public String getSendMailActioName() {
+		return sendMailActioName;
+	}
+
+	public void setSendMailActioName(String sendMailActioName) {
+		this.sendMailActioName = sendMailActioName;
+	}
+
+	public String getCopyTo() {
+		return copyTo;
+	}
+
+	public void setCopyTo(String copyTo) {
+		this.copyTo = copyTo;
+	}
+
+	public boolean getCopyToSender() {
+		return copyToSender;
+	}
+
+	public void setCopyToSender(boolean copyToSender) {
+		this.copyToSender = copyToSender;
+	}
+	
+	@Override
+	public void reset(ActionMapping mapping, HttpServletRequest request)
+	{
+		this.copyToSender=false;
 	}
 }
