@@ -4,10 +4,13 @@
 
 package net.sourceforge.fenixedu.domain.onlineTests;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Student;
 
 /**
  * @author Susana Fernandes
@@ -77,6 +80,16 @@ public class DistributedTest extends DistributedTest_Base {
     public void setEndHour(Calendar endHour) {
         final Date date = (endHour != null) ? endHour.getTime() : null;
         setEndHourDate(date);
+    }
+    
+    public List<StudentTestLog> getStudentTestLogs(final Student student){
+    	List<StudentTestLog> result = new ArrayList<StudentTestLog>();
+    	for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
+			if(studentTestLog.getStudent().equals(student)) {
+				result.add(studentTestLog);
+			}
+		}
+    	return result;
     }
 
 }

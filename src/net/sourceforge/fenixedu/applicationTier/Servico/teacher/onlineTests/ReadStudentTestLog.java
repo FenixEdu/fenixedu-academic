@@ -34,8 +34,7 @@ public class ReadStudentTestLog extends Service {
 		if (distributedTest == null) {
 			throw new FenixServiceException();
 		}
-		List<StudentTestLog> studentTestLogList = persistentSupport.getIPersistentStudentTestLog()
-				.readByStudentAndDistributedTest(student, distributedTest);
+		List<StudentTestLog> studentTestLogList = distributedTest.getStudentTestLogs(student);
 
 		for (StudentTestLog studentTestLog : studentTestLogList) {
 			InfoStudentTestLog infoStudentTestLog = InfoStudentTestLogWithStudentAndDistributedTest
