@@ -28,14 +28,10 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantPaymentE
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.owner.GrantOwnerOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gratuity.masterDegree.SibsPaymentFileEntryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.guide.ReimbursementGuideOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesCoursesResOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesSummaryOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesTeachersResOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestAdvisoryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.MetadataOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.QuestionOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.StudentTestLogOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.StudentTestQuestionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAttributeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationFormatOJB;
@@ -57,14 +53,10 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
@@ -227,10 +219,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new StudentTestQuestionOJB();
     }
 
-    public IPersistentStudentTestLog getIPersistentStudentTestLog() {
-        return new StudentTestLogOJB();
-    }
-
     public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {
         return new DistributedTestAdvisoryOJB();
     }
@@ -325,18 +313,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction() {
         return new InsuranceTransactionOJB();
-    }
-
-    public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary() {
-        return new OldInquiriesSummaryOJB();
-    }
-
-    public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes() {
-        return new OldInquiriesTeachersResOJB();
-    }
-
-    public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
-        return new OldInquiriesCoursesResOJB();
     }
 
     public static void fixDescriptors() {

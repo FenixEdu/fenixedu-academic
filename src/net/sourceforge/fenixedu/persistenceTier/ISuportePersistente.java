@@ -13,14 +13,10 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
@@ -56,8 +52,6 @@ public interface ISuportePersistente {
     public IPersistentDistributedTest getIPersistentDistributedTest();
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
-
-    public IPersistentStudentTestLog getIPersistentStudentTestLog();
 
     public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory();
 
@@ -104,12 +98,6 @@ public interface ISuportePersistente {
     public IPersistentObject getIPersistentObject();
 
     public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction();
-
-    public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary();
-
-    public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes();
-
-    public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes();
 
     public IPersistentCMS getIPersistentCms();
 

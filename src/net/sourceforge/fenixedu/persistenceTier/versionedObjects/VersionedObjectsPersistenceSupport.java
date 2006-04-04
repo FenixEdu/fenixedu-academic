@@ -24,14 +24,10 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
@@ -61,14 +57,10 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contr
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantPartVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantPaymentEntityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owner.GrantOwnerVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesCoursesResVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesSummaryVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesTeachersResVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.DistributedTestAdvisoryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.DistributedTestVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.MetadataVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.QuestionVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.StudentTestLogVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.StudentTestQuestionVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
@@ -83,10 +75,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public static VersionedObjectsPersistenceSupport getInstance() {
         return instance;
-    }
-
-    public IPersistentStudentTestLog getIPersistentStudentTestLog() {
-        return new StudentTestLogVO();
     }
 
     public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher() {
@@ -135,10 +123,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentSentSms getIPersistentSentSms() {
         return new SentSmsVO();
-    }
-
-    public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary() {
-        return new OldInquiriesSummaryVO();
     }
 
     public IPersistentGrantOwner getIPersistentGrantOwner() {
@@ -221,10 +205,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new SupportLessonVO();
     }
 
-    public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes() {
-        return new OldInquiriesTeachersResVO();
-    }
-
     public IPersistentObject getIPersistentObject() {
         return null;
     }
@@ -243,10 +223,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentCategory getIPersistentCategory() {
         return null;
-    }
-
-    public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
-        return new OldInquiriesCoursesResVO();
     }
 
     public IPersistentCMS getIPersistentCms() {
