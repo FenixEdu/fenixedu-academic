@@ -24,10 +24,6 @@ public class DateRenderer extends OutputRenderer {
 
     private String format;
     
-    public String getFormat() {
-        return format == null ? DEFAULT_FORMAT : format;
-    }
-
     /**
      * The format in which the date should be displayed. The format can
      * have the form accepted by {@link SimpleDateFormat}.
@@ -41,6 +37,14 @@ public class DateRenderer extends OutputRenderer {
         this.format = format;
     }
 
+    public String getFormat() {
+        return this.format == null ? DEFAULT_FORMAT : format;
+    }
+
+    public boolean isFormatSet() {
+        return this.format != null;
+    }
+    
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new Layout() {

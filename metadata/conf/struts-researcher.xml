@@ -12,6 +12,14 @@
 				dynamic="true">
 			<form-property name="searchedProjectTitle" type="java.lang.String"/>
 		</form-bean>
+		
+		<form-bean name="changeLocaleForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="windowLocation" type="java.lang.String"/>
+	   		<form-property name="newLanguage" type="java.lang.String"/>
+	   		<form-property name="newCountry" type="java.lang.String"/>
+		</form-bean>
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -66,6 +74,11 @@
 		    <forward name="Success" path="projects.createProject"/>
 		</action>
 		
+		<action path="/changeLocaleTo"
+	    		name="changeLocaleForm"
+	    		validate="false"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.research.ChangeLocale">
+	    </action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

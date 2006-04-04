@@ -11,7 +11,8 @@ public class JavaYearMonth2SqlStringFieldConversion implements FieldConversion {
     public Object javaToSql(Object object) {
         if (object != null) {
             Partial yearMonth = (Partial) object;
-            return yearMonth.get(DateTimeFieldType.year()) +"-"+ yearMonth.get(DateTimeFieldType.monthOfYear());
+            
+            return String.format("%d-%02d", yearMonth.get(DateTimeFieldType.year()), yearMonth.get(DateTimeFieldType.monthOfYear()));
         }
         return null;
     }

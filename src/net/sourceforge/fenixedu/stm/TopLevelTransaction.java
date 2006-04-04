@@ -132,7 +132,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     }
 
     public <T> VBoxBody<T> getBodyForRead(VBox<T> vbox, Object obj, String attr) {
-        VBoxBody<T> body = getBodyInTx(vbox);
+       VBoxBody<T> body = getBodyInTx(vbox);
 
         if (body == null) {
             body = vbox.body.getBody(number);

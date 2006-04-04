@@ -36,10 +36,6 @@ public class DateInputRenderer extends TextFieldRenderer {
     
     private String format;
     
-    public String getFormat() {
-        return format == null ? DEFAULT_FORMAT : format;
-    }
-
     /**
      * The format in which the date should be displayed. The format can
      * have the form accepted by 
@@ -52,6 +48,14 @@ public class DateInputRenderer extends TextFieldRenderer {
      */
     public void setFormat(String format) {
         this.format = format;
+    }
+
+    public String getFormat() {
+        return this.format == null ? DEFAULT_FORMAT : format;
+    }
+
+    public boolean isFormatSet() {
+        return this.format != null;
     }
 
     private Locale getLocale() {
@@ -72,13 +76,17 @@ public class DateInputRenderer extends TextFieldRenderer {
             dateInput.setValue(dateFormat.format(date));
         }
         
-        dateInput.setConverter(new DateConverter(dateFormat));
+        dateInput.setConverter(getDateConverter(dateFormat));
         
         HtmlContainer container = new HtmlInlineContainer();
         container.addChild(dateInput);
         container.addChild(new HtmlText(getFormat()));
         
         return container;
+    }
+
+    protected Converter getDateConverter(SimpleDateFormat dateFormat) {
+        return new DateConverter(dateFormat);
     }
     
     @Override
@@ -103,21 +111,22 @@ public class DateInputRenderer extends TextFieldRenderer {
         }
         
     }
-}
-
-class DateConverter extends Converter {
-    private SimpleDateFormat format;
     
-    public DateConverter(SimpleDateFormat format) {
-        this.format = format;
-    }
+    public static class DateConverter extends Converter {
+        private SimpleDateFormat format;
+        
+        public DateConverter(SimpleDateFormat format) {
+            this.format = format;
+        }
 
-    @Override
-    public Object convert(Class type, Object value) {
-        try {
-            return format.parse((String) value);
-        } catch (ParseException e) {
-            throw new ConversionException("could not convert input \"" + value + "\" to a date", e);
+        @Override
+        public Object convert(Class type, Object value) {
+            try {
+                return format.parse((String) value);
+            } catch (ParseException e) {
+                throw new ConversionException("could not convert input \"" + value + "\" to a date", e);
+            }
         }
     }
+    
 }

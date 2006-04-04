@@ -4,7 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<logic:present role="RESEARCHER">		
+<logic:present role="RESEARCHER">	
+
   	<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.interestsManagement.title"/> </h2>
 		
 		<fr:view name="researchInterests" layout="tabular-list" >
@@ -38,10 +39,10 @@
 			</fr:layout>
 		</fr:view>
 	
-	<fr:create type="net.sourceforge.fenixedu.domain.research.ResearchInterest" schema="researchInterest.simpleCreate"
-	           action="/interests/interestsManagement.do?method=prepare">
-		<fr:hidden slot="order" name="lastOrder"/>
-		<fr:hidden slot="party" name="party" />
-	</fr:create>
+		<fr:create type="net.sourceforge.fenixedu.domain.research.ResearchInterest" schema="researchInterest.simpleCreate"
+	  	         action="/interests/interestsManagement.do?method=prepare">
+			<fr:hidden slot="order" name="lastOrder"/>
+			<fr:hidden slot="party" name="party" />
+		</fr:create>
 </logic:present>
 

@@ -17,7 +17,7 @@
 	/>
 	
 	<field-descriptor
-		name="abstract"
+		name="projectAbstract"
 		column="ABSTRACT"
 		jdbc-type="LONGVARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"

@@ -77,6 +77,10 @@
 
 
 <logic:present role="RESEARCHER">		
+
+	<html:link page="/viewCurriculum.do?method=prepare&locale=en"> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.language.en" /></html:link> <br/>
+	<html:link page="/viewCurriculum.do?method=prepare&locale=pt"> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.language.pt" /></html:link> <br/>
+
 		<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.title"/> </h2>
 		
 				

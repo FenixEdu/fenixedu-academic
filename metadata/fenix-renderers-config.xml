@@ -94,6 +94,10 @@ Documentation:
           accordingly with the format given.  -->
     <renderer type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateRenderer"/>
 
+	<!--@ The default presentation for a joda partial is the presentation of all the date components of partial as
+		  a normal date and a label explaining the components presented -->
+    <renderer type="org.joda.time.Partial" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialRenderer"/>
+
     <!--@ The default presentation for a domain object consist of a link for it's details. The is the top level 
           version of the <tt>link</tt> layout. -->
     <renderer type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.presentationTier.renderers.DomainObjectLinkRenderer">
@@ -185,6 +189,33 @@ Documentation:
     <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>
     <renderer mode="input" type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateInputRenderer"/>
 
+	<!--@ The layout year-month allows you to insert a joda time partial given a month and a year -->
+	<renderer mode="input" type="org.joda.time.Partial" layout="year-month" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+		<property name="year" value="true"/>
+		<property name="month" value="true"/>
+	</renderer>
+	
+	<!--@ The layout year-month allows you to insert a joda time partial given a month, a year, and a day -->
+	<renderer mode="input" type="org.joda.time.Partial" layout="year-month-day" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+		<property name="year" value="true"/>
+		<property name="month" value="true"/>
+		<property name="day" value="true"/>
+	</renderer>
+
+	<!--@ The default layout for a TimeOfDay automatically includes the hout, minute, nad second in the partial -->
+	<renderer mode="input" type="org.joda.time.TimeOfDay" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+		<property name="hour" value="true"/>
+		<property name="minute" value="true"/>
+		<property name="second" value="true"/>
+	</renderer>
+	
+	<!--@ The default layout for a YearMonthDay automatically includes the hout, minute, nad second in the partial -->
+	<renderer mode="input" type="org.joda.time.YearMonthDay" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+		<property name="year" value="true"/>
+		<property name="month" value="true"/>
+		<property name="day" value="true"/>
+	</renderer>
+	
     <!--@ Allows to present a collection in a table were rows can be sorted by pressing the table headers. -->
     <renderer mode="input" type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer"/>
 

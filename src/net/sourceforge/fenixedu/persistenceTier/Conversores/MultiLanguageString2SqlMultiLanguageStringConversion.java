@@ -22,13 +22,14 @@ public class MultiLanguageString2SqlMultiLanguageStringConversion implements Fie
         if (source instanceof String) {
             String src = (String) source;
             MultiLanguageString multiLanguageString = new MultiLanguageString();
+            
             for (int i = 0; i < src.length();) {
                 final String language = src.substring(i, i + 2);
-                final int pos = src.indexOf(':');
-                final int lenght = Integer.parseInt(src.substring(i + 2, pos));
-                final String content = src.substring(pos+1, pos + lenght+1);
+                final int pos = src.indexOf(':', i + 2);
+                final int length = Integer.parseInt(src.substring(i + 2, pos));
+                final String content = src.substring(pos + 1, pos + 1 + length);
                 multiLanguageString.setContent(Language.valueOf(language), content);
-                i = pos + lenght+1;
+                i = pos + 1 + length;
             }
             return multiLanguageString;
         }

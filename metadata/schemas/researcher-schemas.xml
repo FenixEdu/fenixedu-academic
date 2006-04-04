@@ -33,9 +33,8 @@
 		<property name="rows" value="5"/>
 		<property name="columns" value="75"/>
 	</slot>
-	<!-- 
-	<slot name="project.startDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="project.endDate"/> -->
+	<slot name="project.startDate" layout="year-month" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="project.endDate" layout="year-month"/> 
 	<slot name="project.projectType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>	
