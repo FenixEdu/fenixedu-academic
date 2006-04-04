@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -32,6 +33,9 @@ public class Student extends Student_Base {
 
     private transient Integer approvedEnrollmentsNumber = 0;
 
+    final static Comparator numberComparator = new BeanComparator("number");;
+    
+       
     public Student() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
@@ -433,7 +437,7 @@ public class Student extends Student_Base {
     public static Integer generateStudentNumber(DegreeType degreeType) {
         Integer number = Integer.valueOf(0);
         List<Student> students = readStudentsByDegreeType(degreeType);
-        Collections.sort(students, new ReverseComparator(new BeanComparator("number")));
+        Collections.sort(students, new ReverseComparator(numberComparator));
 
         if (!students.isEmpty()) {
             number = students.get(0).getNumber();
@@ -447,5 +451,5 @@ public class Student extends Student_Base {
         }
 
         return Integer.valueOf(number.intValue() + 1);
-    }
+    } 
 }
