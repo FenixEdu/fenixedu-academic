@@ -264,6 +264,46 @@ public class Degree extends Degree_Base {
     public String getName() {
         return this.getNome();
     }
+    
+    public OldInquiriesCoursesRes getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(String code, ExecutionPeriod executionPeriod) {
+    	for (OldInquiriesCoursesRes oldInquiriesCoursesRes : this.getAssociatedOldInquiriesCoursesRes()) {
+			if(oldInquiriesCoursesRes.getCourseCode().equalsIgnoreCase(code) && oldInquiriesCoursesRes.getExecutionPeriod().equals(executionPeriod)) {
+				return oldInquiriesCoursesRes;
+			}
+		}
+    	return null;
+    }
+    
+    public List<OldInquiriesSummary> getOldInquiriesSummariesByExecutionPeriod(ExecutionPeriod executionPeriod){
+    	List<OldInquiriesSummary> result = new ArrayList<OldInquiriesSummary>();
+    	for (OldInquiriesSummary oldInquiriesSummary : this.getAssociatedOldInquiriesSummaries()) {
+			if(oldInquiriesSummary.getExecutionPeriod().equals(executionPeriod)) {
+				result.add(oldInquiriesSummary);
+			}
+		}
+    	return result;
+    }
+    
+    public List<OldInquiriesTeachersRes> getOldInquiriesTeachersResByExecutionPeriodAndCurricularYearAndCourseCode(ExecutionPeriod executionPeriod, Integer curricularYear, String courseCode){
+    	List<OldInquiriesTeachersRes> result = new ArrayList<OldInquiriesTeachersRes>();
+    	for (OldInquiriesTeachersRes oldInquiriesTeachersRes : this.getAssociatedOldInquiriesTeachersRes()) {
+			if(oldInquiriesTeachersRes.getExecutionPeriod().equals(executionPeriod) && oldInquiriesTeachersRes.getCurricularYear().equals(curricularYear) && oldInquiriesTeachersRes.getCourseCode().equalsIgnoreCase(courseCode)) {
+				result.add(oldInquiriesTeachersRes);
+			}
+		}
+    	return result;
+    }
+
+    public List<OldInquiriesTeachersRes> getOldInquiriesTeachersResByExecutionPeriodAndCurricularYearAndCourseCodeAndTeacher(ExecutionPeriod executionPeriod, Integer curricularYear, String courseCode, Teacher teacher){
+    	List<OldInquiriesTeachersRes> result = new ArrayList<OldInquiriesTeachersRes>();
+    	for (OldInquiriesTeachersRes oldInquiriesTeachersRes : this.getAssociatedOldInquiriesTeachersRes()) {
+			if(oldInquiriesTeachersRes.getExecutionPeriod().equals(executionPeriod) && oldInquiriesTeachersRes.getCurricularYear().equals(curricularYear) 
+					&& oldInquiriesTeachersRes.getCourseCode().equalsIgnoreCase(courseCode) && oldInquiriesTeachersRes.getTeacher().equals(teacher)) {
+				result.add(oldInquiriesTeachersRes);
+			}
+		}
+    	return result;
+    }
 
     
     // -------------------------------------------------------------

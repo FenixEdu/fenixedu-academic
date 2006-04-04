@@ -9,9 +9,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -24,17 +26,17 @@ public class ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID extends Servic
 
 	public List run(Integer degreeID, Integer executionPeriodID) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		List oldInquiriesSummaryList = null;
+		Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeID);
+		ExecutionPeriod executionPeriod = RootDomainObject.getInstance().readExecutionPeriodByOID(executionPeriodID);
 
-		if (degreeID == null) {
+		if (degree == null) {
 			throw new FenixServiceException("nullDegreeId");
 		}
-		if (executionPeriodID == null) {
+		if (executionPeriod == null) {
 			throw new FenixServiceException("nullExecutionPeriodId");
 		}
-		IPersistentOldInquiriesSummary pois = persistentSupport.getIPersistentOldInquiriesSummary();
-
-		oldInquiriesSummaryList = pois.readByDegreeIdAndExecutionPeriod(degreeID, executionPeriodID);
+		
+		List<OldInquiriesSummary> oldInquiriesSummaryList = degree.getOldInquiriesSummariesByExecutionPeriod(executionPeriod); 
 
 		CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
 

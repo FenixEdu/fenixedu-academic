@@ -9,9 +9,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -23,14 +23,13 @@ import org.apache.commons.collections.Transformer;
 public class ReadOldIquiriesSummaryByDegreeID extends Service {
 
 	public List run(Integer degreeID) throws FenixServiceException, ExcepcaoPersistencia {
-		List oldInquiriesSummaryList = null;
+		Degree degree = rootDomainObject.readDegreeByOID(degreeID);
 
-		if (degreeID == null) {
+		if (degree == null) {
 			throw new FenixServiceException("nullDegreeId");
 		}
-		IPersistentOldInquiriesSummary pois = persistentSupport.getIPersistentOldInquiriesSummary();
-
-		oldInquiriesSummaryList = pois.readByDegreeId(degreeID);
+		
+		List<OldInquiriesSummary> oldInquiriesSummaryList = degree.getAssociatedOldInquiriesSummaries();
 
 		CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
 
