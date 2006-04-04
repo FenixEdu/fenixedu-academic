@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -239,7 +237,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
 
         CurricularYear curricularYearToReturn = null;
-        List curricularCourseScopesFound = null;
+        List<CurricularCourseScope> curricularCourseScopesFound = null;
         CurricularCourseScope curricularCourseScopeFound = null;
         boolean foundInBranchButNotInSemester = false;
         boolean notFoundInBranch = false;
@@ -395,7 +393,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return !result.isEmpty();
     }
 
-    private CurricularYear getCurricularYearWithLowerYear(List listOfScopes, Date date) {
+    private CurricularYear getCurricularYearWithLowerYear(List<CurricularCourseScope> listOfScopes, Date date) {
 
         if (listOfScopes.isEmpty()) {
             return null;
@@ -897,15 +895,23 @@ public class CurricularCourse extends CurricularCourse_Base {
         return false;
     }
 
-
+    public static List<CurricularCourse> readAll() {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+        
+        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
+            if (degreeModule instanceof CurricularCourse) {
+                result.add((CurricularCourse) degreeModule);
+            }
+        }
+        
+        return result;
+    }
+    
     public static List<CurricularCourse> readByCurricularStage(CurricularStage curricularStage){
     	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-    	for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
-			if(degreeModule instanceof CurricularCourse) {
-				CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-				if(curricularCourse.getCurricularStage() != null && curricularCourse.getCurricularStage().equals(curricularStage)) {
-					result.add(curricularCourse);
-				}
+    	for (CurricularCourse curricularCourse : CurricularCourse.readAll()) {
+			if(curricularCourse.getCurricularStage() != null && curricularCourse.getCurricularStage().equals(curricularStage)) {
+				result.add(curricularCourse);
 			}
 		}
     	return result;

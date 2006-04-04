@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
@@ -21,6 +22,18 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 
 public class CourseGroup extends CourseGroup_Base {
 
+    public static List<CourseGroup> readAll() {
+        List<CourseGroup> result = new ArrayList<CourseGroup>();
+        
+        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
+            if (degreeModule instanceof CourseGroup) {
+                result.add((CourseGroup) degreeModule);
+            }
+        }
+        
+        return result;
+    }
+    
     protected CourseGroup() {
         super();
         setOjbConcreteClass(CourseGroup.class.getName());

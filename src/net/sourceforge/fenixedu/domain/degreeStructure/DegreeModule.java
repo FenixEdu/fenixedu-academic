@@ -46,30 +46,6 @@ public abstract class DegreeModule extends DegreeModule_Base {
                 endExecutionPeriod);
     }
     
-    public static List<CurricularCourse> readCurricularCourses() {
-        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-        
-        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
-            if (degreeModule instanceof CurricularCourse) {
-                result.add((CurricularCourse) degreeModule);
-            }
-        }
-        
-        return result;
-    }
-    
-    public static List<CourseGroup> readCourseGroups() {
-        List<CourseGroup> result = new ArrayList<CourseGroup>();
-        
-        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
-            if (degreeModule instanceof CourseGroup) {
-                result.add((CourseGroup) degreeModule);
-            }
-        }
-        
-        return result;
-    }
-    
     public void deleteContext(Context context) {        
         if (hasParentContexts(context)) {
             context.delete();
