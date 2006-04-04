@@ -570,7 +570,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         linkParameters.put("executionDegreeID", this.executionDegreeID.toString());
         linkParameters.put("curricularYearID", this.getCurricularYearID().toString());
         linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
-        linkParameters.put("executionPeriodOID", this.getExecutionPeriodOID().toString());
+        if (this.getExecutionPeriodOID() != null) {
+            linkParameters.put("executionPeriodOID", this.getExecutionPeriodOID().toString());
+        } else {
+            linkParameters.put("executionPeriodOID", executionCourse.getExecutionPeriod().getIdInternal().toString());
+        }
         return linkParameters;
     }
 
