@@ -24,6 +24,7 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.calendarPeriodHidden}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
+		<h:outputText escape="false" value="<input id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
 
 		<h:panelGrid styleClass="infoselected">
@@ -115,9 +116,6 @@
 			<h:commandLink action="associateExecutionCourseToWrittenEvaluation">
 				<h:outputText value="#{bundleSOP['property.exam.associate']}" escape="false"/>
 				<f:param name="executionPeriodOID" value="#{SOPEvaluationManagementBackingBean.executionPeriodOID}" />
-				<c:forEach items="${SOPEvaluationManagementBackingBean.curricularYearIDs}" var="curricularYearID">
-					<f:param name="curricularYearIDs" value="#{curricularYearID}" />
-				</c:forEach>
 			</h:commandLink>
 		</h:panelGrid>
 

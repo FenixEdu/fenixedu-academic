@@ -11,17 +11,17 @@
 	<h:form>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
-		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.curricularYearIdHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.dayHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.monthHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.yearHidden}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
 		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
 		<h:panelGrid columns="1" styleClass="infoselected">
 			<h:outputText value="#{bundleSOP['property.executionPeriod']}: <b>#{SOPEvaluationManagementBackingBean.executionPeriodLabel}</b>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.context.degree']}: <b>#{SOPEvaluationManagementBackingBean.executionDegreeLabel}</b>" escape="false"/>
-			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: <b>#{SOPEvaluationManagementBackingBean.curricularYear}</b>" escape="false"/>
+			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: <b> </b>" escape="false"/>
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false"/>
 

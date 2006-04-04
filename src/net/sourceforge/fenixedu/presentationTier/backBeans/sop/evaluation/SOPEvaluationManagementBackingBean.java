@@ -66,6 +66,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     protected HtmlInputHidden executionDegreeIdHidden;
     protected Integer curricularYearID;
     protected HtmlInputHidden curricularYearIdHidden;
+    protected String curricularYearIDsParameterString;
     protected Integer calendarPeriod;
     protected HtmlInputHidden calendarPeriodHidden;
     private Integer[] curricularYearIDs;
@@ -513,11 +514,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
 
         List<SelectItem> curricularYearItems = new ArrayList<SelectItem>(6);
-        curricularYearItems.add(new SelectItem(1, "1º Ano"));
-        curricularYearItems.add(new SelectItem(2, "2º Ano"));
-        curricularYearItems.add(new SelectItem(3, "3º Ano"));
-        curricularYearItems.add(new SelectItem(4, "4º Ano"));
-        curricularYearItems.add(new SelectItem(5, "5º Ano"));
+        curricularYearItems.add(new SelectItem(1, "1ï¿½ Ano"));
+        curricularYearItems.add(new SelectItem(2, "2ï¿½ Ano"));
+        curricularYearItems.add(new SelectItem(3, "3ï¿½ Ano"));
+        curricularYearItems.add(new SelectItem(4, "4ï¿½ Ano"));
+        curricularYearItems.add(new SelectItem(5, "5ï¿½ Ano"));
 
         return curricularYearItems;
     }
@@ -548,22 +549,44 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.setCurricularYearIDs((Integer[]) valueChangeEvent.getNewValue());
     }
 
+    public Integer[] getCurricularYearIDParameters() {
+    	final String curricularYearIDsParameterString = getRequestParameter("curricularYearIDsParameterString");
+    	if (curricularYearIDsParameterString != null && curricularYearIDsParameterString.length() > 0 && !curricularYearIDsParameterString.equals("null")) {
+    		final String[] curricularYearIDsParameterStringTokens = curricularYearIDsParameterString.split(",");
+    		final Integer[] curricularYearIDParameters = new Integer[curricularYearIDsParameterStringTokens.length];
+    		for (int i = 0; i < curricularYearIDParameters.length; i++) {
+    			curricularYearIDParameters[i] = Integer.valueOf(curricularYearIDsParameterStringTokens[i]);
+    		}
+    		return curricularYearIDParameters;
+    	}
+    	return null;
+    }
+
+    public String getCurricularYearIDsParameterString() {
+    	final Integer[] curricularYearIDs = getCurricularYearIDs();
+    	if (curricularYearIDs != null && curricularYearIDs.length > 0) {
+    		final StringBuilder stringBuilder = new StringBuilder();
+    		for (int i = 0; i < curricularYearIDs.length; i++) {
+    			if (i > 0) {
+    				stringBuilder.append(',');
+    			}    			
+    			stringBuilder.append(curricularYearIDs[i].toString());
+    		}
+    		this.curricularYearIDsParameterString = stringBuilder.toString();
+    	}
+    	return curricularYearIDsParameterString;
+    }
+
+    public void setCurricularYearIDsParameterString(String curricularYearIDsParameterString) {
+    	this.curricularYearIDsParameterString = curricularYearIDsParameterString;
+    }
+
     public Integer[] getCurricularYearIDs() {
         if (curricularYearIDs == null) {
             curricularYearIDs = (Integer[]) getViewState().getAttribute("curricularYearIDs");
         }
         if (curricularYearIDs == null) {
-            final String[] curricularYearIDStrings = getRequestParameterValues("curricularYearIDs");
-            System.out.println("curricularYearIDStrings" + curricularYearIDStrings);
-            System.out.println("getRequestParameter(\"curricularYearIDs\")" + getRequestParameter("curricularYearIDs"));
-            if (curricularYearIDStrings != null) {
-                curricularYearIDs = new Integer[curricularYearIDStrings.length];
-                for (int i = 0; i < curricularYearIDStrings.length; i++) {
-                    if (curricularYearIDStrings[i] != null && curricularYearIDStrings[i].length() > 0 && !curricularYearIDStrings[i].equals("null")) {
-                        curricularYearIDs[i] = Integer.valueOf(curricularYearIDStrings[i]);
-                    }
-                }
-            }
+        	curricularYearIDs = getCurricularYearIDParameters();
         }
         return curricularYearIDs;
     }
@@ -673,9 +696,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         linkParameters.put("evaluationID", writtenEvaluation.getIdInternal().toString());
         linkParameters.put("executionPeriodID", this.executionPeriodID.toString());
         linkParameters.put("executionDegreeID", this.executionDegreeID.toString());
-        for (final Integer curricularYearID : getCurricularYearIDs()) {
-            linkParameters.put("curricularYearIDs", curricularYearID.toString());
-        }
+        linkParameters.put("curricularYearIDsParameterString", getCurricularYearIDsParameterString());
         linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
         if (this.getExecutionPeriodOID() != null) {
             linkParameters.put("executionPeriodOID", this.getExecutionPeriodOID().toString());
@@ -1168,10 +1189,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                     label.append(curricularCourseScope.getCurricularSemester().getCurricularYear()
                             .getYear());
                     if (!curricularCourseScope.getBranch().getName().equals("")) {
-                        label.append(" º Ano, ");
+                        label.append(" ï¿½ Ano, ");
                         label.append(curricularCourseScope.getBranch().getName());
                     } else {
-                        label.append(" º Ano");
+                        label.append(" ï¿½ Ano");
                     }
 
                     items.add(new SelectItem(curricularCourseScope.getIdInternal(), label.toString()));
@@ -1335,10 +1356,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         Integer selectedCurricularYearID = (Integer) this.getViewState().getAttribute(
                 "selectedCurricularYearID");
 
-        if (selectedCurricularYearID == null) {
-            selectedCurricularYearID = getCurricularYearIDs()[0];
-            setSelectedCurricularYearID(selectedCurricularYearID);
-        }
+//        if (selectedCurricularYearID == null) {
+//            selectedCurricularYearID = getCurricularYearIDs()[0];
+//            setSelectedCurricularYearID(selectedCurricularYearID);
+//        }
 
         return selectedCurricularYearID;
     }

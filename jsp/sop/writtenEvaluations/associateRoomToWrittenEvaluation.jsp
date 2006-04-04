@@ -27,6 +27,7 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.endHourHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.endMinuteHidden}"/>
 		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
 		<h:outputText escape="false" value="<input id='year' name='year' type='hidden' value='#{SOPEvaluationManagementBackingBean.year}'/>"/>
 		<h:outputText escape="false" value="<input id='month' name='month' type='hidden' value='#{SOPEvaluationManagementBackingBean.month}'/>"/>
