@@ -16,19 +16,15 @@ public class EditExternalPerson extends Service {
             String phone, String mobile, String homepage, String email) throws FenixServiceException,
             ExcepcaoPersistencia, DomainException {
 
-        ExternalPerson storedExternalPerson = (ExternalPerson) persistentObject.readByOID(ExternalPerson.class, externalPersonID);
+        ExternalPerson storedExternalPerson = rootDomainObject.readExternalPersonByOID(externalPersonID);
+        if (storedExternalPerson == null) {
+            throw new NonExistingServiceException("error.exception.externalPerson.nonExistingExternalPsrson");
+        }
 
-        if (storedExternalPerson == null)
-            throw new NonExistingServiceException(
-                    "error.exception.externalPerson.nonExistingExternalPsrson");
+        List<ExternalPerson> allExternalPersons = rootDomainObject.getExternalPersons();
 
-        List<ExternalPerson> allExternalPersons = (List<ExternalPerson>) persistentSupport
-                .getIPersistentExternalPerson().readAll(ExternalPerson.class);
-
-        Unit storedInstitution = (Unit) persistentObject.readByOID(
-                Unit.class, institutionID);
-
-        storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedInstitution,
-                allExternalPersons);
+        Unit storedInstitution = (Unit) rootDomainObject.readPartyByOID(institutionID);
+        storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedInstitution, allExternalPersons);
     }
+    
 }

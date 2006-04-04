@@ -13,8 +13,7 @@ public class ReadGlossaryEntries extends Service {
     public List<InfoGlossaryEntry> run() throws ExcepcaoPersistencia {
         List<InfoGlossaryEntry> result = new ArrayList<InfoGlossaryEntry>();
         
-        List<GlossaryEntry> glossaryEntries = (List<GlossaryEntry>) persistentObject.readAll(GlossaryEntry.class);
-        for (GlossaryEntry glossaryEntry : glossaryEntries) {
+        for (GlossaryEntry glossaryEntry : rootDomainObject.getGlossaryEntrys()) {
             result.add(InfoGlossaryEntry.newInfoFromDomain(glossaryEntry));
         }
         

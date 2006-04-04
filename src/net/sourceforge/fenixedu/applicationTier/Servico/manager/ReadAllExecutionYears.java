@@ -12,13 +12,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadAllExecutionYears extends Service {
 
     public List<InfoExecutionYear> run() throws FenixServiceException, ExcepcaoPersistencia {
-        List<ExecutionYear> executionYears = (List<ExecutionYear>) persistentObject.readAll(ExecutionYear.class);
-        if (executionYears == null || executionYears.isEmpty()) {
-            return new ArrayList<InfoExecutionYear>();
-        }
+        List<InfoExecutionYear> result = new ArrayList<InfoExecutionYear>();
 
-        List<InfoExecutionYear> result = new ArrayList<InfoExecutionYear>(executionYears.size());
-        for (ExecutionYear executionYear : executionYears) {
+        for (ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
             result.add(InfoExecutionYear.newInfoFromDomain(executionYear));
         }
 

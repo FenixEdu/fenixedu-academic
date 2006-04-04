@@ -1,6 +1,3 @@
-/**
- * Jan 16, 2006
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
@@ -13,17 +10,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.Predicate;
 
-/**
- * @author Ricardo Rodrigues
- * 
- */
-
 public class ReadDomainTeacherByNumber extends Service {
 
     public Teacher run(final Integer teacherNumber) throws ExcepcaoPersistencia, FenixServiceException {
-        List<Teacher> teachers = (List<Teacher>) persistentSupport.getIPersistentObject().readAll(
-                Teacher.class);
-
+        List<Teacher> teachers = rootDomainObject.getTeachers();
+        
         Teacher teacher = (Teacher) CollectionUtils.find(teachers, new Predicate() {
 
             public boolean evaluate(Object object) {
@@ -37,4 +28,5 @@ public class ReadDomainTeacherByNumber extends Service {
         }
         return teacher;
     }
+    
 }

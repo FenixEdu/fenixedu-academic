@@ -1,7 +1,3 @@
-/*
- * Created on 2004/08/30
- * 
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.Collection;
@@ -15,13 +11,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-/**
- * @author Luis Cruz
- */
 public class ReadFAQSections extends Service {
 
     public Collection run() throws ExcepcaoPersistencia {
-        List faqSections = (List) persistentObject.readAll(FAQSection.class);
+        List<FAQSection> faqSections = rootDomainObject.getFAQSections();
         return CollectionUtils.collect(faqSections, new Transformer() {
             public Object transform(Object arg0) {
                 FAQSection faqSection = (FAQSection) arg0;

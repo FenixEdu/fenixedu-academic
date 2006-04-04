@@ -1,7 +1,3 @@
-/*
- * Created on Jul 19, 2004
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.schoolRegistration;
 
 import java.util.Calendar;
@@ -25,10 +21,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Nuno Correia
- * @author Ricardo Rodrigues
- */
 public class SchoolRegistration extends Service {
 
     public Boolean run(final IUserView userView, final InfoPerson infoPerson,
@@ -71,8 +63,7 @@ public class SchoolRegistration extends Service {
         person.edit(infoPerson, country);
         person.setPassword(PasswordEncryptor.encryptPassword(infoPerson.getPassword()));
 
-        final Role studentRole = findRole((List<Role>) persistentObject.readAll(Role.class),
-                RoleType.STUDENT);
+        final Role studentRole = findRole(rootDomainObject.getRoles(), RoleType.STUDENT);
         final Role firstTimeStudentRole = findRole(person.getPersonRoles(), RoleType.FIRST_TIME_STUDENT);
 
         person.addPersonRoles(studentRole);

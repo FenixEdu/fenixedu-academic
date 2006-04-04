@@ -39,11 +39,10 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		
 		final List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
 		for(Integer executionPeriodID : executionPeriodsIDs){
-			executionPeriodList.add((ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID));
+			executionPeriodList.add(rootDomainObject.readExecutionPeriodByOID(executionPeriodID));
 		}
 		
-		final List<ExecutionPeriod> allExecutionPeriods = (List<ExecutionPeriod>) persistentObject.readAll(ExecutionPeriod.class);
-		
+		final List<ExecutionPeriod> allExecutionPeriods = rootDomainObject.getExecutionPeriods();
 		final ExecutionPeriod startPeriod = findStartPeriod(allExecutionPeriods);
 		
 		ExecutionPeriod endPeriod = findEndPeriod(executionPeriodList, startPeriod); 

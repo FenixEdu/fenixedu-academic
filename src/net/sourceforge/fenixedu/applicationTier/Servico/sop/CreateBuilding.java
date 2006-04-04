@@ -21,7 +21,7 @@ public class CreateBuilding extends Service {
             throw new ExistingServiceException();
         }
 
-        final Campus campus = (Campus) persistentObject.readByOID(Campus.class, campusID);
+        final Campus campus = rootDomainObject.readCampusByOID(campusID);
 
         final OldBuilding building = DomainFactory.makeOldBuilding();
         building.setName(buildingName);

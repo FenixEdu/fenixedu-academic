@@ -15,7 +15,7 @@ public class ReadAllCountries extends Service {
     public Object run() throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
         List<InfoCountry> result = new ArrayList<InfoCountry>();
         
-        List<Country> countries = (List<Country>) persistentObject.readAll(Country.class);
+        List<Country> countries = rootDomainObject.getCountrys();
         if (countries.isEmpty()) {
             throw new ExcepcaoInexistente("Non existing Countries !!");
         }

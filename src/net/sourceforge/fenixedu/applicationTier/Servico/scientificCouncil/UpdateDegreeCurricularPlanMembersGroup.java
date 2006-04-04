@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
@@ -12,13 +13,12 @@ import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 public class UpdateDegreeCurricularPlanMembersGroup extends Service {
 
     public void run(DegreeCurricularPlan degreeCurricularPlan, Integer[] add, Integer[] remove) throws ExcepcaoPersistencia {
-        List<Person> toAdd = materializePersons(persistentSupport, add);
-        List<Person> toRemove = materializePersons(persistentSupport, remove);
+        List<Person> toAdd = materializePersons(add);
+        List<Person> toRemove = materializePersons(remove);
         List<Person> finalList = new ArrayList<Person>();
         
         Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER); 
@@ -33,7 +33,7 @@ public class UpdateDegreeCurricularPlanMembersGroup extends Service {
             if (! toRemove.contains(person)) {
                 finalList.add(person);
                 addBolonhaRole(person, bolonhaRole);
-            } else if (person.hasRole(RoleType.BOLONHA_MANAGER) && !belongsToOtherGroupsWithSameRole(persistentSupport, degreeCurricularPlan, person)) {
+            } else if (person.hasRole(RoleType.BOLONHA_MANAGER) && !belongsToOtherGroupsWithSameRole(degreeCurricularPlan, person)) {
                 person.removeRoleByType(RoleType.BOLONHA_MANAGER);
             }
         }
@@ -48,12 +48,12 @@ public class UpdateDegreeCurricularPlanMembersGroup extends Service {
         degreeCurricularPlan.setCurricularPlanMembersGroup(new FixedSetGroup(finalList));
     }
 
-    private List<Person> materializePersons(ISuportePersistente persistentSupport, Integer[] personsIDs) throws ExcepcaoPersistencia {
+    private List<Person> materializePersons(Integer[] personsIDs) throws ExcepcaoPersistencia {
         if (personsIDs != null) {
             List<Person> result = new ArrayList<Person>();
             
             for (Integer personID : personsIDs) {
-                result.add((Person) persistentObject.readByOID(Person.class, personID));
+                result.add((Person) rootDomainObject.readPartyByOID(personID));
             }
             
             return result;
@@ -68,18 +68,19 @@ public class UpdateDegreeCurricularPlanMembersGroup extends Service {
         }
     }
 
-    private boolean belongsToOtherGroupsWithSameRole(ISuportePersistente persistentSupport, DegreeCurricularPlan dcpWhoAsks, Person person) throws ExcepcaoPersistencia {
-        List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentObject.readAll(DegreeCurricularPlan.class);
-        for (DegreeCurricularPlan dcp : dcps) {
-            if (dcp != dcpWhoAsks) {
-                Group group = dcp.getCurricularPlanMembersGroup();
-                if (group != null && group.isMember(person)) {
-                    return true;
+    private boolean belongsToOtherGroupsWithSameRole(DegreeCurricularPlan dcpWhoAsks, Person person) throws ExcepcaoPersistencia {
+        for (Degree bolonhaDegree : Degree.readBolonhaDegrees()) {
+            for (DegreeCurricularPlan dcp : bolonhaDegree.getDegreeCurricularPlans()) {
+                if (dcp != dcpWhoAsks) {
+                    Group group = dcp.getCurricularPlanMembersGroup();
+                    if (group != null && group.isMember(person)) {
+                        return true;
+                    }
                 }
             }
         }
 
-        List<Department> departments = (List<Department>) persistentObject.readAll(Department.class);
+        List<Department> departments = rootDomainObject.getDepartments();
         for (Department department : departments) {
             Group group = department.getCompetenceCourseMembersGroup();
             if (group != null && group.isMember(person)) {

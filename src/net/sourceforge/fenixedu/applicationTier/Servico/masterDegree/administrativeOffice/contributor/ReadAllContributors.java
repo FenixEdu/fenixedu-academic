@@ -14,8 +14,7 @@ public class ReadAllContributors extends Service {
 	public List<InfoContributor> run() throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoContributor> result = new ArrayList<InfoContributor>();
         
-        List<Contributor> contributors = (List<Contributor>) persistentObject.readAll(Contributor.class);
-        for (Contributor contributor : contributors) {
+        for (Contributor contributor : rootDomainObject.getContributors()) {
             result.add(InfoContributor.newInfoFromDomain(contributor));
         }
 
