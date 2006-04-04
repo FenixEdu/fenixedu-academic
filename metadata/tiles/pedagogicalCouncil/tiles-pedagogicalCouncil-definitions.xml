@@ -4,9 +4,19 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="pedagogicalCouncil.masterPage" extends="df.layout.two-column">
-	  <put name="title" value="" />
+	  <put name="title" value="Conselho Pedagógico" />
 	  <put name="serviceName" value="" />
 	  <put name="navLocal" value="/pedagogicalCouncil/localNavigationBar.jsp" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
+	  <put name="body-context" value="/commons/blank.jsp"/>
+      <put name="body" value="/commons/blank.jsp" />
+      <put name="footer" value="/copyright.jsp" />
+	</definition>
+
+	<definition name="pedagogicalCouncil.masterPage-without-local-navigation" extends="df.layout.two-column">
+	  <put name="title" value="Conselho Pedagógico" />
+	  <put name="serviceName" value="" />
+	  <put name="navLocal" value="" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
 	  <put name="body-context" value="/commons/blank.jsp"/>
       <put name="body" value="/commons/blank.jsp" />

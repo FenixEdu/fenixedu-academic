@@ -1459,6 +1459,43 @@
 	</navigation-rule>
 	<!-- END: COORDINATOR Navigation Rules -->	
 	
+	<!-- BEGIN: Pedagogical Council Navigation Rules -->
+	<navigation-rule>
+		<from-view-id>/pedagogicalCouncil/competenceCourses/showCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/pedagogicalCouncil/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pedagogicalCouncil/curricularPlans/viewDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/pedagogicalCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pedagogicalCouncil/curricularPlans/viewCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/pedagogicalCouncil/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pedagogicalCouncil/curricularPlans/viewCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/pedagogicalCouncil/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pedagogicalCouncil/curricularPlans/viewCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/pedagogicalCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- END: Pedagogical Council Navigation Rules -->
 
 	<!-- BEGIN: Scientific Council Navigation Rules -->
 	<!-- Degree -->

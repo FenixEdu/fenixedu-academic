@@ -3,6 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
+<!-- Import new CSS for this section: #navlateral  -->
+<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
+
 <logic:present role="PEDAGOGICAL_COUNCIL">
 	<ul>
 		<li>
@@ -10,5 +13,20 @@
 			    <bean:message key="link.weekly.work.load"/>
 			</html:link>
 		</li>
-	</ul>	
+		<br/>
+		<li class="navheader">
+			<bean:message bundle="PEDAGOGICAL_COUNCIL" key="bolonha.process"/>
+		</li>
+		<li>
+			<html:link page="/competenceCourses/competenceCoursesManagement.faces">
+				<bean:message bundle="PEDAGOGICAL_COUNCIL" key="navigation.competenceCoursesManagement"/>
+			</html:link>
+		</li>
+
+		<li>
+			<html:link page="/curricularPlans/curricularPlansManagement.faces">
+				<bean:message bundle="PEDAGOGICAL_COUNCIL" key="navigation.curricularPlansManagement"/>
+			</html:link>
+		</li>
+	</ul>
 </logic:present>

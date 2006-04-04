@@ -416,7 +416,7 @@
             <param-value>/WEB-INF/conf/struts-researcher.xml</param-value>
         </init-param>
         <init-param>
-            <param-name>config/PedagogicalCouncil</param-name>
+            <param-name>config/pedagogicalCouncil</param-name>
             <param-value>/WEB-INF/conf/struts-pedagogicalCouncil.xml</param-value>
         </init-param>
         <init-param>
