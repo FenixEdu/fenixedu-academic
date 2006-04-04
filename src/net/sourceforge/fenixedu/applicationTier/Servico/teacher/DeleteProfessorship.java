@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -23,19 +22,16 @@ public class DeleteProfessorship extends Service {
     public Boolean run(Integer infoExecutionCourseCode, Integer teacherCode)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        IPersistentShiftProfessorship shiftProfessorshipDAO = persistentSupport
-                .getIPersistentShiftProfessorship();
-
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherCode);
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(
-                infoExecutionCourseCode);
+        ExecutionCourse executionCourse = rootDomainObject
+                .readExecutionCourseByOID(infoExecutionCourseCode);
 
         Professorship professorshipToDelete = null;
         if (teacher != null) {
             professorshipToDelete = teacher.getProfessorshipByExecutionCourse(executionCourse);
         }
 
-        List shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorshipToDelete);
+        List shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
 
         boolean hasCredits = false;
 

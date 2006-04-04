@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -42,9 +41,8 @@ public class ReadProfessorshipSupportLessons extends Service {
 
         InfoProfessorship infoProfessorship = InfoProfessorshipWithAll.newInfoFromDomain(professorship);
         professorshipSupportLessonsDTO.setInfoProfessorship(infoProfessorship);
-        IPersistentSupportLesson supportLessonDAO = persistentSupport.getIPersistentSupportLesson();
 
-        List supportLessons = supportLessonDAO.readByProfessorship(professorship.getIdInternal());
+        List supportLessons = professorship.getSupportLessons();
         List infoSupportLessons = (List) CollectionUtils.collect(supportLessons, new Transformer() {
 
             public Object transform(Object input) {

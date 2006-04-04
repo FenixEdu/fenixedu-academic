@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRe
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
@@ -21,8 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTe
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
-import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
-import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 
 public interface ISuportePersistente {
@@ -42,9 +39,7 @@ public interface ISuportePersistente {
     public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
 
     public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
-
-    public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage();
-
+    
     public IPersistentMetadata getIPersistentMetadata();
 
     public IPersistentQuestion getIPersistentQuestion();
@@ -63,8 +58,6 @@ public interface ISuportePersistente {
 
     public IPersistentGrantCostCenter getIPersistentGrantCostCenter();
 
-    public IPersistentGrantPart getIPersistentGrantPart();
-
     public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity();
 
     public IPersistentGrantContractRegime getIPersistentGrantContractRegime();
@@ -75,13 +68,7 @@ public interface ISuportePersistente {
 
     public IPersistentExternalPerson getIPersistentExternalPerson();
 
-    public IPersistentShiftProfessorship getIPersistentShiftProfessorship();
-
     public IPersistentReimbursementGuide getIPersistentReimbursementGuide();
-
-    public IPersistentSupportLesson getIPersistentSupportLesson();
-
-    public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime();
 
     public IPersistentGratuitySituation getIPersistentGratuitySituation();
 

@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.util.StudentState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class Student extends Student_Base {
 
@@ -68,21 +69,21 @@ public class Student extends Student_Base {
         }
         return null;
     }
-    
+
     public StudentCurricularPlan getActiveOrConcludedStudentCurricularPlan() {
-    	StudentCurricularPlan concludedStudentCurricularPlan = null;
+        StudentCurricularPlan concludedStudentCurricularPlan = null;
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
             if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
                 return studentCurricularPlan;
             }
-            if(concludedStudentCurricularPlan == null && studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.SCHOOLPARTCONCLUDED) {
-            	concludedStudentCurricularPlan = studentCurricularPlan;
+            if (concludedStudentCurricularPlan == null
+                    && studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.SCHOOLPARTCONCLUDED) {
+                concludedStudentCurricularPlan = studentCurricularPlan;
             }
         }
         return concludedStudentCurricularPlan;
     }
 
-    
     public boolean attends(final ExecutionCourse executionCourse) {
         for (final Attends attends : getAssociatedAttends()) {
             if (attends.getDisciplinaExecucao() == executionCourse) {
@@ -307,29 +308,33 @@ public class Student extends Student_Base {
         }
         return result;
     }
-    
-    public List<StudentCurricularPlan> getStudentCurricularPlansBySpecialization(Specialization specialization) {
+
+    public List<StudentCurricularPlan> getStudentCurricularPlansBySpecialization(
+            Specialization specialization) {
         List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
         for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
-            if (studentCurricularPlan.getSpecialization() != null && studentCurricularPlan.getSpecialization().equals(specialization)) {
+            if (studentCurricularPlan.getSpecialization() != null
+                    && studentCurricularPlan.getSpecialization().equals(specialization)) {
                 result.add(studentCurricularPlan);
             }
         }
         return result;
     }
 
-    public List<StudentCurricularPlan> getStudentCurricularPlansBySpecializationAndState(Specialization specialization, StudentCurricularPlanState state) {
+    public List<StudentCurricularPlan> getStudentCurricularPlansBySpecializationAndState(
+            Specialization specialization, StudentCurricularPlanState state) {
         List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
         for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
-            if (studentCurricularPlan.getSpecialization() != null && studentCurricularPlan.getSpecialization().equals(specialization) 
-            		&& studentCurricularPlan.getCurrentState() != null && studentCurricularPlan.getCurrentState().equals(state)) {
+            if (studentCurricularPlan.getSpecialization() != null
+                    && studentCurricularPlan.getSpecialization().equals(specialization)
+                    && studentCurricularPlan.getCurrentState() != null
+                    && studentCurricularPlan.getCurrentState().equals(state)) {
                 result.add(studentCurricularPlan);
             }
         }
         return result;
     }
 
-    
     public List<Attends> readAttendsInCurrentExecutionPeriod() {
         List<Attends> attends = new ArrayList<Attends>();
         for (Attends attend : this.getAssociatedAttends()) {
@@ -383,11 +388,13 @@ public class Student extends Student_Base {
             String studentName, String docIdNumber, IDDocumentType idType, Integer studentNumber) {
 
         final List<Student> students = new ArrayList();
-        final String studentNameToMatch = (studentName == null) ? null : studentName.replaceAll("%", ".*").toLowerCase();
+        final String studentNameToMatch = (studentName == null) ? null : studentName.replaceAll("%",
+                ".*").toLowerCase();
         for (Student student : RootDomainObject.getInstance().getStudents()) {
             Person person = student.getPerson();
             if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)
-                    && ((studentNameToMatch != null && person.getName().toLowerCase().matches(studentNameToMatch)) || studentNameToMatch == null)
+                    && ((studentNameToMatch != null && person.getName().toLowerCase().matches(
+                            studentNameToMatch)) || studentNameToMatch == null)
                     && ((docIdNumber != null && person.getDocumentIdNumber().equals(docIdNumber)) || docIdNumber == null)
                     && ((idType != null && person.getIdDocumentType().equals(idType)) || idType == null)
                     && ((studentNumber != null && student.getNumber().equals(studentNumber)) || studentNumber == null)) {
@@ -426,20 +433,19 @@ public class Student extends Student_Base {
     public static Integer generateStudentNumber(DegreeType degreeType) {
         Integer number = Integer.valueOf(0);
         List<Student> students = readStudentsByDegreeType(degreeType);
-        Collections.sort(students, new BeanComparator("number"));
-        Collections.reverse(students);
-        
+        Collections.sort(students, new ReverseComparator(new BeanComparator("number")));
+
         if (!students.isEmpty()) {
             number = students.get(0).getNumber();
         }
-        
+
         // FIXME: ISTO E UMA SOLUCAO TEMPORARIA DEVIDO A EXISTIREM ALUNOS
         // NA SECRETARIA QUE
         // POR UM MOTIVO OU OUTRO NAO SE ENCONTRAM NA BASE DE DADOS
         if (degreeType.equals(DegreeType.MASTER_DEGREE) && (number.intValue() < 5411)) {
             number = Integer.valueOf(5411);
         }
-        
+
         return Integer.valueOf(number.intValue() + 1);
     }
 }

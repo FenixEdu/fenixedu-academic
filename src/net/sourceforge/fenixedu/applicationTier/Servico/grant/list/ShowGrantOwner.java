@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 
 /**
  * @author Pica
@@ -106,14 +105,13 @@ public class ShowGrantOwner extends Service {
 		List contractSubsidies = grantContract.getAssociatedGrantSubsidies();
 		Iterator subsidiesIter = contractSubsidies.iterator();
 		while (subsidiesIter.hasNext()) {
+            GrantSubsidy grantSubsidy = (GrantSubsidy) subsidiesIter.next();
 			InfoListGrantSubsidy newInfoListGrantSubsidy = new InfoListGrantSubsidy();
 			InfoGrantSubsidy newInfoGrantSubsidy = InfoGrantSubsidyWithContract
-					.newInfoFromDomain((GrantSubsidy) subsidiesIter.next());
+					.newInfoFromDomain(grantSubsidy);
 			newInfoListGrantSubsidy.setInfoGrantSubsidy(newInfoGrantSubsidy);
 			// read the subsidy grant parts
-			IPersistentGrantPart persistentGrantPart = persistentSupport.getIPersistentGrantPart();
-			List subsidyParts = persistentGrantPart.readAllGrantPartsByGrantSubsidy(newInfoGrantSubsidy
-					.getIdInternal());
+            List subsidyParts = grantSubsidy.getAssociatedGrantParts();			
 			Iterator partsIter = subsidyParts.iterator();
 			while (partsIter.hasNext()) {
 				InfoGrantPart newInfoGrantPart = InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity

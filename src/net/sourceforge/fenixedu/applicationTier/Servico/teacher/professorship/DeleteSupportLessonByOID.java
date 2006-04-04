@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.DeleteDomainOb
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 public class DeleteSupportLessonByOID extends DeleteDomainObjectService {
 
@@ -12,10 +11,6 @@ public class DeleteSupportLessonByOID extends DeleteDomainObjectService {
         return SupportLesson.class;
     }
 
-    protected IPersistentObject getIPersistentObject() {
-        return persistentSupport.getIPersistentSupportLesson();
-    }
-	
 	protected void deleteDomainObject(DomainObject domainObject) throws ExcepcaoPersistencia {
         SupportLesson supportLesson = (SupportLesson) domainObject;
         supportLesson.delete();

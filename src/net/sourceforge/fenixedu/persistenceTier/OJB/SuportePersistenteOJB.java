@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailAddressAliasOJB;
@@ -23,7 +22,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContract
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractRegimeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantCostCenterOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantOrientationTeacherOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantPartOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantPaymentEntityOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.owner.GrantOwnerOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gratuity.masterDegree.SibsPaymentFileEntryOJB;
@@ -36,9 +34,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.StudentTestQuest
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAttributeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationFormatOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.sms.SentSmsOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.ShiftProfessorshipOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship.SupportLessonOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.teacher.workingTime.TeacherInstitutionWorkingTimeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.InsuranceTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
@@ -49,7 +44,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRe
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
@@ -61,8 +55,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTe
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
-import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
-import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 import net.sourceforge.fenixedu.stm.Transaction;
@@ -159,10 +151,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new PersistentEnrolmentPeriod();
     }
 
-    public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage() {
-        return new ShiftProfessorshipOJB();
-    }
-
     public IPersistentGrantOwner getIPersistentGrantOwner() {
         return new GrantOwnerOJB();
     }
@@ -187,20 +175,8 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new ExternalPersonOJB();
     }
 
-    public IPersistentShiftProfessorship getIPersistentShiftProfessorship() {
-        return new ShiftProfessorshipOJB();
-    }
-
     public IPersistentReimbursementGuide getIPersistentReimbursementGuide() {
         return new ReimbursementGuideOJB();
-    }
-
-    public IPersistentSupportLesson getIPersistentSupportLesson() {
-        return new SupportLessonOJB();
-    }
-
-    public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime() {
-        return new TeacherInstitutionWorkingTimeOJB();
     }
 
     public IPersistentMetadata getIPersistentMetadata() {
@@ -263,15 +239,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
      */
     public IPersistentGrantCostCenter getIPersistentGrantCostCenter() {
         return new GrantCostCenterOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantPart()
-     */
-    public IPersistentGrantPart getIPersistentGrantPart() {
-        return new GrantPartOJB();
     }
 
     /*
