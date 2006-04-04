@@ -6,8 +6,13 @@
 <span><html:errors/></span>
 
 <html:form action="/executionDegreesManagement">
-	<html:hidden property="method" value="editExecutionDegree"/>
+	<bean:define id="degreeType" name="executionDegree" property="degreeCurricularPlan.degree.bolonhaDegreeType.name" />
+	<bean:define id="degreeCurricularPlanID" name="executionDegree" property="degreeCurricularPlan.idInternal" />
 	<bean:define id="executionDegreeID" name="executionDegree" property="idInternal" />
+
+	<html:hidden property="method" value="editExecutionDegree"/>
+	<html:hidden property="degreeType" value="<%= degreeType.toString() %>"/>
+	<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>" />
 	<html:hidden property="executionDegreeID" value="<%= executionDegreeID.toString() %>"/>
 	
 	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.executionDegree"/></h3>

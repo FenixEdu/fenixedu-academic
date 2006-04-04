@@ -177,7 +177,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         } catch (FenixServiceException e) {
             return mapping.getInputForward();
         }
-        return readDegreeCurricularPlans(mapping, actionForm, request, response);        
+        return readExecutionDegrees(mapping, actionForm, request, response);        
     }
     
     private void readAndSetDegrees(HttpServletRequest request) {
