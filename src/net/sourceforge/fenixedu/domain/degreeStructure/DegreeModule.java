@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -43,6 +44,30 @@ public abstract class DegreeModule extends DegreeModule_Base {
         checkOwnRestrictions(parentCourseGroup, curricularPeriod);
         context.edit(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod,
                 endExecutionPeriod);
+    }
+    
+    public static List<CurricularCourse> readCurricularCourses() {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+        
+        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
+            if (degreeModule instanceof CurricularCourse) {
+                result.add((CurricularCourse) degreeModule);
+            }
+        }
+        
+        return result;
+    }
+    
+    public static List<CourseGroup> readCourseGroups() {
+        List<CourseGroup> result = new ArrayList<CourseGroup>();
+        
+        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
+            if (degreeModule instanceof CourseGroup) {
+                result.add((CourseGroup) degreeModule);
+            }
+        }
+        
+        return result;
     }
     
     public void deleteContext(Context context) {        
