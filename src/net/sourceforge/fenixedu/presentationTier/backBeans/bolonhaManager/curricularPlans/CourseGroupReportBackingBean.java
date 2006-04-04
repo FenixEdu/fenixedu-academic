@@ -52,7 +52,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
-        return (DegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class, getDegreeCurricularPlanID());
+        return rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanID());
     }
     
     public Integer getCourseGroupID() {
@@ -64,7 +64,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
     }
     
     public CourseGroup getCourseGroup() throws FenixFilterException, FenixServiceException {
-        return (CourseGroup) readDomainObject(CourseGroup.class, this.getCourseGroupID());
+        return (CourseGroup) rootDomainObject.readDegreeModuleByOID(getCourseGroupID());
     }
 
     public String getName() throws FenixFilterException, FenixServiceException {
