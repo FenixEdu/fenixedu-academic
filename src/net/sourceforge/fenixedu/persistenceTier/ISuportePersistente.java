@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
-import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
@@ -79,8 +78,6 @@ public interface ISuportePersistente {
     public IPersistentPublicationAttribute getIPersistentPublicationAttribute();
 
     public IPersistentPublicationFormat getIPersistentPublicationFormat();
-
-    public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry();
 
     public IPersistentObject getIPersistentObject();
 

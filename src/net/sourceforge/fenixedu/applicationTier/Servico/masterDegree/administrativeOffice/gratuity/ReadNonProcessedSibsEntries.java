@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -9,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.sibs.InfoSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -19,20 +17,10 @@ import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersisten
 public class ReadNonProcessedSibsEntries extends Service {
 
 	public List run() throws FenixServiceException, ExcepcaoPersistencia {
-		List infoSibsFileEntries = new ArrayList();
-
-		IPersistentSibsPaymentFileEntry persistentSibsPaymentFileEntry = persistentSupport
-				.getIPersistentSibsPaymentFileEntry();
-
-		List sibsFileEntries = persistentSibsPaymentFileEntry.readNonProcessed();
-
-		for (Iterator iter = sibsFileEntries.iterator(); iter.hasNext();) {
-			SibsPaymentFileEntry sibsPaymentFileEntry = (SibsPaymentFileEntry) iter.next();
-			infoSibsFileEntries.add(InfoSibsPaymentFileEntry.newInfoFromDomain(sibsPaymentFileEntry));
-		}
-
-		return infoSibsFileEntries;
-
+		final List<InfoSibsPaymentFileEntry> result = new ArrayList<InfoSibsPaymentFileEntry>();
+        for (final SibsPaymentFileEntry sibsPaymentFileEntry : SibsPaymentFileEntry.readNonProcessed()) {
+            result.add(InfoSibsPaymentFileEntry.newInfoFromDomain(sibsPaymentFileEntry));
+        }
+		return result;
 	}
-
 }

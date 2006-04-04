@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsPaymentFileUtils;
 
@@ -309,12 +308,8 @@ public class ProcessSibsPaymentFile extends Service {
 
         // next check if the gratuity or insurance payment is repeated in
         // database
-        final IPersistentSibsPaymentFileEntry sibsPaymentFileEntryDAO = persistentSupport
-                .getIPersistentSibsPaymentFileEntry();
-        List sibsPaymentFileEntryList = sibsPaymentFileEntryDAO
-                .readByYearAndStudentNumberAndPaymentType(sibsPaymentFileEntry.getYear(),
+        List sibsPaymentFileEntryList = SibsPaymentFileEntry.readByYearAndStudentNumberAndPaymentType(sibsPaymentFileEntry.getYear(),
                         sibsPaymentFileEntry.getStudentNumber(), sibsPaymentFileEntry.getPaymentType());
-
         if (sibsPaymentFileEntryList.size() > 0) {
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
                 sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);

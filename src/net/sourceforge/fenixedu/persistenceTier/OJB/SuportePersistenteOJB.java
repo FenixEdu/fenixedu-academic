@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantCostCent
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantOrientationTeacherOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantPaymentEntityOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.owner.GrantOwnerOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.gratuity.masterDegree.SibsPaymentFileEntryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.guide.ReimbursementGuideOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestAdvisoryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestOJB;
@@ -45,7 +44,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
-import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
@@ -268,10 +266,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentPublicationFormat getIPersistentPublicationFormat() {
         return new PublicationFormatOJB();
-    }
-
-    public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry() {
-        return new SibsPaymentFileEntryOJB();
     }
 
     public IPersistentObject getIPersistentObject() {
