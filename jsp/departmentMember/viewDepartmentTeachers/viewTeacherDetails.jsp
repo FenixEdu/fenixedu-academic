@@ -293,12 +293,12 @@
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.teacher.details.functionsInformation.startDate']}" />
 					</f:facet>
-					<h:panelGroup rendered="#{teacherFunction.beginDate != null}">
+					<h:panelGroup rendered="#{teacherFunction.beginDateInDateType != null}">
 						<h:outputFormat value="{0, date, dd / MM / yyyy}" escape="false">
-							<f:param value="#{teacherFunction.beginDate}" />
+							<f:param value="#{teacherFunction.beginDateInDateType}" />
 						</h:outputFormat>
 					</h:panelGroup>
-					<h:panelGroup rendered="#{teacherFunction.beginDate == null}">
+					<h:panelGroup rendered="#{teacherFunction.beginDateInDateType == null}">
 						<h:outputText value="#{bundle['label.common.notAvailable']}" />
 					</h:panelGroup>
 				</h:column>
@@ -306,12 +306,12 @@
 					<f:facet name="header">
 						<h:outputText value="#{bundle['label.teacher.details.functionsInformation.endDate']}" />
 					</f:facet>
-					<h:panelGroup rendered="#{teacherFunction.endDate != null}">
+					<h:panelGroup rendered="#{teacherFunction.endDateInDateType != null}">
 						<h:outputFormat value="{0, date, dd / MM / yyyy}" escape="false">
-							<f:param value="#{teacherFunction.endDate}" />
+							<f:param value="#{teacherFunction.endDateInDateType}" />
 						</h:outputFormat>
 					</h:panelGroup>
-					<h:panelGroup rendered="#{teacherFunction.endDate == null}">
+					<h:panelGroup rendered="#{teacherFunction.endDateInDateType == null}">
 						<h:outputText value="#{bundle['label.common.notAvailable']}" />
 					</h:panelGroup>
 				</h:column>
