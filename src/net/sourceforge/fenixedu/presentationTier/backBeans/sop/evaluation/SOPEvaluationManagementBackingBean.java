@@ -65,6 +65,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     protected HtmlInputHidden executionDegreeIdHidden;
     protected Integer curricularYearID;
     protected HtmlInputHidden curricularYearIdHidden;
+    protected Integer calendarPeriod;
+    protected HtmlInputHidden calendarPeriodHidden;
     private String chooseMessage = messages.getMessage("label.choose.message");
     private HtmlInputHidden dayHidden;
     private HtmlInputHidden monthHidden;
@@ -226,9 +228,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return stringBuffer.toString();
     }
 
-    // END executionDegree
-
-    // BEGIN curricularYear
     public Integer getCurricularYearID() {
         if (this.curricularYearID == null && this.curricularYearIdHidden.getValue() != null
                 && !this.curricularYearIdHidden.getValue().equals("")) {
@@ -244,12 +243,35 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return curricularYearID;
     }
 
+    public Integer getCalendarPeriod() {
+        if (this.calendarPeriod == null && this.getCalendarPeriodHidden().getValue() != null
+                && !this.calendarPeriodHidden.getValue().equals("")) {
+            this.calendarPeriod = Integer.valueOf(this.getCalendarPeriodHidden().getValue().toString());
+        } else if (this.getRequestAttribute("calendarPeriod") != null
+                && !this.getRequestAttribute("calendarPeriod").equals("")) {
+            this.calendarPeriod = Integer.valueOf(this.getRequestAttribute("calendarPeriod")
+                    .toString());
+        } else if (this.getRequestParameter("calendarPeriod") != null
+                && !this.getRequestParameter("calendarPeriod").equals("")) {
+            this.calendarPeriod = Integer.valueOf(this.getRequestParameter("calendarPeriod"));
+        }
+        return calendarPeriod;
+    }
+
     public void setCurricularYearID(Integer curricularYearID) {
         if (curricularYearID != null) {
             this.curricularYearIdHidden = new HtmlInputHidden();
             this.curricularYearIdHidden.setValue(curricularYearID);
         }
         this.curricularYearID = curricularYearID;
+    }
+
+    public void setCalendarPeriod(Integer calendarPeriod) {
+        if (calendarPeriod != null) {
+            this.calendarPeriodHidden = new HtmlInputHidden();
+            this.calendarPeriodHidden.setValue(calendarPeriod);
+        }
+        this.calendarPeriod = calendarPeriod;
     }
 
     public HtmlInputHidden getCurricularYearIdHidden() {
@@ -260,12 +282,28 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return curricularYearIdHidden;
     }
 
+    public HtmlInputHidden getCalendarPeriodHidden() {
+        if (this.calendarPeriodHidden == null) {
+            this.calendarPeriodHidden = new HtmlInputHidden();
+            this.calendarPeriodHidden.setValue(this.getCalendarPeriod());
+        }
+        return calendarPeriodHidden;
+    }
+
     public void setCurricularYearIdHidden(HtmlInputHidden curricularYearIdHidden) {
         if (curricularYearIdHidden != null && curricularYearIdHidden.getValue() != null
                 && !curricularYearIdHidden.getValue().equals("")) {
             this.curricularYearID = Integer.valueOf(curricularYearIdHidden.getValue().toString());
         }
         this.curricularYearIdHidden = curricularYearIdHidden;
+    }
+
+    public void setCalendarPeriodHidden(HtmlInputHidden calendarPeriodHidden) {
+        if (calendarPeriodHidden != null && calendarPeriodHidden.getValue() != null
+                && !calendarPeriodHidden.getValue().equals("")) {
+            this.calendarPeriod = Integer.valueOf(calendarPeriodHidden.getValue().toString());
+        }
+        this.calendarPeriodHidden = calendarPeriodHidden;
     }
 
     public String getCurricularYear() {
@@ -473,8 +511,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
 
         List<SelectItem> curricularYearItems = new ArrayList<SelectItem>(6);
-
-        curricularYearItems.add(new SelectItem(0, this.chooseMessage));
         curricularYearItems.add(new SelectItem(1, "1º Ano"));
         curricularYearItems.add(new SelectItem(2, "2º Ano"));
         curricularYearItems.add(new SelectItem(3, "3º Ano"));
@@ -482,6 +518,20 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         curricularYearItems.add(new SelectItem(5, "5º Ano"));
 
         return curricularYearItems;
+    }
+
+    public List<SelectItem> getCalendarPeriodItems() {
+        if (this.getDisableDropDown()) {
+            return new ArrayList<SelectItem>();
+        }
+
+        List<SelectItem> calendarPeriodItems = new ArrayList<SelectItem>(7);
+
+        calendarPeriodItems.add(new SelectItem(0, messages.getMessage("label.calendarPeriodItem.all")));
+        calendarPeriodItems.add(new SelectItem(1, messages.getMessage("label.calendarPeriodItem.lesson.period")));
+        calendarPeriodItems.add(new SelectItem(2, messages.getMessage("label.calendarPeriodItem.exam.period")));
+
+        return calendarPeriodItems;
     }
 
     public void setNewValueExecutionDegreeID(ValueChangeEvent valueChangeEvent) {
@@ -492,32 +542,56 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.setCurricularYearID((Integer) valueChangeEvent.getNewValue());
     }
 
+    public void setNewValueCurricularYearIDs(ValueChangeEvent valueChangeEvent) {
+        this.setCurricularYearIDs((Integer[]) valueChangeEvent.getNewValue());
+    }
+
+    public Integer[] getCurricularYearIDs() {
+        return (Integer[]) getViewState().getAttribute("curricularYearIDs");
+    }
+
+    public void setCurricularYearIDs(Integer[] curricularYearIDs) {
+        getViewState().setAttribute("curricularYearIDs", curricularYearIDs);
+    }
+
+    public void setNewValueCalendarPeriod(ValueChangeEvent valueChangeEvent) {
+        this.setCalendarPeriod((Integer) valueChangeEvent.getNewValue());
+    }
+
     public void setNewValueExecutionCourseID(ValueChangeEvent valueChangeEvent) {
         this.setExecutionCourseID((Integer) valueChangeEvent.getNewValue());
     }
 
     public boolean getRenderContextSelection() {
         if (this.getExecutionPeriodID() == null || this.getExecutionDegreeID() == null
-                || this.getCurricularYearID() == null || this.getExecutionPeriodID() == 0
-                || this.getExecutionDegreeID() == 0 || this.getCurricularYearID() == 0) {
+                || this.getCurricularYearIDs() == null || this.getCurricularYearIDs().length <= 0
+                || this.getExecutionPeriodID() == 0 || this.getExecutionDegreeID() == 0) {
             return false;
         }
         return true;
     }
 
-    // END Drop down menu logic
-
-    // BEGIN Build of Calendar
     public Date getWrittenEvaluationsCalendarBegin() {
         Date beginDate = getExecutionPeriod().getBeginDate();
         final ExecutionDegree executionDegree = getExecutionDegree();
+
+        final Integer calendarPeriod = getCalendarPeriod();
+
         if (executionDegree != null) {
             if (getExecutionPeriod().getSemester().intValue() == 1
                     && executionDegree.getPeriodLessonsFirstSemester().getStart() != null) {
-                beginDate = executionDegree.getPeriodLessonsFirstSemester().getStart();
+                if (calendarPeriod != null && calendarPeriod.intValue() == 2) {
+                    beginDate = executionDegree.getPeriodExamsFirstSemester().getStart();
+                } else {
+                    beginDate = executionDegree.getPeriodLessonsFirstSemester().getStart();
+                }
             } else if (getExecutionPeriod().getSemester().intValue() == 2
                     && executionDegree.getPeriodLessonsSecondSemester().getStart() != null) {
-                beginDate = executionDegree.getPeriodLessonsSecondSemester().getStart();
+                if (calendarPeriod != null && calendarPeriod.intValue() == 2) {
+                    beginDate = executionDegree.getPeriodExamsSecondSemester().getStart();
+                } else {
+                    beginDate = executionDegree.getPeriodLessonsSecondSemester().getStart();
+                }
             }
         }
         return beginDate;
@@ -526,13 +600,25 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public Date getWrittenEvaluationsCalendarEnd() {
         Date endDate = getExecutionPeriod().getEndDate();
         final ExecutionDegree executionDegree = getExecutionDegree();
+
+        final Integer calendarPeriod = getCalendarPeriod();
+
         if (executionDegree != null) {
             if (getExecutionPeriod().getSemester().intValue() == 1
                     && executionDegree.getPeriodExamsFirstSemester().getEnd() != null) {
-                endDate = executionDegree.getPeriodExamsFirstSemester().getEnd();
+                if (calendarPeriod != null && calendarPeriod.intValue() == 1) {
+                    endDate = executionDegree.getPeriodLessonsFirstSemester().getEnd();
+                } else {
+                    endDate = executionDegree.getPeriodExamsFirstSemester().getEnd();
+                }
             } else if (getExecutionPeriod().getSemester().intValue() == 2
                     && executionDegree.getPeriodExamsSecondSemester().getEnd() != null) {
-                endDate = executionDegree.getPeriodExamsSecondSemester().getEnd();
+                if (calendarPeriod != null && calendarPeriod.intValue() == 1) {
+                    endDate = executionDegree.getPeriodLessonsSecondSemester().getEnd();
+                } else {
+                    endDate = executionDegree.getPeriodExamsSecondSemester().getEnd();
+                }
+                
             }
         }
         return endDate;

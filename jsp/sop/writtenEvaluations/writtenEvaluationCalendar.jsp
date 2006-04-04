@@ -114,14 +114,21 @@ table.executionCoursesWithoutWrittenEvaluations td {
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueExecutionDegreeID}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionDegrees}"/>
 			</h:selectOneMenu>
+
+			<h:outputText value="#{bundleSOP['property.context.period']}: " />
+			<h:selectOneMenu id="calendarPeriod" value="#{SOPEvaluationManagementBackingBean.calendarPeriod}"
+							disabled="#{SOPEvaluationManagementBackingBean.disableDropDown}"
+							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueCalendarPeriod}">
+				<f:selectItems value="#{SOPEvaluationManagementBackingBean.calendarPeriodItems}"/>
+			</h:selectOneMenu>
 			
 			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: " />
 			<h:selectOneMenu id="curricularYearID" value="#{SOPEvaluationManagementBackingBean.curricularYearID}"
 							disabled="#{SOPEvaluationManagementBackingBean.disableDropDown}"
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueCurricularYearID}">
-				<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularYearItems}" />
+				<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularYearItems}"/>
 			</h:selectOneMenu>
-			
+
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false"/>
 
