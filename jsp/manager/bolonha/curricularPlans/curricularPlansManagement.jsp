@@ -10,13 +10,13 @@
 	
 	<h:outputText value="<h2>#{bolonhaBundle['curricularPlans']}</h2>" escape="false"/>
  
-	<h:outputText value="<i>#{bolonhaBundle['no.curricularPlans']}</i>" escape="false" rendered="#{empty DegreeManagement.bolonhaDegrees}"/>
+	<h:outputText value="<i>#{bolonhaBundle['no.curricularPlans']}</i>" escape="false" rendered="#{empty DegreeManagement.filteredBolonhaDegrees}"/>
 
 	<h:panelGroup>
 		<h:outputText value="<br/>" escape="false" />
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 	
-		<fc:dataRepeater value="#{DegreeManagement.bolonhaDegrees}" var="degree" rendered="#{!empty DegreeManagement.bolonhaDegrees}">
+		<fc:dataRepeater value="#{DegreeManagement.filteredBolonhaDegrees}" var="degree" rendered="#{!empty DegreeManagement.filteredBolonhaDegrees}">
 			<h:outputText value="<table style='width: 720px' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
