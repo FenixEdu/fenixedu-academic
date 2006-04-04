@@ -12,6 +12,18 @@ import net.sourceforge.fenixedu.util.Season;
 
 public class Exam extends Exam_Base {
 
+    public static List<Exam> readExams() {
+        List<Exam> result = new ArrayList<Exam>();
+        
+        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+            if (evaluation instanceof Exam) {
+                result.add((Exam) evaluation);
+            }
+        }
+        
+        return result;
+    }
+    
     public Exam(Date examDay, Date examStartTime, Date examEndTime, 
             List<ExecutionCourse> executionCoursesToAssociate,
             List<CurricularCourseScope> curricularCourseScopesToAssociate, 
@@ -91,13 +103,7 @@ public class Exam extends Exam_Base {
         List<Exam> result = new ArrayList<Exam>();
         
         outter:
-        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
-            if (! (evaluation instanceof Exam)) {
-                continue;
-            }
-            
-            Exam exam = (Exam) evaluation;
-            
+        for (Exam exam : Exam.readExams()) {
             for (RoomOccupation occupation : exam.getAssociatedRoomOccupation()) {
                 if (! occupation.getRoom().getNome().equals(room)) {
                     continue outter;
@@ -128,13 +134,7 @@ public class Exam extends Exam_Base {
         List<Exam> result = new ArrayList<Exam>();
         
         outter:
-        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
-            if (! (evaluation instanceof Exam)) {
-                continue;
-            }
-            
-            Exam exam = (Exam) evaluation;
-        
+        for (Exam exam : Exam.readExams()) {
             if (! examDay.equals(exam.getDay())) {
                 continue;
             }

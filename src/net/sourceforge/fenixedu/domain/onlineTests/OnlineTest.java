@@ -1,18 +1,26 @@
-/*
- * Created on 29/Jan/2004
- *
- */
 package net.sourceforge.fenixedu.domain.onlineTests;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
-/**
- * 
- * @author Susana Fernandes
- * 
- */
 public class OnlineTest extends OnlineTest_Base {
 
+    public static List<OnlineTest> readOnlineTests() {
+        List<OnlineTest> result = new ArrayList<OnlineTest>();
+        
+        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+            if (evaluation instanceof OnlineTest) {
+                result.add((OnlineTest) evaluation);
+            }
+        }
+        
+        return result;
+    }
+    
     public OnlineTest() {
     	super();
         this.setOjbConcreteClass(OnlineTest.class.getName());
@@ -26,4 +34,5 @@ public class OnlineTest extends OnlineTest_Base {
 		setDistributedTest(null);
 		super.delete();
 	}
+    
 }

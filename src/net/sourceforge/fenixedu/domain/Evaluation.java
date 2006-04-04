@@ -3,13 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
-
-/**
- * @author T�nia Pous�o 24 de Junho de 2003
- */
 public abstract class Evaluation extends Evaluation_Base {
 
     public Evaluation() {
@@ -37,42 +32,6 @@ public abstract class Evaluation extends Evaluation_Base {
         super.deleteDomainObject();
     }
 
-    public static List<Exam> readExams() {
-        List<Exam> result = new ArrayList<Exam>();
-        
-        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
-            if (evaluation instanceof Exam) {
-                result.add((Exam) evaluation);
-            }
-        }
-        
-        return result;
-    }
-    
-    public static List<WrittenEvaluation> readWrittenEvaluations() {
-        List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
-        
-        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
-            if (evaluation instanceof Evaluation) {
-                result.add((WrittenEvaluation) evaluation);
-            }
-        }
-        
-        return result;
-    }
-    
-    public static List<OnlineTest> readOnlineTests() {
-        List<OnlineTest> result = new ArrayList<OnlineTest>();
-        
-        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
-            if (evaluation instanceof OnlineTest) {
-                result.add((OnlineTest) evaluation);
-            }
-        }
-        
-        return result;
-    }
-    
     public Mark addNewMark(Attends attends, String markValue) {
 		Mark mark =  new Mark();
 		mark.setAttend(attends);
@@ -91,4 +50,5 @@ public abstract class Evaluation extends Evaluation_Base {
 		}
 		return null;
 	}
+    
 }

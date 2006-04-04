@@ -19,6 +19,18 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 
 public class WrittenEvaluation extends WrittenEvaluation_Base {
 
+    public static List<WrittenEvaluation> readWrittenEvaluations() {
+        List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
+        
+        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+            if (evaluation instanceof Evaluation) {
+                result.add((WrittenEvaluation) evaluation);
+            }
+        }
+        
+        return result;
+    }
+    
     public WrittenEvaluation() {
     	super();
     }
