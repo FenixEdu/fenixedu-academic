@@ -142,26 +142,6 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 
 	}
 
-	public List readByExecutionDegree(Integer executionDegreeID) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
-		return queryList(MasterDegreeCandidate.class, crit);
-
-	}
-
-	public List readByDegreeCurricularPlanId(Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("executionDegree.degreeCurricularPlan.idInternal", degreeCurricularPlanId);
-
-		return queryList(MasterDegreeCandidate.class, crit);
-	}
-
-	public List readByPersonID(Integer personID) throws ExcepcaoPersistencia {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("person.idInternal", personID);
-		return queryList(MasterDegreeCandidate.class, criteria);
-	}
-
     public List readAllCandidatesByDCPlanIDSpecSituationAndIsAssistant(Integer degreeCurricularPlanId, 
     		Specialization specialization, SituationName situation, 
     		Boolean givesClasses) throws ExcepcaoPersistencia {

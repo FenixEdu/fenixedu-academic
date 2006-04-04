@@ -681,7 +681,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return false;
     }
-
+    
+    public Set<MasterDegreeCandidate> readMasterDegreeCandidates() {
+        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
+        for (final ExecutionDegree executionDegree : this.getExecutionDegreesSet()) {
+            result.addAll(executionDegree.getMasterDegreeCandidatesSet());
+        }
+        return result;
+    }
     
     // -------------------------------------------------------------
     // read static methods 

@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CandidateSituation;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -205,36 +204,6 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 		}
 		return null;
 
-	}
-
-	public List readByExecutionDegree(final Integer executionDegreeID) throws ExcepcaoPersistencia {
-
-		final ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
-				executionDegreeID);
-
-		return executionDegree.getMasterDegreeCandidates();
-	}
-
-	public List readByDegreeCurricularPlanId(Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
-
-		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
-				DegreeCurricularPlan.class, degreeCurricularPlanId);
-
-		final List<MasterDegreeCandidate> result = new ArrayList<MasterDegreeCandidate>();
-
-		for (ExecutionDegree degree : degreeCurricularPlan
-				.getExecutionDegrees()) {
-			result.addAll(degree.getMasterDegreeCandidates());
-		}
-
-		return result;
-	}
-
-	public List readByPersonID(Integer personID) throws ExcepcaoPersistencia {
-
-		final Person person = (Person) readByOID(Person.class, personID);
-
-		return person.getMasterDegreeCandidates();
 	}
 
     public List readAllCandidatesByDCPlanIDSpecSituationAndIsAssistant(Integer degreeCurricularPlanId, Specialization specialization, SituationName situation, Boolean givesClasses) throws ExcepcaoPersistencia {

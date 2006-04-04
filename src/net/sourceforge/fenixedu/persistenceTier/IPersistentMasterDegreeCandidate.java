@@ -92,27 +92,6 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	public MasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(Integer executionDegreeID,
 			Integer personID, Integer number) throws ExcepcaoPersistencia;
 
-	/**
-	 * @param executionDegree
-	 * @return List
-	 * @throws ExcepcaoPersistencia
-	 */
-	public List readByExecutionDegree(Integer executionDegreeID) throws ExcepcaoPersistencia;
-
-	/**
-	 * @param degreeCurricularPlanId
-	 * @return
-	 * @throws ExcepcaoPersistencia
-	 */
-	public List readByDegreeCurricularPlanId(Integer degreeCurricularPlanId) throws ExcepcaoPersistencia;
-
-	/**
-	 * @param personID
-	 * @return The Master degree candidate's for this person
-	 * @throws ExcepcaoPersistencia
-	 */
-	public List readByPersonID(Integer personID) throws ExcepcaoPersistencia;
-
     public List readAllCandidatesByDCPlanIDSpecSituationAndIsAssistant(Integer degreeCurricularPlanId, 
     		Specialization specialization, SituationName situation, 
     		Boolean givesClasses) throws ExcepcaoPersistencia;
