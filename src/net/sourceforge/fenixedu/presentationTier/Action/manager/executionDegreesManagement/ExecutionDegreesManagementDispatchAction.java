@@ -1,6 +1,3 @@
-/*
- * Created on Mar 31, 2006
- */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.executionDegreesManagement;
 
 import java.text.ParseException;
@@ -20,6 +17,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -29,6 +27,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
@@ -44,7 +44,6 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         if (degreeType != null && degreeType.length() != 0) {
             readAndSetDegreeCurricularPlans(request, degreeType);
         }
-        
         return mapping.findForward("executionDegreeManagement");
     }
     
@@ -82,15 +81,17 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         try {
             final Object[] args = {executionDegreeID, coordinatorNumber};
             ServiceManagerServiceFactory.executeService(getUserView(request), "AddCoordinatorByManager", args);
-            // TODO: error messages           
-        } catch (FenixFilterException e) {
-            return mapping.getInputForward();
-        } catch (FenixServiceException e) {
-            return mapping.getInputForward();
+
+        } catch (final FenixFilterException e) {
+            addMessage(request, "error.notAuthorized");
+        } catch (final FenixServiceException e) {
+            addMessage(request, e.getMessage());
+        } catch (final DomainException e) {
+            addMessage(request, e.getMessage());
         }
         return readCoordinators(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward saveCoordinatorsInformation(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
@@ -105,11 +106,13 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             final Integer[] coordinatorsToRemoveIDs = (Integer[]) form.get("removeCoordinatorsIDs");
             ServiceManagerServiceFactory.executeService(getUserView(request), "RemoveCoordinatorsByManager",
                     new Object[] { executionDegreeID, Arrays.asList(coordinatorsToRemoveIDs) });
-            // TODO: error messages
-        } catch (FenixFilterException e) {
-            return mapping.getInputForward();
-        } catch (FenixServiceException e) {
-            return mapping.getInputForward();
+            
+        } catch (final FenixFilterException e) {
+            addMessage(request, "error.notAuthorized");
+        } catch (final FenixServiceException e) {
+            addMessage(request, e.getMessage());
+        } catch (final DomainException e) {
+            addMessage(request, e.getMessage());
         }
         return readCoordinators(mapping, actionForm, request, response);
     }
@@ -169,15 +172,17 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
                             periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd,
                             periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd,
                             periodExamsSecondSemesterBegin, periodExamsSecondSemesterEnd });
-            //TODO: error messages
-        } catch (ParseException e) {
-            return mapping.getInputForward();
-        } catch (FenixFilterException e) {
-            return mapping.getInputForward();
-        } catch (FenixServiceException e) {
-            return mapping.getInputForward();
+            
+        } catch (final ParseException e) {
+            addMessage(request, "error.executionDegrees.invalid.date.format");
+        } catch (final FenixFilterException e) {
+            addMessage(request, "error.notAuthorized");
+        } catch (final FenixServiceException e) {
+            addMessage(request, e.getMessage());
+        } catch (final DomainException e) {
+            addMessage(request, e.getMessage());
         }
-        return readExecutionDegrees(mapping, actionForm, request, response);        
+        return readExecutionDegrees(mapping, actionForm, request, response);                
     }
     
     private void readAndSetDegrees(HttpServletRequest request) {
@@ -218,6 +223,12 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         } else {
             return mapping.getInputForward();
         }
+    }
+    
+    private void addMessage(HttpServletRequest request, String keyMessage) {
+        final ActionMessages actionMessages = new ActionMessages();
+        actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(keyMessage));
+        saveMessages(request, actionMessages);
     }
 
 }

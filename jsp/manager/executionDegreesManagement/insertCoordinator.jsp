@@ -3,7 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
-<span><html:errors/></span>
+<html:messages id="messages" message="true">
+	<span class="error"><bean:write name="messages" /></span>
+</html:messages>
 
 <html:form action="/executionDegreesManagement">
 	<html:hidden property="method" value="insertCoordinator"/>

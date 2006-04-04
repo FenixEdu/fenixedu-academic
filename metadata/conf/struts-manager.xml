@@ -1940,7 +1940,7 @@
 			forward="df.executionDegreeManagement.firstPage" />
 			
 	<action path="/executionDegreesManagement"
-			input="executionDegreesManagementMainPage.do"
+			input="/executionDegreesManagementMainPage.do"
 			name="executionDegreesManagementForm"
 			scope="request"
 			parameter="method"
