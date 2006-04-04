@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.util;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
@@ -7,7 +8,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Language;
 
-public class MultiLanguageString {
+public class MultiLanguageString implements Serializable {
     
     private static InheritableThreadLocal<Locale> locale = new InheritableThreadLocal<Locale>();
 
@@ -20,9 +21,7 @@ public class MultiLanguageString {
     {
         MultiLanguageString.locale.set(locale);
     }
-    
-    
-    
+
 	private Map<Language, String> contentsMap;
 
 	public MultiLanguageString() {
@@ -46,18 +45,29 @@ public class MultiLanguageString {
     }
     
     public String getContent() {
+        return getContent(getContentLanguage());
+    }
+	
+    public boolean isRequestedLanguage() {
         final Language userLanguage = getUserLanguage();
         if (userLanguage != null && hasLanguage(userLanguage)) {
-            return getContent(userLanguage);
+            return true;
+        }
+        return false;
+    }
+    
+    public Language getContentLanguage() {
+        final Language userLanguage = getUserLanguage();
+        if (userLanguage != null && hasLanguage(userLanguage)) {
+            return userLanguage;
         }
         final Language systemLanguage = getSystemLanguage();
         if (systemLanguage != null && hasLanguage(systemLanguage)) {
-            return getContent(systemLanguage);
+            return systemLanguage;
         }
-
-        return contentsMap.isEmpty() ? null : contentsMap.values().iterator().next();
+        return contentsMap.isEmpty() ? null : contentsMap.keySet().iterator().next();
     }
-	
+    
     public void setContent(String text) {
         final Language userLanguage = getUserLanguage();
         if (userLanguage != null) {
