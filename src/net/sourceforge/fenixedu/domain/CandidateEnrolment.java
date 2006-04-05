@@ -1,10 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-
-/**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- */
-
 public class CandidateEnrolment extends CandidateEnrolment_Base {
 
 	public CandidateEnrolment() {
@@ -12,11 +7,17 @@ public class CandidateEnrolment extends CandidateEnrolment_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public CandidateEnrolment(MasterDegreeCandidate masterDegreeCandidate,
-			CurricularCourse curricularCourse) {
+	public CandidateEnrolment(MasterDegreeCandidate masterDegreeCandidate, CurricularCourse curricularCourse) {
 		this();
 		setMasterDegreeCandidate(masterDegreeCandidate);
 		setCurricularCourse(curricularCourse);
 	}
+    
+    public void delete() {
+        removeCurricularCourse();
+        removeMasterDegreeCandidate();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
 
 }
