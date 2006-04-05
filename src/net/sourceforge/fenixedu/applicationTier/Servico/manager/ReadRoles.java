@@ -15,7 +15,7 @@ public class ReadRoles extends Service {
 		List<InfoRole> result = new ArrayList<InfoRole>();
 
 		for (Role role : rootDomainObject.getRoles()) {
-            InfoRole.newInfoFromDomain(role);
+            result.add(InfoRole.newInfoFromDomain(role));
         }
         
 		return result;
