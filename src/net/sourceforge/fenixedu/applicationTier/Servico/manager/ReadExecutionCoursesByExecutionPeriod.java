@@ -1,6 +1,3 @@
-/*
- * Created on 8/Set/2003
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
@@ -16,23 +13,13 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author lmac1
- */
 public class ReadExecutionCoursesByExecutionPeriod extends Service {
 
-	/**
-	 * Executes the service. Returns the current collection of
-	 * infoExecutionCourses.
-	 * 
-	 * @throws ExcepcaoPersistencia
-	 */
 	public List run(Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
 		List allExecutionCoursesFromExecutionPeriod = null;
-		List allExecutionCourses = null;
+		List<InfoExecutionCourse> allExecutionCourses = null;
 
-		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-				ExecutionPeriod.class, executionPeriodId);
+		ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
 
 		if (executionPeriod == null) {
 			throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
@@ -44,7 +31,7 @@ public class ReadExecutionCoursesByExecutionPeriod extends Service {
 			return allExecutionCoursesFromExecutionPeriod;
 		}
 		InfoExecutionCourse infoExecutionCourse = null;
-		allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size());
+		allExecutionCourses = new ArrayList<InfoExecutionCourse>(allExecutionCoursesFromExecutionPeriod.size());
 		Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
 		while (iter.hasNext()) {
 			ExecutionCourse executionCourse = (ExecutionCourse) iter.next();

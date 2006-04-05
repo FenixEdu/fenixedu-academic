@@ -8,28 +8,25 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Jo�o Mota 2/Out/2003
- */
-
 public class ReadPosGradStudentCurricularPlans extends Service {
 
-	public List run(Integer studentId) throws FenixServiceException, ExcepcaoPersistencia {
-		List result = new ArrayList();
+	public List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException, ExcepcaoPersistencia {
+		List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
 
-		Student student = (Student) persistentObject.readByOID(Student.class, studentId);
-
+		Student student = rootDomainObject.readStudentByOID(studentId);
 		if (student == null) {
 			throw new InvalidArgumentsServiceException("invalidStudentId");
 		}
+        
 		if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
-			List resultTemp = new ArrayList();
+			List<StudentCurricularPlan> resultTemp = new ArrayList<StudentCurricularPlan>();
 			resultTemp.addAll(student.getStudentCurricularPlans());
 
 			Iterator iterator = resultTemp.iterator();
@@ -45,4 +42,5 @@ public class ReadPosGradStudentCurricularPlans extends Service {
 
 		return result;
 	}
+    
 }

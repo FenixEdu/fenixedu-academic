@@ -31,9 +31,7 @@ public class VerifyStudentGroupAtributes extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		boolean result = false;
 
-		StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-				StudentGroup.class, studentGroupCode);
-
+		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 		if (studentGroup == null) {
 			throw new FenixServiceException();
 		}
@@ -63,9 +61,7 @@ public class VerifyStudentGroupAtributes extends Service {
 	private boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		boolean result = false;
-		Grouping groupProperties = (Grouping) persistentObject.readByOID(
-				Grouping.class, groupPropertiesCode);
-
+		Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 		if (groupProperties == null) {
 			throw new InvalidChangeServiceException();
 		}
@@ -79,7 +75,7 @@ public class VerifyStudentGroupAtributes extends Service {
 			throw new NotAuthorizedException();
 		}
 
-		Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftCode);
+		Shift shift = rootDomainObject.readShiftByOID(shiftCode);
 		result = strategy.checkNumberOfGroups(groupProperties, shift);
 
 		if (!result)
@@ -98,9 +94,7 @@ public class VerifyStudentGroupAtributes extends Service {
 
 		boolean result = false;
 
-		StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-				StudentGroup.class, studentGroupCode);
-
+		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 		if (studentGroup == null) {
 			throw new FenixServiceException();
 		}
@@ -130,15 +124,12 @@ public class VerifyStudentGroupAtributes extends Service {
 			String username) throws FenixServiceException, ExcepcaoPersistencia {
 		boolean result = false;
 
-		Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
-				groupPropertiesCode);
-
+		Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
 		}
 
-		StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-				StudentGroup.class, studentGroupCode);
+		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 		if (studentGroup == null) {
 			throw new FenixServiceException();
 		}
@@ -166,15 +157,12 @@ public class VerifyStudentGroupAtributes extends Service {
 	private boolean checkEnrollStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode,
 			String username) throws FenixServiceException, ExcepcaoPersistencia {
 		boolean result = false;
-		Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
-				groupPropertiesCode);
-
+		Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
 		}
 
-		StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-				StudentGroup.class, studentGroupCode);
+		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 		if (studentGroup == null) {
 			throw new FenixServiceException();
 		}

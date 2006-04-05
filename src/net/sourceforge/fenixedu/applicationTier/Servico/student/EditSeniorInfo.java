@@ -1,7 +1,3 @@
-/*
- * Created on Jan 4, 2005
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.Calendar;
@@ -13,25 +9,17 @@ import net.sourceforge.fenixedu.dataTransferObject.student.InfoSenior;
 import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Luis Egidio, luis.egidio@ist.utl.pt
- *
- */
 public class EditSeniorInfo extends Service {
 
     public void run(InfoSenior changedInfoSenior) throws ExcepcaoPersistencia, FenixServiceException {
-            Senior seniorToEdit = (Senior) persistentObject.readByOID(Senior.class, changedInfoSenior.getIdInternal());
-            if (seniorToEdit == null) {
-                throw new NonExistingServiceException("Object doesn't exist!");
-            }
+        Senior seniorToEdit = rootDomainObject.readSeniorByOID(changedInfoSenior.getIdInternal());
+        if (seniorToEdit == null) {
+            throw new NonExistingServiceException("Object doesn't exist!");
+        }
 
-            copyProperties(changedInfoSenior, seniorToEdit);
+        copyProperties(changedInfoSenior, seniorToEdit);
     }
 
-    /**
-     * @param changedInfoSenior
-     * @param seniorToEdit
-     */
     protected void copyProperties(InfoSenior changedInfoSenior, Senior seniorToEdit) {
         seniorToEdit.setExpectedDegreeTermination(changedInfoSenior.getExpectedDegreeTermination());
         seniorToEdit.setExpectedDegreeAverageGrade(changedInfoSenior.getExpectedDegreeAverageGrade());

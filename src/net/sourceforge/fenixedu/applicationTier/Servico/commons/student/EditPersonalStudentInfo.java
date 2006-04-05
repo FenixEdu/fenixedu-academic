@@ -12,11 +12,13 @@ public class EditPersonalStudentInfo extends Service {
 
     public InfoPerson run(InfoPerson newInfoPerson) throws ExcepcaoPersistencia, FenixServiceException {
         
-        final Person person = (Person) persistentObject.readByOID(Person.class, newInfoPerson.getIdInternal());
+        final Person person = (Person) rootDomainObject.readPartyByOID(newInfoPerson.getIdInternal());
         if (person == null) {
             throw new FenixServiceException("error.noPerson");
         }
+        
         person.edit(newInfoPerson, Country.readCountryByNationality(newInfoPerson.getInfoPais().getNationality()));
         return InfoPersonWithInfoCountry.newInfoFromDomain(person);
     }
+    
 }

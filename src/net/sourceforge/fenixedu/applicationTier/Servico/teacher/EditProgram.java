@@ -37,9 +37,7 @@ public class EditProgram extends Service {
             throw new FenixServiceException("nullCurricularCourseCode");
         }
 
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, infoCurricularCourseCode);
-
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
         }

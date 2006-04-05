@@ -1,13 +1,8 @@
-/*
- * Created on Feb 17, 2004
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -23,50 +18,33 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
- * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- * 
- */
 public class ReadCourseHistoric extends Service {
 
 	public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-				ExecutionCourse.class, executionCourseId);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 		Integer semester = executionCourse.getExecutionPeriod().getSemester();
-		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+		List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
 		return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester);
 	}
 
-	/**
-	 * @param curricularCourses
-	 * @param persistentSupport
-	 * @return
-	 */
-	private List getInfoSiteCoursesHistoric(ExecutionCourse executionCourse, List curricularCourses, Integer semester)
-            throws ExcepcaoPersistencia {
-		List infoSiteCoursesHistoric = new ArrayList();
-		Iterator iter = curricularCourses.iterator();
-		while (iter.hasNext()) {
-			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-			infoSiteCoursesHistoric.add(getInfoSiteCourseHistoric(executionCourse.getExecutionPeriod()
-					.getExecutionYear(), curricularCourse, semester));
+	private List<InfoSiteCourseHistoric> getInfoSiteCoursesHistoric(ExecutionCourse executionCourse, List<CurricularCourse> curricularCourses, Integer semester) throws ExcepcaoPersistencia {
+		List<InfoSiteCourseHistoric> result = new ArrayList<InfoSiteCourseHistoric>();
+		
+        for (CurricularCourse curricularCourse : curricularCourses) {
+            result.add(
+                    getInfoSiteCourseHistoric(
+                            executionCourse.getExecutionPeriod().getExecutionYear(), 
+                            curricularCourse, 
+                            semester));
 		}
-		return infoSiteCoursesHistoric;
+		
+        return result;
 	}
 
-	/**
-	 * @param curricularCourse
-	 * @param persistentSupport
-	 * @return
-	 */
-	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final ExecutionYear executionYear,
-			CurricularCourse curricularCourse, Integer semester)
-			throws ExcepcaoPersistencia {
+	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final ExecutionYear executionYear, CurricularCourse curricularCourse, Integer semester) throws ExcepcaoPersistencia {
 		InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
 
-		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegreeCurricularPlan
-				.newInfoFromDomain(curricularCourse);
+		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegreeCurricularPlan.newInfoFromDomain(curricularCourse);
 		infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
 		final List<CourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
@@ -95,4 +73,5 @@ public class ReadCourseHistoric extends Service {
 		infoSiteCourseHistoric.setInfoCourseHistorics(infoCourseHistorics);
 		return infoSiteCourseHistoric;
 	}
+    
 }

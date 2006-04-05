@@ -19,21 +19,8 @@ import org.apache.commons.collections.CollectionUtils;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
-/**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- * @author Joana Mota (jccm@rnl.ist.utl.pt)
- */
 public class GetCandidatesByIDAuthorizationFilter extends Filtro {
 
-    public GetCandidatesByIDAuthorizationFilter() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
@@ -48,7 +35,7 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
      * @return The Needed Roles to Execute The Service
      */
     protected Collection getNeededRoles() {
-        List roles = new ArrayList();
+        List<InfoRole> roles = new ArrayList<InfoRole>();
 
         InfoRole infoRole = new InfoRole();
         infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
@@ -67,17 +54,16 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
      * @return
      */
     private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
-
-        List roles = getRoleList(id.getRoles());
+        List<RoleType> roles = getRoleList(id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
 
-        List roleTemp = new ArrayList();
+        List<RoleType> roleTemp = new ArrayList<RoleType>();
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             return true;
         }
 
-        roleTemp = new ArrayList();
+        roleTemp = new ArrayList<RoleType>();
         roleTemp.add(RoleType.COORDINATOR);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
 
@@ -89,16 +75,13 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
 
                 teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
-                MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject
-                		.readByOID(MasterDegreeCandidate.class, candidateID);
-
+                MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
                 if (masterDegreeCandidate == null) {
                     return false;
                 }
 
                 //modified by Tânia Pousão
                 Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(teacher);
-
                 if (coordinator == null) {
                     return false;
                 }
@@ -112,8 +95,8 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
         return true;
     }
 
-    private List getRoleList(Collection roles) {
-        List result = new ArrayList();
+    private List<RoleType> getRoleList(Collection roles) {
+        List<RoleType> result = new ArrayList<RoleType>();
         Iterator iterator = roles.iterator();
         while (iterator.hasNext()) {
             result.add(((InfoRole) iterator.next()).getRoleType());

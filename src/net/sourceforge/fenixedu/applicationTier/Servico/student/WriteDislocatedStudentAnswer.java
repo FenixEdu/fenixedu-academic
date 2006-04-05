@@ -1,6 +1,3 @@
-/**
-* Aug 31, 2005
-*/
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -11,21 +8,16 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Ricardo Rodrigues
- *
- */
-
 public class WriteDislocatedStudentAnswer extends Service {
 
     public void run(Integer studentID, Integer countryID, Integer dislocatedCountryID, Integer districtID) throws ExcepcaoPersistencia{
-        Student student = (Student) persistentObject.readByOID(Student.class, studentID);
-        Country country = (Country) persistentObject.readByOID(Country.class, countryID);
+        Student student = rootDomainObject.readStudentByOID(studentID);
+        Country country = rootDomainObject.readCountryByOID(countryID);
         Country dislocatedCountry = null;
         if(dislocatedCountryID != null){
-            dislocatedCountry = (Country) persistentObject.readByOID(Country.class, dislocatedCountryID);
+            dislocatedCountry = rootDomainObject.readCountryByOID(dislocatedCountryID);
         }
-        District district = (District) persistentObject.readByOID(District.class, districtID);
+        District district = rootDomainObject.readDistrictByOID(districtID);
         
         DislocatedStudent dislocatedStudent = DomainFactory.makeDislocatedStudent();
         dislocatedStudent.setStudent(student);
@@ -33,6 +25,5 @@ public class WriteDislocatedStudentAnswer extends Service {
         dislocatedStudent.setDislocatedCountry(dislocatedCountry);
         dislocatedStudent.setDistrict(district);
     }
+    
 }
-
-

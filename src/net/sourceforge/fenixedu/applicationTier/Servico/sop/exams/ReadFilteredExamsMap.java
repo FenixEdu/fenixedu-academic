@@ -117,7 +117,7 @@ public class ReadFilteredExamsMap extends Service {
                 CurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
                 if (!checkedCurricularCourses.contains(curricularCourse)) {
                     checkedCurricularCourses.add(curricularCourse);
-                    ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodId);
+                    ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
                     int numberEnroledStudentsInCurricularCourse = curricularCourse.countEnrolmentsByExecutionPeriod(executionPeriod);
                     
                     numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;

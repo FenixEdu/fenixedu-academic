@@ -1,7 +1,3 @@
-/*
- * Created on 17/Nov/2003
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
@@ -19,19 +15,13 @@ import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Leonor Almeida
- * @author Sergio Montelobo
- * 
- */
 public class EditTeacherInformation extends Service {
 
     public Boolean run(InfoServiceProviderRegime infoServiceProviderRegime,
             InfoWeeklyOcupation infoWeeklyOcupation, List<InfoOrientation> infoOrientations,
             List<InfoPublicationsNumber> infoPublicationsNumbers) throws ExcepcaoPersistencia {
 
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoServiceProviderRegime
-                .getInfoTeacher().getIdInternal());
+        Teacher teacher = rootDomainObject.readTeacherByOID(infoServiceProviderRegime.getInfoTeacher().getIdInternal());
 
 		editServiceProviderRegime(infoServiceProviderRegime, teacher);	
 		editWeeklyOcupation(infoWeeklyOcupation, teacher);
@@ -46,8 +36,7 @@ public class EditTeacherInformation extends Service {
 	private void editServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime,
 			Teacher teacher) throws ExcepcaoPersistencia {
 
-        ServiceProviderRegime serviceProviderRegime =
-			(ServiceProviderRegime) persistentObject.readByOID(ServiceProviderRegime.class, infoServiceProviderRegime.getIdInternal());
+        ServiceProviderRegime serviceProviderRegime = rootDomainObject.readServiceProviderRegimeByOID(infoServiceProviderRegime.getIdInternal());
 
         if (serviceProviderRegime == null) {
 			serviceProviderRegime = DomainFactory.makeServiceProviderRegime(teacher, infoServiceProviderRegime);
@@ -73,8 +62,7 @@ public class EditTeacherInformation extends Service {
 	private void editOrientations(List<InfoOrientation> infoOrientations, Teacher teacher) throws ExcepcaoPersistencia {
         // Orientations
         for (InfoOrientation infoOrientation : infoOrientations) {
-            Orientation orientation = (Orientation) persistentObject.readByOID(
-                    Orientation.class, infoOrientation.getIdInternal());
+            Orientation orientation = rootDomainObject.readOrientationByOID(infoOrientation.getIdInternal());
 
             if (orientation == null) {
 				orientation = DomainFactory.makeOrientation(teacher, infoOrientation);
@@ -90,8 +78,7 @@ public class EditTeacherInformation extends Service {
 	private void editPublicationNumbers(List<InfoPublicationsNumber> infoPublicationsNumbers, Teacher teacher) throws ExcepcaoPersistencia {
         // Publications Number
         for (InfoPublicationsNumber infoPublicationsNumber : infoPublicationsNumbers) {
-            PublicationsNumber publicationsNumber = (PublicationsNumber)
-            	persistentObject.readByOID(PublicationsNumber.class, infoPublicationsNumber.getIdInternal());
+            PublicationsNumber publicationsNumber = rootDomainObject.readPublicationsNumberByOID(infoPublicationsNumber.getIdInternal());
 
             if (publicationsNumber == null) {
 				publicationsNumber = DomainFactory.makePublicationsNumber(teacher, infoPublicationsNumber);

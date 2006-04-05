@@ -18,19 +18,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-/**
- * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- */
-
 public class WriteCandidateEnrolments extends Service {
 
     public void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits,
             String givenCreditsRemarks) throws FenixServiceException, ExcepcaoPersistencia {
 
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
-                        candidateID);
-
+        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
         if (masterDegreeCandidate == null) {
             throw new NonExistingServiceException();
         }
@@ -67,27 +60,8 @@ public class WriteCandidateEnrolments extends Service {
 
         writeFilteredEnrollments(masterDegreeCandidate, curricularCoursesToEnroll);
 
-        deleteRemainingEnrollments(candidateEnrollmentsToDelete);
-
-    }
-
-    /**
-     * @param persistentCandidateEnrolment
-     * @param candidateEnrollmentsToDelete
-     * @throws ExcepcaoPersistencia
-     */
-    private void deleteRemainingEnrollments(Collection<CandidateEnrolment> candidateEnrollmentsToDelete) throws ExcepcaoPersistencia {
-        Iterator iterCandidateEnrollmentsToDelete = candidateEnrollmentsToDelete.iterator();
-        while (iterCandidateEnrollmentsToDelete.hasNext()) {
-            CandidateEnrolment candidateEnrolmentToDelete = (CandidateEnrolment) iterCandidateEnrollmentsToDelete
-                    .next();
-            candidateEnrolmentToDelete.getCurricularCourse().getCandidateEnrolments().remove(
-                    candidateEnrolmentToDelete);
-            candidateEnrolmentToDelete.getMasterDegreeCandidate().getCandidateEnrolments().remove(
-                    candidateEnrolmentToDelete);
-            candidateEnrolmentToDelete.setCurricularCourse(null);
-            candidateEnrolmentToDelete.setMasterDegreeCandidate(null);
-            persistentObject.deleteByOID(CandidateEnrolment.class, candidateEnrolmentToDelete.getIdInternal());
+        for (CandidateEnrolment candidateEnrolmentToDelete : candidateEnrollmentsToDelete) {
+            candidateEnrolmentToDelete.delete();
         }
     }
 
@@ -103,8 +77,7 @@ public class WriteCandidateEnrolments extends Service {
         Iterator iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
         while (iterCurricularCourseIds.hasNext()) {
 
-            CurricularCourse curricularCourse = (CurricularCourse) persistentObject
-                    .readByOID(CurricularCourse.class, (Integer) iterCurricularCourseIds.next());
+            CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) iterCurricularCourseIds.next());
 
             if (curricularCourse == null) {
                 throw new NonExistingServiceException();

@@ -15,15 +15,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditGrantSubsidy extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromInfoToDomain(InfoObject infoObject,
-            DomainObject domainObject) throws ExcepcaoPersistencia {
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) throws ExcepcaoPersistencia {
         InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) infoObject;
         GrantSubsidy grantSubsidy = (GrantSubsidy) domainObject;
         grantSubsidy.setDateBeginSubsidy(infoGrantSubsidy.getDateBeginSubsidy());
         grantSubsidy.setDateEndSubsidy(infoGrantSubsidy.getDateEndSubsidy());
 
-        GrantContract grantContract = (GrantContract) persistentObject.readByOID(
-                GrantContract.class, infoGrantSubsidy.getInfoGrantContract().getIdInternal());
+        GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantSubsidy.getInfoGrantContract().getIdInternal());
         grantSubsidy.setGrantContract(grantContract);
 
         grantSubsidy.setState(infoGrantSubsidy.getState());
@@ -49,8 +47,7 @@ public class EditGrantSubsidy extends EditDomainObjectService {
          */
         GrantSubsidy grantSubsidy = (GrantSubsidy) domainObjectLocked;
         InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) infoObject;
-        GrantContract grantContract = (GrantContract) persistentObject.readByOID(
-                GrantContract.class, infoGrantSubsidy.getInfoGrantContract().getIdInternal());
+        GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantSubsidy.getInfoGrantContract().getIdInternal());
         grantSubsidy.setGrantContract(grantContract);
         domainObjectLocked = grantSubsidy;
 

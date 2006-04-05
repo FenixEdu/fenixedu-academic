@@ -1,8 +1,3 @@
-/*
- * Created on 8/Set/2003, 14:37:23
- * 
- * By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import java.util.List;
@@ -10,28 +5,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
-/**
- * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- * 
- * 
- * Created at 8/Set/2003, 14:37:23
- *  
- */
 public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
-    public ManagerOrSeminariesCoordinatorFilter() {
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Integer SCPIDINternal = (Integer) request.getServiceParameters().getParameter(1);
@@ -49,23 +29,14 @@ public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
         }
     }
     
-    public boolean doesThisSCPBelongToASeminaryCandidate(Integer SCPIDInternal)
-    {
-        boolean result = false;
-        try
-        {
-            StudentCurricularPlan scp = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,SCPIDInternal);
-            List candidacies = rootDomainObject.readStudentByOID(scp.getStudent().getIdInternal()).getAssociatedCandidancies();
-            if (candidacies != null && candidacies.size() > 0)
-                result = true;
-        }
-        catch (ExcepcaoPersistencia e)
-        {
-           // thats ok, lets say this SCP does <br>NOT</br> belong to a candidate
+    public boolean doesThisSCPBelongToASeminaryCandidate(Integer SCPIDInternal) {
+        StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(SCPIDInternal);
+        if (scp != null) {
+            List<Candidacy> candidacies = scp.getStudent().getAssociatedCandidancies();
+            return !candidacies.isEmpty();
         }
         
-        
-        return result;
+        return false;
     }
 
     protected RoleType getRoleType1() {
@@ -75,4 +46,5 @@ public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
     protected RoleType getRoleType2() {
         return RoleType.SEMINARIES_COORDINATOR;
     }
+    
 }

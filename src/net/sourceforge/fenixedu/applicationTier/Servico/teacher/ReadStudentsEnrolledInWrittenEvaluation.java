@@ -29,12 +29,12 @@ public class ReadStudentsEnrolledInWrittenEvaluation extends Service {
     public SiteView run(Integer executionCourseID, Integer writtenEvaluationID)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(WrittenEvaluation.class, writtenEvaluationID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
 
-    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseID);
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         final Site site = executionCourse.getSite();
         if (site == null) {
             throw new FenixServiceException("error.noSite");

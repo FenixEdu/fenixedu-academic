@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -10,11 +8,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CreateSites extends Service {
 
     public Integer run(final Integer executionPeriodID) throws ExcepcaoPersistencia {
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID);
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
 
-        final List<ExecutionCourse> executionCourses = executionPeriod.getAssociatedExecutionCourses();
         int numberCreatedSites = 0;
-        for (final ExecutionCourse executionCourse : executionCourses) {
+        for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
             if (executionCourse.getSite() == null) {
                 executionCourse.createSite();
                 numberCreatedSites++;

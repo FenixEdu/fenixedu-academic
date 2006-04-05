@@ -11,9 +11,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PeriodState;
 
-/**
- * @author Fernanda Quitério 19/Nov/2003
- */
 public class LoggedCoordinatorCanEdit extends Service {
 
     public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username)
@@ -32,27 +29,23 @@ public class LoggedCoordinatorCanEdit extends Service {
 
         Teacher teacher = Teacher.readTeacherByUsername(username);
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, executionDegreeCode);
-
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
         ExecutionYear executionYear = executionDegree.getExecutionYear();
 
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, curricularCourseCode);
-
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }
 
-        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
-
         // if user is coordinator and is the current coordinator and
         // curricular course is not basic
         // coordinator can edit
-        result = new Boolean((coordinator != null)
+        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+        result = Boolean.valueOf((coordinator != null)
                 && executionYear.getState().equals(PeriodState.CURRENT)
                 && curricularCourse.getBasic().equals(Boolean.FALSE));
 
         return result;
     }
+    
 }

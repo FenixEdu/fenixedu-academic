@@ -8,8 +8,9 @@ import net.sourceforge.fenixedu.util.PublicationArea;
 public class AddPublicationToTeacherInformationSheet extends Service {
 
     public void run(Integer teacherId, Integer publicationId, String publicationArea) throws Exception {
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);
-        Publication publication = (Publication) persistentObject.readByOID(Publication.class, publicationId);
-        teacher.addToTeacherInformationSheet(publication,PublicationArea.getEnum(publicationArea));
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+        Publication publication = (Publication) rootDomainObject.readResultByOID(publicationId);
+        teacher.addToTeacherInformationSheet(publication, PublicationArea.getEnum(publicationArea));
     }
+    
 }

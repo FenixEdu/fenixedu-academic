@@ -15,9 +15,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Fernanda Quitério
- */
 public class InsertStudentsFinalEvaluation extends Service {
 
 	public List run(List<InfoEnrolmentEvaluation> evaluations, Integer teacherNumber,
@@ -32,21 +29,14 @@ public class InsertStudentsFinalEvaluation extends Service {
 				throw new NonExistingServiceException();
 			}
 
-			Student student = (Student) persistentObject.readByOID(Student.class,
-					infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan()
-							.getInfoStudent().getIdInternal());
+			Student student = rootDomainObject.readStudentByOID(infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
+			infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().setNumber(student.getNumber());
 
-			infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent()
-					.setNumber(student.getNumber());
-
-			EnrolmentEvaluation enrolmentEvaluationFromDb = (EnrolmentEvaluation) persistentObject
-					.readByOID(EnrolmentEvaluation.class, infoEnrolmentEvaluation.getIdInternal());
-
+			EnrolmentEvaluation enrolmentEvaluationFromDb = rootDomainObject.readEnrolmentEvaluationByOID(infoEnrolmentEvaluation.getIdInternal());
 			try {
 				enrolmentEvaluationFromDb.insertStudentFinalEvaluationForMasterDegree(
 						infoEnrolmentEvaluation.getGrade(), teacher.getPerson(), evaluationDate);
 			}
-
 			catch (DomainException e) {
 				infoEvaluationsWithError.add(infoEnrolmentEvaluation);
 			}

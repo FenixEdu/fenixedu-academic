@@ -1,7 +1,3 @@
-/*
- * Created on 21/Jul/2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -17,11 +13,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author mrsp and jdnf
- * 
- * 
- */
 public class InsertSummary extends Service {
 
     public Boolean run(Integer executionCourseID, InfoSummary infoSummary) throws FenixServiceException,
@@ -32,8 +23,7 @@ public class InsertSummary extends Service {
                 || infoSummary.getIsExtraLesson() == null || infoSummary.getSummaryDate() == null) {
             throw new FenixServiceException("error.summary.impossible.insert");
         }
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseID);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 

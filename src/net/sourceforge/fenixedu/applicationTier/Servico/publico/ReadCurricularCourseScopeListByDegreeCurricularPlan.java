@@ -13,18 +13,13 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author T�nia Pous�o Created on 10/Out/2003
- */
 public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends Service {
 
     public List run(Integer idDegreeCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
         
         List allCurricularCourseScope = new ArrayList();
 
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
-                        idDegreeCurricularPlan);
-
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
         List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
 
         if (allCurricularCourses == null || allCurricularCourses.isEmpty())

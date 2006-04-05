@@ -1,8 +1,3 @@
-/*
- * Created on 2/Dez/2003
- * 
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -18,33 +13,18 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
+
 /**
- * @author Tânia Pousão
- * 
  * This filter filter all currricular course that are of LEA(Engenharia
  * Aeroespacial) degree
  */
 public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizationFilter extends
         AuthorizationByRoleFilter {
 
-    public CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizationFilter() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
@@ -58,11 +38,6 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         }
     }
 
-    /**
-     * @param id
-     * @param argumentos
-     * @return
-     */
     private boolean CurricularCourseBelongsExecutionCourse(IUserView id, Object[] argumentos) {
         InfoExecutionCourse infoExecutionCourse = null;
         ExecutionCourse executionCourse = null;
@@ -74,19 +49,15 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         try {
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
-                        infoExecutionCourse.getIdInternal());
+                executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
-                        (Integer) argumentos[0]);
+                executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argumentos[0]);
             }
             if (argumentos[1] instanceof InfoCurricularCourse) {
                 infoCurricularCourse = (InfoCurricularCourse) argumentos[1];
-                curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
-                        infoCurricularCourse.getIdInternal());
+                curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourse.getIdInternal());
             } else {
-                curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
-                        (Integer) argumentos[1]);
+                curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) argumentos[1]);
             }
 
         } catch (Exception e) {
@@ -96,7 +67,6 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
     }
 
     private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos) {
-
         if (argumentos == null) {
             return false;
         }
@@ -140,11 +110,9 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         try {
             if (argumentos[1] instanceof InfoCurricularCourse) {
                 infoCurricularCourse = (InfoCurricularCourse) argumentos[1];
-                curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
-                        infoCurricularCourse.getIdInternal());
+                curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourse.getIdInternal());
             } else {
-                curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
-                        (Integer) argumentos[1]);
+                curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) argumentos[1]);
             }
 
             degree = curricularCourse.getDegreeCurricularPlan().getDegree();
@@ -173,15 +141,14 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         try {
             if (argumentos[1] instanceof InfoCurricularCourse) {
                 infoCurricularCourse = (InfoCurricularCourse) argumentos[1];
-                curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
-                        infoCurricularCourse.getIdInternal());
+                curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourse.getIdInternal());
             } else {
-                curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
-                        (Integer) argumentos[1]);
+                curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) argumentos[1]);
             }
         } catch (Exception e) {
             return false;
         }
         return curricularCourse.getBasic().equals(Boolean.FALSE);
     }
+    
 }

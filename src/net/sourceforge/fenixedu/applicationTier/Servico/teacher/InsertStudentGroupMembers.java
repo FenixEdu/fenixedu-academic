@@ -1,7 +1,3 @@
-/*
- * Created on 23/Ago/2003
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
@@ -19,38 +15,33 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author asnr and scpo
- * 
- */
-
 public class InsertStudentGroupMembers extends Service {
 
     public Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID,
-            List studentUsernames) throws FenixServiceException, ExcepcaoPersistencia {
+            List<String> studentUsernames) throws FenixServiceException, ExcepcaoPersistencia {
 
-        final StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-                StudentGroup.class, studentGroupID);
+        final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
         if (studentGroup == null) {
             throw new ExistingServiceException();
         }
 
         final Grouping grouping = studentGroup.getGrouping();
-        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-                .getInstance();
-        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                .getGroupEnrolmentStrategyInstance(grouping);
+        final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+        final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
 
         if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
             throw new InvalidArgumentsServiceException("error.editStudentGroupMembers");
         }
 
-        for (final String studentUsername : (List<String>) studentUsernames) {
-            if (strategy.checkAlreadyEnroled(grouping, studentUsername))
+        for (final String studentUsername : studentUsernames) {
+            if (strategy.checkAlreadyEnroled(grouping, studentUsername)) {
                 throw new InvalidSituationServiceException();
+            }
             final Attends attend = grouping.getStudentAttend(studentUsername);
             studentGroup.addAttends(attend);
         }
+        
         return Boolean.TRUE;
     }
+    
 }

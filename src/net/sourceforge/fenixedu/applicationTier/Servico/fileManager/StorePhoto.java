@@ -22,7 +22,7 @@ public class StorePhoto extends Service {
 
 	public Boolean run(FileSuportObject file, Integer personId) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		Person person = (Person) persistentObject.readByOID(Person.class, personId);
+		Person person = (Person) rootDomainObject.readPartyByOID(personId);
 
 		file.setUri(person.getSlideName());
 		IFileSuport fileSuport = FileSuport.getInstance();

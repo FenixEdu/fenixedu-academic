@@ -1,11 +1,6 @@
-/*
- * Created on 14/Mar/2003
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -15,43 +10,30 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- */
 public class GetBranchListByCandidateID extends Service {
 
-	public List run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
-
-		List result = null;
-
-		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
-						candidateID);
-		// result =
-		// persistentSupport.getIPersistentBranch().readByExecutionDegree(masterDegreeCandidate.getExecutionDegree());
-		result = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
-
-		List branchList = new ArrayList();
-		if (result == null) {
+	public List<InfoBranch> run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
+        List<InfoBranch> result = new ArrayList<InfoBranch>();
+        
+        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+		List<Branch> branches = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
+		if (branches == null) {
 			InfoBranch infoBranch = new InfoBranch();
 			infoBranch.setName("Tronco Comum");
-			branchList.add(infoBranch);
-			return branchList;
+			result.add(infoBranch);
+			return result;
 		}
 
-		Iterator iterator = result.iterator();
-
-		while (iterator.hasNext()) {
-			Branch branch = (Branch) iterator.next();
+		for (Branch branch : branches) {
 			InfoBranch infoBranch = InfoBranch.newInfoFromDomain(branch);
-
 			if ((infoBranch.getName() == null) || (infoBranch.getName().length() == 0)) {
-
 				// FIXME: Common branch
 				infoBranch.setName("Tronco Comum");
 			}
-			branchList.add(infoBranch);
+			result.add(infoBranch);
 		}
 
-		return branchList;
+		return result;
 	}
+    
 }

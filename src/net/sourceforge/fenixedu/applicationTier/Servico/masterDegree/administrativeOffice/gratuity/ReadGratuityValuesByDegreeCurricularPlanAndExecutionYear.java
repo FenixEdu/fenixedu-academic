@@ -37,11 +37,8 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends Se
 		GratuityValues gratuityValues = null;
 		List infoPaymentPhases = null;
 
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
-
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 		final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
-
 		if (degreeCurricularPlan == null || executionYear == null) {
 			throw new FenixServiceException("error.impossible.noGratuityValues");
 		}
