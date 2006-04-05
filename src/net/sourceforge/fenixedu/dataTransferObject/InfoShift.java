@@ -33,7 +33,7 @@ public class InfoShift extends InfoObject {
 
     protected InfoExecutionCourse _infoDisciplinaExecucao;
 
-    protected List infoLessons;
+    protected List<InfoLesson> infoLessons;
 
     protected List infoClasses;
 
@@ -47,7 +47,7 @@ public class InfoShift extends InfoObject {
         setLotacao(lotacao);
         setInfoDisciplinaExecucao(infoDisciplinaExecucao);
         setInfoClasses(new ArrayList());
-        setInfoLessons(new ArrayList());
+        setInfoLessons(new ArrayList<InfoLesson>());
     }
 
     public InfoShift(Integer shiftIdInternal) {
@@ -160,11 +160,11 @@ public class InfoShift extends InfoObject {
         availabilityFinal = integer;
     }
 
-    public List getInfoLessons() {
+    public List<InfoLesson> getInfoLessons() {
         return infoLessons;
     }
 
-    public void setInfoLessons(List list) {
+    public void setInfoLessons(List<InfoLesson> list) {
         infoLessons = list;
     }
 
