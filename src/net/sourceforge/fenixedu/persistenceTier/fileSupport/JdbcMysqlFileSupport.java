@@ -319,9 +319,12 @@ public class JdbcMysqlFileSupport {
     }
 
     public static void deleteFile(final String directory, final String filename) {
-        final String propertyTableQuery = StringAppender.append("delete from property where uri = \"/files", directory, "/", filename, "\"");
-        final String revisionContentTableQuery = StringAppender.append("delete from revisioncontent where uri = \"/files", directory, "/", filename, "\"");
-        executeUpdates(propertyTableQuery, revisionContentTableQuery);
+        //TODO: temporarily disabled to allow data migration to dspace
+        //final String propertyTableQuery = StringAppender.append("delete from property where uri = \"/files", directory, "/", filename, "\"");
+        //final String revisionContentTableQuery = StringAppender.append("delete from revisioncontent where uri = \"/files", directory, "/", filename, "\"");
+        //executeUpdates(propertyTableQuery, revisionContentTableQuery);
+        
+        throw new RuntimeException();
     }
 
     private static Connection getConnection(final String driver, final String alias, final String user, final String pass)

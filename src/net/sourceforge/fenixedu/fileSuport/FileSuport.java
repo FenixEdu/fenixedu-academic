@@ -362,6 +362,9 @@ public class FileSuport implements IFileSuport {
     }
 
     public void deleteFile(String filePath) throws SlideException {
+        
+        throw new SlideException("Operation not available");
+        /*
         Structure structure = getStructure();
         Content content = getContent();
         if (!filePath.startsWith("/files")) {
@@ -382,8 +385,8 @@ public class FileSuport implements IFileSuport {
             throw new SlideException("runtime exception");
         } catch (Exception e) {
             throw new SlideException("runtime exception");
+        }*/
         }
-    }
 
     /*
      * (non-Javadoc)
