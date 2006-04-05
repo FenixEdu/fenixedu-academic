@@ -76,7 +76,7 @@ public class UpdateObjects extends Service {
     protected void setCollectionProperty(Object object, String slot, List list) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         Collection relation = (Collection) getSlotProperty(object, slot);
         
-        if (relation == null) { 
+        if (relation == null || isWriteableSlot(object, slot)) { 
             relation = new ArrayList();
             relation.addAll(list);
             
@@ -89,6 +89,10 @@ public class UpdateObjects extends Service {
             relation.clear();
             relation.addAll(list);
         }
+    }
+
+    protected boolean isWriteableSlot(Object object, String slot) {
+        return PropertyUtils.isWriteable(object, slot);
     }
 
     protected Object getSlotProperty(Object object, String slot) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
