@@ -32,10 +32,10 @@ public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthor
             ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                     ExecutionCourse.class, executionCourseID);
 
-            List<Professorship> responsiblesFor = executionCourse.responsibleFors();
+            List<Professorship> professorships = executionCourse.getProfessorships();
 
-            for (Professorship responsibleFor : responsiblesFor) {
-                if (responsibleFor.getTeacher().equals(teacher))
+            for (Professorship professorship : professorships) {
+                if (professorship.getTeacher().equals(teacher))
                     return true;
             }
 
