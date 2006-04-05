@@ -76,4 +76,11 @@ public class Test extends Test_Base {
         return null;
     }
 
+    public void delete() {
+        for (; !getTestQuestions().isEmpty(); getTestQuestions().get(0).delete());
+        removeTestScope();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
+
 }
