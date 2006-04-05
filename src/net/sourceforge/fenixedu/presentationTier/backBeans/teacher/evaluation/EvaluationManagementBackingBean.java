@@ -640,8 +640,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public String loadMarks() throws FenixFilterException, FenixServiceException, FileUploadException {
-        System.out.println("In load service");
-
         final HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         final MultipartRequestWrapper multipartRequestWrapper = (MultipartRequestWrapper) httpServletRequest.getAttribute("multipartRequestWrapper");
 
@@ -767,7 +765,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    private String getApplicationContext() {
+    protected String getApplicationContext() {
         final String appContext = PropertiesManager.getProperty("app.context");
         return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
     }

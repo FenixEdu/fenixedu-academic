@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.component.html.HtmlInputHidden;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -40,8 +42,10 @@ import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.Season;
 import net.sourceforge.fenixedu.util.TipoSala;
@@ -1086,7 +1090,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return true;
     }
 
-    public String editWrittenEvaluation() throws FenixFilterException, FenixServiceException {
+    public String editWrittenEvaluation() throws FenixFilterException, FenixServiceException, IOException {
         if (this.getSeason() != null && this.getSeason().equals("noSelection")) {
             this.setErrorMessage("label.choose.request");
             return "";
@@ -1116,7 +1120,24 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             return "";
         }
 
-        return WrittenTest.class.getSimpleName();
+        final String originPage = getOriginPage();
+        if (originPage != null && originPage.length() > 0) {
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .redirect(getApplicationContext()
+                            + "/sop/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date="
+                            + DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime())
+//                    + "&begin="
+//                    + timeFormat.format(this.getBegin().getTime())
+//                    + "&end="
+//                    + timeFormat.format(this.getEnd().getTime())
+                            + "&" + SessionConstants.EXECUTION_PERIOD_OID + "="
+                            + getExecutionPeriodID()
+                    );
+            return originPage;
+        } else {
+            return WrittenTest.class.getSimpleName();
+            //return this.getEvaluation().getClass().getSimpleName();
+        }
     }
 
     // END Create and Edit logic
