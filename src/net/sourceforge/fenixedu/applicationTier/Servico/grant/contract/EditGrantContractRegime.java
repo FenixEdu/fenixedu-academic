@@ -18,15 +18,14 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 
 public class EditGrantContractRegime extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromInfoToDomain(InfoObject infoObject,
-            DomainObject domainObject) throws ExcepcaoPersistencia {
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
+            throws ExcepcaoPersistencia {
         InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
         GrantContractRegime grantContractRegime = (GrantContractRegime) domainObject;
         grantContractRegime.setDateBeginContract(infoGrantContractRegime.getDateBeginContract());
@@ -38,7 +37,8 @@ public class EditGrantContractRegime extends EditDomainObjectService {
         grantContractRegime.setKeyGrantCostCenter(infoGrantContractRegime.getCostCenterKey());
         grantContractRegime.setState(infoGrantContractRegime.getState());
 
-        GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime.getInfoGrantContract().getIdInternal());
+        GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime
+                .getInfoGrantContract().getIdInternal());
         grantContractRegime.setGrantContract(grantContract);
 
         if (grantContract.getKeyGrantCostCenter() != null && grantContract.getKeyGrantCostCenter() != 0) {
@@ -81,7 +81,9 @@ public class EditGrantContractRegime extends EditDomainObjectService {
             GrantContractRegime grantContractRegime = (GrantContractRegime) domainObjectLocked;
             // Set the correct grant orientation teacher
 
-            GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime.getInfoGrantContract().getIdInternal());
+            GrantContract grantContract = rootDomainObject
+                    .readGrantContractByOID(infoGrantContractRegime.getInfoGrantContract()
+                            .getIdInternal());
 
             if (infoGrantContractRegime.getGrantCostCenterInfo() != null
                     && ((infoGrantContractRegime.getGrantCostCenterInfo().getNumber()).trim()).length() > 0) { // ||
@@ -119,8 +121,8 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                     } else {
                         teacher = Teacher.readByNumber(infoGrantContractRegime.getInfoTeacher()
                                 .getTeacherNumber());
-                        Person person = (Person) persistentObject.readByOID(Person.class, teacher
-                                .getPerson().getIdInternal());
+                        Person person = (Person) rootDomainObject.readPartyByOID(teacher.getPerson()
+                                .getIdInternal());
                         infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
                         InfoPerson infoPerson = new InfoPerson();
                         infoPerson = getInfoPerson(person);
@@ -139,11 +141,8 @@ public class EditGrantContractRegime extends EditDomainObjectService {
             // Set all the others GrantContractRegime that are active to state
             // inactive
 
-            IPersistentGrantContractRegime persistentGrantContractRegime = persistentSupport
-                    .getIPersistentGrantContractRegime();
-            List<GrantContractRegime> activeContractRegime = persistentGrantContractRegime
-                    .readGrantContractRegimeByGrantContractAndState(grantContractRegime
-                            .getGrantContract().getIdInternal(), new Integer(1));
+            List<GrantContractRegime> activeContractRegime = grantContractRegime.getGrantContract()
+                    .readGrantContractRegimeByGrantContractAndState(new Integer(1));
             if (activeContractRegime != null && !activeContractRegime.isEmpty()) {
                 // Desactivate the contracts
                 for (GrantContractRegime grantContractRegimeTemp : activeContractRegime) {

@@ -70,7 +70,8 @@ public class CreateReimbursementGuide extends Service {
                 throw new RequiredJustificationServiceException(
                         "error.exception.masterDegree.requiredJustification");
 
-            GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(infoReimbursementGuideEntry.getInfoGuideEntry().getIdInternal());
+            GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(infoReimbursementGuideEntry
+                    .getInfoGuideEntry().getIdInternal());
             if (checkReimbursementGuideEntriesSum(infoReimbursementGuideEntry, guideEntry) == false)
                 throw new InvalidReimbursementValueServiceException(
                         "error.exception.masterDegree.invalidReimbursementValue");
@@ -82,7 +83,8 @@ public class CreateReimbursementGuide extends Service {
             }
 
             // create new reimbursement entry
-            ReimbursementGuideEntry newReimbursementGuideEntry = DomainFactory.makeReimbursementGuideEntry();
+            ReimbursementGuideEntry newReimbursementGuideEntry = DomainFactory
+                    .makeReimbursementGuideEntry();
             newReimbursementGuideEntry.setGuideEntry(guideEntry);
             newReimbursementGuideEntry.setJustification(infoReimbursementGuideEntry.getJustification());
             newReimbursementGuideEntry.setReimbursementGuide(reimbursementGuide);
@@ -92,13 +94,13 @@ public class CreateReimbursementGuide extends Service {
 
         // reimbursement Guide
         reimbursementGuide.setCreationDate(Calendar.getInstance());
-        Integer reimbursementGuideNumber = persistentSupport.getIPersistentReimbursementGuide()
-                .generateReimbursementGuideNumber();
+        Integer reimbursementGuideNumber = ReimbursementGuide.generateReimbursementGuideNumber();
         reimbursementGuide.setNumber(reimbursementGuideNumber);
         reimbursementGuide.setGuide(guide);
 
         // reimbursement Guide Situation
-        ReimbursementGuideSituation reimbursementGuideSituation = DomainFactory.makeReimbursementGuideSituation();
+        ReimbursementGuideSituation reimbursementGuideSituation = DomainFactory
+                .makeReimbursementGuideSituation();
         reimbursementGuideSituation.setEmployee(userView.getPerson().getEmployee());
         reimbursementGuideSituation.setModificationDate(Calendar.getInstance());
         reimbursementGuideSituation.setOfficialDate(Calendar.getInstance());

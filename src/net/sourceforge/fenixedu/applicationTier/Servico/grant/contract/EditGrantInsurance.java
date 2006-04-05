@@ -12,26 +12,25 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 
 public class EditGrantInsurance extends Service {
 
     public void run(InfoGrantInsurance infoGrantInsurance) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final IPersistentGrantContractRegime persistentGrantContractRegime = persistentSupport
-                .getIPersistentGrantContractRegime();
-
-        GrantInsurance grantInsurance = (GrantInsurance) persistentObject
-                .readByOID(GrantInsurance.class, infoGrantInsurance.getIdInternal());
+     
+        GrantInsurance grantInsurance = rootDomainObject.readGrantInsuranceByOID(infoGrantInsurance
+                .getIdInternal());
         if (grantInsurance == null) {
             grantInsurance = DomainFactory.makeGrantInsurance();
         }
 
+        final GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantInsurance
+                .getInfoGrantContract().getIdInternal());
+
         grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());
         if (infoGrantInsurance.getDateEndInsurance() == null) {
-            final List grantContractRegimeList = persistentGrantContractRegime
-                    .readGrantContractRegimeByGrantContractAndState(infoGrantInsurance
-                            .getInfoGrantContract().getIdInternal(), InfoGrantContractRegime
+            final List grantContractRegimeList = grantContract
+                    .readGrantContractRegimeByGrantContractAndState(InfoGrantContractRegime
                             .getActiveState());
             final GrantContractRegime grantContractRegime = (GrantContractRegime) grantContractRegimeList
                     .get(0);
@@ -40,12 +39,10 @@ public class EditGrantInsurance extends Service {
             grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
         }
 
-        final GrantContract grantContract = (GrantContract) persistentObject.readByOID(
-                GrantContract.class, infoGrantInsurance.getInfoGrantContract().getIdInternal());
         grantInsurance.setGrantContract(grantContract);
 
-        final GrantPaymentEntity grantPaymentEntity = (GrantPaymentEntity) persistentObject
-                .readByOID(GrantPaymentEntity.class, infoGrantInsurance.getInfoGrantPaymentEntity()
+        final GrantPaymentEntity grantPaymentEntity = rootDomainObject
+                .readGrantPaymentEntityByOID(infoGrantInsurance.getInfoGrantPaymentEntity()
                         .getIdInternal());
         grantInsurance.setGrantPaymentEntity(grantPaymentEntity);
 

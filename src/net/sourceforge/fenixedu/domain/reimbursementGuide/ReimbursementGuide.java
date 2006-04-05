@@ -5,10 +5,14 @@
 package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.State;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -19,12 +23,14 @@ import org.apache.commons.collections.Predicate;
  */
 public class ReimbursementGuide extends ReimbursementGuide_Base {
 
-    public ReimbursementGuide() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    final static Comparator<ReimbursementGuide> NUMBER_COMPARATOR = new BeanComparator("number");
 
-	/**
+    public ReimbursementGuide() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    /**
      * @return
      */
     public Calendar getCreationDate() {
@@ -41,7 +47,7 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
      */
     public void setCreationDate(Calendar creationDate) {
         if (creationDate != null) {
-            this.setCreation(creationDate.getTime());    
+            this.setCreation(creationDate.getTime());
         } else {
             this.setCreation(null);
         }
@@ -57,4 +63,11 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
                 });
     }
 
+    public static Integer generateReimbursementGuideNumber() {
+        List<ReimbursementGuide> reimbursementGuides = RootDomainObject.getInstance()
+                .getReimbursementGuides();
+
+        return (reimbursementGuides.isEmpty()) ? Integer.valueOf(1) : Collections.max(
+                reimbursementGuides, NUMBER_COMPARATOR).getNumber() + 1;
+    }
 }

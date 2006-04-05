@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 
 public class DeleteGrantContract extends DeleteDomainObjectService {
@@ -60,9 +59,8 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
         }
     }
 
-    private void deleteAssociatedRegimes(GrantContract grantContract) throws ExcepcaoPersistencia {
-        IPersistentGrantContractRegime pgcr = persistentSupport.getIPersistentGrantContractRegime();
-        List<GrantContractRegime> regimesList = pgcr.readGrantContractRegimeByGrantContract(grantContract.getIdInternal());
+    private void deleteAssociatedRegimes(GrantContract grantContract) throws ExcepcaoPersistencia {        
+        List<GrantContractRegime> regimesList = grantContract.readGrantContractRegimeByGrantContract();
         if (regimesList != null) {
             for (GrantContractRegime grantContractRegime : regimesList) {
                 grantContractRegime.delete();
