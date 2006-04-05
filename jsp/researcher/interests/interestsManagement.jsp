@@ -38,13 +38,11 @@
 				<fr:property name="order(delete)" value="3"/>
 			</fr:layout>
 		</fr:view>
-	
-	<br/>
-	
-	<fr:create type="net.sourceforge.fenixedu.domain.research.ResearchInterest" schema="researchInterest.simpleCreate"
-	           action="/interests/interestsManagement.do?method=prepare">
-		<fr:hidden slot="order" name="lastOrder"/>
-		<fr:hidden slot="party" name="party" />
-	</fr:create>
+
+	<br/>	
+	<html:link module="/researcher" page="/interests/interestsManagement.do?method=prepareInsertInterest">
+		<bean:message bundle="RESEARCHER_RESOURCES" key="link.new.interest" />
+	</html:link>
+		
 </logic:present>
 

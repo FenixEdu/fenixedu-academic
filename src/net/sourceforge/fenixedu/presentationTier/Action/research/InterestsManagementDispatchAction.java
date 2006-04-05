@@ -59,6 +59,16 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
+        List<ResearchInterest> orderedInterests = getOrderedInterests(request);                    
+        RenderUtils.invalidateViewState();
+        request.setAttribute("researchInterests", orderedInterests);
+        
+        return mapping.findForward("Success");
+    }
+
+    public ActionForward prepareInsertInterest (ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        
         List<ResearchInterest> orderedInterests = getOrderedInterests(request);
 
         if (orderedInterests.size() > 0) {
@@ -67,15 +77,12 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         } else {
             request.setAttribute("lastOrder", 1);
         }
-
-        request.setAttribute("researchInterests", orderedInterests);
+               
         request.setAttribute("party", (Party) getUserView(request).getPerson());
 
-        RenderUtils.invalidateViewState();
-
-        return mapping.findForward("Success");
+        return mapping.findForward("InsertNewInterest");        
     }
-
+    
     public ActionForward manageTranslations(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         

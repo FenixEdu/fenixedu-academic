@@ -31,4 +31,7 @@
     <definition name="interests.manageTranslations" extends="researcher.masterPage">
         <put name="body" value="/researcher/interests/manageTranslations.jsp"></put>
     </definition>
+    <definition name="interests.insert.interest" extends="researcher.masterPage">
+        <put name="body" value="/researcher/interests/insertNewInterest.jsp"></put>
+    </definition>    
 </tiles-definitions>
