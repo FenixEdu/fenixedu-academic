@@ -76,4 +76,10 @@ public class Metadata extends Metadata_Base {
         return visibleQuestions;
     }
 
+    public void delete() {
+        for (;!getQuestions().isEmpty();getQuestions().get(0).delete());
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
+
 }
