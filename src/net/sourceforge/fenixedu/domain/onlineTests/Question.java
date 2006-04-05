@@ -18,7 +18,8 @@ public class Question extends Question_Base {
 
 	public void delete() {
         removeMetadata();
-        deleteDomainObject();
+        removeRootDomainObject();
+        super.deleteDomainObject();
     }
 
 }
