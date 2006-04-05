@@ -14,16 +14,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadSectionsBySiteAndSuperiorSection extends Service {
 
-	public List<InfoSection> run(InfoSite infoSite, InfoSection infoSuperiorSection) throws FenixServiceException,
-			ExcepcaoPersistencia {
-        
-		final Site site = (Site) persistentObject.readByOID(Site.class, infoSite.getIdInternal());
+	public List<InfoSection> run(InfoSite infoSite, InfoSection infoSuperiorSection) throws FenixServiceException, ExcepcaoPersistencia {
+		final Site site = rootDomainObject.readSiteByOID(infoSite.getIdInternal());
 		if (site == null) {
-            throw new FenixServiceException("error.noSite");     
-        }
+            		throw new FenixServiceException("error.noSite");     
+        	}
         
         final Section parentSection = (infoSuperiorSection == null) ? null :
-            (Section) persistentObject.readByOID(Section.class, infoSuperiorSection.getIdInternal());
+            rootDomainObject.readSectionByOID(infoSuperiorSection.getIdInternal());
         
         final List<InfoSection> result = new ArrayList<InfoSection>();
         for (final Section section : site.getAssociatedSections(parentSection)) {
@@ -32,4 +30,5 @@ public class ReadSectionsBySiteAndSuperiorSection extends Service {
 
 		return result;
 	}
+
 }

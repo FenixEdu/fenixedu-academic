@@ -1,7 +1,3 @@
-/*
- * Created on 25/Jul/2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -15,9 +11,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
-/**
- * @author Susana Fernandes
- */
 public class ReadQuestion extends Service {
 
     private String path = new String();
@@ -29,13 +22,15 @@ public class ReadQuestion extends Service {
         if (questionId == null || questionId.equals(new Integer(-1))) {
             if (metadataId == null)
                 throw new InvalidArgumentsServiceException();
-            Metadata metadata = (Metadata) persistentObject.readByOID(Metadata.class, metadataId);
+
+            Metadata metadata = rootDomainObject.readMetadataByOID(metadataId);
             if (metadata == null || metadata.getVisibleQuestions() == null && metadata.getVisibleQuestions().size() == 0) {
                 throw new InvalidArgumentsServiceException();
             }
+
             question = metadata.getVisibleQuestions().get(0);
         } else {
-            question = (Question) persistentObject.readByOID(Question.class, questionId);
+            question = rootDomainObject.readQuestionByOID(questionId);
         }
         if (question == null) {
             throw new InvalidArgumentsServiceException();

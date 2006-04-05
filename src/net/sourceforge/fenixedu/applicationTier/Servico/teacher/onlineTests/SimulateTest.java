@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -24,7 +22,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
@@ -34,6 +31,8 @@ import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class SimulateTest extends Service {
 
@@ -73,7 +72,7 @@ public class SimulateTest extends Service {
         infoDistributedTest.setTitle(test.getTitle());
         infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
-        List<InfoStudentTestQuestion> infoStudentTestQuestionList = getInfoStudentTestQuestionList(persistentSupport, questionCodes, optionShuffle,
+        List<InfoStudentTestQuestion> infoStudentTestQuestionList = getInfoStudentTestQuestionList(questionCodes, optionShuffle,
                 responses, infoDistributedTest, testId);
         if (infoStudentTestQuestionList.size() == 0)
             return null;
@@ -134,12 +133,12 @@ public class SimulateTest extends Service {
         return infoQuestion;
     }
 
-    private List<InfoStudentTestQuestion> getInfoStudentTestQuestionList(ISuportePersistente persistentSupport, String[] questionCodes, String[] optionShuffle,
+    private List<InfoStudentTestQuestion> getInfoStudentTestQuestionList(String[] questionCodes, String[] optionShuffle,
             Response[] responses, InfoDistributedTest infoDistributedTest, Integer testId) throws ExcepcaoPersistencia,
             InvalidArgumentsServiceException, FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 
-        Test test = (Test) persistentObject.readByOID(Test.class, testId);
+        Test test = rootDomainObject.readTestByOID(testId);
         List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
         Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         for (int i = 0; i < testQuestionList.size(); i++) {

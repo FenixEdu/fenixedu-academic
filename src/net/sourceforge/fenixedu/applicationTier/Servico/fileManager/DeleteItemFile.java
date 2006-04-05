@@ -10,10 +10,10 @@ import org.apache.slide.common.SlideException;
 
 public class DeleteItemFile extends Service {
 
-	public void run(Integer itemId, String fileName) throws FenixServiceException, ExcepcaoPersistencia,
-			SlideException {
-		final Item item = (Item) persistentObject.readByOID(Item.class, itemId);
-        final String slidename = item.getSlideName();
-        JdbcMysqlFileSupport.deleteFile(slidename, fileName);
+	public void run(Integer itemId, String fileName) throws FenixServiceException, ExcepcaoPersistencia, SlideException {
+		final Item item = rootDomainObject.readItemByOID(itemId);
+        	final String slidename = item.getSlideName();
+        	JdbcMysqlFileSupport.deleteFile(slidename, fileName);
 	}
+
 }

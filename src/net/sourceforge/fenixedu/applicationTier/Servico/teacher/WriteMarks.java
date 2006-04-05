@@ -22,8 +22,8 @@ public class WriteMarks extends Service {
             throws ExcepcaoPersistencia, FenixServiceException {
     	final List<DomainException> exceptionList = new ArrayList<DomainException>(); 
         
-        final Evaluation evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class, evaluationOID);
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executioCourseOID);
+        final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationOID);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executioCourseOID);
         
         for (final Entry<Integer, String> entry : marks.entrySet()) {
             final Integer studentNumber = entry.getKey();

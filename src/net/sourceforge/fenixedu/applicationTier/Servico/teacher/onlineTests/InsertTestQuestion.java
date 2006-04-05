@@ -1,7 +1,3 @@
-/*
- * Created on 29/Jul/2003
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
@@ -24,9 +20,6 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-/**
- * @author Susana Fernandes
- */
 public class InsertTestQuestion extends Service {
 
 	private String path = new String();
@@ -37,8 +30,7 @@ public class InsertTestQuestion extends Service {
 		this.path = path.replace('\\', '/');
 
 		for (int i = 0; i < metadataId.length; i++) {
-			Metadata metadata = (Metadata) persistentObject.readByOID(
-					Metadata.class, new Integer(metadataId[i]));
+			Metadata metadata = rootDomainObject.readMetadataByOID(new Integer(metadataId[i]));
 			if (metadata == null) {
 				throw new InvalidArgumentsServiceException();
 			}
@@ -51,7 +43,7 @@ public class InsertTestQuestion extends Service {
 			if (question == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			Test test = (Test) persistentObject.readByOID(Test.class, testId);
+			Test test = rootDomainObject.readTestByOID(testId);
 			if (test == null) {
 				throw new InvalidArgumentsServiceException();
 			}

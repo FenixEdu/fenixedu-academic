@@ -1,8 +1,3 @@
-/*
- * Created on 26/Ago/2003
- *  
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.text.MessageFormat;
@@ -19,13 +14,10 @@ import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Susana Fernandes
- */
 public class InsertTestAsNewTest extends Service {
 
     public Integer run(Integer executionCourseId, Integer oldTestId) throws FenixServiceException, ExcepcaoPersistencia {
-        Test oldTest = (Test) persistentObject.readByOID(Test.class, oldTestId);
+        Test oldTest = rootDomainObject.readTestByOID(oldTestId);
         if (oldTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -52,4 +44,5 @@ public class InsertTestAsNewTest extends Service {
         }
         return test.getIdInternal();
     }
+
 }

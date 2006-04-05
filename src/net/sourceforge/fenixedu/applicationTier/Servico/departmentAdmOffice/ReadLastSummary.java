@@ -1,7 +1,3 @@
-/*
- * Created on Nov 18, 2004
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
 import java.util.ArrayList;
@@ -22,31 +18,26 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-/**
- * @author mrsp and jdnf
- */
-
 public class ReadLastSummary extends Service {
 
     public InfoSummary run(Integer executionCourseId, Integer shiftId, Integer lessonID)
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoSummary summary = null;
 
-        Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftId);
+        Shift shift = rootDomainObject.readShiftByOID(shiftId);
         if (shift == null)
             throw new FenixServiceException("no.shift");
 
-        Lesson aula = (Lesson) persistentObject.readByOID(Lesson.class, lessonID);
+        Lesson aula = rootDomainObject.readLessonByOID(lessonID);
         if (aula == null)
             throw new FenixServiceException("no.lesson");
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executioncourse");
         }
 
-        List summaries = new ArrayList(shift.getAssociatedSummaries());
+        List<Summary> summaries = new ArrayList<Summary>(shift.getAssociatedSummaries());
         if (summaries != null && summaries.size() > 0) {
             Comparator comparator = new BeanComparator("summaryDate.time");
             Collections.sort(summaries, comparator);
@@ -65,4 +56,5 @@ public class ReadLastSummary extends Service {
         }
         return summary;
     }
+    
 }

@@ -8,15 +8,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Fernanda Quitério
- */
 public class EditSection extends Service {
 
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, String newSectionName,
             Integer newOrder) throws FenixServiceException, ExcepcaoPersistencia {
-        Section iSection = (Section) persistentObject.readByOID(Section.class, sectionCode);
-
+        Section iSection = rootDomainObject.readSectionByOID(sectionCode);
         if (iSection == null) {
             throw new NonExistingServiceException();
         }

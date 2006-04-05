@@ -1,7 +1,3 @@
-/*
- * Created on Nov 8, 2005
- *  by jdnf
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.Date;
@@ -15,8 +11,7 @@ public class EditProject extends Service {
 
     public void run(Integer executionCourseID, Integer projectID, String name, Date begin, Date end,
             String description) throws ExcepcaoPersistencia, FenixServiceException {
-        final Project project = (Project) persistentObject.readByOID(
-                Project.class, projectID);
+        final Project project = (Project) rootDomainObject.readEvaluationByOID(projectID);
         if (project == null) {
             throw new FenixServiceException("error.noEvaluation");
         }

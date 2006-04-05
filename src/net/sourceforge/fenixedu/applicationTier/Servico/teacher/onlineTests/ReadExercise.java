@@ -1,7 +1,3 @@
-/*
- * Created on 27/Fev/2004
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
@@ -18,16 +14,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
-/**
- * @author Susana Fernandes
- */
 public class ReadExercise extends Service {
     public InfoMetadata run(Integer executionCourseId, Integer metadataId, Integer variationId, String path) throws FenixServiceException,
             ExcepcaoPersistencia {
-        Metadata metadata = (Metadata) persistentObject.readByOID(Metadata.class, metadataId);
+
+        Metadata metadata = rootDomainObject.readMetadataByOID(metadataId);
         if (metadata == null || !metadata.getVisibility().booleanValue()) {
             return null;
         }
+
         InfoMetadata infoMetadata = InfoMetadataWithExecutionCourse.newInfoFromDomain(metadata);
         List<InfoQuestion> visibleInfoQuestions = new ArrayList<InfoQuestion>();
         for (int i = 0; i < metadata.getVisibleQuestions().size(); i++) {
@@ -47,6 +42,9 @@ public class ReadExercise extends Service {
             visibleInfoQuestions.add(infoQuestion);
         }
         infoMetadata.setVisibleQuestions(visibleInfoQuestions);
+
         return infoMetadata;
     }
+
 }
+

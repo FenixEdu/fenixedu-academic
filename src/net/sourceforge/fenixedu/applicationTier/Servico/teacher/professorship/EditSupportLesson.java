@@ -1,6 +1,3 @@
-/**
- * Nov 22, 2005
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -13,20 +10,13 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Ricardo Rodrigues
- * 
- */
-
 public class EditSupportLesson extends Service {
 
     public void run(SupportLessonDTO supportLessonDTO) throws ExcepcaoPersistencia {
-        SupportLesson supportLesson = (SupportLesson) persistentObject
-                .readByOID(SupportLesson.class, supportLessonDTO.getIdInternal());
+        SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonDTO.getIdInternal());
 
         if (supportLesson == null) {
-            Professorship professorship = (Professorship) persistentObject.readByOID(Professorship.class,
-                            supportLessonDTO.getProfessorshipID());
+            Professorship professorship = rootDomainObject.readProfessorshipByOID(supportLessonDTO.getProfessorshipID());
             supportLesson = DomainFactory.makeSupportLesson();
             supportLesson.setProfessorship(professorship);
         }
@@ -45,6 +35,6 @@ public class EditSupportLesson extends Service {
         supportLesson.setWeekDay(supportLessonDTO.getWeekDay());
 
         supportLesson.verifyOverlappings();
-
     }
+
 }

@@ -1,7 +1,3 @@
-/*
- * Created on Nov 16, 2003 by jpvl
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
@@ -15,9 +11,6 @@ import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
-/**
- * @author jpvl
- */
 public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
     @Override
@@ -28,12 +21,10 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
         shiftProfessorship.setPercentage(infoShiftProfessorship.getPercentage());
 
-        Professorship professorship = (Professorship) persistentObject.readByOID(Professorship.class,
-                infoShiftProfessorship.getInfoProfessorship().getIdInternal());
+        Professorship professorship = rootDomainObject.readProfessorshipByOID(infoShiftProfessorship.getInfoProfessorship().getIdInternal());
         shiftProfessorship.setProfessorship(professorship);
 
-        Shift shift = (Shift) persistentObject.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
-                .getIdInternal());
+        Shift shift = rootDomainObject.readShiftByOID(infoShiftProfessorship.getInfoShift().getIdInternal());
         shiftProfessorship.setShift(shift);
     }
 

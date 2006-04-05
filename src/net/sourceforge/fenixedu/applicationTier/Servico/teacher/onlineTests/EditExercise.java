@@ -1,7 +1,3 @@
-/*
- * Created on 27/Fev/2004
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.Calendar;
@@ -12,19 +8,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * 
- * @author Susana Fernandes
- * 
- */
 public class EditExercise extends Service {
 
 	public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
 			String difficulty, Calendar learningTime, String level, String mainSubject,
 			String secondarySubject) throws FenixServiceException, ExcepcaoPersistencia {
-		Metadata metadata = (Metadata) persistentObject.readByOID(Metadata.class, metadataId);
+		Metadata metadata = rootDomainObject.readMetadataByOID(metadataId);
 		if (metadata == null)
 			throw new InvalidArgumentsServiceException();
+
 		if (author != null)
 			metadata.setAuthor(author);
 		if (!difficulty.equals("-1"))

@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.List;
-import java.util.ListIterator;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -19,16 +16,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Fernanda Quitério
  */
 public class PublishMarks extends Service {
+    
+    private final static int MOBILE_NUMBER_LENGHT = 9;
+    private final static String VODAFONE_NETWORK_PREFIX = "91";
+    private final static String TMN_NETWORK_PREFIX = "96";
+    private final static String OPTIMUS_NETWORK_PREFIX = "93";
 
     public Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage,
             Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
-        // Site
-    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseCode);
+
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
         final Site site = executionCourse.getSite();
-        // find what type of evaluation we are dealing with
-        Evaluation evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class,
-                evaluationCode);
+        final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
 
         if (publishmentMessage == null || publishmentMessage.length() == 0) {
             evaluation.setPublishmentMessage(" ");
@@ -37,25 +37,18 @@ public class PublishMarks extends Service {
             site.createAnnouncement(announcementTitle, publishmentMessage);                       
         }
 
-        // publish marks
-        List<Mark> marksList = evaluation.getMarks();
-        ListIterator iterMarks = marksList.listIterator();
-        while (iterMarks.hasNext()) {
-
-            Mark mark = (Mark) iterMarks.next();
-
+        for (Mark mark : evaluation.getMarks()) {
             if (!mark.getMark().equals(mark.getPublishedMark())) {
                 // update published mark
                 mark.setPublishedMark(mark.getMark());
-                if (sendSMS != null && sendSMS.booleanValue()) {
-                    if (mark.getAttend().getAluno().getPerson().getTelemovel() != null
-                            || mark.getAttend().getAluno().getPerson().getTelemovel().length() == 9) {
-                        String StringDestinationNumber = mark.getAttend().getAluno().getPerson()
-                                .getTelemovel();
+                if (sendSMS != null && sendSMS) {
+                    if (mark.getAttend().getAluno().getPerson().getMobile() != null
+                            || mark.getAttend().getAluno().getPerson().getMobile().length() == MOBILE_NUMBER_LENGHT) {
+                        String StringDestinationNumber = mark.getAttend().getAluno().getPerson().getMobile();
 
-                        if (StringDestinationNumber.startsWith("96")
-                                || StringDestinationNumber.startsWith("91")
-                                || StringDestinationNumber.startsWith("93")) {
+                        if (StringDestinationNumber.startsWith(TMN_NETWORK_PREFIX)
+                                || StringDestinationNumber.startsWith(VODAFONE_NETWORK_PREFIX)
+                                || StringDestinationNumber.startsWith(OPTIMUS_NETWORK_PREFIX)) {
 
                             try {
                                 SmsUtil.getInstance().sendSmsWithoutDeliveryReports(
@@ -64,10 +57,8 @@ public class PublishMarks extends Service {
                                                 + mark.getAttend().getDisciplinaExecucao().getSigla()
                                                 + " - " + mark.getMark());
                             } catch (FenixUtilException e1) {
-
                                 throw new SmsNotSentServiceException("error.person.sendSms");
                             }
-
                         }
                     }
                 }
@@ -76,4 +67,5 @@ public class PublishMarks extends Service {
 
         return Boolean.TRUE;
     }
+    
 }

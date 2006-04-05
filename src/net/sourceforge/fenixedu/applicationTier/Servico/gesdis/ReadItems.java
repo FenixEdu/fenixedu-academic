@@ -16,10 +16,11 @@ public class ReadItems extends Service {
 
     public List run(InfoSection infoSection) throws ExcepcaoPersistencia, FenixServiceException {
         
-        final Section section = (Section) persistentObject.readByOID(Section.class, infoSection.getIdInternal());
+        final Section section = rootDomainObject.readSectionByOID(infoSection.getIdInternal());
         if (section == null) {
             throw new FenixServiceException("error.noSection");
         }
+
         final List<InfoItem> infoItemsList = new ArrayList<InfoItem>(section.getAssociatedItemsCount());
         for (final Item elem : section.getAssociatedItems()) {
             infoItemsList.add(InfoItem.newInfoFromDomain(elem));
@@ -28,4 +29,5 @@ public class ReadItems extends Service {
         
         return infoItemsList;
     }
+
 }

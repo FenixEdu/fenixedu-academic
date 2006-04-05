@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadItemSlideName extends Service {
 
     public String run(final Integer itemId) throws ExcepcaoPersistencia {
-        final Item item = (Item) persistentObject.readByOID(Item.class, itemId);
+        final Item item = rootDomainObject.readItemByOID(itemId);
         return (item != null) ? item.getSlideName() : null;
     }
 

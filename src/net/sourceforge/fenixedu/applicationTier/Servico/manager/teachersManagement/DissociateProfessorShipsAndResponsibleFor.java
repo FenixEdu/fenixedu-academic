@@ -36,8 +36,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends Service {
         if (professorships != null && responsibleFors != null) {
             List<Professorship> newProfessorships = new ArrayList<Professorship>();
             for (Integer professorshipId : professorships) {
-                Professorship professorship = (Professorship) persistentObject.readByOID(
-                        Professorship.class, professorshipId);
+                Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipId);
                 if (professorship == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }
@@ -50,8 +49,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends Service {
 
             List<Professorship> newResponsibleFor = new ArrayList<Professorship>();
             for (Integer responsibleForId : responsibleFors) {
-                Professorship responsibleFor = (Professorship) persistentObject.readByOID(
-                        Professorship.class, responsibleForId);
+                Professorship responsibleFor = rootDomainObject.readProfessorshipByOID(responsibleForId);
                 if (responsibleFor == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }

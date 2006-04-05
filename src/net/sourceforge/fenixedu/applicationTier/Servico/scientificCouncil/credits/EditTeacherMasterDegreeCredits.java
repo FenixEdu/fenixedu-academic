@@ -1,6 +1,3 @@
-/**
- * Feb 4, 2006
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits;
 
 import java.util.HashSet;
@@ -16,16 +13,10 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Ricardo Rodrigues
- * 
- */
-
 public class EditTeacherMasterDegreeCredits extends Service {
 
-    public void run(Map hoursMap, Map creditsMap) throws ExcepcaoPersistencia, NumberFormatException {
-
-        Set<String> professorshipIDs = new HashSet(hoursMap.keySet());
+    public void run(Map<String,String> hoursMap, Map<String,String> creditsMap) throws ExcepcaoPersistencia, NumberFormatException {
+        Set<String> professorshipIDs = new HashSet<String>(hoursMap.keySet());
         professorshipIDs.addAll(creditsMap.keySet());
 
         for (String stringID : professorshipIDs) {
@@ -35,20 +26,21 @@ public class EditTeacherMasterDegreeCredits extends Service {
             if (hoursString.equals("") && creditsString.equals("")) {
                 continue;
             }
-            Professorship professorship = (Professorship) persistentObject.readByOID(
-                    Professorship.class, professorshipID);
+            Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
             Teacher teacher = professorship.getTeacher();
             ExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
+            
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
             if (teacherService == null) {
                 teacherService = DomainFactory.makeTeacherService(teacher, executionPeriod);
             }
-            TeacherMasterDegreeService teacherMasterDegreeService = teacherService
-                    .getMasterDegreeServiceByProfessorship(professorship);
+            
+            TeacherMasterDegreeService teacherMasterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);
             if (teacherMasterDegreeService == null) {
                 teacherMasterDegreeService = DomainFactory.makeTeacherMasterDegreeService(
                         teacherService, professorship);
             }
+            
             Double credits = null;
             Double hours = null;
             if (!creditsString.equals("")) {
@@ -60,4 +52,5 @@ public class EditTeacherMasterDegreeCredits extends Service {
             teacherMasterDegreeService.updateValues(hours, credits);
         }
     }
+
 }

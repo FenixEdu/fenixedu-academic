@@ -1,6 +1,3 @@
-/**
- * Nov 17, 2005
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import java.util.List;
@@ -16,17 +13,11 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.ManageDegreeTeachingServicesDispatchAction.ShiftIDTeachingPercentage;
 
-/**
- * @author Ricardo Rodrigues
- * 
- */
-
 public class UpdateDegreeTeachingServices extends Service {
 
     public void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages)
             throws ExcepcaoPersistencia {
-        Professorship professorship = (Professorship) persistentObject.readByOID(
-                Professorship.class, professorshipID);        
+        Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);        
 
         Teacher teacher = professorship.getTeacher();
         ExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
@@ -35,8 +26,7 @@ public class UpdateDegreeTeachingServices extends Service {
             teacherService = DomainFactory.makeTeacherService(teacher, executionPeriod);
         }
         for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {
-            Shift shift = (Shift) persistentObject.readByOID(Shift.class,
-                    shiftIDTeachingPercentage.getShiftID());
+            Shift shift = rootDomainObject.readShiftByOID(shiftIDTeachingPercentage.getShiftID());
             DegreeTeachingService degreeTeachingService = teacherService
                     .getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
             if (degreeTeachingService != null) {

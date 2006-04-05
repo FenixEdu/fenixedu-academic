@@ -1,6 +1,3 @@
-/*
- * Created on 31/Jul/2003
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
@@ -18,9 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
-/**
- * @author Susana Fernandes
- */
 public class ReadTest extends Service {
 
     private String path = new String();
@@ -28,7 +22,7 @@ public class ReadTest extends Service {
     public InfoTest run(Integer executionCourseId, Integer testId, String path) throws FenixServiceException, ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
 
-        Test test = (Test) persistentObject.readByOID(Test.class, testId);
+        Test test = rootDomainObject.readTestByOID(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -55,7 +49,7 @@ public class ReadTest extends Service {
     }
 
     public InfoTest run(Integer executionCourseId, Integer testId) throws FenixServiceException, ExcepcaoPersistencia {
-        Test test = (Test) persistentObject.readByOID(Test.class, testId);
+        Test test = rootDomainObject.readTestByOID(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
