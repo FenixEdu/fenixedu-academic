@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 
 /**
  * @author pica
@@ -18,14 +17,8 @@ public class ReadPaymentEntityByNumberAndClass extends Service {
 
 	public InfoGrantPaymentEntity run(String paymentEntityNumber, String className)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		GrantPaymentEntity grantPaymentEntity = null;
-		InfoGrantPaymentEntity result = null;
-		IPersistentGrantPaymentEntity pgpe = null;
-
-		pgpe = persistentSupport.getIPersistentGrantPaymentEntity();
-		grantPaymentEntity = pgpe.readByNumberAndClass(paymentEntityNumber, className);
-		result = InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
-
-		return result;
+		final GrantPaymentEntity grantPaymentEntity = GrantPaymentEntity.findGrantPaymentEntityByNumberAndConcreteClass(paymentEntityNumber, className);
+		return InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
 	}
+
 }

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailingListOJB
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantCostCenterOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantOrientationTeacherOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantPaymentEntityOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.owner.GrantOwnerOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestAdvisoryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestOJB;
@@ -38,7 +37,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
@@ -222,15 +220,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
      */
     public IPersistentGrantCostCenter getIPersistentGrantCostCenter() {
         return new GrantCostCenterOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantPaymentEntity()
-     */
-    public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity() {
-        return new GrantPaymentEntityOJB();
     }
 
     public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork() {

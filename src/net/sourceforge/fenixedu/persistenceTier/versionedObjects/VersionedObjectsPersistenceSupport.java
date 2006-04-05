@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
@@ -38,7 +37,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegre
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantCostCenterVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantOrientationTeacherVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantPaymentEntityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owner.GrantOwnerVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.DistributedTestAdvisoryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.DistributedTestVO;
@@ -94,10 +92,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {
         return new DistributedTestAdvisoryVO();
-    }
-
-    public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity() {
-        return new GrantPaymentEntityVO();
     }
 
     public IPersistentPublicationAttribute getIPersistentPublicationAttribute() {

@@ -4,17 +4,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 /**
  * @author Barbosa
@@ -24,19 +22,12 @@ import org.apache.commons.collections.Transformer;
 public class ReadAllGrantPaymentEntitiesByClassName extends Service {
 
 	public List run(String className) throws FenixServiceException, ExcepcaoPersistencia {
-		List result = null;
-		IPersistentGrantPaymentEntity pgpe = null;
-
-		pgpe = persistentSupport.getIPersistentGrantPaymentEntity();
-		List grantPaymentEntities = pgpe.readAllPaymentEntitiesByClassName(className);
-
-		result = (List) CollectionUtils.collect(grantPaymentEntities, new Transformer() {
-			public Object transform(Object o) {
-				GrantPaymentEntity grantPaymentEntity = (GrantPaymentEntity) o;
-				return InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
-			}
-		});
-
-		return result;
+        final Set<GrantPaymentEntity> grantPaymentEntities = GrantPaymentEntity.findGrantPaymentEntityByConcreteClass(className);
+        final List<InfoGrantPaymentEntity> infoGrantPaymentEntities = new ArrayList<InfoGrantPaymentEntity>();
+        for (final GrantPaymentEntity grantPaymentEntity : grantPaymentEntities) {
+            infoGrantPaymentEntities.add(InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity));
+        }
+		return infoGrantPaymentEntities;
 	}
+
 }
