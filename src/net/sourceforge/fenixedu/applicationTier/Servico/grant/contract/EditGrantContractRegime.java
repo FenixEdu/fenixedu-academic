@@ -42,7 +42,8 @@ public class EditGrantContractRegime extends EditDomainObjectService {
         grantContractRegime.setGrantContract(grantContract);
 
         if (grantContract.getKeyGrantCostCenter() != null && grantContract.getKeyGrantCostCenter() != 0) {
-            GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject.readGrantPaymentEntityByOID(infoGrantContractRegime.getIdInternal());
+            GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject
+                    .readGrantPaymentEntityByOID(infoGrantContractRegime.getIdInternal());
             grantContractRegime.setGrantCostCenter(grantCostCenter);
         } else {
             grantContractRegime.setGrantCostCenter(null);
@@ -87,8 +88,11 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
             if (infoGrantContractRegime.getGrantCostCenterInfo() != null
                     && ((infoGrantContractRegime.getGrantCostCenterInfo().getNumber()).trim()).length() > 0) { // ||
-                IPersistentGrantCostCenter pGrantCostCenter = persistentSupport.getIPersistentGrantCostCenter();
-                GrantCostCenter grantCostCenter = pGrantCostCenter.readGrantCostCenterByNumber(infoGrantContractRegime.getGrantCostCenterInfo().getNumber());
+                IPersistentGrantCostCenter pGrantCostCenter = persistentSupport
+                        .getIPersistentGrantCostCenter();
+                GrantCostCenter grantCostCenter = pGrantCostCenter
+                        .readGrantCostCenterByNumber(infoGrantContractRegime.getGrantCostCenterInfo()
+                                .getNumber());
                 if (grantCostCenter == null)
                     throw new GrantOrientationTeacherNotFoundException();
                 grantContract.setGrantCostCenter(grantCostCenter);
@@ -99,7 +103,8 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
             grantContractRegime.setGrantCostCenter(grantContract.getGrantCostCenter());
 
-            IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = persistentSupport.getIPersistentGrantOrientationTeacher();
+            IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = persistentSupport
+                    .getIPersistentGrantOrientationTeacher();
             GrantOrientationTeacher grantOrientationTeacher = persistentGrantOrientationTeacher
                     .readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(),
                             new Integer(0));

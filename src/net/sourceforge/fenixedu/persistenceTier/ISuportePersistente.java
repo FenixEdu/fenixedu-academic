@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
@@ -56,8 +55,6 @@ public interface ISuportePersistente {
     public IPersistentGrantCostCenter getIPersistentGrantCostCenter();
 
     public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity();
-
-    public IPersistentGrantContractRegime getIPersistentGrantContractRegime();
 
     public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion();
 
