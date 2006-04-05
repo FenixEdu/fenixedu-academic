@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -22,12 +21,7 @@ public class InsertExternalPersons extends Service {
 
         List<ExternalPerson> externalPersons = new ArrayList<ExternalPerson>();
 
-        List<Unit> institutions = Party.readAllUnits();
-
-        // generate new identification number
-        String lastDocumentIdNumber = persistentSupport.getIPersistentExternalPerson()
-                .readLastDocumentIdNumber();
-        int nextID = Integer.parseInt(lastDocumentIdNumber);
+        List<Unit> institutions = Unit.readAllUnits();
 
         for (InfoExternalPerson infoExternalPerson : infoExternalPersons) {
 
@@ -43,11 +37,10 @@ public class InsertExternalPersons extends Service {
             }
 
             String name = infoExternalPerson.getInfoPerson().getNome();
-            String documentIDNumber = String.valueOf(++nextID);
 
             // creating a new ExternalPerson
             ExternalPerson externalPerson = DomainFactory.makeExternalPerson(name, Gender.MALE, "", "",
-                    "", "", "", documentIDNumber, currentInstitution);
+                    "", "", "", String.valueOf(System.currentTimeMillis()), currentInstitution);
 
             externalPersons.add(externalPerson);
         }

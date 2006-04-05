@@ -322,7 +322,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
                 executionYearID = null;
             }
 
-            Teacher teacher = (Teacher) readDomainObject(Teacher.class, getSelectedTeacherID());
+            Teacher teacher = rootDomainObject.readTeacherByOID(getSelectedTeacherID());
 
             List<PersonFunction> result = new ArrayList<PersonFunction>(
                     (List<PersonFunction>) ServiceUtils.executeService(getUserView(),

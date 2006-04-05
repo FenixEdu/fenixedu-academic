@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -368,5 +369,15 @@ public class Unit extends Unit_Base {
             }
         }
         return null;
+    }
+
+    public static List<Unit> readAllUnits() {
+        List<Unit> allUnits = new ArrayList<Unit>();
+        for (Party party : RootDomainObject.getInstance().getPartys()) {
+           if (party instanceof Unit) {               
+               allUnits.add((Unit) party);
+           }
+        }
+        return allUnits;
     }
 }

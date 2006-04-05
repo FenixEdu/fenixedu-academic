@@ -18,10 +18,11 @@ public class ReadExternalPersonsByIDs extends Service {
 
     public Collection<InfoExternalPerson> run(Collection<Integer> externalPersonsIDs)
             throws ExcepcaoPersistencia {
+        
         Collection<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(
                 externalPersonsIDs.size());
-        Collection<ExternalPerson> externalPersons = persistentSupport.getIPersistentExternalPerson().readByIDs(
-                externalPersonsIDs);
+        
+        Collection<ExternalPerson> externalPersons = ExternalPerson.readByIDs(externalPersonsIDs);
 
         for (ExternalPerson externalPerson : externalPersons) {
             infoExternalPersons.add(InfoExternalPersonWithPersonAndWLocation

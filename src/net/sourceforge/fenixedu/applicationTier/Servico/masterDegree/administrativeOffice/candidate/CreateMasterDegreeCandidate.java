@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -79,7 +78,7 @@ public class CreateMasterDegreeCandidate extends Service {
         Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
                 identificationDocumentType);
 
-        List<Person> persons = Party.readAllPersons();
+        List<Person> persons = Person.readAllPersons();
 
         Role personRole = Role.getRoleByRoleType(RoleType.PERSON);
 

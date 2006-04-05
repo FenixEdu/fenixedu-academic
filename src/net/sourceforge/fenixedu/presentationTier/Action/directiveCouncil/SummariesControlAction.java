@@ -125,15 +125,12 @@ public class SummariesControlAction extends FenixDispatchAction {
     private List<SummariesControlElementDTO> getListing(HttpServletRequest request, String departmentID,
             String executionPeriodID) throws FenixFilterException, FenixServiceException {
 
-        final Department department;
-        final ExecutionPeriod executionPeriod;
-        Object[] args = { Department.class, Integer.valueOf(departmentID) }, args1 = {
-                ExecutionPeriod.class, Integer.valueOf(executionPeriodID) };
-
-        department = (Department) ServiceManagerServiceFactory.executeService(null, "ReadDomainObject",
-                args);
-        executionPeriod = (ExecutionPeriod) ServiceManagerServiceFactory.executeService(null,
-                "ReadDomainObject", args1);
+        final Department department = rootDomainObject
+                .readDepartmentByOID(Integer.valueOf(departmentID));
+        ;
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(Integer
+                .valueOf(executionPeriodID));
+        ;
 
         List<Teacher> allDepartmentTeachers = (department != null && executionPeriod != null) ? department
                 .getTeachers(executionPeriod.getBeginDate(), executionPeriod.getEndDate())
@@ -145,7 +142,8 @@ public class SummariesControlAction extends FenixDispatchAction {
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
             for (Professorship professorship : teacher.getProfessorships()) {
 
-                Double lessonHours = 0.0, summaryHours = 0.0, percentage = 0.0, shiftDifference = 0.0, courseSummaryHours = 0.0, courseDifference = 0.0;
+                Double lessonHours = 0.0, summaryHours = 0.0, courseDifference = 0.0;
+                Double percentage = 0.0, shiftDifference = 0.0, courseSummaryHours = 0.0;
 
                 if (professorship.belongsToExecutionPeriod(executionPeriod)
                         && !professorship.getExecutionCourse().isMasterDegreeOnly()) {

@@ -36,7 +36,8 @@ public class ChangeMasterDegreeProof extends Service {
             Integer attachedCopiesNumber, List<Integer> teacherJuriesNumbers,
             List<Integer> externalJuriesIDs) throws FenixServiceException, ExcepcaoPersistencia {
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject
+                .readStudentCurricularPlanByOID(studentCurricularPlanID);
         MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
         if (storedMasterDegreeThesis == null) {
             throw new NonExistingServiceException(
@@ -62,17 +63,14 @@ public class ChangeMasterDegreeProof extends Service {
 
         Employee employee = userView.getPerson().getEmployee();
 
-        List<Teacher> teacherJuries = (List<Teacher>) Teacher.readByNumbers(
-                teacherJuriesNumbers);
-        List<ExternalPerson> externalJuries = (List<ExternalPerson>) persistentSupport.getIPersistentExternalPerson()
-                .readByIDs(externalJuriesIDs);
+        List<Teacher> teacherJuries = (List<Teacher>) Teacher.readByNumbers(teacherJuriesNumbers);
+        List<ExternalPerson> externalJuries = ExternalPerson.readByIDs(externalJuriesIDs);
 
-        DomainFactory.makeMasterDegreeProofVersion(
-                storedMasterDegreeThesis, employee, new Date(), proofDate, thesisDeliveryDate,
-                finalResult, attachedCopiesNumber, new State(State.ACTIVE), teacherJuries,
-                externalJuries);
-        
-        if(finalResult.equals(MasterDegreeClassification.APPROVED)){
+        DomainFactory.makeMasterDegreeProofVersion(storedMasterDegreeThesis, employee, new Date(),
+                proofDate, thesisDeliveryDate, finalResult, attachedCopiesNumber,
+                new State(State.ACTIVE), teacherJuries, externalJuries);
+
+        if (finalResult.equals(MasterDegreeClassification.APPROVED)) {
             Person person = studentCurricularPlan.getStudent().getPerson();
             person.addPersonRoles(Role.getRoleByRoleType(RoleType.ALUMNI));
             person.removeRoleByType(RoleType.STUDENT);

@@ -46,7 +46,8 @@ public class CreateMasterDegreeThesis extends Service {
                     "error.exception.masterDegree.externalGuiderAlreadyChosen");
         }
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject
+                .readStudentCurricularPlanByOID(studentCurricularPlanID);
         MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
         if (storedMasterDegreeThesis != null) {
             throw new ExistingServiceException("error.exception.masterDegree.existingMasterDegreeThesis");
@@ -73,11 +74,9 @@ public class CreateMasterDegreeThesis extends Service {
                         new Date(), new State(State.ACTIVE));
 
         Collection<Teacher> guiders = Teacher.readByNumbers(guidersNumbers);
-        Collection<Teacher> assistentGuiders = Teacher.readByNumbers(
-                assistentGuidersNumbers);
-        Collection<ExternalPerson> externalGuiders = persistentSupport.getIPersistentExternalPerson().readByIDs(
-                externalGuidersIDs);
-        Collection<ExternalPerson> externalAssistentGuiders = persistentSupport.getIPersistentExternalPerson()
+        Collection<Teacher> assistentGuiders = Teacher.readByNumbers(assistentGuidersNumbers);
+        Collection<ExternalPerson> externalGuiders = ExternalPerson.readByIDs(externalGuidersIDs);
+        Collection<ExternalPerson> externalAssistentGuiders = ExternalPerson
                 .readByIDs(externalAssistentGuidersIDs);
 
         masterDegreeThesisDataVersion.getGuiders().addAll(guiders);

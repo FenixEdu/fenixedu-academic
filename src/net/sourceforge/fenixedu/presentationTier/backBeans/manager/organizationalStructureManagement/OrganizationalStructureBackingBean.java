@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -138,7 +137,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private List<Unit> readAllUnits() throws FenixServiceException, FenixFilterException {
-        return Party.readAllUnits();
+        return Unit.readAllUnits();
     }
 
     public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException,

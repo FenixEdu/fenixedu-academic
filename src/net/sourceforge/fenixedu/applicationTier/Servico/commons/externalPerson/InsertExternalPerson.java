@@ -15,8 +15,8 @@ public class InsertExternalPerson extends Service {
             String phone, String mobile, String homepage, String email) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ExternalPerson storedExternalPerson = persistentSupport.getIPersistentExternalPerson()
-                .readByNameAndAddressAndInstitutionID(name, address, institutionID);
+        ExternalPerson storedExternalPerson = ExternalPerson.readByNameAndAddressAndInstitutionID(name,
+                address, institutionID);
 
         if (storedExternalPerson != null)
             throw new ExistingServiceException(
@@ -24,15 +24,8 @@ public class InsertExternalPerson extends Service {
 
         Unit institutionLocation = (Unit) rootDomainObject.readPartyByOID(institutionID);
 
-        // generate new identification number
-        String lastDocumentIdNumber = persistentSupport.getIPersistentExternalPerson()
-                .readLastDocumentIdNumber();
-        
-        int nextID = Integer.parseInt(lastDocumentIdNumber) + 1;
-        String documentIdNumber = String.valueOf(nextID);
-
         return DomainFactory.makeExternalPerson(name, Gender.valueOf(sex), address, phone, mobile,
-                homepage, email, documentIdNumber, institutionLocation);
+                homepage, email, String.valueOf(System.currentTimeMillis()), institutionLocation);
     }
 
 }

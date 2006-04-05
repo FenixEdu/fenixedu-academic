@@ -64,8 +64,6 @@ public interface ISuportePersistente {
 
     public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion();
 
-    public IPersistentExternalPerson getIPersistentExternalPerson();
-
     public IPersistentReimbursementGuide getIPersistentReimbursementGuide();
 
     public IPersistentGratuitySituation getIPersistentGratuitySituation();

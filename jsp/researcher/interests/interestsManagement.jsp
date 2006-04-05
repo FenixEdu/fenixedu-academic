@@ -39,10 +39,12 @@
 			</fr:layout>
 		</fr:view>
 	
-		<fr:create type="net.sourceforge.fenixedu.domain.research.ResearchInterest" schema="researchInterest.simpleCreate"
-	  	         action="/interests/interestsManagement.do?method=prepare">
-			<fr:hidden slot="order" name="lastOrder"/>
-			<fr:hidden slot="party" name="party" />
-		</fr:create>
+	<br/>
+	
+	<fr:create type="net.sourceforge.fenixedu.domain.research.ResearchInterest" schema="researchInterest.simpleCreate"
+	           action="/interests/interestsManagement.do?method=prepare">
+		<fr:hidden slot="order" name="lastOrder"/>
+		<fr:hidden slot="party" name="party" />
+	</fr:create>
 </logic:present>
 

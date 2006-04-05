@@ -33,7 +33,7 @@ public class Student extends Student_Base {
 
     private transient Integer approvedEnrollmentsNumber = 0;
 
-    final static Comparator numberComparator = new BeanComparator("number");;
+    final static Comparator<Student> NUMBER_COMPARATOR = new BeanComparator("number");;
     
        
     public Student() {
@@ -394,6 +394,7 @@ public class Student extends Student_Base {
         final List<Student> students = new ArrayList();
         final String studentNameToMatch = (studentName == null) ? null : studentName.replaceAll("%",
                 ".*").toLowerCase();
+        
         for (Student student : RootDomainObject.getInstance().getStudents()) {
             Person person = student.getPerson();
             if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)
@@ -437,7 +438,7 @@ public class Student extends Student_Base {
     public static Integer generateStudentNumber(DegreeType degreeType) {
         Integer number = Integer.valueOf(0);
         List<Student> students = readStudentsByDegreeType(degreeType);
-        Collections.sort(students, new ReverseComparator(numberComparator));
+        Collections.sort(students, new ReverseComparator(NUMBER_COMPARATOR));
 
         if (!students.isEmpty()) {
             number = students.get(0).getNumber();

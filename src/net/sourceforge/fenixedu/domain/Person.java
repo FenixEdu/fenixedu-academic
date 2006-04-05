@@ -1129,7 +1129,7 @@ public class Person extends Person_Base {
     public static boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
             final IDDocumentType documentType, Person thisPerson) {
 
-        for (final Person person : Party.readAllPersons()) {
+        for (final Person person : Person.readAllPersons()) {
             if (!person.equals(thisPerson) && person.getDocumentIdNumber().equals(documentIDNumber)
                     && person.getIdDocumentType().equals(documentType)) {
                 return true;
@@ -1154,7 +1154,7 @@ public class Person extends Person_Base {
 
     public static Collection<Person> readByDocumentIdNumber(final String documentIdNumber) {
         Collection<Person> result = new ArrayList<Person>();
-        for (final Person person : Party.readAllPersons()) {
+        for (final Person person : Person.readAllPersons()) {
             if (person.getDocumentIdNumber().equalsIgnoreCase(documentIdNumber)) {
                 result.add(person);
             }
@@ -1164,7 +1164,7 @@ public class Person extends Person_Base {
 
     public static Person readByDocumentIdNumberAndIdDocumentType(final String documentIdNumber,
             final IDDocumentType idDocumentType) {
-        for (final Person person : Party.readAllPersons()) {
+        for (final Person person : Person.readAllPersons()) {
             if (person.getDocumentIdNumber().equalsIgnoreCase(documentIdNumber)
                     && person.getIdDocumentType() == idDocumentType) {
                 return person;
@@ -1191,7 +1191,7 @@ public class Person extends Person_Base {
         final List<Person> result = new ArrayList<Person>();
         if (name != null) {
             final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
-            for (final Person person : Party.readAllPersons()) {
+            for (final Person person : Person.readAllPersons()) {
                 if (person.getName().toLowerCase().matches(nameToMatch)) {
                     result.add(person);
                 }
@@ -1208,4 +1208,14 @@ public class Person extends Person_Base {
         }
         return null;
     }
+
+    public static List<Person> readAllPersons() {
+        List<Person> allPersons = new ArrayList<Person>();
+        for (Party party : RootDomainObject.getInstance().getPartys()) {
+           if (party instanceof Person) {              
+               allPersons.add((Person) party);
+           }
+        }
+        return allPersons;
+    }       
 }

@@ -2509,7 +2509,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Date endDate;		
 	  }
 	  
-	  	  class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
+	  class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer keyCms;
 		Integer keyEmployee;
 		Integer keyTeacher;
@@ -2540,7 +2540,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		String districtOfBirth;
 		Boolean availableEmail;
 		String workPhone;
-		String name;
 		String parishOfBirth;
 		String areaCode;
 		String nameOfFather;

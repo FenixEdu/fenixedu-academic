@@ -49,7 +49,9 @@
             <forward name="Success" path="viewCurriculum"/>
         </action>
         
-        <action path="/interests/interestsManagement" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.InterestsManagementDispatchAction">
+        <action path="/interests/interestsManagement"
+                parameter="method" 
+                type="net.sourceforge.fenixedu.presentationTier.Action.research.InterestsManagementDispatchAction">
 	        <forward name="ManageTranslations" path="interests.manageTranslations"/>
 		    <forward name="Success" path="interests.interestsManagement"/>
 		</action>

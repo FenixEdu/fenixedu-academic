@@ -7,7 +7,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
@@ -165,10 +164,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion() {
         return new MasterDegreeProofVersionOJB();
-    }
-
-    public IPersistentExternalPerson getIPersistentExternalPerson() {
-        return new ExternalPersonOJB();
     }
 
     public IPersistentReimbursementGuide getIPersistentReimbursementGuide() {

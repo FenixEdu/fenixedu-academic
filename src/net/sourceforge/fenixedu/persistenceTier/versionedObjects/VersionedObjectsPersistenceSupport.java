@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
@@ -34,7 +33,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailAdressA
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingListVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseScopeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPeriodVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExternalPersonVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeProofVersionVO;
@@ -93,11 +91,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     public void iniciarTransaccao() throws ExcepcaoPersistencia {
         return;
     }
-
-    public IPersistentExternalPerson getIPersistentExternalPerson() {
-        return new ExternalPersonVO();
-    }
-
+    
     public IPersistentMetadata getIPersistentMetadata() {
         return new MetadataVO();
     }

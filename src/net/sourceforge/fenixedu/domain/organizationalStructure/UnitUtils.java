@@ -19,7 +19,7 @@ public class UnitUtils {
     public static final String EXTERNAL_INSTITUTION_UNIT_NAME = getLabel("external.instituions.name");
 
     public static List<Unit> readAllExternalInstitutionUnits() throws ExcepcaoPersistencia {
-        List<Unit> allUnits = Party.readAllUnits();
+        List<Unit> allUnits = Unit.readAllUnits();
         List<Unit> allExternalUnits = new ArrayList<Unit>();
 
         for (Unit unit : allUnits) {
@@ -31,7 +31,7 @@ public class UnitUtils {
     }
 
     public static Unit readExternalInstitutionUnitByName(String name) throws ExcepcaoPersistencia {
-        List<Unit> allUnits = Party.readAllUnits();
+        List<Unit> allUnits = Unit.readAllUnits();
         Unit externalUnit = null;
 
         for (Unit unit : allUnits) {
@@ -55,7 +55,7 @@ public class UnitUtils {
     }
 
     public static List<Unit> readAllUnitsWithoutParents() throws ExcepcaoPersistencia {
-        List<Unit> allUnits = Party.readAllUnits();
+        List<Unit> allUnits = Unit.readAllUnits();
         List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
 
         for (Unit unit : allUnits) {
@@ -69,7 +69,7 @@ public class UnitUtils {
     public static List<Unit> readAllDepartmentUnits() {
         final List<Unit> result = new ArrayList<Unit>();
         final Date now = Calendar.getInstance().getTime();
-        for (final Unit unit : Party.readAllUnits()) {
+        for (final Unit unit : Unit.readAllUnits()) {
             if (unit.isActive(now) && unit.getType() == PartyTypeEnum.DEPARTMENT) {
                 result.add(unit);
             }

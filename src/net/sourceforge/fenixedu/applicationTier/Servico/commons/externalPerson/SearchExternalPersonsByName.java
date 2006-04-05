@@ -19,7 +19,7 @@ public class SearchExternalPersonsByName extends Service {
 
     public List run(String name) throws FenixServiceException, ExcepcaoPersistencia {
         List infoExternalPersons = new ArrayList();
-        List<ExternalPerson> externalPersons = persistentSupport.getIPersistentExternalPerson().readByName(name);
+        List<ExternalPerson> externalPersons = ExternalPerson.readByName(name);
 
         for (ExternalPerson externalPerson : externalPersons) {
             infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));

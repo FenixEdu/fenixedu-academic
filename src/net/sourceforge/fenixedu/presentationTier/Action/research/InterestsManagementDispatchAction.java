@@ -28,10 +28,12 @@ import org.apache.struts.action.ActionMapping;
 public class InterestsManagementDispatchAction extends FenixDispatchAction {
 
     private static final int UP = -1;
+
     private static final int DOWN = 1;
-    
+
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+
         Integer oid = Integer.parseInt(request.getParameter("oid"));
         IUserView userView = getUserView(request);
 
@@ -46,10 +48,10 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         changeOrder(request, UP);
         return prepare(mapping, form, request, response);
     }
-    
+
     public ActionForward down(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        
+
         changeOrder(request, DOWN);
         return prepare(mapping, form, request, response);
     }
@@ -68,51 +70,53 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("researchInterests", orderedInterests);
         request.setAttribute("party", (Party) getUserView(request).getPerson());
-        
+
         RenderUtils.invalidateViewState();
-        
+
         return mapping.findForward("Success");
     }
 
-    public ActionForward manageTranslations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward manageTranslations(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
         final Integer oid = Integer.parseInt(request.getParameter("oid"));
         final ResearchInterest researchInterest = rootDomainObject.readResearchInterestByOID(oid);
-  
-        
+
         if (RenderUtils.getViewState() != null) {
-            final ResearchInterestTranslation translation = (ResearchInterestTranslation) ((CreationMetaObject) RenderUtils.getViewState().getMetaObject()).getCreatedObject();
+            final ResearchInterestTranslation translation = (ResearchInterestTranslation) ((CreationMetaObject) RenderUtils
+                    .getViewState().getMetaObject()).getCreatedObject();
             researchInterest.addTranslation(translation);
         }
-        
-        
+
         request.setAttribute("interestId", oid);
         request.setAttribute("interestTranslations", researchInterest.getAllTranslations());
-        
+
         RenderUtils.invalidateViewState();
-        
+
         return mapping.findForward("ManageTranslations");
     }
-    
-    public ActionForward deleteTranslation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+
+    public ActionForward deleteTranslation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+      
         final Integer oid = Integer.parseInt(request.getParameter("oid"));
         final Language language = Language.valueOf(request.getParameter("language"));
-        
+
         final ResearchInterest researchInterest = rootDomainObject.readResearchInterestByOID(oid);
-        
+
         researchInterest.removeTranslation(language);
-        
+
         return manageTranslations(mapping, form, request, response);
     }
-    
-    private void changeOrder(HttpServletRequest request, int direction) throws FenixFilterException, FenixServiceException {
+
+    private void changeOrder(HttpServletRequest request, int direction) throws FenixFilterException,
+            FenixServiceException {
         Integer oid = Integer.parseInt(request.getParameter("oid"));
 
-        IUserView userView = getUserView(request);        
+        IUserView userView = getUserView(request);
         Person person = userView.getPerson();
-        
-        ResearchInterest interest = (ResearchInterest) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { ResearchInterest.class, oid });
+
+        ResearchInterest interest = rootDomainObject.readResearchInterestByOID(oid);
         List<ResearchInterest> orderedInterests = getOrderedInterests(request);
 
         int index = orderedInterests.indexOf(interest);
@@ -120,16 +124,18 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
             orderedInterests.remove(interest);
             if (index + direction > orderedInterests.size()) {
                 orderedInterests.add(index, interest);
-            }
-            else {
+            } else {
                 orderedInterests.add(index + direction, interest);
             }
-    
-            ServiceUtils.executeService(userView, "ChangeResearchInterestOrder", new Object[] { person, orderedInterests });        
+
+            ServiceUtils.executeService(userView, "ChangeResearchInterestOrder", new Object[] { person,
+                    orderedInterests });
         }
     }
-    
-    private List<ResearchInterest> getOrderedInterests(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+
+    private List<ResearchInterest> getOrderedInterests(HttpServletRequest request)
+            throws FenixFilterException, FenixServiceException {
+       
         List<ResearchInterest> researchInterests = getUserView(request).getPerson()
                 .getResearchInterests();
 
