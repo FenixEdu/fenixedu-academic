@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
@@ -20,10 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContract
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantCostCenterOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantOrientationTeacherOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.owner.GrantOwnerOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestAdvisoryOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.MetadataOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.QuestionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.StudentTestQuestionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.InsuranceTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
@@ -33,10 +29,7 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
@@ -130,10 +123,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new CurricularCourseScopeOJB();
 	}
 
-    public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
-		return new PersistentEnrolmentPeriod();
-	}
-
     public IPersistentGrantOwner getIPersistentGrantOwner() {
 		return new GrantOwnerOJB();
 	}
@@ -158,20 +147,8 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new MetadataOJB();
 	}
 
-    public IPersistentQuestion getIPersistentQuestion() {
-		return new QuestionOJB();
-	}
-
-    public IPersistentDistributedTest getIPersistentDistributedTest() {
-		return new DistributedTestOJB();
-	}
-
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion() {
 		return new StudentTestQuestionOJB();
-	}
-
-    public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {
-		return new DistributedTestAdvisoryOJB();
 	}
 
     public void beginTransaction() {

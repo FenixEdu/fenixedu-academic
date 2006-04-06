@@ -7,10 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 
@@ -34,15 +31,9 @@ public interface ISuportePersistente {
 
     public IPersistentMetadata getIPersistentMetadata();
 
-	public IPersistentQuestion getIPersistentQuestion();
+    public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
 
-	public IPersistentDistributedTest getIPersistentDistributedTest();
-
-	public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
-
-	public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory();
-
-	public IPersistentGrantOwner getIPersistentGrantOwner();
+    public IPersistentGrantOwner getIPersistentGrantOwner();
 
 	public IPersistentGrantContract getIPersistentGrantContract();
 
