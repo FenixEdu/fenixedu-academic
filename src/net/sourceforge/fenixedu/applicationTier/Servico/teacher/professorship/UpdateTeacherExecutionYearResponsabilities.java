@@ -20,7 +20,7 @@ public class UpdateTeacherExecutionYearResponsabilities extends Service {
     public void run(Integer teacherId, Integer executionYearId,
             final List executionCourseResponsabilities) throws FenixServiceException,
             ExcepcaoPersistencia, DomainException {    
-        final Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);
+        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
         if (teacher == null)
             throw new FenixServiceException("message.teacher-not-found");
 

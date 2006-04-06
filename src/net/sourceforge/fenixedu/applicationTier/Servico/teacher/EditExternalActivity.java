@@ -23,7 +23,7 @@ public class EditExternalActivity extends Service {
 		ExternalActivity externalActivity = (ExternalActivity) persistentObject.readByOID(ExternalActivity.class, externalActivityId);
 		//If it doesn't exist in the database, a new one has to be created
 		if(externalActivity == null) {
-			Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoExternalActivity.getInfoTeacher().getIdInternal());
+			Teacher teacher = rootDomainObject.readTeacherByOID(infoExternalActivity.getInfoTeacher().getIdInternal());
 			externalActivity = DomainFactory.makeExternalActivity(teacher, infoExternalActivity);
 
 		} else {

@@ -16,7 +16,7 @@ public class ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID extends S
 
     public List<MasterDegreeThesisDataVersion> run(Integer teacherID, Integer executionYearID)
             throws ExcepcaoPersistencia, FenixServiceException {
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherID);
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions;
 
         if (executionYearID == null) {

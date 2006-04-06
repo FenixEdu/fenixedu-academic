@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadDepartmentByTeacher extends Service {
 
     public InfoDepartment run(InfoTeacher infoTeacher) throws ExcepcaoPersistencia {
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoTeacher.getIdInternal());        
+        Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());        
         Department department = teacher.getCurrentWorkingDepartment();
         return InfoDepartment.newInfoFromDomain(department);
     }

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class RemovePublicationFromTeacherInformationSheet extends Service {
     
     public void run(Integer teacherId, final Integer publicationId) throws ExcepcaoPersistencia, DomainException {
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
         Publication publication = (Publication) persistentObject.readByOID(Publication.class, publicationId);        
         teacher.removeFromTeacherInformationSheet(publication);
     }

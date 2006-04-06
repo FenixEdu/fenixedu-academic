@@ -30,8 +30,7 @@ public class ReadWebSiteByObjectCode extends Service {
     public InfoWebSite run(Integer webSiteCode) throws FenixServiceException, ExcepcaoPersistencia {
         final List infoWebSiteSections = new ArrayList();
 
-        final WebSite webSite = (WebSite) persistentObject.readByOID(WebSite.class, webSiteCode);
-
+        final WebSite webSite = rootDomainObject.readWebSiteByOID(webSiteCode);
         if (webSite == null) {
             throw new NonExistingServiceException("message.nonExistingWebSite", null);
         }
@@ -44,7 +43,7 @@ public class ReadWebSiteByObjectCode extends Service {
             InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(section);
 
             List<WebSiteItem> webSiteItems = section.getIncludedWebSiteItems(); 
-            List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
+            List<InfoWebSiteItem> infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
                 public Object transform(Object arg0) {
                     WebSiteItem webSiteItem = (WebSiteItem) arg0;
                     InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);

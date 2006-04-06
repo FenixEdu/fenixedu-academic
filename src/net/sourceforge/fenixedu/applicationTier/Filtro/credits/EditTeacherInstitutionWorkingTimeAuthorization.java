@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author jpvl
@@ -19,21 +18,10 @@ public class EditTeacherInstitutionWorkingTimeAuthorization extends
         return filter;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
-     */
     protected Integer getTeacherId(Object[] arguments) {
         InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) arguments[1];
 
-        Teacher teacher;
-        try {
-            teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoTeacherInstitutionWorkTime
-                    .getInfoTeacher().getIdInternal());
-        } catch (ExcepcaoPersistencia e) {
-            return null;
-        }
+        Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal());
         return teacher != null ? teacher.getIdInternal() : null;
     }
 

@@ -31,8 +31,7 @@ public class ReadWebSiteSectionByCode extends Service {
 		WebSiteSection webSiteSection;
 		InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
 
-		webSiteSection = (WebSiteSection) persistentObject.readByOID(WebSiteSection.class,
-				sectionCode);
+		webSiteSection = rootDomainObject.readWebSiteSectionByOID(sectionCode);
 
 		if (webSiteSection == null) {
 			throw new NonExistingServiceException();
@@ -60,7 +59,7 @@ public class ReadWebSiteSectionByCode extends Service {
 			throw new NonExistingServiceException();
 		}
 
-		List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
+		List<InfoWebSiteItem> infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
 			public Object transform(Object arg0) {
 				WebSiteItem webSiteItem = (WebSiteItem) arg0;
 				InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);

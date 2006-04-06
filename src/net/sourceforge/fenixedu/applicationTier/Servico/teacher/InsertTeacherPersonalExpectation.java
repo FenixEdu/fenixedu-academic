@@ -14,7 +14,7 @@ public class InsertTeacherPersonalExpectation extends Service {
 
     public void run(InfoTeacherPersonalExpectation infoTeacherPersonalExpectation, Integer teacherID,
             Integer executionYearID) throws ExcepcaoPersistencia, FenixServiceException {
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherID);
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                 ExecutionYear.class, executionYearID);
         

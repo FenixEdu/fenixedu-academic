@@ -19,7 +19,7 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
     public List<ExecutionCourse> run(Integer teacherID, Integer executionYearID, DegreeType degreeType)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherID);
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
 
         List<ExecutionCourse> lecturedExecutionCourses;
 

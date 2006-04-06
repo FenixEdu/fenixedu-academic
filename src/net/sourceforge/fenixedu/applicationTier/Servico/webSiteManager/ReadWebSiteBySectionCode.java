@@ -28,25 +28,20 @@ public class ReadWebSiteBySectionCode extends Service {
     public InfoWebSite run(Integer webSiteSectionCode) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        List infoWebSiteSections = new ArrayList();
-        List infoWebSiteItems = new ArrayList();
-
-        WebSiteSection webSiteSection;
-        webSiteSection = (WebSiteSection) persistentObject.readByOID(WebSiteSection.class,
-                webSiteSectionCode);
-
+        WebSiteSection webSiteSection = rootDomainObject.readWebSiteSectionByOID(webSiteSectionCode);
         if (webSiteSection == null) {
             throw new NonExistingServiceException();
         }
 
         List<WebSiteSection> webSiteSections = webSiteSection.getWebSite().getAssociatedWebSiteSections(); 
+        List<InfoWebSiteSection> infoWebSiteSections = new ArrayList<InfoWebSiteSection>();
         Iterator iterSections = webSiteSections.iterator();
         while (iterSections.hasNext()) {
             WebSiteSection section = (WebSiteSection) iterSections.next();
             InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(section);
 
             List<WebSiteItem> webSiteItems = section.getIncludedWebSiteItems(); 
-            infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
+            List<InfoWebSiteItem> infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
                 public Object transform(Object arg0) {
                     WebSiteItem webSiteItem = (WebSiteItem) arg0;
                     InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
@@ -62,7 +57,6 @@ public class ReadWebSiteBySectionCode extends Service {
             infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
 
             infoWebSiteSections.add(infoWebSiteSection);
-
         }
 
         InfoWebSite infoWebSite = new InfoWebSite();

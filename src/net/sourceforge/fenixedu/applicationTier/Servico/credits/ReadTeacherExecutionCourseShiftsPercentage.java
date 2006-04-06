@@ -93,7 +93,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
     }
 
     private Teacher readTeacher(InfoTeacher infoTeacher) throws ExcepcaoPersistencia {
-        return (Teacher) persistentObject.readByOID(Teacher.class, infoTeacher.getIdInternal());
+        return rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
     }
 
     private ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {

@@ -24,9 +24,7 @@ public class ConfigureWebSiteSections extends Service {
 		while (iterSections.hasNext()) {
 			InfoWebSiteSection infoWebSiteSection = (InfoWebSiteSection) iterSections.next();
 
-			WebSite webSite = (WebSite) persistentObject.readByOID(WebSite.class, infoWebSite
-					.getIdInternal());
-
+			WebSite webSite = rootDomainObject.readWebSiteByOID(infoWebSite.getIdInternal());
 			if (webSite == null) {
 				throw new NonExistingServiceException("website");
 			}
@@ -39,9 +37,7 @@ public class ConfigureWebSiteSections extends Service {
 				throw new ExistingServiceException(infoWebSiteSection.getName());
 			}
 
-			webSiteSection = (WebSiteSection) persistentObject.readByOID(WebSiteSection.class,
-					infoWebSiteSection.getIdInternal());
-
+			webSiteSection = rootDomainObject.readWebSiteSectionByOID(infoWebSiteSection.getIdInternal());
 			if (webSiteSection == null) {
 				throw new NonExistingServiceException("websiteSection");
 			}

@@ -40,7 +40,7 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
             
             Person requesterPerson = Person.readPersonByUsername(requester.getUtilizador());
 
-            Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);
+            Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
 
             Department teacherDepartment = teacher.getCurrentWorkingDepartment();
 

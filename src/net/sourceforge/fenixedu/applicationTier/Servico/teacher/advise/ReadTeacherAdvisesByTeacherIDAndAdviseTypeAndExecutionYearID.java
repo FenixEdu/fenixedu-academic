@@ -23,7 +23,7 @@ public class ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID extend
 
     public List<Advise> run(AdviseType adviseType, Integer teacherID, Integer executionYearID)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException {
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherID);
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         List<Advise> result;
 
         if (executionYearID != null) {

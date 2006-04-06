@@ -29,7 +29,7 @@ public class SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID e
                 ExecutionYear.class, executionYearID);
 
         if (teacherID != null) {
-            Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherID);
+            Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
             TeacherPersonalExpectation teacherPersonalExpectation = teacher
                     .getTeacherPersonalExpectationByExecutionYear(executionYear);
 
