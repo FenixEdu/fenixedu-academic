@@ -73,8 +73,7 @@ public class EditDistributedTest extends Service {
             distributedTest.setEndDate(endDate);
             distributedTest.setEndHour(endHour);
             advisory = createTestAdvisory(distributedTest);
-            persistentSupport.getIPersistentDistributedTestAdvisory()
-                    .updateDistributedTestAdvisoryDates(distributedTest, endDate.getTime());
+            distributedTest.updateDistributedTestAdvisoryDates(endDate.getTime());
             createDistributedTestAdvisory(distributedTest, advisory);
         }
 
