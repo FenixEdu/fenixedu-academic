@@ -17,7 +17,7 @@ public class DeleteDistributedTest extends Service {
     public void run(Integer executionCourseId, final Integer distributedTestId) throws ExcepcaoPersistencia {
         final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 
-        persistentSupport.getIPersistentQuestion().cleanQuestions(distributedTest);
+        distributedTest.cleanQuestions();
         persistentSupport.getIPersistentMetadata().cleanMetadatas();
 
         if (distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {

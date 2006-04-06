@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import org.apache.ojb.broker.query.Criteria;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -74,6 +76,26 @@ public class Metadata extends Metadata_Base {
             }
         }
         return visibleQuestions;
+    }
+    
+    public String correctFileName(String fileName) {
+        String original = fileName.replaceAll(".xml", "");
+        String newName = fileName;
+        for (int i = 1;; i++) {
+        	if(getQuestionByFileName(newName) == null) {
+        		return newName;
+        	}
+            newName = original.concat("(" + i + ").xml");
+        }    	
+    }
+    
+    public Question getQuestionByFileName(String fileName) {
+    	for (Question question : this.getQuestions()) {
+			if(question.getXmlFileName().equalsIgnoreCase(fileName)) {
+				return question;
+			}
+		}
+    	return null;
     }
 
     public void delete() {

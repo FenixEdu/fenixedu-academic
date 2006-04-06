@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
@@ -61,13 +60,12 @@ public class InsertExerciseVariation extends Service {
 
             try {
                 ParseQuestion parseQuestion = new ParseQuestion();
-                IPersistentQuestion persistentQuestion = persistentSupport.getIPersistentQuestion();
 
                 parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), replacedPath);
                 Question question = DomainFactory.makeQuestion();
                 question.setMetadata(metadata);
                 question.setXmlFile(xmlFile);
-                question.setXmlFileName(persistentQuestion.correctFileName(xmlFileName, metadataId));
+                question.setXmlFileName(metadata.correctFileName(xmlFileName));
                 question.setVisibility(new Boolean("true"));
             } catch (ParseException e) {
                 badXmls.add(xmlFileName);

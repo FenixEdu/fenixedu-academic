@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 import net.sourceforge.fenixedu.util.tests.XMLQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
@@ -50,7 +49,6 @@ public class CreateExercise extends Service {
                 throw new InvalidArgumentsServiceException();
             }
         }
-        IPersistentQuestion persistentQuestion = persistentSupport.getIPersistentQuestion();
         Question question = DomainFactory.makeQuestion();
         question.setMetadata(metadata);
         question.setVisibility(new Boolean(true));
@@ -65,8 +63,8 @@ public class CreateExercise extends Service {
         if (metadataId == null)
             question.setXmlFileName("Pergunta" + visibleQuestions.size() + ".xml");
         else
-            question.setXmlFileName(persistentQuestion.correctFileName("Pergunta"
-                    + visibleQuestions.size() + ".xml", metadataId));
+            question.setXmlFileName(metadata.correctFileName("Pergunta"
+                    + visibleQuestions.size() + ".xml"));
 
         infoQuestion.setXmlFile(question.getXmlFile());
         ParseQuestion parse = new ParseQuestion();
