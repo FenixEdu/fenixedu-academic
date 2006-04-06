@@ -5,9 +5,10 @@
 <struts-config>
 
 	<data-sources/>
-
+	
 	<!-- ========== Action Mapping Definitions ============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
+	        
 		<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.InfoGroupsByExecutionCourse"
             	path="/infoGroupsByExecutionCourse"
 		        scope="request"
@@ -32,7 +33,15 @@
 	        scope="request"
 			validate="true">
     	</action>
-		
+    	
+	    <action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.RetrieveUserInformation"
+            path="/retrieveUserInformation"
+	        scope="request"
+	        parameter="method"
+			validate="true">
+    	</action>
+    	
+   		
 	</action-mappings>
   
   <!-- ========== Controller Configuration ================================ -->

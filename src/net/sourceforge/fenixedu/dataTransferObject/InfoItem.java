@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.FileItem;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
@@ -19,7 +20,7 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class InfoItem extends InfoObject implements Comparable {
 
-    //Serializable
+    // Serializable
     private String information;
 
     private String name;
@@ -30,9 +31,7 @@ public class InfoItem extends InfoObject implements Comparable {
 
     private Boolean urgent;
 
-    private List links;
-
-    private String slidename;
+    private List<InfoFileItem> infoFileItems;
 
     /**
      * Constructor
@@ -172,33 +171,6 @@ public class InfoItem extends InfoObject implements Comparable {
         return this.getItemOrder().intValue() - ((InfoItem) arg0).getItemOrder().intValue();
     }
 
-    /**
-     * @return
-     */
-    public List getLinks() {
-        return links;
-    }
-
-    /**
-     * @param links
-     */
-    public void setLinks(List links) {
-        this.links = links;
-    }
-
-    public void setLinks(final String slideName) {
-        final Collection<FileSuportObject> fileSupportObjects = JdbcMysqlFileSupport.listFiles(slideName);
-        final List<InfoLink> infoLinks = new ArrayList<InfoLink>(fileSupportObjects.size());
-        for (final FileSuportObject fileSuportObject : fileSupportObjects) {
-            final InfoLink infoLink = new InfoLink();
-            infoLink.setLink(fileSuportObject.getFileName());
-            infoLink.setLinkName(fileSuportObject.getLinkName());
-            infoLinks.add(infoLink);
-        }
-        Collections.sort(infoLinks, new BeanComparator("linkName"));
-        setLinks(infoLinks);
-    }
-
     public void copyFromDomain(Item item) {
         super.copyFromDomain(item);
         if (item != null) {
@@ -206,6 +178,15 @@ public class InfoItem extends InfoObject implements Comparable {
             setItemOrder(item.getItemOrder());
             setName(item.getName());
             setUrgent(item.getUrgent());
+
+            List<InfoFileItem> infoFileItems = new ArrayList<InfoFileItem>();
+
+            for (FileItem fileItem : item.getFileItems()) {
+                infoFileItems.add(InfoFileItem.newInfoFromDomain(fileItem));
+            }
+
+            Collections.sort(infoFileItems, new BeanComparator("displayName"));
+            setInfoFileItems(infoFileItems);
         }
     }
 
@@ -222,11 +203,11 @@ public class InfoItem extends InfoObject implements Comparable {
         return infoItem;
     }
 
-	public String getSlidename() {
-		return slidename;
-	}
+    public void setInfoFileItems(List<InfoFileItem> infoFileItems) {
+        this.infoFileItems = infoFileItems;
+    }
 
-	public void setSlidename(String slidename) {
-		this.slidename = slidename;
-	}
+    public List<InfoFileItem> getInfoFileItems() {
+        return this.infoFileItems;
+    }
 }

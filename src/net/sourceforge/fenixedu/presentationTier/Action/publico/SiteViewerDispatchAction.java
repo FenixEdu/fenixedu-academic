@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -60,6 +61,10 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 public class SiteViewerDispatchAction extends FenixContextDispatchAction {
+
+    private static final String DSPACE_BASE_DOWNLOAD_URL = PropertiesManager
+            .getProperty("dspace.serverUrl")
+            + PropertiesManager.getProperty("dspace.downloadUriPrefix");
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException,
@@ -171,9 +176,11 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         setFromRequest(request);
         final InfoSiteEvaluationMarks evaluationMarksComponent = new InfoSiteEvaluationMarks();
         evaluationMarksComponent.setEvaluationID(Integer.valueOf(evaluationOID));
-        final ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) readSiteView(request, evaluationMarksComponent, null, null, null);
+        final ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) readSiteView(request,
+                evaluationMarksComponent, null, null, null);
 
-        final Integer executionCourseID = ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal();
+        final Integer executionCourseID = ((InfoSiteCommon) siteView.getCommonComponent())
+                .getExecutionCourse().getIdInternal();
         final Evaluation evaluation = evaluationMarksComponent.getEvaluation();
         final List<ExecutionCourse> executionCourses;
 
@@ -196,6 +203,8 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         ISiteComponent sectionComponent = new InfoSiteSection();
         readSiteView(request, sectionComponent, null, sectionIndex, null);
+        
+        request.setAttribute("dspaceBaseDownloadUrl", DSPACE_BASE_DOWNLOAD_URL);
 
         return mapping.findForward("sucess");
     }
@@ -228,16 +237,15 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         SiteView siteView = readSiteView(request, summariesComponent, null, null, null);
 
-
         final InfoSiteSummaries infoSiteSummaries = (InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
-                .getComponent();                
-        
+                .getComponent();
+
         for (final InfoShift infoShift : (List<InfoShift>) infoSiteSummaries.getInfoShifts()) {
             Collections.sort(infoShift.getInfoLessons());
         }
         Collections.sort(infoSiteSummaries.getInfoSummaries(), Collections.reverseOrder());
         Collections.sort(infoSiteSummaries.getInfoShifts(), new BeanComparator("lessons"));
-        
+
         request.setAttribute("siteView", siteView);
 
         return mapping.findForward("sucess");
@@ -479,31 +487,38 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
             ISiteComponent bodyComponent = new InfoSiteRoomTimeTable();
             DynaActionForm indexForm = (DynaActionForm) form;
             Integer indexWeek = (Integer) indexForm.get("indexWeek");
-            //Integer executionPeriodID = (Integer) indexForm.get("selectedExecutionPeriodID");
+            // Integer executionPeriodID = (Integer)
+            // indexForm.get("selectedExecutionPeriodID");
             String executionPeriodIDString = request.getParameter("selectedExecutionPeriodID");
             if (executionPeriodIDString == null) {
-            	executionPeriodIDString = (String) request.getAttribute("selectedExecutionPeriodID");
+                executionPeriodIDString = (String) request.getAttribute("selectedExecutionPeriodID");
             }
-            Integer executionPeriodID = (executionPeriodIDString != null) ? Integer.valueOf(executionPeriodIDString) : null;
+            Integer executionPeriodID = (executionPeriodIDString != null) ? Integer
+                    .valueOf(executionPeriodIDString) : null;
             if (executionPeriodID == null) {
-            	try {
-            		//executionPeriodID = (Integer) indexForm.get("selectedExecutionPeriodID");
-            		executionPeriodID = Integer.valueOf((String) indexForm.get("selectedExecutionPeriodID"));
-            	} catch (IllegalArgumentException ex) {
-            	}
+                try {
+                    // executionPeriodID = (Integer)
+                    // indexForm.get("selectedExecutionPeriodID");
+                    executionPeriodID = Integer.valueOf((String) indexForm
+                            .get("selectedExecutionPeriodID"));
+                } catch (IllegalArgumentException ex) {
+                }
             }
             Calendar today = Calendar.getInstance();
             ArrayList weeks = new ArrayList();
 
             InfoExecutionPeriod executionPeriod;
             if (executionPeriodID == null) {
-                executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod", new Object[] {});
+                executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView,
+                        "ReadCurrentExecutionPeriod", new Object[] {});
                 try {
-                	indexForm.set("selectedExecutionPeriodID", executionPeriod.getIdInternal().toString());
+                    indexForm.set("selectedExecutionPeriodID", executionPeriod.getIdInternal()
+                            .toString());
                 } catch (IllegalArgumentException ex) {
                 }
             } else {
-                executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadExecutionPeriodByOID", new Object[] { executionPeriodID });
+                executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView,
+                        "ReadExecutionPeriodByOID", new Object[] { executionPeriodID });
             }
 
             try {
@@ -533,18 +548,18 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
                     i++;
                 }
 
-                final List<ExecutionPeriod> executionPeriods = (List<ExecutionPeriod>)
-                    ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[] {
-                        ExecutionPeriod.class
-                });
+                final List<ExecutionPeriod> executionPeriods = (List<ExecutionPeriod>) ServiceUtils
+                        .executeService(userView, "ReadAllDomainObjects",
+                                new Object[] { ExecutionPeriod.class });
                 final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
                 for (final ExecutionPeriod ep : executionPeriods) {
                     if (ep.getState() == PeriodState.OPEN || ep.getState() == PeriodState.CURRENT) {
-                        executionPeriodLabelValueBeans.add(new LabelValueBean(
-                                ep.getName() + " " + ep.getExecutionYear().getYear(), ep.getIdInternal().toString()));
+                        executionPeriodLabelValueBeans.add(new LabelValueBean(ep.getName() + " "
+                                + ep.getExecutionYear().getYear(), ep.getIdInternal().toString()));
                     }
                 }
-                request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodLabelValueBeans);
+                request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD,
+                        executionPeriodLabelValueBeans);
 
                 request.setAttribute(SessionConstants.LABELLIST_WEEKS, weeksLabelValueList);
             } catch (FenixServiceException e) {

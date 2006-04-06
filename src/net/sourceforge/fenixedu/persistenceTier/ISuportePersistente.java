@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
-import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
@@ -13,66 +12,58 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistribut
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 
 public interface ISuportePersistente {
     
-    public void iniciarTransaccao() throws ExcepcaoPersistencia;
+	public void iniciarTransaccao() throws ExcepcaoPersistencia;
 
-    public void confirmarTransaccao() throws ExcepcaoPersistencia;
+	public void confirmarTransaccao() throws ExcepcaoPersistencia;
 
-    public void cancelarTransaccao() throws ExcepcaoPersistencia;
+	public void cancelarTransaccao() throws ExcepcaoPersistencia;
 
-    public void clearCache();
+	public void clearCache();
 
-    public Integer getNumberCachedItems();
+	public Integer getNumberCachedItems();
+	
+	public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate();
 
-    public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate();
+	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
 
-    public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
+	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 
-    public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
-    
     public IPersistentMetadata getIPersistentMetadata();
 
-    public IPersistentQuestion getIPersistentQuestion();
+	public IPersistentQuestion getIPersistentQuestion();
 
-    public IPersistentDistributedTest getIPersistentDistributedTest();
+	public IPersistentDistributedTest getIPersistentDistributedTest();
 
-    public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
+	public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
 
-    public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory();
+	public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory();
 
-    public IPersistentGrantOwner getIPersistentGrantOwner();
+	public IPersistentGrantOwner getIPersistentGrantOwner();
 
-    public IPersistentGrantContract getIPersistentGrantContract();
+	public IPersistentGrantContract getIPersistentGrantContract();
 
-    public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher();
+	public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher();
 
-    public IPersistentGrantCostCenter getIPersistentGrantCostCenter();
+	public IPersistentGrantCostCenter getIPersistentGrantCostCenter();
 
-    public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion();
+	public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion();
 
-    public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion();
+	public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion();
 
-    public IPersistentGratuitySituation getIPersistentGratuitySituation();
+	public IPersistentGratuitySituation getIPersistentGratuitySituation();
 
-    public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork();
+	public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork();
 
-    public IPersistentPublicationAttribute getIPersistentPublicationAttribute();
+	public IPersistentObject getIPersistentObject();
 
-    public IPersistentPublicationFormat getIPersistentPublicationFormat();
+	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction();
 
-    public IPersistentObject getIPersistentObject();
+	public IPersistentCMS getIPersistentCms();
 
-    public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction();
-
-    public IPersistentCMS getIPersistentCms();
-
-    public IPersistentMailAddressAlias getIPersistentMailAdressAlias();
-
-    public IPersistentMailingList getIPersistentMailingList();
-
+	public IPersistentMailingList getIPersistentMailingList();
+            
 }

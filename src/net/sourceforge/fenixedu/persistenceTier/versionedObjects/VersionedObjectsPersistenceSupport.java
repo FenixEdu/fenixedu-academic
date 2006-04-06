@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDat
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
-import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
@@ -22,11 +21,8 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistribut
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailAdressAliasVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingListVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseScopeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPeriodVO;
@@ -81,7 +77,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     public void iniciarTransaccao() throws ExcepcaoPersistencia {
         return;
     }
-    
+
     public IPersistentMetadata getIPersistentMetadata() {
         return new MetadataVO();
     }
@@ -92,10 +88,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {
         return new DistributedTestAdvisoryVO();
-    }
-
-    public IPersistentPublicationAttribute getIPersistentPublicationAttribute() {
-        return null;
     }
 
     public IPersistentGrantContract getIPersistentGrantContract() {
@@ -130,10 +122,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new MasterDegreeProofVersionVO();
     }
 
-    public IPersistentPublicationFormat getIPersistentPublicationFormat() {
-        return null;
-    }
-
     public void cancelarTransaccao() throws ExcepcaoPersistencia {
         return;
     }
@@ -159,15 +147,12 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentCMS getIPersistentCms() {
-        return new CMSVO();
-    }
-
-    public IPersistentMailAddressAlias getIPersistentMailAdressAlias() {
-        return new MailAdressAliasVO();
-    }
-
-    public IPersistentMailingList getIPersistentMailingList() {
-        return new MailingListVO();
-    }
-
+		return new CMSVO();
+	}
+	
+	public IPersistentMailingList getIPersistentMailingList()
+	{
+		return new MailingListVO();
+	}	
+	    
 }

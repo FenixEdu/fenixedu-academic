@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDat
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailAddressAliasOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentMailingListOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantCostCenterOJB;
@@ -26,12 +25,9 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.DistributedTestO
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.MetadataOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.QuestionOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.StudentTestQuestionOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAttributeOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationFormatOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.transactions.InsuranceTransactionOJB;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
-import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
@@ -42,8 +38,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistribut
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 import net.sourceforge.fenixedu.stm.Transaction;
@@ -60,221 +54,211 @@ import pt.utl.ist.berserk.storage.ITransactionBroker;
 import pt.utl.ist.berserk.storage.exceptions.StorageException;
 
 public class SuportePersistenteOJB implements ISuportePersistente, ITransactionBroker {
-    private static SuportePersistenteOJB _instance = null;
+	private static SuportePersistenteOJB _instance = null;
 
-    private static HashMap<String, DescriptorRepository> descriptorMap = null;
+	private static HashMap<String,DescriptorRepository> descriptorMap = null;
 
     public void setDescriptor(DescriptorRepository descriptorRepository, String hashName) {
-        descriptorMap.put(hashName, descriptorRepository);
-    }
+		descriptorMap.put(hashName, descriptorRepository);
+	}
 
     public DescriptorRepository getDescriptor(String hashName) {
 
-        return (DescriptorRepository) descriptorMap.get(hashName);
-    }
+		return (DescriptorRepository) descriptorMap.get(hashName);
+	}
 
     public static PersistenceBroker getCurrentPersistenceBroker() {
-        return Transaction.getOJBBroker();
-    }
+		return Transaction.getOJBBroker();
+	}
 
     public void clearCache() {
-        getCurrentPersistenceBroker().clearCache();
-    }
+		getCurrentPersistenceBroker().clearCache();
+	}
 
     public Integer getNumberCachedItems() {
-        return new Integer(FenixCache.getNumberOfCachedItems());
-    }
+		return new Integer(FenixCache.getNumberOfCachedItems());
+	}
 
     public static synchronized SuportePersistenteOJB getInstance() throws ExcepcaoPersistencia {
         if (_instance == null) {
-            _instance = new SuportePersistenteOJB();
-        }
+			_instance = new SuportePersistenteOJB();
+		}
         if (descriptorMap == null) {
-            descriptorMap = new HashMap<String, DescriptorRepository>();
+			descriptorMap = new HashMap<String,DescriptorRepository>();
 
-        }
-        return _instance;
-    }
+		}
+		return _instance;
+	}
 
     public static synchronized void resetInstance() {
         if (_instance != null) {
-            PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-            broker.clearCache();
-            _instance = null;
-        }
-    }
+			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			broker.clearCache();
+			_instance = null;
+		}
+	}
 
-    /** Creates a new instance of SuportePersistenteOJB */
+	/** Creates a new instance of SuportePersistenteOJB */
     private SuportePersistenteOJB() {
-    }
+	}
 
     protected void finalize() throws Throwable {
-    }
+	}
 
     public void iniciarTransaccao() {
-        // commit any current transaction
+		// commit any current transaction
         if (Transaction.current() != null) {
-            Transaction.commit();
-        }
-        Transaction.begin();
-    }
+			Transaction.commit();
+		}
+		Transaction.begin();
+	}
 
     public void confirmarTransaccao() {
-        Transaction.checkpoint();
-        Transaction.currentFenixTransaction().setReadOnly();
-    }
+		Transaction.checkpoint();
+		Transaction.currentFenixTransaction().setReadOnly();
+	}
 
     public void cancelarTransaccao() {
-        Transaction.abort();
-    }
+		Transaction.abort();
+	}
 
     public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate() {
-        return new MasterDegreeCandidateOJB();
-    }
+		return new MasterDegreeCandidateOJB();
+	}
 
     public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope() {
-        return new CurricularCourseScopeOJB();
-    }
+		return new CurricularCourseScopeOJB();
+	}
 
     public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
-        return new PersistentEnrolmentPeriod();
-    }
+		return new PersistentEnrolmentPeriod();
+	}
 
     public IPersistentGrantOwner getIPersistentGrantOwner() {
-        return new GrantOwnerOJB();
-    }
+		return new GrantOwnerOJB();
+	}
 
     public IPersistentGrantContract getIPersistentGrantContract() {
-        return new GrantContractOJB();
-    }
+		return new GrantContractOJB();
+	}
 
     public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher() {
-        return new GrantOrientationTeacherOJB();
-    }
+		return new GrantOrientationTeacherOJB();
+	}
 
     public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion() {
-        return new MasterDegreeThesisDataVersionOJB();
-    }
+		return new MasterDegreeThesisDataVersionOJB();
+	}
 
     public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion() {
-        return new MasterDegreeProofVersionOJB();
-    }
+		return new MasterDegreeProofVersionOJB();
+	}
 
     public IPersistentMetadata getIPersistentMetadata() {
-        return new MetadataOJB();
-    }
+		return new MetadataOJB();
+	}
 
     public IPersistentQuestion getIPersistentQuestion() {
-        return new QuestionOJB();
-    }
+		return new QuestionOJB();
+	}
 
     public IPersistentDistributedTest getIPersistentDistributedTest() {
-        return new DistributedTestOJB();
-    }
+		return new DistributedTestOJB();
+	}
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion() {
-        return new StudentTestQuestionOJB();
-    }
+		return new StudentTestQuestionOJB();
+	}
 
     public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {
-        return new DistributedTestAdvisoryOJB();
-    }
+		return new DistributedTestAdvisoryOJB();
+	}
 
     public void beginTransaction() {
-        this.iniciarTransaccao();
-    }
+		this.iniciarTransaccao();
+	}
 
     public void commitTransaction() {
-        this.confirmarTransaccao();
-    }
+		this.confirmarTransaccao();
+	}
 
     public void abortTransaction() throws StorageException {
-        this.cancelarTransaccao();
-    }
+		this.cancelarTransaccao();
+	}
 
-    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void lockRead(List list) throws StorageException {
-    }
+	}
 
-    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void lockRead(Object obj) throws StorageException {
-    }
+	}
 
-    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public void lockWrite(Object obj) throws StorageException {
-    }
+	}
 
-    // by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public PersistenceBroker currentBroker() {
-        return getCurrentPersistenceBroker();
-    }
+		return getCurrentPersistenceBroker();
+	}
 
     public IPersistentGratuitySituation getIPersistentGratuitySituation() {
-        return new GratuitySituationOJB();
-    }
+		return new GratuitySituationOJB();
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantCostCenter()
-     */
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantCostCenter()
+	 */
     public IPersistentGrantCostCenter getIPersistentGrantCostCenter() {
-        return new GrantCostCenterOJB();
-    }
+		return new GrantCostCenterOJB();
+	}
 
     public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork() {
-        return new FinalDegreeWorkOJB();
-    }
-
-    public IPersistentPublicationAttribute getIPersistentPublicationAttribute() {
-        return new PublicationAttributeOJB();
-    }
-
-    public IPersistentPublicationFormat getIPersistentPublicationFormat() {
-        return new PublicationFormatOJB();
-    }
-
+		return new FinalDegreeWorkOJB();
+	}
+  
     public IPersistentObject getIPersistentObject() {
-        return new PersistentObjectOJB();
-    }
+		return new PersistentObjectOJB();
+	}
 
     public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction() {
-        return new InsuranceTransactionOJB();
-    }
+		return new InsuranceTransactionOJB();
+	}
 
     public static void fixDescriptors() {
-        final MetadataManager metadataManager = MetadataManager.getInstance();
+		final MetadataManager metadataManager = MetadataManager.getInstance();
         final Collection<ClassDescriptor> classDescriptors = (Collection<ClassDescriptor>) metadataManager
                 .getGlobalRepository().getDescriptorTable().values();
 
         for (ClassDescriptor classDescriptor : classDescriptors) {
             for (ObjectReferenceDescriptor rd : (Collection<ObjectReferenceDescriptor>) classDescriptor
                     .getObjectReferenceDescriptors()) {
-                rd.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
-                rd.setCascadeRetrieve(false);
-                rd.setLazy(false);
-            }
+				rd.setCascadingStore(ObjectReferenceDescriptor.CASCADE_LINK);
+				rd.setCascadeRetrieve(false);
+				rd.setLazy(false);
+			}
 
             for (CollectionDescriptor cod : (Collection<CollectionDescriptor>) classDescriptor
                     .getCollectionDescriptors()) {
-                cod.setCascadingStore(ObjectReferenceDescriptor.CASCADE_NONE);
-                cod.setCollectionClass(OJBFunctionalSetWrapper.class);
-                cod.setCascadeRetrieve(false);
-                cod.setLazy(false);
-            }
-        }
-    }
+				cod.setCascadingStore(ObjectReferenceDescriptor.CASCADE_NONE);
+				cod.setCollectionClass(OJBFunctionalSetWrapper.class);
+				cod.setCascadeRetrieve(false);
+				cod.setLazy(false);
+			}
+		}
+	}
 
     public IPersistentCMS getIPersistentCms() {
-        return new PersistentCMSOJB();
-    }
+		return new PersistentCMSOJB();
+	}
 
-    public IPersistentMailAddressAlias getIPersistentMailAdressAlias() {
-        return new PersistentMailAddressAliasOJB();
-    }
-
-    public IPersistentMailingList getIPersistentMailingList() {
-        return new PersistentMailingListOJB();
-    }
-
+	public IPersistentMailingList getIPersistentMailingList()
+	{
+		return new PersistentMailingListOJB();
+	}   
+    
 }

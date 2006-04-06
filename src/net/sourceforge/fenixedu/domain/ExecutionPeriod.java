@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.fileSuport.INode;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.joda.time.DateMidnight;
@@ -19,23 +18,13 @@ import org.joda.time.Interval;
  * @author jpvl
  * 
  */
-public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comparable {
+public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable {
 
     public ExecutionPeriod() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
-	}
-
-	public String getSlideName() {
-        String result = getParentNode().getSlideName() + "/EP" + getIdInternal();
-        return result;
     }
-
-    public INode getParentNode() {
-        ExecutionYear executionYear = getExecutionYear();
-        return executionYear;
-    }
-
+   
     public int compareTo(Object object) {
         final ExecutionPeriod executionPeriod = (ExecutionPeriod) object; 
         final ExecutionYear executionYear = executionPeriod.getExecutionYear();
@@ -78,10 +67,10 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
    		final DateMidnight thisMonday = getThisMonday();
    		return thisMonday == null ? null : new Interval(thisMonday.minusWeeks(1), thisMonday);
     }
-    
+
     public boolean isAfter(ExecutionPeriod executionPeriod) {
     	return this.compareTo(executionPeriod) > 0;
-    }
+	}
 
     public boolean isAfterOrEquals(ExecutionPeriod executionPeriod) {
     	return this.compareTo(executionPeriod) >= 0;
@@ -94,7 +83,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
     public boolean isBeforeOrEquals(ExecutionPeriod executionPeriod) {
     	return this.compareTo(executionPeriod) <= 0;
     }
-    
+
     public ExecutionCourse getExecutionCourseByInitials(String courseInitials) {
     	for (ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
 			if(executionCourse.getSigla().equalsIgnoreCase(courseInitials)) {
@@ -120,14 +109,14 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
     	for (ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
     		if(executionCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(semester, curricularYear, degreeCurricularPlan) &&
 				(name == null || name.length() == 0 || executionCourse.getNome().matches(name.replaceAll("%", ".*")))) {
-    			result.add(executionCourse);
-    		}
+				result.add(executionCourse);
+			}
 		}
     	return result;
     }
 
     
-    // -------------------------------------------------------------
+     // -------------------------------------------------------------
     // read static methods 
     // -------------------------------------------------------------
     public static ExecutionPeriod readActualExecutionPeriod() {

@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -16,20 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyExistsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileNameTooLongServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
@@ -68,7 +66,6 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -80,7 +77,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
-import net.sourceforge.fenixedu.util.StringNormalizer;
+import net.sourceforge.fenixedu.util.FileUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -100,6 +97,11 @@ import org.apache.struts.validator.DynaValidatorForm;
  */
 @Deprecated
 public class TeacherAdministrationViewerDispatchAction extends FenixDispatchAction {
+
+    private static final String DSPACE_BASE_DOWNLOAD_URL = PropertiesManager
+            .getProperty("dspace.serverUrl")
+            + PropertiesManager.getProperty("dspace.downloadUriPrefix");
+
     public ActionForward instructions(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
@@ -287,33 +289,33 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
-        
+
         HttpSession session = request.getSession(false);
         String announcementCodeString = request.getParameter("announcementCode");
-        
+
         if (announcementCodeString == null) {
             announcementCodeString = (String) request.getAttribute("announcementCode");
         }
-        
+
         Integer announcementCode = new Integer(announcementCodeString);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { announcementCode };
-        
+
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncementService", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        
+
         ISiteComponent announecementsComponent = new InfoSiteAnnouncement();
         readSiteView(request, announecementsComponent, null, null, null);
         TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
                 .getAttribute("siteView");
-        
+
         if (!((InfoSiteAnnouncement) siteView.getComponent()).getAnnouncements().isEmpty()) {
             return showAnnouncements(mapping, form, request, response);
         }
-        
+
         DynaActionForm actionForm = (DynaActionForm) form;
         htmlEditorConfigurations(request, actionForm);
         return mapping.findForward("insertAnnouncement");
@@ -750,14 +752,15 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             ServiceManagerServiceFactory.executeService(userView, "DeleteProfessorship", args);
         } catch (NotAuthorizedFilterException e) {
             final ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.invalidTeacherRemoval", new ActionError("error.invalidTeacherRemoval"));
-            saveErrors(request, actionErrors);       
-        } catch (FenixServiceException e) {            
+            actionErrors.add("error.invalidTeacherRemoval", new ActionError(
+                    "error.invalidTeacherRemoval"));
+            saveErrors(request, actionErrors);
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
-        } catch (DomainException domainException){
+        } catch (DomainException domainException) {
             final ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error", new ActionError(domainException.getMessage()));
-            saveErrors(request, actionErrors);       
+            saveErrors(request, actionErrors);
         }
         return viewTeachersByProfessorship(mapping, form, request, response);
     }
@@ -790,6 +793,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             FenixFilterException {
         ISiteComponent sectionComponent = new InfoSiteSection();
         readSiteView(request, sectionComponent, null, sectionCode, null);
+
+        request.setAttribute("dspaceBaseDownloadUrl", DSPACE_BASE_DOWNLOAD_URL);
+
         return mapping.findForward("viewSection");
     }
 
@@ -894,16 +900,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             }
             return sectionsFirstPage(mapping, form, request, response);
 
-        } catch (notAuthorizedServiceDeleteException notnotAuthorizedServiceDeleteException) {
+        } catch (DomainException ex) {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("notAuthorizedSectionDelete", new ActionError(
-                    "error.notAuthorizedSectionDelete.fileExists"));
+            actionErrors.add(ex.getMessage(), new ActionError(ex.getMessage()));
             saveErrors(request, actionErrors);
-            if (superiorSectionCode != null) {
-                return viewSection(mapping, form, request, response, superiorSectionCode);
-            }
-            return sectionsFirstPage(mapping, form, request, response);
 
+            return viewSection(mapping, form, request, response);
         } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         } catch (Exception e) {
@@ -937,102 +939,130 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer itemCode = getItemCode(request);
-        DynaActionForm xptoForm = (DynaActionForm) form;
-        FormFile formFile = (FormFile) xptoForm.get("theFile");
-        FileSuportObject file = null;
-        try {
-            file = new FileSuportObject();
-            file.setContent(formFile.getFileData());
-            file.setFileName(new String(normalize(formFile.getFileName()).getBytes(), "ISO-8859-1"));
-            file.setContentType(formFile.getContentType());
-            file.setLinkName((String) xptoForm.get("linkName"));
-            if (file.getLinkName() == null || file.getLinkName() == "") {
-                file.setLinkName(new String(formFile.getFileName().getBytes(), "ISO-8859-1"));
-            }
+        DynaActionForm fileUploadForm = (DynaActionForm) form;
+        FormFile formFile = (FormFile) fileUploadForm.get("theFile");
+        String displayName = fileUploadForm.getString("displayName");
+        ActionErrors actionErrors = new ActionErrors();
 
-        } catch (FileNotFoundException e) {
+        if (displayName == null || displayName.length() == 0) {
+            displayName = getFilenameOnly(formFile.getFileName());
+        }
+
+        if (formFile.getFileName() == null || formFile.getFileName().length() == 0
+                || formFile.getFileSize() == 0) {
+            actionErrors.add("fileRequired", new ActionError("errors.fileRequired"));
+
+            saveErrors(request, actionErrors);
+
+            return prepareFileUpload(mapping, form, request, response);
+
+        }
+
+        File temporaryFile = null;
+        try {
+            temporaryFile = createTemporaryFile(formFile);
+
+            Object[] args = { itemCode, temporaryFile, formFile.getFileName(), displayName, false };
+
+            ServiceUtils.executeService(userView, "CreateFileItemForItem", args);
 
         } catch (IOException e) {
+            actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", formFile
+                    .getFileName()));
 
+            saveErrors(request, actionErrors);
+
+            return prepareFileUpload(mapping, form, request, response);
+
+        } catch (FenixFilterException e) {
+            actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", formFile
+                    .getFileName()));
+
+            saveErrors(request, actionErrors);
+
+            return prepareFileUpload(mapping, form, request, response);
+        } catch (FenixServiceException e) {
+            actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", formFile
+                    .getFileName()));
+
+            saveErrors(request, actionErrors);
+
+            return prepareFileUpload(mapping, form, request, response);
+        } finally {
+            if (temporaryFile != null) {
+                temporaryFile.delete();
+            }
         }
-        ActionErrors actionErrors = new ActionErrors();
-        if (file.getFileName() == null || file.getFileName().indexOf("&") != -1
-                || file.getFileName().indexOf("#") != -1 || file.getFileName().indexOf("+") != -1) {
-            actionErrors.add("fileNameInvalid", new ActionError("errors.fileNameInvalid", file
-                    .getFileName()));
-            saveErrors(request, actionErrors);
-            return prepareFileUpload(mapping, form, request, response);
 
-        }
-
-        Object[] args = { file, itemCode };
-        Boolean serviceResult = null;
-
-        try {
-            serviceResult = (Boolean) ServiceUtils.executeService(userView, "StoreItemFile", args);
-        } catch (FileAlreadyExistsServiceException e1) {
-            e1.printStackTrace();
-            actionErrors.add("fileAlreadyExists", new ActionError("errors.fileAlreadyExists", file
-                    .getFileName()));
-            saveErrors(request, actionErrors);
-            return prepareFileUpload(mapping, form, request, response);
-
-        } catch (FileNameTooLongServiceException e1) {
-            e1.printStackTrace();
-            actionErrors.add("fileNameTooLong", new ActionError("errors.fileNameTooLong", file
-                    .getFileName()));
-            saveErrors(request, actionErrors);
-            return prepareFileUpload(mapping, form, request, response);
-
-        } catch (FenixServiceException e1) {
-            e1.printStackTrace();
-            actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", file
-                    .getFileName()));
-            saveErrors(request, actionErrors);
-            return prepareFileUpload(mapping, form, request, response);
-
-        } catch (Exception e1) {
-            e1.printStackTrace();
-            actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", file
-                    .getFileName()));
-            saveErrors(request, actionErrors);
-            return prepareFileUpload(mapping, form, request, response);
-
-        }
-        
-        if (!serviceResult.booleanValue()) {
-            actionErrors.add("fileTooBig", new ActionError("errors.fileTooBig", file.getFileName()));
-            saveErrors(request, actionErrors);
-            return prepareFileUpload(mapping, form, request, response);
-        }
         return viewSection(mapping, form, request, response);
     }
 
-    private String normalize(String string) {
-        return StringNormalizer.normalize(string).replaceAll(" ", "_");
+    private String getFilenameOnly(String fullPathToFile) {
+        // Strip all but the last filename. It would be nice
+        // to know which OS the file came from.
+        String filenameOnly = fullPathToFile;
+
+        while (filenameOnly.indexOf('/') > -1) {
+            filenameOnly = filenameOnly.substring(filenameOnly.indexOf('/') + 1);
+        }
+
+        while (filenameOnly.indexOf('\\') > -1) {
+            filenameOnly = filenameOnly.substring(filenameOnly.indexOf('\\') + 1);
+        }
+
+        return filenameOnly;
+    }
+
+    /**
+     * Creates a temporary file representing the uploaded file This
+     * 
+     * @param formFile
+     * @return
+     * @throws IOException
+     */
+    private File createTemporaryFile(FormFile formFile) throws IOException {
+        File tmpFile = null;
+        FileOutputStream tmpFileOutputStream = null;
+        try {
+
+            tmpFile = File.createTempFile(FileUtils.getTemporaryFileBaseName(), null);
+
+            // In case anything fails the file will be cleaned when jvm
+            // shutsdown
+            tmpFile.deleteOnExit();
+
+            tmpFileOutputStream = new FileOutputStream(tmpFile);
+
+            FileUtils.copy(formFile.getInputStream(), tmpFileOutputStream);
+
+        } finally {
+            if (tmpFileOutputStream != null) {
+                try {
+                    tmpFileOutputStream.close();
+                } catch (IOException e) {
+                    throw e;
+                }
+            }
+        }
+
+        return tmpFile;
+
     }
 
     public ActionForward deleteFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         Integer itemCode = getItemCode(request);
-        String fileName;
-
-        try {
-            fileName = new String(request.getParameter("fileName").getBytes("ISO-8859-1"), "ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            fileName = new String(request.getParameter("fileName"));
-        }
+        Integer fileItemId = getFileItemId(request);
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object[] args = { itemCode, fileName };
-        
+        Object[] args = { itemCode, fileItemId };
         try {
-            ServiceUtils.executeService(userView, "DeleteItemFile", args);
-        } catch (Exception e1) {
+            ServiceUtils.executeService(userView, "DeleteFileItemFromItem", args);
+        } catch (FenixServiceException e1) {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("unableToDeleteFile", new ActionError("errors.unableToDeleteFile",fileName));
+            actionErrors.add("unableToDeleteFile", new ActionError("errors.unableToDeleteFile"));
             saveErrors(request, actionErrors);
         }
 
@@ -1125,6 +1155,18 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return itemCode;
     }
 
+    private Integer getFileItemId(HttpServletRequest request) {
+        Integer itemCode = null;
+        String itemCodeString = request.getParameter("fileItemId");
+        if (itemCodeString == null) {
+            itemCodeString = (String) request.getAttribute("fileItemId");
+        }
+        if (itemCodeString != null) {
+            itemCode = new Integer(itemCodeString);
+        }
+        return itemCode;
+    }
+
     public ActionForward editItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
@@ -1176,14 +1218,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Object deleteItemArguments[] = { objectCode, itemCode };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteItem", deleteItemArguments);
-        } catch (notAuthorizedServiceDeleteException e) {
+        } catch (DomainException ex) {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("notAuthorizedItemDelete", new ActionError(
-                    "error.notAuthorizedItemDelete.fileExists"));
+            actionErrors.add(ex.getMessage(), new ActionError(ex.getMessage()));
             saveErrors(request, actionErrors);
+
+            return viewSection(mapping, form, request, response);
         } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException);
         }
+
         return viewSection(mapping, form, request, response);
     }
 
@@ -3171,7 +3215,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     private void htmlEditorConfigurations(HttpServletRequest request, DynaActionForm actionForm) {
-        String header = request.getHeader("User-Agent");        
+        String header = request.getHeader("User-Agent");
         if (header.indexOf("Safari/") == -1 && header.indexOf("Opera/") == -1
                 && header.indexOf("Konqueror/") == -1) {
 

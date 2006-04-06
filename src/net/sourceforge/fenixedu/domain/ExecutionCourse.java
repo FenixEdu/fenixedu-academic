@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.fileSuport.INode;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.ProposalState;
 
@@ -31,7 +30,7 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 
-public class ExecutionCourse extends ExecutionCourse_Base implements INode {
+public class ExecutionCourse extends ExecutionCourse_Base {
 
 	public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new BeanComparator("nome", Collator.getInstance());
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new ComparatorChain();
@@ -46,18 +45,7 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
-
-	public String getSlideName() {
-		String result = getParentNode().getSlideName() + "/EC"
-				+ getIdInternal();
-		return result;
-	}
-
-	public INode getParentNode() {
-		ExecutionPeriod executionPeriod = getExecutionPeriod();
-		return executionPeriod;
-	}
-
+    
 	public List<Grouping> getGroupings() {
 		List<Grouping> result = new ArrayList();
 		for (final ExportGrouping exportGrouping : this.getExportGroupings()) {
@@ -829,11 +817,10 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
     	for (final Shift shift : getAssociatedShiftsSet()) {
     		if (shift.getNome().equals(shiftName)) {
     			return shift;
-    		}
+			}
     	}
     	return null;
     }
-
     public Set<Shift> findShiftByType(final ShiftType shiftType) {
     	final Set<Shift> shifts = new HashSet<Shift>();
     	for (final Shift shift : getAssociatedShiftsSet()) {

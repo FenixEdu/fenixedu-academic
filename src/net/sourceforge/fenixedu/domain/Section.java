@@ -9,31 +9,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.fileSuport.INode;
 
 /**
  * @author Ivo Brand�o
  */
-public class Section extends Section_Base implements INode {
+public class Section extends Section_Base {
 
     public Section() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
-	}
-
-	public String getSlideName() {
-        String result = getParentNode().getSlideName() + "/S" + getIdInternal();
-        return result;
-    }
-
-    public INode getParentNode() {
-        if (getSuperiorSection() == null) {
-            Site site = getSite();
-            ExecutionCourse executionCourse = site.getExecutionCourse();
-            return executionCourse;
-        }
-        Section section = getSuperiorSection();
-        return section;
     }
 
     public void insertItem(String itemName, String itemInformation, Boolean itemUrgent,
@@ -117,6 +101,12 @@ public class Section extends Section_Base implements INode {
 
     public void delete() {
 
+        checkIfSectionCanBeDeleted(this);
+
+        for (Section subSection : this.getAssociatedSections()) {
+            checkIfSectionCanBeDeleted(subSection);
+        }
+
         Section superiorSection = this.getSuperiorSection();
         Site sectionSite = this.getSite();
         Integer sectionToDeleteOrder = this.getSectionOrder();
@@ -155,8 +145,17 @@ public class Section extends Section_Base implements INode {
                 section.setSectionOrder(new Integer(sectionOrder.intValue() - 1));
             }
         }
-        
+
         removeRootDomainObject();
         super.deleteDomainObject();
     }
+
+    private void checkIfSectionCanBeDeleted(Section section) {
+        for (Item item : section.getAssociatedItems()) {
+            if (item.getFileItems().size() != 0) {
+                throw new DomainException("section.cannotDeleteWhileHasItemsWithFiles");
+            }
+        }
+    }
+
 }

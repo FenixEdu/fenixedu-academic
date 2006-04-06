@@ -4834,20 +4834,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>StoreItemFile</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StoreItemFile</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>DeleteItemFile</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.DeleteItemFile</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>ReadWebSiteByObjectCode</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.webSiteManager.ReadWebSiteByObjectCode</implementationClass>
@@ -8686,12 +8672,6 @@
 			<chain name="TeacherAuthorization"/>
 		</filterChains>
 	</service>
-    <service>
-    	<name>ReadItemSlideName</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.ReadItemSlideName</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>       
-    </service>
 	<service>
     	<name>ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID</implementationClass>
@@ -9640,6 +9620,31 @@
 		<filterChains>
 			<chain name="CoordinatorOrDepartmentAdminOfficeAuthorization" />
 		</filterChains>
+	</service>
+	<service>
+		<name>CreateFileItemForItem</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateFileItemForItem</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteFileItemFromItem</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteFileItemFromItem</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadPersonByUsernameOrIstUsername</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsernameOrIstUsername</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
 	</service>    
 	<service>
 		<name>SubmitHomepage</name>

@@ -598,15 +598,7 @@
 	        scope="request"
 			validate="true">
     </action>
-     	 
-    
-    <action path="/fileDownload" 
-      		  type="net.sourceforge.fenixedu.presentationTier.Action.fileManager.FileRetrievingAction"
-      		  name="downloadForm"
-      		  validate="false">
-      		  <forward  name="xpto1" path="/xpto1.jsp"/>  		  
-     </action>	 
-     
+     	      
      <!-- For degrees´s Site-->
     <action path="/showDegrees" 
      		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreesAction" 

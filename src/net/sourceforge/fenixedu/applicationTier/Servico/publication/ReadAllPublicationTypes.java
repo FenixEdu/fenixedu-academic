@@ -16,10 +16,9 @@ public class ReadAllPublicationTypes extends Service {
 
         List<InfoPublicationType> result = new ArrayList<InfoPublicationType>();
         for (PublicationType publicationType : publicationTypeList) {
-        	result.add(InfoPublicationTypeWithAttributesAndSubtypes.newInfoFromDomain(publicationType));
-		}
+            result.add(InfoPublicationTypeWithAttributesAndSubtypes.newInfoFromDomain(publicationType));
+        }
 
         return result;
     }
-    
 }

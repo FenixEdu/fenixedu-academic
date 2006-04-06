@@ -10,6 +10,9 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
 
 /**
  * @author Luis Cruz
@@ -19,6 +22,9 @@ import java.io.IOException;
 public class FileUtils {
 
     private static int[] fileWriterSynch = new int[0];
+
+    // Cluster safe global unique temporary filename
+    private static final String TEMPORARY_FILE_GLOBAL_UNIQUE_NAME = UUID.randomUUID().toString();
 
     public static String readFile(final String filename) throws IOException {
         final FileReader fileReader = new FileReader(filename);
@@ -40,7 +46,8 @@ public class FileUtils {
         final byte[] buffer = new byte[fileSize];
 
         if (fileSize > 0) {
-            for (int n = 0; (n = fileInputStream.read(buffer, n, fileSize - n)) != -1;) {}
+            for (int n = 0; (n = fileInputStream.read(buffer, n, fileSize - n)) != -1;) {
+            }
         }
 
         fileInputStream.close();
@@ -78,11 +85,32 @@ public class FileUtils {
     public static void deleteDirContents(final String dir) {
         File directory = new File(dir);
         if (directory.isDirectory()) {
-        	File[] files = directory.listFiles();
-        	for (int i = 0; i < files.length; i++) {
-        		files[i].delete();
-        	}
+            File[] files = directory.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                files[i].delete();
+            }
         }
+    }
+
+    public static void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
+
+        final int BUFFER_SIZE = 1024 * 1024;
+        final byte[] buffer = new byte[BUFFER_SIZE];
+
+        while (true) {
+            final int numberOfBytesRead = inputStream.read(buffer, 0, BUFFER_SIZE);
+
+            if (numberOfBytesRead == -1) {
+                break;
+            }
+
+            // write out those same bytes
+            outputStream.write(buffer, 0, numberOfBytesRead);
+        }
+    }
+
+    public static String getTemporaryFileBaseName() {
+        return TEMPORARY_FILE_GLOBAL_UNIQUE_NAME;
     }
 
 }

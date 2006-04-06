@@ -2,31 +2,25 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.fileSuport.INode;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
  * 
  * @author ars
  */
 
-public class Item extends Item_Base implements INode {
+public class Item extends Item_Base {
 
     public Item() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
-	}
-
-	public String getSlideName() {
-        String result = getParentNode().getSlideName() + "/I" + getIdInternal();
-        return result;
-    }
-
-    public INode getParentNode() {
-        Section section = getSection();
-        return section;
     }
 
     public void delete() {
+
+        if (this.getFileItems().size() != 0) {
+            throw new DomainException("item.cannotDeleteWhileHasFiles");
+        }
 
         Section section = this.getSection();
 
@@ -41,9 +35,9 @@ public class Item extends Item_Base implements INode {
                 if (associatedItemOrder > this.getItemOrder().intValue()) {
                     item.setItemOrder(new Integer(associatedItemOrder - 1));
                 }
-            }                       
+            }
         }
-        
+
         removeRootDomainObject();
         super.deleteDomainObject();
     }
@@ -77,7 +71,7 @@ public class Item extends Item_Base implements INode {
                         item.setItemOrder(new Integer(iterItemOrder - 1));
                     }
                 }
-            else {                
+            else {
                 for (Item item : items) {
                     int iterItemOrder = item.getItemOrder().intValue();
                     if (iterItemOrder >= newOrder.intValue() && iterItemOrder < oldOrder.intValue()) {
@@ -88,4 +82,5 @@ public class Item extends Item_Base implements INode {
         }
         return newOrder;
     }
+
 }

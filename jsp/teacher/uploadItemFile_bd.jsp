@@ -19,7 +19,7 @@
  
 	<strong>Nome que pretende para a visualização do ficheiro:</strong>
 	<br/>	
- 	<html:text property="linkName" size="55"/>
+ 	<html:text property="displayName" size="55"/>
  	<br/> 	
  	<br/>
  	<strong>Ficheiro:</strong>

@@ -502,7 +502,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 				infoTeachers.add(infoTeacher);
 			}
 
-			// see if teacher is responsible for that execution course			
+			// see if teacher is responsible for that execution course
 			List responsibleTeachers = executionCourse.responsibleFors();
 
 			List infoResponsibleTeachers = new ArrayList();
@@ -701,11 +701,10 @@ public class TeacherAdministrationSiteComponentBuilder {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final Section section = (Section) persistentSupport.getIPersistentObject().readByOID(Section.class, sectionCode);
-        
+
 		final List<InfoItem> infoItemsList = new ArrayList(section.getAssociatedItemsCount());
 		for (final Item item : section.getAssociatedItems()) {
             final InfoItem infoItem = InfoItem.newInfoFromDomain(item);
-            infoItem.setLinks(item.getSlideName());
             infoItemsList.add(infoItem);
         }
 
@@ -785,17 +784,17 @@ public class TeacherAdministrationSiteComponentBuilder {
 		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		final Item iItem = (Item) persistentSupport.getIPersistentObject().readByOID(Item.class, itemCode);
         final Section iSection = iItem.getSection();
-        
+
         final InfoItem infoItem = InfoItem.newInfoFromDomain(iItem);
 		infoItem.setInfoSection(InfoSectionWithInfoSiteAndInfoExecutionCourse.newInfoFromDomain(iSection));
-        
+
 		final List<Item> allItems = iSection.getAssociatedItems();
         List infoItemsList = new ArrayList(iSection.getAssociatedItemsCount());
         for (final Item item : allItems) {
             if (item != iItem) {
-                infoItemsList.add(InfoItem.newInfoFromDomain(item));
-            }
-        }
+				infoItemsList.add(InfoItem.newInfoFromDomain(item));
+			}
+		}
 
 		Collections.sort(infoItemsList);
 		component.setItem(infoItem);

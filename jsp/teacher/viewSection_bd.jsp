@@ -98,24 +98,26 @@
     <logic:equal name="item" property="urgent" value="true"><font color="red"></logic:equal> 		
   	<bean:write name="item" property="information" filter="false" />
   	<logic:equal name="item" property="urgent" value="true"></font></logic:equal>
-  	<logic:present name="item" property="links">
+  	<logic:present name="item" property="infoFileItems">
   	<br/>
   	<br/>  			
   		<table>	
-		<logic:iterate id="infoLink" name="item" property="links">
+		<logic:iterate id="infoFileItem" name="item" property="infoFileItems">
 		<tr>
-		<bean:define id="linkName" name="infoLink" property="linkName"/>
-		<bean:define id="link" name="infoLink" property="link" type="java.lang.String"/>
+		<bean:define id="displayName" name="infoFileItem" property="displayName" type="java.lang.String"/>
+		<bean:define id="dspaceBitstreamIdentification" name="infoFileItem" property="dspaceBitstreamIdentification" type="java.lang.String"/>
+		<bean:define id="filename" name="infoFileItem" property="filename" type="java.lang.String"/>
+		<bean:define id="fileItemId" name="infoFileItem" property="idInternal" type="java.lang.Integer"/>
 		<td>
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
 		</td>
 		<td>
-			<html:link href="<%= request.getContextPath() + "/download/" + link + "?itemCode=" + itemCode + "&fileName=" + link %>" ><bean:write name="infoLink" property="linkName"/></html:link>
+			<html:link href="<%= pageContext.findAttribute("dspaceBaseDownloadUrl") + "/" + dspaceBitstreamIdentification + "/" + filename %>" ><bean:write name="infoFileItem" property="displayName"/></html:link>
 		</td>
 		<td>&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
 		</td>
 		<td>
-			<html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode + "&fileName=" + link %>"   onclick="<%= "return confirm('Tem a certeza que deseja apagar o ficheiro "+linkName+"?')"%>" >Apagar Ficheiro</html:link>
+			<html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode + "&fileItemId=" + fileItemId %>"   onclick="<%= "return confirm('Tem a certeza que deseja apagar o ficheiro "+displayName+"?')"%>" >Apagar Ficheiro</html:link>
 		</td>
 		
 		</tr>

@@ -402,6 +402,7 @@ password.generator=net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswo
 #
 
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.CheckPasswordKerberosAction=127.0.0.1
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.RetrieveUserInformation=127.0.0.1
 
 #----------------------------------------------
 # CAS configuration
@@ -413,11 +414,13 @@ cas.logoutUrl=https://localhost:8443/cas/logout
 cas.serviceUrl.localhost=https://localhost:8443/ciapl/loginCAS.do
 cas.serviceUrl.salad21=https://salad21.ist.utl.pt:8443/ciapl/loginCAS.do
 
-
 #----------------------------------------------------------------
-# Kerberos Password Check Configuration (external systems access)
+# Dspace configuration
 #----------------------------------------------------------------
-checkPasswordKerberos.authorizedHosts=127.0.0.1
+dspace.serverUrl=https://localhost:8443/dspace
+dspace.downloadUriPrefix=/bitstream
+dspace.username=ist12345
+dspace.password=pass
 
 #------------------------------------------------------------------------------
 # Miscellaneous 

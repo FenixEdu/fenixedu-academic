@@ -24,18 +24,19 @@ public class DeleteItem extends Service {
             return new Boolean(true);
         }
 
-        testFilesExistence(deletedItem);
+        //testFilesExistence(deletedItem);
        
         deletedItem.delete();
 
         return Boolean.TRUE;
     }
 
-    private void testFilesExistence(final Item deletedItem) throws notAuthorizedServiceDeleteException {
+   /* private void testFilesExistence(final Item deletedItem) throws notAuthorizedServiceDeleteException {
+        
         Collection<FileSuportObject> listFiles = JdbcMysqlFileSupport.listFiles(deletedItem.getSlideName());
         if (!listFiles.isEmpty()) {
             throw new notAuthorizedServiceDeleteException();
         }
-    }
+    }*/
 
 }

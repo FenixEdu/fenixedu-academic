@@ -6,26 +6,21 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.fileSuport.INode;
 import net.sourceforge.fenixedu.util.PeriodState;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-public class ExecutionYear extends ExecutionYear_Base implements INode, Comparable {
+/**
+ * Created on 11/Fev/2003
+ * 
+ * @author Jo�o Mota ciapl Dominio
+ * 
+ */
+public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 
     public ExecutionYear() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
-	}
-
-	public String getSlideName() {
-        String result = "/EY" + getIdInternal();
-        return result;
-    }
-
-    public INode getParentNode() {
-        return null;
     }
 
     public Collection<ExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
@@ -59,9 +54,9 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
     public ExecutionYear getNextExecutionYear() {
         for (ExecutionPeriod executionPeriod = this.getExecutionPeriods().get(0);
         	executionPeriod != null; executionPeriod = executionPeriod.getNextExecutionPeriod()) {
-        	if (executionPeriod.getExecutionYear() != this) {
-        		return executionPeriod.getExecutionYear();
-        	}
+            if (executionPeriod.getExecutionYear() != this) {
+                return executionPeriod.getExecutionYear();
+            }
         }
 
         return null;
@@ -71,7 +66,7 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
         final ExecutionYear executionYear = (ExecutionYear) object;
         return getYear().compareTo(executionYear.getYear());
     }
-    
+
     public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
         final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
         Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
@@ -86,13 +81,13 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
         }
         return null;
     }
-    
+
     public List<ExecutionPeriod> readNotClosedPublicExecutionPeriods() {
         final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
         for (final ExecutionPeriod executionPeriod : this.getExecutionPeriodsSet()) {
             if (executionPeriod.getState() != PeriodState.NOT_OPEN && executionPeriod.getState() != PeriodState.CLOSED) {
                 result.add(executionPeriod);
-            }
+    }
         }
         return result;
     }
@@ -106,7 +101,7 @@ public class ExecutionYear extends ExecutionYear_Base implements INode, Comparab
         return null;
     }
     
-    // -------------------------------------------------------------
+      // -------------------------------------------------------------
     // read static methods 
     // -------------------------------------------------------------
     public static ExecutionYear readCurrentExecutionYear() {

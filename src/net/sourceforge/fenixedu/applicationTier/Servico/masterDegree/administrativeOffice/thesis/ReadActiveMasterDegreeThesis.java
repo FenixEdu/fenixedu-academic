@@ -68,7 +68,7 @@ public class ReadActiveMasterDegreeThesis extends Service {
 
         List<MasterDegreeThesis> masterDegreeThesis = rootDomainObject.getMasterDegreeThesiss();
 
-        List<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
+        Collection<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
         for (MasterDegreeThesis thesis : masterDegreeThesis) {
 
             boolean isToAdd = true;
