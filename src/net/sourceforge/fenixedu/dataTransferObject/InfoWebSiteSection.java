@@ -25,7 +25,7 @@ public class InfoWebSiteSection extends InfoObject {
 
     private InfoWebSite infoWebSite;
 
-    private List<InfoItem> infoItemsList;
+    private List<InfoWebSiteItem> infoItemsList;
 
     /**
      * @return
@@ -44,14 +44,14 @@ public class InfoWebSiteSection extends InfoObject {
     /**
      * @return
      */
-    public List<InfoItem> getInfoItemsList() {
+    public List<InfoWebSiteItem> getInfoItemsList() {
         return infoItemsList;
     }
 
     /**
      * @param itemsList
      */
-    public void setInfoItemsList(List<InfoItem> itemsList) {
+    public void setInfoItemsList(List<InfoWebSiteItem> itemsList) {
         this.infoItemsList = itemsList;
     }
 
