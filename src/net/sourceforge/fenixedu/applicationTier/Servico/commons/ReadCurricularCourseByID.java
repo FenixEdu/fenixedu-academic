@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadCurricularCourseByID extends Service {
 
     public InfoCurricularCourse run(Integer curricularCourseID) throws FenixServiceException, ExcepcaoPersistencia {
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(
                 curricularCourseID);
 
         if (curricularCourse == null) {

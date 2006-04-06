@@ -15,9 +15,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditTeacherExpectationDefinitionPeriod extends Service {
     public void run(Integer teacherExpectationDefinitionPeriodID, Date startDate, Date endDate)
             throws FenixServiceException, ExcepcaoPersistencia {
-        TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (TeacherExpectationDefinitionPeriod)
-        		persistentObject.readByOID(TeacherExpectationDefinitionPeriod.class, teacherExpectationDefinitionPeriodID);
-
+        TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = rootDomainObject.readTeacherExpectationDefinitionPeriodByOID(teacherExpectationDefinitionPeriodID);
         teacherExpectationDefinitionPeriod.edit(startDate, endDate);
     }
+    
 }

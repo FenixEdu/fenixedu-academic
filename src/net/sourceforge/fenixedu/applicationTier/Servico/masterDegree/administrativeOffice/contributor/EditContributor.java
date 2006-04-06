@@ -14,7 +14,7 @@ public class EditContributor extends Service {
     public InfoContributor run(InfoContributor infoContributor, Integer contributorNumber,
             String contributorName, String contributorAddress) throws ExcepcaoPersistencia, FenixServiceException {
 
-        final Contributor storedContributor = (Contributor) persistentObject.readByOID(Contributor.class, infoContributor.getIdInternal());
+        final Contributor storedContributor = rootDomainObject.readContributorByOID(infoContributor.getIdInternal());
         if (storedContributor == null) {
             throw new NonExistingServiceException();
         }

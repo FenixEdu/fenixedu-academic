@@ -24,7 +24,7 @@ public class RemoveClasses extends Service {
 
         boolean result = false;
 
-        Shift shift = (Shift) persistentObject.readByOID(Shift.class,
+        Shift shift = rootDomainObject.readShiftByOID(
                 infoShift.getIdInternal());
 
         for (int i = 0; i < classOIDs.size(); i++) {

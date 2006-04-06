@@ -19,7 +19,7 @@ public class EditDegree extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degreeToEdit = (Degree) persistentObject.readByOID(Degree.class,
+        final Degree degreeToEdit = rootDomainObject.readDegreeByOID(
                 infoDegree.getIdInternal());
 
         if (degreeToEdit == null) {

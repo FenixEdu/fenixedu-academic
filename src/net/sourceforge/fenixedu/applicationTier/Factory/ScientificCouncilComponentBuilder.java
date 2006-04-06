@@ -23,11 +23,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSCDegrees;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author Jo�o Mota
@@ -77,21 +75,18 @@ public class ScientificCouncilComponentBuilder {
 	private ISiteComponent getInfoSiteBasicCurricularCourses(InfoSiteBasicCurricularCourses component,
 			Integer degreeCurricularPlanId) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(
-				DegreeCurricularPlan.class, degreeCurricularPlanId);
-
+		DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 		if (degreeCurricularPlan == null) {
 			throw new InvalidArgumentsServiceException();
 		}
+        
 		List<CurricularCourse> nonBasicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.FALSE); 
 		List<CurricularCourse> basicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.TRUE);
 		
 		Iterator iter = nonBasicCurricularCourses.iterator();
 		Iterator iter1 = basicCurricularCourses.iterator();
-		List infoNonBasicCurricularCourses = new ArrayList();
-		List infoBasicCurricularCourses = new ArrayList();
+		List<InfoCurricularCourse> infoNonBasicCurricularCourses = new ArrayList<InfoCurricularCourse>();
+		List<InfoCurricularCourse> infoBasicCurricularCourses = new ArrayList<InfoCurricularCourse>();
 		while (iter.hasNext()) {
 			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
@@ -122,11 +117,7 @@ public class ScientificCouncilComponentBuilder {
 	private ISiteComponent getInfoSiteCurricularCourses(InfoSiteCurricularCourses component,
 			Integer degreeCurricularPlanId) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(
-				DegreeCurricularPlan.class, degreeCurricularPlanId);
-
+		DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 		if (degreeCurricularPlan == null) {
 			throw new InvalidArgumentsServiceException();
 		}
@@ -134,7 +125,7 @@ public class ScientificCouncilComponentBuilder {
 		List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 		
 		Iterator iter = curricularCourses.iterator();
-		List infoCurricularCourses = new ArrayList();
+		List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
 		while (iter.hasNext()) {
 			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
@@ -156,9 +147,7 @@ public class ScientificCouncilComponentBuilder {
 	private ISiteComponent getInfoSiteDegreeCurricularPlans(InfoSiteDegreeCurricularPlans component,
 			Integer degreeId) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
-		Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
+		Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
 		if (degree == null) {
 			throw new InvalidArgumentsServiceException();
 		}
@@ -166,7 +155,7 @@ public class ScientificCouncilComponentBuilder {
 		List degreeCurricularPlans = degree.findDegreeCurricularPlansByState(DegreeCurricularPlanState.ACTIVE);
 		
 		Iterator iter = degreeCurricularPlans.iterator();
-		List infoDegreeCurricularPlans = new ArrayList();
+		List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
 		while (iter.hasNext()) {
 			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) iter.next();
 			InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree
@@ -188,7 +177,7 @@ public class ScientificCouncilComponentBuilder {
 
 		List<Degree> degrees = Degree.readOldDegrees();
 		Iterator degreeIterator = degrees.iterator();
-		List infoDegrees = new ArrayList();
+		List<InfoDegree> infoDegrees = new ArrayList<InfoDegree>();
 		while (degreeIterator.hasNext()) {
 			Degree degree = (Degree) degreeIterator.next();
 			InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);

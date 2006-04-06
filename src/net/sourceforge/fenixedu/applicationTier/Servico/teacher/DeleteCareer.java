@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteCareer extends Service {
 
 	public void run(Integer careerId) throws ExcepcaoPersistencia {
-		Career career = (Career) persistentObject.readByOID(Career.class, careerId);
+		Career career = rootDomainObject.readCareerByOID(careerId);
 		
 		if(career instanceof TeachingCareer) {
 			TeachingCareer teachingCareer = (TeachingCareer) career;

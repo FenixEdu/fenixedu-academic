@@ -31,8 +31,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -156,9 +154,7 @@ public class GroupSiteComponentBuilder {
 
 		List<InfoSiteStudentAndGroup> infoSiteStudentsAndGroupsList = new ArrayList<InfoSiteStudentAndGroup>();
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
+		Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(
 				groupPropertiesCode);
 		Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
 
@@ -212,10 +208,7 @@ public class GroupSiteComponentBuilder {
 
 		List<InfoSiteStudentAndGroup> infoSiteStudentsAndGroupsList = new ArrayList<InfoSiteStudentAndGroup>();
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
-				groupPropertiesCode);
-
+		Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
 		}
@@ -349,8 +342,7 @@ public class GroupSiteComponentBuilder {
 	private ISiteComponent getInfoSiteShiftsAndGroups(InfoSiteShiftsAndGroups component,
 			Integer groupPropertiesCode) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
+		Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(
 				groupPropertiesCode);
 
 		List infoSiteShiftsAndGroups = ReadShiftsAndGroups.run(grouping).getInfoSiteGroupsByShiftList();
@@ -399,11 +391,7 @@ public class GroupSiteComponentBuilder {
 
 		List<InfoSiteStudentInformation> studentGroupAttendInformationList = null;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
-				StudentGroup.class, studentGroupCode);
-
+		StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
 		List studentGroupAttendList = studentGroup.getAttends();
 
 		studentGroupAttendInformationList = new ArrayList<InfoSiteStudentInformation>(studentGroupAttendList.size());
@@ -435,17 +423,8 @@ public class GroupSiteComponentBuilder {
 	}
 
 	public InfoStudentGroup readStudentGroupNumber(Integer studentGroupID) throws FenixServiceException, ExcepcaoPersistencia {
-
-		InfoStudentGroup infoStudentGroup = null;
-
-		final ISuportePersistente persistentSupport = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-
-		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject()
-				.readByOID(StudentGroup.class, studentGroupID);
-		infoStudentGroup = InfoStudentGroup.newInfoFromDomain(studentGroup);
-
-		return infoStudentGroup;
+		StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
+		return InfoStudentGroup.newInfoFromDomain(studentGroup);
 	}
 
 }

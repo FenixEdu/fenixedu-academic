@@ -58,7 +58,8 @@ public interface ISuportePersistente {
 
 	public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork();
 
-	public IPersistentObject getIPersistentObject();
+	@Deprecated
+    public IPersistentObject getIPersistentObject();
 
 	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction();
 

@@ -44,7 +44,7 @@ public class CalculateStatGrantOwnerByCriteria extends Service {
 
 		if (infoStatGrantOwner.getGrantType() != null) {
 			// Read the sigla for presentation reasons
-			GrantType granttype = (GrantType) persistentObject.readByOID(GrantType.class,
+			GrantType granttype = rootDomainObject.readGrantTypeByOID(
 					infoStatGrantOwner.getGrantType());
 			infoStatGrantOwner.setGrantTypeSigla(granttype.getSigla());
 		}

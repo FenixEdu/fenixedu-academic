@@ -37,14 +37,11 @@ public class CreateLesson extends Service {
 
     public InfoLessonServiceResult run(InfoLesson infoLesson, InfoShift infoShift)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
-                .readByOID(
-                        ExecutionPeriod.class,
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(
                         infoLesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()
                                 .getIdInternal());
 
-        final Shift shift = (Shift) persistentObject.readByOID(Shift.class,
-                infoShift.getIdInternal());
+        final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
 
         InfoLessonServiceResult result = validTimeInterval(infoLesson);
         if (result.getMessageType() == 1) {
@@ -66,7 +63,7 @@ public class CreateLesson extends Service {
                     final OldRoom sala = OldRoom.findOldRoomByName(infoLesson.getInfoSala().getNome());
                     roomOccupation.setRoom(sala);
 
-                    final OccupationPeriod period = (OccupationPeriod) persistentObject.readByOID(OccupationPeriod.class,
+                    final OccupationPeriod period = rootDomainObject.readOccupationPeriodByOID(
                             infoLesson.getInfoRoomOccupation().getInfoPeriod().getIdInternal());
                     roomOccupation.setPeriod(period);
 

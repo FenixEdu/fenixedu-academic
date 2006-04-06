@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAut
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Career;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Leonor Almeida
@@ -21,32 +20,20 @@ public class CareerTeacherAuthorizationFilter extends DomainObjectAuthorizationF
     public CareerTeacherAuthorizationFilter() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
-     *      java.lang.Integer)
-     */
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
 
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-            Career career = (Career) persistentObject.readByOID(Career.class, objectId);
+            Career career = rootDomainObject.readCareerByOID(objectId);
 
             return career.getTeacher().equals(teacher);
-        } catch (ExcepcaoPersistencia e) {
-            return false;
         } catch (Exception e) {
             return false;
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#getRoleType()
-     */
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
+    
 }

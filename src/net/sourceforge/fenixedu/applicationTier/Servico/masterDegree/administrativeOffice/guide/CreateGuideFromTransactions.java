@@ -21,12 +21,10 @@ import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
-import net.sourceforge.fenixedu.domain.transactions.Transaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.State;
@@ -103,9 +101,7 @@ public class CreateGuideFromTransactions extends Service {
 
         while (iterator.hasNext()) {
             transactionId = (Integer) iterator.next();
-            transaction = (PaymentTransaction) persistentObject.readByOID(Transaction.class,
-                    transactionId);
-
+            transaction = (PaymentTransaction) rootDomainObject.readTransactionByOID(transactionId);
             if (transaction == null) {
                 throw new ExcepcaoInexistente();
             }

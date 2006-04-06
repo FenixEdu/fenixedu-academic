@@ -354,12 +354,9 @@ public class ExecutionCourseSiteComponentBuilder {
                 sectionIndex.intValue());
 		component.setSection(infoSection);
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final Section section = (Section) persistentSupport.getIPersistentObject().readByOID(
-                Section.class, infoSection.getIdInternal());
+        final Section section = RootDomainObject.getInstance().readSectionByOID(infoSection.getIdInternal());
 
-		final List<InfoItem> infoItemsList = new ArrayList(section.getAssociatedItemsCount());
+		final List<InfoItem> infoItemsList = new ArrayList<InfoItem>(section.getAssociatedItemsCount());
 		for (final Item item : section.getAssociatedItems()) {
             final InfoItem infoItem = InfoItem.newInfoFromDomain(item);
             infoItemsList.add(infoItem);

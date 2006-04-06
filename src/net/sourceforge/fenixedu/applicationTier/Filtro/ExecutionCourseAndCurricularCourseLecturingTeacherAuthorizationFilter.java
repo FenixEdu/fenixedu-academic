@@ -77,10 +77,10 @@ public class ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilt
             }
             if (argumentos[1] instanceof InfoCurricularCourse) {
                 infoCurricularCourse = (InfoCurricularCourse) argumentos[1];
-                curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
+                curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(
                         infoCurricularCourse.getIdInternal());
             } else {
-                curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
+                curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(
                         (Integer) argumentos[1]);
             }
 

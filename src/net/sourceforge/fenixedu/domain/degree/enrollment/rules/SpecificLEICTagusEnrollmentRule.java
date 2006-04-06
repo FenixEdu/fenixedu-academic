@@ -9,9 +9,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 	
@@ -79,30 +78,27 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 	}
 
 	protected List<CurricularCourse> getLEIC5Courses(){
-		try {
-			Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
-			DegreeCurricularPlan leicDegreeCurricularPlan = (DegreeCurricularPlan) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentObject().readByOID(DegreeCurricularPlan.class, 88);
-			List<CurricularCourseGroup> optionalCurricularCourseGroups = leicDegreeCurricularPlan.getAllOptionalCurricularCourseGroups();
-	        for (CurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
-				List<CurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
-				for (CurricularCourse course : optionalCurricularCourses) {
-					if (!isApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
-						if(!studentCurricularPlan.isCurricularCourseApproved(course) && isAnyScopeActive(course.getScopes())) {
-							areaCourses.add(course);
-						}
+		Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
+		DegreeCurricularPlan leicDegreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(88);
+		List<CurricularCourseGroup> optionalCurricularCourseGroups = leicDegreeCurricularPlan.getAllOptionalCurricularCourseGroups();
+        
+        for (CurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
+			List<CurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
+			for (CurricularCourse course : optionalCurricularCourses) {
+				if (!isApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
+					if(!studentCurricularPlan.isCurricularCourseApproved(course) && isAnyScopeActive(course.getScopes())) {
+						areaCourses.add(course);
 					}
-					else {
-						if(isAnyScopeActive(course.getScopes())) {
-							optionalCourses++;
-						}
+				}
+				else {
+					if(isAnyScopeActive(course.getScopes())) {
+						optionalCourses++;
 					}
 				}
 			}
-	        return new ArrayList<CurricularCourse>(areaCourses);
-		} catch (ExcepcaoPersistencia e) {
-			throw new RuntimeException(e);
 		}
-		
+
+        return new ArrayList<CurricularCourse>(areaCourses);
 	}
 
 }

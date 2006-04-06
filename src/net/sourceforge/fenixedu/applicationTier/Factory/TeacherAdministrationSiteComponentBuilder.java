@@ -98,7 +98,6 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.BeanUtils;
@@ -281,10 +280,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 */
 	private ISiteComponent getInfoAnnouncement(InfoAnnouncement component, Site site,
 			Integer announcementCode) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		Announcement iAnnouncement = (Announcement) persistentSupport.getIPersistentObject().readByOID(
-				Announcement.class, announcementCode);
+		Announcement iAnnouncement = RootDomainObject.getInstance().readAnnouncementByOID(announcementCode);
 		InfoAnnouncement infoAnnouncement = InfoAnnouncement.newInfoFromDomain(iAnnouncement);
 
 		component.setCreationDate(infoAnnouncement.getCreationDate());
@@ -453,13 +449,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoBibliographicReference(InfoBibliographicReference component,
 			Site site, Integer bibliographicReferenceCode) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		BibliographicReference iBibliographicReference = RootDomainObject.getInstance().readBibliographicReferenceByOID(bibliographicReferenceCode);
 
-		BibliographicReference iBibliographicReference = (BibliographicReference) persistentSupport
-				.getIPersistentObject().readByOID(BibliographicReference.class,
-						bibliographicReferenceCode);
-
-		InfoBibliographicReference infoBibliographicReference = InfoBibliographicReference
+        InfoBibliographicReference infoBibliographicReference = InfoBibliographicReference
 				.newInfoFromDomain(iBibliographicReference);
 
 		component.setTitle(infoBibliographicReference.getTitle());
@@ -598,10 +590,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 			InfoSiteEvaluationExecutionCourses component, Site site, Integer evaluationID)
 			throws ExcepcaoPersistencia {
 
-		final ISuportePersistente persistentSupport = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		final Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject()
-				.readByOID(Evaluation.class, evaluationID);
+		final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationID);
 
 		if (evaluation instanceof Exam) {
 			final Exam exam = (Exam) evaluation;
@@ -632,10 +621,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 	private ISiteComponent getInfoEvaluation(InfoEvaluation component, Site site, Integer evaluationCode)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class,
-				evaluationCode);
+		Evaluation evaluation = (Evaluation) RootDomainObject.getInstance().readEvaluationByOID(evaluationCode);
 
 		InfoEvaluation infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
@@ -692,8 +678,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoSiteSection(InfoSiteSection component, Site site, Integer sectionCode)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final Section section = (Section) persistentSupport.getIPersistentObject().readByOID(Section.class, sectionCode);
+        final Section section = RootDomainObject.getInstance().readSectionByOID(sectionCode);
 
 		final List<InfoItem> infoItemsList = new ArrayList<InfoItem>(section.getAssociatedItemsCount());
 		for (final Item item : section.getAssociatedItems()) {
@@ -710,9 +695,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 	private ISiteComponent getInfoSiteRegularSections(InfoSiteRegularSections component, Site site,
 			Integer sectionCode) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		Section iSuperiorSection = (Section) persistentSupport.getIPersistentObject().readByOID(Section.class, sectionCode);
+		Section iSuperiorSection = RootDomainObject.getInstance().readSectionByOID(sectionCode);
 		List allSections = site.getAssociatedSections();
 
 		// build the result of this service
@@ -735,9 +718,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 	private ISiteComponent getInfoSiteSections(InfoSiteSections component, Site site,
 			Integer sectionCode) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		Section iSection = (Section) persistentSupport.getIPersistentObject().readByOID(Section.class, sectionCode);
+		Section iSection = RootDomainObject.getInstance().readSectionByOID(sectionCode);
 
 		InfoSection infoSection = InfoSection.newInfoFromDomain(iSection);
 		List allSections = site.getAssociatedSections(); 
@@ -774,8 +755,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoSiteItems(InfoSiteItems component, Site site, Integer itemCode)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		final Item iItem = (Item) persistentSupport.getIPersistentObject().readByOID(Item.class, itemCode);
+		final Item iItem = RootDomainObject.getInstance().readItemByOID(itemCode);
         final Section iSection = iItem.getSection();
 
         final InfoItem infoItem = InfoItem.newInfoFromDomain(iItem);
@@ -984,11 +964,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoSiteShiftsAndGroups(InfoSiteShiftsAndGroups component,
 			Integer groupPropertiesCode) throws FenixServiceException, ExcepcaoPersistencia {
 
-		Grouping groupProperties = null;
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
-				groupPropertiesCode);
+		Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 
 		List infoSiteShiftsAndGroups = ReadShiftsAndGroups.run(groupProperties)
 				.getInfoSiteGroupsByShiftList();
@@ -1027,11 +1003,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoSiteStudentGroup(InfoSiteStudentGroup component, Integer studentGroupID)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		final ISuportePersistente persistentSupport = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		final StudentGroup studentGroup = (StudentGroup) persistentSupport
-				.getIPersistentObject().readByOID(StudentGroup.class, studentGroupID);
-
+		final StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
 		if (studentGroup == null) {
 			return null;
 		}
@@ -1122,10 +1094,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		List<InfoSiteStudentsAndShiftByStudentGroup> infoSiteStudentsAndShiftByStudentGroupList = new ArrayList<InfoSiteStudentsAndShiftByStudentGroup>();
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
-				groupPropertiesCode);
+		Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 		if (groupProperties == null)
 			return null;
 
@@ -1209,13 +1178,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 	private InfoGrouping readGroupProperties(Integer groupPropertiesCode) throws ExcepcaoInexistente,
 			FenixServiceException, ExcepcaoPersistencia {
-
-		Grouping groupProperties = null;
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
-				groupPropertiesCode);
-
+		Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 		return InfoGroupingWithAttends.newInfoFromDomain(groupProperties);
 	}
 
@@ -1228,21 +1191,14 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer groupPropertiesCode,
 			Integer studentGroupCode) throws FenixServiceException, ExcepcaoPersistencia {
 		List<InfoShift> infoShifts = new ArrayList<InfoShift>();
-		Grouping groupProperties = null;
 		ExecutionCourse executionCourse = null;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		StudentGroup studentGroup = null;
-		groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
-				groupPropertiesCode);
+        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 		if (groupProperties == null) {
 			return null;
 		}
 		if (studentGroupCode != null) {
-
-			studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(StudentGroup.class,
-					studentGroupCode);
-
+            StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
 			if (studentGroup == null) {
 				component.setShifts(null);
 				return component;

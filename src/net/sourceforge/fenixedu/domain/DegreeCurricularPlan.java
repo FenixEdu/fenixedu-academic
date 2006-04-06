@@ -480,7 +480,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return new ArrayList();
     }
 
-    public List getAllOptionalCurricularCourseGroups() {
+    public List<CurricularCourseGroup> getAllOptionalCurricularCourseGroups() {
     	List<CurricularCourseGroup> result = new ArrayList<CurricularCourseGroup>();
     	for (Branch branch : this.getAreas()) {
 			for (CurricularCourseGroup curricularCourseGroup : branch.getCurricularCourseGroups()) {
