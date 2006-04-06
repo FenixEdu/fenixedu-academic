@@ -89,6 +89,18 @@ public abstract class DegreeModule extends DegreeModule_Base {
         return result;
     }
     
+    public List<CurricularRule> getCurricularRules(ExecutionPeriod executionPeriod) {
+        List<CurricularRule> result = new ArrayList<CurricularRule>();
+        for (CurricularRule curricularRule : this.getCurricularRules()) {
+            if (executionPeriod == null || curricularRule.isValid(executionPeriod)) {
+                result.add(curricularRule);
+            }
+        }
+        
+        return result;
+    }
+
+    
     public abstract Double getEctsCredits();
     public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
     public abstract Boolean getCanBeDeleted();
