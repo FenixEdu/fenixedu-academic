@@ -45,8 +45,7 @@ public class ReadFilteredExamsMapList extends Service {
         // Set List of Curricular Years
         infoExamsMap.setCurricularYears(curricularYears);
 
-        final ExecutionDegree executionDegreeFromDB = (ExecutionDegree) persistentObject
-                .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegreeFromDB = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
         final Calendar startSeason1;
         final Calendar endSeason2;

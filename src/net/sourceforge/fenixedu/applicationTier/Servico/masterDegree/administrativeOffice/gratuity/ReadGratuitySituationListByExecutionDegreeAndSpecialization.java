@@ -66,8 +66,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 
             if (executionDegreeId != null) {
 
-                ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                        ExecutionDegree.class, executionDegreeId);
+                ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
                 executionDegreeList.add(executionDegree);
 
             } else {

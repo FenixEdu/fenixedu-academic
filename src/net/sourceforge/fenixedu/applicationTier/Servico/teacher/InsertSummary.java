@@ -36,8 +36,7 @@ public class InsertSummary extends Service {
             throw new FenixServiceException("error.summary.impossible.insert");
         }
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseID);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 

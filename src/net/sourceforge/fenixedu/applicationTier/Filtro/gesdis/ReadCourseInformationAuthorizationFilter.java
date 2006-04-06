@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Leonor Almeida
@@ -29,8 +28,7 @@ public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthor
         try {
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
-            ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                    ExecutionCourse.class, executionCourseID);
+            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
             List<Professorship> professorships = executionCourse.getProfessorships();
 
@@ -39,9 +37,6 @@ public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthor
                     return true;
             }
 
-            return false;
-
-        } catch (ExcepcaoPersistencia e) {
             return false;
         } catch (Exception e) {
             return false;

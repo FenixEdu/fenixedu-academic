@@ -72,8 +72,7 @@ public class ReadCourseInformation extends Service {
             ExcepcaoPersistencia {
         TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView();
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
         InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();
 

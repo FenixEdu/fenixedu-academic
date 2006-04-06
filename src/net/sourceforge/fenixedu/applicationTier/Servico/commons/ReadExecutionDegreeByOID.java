@@ -29,8 +29,7 @@ public class ReadExecutionDegreeByOID extends Service {
 
 		InfoExecutionDegree infoExecutionDegree = null;
 
-		ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
-				.readByOID(ExecutionDegree.class, oid);
+		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(oid);
 		if (executionDegree != null) {
 
 			infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus

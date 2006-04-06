@@ -34,8 +34,7 @@ public class DeleteGroupingMembersByExecutionCourseID extends Service {
             throw new ExistingServiceException();
         }
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseCode);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
        
         if (executionCourse == null) {
             throw new InvalidSituationServiceException();

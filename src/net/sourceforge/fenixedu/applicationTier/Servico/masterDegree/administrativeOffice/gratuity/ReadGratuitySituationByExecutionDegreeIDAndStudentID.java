@@ -21,9 +21,8 @@ public class ReadGratuitySituationByExecutionDegreeIDAndStudentID extends Servic
 
 		InfoGratuitySituation infoGratuitySituation = null;
 
-		ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
-				.readByOID(ExecutionDegree.class, executionDegreeID);
-		Student student = (Student) persistentObject.readByOID(Student.class, studentID);
+		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+		Student student = rootDomainObject.readStudentByOID(studentID);
 
 		if ((executionDegree == null) || (student == null)) {
 			return null;

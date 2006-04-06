@@ -34,8 +34,7 @@ public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Serv
     public InfoExecutionCourse run(final Integer oid) throws ExcepcaoPersistencia {
         InfoExecutionCourse infoExecutionCourse = null;
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, oid);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(oid);
 
         if (executionCourse != null) {
             infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);

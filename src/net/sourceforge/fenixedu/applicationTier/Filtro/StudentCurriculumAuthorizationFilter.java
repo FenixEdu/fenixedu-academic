@@ -186,8 +186,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
             roleTemp.add(RoleType.COORDINATOR);
             if (CollectionUtils.containsAny(roles, roleTemp)) {
                 try {
-                    ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
-                            .readByOID(ExecutionDegree.class, (Integer) arguments[0]);
+                    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) arguments[0]);
 
                     if (executionDegree == null) {
                         return "noAuthorization";

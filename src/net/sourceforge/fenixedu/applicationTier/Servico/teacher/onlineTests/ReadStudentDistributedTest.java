@@ -24,7 +24,7 @@ public class ReadStudentDistributedTest extends Service {
             ExcepcaoPersistencia {
         path = path.replace('\\', '/');
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
-        Student student = (Student) persistentObject.readByOID(Student.class, studentId);
+        Student student = rootDomainObject.readStudentByOID(studentId);
         if (student == null)
             throw new FenixServiceException();
         DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,

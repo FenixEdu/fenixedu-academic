@@ -30,8 +30,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
         Service {
     public Collection run(Integer executionCourseID, String username) throws ExcepcaoPersistencia {
         Collection result = new ArrayList();
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseID);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
         List groupProperties = executionCourse.getGroupings();
 

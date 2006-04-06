@@ -15,8 +15,7 @@ public class UpdateNonAffiliatedTeachersProfessorship extends Service {
     public void run(List<Integer> nonAffiliatedTeachersIds, Integer executionCourseId)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseId);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }

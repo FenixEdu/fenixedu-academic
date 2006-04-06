@@ -24,8 +24,7 @@ public class ReadExecutionCourseWithAssociatedCurricularCourses extends Service 
 
     public InfoExecutionCourse run(Integer executionCourseID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseID);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");
         }

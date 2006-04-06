@@ -16,8 +16,7 @@ public class DissociateCurricularCourseByExecutionCourseId extends Service {
 
     public void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException,
             ExcepcaoPersistencia {
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
         CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, curricularCourseId);

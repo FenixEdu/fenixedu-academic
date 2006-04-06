@@ -22,8 +22,7 @@ public class CreateGrouping extends Service {
     public boolean run(Integer executionCourseID, InfoGrouping infoGrouping)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseID);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

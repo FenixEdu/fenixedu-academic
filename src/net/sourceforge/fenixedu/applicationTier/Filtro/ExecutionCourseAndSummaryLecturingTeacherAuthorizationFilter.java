@@ -74,8 +74,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
     private List getExecutionCourseTeachers(Object[] arguments, ServiceRequest request)
             throws ExcepcaoPersistencia {
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, ((Integer) arguments[0]));
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(((Integer) arguments[0]));
 
         List professorShips = executionCourse.getProfessorships();
 
@@ -141,8 +140,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         try {
             List result = null;
 
-            ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                    ExecutionCourse.class, executionCourseId);
+            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
             result = executionCourse.responsibleFors();
 
@@ -158,7 +156,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             }
             return result;
 
-        } catch (ExcepcaoPersistencia e) {
+        } catch (Exception e) {
             throw new NotAuthorizedFilterException(e);
         }
     }
@@ -303,9 +301,9 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
 
         if (arguments[1] instanceof InfoSummary) {
             infoSummary = (InfoSummary) arguments[1];
-            summary = (Summary) persistentObject.readByOID(Summary.class, infoSummary.getIdInternal());
+            summary = rootDomainObject.readSummaryByOID(infoSummary.getIdInternal());
         } else {
-            summary = (Summary) persistentObject.readByOID(Summary.class, (Integer) arguments[1]);
+            summary = rootDomainObject.readSummaryByOID((Integer) arguments[1]);
         }
         return summary;
     }
@@ -345,13 +343,13 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             if (argumentos[1] instanceof InfoSummary) {
                 infoSummary = (InfoSummary) argumentos[1];
 
-                summary = (Summary) persistentObject.readByOID(Summary.class, infoSummary
+                summary = rootDomainObject.readSummaryByOID(infoSummary
                         .getIdInternal());
                 if (summary == null) {
                     return false;
                 }
             } else {
-                summary = (Summary) persistentObject.readByOID(Summary.class, (Integer) argumentos[1]);
+                summary = rootDomainObject.readSummaryByOID((Integer) argumentos[1]);
                 if (summary == null) {
                     return false;
                 }

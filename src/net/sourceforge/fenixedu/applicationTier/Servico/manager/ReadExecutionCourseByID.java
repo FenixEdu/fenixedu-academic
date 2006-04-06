@@ -15,8 +15,7 @@ public class ReadExecutionCourseByID extends Service {
 		ExecutionCourse executionCourse = null;
 		InfoExecutionCourseWithNonAffiliatedTeachers infoExecutionCourse = new InfoExecutionCourseWithNonAffiliatedTeachers();
 
-		executionCourse = (ExecutionCourse) persistentObject.readByOID(
-				ExecutionCourse.class, idInternal);
+		executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
 
 		if (executionCourse == null) {
 			throw new NonExistingServiceException();

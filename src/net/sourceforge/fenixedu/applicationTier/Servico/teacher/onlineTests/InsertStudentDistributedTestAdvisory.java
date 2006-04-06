@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertStudentDistributedTestAdvisory extends Service {
 
     public void run(final Integer executionCourseId, final Integer advisoryId, final Integer studentId) throws ExcepcaoPersistencia {
-        Advisory advisory = (Advisory) persistentObject.readByOID(Advisory.class, advisoryId);
-        Student student = (Student) persistentObject.readByOID(Student.class, studentId);
+        Advisory advisory = rootDomainObject.readAdvisoryByOID(advisoryId);
+        Student student = rootDomainObject.readStudentByOID(studentId);
         advisory.addPeople(student.getPerson());
     }
 

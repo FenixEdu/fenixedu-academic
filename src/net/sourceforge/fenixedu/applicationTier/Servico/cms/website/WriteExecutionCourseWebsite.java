@@ -84,8 +84,7 @@ public class WriteExecutionCourseWebsite extends CmsService {
         website.setName(parameters.getName());
         website.setDescription(parameters.getDescription());
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, parameters.getExecutionCourseID());
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(parameters.getExecutionCourseID());
         
         WebsiteType websiteType = (WebsiteType) persistentObject.readByOID(WebsiteType.class, parameters.getWebsiteTypeID());
         if (websiteType == null) {

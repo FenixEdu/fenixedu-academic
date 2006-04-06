@@ -40,7 +40,7 @@ public class InsertGroupingMembers extends Service {
         Iterator iterator = studentCodes.iterator();
 
         while (iterator.hasNext()) {
-            Student student = (Student) persistentObject.readByOID(Student.class, (Integer) iterator
+            Student student = rootDomainObject.readStudentByOID((Integer) iterator
                     .next());
             students.add(student);
         }

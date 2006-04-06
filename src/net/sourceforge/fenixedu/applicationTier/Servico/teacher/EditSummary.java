@@ -35,11 +35,10 @@ public class EditSummary extends Service {
             throw new FenixServiceException("error.summary.impossible.edit");
         }
 
-        final Summary summary = (Summary) persistentObject.readByOID(Summary.class, infoSummary
+        final Summary summary = rootDomainObject.readSummaryByOID(infoSummary
                 .getIdInternal());
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseId);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
         final Shift shift = SummaryUtils.getShift(summary, infoSummary);
         final OldRoom room = SummaryUtils.getRoom(summary, shift, infoSummary);

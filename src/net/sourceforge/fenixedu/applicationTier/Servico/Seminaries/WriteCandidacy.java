@@ -36,7 +36,7 @@ public class WriteCandidacy extends Service {
         candidacy.setModality(modality);
 
         // Student
-        final Student readStudent = (Student) persistentObject.readByOID(Student.class, infoCandidacy.getInfoStudent().getIdInternal());
+        final Student readStudent = rootDomainObject.readStudentByOID(infoCandidacy.getInfoStudent().getIdInternal());
         candidacy.setStudent(readStudent);
 
         // Seminary

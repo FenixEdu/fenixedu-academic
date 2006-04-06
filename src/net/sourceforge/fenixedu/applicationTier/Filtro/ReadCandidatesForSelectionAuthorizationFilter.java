@@ -85,7 +85,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
         // Read The DegreeCurricularPlan
         try {
 
-            executionDegree = (ExecutionDegree) persistentObject.readByOID(ExecutionDegree.class, executionDegreeID);
+            executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
 
         } catch (Exception e) {
             return false;

@@ -17,8 +17,7 @@ public class ExecutionCourseHasProposals extends Service {
 
 	public boolean run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
 		boolean result = false;
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-				ExecutionCourse.class, executionCourseCode);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
 		result = executionCourse.hasProposals();
 

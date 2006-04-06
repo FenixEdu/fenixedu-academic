@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditAdvisory extends Service {
 
     public void run(Integer advisoryID, String newSender, String newSubject, String message, Date expires) throws ExcepcaoPersistencia, FenixServiceException{
-        Advisory advisory = (Advisory) persistentObject.readByOID(Advisory.class, advisoryID);
+        Advisory advisory = rootDomainObject.readAdvisoryByOID(advisoryID);
         
         if(advisory == null){                  
             throw new FenixServiceException("error.no.advisory");            

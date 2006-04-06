@@ -21,7 +21,7 @@ public class ReadExecutionDegreeByCandidateID extends Service {
         MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
                         candidateID);
 
-        executionDegree = (ExecutionDegree) persistentObject.readByOID(ExecutionDegree.class, masterDegreeCandidate.getExecutionDegree().getIdInternal());
+        executionDegree = rootDomainObject.readExecutionDegreeByOID(masterDegreeCandidate.getExecutionDegree().getIdInternal());
 
         if (executionDegree == null) {
             throw new NonExistingServiceException();

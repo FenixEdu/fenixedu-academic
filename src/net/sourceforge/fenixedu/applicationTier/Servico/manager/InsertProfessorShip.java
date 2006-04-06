@@ -21,8 +21,7 @@ public class InsertProfessorShip extends Service {
 
     public void run(InfoProfessorship infoProfessorShip)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, infoProfessorShip.getInfoExecutionCourse().getIdInternal());
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoProfessorShip.getInfoExecutionCourse().getIdInternal());
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }

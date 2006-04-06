@@ -14,8 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadEvaluations extends Service {
 
     public List run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseCode);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
         if (executionCourse == null) {
             throw new NonExistingServiceException();
         }

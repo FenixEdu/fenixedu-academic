@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 public class ReadActualPersonalDataAuthorizationAnswer extends Service {
 
     public StudentPersonalDataAuthorizationChoice run(Integer studentID) throws ExcepcaoPersistencia {
-        final Student student = (Student) persistentObject.readByOID(Student.class, studentID);
+        final Student student = rootDomainObject.readStudentByOID(studentID);
 
         for (final StudentPersonalDataAuthorization studentPersonalDataAuthorization :
                 student.getStudentPersonalDataAuthorizations()) {

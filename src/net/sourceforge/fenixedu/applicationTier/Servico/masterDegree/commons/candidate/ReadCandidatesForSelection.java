@@ -23,8 +23,7 @@ public class ReadCandidatesForSelection extends Service {
 
 		// Read the candidates
 
-		ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
-				.readByOID(ExecutionDegree.class, executionDegreeID);
+		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
 
         
         List<SituationName> situationNames = new ArrayList<SituationName>();

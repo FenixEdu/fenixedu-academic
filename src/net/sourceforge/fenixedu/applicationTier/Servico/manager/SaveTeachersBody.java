@@ -15,8 +15,7 @@ public class SaveTeachersBody extends Service {
     public Boolean run(final List responsibleTeachersIds, final List<Integer> professorShipTeachersIds,
             final Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseId);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
         final List<Integer> auxProfessorshipTeacherIDs = new ArrayList<Integer>(professorShipTeachersIds);
 

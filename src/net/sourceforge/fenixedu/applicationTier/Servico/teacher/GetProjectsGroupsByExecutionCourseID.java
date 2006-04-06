@@ -33,8 +33,7 @@ public class GetProjectsGroupsByExecutionCourseID extends Service {
 
         final List infosGroupProjectStudents = new LinkedList();
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseID);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         final List<Grouping> groupings = executionCourse.getGroupings();
 
         for (final Grouping grouping : groupings) {

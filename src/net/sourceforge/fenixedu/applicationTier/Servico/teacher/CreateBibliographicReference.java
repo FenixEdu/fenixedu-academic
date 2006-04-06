@@ -15,8 +15,7 @@ public class CreateBibliographicReference extends Service {
             String newBibliographyAuthors, String newBibliographyReference, String newBibliographyYear,
             Boolean newBibliographyOptional) throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, infoExecutionCourseID);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseID);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 

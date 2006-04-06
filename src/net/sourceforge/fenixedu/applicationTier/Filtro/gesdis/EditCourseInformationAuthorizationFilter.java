@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -66,8 +65,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         try {
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
-            ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                    ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
 
             List<Professorship> responsiblesFor = executionCourse.responsibleFors();
             
@@ -77,11 +75,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
             }            
             return false;
 
-        } catch (ExcepcaoPersistencia e) {
-
-            return false;
         } catch (Exception e) {
-
             return false;
         }
     }

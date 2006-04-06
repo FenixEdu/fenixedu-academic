@@ -97,8 +97,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 
                 teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
-                ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                        ExecutionCourse.class, executionCourseID);
+                ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
                 // For all Associated Curricular Courses
                 Iterator curricularCourseIterator = executionCourse.getAssociatedCurricularCourses()

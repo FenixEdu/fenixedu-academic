@@ -36,7 +36,7 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends Servi
 		ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
 				ExecutionYear.class, executionYearId);
 
-		Student student = (Student) persistentObject.readByOID(Student.class, studentId);
+		Student student = rootDomainObject.readStudentByOID(studentId);
 
 		if ((executionYear == null) || (student == null)) {
 			return null;

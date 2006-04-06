@@ -19,8 +19,7 @@ public class DissociateExecutionCourse extends Service {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseId);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }

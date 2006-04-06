@@ -29,8 +29,7 @@ public class ReadInfoExecutionCourseByOID extends Service {
 			throw new FenixServiceException("nullId");
 		}
 
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-				ExecutionCourse.class, executionCourseOID);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseOID);
 
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 

@@ -22,8 +22,7 @@ public class AssociateCurricularCoursesToExecutionCourse extends Service {
 		}
 
 		if (curricularCourseIds != null) {
-			ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-					ExecutionCourse.class, executionCourseId);
+			ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
 			if (executionCourse == null) {
 				throw new NonExistingServiceException("noExecutionCourse");

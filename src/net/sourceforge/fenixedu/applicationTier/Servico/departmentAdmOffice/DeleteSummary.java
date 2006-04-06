@@ -22,7 +22,7 @@ public class DeleteSummary extends Service {
 
     public boolean run(Integer executionCourseId, Integer summaryID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final Summary summary = (Summary) persistentObject.readByOID(Summary.class, summaryID);
+        final Summary summary = rootDomainObject.readSummaryByOID(summaryID);
         if (summary == null)
             throw new InvalidArgumentsServiceException();
 

@@ -39,7 +39,7 @@ public class ReadStudentsByStudentGroupID extends Service {
         while(iter.hasNext()) {
             Attends attend = (Attends) iter.next();
             Integer studentID = attend.getAluno().getIdInternal();
-            Student student = (Student) persistentObject.readByOID(Student.class, studentID);
+            Student student = rootDomainObject.readStudentByOID(studentID);
             infoStudents.add(InfoStudent.newInfoFromDomain(student));
         }
         return infoStudents;

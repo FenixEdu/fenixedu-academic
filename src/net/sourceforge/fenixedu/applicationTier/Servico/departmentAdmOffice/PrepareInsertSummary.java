@@ -44,8 +44,7 @@ public class PrepareInsertSummary extends Service {
             ExcepcaoPersistencia {
         SiteView siteView;
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executionCourse");
         }

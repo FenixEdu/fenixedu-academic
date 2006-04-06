@@ -48,8 +48,7 @@ public class ReadSummary extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         SiteView siteView;
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executioncourse");
         }
@@ -104,7 +103,7 @@ public class ReadSummary extends Service {
         }
         Collections.sort(infoRooms, new BeanComparator("nome"));
 
-        Summary summary = (Summary) persistentObject.readByOID(Summary.class, summaryId);
+        Summary summary = rootDomainObject.readSummaryByOID(summaryId);
         if (summary == null) {
             throw new FenixServiceException("no.summary");
         }

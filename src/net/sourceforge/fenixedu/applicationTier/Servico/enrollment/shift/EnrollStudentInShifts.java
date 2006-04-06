@@ -20,7 +20,7 @@ public class EnrollStudentInShifts extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
-        final Student student = (Student) persistentObject.readByOID(Student.class, studentId);
+        final Student student = rootDomainObject.readStudentByOID(studentId);
         if (student == null) {
             throw new StudentNotFoundServiceException();
         }

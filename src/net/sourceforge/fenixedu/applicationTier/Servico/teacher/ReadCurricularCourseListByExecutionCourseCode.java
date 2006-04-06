@@ -36,8 +36,7 @@ public class ReadCurricularCourseListByExecutionCourseCode extends Service {
 
         List infoCurricularCourseList = new ArrayList();
         Site site = null;
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseCode);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
         if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
             for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {

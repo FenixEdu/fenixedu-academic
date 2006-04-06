@@ -16,8 +16,7 @@ public class EditExecutionCourse extends Service {
 
     public InfoExecutionCourse run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia,
             FenixServiceException {
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

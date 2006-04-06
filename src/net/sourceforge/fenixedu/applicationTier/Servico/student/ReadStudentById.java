@@ -24,7 +24,7 @@ public class ReadStudentById extends Service {
 	public Object run(Integer id) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoStudent infoStudent = null;
 
-		Student student = (Student) persistentObject.readByOID(Student.class, id);
+		Student student = rootDomainObject.readStudentByOID(id);
 		if (student != null) {
 			infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
 		}
