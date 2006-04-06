@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
  */
 public class InfoCandidacy extends InfoObject {
 
-    private List caseStudyChoices;
+    private List<InfoCaseStudyChoice> caseStudyChoices;
 
     private String motivation;
 
@@ -44,14 +44,14 @@ public class InfoCandidacy extends InfoObject {
     /**
      * @return
      */
-    public List getCaseStudyChoices() {
+    public List<InfoCaseStudyChoice> getCaseStudyChoices() {
         return caseStudyChoices;
     }
 
     /**
      * @param list
      */
-    public void setCaseStudyChoices(List list) {
+    public void setCaseStudyChoices(List<InfoCaseStudyChoice> list) {
         caseStudyChoices = list;
     }
 
