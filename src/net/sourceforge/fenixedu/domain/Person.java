@@ -882,6 +882,24 @@ public class Person extends Person_Base {
         return count;
     }
 
+    public Student readStudentByDegreeType(DegreeType degreeType) {
+        for (final Student student : this.getStudents()) {
+            if (student.getDegreeType().equals(degreeType)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public MasterDegreeCandidate getMasterDegreeCandidateByExecutionDegree(final ExecutionDegree executionDegree) {
+        for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
+            if (masterDegreeCandidate.getExecutionDegree() == executionDegree) {
+                return masterDegreeCandidate;
+            }
+        }
+        return null;
+    }
+
     @Deprecated
     public String getCodigoFiscal() {
         return super.getFiscalCode();
@@ -1198,15 +1216,6 @@ public class Person extends Person_Base {
             }
         }
         return result;
-    }
-
-    public Student readStudentByDegreeType(DegreeType degreeType) {
-        for (Student student : this.getStudents()) {
-            if (student.getDegreeType().equals(degreeType)) {
-                return student;
-            }
-        }
-        return null;
     }
 
     public static List<Person> readAllPersons() {

@@ -35,7 +35,7 @@ public class ReadPersonCandidatesAction extends FenixAction {
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        Object args[] = { userView };
+        Object args[] = { userView.getUtilizador() };
 
         List<InfoMasterDegreeCandidate> candidates = null;
         try {

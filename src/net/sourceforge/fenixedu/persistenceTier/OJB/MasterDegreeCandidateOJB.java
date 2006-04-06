@@ -16,7 +16,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -115,66 +114,6 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
 		crit.addEqualTo("candidateNumber", number);
 		return (MasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
-
 	}
-
-	public MasterDegreeCandidate readByExecutionDegreeAndPerson(Integer executionDegreeID,
-			Integer personID) throws ExcepcaoPersistencia {
-
-		Criteria crit = new Criteria();
-		crit.addEqualTo("person.idInternal", personID);
-		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
-
-		return (MasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
-
-	}
-
-	public MasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(Integer executionDegreeID,
-			Integer personID, Integer number) throws ExcepcaoPersistencia {
-
-		Person person = (Person) readByOID(Person.class, personID);
-
-		Criteria crit = new Criteria();
-		crit.addEqualTo("person.user.identifications.username", person.getUsername());
-		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
-		crit.addEqualTo("candidateNumber", number);
-		return (MasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
-
-	}
-
-    public List readAllCandidatesByDCPlanIDSpecSituationAndIsAssistant(Integer degreeCurricularPlanId, 
-    		Specialization specialization, SituationName situation, 
-    		Boolean givesClasses) throws ExcepcaoPersistencia {
-
-    	// se nenhum valor e' dado, retorna vazio
-        if (degreeCurricularPlanId == null && specialization == null && situation == null
-                && givesClasses == null)
-            return null;
-
-        Criteria criteria = new Criteria();
-
-        // id do degreecurricularplan
-        if (degreeCurricularPlanId != null) {
-            criteria.addEqualTo("executionDegree.degreeCurricularPlan.idInternal", degreeCurricularPlanId);
-        }
-
-        // specialization
-        if (specialization != null) {
-            criteria.addEqualTo("specialization", specialization);
-        }
-
-        // situacao
-        if (situation != null) {
-            criteria.addEqualTo("situations.situation", situation.getSituationName());
-            criteria.addEqualTo("situations.validation", new Integer(State.ACTIVE));
-        }
-
-        // da aulas?
-        if (givesClasses != null) {
-            criteria.addEqualTo("courseAssistant", givesClasses.booleanValue());
-        }
-        
-        return queryList(MasterDegreeCandidate.class, criteria);
-    }
     
 } // End of class definition

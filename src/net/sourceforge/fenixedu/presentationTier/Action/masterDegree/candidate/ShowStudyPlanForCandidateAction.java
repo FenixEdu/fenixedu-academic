@@ -19,10 +19,6 @@ import org.apache.struts.action.ActionMapping;
 
 public class ShowStudyPlanForCandidateAction extends FenixAction {
 
-    /**
-     * 
-     * @author Ricardo Clerigo & Telmo Nabais
-     */
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -46,17 +42,10 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         return mapping.findForward("Sucess");
     }
 
-    /**
-     * 
-     * @author Ricardo Clerigo & Telmo Nabais
-     * @param userView
-     * @param session
-     * @return
-     */
     private InfoMasterDegreeCandidate getMasterDegreeCandidate(IUserView userView, HttpSession session) {
         if (session != null) {
 
-            Object args[] = { userView };
+            Object args[] = { userView.getUtilizador() };
             List candidates = null;
             try {
                 candidates = (List) ServiceManagerServiceFactory.executeService(userView,
@@ -76,13 +65,6 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         return null;
     }
 
-    /**
-     * 
-     * @author Ricardo Clerigo & Telmo Nabais
-     * @param candidateID
-     * @param userView
-     * @return
-     */
     private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
         Object[] args = { candidateID };
 

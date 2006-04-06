@@ -14,6 +14,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
 public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
@@ -55,6 +56,17 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
             }
         }
         return null;
+    }
+    
+    public boolean hasCandidateSituationWith(final SituationName situationName) {
+        final State candidateSituationState = new State(State.ACTIVE);
+        for (final CandidateSituation candidateSituation : this.getSituationsSet()) {
+            if (candidateSituation.getSituation().equals(situationName) &&
+                    candidateSituation.getValidation().equals(candidateSituationState)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

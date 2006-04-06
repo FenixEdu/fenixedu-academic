@@ -1,16 +1,3 @@
-/*
- * CandidateSituation.java
- *
- * Created on 1 de Novembro de 2002, 15:25
- */
-
-/**
- * 
- * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
- * (jccm@rnl.ist.utl.pt)
- *  
- */
-
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
@@ -28,6 +15,7 @@ public class CandidateSituation extends CandidateSituation_Base {
 	public CandidateSituation(Date date, String remarks, State validation,
 			MasterDegreeCandidate masterDegreeCandidate,
 			SituationName situation) {
+        
 		this();
 		setMasterDegreeCandidate(masterDegreeCandidate);
 		setSituation(situation);
@@ -35,5 +23,11 @@ public class CandidateSituation extends CandidateSituation_Base {
 		setRemarks(remarks);
 		setValidation(validation);
 	}
+    
+    public void delete() {
+        removeMasterDegreeCandidate();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
 
 }

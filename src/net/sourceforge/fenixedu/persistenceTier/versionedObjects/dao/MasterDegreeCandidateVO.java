@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -170,45 +169,5 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 		return null;
 
 	}
-
-	public MasterDegreeCandidate readByExecutionDegreeAndPerson(final Integer executionDegreeID,
-			final Integer personID) throws ExcepcaoPersistencia {
-
-		final Person person = (Person) readByOID(Person.class, personID);
-
-		final List<MasterDegreeCandidate> masterDegreeCandidates = person
-				.getMasterDegreeCandidates();
-
-		for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
-			if (masterDegreeCandidate.getExecutionDegree().getIdInternal().equals(executionDegreeID)) {
-				return masterDegreeCandidate;
-			}
-		}
-		return null;
-	}
-
-	public MasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(
-			final Integer executionDegreeID, final Integer personID, final Integer number)
-			throws ExcepcaoPersistencia {
-
-		final Person person = (Person) readByOID(Person.class, personID);
-
-		final List<MasterDegreeCandidate> masterDegreeCandidates = person
-				.getMasterDegreeCandidates();
-
-		for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
-			if (masterDegreeCandidate.getExecutionDegree().getIdInternal().equals(executionDegreeID)
-					&& masterDegreeCandidate.getCandidateNumber().equals(number)) {
-				return masterDegreeCandidate;
-			}
-		}
-		return null;
-
-	}
-
-    public List readAllCandidatesByDCPlanIDSpecSituationAndIsAssistant(Integer degreeCurricularPlanId, Specialization specialization, SituationName situation, Boolean givesClasses) throws ExcepcaoPersistencia {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 } // End of class definition

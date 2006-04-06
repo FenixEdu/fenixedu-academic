@@ -20,80 +20,19 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.SituationName;
 
 public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
-	/**
-	 * @param username
-	 * @return List
-	 * @throws ExcepcaoPersistencia
-	 */
-	public List readMasterDegreeCandidatesByUsername(String username) throws ExcepcaoPersistencia;
 
-	/**
-	 * @param executionYear
-	 * @param degreeName
-	 * @param specialization
-	 * @return Candidate Number
-	 * @throws ExcepcaoPersistencia
-	 */
 	public Integer generateCandidateNumber(String executionYear, String degreeName,
 			Specialization specialization) throws ExcepcaoPersistencia;
 
-	/**
-	 * @param idDocumentNumber
-	 * @param idDocumentType
-	 * @param executionDegree
-	 * @param specialization
-	 * @return IMasterDegreeCandidate
-	 * @throws ExcepcaoPersistencia
-	 */
 	public MasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
 			String idDocumentNumber, IDDocumentType idDocumentType, Integer executionDegreeID,
 			Specialization specialization) throws ExcepcaoPersistencia;
 
-	/**
-	 * @param degreeName
-	 * @param degreeType
-	 * @param candidateSituation
-	 * @param candidateNumber
-	 * @param executionYear
-	 * @return List
-	 * @throws ExcepcaoPersistencia
-	 */
 	public List readCandidateList(Integer executionDegreeID, Specialization degreeType,
 			SituationName candidateSituation, Integer candidateNumber, Integer executionYearID)
 			throws ExcepcaoPersistencia;
 
-
-	/**
-	 * @param number
-	 * @param executionDegree
-	 * @param specialization
-	 * @return IMasterDegreeCandidate
-	 * @throws ExcepcaoPersistencia
-	 */
 	public MasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number,
 			Integer executionDegreeID, Specialization specialization) throws ExcepcaoPersistencia;
-
-	/**
-	 * @param executionDegree
-	 * @param person
-	 * @return IMasterDegreeCandidate
-	 * @throws ExcepcaoPersistencia
-	 */
-	public MasterDegreeCandidate readByExecutionDegreeAndPerson(Integer executionDegreeID,
-			Integer personID) throws ExcepcaoPersistencia;
-
-	/**
-	 * @param executionDegree
-	 * @param person
-	 * @param number
-	 * @return IMasterDegreeCandidate
-	 * @throws ExcepcaoPersistencia
-	 */
-	public MasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(Integer executionDegreeID,
-			Integer personID, Integer number) throws ExcepcaoPersistencia;
-
-    public List readAllCandidatesByDCPlanIDSpecSituationAndIsAssistant(Integer degreeCurricularPlanId, 
-    		Specialization specialization, SituationName situation, 
-    		Boolean givesClasses) throws ExcepcaoPersistencia;
 
 } // End of class definition

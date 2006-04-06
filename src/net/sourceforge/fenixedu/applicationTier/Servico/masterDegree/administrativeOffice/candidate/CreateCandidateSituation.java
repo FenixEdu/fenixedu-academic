@@ -3,40 +3,32 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
 public class CreateCandidateSituation extends Service {
 
-    public void run(Integer executionDegreeID, Integer personID, SituationName newSituation)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer executionDegreeID, Integer personID, SituationName newSituation) {
 
-        final MasterDegreeCandidate masterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate()
-                .readByExecutionDegreeAndPerson(executionDegreeID, personID);
-        if (masterDegreeCandidate == null) {
-            throw new ExcepcaoInexistente("Unknown Master Degree Candidate");
-        }
+        final Person person = (Person) rootDomainObject.readPartyByOID(personID);
+        final ExecutionDegree executionDegree = rootDomainObject
+                .readExecutionDegreeByOID(executionDegreeID);
 
-        for (CandidateSituation candidateSituation : masterDegreeCandidate.getSituations()) {
+        final MasterDegreeCandidate masterDegreeCandidate = person
+                .getMasterDegreeCandidateByExecutionDegree(executionDegree);
+        for (final CandidateSituation candidateSituation : masterDegreeCandidate.getSituations()) {
             if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
                 candidateSituation.setValidation(new State(State.INACTIVE));
             }
         }
-
         // Create the New Candidate Situation
-        CandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
-        Calendar calendar = Calendar.getInstance();
-        candidateSituation.setDate(calendar.getTime());
-        candidateSituation.setSituation(newSituation);
-        candidateSituation.setValidation(new State(State.ACTIVE));
-        candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
-
+        final Calendar calendar = Calendar.getInstance();
+        DomainFactory.makeCandidateSituation(calendar.getTime(), null, new State(State.ACTIVE),
+                masterDegreeCandidate, newSituation);
     }
-
 }

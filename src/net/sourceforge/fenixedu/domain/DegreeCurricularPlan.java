@@ -32,8 +32,10 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.MarkType;
+import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -686,6 +688,36 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
         for (final ExecutionDegree executionDegree : this.getExecutionDegreesSet()) {
             result.addAll(executionDegree.getMasterDegreeCandidatesSet());
+        }
+        return result;
+    }
+    
+    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySpecialization(final Specialization specialization) {
+        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
+        for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates()) {
+            if (masterDegreeCandidate.getSpecialization() == specialization) {
+                result.add(masterDegreeCandidate);
+            }
+        }
+        return result;
+    }
+    
+    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySituatioName(final SituationName situationName) {
+        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
+        for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates()) {
+            if (masterDegreeCandidate.hasCandidateSituationWith(situationName)) {
+                result.add(masterDegreeCandidate);
+            }
+        }
+        return result;
+    }
+    
+    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesByCourseAssistant(boolean courseAssistant) {
+        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
+        for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates()) {
+            if (masterDegreeCandidate.getCourseAssistant() == courseAssistant) {
+                result.add(masterDegreeCandidate);
+            }
         }
         return result;
     }
