@@ -1606,6 +1606,7 @@
 			input="/searchWrittenEvaluationsByDate.do?method=prepare&amp;page=0"
             type="net.sourceforge.fenixedu.presentationTier.Action.sop.writtenEvaluations.SearchWrittenEvaluationsByDate"
             name="examSearchByDateForm"
+            attribute="examSearchByDateForm"
             parameter="method"
             scope="request"
             validate="true"

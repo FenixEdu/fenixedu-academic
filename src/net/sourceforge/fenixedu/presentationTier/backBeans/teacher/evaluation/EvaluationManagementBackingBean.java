@@ -124,6 +124,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     private String originPage;
 
+    private String selectedBegin;
+
+    private String selectedEnd;
+
     protected Map<Integer, String> marks = new HashMap<Integer, String>();
     
     protected String[] attendsIDs;
@@ -747,18 +751,23 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         final String originPage = getOriginPage();
         if (originPage != null) {
-            
-            FacesContext.getCurrentInstance().getExternalContext()
-                    .redirect(getApplicationContext()
-                            + "/sop/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date="
-                            + DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime())
-//                    + "&begin="
-//                    + timeFormat.format(this.getBegin().getTime())
-//                    + "&end="
-//                    + timeFormat.format(this.getEnd().getTime())
-                            + "&" + SessionConstants.EXECUTION_PERIOD_OID + "="
-                            + executionCourse.getExecutionPeriod().getIdInternal()
-                    );
+            final StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(getApplicationContext());
+            stringBuilder.append("/sop/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date=");
+            stringBuilder.append(DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime()));
+            stringBuilder.append("&");
+            stringBuilder.append(SessionConstants.EXECUTION_PERIOD_OID);
+            stringBuilder.append("=");
+            stringBuilder.append(executionCourse.getExecutionPeriod().getIdInternal());
+            if (selectedBegin != null && selectedBegin.length() > 0 && selectedBegin.equals("true")) {
+                stringBuilder.append("selectedBegin=");
+                stringBuilder.append(DateFormatUtil.format("HH:mm", this.getBegin().getTime()));
+            }
+            if (selectedEnd != null && selectedEnd.length() > 0 && selectedEnd.equals("true")) {
+                stringBuilder.append("selectedEnd=");
+                stringBuilder.append(DateFormatUtil.format("HH:mm", this.getEnd().getTime()));
+            }
+            FacesContext.getCurrentInstance().getExternalContext().redirect(stringBuilder.toString());
             return originPage;
         } else {
             return this.getEvaluation().getClass().getSimpleName();
@@ -1014,7 +1023,28 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public void setOriginPage(String originPage) {
         this.originPage = originPage;
     }
-    
+
+    public String getSelectedBegin() {
+        if (selectedBegin == null) {
+            selectedBegin = getRequestParameter("selectedBegin");
+        }
+        return selectedBegin;
+    }
+
+    public void setSelectedBegin(String selectedBegin) {
+        this.selectedBegin = selectedBegin;
+    }
+
+    public String getSelectedEnd() {
+        if (selectedEnd == null) {
+            selectedEnd = getRequestParameter("selectedEnd");
+        }
+        return selectedEnd;
+    }
+
+    public void setSelectedEnd(String selectedEnd) {
+        this.selectedEnd = selectedEnd;
+    }
     
     //Submit Marks
     public List<FinalMark> getAlreadySubmitedMarks() throws FenixFilterException, FenixServiceException{

@@ -94,6 +94,8 @@ table.executionCoursesWithoutWrittenEvaluations td {
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.originPage}"/>
+		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.selectedBegin}"/>
+		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.selectedEnd}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
 		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>

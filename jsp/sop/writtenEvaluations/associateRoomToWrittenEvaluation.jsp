@@ -21,6 +21,8 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.yearHidden}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.originPage}"/>
+		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.selectedBegin}"/>
+		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.selectedEnd}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.beginHourHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.beginMinuteHidden}"/>

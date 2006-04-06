@@ -518,11 +518,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
 
         List<SelectItem> curricularYearItems = new ArrayList<SelectItem>(6);
-        curricularYearItems.add(new SelectItem(1, "1ï¿½ Ano"));
-        curricularYearItems.add(new SelectItem(2, "2ï¿½ Ano"));
-        curricularYearItems.add(new SelectItem(3, "3ï¿½ Ano"));
-        curricularYearItems.add(new SelectItem(4, "4ï¿½ Ano"));
-        curricularYearItems.add(new SelectItem(5, "5ï¿½ Ano"));
+        curricularYearItems.add(new SelectItem(1, "1º Ano"));
+        curricularYearItems.add(new SelectItem(2, "2º Ano"));
+        curricularYearItems.add(new SelectItem(3, "3º Ano"));
+        curricularYearItems.add(new SelectItem(4, "4º Ano"));
+        curricularYearItems.add(new SelectItem(5, "5º Ano"));
 
         return curricularYearItems;
     }
@@ -1122,17 +1122,19 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         final String originPage = getOriginPage();
         if (originPage != null && originPage.length() > 0) {
-            FacesContext.getCurrentInstance().getExternalContext()
-                    .redirect(getApplicationContext()
-                            + "/sop/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date="
-                            + DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime())
-//                    + "&begin="
-//                    + timeFormat.format(this.getBegin().getTime())
-//                    + "&end="
-//                    + timeFormat.format(this.getEnd().getTime())
-                            + "&" + SessionConstants.EXECUTION_PERIOD_OID + "="
-                            + getExecutionPeriodID()
-                    );
+            final StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(getApplicationContext());
+            stringBuilder.append("/sop/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date=");
+            stringBuilder.append(DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime()));
+            if (getSelectedBegin() != null && getSelectedBegin().length() > 0 && getSelectedBegin().equals("true")) {
+                stringBuilder.append("&selectedBegin=");
+                stringBuilder.append(DateFormatUtil.format("HH:mm", this.getBegin().getTime()));
+            }
+            if (getSelectedEnd() != null && getSelectedEnd().length() > 0 && getSelectedEnd().equals("true")) {
+                stringBuilder.append("&selectedEnd=");
+                stringBuilder.append(DateFormatUtil.format("HH:mm", this.getEnd().getTime()));
+            }
+            FacesContext.getCurrentInstance().getExternalContext().redirect(stringBuilder.toString());
             return originPage;
         } else {
             return WrittenTest.class.getSimpleName();

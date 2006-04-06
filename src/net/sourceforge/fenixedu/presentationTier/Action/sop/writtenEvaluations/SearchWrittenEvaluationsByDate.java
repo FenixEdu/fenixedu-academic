@@ -52,12 +52,31 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
 
         final String date = request.getParameter("date");
+        final String selectedBegin = request.getParameter("selectedBegin");
+        final String selectedEnd = request.getParameter("selectedEnd");
 
         dynaActionForm.set("year", date.substring(0, 4));
         dynaActionForm.set("month", date.substring(5, 7));
         dynaActionForm.set("day", date.substring(8, 10));
 
-        return search(mapping, request, DateFormatUtil.parse("yyyy/MM/dd", date), null, null);
+        final Date begin;
+        if (selectedBegin != null && selectedBegin.length() > 0) {
+            dynaActionForm.set("beginningHour", selectedBegin.substring(0, 2));
+            dynaActionForm.set("beginningMinute", selectedBegin.substring(3, 5));
+            begin = DateFormatUtil.parse("HH:mm", selectedBegin);
+        } else {
+            begin = null;
+        }
+        final Date end;
+        if (selectedEnd != null && selectedEnd.length() > 0) {
+            dynaActionForm.set("endHour", selectedEnd.substring(0, 2));
+            dynaActionForm.set("endMinute", selectedEnd.substring(3, 5));
+            end = DateFormatUtil.parse("HH:mm", selectedEnd);
+        } else {
+            end = null;
+        }
+
+        return search(mapping, request, DateFormatUtil.parse("yyyy/MM/dd", date), begin, end);
     }
 
     public ActionForward search(ActionMapping mapping, HttpServletRequest request,

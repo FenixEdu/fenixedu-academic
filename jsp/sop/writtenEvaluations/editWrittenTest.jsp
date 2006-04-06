@@ -18,7 +18,8 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.evaluationIdHidden}" />
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.originPage}"/>
-
+		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.selectedBegin}"/>
+		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.selectedEnd}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.calendarPeriodHidden}"/>

@@ -101,6 +101,9 @@
 					</logic:iterate>
 				</td>
 				<td class="listClasses">
+				<bean:define id="selectedBegin"><logic:present name="examSearchByDateForm" property="beginningHour"><logic:notEmpty name="examSearchByDateForm" property="beginningHour">true</logic:notEmpty><logic:empty name="examSearchByDateForm" property="beginningHour">false</logic:empty></logic:present><logic:notPresent name="examSearchByDateForm" property="beginningHour">false</logic:notPresent></bean:define>
+				<bean:define id="selectedEnd"><logic:present name="examSearchByDateForm" property="endHour"><logic:notEmpty name="examSearchByDateForm" property="endHour">true</logic:notEmpty><logic:empty name="examSearchByDateForm" property="endHour">false</logic:empty></logic:present><logic:notPresent name="examSearchByDateForm" property="endHour">false</logic:notPresent></bean:define>
+
 					<html:link page="<%= "/writtenEvaluations/editWrittenTest.faces?"
 										+ "executionDegreeID"
 										+ "="
@@ -131,6 +134,14 @@
 										+ pageContext.findAttribute("curricularYearID") 
 										+ "&amp;"
 										+ "originPage=showWrittenEvaluationsByDate"
+										+ "&amp;"
+										+ "selectedBegin"
+										+ "="
+										+ pageContext.findAttribute("selectedBegin") 
+										+ "&amp;"
+										+ "selectedEnd"
+										+ "="
+										+ pageContext.findAttribute("selectedEnd") 
 										%>">
 						<logic:equal name="writtenEvaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Exam">
 							<bean:write name="writtenEvaluation" property="season"/>
