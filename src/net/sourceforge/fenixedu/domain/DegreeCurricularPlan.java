@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -34,9 +35,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.SituationName;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -346,6 +349,41 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return curricularCourses;
+    }
+    
+    public EnrolmentPeriodInCurricularCourses getActualEnrolmentPeriod() {
+    	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+			if((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) && enrolmentPeriod.isValid()) {
+				return (EnrolmentPeriodInCurricularCourses) enrolmentPeriod;
+			}
+		}
+    	return null;
+    }
+    
+    public EnrolmentPeriodInCurricularCourses getNextEnrolmentPeriod() {
+    	List<EnrolmentPeriodInCurricularCourses> result = new ArrayList<EnrolmentPeriodInCurricularCourses>();
+    	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+			if((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) && DateFormatUtil.isAfter("yyyyMMdd", enrolmentPeriod.getStartDate(), new Date())) {
+				result.add((EnrolmentPeriodInCurricularCourses) enrolmentPeriod);
+			}
+		}
+    	if(!result.isEmpty()) {
+    		Collections.sort(result, new BeanComparator("startDate"));
+    		return result.get(0);
+    	}
+    	return null;
+    }
+
+    
+    public EnrolmentPeriodInClasses getCurrentClassesEnrollmentPeriod() {
+    	ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+    	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+			if((enrolmentPeriod instanceof EnrolmentPeriodInClasses) && enrolmentPeriod.getExecutionPeriod().equals(executionPeriod)) {
+				return (EnrolmentPeriodInClasses) enrolmentPeriod;
+			}
+		}
+    	return null;
+
     }
 
     // -------------------------------------------------------------
