@@ -52,7 +52,7 @@ public class EditCompetenceCourse extends Service {
     }
     
     private CompetenceCourse readCompetenceCourse(Integer competenceCourseID) throws ExcepcaoPersistencia, FenixServiceException {
-        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(CompetenceCourse.class, competenceCourseID);
+        final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }

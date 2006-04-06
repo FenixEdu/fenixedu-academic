@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /*
  * 
@@ -32,40 +31,32 @@ public class DeleteStudentAttendingCourse extends Service {
         if (infoStudent == null) {
             return Boolean.FALSE;
         }
-        final Student student = readStudent(persistentSupport, infoStudent);
-        final ExecutionCourse executionCourse = readExecutionCourse(persistentSupport,
-                executionCourseID);
+        final Student student = readStudent(infoStudent);
+        final ExecutionCourse executionCourse = readExecutionCourse(executionCourseID);
 
-        deleteAttend(persistentSupport, student, executionCourse);
+        deleteAttend(student, executionCourse);
 
         return Boolean.TRUE;
     }
 
-    private ExecutionCourse readExecutionCourse(final ISuportePersistente persistentSupport,
-            final Integer executionCourseID) throws ExcepcaoPersistencia, FenixServiceException {
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseID);
+    private ExecutionCourse readExecutionCourse(final Integer executionCourseID) throws ExcepcaoPersistencia, FenixServiceException {
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");
         }
         return executionCourse;
     }
 
-    private Student readStudent(final ISuportePersistente persistentSupport,
-            final InfoStudent infoStudent) throws FenixServiceException, ExcepcaoPersistencia {
-        final Student student = (Student) persistentObject.readByOID(Student.class, infoStudent
-                .getIdInternal());
+    private Student readStudent(final InfoStudent infoStudent) throws FenixServiceException, ExcepcaoPersistencia {
+        final Student student = rootDomainObject.readStudentByOID(infoStudent.getIdInternal());
         if (student == null) {
             throw new FenixServiceException("error.exception.noStudents");
         }
         return student;
     }
 
-    private void deleteAttend(final ISuportePersistente persistentSupport, final Student student,
-            final ExecutionCourse executionCourse) throws FenixServiceException, ExcepcaoPersistencia {
-        
+    private void deleteAttend(final Student student, final ExecutionCourse executionCourse) throws FenixServiceException, ExcepcaoPersistencia {
         final Attends attend = student.readAttendByExecutionCourse(executionCourse);
-
         if (attend != null) {
             checkIfHasStudentGroups(attend);
             checkIfIsEnrolled(attend);
@@ -74,8 +65,7 @@ public class DeleteStudentAttendingCourse extends Service {
         }
     }
 
-    private void checkStudentShifts(final Student student, final ExecutionCourse executionCourse)
-            throws AlreadyEnrolledInShiftServiceException {
+    private void checkStudentShifts(final Student student, final ExecutionCourse executionCourse) throws AlreadyEnrolledInShiftServiceException {
         for (final Shift shift : student.getShifts()) {
             if (shift.getDisciplinaExecucao() == executionCourse) {
                 throw new AlreadyEnrolledInShiftServiceException();
@@ -89,10 +79,10 @@ public class DeleteStudentAttendingCourse extends Service {
         }
     }
 
-    private void checkIfHasStudentGroups(final Attends attend)
-            throws AlreadyEnrolledInGroupServiceException {
-        if (attend.getStudentGroupsCount() > 0) {
+    private void checkIfHasStudentGroups(final Attends attend) throws AlreadyEnrolledInGroupServiceException {
+        if (attend.hasAnyStudentGroups()) {
             throw new AlreadyEnrolledInGroupServiceException();
         }
     }
+
 }

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -48,27 +47,21 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
             return false;
 
         boolean result = false;
-        try {
+        final Integer bibliographicReferenceID = getBibliographicReference(args);
+        final BibliographicReference bibliographicReference = rootDomainObject.readBibliographicReferenceByOID(bibliographicReferenceID);
+        final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
-            final Integer bibliographicReferenceID = getBibliographicReference(args);
-            final BibliographicReference bibliographicReference = (BibliographicReference) persistentObject
-                    .readByOID(BibliographicReference.class, bibliographicReferenceID);
-            final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-
-            if (bibliographicReference != null && teacher != null) {
-                final ExecutionCourse executionCourse = bibliographicReference.getExecutionCourse();
-                final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();
-                // Check if Teacher has a professorship to ExecutionCourse BibliographicReference
-                while (associatedProfessorships.hasNext()) {
-                    Professorship professorship = (Professorship) associatedProfessorships.next();
-                    if (professorship.getExecutionCourse().equals(executionCourse)) {
-                        result = true;
-                        break;
-                    }
+        if (bibliographicReference != null && teacher != null) {
+            final ExecutionCourse executionCourse = bibliographicReference.getExecutionCourse();
+            final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();
+            // Check if Teacher has a professorship to ExecutionCourse BibliographicReference
+            while (associatedProfessorships.hasNext()) {
+                Professorship professorship = (Professorship) associatedProfessorships.next();
+                if (professorship.getExecutionCourse().equals(executionCourse)) {
+                    result = true;
+                    break;
                 }
             }
-        } catch (ExcepcaoPersistencia e) {
-            result = false;
         }
         return result;
     }

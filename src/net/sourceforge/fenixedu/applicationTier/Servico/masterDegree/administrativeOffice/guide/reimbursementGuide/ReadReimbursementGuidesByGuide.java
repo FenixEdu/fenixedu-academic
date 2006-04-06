@@ -5,11 +5,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
@@ -23,31 +21,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadReimbursementGuidesByGuide extends Service {
 
-    /**
-     * @throws FenixServiceException
-     * @throws ExcepcaoPersistencia
-     */
-
     public List run(Integer guideId) throws ExcepcaoPersistencia {
+        List<InfoReimbursementGuide> result = new ArrayList<InfoReimbursementGuide>();
 
-        // guide
-        Guide guide = (Guide) persistentObject.readByOID(Guide.class, guideId);
-
-        // reimbursement Guides
-        List reimbursementGuides = guide.getReimbursementGuides();
-
-        List infoReimbursementGuides = new ArrayList();
-
-        Iterator it = reimbursementGuides.iterator();
-        while (it.hasNext()) {
-
-            infoReimbursementGuides.add(InfoReimbursementGuide
-                    .newInfoFromDomain((ReimbursementGuide) it.next()));
-
+        Guide guide = rootDomainObject.readGuideByOID(guideId);
+        for (ReimbursementGuide reimbursementGuide : guide.getReimbursementGuides()) {
+            result.add(InfoReimbursementGuide.newInfoFromDomain(reimbursementGuide));
         }
 
-        return infoReimbursementGuides;
-
+        return result;
     }
 
 }

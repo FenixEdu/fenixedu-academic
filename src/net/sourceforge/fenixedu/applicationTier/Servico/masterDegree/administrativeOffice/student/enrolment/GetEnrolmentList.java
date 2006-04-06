@@ -6,7 +6,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -25,24 +24,18 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
  */
 public class GetEnrolmentList extends Service {
 
-	public List run(Integer studentCurricularPlanID, EnrollmentState enrollmentState)
-			throws FenixServiceException, Exception {
-		
-		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+	public List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState) throws FenixServiceException, Exception {
+        List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
+        
+		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 		List<Enrolment> enrolmentList = studentCurricularPlan.getEnrolmentsByState(enrollmentState);
-
-		List result = new ArrayList();
-		Iterator iterator = enrolmentList.iterator();
-
-		while (iterator.hasNext()) {
-			Enrolment enrolment = (Enrolment) iterator.next();
+		for (Enrolment enrolment : enrolmentList) {
 			if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
 				continue;
 			}
 
 			if (!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE)) {
-				InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod
-						.newInfoFromDomain(enrolment);
+				InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod.newInfoFromDomain(enrolment);
 				result.add(infoEnrolment);
 			}
 		}
@@ -50,28 +43,17 @@ public class GetEnrolmentList extends Service {
 		return result;
 	}
 
-	public List run(Integer studentCurricularPlanID) throws FenixServiceException, Exception {
+	public List<InfoEnrolment> run(Integer studentCurricularPlanID) throws FenixServiceException, Exception {
+		List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
 
-		List enrolmentList = null;
-
-		// Read the list
-
-		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,
-						studentCurricularPlanID);
-		enrolmentList = studentCurricularPlan.getEnrolments();
-
-		List result = new ArrayList();
-		Iterator iterator = enrolmentList.iterator();
-
-		while (iterator.hasNext()) {
-			Enrolment enrolment = (Enrolment) iterator.next();
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+        for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 			if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
 				continue;
 			}
 
 			if (!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE)) {
-				InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-						.newInfoFromDomain(enrolment);
+				InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
 				result.add(infoEnrolment);
 			}
 		}
@@ -79,26 +61,21 @@ public class GetEnrolmentList extends Service {
 		return result;
 	}
 
-	public List run(Integer studentCurricularPlanID, EnrollmentState enrollmentState,
-			Boolean pTypeEnrolments) throws FenixServiceException, Exception {
-
+	public List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState, Boolean pTypeEnrolments) throws FenixServiceException, Exception {
 		if (!pTypeEnrolments.booleanValue()) {
 			return this.run(studentCurricularPlanID, enrollmentState);
 		}
 
-		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
-		List<Enrolment> enrolmentList = studentCurricularPlan.getEnrolmentsByState(enrollmentState);
-
-		// clone
-		List result = new ArrayList();
-		for (Iterator iter = enrolmentList.iterator(); iter.hasNext();) {
-			Enrolment enrolment = (Enrolment) iter.next();
+		List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
+		
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+        List<Enrolment> enrolmentList = studentCurricularPlan.getEnrolmentsByState(enrollmentState);
+        for (Enrolment enrolment : enrolmentList) {
 			if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
 				continue;
 			}
 
-			InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod
-					.newInfoFromDomain(enrolment);
+			InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod.newInfoFromDomain(enrolment);
 			result.add(infoEnrolment);
 		}
 

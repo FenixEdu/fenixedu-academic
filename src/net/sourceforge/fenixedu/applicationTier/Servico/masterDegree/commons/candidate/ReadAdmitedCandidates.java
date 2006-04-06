@@ -23,31 +23,27 @@ public class ReadAdmitedCandidates extends Service {
      * @throws FenixServiceException
      * @throws ExcepcaoPersistencia 
      */
-    public List run(String[] candidateList, String[] ids) throws FenixServiceException,
-			ExcepcaoPersistencia {
-        List result = new ArrayList();
+    public List run(String[] candidateList, String[] ids) throws FenixServiceException, ExcepcaoPersistencia {
+        List<String> result = new ArrayList<String>();
 
-            // Read the admited candidates
-            int size = candidateList.length;
-            int i = 0;
-            for (i = 0; i < size; i++) {
-                if (candidateList[i].equals(SituationName.ADMITIDO_STRING)
-                        || candidateList[i].equals(SituationName.ADMITED_SPECIALIZATION_STRING)
-                        || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING)
-                        || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING)
-                        || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)) {
+        // Read the admited candidates
+        int size = candidateList.length;
+        int i = 0;
+        for (i = 0; i < size; i++) {
+            if (candidateList[i].equals(SituationName.ADMITIDO_STRING)
+                    || candidateList[i].equals(SituationName.ADMITED_SPECIALIZATION_STRING)
+                    || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING)
+                    || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING)
+                    || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)) {
 
-                    MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(
-                                    MasterDegreeCandidate.class, new Integer(ids[i]));
-                    if (!masterDegreeCandidate.getSpecialization().equals(
-                            Specialization.SPECIALIZATION)) {
-                        result.add(candidateList[i]);
-                    }
+                MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(new Integer(ids[i]));
+                if (!masterDegreeCandidate.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+                    result.add(candidateList[i]);
                 }
             }
+        }
 
         return result;
-
     }
 
 }

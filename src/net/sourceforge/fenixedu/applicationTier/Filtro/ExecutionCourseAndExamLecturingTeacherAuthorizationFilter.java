@@ -88,11 +88,9 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
 
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
-                        infoExecutionCourse.getIdInternal());
+                executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
-                        (Integer) argumentos[0]);
+                executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argumentos[0]);
             }
 
             Integer examId;

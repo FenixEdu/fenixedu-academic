@@ -8,11 +8,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadPublicationType extends Service {
 
     public InfoPublicationType run(Integer publicationTypeId) throws ExcepcaoPersistencia  {
-            PublicationType publicationType = (PublicationType) persistentObject.readByOID(
-                    PublicationType.class, publicationTypeId);
-            
-            return InfoPublicationType.newInfoFromDomain(publicationType);
-
+        PublicationType publicationType = rootDomainObject.readPublicationTypeByOID(publicationTypeId);
+        return InfoPublicationType.newInfoFromDomain(publicationType);
     }
     
 }

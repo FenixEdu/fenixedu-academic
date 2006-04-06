@@ -25,20 +25,13 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
     public void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID)
             throws ExcepcaoPersistencia {
 
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
-                .readByOID(ExecutionPeriod.class, executionPeriodID);
-
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
         Set<String> existentsExecutionCoursesSiglas = readExistingExecutionCoursesSiglas(executionPeriod);
-
         for (Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
 
-            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-                    .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
-
+            DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
             List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
-
             for (CurricularCourse curricularCourse : curricularCourses) {
-
                 if (curricularCourse.getActiveScopesInExecutionPeriodAndSemester(executionPeriod).isEmpty()) {
                     continue;
                 }
@@ -63,33 +56,24 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
                     executionCourse.setComment("");
 
                     curricularCourse.addAssociatedExecutionCourses(executionCourse);
-
                 }
-
             }
-
         }
-
     }
 
     private String getUniqueSigla(Set<String> existentsExecutionCoursesSiglas, String sigla) {
-
         if (existentsExecutionCoursesSiglas.contains(sigla)) {
             int suffix = 1;
-            while (existentsExecutionCoursesSiglas.contains(sigla + "-" + ++suffix))
-                ;
+            while (existentsExecutionCoursesSiglas.contains(sigla + "-" + ++suffix));
             sigla = sigla + "-" + suffix;
         }
-
         existentsExecutionCoursesSiglas.add(sigla);
 
         return sigla;
     }
 
     private Set<String> readExistingExecutionCoursesSiglas(ExecutionPeriod executionPeriod) {
-
-        Set<String> existingExecutionCoursesSiglas = new HashSet<String>(executionPeriod
-                .getAssociatedExecutionCoursesCount());
+        Set<String> existingExecutionCoursesSiglas = new HashSet<String>(executionPeriod.getAssociatedExecutionCoursesCount());
 
         for (ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
             existingExecutionCoursesSiglas.add(executionCourse.getSigla());

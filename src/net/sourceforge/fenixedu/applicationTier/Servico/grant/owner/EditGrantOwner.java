@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 
 public class EditGrantOwner extends Service {
 
@@ -21,16 +20,12 @@ public class EditGrantOwner extends Service {
         return result;
     }
 
-    private GrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber,
-            IPersistentGrantOwner persistentGrantOwner) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        GrantOwner grantOwner = null;
-        grantOwner = persistentGrantOwner.readGrantOwnerByNumber(grantOwnerNumber);
-        return grantOwner;
+    private GrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber) throws FenixServiceException, ExcepcaoPersistencia {
+        return persistentSupport.getIPersistentGrantOwner().readGrantOwnerByNumber(grantOwnerNumber);
     }
 
     private GrantOwner prepareGrantOwner(GrantOwner grantOwner, Person person,
-            InfoGrantOwner infoGrantOwner, IPersistentGrantOwner pGrantOwner)
+            InfoGrantOwner infoGrantOwner)
             throws ExcepcaoPersistencia {
         grantOwner.setPerson(person);
         grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
@@ -38,9 +33,9 @@ public class EditGrantOwner extends Service {
 
         if (infoGrantOwner.getGrantOwnerNumber() == null) {
             // Generate the GrantOwner's number
-            Integer maxNumber = pGrantOwner.readMaxGrantOwnerNumber();
-            int aux = maxNumber.intValue() + 1;
-            Integer nextNumber = new Integer(aux);
+            Integer maxNumber = persistentSupport.getIPersistentGrantOwner().readMaxGrantOwnerNumber();
+            int aux = maxNumber + 1;
+            Integer nextNumber = Integer.valueOf(aux);
             grantOwner.setNumber(nextNumber);
         } else
             grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
@@ -50,21 +45,16 @@ public class EditGrantOwner extends Service {
 
     protected boolean isNew(DomainObject domainObject) {
         Integer objectId = domainObject.getIdInternal();
-        return ((objectId == null) || objectId.equals(new Integer(0)));
+        return ((objectId == null) || objectId.equals(Integer.valueOf(0)));
     }
 
     public Integer run(InfoGrantOwner infoGrantOwner) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentGrantOwner pGrantOwner = null;
-
-        pGrantOwner = persistentSupport.getIPersistentGrantOwner();
-
         Person person = null;
         GrantOwner grantOwner = null;
         Country country = null;
 
         if (infoGrantOwner.getPersonInfo().getInfoPais() != null) {
-            country = (Country) persistentObject.readByOID(Country.class, infoGrantOwner.getPersonInfo()
-                    .getInfoPais().getIdInternal());
+            country = rootDomainObject.readCountryByOID(infoGrantOwner.getPersonInfo().getInfoPais().getIdInternal());
         } else {
             // If the person country is undefined it is set to default
             // "PORTUGUESA NATURAL DO CONTINENTE"
@@ -77,14 +67,13 @@ public class EditGrantOwner extends Service {
         if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {           
             person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);            
         } else {
-            person = (Person) persistentObject.readByOID(Person.class, infoGrantOwner.getPersonInfo()
-                    .getIdInternal());
+            person = (Person) rootDomainObject.readPartyByOID(infoGrantOwner.getPersonInfo().getIdInternal());
             person.edit(infoGrantOwner.getPersonInfo(), country);
         }
 
         // verify if person is new
         if (person.getUsername() != null)
-            grantOwner = checkIfGrantOwnerExists(infoGrantOwner.getGrantOwnerNumber(), pGrantOwner);
+            grantOwner = checkIfGrantOwnerExists(infoGrantOwner.getGrantOwnerNumber());
 
         // create or edit grantOwner information
         if (grantOwner == null) {
@@ -96,7 +85,7 @@ public class EditGrantOwner extends Service {
             }
             person.getPersonRoles().add(Role.getRoleByRoleType(RoleType.GRANT_OWNER));
         }
-        grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner, pGrantOwner);
+        grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner);
 
         // Generate the GrantOwner's Person Username
         if (person.getUsername() == null || person.getUsername().length() == 0)

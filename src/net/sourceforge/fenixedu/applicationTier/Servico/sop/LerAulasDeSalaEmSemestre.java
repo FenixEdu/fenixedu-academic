@@ -1,14 +1,5 @@
-/*
- * LerAulasDeSalaEmSemestre.java Created on 29 de Outubro de 2002, 15:44
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
-/**
- * Servi�o LerAulasDeSalaEmSemestre.
- * 
- * @author tfc130
- */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +21,8 @@ public class LerAulasDeSalaEmSemestre extends Service {
             executionPeriodId = infoExecutionPeriod.getIdInternal();
         }
 
-    	final OldRoom room = (OldRoom) persistentObject.readByOID(OldRoom.class, infoRoom.getIdInternal());
-    	final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodId);
+    	final OldRoom room = rootDomainObject.readOldRoomByOID(infoRoom.getIdInternal());
+    	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
 
         final List<Lesson> lessonList = room.findLessonsForExecutionPeriod(executionPeriod);
         List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();

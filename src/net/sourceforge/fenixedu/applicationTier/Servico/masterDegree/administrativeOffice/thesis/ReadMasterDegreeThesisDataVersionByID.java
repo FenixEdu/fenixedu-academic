@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -17,19 +16,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadMasterDegreeThesisDataVersionByID extends Service {
 
 	public Object run(Integer masterDegreeThesisDataVersionID) throws FenixServiceException, ExcepcaoPersistencia {
-		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
-		MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = null;
-
-		masterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) persistentObject.readByOID(
-						MasterDegreeThesisDataVersion.class, masterDegreeThesisDataVersionID);
-
+        MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = rootDomainObject.readMasterDegreeThesisDataVersionByOID(masterDegreeThesisDataVersionID);
 		if (masterDegreeThesisDataVersion == null)
-			throw new NonExistingServiceException(
-					"error.exception.masterDegree.nonExistingMasterDegreeThesisDataVersion");
+			throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesisDataVersion");
 
-		infoMasterDegreeThesisDataVersion = InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
-				.newInfoFromDomain(masterDegreeThesisDataVersion);
-
-		return infoMasterDegreeThesisDataVersion;
+		return InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis.newInfoFromDomain(masterDegreeThesisDataVersion);
 	}
+    
 }

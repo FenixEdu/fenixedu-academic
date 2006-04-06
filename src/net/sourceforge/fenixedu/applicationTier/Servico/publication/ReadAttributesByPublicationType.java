@@ -16,22 +16,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Ricardo Rodrigues
- *
+ * 
  */
 
 public class ReadAttributesByPublicationType extends Service {
 
-    /**
-     * @param args
-     * @throws ExcepcaoPersistencia 
-     */
     public HashMap run(Integer publicationTypeID) throws ExcepcaoPersistencia {
-        PublicationType publicationType = (PublicationType) persistentObject.readByOID(
-                PublicationType.class, new Integer(publicationTypeID));
+        PublicationType publicationType = rootDomainObject.readPublicationTypeByOID(publicationTypeID);
 
-        HashMap result = new HashMap();
+        HashMap<String,String> result = new HashMap<String,String>();
         if (publicationType != null) {
-        List<Attribute> requiredAttributes = publicationType.getRequiredAttributes();
+            List<Attribute> requiredAttributes = publicationType.getRequiredAttributes();
             List<Attribute> nonRequiredAttributes = publicationType.getNonRequiredAttributes();
             List<Attribute> allAttributes = new ArrayList<Attribute>(requiredAttributes);
             allAttributes.addAll(nonRequiredAttributes);
@@ -44,7 +39,6 @@ public class ReadAttributesByPublicationType extends Service {
         }
 
         return result;
-
     }
 
 }
