@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -10,6 +11,8 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -338,7 +341,18 @@ public class Student extends Student_Base {
         }
         return result;
     }
-
+    
+    public List<DistributedTest> getDistributedTestsByExecutionCourse(ExecutionCourse executionCourse){
+    	Set<DistributedTest> result = new HashSet<DistributedTest>();
+    	for (StudentTestQuestion studentTestQuestion : this.getStudentTestsQuestions()) {
+			if(studentTestQuestion.getDistributedTest().getTestScope().getClassName().equals(ExecutionCourse.class.getName())
+					&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(executionCourse.getIdInternal())){
+				result.add(studentTestQuestion.getDistributedTest());
+			}
+		}
+    	return new ArrayList<DistributedTest>(result);
+    }
+    
     public List<Attends> readAttendsInCurrentExecutionPeriod() {
         List<Attends> attends = new ArrayList<Attends>();
         for (Attends attend : this.getAssociatedAttends()) {
