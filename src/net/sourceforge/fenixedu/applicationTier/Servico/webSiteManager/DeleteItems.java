@@ -19,8 +19,7 @@ public class DeleteItems extends Service {
 		while (iterItemsCode.hasNext()) {
 			Integer itemCode = (Integer) iterItemsCode.next();
 
-			WebSiteItem webSiteItemAux = (WebSiteItem) persistentObject.readByOID(
-					WebSiteItem.class, itemCode);
+			WebSiteItem webSiteItemAux = rootDomainObject.readWebSiteItemByOID(itemCode);
 			if (webSiteItemAux != null) {
 				webSiteItemAux.delete();
 			}

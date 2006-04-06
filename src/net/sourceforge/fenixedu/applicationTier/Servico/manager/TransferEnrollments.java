@@ -10,12 +10,11 @@ public class TransferEnrollments extends Service {
     public void run(final Integer destinationStudentCurricularPlanId,
             final Integer[] enrollmentIDsToTransfer) throws ExcepcaoPersistencia {
 
-        final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
-                .readByOID(StudentCurricularPlan.class, destinationStudentCurricularPlanId);
+        final StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(destinationStudentCurricularPlanId);
 
         for (int i = 0; i < enrollmentIDsToTransfer.length; i++) {
             final Integer enrollmentIDToTransfer = enrollmentIDsToTransfer[i];
-            final Enrolment enrollment = (Enrolment) persistentObject.readByOID(Enrolment.class, enrollmentIDToTransfer);
+            final Enrolment enrollment = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrollmentIDToTransfer);
 
             enrollment.setStudentCurricularPlan(studentCurricularPlan);
         }

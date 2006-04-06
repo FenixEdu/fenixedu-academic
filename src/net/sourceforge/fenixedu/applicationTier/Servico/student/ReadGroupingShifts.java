@@ -38,7 +38,7 @@ public class ReadGroupingShifts extends Service {
 		boolean result = false;
 
 		StudentGroup studentGroup = null;
-		grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupingCode);
+		grouping = rootDomainObject.readGroupingByOID(groupingCode);
 		if (grouping == null) {
 			throw new ExistingServiceException();
 		}

@@ -21,7 +21,7 @@ public class EditGrouping extends Service {
 
     public List run(Integer executionCourseID, InfoGrouping infoGroupProperties)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
+        final Grouping grouping = rootDomainObject.readGroupingByOID(
                 infoGroupProperties.getIdInternal());
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();

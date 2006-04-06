@@ -28,8 +28,7 @@ public class DeleteExecutionCourses extends Service {
         final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
 
         for (final Integer executionCourseID : (List<Integer>) executionCourseIDs) {
-            final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
-                    .readByOID(ExecutionCourse.class, executionCourseID);
+            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
             if (!deleteExecutionCourses(persistentSupport, executionCourse)) {
                 undeletedExecutionCoursesCodes.add(executionCourse.getSigla());

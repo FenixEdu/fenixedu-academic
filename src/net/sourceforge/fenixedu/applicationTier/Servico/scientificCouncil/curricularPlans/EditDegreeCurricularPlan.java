@@ -17,13 +17,13 @@ public class EditDegreeCurricularPlan extends Service {
             throw new InvalidArgumentsServiceException();
         }
         
-        final DegreeCurricularPlan dcpToEdit = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class, dcpId);
+        final DegreeCurricularPlan dcpToEdit = rootDomainObject.readDegreeCurricularPlanByOID(dcpId);
         if (dcpToEdit == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");
         }
         
         final ExecutionYear executionYear = (executionYearID == null) ? null
-                : (ExecutionYear) persistentObject.readByOID(ExecutionYear.class, executionYearID);
+                : rootDomainObject.readExecutionYearByOID(executionYearID);
         
         dcpToEdit.edit(name, curricularStage, gradeScale, executionYear);
     }

@@ -36,10 +36,10 @@ public class ReadStudentsAndGroupsByShiftID extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-        Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(
                 groupPropertiesId);
         infoSiteStudentsAndGroups.setInfoGrouping(InfoGrouping.newInfoFromDomain(groupProperties));
-        Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftId);
+        Shift shift = rootDomainObject.readShiftByOID(shiftId);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();

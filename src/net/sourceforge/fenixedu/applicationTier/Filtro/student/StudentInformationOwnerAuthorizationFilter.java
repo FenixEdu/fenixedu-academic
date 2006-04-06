@@ -43,8 +43,7 @@ public class StudentInformationOwnerAuthorizationFilter extends Filtro {
     private boolean curriculumOwner(IUserView id, Object[] arguments) {
         StudentCurricularPlan studentCurricularPlan;
         try {
-            studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(
-                    StudentCurricularPlan.class, (Integer) arguments[1]);
+            studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) arguments[1]);
             if (studentCurricularPlan == null) {
                 return false;
             }

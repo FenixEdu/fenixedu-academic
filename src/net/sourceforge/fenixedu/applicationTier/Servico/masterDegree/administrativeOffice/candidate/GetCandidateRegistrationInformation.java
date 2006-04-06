@@ -26,8 +26,7 @@ public class GetCandidateRegistrationInformation extends Service {
             ExcepcaoPersistencia {
         InfoCandidateRegistration infoCandidateRegistration = null;
 
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject
-                .readByOID(MasterDegreeCandidate.class, candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
         Student student = masterDegreeCandidate.getPerson().readStudentByDegreeType(
                 DegreeType.MASTER_DEGREE);

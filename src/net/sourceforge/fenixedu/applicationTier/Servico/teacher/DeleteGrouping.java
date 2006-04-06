@@ -23,7 +23,7 @@ public class DeleteGrouping extends Service {
             return Boolean.FALSE;
         }
 
-        Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(
                 groupPropertiesId);
 
         if (groupProperties == null) {

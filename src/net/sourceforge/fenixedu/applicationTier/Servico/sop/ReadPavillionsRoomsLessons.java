@@ -36,8 +36,7 @@ public class ReadPavillionsRoomsLessons extends Service {
 
     public List run(List pavillions, InfoExecutionPeriod infoExecutionPeriod)
             throws ExcepcaoPersistencia {
-    	final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
-    			.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
+    	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
 
         final Set<OldRoom> rooms = OldRoom.findOldRoomsByBuildingNames(pavillions);
 

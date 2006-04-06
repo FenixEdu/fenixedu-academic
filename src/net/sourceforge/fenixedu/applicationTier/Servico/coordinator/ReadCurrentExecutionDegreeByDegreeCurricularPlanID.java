@@ -16,8 +16,7 @@ public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID extends Service 
 
     public InfoExecutionDegree run(final Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
 
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
-                        degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         final List executionDegrees = degreeCurricularPlan.getExecutionDegrees();
         final ExecutionDegree executionDegree = (ExecutionDegree) CollectionUtils.find(

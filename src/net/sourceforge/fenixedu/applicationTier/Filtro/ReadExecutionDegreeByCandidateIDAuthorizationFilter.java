@@ -89,8 +89,7 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
 
                 teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
-                MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject
-                		.readByOID(MasterDegreeCandidate.class, candidateID);
+                MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
                 if (masterDegreeCandidate == null) {
                     return false;

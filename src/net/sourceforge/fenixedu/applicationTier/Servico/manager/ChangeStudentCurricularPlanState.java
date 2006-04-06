@@ -18,8 +18,7 @@ public class ChangeStudentCurricularPlanState extends Service {
 
     public void run(final Integer studentCurricularPlanId,
             final StudentCurricularPlanState studentCurricularPlanState) throws ExcepcaoPersistencia, DomainException {
-		final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
-                .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);		
+		final StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);		
 		studentCurricularPlan.changeState(studentCurricularPlanState);
     }
 

@@ -28,8 +28,7 @@ public class ReadExecutionCourseTeachers extends Service {
 	public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
 
 		List professorShips = null;
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
-				.readByOID(ExecutionCourse.class, executionCourseId);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 		professorShips = executionCourse.getProfessorships();
 
 		if (professorShips == null || professorShips.isEmpty())

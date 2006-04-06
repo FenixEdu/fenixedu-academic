@@ -21,8 +21,7 @@ public class EditDegree extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degreeToEdit = (Degree) persistentObject.readByOID(
-                Degree.class, idInternal);
+        final Degree degreeToEdit = rootDomainObject.readDegreeByOID(idInternal);
 
         if (degreeToEdit == null) {
             throw new NonExistingServiceException();

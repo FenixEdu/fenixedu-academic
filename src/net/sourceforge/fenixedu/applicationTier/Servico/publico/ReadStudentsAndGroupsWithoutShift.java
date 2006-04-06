@@ -33,7 +33,7 @@ public class ReadStudentsAndGroupsWithoutShift extends Service {
             ExcepcaoPersistencia {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-        Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(
                 groupPropertiesId);
 
         if (groupProperties == null) {

@@ -37,8 +37,7 @@ public class ReadExecutionCourseProjects extends Service {
 
 		InfoSiteProjects infoSiteProjects = null;
 
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
-				.readByOID(ExecutionCourse.class, executionCourseCode);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
 		List executionCourseProjects = new ArrayList();
 		List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();

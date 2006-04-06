@@ -36,12 +36,12 @@ public class CreateStudentGroup extends Service {
 
     public boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID,
             Integer shiftID, List studentUserNames) throws FenixServiceException, ExcepcaoPersistencia {
-        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupingID);
+        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
         
         if (grouping == null)
             throw new FenixServiceException();
         
-        Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftID);
+        Shift shift = rootDomainObject.readShiftByOID(shiftID);
         
         List studentList = buildStudentList(studentUserNames, grouping);
         

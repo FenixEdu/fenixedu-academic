@@ -35,7 +35,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
         List infoExecutionDegreeList = null;
         List executionDegrees = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(
                         degreeCurricularPlanID);
 
         executionDegrees = degreeCurricularPlan.getExecutionDegrees();
@@ -70,7 +70,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
      */
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, final String executionYear)
             throws ExcepcaoPersistencia {
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(
                         degreeCurricularPlanID);
 
         if (executionYear.equals("")) {

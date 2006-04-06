@@ -24,7 +24,7 @@ public class UnEnrollStudentGroupShift extends Service {
 	public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
+		Grouping groupProperties = rootDomainObject.readGroupingByOID(
 				groupPropertiesCode);
 
 		if (groupProperties == null) {

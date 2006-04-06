@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteEnrollment extends Service {
 
     public void run(final Integer enrollmentId) throws ExcepcaoPersistencia {
-        final Enrolment enrollment = (Enrolment) persistentObject.readByOID(Enrolment.class, enrollmentId);
+        final Enrolment enrollment = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrollmentId);
         enrollment.delete();
     }
 }

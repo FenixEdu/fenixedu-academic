@@ -53,14 +53,12 @@ public class MergeExecutionCourses extends Service {
             throw new SourceAndDestinationAreTheSameException();
         }
 
-        final ExecutionCourse executionCourseFrom = (ExecutionCourse) persistentObject
-                .readByOID(ExecutionCourse.class, executionCourseSourceId);
+        final ExecutionCourse executionCourseFrom = rootDomainObject.readExecutionCourseByOID(executionCourseSourceId);
         if (executionCourseFrom == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ExecutionCourse executionCourseTo = (ExecutionCourse) persistentObject
-                .readByOID(ExecutionCourse.class, executionCourseDestinationId);
+        final ExecutionCourse executionCourseTo = rootDomainObject.readExecutionCourseByOID(executionCourseDestinationId);
         if (executionCourseTo == null) {
             throw new InvalidArgumentsServiceException();
         }

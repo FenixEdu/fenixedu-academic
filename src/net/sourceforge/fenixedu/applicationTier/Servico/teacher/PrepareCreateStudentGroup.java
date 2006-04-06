@@ -31,7 +31,7 @@ public class PrepareCreateStudentGroup extends Service {
     public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode)
             throws ExcepcaoPersistencia, ExistingServiceException {
 
-        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
+        final Grouping grouping = rootDomainObject.readGroupingByOID(
                 groupPropertiesCode);
 
         if (grouping == null) {

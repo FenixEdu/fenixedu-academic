@@ -25,7 +25,7 @@ public class DeleteEnrolment extends Service {
     public void run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer enrolmentID)
             throws FenixServiceException, DomainException, ExcepcaoPersistencia {
 
-        final Enrolment enrollment1 = (Enrolment) persistentObject.readByOID(Enrolment.class, enrolmentID);
+        final Enrolment enrollment1 = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrolmentID);
 
         List<Enrolment> enrollments2Delete = new ArrayList<Enrolment>();
         List studentEnrolledEnrollmentsInExecutionPeriod = enrollment1.getStudentCurricularPlan()

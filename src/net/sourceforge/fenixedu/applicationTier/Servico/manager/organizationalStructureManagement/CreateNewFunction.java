@@ -25,8 +25,7 @@ public class CreateNewFunction extends Service {
         if (functionID == null) {
             function = DomainFactory.makeFunction();
         } else {
-            function = (Function) persistentObject.readByOID(Function.class,
-                    functionID);
+            function = rootDomainObject.readFunctionByOID(functionID);
             if (function == null) {
                 throw new FenixServiceException("error.noFunction");
             }
@@ -34,13 +33,12 @@ public class CreateNewFunction extends Service {
 
         Unit unit = null;
         if (unitID != null) {
-            unit = (Unit) persistentObject.readByOID(Unit.class, unitID);            
+            unit = (Unit) rootDomainObject.readPartyByOID(unitID);            
         }
 
         Function parentInherentFunction = null;
         if (parentInherentFunctionID != null) {
-            parentInherentFunction = (Function) persistentObject
-                    .readByOID(Function.class, parentInherentFunctionID);            
+            parentInherentFunction = rootDomainObject.readFunctionByOID(parentInherentFunctionID);            
         }
         
         function.edit(functionName, beginDate, endDate, type, unit, parentInherentFunction);

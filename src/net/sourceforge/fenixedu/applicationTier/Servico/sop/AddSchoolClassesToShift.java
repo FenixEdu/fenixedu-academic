@@ -15,7 +15,7 @@ public class AddSchoolClassesToShift extends Service {
 	public void run(InfoShift infoShift, List<Integer> schoolClassOIDs) throws ExcepcaoPersistencia,
 			FenixServiceException {
 
-		final Shift shift = (Shift) persistentObject.readByOID(Shift.class, infoShift.getIdInternal());
+		final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
 		if (shift == null)
 			throw new InvalidArgumentsServiceException();
 

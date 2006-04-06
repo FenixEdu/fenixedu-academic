@@ -27,7 +27,7 @@ public class ReadQuestionImage extends Service {
 
     public String run(Integer exerciseId, Integer imageId, String path) throws FenixServiceException, ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
-        Question question = (Question) persistentObject.readByOID(Question.class, exerciseId);
+        Question question = rootDomainObject.readQuestionByOID(exerciseId);
         ParseQuestion parse = new ParseQuestion();
         String image;
         try {
@@ -41,7 +41,7 @@ public class ReadQuestionImage extends Service {
     public String run(Integer distributedTestId, Integer questionId, String optionShuffle, Integer imageId, String path)
             throws FenixServiceException, ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
-        Question question = (Question) persistentObject.readByOID(Question.class, questionId);
+        Question question = rootDomainObject.readQuestionByOID(questionId);
         InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
         try {
             ParseQuestion parse = new ParseQuestion();

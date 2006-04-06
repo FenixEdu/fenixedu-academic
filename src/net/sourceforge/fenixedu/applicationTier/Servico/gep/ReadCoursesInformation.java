@@ -195,7 +195,7 @@ public class ReadCoursesInformation extends Service {
                 // Shift shift2;
 
                 InfoLesson infoLesson = (InfoLesson) iter.next();
-                Lesson lesson = (Lesson) persistentObject.readByOID(Lesson.class, infoLesson
+                Lesson lesson = rootDomainObject.readLessonByOID(infoLesson
                         .getIdInternal());
 
                 // shifts = persistentShift.readByLesson(lesson);

@@ -17,11 +17,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadAttendsByOID extends Service {
 	
 	public InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers run(Integer idInternal) throws ExcepcaoPersistencia {
-		Attends attends = (Attends)persistentObject.readByOID(Attends.class, idInternal);				
+		Attends attends = rootDomainObject.readAttendsByOID(idInternal);				
 		return InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers.newInfoFromDomain(attends);
 
 	}
-
-    
 
 }

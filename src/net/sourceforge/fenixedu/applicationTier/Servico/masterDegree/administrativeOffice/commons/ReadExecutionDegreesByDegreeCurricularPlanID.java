@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionDegreesByDegreeCurricularPlanID extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(
                         degreeCurricularPlanID);
 
         List infoExecutionDegreeList = new ArrayList();

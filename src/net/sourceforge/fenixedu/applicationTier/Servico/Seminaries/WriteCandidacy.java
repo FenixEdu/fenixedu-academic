@@ -40,7 +40,7 @@ public class WriteCandidacy extends Service {
         candidacy.setStudent(readStudent);
 
         // Seminary
-        final Seminary readSeminary = (Seminary) persistentObject.readByOID(Seminary.class, infoCandidacy.getInfoSeminary().getIdInternal());
+        final Seminary readSeminary = rootDomainObject.readSeminaryByOID(infoCandidacy.getInfoSeminary().getIdInternal());
         candidacy.setSeminary(readSeminary);
         
         // Curricular Course

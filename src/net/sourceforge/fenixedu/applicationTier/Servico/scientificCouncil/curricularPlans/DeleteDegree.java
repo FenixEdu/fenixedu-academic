@@ -14,8 +14,7 @@ public class DeleteDegree extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degreeToDelete = (Degree) persistentObject.readByOID(
-                Degree.class, idInternal);
+        final Degree degreeToDelete = rootDomainObject.readDegreeByOID(idInternal);
 
         if (degreeToDelete == null) {
             throw new NonExistingServiceException();

@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadShiftByOID extends Service {
 
     public InfoShift run(final Integer oid) throws ExcepcaoPersistencia {
-        final Shift shift = (Shift) persistentObject.readByOID(Shift.class, oid);
+        final Shift shift = rootDomainObject.readShiftByOID(oid);
 
         if (shift != null) {
             final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);

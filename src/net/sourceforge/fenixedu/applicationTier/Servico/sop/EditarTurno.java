@@ -74,7 +74,7 @@ public class EditarTurno extends Service {
 		// 1. Read shift lessons
 		List shiftLessons = null;
 		Shift shift = null;
-		shift = (Shift) persistentObject.readByOID(Shift.class, infoShiftOld.getIdInternal());
+		shift = rootDomainObject.readShiftByOID(infoShiftOld.getIdInternal());
 		shiftLessons = shift.getAssociatedLessons();
 
 		// 2. Count shift total duration and get maximum lesson room capacity

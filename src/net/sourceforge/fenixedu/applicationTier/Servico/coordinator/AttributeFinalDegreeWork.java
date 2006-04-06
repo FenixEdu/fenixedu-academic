@@ -9,8 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class AttributeFinalDegreeWork extends Service {
 
     public void run(Integer selectedGroupProposal) throws ExcepcaoPersistencia {
-        GroupProposal groupProposal = (GroupProposal) persistentObject.readByOID(
-                GroupProposal.class, selectedGroupProposal);
+        GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposal);
         if (groupProposal != null) {
             Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
             proposal.setGroupAttributed(groupProposal.getFinalDegreeDegreeWorkGroup());

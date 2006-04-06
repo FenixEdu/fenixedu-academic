@@ -14,8 +14,7 @@ public class DeleteDegreeCurricularPlan extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToDelete = (DegreeCurricularPlan) persistentObject.readByOID(
-                DegreeCurricularPlan.class, idInternal);
+        final DegreeCurricularPlan dcpToDelete = rootDomainObject.readDegreeCurricularPlanByOID(idInternal);
 
         if (dcpToDelete == null) {
             throw new NonExistingServiceException();

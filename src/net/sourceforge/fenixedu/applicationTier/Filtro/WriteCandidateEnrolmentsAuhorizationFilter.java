@@ -92,8 +92,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
                 Integer candidateID = (Integer) arguments[1];
                 teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
-                MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject
-                		.readByOID(MasterDegreeCandidate.class, candidateID);
+                MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
                 if (masterDegreeCandidate == null) {
                     return false;

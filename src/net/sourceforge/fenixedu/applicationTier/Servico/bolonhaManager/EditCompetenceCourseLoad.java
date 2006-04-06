@@ -18,8 +18,7 @@ public class EditCompetenceCourseLoad extends Service {
 
     public void run(Integer competenceCourseID, RegimeType regimeType, Integer numberOfPeriods,
             List<CourseLoad> courseLoads) throws ExcepcaoPersistencia, FenixServiceException {
-        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(
-                CompetenceCourse.class, competenceCourseID);
+        final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }
@@ -35,8 +34,8 @@ public class EditCompetenceCourseLoad extends Service {
                         .getAutonomousWorkHours(), courseLoad.getEctsCredits(), courseLoad.getOrder(),
                         curricularPeriodType);
             } else {
-                final CompetenceCourseLoad competenceCourseLoad = (CompetenceCourseLoad) persistentObject
-                        .readByOID(CompetenceCourseLoad.class, courseLoad.getIdentification());
+                final CompetenceCourseLoad competenceCourseLoad = rootDomainObject
+                        .readCompetenceCourseLoadByOID(courseLoad.getIdentification());
 
                 if (competenceCourseLoad != null && courseLoad.getAction().equals("edit")) {
                     competenceCourseLoad.edit(courseLoad.getTheoreticalHours(), courseLoad

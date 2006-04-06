@@ -17,8 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteStudentCurricularPlan extends Service {
 
     public void run(final Integer studentCurricularPlanId) throws DomainException, ExcepcaoPersistencia, NonExistingServiceException {
-        final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
-                .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
+        final StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
 
 		if (studentCurricularPlan != null)
 			studentCurricularPlan.delete();

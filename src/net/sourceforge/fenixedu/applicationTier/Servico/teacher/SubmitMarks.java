@@ -47,7 +47,7 @@ public class SubmitMarks extends Service {
 	
 	public void run(Integer executionCourseID, Integer evaluationID, String[] attendsIDs, Date evaluationDate, IUserView userView) throws ExcepcaoPersistencia, InvalidArgumentsServiceException, OutOfPeriodException {
 		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseID);
-		FinalEvaluation finalEvaluation = (FinalEvaluation) persistentObject.readByOID(FinalEvaluation.class, evaluationID);
+		FinalEvaluation finalEvaluation = (FinalEvaluation) rootDomainObject.readEvaluationByOID(evaluationID);
 		
 		if(executionCourse == null || finalEvaluation == null) {
 			throw new InvalidArgumentsServiceException();

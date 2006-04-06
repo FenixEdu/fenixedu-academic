@@ -68,8 +68,7 @@ public class StudentCurricularPlanOwnerAuthorizationFilter extends
 	    
 	    
 	    try {
-	        studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(
-	                StudentCurricularPlan.class, studentCurricularPlanID);
+	        studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 	        if (studentCurricularPlan == null)
 	        {
 	            return "noAuthorization";

@@ -27,8 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends Service {
 
     public List run(Integer degreeId, Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
-            final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
-                    .readByOID(ExecutionPeriod.class, executionPeriodId);
+            final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
             if (executionPeriod == null) {
                 throw new InvalidArgumentsServiceException();
             }

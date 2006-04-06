@@ -22,13 +22,11 @@ public class CopySiteExecutionCourse extends Service {
     public void run(Integer executionCourseFromID, Integer executionCourseToID)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
-        final ExecutionCourse executionCourseFrom = (ExecutionCourse) persistentObject
-                .readByOID(ExecutionCourse.class, executionCourseFromID);
+        final ExecutionCourse executionCourseFrom = rootDomainObject.readExecutionCourseByOID(executionCourseFromID);
         if (executionCourseFrom == null)
             throw new InvalidArgumentsServiceException();
 
-        final ExecutionCourse executionCourseTo = (ExecutionCourse) persistentObject
-                .readByOID(ExecutionCourse.class, executionCourseToID);
+        final ExecutionCourse executionCourseTo = rootDomainObject.readExecutionCourseByOID(executionCourseToID);
         if (executionCourseTo == null)
             throw new InvalidArgumentsServiceException();
 

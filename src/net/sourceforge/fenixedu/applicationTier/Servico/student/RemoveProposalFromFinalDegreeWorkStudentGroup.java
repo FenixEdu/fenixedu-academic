@@ -23,7 +23,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup extends Service {
     }
 
     public boolean run(Integer groupOID, Integer groupProposalOID) throws ExcepcaoPersistencia {
-        Group group = (Group) persistentObject.readByOID(Group.class, groupOID);
+        Group group = rootDomainObject.readGroupByOID(groupOID);
         GroupProposal groupProposal = (GroupProposal) CollectionUtils.find(group.getGroupProposals(),
                 new PREDICATE_FIND_BY_ID(groupProposalOID));
         if (groupProposal != null) {

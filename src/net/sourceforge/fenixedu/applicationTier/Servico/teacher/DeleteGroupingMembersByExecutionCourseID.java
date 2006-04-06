@@ -28,7 +28,7 @@ public class DeleteGroupingMembersByExecutionCourseID extends Service {
 
     public boolean run(Integer executionCourseCode, Integer groupingCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupingCode);
+        Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
         
         if (grouping == null) {
             throw new ExistingServiceException();

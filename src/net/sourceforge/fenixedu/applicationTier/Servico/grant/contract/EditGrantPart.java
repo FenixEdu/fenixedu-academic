@@ -16,22 +16,19 @@ public class EditGrantPart extends Service {
 
     public void run(InfoGrantPart infoGrantPart) throws FenixServiceException, ExcepcaoPersistencia {
 
-        GrantPart grantPart = (GrantPart) persistentObject.readByOID(
-                GrantPart.class, infoGrantPart.getIdInternal());
+        GrantPart grantPart = rootDomainObject.readGrantPartByOID(infoGrantPart.getIdInternal());
         if (grantPart == null) {
             grantPart = DomainFactory.makeGrantPart();
         }
 
-        final GrantPaymentEntity grantPaymentEntity = (GrantPaymentEntity) persistentObject
-                .readByOID(GrantPaymentEntity.class, infoGrantPart.getInfoGrantPaymentEntity()
+        final GrantPaymentEntity grantPaymentEntity = rootDomainObject.readGrantPaymentEntityByOID(infoGrantPart.getInfoGrantPaymentEntity()
                         .getIdInternal());
         if (grantPaymentEntity == null) {
             throw new InvalidGrantPaymentEntityException();
         }
         grantPart.setGrantPaymentEntity(grantPaymentEntity);
 
-        final GrantSubsidy grantSubsidy = (GrantSubsidy) persistentObject.readByOID(
-                GrantSubsidy.class, infoGrantPart.getInfoGrantSubsidy().getIdInternal());
+        final GrantSubsidy grantSubsidy = rootDomainObject.readGrantSubsidyByOID(infoGrantPart.getInfoGrantSubsidy().getIdInternal());
         grantPart.setGrantSubsidy(grantSubsidy);
 
         grantPart.setPercentage(infoGrantPart.getPercentage());

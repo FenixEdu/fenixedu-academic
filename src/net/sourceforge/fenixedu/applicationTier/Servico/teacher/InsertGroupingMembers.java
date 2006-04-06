@@ -30,7 +30,7 @@ public class InsertGroupingMembers extends Service {
 
         List students = new ArrayList();
 
-        Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(
                 groupPropertiesCode);
 
         if (groupProperties == null) {

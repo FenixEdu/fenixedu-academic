@@ -24,8 +24,7 @@ public class ReadStudentCurriculum extends Service {
 
     public List run(Integer executionDegreeCode, Integer studentCurricularPlanID)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
-                .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException();

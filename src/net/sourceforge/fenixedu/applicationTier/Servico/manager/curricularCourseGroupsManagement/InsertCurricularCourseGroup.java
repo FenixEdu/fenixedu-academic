@@ -22,14 +22,14 @@ public class InsertCurricularCourseGroup extends Service {
     public void run(Integer groupId, String name, Integer branchId, Integer minimumValue,
             Integer maximumValue, AreaType areaType, String className) throws ExcepcaoPersistencia,
             InvalidArgumentsServiceException {
-        Branch branch = (Branch) persistentObject.readByOID(Branch.class, branchId);
+        Branch branch = rootDomainObject.readBranchByOID(branchId);
         if (branch == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         CurricularCourseGroup curricularCourseGroup = null;
         if (groupId != null) {
-            curricularCourseGroup = (CurricularCourseGroup) persistentObject.readByOID(CurricularCourseGroup.class, groupId);
+            curricularCourseGroup = rootDomainObject.readCurricularCourseGroupByOID(groupId);
             if (curricularCourseGroup == null) {
                 throw new InvalidArgumentsServiceException();
             }

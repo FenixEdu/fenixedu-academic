@@ -24,14 +24,14 @@ public class EditStudentGroupShift extends Service {
 			Integer groupPropertiesCode, Integer newShiftCode) throws FenixServiceException,
 			ExcepcaoPersistencia {
 
-		Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
+		Grouping grouping = rootDomainObject.readGroupingByOID(
 				groupPropertiesCode);
 
 		if (grouping == null) {
 			throw new ExistingServiceException();
 		}
 
-		Shift shift = (Shift) persistentObject.readByOID(Shift.class, newShiftCode);
+		Shift shift = rootDomainObject.readShiftByOID(newShiftCode);
 
 		// grouping.checkShiftCapacity(shift);
 

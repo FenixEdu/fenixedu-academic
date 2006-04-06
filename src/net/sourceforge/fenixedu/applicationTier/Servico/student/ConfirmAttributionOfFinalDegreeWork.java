@@ -23,8 +23,7 @@ public class ConfirmAttributionOfFinalDegreeWork extends Service {
 
     public boolean run(String username, Integer selectedGroupProposalOID) throws ExcepcaoPersistencia,
             FenixServiceException {
-        GroupProposal groupProposal = (GroupProposal) persistentObject.readByOID(
-                GroupProposal.class, selectedGroupProposalOID);
+        GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
 
         if (groupProposal != null) {
             Group groupAttributed = groupProposal.getFinalDegreeWorkProposal()

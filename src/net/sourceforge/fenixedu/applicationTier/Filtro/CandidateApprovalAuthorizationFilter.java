@@ -75,8 +75,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 
                 for (int i = 0; i < ids.length; i++) {
 
-                    MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject
-                    		.readByOID(MasterDegreeCandidate.class, new Integer(ids[i]));
+                    MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(new Integer(ids[i]));
 
                     //modified by Tânia Pousão
                     Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(teacher);

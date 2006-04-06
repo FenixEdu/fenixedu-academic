@@ -64,9 +64,9 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
             if (argumentos[1] instanceof InfoItem) {
                 infoItem = (InfoItem) argumentos[1];
 
-                item = (Item) persistentObject.readByOID(Item.class, infoItem.getIdInternal());
+                item = rootDomainObject.readItemByOID(infoItem.getIdInternal());
             } else {
-                item = (Item) persistentObject.readByOID(Item.class, (Integer) argumentos[1]);
+                item = rootDomainObject.readItemByOID((Integer) argumentos[1]);
 
             }
         } catch (Exception e) {

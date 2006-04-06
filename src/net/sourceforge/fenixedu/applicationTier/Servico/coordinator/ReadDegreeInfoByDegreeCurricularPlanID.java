@@ -27,7 +27,7 @@ public class ReadDegreeInfoByDegreeCurricularPlanID extends Service {
         }
 
         // Degree curricular plan
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(
                         degreeCurricularPlanID);
 
         // Read degree information

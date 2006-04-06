@@ -29,7 +29,7 @@ public class EnrollStudentInShifts extends Service {
             throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
-        final Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftId);
+        final Shift shift = rootDomainObject.readShiftByOID(shiftId);
         if (shift == null) {
             errorReport.getUnExistingShifts().add(shiftId);
         }             

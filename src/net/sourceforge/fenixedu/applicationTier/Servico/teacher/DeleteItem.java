@@ -18,7 +18,7 @@ public class DeleteItem extends Service {
 
     public Boolean run(final Integer infoExecutionCourseCode, final Integer itemCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final Item deletedItem = (Item) persistentObject.readByOID(Item.class, itemCode);
+        final Item deletedItem = rootDomainObject.readItemByOID(itemCode);
         
         if (deletedItem == null) {
             return new Boolean(true);
@@ -40,3 +40,4 @@ public class DeleteItem extends Service {
     }*/
 
 }
+

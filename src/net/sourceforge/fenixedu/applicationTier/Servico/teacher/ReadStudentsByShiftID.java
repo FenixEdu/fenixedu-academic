@@ -13,7 +13,7 @@ public class ReadStudentsByShiftID extends Service {
 
     public List run(final Integer executionCourseID, final Integer shiftID) throws ExcepcaoPersistencia {
         final List infoStudents = new LinkedList();
-        final Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftID);
+        final Shift shift = rootDomainObject.readShiftByOID(shiftID);
         final List<Student> students = shift.getStudents();
         for (final Student student : students) {
             infoStudents.add(InfoStudent.newInfoFromDomain(student));

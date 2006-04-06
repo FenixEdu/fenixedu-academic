@@ -21,7 +21,7 @@ public class VerifyStudentGroupWithoutShift extends Service {
 
 	public Integer run(Integer executionCourseCode, Integer studentGroupCode,
 			Integer groupPropertiesCode, String shiftCodeString) throws FenixServiceException, ExcepcaoPersistencia {
-		Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
+		Grouping groupProperties = rootDomainObject.readGroupingByOID(
 				groupPropertiesCode);
 
 		if (groupProperties == null) {

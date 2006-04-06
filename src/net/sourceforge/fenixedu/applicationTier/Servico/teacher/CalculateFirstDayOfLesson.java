@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CalculateFirstDayOfLesson extends Service {
 
 	public Calendar run(final Integer lessonId) throws ExcepcaoPersistencia {
-	    final Lesson lesson = (Lesson) persistentObject.readByOID(Lesson.class, lessonId);
+	    final Lesson lesson = rootDomainObject.readLessonByOID(lessonId);
 	    return lesson.getRoomOccupation().getPeriod().getStartDate();
     }
 

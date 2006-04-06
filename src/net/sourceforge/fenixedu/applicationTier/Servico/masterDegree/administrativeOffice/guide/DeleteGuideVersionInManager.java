@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteGuideVersionInManager extends Service {
 
     public void run(Integer guideID) throws ExcepcaoPersistencia, InvalidChangeServiceException {
-        Guide guide = (Guide) persistentObject.readByOID(Guide.class, guideID);
+        Guide guide = rootDomainObject.readGuideByOID(guideID);
 
         if (!guide.getGuideEntries().isEmpty()) {
             throw new InvalidChangeServiceException();

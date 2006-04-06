@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Luis Cruz
@@ -22,16 +21,12 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup extends Service {
 
     public boolean run(Integer groupOID, Integer proposalOID) throws ExcepcaoPersistencia,
             FenixServiceException {
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
 
-        Group group = (Group) persistentObject.readByOID(Group.class, groupOID);
-        Proposal proposal = (Proposal) persistentObject
-                .readByOID(Proposal.class, proposalOID);
+        Group group = rootDomainObject.readGroupByOID(groupOID);
+        Proposal proposal = rootDomainObject.readProposalByOID(proposalOID);
         if (group != null && group.getGroupProposals() != null
         /* && !CollectionUtils.exists(group.getStudents(), ) */) {
-            Scheduleing scheduleing = persistentFinalDegreeWork.readFinalDegreeWorkScheduleing(group
-                    .getExecutionDegree().getIdInternal());
+            Scheduleing scheduleing = group.getExecutionDegree().getScheduling();
             if (scheduleing == null
                     || scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup() == null) {
                 throw new MaximumNumberOfProposalCandidaciesPerGroupUndefinedException();

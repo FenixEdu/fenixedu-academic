@@ -28,7 +28,7 @@ public class DeleteExerciseVariation extends Service {
     public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
-        Question question = (Question) persistentObject.readByOID(Question.class, questionCode);
+        Question question = rootDomainObject.readQuestionByOID(questionCode);
         if (question == null) {
             throw new InvalidArgumentsServiceException();
         }

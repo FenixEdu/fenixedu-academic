@@ -21,20 +21,17 @@ public class WriteStudentAreas extends Service {
 			Integer persistentSupportecializationAreaID, Integer secundaryAreaID)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
-				.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
 		if (studentCurricularPlan == null) {
 			throw new NonExistingServiceException();
 		}
 
-		Branch specializationArea = (Branch) persistentObject.readByOID(
-				Branch.class, persistentSupportecializationAreaID);
+		Branch specializationArea = rootDomainObject.readBranchByOID(persistentSupportecializationAreaID);
 
 		Branch secundaryArea = null;
 		if (secundaryAreaID != null) {
-			secundaryArea = (Branch) persistentObject.readByOID(Branch.class,
-					secundaryAreaID);
+			secundaryArea = rootDomainObject.readBranchByOID(secundaryAreaID);
 		}
 
 		try {

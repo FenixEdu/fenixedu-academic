@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAut
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Leonor Almeida
@@ -26,12 +25,9 @@ public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectAuth
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-            ExternalActivity externalActivity = (ExternalActivity) persistentObject
-                    .readByOID(ExternalActivity.class, objectId);
+            ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(objectId);
 
             return externalActivity.getTeacher().equals(teacher);
-        } catch (ExcepcaoPersistencia e) {
-            return false;
         } catch (Exception e) {
             return false;
         }

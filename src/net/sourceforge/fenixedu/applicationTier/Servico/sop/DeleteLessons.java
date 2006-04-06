@@ -26,7 +26,7 @@ public class DeleteLessons extends Service {
 
     public static void deleteLesson(final ISuportePersistente persistentSupport, final Integer lessonOID)
             throws ExcepcaoPersistencia {
-        final Lesson lesson = (Lesson) persistentObject.readByOID(Lesson.class, lessonOID);
+        final Lesson lesson = rootDomainObject.readLessonByOID(lessonOID);
         deleteLesson(persistentSupport, lesson);
     }
 

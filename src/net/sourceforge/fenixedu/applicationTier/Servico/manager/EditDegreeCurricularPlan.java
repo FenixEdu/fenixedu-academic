@@ -18,7 +18,7 @@ public class EditDegreeCurricularPlan extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToEdit = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
+        final DegreeCurricularPlan dcpToEdit = rootDomainObject.readDegreeCurricularPlanByOID(
                         infoDcp.getIdInternal());
         if (dcpToEdit == null) {
             throw new FenixServiceException("message.nonExistingDegreeCurricularPlan");

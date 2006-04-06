@@ -36,7 +36,7 @@ public class ReadAvailableClassesForShift extends Service {
 
         List infoClasses = null;
 
-        Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftOID);
+        Shift shift = rootDomainObject.readShiftByOID(shiftOID);
 
         List curricularCourses = shift.getDisciplinaExecucao().getAssociatedCurricularCourses();
         List scopes = new ArrayList();

@@ -19,9 +19,8 @@ public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy extends
 
     public boolean run(Integer groupOID, Integer groupProposalOID, Integer orderOfPreference)
             throws ExcepcaoPersistencia {
-        Group group = (Group) persistentObject.readByOID(Group.class, groupOID);
-        GroupProposal groupProposal = (GroupProposal) persistentObject.readByOID(
-                GroupProposal.class, groupProposalOID);
+        Group group = rootDomainObject.readGroupByOID(groupOID);
+        GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(groupProposalOID);
         if (group != null && groupProposal != null) {
             for (int i = 0; i < group.getGroupProposals().size(); i++) {
                 GroupProposal otherGroupProposal = group.getGroupProposals().get(i);

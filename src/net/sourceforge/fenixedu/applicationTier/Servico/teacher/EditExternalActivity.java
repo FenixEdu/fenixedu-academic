@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditExternalActivity extends Service {
 
     public void run(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException, ExcepcaoPersistencia {
-		ExternalActivity externalActivity = (ExternalActivity) persistentObject.readByOID(ExternalActivity.class, externalActivityId);
+		ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);
 		//If it doesn't exist in the database, a new one has to be created
 		if(externalActivity == null) {
 			Teacher teacher = rootDomainObject.readTeacherByOID(infoExternalActivity.getInfoTeacher().getIdInternal());

@@ -18,8 +18,7 @@ public class ReadNumerusClausus extends Service {
 
         DegreeCurricularPlan degreeCurricularPlan = null;
 
-        degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(
-                DegreeCurricularPlan.class, degreeCurricularPlanID);
+        degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException();

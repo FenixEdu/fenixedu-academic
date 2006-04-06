@@ -22,8 +22,7 @@ public class ReadPosGradStudentCurricularPlanById extends Service {
     public Object run(Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
-                .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
 
         if (studentCurricularPlan != null) {
             infoStudentCurricularPlan = InfoStudentCurricularPlanWithInfoStudentAndDegreeAndBranch

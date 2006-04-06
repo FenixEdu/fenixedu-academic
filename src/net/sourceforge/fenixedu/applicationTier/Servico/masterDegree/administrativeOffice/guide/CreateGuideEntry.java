@@ -18,7 +18,7 @@ public class CreateGuideEntry extends Service {
     public void run(Integer guideID, GraduationType graduationType, DocumentType documentType,
             String description, Double price, Integer quantity) throws ExcepcaoPersistencia {
 
-        Guide guide = (Guide) persistentObject.readByOID(Guide.class, guideID);
+        Guide guide = rootDomainObject.readGuideByOID(guideID);
 
         GuideEntry guideEntry = DomainFactory.makeGuideEntry();
 

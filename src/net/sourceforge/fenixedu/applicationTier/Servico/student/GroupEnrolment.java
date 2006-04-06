@@ -34,7 +34,7 @@ public class GroupEnrolment extends Service {
 
     public boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
             String studentUsername) throws FenixServiceException, ExcepcaoPersistencia {
-        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupingID);
+        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
         if (grouping == null) {
             throw new NonExistingServiceException();
         }

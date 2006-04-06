@@ -29,7 +29,7 @@ public class DeleteBranches extends Service {
 
 		while (iter.hasNext()) {
 			internalId = (Integer) iter.next();
-			branch = (Branch) persistentObject.readByOID(Branch.class, internalId);
+			branch = rootDomainObject.readBranchByOID(internalId);
 			if (branch != null) {
 				try {
 					if (branch.getStudentCurricularPlans().isEmpty()) {

@@ -22,7 +22,7 @@ public class ReadLessonByOID extends Service {
 	public InfoLesson run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoLesson result = null;
 
-		Lesson lesson = (Lesson) persistentObject.readByOID(Lesson.class, oid);
+		Lesson lesson = rootDomainObject.readLessonByOID(oid);
 		if (lesson != null) {
 			InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod
 					.newInfoFromDomain(lesson);

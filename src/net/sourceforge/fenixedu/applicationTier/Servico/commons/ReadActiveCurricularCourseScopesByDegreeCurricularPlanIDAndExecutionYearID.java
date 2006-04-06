@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID extends Service {
 
     public List run(Integer degreeCurricularPlanId, Integer executionYearID) throws ExcepcaoPersistencia {
-        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class, executionYearID);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
         return persistentSupport.getIPersistentCurricularCourseScope()
                 .readCurricularCourseScopesByDegreeCurricularPlanInExecutionYear(degreeCurricularPlanId,

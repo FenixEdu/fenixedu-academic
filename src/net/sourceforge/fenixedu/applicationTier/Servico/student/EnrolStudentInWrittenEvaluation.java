@@ -14,8 +14,7 @@ public class EnrolStudentInWrittenEvaluation extends Service {
 
         final Student student = Student.readByUsername(username);
 
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(
-                WrittenEvaluation.class, writtenEvaluationOID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationOID);
         if (writtenEvaluation == null || student == null) {
             throw new InvalidArgumentsServiceException();
         }

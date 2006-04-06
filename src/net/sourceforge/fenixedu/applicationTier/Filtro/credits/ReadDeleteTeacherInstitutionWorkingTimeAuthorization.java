@@ -26,8 +26,7 @@ public class ReadDeleteTeacherInstitutionWorkingTimeAuthorization extends
     protected Integer getTeacherId(Object[] arguments)
             throws ExcepcaoPersistencia {
         Integer teacherInstitutionWorkingTime = (Integer) arguments[0];
-        TeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime) persistentObject
-                .readByOID(TeacherInstitutionWorkTime.class, teacherInstitutionWorkingTime);
+        TeacherInstitutionWorkTime teacherInstitutionWorkTime = rootDomainObject.readTeacherInstitutionWorkTimeByOID(teacherInstitutionWorkingTime);
         return teacherInstitutionWorkTime != null ? teacherInstitutionWorkTime.getTeacher()
                 .getIdInternal() : null;
     }

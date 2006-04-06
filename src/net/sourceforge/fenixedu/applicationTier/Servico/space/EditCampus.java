@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditCampus extends Service {
 
     public void run(final Integer campusInformationID, final Boolean asNewVersion, final String name) throws ExcepcaoPersistencia {
-    	final CampusInformation campusInformation = (CampusInformation) persistentObject.readByOID(CampusInformation.class, campusInformationID);
+    	final CampusInformation campusInformation = (CampusInformation) rootDomainObject.readSpaceInformationByOID(campusInformationID);
         if (asNewVersion.booleanValue()) {
         	final Campus campus = (Campus) campusInformation.getSpace();
         	campus.edit(name);

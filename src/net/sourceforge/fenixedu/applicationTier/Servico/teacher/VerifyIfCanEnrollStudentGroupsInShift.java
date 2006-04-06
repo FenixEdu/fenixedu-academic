@@ -23,13 +23,13 @@ public class VerifyIfCanEnrollStudentGroupsInShift extends Service {
 
     public boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupPropertiesCode);
+        final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftCode);
+        final Shift shift = rootDomainObject.readShiftByOID(shiftCode);
 
         if (grouping.getShiftType() != shift.getTipo()) {
             return false;
