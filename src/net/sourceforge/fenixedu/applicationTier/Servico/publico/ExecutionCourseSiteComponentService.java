@@ -31,7 +31,7 @@ public class ExecutionCourseSiteComponentService extends Service {
         if (infoSiteCode != null)
             site = (Site) persistentObject.readByOID(Site.class, infoSiteCode);
         else {
-        	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+        	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourseCode);
             site = executionCourse.getSite();
         }
 

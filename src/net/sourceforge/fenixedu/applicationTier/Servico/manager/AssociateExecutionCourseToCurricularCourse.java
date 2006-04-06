@@ -16,12 +16,12 @@ public class AssociateExecutionCourseToCurricularCourse extends Service {
     public void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, curricularCourseId);
+        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodId);
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
         if (executionPeriod == null) {
             throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
         }
@@ -33,7 +33,7 @@ public class AssociateExecutionCourseToCurricularCourse extends Service {
             }
         }
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }

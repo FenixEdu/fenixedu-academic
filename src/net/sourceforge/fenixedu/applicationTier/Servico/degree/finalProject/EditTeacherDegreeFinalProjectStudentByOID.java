@@ -28,9 +28,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
             throw new FenixServiceException("message.student-not-found");
         }
 
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod()
-                        .getIdInternal());
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod().getIdInternal());
         if (executionPeriod == null) {
             throw new FenixServiceException("message.execution-period-not-found");
         }
@@ -66,7 +64,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
             }
         }
         if (percentage > 100) {
-            final List<InfoTeacherDegreeFinalProjectStudent> infoTeacherDegreeFinalProjectStudentList = new ArrayList(
+            final List<InfoTeacherDegreeFinalProjectStudent> infoTeacherDegreeFinalProjectStudentList = new ArrayList<InfoTeacherDegreeFinalProjectStudent>(
                     student.getTeacherDegreeFinalProjectStudentCount());
             for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : student
                     .getTeacherDegreeFinalProjectStudent()) {

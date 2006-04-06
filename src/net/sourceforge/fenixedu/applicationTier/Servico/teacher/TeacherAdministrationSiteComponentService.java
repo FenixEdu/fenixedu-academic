@@ -20,7 +20,7 @@ public class TeacherAdministrationSiteComponentService extends Service {
             ISiteComponent bodyComponent, Integer infoSiteCode, Object obj1, Object obj2)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourseCode);
         final Site site = executionCourse.getSite();
 
         final TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder

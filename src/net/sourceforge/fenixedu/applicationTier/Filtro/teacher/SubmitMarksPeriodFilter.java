@@ -22,7 +22,7 @@ public class SubmitMarksPeriodFilter extends Filtro {
 		Integer executionPeriodId = 83;
 		
 		Object[] arguments = getServiceCallArguments(request);
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, (Integer) arguments[0]);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( (Integer) arguments[0]);
 		if(executionCourse != null) {
 			if(executionCourse.getExecutionPeriod().getIdInternal().equals(executionPeriodId)) {
 				if(now.after(start) && now.before(end)) {

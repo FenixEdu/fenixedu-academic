@@ -28,14 +28,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadAllClasses extends Service {
 
 	public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException, ExcepcaoPersistencia {
-		List infoClasses = null;
+		List<InfoClass> infoClasses = null;
 
-		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-				ExecutionPeriod.class, keyExecutionPeriod);
+		ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(keyExecutionPeriod);
 
 		List classes = executionPeriod.getSchoolClasses();
 
-		infoClasses = new ArrayList();
+		infoClasses = new ArrayList<InfoClass>();
 		Iterator iter = classes.iterator();
 		while (iter.hasNext()) {
 			SchoolClass dClass = (SchoolClass) iter.next();

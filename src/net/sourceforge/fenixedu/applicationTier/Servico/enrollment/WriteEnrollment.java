@@ -30,7 +30,7 @@ public class WriteEnrollment extends Service {
         if (executionPeriodID == null) {
             executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,executionPeriodID);
+            executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
         }
 
 		Enrolment enrollment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,executionPeriod);

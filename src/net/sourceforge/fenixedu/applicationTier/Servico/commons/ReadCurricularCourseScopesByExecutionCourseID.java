@@ -28,7 +28,7 @@ public class ReadCurricularCourseScopesByExecutionCourseID extends Service {
 
         // Read The ExecutionCourse
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseID);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseID);
 
         // For all associated Curricular Courses read the Scopes
 

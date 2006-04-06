@@ -40,7 +40,7 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 		
 		List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
 		for(Integer executionPeriodID : executionPeriodsIDs){
-			executionPeriodList.add((ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID));
+			executionPeriodList.add(rootDomainObject.readExecutionPeriodByOID(executionPeriodID));
 		}
 
 

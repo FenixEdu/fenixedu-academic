@@ -11,7 +11,7 @@ public class EditCustomizationOptions extends Service {
 
     public boolean run(Integer infoExecutionCourseCode, InfoSite infoSiteNew)
             throws FenixServiceException, ExcepcaoPersistencia {
-    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourseCode);
         final Site site = executionCourse.getSite();
 
         site.setAlternativeSite(infoSiteNew.getAlternativeSite());

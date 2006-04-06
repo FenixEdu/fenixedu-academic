@@ -14,7 +14,7 @@ public class EditEvaluation extends Service {
     public boolean run(Integer infoExecutionCourseCode, Integer infoEvaluationMethodCode,
             InfoEvaluationMethod infoEvaluationMethod) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourseCode);
 
         if (executionCourse.getEvaluationMethod() == null) { // Create a new one
             executionCourse.createEvaluationMethod(infoEvaluationMethod.getEvaluationElements(),

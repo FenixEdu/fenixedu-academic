@@ -29,9 +29,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlanBaseService {
 
-    public List run(Integer degreeCurricularPlanId, Integer executionPeriodId, Locale locale,
-            String arg) throws FenixServiceException, ExcepcaoPersistencia {
-
+    public List run(Integer degreeCurricularPlanId, Integer executionPeriodId, Locale locale, String arg) throws FenixServiceException, ExcepcaoPersistencia {
         if (degreeCurricularPlanId == null) {
             throw new FenixServiceException("null degreeCurricularPlanId");
         }
@@ -41,8 +39,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
                     .readActiveCurricularCourseScopes(degreeCurricularPlanId), locale);
         }
 
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, executionPeriodId);
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
         if (executionPeriod == null || executionPeriod.getExecutionYear() == null) {
             throw new FenixServiceException("null executionPeriod");
         }
@@ -55,8 +52,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
     public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
             Integer curricularYear, Locale locale) throws FenixServiceException, ExcepcaoPersistencia {
-        final ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("null degreeCurricularPlan");
@@ -66,8 +62,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
             return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
                     .readActiveCurricularCourseScopes(degreeCurricularPlan.getIdInternal()), locale);
         }
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
         if (executionPeriod == null || executionPeriod.getExecutionYear() == null) {
             throw new FenixServiceException("nullDegree");
         }
@@ -78,9 +73,9 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
     }
 
     
-    private List groupScopesByCurricularYearAndCurricularCourseAndBranch(List scopes, Locale locale) {
+    private List groupScopesByCurricularYearAndCurricularCourseAndBranch(List<InfoCurricularCourseScope> scopes, Locale locale) {
         List result = new ArrayList();
-        List temp = new ArrayList();
+        List<InfoCurricularCourseScope> temp = new ArrayList<InfoCurricularCourseScope>();
 
         ComparatorChain comparatorChain = new ComparatorChain();
 
@@ -90,7 +85,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
         comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
         comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
 
-        List scopesAux = new ArrayList(scopes);
+        List<InfoCurricularCourseScope> scopesAux = new ArrayList<InfoCurricularCourseScope>(scopes);
         Collections.sort(scopesAux, comparatorChain);
 
         if (scopesAux != null && scopesAux.size() > 0) {
@@ -117,7 +112,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
                     temp.add(scope);
                 } else {
                     result.add(temp);
-                    temp = new ArrayList();
+                    temp = new ArrayList<InfoCurricularCourseScope>();
                     year = scopeYear;
                     curricularCourse = scopeCurricularCourse;
                     temp.add(scope);
@@ -135,8 +130,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
     
     public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanId, Integer executionYear, String arg)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
         if (degreeCurricularPlan != null) {

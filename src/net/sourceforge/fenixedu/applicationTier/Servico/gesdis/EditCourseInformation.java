@@ -22,7 +22,7 @@ public class EditCourseInformation extends Service {
         if (courseReportID != 0) {
             courseReport = (CourseReport) persistentObject.readByOID(CourseReport.class, courseReportID);
         } else {
-            final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoCourseReport.getInfoExecutionCourse().getIdInternal());
+            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoCourseReport.getInfoExecutionCourse().getIdInternal());
 
             courseReport = executionCourse.createCourseReport(newReport);
         }

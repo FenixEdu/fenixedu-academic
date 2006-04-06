@@ -97,6 +97,6 @@ public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
     }
 
     private ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
-        return (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+        return rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
     }
 }

@@ -21,7 +21,7 @@ public class ReadExecutionCourseSite extends Service {
 
         InfoSite infoSite = null;
 
-    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
         final Site site = executionCourse.getSite();
 
         if (site != null)

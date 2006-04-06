@@ -23,24 +23,23 @@ public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurr
     public List<ExecutionCourse> run(Integer degreeCurricularPlanID, Integer executionPeriodID,
             Integer curricularYearID) throws ExcepcaoPersistencia, FenixServiceException {
 
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID);
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
         if (executionPeriod == null) {
             throw new FenixServiceException("error.no.executionPeriod");
         }
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
-                        degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.coordinator.noDegreeCurricularPlan");
         }
         CurricularYear curricularYear = null;
         if (curricularYearID != 0) {
-            curricularYear = (CurricularYear) persistentObject.readByOID(CurricularYear.class, curricularYearID);
+            curricularYear = rootDomainObject.readCurricularYearByOID(curricularYearID);
             if (curricularYear == null) {
                 throw new FenixServiceException("error.no.curYear");
             }
         }
 
-        final List<ExecutionCourse> result = new ArrayList();
+        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
             if (belongToDegreeCurricularPlanAndCurricularYear(executionCourse, degreeCurricularPlan,
                     curricularYear)) {

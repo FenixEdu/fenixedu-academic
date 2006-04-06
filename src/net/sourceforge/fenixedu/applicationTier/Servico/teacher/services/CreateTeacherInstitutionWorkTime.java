@@ -21,9 +21,8 @@ public class CreateTeacherInstitutionWorkTime extends Service {
     public void run(Integer teacherID, Integer executioPeriodID,
             InstitutionWorkTimeDTO institutionWorkTimeDTO) throws ExcepcaoPersistencia {
 
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
-                teacherID);
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executioPeriodID);
+        Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executioPeriodID);
 
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService == null) {

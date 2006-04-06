@@ -40,8 +40,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, executionPeriodID);
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
 
         StudentCurricularPlan studentCurricularPlan = null;
         if (infoStudent != null && infoStudent.getNumber() != null) {

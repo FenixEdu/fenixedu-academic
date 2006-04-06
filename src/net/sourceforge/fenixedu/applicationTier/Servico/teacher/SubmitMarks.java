@@ -46,7 +46,7 @@ public class SubmitMarks extends Service {
 	private static final String IMPROVMENT_DIR = "melhorias/";
 	
 	public void run(Integer executionCourseID, Integer evaluationID, String[] attendsIDs, Date evaluationDate, IUserView userView) throws ExcepcaoPersistencia, InvalidArgumentsServiceException, OutOfPeriodException {
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseID);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseID);
 		FinalEvaluation finalEvaluation = (FinalEvaluation) persistentObject.readByOID(FinalEvaluation.class, evaluationID);
 		
 		if(executionCourse == null || finalEvaluation == null) {

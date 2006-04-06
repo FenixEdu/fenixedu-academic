@@ -17,8 +17,7 @@ public class ReadTeachersByExecutionCourseResponsibility extends Service {
     }
 
     public List run(Integer executionCourseID) throws ExcepcaoPersistencia {
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
-                ExecutionCourse.class, executionCourseID);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
         final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
         for (final Professorship professorship : executionCourse.responsibleFors()) {

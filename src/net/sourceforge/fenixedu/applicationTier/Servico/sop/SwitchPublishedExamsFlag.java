@@ -20,8 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class SwitchPublishedExamsFlag extends Service {
 
     public void run(final Integer executionPeriodOID) throws ExcepcaoPersistencia {
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, executionPeriodOID);
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodOID);
         final ExecutionYear executionYear = executionPeriod.getExecutionYear();
         final List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear.getYear());
 

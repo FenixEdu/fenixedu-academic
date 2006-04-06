@@ -17,18 +17,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionPeriod extends Service {
 
 	public InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
-		InfoExecutionPeriod infoExecutionPeriod = null;
-		ExecutionPeriod executionPeriod = null;
-
-		executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-				ExecutionPeriod.class, executionPeriodId);
-
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
 		if (executionPeriod == null) {
 			throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 		}
 
-		infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
-				.newInfoFromDomain(executionPeriod);
-		return infoExecutionPeriod;
+        return InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
 	}
+    
 }

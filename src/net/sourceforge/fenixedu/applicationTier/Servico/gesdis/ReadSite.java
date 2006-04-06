@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadSite extends Service {
 
     public InfoSite run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
-    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
         final Site site = executionCourse.getSite();
         if (site != null) {
             return InfoSiteWithInfoExecutionCourse.newInfoFromDomain(site);

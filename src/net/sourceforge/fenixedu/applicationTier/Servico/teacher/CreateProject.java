@@ -17,7 +17,7 @@ public class CreateProject extends Service {
     public void run(Integer executionCourseID, String name, Date begin, Date end, String description)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseID);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");
         }        

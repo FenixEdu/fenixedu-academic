@@ -18,7 +18,7 @@ public class CreateEnrolmentPeriods extends Service {
 
     public void run(final Integer executionPeriodID, final DegreeType degreeType, final String enrolmentPeriodClassName,
     		final Date startDate, final Date endDate) throws ExcepcaoPersistencia, FenixServiceException {
-    	final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID);
+    	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
     	for (final ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
     		final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
     		if (degreeType == null || degreeType == degreeCurricularPlan.getDegree().getTipoCurso()) {

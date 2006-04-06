@@ -45,11 +45,11 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
 
     // FIXME duplicated code: this method is (almost?) identical to RoomSiteComponentBuilder.getInfoSiteRoomTimeTable
     public List run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
-    	final OldRoom room = (OldRoom) persistentObject.readByOID(OldRoom.class, infoRoom.getIdInternal());
+    	final OldRoom room = rootDomainObject.readOldRoomByOID(infoRoom.getIdInternal());
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
 
         Calendar startDay = Calendar.getInstance();
         startDay.setTimeInMillis(day.getTimeInMillis());

@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class LerAulasDeDisciplinaExecucao extends Service {
 
     public Object run(final InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
         final List<Shift> shifts = executionCourse.getAssociatedShifts();
 
         // An estimated upper bound for the number of elements is three lessons per shift.

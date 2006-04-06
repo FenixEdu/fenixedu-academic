@@ -17,7 +17,7 @@ public class EditSite extends Service {
 
     public Boolean run(InfoSite infoSiteOld, InfoSite infoSiteNew) throws FenixServiceException,
             ExcepcaoPersistencia {
-    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoSiteOld.getInfoExecutionCourse().getIdInternal());
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoSiteOld.getInfoExecutionCourse().getIdInternal());
         final Site site = executionCourse.getSite();
 
         site.edit(infoSiteNew.getInitialStatement(), infoSiteNew.getIntroduction(), infoSiteNew

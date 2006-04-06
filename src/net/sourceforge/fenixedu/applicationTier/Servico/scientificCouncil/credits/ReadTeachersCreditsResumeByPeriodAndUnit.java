@@ -122,7 +122,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
         }
     }
 
-    private void setAllTopDisplayUnits(Unit unit, Set displayUnits) {
+    private void setAllTopDisplayUnits(Unit unit, Set<Unit> displayUnits) {
         if (unit.getType() != null
                 && (unit.getType().equals(PartyTypeEnum.SCIENTIFIC_AREA) || unit.getType().equals(
                         PartyTypeEnum.SECTION)) && unit.getCostCenterCode() != null) {
@@ -156,10 +156,8 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
         creditLine.getCreditsByExecutionPeriod().put(executionPeriod, totalCredits);
     }
 
-    private void setPastCredits(Teacher teacher, TeacherCreditsReportDTO creditLine)
-            throws ExcepcaoPersistencia {
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, 1);
+    private void setPastCredits(Teacher teacher, TeacherCreditsReportDTO creditLine) throws ExcepcaoPersistencia {
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(1);
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService != null) {
             creditLine.setPastCredits(teacherService.getPastServiceCredits());
@@ -184,8 +182,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
     }
 
     public static class TeacherCreditsReportDTO {
-        Map<ExecutionPeriod, Double> creditsByExecutionPeriod = new TreeMap(new BeanComparator(
-                "beginDate"));
+        Map<ExecutionPeriod, Double> creditsByExecutionPeriod = new TreeMap<ExecutionPeriod, Double>(new BeanComparator("beginDate"));
 
         Teacher teacher;
 

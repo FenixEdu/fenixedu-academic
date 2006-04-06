@@ -20,8 +20,8 @@ public class ExecutionDataIsForNotYetOpenedPeriodFilter extends Filtro {
         Integer executionCourseDestinationId = (Integer) serviceArgs[0];
         Integer executionCourseSourceId = (Integer) serviceArgs[1];
 
-        ExecutionCourse executionCourseDestination = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseDestinationId);
-        ExecutionCourse executionCourseSource = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseSourceId);
+        ExecutionCourse executionCourseDestination = rootDomainObject.readExecutionCourseByOID( executionCourseDestinationId);
+        ExecutionCourse executionCourseSource = rootDomainObject.readExecutionCourseByOID( executionCourseSourceId);
 
         long now = System.currentTimeMillis();
         if (executionCourseDestination.getExecutionPeriod().getBeginDate().getTime() < now

@@ -40,7 +40,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         List infoStudentList = null;
         CurricularCourse curricularCourse = null;
 
-    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseCode);
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseCode);
         final Site site = executionCourse.getSite();
 
         if (courseCode == null) {

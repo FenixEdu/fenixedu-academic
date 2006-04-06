@@ -9,9 +9,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadNextExecutionPeriod extends Service {
 
     public InfoExecutionPeriod run(final Integer oid) throws ExcepcaoPersistencia {
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, oid);
-        return (executionPeriod != null && executionPeriod.getNextExecutionPeriod() != null) ?
-                InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod) : null;
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(oid);
+        return (executionPeriod != null && executionPeriod.getNextExecutionPeriod() != null) ? InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod) : null;
     }
 
 }

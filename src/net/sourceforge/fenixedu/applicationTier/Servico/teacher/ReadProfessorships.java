@@ -24,16 +24,13 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
 
         ExecutionPeriod executionPeriod = null;
         if (executionPeriodCode != null) {
-            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                    ExecutionPeriod.class, executionPeriodCode);
+            executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodCode);
         }
 
         Teacher teacher = Teacher.readTeacherByUsername(userView.getUtilizador());
 
-        List professorships = teacher.getProfessorships();
-        List professorshipsList = new ArrayList();
-        professorshipsList.addAll(professorships);
-
+        List<Professorship> professorships = teacher.getProfessorships();
+        List<Professorship> professorshipsList = new ArrayList<Professorship>(professorships);
         if (executionPeriod != null) {
             Iterator iterProfessorships = professorships.iterator();
             while (iterProfessorships.hasNext()) {
@@ -44,10 +41,8 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
             }
         }
 
-        final List responsibleFors = teacher.responsibleFors();
-        List responsibleForsList = new ArrayList();
-        responsibleForsList.addAll(responsibleFors);
-
+        final List<Professorship> responsibleFors = teacher.responsibleFors();
+        List<Professorship> responsibleForsList = new ArrayList<Professorship>(responsibleFors);
         if (executionPeriod != null) {
             Iterator iterResponsibleFors = responsibleFors.iterator();
             while (iterResponsibleFors.hasNext()) {

@@ -25,8 +25,8 @@ public class ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod extends
     
 	public List<InfoCurricularCourse> run(Integer studentCurricularPlanId, Integer executionPeriodId)
 	throws ExcepcaoPersistencia {
-		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
-		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodId);
+		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
+		ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
 		List<Enrolment> enrollments = studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod);
 		
 		List<InfoCurricularCourse> enrolledCurricularCourses = new ArrayList<InfoCurricularCourse>();

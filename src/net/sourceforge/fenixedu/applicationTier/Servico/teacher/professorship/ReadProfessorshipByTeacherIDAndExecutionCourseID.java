@@ -20,7 +20,7 @@ public class ReadProfessorshipByTeacherIDAndExecutionCourseID extends Service {
             throws ExcepcaoPersistencia {
         Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
                 teacherID);
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseID);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseID);
 
         return teacher.getProfessorshipByExecutionCourse(executionCourse);
     }

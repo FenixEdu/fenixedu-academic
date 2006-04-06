@@ -15,7 +15,7 @@ public class CreateAnnouncement extends Service {
     public boolean run(Integer infoExecutionCourseCode, String announcementTitle,
             String announcementInformation) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
 
-    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourseCode);
         final Site site = executionCourse.getSite();
 
         if (site == null)

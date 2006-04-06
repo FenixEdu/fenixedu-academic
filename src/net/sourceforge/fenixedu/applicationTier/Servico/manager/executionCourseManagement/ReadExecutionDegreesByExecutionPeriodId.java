@@ -23,22 +23,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionDegreesByExecutionPeriodId extends Service {
 
     public List run(Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
-
-        List infoExecutionDegreeList = null;
-
         if (executionPeriodId == null) {
             throw new FenixServiceException("nullId");
         }
-
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, executionPeriodId);
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
 
         List executionDegrees = ExecutionDegree.getAllByExecutionYear(executionPeriod
                 .getExecutionYear().getYear());
 
         Iterator iterator = executionDegrees.iterator();
-        infoExecutionDegreeList = new ArrayList();
-
+        List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
         while (iterator.hasNext()) {
             final ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
             final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);

@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionCourseResponsiblesIds extends Service {
 
     public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseId);
         
         List<Professorship> responsibles = executionCourse.responsibleFors();
 

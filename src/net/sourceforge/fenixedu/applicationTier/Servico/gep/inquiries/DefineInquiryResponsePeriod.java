@@ -8,11 +8,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DefineInquiryResponsePeriod extends Service {
 
-    public void run(final Integer executionPeriodID, final Date inquiryResponseBegin, final Date inquiryResponseEnd)
-            throws ExcepcaoPersistencia {
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
-                ExecutionPeriod.class, executionPeriodID);
-
+    public void run(final Integer executionPeriodID, final Date inquiryResponseBegin, final Date inquiryResponseEnd) throws ExcepcaoPersistencia {
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
         executionPeriod.setInquiryResponseBegin(inquiryResponseBegin);
         executionPeriod.setInquiryResponseEnd(inquiryResponseEnd);
     }

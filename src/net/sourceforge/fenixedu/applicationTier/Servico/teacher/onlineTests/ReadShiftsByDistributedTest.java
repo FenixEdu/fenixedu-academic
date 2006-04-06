@@ -30,7 +30,7 @@ public class ReadShiftsByDistributedTest extends Service {
 			studentsList = persistentSupport.getIPersistentStudentTestQuestion()
 					.readStudentsByDistributedTest(distributedTestId);
 
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseId);
 		if (executionCourse == null) {
 			throw new InvalidArgumentsServiceException();
 		}
