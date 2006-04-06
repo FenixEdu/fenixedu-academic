@@ -21,20 +21,18 @@ public class PersonRecipient extends Recipient {
 	{
 		this.subject = person;
 	}
-	
-	public Person getSubject()
-	{
-		return subject;
-	}
-
-	public void setSubject(Person subject)
-	{
-		this.subject = subject;
-	}
 
 	@Override
 	public EMailAddress getAddress() {
-		return new EMailAddress(this.getSubject().getEmail());
+		return new EMailAddress(this.subject.getEmail());
+	}
+
+	public Person getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Person subject) {
+		this.subject = subject;
 	}
 	
 }

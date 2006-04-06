@@ -196,7 +196,7 @@ public abstract class MailSenderAction extends FenixDispatchAction {
 			String[] copyToString = sendMailForm.getCopyTo().split(",");
 			EMailAddress[] copyTo = new EMailAddress[copyToString.length];
 			for (int i = 0; i < copyToString.length; i++) {
-				copyTo[i] = new EMailAddress(copyToString[i]);
+				copyTo[i] = new EMailAddress(copyToString[i].trim());
 			}
 
 			parameters.copyTo = copyTo;
