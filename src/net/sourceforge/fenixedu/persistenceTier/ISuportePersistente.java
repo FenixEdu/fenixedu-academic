@@ -27,8 +27,6 @@ public interface ISuportePersistente {
 
 	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
 
-	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
-
     public IPersistentMetadata getIPersistentMetadata();
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
