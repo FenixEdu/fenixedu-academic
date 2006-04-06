@@ -17,7 +17,6 @@ import java.util.TreeMap;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -33,31 +32,22 @@ import org.apache.commons.collections.Transformer;
  */
 public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 
-	public SendWebSiteSectionFileToServer() {
-
-	}
-
 	public Boolean run(final Integer sectionCode, InfoWebSiteItem lastInfoWebSiteItem)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		List<WebSiteSection> sections = new ArrayList();
+
+        List<WebSiteSection> sections = new ArrayList<WebSiteSection>();
 		if (sectionCode == null) {
 			// in case of configuration we have to update all sections
-			sections = RootDomainObject.getInstance().getWebSiteSections();
+			sections = rootDomainObject.getWebSiteSections();
 		} else {
-			WebSiteSection webSiteSectionTmp;
-			webSiteSectionTmp = (WebSiteSection) persistentObject.readByOID(
-					WebSiteSection.class, sectionCode);
+			WebSiteSection webSiteSectionTmp = rootDomainObject.readWebSiteSectionByOID(sectionCode);
 			sections.add(webSiteSectionTmp);
 		}
-		Iterator iterSections = sections.iterator();
-		while (iterSections.hasNext()) {
-			WebSiteSection webSiteSection = (WebSiteSection) iterSections.next();
-
+		
+		for (WebSiteSection webSiteSection : sections) {
 			List<WebSiteItem> webSiteItems = webSiteSection.getPublishedWebSiteItems(); 
-			final InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection
-					.newInfoFromDomain(webSiteSection);
-			List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
-
+			final InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(webSiteSection);
+			List<InfoWebSiteItem> infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
 				public Object transform(Object arg0) {
 					WebSiteItem webSiteItem = (WebSiteItem) arg0;
 					InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
@@ -65,7 +55,6 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 					return infoWebSiteItem;
 				}
 			});
-
 			infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
 
 			BeanComparator beanComparator = getBeanComparator(infoWebSiteSection);
@@ -83,13 +72,13 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 			// date has today's date
 			// and the number of items to show is limited by size of section
 
-			List excerptsList = new ArrayList();
+			List<InfoWebSiteItem> excerptsList = new ArrayList<InfoWebSiteItem>();
 			excerptsList.addAll(infoWebSiteSection.getInfoItemsList());
 
 			// beginning of file
 			String excerptsFile = new String();
 
-			if (excerptsList.size() == 0) {
+			if (excerptsList.isEmpty()) {
 				// build no items file
 				excerptsFile = excerptsFile.concat("<p>\n\t\t");
 				excerptsFile = excerptsFile.concat("Não existem " + infoWebSiteSection.getName() + "\n");
@@ -98,12 +87,12 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 			} else {
 				// limits number of items to mandatory section size in
 				// website
-				if (excerptsList.size() > infoWebSiteSection.getSize().intValue()) {
+				if (excerptsList.size() > infoWebSiteSection.getSize()) {
 					Calendar today = Calendar.getInstance();
-					List limitedList = new ArrayList();
+					List<InfoWebSiteItem> limitedList = new ArrayList<InfoWebSiteItem>();
 					int i = 0;
 					ListIterator iterItems = excerptsList.listIterator();
-					while (i < infoWebSiteSection.getSize().intValue() && iterItems.hasNext()) {
+					while (i < infoWebSiteSection.getSize() && iterItems.hasNext()) {
 						InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
 						// show only published items that have to be
 						// published
@@ -114,20 +103,17 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 							i++;
 						}
 					}
-					excerptsList = (ArrayList) limitedList;
+					excerptsList = limitedList;
 
 					// be sure that we have at least one excerpt
-					if (excerptsList.size() == 0) {
+					if (excerptsList.isEmpty()) {
 						excerptsList.add(infoWebSiteSection.getInfoItemsList().get(0));
 					}
 				}
 
-				Iterator iterItems = excerptsList.iterator();
-				while (iterItems.hasNext()) {
-					InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
+				for (InfoWebSiteItem infoWebSiteItem : excerptsList) {
 					excerptsFile = putBegginingOfItem(excerptsFile, infoWebSiteItem);
-					excerptsFile = putExcerpt(infoWebSiteSection, excerptsFile, infoWebSiteItem,
-							currentMonth, currentMonthFileName);
+					excerptsFile = putExcerpt(infoWebSiteSection, excerptsFile, infoWebSiteItem, currentMonth, currentMonthFileName);
 				}
 			}
 
@@ -159,17 +145,17 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 			// case
 			// some item was deleted
 
-			List items = new ArrayList();
+			List<InfoWebSiteItem> items = new ArrayList<InfoWebSiteItem>();
 			items.addAll(infoWebSiteSection.getInfoItemsList());
 
-			List monthList = new ArrayList();
+			List<InfoWebSiteItem> monthList = new ArrayList<InfoWebSiteItem>();
             Comparator<Integer> comparator = new Comparator<Integer>() {
                 public int compare(Integer o1, Integer o2) {
                     return 0 - o1.compareTo(o2);
                 }
             };
-			Map monthsToCreateLinks = new TreeMap(comparator);
-			Map monthsToCreateFiles = new TreeMap(comparator);
+			Map<Integer,List<Integer>> monthsToCreateLinks = new TreeMap<Integer,List<Integer>>(comparator);
+			Map<Integer,List<Integer>> monthsToCreateFiles = new TreeMap<Integer,List<Integer>>(comparator);
 			Calendar calendarCycle = Calendar.getInstance();
 			Calendar calendarLast = Calendar.getInstance();
 			if (lastInfoWebSiteItem != null) {
@@ -177,9 +163,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 				calendarLast.setTime(dateToSort(infoWebSiteSection, lastInfoWebSiteItem));
 
 				// get items with the same month as last inserted
-				Iterator iterItems = infoWebSiteSection.getInfoItemsList().iterator();
-				while (iterItems.hasNext()) {
-					InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
+				for (InfoWebSiteItem infoWebSiteItem : infoWebSiteSection.getInfoItemsList()) {
 					calendarCycle.clear();
 					calendarCycle.setTime(dateToSort(infoWebSiteSection, infoWebSiteItem));
 					if (calendarCycle.get(Calendar.MONTH) == calendarLast.get(Calendar.MONTH)
@@ -191,10 +175,9 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 				if (monthList.size() > 1) {
 					// file already exists so only this file needs to be
 					// refreshed
-					List monthToRefresh = new ArrayList();
-					monthToRefresh.add(new Integer(calendarLast.get(Calendar.MONTH)));
-					monthsToCreateFiles
-							.put(new Integer(calendarLast.get(Calendar.YEAR)), monthToRefresh);
+					List<Integer> monthToRefresh = new ArrayList<Integer>();
+					monthToRefresh.add(Integer.valueOf(calendarLast.get(Calendar.MONTH)));
+					monthsToCreateFiles.put(Integer.valueOf(calendarLast.get(Calendar.YEAR)), monthToRefresh);
 
 					items = monthList;
 				} else {
@@ -204,9 +187,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 					copyNewHashmapForFiles(monthsToCreateLinks, monthsToCreateFiles);
 				}
 			} else {
-				Iterator iterItems = infoWebSiteSection.getInfoItemsList().iterator();
-				while (iterItems.hasNext()) {
-					InfoWebSiteItem infoWebSiteItem = (InfoWebSiteItem) iterItems.next();
+				for (InfoWebSiteItem infoWebSiteItem : infoWebSiteSection.getInfoItemsList()) {
 					calendarCycle.clear();
 					calendarCycle.setTime(dateToSort(infoWebSiteSection, infoWebSiteItem));
 
@@ -231,7 +212,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 					String fileName = infoWebSiteSection.getFtpName() + year.toString() + "_"
 							+ new Integer(monthLink.intValue() + 1).toString() + ".html";
 
-					List thisMonthList = new ArrayList();
+					List<InfoWebSiteItem> thisMonthList = new ArrayList<InfoWebSiteItem>();
 					// if month of last item is new we have to recreate all
 					// files for other months
 					if (monthList.size() <= 1) {
@@ -338,18 +319,18 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 	 * @param monthsToCreateLinks
 	 * @param monthsToCreateFiles
 	 */
-	private void copyNewHashmapForFiles(Map monthsToCreateLinks, Map monthsToCreateFiles) {
-		List allMonthLinks = null;
+	private void copyNewHashmapForFiles(Map<Integer,List<Integer>> monthsToCreateLinks, Map<Integer,List<Integer>> monthsToCreateFiles) {
+		List<Integer> allMonthLinks = null;
 		Integer yearMap = null;
-		Iterator iterYearsMap = monthsToCreateLinks.entrySet().iterator();
+		Iterator<Map.Entry<Integer,List<Integer>>> iterYearsMap = monthsToCreateLinks.entrySet().iterator();
 		while (iterYearsMap.hasNext()) {
-			Map.Entry monthsMap = (Map.Entry) iterYearsMap.next();
+			Map.Entry<Integer,List<Integer>> monthsMap = iterYearsMap.next();
 			yearMap = (Integer) monthsMap.getKey();
-			allMonthLinks = (List) monthsMap.getValue();
+			allMonthLinks = monthsMap.getValue();
 
-			List newList = new ArrayList();
+			List<Integer> newList = new ArrayList<Integer>();
 			newList.addAll(allMonthLinks);
-			monthsToCreateFiles.put(new Integer(yearMap.intValue()), newList);
+			monthsToCreateFiles.put(Integer.valueOf(yearMap), newList);
 		}
 	}
 
@@ -416,16 +397,16 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 	 * @param monthsToCreateLinks
 	 * @param calendarCycle
 	 */
-	private void findMonthsForArchive(Map monthsToCreateLinks, Calendar calendarCycle) {
-		Integer monthToCreateLink = new Integer(calendarCycle.get(Calendar.MONTH));
-		Integer yearOfMonthToCreateLink = new Integer(calendarCycle.get(Calendar.YEAR));
+	private void findMonthsForArchive(Map<Integer,List<Integer>> monthsToCreateLinks, Calendar calendarCycle) {
+		Integer monthToCreateLink = Integer.valueOf(calendarCycle.get(Calendar.MONTH));
+		Integer yearOfMonthToCreateLink = Integer.valueOf(calendarCycle.get(Calendar.YEAR));
 		if (monthsToCreateLinks.containsKey(yearOfMonthToCreateLink)) {
-			List months = (List) monthsToCreateLinks.get(yearOfMonthToCreateLink);
+			List<Integer> months = monthsToCreateLinks.get(yearOfMonthToCreateLink);
 			if (!months.contains(monthToCreateLink)) {
 				months.add(monthToCreateLink);
 			}
 		} else {
-			List months = new ArrayList();
+			List<Integer> months = new ArrayList<Integer>();
 			months.add(monthToCreateLink);
 			monthsToCreateLinks.put(yearOfMonthToCreateLink, months);
 		}
@@ -659,4 +640,5 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 		}
 		return beanComparator;
 	}
+    
 }
