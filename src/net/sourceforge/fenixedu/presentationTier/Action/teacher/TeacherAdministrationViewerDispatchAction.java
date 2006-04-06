@@ -944,7 +944,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String displayName = fileUploadForm.getString("displayName");
         ActionErrors actionErrors = new ActionErrors();
 
-        if (displayName == null || displayName.length() == 0) {
+        if (displayName == null || displayName.length() == 0 || displayName.trim().length() == 0) {
             displayName = getFilenameOnly(formFile.getFileName());
         }
 

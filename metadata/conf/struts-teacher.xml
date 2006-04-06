@@ -1651,7 +1651,7 @@
             <forward name="uploadItemFile" path="/uploadItemFile.jsp"/>
         </action>
         <action path="/fileUpload" name="fileForm" parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" scope="request">
             <forward name="viewSection" path="/viewSection.jsp"/>
             <forward name="uploadItemFile" path="/uploadItemFile.jsp"/>
         </action>
