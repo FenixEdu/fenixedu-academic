@@ -13,8 +13,7 @@ public class EditInsuranceValueByExecutionYearID extends Service {
     public void run(Integer executionYearID, Double annualValue, Date endDate)
             throws ExcepcaoPersistencia {
 
-        final ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                ExecutionYear.class, executionYearID);
+        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
         InsuranceValue insuranceValue = executionYear.getInsuranceValue();
         

@@ -27,8 +27,7 @@ public class ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID extend
         List<Advise> result;
 
         if (executionYearID != null) {
-            ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                    ExecutionYear.class, executionYearID);
+            ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
             result = teacher.getAdvisesByAdviseTypeAndExecutionYear(adviseType, executionYear);
         } else {

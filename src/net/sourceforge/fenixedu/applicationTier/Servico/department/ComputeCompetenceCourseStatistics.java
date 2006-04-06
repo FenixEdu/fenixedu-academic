@@ -26,10 +26,9 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
     public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Department department = (Department) persistentObject.readByOID(Department.class,
+        Department department = rootDomainObject.readDepartmentByOID(
                 departementID);
-        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                ExecutionYear.class, executionYearID);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
         List<CompetenceCourse> competenceCourses = department
                 .getCompetenceCoursesByExecutionYear(executionYear);

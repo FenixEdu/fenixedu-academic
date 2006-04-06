@@ -23,8 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ApagarTurma extends Service {
 
     public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
-        final SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(
-                SchoolClass.class, infoClass.getIdInternal());
+        final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
 
         // Shift
         Iterator iter = schoolClass.getAssociatedShiftsIterator();

@@ -48,8 +48,7 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
 
         if (group.getExecutionDegree() == null
                 || !group.getExecutionDegree().getIdInternal().equals(executionDegreeOID)) {
-            ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                    ExecutionDegree.class, executionDegreeOID);
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
             if (executionDegree != null) {
                 group.setExecutionDegree(executionDegree);
             }

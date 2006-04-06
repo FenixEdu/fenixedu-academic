@@ -53,8 +53,7 @@ public class ReadDegreesClassesLessons extends Service {
 		List classes = new ArrayList();
 		for (int i = 0; i < infoExecutionDegrees.size(); i++) {
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(i);
-			ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-					ExecutionDegree.class, infoExecutionDegree.getIdInternal());
+			ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 			List degreeClasses = executionDegree.getSchoolClasses();
 			for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext();) {
 				SchoolClass klass = (SchoolClass) iterator.next();

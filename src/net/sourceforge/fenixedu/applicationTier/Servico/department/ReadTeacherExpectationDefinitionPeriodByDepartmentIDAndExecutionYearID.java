@@ -16,10 +16,9 @@ public class ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYea
 
     public TeacherExpectationDefinitionPeriod run(Integer departmentID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Department department = (Department) persistentObject.readByOID(Department.class,
+        Department department = rootDomainObject.readDepartmentByOID(
                 departmentID);
-        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                ExecutionYear.class, executionYearID);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
         return department.readTeacherExpectationDefinitionPeriodByExecutionYear(executionYear);
     }

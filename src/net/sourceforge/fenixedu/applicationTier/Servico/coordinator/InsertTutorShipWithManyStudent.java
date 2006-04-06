@@ -31,8 +31,7 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
         List<Integer> studentsErrors = new ArrayList<Integer>();
         try {
             // execution degree
-            ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                    ExecutionDegree.class, executionDegreeId);
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
             String degreeCode = null;
             if (executionDegree != null && executionDegree.getDegreeCurricularPlan() != null
                     && executionDegree.getDegreeCurricularPlan().getDegree() != null) {

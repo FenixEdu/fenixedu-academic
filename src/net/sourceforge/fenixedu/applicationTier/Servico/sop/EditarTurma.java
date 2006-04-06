@@ -13,8 +13,7 @@ public class EditarTurma extends Service {
 
     public void run(final InfoClass oldClassView, final InfoClass newClassView)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final SchoolClass classToEdit = (SchoolClass) persistentObject.readByOID(
-                SchoolClass.class, oldClassView.getIdInternal());
+        final SchoolClass classToEdit = rootDomainObject.readSchoolClassByOID(oldClassView.getIdInternal());
         final ExecutionDegree executionDegree = classToEdit.getExecutionDegree();
         final ExecutionPeriod executionPeriod = classToEdit.getExecutionPeriod();
 

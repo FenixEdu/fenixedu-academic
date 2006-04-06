@@ -17,8 +17,7 @@ public class ReadFinalDegreeWorksByTeacherIDAndExecutionYearID extends Service {
     public List<Proposal> run(Integer teacherID, Integer executionYearID) throws ExcepcaoPersistencia,
             FenixServiceException {
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
-        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                ExecutionYear.class, executionYearID);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
         ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
 

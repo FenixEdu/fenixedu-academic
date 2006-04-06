@@ -14,8 +14,7 @@ public class AddShiftsToSchoolClass extends Service {
 
 	public void run(InfoClass infoClass, List<String> shiftOIDs) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		final SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(
-				SchoolClass.class, infoClass.getIdInternal());
+		final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
 		if (schoolClass == null) {
 			throw new InvalidArgumentsServiceException();
 		}

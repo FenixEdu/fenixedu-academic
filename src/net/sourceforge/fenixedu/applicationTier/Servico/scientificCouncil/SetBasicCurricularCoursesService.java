@@ -43,8 +43,7 @@ public class SetBasicCurricularCoursesService extends Service {
 
 		while (itId.hasNext()) {
 
-			CurricularCourse curricularCourseBasic = (CurricularCourse) persistentObject
-					.readByOID(CurricularCourse.class, (Integer) itId.next());
+			CurricularCourse curricularCourseBasic = (CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) itId.next());
 			curricularCourseBasic.setBasic(new Boolean(true));
 
 		}

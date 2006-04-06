@@ -27,8 +27,7 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
             lecturedExecutionCourses = teacher.getAllLecturedExecutionCourses();
 
         } else {
-            ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                    ExecutionYear.class, executionYearID);
+            ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
             lecturedExecutionCourses = teacher.getLecturedExecutionCoursesByExecutionYear(executionYear);
         }
 

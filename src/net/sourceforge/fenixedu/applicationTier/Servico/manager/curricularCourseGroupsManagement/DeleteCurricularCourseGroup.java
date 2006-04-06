@@ -11,8 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteCurricularCourseGroup extends Service {
 
     public void run(Integer groupId) throws FenixServiceException, ExcepcaoPersistencia {
-        CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentObject
-                .readByOID(CurricularCourseGroup.class, groupId);
+        CurricularCourseGroup curricularCourseGroup = rootDomainObject.readCurricularCourseGroupByOID(groupId);
 		if (curricularCourseGroup != null) {
 			try {
 				curricularCourseGroup.delete();

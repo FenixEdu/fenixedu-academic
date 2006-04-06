@@ -18,8 +18,7 @@ public class InsertSimplePrecedence extends Service {
 
     public void run(String className, Integer curricularCourseToAddPrecedenceID,
             Integer precedentCurricularCourseID, Integer number) throws FenixServiceException, ExcepcaoPersistencia {
-        CurricularCourse curricularCourseToAddPrecedence = (CurricularCourse) persistentObject
-                .readByOID(CurricularCourse.class, curricularCourseToAddPrecedenceID);
+        CurricularCourse curricularCourseToAddPrecedence = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseToAddPrecedenceID);
         if (curricularCourseToAddPrecedence == null) {
             throw new FenixServiceException("curricularCourseToAddPrecedence.NULL");
         }

@@ -34,8 +34,7 @@ public class ReadAllStudentsAndGroups extends Service {
             ExcepcaoPersistencia {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-        Grouping grouping = (Grouping) persistentObject.readByOID(
-                Grouping.class, groupingId);
+        Grouping grouping = rootDomainObject.readGroupingByOID(groupingId);
 
         if (grouping == null) {
             throw new ExistingServiceException();

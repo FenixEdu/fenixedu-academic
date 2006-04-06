@@ -42,8 +42,7 @@ public class NewProjectProposal extends Service {
             return result;
         }
  
-        Grouping groupProperties = (Grouping) persistentObject.readByOID(
-                Grouping.class, groupPropertiesId);
+        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesId);
         ExecutionCourse goalExecutionCourse = rootDomainObject.readExecutionCourseByOID(goalExecutionCourseId);
         ExecutionCourse startExecutionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
         Person senderPerson = Teacher.readTeacherByUsername(senderPersonUsername).getPerson();

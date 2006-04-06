@@ -20,13 +20,12 @@ public class SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID e
 
     public List<TeacherPersonalExpectation> run(Integer departmentID, Integer executionYearID,
             Integer teacherID) throws FenixServiceException, ExcepcaoPersistencia {
-        Department department = (Department) persistentObject.readByOID(Department.class,
+        Department department = rootDomainObject.readDepartmentByOID(
                 departmentID);
 
         List<TeacherPersonalExpectation> result = new ArrayList<TeacherPersonalExpectation>();
 
-        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                ExecutionYear.class, executionYearID);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
         if (teacherID != null) {
             Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);

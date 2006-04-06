@@ -17,10 +17,9 @@ public class CreateTeacherExpectationDefinitionPeriod extends Service {
 
     public void run(Integer departmentID, Integer executionYearID, Date startDate, Date endDate)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Department department = (Department) persistentObject.readByOID(Department.class,
+        Department department = rootDomainObject.readDepartmentByOID(
                 departmentID);
-        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                ExecutionYear.class, executionYearID);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
         department.createTeacherExpectationDefinitionPeriod(executionYear, startDate, endDate);
     }

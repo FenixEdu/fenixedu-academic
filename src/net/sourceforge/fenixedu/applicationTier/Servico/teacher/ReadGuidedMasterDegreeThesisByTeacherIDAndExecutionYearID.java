@@ -22,8 +22,7 @@ public class ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID extends S
         if (executionYearID == null) {
             masterDegreeThesisDataVersions = teacher.getAllGuidedMasterDegreeThesis();
         } else {
-            ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                    ExecutionYear.class, executionYearID);
+            ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
             masterDegreeThesisDataVersions = teacher
                     .getGuidedMasterDegreeThesisByExecutionYear(executionYear);

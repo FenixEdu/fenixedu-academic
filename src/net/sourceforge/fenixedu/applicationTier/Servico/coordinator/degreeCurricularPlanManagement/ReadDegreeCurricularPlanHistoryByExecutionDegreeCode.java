@@ -32,8 +32,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode extends Servic
             throw new FenixServiceException("nullDegree");
         }
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, executionDegreeCode);
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
 
         if (executionDegree == null) {
             throw new NonExistingServiceException();

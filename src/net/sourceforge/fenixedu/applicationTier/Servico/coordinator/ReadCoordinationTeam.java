@@ -24,8 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadCoordinationTeam extends Service {
 
     public List run(Integer executionDegreeId) throws FenixServiceException, ExcepcaoPersistencia {
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, executionDegreeId);
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
         if (executionDegree == null) {
             throw new FenixServiceException("errors.invalid.execution.degree");
         }

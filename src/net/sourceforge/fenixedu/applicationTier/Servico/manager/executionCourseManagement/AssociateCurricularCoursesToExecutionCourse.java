@@ -32,8 +32,7 @@ public class AssociateCurricularCoursesToExecutionCourse extends Service {
 			while (iter.hasNext()) {
 				Integer curricularCourseId = (Integer) iter.next();
 
-				CurricularCourse curricularCourse = (CurricularCourse) persistentObject
-						.readByOID(CurricularCourse.class, curricularCourseId);
+				CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 				if (curricularCourse == null) {
 					throw new NonExistingServiceException("noCurricularCourse");
 				}

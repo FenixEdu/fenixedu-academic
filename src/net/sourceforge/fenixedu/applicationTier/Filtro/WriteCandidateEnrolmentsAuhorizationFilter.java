@@ -110,8 +110,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 					
                     // Modified by Fernanda Quitério
 
-                    CurricularCourse curricularCourse = (CurricularCourse) persistentObject
-                    	.readByOID(CurricularCourse.class, selectedCurricularCourse);
+                    CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(selectedCurricularCourse);
                     if (!curricularCourse.getDegreeCurricularPlan().equals(
                             masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan())) {
                         return false;

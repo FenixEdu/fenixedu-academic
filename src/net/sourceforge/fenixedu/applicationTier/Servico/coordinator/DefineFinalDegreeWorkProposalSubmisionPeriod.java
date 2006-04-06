@@ -25,8 +25,7 @@ public class DefineFinalDegreeWorkProposalSubmisionPeriod extends Service {
             IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                     .getIPersistentFinalDegreeWork();
 
-            ExecutionDegree cursoExecucao = (ExecutionDegree) persistentObject.readByOID(
-                    ExecutionDegree.class, executionDegreeOID);
+            ExecutionDegree cursoExecucao = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 
             if (cursoExecucao != null) {
                 Scheduleing scheduleing = persistentFinalDegreeWork

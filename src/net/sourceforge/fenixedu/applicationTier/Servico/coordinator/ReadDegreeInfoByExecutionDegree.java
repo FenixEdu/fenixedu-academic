@@ -27,8 +27,7 @@ public class ReadDegreeInfoByExecutionDegree extends Service {
             }
 
             //Execution degree
-            ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                    ExecutionDegree.class, infoExecutionDegreeId);
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegreeId);
 
             if (executionDegree == null) {
                 throw new FenixServiceException("error.invalidExecutionDegree");

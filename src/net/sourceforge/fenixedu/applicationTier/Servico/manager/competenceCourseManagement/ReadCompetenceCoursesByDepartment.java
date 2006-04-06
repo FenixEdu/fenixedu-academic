@@ -19,7 +19,7 @@ public class ReadCompetenceCoursesByDepartment extends Service{
 
         final List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();
 		if(departmentID != null) {
-			final Department department = (Department) persistentObject.readByOID(Department.class, departmentID);
+			final Department department = rootDomainObject.readDepartmentByOID( departmentID);
 			if(department == null) {
 				throw new NotExistingServiceException("error.manager.noDepartment");
 			}

@@ -18,7 +18,7 @@ public class CreateEditCompetenceCourse extends Service {
 	public InfoCompetenceCourse run(Integer competenceCourseID, String code, String name, Integer[] departmentIDs) throws Exception{
 		List<Department> departments = new ArrayList<Department>();
 		for (Integer departmentID : departmentIDs) {
-			Department department = (Department) persistentObject.readByOID(Department.class, departmentID);
+			Department department = rootDomainObject.readDepartmentByOID( departmentID);
 			if(department == null) {
 				throw new NonExistingServiceException("error.manager.noDepartment");
 			}

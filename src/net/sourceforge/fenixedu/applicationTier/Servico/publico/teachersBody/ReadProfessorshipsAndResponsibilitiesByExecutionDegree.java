@@ -36,8 +36,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends Serv
 
     public List run(Integer executionDegreeId) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                ExecutionDegree.class, executionDegreeId);
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 
         List professorships = Professorship.readByDegreeCurricularPlanAndExecutionYear(executionDegree
                 .getDegreeCurricularPlan(), executionDegree.getExecutionYear());

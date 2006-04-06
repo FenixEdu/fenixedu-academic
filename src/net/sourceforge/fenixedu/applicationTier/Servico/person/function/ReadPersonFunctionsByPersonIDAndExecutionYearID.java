@@ -26,8 +26,7 @@ public class ReadPersonFunctionsByPersonIDAndExecutionYearID extends Service {
         List<PersonFunction> personFunctions = null;
 
         if (executionYearID != null) {
-            ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                    ExecutionYear.class, executionYearID);
+            ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
             Date beginDate = executionYear.getBeginDate();
             Date endDate = executionYear.getEndDate();
             personFunctions = person.getPersonFuntions(YearMonthDay.fromDateFields(beginDate),

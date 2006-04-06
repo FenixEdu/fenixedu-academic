@@ -19,14 +19,13 @@ public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID extends Serv
 
     public List<Teacher> run(Integer departmentID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Department department = (Department) persistentObject.readByOID(Department.class,
+        Department department = rootDomainObject.readDepartmentByOID(
                 departmentID);
 
         List<Teacher> teachersFromDepartment = new ArrayList<Teacher>();
 
         if (executionYearID != null) {
-            ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                    ExecutionYear.class, executionYearID);
+            ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
             teachersFromDepartment = department.getTeachers(executionYear.getBeginDate(), executionYear
                     .getEndDate());

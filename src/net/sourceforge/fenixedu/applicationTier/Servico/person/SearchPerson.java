@@ -65,8 +65,7 @@ public class SearchPerson extends Service {
             }
 
             if (departmentId != null) {
-                department = (Department) persistentObject.readByOID(Department.class,
-                        departmentId);
+                department = rootDomainObject.readDepartmentByOID(departmentId);
             }
         }
 

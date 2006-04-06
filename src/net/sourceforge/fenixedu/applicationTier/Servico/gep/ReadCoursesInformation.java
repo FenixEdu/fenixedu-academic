@@ -76,8 +76,7 @@ public class ReadCoursesInformation extends Service {
                                 executionDegreesExecutionYear, basic);
             }
         } else {
-            ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                    ExecutionDegree.class, executionDegreeId);
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
             if (basic == null) {
                 professorships = Professorship.readByDegreeCurricularPlanAndExecutionYear(
                         executionDegree.getDegreeCurricularPlan(), executionDegree.getExecutionYear());

@@ -42,8 +42,7 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 		List infoSiteEnrolmentEvaluations = new ArrayList();
 
 		// read curricularCourse by ID
-		CurricularCourse curricularCourse = (CurricularCourse) persistentObject
-				.readByOID(CurricularCourse.class, curricularCourseID);
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
 
 		final CurricularCourse curricularCourseTemp = curricularCourse;
 

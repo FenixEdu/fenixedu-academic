@@ -25,8 +25,7 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
         Degree degree = rootDomainObject.readDegreeByOID(degreeId);
 
-        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                ExecutionYear.class, executionYearId);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
 
         List<CurricularCourse> curricularCourses = competenceCourse
                 .getAssociatedCurricularCoursesGroupedByDegree().get(degree);

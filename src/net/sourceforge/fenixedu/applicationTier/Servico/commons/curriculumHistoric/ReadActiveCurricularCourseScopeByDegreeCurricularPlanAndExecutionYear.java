@@ -24,8 +24,7 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
             Integer executioYearID) throws FenixServiceException, ExcepcaoPersistencia {
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-                ExecutionYear.class, executioYearID);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executioYearID);
         List scopes = super.readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlan
                 .getIdInternal(), executionYear);
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan

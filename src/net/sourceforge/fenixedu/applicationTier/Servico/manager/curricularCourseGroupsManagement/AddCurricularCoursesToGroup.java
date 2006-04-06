@@ -17,12 +17,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class AddCurricularCoursesToGroup extends Service {
 
 	public void run(Integer groupId, Integer[] courseIds) throws FenixServiceException, ExcepcaoPersistencia {
-		CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentObject
-				.readByOID(CurricularCourseGroup.class, groupId);
+		CurricularCourseGroup curricularCourseGroup = rootDomainObject.readCurricularCourseGroupByOID(groupId);
 		for (int i = 0; i < courseIds.length; i++) {
 			Integer courseId = courseIds[i];
-			CurricularCourse curricularCourse = (CurricularCourse) persistentObject
-					.readByOID(CurricularCourse.class, courseId);
+			CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(courseId);
 			curricularCourseGroup.getCurricularCourses().add(curricularCourse);
 		}
 	}

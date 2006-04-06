@@ -20,8 +20,7 @@ public class AddSchoolClassesToShift extends Service {
 			throw new InvalidArgumentsServiceException();
 
 		for (final Integer schoolClassOID : schoolClassOIDs) {
-			final SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(
-					SchoolClass.class, schoolClassOID);
+			final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(schoolClassOID);
 			if (schoolClass == null) {
 				throw new InvalidArgumentsServiceException();
 			}

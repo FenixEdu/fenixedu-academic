@@ -33,8 +33,7 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends Servi
 		IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
 				.getIPersistentInsuranceTransaction();
 
-		ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-				ExecutionYear.class, executionYearId);
+		ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
 
 		Student student = rootDomainObject.readStudentByOID(studentId);
 
