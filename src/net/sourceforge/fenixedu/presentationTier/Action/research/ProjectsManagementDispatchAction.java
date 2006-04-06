@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,13 +33,32 @@ public class ProjectsManagementDispatchAction extends FenixDispatchAction {
     
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        //final IUserView userView = getUserView(request);
+        final IUserView userView = getUserView(request);
+        final Integer oid = Integer.parseInt(request.getParameter("oid"));
         
-        request.getAttribute("delete");
-        //tratar de chamar o metodo delete do projecto
+        ServiceUtils.executeService(userView, "DeleteResearchProject", new Object[] { oid });
         
-        
-        return mapping.findForward("Success");  
+        return listProjects(mapping, form, request, response);  
     }
+    
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
+        final Integer oid = Integer.parseInt(request.getParameter("oid"));
+
+        for( Project project : rootDomainObject.getProjects()) {
+            if (project.getIdInternal().equals(oid)) {
+                final int personIdInternal = getUserView(request).getPerson().getIdInternal();
+                for (ProjectParticipation participation: project.getProjectParticipations()) {
+                    if (participation.getParty().getIdInternal() == personIdInternal) {
+                        request.setAttribute("selectedProjectParticipation", participation);
+                    }
+                }
+            }
+        }
+        
+        request.setAttribute("party", getUserView(request).getPerson());
+        return mapping.findForward("ProjectSelected");  
+    }    
+    
 }

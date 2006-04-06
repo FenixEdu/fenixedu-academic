@@ -18,10 +18,6 @@
  		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.title"/> 2 :
  	</strong>
  	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.insertData"/> >
-  	<strong>
-	  	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.title"/> 3 :
-	</strong>
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.createTranslations"/>
 		
 	<br/>
 	<br/>

@@ -196,7 +196,7 @@ public class PartialInputRenderer extends DateInputRenderer {
             }
             
             if (isMonth()) {
-                partial = partial.with(DateTimeFieldType.monthOfYear(), calendar.get(Calendar.MONTH));
+                partial = partial.with(DateTimeFieldType.monthOfYear(), calendar.get(Calendar.MONTH) + 1 );
             }
             
             if (isYear()) {

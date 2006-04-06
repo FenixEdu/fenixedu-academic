@@ -20,7 +20,7 @@
         <put name="body" value="/researcher/projects/searchProject.jsp"></put>
     </definition>
     <definition name="projects.editProject" extends="researcher.masterPage">
-        <put name="body" value="/researcher/projects/createProject.jsp"></put>
+        <put name="body" value="/researcher/projects/editProject.jsp"></put>
     </definition>
     <definition name="projects.createProject" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/createProject.jsp"></put>

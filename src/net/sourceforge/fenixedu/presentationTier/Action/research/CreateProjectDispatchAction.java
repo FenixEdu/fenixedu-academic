@@ -51,6 +51,8 @@ public class CreateProjectDispatchAction extends FenixDispatchAction {
                 request.setAttribute("selectedProject", project);
             }
         }
+        
+        request.setAttribute("party", getUserView(request).getPerson());
         return mapping.findForward("ProjectSelected");  
     }
     

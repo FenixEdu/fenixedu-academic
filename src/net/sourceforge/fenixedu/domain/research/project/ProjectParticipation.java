@@ -10,6 +10,13 @@ public class ProjectParticipation extends ProjectParticipation_Base {
         
     }
     
+    public void delete(){
+        this.removeParty();
+        this.removeProject();
+        this.removeRootDomainObject();
+        deleteDomainObject();
+    }
+    
     public enum ProjectParticipationType {
         Coordinator,
         Speaker,
