@@ -118,18 +118,10 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
     		Integer semester, CurricularYear curricularYear, String name){
     	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
     	for (ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
-			if(executionCourse.hasCurricularCourseWithScopeInGivenSemester(semester)) {
-				if(name != null && name.length() != 0 && !executionCourse.getNome().matches(name.replaceAll("%", ".*"))) {
-					continue;
-				}
-				if(degreeCurricularPlan != null && !executionCourse.hasCurricularCourseInGivenDCP(degreeCurricularPlan)) {
-					continue;
-				}
-				if(curricularYear != null && !executionCourse.hasCurricularCourseWithScopeInGivenCurricularYear(curricularYear)) {
-					continue;
-				}
-				result.add(executionCourse);
-			}
+    		if(executionCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(semester, curricularYear, degreeCurricularPlan) &&
+				(name == null || name.length() == 0 || executionCourse.getNome().matches(name.replaceAll("%", ".*")))) {
+    			result.add(executionCourse);
+    		}
 		}
     	return result;
     }

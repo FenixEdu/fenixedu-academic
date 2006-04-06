@@ -915,6 +915,18 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
     	return false;
     }
     
+    public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(Integer semester, CurricularYear curricularYear, DegreeCurricularPlan degreeCurricularPlan) {
+    	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
+    		if(degreeCurricularPlan == null || curricularCourse.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+    			for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+					if(curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && (curricularYear == null || curricularCourseScope.getCurricularSemester().getCurricularYear().equals(curricularYear))) {
+						return true;
+					}
+				}
+    		}
+		}
+    	return false;
+    }
      
 
 }
