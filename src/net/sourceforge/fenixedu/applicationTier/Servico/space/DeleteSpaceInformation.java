@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteSpaceInformation extends Service {
 
     public void run(final Integer spaceInformationID) throws ExcepcaoPersistencia {
-        final SpaceInformation spaceInformation = (SpaceInformation) persistentObject.readByOID(SpaceInformation.class, spaceInformationID);
+        final SpaceInformation spaceInformation = rootDomainObject.readSpaceInformationByOID(spaceInformationID);
         spaceInformation.delete();
     }
 

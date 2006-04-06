@@ -28,8 +28,7 @@ public class VerifyGroupingAndStudentGroupWithoutShift extends Service {
 			throw new ExistingServiceException();
 		}
 
-		StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-				StudentGroup.class, studentGroupCode);
+		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
 		if (studentGroup == null) {
 			throw new InvalidSituationServiceException();

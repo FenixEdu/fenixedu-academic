@@ -21,8 +21,7 @@ public class ReadPrecedencesFromDegreeCurricularPlan extends Service {
 
 		Map finalListOfInfoPrecedences = new HashMap();
 
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
 		List curricularCourses = degreeCurricularPlan.getCurricularCourses();
 

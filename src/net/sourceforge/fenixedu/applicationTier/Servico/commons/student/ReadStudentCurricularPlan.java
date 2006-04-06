@@ -29,7 +29,7 @@ public class ReadStudentCurricularPlan extends Service {
         StudentCurricularPlan studentCurricularPlan = null;
 
         // The student Curricular plan
-        studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+        studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException();

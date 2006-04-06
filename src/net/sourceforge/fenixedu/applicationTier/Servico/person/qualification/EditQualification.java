@@ -25,7 +25,7 @@ public class EditQualification extends Service {
 		//If it doesn't exist in the database, a new one has to be created
 		Country country = (Country) persistentObject.readByOID(Country.class, infoQualification.getInfoCountry().getIdInternal());
 		if(qualification == null) {
-			Person person = (Person) persistentObject.readByOID(Person.class, infoQualification.getInfoPerson().getIdInternal());
+			Person person = (Person) rootDomainObject.readPartyByOID(infoQualification.getInfoPerson().getIdInternal());
 			qualification = DomainFactory.makeQualification(person, country, infoQualification);
 		
 		} else {

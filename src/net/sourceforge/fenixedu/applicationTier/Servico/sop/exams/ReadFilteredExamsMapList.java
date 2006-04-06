@@ -119,7 +119,7 @@ public class ReadFilteredExamsMapList extends Service {
 	                            InfoCurricularCourse infoCurricularCourse = scope.getInfoCurricularCourse();
 	                            if (!curricularCourseIDs.contains(infoCurricularCourse.getIdInternal())) {
 	                                curricularCourseIDs.add(infoCurricularCourse.getIdInternal());
-	                                CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, infoCurricularCourse.getIdInternal());
+	                                CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourse.getIdInternal());
 	                                int numberEnroledStudentsInCurricularCourse = curricularCourse.countEnrolmentsByExecutionPeriod(executionPeriod);
 	
 	                                numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;

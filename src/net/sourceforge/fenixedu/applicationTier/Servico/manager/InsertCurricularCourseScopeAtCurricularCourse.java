@@ -30,8 +30,7 @@ public class InsertCurricularCourseScopeAtCurricularCourse extends Service {
          
 			
             
-			CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-					CurricularCourse.class, infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal());
+			CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal());
             if (curricularCourse == null)
                 throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 

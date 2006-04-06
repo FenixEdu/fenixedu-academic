@@ -48,8 +48,7 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 		InfoTeacher infoTeacher = new InfoTeacher();
 		Date lastEvaluationDate = null;
 
-		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-				CurricularCourse.class, curricularCourseCode);
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 
 		List enrolments = null;
 		if (yearString != null) {

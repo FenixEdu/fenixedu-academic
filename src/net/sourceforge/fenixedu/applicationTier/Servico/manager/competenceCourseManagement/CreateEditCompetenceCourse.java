@@ -30,7 +30,7 @@ public class CreateEditCompetenceCourse extends Service {
 			if(competenceCourseID == null) {
 				competenceCourse = new CompetenceCourse(code, name, departments, CurricularStage.OLD);
 			} else {
-				competenceCourse = (CompetenceCourse) persistentObject.readByOID(CompetenceCourse.class, competenceCourseID);
+				competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
 				if(competenceCourse == null) {
 					throw new NonExistingServiceException("error.manager.noCompetenceCourse");
 				}

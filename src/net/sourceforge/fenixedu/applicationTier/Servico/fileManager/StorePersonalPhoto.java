@@ -28,7 +28,7 @@ public class StorePersonalPhoto extends Service {
 
     public void run(byte[] contents, ContentType contentType, Integer personID)
             throws ExcepcaoPersistencia {
-        Person person = (Person) persistentObject.readByOID(Person.class, personID);
+        Person person = (Person) rootDomainObject.readPartyByOID(personID);
 
         storePersonalPhoto(contents, contentType, person);
     }

@@ -15,8 +15,7 @@ public class ReadCurricularCourseScopes extends Service {
 
     public List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException,
             ExcepcaoPersistencia {
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, curricularCourseId);
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 
         List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();
         if (curricularCourseScopes == null || curricularCourseScopes.isEmpty()) {

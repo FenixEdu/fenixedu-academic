@@ -13,8 +13,7 @@ public class ReadCurricularCourseEquivalenciesByDegreeCurricularPlan extends Ser
 
     public List<InfoCurricularCourseEquivalence> run(final Integer degreeCurricularPlanID)
             throws ExcepcaoPersistencia {
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-        		.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         if (degreeCurricularPlan != null) {
         	final List<CurricularCourseEquivalence> curricularCourseEquivalencies = degreeCurricularPlan.getCurricularCourseEquivalences();
         	final List<InfoCurricularCourseEquivalence> infoCurricularCourseEquivalencies = 

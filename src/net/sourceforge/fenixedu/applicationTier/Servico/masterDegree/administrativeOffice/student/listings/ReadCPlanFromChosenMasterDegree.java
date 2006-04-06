@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadCPlanFromChosenMasterDegree extends Service {
 
     public List run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
-        Degree degree = (Degree) persistentObject.readByOID(Degree.class, idInternal);
+        Degree degree = rootDomainObject.readDegreeByOID(idInternal);
 
         List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
         for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {

@@ -21,8 +21,7 @@ public class EditDescriptionDegreeCurricularPlan extends Service {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
 
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-                .readByOID(DegreeCurricularPlan.class, infoDegreeCurricularPlan.getIdInternal());
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(infoDegreeCurricularPlan.getIdInternal());
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
         }
@@ -46,8 +45,7 @@ public class EditDescriptionDegreeCurricularPlan extends Service {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
 
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-                .readByOID(DegreeCurricularPlan.class, infoDegreeCurricularPlan.getIdInternal());
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(infoDegreeCurricularPlan.getIdInternal());
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
         }

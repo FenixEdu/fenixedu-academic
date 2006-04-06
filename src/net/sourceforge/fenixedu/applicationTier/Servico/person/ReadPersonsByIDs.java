@@ -14,7 +14,7 @@ public class ReadPersonsByIDs extends Service {
         List<InfoPerson> persons = new ArrayList<InfoPerson>();
 
         for (Integer personId : personsInternalIds) {
-            Person person = (Person) persistentObject.readByOID(Person.class, personId);
+            Person person = (Person) rootDomainObject.readPartyByOID(personId);
             persons.add(InfoPerson.newInfoFromDomain(person));
         }
 

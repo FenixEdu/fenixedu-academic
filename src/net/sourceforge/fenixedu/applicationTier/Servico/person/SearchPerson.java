@@ -57,7 +57,7 @@ public class SearchPerson extends Service {
             }
 
             if (degreeId != null) {
-                degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
+                degree = rootDomainObject.readDegreeByOID(degreeId);
             }
 
             if (degreeTypeString != null && degreeTypeString.length() > 0) {

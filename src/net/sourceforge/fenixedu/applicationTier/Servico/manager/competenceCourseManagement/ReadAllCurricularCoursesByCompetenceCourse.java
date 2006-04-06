@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 public class ReadAllCurricularCoursesByCompetenceCourse extends Service {
 
 	public List<CurricularCourse> run(Integer competenceID) throws Exception {
-		CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(CompetenceCourse.class, competenceID);
+		CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceID);
 		if(competenceCourse == null) {
 			throw new NonExistingServiceException("error.manager.noCompetenceCourse");
 		}

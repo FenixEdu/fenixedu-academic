@@ -31,7 +31,7 @@ public class InsertDegreeCurricularPlan extends Service {
             }
         }
 
-        final Degree degree = (Degree) persistentObject.readByOID(Degree.class, infoDcp
+        final Degree degree = rootDomainObject.readDegreeByOID(infoDcp
                 .getInfoDegree().getIdInternal());
         if (degree == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");

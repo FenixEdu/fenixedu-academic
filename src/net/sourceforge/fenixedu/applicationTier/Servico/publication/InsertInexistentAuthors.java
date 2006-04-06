@@ -40,7 +40,7 @@ public class InsertInexistentAuthors extends Service {
                 externalPersonsIndexes.add(index);
             }
             else {
-                Person person = (Person) persistentObject.readByOID(Person.class, infoAuthor.getIdInternal());
+                Person person = (Person) rootDomainObject.readPartyByOID(infoAuthor.getIdInternal());
                 authorsList.add(person);
             }
             index++;

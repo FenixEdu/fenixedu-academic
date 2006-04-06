@@ -27,8 +27,7 @@ public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization extends
             throws ExcepcaoPersistencia {
         Integer teacherDegreeFinalProjectStudentId = (Integer) arguments[0];
 
-        TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) persistentObject
-                .readByOID(TeacherDegreeFinalProjectStudent.class, teacherDegreeFinalProjectStudentId);
+        TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = rootDomainObject.readTeacherDegreeFinalProjectStudentByOID(teacherDegreeFinalProjectStudentId);
         return teacherDegreeFinalProjectStudent != null ? teacherDegreeFinalProjectStudent.getTeacher()
                 .getIdInternal() : null;
     }

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeletePersonByOID extends Service {
     
     public boolean run(Integer personID) throws ExcepcaoPersistencia{
-        Person person = (Person) persistentObject.readByOID(Person.class, personID);        
+        Person person = (Person) rootDomainObject.readPartyByOID(personID);        
         return person.delete();
         
     }

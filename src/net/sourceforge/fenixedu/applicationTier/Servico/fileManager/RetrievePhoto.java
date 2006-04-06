@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport
 public class RetrievePhoto extends Service {
 
     public FileSuportObject run(Integer personId) throws FenixServiceException, ExcepcaoPersistencia {
-        final Person person = (Person) persistentObject.readByOID(Person.class, personId);
+        final Person person = (Person) rootDomainObject.readPartyByOID(personId);
         final Collection<FileSuportObject> fileSupportObjects = JdbcMysqlFileSupport.listFiles(person.getSlideName());
         for (final FileSuportObject fileSupportObject : fileSupportObjects) {
             if (fileSupportObject.getFileName().indexOf("personPhoto") != -1) {

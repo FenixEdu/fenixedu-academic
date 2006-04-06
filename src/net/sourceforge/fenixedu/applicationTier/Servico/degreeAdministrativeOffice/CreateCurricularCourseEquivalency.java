@@ -10,10 +10,9 @@ public class CreateCurricularCourseEquivalency extends Service {
 
     public void run(final Integer degreeCurricularPlanID, final Integer curricularCourseID, 
             final Integer oldCurricularCourseID) throws ExcepcaoPersistencia {
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-        		.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
-        final CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, curricularCourseID);
-        final CurricularCourse oldCurricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, oldCurricularCourseID);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+        final CurricularCourse oldCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(oldCurricularCourseID);
 
         DomainFactory.makeCurricularCourseEquivalence(degreeCurricularPlan, curricularCourse, oldCurricularCourse);
     }

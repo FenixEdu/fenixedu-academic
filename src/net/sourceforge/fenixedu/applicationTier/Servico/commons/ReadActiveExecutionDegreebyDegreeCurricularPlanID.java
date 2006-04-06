@@ -33,8 +33,7 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID extends Service {
             ExcepcaoPersistencia {
 
         // degree curricular plan
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }

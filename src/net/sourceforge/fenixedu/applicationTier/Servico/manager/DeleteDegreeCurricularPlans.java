@@ -27,8 +27,7 @@ public class DeleteDegreeCurricularPlans extends Service {
 		while (iter.hasNext()) {
 
 			Integer degreeCurricularPlanId = (Integer) iter.next();
-			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-					.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
+			DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
 			try {
 				degreeCurricularPlan.delete();

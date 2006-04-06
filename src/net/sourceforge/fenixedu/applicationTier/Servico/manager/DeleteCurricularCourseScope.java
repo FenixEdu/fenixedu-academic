@@ -16,8 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteCurricularCourseScope extends Service {
 
 	public void run(Integer scopeId) throws FenixServiceException, ExcepcaoPersistencia {
-		CurricularCourseScope scope = (CurricularCourseScope) persistentObject
-				.readByOID(CurricularCourseScope.class, scopeId);
+		CurricularCourseScope scope = rootDomainObject.readCurricularCourseScopeByOID(scopeId);
 		if (scope != null) {
 
 			try {

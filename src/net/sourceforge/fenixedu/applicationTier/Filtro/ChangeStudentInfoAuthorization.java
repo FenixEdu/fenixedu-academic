@@ -36,7 +36,7 @@ public class ChangeStudentInfoAuthorization extends AuthorizationByRoleFilter {
         
         InfoPerson infoPerson = (InfoPerson) request.getServiceParameters().parametersArray()[0];
         
-        Person person = (Person) persistentObject.readByOID(Person.class, infoPerson.getIdInternal());
+        Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());
         Role teacherRole = (Role) Role.getRoleByRoleType(RoleType.TEACHER);
         Role employeeRole = (Role) Role.getRoleByRoleType(RoleType.EMPLOYEE);
         

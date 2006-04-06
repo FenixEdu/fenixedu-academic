@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertNotNeedToEnrollInCurricularCourses extends Service {
 
     public void run(Integer studentCurricularPlanID, Integer[] curricularCoursesID) throws ExcepcaoPersistencia{
-        StudentCurricularPlan scp = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+        StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
         
         for (int iter = 0; iter < curricularCoursesID.length; iter++) {
             Integer curricularCourseID = curricularCoursesID[iter];
-            CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, curricularCourseID);
+            CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
             NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = DomainFactory.makeNotNeedToEnrollInCurricularCourse();
             notNeedToEnrollInCurricularCourse.setCurricularCourse(curricularCourse);
             notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(scp);

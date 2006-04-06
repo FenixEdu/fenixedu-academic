@@ -35,8 +35,7 @@ public class EditStudentGroupShift extends Service {
 
 		// grouping.checkShiftCapacity(shift);
 
-		StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-				StudentGroup.class, studentGroupCode);
+		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
 		if (studentGroup == null) {
 			throw new InvalidArgumentsServiceException();

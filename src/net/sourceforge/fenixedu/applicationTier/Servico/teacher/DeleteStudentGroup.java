@@ -18,8 +18,7 @@ public class DeleteStudentGroup extends Service {
 
     public Boolean run(Integer executionCourseCode, Integer studentGroupCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        StudentGroup deletedStudentGroup = (StudentGroup) persistentObject.readByOID(
-                StudentGroup.class, studentGroupCode);
+        StudentGroup deletedStudentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
         
         if (deletedStudentGroup == null)
             throw new ExistingServiceException();     

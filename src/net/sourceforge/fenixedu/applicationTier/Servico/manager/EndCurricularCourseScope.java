@@ -22,8 +22,7 @@ public class EndCurricularCourseScope extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        CurricularCourseScope oldCurricularCourseScope = (CurricularCourseScope) persistentObject
-                .readByOID(CurricularCourseScope.class, newInfoCurricularCourseScope.getIdInternal());
+        CurricularCourseScope oldCurricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(newInfoCurricularCourseScope.getIdInternal());
         if (oldCurricularCourseScope == null) {
             throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
         }

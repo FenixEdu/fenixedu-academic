@@ -23,7 +23,7 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
         CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(
                 CompetenceCourse.class, competenceCourseId);
 
-        Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
+        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
 
         ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                 ExecutionYear.class, executionYearId);

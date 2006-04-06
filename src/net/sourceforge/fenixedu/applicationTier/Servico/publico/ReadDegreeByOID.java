@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadDegreeByOID extends Service {
 
     public InfoDegree run(Integer degreeId) throws ExcepcaoPersistencia {
-        Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
+        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
         return InfoDegree.newInfoFromDomain(degree);
     }
 

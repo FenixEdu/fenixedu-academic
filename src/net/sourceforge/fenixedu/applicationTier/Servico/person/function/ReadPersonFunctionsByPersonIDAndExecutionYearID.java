@@ -21,7 +21,7 @@ public class ReadPersonFunctionsByPersonIDAndExecutionYearID extends Service {
 
     public List<PersonFunction> run(Integer personID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Person person = (Person) persistentObject.readByOID(Person.class, personID);
+        Person person = (Person) rootDomainObject.readPartyByOID(personID);
 
         List<PersonFunction> personFunctions = null;
 

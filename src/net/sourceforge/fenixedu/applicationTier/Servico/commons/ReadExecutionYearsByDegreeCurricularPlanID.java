@@ -27,8 +27,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadExecutionYearsByDegreeCurricularPlanID extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         List<ExecutionYear> executionYears = (List<ExecutionYear>) CollectionUtils.collect(
                 degreeCurricularPlan.getExecutionDegrees(), new Transformer() {

@@ -25,7 +25,7 @@ public class ChangePersonalStudentInfo extends Service {
 
     public InfoPerson run(InfoPerson newInfoPerson) throws ExcepcaoPersistencia, FenixServiceException  {
         
-        Person person = (Person) persistentObject.readByOID(Person.class, newInfoPerson.getIdInternal());
+        Person person = (Person) rootDomainObject.readPartyByOID(newInfoPerson.getIdInternal());
         if (person == null) {
             throw new ExcepcaoInexistente("Unknown Person !!");
         }

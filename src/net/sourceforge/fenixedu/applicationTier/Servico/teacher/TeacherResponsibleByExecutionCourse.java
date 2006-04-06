@@ -39,8 +39,7 @@ public class TeacherResponsibleByExecutionCourse extends Service {
     private boolean CurricularCourseNotBasic(Integer curricularCourseCode) throws ExcepcaoPersistencia {
         boolean result = false;
         CurricularCourse curricularCourse = null;
-        curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, curricularCourseCode);
+        curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
         result = curricularCourse.getBasic().equals(Boolean.FALSE);
 
         return result;

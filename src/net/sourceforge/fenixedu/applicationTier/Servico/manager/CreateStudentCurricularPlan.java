@@ -24,8 +24,7 @@ public class CreateStudentCurricularPlan extends Service {
             throw new NonExistingServiceException("exception.student.does.not.exist");
         }
 
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException("exception.degree.curricular.plan.does.not.exist");
         }

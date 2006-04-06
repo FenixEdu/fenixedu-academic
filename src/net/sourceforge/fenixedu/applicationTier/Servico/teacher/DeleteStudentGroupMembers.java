@@ -28,8 +28,7 @@ public class DeleteStudentGroupMembers extends Service {
     public boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID,
             List studentUsernames) throws FenixServiceException, ExcepcaoPersistencia {
 
-        final StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-                StudentGroup.class, studentGroupID);
+        final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }

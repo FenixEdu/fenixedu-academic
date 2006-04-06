@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ChangePersonUsername extends Service {
 
     public void run(String newUsername, Integer personId) throws ExcepcaoPersistencia {
-        Person person = (Person) persistentObject.readByOID(Person.class, personId);              
+        Person person = (Person) rootDomainObject.readPartyByOID(personId);              
         person.changeUsername(newUsername);
     }
 }

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadPersonByID extends Service {
 
 	public InfoPerson run(Integer idInternal) throws ExcepcaoPersistencia {
-		Person person = (Person) persistentObject.readByOID(Person.class, idInternal);
+		Person person = (Person) rootDomainObject.readPartyByOID(idInternal);
 		
 		InfoPerson infoPerson = null;
 		

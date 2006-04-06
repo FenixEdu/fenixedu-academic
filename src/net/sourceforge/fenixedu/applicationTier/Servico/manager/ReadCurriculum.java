@@ -24,8 +24,7 @@ public class ReadCurriculum extends Service {
         CurricularCourse curricularCourse;
         Curriculum curriculum;
 
-        curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, curricularCourseId);
+        curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }

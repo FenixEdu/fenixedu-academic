@@ -32,7 +32,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends Service {
             if (executionPeriod == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            final Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
+            final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
             if (degree == null) {
                 throw new InvalidArgumentsServiceException();
             }

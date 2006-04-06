@@ -38,8 +38,7 @@ public class CourseOfTheExpectedDegree extends Service {
 		CurricularCourse curricularCourse = null;
 		Degree degree = null;
 
-		curricularCourse = (CurricularCourse) persistentObject.readByOID(
-				CurricularCourse.class, curricularCourseCode);
+		curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 
 		degree = curricularCourse.getDegreeCurricularPlan().getDegree();
 
@@ -57,8 +56,7 @@ public class CourseOfTheExpectedDegree extends Service {
 		boolean result = false;
 		CurricularCourse curricularCourse = null;
 
-		curricularCourse = (CurricularCourse) persistentObject.readByOID(
-				CurricularCourse.class, curricularCourseCode);
+		curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 		result = curricularCourse.getBasic().equals(Boolean.FALSE);
 
 		return result;

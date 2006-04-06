@@ -24,8 +24,7 @@ public class EditCurriculum extends Service {
 
     public void run(InfoCurriculum infoCurriculum, String language, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, infoCurriculum.getInfoCurricularCourse().getIdInternal());
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurriculum.getInfoCurricularCourse().getIdInternal());
 
         if (curricularCourse == null) {
             throw new NonExistingServiceException();

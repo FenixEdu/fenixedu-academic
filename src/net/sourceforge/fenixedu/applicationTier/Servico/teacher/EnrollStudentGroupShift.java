@@ -39,8 +39,7 @@ public class EnrollStudentGroupShift extends Service {
 			throw new InvalidSituationServiceException();
 		}
 
-		StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-				StudentGroup.class, studentGroupCode);
+		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
 		if (studentGroup == null) {
 			throw new InvalidArgumentsServiceException();

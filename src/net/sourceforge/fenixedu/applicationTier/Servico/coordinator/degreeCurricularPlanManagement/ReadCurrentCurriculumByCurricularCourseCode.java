@@ -36,8 +36,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
             throw new FenixServiceException("nullCurricularCourse");
         }
 
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }

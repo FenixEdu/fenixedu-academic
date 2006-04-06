@@ -22,7 +22,7 @@ public class StoreApplicationDocuments extends Service {
         result[0] = result[1] = result[2] = result[3] = false;
         
         try {
-        Person person = (Person) persistentObject.readByOID(Person.class, personId);
+        Person person = (Person) rootDomainObject.readPartyByOID(personId);
         IFileSuport fileSuport = FileSuport.getInstance();
         String uri = person.getSlideNameForCandidateDocuments();
 

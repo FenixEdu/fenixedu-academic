@@ -25,8 +25,7 @@ public class EditStudentCourseReport extends EditDomainObjectService {
         InfoStudentCourseReport infoStudentCourseReport = (InfoStudentCourseReport) infoObject;
         StudentCourseReport studentCourseReport = (StudentCourseReport) domainObject;
 
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, infoStudentCourseReport.getInfoCurricularCourse()
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoStudentCourseReport.getInfoCurricularCourse()
                         .getIdInternal());
         studentCourseReport.setCurricularCourse(curricularCourse);
 

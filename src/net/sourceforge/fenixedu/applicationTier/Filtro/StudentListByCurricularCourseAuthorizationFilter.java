@@ -92,8 +92,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 
         // Read The DegreeCurricularPlan
         try {
-            curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                    CurricularCourse.class, curricularCourseID);
+            curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
         } catch (Exception e) {
             return false;
         }

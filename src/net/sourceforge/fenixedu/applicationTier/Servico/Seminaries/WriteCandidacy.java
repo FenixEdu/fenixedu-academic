@@ -44,7 +44,7 @@ public class WriteCandidacy extends Service {
         candidacy.setSeminary(readSeminary);
         
         // Curricular Course
-        final CurricularCourse readCurricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, infoCandidacy.getCurricularCourse().getIdInternal());
+        final CurricularCourse readCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCandidacy.getCurricularCourse().getIdInternal());
         candidacy.setCurricularCourse(readCurricularCourse);
 
         // Theme

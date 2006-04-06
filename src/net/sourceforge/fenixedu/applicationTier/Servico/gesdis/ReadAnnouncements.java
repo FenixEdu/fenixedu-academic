@@ -22,8 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadAnnouncements extends Service {
 
     public List run(InfoSite infoSite) throws FenixServiceException, ExcepcaoPersistencia {
-    	final ExecutionCourse executionCourse = (ExecutionCourse)
-    			persistentObject.readByOID(ExecutionCourse.class, infoSite.getInfoExecutionCourse().getIdInternal());
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoSite.getInfoExecutionCourse().getIdInternal());
         final Site site = executionCourse.getSite();
         final List<Announcement> announcementsList = site.getAssociatedAnnouncements();
 

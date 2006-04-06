@@ -31,8 +31,7 @@ public class ReadStudentsByStudentGroupID extends Service {
 
         List infoStudents = new LinkedList();
         
-        StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
-                StudentGroup.class, groupId);
+        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(groupId);
        
         Iterator iter = studentGroup.getAttends().iterator();
 

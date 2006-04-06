@@ -46,8 +46,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         if (courseCode == null) {
             infoStudentList = getAllAttendingStudents(site);
         } else {
-            curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                    CurricularCourse.class, courseCode);
+            curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(courseCode);
 
             infoStudentList = getCurricularCourseStudents(curricularCourse, persistentSupport);
 

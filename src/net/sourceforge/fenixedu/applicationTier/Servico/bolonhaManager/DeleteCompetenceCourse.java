@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteCompetenceCourse extends Service {
 
     public void run(Integer competenceCourseID) throws ExcepcaoPersistencia {
-        CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(CompetenceCourse.class, competenceCourseID);
+        CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
         if (competenceCourse != null) {
             competenceCourse.delete();
         }

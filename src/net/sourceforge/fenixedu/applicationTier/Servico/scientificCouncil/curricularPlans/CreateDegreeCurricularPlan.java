@@ -24,7 +24,7 @@ public class CreateDegreeCurricularPlan extends Service {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.creator");
         }
         
-        final Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
+        final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
         if (degree == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
         }

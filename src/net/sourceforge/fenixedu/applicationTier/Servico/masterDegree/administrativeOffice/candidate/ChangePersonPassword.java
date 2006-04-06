@@ -25,7 +25,7 @@ public class ChangePersonPassword extends Service {
 
 		Person person = null;
 
-		person = (Person) persistentObject.readByOID(Person.class, personID);
+		person = (Person) rootDomainObject.readPartyByOID(personID);
 
 		if (person == null)
 			throw new ExcepcaoInexistente("Unknown Person!");

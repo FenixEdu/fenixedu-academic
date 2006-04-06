@@ -20,8 +20,7 @@ public class ReadDegreeCurricularPlan extends Service {
     public InfoDegreeCurricularPlan run(final Integer idInternal) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-                .readByOID(DegreeCurricularPlan.class, idInternal);
+		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idInternal);
 
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException();

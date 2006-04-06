@@ -35,7 +35,7 @@ public class ReadStudentListByCurricularCourse extends Service {
 
         // Read the Students
 
-        curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, curricularCourseID);
+        curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
 
         List enrolmentList = null;
         if (executionYear != null) {

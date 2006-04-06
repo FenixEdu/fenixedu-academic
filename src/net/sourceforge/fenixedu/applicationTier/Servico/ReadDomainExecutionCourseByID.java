@@ -18,8 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadDomainExecutionCourseByID extends Service {
     public ExecutionCourse run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ExecutionCourse executionCourse = (ExecutionCourse)
-        		persistentObject.readByOID(ExecutionCourse.class, idInternal);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
         if (executionCourse == null) {
             throw new NonExistingServiceException();
         }

@@ -14,7 +14,7 @@ public class RetrieveApplicationDocument extends Service {
 
     public FileSuportObject run(Integer personId, ApplicationDocumentType adt)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Person person = (Person) persistentObject.readByOID(Person.class, personId);
+        Person person = (Person) rootDomainObject.readPartyByOID(personId);
 
         if (adt == ApplicationDocumentType.CURRICULUM_VITAE)
             return retrieveDocumentByType(person.getSlideNameForCandidateDocuments(), "candidateCV");

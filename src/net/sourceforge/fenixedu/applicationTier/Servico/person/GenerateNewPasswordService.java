@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 public class GenerateNewPasswordService extends Service {
 
 	public String run(Integer personID) throws Exception {
-		Person person = (Person) persistentObject.readByOID(Person.class, personID);
+		Person person = (Person) rootDomainObject.readPartyByOID(personID);
 		if (person == null) {
 			throw new ExcepcaoInexistente("Unknown Person!");
 		}

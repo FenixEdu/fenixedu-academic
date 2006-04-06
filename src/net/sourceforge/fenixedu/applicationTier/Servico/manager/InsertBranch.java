@@ -18,8 +18,7 @@ public class InsertBranch extends Service {
 
     public void run(InfoBranch infoBranch) throws ExcepcaoPersistencia, NonExistingServiceException {
         final Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getIdInternal();
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
         if (degreeCurricularPlan == null)
             throw new NonExistingServiceException();

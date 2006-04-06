@@ -26,8 +26,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadCurricularCourseGroupsByDegreeCurricularPlan extends Service {
 
 	public List run(Integer degreeCurricularPlanId) throws FenixServiceException, ExcepcaoPersistencia {
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
-				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 		List groups = new ArrayList();
 		List areas = degreeCurricularPlan.getAreas();
 		Iterator iter = areas.iterator();

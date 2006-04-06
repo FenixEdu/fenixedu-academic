@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 public class ReadCompetenceCourse extends Service {
 	
 	public InfoCompetenceCourse run(Integer competenceCourseID) throws Exception{
-		CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(CompetenceCourse.class, competenceCourseID);
+		CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
 		if(competenceCourse == null) {
 			throw new NotExistingServiceException("Invalid CompetenceCourse ID");
 		}

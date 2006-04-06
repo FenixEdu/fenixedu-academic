@@ -18,8 +18,7 @@ public class DissociateCurricularCourseByExecutionCourseId extends Service {
             ExcepcaoPersistencia {
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
-        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
-                CurricularCourse.class, curricularCourseId);
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 
         curricularCourse.removeAssociatedExecutionCourses(executionCourse);
 

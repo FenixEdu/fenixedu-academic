@@ -6,13 +6,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -31,61 +29,55 @@ public class EditCurricularCourse extends Service {
         String newNameEn = null;
         String newCode = null;
       
-        try {
-            oldCurricularCourse = (CurricularCourse) persistentObject.readByOID(
-                    CurricularCourse.class, newInfoCurricularCourse.getIdInternal());
+        oldCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(newInfoCurricularCourse.getIdInternal());
 
-            newName = newInfoCurricularCourse.getName();
-            newNameEn = newInfoCurricularCourse.getNameEn();
-            newCode = newInfoCurricularCourse.getCode();
-            final String newAcronym = newInfoCurricularCourse.getAcronym();
+        newName = newInfoCurricularCourse.getName();
+        newNameEn = newInfoCurricularCourse.getNameEn();
+        newCode = newInfoCurricularCourse.getCode();
+        final String newAcronym = newInfoCurricularCourse.getAcronym();
 
-            if (oldCurricularCourse == null) {
-                throw new NonExistingServiceException();
-            }
-            
-            List curricularCourses = null;
-            curricularCourses = oldCurricularCourse.getDegreeCurricularPlan().getCurricularCourses();
-            
-            CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses,new Predicate(){
+        if (oldCurricularCourse == null) {
+            throw new NonExistingServiceException();
+        }
+        
+        List curricularCourses = null;
+        curricularCourses = oldCurricularCourse.getDegreeCurricularPlan().getCurricularCourses();
+        
+        CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses,new Predicate(){
 
-				public boolean evaluate(Object arg0) {
-					CurricularCourse curricularCourse = (CurricularCourse) arg0;
-					if(newAcronym.equalsIgnoreCase(curricularCourse.getAcronym()))
-						return true;
-					return false;
-			}});
-            
-            if (cCourse == null || newAcronym.equalsIgnoreCase(oldCurricularCourse.getAcronym())){
-            	
-            	oldCurricularCourse.setName(newName);
-                oldCurricularCourse.setNameEn(newNameEn);
-                oldCurricularCourse.setCode(newCode);
-                oldCurricularCourse.setAcronym(newInfoCurricularCourse.getAcronym());
-                oldCurricularCourse.setType(newInfoCurricularCourse.getType());
-                oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
-                oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
-                oldCurricularCourse.setTheoreticalHours(newInfoCurricularCourse.getTheoreticalHours());
-                oldCurricularCourse.setTheoPratHours(newInfoCurricularCourse.getTheoPratHours());
-                oldCurricularCourse.setPraticalHours(newInfoCurricularCourse.getPraticalHours());
-                oldCurricularCourse.setLabHours(newInfoCurricularCourse.getLabHours());
-                oldCurricularCourse.setMaximumValueForAcumulatedEnrollments(newInfoCurricularCourse
-                        .getMaximumValueForAcumulatedEnrollments());
-                oldCurricularCourse.setMinimumValueForAcumulatedEnrollments(newInfoCurricularCourse
-                        .getMinimumValueForAcumulatedEnrollments());
-                oldCurricularCourse.setCredits(newInfoCurricularCourse.getCredits());
-                oldCurricularCourse.setEctsCredits(newInfoCurricularCourse.getEctsCredits());
-                oldCurricularCourse.setWeigth(newInfoCurricularCourse.getWeigth());
-                oldCurricularCourse.setEnrollmentWeigth(newInfoCurricularCourse.getEnrollmentWeigth());
-                oldCurricularCourse.setMandatoryEnrollment(newInfoCurricularCourse.getMandatoryEnrollment());
-                oldCurricularCourse.setEnrollmentAllowed(newInfoCurricularCourse.getEnrollmentAllowed());
-                oldCurricularCourse.setGradeScale(newInfoCurricularCourse.getGradeScale());
-            } else {
-            	throw new ExistingAcronymException();
-            }
-            
-        } catch (ExistingPersistentException ex) {
-            throw new ExistingServiceException(ex);
+			public boolean evaluate(Object arg0) {
+				CurricularCourse curricularCourse = (CurricularCourse) arg0;
+				if(newAcronym.equalsIgnoreCase(curricularCourse.getAcronym()))
+					return true;
+				return false;
+		}});
+        
+        if (cCourse == null || newAcronym.equalsIgnoreCase(oldCurricularCourse.getAcronym())){
+        	
+        	oldCurricularCourse.setName(newName);
+            oldCurricularCourse.setNameEn(newNameEn);
+            oldCurricularCourse.setCode(newCode);
+            oldCurricularCourse.setAcronym(newInfoCurricularCourse.getAcronym());
+            oldCurricularCourse.setType(newInfoCurricularCourse.getType());
+            oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
+            oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
+            oldCurricularCourse.setTheoreticalHours(newInfoCurricularCourse.getTheoreticalHours());
+            oldCurricularCourse.setTheoPratHours(newInfoCurricularCourse.getTheoPratHours());
+            oldCurricularCourse.setPraticalHours(newInfoCurricularCourse.getPraticalHours());
+            oldCurricularCourse.setLabHours(newInfoCurricularCourse.getLabHours());
+            oldCurricularCourse.setMaximumValueForAcumulatedEnrollments(newInfoCurricularCourse
+                    .getMaximumValueForAcumulatedEnrollments());
+            oldCurricularCourse.setMinimumValueForAcumulatedEnrollments(newInfoCurricularCourse
+                    .getMinimumValueForAcumulatedEnrollments());
+            oldCurricularCourse.setCredits(newInfoCurricularCourse.getCredits());
+            oldCurricularCourse.setEctsCredits(newInfoCurricularCourse.getEctsCredits());
+            oldCurricularCourse.setWeigth(newInfoCurricularCourse.getWeigth());
+            oldCurricularCourse.setEnrollmentWeigth(newInfoCurricularCourse.getEnrollmentWeigth());
+            oldCurricularCourse.setMandatoryEnrollment(newInfoCurricularCourse.getMandatoryEnrollment());
+            oldCurricularCourse.setEnrollmentAllowed(newInfoCurricularCourse.getEnrollmentAllowed());
+            oldCurricularCourse.setGradeScale(newInfoCurricularCourse.getGradeScale());
+        } else {
+        	throw new ExistingAcronymException();
         }
     }
     
