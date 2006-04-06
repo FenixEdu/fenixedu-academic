@@ -27,9 +27,10 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 
 /**
@@ -110,13 +111,11 @@ public class MergeExecutionCourses extends Service {
         boolean distributedTestAuthorization = false;
 
         IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
-        IPersistentDistributedTest persistentDistributedTest = persistentSupport
-                .getIPersistentDistributedTest();
 
-            List metadatas = persistentMetadata.readByExecutionCourse(executionCourseFrom);
-            List distributedTests = persistentDistributedTest.readByTestScope(executionCourseFrom
-                    .getClass().getName(), executionCourseFrom.getIdInternal());
-            distributedTestAuthorization = (metadatas == null || metadatas.isEmpty())
+        List metadatas = persistentMetadata.readByExecutionCourse(executionCourseFrom);
+        List<DistributedTest> distributedTests = TestScope.readDistributedTestsByTestScope(executionCourseFrom
+                    .getClass(), executionCourseFrom.getIdInternal()); 
+        distributedTestAuthorization = (metadatas == null || metadatas.isEmpty())
                     && (distributedTests == null || distributedTests.isEmpty());
 
         return executionCourseTo != null

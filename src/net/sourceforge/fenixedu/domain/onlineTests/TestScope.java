@@ -4,6 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.onlineTests;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
@@ -50,6 +53,15 @@ public class TestScope extends TestScope_Base {
             }
         }
         return null;
+    }
+    
+    public static List<DistributedTest> readDistributedTestsByTestScope(Class clazz, Integer idInternal) {
+    	List<DistributedTest> result = new ArrayList<DistributedTest>();
+    	TestScope testScope = readByDomainObject(clazz, idInternal);
+    	if(testScope != null) {
+    		result.addAll(testScope.getDistributedTests());
+    	} 
+    	return result;
     }
 
 }

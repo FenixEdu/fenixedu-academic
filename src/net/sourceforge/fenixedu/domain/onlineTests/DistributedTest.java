@@ -91,5 +91,28 @@ public class DistributedTest extends DistributedTest_Base {
 		}
     	return result;
     }
+    
+    public void updateDistributedTestAdvisoryDates(final Date newExpiresDate) {
+    	for (final DistributedTestAdvisory distributedTestAdvisory : this.getDistributedTestAdvisories()) {
+			distributedTestAdvisory.getAdvisory().setExpires(newExpiresDate);
+		}
+    }
+    
+    public void cleanQuestions() {
+    	for (StudentTestQuestion studentTestQuestion : this.getDistributedTestQuestions()) {
+			if(!studentTestQuestion.getQuestion().getVisibility() && !isInOtherDistributedTest(studentTestQuestion.getQuestion())) {
+				studentTestQuestion.getQuestion().delete();
+			}
+		}
+    }
+    
+    private boolean isInOtherDistributedTest(Question question) {
+    	for (StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestions()) {
+			if(!studentTestQuestion.getDistributedTest().equals(this)) {
+				return true;
+			}
+		}
+    	return false;
+    }
 
 }
