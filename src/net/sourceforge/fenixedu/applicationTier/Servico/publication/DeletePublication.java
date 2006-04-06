@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeletePublication extends Service {
 
 	public void run(final Integer publicationId) throws ExcepcaoPersistencia {
-        final Publication publication = (Publication) persistentObject.readByOID(Publication.class, publicationId);
+        final Publication publication = (Publication) rootDomainObject.readResultByOID(publicationId);
         publication.delete();
 	}
 

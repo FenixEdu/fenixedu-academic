@@ -90,14 +90,14 @@ public class GroupSiteComponentBuilder {
 	public List readExecutionCourseProjects(Integer executionCourseCode) throws ExcepcaoInexistente,
 			FenixServiceException, ExcepcaoPersistencia {
 
-		List projects = null;
+		List<InfoGrouping> projects = null;
 		Grouping groupProperties;
 
 		ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
 
 		List executionCourseProjects = executionCourse.getGroupings();
 
-		projects = new ArrayList();
+		projects = new ArrayList<InfoGrouping>();
 		Iterator iterator = executionCourseProjects.iterator();
 
 		while (iterator.hasNext()) {
@@ -154,7 +154,7 @@ public class GroupSiteComponentBuilder {
 	private List readStudentsAndGroupsByShift(Integer groupPropertiesCode, Integer shiftCode)
 			throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
-		List infoSiteStudentsAndGroupsList = new ArrayList();
+		List<InfoSiteStudentAndGroup> infoSiteStudentsAndGroupsList = new ArrayList<InfoSiteStudentAndGroup>();
 
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -202,8 +202,7 @@ public class GroupSiteComponentBuilder {
 			}
 		}
 
-		Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator(
-				"infoSiteStudentInformation.number"));
+		Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator("infoSiteStudentInformation.number"));
 
 		return infoSiteStudentsAndGroupsList;
 	}
@@ -211,7 +210,7 @@ public class GroupSiteComponentBuilder {
 	private List readStudentsAndGroupsWithoutShift(Integer groupPropertiesCode)
 			throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
-		List infoSiteStudentsAndGroupsList = new ArrayList();
+		List<InfoSiteStudentAndGroup> infoSiteStudentsAndGroupsList = new ArrayList<InfoSiteStudentAndGroup>();
 
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
@@ -265,13 +264,9 @@ public class GroupSiteComponentBuilder {
 	private List readAllStudentsAndGroups(Integer groupPropertiesCode) throws ExcepcaoInexistente,
 			FenixServiceException, ExcepcaoPersistencia {
 
-		List infoSiteStudentsAndGroupsList = new ArrayList();
+		List<InfoSiteStudentAndGroup> infoSiteStudentsAndGroupsList = new ArrayList<InfoSiteStudentAndGroup>();
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
-				groupPropertiesCode);
-
+		Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
 		}
@@ -318,7 +313,7 @@ public class GroupSiteComponentBuilder {
 	}
 
 	private List getStudentGroupsByShiftAndGrouping(Grouping groupProperties, Shift shift) {
-		List result = new ArrayList();
+		List<StudentGroup> result = new ArrayList<StudentGroup>();
 		List studentGroups = groupProperties.getStudentGroupsWithShift();
 		Iterator iter = studentGroups.iterator();
 		while (iter.hasNext()) {
@@ -330,18 +325,12 @@ public class GroupSiteComponentBuilder {
 		return result;
 	}
 
-	private List getStudentGroupsWithoutShiftByGrouping(Grouping groupProperties) {
-		List result = new ArrayList();
-		List studentGroups = groupProperties.getStudentGroupsWithoutShift();
-		result.addAll(studentGroups);
-		return result;
+	private List<StudentGroup> getStudentGroupsWithoutShiftByGrouping(Grouping groupProperties) {
+		return new ArrayList<StudentGroup>(groupProperties.getStudentGroupsWithoutShift());
 	}
 
-	private List getAllStudentGroups(Grouping groupProperties) {
-		List result = new ArrayList();
-		List studentGroups = groupProperties.getStudentGroups();
-		result.addAll(studentGroups);
-		return result;
+	private List<StudentGroup> getAllStudentGroups(Grouping groupProperties) {
+		return new ArrayList<StudentGroup>(groupProperties.getStudentGroups());
 	}
 
 	private Shift readShift(Integer shiftCode) throws ExcepcaoInexistente, FenixServiceException,
@@ -378,10 +367,7 @@ public class GroupSiteComponentBuilder {
 
 		InfoGrouping infoGroupProperties = null;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
-				groupPropertiesCode);
+		Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 
 		infoGroupProperties = InfoGroupingWithExportGrouping.newInfoFromDomain(grouping);
 
@@ -411,7 +397,7 @@ public class GroupSiteComponentBuilder {
 	public List readStudentGroupInformation(Integer studentGroupCode) throws FenixServiceException,
 			ExcepcaoPersistencia {
 
-		List studentGroupAttendInformationList = null;
+		List<InfoSiteStudentInformation> studentGroupAttendInformationList = null;
 
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -420,7 +406,7 @@ public class GroupSiteComponentBuilder {
 
 		List studentGroupAttendList = studentGroup.getAttends();
 
-		studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
+		studentGroupAttendInformationList = new ArrayList<InfoSiteStudentInformation>(studentGroupAttendList.size());
 		Iterator iter = studentGroupAttendList.iterator();
 		InfoSiteStudentInformation infoSiteStudentInformation = null;
 		Attends attend = null;

@@ -24,7 +24,7 @@ public class EditMasterDegreeCandidate extends Service {
     public InfoMasterDegreeCandidate run(Integer oldCandidateID, InfoMasterDegreeCandidate newCandidate)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class, oldCandidateID);
+        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID( oldCandidateID);
         if (masterDegreeCandidate == null) {
             throw new ExcepcaoInexistente("Unknown Candidate !!");
         }

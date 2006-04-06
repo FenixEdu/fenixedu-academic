@@ -49,7 +49,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
      * @return The Needed Roles to Execute The Service
      */
     protected Collection getNeededRoles() {
-        List roles = new ArrayList();
+        List<InfoRole> roles = new ArrayList<InfoRole>();
 
         InfoRole infoRole = new InfoRole();
         infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
@@ -78,8 +78,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
 
         // Read The DegreeCurricularPlan
         try {
-            curricularCourseScope = (CurricularCourseScope) persistentObject.readByOID(
-                    CurricularCourseScope.class, curricularCourseScopeID);
+            curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(curricularCourseScopeID);
         } catch (Exception e) {
             return false;
         }
@@ -88,7 +87,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
             return false;
         }
 
-        List roleTemp = new ArrayList();
+        List<RoleType> roleTemp = new ArrayList<RoleType>();
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             if (curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getDegree()
@@ -99,7 +98,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
 
         }
 
-        roleTemp = new ArrayList();
+        roleTemp = new ArrayList<RoleType>();
         roleTemp.add(RoleType.COORDINATOR);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
 
@@ -149,7 +148,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
     }
 
     private List getRoleList(Collection roles) {
-        List result = new ArrayList();
+        List<RoleType> result = new ArrayList<RoleType>();
         Iterator iterator = roles.iterator();
         while (iterator.hasNext()) {
             result.add(((InfoRole) iterator.next()).getRoleType());

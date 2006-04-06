@@ -19,9 +19,8 @@ public class DeleteFileItemFromItem extends Service {
     public void run(Integer itemId, Integer fileItemId)
             throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
-        Item item = (Item) persistentObject.readByOID(Item.class, itemId);
-        FileItem fileItem = (FileItem) persistentObject.readByOID(FileItem.class, fileItemId);
-
+        Item item = rootDomainObject.readItemByOID(itemId);
+        FileItem fileItem = rootDomainObject.readFileItemByOID(fileItemId);
         item.removeFileItems(fileItem);
 
         try {
@@ -29,7 +28,6 @@ public class DeleteFileItemFromItem extends Service {
         } catch (DspaceClientException e) {
             throw new FenixServiceException(e.getMessage());
         }
-
     }
 
 }

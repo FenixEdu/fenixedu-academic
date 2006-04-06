@@ -14,26 +14,18 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  * 
- * <br>
- * <strong>Description: </strong> <br>
- * Standard reading service using the ID to identify the object
- * 
- * 
  */
 public class ViewReimbursementGuide extends Service {
 
     public InfoReimbursementGuide run(Integer reimbursementGuideId) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentObject.readByOID(ReimbursementGuide.class,
-                        reimbursementGuideId);
-
+        ReimbursementGuide reimbursementGuide = rootDomainObject.readReimbursementGuideByOID(reimbursementGuideId);
         if (reimbursementGuide == null) {
             throw new NonExistingServiceException();
         }
 
         return InfoReimbursementGuide.newInfoFromDomain(reimbursementGuide);
-
     }
 
 }

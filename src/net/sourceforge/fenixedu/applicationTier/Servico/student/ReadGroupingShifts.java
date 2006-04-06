@@ -44,7 +44,7 @@ public class ReadGroupingShifts extends Service {
 		}
 		if (studentGroupCode != null) {
 
-			studentGroup = (StudentGroup) persistentObject.readByOID(StudentGroup.class,
+			studentGroup = rootDomainObject.readStudentGroupByOID(
 					studentGroupCode);
 
 			if (studentGroup == null) {

@@ -28,7 +28,7 @@ public class StudentIsUserFilter extends Filtro {
         Integer studentId = (Integer) serviceRequest.getArguments()[0];
         IUserView userView = getRemoteUser(serviceRequest);
         
-        Student student = (Student) persistentObject.readByOID(Student.class,
+        Student student = rootDomainObject.readStudentByOID(
                 studentId);
         if (student == null || userView == null
                 || !userView.getUtilizador().equals(student.getPerson().getUsername())) {

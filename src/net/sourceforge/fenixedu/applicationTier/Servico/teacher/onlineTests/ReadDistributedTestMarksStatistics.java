@@ -33,7 +33,7 @@ public class ReadDistributedTestMarksStatistics extends Service {
 
 		InfoSiteStudentsTestMarksStatistics infoSiteStudentsTestMarksStatistics = new InfoSiteStudentsTestMarksStatistics();
 
-		DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
+		DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 		if (distributedTest == null)
 			throw new InvalidArgumentsServiceException();
 
@@ -49,7 +49,7 @@ public class ReadDistributedTestMarksStatistics extends Service {
 		List<String> answeredPercentageList = new ArrayList<String>();
 
 		DecimalFormat df = new DecimalFormat("#%");
-		int numOfStudent = persistentStudentTestQuestion.countNumberOfStudents(distributedTest);
+        int numOfStudent = persistentStudentTestQuestion.countNumberOfStudents(distributedTest);
 		for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
 			if (studentTestQuestion.getCorrectionFormula().getFormula().intValue() == CorrectionFormula.FENIX) {
 

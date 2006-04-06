@@ -24,7 +24,7 @@ public class PrepareEditStudentGroupMembers extends Service {
 
     public List run(Integer executionCourseID, Integer studentGroupID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(StudentGroup.class, studentGroupID);
+        final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -38,10 +38,11 @@ public class PrepareEditStudentGroupMembers extends Service {
                 groupingAttends.remove(attend);                
             }
         }
-        final List<InfoStudent> infoStudents = new ArrayList();
+        final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>();
         for (final Attends attend : groupingAttends) {
             infoStudents.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
         }
         return infoStudents;
     }
+    
 }

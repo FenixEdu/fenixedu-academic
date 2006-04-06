@@ -39,9 +39,8 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		List enrolmentEvaluations = null;
 		InfoTeacher infoTeacher = null;
-		List infoSiteEnrolmentEvaluations = new ArrayList();
+		List<InfoSiteEnrolmentEvaluation> infoSiteEnrolmentEvaluations = new ArrayList<InfoSiteEnrolmentEvaluation>();
 
-		// read curricularCourse by ID
 		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
 
 		final CurricularCourse curricularCourseTemp = curricularCourse;
@@ -133,7 +132,7 @@ public class ReadStudentMarksByCurricularCourse extends Service {
                 }				
 			}
 
-			List infoEnrolmentEvaluations = new ArrayList();
+			List<InfoEnrolmentEvaluation> infoEnrolmentEvaluations = new ArrayList<InfoEnrolmentEvaluation>();
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
 				ListIterator iter = enrolmentEvaluations.listIterator();
 				while (iter.hasNext()) {
@@ -146,13 +145,8 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 
 					if (enrolmentEvaluation != null) {
 						if (enrolmentEvaluation.getEmployee() != null) {
-							Person person2 = (Person) persistentObject
-									.readByOID(
-											Person.class,
-											enrolmentEvaluation.getEmployee().getPerson()
-													.getIdInternal());
-							infoEnrolmentEvaluation.setInfoEmployee(InfoPersonWithInfoCountry
-									.newInfoFromDomain(person2));
+							Person person2 = enrolmentEvaluation.getEmployee().getPerson();
+							infoEnrolmentEvaluation.setInfoEmployee(InfoPersonWithInfoCountry.newInfoFromDomain(person2));
 						}
 
 					}

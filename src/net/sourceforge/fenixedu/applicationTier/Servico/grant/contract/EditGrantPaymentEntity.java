@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProje
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -23,18 +22,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditGrantPaymentEntity extends Service {
 
-
-
     public void run(InfoGrantCostCenter infoObject) throws FenixServiceException,
     				ExcepcaoPersistencia{
-        GrantCostCenter grantCostCenter = (GrantCostCenter)persistentObject.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
+        GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject.readGrantPaymentEntityByOID(infoObject.getIdInternal() );
         if(grantCostCenter == null){
         	grantCostCenter = DomainFactory.makeGrantCostCenter();
         } 
         grantCostCenter.setDesignation(infoObject.getDesignation());
         grantCostCenter.setNumber(infoObject.getNumber());
-//      ResponsibleTeacher
-    	if (infoObject.getInfoResponsibleTeacher() != null) {            
+
+        if (infoObject.getInfoResponsibleTeacher() != null) {            
             Teacher teacher = Teacher.readByNumber(infoObject
                     .getInfoResponsibleTeacher().getTeacherNumber());
             if (teacher == null)
@@ -45,7 +42,7 @@ public class EditGrantPaymentEntity extends Service {
 
     public void run(InfoGrantProject infoObject) throws FenixServiceException,
     				ExcepcaoPersistencia {
-        GrantProject grantProject = (GrantProject)persistentObject.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
+        GrantProject grantProject = (GrantProject) rootDomainObject.readGrantPaymentEntityByOID(infoObject.getIdInternal() );
         if(grantProject == null){
         	grantProject = DomainFactory.makeGrantProject();
         } 
@@ -53,7 +50,7 @@ public class EditGrantPaymentEntity extends Service {
     	grantProject.setNumber(infoObject.getNumber());
     	//Grant Cost Center
     	if (infoObject.getInfoGrantCostCenter() != null ){
-	    	final GrantCostCenter  grantCostCenter = (GrantCostCenter) persistentObject.readByOID(GrantCostCenter.class,infoObject.getInfoGrantCostCenter().getIdInternal());
+	    	final GrantCostCenter  grantCostCenter = (GrantCostCenter) rootDomainObject.readGrantPaymentEntityByOID(infoObject.getInfoGrantCostCenter().getIdInternal());
 	    	if(grantCostCenter == null)
 	    		throw new GrantOrientationTeacherNotFoundException();
 	    	grantProject.setGrantCostCenter(grantCostCenter);

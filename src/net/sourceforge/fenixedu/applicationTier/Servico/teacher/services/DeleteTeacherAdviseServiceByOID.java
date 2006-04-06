@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteTeacherAdviseServiceByOID extends Service {
 
     public void run(Integer teacherAdviseServiceID) throws ExcepcaoPersistencia {
-        TeacherAdviseService teacherAdviseService = (TeacherAdviseService) persistentObject
-        		.readByOID(TeacherAdviseService.class, teacherAdviseServiceID);
+        TeacherAdviseService teacherAdviseService = (TeacherAdviseService) rootDomainObject.readTeacherServiceItemByOID(teacherAdviseServiceID);
         teacherAdviseService.delete();
     }
+    
 }

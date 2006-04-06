@@ -16,16 +16,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadRequiredAttributes extends Service {
 
     public List<InfoAttribute> run(int publicationTypeId) throws ExcepcaoPersistencia {
-        PublicationType publicationType = (PublicationType) persistentObject.readByOID(
-                PublicationType.class, new Integer(publicationTypeId));
+        PublicationType publicationType = rootDomainObject.readPublicationTypeByOID(new Integer(publicationTypeId));
 
         List<InfoAttribute> infoAttributes = new ArrayList<InfoAttribute>();
         if (publicationType != null) {
-            for (Attribute attribute : (List<Attribute>)publicationType.getRequiredAttributes()) {
+            for (Attribute attribute : (List<Attribute>) publicationType.getRequiredAttributes()) {
                 infoAttributes.add(InfoAttribute.newInfoFromDomain(attribute));
             }
         }
 
         return infoAttributes;
     }
+    
 }

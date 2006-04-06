@@ -10,7 +10,7 @@ public class RemovePublicationFromTeacherInformationSheet extends Service {
     
     public void run(Integer teacherId, final Integer publicationId) throws ExcepcaoPersistencia, DomainException {
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
-        Publication publication = (Publication) persistentObject.readByOID(Publication.class, publicationId);        
+        Publication publication = (Publication) rootDomainObject.readResultByOID(publicationId);        
         teacher.removeFromTeacherInformationSheet(publication);
     }
     

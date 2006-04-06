@@ -28,7 +28,7 @@ public class RemoveClasses extends Service {
                 infoShift.getIdInternal());
 
         for (int i = 0; i < classOIDs.size(); i++) {
-            SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(SchoolClass.class,
+            SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(
                     (Integer) classOIDs.get(i));
 
             shift.getAssociatedClasses().remove(schoolClass);

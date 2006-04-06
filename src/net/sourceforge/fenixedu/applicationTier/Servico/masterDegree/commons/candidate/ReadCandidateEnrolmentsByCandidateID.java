@@ -23,7 +23,7 @@ public class ReadCandidateEnrolmentsByCandidateID extends Service {
     public List run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
         List result = new ArrayList();
 
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
+        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(
                         candidateID);
 
         if (masterDegreeCandidate == null) {

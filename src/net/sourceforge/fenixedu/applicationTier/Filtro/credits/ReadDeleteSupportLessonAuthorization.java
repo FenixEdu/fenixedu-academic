@@ -17,19 +17,12 @@ public class ReadDeleteSupportLessonAuthorization extends AbstractTeacherDepartm
         return filter;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
-     */
     protected Integer getTeacherId(Object[] arguments)
             throws ExcepcaoPersistencia {
         Integer supportLessonId = (Integer) arguments[0];
 
-        SupportLesson supportLesson = (SupportLesson) persistentObject.readByOID(SupportLesson.class,
-                supportLessonId);
-        return supportLesson != null ? supportLesson.getProfessorship().getTeacher().getIdInternal()
-                : null;
+        SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonId);
+        return supportLesson != null ? supportLesson.getProfessorship().getTeacher().getIdInternal() : null;
     }
 
 }

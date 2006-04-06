@@ -30,8 +30,7 @@ public class GetEquivalency extends Service {
 	public InfoEquivalency run(Integer equivalencyID) throws BDException, ExcepcaoPersistencia {
 		InfoEquivalency infoEquivalency = null;
 
-		CourseEquivalency equivalency = (CourseEquivalency) persistentObject.readByOID(
-				CourseEquivalency.class, equivalencyID);
+		CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);
 		if (equivalency != null) {
 			infoEquivalency = InfoEquivalency.newInfoFromDomain(equivalency);
 			infoEquivalency.setThemes((List) CollectionUtils.collect(equivalency.getThemes(),

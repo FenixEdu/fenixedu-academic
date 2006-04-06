@@ -18,7 +18,7 @@ public class ReadProfessorshipByTeacherIDAndExecutionCourseID extends Service {
 
     public Professorship run(final Integer teacherID, final Integer executionCourseID)
             throws ExcepcaoPersistencia {
-        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
+        Teacher teacher = rootDomainObject.readTeacherByOID(
                 teacherID);
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseID);
 

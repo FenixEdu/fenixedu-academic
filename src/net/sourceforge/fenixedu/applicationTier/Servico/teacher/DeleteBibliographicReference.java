@@ -14,16 +14,14 @@ public class DeleteBibliographicReference extends Service {
 
     public boolean run(Integer bibliographicReferenceOID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        BibliographicReference bibliographicReference = (BibliographicReference) persistentObject
-                .readByOID(BibliographicReference.class, bibliographicReferenceOID);
 
+        BibliographicReference bibliographicReference = rootDomainObject.readBibliographicReferenceByOID(bibliographicReferenceOID);
         if (bibliographicReference == null) {
             throw new InvalidArgumentsServiceException();
         }
+        
         bibliographicReference.delete();
-        persistentObject.deleteByOID(BibliographicReference.class,
-                bibliographicReference.getIdInternal());
-
         return true;
     }
+    
 }

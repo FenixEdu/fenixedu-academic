@@ -33,8 +33,7 @@ public class ReadDistributedTestMarksToString extends Service {
 
     public String run(Integer executionCourseId, Integer distributedTestId)
             throws FenixServiceException, ExcepcaoPersistencia {
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(
-                DistributedTest.class, distributedTestId);
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
@@ -120,8 +119,7 @@ public class ReadDistributedTestMarksToString extends Service {
         Double[] maxValues = new Double[distributedTestCodes.length];
 
         for (int i = 0; i < distributedTestCodes.length; i++) {
-            DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(
-                    DistributedTest.class, new Integer(distributedTestCodes[i]));
+            DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(Integer.valueOf(distributedTestCodes[i]));
             if (distributedTest == null)
                 throw new InvalidArgumentsServiceException();
             maxValues[i] = persistentStudentTestQuestion.getMaximumDistributedTestMark(new Integer(

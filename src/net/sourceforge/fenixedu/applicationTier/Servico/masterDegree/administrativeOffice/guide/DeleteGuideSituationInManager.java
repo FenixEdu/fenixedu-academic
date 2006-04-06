@@ -12,13 +12,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteGuideSituationInManager extends Service {
 
     public void run(Integer guideSituationID) throws ExcepcaoPersistencia {
-        GuideSituation guideSituation = (GuideSituation) persistentObject.readByOID(
-                GuideSituation.class, guideSituationID);
-
-        guideSituation.removeGuide();
-
-        persistentObject.deleteByOID(GuideSituation.class, guideSituationID);
-
+        GuideSituation guideSituation = rootDomainObject.readGuideSituationByOID(guideSituationID);
+        guideSituation.delete();
     }
 
 }

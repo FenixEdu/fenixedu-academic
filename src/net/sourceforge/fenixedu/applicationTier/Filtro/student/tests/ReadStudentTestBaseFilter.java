@@ -19,20 +19,13 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilter {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     final public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
             Exception {
         super.execute(request, response);
 
         Integer testId = (Integer) request.getServiceParameters().parametersArray()[1];
 
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(
-                DistributedTest.class, testId);
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(testId);
 
         if (distributedTest != null) {
             Calendar now = Calendar.getInstance();

@@ -12,7 +12,7 @@ public class EditWrittenEvaluationEnrolmentPeriod extends Service {
     public void run(Integer executionCourseID, Integer writtenEvaluationID, Date beginDate,
             Date endDate, Date beginTime, Date endTime) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(WrittenEvaluation.class, writtenEvaluationID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }

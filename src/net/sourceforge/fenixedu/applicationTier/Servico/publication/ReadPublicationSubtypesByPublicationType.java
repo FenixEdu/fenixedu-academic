@@ -14,8 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadPublicationSubtypesByPublicationType extends Service {
 
     public List<InfoPublicationSubtype> run(int publicationTypeId) throws ExcepcaoPersistencia {
-        PublicationType publicationType = (PublicationType) persistentObject.readByOID(
-                PublicationType.class, new Integer(publicationTypeId));
+        PublicationType publicationType = rootDomainObject.readPublicationTypeByOID(new Integer(publicationTypeId));
 
         List<InfoPublicationSubtype> result = new ArrayList<InfoPublicationSubtype>();
         if (publicationType != null) {

@@ -27,10 +27,11 @@ public class ReadStudentDistributedTest extends Service {
         Student student = rootDomainObject.readStudentByOID(studentId);
         if (student == null)
             throw new FenixServiceException();
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,
-                distributedTestId);
+        
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null)
             throw new FenixServiceException();
+        
         List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
                 student.getIdInternal(), distributedTest.getIdInternal());
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {

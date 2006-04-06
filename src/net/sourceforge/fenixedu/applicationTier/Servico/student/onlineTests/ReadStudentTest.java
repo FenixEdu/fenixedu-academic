@@ -34,8 +34,7 @@ public class ReadStudentTest extends Service {
         Student student = Student.readByUsername(userName);
         if (student == null)
             throw new FenixServiceException();
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(
-                DistributedTest.class, distributedTestId);
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }

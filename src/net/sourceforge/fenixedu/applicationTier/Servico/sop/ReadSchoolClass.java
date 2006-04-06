@@ -15,7 +15,7 @@ public class ReadSchoolClass extends Service {
 
 	public InfoClass run(InfoClass infoSchoolClass) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoClass result = null;
-		SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(SchoolClass.class,
+		SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(
 				infoSchoolClass.getIdInternal());
 		if (schoolClass != null) {
 			result = InfoClass.newInfoFromDomain(schoolClass);

@@ -17,11 +17,9 @@ public class FinalResult extends Service {
 
         boolean result = false;
 
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.
-            readByOID(StudentCurricularPlan.class,infoStudentCurricularPlan.getIdInternal());
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
 
-        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
-                .getInstance();
+        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
 
         IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
                 .getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());

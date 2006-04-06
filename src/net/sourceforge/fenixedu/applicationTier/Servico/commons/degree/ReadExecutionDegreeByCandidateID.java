@@ -18,7 +18,7 @@ public class ReadExecutionDegreeByCandidateID extends Service {
 
         ExecutionDegree executionDegree = null;
 
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
+        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(
                         candidateID);
 
         executionDegree = rootDomainObject.readExecutionDegreeByOID(masterDegreeCandidate.getExecutionDegree().getIdInternal());

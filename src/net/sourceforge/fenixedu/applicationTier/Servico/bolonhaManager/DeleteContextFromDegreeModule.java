@@ -16,7 +16,7 @@ public class DeleteContextFromDegreeModule extends Service {
         if (degreeModule == null) {
             throw new FenixServiceException("error.noDegreeModule");
         }
-        final Context context = (Context) persistentObject.readByOID(Context.class, contextID);
+        final Context context = rootDomainObject.readContextByOID(contextID);
         if (context == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }

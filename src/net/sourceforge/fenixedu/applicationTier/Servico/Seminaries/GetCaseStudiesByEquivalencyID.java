@@ -27,13 +27,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
 public class GetCaseStudiesByEquivalencyID extends Service {
 
 	public List run(Integer equivalencyID) throws BDException, ExcepcaoPersistencia {
-		List infoCases = new LinkedList();
+		List<InfoCaseStudy> infoCases = new LinkedList<InfoCaseStudy>();
 
-		//
-		CourseEquivalency equivalency = (CourseEquivalency) persistentObject.readByOID(
-				CourseEquivalency.class, equivalencyID);
-		//
-		List cases = new LinkedList();
+		CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);
+		List<CaseStudy> cases = new LinkedList<CaseStudy>();
 		List themes = equivalency.getThemes();
 
 		for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
@@ -48,4 +45,5 @@ public class GetCaseStudiesByEquivalencyID extends Service {
 
 		return infoCases;
 	}
+
 }

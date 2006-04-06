@@ -19,7 +19,7 @@ public class VerifyIfCanDeleteDistributedTest extends Service {
 	public boolean run(Integer executionCourseId, Integer distributedTestId)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
+		DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 		if (distributedTest == null) {
 			throw new InvalidArgumentsServiceException();
 		}

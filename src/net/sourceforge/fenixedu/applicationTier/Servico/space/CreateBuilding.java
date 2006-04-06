@@ -10,7 +10,7 @@ public class CreateBuilding extends Service {
 
     public void run(final Integer suroundingSpaceID, final String name) throws ExcepcaoPersistencia {
         final Building building = DomainFactory.makeBuilding(name);
-        final Space space = (Space) persistentObject.readByOID(Space.class, suroundingSpaceID);
+        final Space space = rootDomainObject.readSpaceByOID(suroundingSpaceID);
         building.setSuroundingSpace(space);
     }
 

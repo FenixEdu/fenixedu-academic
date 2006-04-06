@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -51,26 +50,21 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter e
             return false;
         }
         boolean result = false;
-        try {            
-            final Integer announcementID = getAnnouncementID(args);
-            final Announcement announcement = (Announcement) persistentObject.readByOID(
-                    Announcement.class, announcementID);
-            final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+        final Integer announcementID = getAnnouncementID(args);
+        final Announcement announcement = rootDomainObject.readAnnouncementByOID(announcementID);
+        final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
-            if (announcement != null && teacher != null) {
-                final ExecutionCourse executionCourse = announcement.getSite().getExecutionCourse();
-                // Check if Teacher has a professorship to ExecutionCourse Announcement
-                final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();
-                while (associatedProfessorships.hasNext()) {
-                    Professorship professorship = (Professorship) associatedProfessorships.next();
-                    if (professorship.getExecutionCourse().equals(executionCourse)) {
-                        result = true;
-                        break;
-                    }
+        if (announcement != null && teacher != null) {
+            final ExecutionCourse executionCourse = announcement.getSite().getExecutionCourse();
+            // Check if Teacher has a professorship to ExecutionCourse Announcement
+            final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();
+            while (associatedProfessorships.hasNext()) {
+                Professorship professorship = (Professorship) associatedProfessorships.next();
+                if (professorship.getExecutionCourse().equals(executionCourse)) {
+                    result = true;
+                    break;
                 }
             }
-        } catch (ExcepcaoPersistencia e) {
-            result = false;
         }
         return result;
     }

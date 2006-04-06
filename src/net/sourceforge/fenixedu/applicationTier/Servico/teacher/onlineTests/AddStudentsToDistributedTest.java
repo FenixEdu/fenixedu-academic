@@ -38,7 +38,7 @@ public class AddStudentsToDistributedTest extends Service {
         if (infoStudentList == null || infoStudentList.size() == 0)
             return null;
         this.contextPath = contextPath.replace('\\', '/');
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
@@ -50,7 +50,7 @@ public class AddStudentsToDistributedTest extends Service {
             questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
             for (int j = 0; j < infoStudentList.size(); j++) {
-                Student student = (Student) persistentObject.readByOID(Student.class,
+                Student student = rootDomainObject.readStudentByOID(
                         ((InfoStudent) infoStudentList.get(j)).getIdInternal());
                 if (persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(student.getIdInternal(), distributedTestId)
                         .isEmpty()) {

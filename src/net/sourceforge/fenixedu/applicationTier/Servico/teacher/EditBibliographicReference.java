@@ -15,8 +15,8 @@ public class EditBibliographicReference extends Service {
     public boolean run(Integer bibliographicReferenceID, String newTitle, String newAuthors,
             String newReference, String newYear, Boolean optional) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final BibliographicReference bibliographicReference = (BibliographicReference) persistentObject
-                .readByOID(BibliographicReference.class, bibliographicReferenceID);
+        
+        final BibliographicReference bibliographicReference = rootDomainObject.readBibliographicReferenceByOID(bibliographicReferenceID);
         if (bibliographicReference == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -24,4 +24,5 @@ public class EditBibliographicReference extends Service {
 
         return true;
     }
+    
 }

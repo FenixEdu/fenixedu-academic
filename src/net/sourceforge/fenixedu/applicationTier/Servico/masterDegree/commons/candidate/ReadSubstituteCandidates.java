@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -15,10 +16,10 @@ import net.sourceforge.fenixedu.util.SituationName;
  */
 public class ReadSubstituteCandidates extends Service {
 
-	public List run(String[] candidateList, String[] ids) throws FenixServiceException,
+	public List<InfoMasterDegreeCandidate> run(String[] candidateList, String[] ids) throws FenixServiceException,
 			ExcepcaoPersistencia {
 
-		List result = new ArrayList();
+		List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
 
 		// Read the substitute candidates
 		int size = candidateList.length;
@@ -31,15 +32,12 @@ public class ReadSubstituteCandidates extends Service {
 
 				Integer idInternal = new Integer(ids[i]);
 
-				MasterDegreeCandidate masterDegreeCandidateToWrite = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
-								idInternal);
-				result.add(InfoMasterDegreeCandidateWithInfoPerson
-						.newInfoFromDomain(masterDegreeCandidateToWrite));
+				MasterDegreeCandidate masterDegreeCandidateToWrite = rootDomainObject.readMasterDegreeCandidateByOID(idInternal);
+				result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidateToWrite));
 			}
 		}
 
 		return result;
-
 	}
 
 }

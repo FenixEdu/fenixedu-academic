@@ -10,7 +10,7 @@ public class EditOldBuilding extends Service {
 
     public void run(final Integer buildingID, final Integer campusID) throws ExcepcaoPersistencia, ExistingServiceException {
         final OldBuilding building = (OldBuilding) persistentObject.readByOID(OldBuilding.class, buildingID);
-        final Campus campus = (Campus) persistentObject.readByOID(Campus.class, campusID);
+        final Campus campus = rootDomainObject.readCampusByOID(campusID);
         building.setCampus(campus);
     }
 

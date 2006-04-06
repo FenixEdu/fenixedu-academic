@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDistributedTest extends Service {
 
-    public InfoDistributedTest run(Integer executionCourseId, Integer distributedTestId) throws ExcepcaoPersistencia,
-            InvalidArgumentsServiceException {
-        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,
-                distributedTestId);
+    public InfoDistributedTest run(Integer executionCourseId, Integer distributedTestId) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
+
         return InfoDistributedTest.newInfoFromDomain(distributedTest);
     }
+
 }

@@ -12,11 +12,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteAnnouncementService extends Service {
 
-    public boolean run(Integer announcementCode)
-            throws FenixServiceException, ExcepcaoPersistencia {
-
-        Announcement announcement = (Announcement) persistentObject.readByOID(
-                Announcement.class, announcementCode);
+    public boolean run(Integer announcementCode) throws FenixServiceException, ExcepcaoPersistencia {
+        Announcement announcement = rootDomainObject.readAnnouncementByOID(announcementCode);
         if (announcement == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -24,4 +21,5 @@ public class DeleteAnnouncementService extends Service {
        
         return true;
     }
+    
 }

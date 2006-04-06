@@ -12,7 +12,7 @@ public class OrderDegreeModule extends Service {
             throw new FenixServiceException();
         }
         
-        final Context context = (Context) persistentObject.readByOID(Context.class, contextID);
+        final Context context = rootDomainObject.readContextByOID(contextID);
         if (context == null) {
             throw new FenixServiceException("error.noContext");
         }

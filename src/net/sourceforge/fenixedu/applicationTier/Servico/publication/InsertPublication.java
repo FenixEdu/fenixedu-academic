@@ -17,8 +17,7 @@ public class InsertPublication extends Service {
 
         final List<Person> authors = new InsertInexistentAuthors().run(infoAuthorsList);
 
-        final PublicationType publicationType = (PublicationType) persistentObject.readByOID(
-                PublicationType.class, infoPublication.getInfoPublicationType().getIdInternal());
+        final PublicationType publicationType = rootDomainObject.readPublicationTypeByOID(infoPublication.getInfoPublicationType().getIdInternal());
         
         DomainFactory.makePublication(infoPublication,publicationType,authors);
     }

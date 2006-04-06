@@ -16,11 +16,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditPublication extends Service {
 
     public void run(InfoPublication infoPublication) throws FenixServiceException, ExcepcaoPersistencia {
-        final Publication publication = (Publication) persistentObject.readByOID(
-                Publication.class, infoPublication.getIdInternal());
+        final Publication publication = (Publication) rootDomainObject.readResultByOID(infoPublication.getIdInternal());
 
-        final PublicationType publicationType = (PublicationType) persistentObject.readByOID(
-                PublicationType.class, infoPublication.getInfoPublicationType().getIdInternal());
+        final PublicationType publicationType = rootDomainObject.readPublicationTypeByOID(infoPublication.getInfoPublicationType().getIdInternal());
 
         final List<InfoAuthor> infoAuthors = new ArrayList<InfoAuthor>();
         final List<InfoPublicationAuthor> infoPublicationAuthors = infoPublication

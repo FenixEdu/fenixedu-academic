@@ -44,7 +44,7 @@ public class ReadInquiryStatistics extends Service {
 		this.path = path.replace('\\', '/');
 		InfoSiteInquiryStatistics infoSiteInquiryStatistics = new InfoSiteInquiryStatistics();
 		List infoInquiryStatisticsList = new ArrayList();
-		DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
+		DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 		if (distributedTest == null)
 			throw new InvalidArgumentsServiceException();
 		infoSiteInquiryStatistics.setExecutionCourse(InfoExecutionCourse

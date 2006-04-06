@@ -21,12 +21,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditGrantContractMovement extends EditDomainObjectService {
 
     @Override
-    protected DomainObject readObjectByUnique(InfoObject infoObject)
-            throws ExcepcaoPersistencia {
+    protected DomainObject readObjectByUnique(InfoObject infoObject) throws ExcepcaoPersistencia {
         InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
-
-        return persistentObject.readByOID(GrantContractMovement.class,
-                infoGrantContractMovement.getIdInternal());
+        return rootDomainObject.readGrantContractMovementByOID(infoGrantContractMovement.getIdInternal());
     }
 
     @Override
@@ -40,8 +37,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
             GrantContractMovement grantContractMovement = (GrantContractMovement) domainObjectLocked;
             InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
 
-            GrantContract grantContract = (GrantContract) persistentObject.readByOID(
-                    GrantContract.class,
+            GrantContract grantContract = rootDomainObject.readGrantContractByOID(
                     infoGrantContractMovement.getInfoGrantContract().getIdInternal());
             grantContractMovement.setGrantContract(grantContract);
             domainObjectLocked = grantContractMovement;
@@ -63,8 +59,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
         grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
         grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
 
-        GrantContract grantContract = (GrantContract) persistentObject.readByOID(GrantContract.class,
-                infoGrantContractMovement.getInfoGrantContract().getIdInternal());
+        GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractMovement.getInfoGrantContract().getIdInternal());
         grantContractMovement.setGrantContract(grantContract);
 
         grantContractMovement.setLocation(infoGrantContractMovement.getLocation());

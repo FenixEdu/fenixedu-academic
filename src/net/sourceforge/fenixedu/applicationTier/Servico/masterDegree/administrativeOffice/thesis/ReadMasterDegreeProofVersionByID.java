@@ -15,15 +15,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadMasterDegreeProofVersionByID extends Service {
 
-    public Object run(Integer masterDegreeProofVersionID) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        MasterDegreeProofVersion masterDegreeProofVersion = (MasterDegreeProofVersion) persistentObject.readByOID(MasterDegreeProofVersion.class,
-                        masterDegreeProofVersionID);
-
+    public Object run(Integer masterDegreeProofVersionID) throws FenixServiceException, ExcepcaoPersistencia {
+        MasterDegreeProofVersion masterDegreeProofVersion = rootDomainObject.readMasterDegreeProofVersionByOID(masterDegreeProofVersionID);
         if (masterDegreeProofVersion == null)
             throw new NonExistingServiceException(
                     "error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
 
         return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
     }
+    
 }

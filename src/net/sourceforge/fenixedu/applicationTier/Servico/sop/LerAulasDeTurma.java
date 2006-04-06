@@ -36,7 +36,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class LerAulasDeTurma extends Service {
 
     public List run(InfoClass infoClass) throws ExcepcaoPersistencia {
-        SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(SchoolClass.class, infoClass.getIdInternal());
+        SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID( infoClass.getIdInternal());
         
         final List<Shift> shiftList = schoolClass.getAssociatedShifts();
 

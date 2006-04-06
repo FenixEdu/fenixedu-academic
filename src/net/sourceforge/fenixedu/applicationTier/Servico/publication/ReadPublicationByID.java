@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadPublicationByID extends Service {
 
     public InfoPublication run(Integer internalId, IUserView userView) throws ExcepcaoPersistencia {
-        Publication publication = (Publication) persistentObject.readByOID(Publication.class, internalId);
+        Publication publication = (Publication) rootDomainObject.readResultByOID(internalId);
 
         return InfoPublication.newInfoFromDomain(publication);
     }

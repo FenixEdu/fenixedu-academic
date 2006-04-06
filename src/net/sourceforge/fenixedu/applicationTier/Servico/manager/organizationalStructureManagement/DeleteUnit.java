@@ -12,11 +12,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteUnit extends Service {
     
     public void run(Integer unitID) throws ExcepcaoPersistencia, FenixServiceException{
-        Unit unit = (Unit) persistentObject.readByOID(Unit.class, unitID);
+        Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
         if(unit == null){
             throw new FenixServiceException("error.noUnit");
         }
         
         unit.delete();        
     }
+    
 }

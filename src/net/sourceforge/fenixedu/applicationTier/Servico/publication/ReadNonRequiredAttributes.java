@@ -12,8 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadNonRequiredAttributes extends Service {
 
     public List<InfoAttribute> run(int publicationTypeId) throws ExcepcaoPersistencia {
-        PublicationType publicationType = (PublicationType) persistentObject.readByOID(
-                PublicationType.class, new Integer(publicationTypeId));
+        PublicationType publicationType = rootDomainObject.readPublicationTypeByOID(new Integer(publicationTypeId));
 
         List<Attribute> nonRequiredAttributeList = publicationType.getNonRequiredAttributes();
 

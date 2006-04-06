@@ -20,7 +20,7 @@ public class ReadClassByOID extends Service {
 
 	public InfoClass run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoClass result = null;
-		SchoolClass turma = (SchoolClass) persistentObject.readByOID(SchoolClass.class, oid);
+		SchoolClass turma = rootDomainObject.readSchoolClassByOID( oid);
 		if (turma != null) {
 			result = InfoClass.newInfoFromDomain(turma);
 		}

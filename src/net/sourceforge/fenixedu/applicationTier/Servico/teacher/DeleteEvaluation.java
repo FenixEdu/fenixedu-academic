@@ -15,13 +15,12 @@ public class DeleteEvaluation extends Service {
      * @param Integer executionCourseID used in filtering
      *        (ExecutionCourseLecturingTeacherAuthorizationFilter)
      */
-    public void run(Integer executionCourseID, Integer evaluationID) throws ExcepcaoPersistencia,
-            FenixServiceException {
-        final Evaluation evaluation = (Evaluation) persistentObject
-                .readByOID(Evaluation.class, evaluationID);
+    public void run(Integer executionCourseID, Integer evaluationID) throws ExcepcaoPersistencia, FenixServiceException {
+        final Evaluation evaluation = (Evaluation) rootDomainObject.readEvaluationByOID(evaluationID);
         if (evaluation == null) {
             throw new FenixServiceException("error.noEvaluation");
         }
         evaluation.delete();
     }
+    
 }

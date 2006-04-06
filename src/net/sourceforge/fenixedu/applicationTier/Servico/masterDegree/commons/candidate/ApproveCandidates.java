@@ -21,7 +21,7 @@ public class ApproveCandidates extends Service {
 
         for (int i = 0; i < situations.length; i++) {
 
-            MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
+            MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(
                             new Integer(ids[i]));
             CandidateSituation candidateSituationOld = masterDegreeCandidate
                     .getActiveCandidateSituation();

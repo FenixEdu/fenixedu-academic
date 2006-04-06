@@ -49,7 +49,7 @@ public class InsertStudentsInGrouping extends Service {
             String number = (String) iterator.next();
             if (number.equals("Todos os Alunos")) {
             } else {
-                Student student = (Student) persistentObject.readByOID(Student.class,
+                Student student = rootDomainObject.readStudentByOID(
                         new Integer(number));
                 students.add(student);
             }

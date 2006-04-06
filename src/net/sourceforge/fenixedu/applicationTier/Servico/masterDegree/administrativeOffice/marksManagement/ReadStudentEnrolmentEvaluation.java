@@ -31,10 +31,9 @@ public class ReadStudentEnrolmentEvaluation extends Service {
         InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
         InfoEnrolment infoEnrolment = new InfoEnrolment();
         InfoTeacher infoTeacher = new InfoTeacher();
-        List infoEnrolmentEvaluations = new ArrayList();
+        List<InfoEnrolmentEvaluation> infoEnrolmentEvaluations = new ArrayList<InfoEnrolmentEvaluation>();
 
-        enrolmentEvaluation = (EnrolmentEvaluation) persistentObject.readByOID(
-                EnrolmentEvaluation.class, studentEvaluationCode);
+        enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(studentEvaluationCode);
 
         infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                 .newInfoFromDomain(enrolmentEvaluation.getEnrolment());

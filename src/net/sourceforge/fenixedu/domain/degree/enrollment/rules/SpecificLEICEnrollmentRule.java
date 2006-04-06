@@ -18,14 +18,13 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -351,36 +350,31 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 
 
 	protected List<CurricularCourse> getTagus4And5Courses() {
-		try {
-			DegreeCurricularPlan tagusCurricularPlan = (DegreeCurricularPlan) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentObject().readByOID(DegreeCurricularPlan.class, 89);
-			Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
-			Set<CurricularCourse> allCurricularCourses = new HashSet<CurricularCourse>();
+		DegreeCurricularPlan tagusCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(89);
+		Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
+		Set<CurricularCourse> allCurricularCourses = new HashSet<CurricularCourse>();
 
-			for (Branch branch : (List<Branch>) tagusCurricularPlan.getSpecializationAreas()) {
-                addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
-            }
-			for (Branch branch : (List<Branch>) tagusCurricularPlan.getSecundaryAreas()) {
-                addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
-			}
-            addOldCurricularCourses(allCurricularCourses, tagusCurricularPlan.getAllOptionalCurricularCourseGroups());
-	        
-			for (CurricularCourse course : allCurricularCourses) {
-				if (!isApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
-					if (!studentCurricularPlan.isCurricularCourseApproved(course) && isAnyScopeActive(course.getScopes())) {
-						areaCourses.add(course);
-					}
-				} else {
-					if(isAnyScopeActive(course.getScopes())) {
-						optionalCourses++;
-					}
+		for (Branch branch : (List<Branch>) tagusCurricularPlan.getSpecializationAreas()) {
+            addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
+        }
+		for (Branch branch : (List<Branch>) tagusCurricularPlan.getSecundaryAreas()) {
+            addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
+		}
+        addOldCurricularCourses(allCurricularCourses, tagusCurricularPlan.getAllOptionalCurricularCourseGroups());
+        
+		for (CurricularCourse course : allCurricularCourses) {
+			if (!isApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
+				if (!studentCurricularPlan.isCurricularCourseApproved(course) && isAnyScopeActive(course.getScopes())) {
+					areaCourses.add(course);
+				}
+			} else {
+				if(isAnyScopeActive(course.getScopes())) {
+					optionalCourses++;
 				}
 			}
-
-			return new ArrayList<CurricularCourse>(areaCourses);
-		}catch(ExcepcaoPersistencia e) {
-			throw new RuntimeException(e);
 		}
 
+		return new ArrayList<CurricularCourse>(areaCourses);
 	}
 
 	private void addOldCurricularCourses(Set<CurricularCourse> allCurricularCourses, List<CurricularCourseGroup> curricularCourseGroups) {

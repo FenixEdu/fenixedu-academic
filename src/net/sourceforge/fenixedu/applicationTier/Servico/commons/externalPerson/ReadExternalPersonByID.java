@@ -19,8 +19,7 @@ public class ReadExternalPersonByID extends Service {
         InfoExternalPerson infoExternalPerson = null;
         ExternalPerson externalPerson = null;
 
-        externalPerson = (ExternalPerson) persistentObject.readByOID(ExternalPerson.class, externalPersonID);
-
+        externalPerson = rootDomainObject.readExternalPersonByOID(externalPersonID);
         if (externalPerson == null)
             throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");
 
@@ -28,4 +27,5 @@ public class ReadExternalPersonByID extends Service {
 
         return infoExternalPerson;
     }
+    
 }

@@ -19,9 +19,7 @@ public class ReadGratuitySituationById extends Service {
 	public InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoGratuitySituation infoGratuitySituation = null;
 
-		GratuitySituation gratuitySituation = (GratuitySituation) persistentObject
-				.readByOID(GratuitySituation.class, gratuitySituationID);
-
+		GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
 		if (gratuitySituation == null) {
 			throw new NonExistingServiceException(
 					"error.exception.masterDegree.gratuity.notExistingGratuitySituation");

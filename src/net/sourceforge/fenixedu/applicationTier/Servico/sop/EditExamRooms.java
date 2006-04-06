@@ -24,7 +24,7 @@ public class EditExamRooms extends Service {
         	finalRoomList.add((OldRoom) persistentObject.readByOID(OldRoom.class, (Integer) id));
         }
 
-        final Exam exam = (Exam) persistentObject.readByOID(Exam.class, infoExam.getIdInternal());
+        final Exam exam = (Exam) rootDomainObject.readEvaluationByOID( infoExam.getIdInternal());
         if (exam == null) {
             throw new NonExistingServiceException();
         }

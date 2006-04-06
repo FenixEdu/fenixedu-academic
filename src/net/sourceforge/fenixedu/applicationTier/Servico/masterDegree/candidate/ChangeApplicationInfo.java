@@ -37,8 +37,7 @@ public class ChangeApplicationInfo extends Service {
     public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
             InfoPerson infoPerson, IUserView userView, Boolean isNewPerson)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
-                .readByOID(ExecutionDegree.class,
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(
                         newMasterDegreeCandidate.getInfoExecutionDegree().getIdInternal());
 
         MasterDegreeCandidate existingMasterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate()
