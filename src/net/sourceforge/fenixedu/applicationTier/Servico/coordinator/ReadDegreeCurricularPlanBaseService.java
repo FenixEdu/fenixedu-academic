@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -27,9 +28,9 @@ import org.apache.commons.collections.Transformer;
  */
 abstract public class ReadDegreeCurricularPlanBaseService extends Service {
 
-    protected List readActiveCurricularCourseScopes(final Integer degreeCurricularPlanId)
+    protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopes(final Integer degreeCurricularPlanId)
             throws ExcepcaoPersistencia {
-        List infoActiveScopes = null;
+        List<InfoCurricularCourseScope> infoActiveScopes = null;
 
         if (degreeCurricularPlanId != null) {
 
@@ -37,7 +38,7 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
             List<CurricularCourseScope> allActiveScopes =  degreeCurricularPlan.getActiveCurricularCourseScopes();
 
             if (allActiveScopes != null && allActiveScopes.size() > 0) {
-                infoActiveScopes = new ArrayList();
+                infoActiveScopes = new ArrayList<InfoCurricularCourseScope>();
 
                 CollectionUtils.collect(allActiveScopes, new Transformer() {
                     public Object transform(Object input) {
@@ -55,9 +56,9 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
     }
 
     // Read all curricular course scope of this year
-    protected List readActiveCurricularCourseScopesInExecutionYear(Integer degreeCurricularPlanId,
+    protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopesInExecutionYear(Integer degreeCurricularPlanId,
             ExecutionYear executionYear) throws FenixServiceException, ExcepcaoPersistencia {
-        List infoActiveScopes = null;
+        List<InfoCurricularCourseScope> infoActiveScopes = null;
 
         IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
@@ -68,7 +69,7 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
                             degreeCurricularPlanId, executionYear.getBeginDate(), executionYear
                                     .getEndDate());
             if (allActiveScopes != null && allActiveScopes.size() > 0) {
-                infoActiveScopes = new ArrayList();
+                infoActiveScopes = new ArrayList<InfoCurricularCourseScope>();
 
                 CollectionUtils.collect(allActiveScopes, new Transformer() {
                     public Object transform(Object input) {
@@ -86,10 +87,10 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
     }
 
     // Read all curricular course scope of this year and curricular year
-    protected List readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(
+    protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(
             ExecutionPeriod executionPeriod, ExecutionDegree executionDegree, Integer curricularYear)
             throws FenixServiceException, ExcepcaoPersistencia {
-        List infoActiveScopes = null;
+        List<InfoCurricularCourseScope> infoActiveScopes = null;
 
         IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
@@ -102,7 +103,7 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
                                     .getExecutionYear().getEndDate());
 
             if (allActiveExecution != null && allActiveExecution.size() > 0) {
-                infoActiveScopes = new ArrayList();
+                infoActiveScopes = new ArrayList<InfoCurricularCourseScope>();
                 CollectionUtils.collect(allActiveExecution, new Transformer() {
                     public Object transform(Object input) {
                         CurricularCourseScope curricularCourseScope = (CurricularCourseScope) input;
