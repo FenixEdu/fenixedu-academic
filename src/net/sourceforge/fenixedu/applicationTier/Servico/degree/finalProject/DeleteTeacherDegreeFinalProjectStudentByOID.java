@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteTeacherDegreeFinalProjectStudentByOID extends Service {
 
     public void run(Integer teacherDegreeFinalProjectStudentID) throws ExcepcaoPersistencia, FenixServiceException {
-        final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent)
-        		persistentObject.readByOID(TeacherDegreeFinalProjectStudent.class, teacherDegreeFinalProjectStudentID);
+        final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = rootDomainObject.readTeacherDegreeFinalProjectStudentByOID(teacherDegreeFinalProjectStudentID);
         if (teacherDegreeFinalProjectStudent == null) {
             throw new FenixServiceException("message.noTeacherDegreeFinalProjectStudent");
         }
         teacherDegreeFinalProjectStudent.delete();
     }
+    
 }

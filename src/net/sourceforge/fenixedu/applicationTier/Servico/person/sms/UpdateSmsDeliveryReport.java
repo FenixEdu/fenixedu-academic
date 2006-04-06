@@ -21,7 +21,7 @@ public class UpdateSmsDeliveryReport extends Service {
 
 	public void run(Integer smsId, SmsDeliveryType smsDeliveryType) throws FenixServiceException, ExcepcaoPersistencia {
 		// read sentSms Object
-		SentSms sentSms = (SentSms) persistentObject.readByOID(SentSms.class, smsId);
+		SentSms sentSms = rootDomainObject.readSentSmsByOID(smsId);
 
 		if (sentSms == null) {
 			throw new FenixServiceException();

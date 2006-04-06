@@ -10,8 +10,7 @@ public class ChangeCandidacyApprovanceStatus extends Service {
 
     public void run(List<Integer> candidaciesIDs) throws ExcepcaoPersistencia {
         for (Integer candidacyID : candidaciesIDs) {
-            Candidacy candidacy = (Candidacy) persistentObject.readByOID(
-                    Candidacy.class, candidacyID);
+            Candidacy candidacy = rootDomainObject.readCandidacyByOID(candidacyID);
             if (candidacy.getApproved() == null) {
                 candidacy.setApproved(Boolean.FALSE);
             }

@@ -40,9 +40,7 @@ public class ReadStudentsWithoutGroup extends Service {
 			ExcepcaoPersistencia {
 
 		final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
-		final Grouping grouping = (Grouping) persistentObject
-				.readByOID(Grouping.class, groupPropertiesCode);
-
+		final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 		if (grouping == null) {
 			throw new ExistingServiceException();
 		}
@@ -54,7 +52,7 @@ public class ReadStudentsWithoutGroup extends Service {
 		infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
         infoSiteStudentsWithoutGroup.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
 
-		final List attends = grouping.getAttends();
+		final List<Attends> attends = grouping.getAttends();
 
 		Student userStudent = null;
 		for (final Iterator iterator = attends.iterator(); iterator.hasNext(); ) {
@@ -75,7 +73,7 @@ public class ReadStudentsWithoutGroup extends Service {
 		}
 
 
-		final Set attendsWithOutGroupsSet = new HashSet(attends);
+		final Set<Attends> attendsWithOutGroupsSet = new HashSet<Attends>(attends);
 		for (final Iterator iterator = allStudentsGroups.iterator(); iterator.hasNext(); ) {
 			final StudentGroup studentGroup = (StudentGroup) iterator.next();
 			
@@ -87,7 +85,7 @@ public class ReadStudentsWithoutGroup extends Service {
 			}
 		}
 
-		final List infoStudentList = new ArrayList(attendsWithOutGroupsSet.size());
+		final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>(attendsWithOutGroupsSet.size());
 		for (final Iterator iterator = attendsWithOutGroupsSet.iterator(); iterator.hasNext(); ) {
 			final Attends attend = (Attends) iterator.next();
 			final Student student = attend.getAluno();

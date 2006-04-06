@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteCurricularCourseEquivalency extends Service {
 
     public void run(final Integer curricularCourseEquivalencyID) throws ExcepcaoPersistencia {
-        final CurricularCourseEquivalence curricularCourseEquivalence = (CurricularCourseEquivalence) persistentObject.readByOID(CurricularCourseEquivalence.class, curricularCourseEquivalencyID);
+        final CurricularCourseEquivalence curricularCourseEquivalence = rootDomainObject.readCurricularCourseEquivalenceByOID(curricularCourseEquivalencyID);
         curricularCourseEquivalence.delete();
     }
 

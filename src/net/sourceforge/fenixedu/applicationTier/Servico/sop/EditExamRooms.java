@@ -21,7 +21,7 @@ public class EditExamRooms extends Service {
 
         final List<OldRoom> finalRoomList = new ArrayList<OldRoom>();
         for (final Integer id : roomsForExam) {
-        	finalRoomList.add((OldRoom) persistentObject.readByOID(OldRoom.class, (Integer) id));
+        	finalRoomList.add(rootDomainObject.readOldRoomByOID( (Integer) id));
         }
 
         final Exam exam = (Exam) rootDomainObject.readEvaluationByOID( infoExam.getIdInternal());

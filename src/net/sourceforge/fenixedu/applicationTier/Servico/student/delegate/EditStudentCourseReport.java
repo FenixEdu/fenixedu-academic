@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.delegate;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
-import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -27,9 +26,7 @@ public class EditStudentCourseReport extends EditDomainObjectService {
         InfoStudentCourseReport infoStudentCourseReport = (InfoStudentCourseReport) infoObject;
         StudentCourseReport studentCourseReport = (StudentCourseReport) domainObject;
         if (infoStudentCourseReport.getInfoCurricularCourse() != null) {
-            CurricularCourse curricularCourse = (CurricularCourse) persistentObject
-                    .readByOID(Country.class,
-                            infoStudentCourseReport.getInfoCurricularCourse().getIdInternal());
+            CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoStudentCourseReport.getInfoCurricularCourse().getIdInternal());
             studentCourseReport.setCurricularCourse(curricularCourse);
         }
         studentCourseReport.setLastModificationDate(infoStudentCourseReport.getLastModificationDate());

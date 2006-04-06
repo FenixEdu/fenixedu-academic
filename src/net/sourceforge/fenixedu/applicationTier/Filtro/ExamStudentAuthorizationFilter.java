@@ -58,8 +58,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
             } else {
                 return false;
             }
-            final Evaluation evaluation = (Evaluation) persistentObject
-                    .readByOID(Evaluation.class, evaluationID);
+            final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationID);
 
             final String studentUsername = (String) args[0];
             for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {

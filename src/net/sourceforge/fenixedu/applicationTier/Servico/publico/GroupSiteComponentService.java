@@ -17,7 +17,7 @@ public class GroupSiteComponentService extends Service {
             Integer value) throws FenixServiceException, ExcepcaoPersistencia {
         Site site = null;
         if (infoSiteCode != null) {
-            site = (Site) persistentObject.readByOID(Site.class, infoSiteCode);
+            site = rootDomainObject.readSiteByOID(infoSiteCode);
             if (site == null) {
                 throw new NonExistingServiceException();
             }

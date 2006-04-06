@@ -15,8 +15,7 @@ public class EditAnnouncementService extends Service {
 
     public boolean run(Integer announcementCode, String newAnnouncementTitle,
             String newAnnouncementInformation) throws ExcepcaoPersistencia, FenixServiceException {
-        final Announcement announcement = (Announcement) persistentObject.readByOID(
-                Announcement.class, announcementCode);
+        final Announcement announcement = rootDomainObject.readAnnouncementByOID(announcementCode);
         if (announcement == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -24,4 +23,5 @@ public class EditAnnouncementService extends Service {
 
         return true;
     }
+    
 }

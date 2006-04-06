@@ -13,7 +13,7 @@ public class DeleteSection extends Service {
 
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Section sectionToDelete = (Section) persistentObject.readByOID(Section.class, sectionCode);
+        Section sectionToDelete = rootDomainObject.readSectionByOID(sectionCode);
 
         if (sectionToDelete == null) {
             throw new FenixServiceException("non existing section");

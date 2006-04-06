@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Luis Cruz
@@ -27,28 +26,17 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#getRoleType()
-     */
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#verifyCondition(ServidorAplicacao.IUserView,
-     *      java.lang.Integer)
-     */
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
             if (objectId == null) {
                 return false;
             }
 
-            Proposal proposal = (Proposal) persistentObject.readByOID(Proposal.class,
+            Proposal proposal = rootDomainObject.readProposalByOID(
                     objectId);
             if (proposal == null) {
                 return false;
@@ -71,8 +59,6 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
                 return true;
             }
 
-            return false;
-        } catch (ExcepcaoPersistencia e) {
             return false;
         } catch (Exception e) {
             return false;

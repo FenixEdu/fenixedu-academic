@@ -14,20 +14,19 @@ public class EditExecutionDegree extends Service {
     public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        final ExecutionDegree oldExecutionDegree = (ExecutionDegree) persistentObject.readByOID(ExecutionDegree.class,
+        final ExecutionDegree oldExecutionDegree = rootDomainObject.readExecutionDegreeByOID(
                         infoExecutionDegree.getIdInternal());
         if (oldExecutionDegree == null) {
             throw new NonExistingServiceException("message.nonExistingExecutionDegree", null);
         }
 
-        final Campus campus = (Campus) persistentObject.readByOID(Campus.class,
+        final Campus campus = rootDomainObject.readCampusByOID(
                 infoExecutionDegree.getInfoCampus().getIdInternal());
         if (campus == null) {
             throw new NonExistingServiceException("message.nonExistingCampus", null);
         }
 
-        final ExecutionYear executionYear = (ExecutionYear) persistentObject
-                .readByOID(ExecutionYear.class,
+        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(
                         infoExecutionDegree.getInfoExecutionYear().getIdInternal());
         if (executionYear == null) {
             throw new NonExistingServiceException("message.non.existing.execution.year", null);

@@ -14,9 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class FixSibsEntryByID extends Service {
 
 	public void run(Integer sibsEntryId) throws FenixServiceException, ExcepcaoPersistencia {
-		SibsPaymentFileEntry sibsPaymentFileEntry = (SibsPaymentFileEntry) persistentObject
-				.readByOID(SibsPaymentFileEntry.class, sibsEntryId);
-
+		SibsPaymentFileEntry sibsPaymentFileEntry = rootDomainObject.readSibsPaymentFileEntryByOID(sibsEntryId);
 		if (sibsPaymentFileEntry == null) {
 			throw new FenixServiceException();
 		}

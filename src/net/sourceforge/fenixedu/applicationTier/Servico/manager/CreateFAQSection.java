@@ -19,7 +19,7 @@ public class CreateFAQSection extends Service {
         FAQSection parentFAQSection = null;
         if (infoFAQSection.getParentSection() != null
                 && infoFAQSection.getParentSection().getIdInternal() != null) {
-            parentFAQSection = (FAQSection) persistentObject.readByOID(FAQSection.class, infoFAQSection
+            parentFAQSection = rootDomainObject.readFAQSectionByOID(infoFAQSection
                     .getParentSection().getIdInternal());
         }
 

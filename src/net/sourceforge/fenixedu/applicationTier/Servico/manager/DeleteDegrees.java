@@ -20,12 +20,10 @@ public class DeleteDegrees extends Service {
     public List run(List degreesInternalIds) throws FenixServiceException, ExcepcaoPersistencia {
             Iterator iter = degreesInternalIds.iterator();
 
-            List undeletedDegreesNames = new ArrayList();
-
+            List<String> undeletedDegreesNames = new ArrayList<String>();
             while (iter.hasNext()) {
-
                 Integer internalId = (Integer) iter.next();
-                Degree degree = (Degree)persistentObject.readByOID(Degree.class,internalId);
+                Degree degree = rootDomainObject.readDegreeByOID(internalId);
                 
                 if (degree != null) {
                 
@@ -38,6 +36,6 @@ public class DeleteDegrees extends Service {
             }
 
             return undeletedDegreesNames;
-
     }
+    
 }

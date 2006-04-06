@@ -15,17 +15,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadTransactionByID extends Service {
 
 	public InfoTransaction run(Integer transactionId) throws FenixServiceException, ExcepcaoPersistencia {
-		InfoTransaction infoTransaction = null;
-
-		Transaction transaction = (Transaction) persistentObject.readByOID(
-				Transaction.class, transactionId);
-
+		Transaction transaction = rootDomainObject.readTransactionByOID(transactionId);
 		if (transaction == null) {
 			throw new ExcepcaoInexistente();
 		}
-		infoTransaction = InfoTransaction.newInfoFromDomain(transaction);
-
-		return infoTransaction;
+		return InfoTransaction.newInfoFromDomain(transaction);
 	}
 
 }

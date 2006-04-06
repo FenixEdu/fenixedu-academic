@@ -24,9 +24,10 @@ public class GetCandidacyById extends Service {
 	public InfoCandidacy run(Integer id) throws BDException, ExcepcaoPersistencia {
 		InfoCandidacy infoCandidacy = null;
 
-		Candidacy candidacy = (Candidacy) persistentObject.readByOID(Candidacy.class, id);
+		Candidacy candidacy = rootDomainObject.readCandidacyByOID(id);
 		infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
 
 		return infoCandidacy;
 	}
+    
 }

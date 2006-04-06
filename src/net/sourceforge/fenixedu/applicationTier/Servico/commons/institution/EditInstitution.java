@@ -15,9 +15,7 @@ public class EditInstitution extends Service {
 
         Unit storedInstitution = UnitUtils.readExternalInstitutionUnitByName(newInstitutionName);
         
-        Unit oldInstitution = (Unit) persistentObject.readByOID(Unit.class,
-                oldInstitutionOID);
-
+        Unit oldInstitution = (Unit) rootDomainObject.readPartyByOID(oldInstitutionOID);
         if (oldInstitution == null) {
             throw new NonExistingServiceException(
                     "error.exception.commons.institution.institutionNotFound");
@@ -30,4 +28,5 @@ public class EditInstitution extends Service {
 
         oldInstitution.setName(newInstitutionName);
     }
+    
 }

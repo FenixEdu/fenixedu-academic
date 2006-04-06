@@ -20,7 +20,7 @@ public class EditCourseInformation extends Service {
             FenixServiceException {
         final CourseReport courseReport;
         if (courseReportID != 0) {
-            courseReport = (CourseReport) persistentObject.readByOID(CourseReport.class, courseReportID);
+            courseReport = rootDomainObject.readCourseReportByOID(courseReportID);
         } else {
             final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoCourseReport.getInfoExecutionCourse().getIdInternal());
 

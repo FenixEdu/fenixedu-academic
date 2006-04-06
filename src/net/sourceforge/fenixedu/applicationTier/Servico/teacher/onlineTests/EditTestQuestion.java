@@ -17,7 +17,7 @@ public class EditTestQuestion extends Service {
 
     public void run(Integer executionCourseId, Integer testQuestionId, Integer testQuestionOrder, Double testQuestionValue, CorrectionFormula formula)
             throws ExcepcaoPersistencia, FenixServiceException {
-        TestQuestion testQuestion = (TestQuestion) persistentObject.readByOID(TestQuestion.class, testQuestionId);
+        TestQuestion testQuestion = rootDomainObject.readTestQuestionByOID(testQuestionId);
         if (testQuestion == null) {
             throw new InvalidArgumentsServiceException();
         }

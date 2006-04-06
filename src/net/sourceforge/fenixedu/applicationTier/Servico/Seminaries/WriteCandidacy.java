@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
@@ -32,7 +30,7 @@ public class WriteCandidacy extends Service {
         candidacy.setMotivation(infoCandidacy.getMotivation());
         
         // Modality
-        final Modality modality = (Modality) persistentObject.readByOID(Modality.class,infoCandidacy.getInfoModality().getIdInternal());        
+        final Modality modality = rootDomainObject.readModalityByOID(infoCandidacy.getInfoModality().getIdInternal());        
         candidacy.setModality(modality);
 
         // Student
@@ -59,7 +57,7 @@ public class WriteCandidacy extends Service {
         }
 
         // Seminary Case Study Choices
-        for (InfoCaseStudyChoice infoCaseStudyChoice : (List<InfoCaseStudyChoice>) infoCandidacy.getCaseStudyChoices()) {
+        for (InfoCaseStudyChoice infoCaseStudyChoice : infoCandidacy.getCaseStudyChoices()) {
             final CaseStudyChoice caseStudyChoice = DomainFactory.makeCaseStudyChoice();
             
             caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());

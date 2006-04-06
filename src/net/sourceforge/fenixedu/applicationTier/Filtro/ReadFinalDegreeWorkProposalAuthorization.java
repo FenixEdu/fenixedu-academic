@@ -23,7 +23,7 @@ public class ReadFinalDegreeWorkProposalAuthorization extends Filtro {
         IUserView id = getRemoteUser(request);
         Integer finalDegreeWorkProposalOID = (Integer) request.getServiceParameters().parametersArray()[0];
         if (finalDegreeWorkProposalOID != null) {
-            Proposal proposal = (Proposal) persistentObject.readByOID(Proposal.class,
+            Proposal proposal = rootDomainObject.readProposalByOID(
                     finalDegreeWorkProposalOID);
             if (proposal != null) {
                 if (proposal.getStatus() != null

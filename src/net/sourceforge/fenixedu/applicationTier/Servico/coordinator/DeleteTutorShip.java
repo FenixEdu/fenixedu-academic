@@ -18,7 +18,7 @@ public class DeleteTutorShip extends Service {
 
         if (tutorIds2Delete != null && tutorIds2Delete.size() > 0) {
             for (Integer tutorId : tutorIds2Delete) {
-                Tutor tutor = (Tutor) persistentObject.readByOID(Tutor.class, tutorId);
+                Tutor tutor = rootDomainObject.readTutorByOID(tutorId);
                 if (tutor != null) {
                     tutor.delete();
                 }

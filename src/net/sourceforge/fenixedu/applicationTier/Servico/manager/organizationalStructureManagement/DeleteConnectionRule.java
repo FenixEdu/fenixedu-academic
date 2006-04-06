@@ -12,10 +12,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteConnectionRule extends Service {
     
     public void run(Integer connectionRuleID) throws ExcepcaoPersistencia, FenixServiceException{
-        ConnectionRule connectionRule = (ConnectionRule) persistentObject.readByOID(ConnectionRule.class, connectionRuleID);
+        ConnectionRule connectionRule = rootDomainObject.readConnectionRuleByOID(connectionRuleID);
         if(connectionRule == null){
             throw new FenixServiceException("error.no.connectionRule");
         }        
         connectionRule.delete();        
     }
+    
 }

@@ -49,7 +49,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
         // criterio define que IEnrolments vamos ver: pode ser 'aprovado ou null
         // (selecciona todos)
 
-        List studentCurricularPlans = new ArrayList();
+        List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
 
         Predicate predicado = null;
 
@@ -64,7 +64,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
         if (curricularPlanID.isAll() || curricularPlanID.isNewest()) {
             Person person = Person.readPersonByUsername(username);
             List students = person.getStudents();
-            List studentCPsTemp = null;
+            List<StudentCurricularPlan> studentCPsTemp = null;
 
             Iterator studentsIterator = students.iterator();
 
@@ -95,14 +95,13 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
                     }
                 }
 
-                studentCurricularPlans = new ArrayList();
+                studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
                 studentCurricularPlans.add(planoRecente);
             }
         } else // um SCP em particular
         {
-            // obter o CP epersistentSupportecificado como curricularPlanID
-
-            studentCurricularPlans.add(persistentObject.readByOID(StudentCurricularPlan.class, curricularPlanID.getId()));
+            // obter o CP especificado como curricularPlanID
+            studentCurricularPlans.add(rootDomainObject.readStudentCurricularPlanByOID(curricularPlanID.getId()));
         }
 
         InfoStudentCurricularPlansWithSelectedEnrollments currPlanEnrol = new InfoStudentCurricularPlansWithSelectedEnrollments();
@@ -121,7 +120,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
                                                                         // IEnrollment's
             List selectedEnrollments = ((List) CollectionUtils.select(enrollments, predicado));
 
-            List infoSelectedEnrollments = new ArrayList();
+            List<InfoEnrolment> infoSelectedEnrollments = new ArrayList<InfoEnrolment>();
             Iterator selectedEnrollmentsIterator = selectedEnrollments.iterator();
 
             GetEnrolmentGrade getEnrolmentGrade = new GetEnrolmentGrade();

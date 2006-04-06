@@ -30,19 +30,16 @@ public class DeleteEnrollmentsList extends Service {
             while (iterator.hasNext()) {
                 Integer enrolmentID = (Integer) iterator.next();
 
-                final Enrolment enrollment = (Enrolment) persistentObject.readByOID(Enrolment.class,
-                        enrolmentID);
-
+                final Enrolment enrollment = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrolmentID);
                 if (enrollment != null) {
-
                     try {
                         enrollment.unEnroll();
                     } catch (DomainException e) {
                         throw new CantDeleteServiceException();
                     }
-
                 }
             }
         }
     }
+    
 }

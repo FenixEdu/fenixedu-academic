@@ -75,10 +75,9 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
             if (argumentos[1] instanceof InfoSection) {
                 infoSection = (InfoSection) argumentos[1];
 
-                section = (Section) persistentObject.readByOID(Section.class, infoSection
-                        .getIdInternal());
+                section = rootDomainObject.readSectionByOID(infoSection.getIdInternal());
             } else {
-                section = (Section) persistentObject.readByOID(Section.class, (Integer) argumentos[1]);
+                section = rootDomainObject.readSectionByOID((Integer) argumentos[1]);
 
             }
         } catch (Exception e) {

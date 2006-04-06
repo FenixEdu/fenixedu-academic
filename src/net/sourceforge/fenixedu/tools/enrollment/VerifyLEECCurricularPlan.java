@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
@@ -34,8 +35,7 @@ public class VerifyLEECCurricularPlan {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSuport.iniciarTransaccao();
 
-            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSuport.getIPersistentObject().readByOID(DegreeCurricularPlan.class, new Integer("48"));
-
+            DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(48);
             List branches = degreeCurricularPlan.getAreas();
 
             Iterator iterator = branches.iterator();
@@ -128,7 +128,7 @@ public class VerifyLEECCurricularPlan {
      */
     private static List getCurricularCourseScopesByScientificAreaInGroup(
             CurricularCourseGroup curricularCourseGroup, ScientificArea scientificArea) {
-        List result = new ArrayList();
+        List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
         List curricularCourses = curricularCourseGroup.getCurricularCourses();
         Iterator iterator1 = curricularCourses.iterator();
         while (iterator1.hasNext()) {

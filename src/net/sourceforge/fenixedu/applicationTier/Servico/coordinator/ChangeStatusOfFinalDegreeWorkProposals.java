@@ -14,7 +14,7 @@ public class ChangeStatusOfFinalDegreeWorkProposals extends Service {
             FinalDegreeWorkProposalStatus status) throws FenixServiceException, ExcepcaoPersistencia {
         if (executionDegreeOID != null && selectedProposalOIDs != null) {
             for (Integer selectedProposalOID : selectedProposalOIDs) {
-                Proposal proposal = (Proposal) persistentObject.readByOID(Proposal.class,
+                Proposal proposal = rootDomainObject.readProposalByOID(
                         selectedProposalOID);
                 proposal.setStatus(status);
             }

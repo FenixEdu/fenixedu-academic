@@ -86,7 +86,7 @@ public class WriteExecutionCourseWebsite extends CmsService {
 
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(parameters.getExecutionCourseID());
         
-        WebsiteType websiteType = (WebsiteType) persistentObject.readByOID(WebsiteType.class, parameters.getWebsiteTypeID());
+        WebsiteType websiteType = rootDomainObject.readWebsiteTypeByOID(parameters.getWebsiteTypeID());
         if (websiteType == null) {
             throw new FenixServiceException("The website type could not be found");
         }

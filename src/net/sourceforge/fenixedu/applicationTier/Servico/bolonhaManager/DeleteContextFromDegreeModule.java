@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteContextFromDegreeModule extends Service {
 
     public void run(final Integer degreeModuleID, final Integer contextID) throws ExcepcaoPersistencia, FenixServiceException {
-        final DegreeModule degreeModule = (DegreeModule) persistentObject.readByOID(DegreeModule.class, degreeModuleID);
+        final DegreeModule degreeModule = rootDomainObject.readDegreeModuleByOID(degreeModuleID);
         if (degreeModule == null) {
             throw new FenixServiceException("error.noDegreeModule");
         }

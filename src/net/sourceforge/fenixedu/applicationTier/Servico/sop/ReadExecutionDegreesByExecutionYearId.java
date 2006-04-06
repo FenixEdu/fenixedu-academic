@@ -26,21 +26,20 @@ public class ReadExecutionDegreesByExecutionYearId extends Service {
 
     public List run(Integer executionYearId) throws ExcepcaoPersistencia {
 
-        List infoExecutionDegreeList = null;
+        List<InfoExecutionDegree> infoExecutionDegreeList = null;
 
         ExecutionYear executionYear = null;
         if (executionYearId == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         } else {
-            executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class,
-                    executionYearId);
+            executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
         }
 
         List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear.getYear());
 
         if (executionDegrees != null && executionDegrees.size() > 0) {
             Iterator iterator = executionDegrees.iterator();
-            infoExecutionDegreeList = new ArrayList();
+            infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
 
             while (iterator.hasNext()) {
                 ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();

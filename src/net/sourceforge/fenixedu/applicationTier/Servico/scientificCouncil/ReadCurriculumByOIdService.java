@@ -21,8 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadCurriculumByOIdService extends Service {
 
 	public SiteView run(Integer curriculumId) throws FenixServiceException, ExcepcaoPersistencia {
-		Curriculum curriculum = (Curriculum) persistentObject.readByOID(Curriculum.class,
-				curriculumId);
+		Curriculum curriculum = rootDomainObject.readCurriculumByOID(curriculumId);
 		InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
 		SiteView siteView = new SiteView(infoCurriculum);
 

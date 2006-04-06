@@ -7,8 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteWebsiteType extends Service {
 
     public void run(Integer oid) throws ExcepcaoPersistencia {
-        WebsiteType websiteType = (WebsiteType) this.persistentObject.readByOID(WebsiteType.class, oid);
-        
+        WebsiteType websiteType = rootDomainObject.readWebsiteTypeByOID(oid);
         websiteType.delete();
     }
 

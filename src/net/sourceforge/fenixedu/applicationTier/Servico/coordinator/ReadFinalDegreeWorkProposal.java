@@ -32,7 +32,7 @@ public class ReadFinalDegreeWorkProposal extends Service {
     public InfoProposal run(Integer finalDegreeWorkProposalOID) throws FenixServiceException, ExcepcaoPersistencia {
         InfoProposal infoProposal = null;
 
-        Proposal proposal = (Proposal) persistentObject.readByOID(Proposal.class,
+        Proposal proposal = rootDomainObject.readProposalByOID(
                 finalDegreeWorkProposalOID);
 
         if (proposal != null) {

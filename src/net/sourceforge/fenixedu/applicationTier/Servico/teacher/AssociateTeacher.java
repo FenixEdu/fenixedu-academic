@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -26,24 +25,17 @@ public class AssociateTeacher extends Service {
      */
     public boolean run(Integer infoExecutionCourseCode, Integer teacherNumber)
             throws FenixServiceException, ExcepcaoPersistencia {
-        try {
-            Teacher iTeacher = Teacher.readByNumber(teacherNumber);
-            if (iTeacher == null) {
-                throw new InvalidArgumentsServiceException();
-            }
-
-            ExecutionCourse iExecutionCourse = (ExecutionCourse) persistentObject.readByOID(
-                    ExecutionCourse.class, infoExecutionCourseCode);
-
-            if (lectures(iTeacher, iExecutionCourse.getProfessorships())) {
-                throw new ExistingServiceException();
-            }
-
-            Professorship.create(false, iExecutionCourse, iTeacher, null);
-            
-        } catch (ExistingPersistentException ex) {
-            throw new ExistingServiceException(ex);
+        Teacher iTeacher = Teacher.readByNumber(teacherNumber);
+        if (iTeacher == null) {
+            throw new InvalidArgumentsServiceException();
         }
+
+        ExecutionCourse iExecutionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
+        if (lectures(iTeacher, iExecutionCourse.getProfessorships())) {
+            throw new ExistingServiceException();
+        }
+
+        Professorship.create(false, iExecutionCourse, iTeacher, null);
         return true;
     }
 

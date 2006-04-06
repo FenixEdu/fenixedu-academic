@@ -47,9 +47,7 @@ public class EditCurriculumForCurricularCourse extends Service {
             throw new NonExistingServiceException("noPerson");
         }
 
-        Curriculum oldCurriculum = (Curriculum) persistentObject.readByOID(Curriculum.class,
-                oldCurriculumId);
-
+        Curriculum oldCurriculum = rootDomainObject.readCurriculumByOID(oldCurriculumId);
         if (oldCurriculum == null) {
             oldCurriculum = DomainFactory.makeCurriculum();
 

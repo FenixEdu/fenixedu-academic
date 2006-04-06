@@ -23,21 +23,15 @@ public class InsertCurricularCourseScopeAtCurricularCourse extends Service {
         Branch branch = null;
         CurricularSemester curricularSemester = null;
         try {
-            curricularSemester = (CurricularSemester) persistentObject.readByOID(
-                    CurricularSemester.class, infoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
+            curricularSemester = rootDomainObject.readCurricularSemesterByOID(infoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
             if (curricularSemester == null)
                 throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
          
-			
-            
 			CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal());
             if (curricularCourse == null)
                 throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 
-			
-			
-            branch = (Branch) persistentObject.readByOID(
-					Branch.class, infoCurricularCourseScope.getInfoBranch().getIdInternal());
+            branch = rootDomainObject.readBranchByOID(infoCurricularCourseScope.getInfoBranch().getIdInternal());
             if (branch == null)
                 throw new NonExistingServiceException("message.non.existing.branch", null);
 			
@@ -50,4 +44,5 @@ public class InsertCurricularCourseScopeAtCurricularCourse extends Service {
                     + curricularSemester.getSemester() + "º semestre");
         }
     }
+    
 }

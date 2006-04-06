@@ -11,11 +11,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditTeacherPersonalExpectation extends Service {
 
-    public void run(InfoTeacherPersonalExpectation infoTeacherPersonalExpectation) throws ExcepcaoPersistencia,
-            FenixServiceException {
-        TeacherPersonalExpectation teacherPersonalExpectation = (TeacherPersonalExpectation) persistentObject
-                .readByOID(TeacherPersonalExpectation.class, infoTeacherPersonalExpectation.getIdInternal());
+    public void run(InfoTeacherPersonalExpectation infoTeacherPersonalExpectation) throws ExcepcaoPersistencia, FenixServiceException {
+        TeacherPersonalExpectation teacherPersonalExpectation = rootDomainObject.readTeacherPersonalExpectationByOID(infoTeacherPersonalExpectation.getIdInternal());
         teacherPersonalExpectation.edit(infoTeacherPersonalExpectation);
-
     }
+    
 }

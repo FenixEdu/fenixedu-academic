@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -41,21 +40,19 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
         //Execution Year
         ExecutionYear executionYear = null;
         if (executionYearId != null) {
-            executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class,
+            executionYear = rootDomainObject.readExecutionYearByOID(
                     executionYearId);
         }
         //Departement
-        Department department = (Department) persistentObject
-                .readByOID(Department.class, departmentId);
-        
+        Department department = rootDomainObject.readDepartmentByOID(departmentId);
         List teachers = department.getCurrentTeachers();
         Iterator iter = teachers.iterator();
        
-        List professorships = new ArrayList();
-        List responsibleFors = new ArrayList();
+        List<Professorship> professorships = new ArrayList<Professorship>();
+        List<Professorship> responsibleFors = new ArrayList<Professorship>();
         while (iter.hasNext()) {
             Teacher teacher = (Teacher) iter.next();
-            List teacherProfessorships = null;
+            List<Professorship> teacherProfessorships = null;
             if (executionYear == null) {
                 teacherProfessorships = teacher.getProfessorships();
             } else {
@@ -65,7 +62,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
                 professorships.addAll(teacherProfessorships);
             }
 
-            List teacherResponsibleFors = null;
+            List<Professorship> teacherResponsibleFors = null;
             List<Professorship> teacherResponsibleForsAux = null;
             if (executionYear == null) {
                 teacherResponsibleFors = teacher.responsibleFors();
@@ -81,7 +78,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
             }
         }
 
-        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, persistentSupport);
+        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors);
 
         Collections.sort(detailedProfessorships, new Comparator() {
 
@@ -111,7 +108,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
 
         List result = new ArrayList();
         iter = detailedProfessorships.iterator();
-        List temp = new ArrayList();
+        List<DetailedProfessorship> temp = new ArrayList<DetailedProfessorship>();
         while (iter.hasNext()) {
             DetailedProfessorship detailedProfessorship = (DetailedProfessorship) iter.next();
             if (temp.isEmpty()
@@ -122,7 +119,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
                 temp.add(detailedProfessorship);
             } else {
                 result.add(temp);
-                temp = new ArrayList();
+                temp = new ArrayList<DetailedProfessorship>();
                 temp.add(detailedProfessorship);
             }
         }
@@ -132,8 +129,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
         return result;
     }
 
-    protected List getDetailedProfessorships(List professorships, final List responsibleFors,
-            ISuportePersistente persistentSupport) {
+    protected List getDetailedProfessorships(List professorships, final List responsibleFors) {
 
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
                 new Transformer() {

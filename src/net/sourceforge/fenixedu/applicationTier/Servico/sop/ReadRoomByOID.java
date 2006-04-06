@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadRoomByOID extends Service {
 
 	public InfoRoom run(Integer oid) throws ExcepcaoPersistencia {
-		final OldRoom room = (OldRoom) persistentObject.readByOID(OldRoom.class, oid);
+		final OldRoom room = rootDomainObject.readOldRoomByOID( oid);
 		return InfoRoom.newInfoFromDomain(room);
 	}
 

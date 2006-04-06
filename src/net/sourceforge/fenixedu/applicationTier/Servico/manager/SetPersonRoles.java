@@ -15,7 +15,7 @@ public class SetPersonRoles extends Service {
 
         final List<Role> roles = new ArrayList<Role>();
         for (final Integer roleId : roleOIDs) {
-            roles.add((Role) persistentObject.readByOID(Role.class, roleId));
+            roles.add(rootDomainObject.readRoleByOID(roleId));
         }
 
         person.indicatePrivledges(roles);

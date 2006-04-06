@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsi
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -42,7 +41,7 @@ public class ReadGrantSubsidy extends ReadDomainObjectService {
 		// InfoGrantOwner
 
 		InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
-				.newInfoFromDomain((GrantContract) persistentObject.readByOID(GrantContract.class, infoGrantSubsidy
+				.newInfoFromDomain(rootDomainObject.readGrantContractByOID(infoGrantSubsidy
 						.getInfoGrantContract().getIdInternal()));
 
 		// this section of code is temporary!!!! (see above the reason)
