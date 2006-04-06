@@ -24,4 +24,10 @@ public class GuideSituation extends GuideSituation_Base {
         this.setState(state);
     }
 
+    public void delete() {
+        removeGuide();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }
