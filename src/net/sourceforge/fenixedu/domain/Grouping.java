@@ -59,7 +59,7 @@ public class Grouping extends Grouping_Base {
     }
 
     public List<ExecutionCourse> getExecutionCourses() {
-        final List result = new ArrayList();
+        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final ExportGrouping exportGrouping : this.getExportGroupings()) {
             if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
                     || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
@@ -69,8 +69,8 @@ public class Grouping extends Grouping_Base {
         return result;
     }
 
-    public List getStudentGroupsWithoutShift() {
-        final List<StudentGroup> result = new ArrayList();
+    public List<StudentGroup> getStudentGroupsWithoutShift() {
+        final List<StudentGroup> result = new ArrayList<StudentGroup>();
         for (final StudentGroup studentGroup : this.getStudentGroups()) {
             if (studentGroup.getShift() == null) {
                 result.add(studentGroup);
@@ -79,8 +79,8 @@ public class Grouping extends Grouping_Base {
         return result;
     }
 
-    public List getStudentGroupsWithShift() {
-        final List result = new ArrayList();
+    public List<StudentGroup> getStudentGroupsWithShift() {
+        final List<StudentGroup> result = new ArrayList<StudentGroup>();
         for (final StudentGroup studentGroup : this.getStudentGroups()) {
             if (studentGroup.getShift() != null) {
                 result.add(studentGroup);
@@ -285,14 +285,14 @@ public class Grouping extends Grouping_Base {
         }
 
         List<Attends> attends = this.getAttends();
-        List<Attends> attendsAux = new ArrayList();
+        List<Attends> attendsAux = new ArrayList<Attends>();
         attendsAux.addAll(attends);
         for (Attends attend : attendsAux) {
             attend.removeGroupings(this);
         }
 
-        List exportGroupings = this.getExportGroupings();
-        List<ExportGrouping> exportGroupingsAux = new ArrayList();
+        List<ExportGrouping> exportGroupings = this.getExportGroupings();
+        List<ExportGrouping> exportGroupingsAux = new ArrayList<ExportGrouping>();
         exportGroupingsAux.addAll(exportGroupings);
         for (ExportGrouping exportGrouping : exportGroupingsAux) {
             ExecutionCourse executionCourse = exportGrouping.getExecutionCourse();
