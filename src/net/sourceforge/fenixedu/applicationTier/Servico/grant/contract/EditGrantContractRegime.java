@@ -124,12 +124,11 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                         infoPerson = getInfoPerson(teacher.getPerson());
                         infoTeacher.setInfoPerson(infoPerson);
                     } else {
-                        teacher = Teacher.readByNumber(infoGrantContractRegime.getInfoTeacher()
-                                .getTeacherNumber());
-                        Person person = (Person) rootDomainObject.readPartyByOID(teacher.getPerson()
-                                .getIdInternal());
+                        teacher = Teacher.readByNumber(infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
                         infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
+                        
                         InfoPerson infoPerson = new InfoPerson();
+                        Person person = teacher.getPerson();
                         infoPerson = getInfoPerson(person);
                         infoTeacher.setInfoPerson(infoPerson);
                     }
