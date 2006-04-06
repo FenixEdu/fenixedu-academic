@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -35,9 +34,6 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
         IUserView id = getRemoteUser(request);
 
-        IPersistentEnrolmentPeriod persistentEnrolmentPeriod = persistentSupport
-                .getIPersistentEnrolmentPeriod();
-
         StudentCurricularPlan studentCurricularPlan = null;
         
         Student student = id.getPerson().getStudentByType(DegreeType.DEGREE);
@@ -53,9 +49,7 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
         }
 
         if (studentCurricularPlan != null) {
-            EnrolmentPeriodInClasses enrolmentPeriodInClasses = persistentEnrolmentPeriod
-                    .readCurrentClassesEnrollmentPeriodForDegreeCurricularPlan(studentCurricularPlan
-                            .getDegreeCurricularPlan().getIdInternal());
+        	EnrolmentPeriodInClasses enrolmentPeriodInClasses = studentCurricularPlan.getDegreeCurricularPlan().getCurrentClassesEnrollmentPeriod();
             if (enrolmentPeriodInClasses == null || enrolmentPeriodInClasses.getStartDate() == null
                     || enrolmentPeriodInClasses.getEndDate() == null) {
                 throw new CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan();

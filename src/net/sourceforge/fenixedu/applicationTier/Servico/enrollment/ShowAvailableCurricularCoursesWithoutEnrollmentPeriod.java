@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -162,15 +161,9 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod extends Servi
     public static EnrolmentPeriodInCurricularCourses getEnrolmentPeriod(
             StudentCurricularPlan studentActiveCurricularPlan) throws ExcepcaoPersistencia,
             OutOfCurricularCourseEnrolmentPeriod {
-        IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSupport
-                .getIPersistentEnrolmentPeriod();
-        EnrolmentPeriodInCurricularCourses enrolmentPeriod = enrolmentPeriodDAO
-                .readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
-                        .getDegreeCurricularPlan().getIdInternal());
+        EnrolmentPeriodInCurricularCourses enrolmentPeriod = studentActiveCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriod();
         if (enrolmentPeriod == null) {
-            EnrolmentPeriodInCurricularCourses nextEnrolmentPeriod = enrolmentPeriodDAO
-                    .readNextEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
-                            .getDegreeCurricularPlan().getIdInternal());
+        	EnrolmentPeriodInCurricularCourses nextEnrolmentPeriod = studentActiveCurricularPlan.getDegreeCurricularPlan().getNextEnrolmentPeriod();
             Date startDate = null;
             Date endDate = null;
             if (nextEnrolmentPeriod != null) {
