@@ -23,7 +23,7 @@ public class BibliographicReference extends BibliographicReference_Base {
     }
     
     public void delete() {
-        setExecutionCourse(null);        
+        removeExecutionCourse();        
         removeRootDomainObject();
         super.deleteDomainObject();
     }
