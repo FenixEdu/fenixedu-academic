@@ -96,7 +96,7 @@ public class Guide extends Guide_Base {
     }
 
     public static List<Guide> readByNumberAndYear(Integer number, Integer year) {
-        List<Guide> guides = new ArrayList();
+        List<Guide> guides = new ArrayList<Guide>();
         for (Guide guide : RootDomainObject.getInstance().getGuides()) {
             if (guide.getYear().equals(year) && guide.getNumber().equals(number)) {
                 guides.add(guide);
@@ -107,7 +107,7 @@ public class Guide extends Guide_Base {
     }
 
     public static List<Guide> readByYear(Integer year) {
-        List<Guide> guides = new ArrayList();
+        List<Guide> guides = new ArrayList<Guide>();
         for (Guide guide : RootDomainObject.getInstance().getGuides()) {
             if (guide.getYear().equals(year)) {
                 guides.add(guide);
