@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.State;
 
@@ -20,6 +21,21 @@ public class Guide extends Guide_Base {
     public Guide() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public void delete() {
+        if (canBeDeleted()) {
+            removeRootDomainObject();
+            deleteDomainObject();
+        } else {
+            throw new DomainException("guide.cannot.be.deleted");
+        }
+    }
+
+    public boolean canBeDeleted() {
+        return !(hasAnyGuideEntries() 
+                || hasAnyGuideSituations()
+                || (getVersion() == 1));
     }
 
     public final static Comparator<Guide> yearAndNumberComparator = new Comparator<Guide>() {
@@ -130,4 +146,5 @@ public class Guide extends Guide_Base {
         return result;
         
     }
+
 }
