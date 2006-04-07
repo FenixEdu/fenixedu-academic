@@ -49,6 +49,8 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
 	}
 
     public void delete() {
+        removeGuideEntry();
+        removeResponsiblePerson();
         removePersonAccount();
         removeRootDomainObject();
         deleteDomainObject();
