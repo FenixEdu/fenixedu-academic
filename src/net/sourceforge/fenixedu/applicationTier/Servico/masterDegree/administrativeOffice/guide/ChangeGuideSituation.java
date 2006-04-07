@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.State;
 
@@ -46,8 +45,7 @@ public class ChangeGuideSituation extends Service {
             throws ExcepcaoInexistente, FenixServiceException, ExistingPersistentException,
             ExcepcaoPersistencia {
 
-        Guide guide = Guide.readByNumberAndYearAndVersion(guideNumber,
-                guideYear, guideVersion);
+        Guide guide = Guide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
 
         if (guide == null) {
             throw new ExcepcaoInexistente("Unknown Guide !!");
@@ -99,10 +97,7 @@ public class ChangeGuideSituation extends Service {
                 if (personAccount == null) {
                     personAccount = DomainFactory.makePersonAccount(guide.getPerson());
                 }
-
-                IPersistentGratuitySituation persistentGratuitySituation = persistentSupport
-                        .getIPersistentGratuitySituation();
-
+       
                 Person employeePerson = Person.readPersonByUsername(userView.getUtilizador());
                 Person studentPerson = guide.getPerson();
                 Student student = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
@@ -114,9 +109,9 @@ public class ChangeGuideSituation extends Service {
                     // Write Gratuity Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
 
-                        GratuitySituation gratuitySituation = persistentGratuitySituation
-                                .readGratuitySituationByExecutionDegreeAndStudent(executionDegree
-                                        .getIdInternal(), student.getIdInternal());
+                        GratuitySituation gratuitySituation = student
+                                .readGratuitySituationByExecutionDegree(executionDegree);
+
                         Double value = new Double(guideEntry.getPrice().doubleValue()
                                 * guideEntry.getQuantity().intValue());
 

@@ -16,25 +16,24 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGratuitySituationByExecutionDegreeIDAndStudentID extends Service {
 
-	public InfoGratuitySituation run(Integer executionDegreeID, Integer studentID)
-			throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoGratuitySituation run(Integer executionDegreeID, Integer studentID)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-		InfoGratuitySituation infoGratuitySituation = null;
+        InfoGratuitySituation infoGratuitySituation = null;
 
-		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-		Student student = rootDomainObject.readStudentByOID(studentID);
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        Student student = rootDomainObject.readStudentByOID(studentID);
 
-		if ((executionDegree == null) || (student == null)) {
-			return null;
-		}
+        if ((executionDegree == null) || (student == null)) {
+            return null;
+        }
 
-		GratuitySituation gratuitySituation = persistentSupport.getIPersistentGratuitySituation()
-				.readGratuitySituationByExecutionDegreeAndStudent(executionDegree.getIdInternal(),
-						student.getIdInternal());
+        GratuitySituation gratuitySituation = student
+                .readGratuitySituationByExecutionDegree(executionDegree);
 
-		infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuitySituation);
+        infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuitySituation);
 
-		return infoGratuitySituation;
-	}
+        return infoGratuitySituation;
+    }
 
 }

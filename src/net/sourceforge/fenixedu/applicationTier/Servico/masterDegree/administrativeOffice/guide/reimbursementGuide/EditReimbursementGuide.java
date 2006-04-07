@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSitu
 import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -100,9 +99,6 @@ public class EditReimbursementGuide extends Service {
                         .getPerson());
             }
 
-            IPersistentGratuitySituation persistentGratuitySituation = persistentSupport
-                    .getIPersistentGratuitySituation();
-
             while (iterator.hasNext()) {
                 reimbursementGuideEntry = (ReimbursementGuideEntry) iterator.next();
 
@@ -132,9 +128,8 @@ public class EditReimbursementGuide extends Service {
                     Student student = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
                     ExecutionDegree executionDegree = reimbursementGuide.getGuide().getExecutionDegree();
 
-                    GratuitySituation gratuitySituation = persistentGratuitySituation
-                            .readGratuitySituationByExecutionDegreeAndStudent(executionDegree
-                                    .getIdInternal(), student.getIdInternal());
+                    GratuitySituation gratuitySituation = student
+                            .readGratuitySituationByExecutionDegree(executionDegree);
 
                     if (gratuitySituation == null) {
                         throw new FenixServiceException(

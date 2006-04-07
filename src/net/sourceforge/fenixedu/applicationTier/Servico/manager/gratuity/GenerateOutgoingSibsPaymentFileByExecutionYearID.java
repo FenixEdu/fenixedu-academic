@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
@@ -46,8 +45,8 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
             throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");
         }
 
-        IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
-        IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport.getIPersistentInsuranceTransaction();
+        IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
+                .getIPersistentInsuranceTransaction();
 
         Date insurancePaymentStartDate = Calendar.getInstance().getTime();
         Date insurancePaymentEndDate = paymentEndDate;
@@ -56,7 +55,8 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
         // read master degree and persistentSupportecialization execution
         // degrees
-        List executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.MASTER_DEGREE);
+        List executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear
+                .getYear(), DegreeType.MASTER_DEGREE);
 
         int totalLines = 0;
 
@@ -117,10 +117,8 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
                 if (gratuityValues != null) {
 
                     // Add gratuity lines
-                    GratuitySituation gratuitySituation = gratuitySituationDAO
-                            .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                                    studentCurricularPlan.getIdInternal(), executionDegree
-                                            .getGratuityValues().getIdInternal());
+                    GratuitySituation gratuitySituation = studentCurricularPlan
+                            .getGratuitySituationByGratuityValues(executionDegree.getGratuityValues());
 
                     if (gratuitySituation != null) {
                         totalLines += addGratuityLines(outgoingSibsPaymentFile, gratuitySituation,
@@ -140,7 +138,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
         addFooter(outgoingSibsPaymentFile, totalLines);
 
         byte[] fileContent = writeOutgoingSibsPaymentFile(executionYear, outgoingSibsPaymentFile);
-        
+
         return fileContent;
     }
 
@@ -151,23 +149,23 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
     private byte[] writeOutgoingSibsPaymentFile(ExecutionYear executionYear,
             StringBuilder outgoingSibsPaymentFile) throws FileNotCreatedServiceException {
         ByteArrayOutputStream file = new ByteArrayOutputStream();
-        /*String year = executionYear.getYear().replace('/', '-');
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System
-                    .getProperty("java.io.tmpdir")
-                    + File.separator + "SIBSPropinas" + year + ".txt", false));
-            bufferedWriter.write(outgoingSibsPaymentFile.toString());
-            bufferedWriter.close();
-        } catch (IOException e) {
-            throw new FileNotCreatedServiceException("error.creating.sibs.outgoing.file", e);
-        }*/
-        
+        /*
+         * String year = executionYear.getYear().replace('/', '-'); try {
+         * BufferedWriter bufferedWriter = new BufferedWriter(new
+         * FileWriter(System .getProperty("java.io.tmpdir") + File.separator +
+         * "SIBSPropinas" + year + ".txt", false));
+         * bufferedWriter.write(outgoingSibsPaymentFile.toString());
+         * bufferedWriter.close(); } catch (IOException e) { throw new
+         * FileNotCreatedServiceException("error.creating.sibs.outgoing.file",
+         * e); }
+         */
+
         try {
             file.write(outgoingSibsPaymentFile.toString().getBytes());
         } catch (IOException e) {
             throw new FileNotCreatedServiceException("error.creating.sibs.outgoing.file", e);
         }
-        
+
         return file.toByteArray();
 
     }
@@ -255,8 +253,8 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
                 totalPaymentEndDate, scholarShipPartValue, scholarShipPartValue);
 
         totalLinesAdded++;
-
-        //        
+      
+      //        
         // Date totalPaymentStartDate =
         // gratuitySituation.getGratuityValues().getStartPayment();
         // Date totalPaymentEndDate =
@@ -341,7 +339,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
         // paymentPhaseNumber++;
         //
         // }
-
+      
         return totalLinesAdded;
 
     }
@@ -495,58 +493,57 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
         return sibsPaymentCode + "";
     }
-
-    /**
-     * @param paymentPhaseNumber
-     * @param studentCurricularPlan
-     * @return
-     */
-    private String determinePaymentPhaseCode(int paymentPhaseNumber,
-            StudentCurricularPlan studentCurricularPlan, GratuitySituation gratuitySituation)
-            throws InsufficientSibsPaymentPhaseCodesServiceException {
-
-        int sibsPaymentCode = 0;
-
-        if (paymentPhaseNumber == 1) {
-            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
-
-                sibsPaymentCode = SibsPaymentCodeFactory
-                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE);
-
-            } else {
-
-                sibsPaymentCode = SibsPaymentCodeFactory
-                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE);
-            }
-            // IMPORTANT NOTE: In future integrated master degree codes should
-            // be inserted here
-
-        } else if (paymentPhaseNumber == 2) {
-
-            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
-
-                sibsPaymentCode = SibsPaymentCodeFactory
-                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE);
-
-            } else {
-
-                sibsPaymentCode = SibsPaymentCodeFactory
-                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE);
-            }
-
-            // IMPORTANT NOTE: In future integrated master degree codes should
-            // be inserted here
-
-        } else {
-            throw new InsufficientSibsPaymentPhaseCodesServiceException(gratuitySituation
-                    .getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName()
-                    + " - "
-                    + gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear()
-                            .getYear());
-        }
-
-        return sibsPaymentCode + "";
-
-    }
-
+    
+//    /**
+//     * @param paymentPhaseNumber
+//     * @param studentCurricularPlan
+//     * @return
+//     */
+//    private String determinePaymentPhaseCode(int paymentPhaseNumber,
+//            StudentCurricularPlan studentCurricularPlan, GratuitySituation gratuitySituation)
+//            throws InsufficientSibsPaymentPhaseCodesServiceException {
+//
+//        int sibsPaymentCode = 0;
+//
+//        if (paymentPhaseNumber == 1) {
+//            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+//
+//                sibsPaymentCode = SibsPaymentCodeFactory
+//                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE);
+//
+//            } else {
+//
+//                sibsPaymentCode = SibsPaymentCodeFactory
+//                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE);
+//            }
+//            // IMPORTANT NOTE: In future integrated master degree codes should
+//            // be inserted here
+//
+//        } else if (paymentPhaseNumber == 2) {
+//
+//            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+//
+//                sibsPaymentCode = SibsPaymentCodeFactory
+//                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE);
+//
+//            } else {
+//
+//                sibsPaymentCode = SibsPaymentCodeFactory
+//                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE);
+//            }
+//
+//            // IMPORTANT NOTE: In future integrated master degree codes should
+//            // be inserted here
+//
+//        } else {
+//            throw new InsufficientSibsPaymentPhaseCodesServiceException(gratuitySituation
+//                    .getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName()
+//                    + " - "
+//                    + gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear()
+//                            .getYear());
+//        }
+//
+//        return sibsPaymentCode + "";
+//
+//    }
 }

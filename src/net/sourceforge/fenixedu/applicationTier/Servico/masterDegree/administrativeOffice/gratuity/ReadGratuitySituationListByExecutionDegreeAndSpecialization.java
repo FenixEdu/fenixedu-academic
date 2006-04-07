@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 
@@ -45,8 +44,9 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
      * payed values 3. in third, a double with the total of list's remaning
      * values
      */
-    public Object run(Integer executionDegreeId, String executionYearName, String persistentSupportecializationName,
-            String gratuitySituationTypeName) throws FenixServiceException {
+    public Object run(Integer executionDegreeId, String executionYearName,
+            String persistentSupportecializationName, String gratuitySituationTypeName)
+            throws FenixServiceException {
 
         // at least one of the arguments it's obligator
         if (executionDegreeId == null && executionYearName == null) {
@@ -57,7 +57,6 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
         HashMap result = null;
 
         try {
-            IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
 
             IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
                     .getIPersistentInsuranceTransaction();
@@ -66,14 +65,16 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 
             if (executionDegreeId != null) {
 
-                ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+                ExecutionDegree executionDegree = rootDomainObject
+                        .readExecutionDegreeByOID(executionDegreeId);
                 executionDegreeList.add(executionDegree);
 
             } else {
                 // the execution degree wasn't supplied so
                 // we have to show all execution degrees from the choosen year
                 if (executionYearName != null) {
-                    ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
+                    ExecutionYear executionYear = ExecutionYear
+                            .readExecutionYearByName(executionYearName);
                     if (executionYear != null) {
                         executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(
                                 executionYear.getYear(), DegreeType.MASTER_DEGREE);
@@ -104,22 +105,24 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
                     continue;
                 }
 
-                List allStudentCurricularPlans = executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans();
-                List filteredStudentCurricularPlans = (List) CollectionUtils.select(allStudentCurricularPlans,new Predicate(){
+                List allStudentCurricularPlans = executionDegree.getDegreeCurricularPlan()
+                        .getStudentCurricularPlans();
+                List filteredStudentCurricularPlans = (List) CollectionUtils.select(
+                        allStudentCurricularPlans, new Predicate() {
 
-                    public boolean evaluate(Object arg0) {
-                        StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
-                        return scp.getSpecialization() != null;
-                    }});
+                            public boolean evaluate(Object arg0) {
+                                StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
+                                return scp.getSpecialization() != null;
+                            }
+                        });
 
                 for (Iterator iterator = filteredStudentCurricularPlans.iterator(); iterator.hasNext();) {
                     StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator
                             .next();
 
-                    GratuitySituation gratuitySituation = gratuitySituationDAO
-                            .readByStudentCurricularPlanAndGratuityValuesAndGratuitySituationType(
-                                    studentCurricularPlan.getIdInternal(), gratuityValues
-                                            .getIdInternal(), gratuitySituationType);
+                    GratuitySituation gratuitySituation = studentCurricularPlan
+                            .getGratuitySituationByGratuityValuesAndGratuitySituationType(
+                                    gratuitySituationType, gratuityValues);
 
                     if (gratuitySituation == null) {
                         // ignore them, because they will be created in the next
@@ -136,7 +139,8 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 
                     List insuranceTransactionList = insuranceTransactionDAO
                             .readAllNonReimbursedByExecutionYearAndStudent(executionDegree
-                                    .getExecutionYear().getIdInternal(), studentCurricularPlan.getStudent().getIdInternal());
+                                    .getExecutionYear().getIdInternal(), studentCurricularPlan
+                                    .getStudent().getIdInternal());
 
                     /*
                      * InsuranceTransaction insuranceTransaction =

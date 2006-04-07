@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
 
@@ -113,7 +112,8 @@ public class EditGuideInformation extends Service {
                 }
                 // Remove the Guide entries wich have been deleted
                 for (InfoGuideEntry infoGuideEntry : guideEntriesToRemove) {
-                    GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(infoGuideEntry.getIdInternal());
+                    GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(infoGuideEntry
+                            .getIdInternal());
                     guideEntry.delete();
                 }
 
@@ -154,9 +154,6 @@ public class EditGuideInformation extends Service {
                     personAccount = DomainFactory.makePersonAccount(guide.getPerson());
                 }
 
-                IPersistentGratuitySituation persistentGratuitySituation = persistentSupport
-                        .getIPersistentGratuitySituation();
-
                 // Write the Guide Entries
                 for (InfoGuideEntry infoGuideEntry : (List<InfoGuideEntry>) newInfoGuideEntries) {
                     GuideEntry guideEntry = DomainFactory.makeGuideEntry();
@@ -173,9 +170,8 @@ public class EditGuideInformation extends Service {
                     // Write Gratuity Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
                         executionDegree = guide.getExecutionDegree();
-                        gratuitySituation = persistentGratuitySituation
-                                .readGratuitySituationByExecutionDegreeAndStudent(executionDegree
-                                        .getIdInternal(), student.getIdInternal());
+                        gratuitySituation = student
+                                .readGratuitySituationByExecutionDegree(executionDegree);
 
                         paymentTransaction = DomainFactory.makeGratuityTransaction(
                                 guideEntry.getPrice(), new Timestamp(Calendar.getInstance()
@@ -251,7 +247,7 @@ public class EditGuideInformation extends Service {
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
         Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor()
                 .getContributorNumber());
-       
+
         ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
                 infoGuide.getInfoExecutionDegree().getIdInternal());
         Guide guide = DomainFactory.makeGuide();

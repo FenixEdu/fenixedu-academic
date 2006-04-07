@@ -32,21 +32,21 @@ public class CreateGratuityTransaction extends Service {
 
         Guide guide = guideEntry.getGuide();
         Student student = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
-        GratuitySituation gratuitySituation = persistentSupport.getIPersistentGratuitySituation()
-                .readGratuitySituationByExecutionDegreeAndStudent(guide.getExecutionDegree().getIdInternal(), student.getIdInternal());
+        GratuitySituation gratuitySituation = student.readGratuitySituationByExecutionDegree(guide
+                .getExecutionDegree());
         PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
-        
-        if(personAccount == null){
+
+        if (personAccount == null) {
             personAccount = DomainFactory.makePersonAccount(guide.getPerson());
         }
-        
+
         Person responsible = Person.readPersonByUsername(userView.getUtilizador());
 
         Double value = new Double(guideEntry.getPrice().doubleValue()
                 * guideEntry.getQuantity().intValue());
 
-        DomainFactory.makeGratuityTransaction(value, new Timestamp(Calendar
-                .getInstance().getTimeInMillis()), guideEntry.getDescription(), guide.getPaymentType(),
+        DomainFactory.makeGratuityTransaction(value, new Timestamp(Calendar.getInstance()
+                .getTimeInMillis()), guideEntry.getDescription(), guide.getPaymentType(),
                 TransactionType.GRATUITY_ADHOC_PAYMENT, Boolean.FALSE, responsible, personAccount,
                 guideEntry, gratuitySituation);
 

@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 
 /**
  * 
@@ -20,28 +20,28 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
  */
 public class ReadGratuitySituationListByStudentCurricularPlan extends Service {
 
-	public List run(Integer studentCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
-		List infoGratuitySituations = new ArrayList();
-		List gratuitySituations = null;
-		GratuitySituation gratuitySituation = null;
+    public List run(Integer studentCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
+        List infoGratuitySituations = new ArrayList();
+        List gratuitySituations = null;
+        GratuitySituation gratuitySituation = null;
 
-		IPersistentGratuitySituation persistentGratuitySituation = persistentSupport.getIPersistentGratuitySituation();
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject
+                .readStudentCurricularPlanByOID(studentCurricularPlanID);
 
-		gratuitySituations = persistentGratuitySituation
-				.readGratuitySituatuionListByStudentCurricularPlan(studentCurricularPlanID);
+        gratuitySituations = studentCurricularPlan.getGratuitySituations();
 
-		InfoGratuitySituation infoGratuitySituation = null;
-		for (Iterator iter = gratuitySituations.iterator(); iter.hasNext();) {
-			gratuitySituation = (GratuitySituation) iter.next();
+        InfoGratuitySituation infoGratuitySituation = null;
+        for (Iterator iter = gratuitySituations.iterator(); iter.hasNext();) {
+            gratuitySituation = (GratuitySituation) iter.next();
 
-			if (gratuitySituation != null) {
-				infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
-						.newInfoFromDomain(gratuitySituation);
+            if (gratuitySituation != null) {
+                infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+                        .newInfoFromDomain(gratuitySituation);
 
-				infoGratuitySituations.add(infoGratuitySituation);
-			}
-		}
+                infoGratuitySituations.add(infoGratuitySituation);
+            }
+        }
 
-		return infoGratuitySituations;
-	}
+        return infoGratuitySituations;
+    }
 }

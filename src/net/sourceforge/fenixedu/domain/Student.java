@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StudentState;
@@ -467,5 +468,17 @@ public class Student extends Student_Base {
         }
 
         return Integer.valueOf(number.intValue() + 1);
+    }
+
+    public GratuitySituation readGratuitySituationByExecutionDegree(ExecutionDegree executionDegree) {
+        GratuityValues gratuityValues = executionDegree.getGratuityValues();
+        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+            GratuitySituation gratuitySituation = studentCurricularPlan
+                    .getGratuitySituationByGratuityValues(gratuityValues);
+            if (gratuitySituation != null) {
+                return gratuitySituation;
+            }
+        }
+        return null;
     }
 }

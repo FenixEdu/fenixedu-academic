@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
+import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
@@ -1079,6 +1080,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     }
 
+    public GratuitySituation getGratuitySituationByGratuityValuesAndGratuitySituationType(
+            final GratuitySituationType gratuitySituationType, final GratuityValues gratuityValues) {
+
+        GratuitySituation gratuitySituation = this.getGratuitySituationByGratuityValues(gratuityValues);
+        if (gratuitySituation != null
+                && (gratuitySituationType == null || ((gratuitySituationType
+                        .equals(GratuitySituationType.CREDITOR) && gratuitySituation.getRemainingValue() < 0.0)
+                        || (gratuitySituationType.equals(GratuitySituationType.DEBTOR) && gratuitySituation
+                                .getRemainingValue() > 0.0) || (gratuitySituationType
+                        .equals(GratuitySituationType.REGULARIZED) && gratuitySituation
+                        .getRemainingValue() == 0.0)))) {
+            return gratuitySituation;
+        }
+        return null;
+    }
+
     public boolean isEnroledInSpecialSeason(ExecutionPeriod executionPeriod) {
         List<Enrolment> enrolments = getAllStudentEnrollmentsInExecutionPeriod(executionPeriod);
         for (Enrolment enrolment : enrolments) {
@@ -1188,5 +1205,4 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 MasterDegreeThesisDataVersion.LAST_MODIFICATION_COMPARATOR));
         return masterDegreeThesisDataVersions;
     }
-
 }

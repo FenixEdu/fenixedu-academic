@@ -9,8 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuityValues;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 
 /**
  * @author Tânia Pousão
@@ -18,22 +19,22 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
  */
 public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues extends Service {
 
-	public Object run(Integer studentCurricularPlanID, Integer gratuityValuesID)
-			throws FenixServiceException, ExcepcaoPersistencia {
-		GratuitySituation gratuitySituation = null;
+    public Object run(Integer studentCurricularPlanID, Integer gratuityValuesID)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-		IPersistentGratuitySituation persistentGratuitySituation = persistentSupport.getIPersistentGratuitySituation();
+        GratuitySituation gratuitySituation = null;
 
-		gratuitySituation = persistentGratuitySituation
-				.readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(studentCurricularPlanID,
-						gratuityValuesID);
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject
+                .readStudentCurricularPlanByOID(studentCurricularPlanID);
+        GratuityValues gratuityValues = rootDomainObject.readGratuityValuesByOID(gratuityValuesID);
+        gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 
-		InfoGratuitySituation infoGratuitySituation = null;
-		if (gratuitySituation != null) {
-			infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
-					.newInfoFromDomain(gratuitySituation);
-		}
+        InfoGratuitySituation infoGratuitySituation = null;
+        if (gratuitySituation != null) {
+            infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+                    .newInfoFromDomain(gratuitySituation);
+        }
 
-		return infoGratuitySituation;
-	}
+        return infoGratuitySituation;
+    }
 }

@@ -29,45 +29,44 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
 public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
-    private class GratuityLetterPaymentPhase {
-
-        private String endDate;
-
-        private String fullSibsReference;
-
-        private String value;
-
-        public String getEndDate() {
-            return endDate;
-        }
-
-        public void setEndDate(String endDate) {
-            this.endDate = endDate;
-        }
-
-        public String getFullSibsReference() {
-            return fullSibsReference;
-        }
-
-        public void setFullSibsReference(String fullSibsReference) {
-            this.fullSibsReference = fullSibsReference;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-    }
+//    private class GratuityLetterPaymentPhase {
+//
+//        private String endDate;
+//
+//        private String fullSibsReference;
+//
+//        private String value;
+//
+//        public String getEndDate() {
+//            return endDate;
+//        }
+//
+//        public void setEndDate(String endDate) {
+//            this.endDate = endDate;
+//        }
+//
+//        public String getFullSibsReference() {
+//            return fullSibsReference;
+//        }
+//
+//        public void setFullSibsReference(String fullSibsReference) {
+//            this.fullSibsReference = fullSibsReference;
+//        }
+//
+//        public String getValue() {
+//            return value;
+//        }
+//
+//        public void setValue(String value) {
+//            this.value = value;
+//        }
+//    }
 
     private class GratuityLetterFileEntry {
 
@@ -220,8 +219,8 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
             throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");
         }
 
-        IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
-        IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport.getIPersistentInsuranceTransaction();
+        IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
+                .getIPersistentInsuranceTransaction();
 
         // Date insurancePaymentEndDate = Calendar.getInstance().getTime();
 
@@ -229,7 +228,8 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
         // read master degree and persistentSupportecialization execution
         // degrees
-        List executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.MASTER_DEGREE);
+        List executionDegreeList = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear
+                .getYear(), DegreeType.MASTER_DEGREE);
 
         List gratuityLetterFileEntries = new ArrayList();
 
@@ -302,10 +302,8 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
                 if (gratuityValues != null) {
 
-                    GratuitySituation gratuitySituation = gratuitySituationDAO
-                            .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                                    studentCurricularPlan.getIdInternal(), gratuityValues
-                                            .getIdInternal());
+                    GratuitySituation gratuitySituation = studentCurricularPlan
+                            .getGratuitySituationByGratuityValues(gratuityValues);
 
                     if (gratuitySituation != null) {
 
@@ -554,57 +552,57 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
         return sibsPaymentCode + "";
     }
 
-    /**
-     * @param paymentPhaseNumber
-     * @param studentCurricularPlan
-     * @return
-     */
-    private String determinePaymentPhaseCode(int paymentPhaseNumber,
-            StudentCurricularPlan studentCurricularPlan, GratuitySituation gratuitySituation)
-            throws InsufficientSibsPaymentPhaseCodesServiceException {
-
-        int sibsPaymentCode = 0;
-
-        if (paymentPhaseNumber == 1) {
-            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
-
-                sibsPaymentCode = SibsPaymentCodeFactory
-                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE);
-
-            } else {
-
-                sibsPaymentCode = SibsPaymentCodeFactory
-                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE);
-            }
-            // IMPORTANT NOTE: In future integrated master degree codes should
-            // be inserted here
-
-        } else if (paymentPhaseNumber == 2) {
-
-            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
-                sibsPaymentCode = SibsPaymentCodeFactory
-                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE);
-
-            } else {
-
-                sibsPaymentCode = SibsPaymentCodeFactory
-                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE);
-            }
-
-            // IMPORTANT NOTE: In future integrated master degree codes should
-            // be inserted here
-
-        } else {
-            throw new InsufficientSibsPaymentPhaseCodesServiceException(gratuitySituation
-                    .getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName()
-                    + " - "
-                    + gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear()
-                            .getYear());
-        }
-
-        return sibsPaymentCode + "";
-
-    }
+//    /**
+//     * @param paymentPhaseNumber
+//     * @param studentCurricularPlan
+//     * @return
+//     */
+//    private String determinePaymentPhaseCode(int paymentPhaseNumber,
+//            StudentCurricularPlan studentCurricularPlan, GratuitySituation gratuitySituation)
+//            throws InsufficientSibsPaymentPhaseCodesServiceException {
+//
+//        int sibsPaymentCode = 0;
+//
+//        if (paymentPhaseNumber == 1) {
+//            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+//
+//                sibsPaymentCode = SibsPaymentCodeFactory
+//                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE);
+//
+//            } else {
+//
+//                sibsPaymentCode = SibsPaymentCodeFactory
+//                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE);
+//            }
+//            // IMPORTANT NOTE: In future integrated master degree codes should
+//            // be inserted here
+//
+//        } else if (paymentPhaseNumber == 2) {
+//
+//            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+//                sibsPaymentCode = SibsPaymentCodeFactory
+//                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE);
+//
+//            } else {
+//
+//                sibsPaymentCode = SibsPaymentCodeFactory
+//                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE);
+//            }
+//
+//            // IMPORTANT NOTE: In future integrated master degree codes should
+//            // be inserted here
+//
+//        } else {
+//            throw new InsufficientSibsPaymentPhaseCodesServiceException(gratuitySituation
+//                    .getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName()
+//                    + " - "
+//                    + gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear()
+//                            .getYear());
+//        }
+//
+//        return sibsPaymentCode + "";
+//
+//    }
 
     /**
      * @param gratuityLetterFileEntries
@@ -825,22 +823,24 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
             // insurance payment value
             letterFile.append(gratuityLetterFileEntry.getInsuranceValue() + DATA_SEPARATOR);
 
-           /* for (Iterator iterator = gratuityLetterFileEntry.getGratuityLetterPaymentPhases().iterator(); iterator
-                    .hasNext();) {
-
-                GratuityLetterPaymentPhase gratuityLetterPaymentPhase = (GratuityLetterPaymentPhase) iterator
-                        .next();
-
-                // payment phase end date
-                letterFile.append(gratuityLetterPaymentPhase.getEndDate() + DATA_SEPARATOR);
-
-                // payment phase full sibs reference
-                letterFile.append(gratuityLetterPaymentPhase.getFullSibsReference() + DATA_SEPARATOR);
-
-                // payment phase value
-                letterFile.append(gratuityLetterPaymentPhase.getValue() + DATA_SEPARATOR);
-
-            }*/
+            /*
+             * for (Iterator iterator =
+             * gratuityLetterFileEntry.getGratuityLetterPaymentPhases().iterator();
+             * iterator .hasNext();) {
+             * 
+             * GratuityLetterPaymentPhase gratuityLetterPaymentPhase =
+             * (GratuityLetterPaymentPhase) iterator .next();
+             *  // payment phase end date
+             * letterFile.append(gratuityLetterPaymentPhase.getEndDate() +
+             * DATA_SEPARATOR);
+             *  // payment phase full sibs reference
+             * letterFile.append(gratuityLetterPaymentPhase.getFullSibsReference() +
+             * DATA_SEPARATOR);
+             *  // payment phase value
+             * letterFile.append(gratuityLetterPaymentPhase.getValue() +
+             * DATA_SEPARATOR);
+             *  }
+             */
 
             letterFile.append("\n");
         }

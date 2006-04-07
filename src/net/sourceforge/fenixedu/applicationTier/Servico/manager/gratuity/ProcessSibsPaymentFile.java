@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsPaymentFileUtils;
 
@@ -73,8 +72,7 @@ public class ProcessSibsPaymentFile extends Service {
         // lets build transactions for the entries in file
         final IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
                 .getIPersistentInsuranceTransaction();
-        final IPersistentGratuitySituation gratuitySituationDAO = persistentSupport
-                .getIPersistentGratuitySituation();
+        
         for (int i = 0; i < totalPaymentEntries; i++) {
 
             SibsPaymentFileEntry sibsPaymentFileEntry = sibsPaymentFileEntries.get(i);
@@ -158,8 +156,9 @@ public class ProcessSibsPaymentFile extends Service {
                     continue;
                 }
 
-                ExecutionDegree candidateExecutionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(
-                                studentCurricularPlan.getDegreeCurricularPlan(), executionYear.getYear());
+                ExecutionDegree candidateExecutionDegree = ExecutionDegree
+                        .getByDegreeCurricularPlanAndExecutionYear(studentCurricularPlan
+                                .getDegreeCurricularPlan(), executionYear.getYear());
 
                 if (candidateExecutionDegree != null) {
                     executionDegrees.add(candidateExecutionDegree);
@@ -186,9 +185,8 @@ public class ProcessSibsPaymentFile extends Service {
             StudentCurricularPlan studentCurricularPlan = studentCurricularPlans.get(0);
 
             GratuityValues gratuityValues = executionDegree.getGratuityValues();
-            GratuitySituation gratuitySituation = gratuitySituationDAO
-                    .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                            studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());
+            GratuitySituation gratuitySituation = studentCurricularPlan
+                    .getGratuitySituationByGratuityValues(gratuityValues);
             if (gratuitySituation == null) {
                 // Change status to be solved manually because the student does
                 // not have a gratuity situation
@@ -308,8 +306,9 @@ public class ProcessSibsPaymentFile extends Service {
 
         // next check if the gratuity or insurance payment is repeated in
         // database
-        List sibsPaymentFileEntryList = SibsPaymentFileEntry.readByYearAndStudentNumberAndPaymentType(sibsPaymentFileEntry.getYear(),
-                        sibsPaymentFileEntry.getStudentNumber(), sibsPaymentFileEntry.getPaymentType());
+        List sibsPaymentFileEntryList = SibsPaymentFileEntry.readByYearAndStudentNumberAndPaymentType(
+                sibsPaymentFileEntry.getYear(), sibsPaymentFileEntry.getStudentNumber(),
+                sibsPaymentFileEntry.getPaymentType());
         if (sibsPaymentFileEntryList.size() > 0) {
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
                 sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);

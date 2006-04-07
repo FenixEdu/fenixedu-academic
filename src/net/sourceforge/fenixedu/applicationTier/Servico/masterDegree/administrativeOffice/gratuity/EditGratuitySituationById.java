@@ -9,7 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithAll;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
@@ -23,17 +25,23 @@ public class EditGratuitySituationById extends Service {
             throw new FenixServiceException();
         }
 
-        final GratuitySituation gratuitySituation = persistentSupport.getIPersistentGratuitySituation()
-                .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                        infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(),
-                        infoGratuitySituation.getInfoGratuityValues().getIdInternal());
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject
+                .readStudentCurricularPlanByOID(infoGratuitySituation.getInfoStudentCurricularPlan()
+                        .getIdInternal());
+        
+        GratuityValues gratuityValues = rootDomainObject.readGratuityValuesByOID(infoGratuitySituation
+                .getInfoGratuityValues().getIdInternal());
+        
+        final GratuitySituation gratuitySituation = studentCurricularPlan
+                .getGratuitySituationByGratuityValues(gratuityValues);
+        
         if (gratuitySituation == null) {
             throw new NonExistingServiceException("Gratuity Situation not exist yet.");
         }
 
         // set employee who made register
-        final Person person = Person.readPersonByUsername(
-                infoGratuitySituation.getInfoEmployee().getPerson().getUsername());
+        final Person person = Person.readPersonByUsername(infoGratuitySituation.getInfoEmployee()
+                .getPerson().getUsername());
         if (person != null) {
             gratuitySituation.setEmployee(person.getEmployee());
         }
@@ -72,7 +80,7 @@ public class EditGratuitySituationById extends Service {
                 if (reimbursementGuideEntries != null) {
 
                     for (ReimbursementGuideEntry reimbursementGuideEntry : reimbursementGuideEntries) {
-                        
+
                         if (reimbursementGuideEntry.getReimbursementGuide()
                                 .getActiveReimbursementGuideSituation().getReimbursementGuideState()
                                 .equals(ReimbursementGuideState.PAYED)) {
