@@ -34,8 +34,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
@@ -56,7 +54,6 @@ public class ChangeStudentTestQuestion extends Service {
         if (oldQuestion == null)
             throw new InvalidArgumentsServiceException();
 
-        IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
         Metadata metadata = null;
 
         List<Question> availableQuestions = new ArrayList<Question>();
@@ -148,8 +145,8 @@ public class ChangeStudentTestQuestion extends Service {
                                 ((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));
                         Mark mark = onlineTest.getMarkByAttend(attend);
                         if (mark != null) {
-                            mark.setMark(getNewStudentMark(persistentSupport, studentTestQuestion
-                                    .getDistributedTest(), studentTestQuestion.getStudent(), oldMark));
+                            mark.setMark(getNewStudentMark(studentTestQuestion.getDistributedTest(),
+                                    studentTestQuestion.getStudent(), oldMark));
                         }
                     }
                     StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
@@ -175,17 +172,15 @@ public class ChangeStudentTestQuestion extends Service {
             List metadataQuestions = metadata.getVisibleQuestions();
 
             if (metadataQuestions != null && metadataQuestions.size() <= 1)
-                metadata.setVisibility(new Boolean(false));
+                metadata.setVisibility(Boolean.FALSE);
 
             if (canDelete) {
-                int metadataNumberOfQuestions = persistentMetadata.getNumberOfQuestions(metadata);
                 oldQuestion.delete();
-                if (metadataNumberOfQuestions <= 1) {
-                    metadata.removeExecutionCourse();
-                    persistentMetadata.deleteByOID(Metadata.class, metadata.getIdInternal());
+                if (metadata.getQuestionsCount() <= 1) {
+                    metadata.delete();
                 }
             } else {
-                oldQuestion.setVisibility(new Boolean(false));
+                oldQuestion.setVisibility(Boolean.FALSE);
             }
 
         }
@@ -231,7 +226,7 @@ public class ChangeStudentTestQuestion extends Service {
         return false;
     }
 
-    private void removeOldTestQuestion(Question oldQuestion) throws ExcepcaoPersistencia {
+    private void removeOldTestQuestion(Question oldQuestion) {
         List<TestQuestion> testQuestionOldList = oldQuestion.getTestQuestions();
         List<Question> availableQuestions = new ArrayList<Question>();
         availableQuestions.addAll(oldQuestion.getMetadata().getVisibleQuestions());
@@ -251,8 +246,8 @@ public class ChangeStudentTestQuestion extends Service {
         }
     }
 
-    private String getNewStudentMark(ISuportePersistente persistentSupport, DistributedTest dt,
-            Student s, double mark2Remove) throws ExcepcaoPersistencia {
+    private String getNewStudentMark(DistributedTest dt, Student s, double mark2Remove)
+            throws ExcepcaoPersistencia {
         double totalMark = 0;
         List<StudentTestQuestion> studentTestQuestionList = persistentSupport
                 .getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(s.getIdInternal(),
