@@ -22,13 +22,12 @@ public class InsertStudentsFinalEvaluation extends Service {
 
 		List<InfoEnrolmentEvaluation> infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
 
+        Teacher teacher = Teacher.readByNumber(teacherNumber);
+        if (teacher == null) {
+            throw new NonExistingServiceException();
+        }
+
 		for (InfoEnrolmentEvaluation infoEnrolmentEvaluation : evaluations) {
-
-			Teacher teacher = Teacher.readByNumber(teacherNumber);
-			if (teacher == null) {
-				throw new NonExistingServiceException();
-			}
-
 			Student student = rootDomainObject.readStudentByOID(infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
 			infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().setNumber(student.getNumber());
 
