@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.Calendar;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -23,7 +22,6 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
@@ -38,18 +36,12 @@ public class CreateMasterDegreeCandidate extends Service {
             String name, String identificationDocumentNumber, IDDocumentType identificationDocumentType)
             throws Exception {
 
-        IPersistentMasterDegreeCandidate masterDegreeCandidateDAO = persistentSupport
-                .getIPersistentMasterDegreeCandidate();
-
         // Read the Execution of this degree in the current execution Year
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-
-        MasterDegreeCandidate masterDegreeCandidateFromDB = masterDegreeCandidateDAO
-                .readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-                        identificationDocumentNumber, identificationDocumentType, executionDegreeID,
-                        degreeType);
-
-        if (masterDegreeCandidateFromDB != null) {
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber, identificationDocumentType);
+        
+        MasterDegreeCandidate masterDegreeCandidate = person.getMasterDegreeCandidateByExecutionDegree(executionDegree);
+        if (masterDegreeCandidate != null) {
             throw new ExistingServiceException();
         }
 
@@ -63,7 +55,7 @@ public class CreateMasterDegreeCandidate extends Service {
         candidateSituation.setDate(actualDate.getTime());
 
         // Create the Candidate
-        MasterDegreeCandidate masterDegreeCandidate = DomainFactory.makeMasterDegreeCandidate();
+        masterDegreeCandidate = DomainFactory.makeMasterDegreeCandidate();
         masterDegreeCandidate.addSituations(candidateSituation);
         masterDegreeCandidate.setSpecialization(degreeType);
         masterDegreeCandidate.setExecutionDegree(executionDegree);
@@ -74,14 +66,7 @@ public class CreateMasterDegreeCandidate extends Service {
                         executionDegree.getDegreeCurricularPlan().getDegree().getSigla(), degreeType);
         masterDegreeCandidate.setCandidateNumber(number);
 
-        // Check if the person Exists
-        Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
-                identificationDocumentType);
-
-        List<Person> persons = Person.readAllPersons();
-
         Role personRole = Role.getRoleByRoleType(RoleType.PERSON);
-
         if (person == null) {
             // Create the new Person
             person = DomainFactory.makePerson(name, identificationDocumentNumber,

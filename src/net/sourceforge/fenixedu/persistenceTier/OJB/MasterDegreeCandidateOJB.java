@@ -28,12 +28,6 @@ import org.apache.ojb.broker.query.Criteria;
 public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 		IPersistentMasterDegreeCandidate {
 
-	public List readMasterDegreeCandidatesByUsername(String username) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("person.user.identifications.username", username);
-		return queryList(MasterDegreeCandidate.class, crit);
-	}
-
 	public Integer generateCandidateNumber(String executionYear, String degreeName,
 			Specialization specialization) throws ExcepcaoPersistencia {
 		int number = 0;
@@ -54,18 +48,6 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 		return ++number;
 	}
 
-	public MasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-			String idDocumentNumber, IDDocumentType idDocumentType, Integer executionDegreeID,
-			Specialization specialization) throws ExcepcaoPersistencia {
-
-		Criteria crit = new Criteria();
-		crit.addEqualTo("specialization", specialization);
-		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
-		crit.addEqualTo("person.documentIdNumber", idDocumentNumber);
-		crit.addEqualTo("person.idDocumentType", idDocumentType);
-		return (MasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
-
-	}
 
 	/**
 	 * Reads all candidates that with certains properties. The properties are
@@ -106,14 +88,5 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 		}
 		return queryList(MasterDegreeCandidate.class, criteria);
 	}
-
-	public MasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number,
-			Integer executionDegreeID, Specialization specialization) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("specialization", specialization);
-		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
-		crit.addEqualTo("candidateNumber", number);
-		return (MasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
-	}
-    
-} // End of class definition
+	    
+} 

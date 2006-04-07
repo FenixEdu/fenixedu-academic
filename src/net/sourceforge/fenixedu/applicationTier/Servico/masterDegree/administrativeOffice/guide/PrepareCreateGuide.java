@@ -78,9 +78,9 @@ public class PrepareCreateGuide extends Service {
         // Check if the Requester is a Candidate
         if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
 
-            masterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate()
-                    .readByNumberAndExecutionDegreeAndSpecialization(number,
-                            executionDegree.getIdInternal(), Specialization.valueOf(graduationType));
+            masterDegreeCandidate = executionDegree
+                    .getMasterDegreeCandidateBySpecializationAndCandidateNumber(Specialization
+                            .valueOf(graduationType), number);
 
             // Check if the Candidate Exists
             if (masterDegreeCandidate == null)

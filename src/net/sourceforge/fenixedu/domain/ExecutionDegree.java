@@ -17,6 +17,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
@@ -188,6 +189,19 @@ public class ExecutionDegree extends ExecutionDegree_Base {
         
 		return null;
 	}
+    
+    public MasterDegreeCandidate getMasterDegreeCandidateBySpecializationAndCandidateNumber(
+            Specialization specialization, Integer candidateNumber) {
+        
+        for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
+            if (masterDegreeCandidate.getSpecialization() == specialization
+                    && masterDegreeCandidate.getCandidateNumber().equals(candidateNumber)) {
+                return masterDegreeCandidate;
+            }
+        }
+        return null;
+    }
+    
 
     public static List<ExecutionDegree> getAllByExecutionYear(String year) {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();

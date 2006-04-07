@@ -1,11 +1,6 @@
-/*
- * Created on 14/Mar/2003
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -19,52 +14,39 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 
-/**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- */
 public class ReadMasterDegreeCandidate extends Service {
 
     public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree,
-            Integer candidateNumber, Specialization degreeType) throws ExcepcaoPersistencia {
+            Integer candidateNumber, Specialization degreeType) {
 
-        // Read the candidates
-        MasterDegreeCandidate masterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate()
-                .readByNumberAndExecutionDegreeAndSpecialization(candidateNumber,
-                        infoExecutionDegree.getIdInternal(), degreeType);
-
-        if (masterDegreeCandidate == null)
-            return null;
-        Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
-                .newInfoFromDomain(masterDegreeCandidate);
-        List situations = new ArrayList();
-        while (iterator.hasNext()) {
-            InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((CandidateSituation) iterator.next());
-            situations.add(infoCandidateSituation);
-
-            // Check if this is the Active Situation
-            if (infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
-                infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-        }
-        infoMasterDegreeCandidate.setSituationList(situations);
-
-        return infoMasterDegreeCandidate;
+        final ExecutionDegree executionDegree = rootDomainObject
+                .readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        
+        MasterDegreeCandidate masterDegreeCandidate = executionDegree
+                .getMasterDegreeCandidateBySpecializationAndCandidateNumber(degreeType, candidateNumber);
+        
+        return getInfoMasterDegreeCandidate(masterDegreeCandidate);
     }
 
-    public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson)
-            throws ExcepcaoPersistencia {
+    public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson) {
 
         final Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());
         final ExecutionDegree executionDegree = rootDomainObject
                 .readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
-        final State candidateState = new State(State.ACTIVE);
-
         final MasterDegreeCandidate masterDegreeCandidate = person
                 .getMasterDegreeCandidateByExecutionDegree(executionDegree);
+
+        return getInfoMasterDegreeCandidate(masterDegreeCandidate);
+    }
+
+    private InfoMasterDegreeCandidate getInfoMasterDegreeCandidate(
+            final MasterDegreeCandidate masterDegreeCandidate) {
+        
+        final State candidateState = new State(State.ACTIVE);
+
         final InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
                 .newInfoFromDomain(masterDegreeCandidate);
 

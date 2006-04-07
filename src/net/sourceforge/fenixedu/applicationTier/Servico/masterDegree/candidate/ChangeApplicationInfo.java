@@ -37,15 +37,17 @@ public class ChangeApplicationInfo extends Service {
     public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
             InfoPerson infoPerson, IUserView userView, Boolean isNewPerson)
             throws FenixServiceException, ExcepcaoPersistencia {
+        
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(
                         newMasterDegreeCandidate.getInfoExecutionDegree().getIdInternal());
+        
+        Person person = Person.readByDocumentIdNumberAndIdDocumentType(
+                newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
+                newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
+        
+         
 
-        MasterDegreeCandidate existingMasterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate()
-                .readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-                        newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
-                        newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao(),
-                        executionDegree.getIdInternal(), newMasterDegreeCandidate.getSpecialization());
-
+        MasterDegreeCandidate existingMasterDegreeCandidate = person.getMasterDegreeCandidateByExecutionDegree(executionDegree);
         if (existingMasterDegreeCandidate == null) {
             throw new ExcepcaoInexistente("Unknown Candidate !!");
         }
@@ -57,7 +59,7 @@ public class ChangeApplicationInfo extends Service {
                 country = Country.readCountryByNationality(infoPerson.getInfoPais().getNationality());
             }
             
-            Person person = existingMasterDegreeCandidate.getPerson();
+            person = existingMasterDegreeCandidate.getPerson();
             person.edit(infoPerson, country);
             
         } else {

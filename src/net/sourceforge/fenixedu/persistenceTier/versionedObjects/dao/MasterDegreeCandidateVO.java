@@ -30,19 +30,7 @@ import net.sourceforge.fenixedu.util.SituationName;
 public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 		IPersistentMasterDegreeCandidate {
 
-	public List readMasterDegreeCandidatesByUsername(final String username) throws ExcepcaoPersistencia {
-		final List<MasterDegreeCandidate> masterDegreeCandidates = (List<MasterDegreeCandidate>) readAll(MasterDegreeCandidate.class);
-		final List<MasterDegreeCandidate> result = new ArrayList();
-
-		for (final MasterDegreeCandidate candidate : masterDegreeCandidates) {
-			if (candidate.getPerson().getUsername().equals(username)) {
-				result.add(candidate);
-			}
-		}
-		return result;
-	}
-
-	public Integer generateCandidateNumber(final String executionYear, final String degreeName,
+    public Integer generateCandidateNumber(final String executionYear, final String degreeName,
 			final Specialization specialization) throws ExcepcaoPersistencia {
 
 		final List<MasterDegreeCandidate> masterDegreeCandidateList = (List<MasterDegreeCandidate>) readAll(MasterDegreeCandidate.class);
@@ -57,28 +45,6 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 			}
 		}
 		return ++number;
-	}
-
-	public MasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-			final String idDocumentNumber, final IDDocumentType idDocumentType,
-			final Integer executionDegreeID, final Specialization specialization)
-			throws ExcepcaoPersistencia {
-
-		final ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
-				executionDegreeID);
-		final List<MasterDegreeCandidate> masterDegreeCandidates = executionDegree
-				.getMasterDegreeCandidates();
-
-		for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
-			if (masterDegreeCandidate.getSpecialization().equals(specialization)
-					&& masterDegreeCandidate.getPerson().getIdDocumentType().equals(idDocumentType)
-					&& masterDegreeCandidate.getPerson().getNumeroDocumentoIdentificacao().equals(
-							idDocumentNumber)) {
-				return masterDegreeCandidate;
-			}
-		}
-
-		return null;
 	}
 
 	/**
@@ -148,26 +114,5 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 		}
 		return result;
 	}
-
-	public MasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(final Integer number,
-			final Integer executionDegreeID, final Specialization specialization)
-			throws ExcepcaoPersistencia {
-
-		final ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
-				executionDegreeID);
-
-		final List<MasterDegreeCandidate> masterDegreeCandidates = executionDegree
-				.getMasterDegreeCandidates();
-
-		for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
-			if (masterDegreeCandidate.getSpecialization().equals(specialization)
-					&& masterDegreeCandidate.getCandidateNumber().equals(number)) {
-				return masterDegreeCandidate;
-			}
-		}
-
-		return null;
-
-	}
-
-} // End of class definition
+    
+} 
