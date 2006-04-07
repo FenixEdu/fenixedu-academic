@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
@@ -38,10 +37,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion() {
         return new StudentTestQuestionVO();
-    }
-
-    public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate() {
-        return null;
     }
 
     public void confirmarTransaccao() throws ExcepcaoPersistencia {

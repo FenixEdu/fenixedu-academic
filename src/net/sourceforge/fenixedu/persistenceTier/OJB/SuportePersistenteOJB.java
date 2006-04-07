@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
@@ -105,10 +104,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public void cancelarTransaccao() {
 		Transaction.abort();
-	}
-
-    public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate() {
-		return new MasterDegreeCandidateOJB();
 	}
 
     public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope() {

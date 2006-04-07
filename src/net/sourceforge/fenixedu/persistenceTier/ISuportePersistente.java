@@ -19,8 +19,6 @@ public interface ISuportePersistente {
 	public void clearCache();
 
 	public Integer getNumberCachedItems();
-	
-	public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate();
 
 	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
 

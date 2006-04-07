@@ -1,12 +1,10 @@
-/*
- * Created on 14/Mar/2003
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
@@ -25,19 +23,25 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.SituationName;
 
-/**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- */
 public class ReadCandidateList extends Service {
 
     public List run(String degreeName, Specialization degreeType, SituationName candidateSituation,
             Integer candidateNumber, String executionYearString) throws ExcepcaoPersistencia {
-        // Get the Actual Execution Year
+     
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degreeName));
 
-        // Read the candidates
-        final List result = persistentSupport.getIPersistentMasterDegreeCandidate().readCandidateList(Integer.parseInt(degreeName), degreeType,
-                candidateSituation, candidateNumber, executionYear.getIdInternal());
+        final Set<MasterDegreeCandidate> result;
+        if (executionDegree == null && degreeType == null && candidateSituation == null && candidateNumber == null) {
+            result = new HashSet<MasterDegreeCandidate>();
+            for (final ExecutionDegree executionDegreeIter : executionYear.getExecutionDegreesSet()) {
+                result.addAll(executionDegreeIter.getMasterDegreeCandidatesSet());
+            }
+        } else {
+           result = MasterDegreeCandidate.
+               readByExecutionDegreeOrSpecializationOrCandidateNumberOrSituationName(executionDegree, degreeType,
+                       candidateNumber, candidateSituation);
+        }
 
         final List candidateList = new ArrayList();
         final Iterator iterator = result.iterator();
@@ -54,7 +58,7 @@ public class ReadCandidateList extends Service {
             }
             infoMasterDegreeCandidate.setSituationList(situations);
 
-            final ExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
+            executionDegree = masterDegreeCandidate.getExecutionDegree();
             final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
             infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 

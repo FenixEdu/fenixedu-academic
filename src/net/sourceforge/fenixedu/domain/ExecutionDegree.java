@@ -202,6 +202,15 @@ public class ExecutionDegree extends ExecutionDegree_Base {
         return null;
     }
     
+    public Integer generateCandidateNumberForSpecialization(Specialization specialization) {
+        int maxCandidateNumber = 0;
+        for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
+            if (masterDegreeCandidate.getSpecialization() == specialization) {
+                maxCandidateNumber = Math.max(maxCandidateNumber, masterDegreeCandidate.getCandidateNumber());
+            }
+        }
+        return Integer.valueOf(++maxCandidateNumber);
+    }
 
     public static List<ExecutionDegree> getAllByExecutionYear(String year) {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
@@ -438,5 +447,5 @@ public class ExecutionDegree extends ExecutionDegree_Base {
         
         return null;
     }
-	
+
 }

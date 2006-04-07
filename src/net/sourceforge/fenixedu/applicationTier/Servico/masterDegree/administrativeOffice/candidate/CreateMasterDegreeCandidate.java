@@ -59,12 +59,7 @@ public class CreateMasterDegreeCandidate extends Service {
         masterDegreeCandidate.addSituations(candidateSituation);
         masterDegreeCandidate.setSpecialization(degreeType);
         masterDegreeCandidate.setExecutionDegree(executionDegree);
-
-        // Generate the Candidate's number
-        Integer number = persistentSupport.getIPersistentMasterDegreeCandidate()
-                .generateCandidateNumber(executionDegree.getExecutionYear().getYear(),
-                        executionDegree.getDegreeCurricularPlan().getDegree().getSigla(), degreeType);
-        masterDegreeCandidate.setCandidateNumber(number);
+        masterDegreeCandidate.setCandidateNumber(executionDegree.generateCandidateNumberForSpecialization(degreeType));
 
         Role personRole = Role.getRoleByRoleType(RoleType.PERSON);
         if (person == null) {

@@ -13,6 +13,9 @@
 
 package net.sourceforge.fenixedu.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
@@ -67,6 +70,29 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
             }
         }
         return false;
+    }
+    
+    public static Set<MasterDegreeCandidate> readByExecutionDegreeOrSpecializationOrCandidateNumberOrSituationName(
+            final ExecutionDegree executionDegree, final Specialization specialization,
+            final Integer candidateNumber, final SituationName situationName) {
+        
+        final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
+        for (final MasterDegreeCandidate masterDegreeCandidate : RootDomainObject.getInstance().getMasterDegreeCandidatesSet()) {
+            if (executionDegree != null && masterDegreeCandidate.getExecutionDegree() != executionDegree) {
+                continue;
+            }
+            if (specialization != null && masterDegreeCandidate.getSpecialization() != specialization) {
+                continue;
+            }
+            if (candidateNumber != null && ! masterDegreeCandidate.getCandidateNumber().equals(candidateNumber)) {
+                continue;
+            }
+            if (situationName != null && ! masterDegreeCandidate.hasCandidateSituationWith(situationName)) {
+                continue;
+            }
+            result.add(masterDegreeCandidate);
+        }
+        return result;
     }
 
 }
