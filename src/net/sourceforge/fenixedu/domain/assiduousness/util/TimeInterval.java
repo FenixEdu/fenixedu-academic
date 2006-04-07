@@ -101,11 +101,8 @@ public class TimeInterval implements Serializable {
             }
         }
     }
-     
-
-
     
-//    // TimeInterval e' antes de timeOfDay? Se timeinterval  nao esta definido no dia seguinte e timeofday e' no dia seguinte entao natürlich devolve true
+//    // TimeInterval e' antes de timeOfDay? Se timeinterval  nao esta definido no dia seguinte e timeofday e' no dia seguinte entao natï¿½rlich devolve true
 //    public boolean timeIntervalIsBefore(TimeOfDay timeOfDay, boolean nextDay) {
 //        if (nextDay && (this.getNextDay() == false)) {
 //            return true;
