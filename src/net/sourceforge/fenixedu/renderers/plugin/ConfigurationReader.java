@@ -302,7 +302,13 @@ public class ConfigurationReader {
                         
                         // remove home path automatically appended 
                         String currentPath = new File(System.getProperty("user.dir")).getCanonicalPath();
-                        if (currentPath != null && entityPath.startsWith(currentPath + File.separator)) {
+                        currentPath = currentPath.replace(" ", "%20");
+                        
+                        if (File.separatorChar != '/') {
+                            currentPath = "/" + currentPath.replace(File.separatorChar, '/');
+                        }
+                        
+                        if (currentPath != null && entityPath.startsWith(currentPath + "/")) {
                             entityPath = entityPath.substring(currentPath.length() + 1);
                         }
                         
