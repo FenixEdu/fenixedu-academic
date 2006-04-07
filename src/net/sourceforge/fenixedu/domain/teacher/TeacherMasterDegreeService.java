@@ -30,6 +30,7 @@ public class TeacherMasterDegreeService extends TeacherMasterDegreeService_Base 
     public void delete() {
         removeProfessorship();
         removeTeacherService();
-        deleteDomainObject();
+        super.delete();
     }
+    
 }

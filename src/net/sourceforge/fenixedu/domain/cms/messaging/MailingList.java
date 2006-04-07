@@ -140,6 +140,7 @@ public class MailingList extends MailingList_Base
 			if(conversation.getMailingListsCount()==0)
 				conversation.delete();
 		}
+        removeRootDomainObject();
 		super.delete();
 	}
 }

@@ -144,7 +144,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         for (CurricularPeriod child : getChilds()) {
             child.delete();
         }
-
+        removeRootDomainObject();
         deleteDomainObject();
         
     }

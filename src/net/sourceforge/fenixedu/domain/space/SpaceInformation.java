@@ -26,6 +26,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
     }
 
     protected void deleteMaintainingReferenceToSpace() {
+        removeRootDomainObject();
         deleteDomainObject();
     }
 

@@ -11,6 +11,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalence extends EquivalentEnrolm
 	}
 
 	public void delete() {
+        removeRootDomainObject();
         deleteDomainObject();
     }
 

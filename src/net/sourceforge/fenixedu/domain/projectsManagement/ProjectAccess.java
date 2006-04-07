@@ -75,7 +75,7 @@ public class ProjectAccess extends ProjectAccess_Base {
 
     public void delete() {
         removePerson();
-        
+        removeRootDomainObject();
         deleteDomainObject();
     }
 

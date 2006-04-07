@@ -63,15 +63,16 @@ public class Attends extends Attends_Base {
     }
 
     public void delete() throws DomainException {
-
         if (!hasAnyShiftEnrolments() && !hasAnyStudentGroups() && !hasAnyAssociatedMarks()) {
             removeAluno();
             removeDisciplinaExecucao();
             removeEnrolment();
+            
             removeRootDomainObject();
-        super.deleteDomainObject();
-        } else
+            deleteDomainObject();
+        } else {
             throw new DomainException("error.attends.cant.delete");
+        }
     }
 
     private boolean hasAnyShiftEnrolments() {
@@ -277,13 +278,13 @@ public class Attends extends Attends_Base {
     public static List<Attends> readByDegreeCurricularPlanAndExecutionPeriod(
             DegreeCurricularPlan degreeCurricularPlan, ExecutionPeriod executionPeriod) {
         
-        Set<Attends> attends = new HashSet();
+        Set<Attends> attends = new HashSet<Attends>();
         for (Attends attend : RootDomainObject.getInstance().getAttendss()) {
             if (attend.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod) && 
                     attend.getEnrolment().getStudentCurricularPlan().equals(degreeCurricularPlan)) {
                 attends.add(attend);
             }
         }               
-        return new ArrayList(attends);               
+        return new ArrayList<Attends>(attends);               
     }
 }

@@ -22,6 +22,7 @@ public abstract class CurricularCourseGroup extends CurricularCourseGroup_Base {
 		if (!hasAnyCurricularCourses()) {
 			removeBranch();
 			getScientificAreas().clear();
+            removeRootDomainObject();
 			deleteDomainObject();
 		} else {
 			throw new DomainException("error.curricular.course.group.has.associated.curricular.courses");			

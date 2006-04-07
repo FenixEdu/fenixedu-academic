@@ -164,6 +164,7 @@ public class MailConversation extends MailConversation_Base
 			if (message.getMailConversationsCount() == 0) message.delete();
 		}
 
+        removeRootDomainObject();
 		super.delete();
 	}
 }

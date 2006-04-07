@@ -20,6 +20,7 @@ public class ConnectionRule extends ConnectionRule_Base {
         removeAccountabilityType();
         removeAllowedChildPartyType();
         removeAllowedParentPartyType();
+        removeRootDomainObject();
         deleteDomainObject();
     }
 }

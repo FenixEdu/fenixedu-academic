@@ -18,6 +18,7 @@ public class Tutor extends Tutor_Base {
     
     public void delete() {
         if (getCanBeDeleted()) {
+            removeRootDomainObject();
             deleteDomainObject();
         } else {
             throw new DomainException("tutor.cant.delete");

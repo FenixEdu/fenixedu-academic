@@ -35,10 +35,11 @@ public class Advise extends Advise_Base {
 
     public void delete() {
         if (getTeacherAdviseServices() == null || getTeacherAdviseServices().isEmpty()) {
-            setStudent(null);
-            setTeacher(null);
-            setEndExecutionPeriod(null);
-            setStartExecutionPeriod(null);
+            removeStudent();
+            removeTeacher();
+            removeEndExecutionPeriod();
+            removeStartExecutionPeriod();
+            removeRootDomainObject();
             deleteDomainObject();
         } else {
             throw new DomainException("error.delete.Advise.hasTeacherAdviseServices");

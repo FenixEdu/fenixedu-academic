@@ -53,6 +53,44 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
+    public void delete() throws DomainException {
+        removeDegreeCurricularPlan();
+        removeStudent();
+        removeBranch();
+        removeEmployee();
+        removeMasterDegreeThesis();
+        getGratuitySituations().clear();
+
+        for (Iterator iter = getEnrolmentsIterator(); iter.hasNext();) {
+            Enrolment enrolment = (Enrolment) iter.next();
+            iter.remove();
+            enrolment.removeStudentCurricularPlan();
+            enrolment.delete();
+        }
+
+        for (Iterator iter = getNotNeedToEnrollCurricularCoursesIterator(); iter.hasNext();) {
+            NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) iter
+                    .next();
+            iter.remove();
+            notNeedToEnrollInCurricularCourse.removeStudentCurricularPlan();
+            notNeedToEnrollInCurricularCourse.delete();
+        }
+
+        for (; !getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().get(0)
+                .delete())
+            ;
+
+        for (Iterator iter = getCreditsInScientificAreasIterator(); iter.hasNext();) {
+            CreditsInScientificArea creditsInScientificArea = (CreditsInScientificArea) iter.next();
+            iter.remove();
+            creditsInScientificArea.removeStudentCurricularPlan();
+            creditsInScientificArea.delete();
+        }
+
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+    
     public Integer getCreditsInSecundaryArea() {
         // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
         // return a value
@@ -992,44 +1030,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 otherStudentCurricularPlan.setCurrentState(StudentCurricularPlanState.INACTIVE);
             }
         }
-    }
-
-    public void delete() throws DomainException {
-
-        removeDegreeCurricularPlan();
-        removeStudent();
-        removeBranch();
-        removeEmployee();
-        removeMasterDegreeThesis();
-        getGratuitySituations().clear();
-
-        for (Iterator iter = getEnrolmentsIterator(); iter.hasNext();) {
-            Enrolment enrolment = (Enrolment) iter.next();
-            iter.remove();
-            enrolment.removeStudentCurricularPlan();
-            enrolment.delete();
-        }
-
-        for (Iterator iter = getNotNeedToEnrollCurricularCoursesIterator(); iter.hasNext();) {
-            NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) iter
-                    .next();
-            iter.remove();
-            notNeedToEnrollInCurricularCourse.removeStudentCurricularPlan();
-            notNeedToEnrollInCurricularCourse.delete();
-        }
-
-        for (; !getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().get(0)
-                .delete())
-            ;
-
-        for (Iterator iter = getCreditsInScientificAreasIterator(); iter.hasNext();) {
-            CreditsInScientificArea creditsInScientificArea = (CreditsInScientificArea) iter.next();
-            iter.remove();
-            creditsInScientificArea.removeStudentCurricularPlan();
-            creditsInScientificArea.delete();
-        }
-
-        deleteDomainObject();
     }
 
     public Enrolment getEnrolmentByCurricularCourseAndExecutionPeriod(

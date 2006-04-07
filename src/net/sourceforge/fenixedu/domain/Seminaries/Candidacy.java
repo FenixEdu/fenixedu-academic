@@ -37,6 +37,7 @@ public class Candidacy extends Candidacy_Base {
         removeStudent();
         removeTheme();
         
+        removeRootDomainObject();
         deleteDomainObject();
     }
 

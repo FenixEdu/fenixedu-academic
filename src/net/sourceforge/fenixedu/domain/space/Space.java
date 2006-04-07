@@ -67,6 +67,7 @@ public abstract class Space extends Space_Base {
             spaceInformation.deleteMaintainingReferenceToSpace();
         }
         setSuroundingSpace(null);
+        removeRootDomainObject();
         deleteDomainObject();
     }
 

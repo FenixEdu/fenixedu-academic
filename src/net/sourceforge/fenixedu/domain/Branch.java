@@ -113,6 +113,7 @@ public class Branch extends Branch_Base {
 		
 		removeDegreeCurricularPlan();
 		
+        removeRootDomainObject();
 		deleteDomainObject();
 	}
 	

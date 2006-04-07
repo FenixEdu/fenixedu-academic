@@ -21,7 +21,7 @@ public class TeacherAdviseService extends TeacherAdviseService_Base {
     public void delete(){
         removeAdvise();
         removeTeacherService();
-        deleteDomainObject();
+        super.delete();
     }
     
     public void updatePercentage(Double percentage) {

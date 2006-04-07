@@ -24,8 +24,8 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
     }
 
     public void delete(){
-        setTeacherService(null);
-        deleteDomainObject();
+        removeTeacherService();
+        super.delete();
     }
     
     public double getHours() {

@@ -656,6 +656,7 @@ public class Person extends Person_Base {
             removeCms();
             removePais();
             RootDomainObject.getInstance().removePartys(this);
+            removeRootDomainObject();
             deleteDomainObject();
             return true;
         }

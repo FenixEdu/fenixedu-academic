@@ -154,6 +154,7 @@ public class Degree extends Degree_Base {
             for (;!getParticipatingAnyCurricularCourseCurricularRules().isEmpty()
                  ;getParticipatingAnyCurricularCourseCurricularRules().get(0).delete());
             
+            removeRootDomainObject();
             deleteDomainObject();
         } else {
             throw new DomainException("error.degree.has.degree.curricular.plans");

@@ -22,7 +22,7 @@ public class WebsiteType extends WebsiteType_Base {
         
         removeCreator();
         getMandatoryContents().clear();
-        
+        removeRootDomainObject();
         deleteDomainObject();
     }
     

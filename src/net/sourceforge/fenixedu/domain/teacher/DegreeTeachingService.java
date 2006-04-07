@@ -36,10 +36,10 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
     }
 
     public void delete(){
-        setTeacherService(null);
-        setShift(null);
-        setProfessorship(null);
-        deleteDomainObject();
+        removeTeacherService();
+        removeShift();
+        removeProfessorship();
+        super.delete();
     }
     
     public void updatePercentage(Double percentage) {

@@ -22,6 +22,7 @@ public class ResearchInterest extends ResearchInterest_Base {
 
     public void delete() {
         removeParty();
+        removeRootDomainObject();
         deleteDomainObject();
     }
 

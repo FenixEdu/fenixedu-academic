@@ -10,4 +10,9 @@ public abstract class TeacherServiceItem extends TeacherServiceItem_Base {
         this.setOjbConcreteClass(this.getClass().getName());
     }
     
+    public void delete() {
+        removeRootDomainObject();
+        deleteDomainObject();        
+    }
+    
 }

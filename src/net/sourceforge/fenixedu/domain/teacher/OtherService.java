@@ -17,7 +17,7 @@ public class OtherService extends OtherService_Base {
     
     public void delete(){
         removeTeacherService();
-        deleteDomainObject();
+        super.delete();
     }
     
 }

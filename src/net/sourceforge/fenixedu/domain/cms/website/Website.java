@@ -11,7 +11,8 @@ public class Website extends Website_Base {
 
     public void delete() {
         removeTarget();
-        
+        removeRootDomainObject();
         super.delete();
     }
+    
 }

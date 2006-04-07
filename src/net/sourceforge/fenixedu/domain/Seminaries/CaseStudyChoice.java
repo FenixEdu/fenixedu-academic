@@ -18,7 +18,6 @@ public class CaseStudyChoice extends CaseStudyChoice_Base {
 
     public CaseStudyChoice() {
         super();
-
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
@@ -26,6 +25,8 @@ public class CaseStudyChoice extends CaseStudyChoice_Base {
         removeCaseStudy();
         removeCandidacy();
 
+        removeRootDomainObject();
         deleteDomainObject();
     }
+    
 }

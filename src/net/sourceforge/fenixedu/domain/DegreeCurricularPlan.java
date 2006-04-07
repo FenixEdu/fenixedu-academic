@@ -235,6 +235,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             if (hasDegreeStructure()) {
                 getDegreeStructure().delete();
             }
+            removeRootDomainObject();
             deleteDomainObject();
         } else
             throw new DomainException("error.degree.curricular.plan.cant.delete");
