@@ -162,7 +162,7 @@ public class ValuesRenderer extends OutputRenderer {
                 layout = getEachLayout();
             }
             
-            return renderValue(slot.getObject(), schema, layout, slot.getProperties());
+            return renderValue(slot.getObject(), slot.getType(), schema, layout, slot.getProperties());
         }
     }
 }

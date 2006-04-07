@@ -3,10 +3,12 @@ package net.sourceforge.fenixedu.renderers;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 /**
  * This renderer allows you to present a collection of objects as a
@@ -19,6 +21,11 @@ import net.sourceforge.fenixedu.renderers.utils.RenderKit;
  * <p>
  * Example:
  * <table border="1">
+ *  <thead>
+ *      <th>List title</th>
+ *      <th></th>
+ *      <th></th>
+ *  </thead> 
  *  <tr>
  *      <td><em>&lt;object A presentation&gt;</em></td>
  *      <td><a href="#">Edit</a></td>
@@ -44,8 +51,16 @@ public class TabularListRenderer extends CollectionRenderer {
     
     private String subLayout;
     
+    private String listTitle;
+    
+    private boolean listTitleKey;
+    
+    private String listTitleBundle;
+    
     public TabularListRenderer() {
         super();
+        
+        this.listTitleKey = false;
     }
     
     public String getSubLayout() {
@@ -76,6 +91,45 @@ public class TabularListRenderer extends CollectionRenderer {
         this.subSchema = subSchema;
     }
 
+    public String getListTitle() {
+        return this.listTitle;
+    }
+
+    /**
+     * Allows you to set the title of this listing.
+     * 
+     * @property
+     */
+    public void setListTitle(String listTitle) {
+        this.listTitle = listTitle;
+    }
+
+    public boolean isListTitleKey() {
+        return this.listTitleKey;
+    }
+
+    /**
+     * Indicates the the value of the property {@link #setListTitle(String) listTitle} is a resource key. 
+     * 
+     * @property
+     */
+    public void setListTitleKey(boolean listTitleKey) {
+        this.listTitleKey = listTitleKey;
+    }
+
+    public String getListTitleBundle() {
+        return this.listTitleBundle;
+    }
+
+    /**
+     * The name of the resource bundle to use for the list title.
+     * 
+     * @property
+     */
+    public void setListTitleBundle(String listTitleBundle) {
+        this.listTitleBundle = listTitleBundle;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new TabularListRendererLayout((Collection) object);
@@ -94,9 +148,28 @@ public class TabularListRenderer extends CollectionRenderer {
 
         @Override
         protected boolean hasHeader() {
-            return false;
+            return getListTitle() != null;
         }
         
+        @Override
+        protected HtmlComponent getHeaderComponent(int columnIndex) {
+            if (columnIndex == 0) {
+                String description;
+                
+                if (isListTitleKey()) {
+                    description = RenderUtils.getResourceString(getListTitleBundle(), getListTitle());
+                }
+                else {
+                    description = getListTitle();
+                }
+                
+                return new HtmlText(description);
+            }
+            else {
+                return new HtmlText();
+            }
+        }
+
         @Override
         protected HtmlComponent generateObjectComponent(int columnIndex, MetaObject object) {
             Schema schema = RenderKit.getInstance().findSchema(getSubSchema());

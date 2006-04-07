@@ -12,6 +12,14 @@ import net.sourceforge.fenixedu.renderers.exceptions.NoRendererException;
 import net.sourceforge.fenixedu.renderers.exceptions.NoSuchSchemaException;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 
+/**
+ * Entry point for the rendering mechanism. The render kit allows several renderers and schemas to
+ * be registered. The application can retrieve schemas to create suitable meta objects and prepare
+ * a presentation context and then start the rendering mechanism with, for example, an invokation
+ * to {@link #render(PresentationContext, Object, Class)}.
+ * 
+ * @author cfgi
+ */
 public class RenderKit {
 
     private static RenderKit instance = new RenderKit();
@@ -38,12 +46,16 @@ public class RenderKit {
     }
 
     /**
-     * Used to allow reloading of the configuration in runtime 
+     * Used to allow reloading of the configuration in runtime All registered schemas 
+     * and renderers are lost.
      */
     public static void reset() {
         RenderKit.instance = new RenderKit();
     }
     
+    /**
+     * Retrieves the default instance of the render kit.
+     */
     public static RenderKit getInstance() {
         return instance;
     }
@@ -52,10 +64,19 @@ public class RenderKit {
     // register renderer and schema
     //
     
+    /**
+     * Registers a new renderer for the mode type and layout specified. Every instance of this renderer will be pre-configured with
+     * the properties given so the work as the default properties for the renderer.
+     * <p>
+     * An instace of the renderer can be retrieved with {@link #getRenderer(RenderMode, Class, String)}.
+     */
     public void registerRenderer(RenderMode mode, Class type, String layout, Class<? extends Renderer> renderer, Properties defaultProperties) {
         registryMap.get(mode).registerRenderer(type, layout, renderer, defaultProperties);
     }
 
+    /**
+     * Registers a new schema. The scheme can be searched by name with {@link #findSchema(String)}.
+     */
     public void registerSchema(Schema schema) {
         schemaRegistry.registerSchema(schema);
     }
@@ -65,6 +86,10 @@ public class RenderKit {
     // 
     
     /**
+     * Finds a registered schema by name. If the name is null then this method returns null. In all
+     * other cases returns the schema with the given name or throws an exception if the schema
+     * is not registered. 
+     * 
      * @exception NoSuchSchemaException if the schema named <tt>schemaName</tt> could not be found
      */
     public Schema findSchema(String schemaName) {
@@ -89,11 +114,21 @@ public class RenderKit {
         }
     }
     
-    private Renderer getRenderer(RenderMode mode, Class type, String layout) {
+    /**
+     * Allows to retrieve a new instance of a renderer previously registered for the given mode, type, and
+     * layout.
+     * 
+     * @return a new instance of the renderer pre-configured with the default properties
+     */
+    public Renderer getRenderer(RenderMode mode, Class type, String layout) {
         RendererDescription rendererDescription = getSpecificRendererDescription(mode, type, layout);
         return rendererDescription.createRenderer();
     }
 
+    /**
+     * This method is a convinience method. It works in a similar way as {@link #getRenderer(RenderMode, Class, String)}
+     * but the render mode is retrieved from the presentation context.
+     */
     public Renderer getRenderer(PresentationContext context, Class type, String layout) {
         return getRenderer(context.getRenderMode(), type, layout);
     }
@@ -134,7 +169,8 @@ public class RenderKit {
     }
     
     /**
-     * Uses the given renderer to render the object. 
+     * Uses the given renderer to render the object. That is setups the renderer and invokes
+     * {@link Renderer#render(Object, Class)}.
      */
     public HtmlComponent renderUsing(Renderer renderer, PresentationContext context, Object object, Class type) {
         prepareRenderer(renderer, context);

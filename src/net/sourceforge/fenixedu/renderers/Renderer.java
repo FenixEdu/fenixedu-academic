@@ -87,6 +87,14 @@ public abstract class Renderer {
         return title;
     }
 
+    /**
+     * Main method of a renderer that is invoked to do the renderization of a value 
+     * into a component. The default behaviour is to {@linkplain #getLayout(Object, Class) get the layout} 
+     * for this renderer, configure it with the {@linkplain Layout#getPropertyNames() declared properties} 
+     * and {@linkplain #renderComponent(Layout, Object, Class) issue the rendering}.
+     * 
+     * @return a component representing the presentation of the given value
+     */
     public HtmlComponent render(Object object, Class type) {
         Layout layout = getLayout(object, type);
         
@@ -98,12 +106,32 @@ public abstract class Renderer {
         return component;
     }
     
+    /**
+     * This is the base method that should be overriden but every renderer. Each renderer must
+     * render the given value accordingly with a layout. The layout represents the way information
+     * will be presented.
+     * 
+     * @return the layout to be used in the rendering
+     */
     protected abstract Layout getLayout(Object object, Class type);
 
+    /**
+     * Creates the component according to the layout given. This method is called from {@link #render(Object, Class)}
+     * and is basically delegates the creation of the component to the layout.
+     * 
+     * @return a component representing the presentation of the given value
+     */
     protected HtmlComponent renderComponent(Layout layout, Object object, Class type) {
         return layout.createLayout(object, type);
     }
 
+    /**
+     * Copies all propreties from this renderer to the given layout. The layout 
+     * declares the properties it's interested through {@link Layout#getPropertyNames()}. 
+     * If this renderer has a property with the same name, it's copied to the layout.
+     * 
+     * @param the layout ot configure
+     */
     protected void setLayoutProperties(Layout layout) {
         String[] names = layout.getAndVerifyPropertyNames();
         
@@ -128,7 +156,15 @@ public abstract class Renderer {
     // rendering support
     //
     
-    protected HtmlComponent renderValue(Object value, Schema schema, String layout, Properties properties) {
+    /**
+     * Starts the rendering process for a concrete value. The presentation context used to present the value
+     * will be a subcontext of the {@linkplain #getContext() current context}. This means that the presentation
+     * will made in the same mode. The subcontext will be configured with the given schema, layout, and properties.
+     * <p>
+     * If you want to present the <code>null</code> value or a value in a different presentation mode then
+     * you must use {@link RenderKit#render(PresentationContext, Object, Class)} directly.
+     */
+    protected HtmlComponent renderValue(Object value, Class type, Schema schema, String layout, Properties properties) {
         MetaObject metaObject = MetaObjectFactory.createObject(value, schema);
 
         PresentationContext newContext = getContext().createSubContext(metaObject);
@@ -136,13 +172,28 @@ public abstract class Renderer {
         newContext.setProperties(properties);
         
         RenderKit kit = RenderKit.getInstance();
-        return kit.render(newContext, value);
+        return kit.render(newContext, value, type);
     }
     
+    /**
+     * This method is a convenience method for the previous one. It assumes that no properties are set in
+     * the subcontext. 
+     */
     protected HtmlComponent renderValue(Object value, Schema schema, String layout) {
-        return renderValue(value, schema, layout, new Properties());
+        return renderValue(value, value.getClass(), schema, layout, new Properties());
     }
     
+    /**
+     * This method is a convenience method for the previous one. It assumes that the value is not null.
+     */
+    protected HtmlComponent renderValue(Object value, Class type, Schema schema, String layout) {
+        return renderValue(value, type, schema, layout, new Properties());
+    }
+
+    /**
+     * Starts the rendering process for the value of a meta slot. A subcontext will be created to present the
+     * slot's value. That subcontext will be configured with the layout and properties defined in the slot.
+     */
     protected HtmlComponent renderSlot(MetaSlot slot) {
         PresentationContext newContext = getContext().createSubContext(slot);
         newContext.setLayout(slot.getLayout());

@@ -85,7 +85,7 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
     }
 
     public void setTargetSlot(MetaSlotKey key) {
-        setName(key.toString());
+        setName(key != null ? key.toString() : null);
         this.slotKey = key;
     }
 

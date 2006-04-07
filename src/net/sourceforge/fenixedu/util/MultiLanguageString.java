@@ -37,7 +37,9 @@ public class MultiLanguageString implements Serializable {
 	}
 
     private Language getUserLanguage() {
-        return getLocale() != null ? Language.valueOf(getLocale().getLanguage()) : null;
+        Locale locale = getLocale();
+        
+        return locale != null ? Language.valueOf(locale.getLanguage()) : null;
     }
 
     private Language getSystemLanguage() {
@@ -49,22 +51,26 @@ public class MultiLanguageString implements Serializable {
     }
 	
     public boolean isRequestedLanguage() {
-        final Language userLanguage = getUserLanguage();
-        if (userLanguage != null && hasLanguage(userLanguage)) {
+        Language userLanguage = getUserLanguage();
+        
+        if (userLanguage != null && userLanguage.equals(getContentLanguage())) {
             return true;
         }
+        
         return false;
     }
     
     public Language getContentLanguage() {
-        final Language userLanguage = getUserLanguage();
+        Language userLanguage = getUserLanguage();
         if (userLanguage != null && hasLanguage(userLanguage)) {
             return userLanguage;
         }
-        final Language systemLanguage = getSystemLanguage();
+        
+        Language systemLanguage = getSystemLanguage();
         if (systemLanguage != null && hasLanguage(systemLanguage)) {
             return systemLanguage;
         }
+        
         return contentsMap.isEmpty() ? null : contentsMap.keySet().iterator().next();
     }
     
@@ -106,4 +112,26 @@ public class MultiLanguageString implements Serializable {
 		}
 		return result.toString();
 	}
+    
+    public static MultiLanguageString importFromString(String string) {
+        if (string == null) {
+            return null;
+        }
+        
+        MultiLanguageString mls = new MultiLanguageString();
+        
+        for (int i = 0; i < string.length();) {
+            String language = string.substring(i, i + 2);
+            
+            int pos = string.indexOf(':', i + 2);
+            int length = Integer.parseInt(string.substring(i + 2, pos));
+            
+            String content = string.substring(pos + 1, pos + 1 + length);
+            mls.setContent(Language.valueOf(language), content);
+            
+            i = pos + 1 + length;
+        }
+        
+        return mls;
+    }
 }

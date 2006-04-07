@@ -1,19 +1,15 @@
 package net.sourceforge.fenixedu.renderers;
 
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
 import org.apache.log4j.Logger;
 
@@ -94,7 +90,7 @@ public class StandardInputRenderer extends InputRenderer {
     }
 
     class ObjectInputTabularLayout extends TabularLayout {
-        private Logger logger = Logger.getLogger(ObjectInputTabularLayout.class);
+        public Logger logger = Logger.getLogger(ObjectInputTabularLayout.class);
 
         protected Map<Integer, HtmlSimpleValueComponent> inputComponents;
 
@@ -153,29 +149,6 @@ public class StandardInputRenderer extends InputRenderer {
             }
 
             return component;
-        }
-
-        protected HtmlValidator getValidator(Validatable inputComponent,
-                MetaSlot slot) {
-            Class<HtmlValidator> validatorType = slot.getValidator();
-
-            if (validatorType == null) {
-                return null;
-            }
-
-            Constructor<HtmlValidator> constructor;
-            try {
-                constructor = validatorType.getConstructor(new Class[] { Validatable.class });
-
-                HtmlValidator validator = constructor.newInstance(inputComponent);
-                RenderUtils.setProperties(validator, slot.getValidatorProperties());
-                
-                return validator;
-            } catch (Exception e) {
-                logger.warn("could not create validator '" + validatorType.getName() + "' for slot '"
-                        + slot.getName() + "': " + e);
-                return null;
-            }
         }
     }
 

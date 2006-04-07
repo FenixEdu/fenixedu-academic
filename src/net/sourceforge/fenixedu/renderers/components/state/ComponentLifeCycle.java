@@ -150,16 +150,18 @@ public class ComponentLifeCycle {
             component = viewState.getComponent();
         }
 
-        viewState.setValid(validateComponent(component));
+        if (! viewState.skipUpdate()) { // EXPERIMENTAL
+            viewState.setValid(validateComponent(component));
 
-        if (viewState.isValid()) {
-            // updateMetaObject can get convert errors
-            viewState.setValid(updateMetaObject(collector, editRequest));
-        }
+            if (viewState.isValid()) {
+                // updateMetaObject can get convert errors
+                viewState.setValid(updateMetaObject(collector, editRequest));
+            }
         
-        if (viewState.isValid() && !viewState.skipUpdate()) {
-            // updateDomain can get convert errors
-            updateDomain(collector, editRequest);
+            if (viewState.isValid() && !viewState.skipUpdate()) {
+                // updateDomain can get convert errors
+                updateDomain(collector, editRequest);
+            }
         }
 
         ViewDestination destination = getDestination(viewState);

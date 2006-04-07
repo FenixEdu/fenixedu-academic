@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
  */
 public class TextAreaInputRenderer extends InputRenderer {
 
-    private int columns;
-    private int rows;
+    private Integer columns;
+    private Integer rows;
     
-    public int getColumns() {
+    public Integer getColumns() {
         return this.columns;
     }
 
@@ -33,7 +33,7 @@ public class TextAreaInputRenderer extends InputRenderer {
         this.columns = columns;
     }
 
-    public int getRows() {
+    public Integer getRows() {
         return this.rows;
     }
 
