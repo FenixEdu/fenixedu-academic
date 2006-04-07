@@ -30,6 +30,16 @@ public class Lesson extends Lesson_Base {
         setShift(shift);
     }
 
+    public void delete() {
+        removeExecutionPeriod();
+        removeSala();
+        removeShift();
+        getRoomOccupation().delete();
+        
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
     public Calendar getInicio() {
         if (this.getBegin() != null) {
             Calendar result = Calendar.getInstance();

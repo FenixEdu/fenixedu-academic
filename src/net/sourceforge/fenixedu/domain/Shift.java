@@ -16,6 +16,15 @@ public class Shift extends Shift_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
+    public void delete() {
+        for (; hasAnyAssociatedLessons(); getAssociatedLessons().get(0).delete());
+        
+        getAssociatedClasses().clear();
+        removeDisciplinaExecucao();
+        removeRootDomainObject();
+        deleteDomainObject();    
+    }
+
 	public double hours() {
         double hours = 0;
         List lessons = this.getAssociatedLessons();
