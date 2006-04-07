@@ -14,6 +14,16 @@ public class SchoolClass extends SchoolClass_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
+    public void delete() {
+        getAssociatedShifts().clear();
+        
+        removeExecutionDegree();
+        removeExecutionPeriod();
+        removeRootDomainObject();
+        
+        deleteDomainObject();
+    }
+
 	public void associateShift(Shift shift) {
         if (shift == null) {
             throw new NullPointerException();
