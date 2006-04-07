@@ -12,10 +12,4 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public class PersistentObjectOJB extends ObjectFenixOJB implements IPersistentObject {
 
-    /**
-     *  
-     */
-    public PersistentObjectOJB() {
-    }
-
 }
