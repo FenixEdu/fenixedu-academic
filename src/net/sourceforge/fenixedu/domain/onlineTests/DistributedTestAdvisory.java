@@ -18,4 +18,11 @@ public class DistributedTestAdvisory extends DistributedTestAdvisory_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
+    public void delete() {
+        removeAdvisory();
+        removeDistributedTest();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.util.tests.TestType;
 
 /**
  * @author Susana Fernandes
@@ -22,6 +23,38 @@ public class DistributedTest extends DistributedTest_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
+    public void delete() {
+        for (; hasAnyDistributedTestQuestions(); getDistributedTestQuestions().get(0).delete());
+        for (; hasAnyDistributedTestAdvisories(); getDistributedTestAdvisories().get(0).delete());
+        for (; hasAnyStudentsLogs(); getStudentsLogs().get(0).delete());
+        if (getTestType().getType().intValue() == TestType.EVALUATION) {
+            getOnlineTest().delete();
+        }
+        deleteQuestions();
+        
+        removeTestScope();
+        removeRootDomainObject();
+        
+        deleteDomainObject();
+    }
+    
+    private void deleteQuestions() {
+        for (StudentTestQuestion studentTestQuestion : getDistributedTestQuestions()) {
+            if(!studentTestQuestion.getQuestion().getVisibility() && !isInOtherDistributedTest(studentTestQuestion.getQuestion())) {
+                studentTestQuestion.getQuestion().delete();
+            }
+        }
+    }
+    
+    private boolean isInOtherDistributedTest(Question question) {
+        for (StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestions()) {
+            if(!studentTestQuestion.getDistributedTest().equals(this)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 	public Calendar getBeginDate() {
         if (getBeginDateDate() != null) {
             final Calendar calendar = Calendar.getInstance();
@@ -98,21 +131,4 @@ public class DistributedTest extends DistributedTest_Base {
 		}
     }
     
-    public void cleanQuestions() {
-    	for (StudentTestQuestion studentTestQuestion : this.getDistributedTestQuestions()) {
-			if(!studentTestQuestion.getQuestion().getVisibility() && !isInOtherDistributedTest(studentTestQuestion.getQuestion())) {
-				studentTestQuestion.getQuestion().delete();
-			}
-		}
-    }
-    
-    private boolean isInOtherDistributedTest(Question question) {
-    	for (StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestions()) {
-			if(!studentTestQuestion.getDistributedTest().equals(this)) {
-				return true;
-			}
-		}
-    	return false;
-    }
-
 }

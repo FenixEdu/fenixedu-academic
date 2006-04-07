@@ -31,7 +31,7 @@ public class OnlineTest extends OnlineTest_Base {
 	}
 	
 	public void delete() {
-		setDistributedTest(null);
+		removeDistributedTest();
 		super.delete();
 	}
     

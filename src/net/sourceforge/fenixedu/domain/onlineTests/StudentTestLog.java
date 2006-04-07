@@ -16,4 +16,10 @@ public class StudentTestLog extends StudentTestLog_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
+    public void delete() {
+        removeStudent();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }
