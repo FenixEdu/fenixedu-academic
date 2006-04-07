@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 
 /**
  * @author Pica
@@ -82,11 +81,8 @@ public class ShowGrantOwner extends Service {
         newInfoListGrantContract.setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
                 .newInfoFromDomain(grantContract));
         // Set the grant orientation teacher for the contract
-        IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = persistentSupport
-                .getIPersistentGrantOrientationTeacher();
-        GrantOrientationTeacher grantOrientationTeacher = persistentGrantOrientationTeacher
-                .readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(), new Integer(
-                        0));
+        GrantOrientationTeacher grantOrientationTeacher = grantContract
+                .readActualGrantOrientationTeacher();
         newInfoListGrantContract.getInfoGrantContract().setGrantOrientationTeacherInfo(
                 InfoGrantOrientationTeacherWithTeacherAndGrantContract
                         .newInfoFromDomain(grantOrientationTeacher));

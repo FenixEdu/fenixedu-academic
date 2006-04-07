@@ -54,9 +54,8 @@ public class ChangeMasterDegreeProof extends Service {
                     "error.exception.masterDegree.scholarshipNotFinished");
         }
 
-        MasterDegreeProofVersion storedMasterDegreeProofVersion = persistentSupport
-                .getIPersistentMasterDegreeProofVersion().readActiveByStudentCurricularPlan(
-                        studentCurricularPlan);
+        MasterDegreeProofVersion storedMasterDegreeProofVersion = studentCurricularPlan
+                .readActiveMasterDegreeProofVersion();
         if (storedMasterDegreeProofVersion != null) {
             storedMasterDegreeProofVersion.setCurrentState(new State(State.INACTIVE));
         }

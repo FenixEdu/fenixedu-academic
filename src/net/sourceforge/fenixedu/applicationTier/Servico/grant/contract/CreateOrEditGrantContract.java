@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 
 public class CreateOrEditGrantContract extends Service {
 
@@ -52,12 +51,8 @@ public class CreateOrEditGrantContract extends Service {
                         .getIdInternal());
         if (grantOrientationTeacher == null) {
             if (infoGrantContract.getIdInternal() != null
-                    || !infoGrantContract.getIdInternal().equals(Integer.valueOf(0))) {
-                IPersistentGrantOrientationTeacher pGrantOrientationTeacher = persistentSupport
-                        .getIPersistentGrantOrientationTeacher();
-                grantOrientationTeacher = pGrantOrientationTeacher
-                        .readActualGrantOrientationTeacherByContract(infoGrantContract.getIdInternal(),
-                                Integer.valueOf(0));
+                    || !infoGrantContract.getIdInternal().equals(Integer.valueOf(0))) {                
+                grantOrientationTeacher = grantContract.readActualGrantOrientationTeacher();
             }
 
             if (grantOrientationTeacher == null) {
@@ -71,7 +66,7 @@ public class CreateOrEditGrantContract extends Service {
                 grantOrientationTeacher.setOrientationTeacher(teacher);
             }
         }
-        grantContract.setGrantOrientationTeacher(grantOrientationTeacher);
+        grantContract.addGrantOrientationTeachers(grantOrientationTeacher);
 
         if (infoGrantContract.getGrantCostCenterInfo() != null
                 && infoGrantContract.getGrantCostCenterInfo().getNumber() != null) {

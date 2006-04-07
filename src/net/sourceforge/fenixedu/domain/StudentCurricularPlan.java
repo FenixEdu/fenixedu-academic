@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,10 +26,12 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.comparators.ReverseComparator;
 
 /**
  * @author David Santos in Jun 24, 2004
@@ -44,8 +47,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // only
 
     public StudentCurricularPlan() {
-    	super();
-    	setRootDomainObject(RootDomainObject.getInstance());
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(getClass().getName());
     }
 
@@ -103,7 +106,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         for (final StudentCurricularPlan studentCurricularPlan : getStudent()
                 .getStudentCurricularPlans()) {
-            if (studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.PAST) || studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.INCOMPLETE)) {
+            if (studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.PAST)
+                    || studentCurricularPlan.getCurrentState().equals(
+                            StudentCurricularPlanState.INCOMPLETE)) {
                 addNonInvisibleEnrolments(allEnrollments, studentCurricularPlan.getEnrolments());
             }
         }
@@ -173,7 +178,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getStudentEnrollmentsWithEnrolledState().size();
     }
 
-    protected boolean isApproved(CurricularCourse curricularCourse, List<CurricularCourse> approvedCourses) {
+    protected boolean isApproved(CurricularCourse curricularCourse,
+            List<CurricularCourse> approvedCourses) {
         return hasEquivalenceIn(curricularCourse, approvedCourses)
                 || hasEquivalenceInNotNeedToEnroll(curricularCourse);
         // || hasEquivalenceIn(curricularCourse,
@@ -199,7 +205,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
-    protected boolean hasEquivalenceIn(CurricularCourse curricularCourse, List<CurricularCourse> otherCourses) {
+    protected boolean hasEquivalenceIn(CurricularCourse curricularCourse,
+            List<CurricularCourse> otherCourses) {
         if (otherCourses.isEmpty()) {
             return false;
         }
@@ -258,14 +265,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isCurricularCourseApproved(CurricularCourse curricularCourse) {
         List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
 
-        List<CurricularCourse> result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer() {
-            public Object transform(Object obj) {
-                Enrolment enrollment = (Enrolment) obj;
+        List<CurricularCourse> result = (List) CollectionUtils.collect(studentApprovedEnrollments,
+                new Transformer() {
+                    public Object transform(Object obj) {
+                        Enrolment enrollment = (Enrolment) obj;
 
-                return enrollment.getCurricularCourse();
+                        return enrollment.getCurricularCourse();
 
-            }
-        });
+                    }
+                });
 
         return isApproved(curricularCourse, result);
     }
@@ -335,7 +343,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 }));
     }
 
-    public List<Enrolment> getAllStudentEnrollmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    public List<Enrolment> getAllStudentEnrollmentsInExecutionPeriod(
+            final ExecutionPeriod executionPeriod) {
         calculateStudentAcumulatedEnrollments(executionPeriod);
         return initAcumulatedEnrollments((List) CollectionUtils.select(getEnrolments(), new Predicate() {
             public boolean evaluate(Object arg0) {
@@ -414,7 +423,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         for (int i = 0; i < commonAreasSize; i++) {
             Branch area = (Branch) commonAreas.get(i);
-            curricularCoursesFromCommonBranches.addAll(getDegreeCurricularPlan().getCurricularCoursesFromArea(area, AreaType.BASE));
+            curricularCoursesFromCommonBranches.addAll(getDegreeCurricularPlan()
+                    .getCurricularCoursesFromArea(area, AreaType.BASE));
         }
         if (!curricularCoursesFromCommonBranches.contains(curricularCourse)) {
 
@@ -530,15 +540,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             for (int i = 0; i < size; i++) {
                 try {
                     Enrolment enrollment = (Enrolment) elements.get(i);
-                    enrollment.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(enrollment.getCurricularCourse()));
+                    enrollment.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(enrollment
+                            .getCurricularCourse()));
                     result.add(enrollment);
                 } catch (ClassCastException e) {
-                    //FIXME shouldn't this be done in a clearer way?...
-                    
-                    CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) elements.get(i);
-                    curricularCourse2Enroll.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(curricularCourse2Enroll.getCurricularCourse()));
+                    // FIXME shouldn't this be done in a clearer way?...
+
+                    CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) elements
+                            .get(i);
+                    curricularCourse2Enroll
+                            .setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(curricularCourse2Enroll
+                                    .getCurricularCourse()));
                     result.add(curricularCourse2Enroll);
-                    //FIXME is this correct? adding a CurricularCourse2Enroll to a list of Enrolments?
+                    // FIXME is this correct? adding a CurricularCourse2Enroll
+                    // to a list of Enrolments?
                 }
             }
 
@@ -557,7 +572,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             sameCompetenceCurricularCourses.add(curricularCourse);
         } else {
             sameCompetenceCurricularCourses = new ArrayList<CurricularCourse>();
-            for (CurricularCourse course : curricularCourse.getCompetenceCourse().getAssociatedCurricularCourses()) {
+            for (CurricularCourse course : curricularCourse.getCompetenceCourse()
+                    .getAssociatedCurricularCourses()) {
                 if (course.getCurricularStage().equals(CurricularStage.OLD)) {
                     sameCompetenceCurricularCourses.add(course);
                 }
@@ -595,7 +611,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 curricularCourse2.getCurricularCourseUniqueKeyForEnrollment());
     }
 
-    protected boolean isThisCurricularCoursesInTheList(final CurricularCourse curricularCourse, List<CurricularCourse> curricularCourses) {
+    protected boolean isThisCurricularCoursesInTheList(final CurricularCourse curricularCourse,
+            List<CurricularCourse> curricularCourses) {
         /*
          * CurricularCourse curricularCourseFound = (CurricularCourse)
          * CollectionUtils.find( curricularCourses, new Predicate() { public
@@ -639,9 +656,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             }
         });
     }
-    
+
     public int getNumberOfStudentEnrollmentsWithApprovedState() {
-        
+
         return CollectionUtils.countMatches(getAllEnrollments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 Enrolment enrollment = (Enrolment) obj;
@@ -653,7 +670,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public int getNumberOfStudentEnrollments() {
         return getAllEnrollments().size();
     }
-    
+
     protected List getStudentEnrollmentsWithEnrolledState() {
 
         return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
@@ -666,34 +683,36 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     protected List getAllEnrollmentsExceptTheOnesWithEnrolledState(final ExecutionPeriod executionPeriod) {
-    	final ExecutionPeriod actualExecutionCourse = getActualExecutionPeriod(executionPeriod);
+        final ExecutionPeriod actualExecutionCourse = getActualExecutionPeriod(executionPeriod);
         return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 Enrolment enrollment = (Enrolment) obj;
-                return !enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED) && !(enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED) && enrollment.getExecutionPeriod().equals(actualExecutionCourse)); 
+                return !enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)
+                        && !(enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED) && enrollment
+                                .getExecutionPeriod().equals(actualExecutionCourse));
             }
         });
     }
 
-	private ExecutionPeriod getActualExecutionPeriod(ExecutionPeriod executionPeriod) {
-		ExecutionPeriod executionPeriodAux = executionPeriod;
-		while(executionPeriodAux != null) {
-			if(executionPeriodAux.getState().equals(PeriodState.CURRENT)) {
-				return executionPeriodAux;
-			}
-			executionPeriodAux = executionPeriodAux.getNextExecutionPeriod();
-		}
-		executionPeriodAux = executionPeriod;
-		while(executionPeriodAux != null) {
-			if(executionPeriodAux.getState().equals(PeriodState.CURRENT)) {
-				return executionPeriodAux;
-			}
-			executionPeriodAux = executionPeriodAux.getPreviousExecutionPeriod();
-		}
-		return null;
-	}
+    private ExecutionPeriod getActualExecutionPeriod(ExecutionPeriod executionPeriod) {
+        ExecutionPeriod executionPeriodAux = executionPeriod;
+        while (executionPeriodAux != null) {
+            if (executionPeriodAux.getState().equals(PeriodState.CURRENT)) {
+                return executionPeriodAux;
+            }
+            executionPeriodAux = executionPeriodAux.getNextExecutionPeriod();
+        }
+        executionPeriodAux = executionPeriod;
+        while (executionPeriodAux != null) {
+            if (executionPeriodAux.getState().equals(PeriodState.CURRENT)) {
+                return executionPeriodAux;
+            }
+            executionPeriodAux = executionPeriodAux.getPreviousExecutionPeriod();
+        }
+        return null;
+    }
 
-	protected Map getAcumulatedEnrollmentsMap() {
+    protected Map getAcumulatedEnrollmentsMap() {
         return acumulatedEnrollments;
     }
 
@@ -706,15 +725,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     protected List<CurricularCourse> getStudentNotNeedToEnrollCurricularCourses() {
-        return (List<CurricularCourse>) CollectionUtils.collect(getNotNeedToEnrollCurricularCourses(), new Transformer() {
-            public Object transform(Object obj) {
-                NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) obj;
-                return notNeedToEnrollInCurricularCourse.getCurricularCourse();
-            }
-        });
+        return (List<CurricularCourse>) CollectionUtils.collect(getNotNeedToEnrollCurricularCourses(),
+                new Transformer() {
+                    public Object transform(Object obj) {
+                        NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) obj;
+                        return notNeedToEnrollInCurricularCourse.getCurricularCourse();
+                    }
+                });
     }
 
-    protected List<CurricularCourse2Enroll> getCommonBranchAndStudentBranchesCourses(ExecutionPeriod executionPeriod) {
+    protected List<CurricularCourse2Enroll> getCommonBranchAndStudentBranchesCourses(
+            ExecutionPeriod executionPeriod) {
         Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         List commonAreas = degreeCurricularPlan.getCommonAreas();
@@ -722,20 +743,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         for (int i = 0; i < commonAreasSize; i++) {
             Branch area = (Branch) commonAreas.get(i);
-            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(area, AreaType.BASE));
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(area,
+                    AreaType.BASE));
         }
 
         if (getBranch() != null) {
-            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getBranch(), AreaType.SPECIALIZATION));
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getBranch(),
+                    AreaType.SPECIALIZATION));
         }
 
         if (getSecundaryBranch() != null) {
-            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getSecundaryBranch(), AreaType.SECONDARY));
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(
+                    getSecundaryBranch(), AreaType.SECONDARY));
         }
 
         curricularCourses.addAll(degreeCurricularPlan.getTFCs());
 
-        List<CurricularCourse> allCurricularCourses = new ArrayList<CurricularCourse>(curricularCourses.size());
+        List<CurricularCourse> allCurricularCourses = new ArrayList<CurricularCourse>(curricularCourses
+                .size());
         allCurricularCourses.addAll(curricularCourses);
 
         List<CurricularCourse2Enroll> result = new ArrayList<CurricularCourse2Enroll>();
@@ -817,8 +842,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     protected void selectOptionalCoursesToBeRemoved(List<CurricularCourse> curricularCoursesToRemove,
-            List<CurricularCourse> curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup,
-            ExecutionPeriod executionPeriod) {
+            List<CurricularCourse> curricularCoursesToKeep,
+            CurricularCourseGroup optionalCurricularCourseGroup, ExecutionPeriod executionPeriod) {
         int count = 0;
 
         int size2 = optionalCurricularCourseGroup.getCurricularCourses().size();
@@ -887,8 +912,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
 
     public StudentCurricularPlan(Student student, DegreeCurricularPlan degreeCurricularPlan,
-            Branch branch, Date startDate, StudentCurricularPlanState currentState,
-            Double givenCredits, Specialization specialization) {
+            Branch branch, Date startDate, StudentCurricularPlanState currentState, Double givenCredits,
+            Specialization specialization) {
 
         this(student, degreeCurricularPlan, currentState, startDate);
 
@@ -1075,7 +1100,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         return results;
     }
-    
+
     public int countEnrolmentsByCurricularCourse(final CurricularCourse curricularCourse) {
         int count = 0;
         for (Enrolment enrolment : this.getEnrolments()) {
@@ -1085,24 +1110,53 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
         return count;
     }
-    
-    public List<Enrolment> getEnrolmentsByState(EnrollmentState state){
-    	List<Enrolment> results = new ArrayList<Enrolment>();
-    	for (Enrolment enrolment : this.getEnrolments()) {
+
+    public List<Enrolment> getEnrolmentsByState(EnrollmentState state) {
+        List<Enrolment> results = new ArrayList<Enrolment>();
+        for (Enrolment enrolment : this.getEnrolments()) {
             if (enrolment.getEnrollmentState().equals(state)) {
                 results.add(enrolment);
             }
         }
-    	return results;
+        return results;
     }
-    
-    public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionPeriod executionPeriod){
-    	List<Enrolment> results = new ArrayList<Enrolment>();
-    	for (Enrolment enrolment : this.getEnrolments()) {
+
+    public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+        List<Enrolment> results = new ArrayList<Enrolment>();
+        for (Enrolment enrolment : this.getEnrolments()) {
             if (enrolment.getExecutionPeriod().equals(executionPeriod)) {
                 results.add(enrolment);
             }
         }
-    	return results;
+        return results;
+    }
+
+    public MasterDegreeProofVersion readActiveMasterDegreeProofVersion() {
+        MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
+        if (masterDegreeThesis != null) {
+            for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis
+                    .getMasterDegreeProofVersions()) {
+                if (masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
+                    return masterDegreeProofVersion;
+                }
+            }
+        }
+        return null;
+    }
+
+    public List<MasterDegreeProofVersion> readNotActiveMasterDegreeProofVersion() {
+        MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
+        List<MasterDegreeProofVersion> masterDegreeProofVersions = new ArrayList<MasterDegreeProofVersion>();
+        if (masterDegreeThesis != null) {
+            for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis
+                    .getMasterDegreeProofVersions()) {
+                if (!masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
+                    masterDegreeProofVersions.add(masterDegreeProofVersion);
+                }
+            }
+        }
+        Collections.sort(masterDegreeProofVersions, new ReverseComparator(
+                MasterDegreeProofVersion.LAST_MODIFICATION_COMPARATOR));
+        return masterDegreeProofVersions;
     }
 }

@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 
 public class DeleteGrantContract extends DeleteDomainObjectService {
 
@@ -24,7 +23,8 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
         return persistentSupport.getIPersistentGrantContract();
     }
 
-    protected void doBeforeDelete(DomainObject domainObject, ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
+    protected void doBeforeDelete(DomainObject domainObject, ISuportePersistente persistentSupport)
+            throws ExcepcaoPersistencia {
         GrantContract grantContract = (GrantContract) domainObject;
 
         deleteAssociatedOrientationTeacher(grantContract);
@@ -34,9 +34,10 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
         deleteAssociatedInsurance(grantContract);
     }
 
-    private void deleteAssociatedOrientationTeacher(GrantContract grantContract) throws ExcepcaoPersistencia {
-        IPersistentGrantOrientationTeacher pgot = persistentSupport.getIPersistentGrantOrientationTeacher();
-        GrantOrientationTeacher grantOrientationTeacher = pgot.readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(), Integer.valueOf(0));
+    private void deleteAssociatedOrientationTeacher(GrantContract grantContract)
+            throws ExcepcaoPersistencia {
+        GrantOrientationTeacher grantOrientationTeacher = grantContract
+                .readActualGrantOrientationTeacher();
         if (grantOrientationTeacher != null)
             grantOrientationTeacher.delete();
     }
@@ -47,19 +48,21 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
         }
     }
 
-    private void deleteAssociatedSubsidiesAndParts(GrantContract grantContract) throws ExcepcaoPersistencia {
+    private void deleteAssociatedSubsidiesAndParts(GrantContract grantContract)
+            throws ExcepcaoPersistencia {
         for (GrantSubsidy grantSubsidy : grantContract.getAssociatedGrantSubsidies()) {
             grantSubsidy.delete();
         }
     }
 
     private void deleteAssociatedMovements(GrantContract grantContract) throws ExcepcaoPersistencia {
-        for (GrantContractMovement grantContractMovement : grantContract.getAssociatedGrantContractMovements()) {
+        for (GrantContractMovement grantContractMovement : grantContract
+                .getAssociatedGrantContractMovements()) {
             grantContractMovement.delete();
         }
     }
 
-    private void deleteAssociatedRegimes(GrantContract grantContract) throws ExcepcaoPersistencia {        
+    private void deleteAssociatedRegimes(GrantContract grantContract) throws ExcepcaoPersistencia {
         List<GrantContractRegime> regimesList = grantContract.readGrantContractRegimeByGrantContract();
         if (regimesList != null) {
             for (GrantContractRegime grantContractRegime : regimesList) {
@@ -67,10 +70,10 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
             }
         }
     }
-	
-	protected void deleteDomainObject(DomainObject domainObject) throws ExcepcaoPersistencia {
+
+    protected void deleteDomainObject(DomainObject domainObject) throws ExcepcaoPersistencia {
         GrantContract grantContract = (GrantContract) domainObject;
         grantContract.delete();
-	}
+    }
 
 }

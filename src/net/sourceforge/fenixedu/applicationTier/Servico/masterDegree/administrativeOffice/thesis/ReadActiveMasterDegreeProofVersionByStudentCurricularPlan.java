@@ -23,7 +23,8 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan extends S
     public InfoMasterDegreeProofVersion run(Integer studentCurricularPlanID)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject
+                .readStudentCurricularPlanByOID(studentCurricularPlanID);
 
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
                 .getInstance();
@@ -34,8 +35,8 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan extends S
             throw new ScholarshipNotFinishedServiceException(
                     "error.exception.masterDegree.scholarshipNotFinished");
 
-        MasterDegreeProofVersion masterDegreeProofVersion = persistentSupport.getIPersistentMasterDegreeProofVersion()
-                .readActiveByStudentCurricularPlan(studentCurricularPlan);
+        MasterDegreeProofVersion masterDegreeProofVersion = studentCurricularPlan
+                .readActiveMasterDegreeProofVersion();
 
         if (masterDegreeProofVersion == null)
             throw new NonExistingServiceException(
@@ -44,5 +45,5 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan extends S
         return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
 
     }
-    
+
 }

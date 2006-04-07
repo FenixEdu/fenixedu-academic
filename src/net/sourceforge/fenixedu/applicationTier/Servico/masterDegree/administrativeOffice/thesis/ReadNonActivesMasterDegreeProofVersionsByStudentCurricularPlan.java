@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -22,8 +23,11 @@ public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan exte
 
     public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException,
             ExcepcaoPersistencia {
-        List masterDegreeProofVersions = persistentSupport.getIPersistentMasterDegreeProofVersion()
-                .readNotActiveByStudentCurricularPlan(infoStudentCurricularPlan.getIdInternal());
+
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject
+                .readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
+        
+        List masterDegreeProofVersions = studentCurricularPlan.readNotActiveMasterDegreeProofVersion();
 
         CollectionUtils.transform(masterDegreeProofVersions, new Transformer() {
 

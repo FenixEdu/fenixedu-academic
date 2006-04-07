@@ -50,4 +50,10 @@ public class GrantContract extends GrantContract_Base {
                 GrantContractRegime.BEGIN_DATE_CONTRACT_COMPARATOR));
         return grantContractRegimes;
     }
+
+    public GrantOrientationTeacher readActualGrantOrientationTeacher() {
+        return (!this.getGrantOrientationTeachers().isEmpty()) ? Collections.max(this
+                .getGrantOrientationTeachers(), GrantOrientationTeacher.BEGIN_DATE_COMPARATOR) : null;
+
+    }
 }

@@ -4,8 +4,11 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.util.State;
@@ -16,16 +19,19 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 
+    final static Comparator<MasterDegreeProofVersion> LAST_MODIFICATION_COMPARATOR = new BeanComparator(
+            "lastModification");
+
     public MasterDegreeProofVersion() {
-    	super();
-    	setRootDomainObject(RootDomainObject.getInstance());
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public MasterDegreeProofVersion(MasterDegreeThesis masterDegreeThesis,
-            Employee responsibleEmployee, Date lastModification, Date proofDate,
-            Date thesisDeliveryDate, MasterDegreeClassification finalResult,
-            Integer attachedCopiesNumber, State currentState, List juries, List externalJuries) {
-    	this();
+    public MasterDegreeProofVersion(MasterDegreeThesis masterDegreeThesis, Employee responsibleEmployee,
+            Date lastModification, Date proofDate, Date thesisDeliveryDate,
+            MasterDegreeClassification finalResult, Integer attachedCopiesNumber, State currentState,
+            List juries, List externalJuries) {
+        this();
         this.setMasterDegreeThesis(masterDegreeThesis);
         this.setResponsibleEmployee(responsibleEmployee);
         this.setLastModification(lastModification);

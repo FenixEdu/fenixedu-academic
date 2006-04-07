@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 
 /**
  * @author Barbosa
@@ -31,11 +30,9 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientatio
 public class ReadAllContractsByGrantOwner extends Service {
 
     public List run(Integer grantOwnerId) throws FenixServiceException, ExcepcaoPersistencia {
-        List contracts = null;
-        IPersistentGrantOrientationTeacher pgot = null;
 
+        List contracts = null;
         IPersistentGrantContract pgc = persistentSupport.getIPersistentGrantContract();
-        pgot = persistentSupport.getIPersistentGrantOrientationTeacher();        
         contracts = pgc.readAllContractsByGrantOwner(grantOwnerId);
 
         if (contracts == null) {
@@ -52,9 +49,8 @@ public class ReadAllContractsByGrantOwner extends Service {
                     .newInfoFromDomain(grantContract);
 
             // get the GrantOrientationTeacher for each contract
-            GrantOrientationTeacher orientationTeacher = pgot
-                    .readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(),
-                            new Integer(0));
+            GrantOrientationTeacher orientationTeacher = grantContract
+                    .readActualGrantOrientationTeacher();
             InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
                     .newInfoFromDomain(orientationTeacher);
             infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);

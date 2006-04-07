@@ -37,8 +37,7 @@ public class Student extends Student_Base {
     private transient Integer approvedEnrollmentsNumber = 0;
 
     final static Comparator<Student> NUMBER_COMPARATOR = new BeanComparator("number");;
-    
-       
+
     public Student() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
@@ -341,18 +340,20 @@ public class Student extends Student_Base {
         }
         return result;
     }
-    
-    public List<DistributedTest> getDistributedTestsByExecutionCourse(ExecutionCourse executionCourse){
-    	Set<DistributedTest> result = new HashSet<DistributedTest>();
-    	for (StudentTestQuestion studentTestQuestion : this.getStudentTestsQuestions()) {
-			if(studentTestQuestion.getDistributedTest().getTestScope().getClassName().equals(ExecutionCourse.class.getName())
-					&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(executionCourse.getIdInternal())){
-				result.add(studentTestQuestion.getDistributedTest());
-			}
-		}
-    	return new ArrayList<DistributedTest>(result);
+
+    public List<DistributedTest> getDistributedTestsByExecutionCourse(ExecutionCourse executionCourse) {
+        Set<DistributedTest> result = new HashSet<DistributedTest>();
+        for (StudentTestQuestion studentTestQuestion : this.getStudentTestsQuestions()) {
+            if (studentTestQuestion.getDistributedTest().getTestScope().getClassName().equals(
+                    ExecutionCourse.class.getName())
+                    && studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
+                            executionCourse.getIdInternal())) {
+                result.add(studentTestQuestion.getDistributedTest());
+            }
+        }
+        return new ArrayList<DistributedTest>(result);
     }
-    
+
     public List<Attends> readAttendsInCurrentExecutionPeriod() {
         List<Attends> attends = new ArrayList<Attends>();
         for (Attends attend : this.getAssociatedAttends()) {
@@ -408,7 +409,7 @@ public class Student extends Student_Base {
         final List<Student> students = new ArrayList();
         final String studentNameToMatch = (studentName == null) ? null : studentName.replaceAll("%",
                 ".*").toLowerCase();
-        
+
         for (Student student : RootDomainObject.getInstance().getStudents()) {
             Person person = student.getPerson();
             if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)
@@ -466,5 +467,5 @@ public class Student extends Student_Base {
         }
 
         return Integer.valueOf(number.intValue() + 1);
-    } 
+    }
 }

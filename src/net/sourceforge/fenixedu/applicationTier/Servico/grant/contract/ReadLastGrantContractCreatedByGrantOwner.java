@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 
 /**
  * @author Barbosa
@@ -22,41 +21,37 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientatio
  */
 public class ReadLastGrantContractCreatedByGrantOwner extends Service {
 
-	public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException,
-			ExcepcaoPersistencia {
-		Integer grantContractNumber = null;
-		GrantContract grantContract = null;
-		GrantOrientationTeacher grantOrientationTeacher = null;
-		IPersistentGrantContract persistentGrantContract = null;
-		IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = null;
+    public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        Integer grantContractNumber = null;
+        GrantContract grantContract = null;
+        GrantOrientationTeacher grantOrientationTeacher = null;
+        IPersistentGrantContract persistentGrantContract = null;
 
-		persistentGrantContract = persistentSupport.getIPersistentGrantContract();
-		persistentGrantOrientationTeacher = persistentSupport.getIPersistentGrantOrientationTeacher();
+        persistentGrantContract = persistentSupport.getIPersistentGrantContract();
 
-		// set the contract number!
-		grantContractNumber = persistentGrantContract
-				.readMaxGrantContractNumberByGrantOwner(grantOwnerId);
-		grantContract = persistentGrantContract.readGrantContractByNumberAndGrantOwner(
-				grantContractNumber, grantOwnerId);
+        // set the contract number!
+        grantContractNumber = persistentGrantContract
+                .readMaxGrantContractNumberByGrantOwner(grantOwnerId);
+        grantContract = persistentGrantContract.readGrantContractByNumberAndGrantOwner(
+                grantContractNumber, grantOwnerId);
 
-		if (grantContract == null) {
-			return new InfoGrantContract();
-		}
+        if (grantContract == null) {
+            return new InfoGrantContract();
+        }
 
-		grantOrientationTeacher = persistentGrantOrientationTeacher
-				.readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(), new Integer(
-						0));
-		if (grantOrientationTeacher == null) {
-			throw new FenixServiceException();
-		}
+        grantOrientationTeacher = grantContract.readActualGrantOrientationTeacher();
+        if (grantOrientationTeacher == null) {
+            throw new FenixServiceException();
+        }
 
-		InfoGrantContract infoGrantContract = null;
+        InfoGrantContract infoGrantContract = null;
 
-		infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantContract);
-		infoGrantContract
-				.setGrantOrientationTeacherInfo(InfoGrantOrientationTeacherWithTeacherAndGrantContract
-						.newInfoFromDomain(grantOrientationTeacher));
+        infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantContract);
+        infoGrantContract
+                .setGrantOrientationTeacherInfo(InfoGrantOrientationTeacherWithTeacherAndGrantContract
+                        .newInfoFromDomain(grantOrientationTeacher));
 
-		return infoGrantContract;
-	}
+        return infoGrantContract;
+    }
 }

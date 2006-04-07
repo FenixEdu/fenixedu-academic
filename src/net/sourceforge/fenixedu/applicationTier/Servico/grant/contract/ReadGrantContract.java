@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 
 /**
  * @author Barbosa
@@ -24,28 +23,27 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientatio
  */
 public class ReadGrantContract extends ReadDomainObjectService {
 
-	protected InfoObject newInfoFromDomain(DomainObject domainObject) {
-		return InfoGrantContractWithGrantOwnerAndGrantType
-				.newInfoFromDomain((GrantContract) domainObject);
-	}
+    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+        return InfoGrantContractWithGrantOwnerAndGrantType
+                .newInfoFromDomain((GrantContract) domainObject);
+    }
 
-	protected Class getDomainObjectClass() {
-		return GrantContract.class;
-	}
+    protected Class getDomainObjectClass() {
+        return GrantContract.class;
+    }
 
-	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentGrantOrientationTeacher pgot = persistentSupport.getIPersistentGrantOrientationTeacher();
+    public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
 
-		InfoGrantContract infoGrantContract = (InfoGrantContract) super.run(objectId);
+        GrantContract grantContract = rootDomainObject.readGrantContractByOID(objectId);
+        InfoGrantContract infoGrantContract = (InfoGrantContract) newInfoFromDomain(grantContract);
 
-		// get the GrantOrientationTeacher for the contract
-		GrantOrientationTeacher orientationTeacher = pgot.readActualGrantOrientationTeacherByContract(
-				infoGrantContract.getIdInternal(), new Integer(0));
-		InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
-				.newInfoFromDomain(orientationTeacher);
-		infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
+        // get the GrantOrientationTeacher for the contract
+        GrantOrientationTeacher orientationTeacher = grantContract.readActualGrantOrientationTeacher();
+        InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
+                .newInfoFromDomain(orientationTeacher);
+        infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
 
-		return infoGrantContract;
-	}
+        return infoGrantContract;
+    }
 
 }

@@ -1229,7 +1229,6 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantContract extends net.s
 	Integer contractNumber;
 	Date dateAcceptTerm;
 	Integer keyGrantType;
-	Integer keyGrantOrientationTeacher;
 	Integer keyGrantInsurance;
 }
 
@@ -4111,7 +4110,9 @@ relation GrantInsuranceGrantPaymentEntity {
 
 
 relation GrantOrientationTeacherGrantContract {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher playsRole grantOrientationTeacher;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher playsRole grantOrientationTeachers {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
 }
 
