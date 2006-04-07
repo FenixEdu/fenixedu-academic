@@ -70,7 +70,12 @@ public class MultiLanguageStringRenderer extends StringRenderer {
             return component;
         }
 
+        if (mlString.getAllLanguages().isEmpty()) {
+            return component;
+        }
+
         HtmlInlineContainer container = new HtmlInlineContainer();
+
         HtmlComponent languageComponent = renderValue(mlString.getContentLanguage(), null, null);
         
         container.addChild(component);

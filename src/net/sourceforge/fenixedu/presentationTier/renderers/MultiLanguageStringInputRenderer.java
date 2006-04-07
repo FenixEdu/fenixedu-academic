@@ -187,7 +187,7 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
                     return allLanguageBeans;
                 }
                 
-                if (index < value.length() && value.charAt(index + 1) == '/') {
+                if (index < value.length() - 1 && value.charAt(index + 1) == '/') {
                     lastIndex = index + 2;
                     continue;
                 }
@@ -273,6 +273,8 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
             
             Map<Integer, LanguageBean> map = getLanguageMap(false);
             if (map == null && mls != null) {
+                map = getLanguageMap(true);
+                
                 int index = 0;
                 for (Language language : mls.getAllLanguages()) {
                     map.put(index++, new LanguageBean(language, mls.getContent(language)));

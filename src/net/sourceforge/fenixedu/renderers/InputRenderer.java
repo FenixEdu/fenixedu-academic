@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.contexts.InputContext;
@@ -36,7 +37,12 @@ public abstract class InputRenderer extends Renderer {
             List<HtmlComponent> children = component.getChildren(new Predicate() {
 
                 public boolean evaluate(Object component) {
-                    return component instanceof HtmlSimpleValueComponent;
+                    if (! (component instanceof HtmlFormComponent)) {
+                        return false;
+                    }
+                    
+                    HtmlFormComponent formComponent = (HtmlFormComponent) component;
+                    return formComponent.hasTargetSlot();
                 }
 
             });

@@ -171,17 +171,24 @@ public class ComponentLifeCycle {
     }
     
     private ViewDestination getDestination(IViewState viewState) {
-        ViewDestination destination = viewState.getCurrentDestination();
+        ViewDestination destination;
         
-        if (destination == null) {
-            // TODO: remove hardcoded?
-            destination = viewState.getDestination(viewState.isValid() ? "success" : "invalid");
-        }
-        
-        if (destination == null && !viewState.isValid()) {
+        if (viewState.skipUpdate()) {
             destination = viewState.getInputDestination();
         }
+        else {
+            destination = viewState.getCurrentDestination();
         
+            if (destination == null) {
+                // TODO: remove hardcoded?
+                destination = viewState.getDestination(viewState.isValid() ? "success" : "invalid");
+            }
+            
+            if (destination == null && !viewState.isValid()) {
+                destination = viewState.getInputDestination();
+            }
+        }        
+
         return destination;
     }
 

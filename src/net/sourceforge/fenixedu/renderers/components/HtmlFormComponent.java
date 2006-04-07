@@ -81,7 +81,7 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
     }
 
     public boolean hasTargetSlot() {
-        return this.slotKey == null;
+        return this.slotKey != null;
     }
 
     public void setTargetSlot(MetaSlotKey key) {

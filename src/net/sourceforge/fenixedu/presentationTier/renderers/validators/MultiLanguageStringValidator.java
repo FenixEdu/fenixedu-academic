@@ -30,16 +30,18 @@ public class MultiLanguageStringValidator extends HtmlValidator {
         List<Language> languages = new ArrayList<Language>();
         
         for (LanguageBean bean : beans) {
-            if (bean.language == null) {
-                hasNullLanguage = true;
+            // only consider fields not empty
+            if (bean.value != null && bean.value.trim().length() > 0) {
+                if (bean.language == null) {
+                    hasNullLanguage = true;
+                }
+                else if (languages.contains(bean.language)){
+                    hasRepeatedLanguage = true;
+                }
+                else {
+                    languages.add(bean.language);
+                }
             }
-            else if (languages.contains(bean.language)){
-                hasRepeatedLanguage = true;
-            }
-            else {
-                languages.add(bean.language);
-            }
-            
         }
         
         if (hasRepeatedLanguage) {
