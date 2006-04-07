@@ -15,23 +15,20 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt"> João Mota </a> 29/Nov/2003
@@ -64,7 +61,7 @@ public class MergeExecutionCourses extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        if (!isMergeAllowed(persistentSupport, executionCourseFrom, executionCourseTo)) {
+        if (!isMergeAllowed(executionCourseFrom, executionCourseTo)) {
             throw new InvalidArgumentsServiceException();
         }
 
@@ -73,19 +70,19 @@ public class MergeExecutionCourses extends Service {
         }
 
         copyShifts(executionCourseFrom, executionCourseTo);
-        copyProfessorships(persistentSupport, executionCourseFrom, executionCourseTo);
+        copyProfessorships(executionCourseFrom, executionCourseTo);
         copyAttends(executionCourseFrom, executionCourseTo);
-        copyBibliographicReference(persistentSupport, executionCourseFrom, executionCourseTo);
+        copyBibliographicReference(executionCourseFrom, executionCourseTo);
         if (executionCourseFrom.getEvaluationMethod() != null) {
             executionCourseFrom.getEvaluationMethod().delete();
         }
         if (executionCourseFrom.getCourseReport() != null) {
             executionCourseFrom.getCourseReport().delete();
         }
-        copySummaries(persistentSupport, executionCourseFrom, executionCourseTo);
+        copySummaries(executionCourseFrom, executionCourseTo);
         copyGroupPropertiesExecutionCourse(executionCourseFrom, executionCourseTo);
-        copySite(persistentSupport, executionCourseFrom, executionCourseTo);
-        removeEvaluations(persistentSupport, executionCourseFrom, executionCourseTo);
+        copySite(executionCourseFrom, executionCourseTo);
+        removeEvaluations(executionCourseFrom, executionCourseTo);
 
         executionCourseTo.getAssociatedCurricularCourses().addAll(executionCourseFrom.getAssociatedCurricularCourses());
 
@@ -105,14 +102,11 @@ public class MergeExecutionCourses extends Service {
         return false;
     }
 
-    private boolean isMergeAllowed(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
+    private boolean isMergeAllowed(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
 
         boolean distributedTestAuthorization = false;
 
-        IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
-
-        List metadatas = persistentMetadata.readByExecutionCourse(executionCourseFrom);
+        List<Metadata> metadatas = executionCourseFrom.getMetadatas();
         List<DistributedTest> distributedTests = TestScope.readDistributedTestsByTestScope(executionCourseFrom
                     .getClass(), executionCourseFrom.getIdInternal()); 
         distributedTestAuthorization = (metadatas == null || metadatas.isEmpty())
@@ -125,10 +119,8 @@ public class MergeExecutionCourses extends Service {
                 && executionCourseFrom != executionCourseTo && distributedTestAuthorization;
     }
 
-    private void copySummaries(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
-            throws ExcepcaoPersistencia {
-        final List<Summary> associatedSummaries = new ArrayList();
+    private void copySummaries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+        final List<Summary> associatedSummaries = new ArrayList<Summary>();
         associatedSummaries.addAll(executionCourseFrom.getAssociatedSummaries());
         for (final Summary summary : associatedSummaries) {
             summary.setExecutionCourse(executionCourseTo);
@@ -136,8 +128,8 @@ public class MergeExecutionCourses extends Service {
     }
 
     private void copyGroupPropertiesExecutionCourse(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
-        final List<ExportGrouping> associatedGroupPropertiesExecutionCourse = new ArrayList();
+            final ExecutionCourse executionCourseTo) {
+        final List<ExportGrouping> associatedGroupPropertiesExecutionCourse = new ArrayList<ExportGrouping>();
         associatedGroupPropertiesExecutionCourse.addAll(executionCourseFrom
                 .getExportGroupings());
 
@@ -150,8 +142,7 @@ public class MergeExecutionCourses extends Service {
         }
     }
 
-    private void removeEvaluations(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
+    private void removeEvaluations(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws ExcepcaoPersistencia, FenixServiceException {
         while (!executionCourseFrom.getAssociatedEvaluations().isEmpty()) {
             final Evaluation evaluation = executionCourseFrom.getAssociatedEvaluations().get(0);
@@ -169,16 +160,13 @@ public class MergeExecutionCourses extends Service {
         }
     }
 
-    private void copyBibliographicReference(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
-            throws ExcepcaoPersistencia {
+    private void copyBibliographicReference(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getAssociatedBibliographicReferences().isEmpty();
             executionCourseTo.getAssociatedBibliographicReferences().add(executionCourseFrom.getAssociatedBibliographicReferences().get(0)));
     }
 
-    private void copyShifts(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
-        final List<Shift> associatedShifts = new ArrayList(executionCourseFrom.getAssociatedShifts());
+    private void copyShifts(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+        final List<Shift> associatedShifts = new ArrayList<Shift>(executionCourseFrom.getAssociatedShifts());
         for (final Shift shift : associatedShifts) {
             shift.setDisciplinaExecucao(executionCourseTo);
         }
@@ -204,12 +192,12 @@ public class MergeExecutionCourses extends Service {
         }
 
         final Iterator associatedAttendsFromDestination = executionCourseTo.getAttendsIterator();
-        final Map alreadyAttendingDestination = new HashMap();
+        final Map<String,Attends> alreadyAttendingDestination = new HashMap<String,Attends>();
         while (associatedAttendsFromDestination.hasNext()) {
             Attends attend = (Attends) associatedAttendsFromDestination.next();
             alreadyAttendingDestination.put(attend.getAluno().getNumber().toString(), attend);
         }
-        final List<Attends> associatedAttendsFromSource = new ArrayList();
+        final List<Attends> associatedAttendsFromSource = new ArrayList<Attends>();
         associatedAttendsFromSource.addAll(executionCourseFrom.getAttends());
         for (final Attends attend : associatedAttendsFromSource) {
             if (!alreadyAttendingDestination.containsKey(attend.getAluno().getNumber().toString())) {
@@ -218,47 +206,18 @@ public class MergeExecutionCourses extends Service {
         }
     }
 
-    private void copySite(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
-            throws ExcepcaoPersistencia {
-
-        final Site sourceSite = executionCourseFrom.getSite();
-        if (sourceSite != null) {
-            copySiteAnnouncements(executionCourseFrom.getSite(), executionCourseTo.getSite());
-            copySiteSections(executionCourseFrom.getSite(), executionCourseTo.getSite());
-
-            sourceSite.setExecutionCourse(null);
-            persistentObject.deleteByOID(Site.class, sourceSite.getIdInternal());
+    private void copySite(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+        final Site siteFrom = executionCourseFrom.getSite();
+        final Site siteTo = executionCourseTo.getSite();
+        
+        if (siteFrom != null) {
+            for (;!siteFrom.getAssociatedAnnouncements().isEmpty(); siteTo.addAssociatedAnnouncements(siteFrom.getAssociatedAnnouncements().get(0)));
+            for (;!siteFrom.getAssociatedSections().isEmpty(); siteTo.addAssociatedSections(siteFrom.getAssociatedSections().get(0)));
+            siteFrom.delete();
         }
     }
 
-    private void copySiteSections(final Site siteFrom, final Site siteTo) throws ExcepcaoPersistencia {
-        if (siteTo != null) {
-            final List<Section> associatedSections = new ArrayList();
-            associatedSections.addAll(siteFrom.getAssociatedSections());
-
-            for (final Section section : associatedSections) {
-                section.setSite(siteTo);
-            }
-        }
-    }
-
-    private void copySiteAnnouncements(final Site siteFrom, final Site siteTo)
-            throws ExcepcaoPersistencia {
-
-        if (siteTo != null) {
-            final List<Announcement> associatedAnnouncements = new ArrayList();
-            associatedAnnouncements.addAll(siteFrom.getAssociatedAnnouncements());
-
-            for (final Announcement announcement : associatedAnnouncements) {
-                announcement.setSite(siteTo);
-            }
-        }
-    }
-
-    private void copyProfessorships(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
-            throws ExcepcaoPersistencia {
+    private void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (;!executionCourseFrom.getProfessorships().isEmpty();) {
             final Professorship professorship = executionCourseFrom.getProfessorships().get(0);
             final Professorship otherProfessorship = findProfessorShip(executionCourseTo, professorship.getTeacher());
@@ -281,6 +240,5 @@ public class MergeExecutionCourses extends Service {
         }
         return null;
     }
-
 
 }

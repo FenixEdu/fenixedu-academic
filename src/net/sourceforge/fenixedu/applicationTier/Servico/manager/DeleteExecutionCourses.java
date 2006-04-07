@@ -8,14 +8,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
  * @author jdnf, mrsp and Luis Cruz
@@ -23,114 +17,19 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  */
 public class DeleteExecutionCourses extends Service {
 
-    public List run(final List executionCourseIDs) throws FenixServiceException, ExcepcaoPersistencia {
-
+    public List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException, ExcepcaoPersistencia {
         final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
 
-        for (final Integer executionCourseID : (List<Integer>) executionCourseIDs) {
+        for (final Integer executionCourseID : executionCourseIDs) {
             final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-            if (!deleteExecutionCourses(persistentSupport, executionCourse)) {
+            if (!executionCourse.canBeDeleted()) {
                 undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
+            } else {
+                executionCourse.delete();
             }
         }
         return undeletedExecutionCoursesCodes;
-    }
-
-    private boolean deleteExecutionCourses(final ISuportePersistente persistentSupport, final ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-
-        if (canBeDeleted(executionCourse)) {
-            executionCourse.setExecutionPeriod(null);
-            deleteProfessorships(persistentSupport, executionCourse);
-            dereferenceCurricularCourses(executionCourse);
-            deleteExecutionCourseProperties(persistentSupport, executionCourse);
-            deleteNonAffiliatedTeachers(executionCourse);
-            persistentObject.deleteByOID(ExecutionCourse.class, executionCourse.getIdInternal());
-            return true;
-        }
-        return false;
-    }
-
-    private void deleteNonAffiliatedTeachers(final ExecutionCourse executionCourse) {
-        final List<NonAffiliatedTeacher> nonAffiliatedTeachers = executionCourse
-                .getNonAffiliatedTeachers();
-        for (final NonAffiliatedTeacher nonAffiliatedTeacher : nonAffiliatedTeachers) {
-            nonAffiliatedTeacher.getExecutionCourses().remove(executionCourse);
-        }
-        nonAffiliatedTeachers.clear();
-    }
-
-    private void deleteExecutionCourseProperties(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        final List<ExecutionCourseProperty> executionCourseProperties = executionCourse
-                .getExecutionCourseProperties();
-        for (final ExecutionCourseProperty executionCourseProperty : executionCourseProperties) {
-            executionCourseProperty.setExecutionCourse(null);
-            persistentObject.deleteByOID(ExecutionCourseProperty.class, executionCourseProperty
-                    .getIdInternal());
-        }
-    }
-
-    private void dereferenceCurricularCourses(final ExecutionCourse executionCourse) {
-        final List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
-        curricularCourses.clear();
-    }
-
-    private void deleteProfessorships(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourse) throws ExcepcaoPersistencia {        
-        
-        final List<Professorship> professorships = executionCourse.getProfessorships();             
-        for(; !professorships.isEmpty(); professorships.get(0).delete());
-    }
-
-    private boolean canBeDeleted(ExecutionCourse executionCourse) {
-        if (!executionCourse.getAssociatedSummaries().isEmpty()) {
-            return false;
-        }
-        if (!executionCourse.getGroupings().isEmpty()) {
-            return false;
-        }
-        if (!executionCourse.getAssociatedBibliographicReferences().isEmpty()) {
-            return false;
-        }
-        if (!executionCourse.getAssociatedEvaluations().isEmpty()) {
-            return false;
-        }
-        if (!executionCourse.getAttends().isEmpty()) {
-            return false;
-        }
-        if (executionCourse.getEvaluationMethod() != null) {
-            return false;
-        }
-        if (!executionCourse.getAssociatedShifts().isEmpty()) {
-            return false;
-        }
-        if (executionCourse.getCourseReport() != null) {
-            return false;
-        }
-        final Site site = executionCourse.getSite();
-        if (site != null) {
-            if (!site.getAssociatedAnnouncements().isEmpty()) {
-                return false;
-            }
-            if (!site.getAssociatedSections().isEmpty()) {
-                return false;
-            }
-        }
-        final List<Professorship> professorships = executionCourse.getProfessorships();
-        for (final Professorship professorship : professorships) {
-            if (!professorship.getAssociatedShiftProfessorship().isEmpty()) {
-                return false;
-            }
-            if (!professorship.getAssociatedSummaries().isEmpty()) {
-                return false;
-            }
-            if (!professorship.getSupportLessons().isEmpty()) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
 }
