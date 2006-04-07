@@ -45,17 +45,27 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public void delete() {
-        if (hasAnyAssociatedSummaries() || hasAnyAssociatedShiftProfessorship()
-                || hasAnySupportLessons() || hasAnyDegreeTeachingServices()
-                || hasAnyTeacherMasterDegreeServices()) {
+        if (canBeDeleted()) {
+            this.removeExecutionCourse();
+            this.removeTeacher();
+            removeRootDomainObject();
+            super.deleteDomainObject();
+        } else {
             throw new DomainException("error.remove.professorship");
         }
-        this.removeExecutionCourse();
-        this.removeTeacher();
-        removeRootDomainObject();
-        super.deleteDomainObject();
     }
     
+    public boolean canBeDeleted() {
+        if (hasAnyAssociatedSummaries() 
+                || hasAnyAssociatedShiftProfessorship()
+                || hasAnySupportLessons() 
+                || hasAnyDegreeTeachingServices()
+                || hasAnyTeacherMasterDegreeServices()) {
+            return false;
+        }
+        return true;
+    }
+
     public boolean isResponsibleFor() {
         return getResponsibleFor().booleanValue();
     }
@@ -70,7 +80,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
                 professorships.addAll(executionCourse.getProfessorships());
             }
         }
-        return new ArrayList(professorships);
+        return new ArrayList<Professorship>(professorships);
     }
 
     public static List<Professorship> readByDegreeCurricularPlanAndExecutionYearAndBasic(
@@ -85,7 +95,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
                 }
             }
         }
-        return new ArrayList(professorships);
+        return new ArrayList<Professorship>(professorships);
     }
 
     public static List<Professorship> readByDegreeCurricularPlanAndExecutionPeriod(
@@ -98,7 +108,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
                 professorships.addAll(executionCourse.getProfessorships());
             }
         }
-        return new ArrayList(professorships);
+        return new ArrayList<Professorship>(professorships);
     }
 
     public static List<Professorship> readByDegreeCurricularPlansAndExecutionYearAndBasic(
@@ -122,7 +132,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
                 }
             }
         }
-        return new ArrayList(professorships);
+        return new ArrayList<Professorship>(professorships);
     }
 
     public static List<Professorship> readByDegreeCurricularPlansAndExecutionYear(
@@ -144,6 +154,6 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
                 }
             }
         }
-        return new ArrayList(professorships);
+        return new ArrayList<Professorship>(professorships);
     }
 }
