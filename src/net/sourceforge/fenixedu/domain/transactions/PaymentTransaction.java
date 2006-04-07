@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.transactions;
 
 import java.sql.Timestamp;
 
+import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
@@ -49,6 +50,15 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
 	}
 
     public void delete() {
+        if (this instanceof GratuityTransaction) {
+            GratuityTransaction gratuityTransaction = (GratuityTransaction) this;
+            gratuityTransaction.removeGratuitySituation();
+            
+            GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
+            double guideEntryValue = getGuideEntry().getPrice() * getGuideEntry().getQuantity();
+            gratuitySituation.setRemainingValue(gratuitySituation.getRemainingValue() + guideEntryValue);
+        }
+        
         removeGuideEntry();
         removeResponsiblePerson();
         removePersonAccount();
