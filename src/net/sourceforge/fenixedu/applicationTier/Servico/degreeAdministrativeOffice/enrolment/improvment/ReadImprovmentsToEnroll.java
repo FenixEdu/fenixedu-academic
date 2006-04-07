@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -15,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDeg
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoImprovmentEnrolmentContext;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -25,7 +27,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -248,19 +249,13 @@ public class ReadImprovmentsToEnroll extends Service {
         });
     }
 
-    private List removeNotInCurrentExecutionPeriod(List enrolments,
+    private List<Enrolment> removeNotInCurrentExecutionPeriod(List<Enrolment> enrolments,
             final ExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia {
-        IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
-                .getIPersistentCurricularCourseScope();
-        List res = new ArrayList();
-        Iterator iterator = enrolments.iterator();
-        while (iterator.hasNext()) {
-            Enrolment enrolment = (Enrolment) iterator.next();
-
-            List scopes = persistentCurricularCourseScope
-                    .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(enrolment
-                            .getCurricularCourse().getIdInternal(), currentExecutionPeriod
-                            .getBeginDate(), currentExecutionPeriod.getEndDate());
+        final List<Enrolment> res = new ArrayList<Enrolment>();
+        for (final Enrolment enrolment : enrolments) {
+            final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+            Set<CurricularCourseScope> scopes = curricularCourse.findCurricularCourseScopesIntersectingPeriod(
+                    currentExecutionPeriod.getBeginDate(), currentExecutionPeriod.getEndDate());
             if (scopes != null && !scopes.isEmpty()) {
                 CurricularCourseScope curricularCourseScope = (CurricularCourseScope) CollectionUtils
                         .find(scopes, new Predicate() {

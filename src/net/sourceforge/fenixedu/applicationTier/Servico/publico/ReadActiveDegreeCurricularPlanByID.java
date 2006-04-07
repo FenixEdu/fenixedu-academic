@@ -33,6 +33,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
         if (degreeCurricularPlanId == null) {
             throw new FenixServiceException("null degreeCurricularPlanId");
         }
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
         if (executionPeriodId == null) {
             return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
@@ -45,8 +46,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
         }
 
         return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
-                .readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlanId, executionPeriod
-                        .getExecutionYear()), locale);
+                .readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlan, executionPeriod .getExecutionYear()), locale);
     }
 
 

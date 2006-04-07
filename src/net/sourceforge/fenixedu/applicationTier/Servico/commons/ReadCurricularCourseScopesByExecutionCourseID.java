@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -24,35 +24,22 @@ public class ReadCurricularCourseScopesByExecutionCourseID extends Service {
 
     public List run(Integer executionCourseID) throws FenixServiceException, ExcepcaoPersistencia {
 
-        List infoCurricularCourses = new ArrayList();
+        final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
 
-        // Read The ExecutionCourse
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseID);
+        final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseID);
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+            final Set<CurricularCourseScope> curricularCourseScopes = curricularCourse.findCurricularCourseScopesIntersectingPeriod(
+                    executionPeriod.getBeginDate(), executionPeriod.getEndDate());
 
-        // For all associated Curricular Courses read the Scopes
-
-        infoCurricularCourses = new ArrayList();
-        Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
-        while (iterator.hasNext()) {
-            CurricularCourse curricularCourse = (CurricularCourse) iterator.next();
-
-            ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-            List curricularCourseScopes = persistentSupport.getIPersistentCurricularCourseScope()
-                    .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
-                            curricularCourse.getIdInternal(), executionPeriod.getBeginDate(),
-                            executionPeriod.getEndDate());
-
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
-                    .newInfoFromDomain(curricularCourse);
+            final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(
+                    curricularCourse);
             infoCurricularCourse.setInfoScopes(new ArrayList());
 
-            Iterator scopeIterator = curricularCourseScopes.iterator();
-            while (scopeIterator.hasNext()) {
-
+            for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
                 infoCurricularCourse.getInfoScopes().add(
-                        InfoCurricularCourseScopeWithBranchAndSemesterAndYear
-                                .newInfoFromDomain((CurricularCourseScope) scopeIterator.next()));
+                        InfoCurricularCourseScopeWithBranchAndSemesterAndYear.newInfoFromDomain(curricularCourseScope));
             }
             infoCurricularCourses.add(infoCurricularCourse);
         }

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gep;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -290,7 +291,7 @@ public class ReadCoursesInformation extends Service {
 
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                     .newInfoFromDomain(curricularCourse);
-            List infoScopes = getInfoScopes(curricularCourse.getScopes(), persistentSupport);
+            List infoScopes = getInfoScopes(curricularCourse.getScopesSet(), persistentSupport);
             infoCurricularCourse.setInfoScopes(infoScopes);
             Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionYear.getEndDate());
             InfoCurriculum infoCurriculum = null;
@@ -327,10 +328,8 @@ public class ReadCoursesInformation extends Service {
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
             CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-            List curricularCourseScopes = persistentSupport.getIPersistentCurricularCourseScope()
-                    .readCurricularCourseScopesByCurricularCourseInExecutionYear(
-                            curricularCourse.getIdInternal(), executionYear.getBeginDate(),
-                            executionYear.getEndDate());
+            Set<CurricularCourseScope> curricularCourseScopes = curricularCourse.findCurricularCourseScopesIntersectingPeriod(
+                    executionYear.getBeginDate(), executionYear.getEndDate());
             List infoScopes = getInfoScopes(curricularCourseScopes, persistentSupport);
 
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
@@ -341,7 +340,7 @@ public class ReadCoursesInformation extends Service {
         return infoCurricularCourses;
     }
 
-    private List getInfoScopes(List scopes, ISuportePersistente persistentSupport) {
+    private List getInfoScopes(Set<CurricularCourseScope> scopes, ISuportePersistente persistentSupport) {
         List infoScopes = new ArrayList();
         Iterator iter = scopes.iterator();
         while (iter.hasNext()) {

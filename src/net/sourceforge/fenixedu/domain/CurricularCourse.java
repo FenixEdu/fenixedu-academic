@@ -3,8 +3,10 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -22,6 +24,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -915,6 +918,16 @@ public class CurricularCourse extends CurricularCourse_Base {
 			}
 		}
     	return result;
+    }
+
+    public Set<CurricularCourseScope> findCurricularCourseScopesIntersectingPeriod(final Date beginDate, final Date endDate) {
+        final Set<CurricularCourseScope> curricularCourseScopes = new HashSet<CurricularCourseScope>();
+        for (final CurricularCourseScope curricularCourseScope : getScopesSet()) {
+            if (curricularCourseScope.intersects(beginDate, endDate)) {
+                curricularCourseScopes.add(curricularCourseScope);
+            }
+        }
+        return curricularCourseScopes;
     }
 
 }

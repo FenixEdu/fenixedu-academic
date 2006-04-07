@@ -20,8 +20,6 @@ public interface ISuportePersistente {
 
 	public Integer getNumberCachedItems();
 
-	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
-
     public IPersistentMetadata getIPersistentMetadata();
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();

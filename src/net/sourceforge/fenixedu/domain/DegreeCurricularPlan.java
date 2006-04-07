@@ -836,4 +836,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return null;
     }
+
+    public Set<CurricularCourseScope> findCurricularCourseScopesIntersectingPeriod(final Date beginDate, final Date endDate) {
+        final Set<CurricularCourseScope> curricularCourseScopes = new HashSet<CurricularCourseScope>();
+        for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
+            curricularCourseScopes.addAll(curricularCourse.findCurricularCourseScopesIntersectingPeriod(beginDate, endDate));
+        }
+        return curricularCourseScopes;
+    }
+
 }

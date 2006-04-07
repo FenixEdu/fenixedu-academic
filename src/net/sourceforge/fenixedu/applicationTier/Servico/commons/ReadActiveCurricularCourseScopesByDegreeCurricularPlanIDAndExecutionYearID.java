@@ -1,11 +1,10 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -15,13 +14,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID extends Service {
 
-    public List run(Integer degreeCurricularPlanId, Integer executionYearID) throws ExcepcaoPersistencia {
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
-
-        return persistentSupport.getIPersistentCurricularCourseScope()
-                .readCurricularCourseScopesByDegreeCurricularPlanInExecutionYear(degreeCurricularPlanId,
-                        executionYear.getBeginDate(), executionYear.getEndDate());
-
+    public Set<CurricularCourseScope> run(Integer degreeCurricularPlanId, Integer executionYearID) throws ExcepcaoPersistencia {
+        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        return degreeCurricularPlan.findCurricularCourseScopesIntersectingPeriod(executionYear.getBeginDate(), executionYear.getEndDate());
     }
 
 }

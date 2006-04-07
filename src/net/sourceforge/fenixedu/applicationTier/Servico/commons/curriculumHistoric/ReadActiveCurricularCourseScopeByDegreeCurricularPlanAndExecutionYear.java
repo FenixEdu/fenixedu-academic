@@ -25,8 +25,7 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executioYearID);
-        List scopes = super.readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlan
-                .getIdInternal(), executionYear);
+        List scopes = super.readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlan, executionYear);
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
                 .newInfoFromDomain(degreeCurricularPlan);
         InfoDegreeCurricularPlanWithCurricularCourseScopes curricularPlanWithCurricularCourseScopes = new InfoDegreeCurricularPlanWithCurricularCourseScopes();

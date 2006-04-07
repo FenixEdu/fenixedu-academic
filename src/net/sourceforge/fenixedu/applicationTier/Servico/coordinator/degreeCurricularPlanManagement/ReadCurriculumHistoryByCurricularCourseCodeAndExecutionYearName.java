@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurri
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -19,7 +20,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -32,9 +32,6 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
     public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode,
             String stringExecutionYear) throws FenixServiceException, ExcepcaoPersistencia {
         InfoCurriculum infoCurriculum = null;
-
-        IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
-                .getIPersistentCurricularCourseScope();
 
         if (curricularCourseCode == null) {
             throw new FenixServiceException("nullCurricularCourse");
@@ -60,9 +57,8 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
             Iterator iterExecutionPeriods = executionPeriods.iterator();
             while (iterExecutionPeriods.hasNext()) {
                 ExecutionPeriod executionPeriod = (ExecutionPeriod) iterExecutionPeriods.next();
-                List curricularCourseScopes = persistentCurricularCourseScope
-                        .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse.getIdInternal(),
-                                executionPeriod.getBeginDate(),executionPeriod.getEndDate());
+                Set<CurricularCourseScope> curricularCourseScopes = curricularCourse.findCurricularCourseScopesIntersectingPeriod(
+                        executionPeriod.getBeginDate(),executionPeriod.getEndDate());
                 if (curricularCourseScopes != null) {
                     List disjunctionCurricularCourseScopes = (List) CollectionUtils.disjunction(
                             allCurricularCourseScopes, curricularCourseScopes);

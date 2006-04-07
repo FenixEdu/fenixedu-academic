@@ -5,6 +5,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 
 
@@ -136,5 +137,10 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     	}
     	return result;
     }
-    
+
+    public boolean intersects(final Date begin, final Date end) {
+        return DateFormatUtil.compareDates("yyyyMMdd", getBegin(), end) < 0 &&
+                (getEnd() == null || DateFormatUtil.compareDates("yyyyMMdd", getEnd(), begin) > 0);
+    }
+
 }
