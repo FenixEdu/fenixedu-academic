@@ -1,16 +1,18 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.Partial;
 
 import net.sourceforge.fenixedu.renderers.DateInputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Partial;
+import org.joda.time.base.AbstractPartial;
 
 public class PartialInputRenderer extends DateInputRenderer {
 
@@ -115,12 +117,12 @@ public class PartialInputRenderer extends DateInputRenderer {
     
     @Override
     protected HtmlComponent createTextField(Object object, Class type) {
-        Date date = convertPartialToCalendar((Partial) object);
+        Date date = convertPartialToDate((AbstractPartial) object);
         
         return super.createTextField(date, type);
     }
 
-    private Date convertPartialToCalendar(Partial partial) {
+    private Date convertPartialToDate(AbstractPartial partial) {
         if (partial == null) {
             return null;
         }
@@ -133,7 +135,7 @@ public class PartialInputRenderer extends DateInputRenderer {
         }
         
         if (isMonth()) {
-            calendar.set(Calendar.MONTH, partial.get(DateTimeFieldType.monthOfYear()));
+            calendar.set(Calendar.MONTH, partial.get(DateTimeFieldType.monthOfYear()) - 1);
         }
         
         if (isYear()) {
@@ -177,45 +179,53 @@ public class PartialInputRenderer extends DateInputRenderer {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             
-            Partial partial = convertCalendarToPartial(type, calendar);
+            Object partial = convertCalendarToPartial(type, calendar);
 
             return partial;
         }
 
-        private Partial convertCalendarToPartial(Class type, Calendar calendar) {
-            Partial partial;
-            
-            try {
-                partial = (Partial) type.newInstance();
-            } catch (Exception e) {
-                throw new ConversionException("could not create a new instance of " + type, e);
+        private Object convertCalendarToPartial(Class type, Calendar calendar) {
+            if (type.equals(Partial.class)) {
+                Partial partial = new Partial();
+                
+                if (isDay()) {
+                    partial = partial.with(DateTimeFieldType.dayOfMonth(), calendar.get(Calendar.DAY_OF_MONTH));
+                }
+                
+                if (isMonth()) {
+                    partial = partial.with(DateTimeFieldType.monthOfYear(), calendar.get(Calendar.MONTH) + 1);
+                }
+                
+                if (isYear()) {
+                    partial = partial.with(DateTimeFieldType.year(), calendar.get(Calendar.YEAR));
+                }
+    
+                if (isHour()) {
+                    partial = partial.with(DateTimeFieldType.hourOfDay(), calendar.get(Calendar.HOUR_OF_DAY));
+                }
+    
+                if (isMinute()) {
+                    partial = partial.with(DateTimeFieldType.minuteOfHour(), calendar.get(Calendar.MINUTE));
+                }
+    
+                if (isSecond()) {
+                    partial = partial.with(DateTimeFieldType.secondOfMinute(), calendar.get(Calendar.SECOND));
+                }
+                
+                return partial;
             }
-            
-            if (isDay()) {
-                partial = partial.with(DateTimeFieldType.dayOfMonth(), calendar.get(Calendar.DAY_OF_MONTH));
+            else {
+                // ASSUMPTION
+                // assume that we want a subtype of BasePartial and that the subtype implements the factory
+                // method fromCalendarField(Calendar calendar)
+                try {
+                    Method method = type.getMethod("fromCalendarFields", new Class[] { Calendar.class });
+                    
+                    return method.invoke(null, new Object[] { calendar });
+                } catch (Exception e) {
+                    throw new ConversionException("could not convert to instace of " + type, e);
+                }
             }
-            
-            if (isMonth()) {
-                partial = partial.with(DateTimeFieldType.monthOfYear(), calendar.get(Calendar.MONTH) + 1 );
-            }
-            
-            if (isYear()) {
-                partial = partial.with(DateTimeFieldType.year(), calendar.get(Calendar.YEAR));
-            }
-
-            if (isHour()) {
-                partial = partial.with(DateTimeFieldType.hourOfDay(), calendar.get(Calendar.HOUR_OF_DAY));
-            }
-
-            if (isMinute()) {
-                partial = partial.with(DateTimeFieldType.minuteOfHour(), calendar.get(Calendar.MINUTE));
-            }
-
-            if (isSecond()) {
-                partial = partial.with(DateTimeFieldType.secondOfMinute(), calendar.get(Calendar.SECOND));
-            }
-            
-            return partial;
         }
         
     }
