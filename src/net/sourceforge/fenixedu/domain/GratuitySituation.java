@@ -40,6 +40,11 @@ public class GratuitySituation extends GratuitySituation_Base {
         setRemainingValue(totalValue);
         setTotalValue(totalValue);
     }
+    
+    public void delete() {
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 
     public void updateValues() {
         
