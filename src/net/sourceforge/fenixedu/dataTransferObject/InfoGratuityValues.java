@@ -34,7 +34,7 @@ public class InfoGratuityValues extends InfoObject {
 
     private Date when;
 
-    private List infoPaymentPhases;
+    private List<InfoPaymentPhase> infoPaymentPhases;
 
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -187,7 +187,7 @@ public class InfoGratuityValues extends InfoObject {
     /**
      * @return Returns the infoPaymentPhases.
      */
-    public List getInfoPaymentPhases() {
+    public List<InfoPaymentPhase> getInfoPaymentPhases() {
         return infoPaymentPhases;
     }
 
@@ -195,7 +195,7 @@ public class InfoGratuityValues extends InfoObject {
      * @param infoPaymentPhases
      *            The infoPaymentPhases to set.
      */
-    public void setInfoPaymentPhases(List infoPaymentPhases) {
+    public void setInfoPaymentPhases(List<InfoPaymentPhase> infoPaymentPhases) {
         this.infoPaymentPhases = infoPaymentPhases;
     }
 
