@@ -9,4 +9,9 @@ public class Proposal extends Proposal_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
+    public void delete() {
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }

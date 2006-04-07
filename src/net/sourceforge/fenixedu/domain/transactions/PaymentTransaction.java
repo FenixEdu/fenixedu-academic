@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -14,7 +15,8 @@ import net.sourceforge.fenixedu.domain.PersonAccount;
 public abstract class PaymentTransaction extends PaymentTransaction_Base {
 
 	public PaymentTransaction() {
-
+	    super();
+        setRootDomainObject(RootDomainObject.getInstance());
 	}
 
 	/**
@@ -33,6 +35,7 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
 			TransactionType transactionType, Boolean wasInternalBalance,
 			Person responsiblePerson, PersonAccount personAccount,
 			GuideEntry guideEntry) {
+        this();
         setOjbConcreteClass(getClass().getName());
 		setGuideEntry(guideEntry);
 		setValue(value);
@@ -44,4 +47,11 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
 		setResponsiblePerson(responsiblePerson);
 		setPersonAccount(personAccount);
 	}
+
+    public void delete() {
+        removePersonAccount();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+    
 }

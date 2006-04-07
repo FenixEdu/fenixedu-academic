@@ -22,4 +22,10 @@ public class ReimbursementGuideEntry extends ReimbursementGuideEntry_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
+    public void delete() {
+        removeReimbursementGuide();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }

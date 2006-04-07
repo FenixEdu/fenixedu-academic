@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
@@ -22,6 +23,18 @@ public class GuideEntry extends GuideEntry_Base {
         this.setPrice(price);
         this.setQuantity(quantity);
 
+    }
+
+    public void delete() {
+        if (hasPaymentTransaction()) {
+            getPaymentTransaction().delete();
+        }
+        for (; hasAnyReimbursementGuideEntries(); getReimbursementGuideEntries().get(0).delete());
+        
+        removeGuide();
+        removeRootDomainObject();
+
+        deleteDomainObject();
     }
 
 }
