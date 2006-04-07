@@ -13,6 +13,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop.exams;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
@@ -22,8 +23,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
 import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -44,6 +50,8 @@ public class ReadExamsMapByRooms extends Service {
             startSeason1.add(Calendar.DATE, shiftDays);
         }
 
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+
         for (final InfoRoom infoRoom : infoRooms) {
             final InfoRoomExamsMap infoRoomExamsMap = new InfoRoomExamsMap();
 
@@ -53,27 +61,49 @@ public class ReadExamsMapByRooms extends Service {
             infoRoomExamsMap.setStartSeason2(null);
             infoRoomExamsMap.setEndSeason2(endSeason2);
 
-            final List<Exam> exams = Exam.getAllByRoomAndExecutionPeriod(infoRoom.getNome(), infoExecutionPeriod.getName(),
-                            infoExecutionPeriod.getInfoExecutionYear().getYear());
-            infoRoomExamsMap.setExams(getInfoExams(exams));
+//            final List<Exam> exams = Exam.getAllByRoomAndExecutionPeriod(infoRoom.getNome(), infoExecutionPeriod.getName(),
+//                            infoExecutionPeriod.getInfoExecutionYear().getYear());
+//            infoRoomExamsMap.setExams(getInfoExams(exams, infoExecutionPeriod));
 
+            infoRoomExamsMap.setExams(getInfoExams(infoRoom, executionPeriod));
+                    
             infoRoomExamMapList.add(infoRoomExamsMap);
         }
         return infoRoomExamMapList;
     }
 
-    private List<InfoExam> getInfoExams(List<Exam> exams) {
-        final List<InfoExam> result = new ArrayList<InfoExam>(exams.size());
-        for (final Exam exam : exams) {
-            InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
-            // Use one execution course
-            infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
-                    .getAssociatedExecutionCourses().get(0)));
-            result.add(infoExam);
+    private List getInfoExams(final InfoRoom infoRoom, final ExecutionPeriod executionPeriod) {
+        final List<InfoExam> result = new ArrayList<InfoExam>();
+        final OldRoom oldRoom = rootDomainObject.readOldRoomByOID(infoRoom.getIdInternal());
+        for (final RoomOccupation roomOccupation : oldRoom.getRoomOccupations()) {
+            final WrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
+            if (writtenEvaluation != null && writtenEvaluation instanceof Exam) {
+                final Exam exam = (Exam) writtenEvaluation;
+                final Set<ExecutionCourse> executionCourses = exam.getAssociatedExecutionCoursesSet();
+                final ExecutionCourse executionCourse = executionCourses.isEmpty() ? null : executionCourses.iterator().next();
+                if (executionCourse != null && executionPeriod == executionCourse.getExecutionPeriod()) {
+                    InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
+                    infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
+                            .getAssociatedExecutionCourses().get(0)));
+                    result.add(infoExam);
+                }
+            }
         }
         return result;
     }
 
+//    private List<InfoExam> getInfoExams(List<Exam> exams) {
+//        final List<InfoExam> result = new ArrayList<InfoExam>(exams.size());
+//        for (final Exam exam : exams) {
+//            InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
+//            // Use one execution course
+//            infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
+//                    .getAssociatedExecutionCourses().get(0)));
+//            result.add(infoExam);
+//        }
+//        return result;
+//    }
+//
     private InfoPeriod calculateExamsSeason(final ISuportePersistente persistentSupport,
             final String year, final int semester) throws ExcepcaoPersistencia {
 
