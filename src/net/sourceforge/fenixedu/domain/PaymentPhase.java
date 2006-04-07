@@ -29,4 +29,10 @@ public class PaymentPhase extends PaymentPhase_Base {
         return newDescription;
     }
 
+    public void delete() {
+        removeGratuityValues();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }
