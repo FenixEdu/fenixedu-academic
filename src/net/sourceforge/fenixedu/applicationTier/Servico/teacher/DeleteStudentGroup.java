@@ -20,12 +20,13 @@ public class DeleteStudentGroup extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         StudentGroup deletedStudentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
         
-        if (deletedStudentGroup == null)
-            throw new ExistingServiceException();     
+        if (deletedStudentGroup == null) {
+            throw new ExistingServiceException();
+        }
 
         deletedStudentGroup.delete();
-        persistentObject.deleteByOID(StudentGroup.class, deletedStudentGroup.getIdInternal());
 
         return Boolean.TRUE;
     }
+    
 }

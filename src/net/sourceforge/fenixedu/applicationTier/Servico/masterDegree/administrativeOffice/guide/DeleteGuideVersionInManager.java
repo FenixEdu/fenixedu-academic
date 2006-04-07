@@ -15,20 +15,11 @@ public class DeleteGuideVersionInManager extends Service {
     public void run(Integer guideID) throws ExcepcaoPersistencia, InvalidChangeServiceException {
         Guide guide = rootDomainObject.readGuideByOID(guideID);
 
-        if (!guide.getGuideEntries().isEmpty()) {
+        if (!guide.canBeDeleted()) {
             throw new InvalidChangeServiceException();
         }
 
-        if (!guide.getGuideSituations().isEmpty()) {
-            throw new InvalidChangeServiceException();
-        }
-
-        if (guide.getVersion().intValue() == 1) {
-            throw new InvalidChangeServiceException();
-        }
-
-        persistentSupport.getIPersistentObject().deleteByOID(Guide.class, guide.getIdInternal());
-
+        guide.delete();
     }
 
 }
