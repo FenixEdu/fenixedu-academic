@@ -107,14 +107,14 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 
 	<target name="prepare-institution" if="institution.project">
-		<copy todir="${build.home}">
+		<copy todir="${build.home}" overwrite="true">
 			<fileset dir="${institution.web-content}" >
 				<include name="**/*.*"/>
 				<exclude name="WEB-INF//*.*"/>
 			</fileset>
 		</copy>
 
-		<copy todir="${build.home.webinf.classes}">
+		<copy todir="${build.home.webinf.classes}" overwrite="true">
 			<fileset dir="${institution.config}"/>
 		</copy>
 	</target>
