@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import org.apache.ojb.broker.query.Criteria;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
