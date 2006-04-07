@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Luis Cruz
@@ -30,10 +29,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 
     public InfoGroup run(String username) throws ExcepcaoPersistencia {
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
-
-        Group group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(username);
+    	Student student = Student.readByUsername(username);
+        Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
         InfoGroup infoGroup = null;
         if (group != null) {
             infoGroup = new InfoGroup();
@@ -49,16 +46,16 @@ public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
                         InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
                         infoGroupStudent.setIdInternal(groupStudent.getIdInternal());
 
-                        Student student = groupStudent.getStudent();
-                        if (student != null) {
+                        Student student1 = groupStudent.getStudent();
+                        if (student1 != null) {
                             InfoStudent infoStudent = new InfoStudent();
-                            infoStudent.setIdInternal(student.getIdInternal());
-                            infoStudent.setNumber(student.getNumber());
-                            if (student.getPerson() != null) {
+                            infoStudent.setIdInternal(student1.getIdInternal());
+                            infoStudent.setNumber(student1.getNumber());
+                            if (student1.getPerson() != null) {
                                 InfoPerson infoPerson = new InfoPerson();
-                                infoPerson.setIdInternal(student.getPerson().getIdInternal());
-                                infoPerson.setNome(student.getPerson().getNome());
-                                infoPerson.setUsername(student.getPerson().getUsername());
+                                infoPerson.setIdInternal(student1.getPerson().getIdInternal());
+                                infoPerson.setNome(student1.getPerson().getNome());
+                                infoPerson.setUsername(student1.getPerson().getUsername());
                                 infoStudent.setInfoPerson(infoPerson);
                             }
                             infoGroupStudent.setStudent(infoStudent);

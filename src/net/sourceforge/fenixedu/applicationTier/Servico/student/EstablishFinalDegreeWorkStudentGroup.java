@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Luis Cruz
@@ -22,21 +21,16 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
 
     public boolean run(String username, Integer executionDegreeOID) throws ExcepcaoPersistencia,
             FenixServiceException {
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
-
-        Group group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(username);
+    	Student student = Student.readByUsername(username);
+    	if (student == null) {
+            throw new FenixServiceException("Error reading student to place in final degree work group.");
+    	}
+        Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
         if (group == null) {
             group = DomainFactory.makeGroup();
-            Student student = Student.readByUsername(username);
-            if (student != null) {
                 GroupStudent groupStudent = DomainFactory.makeGroupStudent();
                 groupStudent.setStudent(student);
                 groupStudent.setFinalDegreeDegreeWorkGroup(group);
-            } else {
-                throw new FenixServiceException(
-                        "Error reading student to place in final degree work group.");
-            }
         } else {
             if (!group.getGroupProposals().isEmpty()) {
                 throw new GroupProposalCandidaciesExistException();

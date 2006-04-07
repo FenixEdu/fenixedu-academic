@@ -5,10 +5,13 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
 public class Scheduleing extends Scheduleing_Base {
 
@@ -97,6 +100,24 @@ public class Scheduleing extends Scheduleing_Base {
         final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
         Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
         return executionDegrees;
+    }
+
+    public Set<Proposal> findProposalsByStatus(final FinalDegreeWorkProposalStatus finalDegreeWorkProposalStatus) {
+    	final Set<Proposal> proposals = new HashSet<Proposal>();
+    	for (final Proposal proposal : getProposalsSet()) {
+    		if (finalDegreeWorkProposalStatus.equals(proposal.getStatus())) {
+    			proposals.add(proposal);
+    		}
+    	}
+    	return proposals;
+    }
+
+    public Set<Proposal> findPublishedProposals() {
+    	return findProposalsByStatus(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
+    }
+
+    public Set<Proposal> findApprovedProposals() {
+    	return findProposalsByStatus(FinalDegreeWorkProposalStatus.APPROVED_STATUS);
     }
 
 }

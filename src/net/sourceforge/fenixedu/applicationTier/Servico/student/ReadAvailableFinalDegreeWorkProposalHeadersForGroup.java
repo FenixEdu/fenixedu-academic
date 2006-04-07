@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
@@ -13,7 +14,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -27,21 +27,14 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup extends Service
     public List run(Integer groupOID) throws ExcepcaoPersistencia {
         List finalDegreeWorkProposalHeaders = new ArrayList();
 
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
-
         Group group = rootDomainObject.readGroupByOID(groupOID);
 
         if (group != null && group.getExecutionDegree() != null) {
-            List finalDegreeWorkProposals = persistentFinalDegreeWork
-                    .readPublishedFinalDegreeWorkProposalsByExecutionDegree(group.getExecutionDegree()
-                            .getIdInternal());
+            Set<Proposal> finalDegreeWorkProposals = group.getExecutionDegree().getScheduling().findPublishedProposals();
 
             if (finalDegreeWorkProposals != null) {
                 finalDegreeWorkProposalHeaders = new ArrayList();
-                for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
-                    Proposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
-
+                for (final Proposal proposal : finalDegreeWorkProposals) {
                     if (proposal != null
                             && !CollectionUtils.exists(group.getGroupProposals(),
                                     new PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(proposal))) {

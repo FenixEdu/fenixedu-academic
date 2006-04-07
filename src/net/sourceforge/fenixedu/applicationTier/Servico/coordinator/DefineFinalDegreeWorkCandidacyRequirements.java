@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Luis Cruz
@@ -21,21 +20,17 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
 
         if (executionDegreeOID != null) {
 
-            IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                    .getIPersistentFinalDegreeWork();
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 
-            ExecutionDegree cursoExecucao = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
-
-            if (cursoExecucao != null) {
-                Scheduleing scheduleing = persistentFinalDegreeWork
-                        .readFinalDegreeWorkScheduleing(executionDegreeOID);
+            if (executionDegree != null) {
+                Scheduleing scheduleing = executionDegree.getScheduling();
 
                 if (scheduleing == null) {
                     scheduleing = DomainFactory.makeScheduleing();
                     scheduleing.setCurrentProposalNumber(new Integer(1));
                 }
 
-                scheduleing.addExecutionDegrees(cursoExecucao);
+                scheduleing.addExecutionDegrees(executionDegree);
                 scheduleing.setMinimumNumberOfCompletedCourses(minimumNumberOfCompletedCourses);
                 scheduleing.setMinimumNumberOfStudents(minimumNumberOfStudents);
                 scheduleing.setMaximumNumberOfStudents(maximumNumberOfStudents);

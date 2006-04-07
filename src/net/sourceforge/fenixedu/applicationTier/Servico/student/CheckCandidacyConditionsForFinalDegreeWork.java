@@ -10,10 +10,10 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Luis Cruz
@@ -22,11 +22,8 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
 
     public boolean run(IUserView userView, Integer executionDegreeOID) throws ExcepcaoPersistencia,
             FenixServiceException {
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
-
-        Scheduleing scheduleing = persistentFinalDegreeWork
-                .readFinalDegreeWorkScheduleing(executionDegreeOID);
+    	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+        Scheduleing scheduleing = executionDegree.getScheduling();
 
         if (scheduleing == null || scheduleing.getStartOfCandidacyPeriod() == null
                 || scheduleing.getEndOfCandidacyPeriod() == null) {

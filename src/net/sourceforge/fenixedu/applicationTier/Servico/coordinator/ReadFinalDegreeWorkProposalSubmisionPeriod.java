@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoSchedulei
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Luis Cruz
@@ -21,15 +20,10 @@ public class ReadFinalDegreeWorkProposalSubmisionPeriod extends Service {
         InfoScheduleing infoScheduleing = null;
 
         if (executionDegreeOID != null) {
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 
-            IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                    .getIPersistentFinalDegreeWork();
-
-            ExecutionDegree cursoExecucao = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
-
-            if (cursoExecucao != null) {
-                Scheduleing scheduleing = persistentFinalDegreeWork
-                        .readFinalDegreeWorkScheduleing(executionDegreeOID);
+            if (executionDegree != null) {
+                Scheduleing scheduleing = executionDegree.getScheduling();
 
                 if (scheduleing != null) {
                     infoScheduleing = new InfoScheduleing();

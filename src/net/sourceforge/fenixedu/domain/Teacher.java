@@ -861,4 +861,10 @@ public class Teacher extends Teacher_Base {
         return executionCourses;
     }
 
+    public Set<Proposal> findFinalDegreeWorkProposals() {
+    	final Set<Proposal> proposals = new HashSet<Proposal>();
+    	proposals.addAll(getAssociatedProposalsByCoorientatorSet());
+    	proposals.addAll(getAssociatedProposalsByOrientatorSet());
+    	return proposals;
+    }
 }

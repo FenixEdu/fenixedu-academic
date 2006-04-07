@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
@@ -143,10 +142,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	// by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
     public PersistenceBroker currentBroker() {
 		return getCurrentPersistenceBroker();
-	}
-
-    public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork() {
-		return new FinalDegreeWorkOJB();
 	}
   
     public IPersistentObject getIPersistentObject() {

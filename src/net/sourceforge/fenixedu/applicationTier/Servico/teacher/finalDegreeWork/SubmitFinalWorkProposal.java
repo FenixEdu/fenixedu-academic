@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Nuno Correia
@@ -25,12 +24,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 public class SubmitFinalWorkProposal extends Service {
 
     public void run(InfoProposal infoProposal) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentFinalDegreeWork persistentFinalWork = persistentSupport.getIPersistentFinalDegreeWork();
-
         Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 
-        Scheduleing scheduleing = persistentFinalWork.readFinalDegreeWorkScheduleing(executionDegreeId);
+        Scheduleing scheduleing = executionDegree.getScheduling();
         if (scheduleing == null) {
             throw new OutOfPeriodException(null, null, null);
         }

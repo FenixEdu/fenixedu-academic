@@ -11,26 +11,25 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan extends Service {
 
     public List run(Integer executionDegreeOID) throws ExcepcaoPersistencia {
-        List finalDegreeWorkProposalHeaders = new ArrayList();
+    	final List finalDegreeWorkProposalHeaders = new ArrayList();
 
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
-        List finalDegreeWorkProposals = persistentFinalDegreeWork
-                .readFinalDegreeWorkProposalsByExecutionDegree(executionDegreeOID);
-        if (finalDegreeWorkProposals != null) {
-            finalDegreeWorkProposalHeaders = new ArrayList();
+    	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+    	final Scheduleing scheduleing = executionDegree.get$scheduling();
+    	if (scheduleing != null) {
+    		final List finalDegreeWorkProposals = scheduleing.getProposals();
             for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
                 Proposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
 

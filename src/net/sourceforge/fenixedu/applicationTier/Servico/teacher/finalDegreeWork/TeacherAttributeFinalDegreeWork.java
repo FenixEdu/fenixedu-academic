@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Luis Cruz
@@ -23,16 +22,12 @@ public class TeacherAttributeFinalDegreeWork extends Service {
 
 	public Boolean run(Integer selectedGroupProposalOID) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
-				.getIPersistentFinalDegreeWork();
-
 		GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
 		if (groupProposal != null) {
 			Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
 			Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
 			if (proposal != null && group != null) {
-				Proposal proposalAttributedToGroup = persistentFinalWork
-						.readFinalDegreeWorkAttributedToGroupByTeacher(group.getIdInternal());
+				Proposal proposalAttributedToGroup = group.getProposalAttributedByTeacher();
 				if (proposalAttributedToGroup != null
 						&& !proposalAttributedToGroup.getIdInternal().equals(proposal.getIdInternal())) {
 					throw new GroupAlreadyAttributed(proposalAttributedToGroup.getProposalNumber()

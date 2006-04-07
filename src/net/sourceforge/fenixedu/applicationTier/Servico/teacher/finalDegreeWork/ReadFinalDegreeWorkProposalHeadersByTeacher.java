@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -18,13 +19,13 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStud
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Luis Cruz
@@ -34,16 +35,12 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher extends Service {
 	public List run(Integer teacherOID) throws FenixServiceException, ExcepcaoPersistencia {
 		List finalDegreeWorkProposalHeaders = new ArrayList();
 
-		IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-				.getIPersistentFinalDegreeWork();
-
-		List finalDegreeWorkProposals = persistentFinalDegreeWork
-				.readFinalDegreeWorkProposalsByTeacher(teacherOID);
+		final Teacher teacher = rootDomainObject.readTeacherByOID(teacherOID);
+		Set<Proposal> finalDegreeWorkProposals = teacher.findFinalDegreeWorkProposals();
 
 		if (finalDegreeWorkProposals != null) {
 			finalDegreeWorkProposalHeaders = new ArrayList();
-			for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
-				Proposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
+			for (final Proposal proposal : finalDegreeWorkProposals) {
 				final Scheduleing scheduleing = proposal.getScheduleing();
 				for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegrees()) {
 

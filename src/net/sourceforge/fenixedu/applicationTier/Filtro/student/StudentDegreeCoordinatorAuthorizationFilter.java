@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -64,7 +63,6 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
     private String authorizedCoordinator(IUserView id, Object[] arguments) {
         try {
             String username = (String) arguments[0];
-            IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport.getIPersistentFinalDegreeWork();
 
             Student student1 = Student.readByUsername(username);
 
@@ -74,8 +72,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
             for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext();) {
                 Student student = (Student) studentsIterator.next();
 
-                Group group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(student
-                        .getPerson().getUsername());
+                Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
 
                 if (group != null) {
                     ExecutionDegree executionDegree = group.getExecutionDegree();

@@ -25,8 +25,6 @@ public interface ISuportePersistente {
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
 
 	public IPersistentGrantContract getIPersistentGrantContract();
-    
-	public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork();
 
 	@Deprecated
     public IPersistentObject getIPersistentObject();

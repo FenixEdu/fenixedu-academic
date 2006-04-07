@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -23,9 +22,6 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
 
     public boolean run(Integer groupOID, String username) throws ExcepcaoPersistencia,
             FenixServiceException {
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
-
         Group group = rootDomainObject.readGroupByOID(groupOID);
         Student student = Student.readByUsername(username);
         if (group == null
@@ -35,8 +31,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
                         new PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(student)) != null) {
             return false;
         }
-        Scheduleing scheduleing = persistentFinalDegreeWork.readFinalDegreeWorkScheduleing(group
-                .getExecutionDegree().getIdInternal());
+        Scheduleing scheduleing = group.getExecutionDegree().getScheduling();
 
         if (scheduleing == null || scheduleing.getMaximumNumberOfStudents() == null) {
             throw new MaximumNumberOfStudentsUndefinedException();
