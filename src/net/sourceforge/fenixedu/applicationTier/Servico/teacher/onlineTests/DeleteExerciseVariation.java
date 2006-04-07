@@ -52,16 +52,16 @@ public class DeleteExerciseVariation extends Service {
             Metadata metadata = question.getMetadata();
             if (question.getStudentTestsQuestions() == null || question.getStudentTestsQuestions().size() == 0) {
                 question.delete();
-                if (persistentSupport.getIPersistentMetadata().getNumberOfQuestions(metadata) <= 1) {
-                    persistentSupport.getIPersistentMetadata().deleteByOID(Metadata.class, metadata.getIdInternal());
+                if (metadata.getQuestionsCount() <= 1) {
+                    metadata.delete();
                 } else if (metadata.getVisibleQuestions().size() == 0) {
-                    metadata.setVisibility(new Boolean(false));
+                    metadata.setVisibility(Boolean.FALSE);
                 }
             } else {
                 if (metadata.getVisibleQuestions().size() <= 1) {
-                    metadata.setVisibility(new Boolean(false));
+                    metadata.setVisibility(Boolean.FALSE);
                 }
-                question.setVisibility(new Boolean(false));
+                question.setVisibility(Boolean.FALSE);
             }
         }
 
