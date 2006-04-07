@@ -1475,8 +1475,8 @@ class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.
 
 class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
-    YearMonthDay beginDate;
-    YearMonthDay endDate;
+    DateTime beginDate;
+    DateTime endDate;
     Boolean	active;    
     Integer keyUser;		
 }

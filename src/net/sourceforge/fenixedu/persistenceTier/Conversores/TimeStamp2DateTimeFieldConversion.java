@@ -21,6 +21,9 @@ public class TimeStamp2DateTimeFieldConversion implements FieldConversion {
 
 
     public Object sqlToJava(Object source) {
+        if(source == null || source.equals("")){
+            return null;
+        } 
         if (source instanceof Timestamp) {
             return new DateTime(((Timestamp) source).getTime());
         }

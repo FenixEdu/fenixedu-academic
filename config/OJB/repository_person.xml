@@ -285,12 +285,14 @@
 	<field-descriptor
 	    name="lastLoginDateTime"
 	    column="LAST_LOGIN_DATE_TIME"
-	    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
+	    jdbc-type="TIMESTAMP" 
+	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
 	/>
 	<field-descriptor
 	    name="currentLoginDateTime"
 	    column="CURRENT_LOGIN_DATE_TIME"
-	    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
+	    jdbc-type="TIMESTAMP"
+	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
 	/>	  
 	<field-descriptor
         name="keyPerson"
@@ -321,14 +323,14 @@
 	<field-descriptor
         name="beginDate"
         column="BEGIN_DATE"
-        jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+		jdbc-type="TIMESTAMP"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
     />
 	<field-descriptor
 	    name="endDate"
 	    column="END_DATE"
-	    jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+		jdbc-type="TIMESTAMP" 
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
 	/>
 	<field-descriptor
         name="active"
@@ -369,14 +371,14 @@
 	<field-descriptor
         name="beginDate"
         column="BEGIN_DATE"
-        jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+		jdbc-type="TIMESTAMP"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
     />
 	<field-descriptor
 	    name="endDate"
 	    column="END_DATE"
-	    jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+		jdbc-type="TIMESTAMP" 
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
 	/>
 	<field-descriptor
         name="active"
