@@ -110,6 +110,7 @@ valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup 
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationMotiveType            as JustificationMotiveType;
 valueType net.sourceforge.fenixedu.domain.assiduousness.WorkWeek                                as WorkWeek;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval                       as TimeInterval;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval                       as DateInterval;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessStatus                as AssiduousnessStatus;
 valueType org.joda.time.DateTime                                                                as DateTime;
 valueType org.joda.time.Duration                                                                as Duration;
@@ -2837,7 +2838,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord extends 
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Schedule extends net.sourceforge.fenixedu.domain.DomainObject {
-	Interval validInterval;
+	DateInterval validInterval;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.NormalWorkPeriod extends net.sourceforge.fenixedu.domain.DomainObject{
@@ -2888,7 +2889,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.HalfTimeSchedule extends net
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Periodicity extends net.sourceforge.fenixedu.domain.DomainObject {
-	TimeInterval definedInterval;
+	Interval definedInterval;
 	WorkWeek workWeek;
 }
 
@@ -2944,34 +2945,6 @@ class net.sourceforge.fenixedu.domain.assiduousness.PersonalCard extends net.sou
 class net.sourceforge.fenixedu.domain.assiduousness.SubstituteCard extends net.sourceforge.fenixedu.domain.assiduousness.Card {
 }
 
-// TO DELETE
-class net.sourceforge.fenixedu.domain.assiduousness.DailyBalance extends net.sourceforge.fenixedu.domain.DomainObject{
-        YearMonthDay date;
-        Duration normalWorkPeriod1Balance;
-        Duration normalWorkPeriod2Balance;
-        Duration fixedPeriodAbsence;
-        Duration lunchBreak;
-        Boolean irregular; // corresponde ao A do verbete - anomalia
-        Boolean justification; // corresponde ao J do verbete - justificacao
-        Integer overtime; // corresponde ao X do verbete - horas extraordinarias
-        String comment;
-}
-
-//class net.sourceforge.fenixedu.domain.assiduousness.Balance extends net.sourceforge.fenixedu.domain.DomainObject{
-//        Duration normalWorkPeriodFinal;
-//        Duration fixedPeriodFinal;
-//        Duration overtime1stType; // type = escalao
-//        Duration overtime2ndType; 
-//        Duration overtimeNextTypes;
-//        Duration ds; // dia-da-semana?
-//        Duration dsc; // descanso?
-//        Duration nightTime;
-//        Duration nightTime1stType;
-//        Duration nightTime2stType;
-//        Duration nightTimeNextTypes;
-//        Duration holiday;
-//        Integer numberNightMeals;
-//}
 
 
 class net.sourceforge.fenixedu.domain.research.project.Project extends net.sourceforge.fenixedu.domain.DomainObject{
@@ -7686,13 +7659,6 @@ relation RootDomainObjectWrittenEvaluationEnrolment {
 	}
 }
 
-relation RootDomainObjectDailyBalance {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.DailyBalance playsRole dailyBalances {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectEnrolmentPeriod {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.EnrolmentPeriod playsRole enrolmentPeriods {
@@ -7813,6 +7779,7 @@ relation RootDomainObjectWorkScheduleType {
 }
 
 relation RootDomainObjectPeriodicity {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.Periodicity playsRole periodicities {
 		multiplicity *;
