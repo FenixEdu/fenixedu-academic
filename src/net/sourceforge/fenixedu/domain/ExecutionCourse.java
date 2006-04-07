@@ -47,7 +47,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
     
 	public List<Grouping> getGroupings() {
-		List<Grouping> result = new ArrayList();
+		List<Grouping> result = new ArrayList<Grouping>();
 		for (final ExportGrouping exportGrouping : this.getExportGroupings()) {
 			if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
 					|| exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
@@ -290,71 +290,39 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	public void delete() {
 		if (canBeDeleted()) {
-            removeExecutionPeriod();
-
-			if (getSite() != null) {
+			if (hasSite()) {
 				getSite().delete();
 			}
-
 			for (; !getProfessorships().isEmpty(); getProfessorships().get(0).delete());
-            
-			getAssociatedCurricularCourses().clear();
-
 			for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().get(0).delete());
-
 			for (; !getAttends().isEmpty(); getAttends().get(0).delete());
 
-			getNonAffiliatedTeachers().clear();
-
-			removeRootDomainObject();
-        super.deleteDomainObject();
+            getAssociatedCurricularCourses().clear();
+            getNonAffiliatedTeachers().clear();
+            removeExecutionPeriod();
+            removeRootDomainObject();
+			super.deleteDomainObject();
 		} else {
 			throw new DomainException("error.execution.course.cant.delete");
         }
 	}
 
-	private boolean canBeDeleted() {
-		if (hasAnyAssociatedSummaries()) {
-			throw new DomainException("error.execution.course.cant.delete");
+	public boolean canBeDeleted() {
+		if (hasAnyAssociatedSummaries() 
+                || !getGroupings().isEmpty()
+                || hasAnyAssociatedBibliographicReferences()
+                || hasAnyAssociatedEvaluations()
+                || hasEvaluationMethod()
+                || hasAnyAssociatedShifts()
+                || hasCourseReport()
+                || hasAnyAttends()
+                || (hasSite() && !getSite().canBeDeleted())) {
+			return false;
 		}
-		if (!getGroupings().isEmpty()) {
-			throw new DomainException("error.execution.course.cant.delete");
-		}
-		if (hasAnyAssociatedBibliographicReferences()) {
-			throw new DomainException("error.execution.course.cant.delete");
-		}
-		if (hasAnyAssociatedEvaluations()) {
-			throw new DomainException("error.execution.course.cant.delete");
-		}
-		if (hasEvaluationMethod()) {
-			throw new DomainException("error.execution.course.cant.delete");
-		}
-		if (hasAnyAssociatedShifts()) {
-			throw new DomainException("error.execution.course.cant.delete");
-		}
-		if (hasCourseReport()) {
-			throw new DomainException("error.execution.course.cant.delete");
-		}
-		final Site site = getSite();
-		if (site != null) {
-			if (site.hasAnyAssociatedAnnouncements()) {
-				throw new DomainException("error.execution.course.cant.delete");
-			}
-			if (site.hasAnyAssociatedSections()) {
-				throw new DomainException("error.execution.course.cant.delete");
-			}
-		}
-
 		for (final Professorship professorship : getProfessorships()) {
-			if (professorship.hasAnyAssociatedShiftProfessorship()) {
-				throw new DomainException("error.execution.course.cant.delete");
-			}
-			if (professorship.hasAnyAssociatedSummaries()) {
-				throw new DomainException("error.execution.course.cant.delete");
-			}
-			if (professorship.hasAnySupportLessons()) {
-				throw new DomainException("error.execution.course.cant.delete");
-			}
+			if (!professorship.canBeDeleted()) {
+                return false;
+            }
 		}
 
 		return true;
@@ -531,8 +499,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		return orderedEvaluations;
 	}
 
-	private static final Comparator<Attends> ATTENDS_COMPARATOR = new BeanComparator(
-			"aluno.number");
+	private static final Comparator<Attends> ATTENDS_COMPARATOR = new BeanComparator("aluno.number");
 
 	public Set<Attends> getOrderedAttends() {
 		final Set<Attends> orderedAttends = new TreeSet<Attends>(
