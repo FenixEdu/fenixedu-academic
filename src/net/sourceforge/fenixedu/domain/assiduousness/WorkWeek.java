@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.util.WeekDay;
 import java.io.Serializable;
 import java.util.EnumSet;
 
+import org.joda.time.DateTime;
+
 /**
  * @author velouria@velouria.org & Prof. J. Cachopo
  *
@@ -63,6 +65,14 @@ public class WorkWeek implements Serializable {
                 return true;
         }
         return false;
+    }
+    
+    public boolean contains(DateTime date) {
+    		WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(date);
+    		if (getDays().contains(dayOfWeek)) {
+    			return true;
+    		}
+    		return false;
     }
     
     // TRASH

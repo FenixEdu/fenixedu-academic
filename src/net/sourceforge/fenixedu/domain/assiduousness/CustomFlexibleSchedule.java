@@ -46,11 +46,9 @@ public class CustomFlexibleSchedule extends CustomFlexibleSchedule_Base {
 	public static CustomFlexibleSchedule makeCustomFlexibleSchedule(NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriods, Meal mealPeriod, 
             TimeInterval workDay, String acronym) {
         CustomFlexibleSchedule newCustomFlexibleSchedule = new CustomFlexibleSchedule();
-//        newCustomFlexibleSchedule.setEmployee(employee);
         newCustomFlexibleSchedule.setNormalWorkPeriod(normalWorkPeriod);
         newCustomFlexibleSchedule.setFixedPeriod(fixedPeriods);
         newCustomFlexibleSchedule.setMeal(mealPeriod);
-//        newCustomFlexibleSchedule.addRegimesToWorkSchedule(regimes);
         newCustomFlexibleSchedule.setWorkDay(workDay);
         newCustomFlexibleSchedule.setAcronym(acronym);
         return newCustomFlexibleSchedule;

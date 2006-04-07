@@ -1,10 +1,16 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.util.WeekDay;
+import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
+import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
+import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 
 import org.joda.time.Duration;
+import org.joda.time.YearMonthDay;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 /**
  *
@@ -18,24 +24,103 @@ public class WorkSchedule extends WorkSchedule_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public static WorkSchedule createWorkSchedule(WorkScheduleType workScheduleType, Periodicity periodicity) {
+    		WorkSchedule wk = new WorkSchedule();
+    		wk.setWorkScheduleType(workScheduleType);
+    		
+    		return wk;
+    }
     
-    // Returns the duration of normal period times the number of days per week the Employee has that schedule
-	public Duration calculateWeekDuration() {
-		return Duration.ZERO;
-		//	    return new Duration(getWorkScheduleType().getNormalWorkPeriod().getTotalNormalWorkPeriodDuration().getMillis() * getWorkWeek().workDaysPerWeek());
-	}
+    // Returns true if the WorkSchedule
+    public boolean isDefinedInDate(YearMonthDay date) {
+    		return getPeriodicity().isDefinedInDate(date);
+    }
     
-    // Returns true if the schedule is defined in the week day weekDay
-    public boolean isDefinedInWeekDay(WeekDay weekDay) {
-    		return false;
-    	// return getWorkWeek().worksAt(weekDay);
+    
+    // TODO ver se o funcionario trabalhou dentro dos periodos
+    public DailyBalance calculateWorkingPeriods(YearMonthDay day, List<Clocking> clockingList, Timeline timeline) {
+    		DailyBalance dailyBalance = new DailyBalance(day);
+    		Duration firstWorkPeriod = Duration.ZERO;
+    		Duration lastWorkPeriod = Duration.ZERO;
+    		TimeInterval mealInterval = null;
+    		WorkScheduleType wsType = getWorkScheduleType();
+    		
+    		if (wsType.definedMeal()) { // o horario tem um intervalo de refeicao definido
+    			mealInterval = timeline.calculateMealBreakInterval(wsType.getMeal().getMealBreak()); // calcular o intervalo de refeicao dentro do periodo de refeicao definido
+    			System.out.println("intervalo refeicao: " + mealInterval);
+
+    			if (mealInterval != null) { // funcionario fez intervalo para almoco => ha 2 periodos de trabalho
+    				dailyBalance.setLunchBreak(mealInterval.getDuration()); // actualiza almoco no dailyBalance
+    				// calcula primeiro periodo de trabalho do horario normal: deste a entrada ate' 'a saida para o almoco
+    				firstWorkPeriod = timeline.calculateDurationAllIntervalsByAttributesToTime(mealInterval.getStartTime(), DomainConstants.WORKED_ATTRIBUTES);
+    				System.out.println("primeiro periodo de trabalho:" + firstWorkPeriod.toPeriod().toString());
+    				dailyBalance.setNormalWorkPeriod1Balance(wsType.checkNormalWorkPeriodAccordingToRules(firstWorkPeriod).
+    						minus(((NormalWorkPeriod)wsType.getNormalWorkPeriod()).getNormalWorkPeriod1Duration()));
+                  // calcula segundo periodo de trabalho do horario normal: desde entrada depois do almoco ate' 'a saida
+    				if (((NormalWorkPeriod)wsType.getNormalWorkPeriod()).definedNormalWorkPeriod2()) {
+    					lastWorkPeriod = timeline.calculateDurationAllIntervalsByAttributesFromTime(mealInterval.getEndTime(), DomainConstants.WORKED_ATTRIBUTES);
+    					System.out.println("segundo periodo de trabalho: " +lastWorkPeriod.toDuration().toPeriod().toString());
+    					dailyBalance.setNormalWorkPeriod2Balance(lastWorkPeriod.minus(((NormalWorkPeriod)wsType.getNormalWorkPeriod()).getNormalWorkPeriod2Duration()));
+    				}
+    			} else { // o funcionario nao foi almocar
+    				System.out.println("o funcionario nao foi almocar");
+    				Duration workPeriod = timeline.calculateDurationAllIntervalsByAttributes(DomainConstants.WORKED_ATTRIBUTES);
+//    				dailyBalance.setNormalWorkPeriod1Balance(worked.minus)
+    				Clocking firstClocking = clockingList.get(0);
+    				
+    				if (wsType.getMeal().getMealBreak().contains(firstClocking.getDate().toTimeOfDay(), false)) { // funcionario entrou no intervalo de almoco
+    					// considera-se o periodo desde o  inicio do intervalo de almoco + desconto obrigatorio de almoco
+    					// se funcionario entrar nesse periodo de tempo e'-lhe descontado desde a entrada ate' (inicio do intervalo de almoco + desconto obrigatorio de almoco)
+    					DateTime endLunchTime = wsType.getMeal().getLunchEnd().toDateTime(firstClocking.getDate());
+    					if (firstClocking.getDate().isBefore(endLunchTime)) {
+    						Duration enteredDuringLunchDiscount = (new Interval(firstClocking.getDate(), endLunchTime)).toDuration();
+    						workPeriod = workPeriod.minus(enteredDuringLunchDiscount);
+    					}
+    				} // else { //entrou antes ou depois do intervalo de almoco
+    				// situacao em q o funcionario entrou antes da hora de almoco
+    				// situacao em que o funcionario entrou depois da hora de almoco
+    				//	}
+    				dailyBalance.setNormalWorkPeriod1Balance(workPeriod.minus(wsType.getNormalWorkPeriod().getTotalNormalWorkPeriodDuration()));
+    			}
+    		} else { // meal nao esta definida
+    			Duration worked = timeline.calculateDurationAllIntervalsByAttributes(DomainConstants.WORKED_ATTRIBUTES);
+    			dailyBalance.setNormalWorkPeriod1Balance(worked.minus(((NormalWorkPeriod)wsType.getNormalWorkPeriod()).getNormalWorkPeriod1Duration()));
+    		}
+    		
+    		System.out.println("total worked1 ->" +dailyBalance.getNormalWorkPeriod1Balance().toPeriod().toString());
+    		System.out.println("total worked2 ->" +dailyBalance.getNormalWorkPeriod2Balance().toPeriod().toString());
+    		System.out.println(dailyBalance.getNormalWorkPeriod1Balance().plus(dailyBalance.getNormalWorkPeriod2Balance()).
+    				minus(((NormalWorkPeriod)wsType.getNormalWorkPeriod()).getTotalNormalWorkPeriodDuration()).toPeriod().toString());
+    		System.out.println("devia ter trabalhado ->" + ((NormalWorkPeriod)wsType.getNormalWorkPeriod()).getTotalNormalWorkPeriodDuration().toPeriod().toString());
+
+    		// Fixed Periods if defined
+    		wsType.calculateFixedPeriodDuration(dailyBalance, timeline);
+
+    		if (wsType.definedMeal()) {
+    			System.out.println("actualizar o meal");
+    			wsType.checkMealDurationAccordingToRules(dailyBalance);
+    		}
+//          System.out.println("total worked ->" + dailyBalance.getNormalWorkPeriod1Balance().plus(dailyBalance.getNormalWorkPeriod2Balance()).minus(this.getNormalWorkPeriod().
+//                  getTotalNormalWorkPeriodDuration()).toPeriod().toString());
+    		return dailyBalance;
     }
 
     
     
     
-
     
+//    // Returns the duration of normal period times the number of days per week the Employee has that schedule
+//	public Duration calculateWeekDuration() {
+//		return Duration.ZERO;
+//		//	    return new Duration(getWorkScheduleType().getNormalWorkPeriod().getTotalNormalWorkPeriodDuration().getMillis() * getWorkWeek().workDaysPerWeek());
+//	}
+    
+//    // Returns true if the schedule is defined in the week day weekDay
+//    public boolean isDefinedInWeekDay(WeekDay weekDay) {
+//    		return false;
+//    	// return getWorkWeek().worksAt(weekDay);
+//    }
+
     
 //	// validates and creates the Valid From To Interval
 //    // TODO find a decent name for this... god it sucks!
