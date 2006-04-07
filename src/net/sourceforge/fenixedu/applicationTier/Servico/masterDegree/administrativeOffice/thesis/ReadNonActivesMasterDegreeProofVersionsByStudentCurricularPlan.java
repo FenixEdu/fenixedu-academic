@@ -27,7 +27,7 @@ public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan exte
         StudentCurricularPlan studentCurricularPlan = rootDomainObject
                 .readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
         
-        List masterDegreeProofVersions = studentCurricularPlan.readNotActiveMasterDegreeProofVersion();
+        List masterDegreeProofVersions = studentCurricularPlan.readNotActiveMasterDegreeProofVersions();
 
         CollectionUtils.transform(masterDegreeProofVersions, new Transformer() {
 

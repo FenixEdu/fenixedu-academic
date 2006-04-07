@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.cms.PersistentCMSOJB;
@@ -118,10 +117,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentGrantContract getIPersistentGrantContract() {
 		return new GrantContractOJB();
-	}
-
-    public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion() {
-		return new MasterDegreeThesisDataVersionOJB();
 	}
 
     public IPersistentMetadata getIPersistentMetadata() {

@@ -53,9 +53,8 @@ public class CreateMasterDegreeThesis extends Service {
             throw new ExistingServiceException("error.exception.masterDegree.existingMasterDegreeThesis");
         }
 
-        MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = persistentSupport
-                .getIPersistentMasterDegreeThesisDataVersion().readActiveByDissertationTitle(
-                        dissertationTitle);
+        MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = MasterDegreeThesisDataVersion
+                .readActiveByDissertationTitle(dissertationTitle);
         if ((storedMasterDegreeThesisDataVersion != null)
                 && (!storedMasterDegreeThesisDataVersion.getMasterDegreeThesis()
                         .getStudentCurricularPlan().getIdInternal().equals(studentCurricularPlanID))) {

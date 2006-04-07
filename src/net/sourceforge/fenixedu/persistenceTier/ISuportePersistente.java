@@ -30,8 +30,6 @@ public interface ISuportePersistente {
 
 	public IPersistentGrantContract getIPersistentGrantContract();
 
-	public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion();
-
 	public IPersistentGratuitySituation getIPersistentGratuitySituation();
 
 	public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork();

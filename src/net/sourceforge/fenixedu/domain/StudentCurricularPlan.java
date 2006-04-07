@@ -1144,7 +1144,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return null;
     }
 
-    public List<MasterDegreeProofVersion> readNotActiveMasterDegreeProofVersion() {
+    public List<MasterDegreeProofVersion> readNotActiveMasterDegreeProofVersions() {
         MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
         List<MasterDegreeProofVersion> masterDegreeProofVersions = new ArrayList<MasterDegreeProofVersion>();
         if (masterDegreeThesis != null) {
@@ -1159,4 +1159,34 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 MasterDegreeProofVersion.LAST_MODIFICATION_COMPARATOR));
         return masterDegreeProofVersions;
     }
+
+    public MasterDegreeThesisDataVersion readActiveMasterDegreeThesisDataVersion() {
+        MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
+        if (masterDegreeThesis != null) {
+            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
+                    .getMasterDegreeThesisDataVersions()) {
+                if (masterDegreeThesisDataVersion.getCurrentState().equals(State.ACTIVE)) {
+                    return masterDegreeThesisDataVersion;
+                }
+            }
+        }
+        return null;
+    }
+
+    public List<MasterDegreeThesisDataVersion> readNotActiveMasterDegreeThesisDataVersions() {
+        MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
+        List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = new ArrayList<MasterDegreeThesisDataVersion>();
+        if (masterDegreeThesis != null) {
+            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
+                    .getMasterDegreeThesisDataVersions()) {
+                if (!masterDegreeThesisDataVersion.getCurrentState().equals(State.ACTIVE)) {
+                    masterDegreeThesisDataVersions.add(masterDegreeThesisDataVersion);
+                }
+            }
+        }
+        Collections.sort(masterDegreeThesisDataVersions, new ReverseComparator(
+                MasterDegreeThesisDataVersion.LAST_MODIFICATION_COMPARATOR));
+        return masterDegreeThesisDataVersions;
+    }
+
 }

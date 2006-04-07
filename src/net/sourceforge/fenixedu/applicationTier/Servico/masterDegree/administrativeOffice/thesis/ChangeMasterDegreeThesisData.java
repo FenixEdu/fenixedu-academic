@@ -48,9 +48,8 @@ public class ChangeMasterDegreeThesisData extends Service {
 
         StudentCurricularPlan studentCurricularPlan = rootDomainObject
                 .readStudentCurricularPlanByOID(studentCurricularPlanID);
-        MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = persistentSupport
-                .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
-                        studentCurricularPlanID);
+        MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = studentCurricularPlan
+                .readActiveMasterDegreeThesisDataVersion();
         if (storedMasterDegreeThesisDataVersion == null) {
             throw new NonExistingServiceException(
                     "error.exception.masterDegree.nonExistentMasterDegreeThesis");
@@ -58,9 +57,8 @@ public class ChangeMasterDegreeThesisData extends Service {
 
         storedMasterDegreeThesisDataVersion.setCurrentState(new State(State.INACTIVE));
 
-        MasterDegreeThesisDataVersion masterDegreeThesisDataVersionWithChosenDissertationTitle = persistentSupport
-                .getIPersistentMasterDegreeThesisDataVersion().readActiveByDissertationTitle(
-                        dissertationTitle);
+        MasterDegreeThesisDataVersion masterDegreeThesisDataVersionWithChosenDissertationTitle = MasterDegreeThesisDataVersion
+                .readActiveByDissertationTitle(dissertationTitle);
 
         if (masterDegreeThesisDataVersionWithChosenDissertationTitle != null) {
             if (!masterDegreeThesisDataVersionWithChosenDissertationTitle.getMasterDegreeThesis()

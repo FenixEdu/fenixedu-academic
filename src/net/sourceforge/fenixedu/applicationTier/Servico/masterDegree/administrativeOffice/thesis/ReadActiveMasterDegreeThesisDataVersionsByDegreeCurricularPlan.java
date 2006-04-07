@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -20,8 +21,12 @@ import org.apache.commons.collections.Transformer;
 public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
-        List masterDegreeThesisDataVersions = persistentSupport.getIPersistentMasterDegreeThesisDataVersion()
-                .readActiveByDegreeCurricularPlan(degreeCurricularPlanID);
+
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
+                .readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+
+        List masterDegreeThesisDataVersions = degreeCurricularPlan
+                .readActiveMasterDegreeThesisDataVersions();
 
         if (masterDegreeThesisDataVersions == null || masterDegreeThesisDataVersions.isEmpty()) {
             throw new NonExistingServiceException(

@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndResp;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -18,9 +19,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan extends Service {
 
     public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws ExcepcaoPersistencia {
-        List masterDegreeThesisDataVersions = persistentSupport
-                .getIPersistentMasterDegreeThesisDataVersion()
-                .readNotActivesVersionsByStudentCurricularPlan(infoStudentCurricularPlan.getIdInternal());
+        
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject
+                .readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
+
+        List masterDegreeThesisDataVersions = studentCurricularPlan
+                .readNotActiveMasterDegreeThesisDataVersions();
 
         List infoMasterDegreeThesisDataVersions = new ArrayList(masterDegreeThesisDataVersions.size());
         for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : (List<MasterDegreeThesisDataVersion>) masterDegreeThesisDataVersions) {

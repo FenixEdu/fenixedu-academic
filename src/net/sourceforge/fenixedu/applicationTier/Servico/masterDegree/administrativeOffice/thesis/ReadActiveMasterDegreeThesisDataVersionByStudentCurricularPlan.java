@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVer
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -21,9 +22,11 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan exte
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
-        MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = persistentSupport
-                .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
-                        infoStudentCurricularPlan.getIdInternal());
+        StudentCurricularPlan studentCurricularPlan = rootDomainObject
+                .readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
+
+        MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = studentCurricularPlan
+                .readActiveMasterDegreeThesisDataVersion();
 
         if (masterDegreeThesisDataVersion == null)
             throw new NonExistingServiceException(

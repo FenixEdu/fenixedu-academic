@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.SituationName;
+import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -67,18 +68,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         this(degree);
         super.setCurricularStage(CurricularStage.OLD);
-        
+
         if (name == null) {
             throw new DomainException("degreeCurricularPlan.name.not.null");
         }
 
         super.setName(name);
         super.setGradeScale(gradeScale);
-        
+
         oldStructureFieldsChange(state, inicialDate, endDate, degreeDuration,
                 minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
-        
-        this.setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
+
+        this
+                .setConcreteClassForStudentCurricularPlans(degree
+                        .getConcreteClassForDegreeCurricularPlans());
     }
 
     private void commonFieldsChange(String name, GradeScale gradeScale) {
@@ -140,14 +143,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setCurricularPlanMembersGroup(new FixedSetGroup(creator));
     }
 
-    private void newStructureFieldsChange(CurricularStage curricularStage, ExecutionYear beginExecutionYear) {
+    private void newStructureFieldsChange(CurricularStage curricularStage,
+            ExecutionYear beginExecutionYear) {
         if (curricularStage == null) {
             throw new DomainException("degreeCurricularPlan.curricularStage.not.null");
         }
         if (curricularStage == CurricularStage.APPROVED) {
             approve(beginExecutionYear);
         } else {
-            this.setCurricularStage(curricularStage);            
+            this.setCurricularStage(curricularStage);
         }
     }
 
@@ -160,7 +164,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
     }
 
-    public void edit(String name, CurricularStage curricularStage, GradeScale gradeScale, ExecutionYear beginExecutionYear) {
+    public void edit(String name, CurricularStage curricularStage, GradeScale gradeScale,
+            ExecutionYear beginExecutionYear) {
         commonFieldsChange(name, gradeScale);
         newStructureFieldsChange(curricularStage, beginExecutionYear);
 
@@ -171,7 +176,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
     }
-    
+
     public void approve(ExecutionYear beginExecutionYear) {
         if (beginExecutionYear == null) {
             throw new DomainException("error.invalid.execution.year");
@@ -183,20 +188,21 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 .readExecutionPeriodForSemester(Integer.valueOf(1)));
         setCurricularStage(CurricularStage.APPROVED);
     }
-    
+
     private void checkIfCurricularCoursesBelongToApprovedCompetenceCourses() {
         final List<String> approvedCompetenceCourses = new ArrayList<String>();
         for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
             final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-            if (! curricularCourse.isOptional() && ! curricularCourse.getCompetenceCourse().isApproved()) {
-                approvedCompetenceCourses.add(
-                        curricularCourse.getCompetenceCourse().getDepartmentUnit().getName()
+            if (!curricularCourse.isOptional() && !curricularCourse.getCompetenceCourse().isApproved()) {
+                approvedCompetenceCourses.add(curricularCourse.getCompetenceCourse().getDepartmentUnit()
+                        .getName()
                         + " > " + curricularCourse.getCompetenceCourse().getName());
             }
         }
         if (!approvedCompetenceCourses.isEmpty()) {
             final String[] result = new String[approvedCompetenceCourses.size()];
-            throw new DomainException("error.not.all.competence.courses.are.approved", approvedCompetenceCourses.toArray(result));
+            throw new DomainException("error.not.all.competence.courses.are.approved",
+                    approvedCompetenceCourses.toArray(result));
         }
     }
 
@@ -208,7 +214,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         for (final Context context : courseGroup.getChildContexts()) {
             context.setBeginExecutionPeriod(beginExecutionPeriod);
-            if (! context.getChildDegreeModule().isLeaf()) {
+            if (!context.getChildDegreeModule().isLeaf()) {
                 initBeginExecutionPeriodForDegreeCurricularPlan((CourseGroup) context
                         .getChildDegreeModule(), beginExecutionPeriod);
             }
@@ -216,10 +222,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private Boolean getCanBeDeleted() {
-        return (getRoot().getCanBeDeleted()
-                && !(hasAnyStudentCurricularPlans() || hasAnyCurricularCourseEquivalences()
-                        || hasAnyEnrolmentPeriods() || hasAnyCurricularCourses()
-                        || hasAnyExecutionDegrees() || hasAnyAreas()));
+        return (getRoot().getCanBeDeleted() && !(hasAnyStudentCurricularPlans()
+                || hasAnyCurricularCourseEquivalences() || hasAnyEnrolmentPeriods()
+                || hasAnyCurricularCourses() || hasAnyExecutionDegrees() || hasAnyAreas()));
     }
 
     public void delete() {
@@ -279,51 +284,59 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return null;
     }
-    
-    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(ExecutionPeriod executionPeriod){
-    	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-    	for (CurricularCourse curricularCourse : this.getCurricularCourses()) {
-			for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-				if(executionCourse.getExecutionPeriod().equals(executionPeriod)) {
-					result.add(executionCourse);
-				}
-			}
-		}
-    	return result;
+
+    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(ExecutionPeriod executionPeriod) {
+        List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+        for (CurricularCourse curricularCourse : this.getCurricularCourses()) {
+            for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+                if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
+                    result.add(executionCourse);
+                }
+            }
+        }
+        return result;
     }
-    
-    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndYear(ExecutionPeriod executionPeriod, Integer curricularYear, Integer semester){
-    	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-    	for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
-    		for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-				if(curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(curricularYear)) {
-					for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-						if(executionCourse.getExecutionPeriod().equals(executionPeriod)) {
-							result.add(executionCourse);
-						}
-					}
-					break;
-				}
-			}
-		}
-    	return result;
+
+    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndYear(
+            ExecutionPeriod executionPeriod, Integer curricularYear, Integer semester) {
+        List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+        for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
+            for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
+                        && curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()
+                                .equals(curricularYear)) {
+                    for (final ExecutionCourse executionCourse : curricularCourse
+                            .getAssociatedExecutionCourses()) {
+                        if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
+                            result.add(executionCourse);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return result;
     }
-    
-    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndCurricularYearAndName(ExecutionPeriod executionPeriod, Integer curricularYear, Integer semester){
-    	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-    	for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
-    		for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-				if(curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(curricularYear)) {
-					for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-						if(executionCourse.getExecutionPeriod().equals(executionPeriod)) {
-							result.add(executionCourse);
-						}
-					}
-					break;
-				}
-			}
-		}
-    	return result;
+
+    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndCurricularYearAndName(
+            ExecutionPeriod executionPeriod, Integer curricularYear, Integer semester) {
+        List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+        for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
+            for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
+                        && curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()
+                                .equals(curricularYear)) {
+                    for (final ExecutionCourse executionCourse : curricularCourse
+                            .getAssociatedExecutionCourses()) {
+                        if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
+                            result.add(executionCourse);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     public List<CurricularCourse> getCurricularCoursesWithExecutionIn(ExecutionYear executionYear) {
@@ -332,7 +345,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
                 List<ExecutionCourse> executionCourses = curricularCourse
                         .getExecutionCoursesByExecutionPeriod(executionPeriod);
-                if(!executionCourses.isEmpty()){
+                if (!executionCourses.isEmpty()) {
                     curricularCourses.add(curricularCourse);
                     break;
                 }
@@ -340,49 +353,53 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return curricularCourses;
     }
-    
-    public List<CurricularCourse> getCurricularCoursesByBasicAttribute(Boolean basic){
-    	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
-    	for (CurricularCourse curricularCourse : getCurricularCourses()) {
-            if(curricularCourse.getCurricularStage() != null && curricularCourse.getCurricularStage().equals(CurricularStage.OLD) && curricularCourse.getBasic().equals(basic)) {
-            	curricularCourses.add(curricularCourse);
+
+    public List<CurricularCourse> getCurricularCoursesByBasicAttribute(Boolean basic) {
+        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
+        for (CurricularCourse curricularCourse : getCurricularCourses()) {
+            if (curricularCourse.getCurricularStage() != null
+                    && curricularCourse.getCurricularStage().equals(CurricularStage.OLD)
+                    && curricularCourse.getBasic().equals(basic)) {
+                curricularCourses.add(curricularCourse);
             }
         }
         return curricularCourses;
     }
-    
+
     public EnrolmentPeriodInCurricularCourses getActualEnrolmentPeriod() {
-    	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-			if((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) && enrolmentPeriod.isValid()) {
-				return (EnrolmentPeriodInCurricularCourses) enrolmentPeriod;
-			}
-		}
-    	return null;
-    }
-    
-    public EnrolmentPeriodInCurricularCourses getNextEnrolmentPeriod() {
-    	List<EnrolmentPeriodInCurricularCourses> result = new ArrayList<EnrolmentPeriodInCurricularCourses>();
-    	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-			if((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) && DateFormatUtil.isAfter("yyyyMMdd", enrolmentPeriod.getStartDate(), new Date())) {
-				result.add((EnrolmentPeriodInCurricularCourses) enrolmentPeriod);
-			}
-		}
-    	if(!result.isEmpty()) {
-    		Collections.sort(result, new BeanComparator("startDate"));
-    		return result.get(0);
-    	}
-    	return null;
+        for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+            if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses)
+                    && enrolmentPeriod.isValid()) {
+                return (EnrolmentPeriodInCurricularCourses) enrolmentPeriod;
+            }
+        }
+        return null;
     }
 
-    
+    public EnrolmentPeriodInCurricularCourses getNextEnrolmentPeriod() {
+        List<EnrolmentPeriodInCurricularCourses> result = new ArrayList<EnrolmentPeriodInCurricularCourses>();
+        for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+            if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses)
+                    && DateFormatUtil.isAfter("yyyyMMdd", enrolmentPeriod.getStartDate(), new Date())) {
+                result.add((EnrolmentPeriodInCurricularCourses) enrolmentPeriod);
+            }
+        }
+        if (!result.isEmpty()) {
+            Collections.sort(result, new BeanComparator("startDate"));
+            return result.get(0);
+        }
+        return null;
+    }
+
     public EnrolmentPeriodInClasses getCurrentClassesEnrollmentPeriod() {
-    	ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-    	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-			if((enrolmentPeriod instanceof EnrolmentPeriodInClasses) && enrolmentPeriod.getExecutionPeriod().equals(executionPeriod)) {
-				return (EnrolmentPeriodInClasses) enrolmentPeriod;
-			}
-		}
-    	return null;
+        ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+        for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+            if ((enrolmentPeriod instanceof EnrolmentPeriodInClasses)
+                    && enrolmentPeriod.getExecutionPeriod().equals(executionPeriod)) {
+                return (EnrolmentPeriodInClasses) enrolmentPeriod;
+            }
+        }
+        return null;
 
     }
 
@@ -456,12 +473,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public List<CurricularCourse> getTFCs() {
-        List<CurricularCourse> curricularCourses = (List<CurricularCourse>) CollectionUtils.select(getCurricularCourses(), new Predicate() {
-            public boolean evaluate(Object obj) {
-                CurricularCourse cc = (CurricularCourse) obj;
-                return cc.getType().equals(CurricularCourseType.TFC_COURSE);
-            }
-        });
+        List<CurricularCourse> curricularCourses = (List<CurricularCourse>) CollectionUtils.select(
+                getCurricularCourses(), new Predicate() {
+                    public boolean evaluate(Object obj) {
+                        CurricularCourse cc = (CurricularCourse) obj;
+                        return cc.getType().equals(CurricularCourseType.TFC_COURSE);
+                    }
+                });
 
         return curricularCourses;
     }
@@ -505,13 +523,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return result;
     }
-    
-    public List<CurricularCourseScope> getActiveCurricularCourseScopes(){
-    	final List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
-    	for (final CurricularCourse course : getCurricularCourses()) {
-			result.addAll(course.getActiveScopes());
-		}
-    	return result;
+
+    public List<CurricularCourseScope> getActiveCurricularCourseScopes() {
+        final List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
+        for (final CurricularCourse course : getCurricularCourses()) {
+            result.addAll(course.getActiveScopes());
+        }
+        return result;
     }
 
     public List getSpecialListOfCurricularCourses() {
@@ -519,15 +537,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public List<CurricularCourseGroup> getAllOptionalCurricularCourseGroups() {
-    	List<CurricularCourseGroup> result = new ArrayList<CurricularCourseGroup>();
-    	for (Branch branch : this.getAreas()) {
-			for (CurricularCourseGroup curricularCourseGroup : branch.getCurricularCourseGroups()) {
-				if(curricularCourseGroup instanceof OptionalCurricularCourseGroup) {
-					result.add(curricularCourseGroup);
-				}
-			}
-		}
-    	return result;
+        List<CurricularCourseGroup> result = new ArrayList<CurricularCourseGroup>();
+        for (Branch branch : this.getAreas()) {
+            for (CurricularCourseGroup curricularCourseGroup : branch.getCurricularCourseGroups()) {
+                if (curricularCourseGroup instanceof OptionalCurricularCourseGroup) {
+                    result.add(curricularCourseGroup);
+                }
+            }
+        }
+        return result;
     }
 
     public boolean isGradeValid(String grade) {
@@ -573,16 +591,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
     }
-    
+
     public CourseGroup createCourseGroup(CourseGroup parentCourseGroup, String name, String nameEn,
             CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod,
             ExecutionPeriod endExecutionPeriod) {
         parentCourseGroup.checkDuplicateChildNames(name, nameEn);
         final CourseGroup courseGroup = new CourseGroup(name, nameEn);
-        new Context(parentCourseGroup, courseGroup, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+        new Context(parentCourseGroup, courseGroup, curricularPeriod, beginExecutionPeriod,
+                endExecutionPeriod);
         return courseGroup;
     }
-    
+
     public CurricularCourse createCurricularCourse(Double weight, String prerequisites,
             String prerequisitesEn, CurricularStage curricularStage, CompetenceCourse competenceCourse,
             CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
@@ -590,7 +609,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         checkIfPresentInDegreeCurricularPlan(competenceCourse, this);
         checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
-        
+
         return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage,
                 competenceCourse, parentCourseGroup, curricularPeriod, beginExecutionPeriod,
                 endExecutionPeriod);
@@ -599,14 +618,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public CurricularCourse createCurricularCourse(CourseGroup parentCourseGroup, String name,
             String nameEn, CurricularStage curricularStage, CurricularPeriod curricularPeriod,
             ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
-        
+
         return new CurricularCourse(parentCourseGroup, name, nameEn, curricularStage, curricularPeriod,
                 beginExecutionPeriod, endExecutionPeriod);
     }
 
     private void checkIfPresentInDegreeCurricularPlan(final CompetenceCourse competenceCourse,
             final DegreeCurricularPlan degreeCurricularPlan) {
-        
+
         final List<DegreeModule> curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan
                 .getDcpDegreeModules(CurricularCourse.class);
         for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
@@ -616,7 +635,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
     }
-    
+
     private void checkIfAnualBeginsInFirstPeriod(final CompetenceCourse competenceCourse,
             final CurricularPeriod curricularPeriod) {
 
@@ -626,16 +645,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                     "competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
         }
     }
-    
+
     public List<DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
         this.getRoot().collectChildDegreeModules(clazz, result);
         return new ArrayList<DegreeModule>(result);
     }
-    
-    public List<List<DegreeModule>> getDcpDegreeModulesIncludingFullPath(Class<? extends DegreeModule> clazz) {
-        final List<List<DegreeModule>> result = new ArrayList<List<DegreeModule>>(); 
-        this.getRoot().collectChildDegreeModulesIncludingFullPath(clazz, result, new ArrayList<DegreeModule>());
+
+    public List<List<DegreeModule>> getDcpDegreeModulesIncludingFullPath(
+            Class<? extends DegreeModule> clazz) {
+        final List<List<DegreeModule>> result = new ArrayList<List<DegreeModule>>();
+        this.getRoot().collectChildDegreeModulesIncludingFullPath(clazz, result,
+                new ArrayList<DegreeModule>());
         return result;
     }
 
@@ -651,8 +672,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public Boolean getUserCanBuild() {
         Person person = AccessControl.getUserView().getPerson();
         return (this.getCurricularPlanMembersGroup().isMember(person)
-                || person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) 
-                || person.hasRole(RoleType.MANAGER));
+                || person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person
+                .hasRole(RoleType.MANAGER));
     }
 
     @Override
@@ -712,7 +733,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public String getPresentationName() {
         return getDegree().getPresentationName() + " " + getName();
     }
-    
+
     public boolean hasAnyExecutionDegreeFor(ExecutionYear executionYear) {
         for (final ExecutionDegree executionDegree : this.getExecutionDegreesSet()) {
             if (executionDegree.getExecutionYear() == executionYear) {
@@ -721,7 +742,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return false;
     }
-    
+
     public Set<MasterDegreeCandidate> readMasterDegreeCandidates() {
         final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
         for (final ExecutionDegree executionDegree : this.getExecutionDegreesSet()) {
@@ -729,8 +750,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return result;
     }
-    
-    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySpecialization(final Specialization specialization) {
+
+    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySpecialization(
+            final Specialization specialization) {
         final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
         for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates()) {
             if (masterDegreeCandidate.getSpecialization() == specialization) {
@@ -739,8 +761,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return result;
     }
-    
-    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySituatioName(final SituationName situationName) {
+
+    public Set<MasterDegreeCandidate> readMasterDegreeCandidatesBySituatioName(
+            final SituationName situationName) {
         final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
         for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates()) {
             if (masterDegreeCandidate.hasCandidateSituationWith(situationName)) {
@@ -749,7 +772,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return result;
     }
-    
+
     public Set<MasterDegreeCandidate> readMasterDegreeCandidatesByCourseAssistant(boolean courseAssistant) {
         final Set<MasterDegreeCandidate> result = new HashSet<MasterDegreeCandidate>();
         for (final MasterDegreeCandidate masterDegreeCandidate : readMasterDegreeCandidates()) {
@@ -759,40 +782,58 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return result;
     }
-    
-    // -------------------------------------------------------------
-    // read static methods 
-    // -------------------------------------------------------------
-    
-    public static List<DegreeCurricularPlan> readByCurricularStage(CurricularStage curricularStage){
-    	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-    	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlans()) {
-			if(degreeCurricularPlan.getCurricularStage().equals(curricularStage)) {
-				result.add(degreeCurricularPlan);
-			}
-		}
-    	return result;
-    }
-        
-    public static List<DegreeCurricularPlan> readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state) {
-    	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-    	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlans()) {
-    		if(!degreeCurricularPlan.getDegree().isBolonhaDegree()) {
-    			if(degreeCurricularPlan.getDegree().getTipoCurso().equals(degreeType) && degreeCurricularPlan.getState().equals(state) && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
-    				result.add(degreeCurricularPlan);
-    			}
-    		}
-    	}
-    	return result;
-    }
-    
-    public static DegreeCurricularPlan readByNameAndDegreeSigla(String name, String degreeSigla) {
-    	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlans()) {
-			if(degreeCurricularPlan.getName().equalsIgnoreCase(name) && degreeCurricularPlan.getDegree().getSigla().equalsIgnoreCase(degreeSigla)) {
-				return degreeCurricularPlan;
-			}
-		}
-    	return null;
+
+    public List<MasterDegreeThesisDataVersion> readActiveMasterDegreeThesisDataVersions() {
+        List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = new ArrayList<MasterDegreeThesisDataVersion>();
+        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+            MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = studentCurricularPlan
+                    .readActiveMasterDegreeThesisDataVersion();
+            if (masterDegreeThesisDataVersion != null) {
+                masterDegreeThesisDataVersions.add(masterDegreeThesisDataVersion);
+            }
+        }
+        return masterDegreeThesisDataVersions;
     }
 
+    // -------------------------------------------------------------
+    // read static methods
+    // -------------------------------------------------------------
+
+    public static List<DegreeCurricularPlan> readByCurricularStage(CurricularStage curricularStage) {
+        List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+        for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
+                .getDegreeCurricularPlans()) {
+            if (degreeCurricularPlan.getCurricularStage().equals(curricularStage)) {
+                result.add(degreeCurricularPlan);
+            }
+        }
+        return result;
+    }
+
+    public static List<DegreeCurricularPlan> readByDegreeTypeAndState(DegreeType degreeType,
+            DegreeCurricularPlanState state) {
+        List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+        for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
+                .getDegreeCurricularPlans()) {
+            if (!degreeCurricularPlan.getDegree().isBolonhaDegree()) {
+                if (degreeCurricularPlan.getDegree().getTipoCurso().equals(degreeType)
+                        && degreeCurricularPlan.getState().equals(state)
+                        && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
+                    result.add(degreeCurricularPlan);
+                }
+            }
+        }
+        return result;
+    }
+
+    public static DegreeCurricularPlan readByNameAndDegreeSigla(String name, String degreeSigla) {
+        for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
+                .getDegreeCurricularPlans()) {
+            if (degreeCurricularPlan.getName().equalsIgnoreCase(name)
+                    && degreeCurricularPlan.getDegree().getSigla().equalsIgnoreCase(degreeSigla)) {
+                return degreeCurricularPlan;
+            }
+        }
+        return null;
+    }
 }
