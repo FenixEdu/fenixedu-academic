@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.PersonAccount;
 public class GratuityTransaction extends GratuityTransaction_Base {
 
 	public GratuityTransaction() {
+        super();
 	}
 
 	/**
@@ -34,6 +35,7 @@ public class GratuityTransaction extends GratuityTransaction_Base {
 			TransactionType transactionType, Boolean wasInternalBalance,
 			Person responsiblePerson, PersonAccount personAccount,
 			GuideEntry guideEntry, GratuitySituation gratuitySituation) {
+        this();
         setOjbConcreteClass(getClass().getName());
 		setValue(value);
 		setTransactionDate(transactionDate);
@@ -46,6 +48,5 @@ public class GratuityTransaction extends GratuityTransaction_Base {
         setGuideEntry(guideEntry);
 		setGratuitySituation(gratuitySituation);
 	}
-
 
 }
