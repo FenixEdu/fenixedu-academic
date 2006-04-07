@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 
 
 /**
@@ -26,15 +28,25 @@ public class GuideEntry extends GuideEntry_Base {
     }
 
     public void delete() {
-        if (hasPaymentTransaction()) {
-            getPaymentTransaction().delete();
-        }
-        for (; hasAnyReimbursementGuideEntries(); getReimbursementGuideEntries().get(0).delete());
-        
-        removeGuide();
-        removeRootDomainObject();
+        if (canBeDeleted()) {
+            if (hasPaymentTransaction()) {
+                getPaymentTransaction().delete();
+            }
+            
+            Guide guide = getGuide();
+            removeGuide();
+            guide.updateTotalValue();
+            
+            removeRootDomainObject();
 
-        deleteDomainObject();
+            deleteDomainObject();
+        } else {
+            throw new DomainException("guide.entry.cannot.be.deleted");
+        }
     }
 
+    public boolean canBeDeleted() {
+        return !hasAnyReimbursementGuideEntries();
+    }
+    
 }
