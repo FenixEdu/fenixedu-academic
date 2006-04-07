@@ -51,6 +51,52 @@ public class ExecutionDegree extends ExecutionDegree_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
     
+    public void delete() {
+        if (canBeDeleted()) {
+            for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete());
+            if (hasGratuityValues()) {
+                getGratuityValues().delete();
+            }
+
+            OccupationPeriod occupationPeriodReference = getPeriodLessonsFirstSemester();
+            removePeriodLessonsFirstSemester();
+            occupationPeriodReference.deleteIfEmpty();
+
+            occupationPeriodReference = getPeriodLessonsSecondSemester(); 
+            removePeriodLessonsSecondSemester();
+            occupationPeriodReference.deleteIfEmpty();
+
+            occupationPeriodReference = getPeriodExamsFirstSemester();
+            removePeriodExamsFirstSemester();
+            occupationPeriodReference.deleteIfEmpty();
+            
+            occupationPeriodReference = getPeriodExamsSecondSemester();
+            removePeriodExamsSecondSemester();
+            occupationPeriodReference.deleteIfEmpty();
+            
+            removeExecutionYear();
+            removeDegreeCurricularPlan();
+            removeCampus();
+            
+            removeRootDomainObject();
+            deleteDomainObject();
+        } else {
+            throw new DomainException("execution.degree.cannot.be.deleted");
+        }
+    }
+    
+    public boolean canBeDeleted() {
+        return (!hasAnySchoolClasses()
+                && !hasAnyMasterDegreeCandidates()
+                && !hasAnyGuides()
+                && !hasScheduling()
+                && !hasAnyAssociatedFinalDegreeWorkGroups()
+                && getPeriodLessonsFirstSemester().getRoomOccupations().isEmpty()
+                && getPeriodLessonsSecondSemester().getRoomOccupations().isEmpty()
+                && getPeriodExamsFirstSemester().getRoomOccupations().isEmpty()
+                && getPeriodExamsSecondSemester().getRoomOccupations().isEmpty());        
+    }
+    
     public void edit(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap,
             Date periodLessonsFirstSemesterBegin, Date periodLessonsFirstSemesterEnd,
             Date periodExamsFirstSemesterBegin, Date periodExamsFirstSemesterEnd,
