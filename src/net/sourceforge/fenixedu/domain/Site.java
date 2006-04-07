@@ -115,7 +115,7 @@ public class Site extends Site_Base {
 	}
     }
     
-    private boolean canBeDeleted() {
+    public boolean canBeDeleted() {
         return !hasAnyAssociatedAnnouncements() && !hasAnyAssociatedSections();
     }
     
