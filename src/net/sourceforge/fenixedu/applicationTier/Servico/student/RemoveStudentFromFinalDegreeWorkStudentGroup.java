@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 import org.apache.commons.collections.Predicate;
 
@@ -24,30 +22,28 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup extends Service {
         super();
     }
 
-    public boolean run(String username, Integer groupOID, Integer studentToRemoveID)
-            throws ExcepcaoPersistencia, FenixServiceException {
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
-
+    public boolean run(String username, Integer groupOID, Integer studentToRemoveID) throws FenixServiceException {
         Group group = rootDomainObject.readGroupByOID(groupOID);
         Student student = Student.readByUsername(username);
-        if (group == null || student == null || group.getGroupStudents() == null
+        
+        if (group == null 
+                || student == null 
+                || group.getGroupStudents() == null
                 || student.getIdInternal().equals(studentToRemoveID)) {
             return false;
         }
+        
         if (!group.getGroupProposals().isEmpty()) {
             throw new GroupProposalCandidaciesExistException();
         }
 
         PREDICATE_FILTER_STUDENT_ID predicate = new PREDICATE_FILTER_STUDENT_ID(studentToRemoveID);
-        for (int i = 0; i < group.getGroupStudents().size(); i++) {
-            GroupStudent groupStudent = group.getGroupStudents().get(i);
+        for (GroupStudent groupStudent : group.getGroupStudents()) {
             if (!predicate.evaluate(groupStudent)) {
-                persistentFinalDegreeWork.deleteByOID(GroupStudent.class, groupStudent.getIdInternal());
+                groupStudent.delete();
             }
         }
         return true;
-
     }
 
     private class PREDICATE_FILTER_STUDENT_ID implements Predicate {
