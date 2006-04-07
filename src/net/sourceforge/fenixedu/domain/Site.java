@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 /**
  * @author Ivo Brand�o
  */
@@ -114,22 +116,17 @@ public class Site extends Site_Base {
     }
     
     private boolean canBeDeleted() {
-    	if (hasAnyAssociatedAnnouncements()) {
-            return false;
-        }
-        if (hasAnyAssociatedSections()) {
-            return false;
-        }
-        
-        return true;
+        return !hasAnyAssociatedAnnouncements() && !hasAnyAssociatedSections();
     }
     
     public void delete() {
     	if(canBeDeleted()) {
-    		setExecutionCourse(null);
+    		removeExecutionCourse();
     		removeRootDomainObject();
-        super.deleteDomainObject();
-    	}
+    		super.deleteDomainObject();
+    	} else {
+            throw new DomainException("site.cannot.be.deleted");
+        }
     }
 
     public List<Section> getAssociatedSections(final Section parentSection) {
