@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
@@ -40,6 +42,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 import net.sourceforge.fenixedu.util.OrientationType;
+import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.PublicationType;
 import net.sourceforge.fenixedu.util.State;
@@ -842,6 +845,20 @@ public class Teacher extends Teacher_Base {
             }
         }
         return null;
+    }
+
+    public SortedSet<ExecutionCourse> getCurrentExecutionCourses() {
+        final SortedSet<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+        for (final Professorship professorship : getProfessorshipsSet()) {
+            final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+            final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+            final ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
+            if (executionPeriod.getState().equals(PeriodState.CURRENT)
+                    || (nextExecutionPeriod != null && nextExecutionPeriod.getState().equals(PeriodState.CURRENT))) {
+                executionCourses.add(executionCourse);
+            }
+        }
+        return executionCourses;
     }
 
 }
