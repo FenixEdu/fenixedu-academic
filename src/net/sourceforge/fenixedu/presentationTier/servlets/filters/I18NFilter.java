@@ -73,6 +73,8 @@ public class I18NFilter implements Filter {
             if (httpSession.getAttribute(Globals.LOCALE_KEY) == null) {
                 setDefaultLocale(request, httpSession);
             }
+            
+            MultiLanguageString.setLocale((Locale) httpSession.getAttribute(Globals.LOCALE_KEY));
         }
 
         chain.doFilter(request, response);
