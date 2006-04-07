@@ -4,9 +4,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
@@ -36,8 +34,6 @@ public interface ISuportePersistente {
 	public IPersistentGrantContract getIPersistentGrantContract();
 
 	public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher();
-
-	public IPersistentGrantCostCenter getIPersistentGrantCostCenter();
 
 	public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion();
 

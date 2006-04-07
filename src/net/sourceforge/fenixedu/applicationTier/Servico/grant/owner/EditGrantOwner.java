@@ -20,20 +20,20 @@ public class EditGrantOwner extends Service {
         return result;
     }
 
-    private GrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber) throws FenixServiceException, ExcepcaoPersistencia {
-        return persistentSupport.getIPersistentGrantOwner().readGrantOwnerByNumber(grantOwnerNumber);
+    private GrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        return GrantOwner.readGrantOwnerByNumber(grantOwnerNumber);
     }
 
     private GrantOwner prepareGrantOwner(GrantOwner grantOwner, Person person,
-            InfoGrantOwner infoGrantOwner)
-            throws ExcepcaoPersistencia {
+            InfoGrantOwner infoGrantOwner) throws ExcepcaoPersistencia {
         grantOwner.setPerson(person);
         grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
         grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
 
         if (infoGrantOwner.getGrantOwnerNumber() == null) {
             // Generate the GrantOwner's number
-            Integer maxNumber = persistentSupport.getIPersistentGrantOwner().readMaxGrantOwnerNumber();
+            Integer maxNumber = GrantOwner.readMaxGrantOwnerNumber();
             int aux = maxNumber + 1;
             Integer nextNumber = Integer.valueOf(aux);
             grantOwner.setNumber(nextNumber);
@@ -54,7 +54,8 @@ public class EditGrantOwner extends Service {
         Country country = null;
 
         if (infoGrantOwner.getPersonInfo().getInfoPais() != null) {
-            country = rootDomainObject.readCountryByOID(infoGrantOwner.getPersonInfo().getInfoPais().getIdInternal());
+            country = rootDomainObject.readCountryByOID(infoGrantOwner.getPersonInfo().getInfoPais()
+                    .getIdInternal());
         } else {
             // If the person country is undefined it is set to default
             // "PORTUGUESA NATURAL DO CONTINENTE"
@@ -64,10 +65,11 @@ public class EditGrantOwner extends Service {
         }
 
         // create or edit person information
-        if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {           
-            person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);            
+        if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {
+            person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);
         } else {
-            person = (Person) rootDomainObject.readPartyByOID(infoGrantOwner.getPersonInfo().getIdInternal());
+            person = (Person) rootDomainObject.readPartyByOID(infoGrantOwner.getPersonInfo()
+                    .getIdInternal());
             person.edit(infoGrantOwner.getPersonInfo(), country);
         }
 

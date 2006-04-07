@@ -12,9 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
@@ -26,9 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceTr
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeProofVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisDataVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantCostCenterVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantOrientationTeacherVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owner.GrantOwnerVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.MetadataVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.StudentTestQuestionVO;
 
@@ -58,10 +54,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return null;
     }
 
-    public IPersistentGrantCostCenter getIPersistentGrantCostCenter() {
-        return new GrantCostCenterVO();
-    }
-
     public void confirmarTransaccao() throws ExcepcaoPersistencia {
         return;
     }
@@ -73,11 +65,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     public IPersistentMetadata getIPersistentMetadata() {
         return new MetadataVO();
     }
-
-    public IPersistentGrantOwner getIPersistentGrantOwner() {
-        return new GrantOwnerVO();
-    }
-
 
     public IPersistentGrantContract getIPersistentGrantContract() {
         return new GrantContractVO();

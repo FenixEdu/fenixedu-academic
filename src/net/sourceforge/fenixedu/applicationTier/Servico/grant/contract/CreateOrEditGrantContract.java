@@ -16,26 +16,29 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 
 public class CreateOrEditGrantContract extends Service {
 
-    public void run(InfoGrantContract infoGrantContract) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoGrantContract infoGrantContract) throws FenixServiceException,
+            ExcepcaoPersistencia {
         IPersistentGrantContract pGrantContract = persistentSupport.getIPersistentGrantContract();
         final GrantContract grantContract;
         if (infoGrantContract.getContractNumber() == null) {
             // set the contract number!
-            Integer maxNumber = pGrantContract.readMaxGrantContractNumberByGrantOwner(infoGrantContract.getGrantOwnerInfo().getIdInternal());
+            Integer maxNumber = pGrantContract.readMaxGrantContractNumberByGrantOwner(infoGrantContract
+                    .getGrantOwnerInfo().getIdInternal());
             Integer newContractNumber = Integer.valueOf(maxNumber + 1);
             infoGrantContract.setContractNumber(newContractNumber);
 
             grantContract = DomainFactory.makeGrantContract();
         } else {
-            grantContract = pGrantContract.readGrantContractByNumberAndGrantOwner(infoGrantContract.getContractNumber(), infoGrantContract.getGrantOwnerInfo().getIdInternal());
+            grantContract = pGrantContract.readGrantContractByNumberAndGrantOwner(infoGrantContract
+                    .getContractNumber(), infoGrantContract.getGrantOwnerInfo().getIdInternal());
         }
 
-        GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(infoGrantContract.getGrantOwnerInfo().getIdInternal());
+        GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(infoGrantContract
+                .getGrantOwnerInfo().getIdInternal());
         grantContract.setGrantOwner(grantOwner);
 
         GrantType grantType = GrantType.readBySigla(infoGrantContract.getGrantTypeInfo().getSigla());
@@ -44,17 +47,26 @@ public class CreateOrEditGrantContract extends Service {
         }
         grantContract.setGrantType(grantType);
 
-        GrantOrientationTeacher grantOrientationTeacher = rootDomainObject.readGrantOrientationTeacherByOID(infoGrantContract.getGrantOrientationTeacherInfo().getIdInternal());
+        GrantOrientationTeacher grantOrientationTeacher = rootDomainObject
+                .readGrantOrientationTeacherByOID(infoGrantContract.getGrantOrientationTeacherInfo()
+                        .getIdInternal());
         if (grantOrientationTeacher == null) {
-            if (infoGrantContract.getIdInternal() != null || !infoGrantContract.getIdInternal().equals(Integer.valueOf(0))) {
-                IPersistentGrantOrientationTeacher pGrantOrientationTeacher = persistentSupport.getIPersistentGrantOrientationTeacher();
-                grantOrientationTeacher = pGrantOrientationTeacher.readActualGrantOrientationTeacherByContract(infoGrantContract.getIdInternal(), Integer.valueOf(0));
+            if (infoGrantContract.getIdInternal() != null
+                    || !infoGrantContract.getIdInternal().equals(Integer.valueOf(0))) {
+                IPersistentGrantOrientationTeacher pGrantOrientationTeacher = persistentSupport
+                        .getIPersistentGrantOrientationTeacher();
+                grantOrientationTeacher = pGrantOrientationTeacher
+                        .readActualGrantOrientationTeacherByContract(infoGrantContract.getIdInternal(),
+                                Integer.valueOf(0));
             }
 
             if (grantOrientationTeacher == null) {
-                grantOrientationTeacher = createNewGrantOrientationTeacher(infoGrantContract.getGrantOrientationTeacherInfo(), grantContract);
+                grantOrientationTeacher = createNewGrantOrientationTeacher(infoGrantContract
+                        .getGrantOrientationTeacherInfo(), grantContract);
             } else {
-                final Teacher teacher = Teacher.readByNumber(infoGrantContract.getGrantOrientationTeacherInfo().getOrientationTeacherInfo().getTeacherNumber());
+                final Teacher teacher = Teacher
+                        .readByNumber(infoGrantContract.getGrantOrientationTeacherInfo()
+                                .getOrientationTeacherInfo().getTeacherNumber());
 
                 grantOrientationTeacher.setOrientationTeacher(teacher);
             }
@@ -63,8 +75,8 @@ public class CreateOrEditGrantContract extends Service {
 
         if (infoGrantContract.getGrantCostCenterInfo() != null
                 && infoGrantContract.getGrantCostCenterInfo().getNumber() != null) {
-            IPersistentGrantCostCenter pGrantCostCenter = persistentSupport.getIPersistentGrantCostCenter();
-            GrantCostCenter grantCostCenter = pGrantCostCenter.readGrantCostCenterByNumber(infoGrantContract.getGrantCostCenterInfo().getNumber());
+            GrantCostCenter grantCostCenter = GrantCostCenter
+                    .readGrantCostCenterByNumber(infoGrantContract.getGrantCostCenterInfo().getNumber());
             if (grantCostCenter == null) {
                 throw new InvalidGrantPaymentEntityException();
             }
@@ -78,15 +90,17 @@ public class CreateOrEditGrantContract extends Service {
         grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
     }
 
-    private GrantOrientationTeacher createNewGrantOrientationTeacher(InfoGrantOrientationTeacher grantOrientationTeacherInfo, GrantContract grantContract)
+    private GrantOrientationTeacher createNewGrantOrientationTeacher(
+            InfoGrantOrientationTeacher grantOrientationTeacherInfo, GrantContract grantContract)
             throws FenixServiceException, ExcepcaoPersistencia {
-        
-        final Teacher teacher = Teacher.readByNumber(grantOrientationTeacherInfo.getOrientationTeacherInfo().getTeacherNumber());
+
+        final Teacher teacher = Teacher.readByNumber(grantOrientationTeacherInfo
+                .getOrientationTeacherInfo().getTeacherNumber());
 
         final GrantOrientationTeacher newGrantOrientationTeacher;
         if (teacher == null) {
             throw new GrantOrientationTeacherNotFoundException();
-	    }
+        }
 
         newGrantOrientationTeacher = DomainFactory.makeGrantOrientationTeacher();
         newGrantOrientationTeacher.setBeginDate(grantOrientationTeacherInfo.getBeginDate());

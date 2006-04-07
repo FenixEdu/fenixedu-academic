@@ -11,10 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -36,7 +33,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         Object[] arguments = getServiceCallArguments(request);
 
         try {
-            //Verify if needed fields are null
+            // Verify if needed fields are null
             if ((id == null) || (id.getRoles() == null)) {
                 throw new NotAuthorizedException();
             }
@@ -47,13 +44,13 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
 
             InfoQualification infoQualification = null;
 
-            //New Qualification, second argument is a qualification
+            // New Qualification, second argument is a qualification
             infoQualification = (InfoQualification) arguments[1];
             if (infoQualification == null)
                 throw new NotAuthorizedException();
 
             boolean valid = false;
-            //Verify if:
+            // Verify if:
             // 1: The user ir a Grant Owner Manager and the qualification
             // belongs to a Grant Owner
             // 2: The user ir a Teacher and the qualification is his own
@@ -75,11 +72,9 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
 
     private boolean isGrantOwner(InfoQualification infoQualification) {
         try {
-            IPersistentGrantOwner persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
-            GrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(infoQualification.getInfoPerson().getIdInternal());
-            return (grantOwner != null);
-        } catch (ExcepcaoPersistencia e) {
-            return false;
+            Person person = (Person) rootDomainObject.readPartyByOID(infoQualification.getInfoPerson()
+                    .getIdInternal());
+            return person.hasGrantOwner();
         } catch (Exception e) {
             return false;
         }
@@ -91,7 +86,8 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         if (isNew) {
             return true;
         }
-        final Qualification qualification = rootDomainObject.readQualificationByOID(infoQualification.getIdInternal());
+        final Qualification qualification = rootDomainObject.readQualificationByOID(infoQualification
+                .getIdInternal());
         return qualification.getPerson() == Person.readPersonByUsername(username);
     }
 }

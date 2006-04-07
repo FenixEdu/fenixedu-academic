@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 
 public class EditGrantContractRegime extends EditDomainObjectService {
@@ -88,9 +87,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
             if (infoGrantContractRegime.getGrantCostCenterInfo() != null
                     && ((infoGrantContractRegime.getGrantCostCenterInfo().getNumber()).trim()).length() > 0) { // ||
-                IPersistentGrantCostCenter pGrantCostCenter = persistentSupport
-                        .getIPersistentGrantCostCenter();
-                GrantCostCenter grantCostCenter = pGrantCostCenter
+                GrantCostCenter grantCostCenter = GrantCostCenter
                         .readGrantCostCenterByNumber(infoGrantContractRegime.getGrantCostCenterInfo()
                                 .getNumber());
                 if (grantCostCenter == null)
@@ -124,9 +121,10 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                         infoPerson = getInfoPerson(teacher.getPerson());
                         infoTeacher.setInfoPerson(infoPerson);
                     } else {
-                        teacher = Teacher.readByNumber(infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
+                        teacher = Teacher.readByNumber(infoGrantContractRegime.getInfoTeacher()
+                                .getTeacherNumber());
                         infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
-                        
+
                         InfoPerson infoPerson = new InfoPerson();
                         Person person = teacher.getPerson();
                         infoPerson = getInfoPerson(person);
