@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -28,7 +27,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -115,28 +113,8 @@ public class EditGuideInformation extends Service {
                 }
                 // Remove the Guide entries wich have been deleted
                 for (InfoGuideEntry infoGuideEntry : guideEntriesToRemove) {
-                    GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(infoGuideEntry
-                            .getIdInternal());
-                    PaymentTransaction paymentTransaction = guideEntry.getPaymentTransaction();
-
-                    if (paymentTransaction != null) {
-                        paymentTransaction.getPersonAccount().getPaymentTransactions().remove(
-                                paymentTransaction);
-                        persistentObject.deleteByOID(PaymentTransaction.class, paymentTransaction
-                                .getIdInternal());
-                    }
-
-                    if (guideEntry.getReimbursementGuideEntries() != null) {
-                        for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry
-                                .getReimbursementGuideEntries()) {
-                            reimbursementGuideEntry.getReimbursementGuide()
-                                    .getReimbursementGuideEntries().remove(reimbursementGuideEntry);
-                            persistentObject.deleteByOID(ReimbursementGuideEntry.class,
-                                    reimbursementGuideEntry.getIdInternal());
-                        }
-                    }
-                    guideEntry.getGuide().getGuideEntries().remove(guideEntry);
-                    persistentObject.deleteByOID(GuideEntry.class, infoGuideEntry.getIdInternal());
+                    GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(infoGuideEntry.getIdInternal());
+                    guideEntry.delete();
                 }
 
                 // Update the remaing guide entries
@@ -274,9 +252,6 @@ public class EditGuideInformation extends Service {
         Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor()
                 .getContributorNumber());
        
-        ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(infoGuide
-                .getInfoExecutionDegree().getInfoExecutionYear().getYear());
-
         ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
                 infoGuide.getInfoExecutionDegree().getIdInternal());
         Guide guide = DomainFactory.makeGuide();
