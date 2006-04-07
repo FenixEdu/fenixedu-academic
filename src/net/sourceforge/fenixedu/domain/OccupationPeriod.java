@@ -110,6 +110,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             removeNextPeriod();
             removePreviousPeriod();
         }
+        removeRootDomainObject();
         deleteDomainObject();
     }
     
