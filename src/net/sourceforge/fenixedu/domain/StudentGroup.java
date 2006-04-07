@@ -32,14 +32,14 @@ public class StudentGroup extends StudentGroup_Base {
     }
 
     public void delete(){
-        List attendsList = this.getAttends();
-
-        if (attendsList.size() != 0) {
-            throw new DomainException(this.getClass().getName(), "");
+        if (!hasAnyAttends()) {
+            removeShift();
+            removeGrouping();
+            removeRootDomainObject();
+            deleteDomainObject();
+        } else {
+            throw new DomainException("student.group.cannot.be.deleted");
         }
-        
-        this.setShift(null);
-        this.setGrouping(null);
     }
     
     public void editShift(Shift shift){
