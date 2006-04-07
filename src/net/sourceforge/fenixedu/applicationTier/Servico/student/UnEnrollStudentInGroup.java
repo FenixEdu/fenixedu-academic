@@ -71,9 +71,7 @@ public class UnEnrollStudentInGroup extends Service {
         studentGroup.removeAttends(attend);
 
         if (resultEmpty) {
-            groupProperties.removeStudentGroups(studentGroup);
-            studentGroup.setShift(null);
-            persistentObject.deleteByOID(StudentGroup.class, studentGroup.getIdInternal());
+            studentGroup.delete();
             return Boolean.FALSE;
         }
 
@@ -84,10 +82,16 @@ public class UnEnrollStudentInGroup extends Service {
             }
             executionCourseNames.append(executionCourse.getNome());
         }
-        EMail.send(mailServer(), "Fenix System", messages.getMessage("suporte.mail"), messages
-                .getMessage("message.subject.grouping.change"), emails, new ArrayList(),
-                new ArrayList(), messages.getMessage("message.body.grouping.change.unenrolment", student
-                        .getNumber().toString(), studentGroup.getGroupNumber().toString()));
+        EMail.send(
+                mailServer(), 
+                "Fenix System", 
+                messages.getMessage("suporte.mail"), 
+                messages.getMessage("message.subject.grouping.change"), 
+                emails, 
+                new ArrayList(),
+                new ArrayList(), 
+                messages.getMessage("message.body.grouping.change.unenrolment", 
+                student.getNumber().toString(), studentGroup.getGroupNumber().toString()));
 
         return Boolean.TRUE;
     }
