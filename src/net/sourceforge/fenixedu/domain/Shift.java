@@ -17,15 +17,29 @@ public class Shift extends Shift_Base {
 	}
 
     public void delete() {
-        for (; hasAnyAssociatedLessons(); getAssociatedLessons().get(0).delete());
-        
-        getAssociatedClasses().clear();
-        removeDisciplinaExecucao();
-        removeRootDomainObject();
-        deleteDomainObject();    
+        if (canBeDeleted()) {
+            for (; hasAnyAssociatedLessons(); getAssociatedLessons().get(0).delete());
+            for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().get(0).delete());
+            
+            getAssociatedClasses().clear();
+            removeDisciplinaExecucao();
+            removeRootDomainObject();
+            deleteDomainObject();    
+        } else {
+            throw new DomainException("shift.cannot.be.deleted");
+        }
     }
 
-	public double hours() {
+	public boolean canBeDeleted() {
+	    if (hasAnyAssociatedSummaries()
+                || hasAnyAssociatedStudentGroups()
+                || hasAnyStudents()) {
+            return false;
+        }
+        return true;
+    }
+
+    public double hours() {
         double hours = 0;
         List lessons = this.getAssociatedLessons();
         for (int i = 0; i < lessons.size(); i++) {
