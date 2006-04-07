@@ -7780,7 +7780,7 @@ relation RootDomainObjectWorkScheduleType {
 
 relation RootDomainObjectPeriodicity {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	
 	net.sourceforge.fenixedu.domain.assiduousness.Periodicity playsRole periodicities {
 		multiplicity *;
 	}
