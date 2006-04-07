@@ -115,7 +115,7 @@ public class InsertGratuityData extends Service {
 			}
 		}
 
-		List paymentPhasesList = infoGratuityValues.getInfoPaymentPhases();
+		List<InfoPaymentPhase> paymentPhasesList = infoGratuityValues.getInfoPaymentPhases();
 		if (paymentPhasesList != null && paymentPhasesList.size() > 0) {
 			// verify if total of all payment phases isn't greater then anual
 			// value
@@ -142,8 +142,8 @@ public class InsertGratuityData extends Service {
 		return gratuityValue;
 	}
 
-	private void validateDatesOfPaymentPhases(List paymentPhasesList) throws FenixServiceException {
-		List paymentPhaseListAux = new ArrayList(paymentPhasesList);
+	private void validateDatesOfPaymentPhases(List<InfoPaymentPhase> paymentPhasesList) throws FenixServiceException {
+		List<InfoPaymentPhase> paymentPhaseListAux = new ArrayList<InfoPaymentPhase>(paymentPhasesList);
 		Collections.sort(paymentPhaseListAux, new BeanComparator("endDate"));
 
 		ListIterator iterator = paymentPhaseListAux.listIterator();
@@ -182,12 +182,10 @@ public class InsertGratuityData extends Service {
 
     private void writePaymentPhases(InfoGratuityValues infoGratuityValues, GratuityValues gratuityValues)
             throws FenixServiceException, ExcepcaoPersistencia {
-		if (gratuityValues.getPaymentPhaseList() != null
-				&& gratuityValues.getPaymentPhaseList().size() > 0) {
+		if (gratuityValues.hasAnyPaymentPhaseList()) {
 			for (PaymentPhase paymentPhase : gratuityValues.getPaymentPhaseList()) {
-				persistentObject.deleteByOID(PaymentPhase.class, paymentPhase.getIdInternal());
+				paymentPhase.delete();
 			}
-			gratuityValues.getPaymentPhaseList().clear();
 		}
 
 		if (infoGratuityValues.getInfoPaymentPhases() != null
@@ -209,4 +207,5 @@ public class InsertGratuityData extends Service {
 			}
 		}
 	}
+
 }
