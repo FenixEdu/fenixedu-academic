@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
  * 
@@ -34,7 +33,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
 
         gratuitySituationsToDelete = new HashSet<GratuitySituation>();
 
-        ExecutionYear executionYear = readExecutionYear(year, persistentSupport);
+        ExecutionYear executionYear = readExecutionYear(year);
 
         // read master degree and persistentSupportecialization execution degrees
         Collection<ExecutionDegree> executionDegrees = executionYear
@@ -74,12 +73,11 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
         }
 
         for (GratuitySituation gratuitySituationToDelete : this.gratuitySituationsToDelete) {
-        	persistentObject.deleteByOID(GratuitySituation.class,
-                    gratuitySituationToDelete.getIdInternal());
+            gratuitySituationToDelete.delete();
         }
     }
 
-    private ExecutionYear readExecutionYear(String year, ISuportePersistente persistentSupport)
+    private ExecutionYear readExecutionYear(String year)
             throws ExcepcaoPersistencia {
         
         final ExecutionYear executionYear;
