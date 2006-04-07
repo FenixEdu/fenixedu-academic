@@ -143,6 +143,7 @@ public class SubmitMarksAction extends DispatchAction {
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(teacherNumber.toString(), e);
         } catch (FenixServiceException e) {
+            e.printStackTrace();
             throw new FenixActionException(e);
         }
 
