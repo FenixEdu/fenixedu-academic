@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
@@ -25,6 +26,7 @@ import org.apache.struts.Globals;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
+import org.apache.struts.util.RequestUtils;
 
 public class RenderUtils {
     private static Logger logger = Logger.getLogger(RenderUtils.class);
@@ -85,8 +87,13 @@ public class RenderUtils {
     public static String getResourceString(String bundle, String key) {
         MessageResources resources = getMessageResources(bundle);
 
+        Locale locale = RequestUtils.getUserLocale(RenderersRequestProcessor.getCurrentRequest(), null);
+        if (locale == null) {
+            locale = Locale.getDefault();
+        }
+
         if (resources.isPresent(key)) {
-            return resources.getMessage(key);
+            return resources.getMessage(locale, key);
         }
         
         if (bundle != null) {
@@ -98,7 +105,7 @@ public class RenderUtils {
             MessageResources rendererResources = getMessageResources("RENDERER_RESOURCES");
             
             if (rendererResources.isPresent(key)) {
-                return rendererResources.getMessage(key);
+                return rendererResources.getMessage(locale, key);
             }
         }
         catch (Exception e) {
