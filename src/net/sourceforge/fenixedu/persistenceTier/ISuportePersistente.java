@@ -29,8 +29,6 @@ public interface ISuportePersistente {
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
 
-    public IPersistentGrantOwner getIPersistentGrantOwner();
-
 	public IPersistentGrantContract getIPersistentGrantContract();
 
 	public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher();
