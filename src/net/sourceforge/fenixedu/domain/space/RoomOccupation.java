@@ -259,7 +259,7 @@ public class RoomOccupation extends RoomOccupation_Base {
 
     public static ArrayList quinzenalDatesInPeriod(Calendar startDate, Calendar endDate, int startWeek,
             DiaSemana weekDay) {
-        ArrayList list = new ArrayList();
+        ArrayList<Calendar> list = new ArrayList<Calendar>();
         Calendar date = Calendar.getInstance();
         date.setTimeInMillis(startDate.getTimeInMillis());
         date.add(Calendar.DATE, weekDay.getDiaSemana().intValue() - date.get(Calendar.DAY_OF_WEEK));
@@ -275,7 +275,7 @@ public class RoomOccupation extends RoomOccupation_Base {
 
     public static ArrayList weeklyDatesInPeriod(Calendar day, Calendar endDay, DiaSemana weekDay,
             OccupationPeriod nextPeriod) {
-        ArrayList list = new ArrayList();
+        ArrayList<Calendar> list = new ArrayList<Calendar>();
         Calendar date = Calendar.getInstance();
         date.setTimeInMillis(day.getTimeInMillis());
         date.add(Calendar.DATE, weekDay.getDiaSemana().intValue() - date.get(Calendar.DAY_OF_WEEK));
