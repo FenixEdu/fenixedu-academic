@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 
 public interface ISuportePersistente {
     
@@ -28,8 +27,6 @@ public interface ISuportePersistente {
 
 	@Deprecated
     public IPersistentObject getIPersistentObject();
-
-	public IPersistentInsuranceTransaction getIPersistentInsuranceTransaction();
 
 	public IPersistentCMS getIPersistentCms();
 

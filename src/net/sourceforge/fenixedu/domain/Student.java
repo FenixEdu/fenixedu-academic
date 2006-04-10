@@ -13,22 +13,28 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.StudentState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.ojb.broker.query.Criteria;
 
 public class Student extends Student_Base {
 
@@ -484,14 +490,52 @@ public class Student extends Student_Base {
     }
 
     public Group findFinalDegreeWorkGroupForCurrentExecutionYear() {
-    	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
-    		final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
-    		final ExecutionDegree executionDegree = group.getExecutionDegree();
-    		final ExecutionYear executionYear = executionDegree.getExecutionYear();
-    		if (executionYear.getState().equals(PeriodState.CURRENT)) {
-    			return group;
-    		}
-    	}
-    	return null;
+        for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
+            final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
+            final ExecutionDegree executionDegree = group.getExecutionDegree();
+            final ExecutionYear executionYear = executionDegree.getExecutionYear();
+            if (executionYear.getState().equals(PeriodState.CURRENT)) {
+                return group;
+            }
+        }
+        return null;
+    }
+
+    public List readAllInsuranceTransactionByExecutionYear(ExecutionYear executionYear) {
+        List<InsuranceTransaction> insuranceTransactions = new ArrayList<InsuranceTransaction>();
+        for (InsuranceTransaction insuranceTransaction : this.getInsuranceTransactions()) {
+            if (insuranceTransaction.getExecutionYear().equals(executionYear)) {
+                insuranceTransactions.add(insuranceTransaction);
+            }
+        }
+        return insuranceTransactions;
+    }
+
+    public List<InsuranceTransaction> readAllNonReimbursedInsuranceTransactionsByExecutionYear(
+            ExecutionYear executionYear) {
+        List<InsuranceTransaction> nonReimbursedInsuranceTransactions = new ArrayList<InsuranceTransaction>();
+        for (InsuranceTransaction insuranceTransaction : this.getInsuranceTransactions()) {
+            if (insuranceTransaction.getExecutionYear().equals(executionYear)) {
+                GuideEntry guideEntry = insuranceTransaction.getGuideEntry();
+                if (guideEntry == null || guideEntry.getReimbursementGuideEntries().isEmpty()) {
+                    nonReimbursedInsuranceTransactions.add(insuranceTransaction);
+                } else {
+                    boolean isReimbursed = false;
+                    for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry
+                            .getReimbursementGuideEntries()) {
+                        if (reimbursementGuideEntry.getReimbursementGuide()
+                                .getActiveReimbursementGuideSituation().getReimbursementGuideState()
+                                .equals(ReimbursementGuideState.PAYED)) {
+                            isReimbursed = true;
+                            break;
+                        }
+                    }
+                    if (!isReimbursed) {
+                        nonReimbursedInsuranceTransactions.add(insuranceTransaction);
+                    }
+                }
+            }
+        }
+        return nonReimbursedInsuranceTransactions;
     }
 }

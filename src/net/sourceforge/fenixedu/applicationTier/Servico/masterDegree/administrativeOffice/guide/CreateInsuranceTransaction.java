@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 
 /**
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
@@ -34,15 +33,12 @@ public class CreateInsuranceTransaction extends Service {
         GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
         Guide guide = guideEntry.getGuide();
 
-        IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
-                .getIPersistentInsuranceTransaction();
-
         Student student = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
         Person responsible = Person.readPersonByUsername(userView.getUtilizador());
 
-        List insuranceTransactionList = insuranceTransactionDAO
-                .readAllNonReimbursedByExecutionYearAndStudent(guide.getExecutionDegree()
-                        .getExecutionYear().getIdInternal(), student.getIdInternal());
+        List insuranceTransactionList = student
+                .readAllNonReimbursedInsuranceTransactionsByExecutionYear(guide.getExecutionDegree()
+                        .getExecutionYear());
 
         if (insuranceTransactionList.isEmpty() == false) {
             throw new ExistingServiceException(
@@ -50,15 +46,15 @@ public class CreateInsuranceTransaction extends Service {
         }
 
         PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
-        
-        if(personAccount == null){
+
+        if (personAccount == null) {
             personAccount = DomainFactory.makePersonAccount(guide.getPerson());
         }
-        
-        DomainFactory.makeInsuranceTransaction(guideEntry.getPrice(),
-                new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry.getDescription(),
-                guide.getPaymentType(), TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, responsible,
-                personAccount, guideEntry, guide.getExecutionDegree().getExecutionYear(), student);
+
+        DomainFactory.makeInsuranceTransaction(guideEntry.getPrice(), new Timestamp(Calendar
+                .getInstance().getTimeInMillis()), guideEntry.getDescription(), guide.getPaymentType(),
+                TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, responsible, personAccount,
+                guideEntry, guide.getExecutionDegree().getExecutionYear(), student);
     }
 
 }

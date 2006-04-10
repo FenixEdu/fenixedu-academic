@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
@@ -44,9 +43,6 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
         if (insuranceValue == null) {
             throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");
         }
-
-        IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
-                .getIPersistentInsuranceTransaction();
 
         Date insurancePaymentStartDate = Calendar.getInstance().getTime();
         Date insurancePaymentEndDate = paymentEndDate;
@@ -91,9 +87,8 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
                     studentsWithInsuranceChecked.add(student.getIdInternal());
 
-                    List insuranceTransactionList = insuranceTransactionDAO
-                            .readAllNonReimbursedByExecutionYearAndStudent(
-                                    executionYear.getIdInternal(), student.getIdInternal());
+                    List insuranceTransactionList = student
+                            .readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear);
 
                     if (insuranceTransactionList.size() == 0) {
                         // the student hasn't payed the insurance for this
@@ -253,8 +248,8 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
                 totalPaymentEndDate, scholarShipPartValue, scholarShipPartValue);
 
         totalLinesAdded++;
-      
-      //        
+
+        //        
         // Date totalPaymentStartDate =
         // gratuitySituation.getGratuityValues().getStartPayment();
         // Date totalPaymentEndDate =
@@ -339,7 +334,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
         // paymentPhaseNumber++;
         //
         // }
-      
+
         return totalLinesAdded;
 
     }
@@ -493,57 +488,64 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
         return sibsPaymentCode + "";
     }
-    
-//    /**
-//     * @param paymentPhaseNumber
-//     * @param studentCurricularPlan
-//     * @return
-//     */
-//    private String determinePaymentPhaseCode(int paymentPhaseNumber,
-//            StudentCurricularPlan studentCurricularPlan, GratuitySituation gratuitySituation)
-//            throws InsufficientSibsPaymentPhaseCodesServiceException {
-//
-//        int sibsPaymentCode = 0;
-//
-//        if (paymentPhaseNumber == 1) {
-//            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
-//
-//                sibsPaymentCode = SibsPaymentCodeFactory
-//                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE);
-//
-//            } else {
-//
-//                sibsPaymentCode = SibsPaymentCodeFactory
-//                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE);
-//            }
-//            // IMPORTANT NOTE: In future integrated master degree codes should
-//            // be inserted here
-//
-//        } else if (paymentPhaseNumber == 2) {
-//
-//            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
-//
-//                sibsPaymentCode = SibsPaymentCodeFactory
-//                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE);
-//
-//            } else {
-//
-//                sibsPaymentCode = SibsPaymentCodeFactory
-//                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE);
-//            }
-//
-//            // IMPORTANT NOTE: In future integrated master degree codes should
-//            // be inserted here
-//
-//        } else {
-//            throw new InsufficientSibsPaymentPhaseCodesServiceException(gratuitySituation
-//                    .getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName()
-//                    + " - "
-//                    + gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear()
-//                            .getYear());
-//        }
-//
-//        return sibsPaymentCode + "";
-//
-//    }
+
+    // /**
+    // * @param paymentPhaseNumber
+    // * @param studentCurricularPlan
+    // * @return
+    // */
+    // private String determinePaymentPhaseCode(int paymentPhaseNumber,
+    // StudentCurricularPlan studentCurricularPlan, GratuitySituation
+    // gratuitySituation)
+    // throws InsufficientSibsPaymentPhaseCodesServiceException {
+    //
+    // int sibsPaymentCode = 0;
+    //
+    // if (paymentPhaseNumber == 1) {
+    // if
+    // (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION))
+    // {
+    //
+    // sibsPaymentCode = SibsPaymentCodeFactory
+    // .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE);
+    //
+    // } else {
+    //
+    // sibsPaymentCode = SibsPaymentCodeFactory
+    // .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE);
+    // }
+    // // IMPORTANT NOTE: In future integrated master degree codes should
+    // // be inserted here
+    //
+    // } else if (paymentPhaseNumber == 2) {
+    //
+    // if
+    // (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION))
+    // {
+    //
+    // sibsPaymentCode = SibsPaymentCodeFactory
+    // .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE);
+    //
+    // } else {
+    //
+    // sibsPaymentCode = SibsPaymentCodeFactory
+    // .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE);
+    // }
+    //
+    // // IMPORTANT NOTE: In future integrated master degree codes should
+    // // be inserted here
+    //
+    // } else {
+    // throw new
+    // InsufficientSibsPaymentPhaseCodesServiceException(gratuitySituation
+    // .getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName()
+    // + " - "
+    // +
+    // gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear()
+    // .getYear());
+    // }
+    //
+    // return sibsPaymentCode + "";
+    //
+    // }
 }

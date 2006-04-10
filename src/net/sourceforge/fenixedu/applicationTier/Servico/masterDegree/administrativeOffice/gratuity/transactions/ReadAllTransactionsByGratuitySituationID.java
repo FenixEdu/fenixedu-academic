@@ -26,11 +26,11 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public class ReadAllTransactionsByGratuitySituationID extends Service {
 
     public List run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
-        GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
-        List<InsuranceTransaction> insuranceTransactionList = persistentSupport.getIPersistentInsuranceTransaction()
-                .readAllByExecutionYearAndStudent(
-                        gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear().getIdInternal(),
-                        gratuitySituation.getStudentCurricularPlan().getStudent().getIdInternal());
+        GratuitySituation gratuitySituation = rootDomainObject
+                .readGratuitySituationByOID(gratuitySituationID);
+        List<InsuranceTransaction> insuranceTransactionList = gratuitySituation
+                .getStudentCurricularPlan().getStudent().readAllInsuranceTransactionByExecutionYear(
+                        gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear());
 
         List<PaymentTransaction> paymentTransactionList = new ArrayList<PaymentTransaction>();
         paymentTransactionList.addAll(insuranceTransactionList);
@@ -41,20 +41,25 @@ public class ReadAllTransactionsByGratuitySituationID extends Service {
             GuideEntry guideEntry = paymentTransaction.getGuideEntry();
 
             if ((guideEntry != null)
-                    && ((guideEntry.getDocumentType().equals(DocumentType.INSURANCE) 
-                            || (guideEntry.getDocumentType().equals(DocumentType.GRATUITY))))) {
+                    && ((guideEntry.getDocumentType().equals(DocumentType.INSURANCE) || (guideEntry
+                            .getDocumentType().equals(DocumentType.GRATUITY))))) {
 
-                for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry.getReimbursementGuideEntries()) {
-                    ReimbursementGuide reimbursementGuide = reimbursementGuideEntry.getReimbursementGuide();
+                for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry
+                        .getReimbursementGuideEntries()) {
+                    ReimbursementGuide reimbursementGuide = reimbursementGuideEntry
+                            .getReimbursementGuide();
 
-                    if (!reimbursementGuide.getActiveReimbursementGuideSituation().getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {
+                    if (!reimbursementGuide.getActiveReimbursementGuideSituation()
+                            .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {
                         // reimbursement is not payed, so there is notransaction
                         continue;
                     }
 
-                    ReimbursementTransaction reimbursementTransaction = reimbursementGuideEntry.getReimbursementTransaction();
+                    ReimbursementTransaction reimbursementTransaction = reimbursementGuideEntry
+                            .getReimbursementTransaction();
                     if (reimbursementTransaction == null) {
-                        throw new NonExistingServiceException("Database is inconsistent because this reimbursement guide entry is supposed to have a reimbursement transaction");
+                        throw new NonExistingServiceException(
+                                "Database is inconsistent because this reimbursement guide entry is supposed to have a reimbursement transaction");
                     }
                     reimbursementTransactionList.add(reimbursementTransaction);
                 }
@@ -80,5 +85,5 @@ public class ReadAllTransactionsByGratuitySituationID extends Service {
 
         return infoTransactionList;
     }
-    
+
 }

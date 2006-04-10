@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 
 /**
  * 
@@ -19,43 +18,39 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranc
  */
 public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends Service {
 
-	/**
-	 * Constructor
-	 */
-	public ReadInsuranceTransactionByStudentIDAndExecutionYearID() {
-	}
+    /**
+     * Constructor
+     */
+    public ReadInsuranceTransactionByStudentIDAndExecutionYearID() {
+    }
 
-	public InfoInsuranceTransaction run(Integer studentId, Integer executionYearId)
-			throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoInsuranceTransaction run(Integer studentId, Integer executionYearId)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-		InfoInsuranceTransaction infoInsuranceTransaction = null;
+        InfoInsuranceTransaction infoInsuranceTransaction = null;
 
-		IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
-				.getIPersistentInsuranceTransaction();
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
 
-		ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+        Student student = rootDomainObject.readStudentByOID(studentId);
 
-		Student student = rootDomainObject.readStudentByOID(studentId);
+        if ((executionYear == null) || (student == null)) {
+            return null;
+        }
 
-		if ((executionYear == null) || (student == null)) {
-			return null;
-		}
+        List insuranceTransactionList = student
+                .readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear);
 
-		List insuranceTransactionList = insuranceTransactionDAO
-				.readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(), student
-						.getIdInternal());
+        if (insuranceTransactionList.size() > 1) {
+            throw new FenixServiceException(
+                    "Database is incoerent. Its not supposed to exist more than one insurance transaction not reimbursed");
 
-		if (insuranceTransactionList.size() > 1) {
-			throw new FenixServiceException(
-					"Database is incoerent. Its not supposed to exist more than one insurance transaction not reimbursed");
+        }
 
-		}
+        if (insuranceTransactionList.size() == 1) {
+            infoInsuranceTransaction = InfoInsuranceTransaction
+                    .newInfoFromDomain((InsuranceTransaction) insuranceTransactionList.get(0));
+        }
 
-		if (insuranceTransactionList.size() == 1) {
-			infoInsuranceTransaction = InfoInsuranceTransaction
-					.newInfoFromDomain((InsuranceTransaction) insuranceTransactionList.get(0));
-		}
-
-		return infoInsuranceTransaction;
-	}
+        return infoInsuranceTransaction;
+    }
 }

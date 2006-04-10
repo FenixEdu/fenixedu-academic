@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsPaymentFileUtils;
 
 public class ProcessSibsPaymentFile extends Service {
@@ -70,9 +69,7 @@ public class ProcessSibsPaymentFile extends Service {
         findDuplicatesAndMarkThem(sibsPaymentFileEntries, totalPaymentEntries);
 
         // lets build transactions for the entries in file
-        final IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
-                .getIPersistentInsuranceTransaction();
-        
+       
         for (int i = 0; i < totalPaymentEntries; i++) {
 
             SibsPaymentFileEntry sibsPaymentFileEntry = sibsPaymentFileEntries.get(i);
@@ -117,9 +114,8 @@ public class ProcessSibsPaymentFile extends Service {
 
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
                 InsuranceValue insuranceValue = executionYear.getInsuranceValue();
-                List insuranceTransactionList = insuranceTransactionDAO
-                        .readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(),
-                                student.getIdInternal());
+                List insuranceTransactionList = student
+                        .readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear);
 
                 if (insuranceTransactionList.size() > 0) {
                     sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);

@@ -97,7 +97,7 @@ public class ChangeGuideSituation extends Service {
                 if (personAccount == null) {
                     personAccount = DomainFactory.makePersonAccount(guide.getPerson());
                 }
-       
+
                 Person employeePerson = Person.readPersonByUsername(userView.getUtilizador());
                 Person studentPerson = guide.getPerson();
                 Student student = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
@@ -132,11 +132,9 @@ public class ChangeGuideSituation extends Service {
                     // Write Insurance Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE)) {
 
-                        List insuranceTransactionList = persistentSupport
-                                .getIPersistentInsuranceTransaction()
-                                .readAllNonReimbursedByExecutionYearAndStudent(
-                                        executionDegree.getExecutionYear().getIdInternal(),
-                                        student.getIdInternal());
+                        List insuranceTransactionList = student
+                                .readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionDegree
+                                        .getExecutionYear());
 
                         if (!insuranceTransactionList.isEmpty()) {
                             throw new ExistingServiceException(

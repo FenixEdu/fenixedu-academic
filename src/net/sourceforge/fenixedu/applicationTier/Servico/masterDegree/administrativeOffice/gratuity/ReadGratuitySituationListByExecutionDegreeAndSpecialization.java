@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -57,10 +56,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
         HashMap result = null;
 
         try {
-
-            IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
-                    .getIPersistentInsuranceTransaction();
-
+         
             List executionDegreeList = new ArrayList();
 
             if (executionDegreeId != null) {
@@ -137,10 +133,9 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 
                     fillSituationType(infoGratuitySituation);
 
-                    List insuranceTransactionList = insuranceTransactionDAO
-                            .readAllNonReimbursedByExecutionYearAndStudent(executionDegree
-                                    .getExecutionYear().getIdInternal(), studentCurricularPlan
-                                    .getStudent().getIdInternal());
+                    List insuranceTransactionList = studentCurricularPlan.getStudent()
+                            .readAllNonReimbursedInsuranceTransactionsByExecutionYear(
+                                    executionDegree.getExecutionYear());
 
                     /*
                      * InsuranceTransaction insuranceTransaction =
