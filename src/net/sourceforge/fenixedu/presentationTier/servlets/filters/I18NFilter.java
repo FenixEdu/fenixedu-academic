@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.util.MultiLanguageString;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.struts.Globals;
 
@@ -67,14 +67,14 @@ public class I18NFilter implements Filter {
             request.removeAttribute(Globals.LOCALE_KEY);
             request.setAttribute(Globals.LOCALE_KEY, locale);
             
-            MultiLanguageString.setLocale(locale);
+            LanguageUtils.setLocale(locale);
         } else {
             HttpSession httpSession = request.getSession(true);
             if (httpSession.getAttribute(Globals.LOCALE_KEY) == null) {
                 setDefaultLocale(request, httpSession);
             }
             
-            MultiLanguageString.setLocale((Locale) httpSession.getAttribute(Globals.LOCALE_KEY));
+            LanguageUtils.setLocale((Locale) httpSession.getAttribute(Globals.LOCALE_KEY));
         }
 
         chain.doFilter(request, response);
@@ -87,7 +87,7 @@ public class I18NFilter implements Filter {
         request.removeAttribute(Globals.LOCALE_KEY);
         request.setAttribute(Globals.LOCALE_KEY, locale);
         
-        MultiLanguageString.setLocale(locale);
+        LanguageUtils.setLocale(locale);
     }
 
 }

@@ -3,25 +3,12 @@ package net.sourceforge.fenixedu.util;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Language;
 
 public class MultiLanguageString implements Serializable {
     
-    private static InheritableThreadLocal<Locale> locale = new InheritableThreadLocal<Locale>();
-
-    public static Locale getLocale()
-    {
-        return MultiLanguageString.locale.get();
-    }
-
-    public static void setLocale(Locale locale)
-    {
-        MultiLanguageString.locale.set(locale);
-    }
-
 	private Map<Language, String> contentsMap;
 
 	public MultiLanguageString() {
@@ -36,22 +23,14 @@ public class MultiLanguageString implements Serializable {
 		return contentsMap.keySet();
 	}
 
-    private Language getUserLanguage() {
-        Locale locale = getLocale();
-        
-        return locale != null ? Language.valueOf(locale.getLanguage()) : null;
-    }
 
-    private Language getSystemLanguage() {
-        return Language.getApplicationLanguage();
-    }
     
     public String getContent() {
         return getContent(getContentLanguage());
     }
 	
     public boolean isRequestedLanguage() {
-        Language userLanguage = getUserLanguage();
+        Language userLanguage = LanguageUtils.getUserLanguage();
         
         if (userLanguage != null && userLanguage.equals(getContentLanguage())) {
             return true;
@@ -61,12 +40,12 @@ public class MultiLanguageString implements Serializable {
     }
     
     public Language getContentLanguage() {
-        Language userLanguage = getUserLanguage();
+        Language userLanguage = LanguageUtils.getUserLanguage();
         if (userLanguage != null && hasLanguage(userLanguage)) {
             return userLanguage;
         }
         
-        Language systemLanguage = getSystemLanguage();
+        Language systemLanguage = LanguageUtils.getSystemLanguage();
         if (systemLanguage != null && hasLanguage(systemLanguage)) {
             return systemLanguage;
         }
@@ -75,11 +54,11 @@ public class MultiLanguageString implements Serializable {
     }
     
     public void setContent(String text) {
-        final Language userLanguage = getUserLanguage();
+        final Language userLanguage = LanguageUtils.getUserLanguage();
         if (userLanguage != null) {
             setContent(userLanguage, text);
         }
-        final Language systemLanguage = getSystemLanguage();
+        final Language systemLanguage = LanguageUtils.getSystemLanguage();
         if (userLanguage != systemLanguage && !hasLanguage(systemLanguage)) {
             setContent(systemLanguage, text);
         }

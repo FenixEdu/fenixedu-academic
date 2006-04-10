@@ -3,23 +3,31 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 
 public enum Language {
+    pt,
+    en,
+    es,
+    de,    
+    fr,
+    it,    
+   
+  
     ar,
     bg,
     cs,
     da,
-    de,
+
     el,
-    en,
+
     eo,
-    es,
+
     et,
     fi,
-    fr,
+
     hr,
     hu,
     id,
     is,
-    it,
+
     ja,
     ko,
     lt,
@@ -27,7 +35,7 @@ public enum Language {
     nl,
     no,
     pl,
-    pt,
+
     ro,
     ru,
     sk,

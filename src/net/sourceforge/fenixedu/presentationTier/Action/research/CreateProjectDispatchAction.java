@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.research.project.Project;
+import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -48,7 +49,12 @@ public class CreateProjectDispatchAction extends FenixDispatchAction {
 
         for( Project project : rootDomainObject.getProjects()) {
             if (project.getIdInternal().equals(oid)) {
-                request.setAttribute("selectedProject", project);
+                final int personIdInternal = getUserView(request).getPerson().getIdInternal();
+                for (ProjectParticipation participation: project.getProjectParticipations()) {
+                    if (participation.getParty().getIdInternal() == personIdInternal) {
+                        request.setAttribute("selectedProjectParticipation", participation);
+                    }
+                }
             }
         }
         

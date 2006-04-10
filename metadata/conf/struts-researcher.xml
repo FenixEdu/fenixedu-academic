@@ -18,7 +18,6 @@
 				dynamic="true">
 	   		<form-property name="windowLocation" type="java.lang.String"/>
 	   		<form-property name="newLanguage" type="java.lang.String"/>
-	   		<form-property name="newCountry" type="java.lang.String"/>
 		</form-bean>
     </form-beans>
 

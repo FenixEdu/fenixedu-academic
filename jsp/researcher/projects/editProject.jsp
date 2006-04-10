@@ -10,23 +10,10 @@
 		
 	<h2/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.useCasetitle"/> </h2>
   	
-	<strong>
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.title"/> 1 :
-	</strong>
-	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.searchProject"/> >
- 	<strong>
- 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.title"/> 2 :
- 	</strong>
- 	<u><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.insertData"/></u> >
-  	<strong>
-	  	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.title"/> 3 :
-	</strong>
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.createTranslations"/>
-		
 	<br/>
 	<br/>
 	
-	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.insertDataExplanation"/>
+	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProjectUseCase.editDataExplanation"/>
   	
   	<br/>
   	<br/>
@@ -38,6 +25,7 @@
     	    <fr:property name="classes" value="style1"/>
         	<fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
+	    <fr:destination name="cancel" path="/projects/projectsManagement?method=listProjects"/>
 	</fr:edit>
 	
 </logic:present>

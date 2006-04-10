@@ -1,16 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
+import net.sourceforge.fenixedu.domain.research.project.Project;
+import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -22,24 +21,21 @@ public class ViewCurriculumDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        List<ResearchInterest> orderedInterests = getOrderedInterests(request);
+        final IUserView userView = getUserView(request);
+        
+        List<Project> projects = new ArrayList<Project>();
 
-        request.setAttribute("researchInterests", orderedInterests);
+        for(ProjectParticipation participation : userView.getPerson().getProjectParticipations()) {
+            projects.add(participation.getProject());
+        }
+        request.setAttribute("projects", projects);
+        
+        List<ResearchInterest> researchInterests = getUserView(request).getPerson()
+        .getResearchInterests();
+
+        request.setAttribute("researchInterests", researchInterests);
         
         return mapping.findForward("Success");
-    }
-
-    private List<ResearchInterest> getOrderedInterests(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-        List<ResearchInterest> researchInterests = getUserView(request).getPerson()
-                .getResearchInterests();
-
-        List<ResearchInterest> orderedInterests = new ArrayList<ResearchInterest>(researchInterests);
-        Collections.sort(orderedInterests, new Comparator<ResearchInterest>() {
-            public int compare(ResearchInterest researchInterest1, ResearchInterest researchInterest2) {
-                return researchInterest1.getOrder().compareTo(researchInterest2.getOrder());
-            }
-        });
-        return orderedInterests;
     }
 
 }

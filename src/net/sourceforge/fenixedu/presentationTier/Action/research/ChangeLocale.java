@@ -17,9 +17,8 @@ public class ChangeLocale extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final String newLanguage = request.getParameter("newLanguage");
-        final String newCountry = request.getParameter("newCountry");
 
-        request.getSession(false).setAttribute(Globals.LOCALE_KEY, new Locale(newLanguage, newCountry));
+        request.getSession(false).setAttribute(Globals.LOCALE_KEY, new Locale(newLanguage, "PT"));
 
         final String windowLocation = request.getParameter("windowLocation");
 

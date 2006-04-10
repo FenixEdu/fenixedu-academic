@@ -17,7 +17,7 @@
  	<strong>
  		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.title"/> 2 :
  	</strong>
- 	<u><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.insertData"/></u> >
+ 	<u><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.insertData"/></u>
 		
 	<br/>
 	<br/>

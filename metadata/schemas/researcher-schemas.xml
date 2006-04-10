@@ -15,6 +15,10 @@
 	<slot name="interest"/>
 </schema>	
 
+<schema name="researchInterest.title" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
+	<slot name="interest"/>
+</schema>	
+
 <schema name="researchInterest.simpleCreate" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
 	<slot name="interest" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
 </schema>	
@@ -38,7 +42,7 @@
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>	
 
-<schema name="projectParticipation.edit-defaults" type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
+<schema name="projectParticipation.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
 	<slot name="project.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="75"/>
 	</slot>
@@ -51,8 +55,3 @@
 	<slot name="project.projectType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
-
-<schema name="researchInterestTranslation" type="net.sourceforge.fenixedu.domain.research.ResearchInterest$ResearchInterestTranslation">
-	<slot name="language"/>
-	<slot name="interest"/>
-</schema>	

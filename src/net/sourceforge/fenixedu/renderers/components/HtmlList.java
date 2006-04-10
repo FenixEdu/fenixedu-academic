@@ -20,6 +20,7 @@ public class HtmlList extends HtmlComponent {
     }
 
     public void setOrdered(boolean ordered) {
+        this.ordered = true;
     }
     
     public boolean isOrdered() {

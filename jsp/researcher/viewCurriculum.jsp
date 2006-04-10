@@ -78,9 +78,6 @@
 
 <logic:present role="RESEARCHER">		
 
-	<html:link page="/viewCurriculum.do?method=prepare&locale=en"> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.language.en" /></html:link> <br/>
-	<html:link page="/viewCurriculum.do?method=prepare&locale=pt"> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.language.pt" /></html:link> <br/>
-
 		<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.title"/> </h2>
 		
 				
@@ -98,8 +95,10 @@
 		<h3 id='researchInterestsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.researchInterestsTitle"/> </span> </h3>
 		<fr:view name="researchInterests" >
 			<fr:layout>
-				<fr:property name="eachLayout" value="values-dash"/>
-				<fr:property name="eachSchema" value="researchInterest.summary"/>
+				<fr:property name="ordered" value="true"/>
+				<fr:property name="sortBy" value="order"/>
+				<fr:property name="eachLayout" value="values"/>
+				<fr:property name="eachSchema" value="researchInterest.title"/>
 			</fr:layout>
 		</fr:view>
 
@@ -109,6 +108,13 @@
 		
 		<!-- Project Participation -->
 		<h3 id='projectParticipationTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.projectParticipationTitle"/> </span> </h3>
+		
+		<fr:view name="projects">
+			<fr:layout>
+				<fr:property name="eachLayout" value="values-dash"/>
+				<fr:property name="eachSchema" value="project.summary"/>
+			</fr:layout>
+		</fr:view>
 		
 		<!-- Publications -->
 		<h3 id='publicationsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.publicationsTitle"/> </span> </h3>
