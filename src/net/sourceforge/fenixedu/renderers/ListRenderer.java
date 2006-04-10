@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlList;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.ListLayout;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
@@ -34,8 +35,16 @@ public class ListRenderer extends OutputRenderer {
 
     private String eachLayout;
 
+    private boolean ordered;
+    
     private String sortBy;
     
+    public ListRenderer() {
+        super();
+        
+        this.ordered = false;
+    }
+
     /**
      * The css classes to apply in each object's presentation.
      * 
@@ -88,6 +97,20 @@ public class ListRenderer extends OutputRenderer {
         this.eachSchema = eachSchema;
     }
 
+    public boolean isOrdered() {
+        return this.ordered;
+    }
+
+    /**
+     * Selects if the generated list is a ordered list or a simple unordered list.
+     * By default the list is unordered.
+     * 
+     * @property
+     */
+    public void setOrdered(boolean ordered) {
+        this.ordered = ordered;
+    }
+
     public String getSortBy() {
         return this.sortBy;
     }
@@ -116,6 +139,14 @@ public class ListRenderer extends OutputRenderer {
         
         public ListRendererLayout(Collection collection) {
             iterator = collection == null ? null : collection.iterator();
+        }
+
+        @Override
+        protected HtmlComponent getContainer() {
+            HtmlList list = (HtmlList) super.getContainer();
+            list.setOrdered(isOrdered());
+            
+            return list;
         }
 
         @Override

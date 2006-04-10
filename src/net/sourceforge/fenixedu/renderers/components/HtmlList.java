@@ -10,11 +10,20 @@ import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 public class HtmlList extends HtmlComponent {
 
     private List <HtmlListItem> items;
+    private boolean ordered;
     
     public HtmlList() {
         super();
         
         this.items = new ArrayList<HtmlListItem>();
+        this.ordered = false;
+    }
+
+    public void setOrdered(boolean ordered) {
+    }
+    
+    public boolean isOrdered() {
+        return this.ordered;
     }
 
     public HtmlListItem createItem() {
@@ -41,8 +50,8 @@ public class HtmlList extends HtmlComponent {
     @Override
     public HtmlTag getOwnTag(PageContext context) {
         HtmlTag tag = super.getOwnTag(context);
-        
-        tag.setName("ul");
+     
+        tag.setName(isOrdered() ? "ol" : "ul");
 
         for (HtmlListItem item : this.items) {
             tag.addChild(item.getOwnTag(context));
