@@ -4,33 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <ul class="treemenu">
-	<li>
-		<html:link page="/l1">
-			Home
-		</html:link>
-    </li>
-<%--
-	<logic:present name="homepage" property="blog">
+	<logic:present name="homepage">
 		<li>
-			<html:link page="/l1">
-				Blog: <bean:write name="homepage" property="blog.name"/>
+			<bean:define id="homepageID" name="homepage" property="idInternal"/>
+			<html:link page="<%= "/viewHomepage.do?method=show&homepageID=" + homepageID.toString() %>">
+				Home
 			</html:link>
-    	</li>
-	</logic:present>
-	<li>
-		<html:link page="/l1">
-			Curriculum Vitae
-		</html:link>
-    </li>
-	<li>
-		<html:link page="/l1">
-			Links
-		</html:link>
-    </li>
-	<li>
-		<html:link page="/l3">
-			Contacts
-		</html:link>
-    </li>
---%>
+	    </li>
+    </logic:present>
 </ul>

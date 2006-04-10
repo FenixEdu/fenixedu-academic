@@ -23,9 +23,8 @@ public class ManageHomepageDA extends FenixDispatchAction {
     	final Person person = getUserView(request).getPerson();
     	final Homepage homepage = person.getHomepage();
 
+        final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
     	if (homepage != null) {
-    		final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-
             dynaActionForm.set("activated", homepage.getActivated().toString());
             if (homepage.getName() == null || homepage.getName().length() == 0) {
             	dynaActionForm.set("name", person.getName());
@@ -42,7 +41,9 @@ public class ManageHomepageDA extends FenixDispatchAction {
             dynaActionForm.set("showAlternativeHomepage", homepage.getShowAlternativeHomepage().toString());
             dynaActionForm.set("showResearchUnitHomepage", homepage.getShowResearchUnitHomepage().toString());
             dynaActionForm.set("showCurrentExecutionCourses", homepage.getShowCurrentExecutionCourses().toString());
-    	}
+    	} else {
+            dynaActionForm.set("name", person.getName());
+        }
 
         return mapping.findForward("show-manage-homepage");
     }

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -8,9 +10,16 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -63,7 +72,7 @@ public class ViewHomepageDA extends FenixContextDispatchAction {
     public ActionForward emailPng(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final String email = getEmailString(request);
-        final byte[] pngFile = TextPngCreator.createPng("UpperHand", 25, "000000", email);
+        final byte[] pngFile = TextPngCreator.createPng("Sleek", 25, "000000", email);
         response.setContentType("image/png");
         response.getOutputStream().write(pngFile);
         response.getOutputStream().close();
@@ -85,6 +94,27 @@ public class ViewHomepageDA extends FenixContextDispatchAction {
             }
         }
         return "";
+    }
+
+    public ActionForward retrievePhoto(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        final String homepageIDString = request.getParameter("homepageID");
+        final Integer homepageID = Integer.valueOf(homepageIDString);
+        final Homepage homepage = (Homepage) readDomainObject(request, Homepage.class, homepageID);
+        if (homepage != null && homepage.getShowPhoto() != null && homepage.getShowPhoto().booleanValue()) {
+            final Person person = homepage.getPerson();
+            final FileEntry personalPhoto = person.getPersonalPhoto();
+
+            if (personalPhoto != null) {
+                response.setContentType(personalPhoto.getContentType().getMimeType());
+                DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+                dos.write(personalPhoto.getContents());
+                dos.close();
+            }
+        }
+
+        return null;
     }
 
 }

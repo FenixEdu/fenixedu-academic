@@ -70,22 +70,22 @@
 			</logic:iterate>
 		</td>
 	</tr>
-	<tr>
-		<td class="leftcol">
-			<logic:present name="UserView" property="person.teacher">
-			<logic:present name="UserView" property="person.employee.currentContract">
-				<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>
-		</td>
-		<td>
-			<html:checkbox property="showCategory" value="true"/>
-			<logic:present name="UserView" property="person.teacher">
-					<bean:write name="UserView" property="person.teacher.category.longName"/>
-			</logic:present>
-			</logic:present>
-			</logic:present>
-		</td>
-	</tr>
-	<tr><td class="leftcol"><bean:message key="label.homepage.showPhoto" bundle="HOMEPAGE_RESOURCES"/>:</td><td> <html:checkbox property="showPhoto" value="true"/> <!-- <img src="bullet07.gif" width="116px" height="116px"/> --></td></tr>
+	<logic:present name="UserView" property="person.teacher">
+		<logic:present name="UserView" property="person.employee.currentContract">
+			<tr>
+				<td class="leftcol">
+					<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>
+				</td>
+				<td>
+					<html:checkbox property="showCategory" value="true"/>
+					<logic:present name="UserView" property="person.teacher">
+						<bean:write name="UserView" property="person.teacher.category.longName"/>
+					</logic:present>
+				</td>
+			</tr>
+		</logic:present>
+	</logic:present>
+	<tr><td class="leftcol"><bean:message key="label.homepage.showPhoto" bundle="HOMEPAGE_RESOURCES"/>:</td><td> <html:checkbox property="showPhoto" value="true"/> <html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" /> </td></tr>
 	<tr><td class="leftcol"><bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>:</td>
 		<td style="vertical-align: center;">
 			<html:checkbox property="showEmail" value="true"/>
