@@ -33,6 +33,7 @@ public enum ServiceExemptionType {
     FUNCTIONS_MANAGEMENT_SERVICE_EXEMPTION,
     INCAPACITY_FOR_TOGETHER_DOCTOR_OF_THE_CGA,
     PUBLIC_MANAGER,
+    DETACHED_TO,
     GOVERNMENT_MEMBER;      
         
     public String getName() {
