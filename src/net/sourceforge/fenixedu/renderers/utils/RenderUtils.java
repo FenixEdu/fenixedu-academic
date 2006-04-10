@@ -92,7 +92,7 @@ public class RenderUtils {
             locale = Locale.getDefault();
         }
 
-        if (resources.isPresent(key)) {
+        if (resources.isPresent(locale, key)) {
             return resources.getMessage(locale, key);
         }
         
@@ -104,7 +104,7 @@ public class RenderUtils {
             // TODO: allow the name to be configured or fetch the resources in other way
             MessageResources rendererResources = getMessageResources("RENDERER_RESOURCES");
             
-            if (rendererResources.isPresent(key)) {
+            if (rendererResources.isPresent(locale, key)) {
                 return rendererResources.getMessage(locale, key);
             }
         }

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.log4j.Logger;
-import org.apache.struts.util.MessageResources;
 
 /**
  * This renderer presents an html menu with one option for each possible enum value.
@@ -37,38 +36,17 @@ public class EnumInputRenderer extends InputRenderer {
     
     // NOTE: duplicate code with EnumRenderer
     protected String getEnumDescription(Enum enumerate) {
-        String description = enumerate.toString();
-        
-        MessageResources resources = getEnumerationResources();
-        if (resources != null) {
-            if (resources.isPresent(enumerate.toString())) {               
-                description = resources.getMessage(enumerate.toString());
-            }
+        String description = RenderUtils.getResourceString("ENUMERATION_RESOURCES", enumerate.toString()); 
+            
+        if (description == null) {
+            description = RenderUtils.getResourceString(enumerate.toString());
         }
-
-        resources = getResources();
-        if (resources != null) {
-            if (resources.isPresent(enumerate.toString())) {               
-                description = resources.getMessage(enumerate.toString());
-            }
+        
+        if (description == null) {
+            description = enumerate.toString();
         }
         
         return description;
-    }
-
-    protected MessageResources getResources() {
-        return RenderUtils.getMessageResources();
-    }
-
-    protected MessageResources getEnumerationResources() {
-        // TODO: allow the name to be configured or fetch the resources in other way
-        MessageResources resources = RenderUtils.getMessageResources("ENUMERATION_RESOURCES");
-        
-        if (resources == null) {
-            resources = RenderUtils.getMessageResources();
-        }
-        
-        return resources;
     }
 
     @Override
