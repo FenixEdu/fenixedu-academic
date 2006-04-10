@@ -61,6 +61,18 @@ public class OldRoom extends OldRoom_Base {
     }
 
     /** @deprecated */
+    public Set<RoomOccupation> findOccupationSet(OccupationPeriod period, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
+            Integer frequency, Integer week) {
+        final Set<RoomOccupation> roomOccupations = new HashSet<RoomOccupation>();
+        for (final RoomOccupation roomOccupation : getRoomOccupations()) {
+            if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek, frequency, week, this)) {
+                roomOccupations.add(roomOccupation);
+            }
+        }
+        return roomOccupations;
+    }
+
+    /** @deprecated */
     private boolean canBeDeleted() {
         return getAssociatedLessons().isEmpty()
                 && getAssociatedSummaries().isEmpty()

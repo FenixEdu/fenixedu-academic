@@ -48,6 +48,8 @@
 
 		<h:outputText styleClass="error" rendered="#{!empty SOPEvaluationManagementBackingBean.errorMessage}"
 			value="#{bundleSOP[SOPEvaluationManagementBackingBean.errorMessage]}"/>
+		<h:outputText styleClass="error" rendered="#{!empty SOPEvaluationManagementBackingBean.errorMessageArgument}"
+			value="#{SOPEvaluationManagementBackingBean.errorMessageArgument}"/>
 		<h:messages showSummary="true" errorClass="error" rendered="#{empty SOPEvaluationManagementBackingBean.errorMessage}"/>
 
 		<h:panelGrid columnClasses="infocell" columns="2" border="0">

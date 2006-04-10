@@ -184,6 +184,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         this.setBeginningDate(beginning);
         this.setEndDate(end);
 
+        final DiaSemana dayOfWeek = new DiaSemana(this.getDay().get(Calendar.DAY_OF_WEEK));
 
         associateRooms(rooms, period);
 
@@ -192,11 +193,31 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
             final Room room = roomOccupation.getRoom();
             if (!rooms.contains(room)) {
                 roomOccupationsToDelete.add(roomOccupation);
+            } else {
+                final OccupationPeriod occupationPeriod = roomOccupation.getPeriod();
+                roomOccupation.setDayOfWeek(dayOfWeek);
+                roomOccupation.setEndTimeDate(end);
+                roomOccupation.setStartTimeDate(beginning);
+                roomOccupation.setPeriod(period);
             }
         }
 
         for (final RoomOccupation roomOccupation : roomOccupationsToDelete) {
             roomOccupation.delete();
+        }
+
+        final Set<OldRoom> occupiedRooms = new HashSet<OldRoom>();
+        for (final RoomOccupation roomOccupation : getAssociatedRoomOccupationSet()) {
+            if (roomOccupation.getRoom().findOccupationSet(period, this.getBeginning(), this.getEnd(), roomOccupation.getDayOfWeek(), RoomOccupation.DIARIA, null).size() > 1) {
+                occupiedRooms.add(roomOccupation.getRoom());
+            }
+        }
+        if (!occupiedRooms.isEmpty()) {
+            final StringBuilder stringBuilder = new StringBuilder();
+            for (final OldRoom oldRoom : occupiedRooms) {
+                stringBuilder.append(oldRoom.getNome()).append(" ");
+            }
+            throw new DomainException("error.occupied.rooms", stringBuilder.toString());
         }
     }
 

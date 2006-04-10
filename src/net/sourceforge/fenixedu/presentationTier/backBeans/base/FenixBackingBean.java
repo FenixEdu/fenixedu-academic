@@ -29,6 +29,8 @@ public class FenixBackingBean {
 
     protected String errorMessage;
 
+    protected String[] errorMessageArguments;
+
     private UIViewState viewState;
 
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
@@ -210,6 +212,24 @@ public class FenixBackingBean {
             parameterValue = null;
         }
         return parameterValue;
+    }
+
+    public String[] getErrorMessageArguments() {
+        return errorMessageArguments;
+    }
+
+    public String getErrorMessageArgument() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        if (errorMessageArguments != null) {
+            for (final String string : errorMessageArguments) {
+                stringBuilder.append(" ").append(string);
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    public void setErrorMessageArguments(String[] errorMessageArguments) {
+        this.errorMessageArguments = errorMessageArguments;
     }
 
 }

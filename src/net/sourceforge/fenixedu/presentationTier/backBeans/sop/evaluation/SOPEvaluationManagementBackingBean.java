@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -1115,6 +1116,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             String errorMessage = e.getMessage();
             if (e instanceof NotAuthorizedFilterException) {
                 errorMessage = "message.error.notAuthorized";
+            }
+            if (e instanceof DomainException) {
+                final DomainException domainException = (DomainException) e;
+                setErrorMessageArguments(domainException.getArgs());
             }
             this.setErrorMessage(errorMessage);
             return "";
