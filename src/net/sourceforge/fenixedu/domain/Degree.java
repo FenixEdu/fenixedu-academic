@@ -1,9 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
@@ -348,6 +351,14 @@ public class Degree extends Degree_Base {
     		}
     	}
     	return result;
+    }
+
+    public DegreeInfo getLatestDegreeInfo() {
+        if (!getDegreeInfos().isEmpty()) {
+            List<DegreeInfo> degreeInfos = new ArrayList<DegreeInfo>(getDegreeInfos());
+            return (DegreeInfo) Collections.max(degreeInfos, new BeanComparator("lastModificationDate"));
+        }
+        return null;
     }
 
 }
