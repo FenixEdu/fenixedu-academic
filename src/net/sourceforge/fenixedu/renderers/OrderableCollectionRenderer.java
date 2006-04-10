@@ -309,7 +309,7 @@ public class OrderableCollectionRenderer extends InputRenderer {
     protected Layout getLayout(Object object, Class type) {
         InputContext inputContext = getInputContext();
         inputContext.getForm().getSubmitButton().setVisible(false);
-        inputContext.getForm().getResetButton().setVisible(false);
+        inputContext.getForm().getCancelButton().setVisible(false);
         
         InputContext context = inputContext.createSubContext(getContext().getMetaObject());
         context.setRenderMode(RenderMode.getMode("output"));

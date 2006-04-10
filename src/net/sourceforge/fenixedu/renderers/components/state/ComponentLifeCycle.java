@@ -42,8 +42,13 @@ public class ComponentLifeCycle {
         public ComponentCollector(IViewState viewState, HtmlComponent component) {
             this.formComponents = new ArrayList<HtmlFormComponent>();
             this.controllers = new ArrayList<HtmlController>();
-    
+            
             visit(component);
+            
+            InputContext context = (InputContext) viewState.getContext();
+            visit(context.getForm().getSubmitButton());
+            visit(context.getForm().getCancelButton());
+            
             addHiddenComponents(viewState);
 
         }
@@ -74,7 +79,7 @@ public class ComponentLifeCycle {
         }
     
         private void visit(HtmlComponent component) {
-            List<HtmlComponent> components = component.getChildren(new Predicate() {
+            Predicate isFormComponent = new Predicate() {
                 public boolean evaluate(Object component) {
                     if (component instanceof HtmlFormComponent) {
                         HtmlFormComponent formComponent = (HtmlFormComponent) component;
@@ -86,8 +91,13 @@ public class ComponentLifeCycle {
     
                     return false;
                 }
-            });
-    
+            };
+
+            if (isFormComponent.evaluate(component)) {
+                this.formComponents.add((HtmlFormComponent) component);
+            }
+            
+            List<HtmlComponent> components = component.getChildren(isFormComponent);
             for (HtmlComponent comp : components) {
                 this.formComponents.add((HtmlFormComponent) comp);
             }
@@ -174,7 +184,11 @@ public class ComponentLifeCycle {
         ViewDestination destination;
         
         if (viewState.skipUpdate()) {
-            destination = viewState.getInputDestination();
+            destination = viewState.getCurrentDestination();
+
+            if (destination == null) {
+                destination = viewState.getInputDestination();
+            }
         }
         else {
             destination = viewState.getCurrentDestination();

@@ -7,6 +7,9 @@ import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.renderers.components.controllers.Controllable;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
+import net.sourceforge.fenixedu.renderers.components.controllers.HtmlSubmitButtonController;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -24,7 +27,7 @@ public class HtmlForm extends HtmlComponent implements Controllable {
     private HtmlComponent body;
     private List<HtmlHiddenField> hiddenFields;
     private HtmlSubmitButton submitButton;
-    private HtmlResetButton resetButton;
+    private HtmlSubmitButton cancelButton;
     
     private HtmlController controller;
     
@@ -33,7 +36,26 @@ public class HtmlForm extends HtmlComponent implements Controllable {
         
         this.hiddenFields = new ArrayList<HtmlHiddenField>();
         this.submitButton = new HtmlSubmitButton(RenderUtils.getResourceString("renderers.form.submit.name"));
-        this.resetButton = new HtmlResetButton(RenderUtils.getResourceString("renderers.form.reset.name"));
+        this.cancelButton = new HtmlSubmitButton(RenderUtils.getResourceString("renderers.form.cancel.name"));
+     
+        this.cancelButton.setName("$form.cancel"); // HACK: ?
+        this.cancelButton.setController(new HtmlSubmitButtonController() {
+
+            @Override
+            protected void buttonPressed(IViewState viewState, HtmlSubmitButton button) {
+                viewState.setSkipUpdate(true);
+                
+                ViewDestination destination = viewState.getDestination("cancel");
+                
+                if (destination == null) {
+                    destination = viewState.getInputDestination();
+                }
+            
+                viewState.setCurrentDestination(destination);
+                viewState.invalidate();
+            }
+            
+        });
     }
 
     public String getAction() {
@@ -76,12 +98,12 @@ public class HtmlForm extends HtmlComponent implements Controllable {
         this.hiddenFields.add(htmlHiddenField);
     }
     
-    public HtmlResetButton getResetButton() {
-        return resetButton;
+    public HtmlSubmitButton getCancelButton() {
+        return this.cancelButton;
     }
 
-    public void setResetButton(HtmlResetButton resetButton) {
-        this.resetButton = resetButton;
+    public void setCancelButton(HtmlSubmitButton cancelButton) {
+        this.cancelButton = cancelButton;
     }
 
     public HtmlSubmitButton getSubmitButton() {
@@ -106,10 +128,10 @@ public class HtmlForm extends HtmlComponent implements Controllable {
             children.add(this.submitButton);
         }
         
-        if (this.resetButton != null) {
-            children.add(this.resetButton);
+        if (this.cancelButton != null) {
+            children.add(this.cancelButton);
         }
-
+        
         return children;
     }
 
@@ -135,10 +157,10 @@ public class HtmlForm extends HtmlComponent implements Controllable {
             tag.addChild(this.submitButton.getOwnTag(context));
         }
         
-        if (this.resetButton != null) {
-            tag.addChild(this.resetButton.getOwnTag(context));
+        if (this.cancelButton != null) {
+            tag.addChild(this.cancelButton.getOwnTag(context));
         }
-        
+
         return tag;
     }
 

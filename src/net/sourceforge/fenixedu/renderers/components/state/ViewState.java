@@ -86,6 +86,11 @@ public class ViewState implements IViewState {
         return postBack;
     }
 
+    public void invalidate() {
+        this.id = "";
+        this.inputDestination = null;
+    }
+
     public void setPostBack(boolean isPostBack) {
         this.postBack = isPostBack;
     }

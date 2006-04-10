@@ -17,6 +17,8 @@ public interface IViewState extends Serializable {
 
     public boolean isPostBack();
 
+    public void invalidate();
+    
     public void setPostBack(boolean isPostBack);
 
     public HtmlComponent getComponent();
