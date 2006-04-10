@@ -25,15 +25,6 @@ import org.apache.ojb.broker.query.QueryByCriteria;
  */
 public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPersistentStudentTestQuestion {
 
-    public StudentTestQuestion readByQuestionAndStudentAndDistributedTest(Integer questionId, Integer studentId, Integer distributedTestId)
-            throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyQuestion", questionId);
-        criteria.addEqualTo("keyStudent", studentId);
-        criteria.addEqualTo("keyDistributedTest", distributedTestId);
-        return (StudentTestQuestion) queryObject(StudentTestQuestion.class, criteria);
-    }
-
     public List<StudentTestQuestion> readByOrderAndDistributedTest(Integer order, Integer distributedTestId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("testQuestionOrder", order);

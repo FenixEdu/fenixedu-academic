@@ -97,17 +97,12 @@ public class ChangeStudentTestQuestion extends Service {
                 Student student = rootDomainObject.readStudentByOID(studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
-                studentsTestQuestionList.add(persistentStudentTestQuestion
-                        .readByQuestionAndStudentAndDistributedTest(oldQuestion.getIdInternal(), student
-                                .getIdInternal(), distributedTest.getIdInternal()));
+            	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(oldQuestion, student, distributedTest));
             } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
                 Student student = rootDomainObject.readStudentByOID(studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
-                Integer order = persistentStudentTestQuestion
-                        .readByQuestionAndStudentAndDistributedTest(oldQuestion.getIdInternal(),
-                                student.getIdInternal(), distributedTest.getIdInternal())
-                        .getTestQuestionOrder();
+                Integer order = StudentTestQuestion.findStudentTestQuestion(oldQuestion, student, distributedTest).getTestQuestionOrder();
                 studentsTestQuestionList = persistentStudentTestQuestion.readByOrderAndDistributedTest(
                         order, distributedTest.getIdInternal());
             } else

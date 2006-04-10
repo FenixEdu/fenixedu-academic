@@ -19,9 +19,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentStudentTestQuestion extends IPersistentObject {
 
-    public abstract StudentTestQuestion readByQuestionAndStudentAndDistributedTest(Integer questionId, Integer studentId, Integer distributedTestId)
-            throws ExcepcaoPersistencia;
-
     public abstract List<StudentTestQuestion> readByOrderAndDistributedTest(Integer order, Integer distributedTestId) throws ExcepcaoPersistencia;
 
     public abstract List<Student> readStudentsByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia;

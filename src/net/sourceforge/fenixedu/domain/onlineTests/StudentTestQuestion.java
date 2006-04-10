@@ -7,11 +7,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
  * @author Susana Fernandes
@@ -53,6 +53,15 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
 			}
 		}
 		return studentTestQuestions;
+	}
+
+	public static StudentTestQuestion findStudentTestQuestion(final Question question, final Student student, final DistributedTest distributedTest) {
+		for (final StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestionsSet()) {
+			if (distributedTest == studentTestQuestion.getDistributedTest() && student == studentTestQuestion.getStudent()) {
+				return studentTestQuestion;
+			}
+		}
+		return null;
 	}
 
 }

@@ -50,16 +50,19 @@ public class ChangeStudentTestQuestionMark extends Service {
                 .getIPersistentStudentTestQuestion();
         List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-            studentsTestQuestionList
-                    .add(persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(
-                            questionId, studentId, distributedTestId));
+        	final Question question = rootDomainObject.readQuestionByOID(questionId);
+        	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        	final Student student = rootDomainObject.readStudentByOID(studentId);
+        	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(question, student, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST_VARIATION) {
         	final Question question = rootDomainObject.readQuestionByOID(questionId);
         	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
             studentsTestQuestionList.addAll(StudentTestQuestion.findStudentTestQuestions(question, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-            StudentTestQuestion studentTestQuestion = persistentStudentTestQuestion
-                    .readByQuestionAndStudentAndDistributedTest(questionId, studentId, distributedTestId);
+        	final Question question = rootDomainObject.readQuestionByOID(questionId);
+        	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        	final Student student = rootDomainObject.readStudentByOID(studentId);
+        	final StudentTestQuestion studentTestQuestion = StudentTestQuestion.findStudentTestQuestion(question, student, distributedTest);
             studentsTestQuestionList.addAll(persistentStudentTestQuestion.readByOrderAndDistributedTest(
                     studentTestQuestion.getTestQuestionOrder(), distributedTestId));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS) {
