@@ -52,8 +52,7 @@ public class AddStudentsToDistributedTest extends Service {
             for (int j = 0; j < infoStudentList.size(); j++) {
                 Student student = rootDomainObject.readStudentByOID(
                         ((InfoStudent) infoStudentList.get(j)).getIdInternal());
-                if (persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(student.getIdInternal(), distributedTestId)
-                        .isEmpty()) {
+                if (StudentTestQuestion.findStudentTestQuestions(student, distributedTest).isEmpty()) {
                     StudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
                     studentTestQuestion.setStudent(student);
                     studentTestQuestion.setDistributedTest(distributedTest);

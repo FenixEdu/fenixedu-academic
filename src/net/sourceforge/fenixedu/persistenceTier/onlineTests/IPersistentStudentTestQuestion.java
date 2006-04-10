@@ -19,18 +19,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentStudentTestQuestion extends IPersistentObject {
 
-    public abstract List<StudentTestQuestion> readByStudentAndDistributedTest(Integer studentId, Integer distributedTestId)
-            throws ExcepcaoPersistencia;
-
-    public abstract List<StudentTestQuestion> readByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia;
-
-    public abstract List<StudentTestQuestion> readByStudent(Integer studentId) throws ExcepcaoPersistencia;
-
-    public abstract List<StudentTestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia;
-
-    public abstract List<StudentTestQuestion> readByQuestionAndDistributedTest(Integer questionId, Integer distributedTestId)
-            throws ExcepcaoPersistencia;
-
     public abstract StudentTestQuestion readByQuestionAndStudentAndDistributedTest(Integer questionId, Integer studentId, Integer distributedTestId)
             throws ExcepcaoPersistencia;
 
@@ -66,7 +54,4 @@ public interface IPersistentStudentTestQuestion extends IPersistentObject {
 
     public abstract int countStudentTestByStudentAndExecutionCourse(Integer executionCourseId, Integer studentId) throws ExcepcaoPersistencia;
 
-    public abstract int countByQuestion(Integer questionId) throws ExcepcaoPersistencia;
-
-    public abstract void deleteByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia;
 }

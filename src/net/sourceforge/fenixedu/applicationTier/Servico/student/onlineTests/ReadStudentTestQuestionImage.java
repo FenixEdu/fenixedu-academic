@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -36,9 +37,7 @@ public class ReadStudentTestQuestionImage extends Service {
         if (distributedTest == null)
             throw new FenixServiceException();
 
-        List<StudentTestQuestion> studentTestQuestionList = persistentSupport
-                .getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
-                        student.getIdInternal(), distributedTest.getIdInternal());
+        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
 
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyQuestion().equals(questionId)) {

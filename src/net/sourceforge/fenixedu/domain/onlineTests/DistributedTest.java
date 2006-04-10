@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
@@ -130,5 +132,11 @@ public class DistributedTest extends DistributedTest_Base {
 			distributedTestAdvisory.getAdvisory().setExpires(newExpiresDate);
 		}
     }
-    
+
+    public SortedSet<StudentTestQuestion> getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder() {
+    	final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(StudentTestQuestion.COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER);
+    	studentTestQuestions.addAll(getDistributedTestQuestionsSet());
+    	return studentTestQuestions;
+    }
+
 }

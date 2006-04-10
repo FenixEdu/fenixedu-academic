@@ -9,6 +9,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -45,9 +46,7 @@ public class ReadDistributedTestMarksToString extends Service {
             result.append("\t");
         }
         result.append("Nota");
-        List<StudentTestQuestion> studentTestQuestionList = persistentSupport
-                .getIPersistentStudentTestQuestion().readByDistributedTest(
-                        distributedTest.getIdInternal());
+        Set<StudentTestQuestion> studentTestQuestionList = distributedTest.getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder();
         if (studentTestQuestionList == null || studentTestQuestionList.size() == 0)
             throw new FenixServiceException();
         int questionIndex = 0;

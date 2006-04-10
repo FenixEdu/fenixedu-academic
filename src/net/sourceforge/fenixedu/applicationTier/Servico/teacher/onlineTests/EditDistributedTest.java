@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -96,9 +97,7 @@ public class EditDistributedTest extends Service {
             List<Student> studentList = persistentSupport.getIPersistentStudentTestQuestion()
                     .readStudentsByDistributedTest(distributedTest.getIdInternal());
             for (Student student : studentList) {
-                List<StudentTestQuestion> studentTestQuestionList = persistentSupport
-                        .getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
-                                student.getIdInternal(), distributedTest.getIdInternal());
+            	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
                 double studentMark = 0;
                 for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
                     studentMark += studentTestQuestion.getTestQuestionMark().doubleValue();

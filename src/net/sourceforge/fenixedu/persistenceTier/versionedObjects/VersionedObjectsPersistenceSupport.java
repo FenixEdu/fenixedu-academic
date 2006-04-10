@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTe
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingListVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.StudentTestQuestionVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
@@ -27,7 +26,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion() {
-        return new StudentTestQuestionVO();
+        return null;
     }
 
     public void confirmarTransaccao() throws ExcepcaoPersistencia {

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -39,9 +40,7 @@ public class ReadStudentTest extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        List<StudentTestQuestion> studentTestQuestionList = persistentSupport
-                .getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
-                        student.getIdInternal(), distributedTest.getIdInternal());
+        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
         if (studentTestQuestionList.size() == 0)
             throw new InvalidArgumentsServiceException();
 

@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -79,9 +80,7 @@ public class InsertStudentTestResponses extends Service {
         List<String> errors = new ArrayList<String>();
 
         if (compareDates(distributedTest.getEndDate(), distributedTest.getEndHour())) {
-            List<StudentTestQuestion> studentTestQuestionList = persistentSupport
-                    .getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
-                            student.getIdInternal(), distributedTest.getIdInternal());
+        	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
             if (studentTestQuestionList.size() == 0)
                 throw new FenixServiceException();
             ParseQuestion parse = new ParseQuestion();

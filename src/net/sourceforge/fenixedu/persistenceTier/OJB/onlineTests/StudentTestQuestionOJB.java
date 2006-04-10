@@ -25,41 +25,6 @@ import org.apache.ojb.broker.query.QueryByCriteria;
  */
 public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPersistentStudentTestQuestion {
 
-    public List<StudentTestQuestion> readByStudentAndDistributedTest(Integer studentId, Integer distributedTestId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("student.idInternal", studentId);
-        criteria.addEqualTo("distributedTest.idInternal", distributedTestId);
-        return queryList(StudentTestQuestion.class, criteria);
-    }
-
-    public List<StudentTestQuestion> readByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTestId);
-        QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
-        queryCriteria.addOrderBy("student.number", true);
-        queryCriteria.addOrderBy("testQuestionOrder", true);
-        return queryList(queryCriteria);
-    }
-
-    public List<StudentTestQuestion> readByStudent(Integer studentId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyStudent", studentId);
-        return queryList(StudentTestQuestion.class, criteria);
-    }
-
-    public List<StudentTestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyQuestion", questionId);
-        return queryList(StudentTestQuestion.class, criteria);
-    }
-
-    public List<StudentTestQuestion> readByQuestionAndDistributedTest(Integer questionId, Integer distributedTestId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyQuestion", questionId);
-        criteria.addEqualTo("keyDistributedTest", distributedTestId);
-        return queryList(StudentTestQuestion.class, criteria);
-    }
-
     public StudentTestQuestion readByQuestionAndStudentAndDistributedTest(Integer questionId, Integer studentId, Integer distributedTestId)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
@@ -236,18 +201,4 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPers
         return count(StudentTestQuestion.class, criteria, false);
     }
 
-    public int countByQuestion(Integer questionId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyQuestion", questionId);
-        return count(StudentTestQuestion.class, criteria, false);
-    }
-
-    public void deleteByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTestId);
-        List<StudentTestQuestion> studentTestQuestions = queryList(StudentTestQuestion.class, criteria);
-        for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
-            delete(studentTestQuestion);
-        }
-    }
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -26,6 +27,7 @@ import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -50,15 +52,17 @@ public class ChangeStudentTestQuestionValue extends Service {
                     .add(persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(
                             questionId, studentId, distributedTestId));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST_VARIATION) {
-            studentsTestQuestionList.addAll(persistentStudentTestQuestion
-                    .readByQuestionAndDistributedTest(questionId, distributedTestId));
+        	final Question question = rootDomainObject.readQuestionByOID(questionId);
+        	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+            studentsTestQuestionList.addAll(StudentTestQuestion.findStudentTestQuestions(question, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
             StudentTestQuestion studentTestQuestion = persistentStudentTestQuestion
                     .readByQuestionAndStudentAndDistributedTest(questionId, studentId, distributedTestId);
             studentsTestQuestionList.addAll(persistentStudentTestQuestion.readByOrderAndDistributedTest(
                     studentTestQuestion.getTestQuestionOrder(), distributedTestId));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS) {
-            studentsTestQuestionList.addAll(persistentStudentTestQuestion.readByQuestion(questionId));
+        	final Question question = rootDomainObject.readQuestionByOID(questionId);
+            studentsTestQuestionList.addAll(question.getStudentTestsQuestionsSet());
         }
         for (StudentTestQuestion studentTestQuestion : studentsTestQuestionList) {
             InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory = new InfoSiteDistributedTestAdvisory();
@@ -105,9 +109,7 @@ public class ChangeStudentTestQuestionValue extends Service {
 
     private String getNewStudentMark(DistributedTest dt, Student s) throws ExcepcaoPersistencia {
         double totalMark = 0;
-        List<StudentTestQuestion> studentTestQuestionList = persistentSupport
-                .getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(s.getIdInternal(),
-                        dt.getIdInternal());
+        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(s, dt);
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
         }

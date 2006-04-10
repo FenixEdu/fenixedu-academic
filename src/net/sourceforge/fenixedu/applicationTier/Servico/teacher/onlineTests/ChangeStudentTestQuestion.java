@@ -5,9 +5,11 @@ import java.text.DecimalFormatSymbols;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -84,7 +86,7 @@ public class ChangeStudentTestQuestion extends Service {
         }
         boolean canDelete = true;
         for (DistributedTest distributedTest : distributedTestList) {
-            List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
+            Collection<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
             InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory = new InfoSiteDistributedTestAdvisory();
             infoSiteDistributedTestAdvisory.setInfoDistributedTest(InfoDistributedTest
                     .newInfoFromDomain(distributedTest));
@@ -109,9 +111,7 @@ public class ChangeStudentTestQuestion extends Service {
                 studentsTestQuestionList = persistentStudentTestQuestion.readByOrderAndDistributedTest(
                         order, distributedTest.getIdInternal());
             } else
-                studentsTestQuestionList = persistentStudentTestQuestion
-                        .readByQuestionAndDistributedTest(oldQuestion.getIdInternal(), distributedTest
-                                .getIdInternal());
+                studentsTestQuestionList = StudentTestQuestion.findStudentTestQuestions(oldQuestion, distributedTest);
 
             List<InfoStudent> group = new ArrayList<InfoStudent>();
 
@@ -249,9 +249,7 @@ public class ChangeStudentTestQuestion extends Service {
     private String getNewStudentMark(DistributedTest dt, Student s, double mark2Remove)
             throws ExcepcaoPersistencia {
         double totalMark = 0;
-        List<StudentTestQuestion> studentTestQuestionList = persistentSupport
-                .getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(s.getIdInternal(),
-                        dt.getIdInternal());
+        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(s, dt);
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
         }

@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -42,8 +43,7 @@ public class ReadDistributedTestMarks extends Service {
 
 		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
 				.getIPersistentStudentTestQuestion();
-		List studentTestQuestionList = persistentStudentTestQuestion
-				.readByDistributedTest(distributedTest.getIdInternal());
+		Set<StudentTestQuestion> studentTestQuestionList = distributedTest.getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder();
 
 		List<InfoStudentTestQuestionMark> infoStudentTestQuestionList = (List<InfoStudentTestQuestionMark>) CollectionUtils
 				.collect(studentTestQuestionList, new Transformer() {
