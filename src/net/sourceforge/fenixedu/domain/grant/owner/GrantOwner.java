@@ -47,7 +47,7 @@ public class GrantOwner extends GrantOwner_Base {
         }
         return null;
     }
-
+    
     public static Integer countAllGrantOwnerByName(String name) {
         return readAllGrantOwnersByName(name).size();
     }

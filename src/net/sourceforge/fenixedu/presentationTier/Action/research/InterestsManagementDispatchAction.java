@@ -11,14 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
-import net.sourceforge.fenixedu.domain.research.ResearchInterest.ResearchInterestTranslation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.renderers.model.CreationMetaObject;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -94,39 +91,6 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("EditInterest");      
     }
     
-    public ActionForward manageTranslations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
-        final Integer oid = Integer.parseInt(request.getParameter("oid"));
-        final ResearchInterest researchInterest = rootDomainObject.readResearchInterestByOID(oid);
-
-        if (RenderUtils.getViewState() != null) {
-            final ResearchInterestTranslation translation = (ResearchInterestTranslation) ((CreationMetaObject) RenderUtils
-                    .getViewState().getMetaObject()).getCreatedObject();
-            researchInterest.addTranslation(translation);
-        }
-
-        request.setAttribute("interestId", oid);
-        request.setAttribute("interestTranslations", researchInterest.getAllTranslations());
-
-        RenderUtils.invalidateViewState();
-
-        return mapping.findForward("ManageTranslations");
-    }
-
-    public ActionForward deleteTranslation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-      
-        final Integer oid = Integer.parseInt(request.getParameter("oid"));
-        final Language language = Language.valueOf(request.getParameter("language"));
-
-        final ResearchInterest researchInterest = rootDomainObject.readResearchInterestByOID(oid);
-
-        researchInterest.removeTranslation(language);
-
-        return manageTranslations(mapping, form, request, response);
-    }
-
     private void changeOrder(HttpServletRequest request, int direction) throws FenixFilterException,
             FenixServiceException {
         Integer oid = Integer.parseInt(request.getParameter("oid"));

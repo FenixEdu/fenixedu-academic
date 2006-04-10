@@ -39,8 +39,7 @@ public class CreateGuideFromTransactions extends Service {
 
     public InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide,
             List transactionsIDs) throws FenixServiceException, ExcepcaoPersistencia {
-
-        Guide guide = DomainFactory.makeGuide();
+        
         GuideSituation guideSituation = null;
 
         // Check the Guide Situation
@@ -48,9 +47,7 @@ public class CreateGuideFromTransactions extends Service {
             throw new InvalidSituationServiceException();
 
         // Get the Guide Number
-        Integer guideNumber = null;
-
-        guideNumber = Guide.generateGuideNumber(infoGuide.getYear());
+        Integer guideNumber = Guide.generateGuideNumber();
 
         infoGuide.setNumber(guideNumber);
 
@@ -63,6 +60,7 @@ public class CreateGuideFromTransactions extends Service {
         Calendar calendar = Calendar.getInstance();
         infoGuideSituation.setSituation(situationOfGuide);
 
+        Guide guide = DomainFactory.makeGuide();
         guide.setCreationDate(infoGuide.getCreationDate());
         guide.setGuideRequester(infoGuide.getGuideRequester());
         guide.setNumber(infoGuide.getNumber());

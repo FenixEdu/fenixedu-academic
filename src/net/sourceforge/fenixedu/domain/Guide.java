@@ -33,9 +33,7 @@ public class Guide extends Guide_Base {
     }
 
     public boolean canBeDeleted() {
-        return !(hasAnyGuideEntries() 
-                || hasAnyGuideSituations()
-                || (getVersion() == 1));
+        return !(hasAnyGuideEntries() || hasAnyGuideSituations() || (getVersion() == 1));
     }
 
     public final static Comparator<Guide> yearAndNumberComparator = new Comparator<Guide>() {
@@ -94,7 +92,7 @@ public class Guide extends Guide_Base {
         return null;
     }
 
-    public static Integer generateGuideNumber(Integer year) {
+    public static Integer generateGuideNumber() {
         return Collections
                 .max(RootDomainObject.getInstance().getGuides(), Guide.yearAndNumberComparator)
                 .getNumber() + 1;
@@ -133,18 +131,18 @@ public class Guide extends Guide_Base {
     }
 
     public static List<Guide> readByYearAndState(Integer guideYear, GuideState situationOfGuide) {
-        
-        List<Guide> result = new ArrayList<Guide>();       
+
+        List<Guide> result = new ArrayList<Guide>();
         for (Guide guide : RootDomainObject.getInstance().getGuides()) {
             GuideSituation activeSituation = guide.getActiveSituation();
             if (activeSituation != null && activeSituation.getSituation().equals(situationOfGuide)) {
                 if (guideYear == null || (guideYear != null && guide.getYear().equals(guideYear))) {
-                    result.add(guide);                    
+                    result.add(guide);
                 }
             }
         }
         return result;
-        
+
     }
 
 }

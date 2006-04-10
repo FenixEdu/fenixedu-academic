@@ -26,14 +26,14 @@ public class EditGrantOwner extends Service {
     }
 
     private GrantOwner prepareGrantOwner(GrantOwner grantOwner, Person person,
-            InfoGrantOwner infoGrantOwner) throws ExcepcaoPersistencia {
+            InfoGrantOwner infoGrantOwner, Integer maxNumber) throws ExcepcaoPersistencia {
+       
         grantOwner.setPerson(person);
         grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
         grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
 
         if (infoGrantOwner.getGrantOwnerNumber() == null) {
             // Generate the GrantOwner's number
-            Integer maxNumber = GrantOwner.readMaxGrantOwnerNumber();
             int aux = maxNumber + 1;
             Integer nextNumber = Integer.valueOf(aux);
             grantOwner.setNumber(nextNumber);
@@ -78,16 +78,18 @@ public class EditGrantOwner extends Service {
             grantOwner = checkIfGrantOwnerExists(infoGrantOwner.getGrantOwnerNumber());
 
         // create or edit grantOwner information
+        Integer maxNumber = null;
         if (grantOwner == null) {
-
+            
+            maxNumber = GrantOwner.readMaxGrantOwnerNumber();
             grantOwner = DomainFactory.makeGrantOwner();
 
             if (!person.hasRole(RoleType.PERSON)) {
                 person.getPersonRoles().add(Role.getRoleByRoleType(RoleType.PERSON));
             }
             person.getPersonRoles().add(Role.getRoleByRoleType(RoleType.GRANT_OWNER));
-        }
-        grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner);
+        }        
+        grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner, maxNumber);
 
         // Generate the GrantOwner's Person Username
         if (person.getUsername() == null || person.getUsername().length() == 0)

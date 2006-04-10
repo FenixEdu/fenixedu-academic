@@ -12,36 +12,30 @@
 			<fr:layout>
 				<fr:property name="subLayout" value="values"/>
 				<fr:property name="subSchema" value="researchInterest.summary"/>
-
-				<fr:property name="link(translations)" value="/interests/interestsManagement.do?method=manageTranslations"/>
-				<fr:property name="param(translations)" value="idInternal/oid"/>
-				<fr:property name="key(translations)" value="researcher.interestsManagement.manageTranslations"/>
-				<fr:property name="bundle(translations)" value="RESEARCHER_RESOURCES"/>
-				<fr:property name="order(translations)" value="0"/>
-				
+		
 				<fr:property name="link(down)" value="/interests/interestsManagement.do?method=down"/>
 				<fr:property name="param(down)" value="idInternal/oid"/>
 				<fr:property name="key(down)" value="researcher.interestsManagement.down"/>
 				<fr:property name="bundle(down)" value="RESEARCHER_RESOURCES"/>
-				<fr:property name="order(down)" value="1"/>
+				<fr:property name="order(down)" value="0"/>
 
 				<fr:property name="link(up)" value="/interests/interestsManagement.do?method=up"/>
 				<fr:property name="param(up)" value="idInternal/oid"/>
 				<fr:property name="key(up)" value="researcher.interestsManagement.up"/>
 				<fr:property name="bundle(up)" value="RESEARCHER_RESOURCES"/>
-				<fr:property name="order(up)" value="2"/>
+				<fr:property name="order(up)" value="1"/>
 
 				<fr:property name="link(edit)" value="/interests/interestsManagement.do?method=prepareEditInterest"/>
 				<fr:property name="param(edit)" value="idInternal/oid"/>
 				<fr:property name="key(edit)" value="researcher.interestsManagement.edit"/>
 				<fr:property name="bundle(edit)" value="RESEARCHER_RESOURCES"/>
-				<fr:property name="order(edit)" value="3"/>
+				<fr:property name="order(edit)" value="2"/>
 
 				<fr:property name="link(delete)" value="/interests/interestsManagement.do?method=delete"/>
 				<fr:property name="param(delete)" value="idInternal/oid"/>
 				<fr:property name="key(delete)" value="researcher.interestsManagement.delete"/>
 				<fr:property name="bundle(delete)" value="RESEARCHER_RESOURCES"/>
-				<fr:property name="order(delete)" value="4"/>
+				<fr:property name="order(delete)" value="3"/>
 			</fr:layout>
 		</fr:view>
 

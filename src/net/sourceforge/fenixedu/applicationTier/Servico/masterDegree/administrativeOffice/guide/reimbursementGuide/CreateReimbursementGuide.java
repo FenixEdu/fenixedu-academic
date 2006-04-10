@@ -61,6 +61,7 @@ public class CreateReimbursementGuide extends Service {
                     "error.exception.masterDegree.invalidGuideSituation");
         }
 
+        Integer reimbursementGuideNumber = ReimbursementGuide.generateReimbursementGuideNumber();
         ReimbursementGuide reimbursementGuide = DomainFactory.makeReimbursementGuide();
 
         for (InfoReimbursementGuideEntry infoReimbursementGuideEntry : (List<InfoReimbursementGuideEntry>) infoReimbursementGuideEntries) {
@@ -93,8 +94,7 @@ public class CreateReimbursementGuide extends Service {
         }
 
         // reimbursement Guide
-        reimbursementGuide.setCreationDate(Calendar.getInstance());
-        Integer reimbursementGuideNumber = ReimbursementGuide.generateReimbursementGuideNumber();
+        reimbursementGuide.setCreationDate(Calendar.getInstance());        
         reimbursementGuide.setNumber(reimbursementGuideNumber);
         reimbursementGuide.setGuide(guide);
 

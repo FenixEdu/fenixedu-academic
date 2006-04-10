@@ -61,7 +61,7 @@ public class CreateGuide extends Service {
         infoGuide.setTotal(CalculateGuideTotal.calculate(infoGuide));
 
         // Get the Guide Number
-        Integer guideNumber = Guide.generateGuideNumber(infoGuide.getYear());
+        Integer guideNumber = Guide.generateGuideNumber();
         infoGuide.setNumber(guideNumber);
 
         // Create the new Guide Situation
