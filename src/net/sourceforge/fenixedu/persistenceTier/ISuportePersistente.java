@@ -4,7 +4,6 @@ package net.sourceforge.fenixedu.persistenceTier;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 
 public interface ISuportePersistente {
@@ -18,8 +17,6 @@ public interface ISuportePersistente {
 	public void clearCache();
 
 	public Integer getNumberCachedItems();
-
-    public IPersistentMetadata getIPersistentMetadata();
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
 

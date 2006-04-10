@@ -15,6 +15,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -881,6 +882,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		}
     	return false;
     }
-     
+
+    public Set<Metadata> findVisibleMetadata() {
+    	final Set<Metadata> visibleMetadata = new HashSet<Metadata>();
+    	for (final Metadata metadata : getMetadatasSet()) {
+    		if (metadata.getVisibility() != null && metadata.getVisibility().booleanValue()) {
+    			visibleMetadata.add(metadata);
+    		}
+    	}
+    	return visibleMetadata;
+    }
 
 }

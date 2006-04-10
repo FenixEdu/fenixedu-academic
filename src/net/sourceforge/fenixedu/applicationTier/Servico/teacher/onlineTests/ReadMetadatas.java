@@ -7,29 +7,38 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadMetadatas extends Service {
 
-    public List<InfoMetadata> run(Integer executionCourseId, Integer testId, Boolean distributedTest) throws ExcepcaoPersistencia {
-        IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
-        List<Metadata> metadatas = null;
+    public List<InfoMetadata> run(Integer executionCourseId, Integer testId, Boolean isDistributedTest) throws ExcepcaoPersistencia {
+    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+
+        final Set<Metadata> metadatas;
         if (testId == null) {
-            metadatas = persistentMetadata.readByExecutionCourseAndVisibility(executionCourseId);
-        } else if (distributedTest == false) {
-            metadatas = persistentSupport.getIPersistentMetadata().readByExecutionCourseAndNotTest(executionCourseId, testId);
-        } else if (distributedTest == true) {
-            metadatas = persistentSupport.getIPersistentMetadata().readByExecutionCourseAndNotDistributedTest(executionCourseId, testId);
+            metadatas = executionCourse.findVisibleMetadata();
+        } else if (isDistributedTest == false) {
+        	final TestQuestion testQuestion = rootDomainObject.readTestQuestionByOID(testId);
+            metadatas = Metadata.findVisibleMetadataFromExecutionCourseNotOfTestQuestion(executionCourse, testQuestion);
+        } else if (isDistributedTest == true) {
+        	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(testId);
+        	metadatas = Metadata.findVisibleMetadataFromExecutionCourseNotOfTestQuestion(executionCourse, distributedTest);
+        } else {
+        	return null;
         }
-        List<InfoMetadata> infoMetadataList = new ArrayList<InfoMetadata>();
+
+        final List<InfoMetadata> infoMetadataList = new ArrayList<InfoMetadata>(metadatas.size());
         for (Metadata metadata : metadatas) {
             infoMetadataList.add(InfoMetadata.newInfoFromDomain(metadata));
         }

@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -102,5 +104,31 @@ public class Metadata extends Metadata_Base {
         removeRootDomainObject();
         super.deleteDomainObject();
     }
+
+    public static Set<Metadata> findVisibleMetadataFromExecutionCourseNotOfTestQuestion(final ExecutionCourse executionCourse, final TestQuestion testQuestion) {
+    	final Set<Metadata> visibleMetadata = new HashSet<Metadata>();
+    	for (final Metadata metadata : executionCourse.getMetadatasSet()) {
+    		if (metadata != testQuestion.getQuestion().getMetadata() && metadata.getVisibility() != null && metadata.getVisibility().booleanValue()) {
+    			visibleMetadata.add(metadata);
+    		}
+    	}
+    	return visibleMetadata;
+    }
+
+	public static Set<Metadata> findVisibleMetadataFromExecutionCourseNotOfTestQuestion(final ExecutionCourse executionCourse, final DistributedTest distributedTest) {
+		final Set<Metadata> distributedTestMetadata = new HashSet<Metadata>();
+		for (final StudentTestQuestion studentTestQuestion : distributedTest.getDistributedTestQuestionsSet()) {
+			distributedTestMetadata.add(studentTestQuestion.getQuestion().getMetadata());
+		}
+
+    	final Set<Metadata> visibleMetadata = new HashSet<Metadata>();
+    	for (final Metadata metadata : executionCourse.getMetadatasSet()) {
+    		if (metadata.getVisibility() != null && metadata.getVisibility().booleanValue() && !distributedTestMetadata.contains(metadata)) {
+    			visibleMetadata.add(metadata);
+    		}
+    	}
+
+    	return visibleMetadata;
+	}
 
 }
