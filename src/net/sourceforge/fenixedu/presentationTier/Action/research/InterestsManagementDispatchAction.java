@@ -83,6 +83,17 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("InsertNewInterest");        
     }
     
+    public ActionForward prepareEditInterest (ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response){
+        
+        Integer interestOid = Integer.parseInt(request.getParameter("oid"));
+        ResearchInterest researchInterest = rootDomainObject.readResearchInterestByOID(interestOid);
+        
+        request.setAttribute("interest", researchInterest);
+        
+        return mapping.findForward("EditInterest");      
+    }
+    
     public ActionForward manageTranslations(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         

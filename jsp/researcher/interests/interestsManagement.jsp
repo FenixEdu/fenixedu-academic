@@ -31,11 +31,17 @@
 				<fr:property name="bundle(up)" value="RESEARCHER_RESOURCES"/>
 				<fr:property name="order(up)" value="2"/>
 
+				<fr:property name="link(edit)" value="/interests/interestsManagement.do?method=prepareEditInterest"/>
+				<fr:property name="param(edit)" value="idInternal/oid"/>
+				<fr:property name="key(edit)" value="researcher.interestsManagement.edit"/>
+				<fr:property name="bundle(edit)" value="RESEARCHER_RESOURCES"/>
+				<fr:property name="order(edit)" value="3"/>
+
 				<fr:property name="link(delete)" value="/interests/interestsManagement.do?method=delete"/>
 				<fr:property name="param(delete)" value="idInternal/oid"/>
 				<fr:property name="key(delete)" value="researcher.interestsManagement.delete"/>
 				<fr:property name="bundle(delete)" value="RESEARCHER_RESOURCES"/>
-				<fr:property name="order(delete)" value="3"/>
+				<fr:property name="order(delete)" value="4"/>
 			</fr:layout>
 		</fr:view>
 
