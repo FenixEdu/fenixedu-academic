@@ -9,6 +9,7 @@
 			Home
 		</html:link>
     </li>
+<%--
 	<logic:present name="homepage" property="blog">
 		<li>
 			<html:link page="/l1">
@@ -31,4 +32,5 @@
 			Contacts
 		</html:link>
     </li>
+--%>
 </ul>

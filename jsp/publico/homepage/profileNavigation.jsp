@@ -9,6 +9,7 @@
 			<bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.listings"/>
 		</html:link>
     </li>
+<%--
 	<li>
 		<html:link page="/l1">
 			Blogs
@@ -24,4 +25,5 @@
 			<bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.statistics"/>
 		</html:link>
     </li>
+--%>
 </ul>
