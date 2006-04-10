@@ -44,5 +44,17 @@
 		column="DSPACE_BITSTREAM_IDENTIFICATION"
 		jdbc-type="VARCHAR"
 	/>
-		
+	<field-descriptor
+        name="permittedGroup"
+        column="PERMITTED_GROUP"
+        jdbc-type="BLOB"
+		conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
+    />
+   	<field-descriptor
+        name="permittedGroupType"
+        column="PERMITTED_GROUP_TYPE"
+        jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaFileItemPermittedGroupType2SqlFileItemPermittedGroupTypeFieldConversion"
+    />
+    	
 </class-descriptor>

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.FileItem;
+import net.sourceforge.fenixedu.domain.FileItemPermittedGroupType;
 
 /**
  * 
@@ -22,21 +23,25 @@ public class InfoFileItem extends InfoObject {
     private Integer size;
 
     private String dspaceBitstreamIdentification;
+    
+    private FileItemPermittedGroupType permittedGroupType;
 
     public InfoFileItem() {
 
     }
 
-    public void copyFromDomain(FileItem item) {
-        super.copyFromDomain(item);
-        if (item != null) {
-            setFilename(item.getFilename());
-            setDisplayName(item.getDisplayName());
-            setMimeType(item.getMimeType());
-            setChecksum(item.getChecksum());
-            setChecksumAlgorithm(item.getChecksumAlgorithm());
-            setSize(item.getSize());
-            setDspaceBitstreamIdentification(item.getDspaceBitstreamIdentification());
+    public void copyFromDomain(FileItem fileItem) {
+        super.copyFromDomain(fileItem);
+        if (fileItem != null) {
+            setFilename(fileItem.getFilename());
+            setDisplayName(fileItem.getDisplayName());
+            setMimeType(fileItem.getMimeType());
+            setChecksum(fileItem.getChecksum());
+            setChecksumAlgorithm(fileItem.getChecksumAlgorithm());
+            setSize(fileItem.getSize());
+            setDspaceBitstreamIdentification(fileItem.getDspaceBitstreamIdentification());
+            setPermittedGroupType(fileItem.getPermittedGroupType());
+            
         }
     }
 
@@ -108,5 +113,15 @@ public class InfoFileItem extends InfoObject {
     public void setSize(Integer size) {
         this.size = size;
     }
+
+    public FileItemPermittedGroupType getPermittedGroupType() {
+        return permittedGroupType;
+    }
+
+    public void setPermittedGroupType(FileItemPermittedGroupType fileItemPermittedGroupType) {
+        this.permittedGroupType = fileItemPermittedGroupType;
+    }
+    
+    
 
 }

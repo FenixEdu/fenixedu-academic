@@ -17,8 +17,6 @@
 
 // NONE
 
-
-
 /*
  * ValueTypes declarations
  * 
@@ -131,6 +129,7 @@ valueType net.sourceforge.fenixedu.domain.research.result.PatentType							as Pa
 valueType net.sourceforge.fenixedu.domain.research.result.PatentStatus							as PatentStatus;
 valueType net.sourceforge.fenixedu.domain.research.result.FormatType							as FormatType;
 valueType net.sourceforge.fenixedu.domain.research.result.ProductType							as ProductType;
+valueType net.sourceforge.fenixedu.domain.FileItemPermittedGroupType							as FileItemPermittedGroupType;
 
 /*
 *
@@ -1454,6 +1453,8 @@ class net.sourceforge.fenixedu.domain.FileItem extends net.sourceforge.fenixedu.
   String checksumAlgorithm;
   Integer size;
   String dspaceBitstreamIdentification;
+  Group permittedGroup;
+  FileItemPermittedGroupType permittedGroupType;
 }
 
 class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2509,7 +2510,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Date endDate;		
 	  }
 	  
-	  class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
+	  	  class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer keyCms;
 		Integer keyEmployee;
 		Integer keyTeacher;
@@ -2944,6 +2945,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.PersonalCard extends net.sou
 
 class net.sourceforge.fenixedu.domain.assiduousness.SubstituteCard extends net.sourceforge.fenixedu.domain.assiduousness.Card {
 }
+
 
 
 
@@ -7780,7 +7782,6 @@ relation RootDomainObjectWorkScheduleType {
 
 relation RootDomainObjectPeriodicity {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	
 	net.sourceforge.fenixedu.domain.assiduousness.Periodicity playsRole periodicities {
 		multiplicity *;
 	}

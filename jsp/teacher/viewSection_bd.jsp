@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
 <span class="error"><html:errors /></span>
 
 <logic:present name="siteView">
@@ -108,11 +109,12 @@
 		<bean:define id="dspaceBitstreamIdentification" name="infoFileItem" property="dspaceBitstreamIdentification" type="java.lang.String"/>
 		<bean:define id="filename" name="infoFileItem" property="filename" type="java.lang.String"/>
 		<bean:define id="fileItemId" name="infoFileItem" property="idInternal" type="java.lang.Integer"/>
+		<bean:define id="permittedGroupType" name="infoFileItem" property="permittedGroupType" type="net.sourceforge.fenixedu.domain.FileItemPermittedGroupType"/>
 		<td>
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
 		</td>
 		<td>
-			<html:link href="<%= pageContext.findAttribute("dspaceBaseDownloadUrl") + "/" + dspaceBitstreamIdentification + "/" + filename %>" ><bean:write name="infoFileItem" property="displayName"/></html:link>
+			<html:link href="<%= pageContext.findAttribute("dspaceBaseDownloadUrl") + "/" + dspaceBitstreamIdentification + "/" + filename %>" ><bean:write name="displayName"/></html:link>
 		</td>
 		<td>&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
 		</td>

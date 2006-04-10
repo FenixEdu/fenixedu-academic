@@ -64,6 +64,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.domain.FileItemPermittedGroupType;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -935,13 +936,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException,
+            FenixServiceException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Integer itemCode = getItemCode(request);
+        Integer itemID = getItemCode(request);
         DynaActionForm fileUploadForm = (DynaActionForm) form;
         FormFile formFile = (FormFile) fileUploadForm.get("theFile");
         String displayName = fileUploadForm.getString("displayName");
+        FileItemPermittedGroupType fileItemPermittedGroupType = FileItemPermittedGroupType
+                .valueOf((String) fileUploadForm.get("fileItemPermittedGroupType"));
+
         ActionErrors actionErrors = new ActionErrors();
 
         if (displayName == null || displayName.length() == 0 || displayName.trim().length() == 0) {
@@ -962,7 +967,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         try {
             temporaryFile = createTemporaryFile(formFile);
 
-            Object[] args = { itemCode, temporaryFile, formFile.getFileName(), displayName, false };
+            Object[] args = {itemID, temporaryFile, formFile.getFileName(), displayName,
+                    fileItemPermittedGroupType };
 
             ServiceUtils.executeService(userView, "CreateFileItemForItem", args);
 

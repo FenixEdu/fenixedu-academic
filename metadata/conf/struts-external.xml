@@ -41,6 +41,13 @@
 			validate="true">
     	</action>
     	
+    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.UserPermissionCheck"
+            path="/userPermissionCheck"
+	        scope="request"
+	        parameter="method"
+			validate="true">
+    	</action>
+    	
    		
 	</action-mappings>
   

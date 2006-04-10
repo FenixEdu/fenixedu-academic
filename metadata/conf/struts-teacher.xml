@@ -12,6 +12,7 @@
         <form-bean name="fileForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="displayName" type="java.lang.String" />
             <form-property name="theFile" type="org.apache.struts.upload.FormFile" />
+            <form-property name="fileItemPermittedGroupType" type="java.lang.String" initial="PUBLIC" />
         </form-bean>
         <!-- test form -->
         <form-bean name="testForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">

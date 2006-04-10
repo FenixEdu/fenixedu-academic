@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Alter IDENTIFICATION table" alterIdentificationTable.sql
+execute "Alter FILE_ITEM table" alterTableFileItem.sql
+execute "Updating FILE_ITEM table" updateTableFileItem.sql

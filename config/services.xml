@@ -8672,7 +8672,7 @@
 			<chain name="TeacherAuthorization"/>
 		</filterChains>
 	</service>
-	<service>
+    <service>
     	<name>ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID</implementationClass>
         <description></description>
@@ -9662,5 +9662,13 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 		</filterChains>
-	</service>    
+	</service>
+	<service>
+		<name>CheckIfUserCanAccessFile</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.CheckIfUserCanAccessFile</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
 </serviceDefinitions>
