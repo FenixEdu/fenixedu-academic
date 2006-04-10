@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
  * @author Pica
  * @author Barbosa
  */
-public class CalculateStatGrantOwnerByCriteria extends Service {
+public class CalculateStateGrantOwnerByCriteria extends Service {
 
     public Object[] run(InfoStatGrantOwner infoStatGrantOwner) throws FenixServiceException,
             ExcepcaoPersistencia {
@@ -31,7 +31,7 @@ public class CalculateStatGrantOwnerByCriteria extends Service {
                 .getJustActiveContracts(), infoStatGrantOwner.getJustInactiveContracts(),
                 infoStatGrantOwner.getDateBeginContract(), infoStatGrantOwner.getDateEndContract(),
                 granttype);
-        Integer totalNumberOfGrantContracts = persistentGrantContract.countAll();
+        Integer totalNumberOfGrantContracts = rootDomainObject.getGrantContractsCount();
         Integer numberOfGrantContractsByCriteria = persistentGrantContract.countAllByCriteria(
                 infoStatGrantOwner.getJustActiveContracts(), infoStatGrantOwner
                         .getJustInactiveContracts(), infoStatGrantOwner.getDateBeginContract(),

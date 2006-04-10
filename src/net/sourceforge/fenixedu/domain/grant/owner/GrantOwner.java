@@ -1,7 +1,3 @@
-/*
- * Created on 27/Out/2003
- * 
- */
 package net.sourceforge.fenixedu.domain.grant.owner;
 
 import java.util.ArrayList;
@@ -19,11 +15,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-/**
- * @author Barbosa
- * @author Pica
- * 
- */
 public class GrantOwner extends GrantOwner_Base {
 
     final static Comparator<GrantOwner> NUMBER_COMPARATOR = new BeanComparator("number");
@@ -31,6 +22,15 @@ public class GrantOwner extends GrantOwner_Base {
     public GrantOwner() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+    }
+    
+    public GrantContract readGrantContractByNumber(final Integer contractNumber) {
+        for (final GrantContract grantContract : this.getGrantContractsSet()) {
+            if (grantContract.getContractNumber().equals(contractNumber)) {
+                return grantContract;
+            }
+        }
+        return null;
     }
 
     public static Integer readMaxGrantOwnerNumber() {
@@ -130,4 +130,5 @@ public class GrantOwner extends GrantOwner_Base {
         }        
         return counter;
     }
+    
 }

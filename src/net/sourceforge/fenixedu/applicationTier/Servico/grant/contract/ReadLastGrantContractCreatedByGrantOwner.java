@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 
@@ -23,8 +24,8 @@ public class ReadLastGrantContractCreatedByGrantOwner extends Service {
 
     public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException,
             ExcepcaoPersistencia {
+
         Integer grantContractNumber = null;
-        GrantContract grantContract = null;
         GrantOrientationTeacher grantOrientationTeacher = null;
         IPersistentGrantContract persistentGrantContract = null;
 
@@ -33,13 +34,12 @@ public class ReadLastGrantContractCreatedByGrantOwner extends Service {
         // set the contract number!
         grantContractNumber = persistentGrantContract
                 .readMaxGrantContractNumberByGrantOwner(grantOwnerId);
-        grantContract = persistentGrantContract.readGrantContractByNumberAndGrantOwner(
-                grantContractNumber, grantOwnerId);
-
+        
+        final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(grantOwnerId);
+        final GrantContract grantContract = grantOwner.readGrantContractByNumber(grantContractNumber);
         if (grantContract == null) {
             return new InfoGrantContract();
         }
-
         grantOrientationTeacher = grantContract.readActualGrantOrientationTeacher();
         if (grantOrientationTeacher == null) {
             throw new FenixServiceException();

@@ -32,8 +32,8 @@ public class CreateOrEditGrantContract extends Service {
 
             grantContract = DomainFactory.makeGrantContract();
         } else {
-            grantContract = pGrantContract.readGrantContractByNumberAndGrantOwner(infoGrantContract
-                    .getContractNumber(), infoGrantContract.getGrantOwnerInfo().getIdInternal());
+            final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(infoGrantContract.getGrantOwnerInfo().getIdInternal());
+            grantContract = grantOwner.readGrantContractByNumber(infoGrantContract.getContractNumber()); 
         }
 
         GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(infoGrantContract

@@ -67,7 +67,7 @@ public class GrantOwnerStatsAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = { infoStatGrantOwner };
         Object[] result = (Object[]) ServiceUtils.executeService(userView,
-                "CalculateStatGrantOwnerByCriteria", args);
+                "CalculateStateGrantOwnerByCriteria", args);
 
         // Set the request with the variables
         Integer filterType = new Integer(1);
