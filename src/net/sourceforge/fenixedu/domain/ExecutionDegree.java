@@ -396,37 +396,22 @@ public class ExecutionDegree extends ExecutionDegree_Base {
         return result;
     }
 
-    public static List<ExecutionDegree> getAllByDegreeAndExecutionYear(Degree degree, String year, CurricularStage stage) {
+    public static List<ExecutionDegree> getAllByDegreeAndExecutionYear(Degree degree, String year) {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
         
-        if (degree == null) {
-            return result;
-        }
-        
-        if (stage == null) {
-            return result;
-        }
-        
-        if (year == null) {
+        if (degree == null || year == null) {
             return result;
         }
         
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
-        
         if (executionYear == null) {
             return result;
         }
-        
+
         for (ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
-            if (! stage.equals(executionDegree.getDegreeCurricularPlan().getCurricularStage())) {
-                continue;
+            if (degree.equals(executionDegree.getDegreeCurricularPlan().getDegree())) {
+                result.add(executionDegree);
             }
-            
-            if (! degree.equals(executionDegree.getDegreeCurricularPlan().getDegree())) {
-                continue;
-            }
-            
-            result.add(executionDegree);
         }
         
         return result;

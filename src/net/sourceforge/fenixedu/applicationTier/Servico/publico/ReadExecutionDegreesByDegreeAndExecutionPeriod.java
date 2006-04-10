@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -23,9 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends Service {
 
-	public List run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException, ExcepcaoPersistencia {
-		List infoExecutionDegreeList = null;
-
+	public List<InfoExecutionDegree> run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException, ExcepcaoPersistencia {
 		if (degreeId == null) {
 			throw new FenixServiceException("error.impossibleDegreeSite");
 		}
@@ -54,12 +51,12 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends Service {
 		}
 
 		// Execution degrees
-		List executionDegreeList = ExecutionDegree.getAllByDegreeAndExecutionYear(degree, executionYear.getYear(), CurricularStage.OLD);
+		List<ExecutionDegree> executionDegreeList = ExecutionDegree.getAllByDegreeAndExecutionYear(degree, executionYear.getYear());
 		if (executionDegreeList == null || executionDegreeList.size() <= 0) {
 			throw new FenixServiceException("error.impossibleDegreeSite");
 		}
 
-		infoExecutionDegreeList = new ArrayList();
+        List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
 		ListIterator listIterator = executionDegreeList.listIterator();
 		while (listIterator.hasNext()) {
 			ExecutionDegree executionDegree = (ExecutionDegree) listIterator.next();
@@ -77,9 +74,9 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends Service {
 			infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 			infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-			infoExecutionDegreeList.add(infoExecutionDegree);
+			result.add(infoExecutionDegree);
 		}
 
-		return infoExecutionDegreeList;
+		return result;
 	}
 }

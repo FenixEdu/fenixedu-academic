@@ -8,13 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Luis Cruz
@@ -22,21 +19,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionDegreesByExecutionYearAndDegree extends Service {
 
-    public Object run(Degree curso, ExecutionYear year) throws FenixServiceException,
-			ExcepcaoPersistencia {
-        List infoExecutionDegrees = new ArrayList();
+    public List<InfoExecutionDegree> run(Degree curso, ExecutionYear year) {
+        List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
 
-            List executionDegrees = ExecutionDegree.getAllByDegreeAndExecutionYear(curso, year.getYear(), CurricularStage.OLD);
-            if (executionDegrees != null && !executionDegrees.isEmpty()) {
-                for (int i = 0; i < executionDegrees.size(); i++) {
-                    ExecutionDegree executionDegree = (ExecutionDegree) executionDegrees.get(i);
-                    InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-                            .newInfoFromDomain(executionDegree);
-                    infoExecutionDegrees.add(infoExecutionDegree);
-                }
-            }
+        List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByDegreeAndExecutionYear(curso, year.getYear());
+        for (ExecutionDegree executionDegree : executionDegrees) {
+            result.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
+        }
 
-        return infoExecutionDegrees;
+        return result;
     }
 
 }
