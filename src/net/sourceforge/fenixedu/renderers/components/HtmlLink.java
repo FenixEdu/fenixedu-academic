@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.renderers.components;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -184,7 +186,12 @@ public class HtmlLink extends HtmlComponent {
                 for (String key : keys) {
                     buffer.append(key);
                     buffer.append("=");
-                    buffer.append(getParameters().get(key));
+
+                    try {
+                        buffer.append(URLEncoder.encode(getParameters().get(key), "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                    
                     count--;
                     if (count > 0) {

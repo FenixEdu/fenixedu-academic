@@ -219,7 +219,7 @@ Documentation:
 	</renderer>
 	
     <!--@ Allows to present a collection in a table were rows can be sorted by pressing the table headers. -->
-    <renderer mode="input" type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer"/>
+    <renderer type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer"/>
 
     <!--@ Allows to edit all objects of a collection by presenting each object in a table row and each slot editor in a table cell. -->
     <renderer mode="input" type="java.util.Collection" layout="tabular-editable" class="net.sourceforge.fenixedu.renderers.TabularInputRenderer"/>
