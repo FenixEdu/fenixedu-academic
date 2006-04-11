@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -41,8 +40,6 @@ public class ReadDistributedTestMarks extends Service {
 			throw new InvalidArgumentsServiceException();
 		}
 
-		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
-				.getIPersistentStudentTestQuestion();
 		Set<StudentTestQuestion> studentTestQuestionList = distributedTest.getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder();
 
 		List<InfoStudentTestQuestionMark> infoStudentTestQuestionList = (List<InfoStudentTestQuestionMark>) CollectionUtils
@@ -55,8 +52,7 @@ public class ReadDistributedTestMarks extends Service {
 
 				});
 
-		infoSiteStudentsTestMarks.setMaximumMark(persistentStudentTestQuestion
-				.getMaximumDistributedTestMark(distributedTest.getIdInternal()));
+		infoSiteStudentsTestMarks.setMaximumMark(distributedTest.calculateMaximumDistributedTestMark());
 		infoSiteStudentsTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
 		infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse
 				.newInfoFromDomain((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));

@@ -23,42 +23,6 @@ import org.apache.ojb.broker.query.QueryByCriteria;
  */
 public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPersistentStudentTestQuestion {
 
-    public List<StudentTestQuestion> readStudentTestQuestionsByDistributedTest(DistributedTest distributedTest) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
-        QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
-        queryCriteria.addOrderBy("keyStudent", true);
-        queryCriteria.addOrderBy("testQuestionOrder", true);
-        queryCriteria.setEndAtIndex(distributedTest.getNumberOfQuestions().intValue());
-
-        return queryList(queryCriteria);
-    }
-
-    public Double getMaximumDistributedTestMark(Integer distributedTestId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("idInternal", distributedTestId);
-        DistributedTest distributedTest = (DistributedTest) queryObject(DistributedTest.class, criteria);
-        double result = 0;
-        List<StudentTestQuestion> studentTestQuestionList = readStudentTestQuestionsByDistributedTest(distributedTest);
-        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList)
-            result = result + studentTestQuestion.getTestQuestionValue().doubleValue();
-        return new Double(result);
-    }
-
-    public Double readStudentTestFinalMark(Integer distributedTestId, Integer studentId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTestId);
-        criteria.addEqualTo("keyStudent", studentId);
-        List<StudentTestQuestion> studentTestQuestions = queryList(StudentTestQuestion.class, criteria);
-        if (studentTestQuestions == null || studentTestQuestions.size() == 0)
-            return null;
-        Double result = new Double(0);
-        for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
-            result = new Double(result.doubleValue() + studentTestQuestion.getTestQuestionMark().doubleValue());
-        }
-        return result;
-    }
-
     public List<DistributedTest> readDistributedTestsByTestQuestion(Integer questionId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyQuestion", questionId);

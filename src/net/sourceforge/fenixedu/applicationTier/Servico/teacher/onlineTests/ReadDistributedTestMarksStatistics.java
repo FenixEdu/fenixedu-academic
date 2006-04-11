@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -39,8 +40,7 @@ public class ReadDistributedTestMarksStatistics extends Service {
 
 		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
 				.getIPersistentStudentTestQuestion();
-		List<StudentTestQuestion> studentTestQuestionList = persistentStudentTestQuestion
-				.readStudentTestQuestionsByDistributedTest(distributedTest);
+        Set<StudentTestQuestion> studentTestQuestions = distributedTest.findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder();
 
 		List<String> correctAnswersPercentageList = new ArrayList<String>();
 		List<String> partiallyCorrectAnswersPercentage = new ArrayList<String>();
@@ -50,7 +50,7 @@ public class ReadDistributedTestMarksStatistics extends Service {
 
 		DecimalFormat df = new DecimalFormat("#%");
         int numOfStudent = persistentStudentTestQuestion.countNumberOfStudents(distributedTest);
-		for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+		for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
 			if (studentTestQuestion.getCorrectionFormula().getFormula().intValue() == CorrectionFormula.FENIX) {
 
 				correctAnswersPercentageList.add(df.format(persistentStudentTestQuestion

@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.persistenceTier.onlineTests;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -16,13 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  * @author Susana Fernandes
  */
 public interface IPersistentStudentTestQuestion extends IPersistentObject {
-
-    public abstract List<StudentTestQuestion> readStudentTestQuestionsByDistributedTest(DistributedTest distributedTest)
-            throws ExcepcaoPersistencia;
-
-    public abstract Double getMaximumDistributedTestMark(Integer distributedTestId) throws ExcepcaoPersistencia;
-
-    public abstract Double readStudentTestFinalMark(Integer distributedTestId, Integer studentId) throws ExcepcaoPersistencia;
 
     public abstract List<DistributedTest> readDistributedTestsByTestQuestion(Integer questionId) throws ExcepcaoPersistencia;
 

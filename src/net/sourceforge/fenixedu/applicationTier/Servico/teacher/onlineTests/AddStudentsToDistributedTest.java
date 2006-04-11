@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -42,10 +43,8 @@ public class AddStudentsToDistributedTest extends Service {
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
-        List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion()
-                .readStudentTestQuestionsByDistributedTest(distributedTest);
-        for (StudentTestQuestion studentTestQuestionExample : studentTestQuestionList) {
-
+        Set<StudentTestQuestion> studentTestQuestions = distributedTest.findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder();
+        for (StudentTestQuestion studentTestQuestionExample : studentTestQuestions) {
             List<Question> questionList = new ArrayList<Question>();
             questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 

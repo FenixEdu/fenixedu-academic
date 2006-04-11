@@ -159,4 +159,33 @@ public class DistributedTest extends DistributedTest_Base {
         return students;
     }
 
+    public SortedSet<StudentTestQuestion> findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder() {
+        final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(StudentTestQuestion.COMPARATOR_BY_TEST_QUESTION_ORDER);
+        final Student student = getDistributedTestQuestionsSet() != null ? getDistributedTestQuestionsSet().iterator().next().getStudent() : null;
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+            if (student == studentTestQuestion.getStudent()) {
+                studentTestQuestions.add(studentTestQuestion);
+            }
+        }
+        return studentTestQuestions;
+    }
+
+    public Double calculateMaximumDistributedTestMark() {
+        double result = 0;
+        for (final StudentTestQuestion studentTestQuestion : findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder()) {
+            result += studentTestQuestion.getTestQuestionValue().doubleValue();
+        }
+        return Double.valueOf(result);
+    }
+
+    public Double calculateTestFinalMarkForStudent(final Student student) {
+        double result = 0;
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+            if (student == studentTestQuestion.getStudent()) {
+                result += studentTestQuestion.getTestQuestionMark().doubleValue();
+            }
+        }
+        return Double.valueOf(result);
+    }
+
 }

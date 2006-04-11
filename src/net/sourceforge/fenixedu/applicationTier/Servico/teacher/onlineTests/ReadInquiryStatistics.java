@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -52,9 +53,8 @@ public class ReadInquiryStatistics extends Service {
 		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
 				.getIPersistentStudentTestQuestion();
 
-		List<StudentTestQuestion> studentTestQuestionList = persistentStudentTestQuestion
-				.readStudentTestQuestionsByDistributedTest(distributedTest);
-		for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        final Set<StudentTestQuestion> studentTestQuestions = distributedTest.findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder();
+		for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
 			InfoInquiryStatistics infoInquiryStatistics = new InfoInquiryStatistics();
 
 			InfoStudentTestQuestion infoStudentTestQuestion;

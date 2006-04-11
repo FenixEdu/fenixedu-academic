@@ -52,8 +52,7 @@ public class ReadDistributedTestMarksToString extends Service {
         if (studentTestQuestionList == null || studentTestQuestionList.size() == 0)
             throw new FenixServiceException();
         int questionIndex = 0;
-        Double maximumMark = persistentSupport.getIPersistentStudentTestQuestion()
-                .getMaximumDistributedTestMark(distributedTest.getIdInternal());
+        Double maximumMark = distributedTest.calculateMaximumDistributedTestMark();
         if (maximumMark.doubleValue() > 0)
             result.append("\tNota (%)\n");
         else
@@ -126,8 +125,7 @@ public class ReadDistributedTestMarksToString extends Service {
             DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(Integer.valueOf(distributedTestCodes[i]));
             if (distributedTest == null)
                 throw new InvalidArgumentsServiceException();
-            maxValues[i] = persistentStudentTestQuestion.getMaximumDistributedTestMark(new Integer(
-                    distributedTestCodes[i]));
+            maxValues[i] = distributedTest.calculateMaximumDistributedTestMark();
             result.append(distributedTest.getTitle());
             result.append("\t");
             if (maxValues[i].doubleValue() > 0)
@@ -147,8 +145,8 @@ public class ReadDistributedTestMarksToString extends Service {
                 DecimalFormat df = new DecimalFormat("#0.##");
                 DecimalFormat percentageFormat = new DecimalFormat("#%");
 
-                finalMark = persistentStudentTestQuestion.readStudentTestFinalMark(new Integer(
-                        distributedTestCodes[i]), student.getIdInternal());
+                final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(Integer.valueOf(distributedTestCodes[i]));
+                finalMark = distributedTest.calculateTestFinalMarkForStudent(student);
 
                 if (finalMark == null) {
                     result.append("NA\t");

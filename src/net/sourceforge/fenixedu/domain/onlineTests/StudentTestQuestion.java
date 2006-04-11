@@ -18,6 +18,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class StudentTestQuestion extends StudentTestQuestion_Base {
 
+    public static final Comparator<StudentTestQuestion> COMPARATOR_BY_TEST_QUESTION_ORDER = new BeanComparator("testQuestionOrder");
 	public static final Comparator<StudentTestQuestion> COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER = new ComparatorChain();
 	static {
 		((ComparatorChain) COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER).addComparator(new BeanComparator("student.number"));
