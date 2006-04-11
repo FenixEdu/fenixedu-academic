@@ -60,7 +60,6 @@ public class Person extends Person_Base {
 
     public Person() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
         this.setMaritalStatus(MaritalStatus.UNKNOWN);
         this.setAvailableEmail(Boolean.FALSE);
         this.setAvailableWebSite(Boolean.FALSE);
@@ -70,7 +69,6 @@ public class Person extends Person_Base {
     public Person(InfoPerson personToCreate, Country country) {
 
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
         if (personToCreate.getIdInternal() != null) {
             throw new DomainException("error.person.existentPerson");
         }
@@ -93,7 +91,6 @@ public class Person extends Person_Base {
             IDDocumentType identificationDocumentType, Gender gender, String username) {
 
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
         checkConditionsToCreateNewPerson(username, identificationDocumentNumber,
                 identificationDocumentType, this);
 
@@ -114,7 +111,6 @@ public class Person extends Person_Base {
             String homepage, String email, String documentIDNumber, IDDocumentType documentType) {
 
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
         checkConditionsToCreateNewPerson(null, documentIDNumber, documentType, this);
 
         setNome(name);
@@ -145,7 +141,6 @@ public class Person extends Person_Base {
             IDDocumentType documentType) {
 
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
         checkConditionsToCreateNewPerson(username, documentIDNumber, documentType, this);
 
         createUserAndLoginEntity(username);
@@ -214,12 +209,9 @@ public class Person extends Person_Base {
                 && documentType != null
                 && checkIfDocumentNumberIdAndDocumentIdTypeExists(documentIDNumber, documentType,
                         thisPerson)) {
+            
             throw new DomainException("error.person.existent.docIdAndType");
-        }
-
-        if (username != null && checkIfUsernameExists(username, thisPerson)) {
-            throw new DomainException("error.person.existent.username");
-        }
+        }     
     }
 
     private Login getLoginIdentification() {
@@ -273,11 +265,11 @@ public class Person extends Person_Base {
         if (getUser() == null) {
             throw new DomainException("error.person.unExistingUser");
         }
-
-        if (checkIfUsernameExists(newUsername, this)) {
+        
+        if (Login.checkIfUsernameExists(newUsername, this.getLoginIdentification())) {
             throw new DomainException("error.person.existingUsername");
-        }
-
+        }  
+        
         setUsername(newUsername);
     }
 
@@ -1136,19 +1128,9 @@ public class Person extends Person_Base {
     // static methods
     // -------------------------------------------------------------
 
-    public static boolean checkIfUsernameExists(String username, Person thisPerson) {
-        for (Login login : Identification.readAllLogins()) {
-            if (!login.getUsername().equalsIgnoreCase(thisPerson.getUsername())
-                    && username.equalsIgnoreCase(login.getUsername())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
             final IDDocumentType documentType, Person thisPerson) {
-
+       
         for (final Person person : Person.readAllPersons()) {
             if (!person.equals(thisPerson) && person.getDocumentIdNumber().equals(documentIDNumber)
                     && person.getIdDocumentType().equals(documentType)) {
@@ -1192,7 +1174,7 @@ public class Person extends Person_Base {
         }
         return null;
     }
-    
+
     // used by grant owner
     public static List<Person> readPersonsByName(final String name, final Integer startIndex,
             final Integer numberOfElementsInSpan) {
