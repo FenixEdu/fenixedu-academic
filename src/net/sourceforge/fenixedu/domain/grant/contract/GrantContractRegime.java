@@ -7,6 +7,7 @@ import java.util.Date;
 import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class GrantContractRegime extends GrantContractRegime_Base {
 
@@ -34,6 +35,11 @@ public class GrantContractRegime extends GrantContractRegime_Base {
     public void delete() {
         removeRootDomainObject();
         super.deleteDomainObject();
+    }
+
+    public boolean isActive() {
+        final Date nowDate = Calendar.getInstance().getTime();
+        return ! DateFormatUtil.isBefore("yyyy/MM/dd", this.getDateEndContract(), nowDate);
     }
 
 }

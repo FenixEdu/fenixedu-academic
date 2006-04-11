@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 
 /**
  * @author Pica
@@ -46,14 +45,8 @@ public class ShowGrantOwner extends Service {
             GrantOwner grantOwner) throws FenixServiceException {
         List listInfoListGrantContracts = new ArrayList();
         try {
-            // set grantOwner info
-            IPersistentGrantContract persistentGrantContract = persistentSupport
-                    .getIPersistentGrantContract();
-            infoListGrantOwnerComplete.setInfoGrantOwner(InfoGrantOwnerWithPerson
-                    .newInfoFromDomain(grantOwner));
-            List grantContractsList = persistentGrantContract.readAllContractsByGrantOwner(grantOwner
-                    .getIdInternal());
-            Iterator contractsIter = grantContractsList.iterator();
+            infoListGrantOwnerComplete.setInfoGrantOwner(InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner));
+            Iterator contractsIter = grantOwner.getGrantContractsIterator();
             // set list of qualifications
             List infoQualificationsList = grantOwner.getPerson().getAssociatedQualifications();
             if (infoQualificationsList != null)

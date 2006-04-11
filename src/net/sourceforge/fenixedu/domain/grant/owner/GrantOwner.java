@@ -32,6 +32,14 @@ public class GrantOwner extends GrantOwner_Base {
         }
         return null;
     }
+    
+    public GrantContract readGrantContractWithMaximumContractNumber() {
+        return Collections.max(this.getGrantContractsSet(), new Comparator<GrantContract>() {
+            public int compare(GrantContract o1, GrantContract o2) {
+                return o1.getContractNumber().compareTo(o2.getContractNumber());
+            }
+        });
+    }
 
     public static Integer readMaxGrantOwnerNumber() {
         List<GrantOwner> grantOwners = RootDomainObject.getInstance().getGrantOwners();

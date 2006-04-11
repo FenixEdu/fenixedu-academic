@@ -10,17 +10,12 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 public class DeleteGrantContract extends DeleteDomainObjectService {
 
     protected Class getDomainObjectClass() {
         return GrantContract.class;
-    }
-
-    protected IPersistentObject getIPersistentObject() {
-        return persistentSupport.getIPersistentGrantContract();
     }
 
     protected void doBeforeDelete(DomainObject domainObject, ISuportePersistente persistentSupport)

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 
 /**
  * @author Barbosa
@@ -25,18 +24,9 @@ public class ReadLastGrantContractCreatedByGrantOwner extends Service {
     public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        Integer grantContractNumber = null;
         GrantOrientationTeacher grantOrientationTeacher = null;
-        IPersistentGrantContract persistentGrantContract = null;
-
-        persistentGrantContract = persistentSupport.getIPersistentGrantContract();
-
-        // set the contract number!
-        grantContractNumber = persistentGrantContract
-                .readMaxGrantContractNumberByGrantOwner(grantOwnerId);
-        
         final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(grantOwnerId);
-        final GrantContract grantContract = grantOwner.readGrantContractByNumber(grantContractNumber);
+        final GrantContract grantContract = grantOwner.readGrantContractWithMaximumContractNumber();
         if (grantContract == null) {
             return new InfoGrantContract();
         }

@@ -7,9 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantContractOJB;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 import net.sourceforge.fenixedu.stm.Transaction;
 
@@ -91,10 +89,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public void cancelarTransaccao() {
 		Transaction.abort();
-	}
-
-    public IPersistentGrantContract getIPersistentGrantContract() {
-		return new GrantContractOJB();
 	}
 
     public void beginTransaction() {

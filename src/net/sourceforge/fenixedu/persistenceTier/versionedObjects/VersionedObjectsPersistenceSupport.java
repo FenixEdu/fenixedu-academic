@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
@@ -26,10 +24,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public void iniciarTransaccao() throws ExcepcaoPersistencia {
         return;
-    }
-
-    public IPersistentGrantContract getIPersistentGrantContract() {
-        return new GrantContractVO();
     }
 
     public Integer getNumberCachedItems() {

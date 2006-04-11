@@ -15,29 +15,23 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 
 public class CreateOrEditGrantContract extends Service {
 
     public void run(InfoGrantContract infoGrantContract) throws FenixServiceException,
             ExcepcaoPersistencia {
-        IPersistentGrantContract pGrantContract = persistentSupport.getIPersistentGrantContract();
+
+        final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(infoGrantContract.getGrantOwnerInfo().getIdInternal());
         final GrantContract grantContract;
         if (infoGrantContract.getContractNumber() == null) {
-            // set the contract number!
-            Integer maxNumber = pGrantContract.readMaxGrantContractNumberByGrantOwner(infoGrantContract
-                    .getGrantOwnerInfo().getIdInternal());
-            Integer newContractNumber = Integer.valueOf(maxNumber + 1);
+            final Integer maxNumber = grantOwner.readGrantContractWithMaximumContractNumber().getContractNumber();
+            final Integer newContractNumber = Integer.valueOf(maxNumber + 1);
             infoGrantContract.setContractNumber(newContractNumber);
-
             grantContract = DomainFactory.makeGrantContract();
         } else {
-            final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(infoGrantContract.getGrantOwnerInfo().getIdInternal());
             grantContract = grantOwner.readGrantContractByNumber(infoGrantContract.getContractNumber()); 
         }
 
-        GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(infoGrantContract
-                .getGrantOwnerInfo().getIdInternal());
         grantContract.setGrantOwner(grantOwner);
 
         GrantType grantType = GrantType.readBySigla(infoGrantContract.getGrantTypeInfo().getSigla());

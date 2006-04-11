@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
 
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 
 public interface ISuportePersistente {
     
@@ -14,8 +13,6 @@ public interface ISuportePersistente {
 	public void clearCache();
 
 	public Integer getNumberCachedItems();
-
-	public IPersistentGrantContract getIPersistentGrantContract();
 
 	@Deprecated
     public IPersistentObject getIPersistentObject();

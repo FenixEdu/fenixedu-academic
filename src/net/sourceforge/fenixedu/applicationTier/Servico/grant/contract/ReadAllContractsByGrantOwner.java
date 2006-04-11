@@ -1,13 +1,9 @@
-/*
- * Created on 18/12/2003
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -18,48 +14,31 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrien
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 
-/**
- * @author Barbosa
- * @author Pica
- * 
- */
 public class ReadAllContractsByGrantOwner extends Service {
 
     public List run(Integer grantOwnerId) throws FenixServiceException, ExcepcaoPersistencia {
 
-        List contracts = null;
-        IPersistentGrantContract pgc = persistentSupport.getIPersistentGrantContract();
-        contracts = pgc.readAllContractsByGrantOwner(grantOwnerId);
-
-        if (contracts == null) {
-            return new ArrayList();
+        final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(grantOwnerId);
+        if (grantOwner == null) {
+            throw new FenixServiceException("error.noGrantOwner");
         }
 
-        Iterator contractIter = contracts.iterator();
-        List contractList = new ArrayList();
+        final List<InfoGrantContract> result = new ArrayList<InfoGrantContract>();
+        final Set<GrantContract> contracts = grantOwner.getGrantContractsSet();
 
-        // gather information related to each contract
-        while (contractIter.hasNext()) {
-            GrantContract grantContract = (GrantContract) contractIter.next();
-            InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
+        for (final GrantContract grantContract : contracts) {
+
+            final InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
                     .newInfoFromDomain(grantContract);
-
-            // get the GrantOrientationTeacher for each contract
-            GrantOrientationTeacher orientationTeacher = grantContract
-                    .readActualGrantOrientationTeacher();
-            InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
-                    .newInfoFromDomain(orientationTeacher);
+            final InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
+                    .newInfoFromDomain(grantContract.readActualGrantOrientationTeacher());
             infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
 
-            // get the GrantCostCenter for each contract
-
             if (grantContract.getGrantCostCenter() != null) {
-
-                InfoGrantCostCenter infoGrantCostCenter = InfoGrantCostCenter
+                final InfoGrantCostCenter infoGrantCostCenter = InfoGrantCostCenter
                         .newInfoFromDomain(grantContract.getGrantCostCenter());
                 infoGrantContract.setGrantCostCenterInfo(infoGrantCostCenter);
             }
@@ -70,9 +49,8 @@ public class ReadAllContractsByGrantOwner extends Service {
              * contract regime is active
              */
             if (infoGrantContract.getEndContractMotiveSet()) {
-                infoGrantContract.setActive(new Boolean(false));
+                infoGrantContract.setActive(Boolean.FALSE);
             } else {
-
                 List grantContractRegimeActual = grantContract
                         .readGrantContractRegimeByGrantContractAndState(new Integer(1));
                 if (grantContractRegimeActual.isEmpty()) {
@@ -83,9 +61,10 @@ public class ReadAllContractsByGrantOwner extends Service {
                         .get(0);
                 infoGrantContract.setActive(grantContractRegime.getContractRegimeActive());
             }
-            contractList.add(infoGrantContract);
+            result.add(infoGrantContract);
         }
-        Collections.reverse(contractList);
-        return contractList;
+
+        Collections.reverse(result);
+        return result;
     }
 }
