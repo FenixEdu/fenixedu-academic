@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creating event and event participation tables" createEventParticipationTable.sql
