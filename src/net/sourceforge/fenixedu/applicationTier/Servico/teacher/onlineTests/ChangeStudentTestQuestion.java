@@ -103,8 +103,7 @@ public class ChangeStudentTestQuestion extends Service {
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
                 Integer order = StudentTestQuestion.findStudentTestQuestion(oldQuestion, student, distributedTest).getTestQuestionOrder();
-                studentsTestQuestionList = persistentStudentTestQuestion.readByOrderAndDistributedTest(
-                        order, distributedTest.getIdInternal());
+                studentsTestQuestionList = distributedTest.findStudentTestQuestionsByTestQuestionOrder(order);
             } else
                 studentsTestQuestionList = StudentTestQuestion.findStudentTestQuestions(oldQuestion, distributedTest);
 

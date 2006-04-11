@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -22,12 +24,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentsWithoutDistributedTest extends Service {
 
     public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException, ExcepcaoPersistencia {
-        List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-        List<Attends> attendList =executionCourse.getAttends();
-        List<Student> studentList = persistentSupport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(distributedTestId);
+        final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final List<Attends> attendList =executionCourse.getAttends();
+        final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        final Set<Student> students = distributedTest.findStudents();
         for (Attends attend : attendList) {
-            if (!studentList.contains(attend.getAluno()))
+            if (!students.contains(attend.getAluno()))
                 infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(attend.getAluno()));
         }
         return infoStudentList;

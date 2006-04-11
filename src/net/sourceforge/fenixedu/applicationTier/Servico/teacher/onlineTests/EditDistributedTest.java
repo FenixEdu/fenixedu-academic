@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -94,9 +93,8 @@ public class EditDistributedTest extends Service {
             OnlineTest onlineTest = DomainFactory.makeOnlineTest();
             onlineTest.setDistributedTest(distributedTest);
             onlineTest.addAssociatedExecutionCourses(executionCourse);
-            List<Student> studentList = persistentSupport.getIPersistentStudentTestQuestion()
-                    .readStudentsByDistributedTest(distributedTest.getIdInternal());
-            for (Student student : studentList) {
+            final Set<Student> students = distributedTest.findStudents();
+            for (Student student : students) {
             	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
                 double studentMark = 0;
                 for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {

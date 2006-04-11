@@ -6,11 +6,9 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -24,41 +22,6 @@ import org.apache.ojb.broker.query.QueryByCriteria;
  * @author Susana Fernandes
  */
 public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPersistentStudentTestQuestion {
-
-    public List<StudentTestQuestion> readByOrderAndDistributedTest(Integer order, Integer distributedTestId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("testQuestionOrder", order);
-        criteria.addEqualTo("keyDistributedTest", distributedTestId);
-        return queryList(StudentTestQuestion.class, criteria);
-    }
-
-    public List<Student> readStudentsByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTestId);
-        criteria.addEqualTo("testQuestionOrder", new Integer(1));
-        List<StudentTestQuestion> result = queryList(StudentTestQuestion.class, criteria);
-        List<Student> studentList = new ArrayList<Student>();
-        for (StudentTestQuestion studentTestQuestion : result) {
-            if (!studentList.contains(studentTestQuestion.getStudent()))
-                studentList.add(studentTestQuestion.getStudent());
-        }
-        return studentList;
-    }
-
-    public List<Student> readStudentsByDistributedTests(Collection distributedTestsIds) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addIn("keyDistributedTest", distributedTestsIds);
-        criteria.addEqualTo("testQuestionOrder", new Integer(1));
-        QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
-        queryCriteria.addGroupBy("student.number");
-        List<StudentTestQuestion> result = queryList(queryCriteria);
-        List<Student> studentList = new ArrayList<Student>();
-        for (StudentTestQuestion studentTestQuestion : result) {
-            if (!studentList.contains(studentTestQuestion.getStudent()))
-                studentList.add(studentTestQuestion.getStudent());
-        }
-        return studentList;
-    }
 
     public List<StudentTestQuestion> readStudentTestQuestionsByDistributedTest(DistributedTest distributedTest) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();

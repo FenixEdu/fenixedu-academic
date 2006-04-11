@@ -5,10 +5,8 @@
 
 package net.sourceforge.fenixedu.persistenceTier.onlineTests;
 
-import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -18,12 +16,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  * @author Susana Fernandes
  */
 public interface IPersistentStudentTestQuestion extends IPersistentObject {
-
-    public abstract List<StudentTestQuestion> readByOrderAndDistributedTest(Integer order, Integer distributedTestId) throws ExcepcaoPersistencia;
-
-    public abstract List<Student> readStudentsByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia;
-
-    public abstract List<Student> readStudentsByDistributedTests(Collection distributedTestsIds) throws ExcepcaoPersistencia;
 
     public abstract List<StudentTestQuestion> readStudentTestQuestionsByDistributedTest(DistributedTest distributedTest)
             throws ExcepcaoPersistencia;

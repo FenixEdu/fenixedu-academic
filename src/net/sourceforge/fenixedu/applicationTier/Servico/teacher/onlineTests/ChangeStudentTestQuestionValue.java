@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
@@ -44,8 +43,6 @@ public class ChangeStudentTestQuestionValue extends Service {
             ExcepcaoPersistencia {
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
 
-        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
-                .getIPersistentStudentTestQuestion();
         List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
         	final Question question = rootDomainObject.readQuestionByOID(questionId);
@@ -61,8 +58,7 @@ public class ChangeStudentTestQuestionValue extends Service {
         	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         	final Student student = rootDomainObject.readStudentByOID(studentId);
         	final StudentTestQuestion studentTestQuestion = StudentTestQuestion.findStudentTestQuestion(question, student, distributedTest);
-            studentsTestQuestionList.addAll(persistentStudentTestQuestion.readByOrderAndDistributedTest(
-                    studentTestQuestion.getTestQuestionOrder(), distributedTestId));
+            studentsTestQuestionList.addAll(distributedTest.findStudentTestQuestionsByTestQuestionOrder(studentTestQuestion.getTestQuestionOrder()));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS) {
         	final Question question = rootDomainObject.readQuestionByOID(questionId);
             studentsTestQuestionList.addAll(question.getStudentTestsQuestionsSet());

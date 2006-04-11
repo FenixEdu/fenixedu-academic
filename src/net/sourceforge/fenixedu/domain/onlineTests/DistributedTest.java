@@ -7,7 +7,9 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -137,6 +139,24 @@ public class DistributedTest extends DistributedTest_Base {
     	final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(StudentTestQuestion.COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER);
     	studentTestQuestions.addAll(getDistributedTestQuestionsSet());
     	return studentTestQuestions;
+    }
+
+    public Set<StudentTestQuestion> findStudentTestQuestionsByTestQuestionOrder(final Integer order) {
+        final Set<StudentTestQuestion> studentTestQuestions = new HashSet<StudentTestQuestion>();
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+            if (studentTestQuestion.getTestQuestionOrder().equals(order)) {
+                studentTestQuestions.add(studentTestQuestion);
+            }
+        }
+        return studentTestQuestions;
+    }
+
+    public Set<Student> findStudents() {
+        final Set<Student> students = new HashSet<Student>();
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+            students.add(studentTestQuestion.getStudent());
+        }
+        return students;
     }
 
 }

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -21,16 +22,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentsWithDistributedTest extends Service {
 
 	public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException, ExcepcaoPersistencia {
-		List<InfoStudent> result = new ArrayList<InfoStudent>();
+		final List<InfoStudent> result = new ArrayList<InfoStudent>();
 
-		DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+		final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 		if (distributedTest == null)
 			throw new FenixServiceException();
 
-		List<Student> studentList = persistentSupport.getIPersistentStudentTestQuestion()
-				.readStudentsByDistributedTest(distributedTest.getIdInternal());
-
-		for (Student student : studentList) {
+        final Set<Student> students = distributedTest.findStudents();
+		for (Student student : students) {
             result.add(InfoStudentWithInfoPerson.newInfoFromDomain(student));    
         }
 		

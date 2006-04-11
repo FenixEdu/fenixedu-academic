@@ -7,7 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -110,11 +112,14 @@ public class ReadDistributedTestMarksToString extends Service {
             }
         });
 
-        List<Integer> distributedTestIdsList = new ArrayList<Integer>();
-        CollectionUtils.addAll(distributedTestIdsList, distributedTestCodes);
-        List<Student> studentsFromTestsList = persistentStudentTestQuestion
-                .readStudentsByDistributedTests(distributedTestIdsList);
-        List<Student> studentList = concatStudentsLists(studentsFromAttendsList, studentsFromTestsList);
+        final Set<Student> students = new HashSet<Student>();
+        for (final String distributedTestCode : distributedTestCodes) {
+            final Integer distributedTestID = Integer.valueOf(distributedTestCode);
+            final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestID);
+            students.addAll(distributedTest.findStudents());
+        }
+
+        List<Student> studentList = concatStudentsLists(studentsFromAttendsList, students);
         Double[] maxValues = new Double[distributedTestCodes.length];
 
         for (int i = 0; i < distributedTestCodes.length; i++) {
@@ -172,7 +177,7 @@ public class ReadDistributedTestMarksToString extends Service {
         return result.toString();
     }
 
-    private List<Student> concatStudentsLists(List<Student> list1, List<Student> list2) {
+    private List<Student> concatStudentsLists(Collection<Student> list1, Collection<Student> list2) {
 
         List<Student> sortedStudents = new ArrayList<Student>();
         sortedStudents.addAll(list1);
