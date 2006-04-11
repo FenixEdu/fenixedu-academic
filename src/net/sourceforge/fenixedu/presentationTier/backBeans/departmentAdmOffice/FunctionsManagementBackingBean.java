@@ -21,6 +21,10 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -45,8 +49,6 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
-
-import sun.text.Normalizer;
 
 public class FunctionsManagementBackingBean extends FenixBackingBean {
 
@@ -320,10 +322,14 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     private List<Person> getAllValidPersonsByName() throws FenixServiceException, FenixFilterException {
+
         List<Person> allPersons = getAllPersonsToSearch(RoleType.PERSON);
-        String[] nameWords = personName.split(" ");
-        normalizeName(nameWords);
-        allPersons = getValidPersons(nameWords, allPersons);
+
+        SearchParameters searchParameters = new SearchPerson.SearchParameters(personName, null, null,
+                null, null, null, null, null);
+        SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
+        allPersons = (List<Person>) CollectionUtils.select(allPersons, predicate);
+
         Collections.sort(allPersons, new BeanComparator("nome"));
         return allPersons;
     }
@@ -399,47 +405,6 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             this.personsList = new ArrayList<Person>();
         }
         return this.personsList;
-    }
-
-    private List<Person> getValidPersons(String[] nameWords, List<Person> allPersons) {
-
-        List<Person> persons = new ArrayList();
-
-        for (Person person : allPersons) {
-            if (verifyNameEquality(nameWords, person)) {
-                persons.add(person);
-            }
-        }
-        return persons;
-    }
-
-    private boolean verifyNameEquality(String[] nameWords, Person person) {
-
-        if (nameWords == null) {
-            return true;
-        }
-
-        if (person.getNome() != null) {
-            String[] personNameWords = person.getNome().trim().split(" ");
-            normalizeName(personNameWords);
-            int j, i;
-            for (i = 0; i < nameWords.length; i++) {
-                if (!nameWords[i].equals("")) {
-                    for (j = 0; j < personNameWords.length; j++) {
-                        if (personNameWords[j].equals(nameWords[i])) {
-                            break;
-                        }
-                    }
-                    if (j == personNameWords.length) {
-                        return false;
-                    }
-                }
-            }
-            if (i == nameWords.length) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public List<SelectItem> getPersonTypes() {
@@ -591,17 +556,6 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         final Object[] argsToRead = { Person.class, this.getPersonID() };
         return (Person) ServiceUtils.executeService(null, "ReadDomainObject", argsToRead);
-    }
-
-    private void normalizeName(String[] nameWords) {
-        for (int i = 0; i < nameWords.length; i++) {
-            nameWords[i] = normalize(nameWords[i]);
-        }
-    }
-
-    private String normalize(String string) {
-        return Normalizer.normalize(string, Normalizer.DECOMP, Normalizer.DONE).replaceAll(
-                "[^\\p{ASCII}]", "").toLowerCase();
     }
 
     public int getPersonsNumber() throws FenixFilterException, FenixServiceException {

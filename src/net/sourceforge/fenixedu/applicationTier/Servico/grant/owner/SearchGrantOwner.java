@@ -64,7 +64,7 @@ public class SearchGrantOwner extends Service {
                             tempNumberOfElementInSpan);
                     numberOfResultsByName = GrantOwner.countAllGrantOwnerByName(name);
                 } else {
-                    personList = Person.findByName(name, startIndex, tempNumberOfElementInSpan);
+                    personList = Person.readPersonsByName(name, startIndex, tempNumberOfElementInSpan);
                     numberOfResultsByName = Person.countAllByName(name);
                 }
             }

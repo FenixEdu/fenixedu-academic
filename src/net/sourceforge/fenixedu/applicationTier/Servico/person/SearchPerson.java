@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.StringNormalizer;
 
@@ -41,8 +40,7 @@ public class SearchPerson extends Service {
         private DegreeType degreeType;
 
         public SearchParameters(String name, String email, String username, String documentIdNumber,
-                String roleType, String degreeTypeString, Integer degreeId, Integer departmentId)
-                throws ExcepcaoPersistencia {
+                String roleType, String degreeTypeString, Integer degreeId, Integer departmentId) {
 
             this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
             this.email = (email != null && !email.equals("")) ? normalize(email.trim()) : null;
@@ -81,8 +79,8 @@ public class SearchPerson extends Service {
         public static List<InfoPerson> getIntervalPersons(Integer start, Integer end,
                 List<InfoPerson> allPersons) {
 
-            return (end >= allPersons.size()) ? allPersons.subList(start, allPersons.size()) : allPersons
-                    .subList(start, end);
+            return (end >= allPersons.size()) ? allPersons.subList(start, allPersons.size())
+                    : allPersons.subList(start, end);
         }
 
         public Degree getDegree() {
@@ -119,7 +117,7 @@ public class SearchPerson extends Service {
     }
 
     public SearchPersonResults run(SearchParameters searchParameters, Predicate predicate)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            throws FenixServiceException {
 
         final List<Person> persons;
         List<Person> allValidPersons = new ArrayList<Person>();

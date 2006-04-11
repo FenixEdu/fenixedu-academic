@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
 
-import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
-import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 
@@ -24,9 +22,5 @@ public interface ISuportePersistente {
 
 	@Deprecated
     public IPersistentObject getIPersistentObject();
-
-	public IPersistentCMS getIPersistentCms();
-
-	public IPersistentMailingList getIPersistentMailingList();
-            
+      
 }

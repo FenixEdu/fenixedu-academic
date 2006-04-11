@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.cms.basic;
 
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
+import net.sourceforge.fenixedu.domain.NotImplementedException;
 import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -35,14 +36,16 @@ public class WriteCmsConfiguration extends CmsService
 
 	public Cms run(String name,CmsConfiguration changes) throws ExcepcaoPersistencia
 	{
-		Cms editedCms = persistentSupport.getIPersistentCms().readCmsByName(name);
-		editedCms.getConfiguration().setSmtpServerAddress(changes.smtpServerAddress);
-		editedCms.getConfiguration().setFilterNonTextualAttachments(changes.filterNonTextualAttachments);
-		editedCms.getConfiguration().setMailingListsHost(changes.mailingListsHost);
-		editedCms.getConfiguration().setConversationReplyMarkers(changes.conversationReplyMarkers);
-		editedCms.getConfiguration().setMaxAttachmentSize(changes.maxAttachmentSize);
-		editedCms.getConfiguration().setMaxMessageSize(changes.maxMessageSize);
-		
-		return editedCms;
+//		Cms editedCms = persistentSupport.getIPersistentCms().readCmsByName(name);
+//		editedCms.getConfiguration().setSmtpServerAddress(changes.smtpServerAddress);
+//		editedCms.getConfiguration().setFilterNonTextualAttachments(changes.filterNonTextualAttachments);
+//		editedCms.getConfiguration().setMailingListsHost(changes.mailingListsHost);
+//		editedCms.getConfiguration().setConversationReplyMarkers(changes.conversationReplyMarkers);
+//		editedCms.getConfiguration().setMaxAttachmentSize(changes.maxAttachmentSize);
+//		editedCms.getConfiguration().setMaxMessageSize(changes.maxMessageSize);
+//		
+//		return editedCms;
+        
+        throw new NotImplementedException();
 	}	
 }

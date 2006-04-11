@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filter;
+import net.sourceforge.fenixedu.domain.NotImplementedException;
 import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -18,7 +19,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public abstract class CmsAccessControlFilter extends Filter {
 
 	protected Cms readFenixCMS() throws ExcepcaoPersistencia {
-		return persistentSupport.getIPersistentCms().readFenixCMS();
+		//return persistentSupport.getIPersistentCms().readFenixCMS();
+        throw new NotImplementedException();
 	}
 
 }

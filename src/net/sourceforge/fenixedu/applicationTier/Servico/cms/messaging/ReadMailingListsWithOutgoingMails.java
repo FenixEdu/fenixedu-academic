@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
+import net.sourceforge.fenixedu.domain.NotImplementedException;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -21,6 +22,7 @@ public class ReadMailingListsWithOutgoingMails extends CmsService
 {
 	public Collection<MailingList> run() throws ExcepcaoPersistencia
 	{
-		return persistentSupport.getIPersistentMailingList().readAllMailingListsWithOutgoingMails();
+		//return persistentSupport.getIPersistentMailingList().readAllMailingListsWithOutgoingMails();
+	    throw new NotImplementedException();
 	}
 }

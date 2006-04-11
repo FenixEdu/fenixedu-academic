@@ -184,7 +184,7 @@ public class Person extends Person_Base {
         if (country != null) {
             setPais(country);
         }
-//        setPais((Country) valueToUpdate(getPais(), country));
+        // setPais((Country) valueToUpdate(getPais(), country));
     }
 
     public void editPersonalContactInformation(InfoPerson personToEdit) {
@@ -500,11 +500,11 @@ public class Person extends Person_Base {
         // setAvailableWebSite((Boolean) valueToUpdate(getAvailableWebSite(),
         // infoPerson
         // .getAvailableWebSite()));
-        if(!StringUtils.isNumeric(getWorkPhone())){
+        if (!StringUtils.isNumeric(getWorkPhone())) {
             setWorkPhone(infoPerson.getWorkPhone());
-        }else{
-            setWorkPhone(valueToUpdate(getWorkPhone(), infoPerson.getWorkPhone()));    
-        }       
+        } else {
+            setWorkPhone(valueToUpdate(getWorkPhone(), infoPerson.getWorkPhone()));
+        }
 
         // setPassword(valueToUpdate(getPassword(),
         // PasswordEncryptor.encryptPassword(GeneratePassword
@@ -862,21 +862,21 @@ public class Person extends Person_Base {
             }
         }
     }
-    
+
     public SortedSet<SentSms> getSentSmsSortedBySendDate() {
         final SortedSet<SentSms> sentSmsSortedBySendDate = new TreeSet<SentSms>(new ReverseComparator(
                 PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE));
         sentSmsSortedBySendDate.addAll(this.getSentSmsSet());
         return sentSmsSortedBySendDate;
     }
-    
+
     public int countSentSmsBetween(final Date startDate, final Date endDate) {
         int count = 0;
         for (final SentSms sentSms : this.getSentSmsSet()) {
             if (sentSms.getDeliveryType() != SmsDeliveryType.NOT_SENT_TYPE
-                && (sentSms.getSendDate().after(startDate) || sentSms.getSendDate().equals(startDate)) 
-                && sentSms.getSendDate().before(endDate)) {
-                
+                    && (sentSms.getSendDate().after(startDate) || sentSms.getSendDate()
+                            .equals(startDate)) && sentSms.getSendDate().before(endDate)) {
+
                 count++;
             }
         }
@@ -892,7 +892,8 @@ public class Person extends Person_Base {
         return null;
     }
 
-    public MasterDegreeCandidate getMasterDegreeCandidateByExecutionDegree(final ExecutionDegree executionDegree) {
+    public MasterDegreeCandidate getMasterDegreeCandidateByExecutionDegree(
+            final ExecutionDegree executionDegree) {
         for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
             if (masterDegreeCandidate.getExecutionDegree() == executionDegree) {
                 return masterDegreeCandidate;
@@ -1131,7 +1132,7 @@ public class Person extends Person_Base {
         super.setMobile(telemovel);
     }
 
-   // -------------------------------------------------------------
+    // -------------------------------------------------------------
     // static methods
     // -------------------------------------------------------------
 
@@ -1191,10 +1192,11 @@ public class Person extends Person_Base {
         }
         return null;
     }
-
+    
     // used by grant owner
-    public static List<Person> findByName(final String name, final Integer startIndex, final Integer numberOfElementsInSpan) {
-        final List<Person> personsList = findByName(name);
+    public static List<Person> readPersonsByName(final String name, final Integer startIndex,
+            final Integer numberOfElementsInSpan) {
+        final List<Person> personsList = readPersonsByName(name);
         if (startIndex != null && numberOfElementsInSpan != null && !personsList.isEmpty()) {
             int finalIndex = Math.min(personsList.size(), startIndex + numberOfElementsInSpan);
             return personsList.subList(startIndex, finalIndex);
@@ -1203,10 +1205,10 @@ public class Person extends Person_Base {
     }
 
     public static Integer countAllByName(final String name) {
-        return Integer.valueOf(findByName(name).size());
+        return Integer.valueOf(readPersonsByName(name).size());
     }
 
-    public static List<Person> findByName(final String name) {
+    public static List<Person> readPersonsByName(final String name) {
         final List<Person> result = new ArrayList<Person>();
         if (name != null) {
             final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
@@ -1222,10 +1224,10 @@ public class Person extends Person_Base {
     public static List<Person> readAllPersons() {
         List<Person> allPersons = new ArrayList<Person>();
         for (Party party : RootDomainObject.getInstance().getPartys()) {
-           if (party instanceof Person) {              
-               allPersons.add((Person) party);
-           }
+            if (party instanceof Person) {
+                allPersons.add((Person) party);
+            }
         }
         return allPersons;
-    }      
+    }
 }

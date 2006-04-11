@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.mail.Address;
 import javax.mail.BodyPart;
@@ -20,6 +21,7 @@ import javax.mail.internet.MimeMessage;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.NotImplementedException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
@@ -56,7 +58,10 @@ public class ProcessReceivedMail extends CmsService
 			{
 				addressesList.add(addresses[i]);
 			}
-			Collection<MailingList> mailingLists = persistentSupport.getIPersistentMailingList().readReceptorMailingListsForAddress(addressesList, this.readFenixCMS().getConfiguration().getMailingListsHostToUse());
+            
+			//Collection<MailingList> mailingLists = persistentSupport.getIPersistentMailingList().readReceptorMailingListsForAddress(addressesList, this.readFenixCMS().getConfiguration().getMailingListsHostToUse());
+            List<MailingList> mailingLists = new ArrayList<MailingList>();
+                         
 			boolean messageCreated = false;
 			boolean firstMailingList = true;
 			if (mailingLists.size() > 0)
@@ -97,8 +102,11 @@ public class ProcessReceivedMail extends CmsService
 			throw new FenixServiceException(e);
 		}
 
-		this.updateRootObjectReferences(mailMessage);
-		return mailMessage;
+		this.updateRootObjectReferences(mailMessage);		
+        
+        //return mailMessage;
+        
+        throw new NotImplementedException();
 	}
 
 	/**

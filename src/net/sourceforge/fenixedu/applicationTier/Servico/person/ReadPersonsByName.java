@@ -21,7 +21,7 @@ public class ReadPersonsByName extends Service {
         }
         
         final List<InfoPerson> infoPersons = new ArrayList<InfoPerson>();
-        for (final Person individualPerson : Person.findByName(authorName.toString())) {
+        for (final Person individualPerson : Person.readPersonsByName(authorName.toString())) {
             infoPersons.add(InfoPerson.newInfoFromDomain(individualPerson));
         }
         return infoPersons;
