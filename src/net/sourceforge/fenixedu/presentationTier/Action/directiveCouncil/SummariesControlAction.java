@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
@@ -71,9 +70,8 @@ public class SummariesControlAction extends FenixDispatchAction {
                 && !executionPeriodID.equals("")) {
 
             getListing(request, departmentID, executionPeriodID);
-            if (request.getParameter("sorted") == null) {
-                request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);
-            }
+            saveDepartmentAndExecutionPeriod(request, departmentID, executionPeriodID);
+            
         } else if (departmentID == null || departmentID.equals("")) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("", new ActionMessage("error.no.deparment"));
@@ -111,15 +109,18 @@ public class SummariesControlAction extends FenixDispatchAction {
 
         if (runProcess) {
             getListing(request, departmentID, executionPeriodID);
-            if (request.getParameter("sorted") == null) {
-                request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);
-            }
+            saveDepartmentAndExecutionPeriod(request, departmentID, executionPeriodID);
         }
 
         readAndSaveAllDepartments(request);
         readAndSaveAllExecutionPeriods(request);
 
         return mapping.findForward("success");
+    }
+
+    private void saveDepartmentAndExecutionPeriod(HttpServletRequest request, String departmentID, String executionPeriodID) {
+        request.setAttribute("department", departmentID);
+        request.setAttribute("executionPeriod", executionPeriodID);
     }
 
     private List<SummariesControlElementDTO> getListing(HttpServletRequest request, String departmentID,

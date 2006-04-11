@@ -12,7 +12,6 @@
 </html:messages>
 
 <html:form action="/summariesControl">
-
 	<html:hidden property="method" value="listSummariesControl"/>
 
 	<p><h2><bean:message key="link.summaries.control"/></h2></p>
@@ -55,8 +54,8 @@
 			}
 		%>
 		
-		<bean:define id="department" property="deparment"/>
-		<bean:define id="executionPeriod" property="executionPeriod"/>
+		<bean:define id="department" type="java.lang.String" name="department"/>
+		<bean:define id="executionPeriod" type="java.lang.String" name="executionPeriod"/>
 		
 		<p><fr:view name="listElements" schema="summaries.control.list">
 				<fr:layout name="tabular-sortable">
