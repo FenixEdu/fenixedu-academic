@@ -28,16 +28,7 @@
 					<html:options collection="executionPeriods" property="value" labelProperty="label"/>
 		</html:select></p>		
 	</logic:notEmpty>
-	
-</html:form>
 
-<html:form action="/summariesControl">
-
-	<html:hidden property="method" value="listSummariesControl"/>
-	<html:hidden property="department"/>
-	<html:hidden property="executionPeriod"/>
-	<html:hidden property="sorted" value="true"/>
-		
 	<logic:present name="listElements">			
 		<bean:define id="url" type="java.lang.String">/summariesControl.do?method=exportToExcel&department=<bean:write name="summariesControlForm" property="department"/>&executionPeriod=<bean:write name="summariesControlForm" property="executionPeriod"/></bean:define> 						
 		<bean:define id="url2" type="java.lang.String">/summariesControl.do?method=exportToCSV&department=<bean:write name="summariesControlForm" property="department"/>&executionPeriod=<bean:write name="summariesControlForm" property="executionPeriod"/></bean:define> 						
@@ -56,13 +47,28 @@
 		
 		<br/>
 		
-		<p><fr:edit name="listElements" schema="summaries.control.list">
+		<%
+			String sortCriteria = request.getParameter("sortBy");
+		
+			if (sortCriteria == null) {
+			    sortCriteria = "teacherNumber=ascending";
+			}
+		%>
+		
+		<bean:define id="department" property="deparment"/>
+		<bean:define id="executionPeriod" property="executionPeriod"/>
+		
+		<p><fr:view name="listElements" schema="summaries.control.list">
 				<fr:layout name="tabular-sortable">
 					<fr:property name="rowClasses" value="listClasses"/>
 					<fr:property name="prefixes" value=",,,,,,,<strong>,,<strong>"/>
 					<fr:property name="suffixes" value=",,,,,h,h,%</strong>,h,%</strong>"/>
+
+					<fr:property name="sortUrl" value="<%= "/summariesControl.do?method=listSummariesControl&department=" + department + "&executionPeriod=" + executionPeriod %>"/>
+					<fr:property name="sortParameter" value="sortBy"/>
+					<fr:property name="sortBy" value="<%= sortCriteria %>"/>
 				</fr:layout>
-		</fr:edit></p>		
+		</fr:view></p>		
 		
 	</logic:present>
 				
