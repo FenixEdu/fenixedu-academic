@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseNUM;
@@ -50,8 +49,6 @@ public class ReadInquiryStatistics extends Service {
 			throw new InvalidArgumentsServiceException();
 		infoSiteInquiryStatistics.setExecutionCourse(InfoExecutionCourse
 				.newInfoFromDomain((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));
-		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
-				.getIPersistentStudentTestQuestion();
 
         final Set<StudentTestQuestion> studentTestQuestions = distributedTest.findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder();
 		for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
@@ -72,28 +69,24 @@ public class ReadInquiryStatistics extends Service {
 			}
 			List<LabelValueBean> statistics = new ArrayList<LabelValueBean>();
 			DecimalFormat df = new DecimalFormat("#%");
-			int numOfStudentResponses = persistentStudentTestQuestion.countResponsedOrNotResponsed(
-					studentTestQuestion.getTestQuestionOrder(), true, distributedTest.getIdInternal());
+			int numOfStudentResponses = distributedTest.countResponses(studentTestQuestion.getTestQuestionOrder(), true);
 			if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.LID) {
 				for (int i = 1; i <= infoStudentTestQuestion.getQuestion().getOptionNumber().intValue(); i++) {
 
-					String response = new String("%<string>" + i + "</string>%");
+					String response = new String("<string>" + i + "</string>");
 
-					int mark = persistentStudentTestQuestion.countResponses(studentTestQuestion
-							.getTestQuestionOrder(), response, distributedTest.getIdInternal());
+					int mark = distributedTest.countResponses(studentTestQuestion.getTestQuestionOrder(), response);
 					String percentage = new String("0%");
 					if (mark != 0)
 						percentage = df.format(mark * java.lang.Math.pow(numOfStudentResponses, -1));
 					statistics.add(new LabelValueBean(new Integer(i).toString(), percentage));
 				}
 			} else {
-				List<String> responses = persistentStudentTestQuestion.getResponses(studentTestQuestion
-						.getTestQuestionOrder(), distributedTest.getIdInternal());
+				Set<String> responses = distributedTest.findResponses();
 
 				String percentage = new String("0%");
 				for (String response : responses) {
-					percentage = df.format(persistentStudentTestQuestion.countByResponse(response,
-							studentTestQuestion.getTestQuestionOrder(), distributedTest.getIdInternal())
+					percentage = df.format(distributedTest.countResponses(studentTestQuestion.getTestQuestionOrder(), response)
 							* java.lang.Math.pow(numOfStudentResponses, -1));
 
 					XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(response.getBytes()));

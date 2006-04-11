@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 
 public interface ISuportePersistente {
     
@@ -15,8 +14,6 @@ public interface ISuportePersistente {
 	public void clearCache();
 
 	public Integer getNumberCachedItems();
-
-    public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
 
 	public IPersistentGrantContract getIPersistentGrantContract();
 

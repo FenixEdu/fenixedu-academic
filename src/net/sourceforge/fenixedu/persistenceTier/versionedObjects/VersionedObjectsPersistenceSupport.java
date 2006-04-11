@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
@@ -19,10 +18,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public static VersionedObjectsPersistenceSupport getInstance() {
         return instance;
-    }
-
-    public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion() {
-        return null;
     }
 
     public void confirmarTransaccao() throws ExcepcaoPersistencia {

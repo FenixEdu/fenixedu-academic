@@ -4,6 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.onlineTests;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
@@ -22,6 +25,14 @@ public class Question extends Question_Base {
         getStudentTestsQuestions().clear();
         getTestQuestions().clear();
         super.deleteDomainObject();
+    }
+
+    public Set<DistributedTest> findDistributedTests() {
+        final Set<DistributedTest> distributedTests = new HashSet<DistributedTest>();
+        for (final StudentTestQuestion studentTestQuestion : getStudentTestsQuestionsSet()) {
+            distributedTests.add(studentTestQuestion.getDistributedTest());
+        }
+        return distributedTests;
     }
 
 }

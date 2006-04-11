@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -36,7 +37,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
@@ -69,14 +69,11 @@ public class ChangeStudentTestQuestion extends Service {
             availableQuestions.remove(oldQuestion);
         }
 
-        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
-                .getIPersistentStudentTestQuestion();
-
-        List<DistributedTest> distributedTestList = new ArrayList<DistributedTest>();
+        final Set<DistributedTest> distributedTestList;
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS)
-            distributedTestList = persistentStudentTestQuestion
-                    .readDistributedTestsByTestQuestion(oldQuestion.getIdInternal());
+            distributedTestList = oldQuestion.findDistributedTests();
         else {
+            distributedTestList = new HashSet<DistributedTest>();
             DistributedTest distributedTest = rootDomainObject
                     .readDistributedTestByOID(distributedTestId);
             if (distributedTest == null)

@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
@@ -28,7 +29,7 @@ public class ReadStudentTests extends Service {
         InfoSiteStudentDistributedTests infoSite = new InfoSiteStudentDistributedTests();
         Student student = Student.readByUsername(userName);
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-        List<DistributedTest> distributedTestList = student.getDistributedTestsByExecutionCourse(executionCourse);
+        Set<DistributedTest> distributedTestList = student.getDistributedTestsByExecutionCourse(executionCourse);
         List<InfoDistributedTest> testToDoList = new ArrayList<InfoDistributedTest>();
         List<InfoDistributedTest> doneTestsList = new ArrayList<InfoDistributedTest>();
         for (DistributedTest distributedTest : distributedTestList) {

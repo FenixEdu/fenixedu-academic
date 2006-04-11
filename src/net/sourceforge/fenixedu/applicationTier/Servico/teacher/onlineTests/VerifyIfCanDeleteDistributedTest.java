@@ -23,11 +23,9 @@ public class VerifyIfCanDeleteDistributedTest extends Service {
 		if (distributedTest == null) {
 			throw new InvalidArgumentsServiceException();
 		}
-		if (distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
-			if (persistentSupport.getIPersistentStudentTestQuestion().countResponsedOrNotResponsed(null,
-					true, distributedTestId) != 0)
-				return false;
-		}
-		return true;
+
+        return !(distributedTest.getTestType().getType().intValue() == TestType.EVALUATION
+                    && distributedTest.countResponses(null, true) != 0);
 	}
+
 }

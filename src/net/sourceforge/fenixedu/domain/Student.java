@@ -346,7 +346,7 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public List<DistributedTest> getDistributedTestsByExecutionCourse(ExecutionCourse executionCourse) {
+    public Set<DistributedTest> getDistributedTestsByExecutionCourse(ExecutionCourse executionCourse) {
         Set<DistributedTest> result = new HashSet<DistributedTest>();
         for (StudentTestQuestion studentTestQuestion : this.getStudentTestsQuestions()) {
             if (studentTestQuestion.getDistributedTest().getTestScope().getClassName().equals(
@@ -356,7 +356,7 @@ public class Student extends Student_Base {
                 result.add(studentTestQuestion.getDistributedTest());
             }
         }
-        return new ArrayList<DistributedTest>(result);
+        return result;
     }
 
     public List<Attends> readAttendsInCurrentExecutionPeriod() {
@@ -544,6 +544,10 @@ public class Student extends Student_Base {
             }
         }
         return null;
+    }
+
+    public int countDistributedTestsByExecutionCourse(final ExecutionCourse executionCourse) {
+        return getDistributedTestsByExecutionCourse(executionCourse).size();
     }
 
 }

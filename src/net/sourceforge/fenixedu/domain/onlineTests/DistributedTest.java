@@ -188,4 +188,79 @@ public class DistributedTest extends DistributedTest_Base {
         return Double.valueOf(result);
     }
 
+    public int countLikeResponses(final Integer order, final String response) {
+        int count = 0;
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+            if (studentTestQuestion.getTestQuestionOrder().equals(order) && studentTestQuestion.getResponse().contains(response)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int countResponses(final Integer order, final String response) {
+        int count = 0;
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+            if (studentTestQuestion.getTestQuestionOrder().equals(order) && studentTestQuestion.getResponse().equals(response)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public Set<String> findResponses() {
+        final Set<String> responses = new HashSet<String>();
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+            if (studentTestQuestion.getResponse() != null) {
+                responses.add(studentTestQuestion.getResponse());
+            }
+        }
+        return responses;
+    }
+
+    public int countResponses(final Integer order, final boolean responded) {
+        int count = 0;
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+            if (order == null || studentTestQuestion.getTestQuestionOrder().equals(order)) {
+                if (responded && studentTestQuestion.getResponse() != null) {
+                    count++;
+                } else if (!responded && studentTestQuestion.getResponse() == null) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int countAnsweres(final Integer order, final double mark, final boolean correct) {
+        int count = 0;
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+            if (studentTestQuestion.getTestQuestionOrder().equals(order)) {
+                if (correct && studentTestQuestion.getTestQuestionMark().doubleValue() >= mark) {
+                    count++;
+                } else if (!correct && studentTestQuestion.getTestQuestionMark() <= 0) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int countPartiallyCorrectAnswers(final Integer order, final double mark) {
+        int count = 0;
+        for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+            if (studentTestQuestion.getTestQuestionOrder().equals(order) && studentTestQuestion.getResponse() != null) {
+                final double testQuestionMark = studentTestQuestion.getTestQuestionMark().doubleValue();
+                if (testQuestionMark < mark && testQuestionMark > 0) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int countNumberOfStudents() {
+        return getDistributedTestQuestionsSet().size() / getNumberOfQuestions().intValue();
+    }
+
 }

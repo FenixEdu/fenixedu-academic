@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsT
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 
 /**
@@ -38,8 +37,6 @@ public class ReadDistributedTestMarksStatistics extends Service {
 		if (distributedTest == null)
 			throw new InvalidArgumentsServiceException();
 
-		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
-				.getIPersistentStudentTestQuestion();
         Set<StudentTestQuestion> studentTestQuestions = distributedTest.findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder();
 
 		List<String> correctAnswersPercentageList = new ArrayList<String>();
@@ -49,24 +46,19 @@ public class ReadDistributedTestMarksStatistics extends Service {
 		List<String> answeredPercentageList = new ArrayList<String>();
 
 		DecimalFormat df = new DecimalFormat("#%");
-        int numOfStudent = persistentStudentTestQuestion.countNumberOfStudents(distributedTest);
+        int numOfStudent = distributedTest.countNumberOfStudents();
 		for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
 			if (studentTestQuestion.getCorrectionFormula().getFormula().intValue() == CorrectionFormula.FENIX) {
 
-				correctAnswersPercentageList.add(df.format(persistentStudentTestQuestion
-						.countCorrectOrIncorrectAnswers(studentTestQuestion.getTestQuestionOrder(),
-								studentTestQuestion.getTestQuestionValue(), true, distributedTest
-										.getIdInternal())
+				correctAnswersPercentageList.add(df.format(distributedTest.countAnsweres(
+                        studentTestQuestion.getTestQuestionOrder(), studentTestQuestion.getTestQuestionValue(), true)
 						* java.lang.Math.pow(numOfStudent, -1)));
-				wrongAnswersPercentageList.add(df.format(persistentStudentTestQuestion
-						.countCorrectOrIncorrectAnswers(studentTestQuestion.getTestQuestionOrder(),
-								studentTestQuestion.getTestQuestionValue(), false, distributedTest
-										.getIdInternal())
+				wrongAnswersPercentageList.add(df.format(distributedTest.countAnsweres(
+				        studentTestQuestion.getTestQuestionOrder(), studentTestQuestion.getTestQuestionValue(), false)
 						* java.lang.Math.pow(numOfStudent, -1)));
 
-				int partially = persistentStudentTestQuestion.countPartiallyCorrectAnswers(
-						studentTestQuestion.getTestQuestionOrder(), studentTestQuestion
-								.getTestQuestionValue(), distributedTest.getIdInternal());
+				int partially = distributedTest.countPartiallyCorrectAnswers(
+						studentTestQuestion.getTestQuestionOrder(), studentTestQuestion.getTestQuestionValue());
 				if (partially != 0)
 					partiallyCorrectAnswersPercentage.add(df.format(partially
 							* java.lang.Math.pow(numOfStudent, -1)));
@@ -74,8 +66,7 @@ public class ReadDistributedTestMarksStatistics extends Service {
 					partiallyCorrectAnswersPercentage.add(new String("-"));
 
 			}
-			int responsed = persistentStudentTestQuestion.countResponsedOrNotResponsed(
-					studentTestQuestion.getTestQuestionOrder(), true, distributedTest.getIdInternal());
+			int responsed = distributedTest.countResponses(studentTestQuestion.getTestQuestionOrder(), true);
 
 			notAnsweredPercentageList.add(df.format((numOfStudent - responsed)
 					* java.lang.Math.pow(numOfStudent, -1)));

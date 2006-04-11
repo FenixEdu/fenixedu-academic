@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -99,8 +98,6 @@ public class ReadDistributedTestMarksToString extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         StringBuilder result = new StringBuilder();
         result.append("Número\tNome\t");
-        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
-                .getIPersistentStudentTestQuestion();
 
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         List<Student> studentsFromAttendsList = (List) CollectionUtils.collect(executionCourse

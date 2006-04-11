@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 
 /**
  * @author Susana Fernandes
@@ -21,17 +20,13 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTe
 public class ReadExecutionCoursesByStudentTests extends Service {
 
     public Object run(String userName) throws ExcepcaoPersistencia {
-        final IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
-                .getIPersistentStudentTestQuestion();
-
         final Student student = Student.readByUsername(userName);
         final List<Attends> attends = student.getAssociatedAttends();
 
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
         for (Attends attend : attends) {
             final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
-            if (persistentStudentTestQuestion.countStudentTestByStudentAndExecutionCourse(
-                    executionCourse.getIdInternal(), student.getIdInternal()) != 0) {
+            if (student.countDistributedTestsByExecutionCourse(executionCourse) != 0) {
                 infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
         }
