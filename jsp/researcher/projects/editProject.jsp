@@ -19,13 +19,13 @@
   	<br/>
 		
 	
-	<fr:edit name="selectedProjectParticipation" schema="projectParticipation.edit-defaults" action="/projects/projectsManagement?method=listProjects">
+	<fr:edit name="selectedProjectParticipation" schema="projectParticipation.edit-defaults" action="/projects/projectsManagement.do?method=listProjects">
 		<fr:hidden slot="party" name="party"/>
 	    <fr:layout name="tabular">
     	    <fr:property name="classes" value="style1"/>
         	<fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
-	    <fr:destination name="cancel" path="/projects/projectsManagement?method=listProjects"/>
+	    <fr:destination name="cancel" path="/projects/projectsManagement.do?method=listProjects"/>
 	</fr:edit>
 	
 </logic:present>

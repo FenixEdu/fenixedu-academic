@@ -12,11 +12,7 @@
 	           action="/interests/interestsManagement.do?method=prepare">
 		<fr:hidden slot="order" name="lastOrder"/>
 		<fr:hidden slot="party" name="party" />
+		<fr:destination name="cancel" path="/interests/interestsManagement.do?method=prepare"/>
 	</fr:create>
 
-	<br/>	
-	<html:link module="/researcher" page="/interests/interestsManagement.do?method=prepare">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="link.back" />
-	</html:link>
-	
 </logic:present>

@@ -5,14 +5,19 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="enum" %>
 
-<logic:present role="RESEARCHER">		
-	 <div id="version">
-		<html:form action="/changeLocaleTo.do">
-		 	<enum:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.Language" bundle="ENUMERATION_RESOURCES" />
-		 	<html:select property="newLanguage" onchange="this.form.submit()" value="<%= net.sourceforge.fenixedu.util.LanguageUtils.getLanguage().toString() %>">
-				<html:options collection="values" property="value" labelProperty="label"/>
-			</html:select>
-		 
-		</html:form>
-	</div>
+<logic:present role="RESEARCHER">	
+<table id="bigtable" width="100%" border="0" cellpadding="0" cellspacing="0">	
+	<tr>
+		<td align="right">
+			<html:form action="/changeLocaleTo.do">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.changeLanguage"/>
+				<html:hidden property="windowLocation" value=""/>
+			 	<enum:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.Language" bundle="ENUMERATION_RESOURCES" />
+			 	<html:select property="newLanguage" onchange="this.form.windowLocation.value=window.location; this.form.submit();" value="<%= net.sourceforge.fenixedu.util.LanguageUtils.getLanguage().toString() %>">
+					<html:options collection="values" property="value" labelProperty="label"/>
+				</html:select>
+			</html:form>
+		</td>
+	</tr>
+</table>
 </logic:present>

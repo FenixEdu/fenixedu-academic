@@ -9,12 +9,8 @@
 	<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="title.edit.interest"/></h2><br/>
 			
 	<fr:edit id="input" name="interest" schema="researchInterest.simpleCreate" 
-		action="/interests/interestsManagement.do?method=prepare">	   
+		action="/interests/interestsManagement.do?method=prepare">	  
+		<fr:destination name="cancel" path="/interests/interestsManagement.do?method=prepare"/>
 	</fr:edit>
 
-	<br/>	
-	<html:link module="/researcher" page="/interests/interestsManagement.do?method=prepare">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="link.back" />
-	</html:link>
-	
 </logic:present>

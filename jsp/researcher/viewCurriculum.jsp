@@ -84,7 +84,7 @@
 		<!-- Personal Information -->
 		<h3 id='personalInformationTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.personalInformationTitle"/> </span> </h3>
 		
-		<fr:view name="UserView" property="person" layout="tabular" schema="person.personalInfo">
+		<fr:view name="UserView" property="person" layout="tabular" schema="researcher.person.personalInfo">
 			<fr:layout>
 				<fr:property name="columnClasses" value="labelColumnClass,valueColumnClass"/>
 			</fr:layout>

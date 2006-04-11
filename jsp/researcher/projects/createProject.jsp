@@ -29,12 +29,13 @@
  	<br/>
 		
 	
-	<fr:create type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation" schema="projectParticipation.create-defaults" action="/projects/projectsManagement?method=listProjects">
+	<fr:create type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation" schema="projectParticipation.create-defaults" action="/projects/projectsManagement.do?method=listProjects">
 		<fr:hidden slot="party" name="party"/>
 	    <fr:layout name="tabular">
     	    <fr:property name="classes" value="style1"/>
         	<fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
+   		<fr:destination name="cancel" path="/projects/projectsManagement.do?method=listProjects"/>
 	</fr:create>
 	
 </logic:present>

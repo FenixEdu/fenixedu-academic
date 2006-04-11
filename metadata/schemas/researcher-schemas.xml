@@ -3,10 +3,10 @@
 </schema>
 
 <schema name="project.summary" type="net.sourceforge.fenixedu.domain.research.project.Project">
-	<slot name="title.content"/>
+	<slot name="title"/>
 </schema>
 
-<schema name="person.personalInfo" type="net.sourceforge.fenixedu.domain.Person">
+<schema name="researcher.person.personalInfo" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="name"/>
 </schema>
 
@@ -28,7 +28,7 @@
 	<slot name="interest"/>
 </schema>
 
-<schema name="projectParticipation.create-defaults" type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
+<schema name="projectParticipation.create-defaults" buauthorship.resultndle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
 	<slot name="project.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="75"/>
 	</slot>
