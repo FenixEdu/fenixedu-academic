@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -27,9 +26,7 @@ public class ReadDegreeCurricularPlansByDegree extends Service {
         List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
 
         for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
-            if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
-                result.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(dcp));
-            }
+            result.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(dcp));
         }
 
         return result;
