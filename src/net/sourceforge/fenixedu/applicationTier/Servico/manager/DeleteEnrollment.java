@@ -18,4 +18,5 @@ public class DeleteEnrollment extends Service {
         final Enrolment enrollment = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrollmentId);
         enrollment.delete();
     }
+
 }

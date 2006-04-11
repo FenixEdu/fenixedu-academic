@@ -1205,4 +1205,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 MasterDegreeThesisDataVersion.LAST_MODIFICATION_COMPARATOR));
         return masterDegreeThesisDataVersions;
     }
+
+    public Enrolment findEnrolmentByEnrolmentID(final Integer enrolmentID) {
+        for (final Enrolment enrolment : getEnrolmentsSet()) {
+            if (enrolment.getIdInternal().equals(enrolmentID)) {
+                return enrolment;
+            }
+        }
+        return null;
+    }
+
 }

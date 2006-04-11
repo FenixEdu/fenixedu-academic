@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.improvment;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -19,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ImprovmentEnrollService extends Service {
 
-    public Object run(Integer studentNumber, String employeeUserName, List enrolmentsIds)
+    public Object run(Integer studentNumber, String employeeUserName, List<Integer> enrolmentsIds)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
@@ -34,22 +33,21 @@ public class ImprovmentEnrollService extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        Employee employee = person.getEmployee();
+        final Employee employee = person.getEmployee();
         if (employee == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Iterator iterator = enrolmentsIds.iterator();
-        while (iterator.hasNext()) {
-            Integer enrolmentId = (Integer) iterator.next();
-            Enrolment enrollment = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrolmentId);
+        for (final Integer enrolmentID : enrolmentsIds) {
+            final Enrolment enrollment = student.findEnrolmentByEnrolmentID(enrolmentID);
             if (enrollment == null) {
                 throw new InvalidArgumentsServiceException();
             }
 
-            enrollment
-                    .createEnrolmentEvaluationForImprovement(employee, currentExecutionPeriod, student);
+            enrollment.createEnrolmentEvaluationForImprovement(employee, currentExecutionPeriod, student);
         }
+
         return Boolean.TRUE;
     }
+
 }

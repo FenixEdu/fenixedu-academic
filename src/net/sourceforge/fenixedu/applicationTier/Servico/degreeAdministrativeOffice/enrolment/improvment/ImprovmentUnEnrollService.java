@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -17,9 +19,13 @@ public class ImprovmentUnEnrollService extends Service {
 
     public Object run(Integer studentNumber, List<Integer> enrolmentsIds)
 			throws FenixServiceException, ExcepcaoPersistencia, DomainException {
-		
-		for (Integer enrolmentId : enrolmentsIds) {
-            final Enrolment enrolment = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrolmentId);
+
+        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+        if (student == null) {
+            student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
+        }
+		for (final Integer enrolmentId : enrolmentsIds) {
+            final Enrolment enrolment = student.findEnrolmentByEnrolmentID(enrolmentId);
             if (enrolment == null) {
                 throw new InvalidArgumentsServiceException();
             }

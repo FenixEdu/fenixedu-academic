@@ -535,4 +535,15 @@ public class Student extends Student_Base {
         }
         return nonReimbursedInsuranceTransactions;
     }
+
+    public Enrolment findEnrolmentByEnrolmentID(final Integer enrolmentID) {
+        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+            final Enrolment enrolment = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);
+            if (enrolment != null) {
+                return enrolment;
+            }
+        }
+        return null;
+    }
+
 }

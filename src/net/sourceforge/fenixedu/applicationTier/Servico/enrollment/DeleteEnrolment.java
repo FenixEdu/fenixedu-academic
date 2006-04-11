@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
@@ -25,7 +26,8 @@ public class DeleteEnrolment extends Service {
     public void run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer enrolmentID)
             throws FenixServiceException, DomainException, ExcepcaoPersistencia {
 
-        final Enrolment enrollment1 = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrolmentID);
+        final StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
+        final Enrolment enrollment1 = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);
 
         List<Enrolment> enrollments2Delete = new ArrayList<Enrolment>();
         List studentEnrolledEnrollmentsInExecutionPeriod = enrollment1.getStudentCurricularPlan()
