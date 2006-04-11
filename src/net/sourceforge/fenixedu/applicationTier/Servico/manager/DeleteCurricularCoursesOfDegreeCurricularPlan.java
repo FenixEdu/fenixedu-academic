@@ -32,7 +32,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan extends Service {
 
         while (iter.hasNext()) {
 			Integer curricularCourseId = (Integer) iter.next();
-			CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+			CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
             if (curricularCourse != null) {
                 //delete curriculum
                 Curriculum curriculum =curricularCourse.findLatestCurriculum();

@@ -26,7 +26,7 @@ public class ApproveCandidates extends Service {
             CandidateSituation candidateSituationOld = masterDegreeCandidate
                     .getActiveCandidateSituation();
 
-            CandidateSituation candidateSituationOldFromBD = RootDomainObject.getInstance().readCandidateSituationByOID(candidateSituationOld.getIdInternal());
+            CandidateSituation candidateSituationOldFromBD = rootDomainObject.readCandidateSituationByOID(candidateSituationOld.getIdInternal());
             candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
 
             if ((substitutes[i] != null) && (substitutes[i].length() > 0)) {

@@ -68,8 +68,6 @@
 		<mkdir dir="${build.home}/images/logs"/>
 
 		<sequential>
-			<delete file="${build.home.webinf.libs}/dml.jar"/>
-
 			<copy todir="${build.home}">
 				<fileset dir="${web-content}" >
 					<include name="**/*.*"/>

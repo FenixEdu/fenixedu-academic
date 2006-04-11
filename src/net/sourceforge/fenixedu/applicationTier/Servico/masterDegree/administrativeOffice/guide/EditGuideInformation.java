@@ -248,7 +248,7 @@ public class EditGuideInformation extends Service {
         Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor()
                 .getContributorNumber());
 
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(
                 infoGuide.getInfoExecutionDegree().getIdInternal());
         Guide guide = DomainFactory.makeGuide();
 

@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadActiveDegreeCurricularPlansByExecutionYear extends Service {
 
     public List run(Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
-        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
         
         List executionDegrees = null;
         if (executionYear != null) {

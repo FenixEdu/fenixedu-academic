@@ -26,7 +26,7 @@ public class SetBasicCurricularCoursesService extends Service {
 	public boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
 		List<CurricularCourse> basicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.TRUE);
 

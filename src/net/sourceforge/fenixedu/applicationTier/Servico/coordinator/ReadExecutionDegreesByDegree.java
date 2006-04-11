@@ -16,7 +16,7 @@ public class ReadExecutionDegreesByDegree extends Service {
 
     public List run(Integer idDegree) throws FenixServiceException, ExcepcaoPersistencia {
 
-        Degree degree = RootDomainObject.getInstance().readDegreeByOID(idDegree);
+        Degree degree = rootDomainObject.readDegreeByOID(idDegree);
         
         List<ExecutionDegree> allExecutionDegrees = ExecutionDegree.getAllByDegreeAndCurricularStage(degree, CurricularStage.OLD);
         if (allExecutionDegrees == null || allExecutionDegrees.isEmpty()) {

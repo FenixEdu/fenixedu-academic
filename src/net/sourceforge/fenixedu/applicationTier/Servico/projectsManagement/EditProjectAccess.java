@@ -16,7 +16,7 @@ public class EditProjectAccess extends Service {
             Calendar beginDate, Calendar endDate, String userNumber) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personId);
+        Person person = (Person) rootDomainObject.readPartyByOID(personId);
         final ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode);
         
         if (projectAccess == null) {

@@ -28,7 +28,7 @@ public class ReadPublicExecutionDegreeByDCPID extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
 
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
         
         List result = new ArrayList();
@@ -48,8 +48,8 @@ public class ReadPublicExecutionDegreeByDCPID extends Service {
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID)
             throws ExcepcaoPersistencia {
 
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
         
         ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear.getYear());
 

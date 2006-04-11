@@ -25,8 +25,8 @@ public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode e
             throws FenixServiceException, ExcepcaoPersistencia, NoSuchMethodException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         InfoOldInquiriesCoursesRes oldInquiriesCoursesRes = null;
         
-        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
-        ExecutionPeriod executionPeriod = RootDomainObject.getInstance().readExecutionPeriodByOID(executionPeriodId);
+        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
 
         if (executionPeriod == null) {
             throw new FenixServiceException("nullExecutionPeriodId");

@@ -21,7 +21,7 @@ public class InsertNonAffiliatedTeacher extends Service {
 
     public NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID) throws ExcepcaoPersistencia,
             NotExistingServiceException {
-        final Unit institution = (Unit) RootDomainObject.getInstance().readPartyByOID(institutionID);
+        final Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);
         if (institution == null) {
             throw new NotExistingServiceException("no.institution");
         }

@@ -19,7 +19,7 @@ public class EditGuideInformationInManager extends Service {
             throws ExcepcaoPersistencia {
         Guide guide = rootDomainObject.readGuideByOID(guideID);
         
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         ExecutionDegree cursoExecucao = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear); 
             
         guide.setPaymentType(PaymentType.valueOf(newPaymentType));

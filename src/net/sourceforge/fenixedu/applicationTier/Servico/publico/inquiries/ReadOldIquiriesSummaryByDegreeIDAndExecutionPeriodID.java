@@ -26,8 +26,8 @@ public class ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID extends Servic
 
 	public List run(Integer degreeID, Integer executionPeriodID) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeID);
-		ExecutionPeriod executionPeriod = RootDomainObject.getInstance().readExecutionPeriodByOID(executionPeriodID);
+		Degree degree = rootDomainObject.readDegreeByOID(degreeID);
+		ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
 
 		if (degree == null) {
 			throw new FenixServiceException("nullDegreeId");

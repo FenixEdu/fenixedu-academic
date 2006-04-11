@@ -36,7 +36,7 @@ public class ReadCandidateForRegistration extends Service {
                         SituationName.ADMITED_SPECIALIZATION_OBJ 
                 });
 
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeCode);
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
         List<CandidateSituation> result = executionDegree.getCandidateSituationsInSituation(situationNames);
         
         if (result.isEmpty()) {

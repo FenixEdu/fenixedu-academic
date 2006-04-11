@@ -60,7 +60,7 @@ public class ReadProjectAccesses extends Service {
 
     public InfoProjectAccess run(String username, String costCenter, Integer personCode, Integer projectCode, String userNumber)
             throws ExcepcaoPersistencia {
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personCode);
+        Person person = (Person) rootDomainObject.readPartyByOID(personCode);
         
         IPersistentSuportOracle spOracle = PersistentSuportOracle.getInstance();
         InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(ProjectAccess.getByPersonAndProject(person, projectCode));

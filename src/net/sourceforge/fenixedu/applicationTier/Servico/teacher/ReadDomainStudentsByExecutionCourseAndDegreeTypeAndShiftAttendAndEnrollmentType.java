@@ -138,7 +138,7 @@ public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEn
 			List<AttendacyStateSelectionType> enrollmentTypeFilters, List<Integer> shiftIds)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 		List<Attends> attends = executionCourse.getAttends();
 		Collection<Enrolment> enrollmentsInWantedState = CollectionUtils.select(attends, new EnrollmentTypeFilter(executionCourse, enrollmentTypeFilters));
 		Collection<Enrolment> enrollmentsInWantedDegree = CollectionUtils.select(enrollmentsInWantedState, new CurricularPlanIdPredicate(curricularPlansIds));

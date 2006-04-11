@@ -29,7 +29,7 @@ public class ReadExecutionDegreeRecentByDegreeId extends Service {
     public InfoExecutionDegree run(final Integer degreeId) throws ExcepcaoPersistencia{
         List<ExecutionDegree> listExecutionDegrees = new ArrayList<ExecutionDegree>();
         
-        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
+        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
         for (DegreeCurricularPlan curricularPlan : degree.getDegreeCurricularPlans()) {
             listExecutionDegrees.addAll(curricularPlan.getExecutionDegrees());
         }

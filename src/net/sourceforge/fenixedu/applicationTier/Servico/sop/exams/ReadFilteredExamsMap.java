@@ -42,7 +42,7 @@ public class ReadFilteredExamsMap extends Service {
         result.setInfoExecutionPeriod(infoExecutionPeriod);
         result.setCurricularYears(curricularYears);
 
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
         this.obtainExamSeasonInfo(result, infoExecutionPeriod.getSemester(), executionDegree);
 

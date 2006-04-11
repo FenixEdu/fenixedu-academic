@@ -26,7 +26,7 @@ public class InsertCurriculum extends Service {
             String generalObjectivesEn, Boolean basic) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 
         if (curricularCourse == null) {
             throw new InvalidArgumentsServiceException();
