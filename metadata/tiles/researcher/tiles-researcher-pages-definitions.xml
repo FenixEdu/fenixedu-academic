@@ -10,6 +10,8 @@
     <definition name="viewCurriculum" extends="researcher.masterPage">
         <put name="body" value="/researcher/viewCurriculum.jsp"></put>
     </definition>
+    
+    <!-- projects definitions -->
     <definition name="projects.projectsManagement" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/projectsManagement.jsp"></put>
     </definition>
@@ -25,13 +27,29 @@
     <definition name="projects.createProject" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/createProject.jsp"></put>
     </definition>
+    
+    <!-- interests definitions -->
     <definition name="interests.interestsManagement" extends="researcher.masterPage">
         <put name="body" value="/researcher/interests/interestsManagement.jsp"></put>
     </definition>
+    <definition name="interests.manageTranslations" extends="researcher.masterPage">
+        <put name="body" value="/researcher/interests/manageTranslations.jsp"></put>
+    </definition>
     <definition name="interests.insert.interest" extends="researcher.masterPage">
         <put name="body" value="/researcher/interests/insertNewInterest.jsp"></put>
-    </definition>
+    </definition>  
     <definition name="interests.edit.interest" extends="researcher.masterPage">
         <put name="body" value="/researcher/interests/editInterest.jsp"></put>
-    </definition>    
+    </definition>  
+    
+    <!-- events definitions -->
+    <definition name="events.viewEvents" extends="researcher.masterPage">
+        <put name="body" value="/researcher/events/viewEvents.jsp"></put>
+    </definition>
+    <definition name="events.newEvent" extends="researcher.masterPage">
+        <put name="body" value="/researcher/events/newEvent.jsp"></put>
+    </definition>
+    <definition name="events.edit.editEvent" extends="researcher.masterPage">
+        <put name="body" value="/researcher/events/editEvent.jsp"></put>
+    </definition>
 </tiles-definitions>

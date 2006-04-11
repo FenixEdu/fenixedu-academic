@@ -94,6 +94,8 @@ Documentation:
           accordingly with the format given.  -->
     <renderer type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateRenderer"/>
 
+	<renderer type="org.joda.time.base.AbstractPartial" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialRenderer"/>
+
 	<!--@ The default presentation for a joda partial is the presentation of all the date components of partial as
 		  a normal date and a label explaining the components presented -->
     <renderer type="org.joda.time.Partial" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialRenderer"/>

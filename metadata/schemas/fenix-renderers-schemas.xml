@@ -457,5 +457,35 @@
 		<slot name="startDate"/>
 	</schema>
 
+	<schema name="event.participation.create" type="net.sourceforge.fenixedu.domain.research.event.EventParticipation">
+		<slot name="role" key="label.event.role"/>
+		<slot name="event.name"/>
+		<slot name="event.eventLocation"/>
+ 		<slot name="event.startDate"/>
+		<slot name="event.endDate"/>
+		<slot name="event.fee"/>
+		<slot name="event.eventType"/>
+	</schema>
+	
+	<schema name="event.participation.edit" type="net.sourceforge.fenixedu.domain.research.event.EventParticipation">
+		<slot name="role" key="label.event.role"/>
+		<slot name="event.name"/>
+		<slot name="event.eventLocation"/>
+ 		<slot name="event.startDate"/>
+		<slot name="event.endDate"/>
+		<slot name="event.fee"/>
+		<slot name="event.eventType"/>
+	</schema>
+
+	<schema name="event.participation.view" type="net.sourceforge.fenixedu.domain.research.event.EventParticipation">
+		<slot name="role" key="label.event.role"/>
+		<slot name="event.name"/>
+		<slot name="event.eventLocation"/>
+ 		<slot name="event.startDate"/>
+		<slot name="event.endDate"/>
+		<slot name="event.fee"/>
+		<slot name="event.eventType"/>
+	</schema>
+
 	&researcher;
 </schemas>

@@ -9,13 +9,31 @@ import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 
 import org.joda.time.DateTimeFieldType;
-import org.joda.time.Partial;
+import org.joda.time.base.AbstractPartial;
 
 public class PartialRenderer extends DateRenderer {
-   
-    private Partial partial;
+	
+	private boolean showFormat;
+    private AbstractPartial partial;
+    
+    public PartialRenderer() {
+		super();
+		this.showFormat = false;
+	}
 
-    @Override
+	public boolean isShowFormat() {
+		return showFormat;
+	}
+
+	/**
+	 * 
+	 * @property
+	 */
+	public void setShowFormat(boolean showFormat) {
+		this.showFormat = showFormat;
+	}
+
+	@Override
     public String getFormat() {
         if (isFormatSet()) {
             return super.getFormat();
@@ -62,8 +80,8 @@ public class PartialRenderer extends DateRenderer {
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-        this.partial = (Partial) object;
-        Date date = this.partial != null ? convertPartialToCalendar(this.partial).getTime() : null;
+        this.partial = (AbstractPartial) object;
+        final Date date = this.partial != null ? convertPartialToCalendar(this.partial).getTime() : null;
         
         final Layout superLayout = super.getLayout(date, type);
         
@@ -71,9 +89,10 @@ public class PartialRenderer extends DateRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                HtmlText text = (HtmlText) superLayout.createComponent(object, type);
+                HtmlText text = (HtmlText) superLayout.createComponent(date, type);
                 
-                text.setText(text.getText() + " (" + getFormat() + ")");
+                String formatText = isShowFormat() ? " (" + getFormat() + ")" : "";
+				text.setText(text.getText() + formatText);
                 
                 return text;
             }
@@ -81,7 +100,7 @@ public class PartialRenderer extends DateRenderer {
         };
     }
     
-    private Calendar convertPartialToCalendar(Partial partial) {
+    private Calendar convertPartialToCalendar(AbstractPartial partial) {
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
 

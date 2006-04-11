@@ -9671,4 +9671,12 @@
 		<filterChains>
 		</filterChains>
 	</service>
+	<service>
+		<name>DeleteResearchEvent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteResearchEvent</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
 </serviceDefinitions>

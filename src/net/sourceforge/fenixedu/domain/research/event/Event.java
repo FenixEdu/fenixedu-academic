@@ -9,15 +9,20 @@ import org.joda.time.YearMonthDay;
 
 public class Event extends Event_Base {
 
-	public Event(YearMonthDay endDate, YearMonthDay startDate, String eventLocation, Boolean feeOrFree,
+	public Event() {
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	public Event(YearMonthDay endDate, YearMonthDay startDate, String eventLocation, Boolean fee,
 			EventType type, MultiLanguageString name) {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 		setEndDate(endDate);
 		setStartDate(startDate);
 		setEventLocation(eventLocation);
-		setFeeOrFree(feeOrFree);
+		setFee(fee);
 		setName(name);
+		setEventType(type);
 	}
 
 	public EventTranslation getEventTranslation(Language language) {
@@ -29,6 +34,12 @@ public class Event extends Event_Base {
 		}
 	}
 
+    public void delete(){
+        for (;!this.getEventParticipations().isEmpty(); getEventParticipations().get(0).delete());
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+	
 	public class EventTranslation {
 		private Language language;
 		private String name;

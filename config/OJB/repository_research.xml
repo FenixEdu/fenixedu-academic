@@ -79,25 +79,44 @@
 	/>
 	
 	<field-descriptor
-		name="location"
+		name="eventLocation"
 		column="LOCATION"
 		jdbc-type="VARCHAR"
 	/>
 
 	<field-descriptor
-		name="feeOrFree"
-		column="FEE_OR_FREE"
-		jdbc-type="INTEGER"
+		name="fee"
+		column="FEE"
+		jdbc-type="BIT"
 	/>
 
 	<field-descriptor 
-	   name="type"    
+	   name="eventType"    
 	   column="TYPE"  
 	   jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ResearchEventType2SqlResearchEventTypeConversion"
     />
-
+    
+    <field-descriptor
+        name="keyRootDomainObject"
+        column="KEY_ROOT_DOMAIN_OBJECT"
+        jdbc-type="INTEGER"
+    />
+    
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="projects"
+			element-class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
+			indirection-table="PROJECT_EVENT"
+			>
+		<fk-pointing-to-this-class column="KEY_EVENT"/>
+		<fk-pointing-to-element-class column="KEY_PROJECT"/>
+	</collection-descriptor>
 		
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         	name="eventParticipations"
+         	element-class-ref="net.sourceforge.fenixedu.domain.research.event.EventParticipation">
+         <inverse-foreignkey field-ref="keyEvent"/>
+    </collection-descriptor>
 </class-descriptor>
 
 
@@ -162,5 +181,57 @@
 	   column="INTEREST_ORDER"  
 		jdbc-type="INTEGER"
 	/>	
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.event.EventParticipation"
+	table="EVENT_PARTICIPATION">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	
+	<field-descriptor
+		name="keyEvent" 
+		column="KEY_EVENT"
+		jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor
+		name="keyParty" 
+		column="KEY_PARTY"
+		jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor
+	   name="role"    
+	   column="ROLE"  
+	   jdbc-type="VARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.EventParticipationRole2SqlEventParticipationRoleConversion"
+    /> 
+    
+    <field-descriptor
+        name="keyRootDomainObject"
+        column="KEY_ROOT_DOMAIN_OBJECT"
+        jdbc-type="INTEGER"
+    />
+    
+    <reference-descriptor auto-retrieve="false" 
+		name="event"
+		class-ref="net.sourceforge.fenixedu.domain.research.event.Event"
+		>
+	    <foreignkey field-ref="keyEvent"/>
+    </reference-descriptor>
+
+    <reference-descriptor auto-retrieve="false" 
+		name="party"
+		class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party"
+		>
+	    <foreignkey field-ref="keyParty"/>
+    </reference-descriptor>
+	
 </class-descriptor>
 

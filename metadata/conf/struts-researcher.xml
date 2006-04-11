@@ -18,6 +18,7 @@
 				dynamic="true">
 	   		<form-property name="windowLocation" type="java.lang.String"/>
 	   		<form-property name="newLanguage" type="java.lang.String"/>
+	   		<form-property name="newCountry" type="java.lang.String"/>
 		</form-bean>
     </form-beans>
 
@@ -51,13 +52,12 @@
         <action path="/interests/interestsManagement"
                 parameter="method" 
                 type="net.sourceforge.fenixedu.presentationTier.Action.research.InterestsManagementDispatchAction">
+	        <forward name="ManageTranslations" path="interests.manageTranslations"/>
 		    <forward name="Success" path="interests.interestsManagement"/>
-		    <forward name="EditInterest" path="interests.edit.interest"/>
-		    <forward name="InsertNewInterest" path="interests.insert.interest"/>		    
+		    <forward name="InsertNewInterest" path="interests.insert.interest"/>
 		</action>
         
-        <action path="/projects/projectsManagement" parameter="method" 
-                type="net.sourceforge.fenixedu.presentationTier.Action.research.ProjectsManagementDispatchAction">
+        <action path="/projects/projectsManagement" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.ProjectsManagementDispatchAction">
 		    <forward name="Success" path="projects.projectsManagement"/>
 		    <forward name="ProjectSelected" path="projects.editProject"/>
 		</action>  
@@ -77,6 +77,14 @@
 			<forward name="CreateProject" path="projects.createProject"/>
 		    <forward name="Success" path="projects.projectsManagement"/>
 		</action>
+
+		<action path="/events/eventsManagement" 
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.EventsManagementAction"
+				parameter="method">
+			<forward name="Success" path="events.viewEvents"/>
+			<forward name="new" path="events.newEvent"/>
+			<forward name="edit" path="events.edit.editEvent"/>
+		</action>
 		
 		<action path="/changeLocaleTo"
 	    		name="changeLocaleForm"
@@ -90,6 +98,7 @@
     
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+	<message-resources parameter="resources.ResearcherResources" null="false"/>
 	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
