@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -8,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
@@ -106,6 +108,12 @@ public class CollectionRenderer extends OutputRenderer {
     private String prefixes;
     
     private String suffixes;
+    
+    private boolean checkable;
+    
+    private String checkboxName;
+    
+    private String checkboxValue;
     
     private Map<String, TableLink> links;
     
@@ -412,6 +420,34 @@ public class CollectionRenderer extends OutputRenderer {
         getTableLink(name).setOrder(value);
     }
 
+    public boolean isExcludedFromFirst(String name) {
+        return getTableLink(name).isExcludeFromFirst();
+    }
+    
+    /**
+     * This property allows you to exclude a control link from appearing 
+     * in the first line of the generated table.
+     * 
+     * @property
+     */
+    public void setExcludedFromFirst(String name, String value) {
+        getTableLink(name).setExcludeFromFirst(new Boolean(value));
+    }
+    
+    public boolean isExcludedFromLast(String name) {
+        return getTableLink(name).isExcludeFromLast();
+    }
+
+    /**
+     * This property allows you to exclude a control link from appearing 
+     * in the last line of the generated table.
+     * 
+     * @property
+     */
+    public void setExcludedFromLast(String name, String value) {
+        getTableLink(name).setExcludeFromLast(new Boolean(value));
+    }
+    
     public String getSortBy() {
         return this.sortBy;
     }
@@ -425,6 +461,50 @@ public class CollectionRenderer extends OutputRenderer {
      */
     public void setSortBy(String sortBy) {
         this.sortBy = sortBy;
+    }
+
+    public boolean isCheckable() {
+        return this.checkable;
+    }
+
+    /**
+     * This property indicates that each element wil be checkable. This means 
+     * that a check box will be generated in each row allowing to select that row.
+     * The user will be responsible for wrapping the whole table in a form and submiting
+     * the form.
+     * 
+     * @property
+     */
+    public void setCheckable(boolean checkable) {
+        this.checkable = checkable;
+    }
+
+    public String getCheckboxName() {
+        return this.checkboxName;
+    }
+
+    /**
+     * Selects the name of the checkbox when it's generated. 
+     * 
+     * @property
+     */
+    public void setCheckboxName(String checkboxName) {
+        this.checkboxName = checkboxName;
+    }
+
+    public String getCheckboxValue() {
+        return this.checkboxValue;
+    }
+
+    /**
+     * The check box value is in fact a property of the object beeing 
+     * displayed in the row. This is usefull, for example, to have as 
+     * value an identificer of the object.
+     * 
+     * @property
+     */
+    public void setCheckboxValue(String checkboxValue) {
+        this.checkboxValue = checkboxValue;
     }
 
     protected int getNumberOfLinks() {
@@ -470,7 +550,7 @@ public class CollectionRenderer extends OutputRenderer {
         protected int getNumberOfColumns() {
             if (this.metaObjects.size() > 0) {
                 MetaObject metaObject = this.metaObjects.get(0);
-                return metaObject.getSlots().size() + getNumberOfLinks();
+                return metaObject.getSlots().size() + getNumberOfLinks() + (isCheckable() ? 1 : 0);
             }
             else {
                 return 0;
@@ -488,8 +568,11 @@ public class CollectionRenderer extends OutputRenderer {
         
         @Override
         protected HtmlComponent getHeaderComponent(int columnIndex) {
-            if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
-                String slotLabel = getObject(0).getSlots().get(columnIndex).getLabel();
+            if (columnIndex == 0 && isCheckable()) {
+                return new HtmlText();
+            }
+            else if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
+                String slotLabel = getObject(0).getSlots().get(columnIndex - (isCheckable() ? 1 : 0)).getLabel();
                 return new HtmlText(slotLabel);
             }
             else {
@@ -502,11 +585,27 @@ public class CollectionRenderer extends OutputRenderer {
             MetaObject object = getObject(rowIndex);
             getContext().setMetaObject(object);
 
-            if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
-                return generateObjectComponent(columnIndex, object);
+            if (columnIndex == 0 && isCheckable()) {
+                HtmlCheckBox checkBox = new HtmlCheckBox();
+                checkBox.setName(getCheckboxName());
+                
+                if (getCheckboxValue() != null) {
+                    Object realObject = object.getObject();
+
+                    try {
+                        checkBox.setUserValue(String.valueOf(PropertyUtils.getProperty(realObject, getCheckboxValue())));
+                    } catch (Exception e) {
+                        throw new RuntimeException("could not set check box value by reading property '" + getCheckboxValue() + "' from object " + realObject, e);
+                    }
+                }
+                
+                return checkBox;
+            }
+            else if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
+                return generateObjectComponent(columnIndex - (isCheckable() ? 1 : 0), object);
             }
             else {
-                return generateLinkComponent(object, columnIndex - (getNumberOfColumns() - getNumberOfLinks()));
+                return generateLinkComponent(object, rowIndex, columnIndex - (getNumberOfColumns() - getNumberOfLinks()));
             }
         }
 
@@ -550,8 +649,16 @@ public class CollectionRenderer extends OutputRenderer {
             return null;
         }
 
-        protected HtmlComponent generateLinkComponent(MetaObject object, int number) {
+        protected HtmlComponent generateLinkComponent(MetaObject object, int rowIndex, int number) {
             TableLink tableLink = getTableLink(number);
+            
+            if (rowIndex == 0 && tableLink.isExcludeFromFirst() ) {
+                return new HtmlText();
+            }
+            
+            if (rowIndex == getNumberOfRows() - 1 && tableLink.isExcludeFromLast()) {
+                return new HtmlText();
+            }
             
             HtmlLink link = new HtmlLink();
             link.setUrl(tableLink.getLink());
@@ -675,7 +782,16 @@ public class CollectionRenderer extends OutputRenderer {
         private String key;
         private String bundle;
         private String order;
+        private boolean excludeFromFirst;
+        private boolean excludeFromLast;
         
+        public TableLink() {
+            super();
+            
+            this.excludeFromFirst = false;
+            this.excludeFromLast = false;
+        }
+
         public TableLink(String name) {
             this.name = name;
         }
@@ -742,6 +858,22 @@ public class CollectionRenderer extends OutputRenderer {
 
         public void setOrder(String order) {
             this.order = order;
+        }
+
+        public boolean isExcludeFromFirst() {
+            return this.excludeFromFirst;
+        }
+
+        public void setExcludeFromFirst(boolean excludeFromFirst) {
+            this.excludeFromFirst = excludeFromFirst;
+        }
+
+        public boolean isExcludeFromLast() {
+            return this.excludeFromLast;
+        }
+
+        public void setExcludeFromLast(boolean excludeFromLast) {
+            this.excludeFromLast = excludeFromLast;
         }
 
         public int compareTo(TableLink other) {
