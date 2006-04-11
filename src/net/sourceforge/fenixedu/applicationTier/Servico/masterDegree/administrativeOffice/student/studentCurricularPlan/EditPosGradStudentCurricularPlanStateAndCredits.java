@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea;
@@ -99,8 +98,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 
 						changeAnnulled2ActiveIfActivePlan(newState, auxEnrolment);
 
-						DeleteEnrollment deleteEnrolmentService = new DeleteEnrollment();
-						deleteEnrolmentService.run(enrolment.getIdInternal());
+                        enrolment.delete();
 					} else {
 						changeAnnulled2ActiveIfActivePlan(newState, enrolment);
 					}

@@ -95,10 +95,14 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         final String enrollmentIdString = request.getParameter("enrollmentId");
-        final Integer enrollmentId = new Integer(enrollmentIdString);
+        final String studentNumberString = request.getParameter("studentNumber");
+        final String degreeTypeString = request.getParameter("degreeType");
+        final Integer enrollmentId = Integer.valueOf(enrollmentIdString);
+        final Integer studentNumber = Integer.valueOf(studentNumberString);
+        final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
         final IUserView userView = SessionUtils.getUserView(request);
-        final Object[] args = new Object[] { enrollmentId };
+        final Object[] args = new Object[] { studentNumber, degreeType, enrollmentId };
         ServiceUtils.executeService(userView, "DeleteEnrollment", args);
 
         return show(mapping, form, request, response);
