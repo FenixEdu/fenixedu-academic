@@ -41,7 +41,8 @@ public class ReadSummaries extends Service {
             throw new FenixServiceException("no.shift");
         }
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = rootDomainObject
+                .readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executionCourse");
         }
@@ -77,7 +78,8 @@ public class ReadSummaries extends Service {
                 public Object transform(Object arg0) {
                     final Shift turno = (Shift) arg0;
                     final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
-                    infoShift.setInfoLessons(new ArrayList<InfoLesson>(turno.getAssociatedLessons().size()));
+                    infoShift.setInfoLessons(new ArrayList<InfoLesson>(turno.getAssociatedLessons()
+                            .size()));
                     for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator
                             .hasNext();) {
                         final Lesson lesson = (Lesson) iterator.next();

@@ -822,8 +822,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         List<Summary> summaries = new ArrayList<Summary>();
         for (Summary summary : this.getAssociatedSummaries()) {
             if (!summary.hasProfessorship()
-                    && (summary.hasTeacher() || (summary.getTeacherName() != null || !summary
-                            .getTeacher().equals("")))) {
+                    && (summary.hasTeacher() || (summary.getTeacherName() != null && !summary
+                            .getTeacherName().equals("")))) {
                 summaries.add(summary);
             }
         }
