@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Insert new AccountabilityType" alterAccountabilityTypeTable.sql
