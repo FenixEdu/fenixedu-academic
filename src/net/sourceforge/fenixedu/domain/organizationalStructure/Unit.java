@@ -136,11 +136,14 @@ public class Unit extends Unit_Base {
         this.setEndDate(endDate);
         this.setType(type);
         this.setCostCenterCode(unitCostCenter);
+        Unit unit = readByAcronymOnMasterDegreeDegreeAndDepartmentUnitTypes(acronym);
+        if (unit != null && !unit.equals(this)) {
+            throw new DomainException("error.existent.acronym");
+        }
         this.setAcronym(acronym);
-
         if (parentUnit != null && accountabilityType != null) {
             this.addParent(parentUnit, accountabilityType);
-        }    
+        }
         if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.endDateBeforeBeginDate");
         }
@@ -379,5 +382,17 @@ public class Unit extends Unit_Base {
            }
         }
         return allUnits;
+    }
+    
+    public static Unit readByAcronymOnMasterDegreeDegreeAndDepartmentUnitTypes(String acronym) {
+        for (Unit unit : readAllUnits()) {
+            if (unit.getAcronym().equals(acronym)
+                    && (unit.getType().equals(PartyTypeEnum.DEGREE)
+                            || unit.getType().equals(PartyTypeEnum.MASTER_DEGREE) || unit.getType()
+                            .equals(PartyTypeEnum.DEPARTMENT))) {
+                return unit;
+            }
+        }
+        return null;
     }
 }
