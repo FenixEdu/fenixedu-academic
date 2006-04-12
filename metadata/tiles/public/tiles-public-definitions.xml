@@ -71,7 +71,7 @@
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>	
 
-	<definition name="definition.public.homepage" page="/layout/istLayout.jsp">
+	<definition name="definition.public.homepage" page="/layout/publicHomepage.jsp">
 		<put name="title" value="Instituto Superior Técnico" /> 
 		<put name="symbols_row" value="/publico/homepage/symbolsRow.jsp" />
 		<put name="profile_navigation" value="/publico/homepage/profileNavigation.jsp" />

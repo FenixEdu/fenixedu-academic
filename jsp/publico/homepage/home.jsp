@@ -7,7 +7,7 @@
 <logic:present name="homepage">
 	<logic:equal name="homepage" property="activated" value="true">
 
-		<h1>
+		<h1 id="no">
 			<%-- <bean:message bundle="HOMEPAGE_RESOURCES" key="title.homepage.of"/>: --%>
 			<bean:write name="homepage" property="name"/>
 		</h1>
@@ -20,7 +20,7 @@
 		</logic:equal>
 
 		<logic:equal name="homepage" property="showUnit" value="true">
-		<p><strong><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:</strong>
+		<p><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
 			<logic:present name="homepage" property="person.employee.currentContract.workingUnit">
 				<bean:write name="homepage" property="person.employee.currentContract.workingUnit.name"/>
 				<br/>
@@ -35,7 +35,7 @@
 		</logic:equal>
 
 		<logic:equal name="homepage" property="showCategory" value="true">
-		<p><strong><bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>:</strong>
+		<p><bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>:
 			<logic:present name="homepage" property="person.teacher">
 				<logic:present name="homepage" property="person.employee.currentContract">
 					<bean:write name="homepage" property="person.teacher.category.longName"/>
@@ -46,7 +46,7 @@
 		</logic:equal>
 
 		<logic:equal name="homepage" property="showEmail" value="true">
-		<p><strong><bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>:</strong>
+		<p><bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>:
 			<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
 			<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 			<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&personID=<bean:write name="homepage" property="person.idInternal"/></bean:define>
@@ -56,28 +56,28 @@
 		</logic:equal>
 
 		<logic:equal name="homepage" property="showTelephone" value="true">
-		<p><strong><bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>:</strong>
+		<p><bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			<bean:write name="homepage" property="person.phone"/>
 			<br/>
 		</p>
 		</logic:equal>
 
 		<logic:equal name="homepage" property="showWorkTelephone" value="true">
-		<p><strong><bean:message key="label.homepage.showWorkTelephone" bundle="HOMEPAGE_RESOURCES"/>:</strong>
+		<p><bean:message key="label.homepage.showWorkTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			<bean:write name="homepage" property="person.workPhone"/>
 			<br/>
 		</p>
 		</logic:equal>
 
 		<logic:equal name="homepage" property="showMobileTelephone" value="true">
-		<p><strong><bean:message key="label.homepage.showMobileTelephone" bundle="HOMEPAGE_RESOURCES"/>:</strong>
+		<p><bean:message key="label.homepage.showMobileTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			<bean:write name="homepage" property="person.mobile"/>
 			<br/>
 		</p>
 		</logic:equal>
 		
 		<logic:equal name="homepage" property="showAlternativeHomepage" value="true">
-		<p><strong><bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/>:</strong>
+		<p><bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/>:
 			<bean:write name="homepage" property="person.webAddress"/>
 			<br/>
 		</p>
@@ -90,7 +90,7 @@
 		</logic:equal>
 -->
 		<logic:equal name="homepage" property="showCurrentExecutionCourses" value="true">
-		<p><strong><bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:</strong>
+		<p><bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
 			<logic:present name="homepage" property="person.teacher">
 				<logic:present name="homepage" property="person.employee.currentContract">
 					<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" length="1">
