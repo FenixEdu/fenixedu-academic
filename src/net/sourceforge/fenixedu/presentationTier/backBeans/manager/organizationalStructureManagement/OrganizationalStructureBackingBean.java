@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -327,7 +326,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
 
-        List<Department> allDepartments = readAllDomainObjects(Department.class);
+        List<Department> allDepartments = rootDomainObject.getDepartments();
 
         for (Department department : allDepartments) {
             selectItem = new SelectItem();
@@ -346,7 +345,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
 
-        List<Degree> allDegrees = readAllDomainObjects(Degree.class);
+        List<Degree> allDegrees = rootDomainObject.getDegrees();
 
         for (Degree degree : allDegrees) {
             selectItem = new SelectItem();
@@ -859,14 +858,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 && this.getUnitIDHidden().getValue() != null
                 && !this.getUnitIDHidden().getValue().equals("")) {
 
-            this.unit = (Unit) RootDomainObject.getInstance().readPartyByOID(
-                    Integer.valueOf(this.getUnitIDHidden().getValue().toString()));
-
-            if (toRemoveParentUnit) {
-                getParentUnitsRelationTypes();
-            } else{
-                getSubUnitsRelationTypes();  
-            }
+            this.unit = (Unit) rootDomainObject.readPartyByOID(
+                    Integer.valueOf(this.getUnitIDHidden().getValue().toString()));            
+        }        
+        if (toRemoveParentUnit) {
+            getParentUnitsRelationTypes();
+        } else {
+            getSubUnitsRelationTypes();
         }
         return unit;
     }
@@ -878,12 +876,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             if (accountability.getParentParty() instanceof Unit) {
                 getUnitRelationsAccountabilityTypes().put(
                         accountability.getParentParty().getIdInternal(),
-                        bundle.getString(accountability.getAccountabilityType().getType()
-                                .getName()));
+                        bundle.getString(accountability.getAccountabilityType().getType().getName()));
             }
         }
     }
-    
+
     private void getSubUnitsRelationTypes() {
         ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
         getUnitRelationsAccountabilityTypes().clear();
@@ -891,8 +888,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             if (accountability.getChildParty() instanceof Unit) {
                 getUnitRelationsAccountabilityTypes().put(
                         accountability.getChildParty().getIdInternal(),
-                        bundle.getString(accountability.getAccountabilityType().getType()
-                                .getName()));
+                        bundle.getString(accountability.getAccountabilityType().getType().getName()));
             }
         }
     }
@@ -926,7 +922,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 && this.getFunctionIDHidden().getValue() != null
                 && !this.getFunctionIDHidden().getValue().equals("")) {
 
-            this.function = (Function) readDomainObject(Function.class, Integer.valueOf(this
+            this.function = rootDomainObject.readFunctionByOID(Integer.valueOf(this
                     .getFunctionIDHidden().getValue().toString()));
         }
         return function;
@@ -988,7 +984,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 && this.getChooseUnitIDHidden().getValue() != null
                 && !this.getChooseUnitIDHidden().getValue().equals("")) {
 
-            this.chooseUnit = (Unit) readDomainObject(Unit.class, Integer.valueOf(this
+            this.chooseUnit = (Unit) rootDomainObject.readPartyByOID(Integer.valueOf(this
                     .getChooseUnitIDHidden().getValue().toString()));
         }
 
