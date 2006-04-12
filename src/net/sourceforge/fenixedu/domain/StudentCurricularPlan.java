@@ -1153,7 +1153,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (masterDegreeThesis != null) {
             for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis
                     .getMasterDegreeProofVersions()) {
-                if (masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
+                if (masterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     return masterDegreeProofVersion;
                 }
             }
@@ -1167,7 +1167,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (masterDegreeThesis != null) {
             for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis
                     .getMasterDegreeProofVersions()) {
-                if (!masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
+                if (!masterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     masterDegreeProofVersions.add(masterDegreeProofVersion);
                 }
             }
@@ -1182,7 +1182,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (masterDegreeThesis != null) {
             for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
                     .getMasterDegreeThesisDataVersions()) {
-                if (masterDegreeThesisDataVersion.getCurrentState().equals(State.ACTIVE)) {
+                if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     return masterDegreeThesisDataVersion;
                 }
             }
@@ -1196,7 +1196,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (masterDegreeThesis != null) {
             for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesis
                     .getMasterDegreeThesisDataVersions()) {
-                if (!masterDegreeThesisDataVersion.getCurrentState().equals(State.ACTIVE)) {
+                if (!masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     masterDegreeThesisDataVersions.add(masterDegreeThesisDataVersion);
                 }
             }

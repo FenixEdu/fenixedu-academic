@@ -40,7 +40,7 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     public static MasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle) {
         for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : RootDomainObject
                 .getInstance().getMasterDegreeThesisDataVersions()) {
-            if (masterDegreeThesisDataVersion.getCurrentState().equals(State.ACTIVE)
+            if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)
                     && masterDegreeThesisDataVersion.getDissertationTitle().equals(dissertationTitle)) {
                 return masterDegreeThesisDataVersion;
             }

@@ -34,7 +34,7 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 
         for (MasterDegreeProofVersion candidateMasterDegreeProofVersion : this
                 .getMasterDegreeProofVersions()) {
-            if (candidateMasterDegreeProofVersion.getCurrentState().getState() == State.ACTIVE) {
+            if (candidateMasterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                 activeMasterDegreeProofVersion = candidateMasterDegreeProofVersion;
                 break;
             }
