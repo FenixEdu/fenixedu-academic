@@ -56,7 +56,7 @@ public class ChangeGuideSituation extends Service {
 
             public boolean evaluate(Object arg0) {
                 GuideSituation guideSituation = (GuideSituation) arg0;
-                return guideSituation.getState().equals(new State(State.ACTIVE));
+                return guideSituation.getState().getState().equals(State.ACTIVE);
             }
 
         });

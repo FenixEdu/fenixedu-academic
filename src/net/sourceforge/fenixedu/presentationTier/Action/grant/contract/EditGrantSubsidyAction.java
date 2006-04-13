@@ -120,7 +120,7 @@ public class EditGrantSubsidyAction extends FenixDispatchAction {
             }
 
             IUserView userView = SessionUtils.getUserView(request);
-            if (infoGrantSubsidy.getState().equals(new Integer(-1))) {
+            if (infoGrantSubsidy.getState().equals(Integer.valueOf(-1))) {
                 //If is a new Subsidy
                 infoGrantSubsidy.setState(new Integer(1)); //Active the subsidy
             }

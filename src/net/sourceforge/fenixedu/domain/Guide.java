@@ -51,7 +51,7 @@ public class Guide extends Guide_Base {
             Iterator iterator = this.getGuideSituations().iterator();
             while (iterator.hasNext()) {
                 GuideSituation guideSituation = (GuideSituation) iterator.next();
-                if (guideSituation.getState().equals(new State(State.ACTIVE))) {
+                if (guideSituation.getState().getState().equals(State.ACTIVE)) {
                     return guideSituation;
                 }
             }

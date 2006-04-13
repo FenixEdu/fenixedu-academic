@@ -145,7 +145,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
                 infoGrantContractRegime.setInfoTeacher(infoTeacher);
             }
 
-            if (infoGrantContractRegime.getState().equals(new Integer(-1))) {
+            if (infoGrantContractRegime.getState().equals(Integer.valueOf(-1))) {
                 //If is a new Regime
                 infoGrantContractRegime.setState(InfoGrantContractRegime.getActiveState()); //Active
             }
@@ -169,7 +169,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
             }
                 
 
-            if (infoGrantContractRegime.getState().equals(new Integer(-1))) {
+            if (infoGrantContractRegime.getState().equals(Integer.valueOf(-1))) {
                 //If is a new Regime
                 infoGrantContractRegime.setState(InfoGrantContractRegime.getActiveState()); //Active
             }
