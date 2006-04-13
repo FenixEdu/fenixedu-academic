@@ -136,17 +136,8 @@ public class Unit extends Unit_Base {
         this.setEndDate(endDate);
         this.setType(type);
         this.setCostCenterCode(unitCostCenter);
-        if (acronym != null
-                && !acronym.equals("")
-                && this.getType() != null
-                && (this.getType().equals(PartyTypeEnum.DEGREE)
-                        || this.getType().equals(PartyTypeEnum.MASTER_DEGREE) || this.getType().equals(
-                        PartyTypeEnum.DEPARTMENT))) {
-            
-            Unit unit = readByAcronymOnMasterDegreeDepartmentAndDegreeUnitTypes(acronym);
-            if (unit != null && !unit.equals(this)) {
-                throw new DomainException("error.existent.acronym");
-            }
+        if (acronym != null && !acronym.equals("") && this.getType() != null) {
+            checkAcronym(acronym, this.getType());
         }
         this.setAcronym(acronym);
         if (parentUnit != null && accountabilityType != null) {
@@ -154,6 +145,13 @@ public class Unit extends Unit_Base {
         }
         if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.endDateBeforeBeginDate");
+        }
+    }
+
+    private void checkAcronym(String acronym, PartyTypeEnum partyTypeEnum) {
+        Unit unit = readUnitByAcronymAndType(acronym, partyTypeEnum);
+        if (unit != null && !unit.equals(this)) {
+            throw new DomainException("error.existent.acronym");
         }
     }
 
@@ -238,17 +236,6 @@ public class Unit extends Unit_Base {
                 }
             }
         }
-        return result;
-    }
-
-    public List<Unit> getDegreeUnits() {
-        List<Unit> result = new ArrayList<Unit>();
-        for (Unit unit : this.getSubUnits()) {
-            if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEGREE)) {
-                result.add(unit);
-            }
-        }
-
         return result;
     }
 
@@ -392,15 +379,18 @@ public class Unit extends Unit_Base {
         return allUnits;
     }
 
-    public static Unit readByAcronymOnMasterDegreeDepartmentAndDegreeUnitTypes(String acronym) {
-        for (Unit unit : readAllUnits()) {
-            if (unit.getAcronym() != null
-                    && unit.getAcronym().equals(acronym)
-                    && unit.getType() != null
-                    && (unit.getType().equals(PartyTypeEnum.DEGREE)
-                            || unit.getType().equals(PartyTypeEnum.MASTER_DEGREE) || unit.getType()
-                            .equals(PartyTypeEnum.DEPARTMENT))) {
-                return unit;
+    /**
+     * This method should be used only for Degree and Department Unit types,
+     * because acronyms of this two types are unique. *
+     */
+    public static Unit readUnitByAcronymAndType(String acronym, PartyTypeEnum partyTypeEnum) {
+        if (partyTypeEnum.equals(PartyTypeEnum.DEGREE_UNIT)
+                || partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)) {
+            for (Unit unit : readAllUnits()) {
+                if (unit.getAcronym() != null && unit.getAcronym().equals(acronym)
+                        && unit.getType() != null && unit.getType().equals(partyTypeEnum)) {
+                    return unit;
+                }
             }
         }
         return null;

@@ -5905,7 +5905,7 @@
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.ViewStudentsByTutor</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
-			<chain name="TutorAuthorization" />
+			<chain name="TeacherAuthorization" />
 		</filterChains>
 	</service>
 	<service>

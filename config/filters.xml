@@ -605,14 +605,7 @@
             net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAndLEECAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
-    </filter> 
-	<filter>
-        <name>TutorAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.TutorAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>false</isTransactional>
-    </filter> 
+    </filter> 	
 	<filter>
         <name>EnrollmentAuthorization</name>
         <implementationClass> 

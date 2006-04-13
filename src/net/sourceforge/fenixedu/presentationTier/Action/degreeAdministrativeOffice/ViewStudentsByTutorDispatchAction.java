@@ -19,32 +19,26 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author joaosa and rmalo
- *  
+ * 
  */
 public class ViewStudentsByTutorDispatchAction extends FenixAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm actionForm,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		
-		Object[] args = {userView.getUtilizador()};
-		 List infoStudents = null;
-		 
-		 infoStudents = (List) ServiceUtils.executeService(userView,"ViewStudentsByTutor",args);
-		
-		if (infoStudents.size() > 1) {
-            //order list by number
-            Collections.sort(infoStudents, new BeanComparator(
-                    "infoStudent.number"));
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+        Object[] args = { userView.getUtilizador() };
+        List infoStudents = null;
+
+        infoStudents = (List) ServiceUtils.executeService(userView, "ViewStudentsByTutor", args);
+
+        if (!infoStudents.isEmpty()) {
+            // order list by number
+            Collections.sort(infoStudents, new BeanComparator("infoStudent.number"));
             request.setAttribute("studentsOfTutor", infoStudents);
         }
-		return mapping.findForward("viewStudentsByTutor");
-	}
+        return mapping.findForward("viewStudentsByTutor");
+    }
 }
