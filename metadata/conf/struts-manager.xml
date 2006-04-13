@@ -1936,7 +1936,7 @@
 	
 	<!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
 	<action path="/executionDegreesManagementMainPage"
-			type="org.apache.struts.actions.ForwardAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction"
 			forward="df.executionDegreeManagement.firstPage" />
 			
 	<action path="/executionDegreesManagement"
