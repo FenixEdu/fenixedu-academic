@@ -136,9 +136,17 @@ public class Unit extends Unit_Base {
         this.setEndDate(endDate);
         this.setType(type);
         this.setCostCenterCode(unitCostCenter);
-        Unit unit = readByAcronymOnMasterDegreeDegreeAndDepartmentUnitTypes(acronym);
-        if (unit != null && !unit.equals(this)) {
-            throw new DomainException("error.existent.acronym");
+        if (acronym != null
+                && !acronym.equals("")
+                && this.getType() != null
+                && (this.getType().equals(PartyTypeEnum.DEGREE)
+                        || this.getType().equals(PartyTypeEnum.MASTER_DEGREE) || this.getType().equals(
+                        PartyTypeEnum.DEPARTMENT))) {
+            
+            Unit unit = readByAcronymOnMasterDegreeDepartmentAndDegreeUnitTypes(acronym);
+            if (unit != null && !unit.equals(this)) {
+                throw new DomainException("error.existent.acronym");
+            }
         }
         this.setAcronym(acronym);
         if (parentUnit != null && accountabilityType != null) {
@@ -360,14 +368,14 @@ public class Unit extends Unit_Base {
         return null;
     }
 
-    public AccountabilityTypeEnum getRelationType(Unit withUnit){
+    public AccountabilityTypeEnum getRelationType(Unit withUnit) {
         for (Accountability accountability : getParents()) {
-            if(accountability.getParentParty().equals(withUnit)){
+            if (accountability.getParentParty().equals(withUnit)) {
                 return accountability.getAccountabilityType().getType();
             }
         }
         for (Accountability accountability : getChilds()) {
-            if(accountability.getChildParty().equals(withUnit)){
+            if (accountability.getChildParty().equals(withUnit)) {
                 return accountability.getAccountabilityType().getType();
             }
         }
@@ -377,16 +385,18 @@ public class Unit extends Unit_Base {
     public static List<Unit> readAllUnits() {
         List<Unit> allUnits = new ArrayList<Unit>();
         for (Party party : RootDomainObject.getInstance().getPartys()) {
-           if (party instanceof Unit) {               
-               allUnits.add((Unit) party);
-           }
+            if (party instanceof Unit) {
+                allUnits.add((Unit) party);
+            }
         }
         return allUnits;
     }
-    
-    public static Unit readByAcronymOnMasterDegreeDegreeAndDepartmentUnitTypes(String acronym) {
+
+    public static Unit readByAcronymOnMasterDegreeDepartmentAndDegreeUnitTypes(String acronym) {
         for (Unit unit : readAllUnits()) {
-            if (unit.getAcronym().equals(acronym)
+            if (unit.getAcronym() != null
+                    && unit.getAcronym().equals(acronym)
+                    && unit.getType() != null
                     && (unit.getType().equals(PartyTypeEnum.DEGREE)
                             || unit.getType().equals(PartyTypeEnum.MASTER_DEGREE) || unit.getType()
                             .equals(PartyTypeEnum.DEPARTMENT))) {
