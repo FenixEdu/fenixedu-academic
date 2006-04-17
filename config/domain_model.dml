@@ -146,7 +146,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 }
 
 class net.sourceforge.fenixedu.domain.RootDomainObject extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer idInternal;
 }
 
 class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
