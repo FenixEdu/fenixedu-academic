@@ -65,7 +65,32 @@ public class HtmlLink extends HtmlComponent {
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        String realUrl = null;
+
+        // parse parameters from url if the url has the form 'url?param=value&other=otherValue'
+        if (url != null) {
+            int indexOfQuestion = url.indexOf('?');
+            
+            if (indexOfQuestion != -1) {
+                realUrl = url.substring(0, indexOfQuestion);
+                
+                if (indexOfQuestion < url.length()) {
+                    String parameters = url.substring(indexOfQuestion + 1);
+                    String[] parameresParts = parameters.split("&");
+                    
+                    for (int i = 0; i < parameresParts.length; i++) {
+                        String part = parameresParts[i];
+                        
+                        String[] paramParts = part.split("=", -1);
+                        if (paramParts.length == 2) {
+                            setParameter(paramParts[0], paramParts[1]);
+                        }
+                    }
+                }
+            }
+        }
+        
+        this.url = realUrl != null ? realUrl : url;
     }
 
     public String getModule() {

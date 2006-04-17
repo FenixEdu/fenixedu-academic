@@ -35,6 +35,8 @@ public class ViewObjectTag extends BaseRenderObjectTag {
         ViewState viewState = new ViewState(null);
         viewState.setMetaObject(metaObject);
 
+        viewState.setInputDestination(getInputDestination());
+        
         viewState.setLayout(getLayout());
         viewState.setProperties(getRenderProperties());
         viewState.setContextClass(context.getClass());

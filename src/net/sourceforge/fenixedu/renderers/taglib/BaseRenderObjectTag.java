@@ -5,14 +5,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.struts.Globals;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.taglib.TagUtils;
 
 public abstract class BaseRenderObjectTag extends TagSupport {
@@ -211,5 +216,35 @@ public abstract class BaseRenderObjectTag extends TagSupport {
     
     protected void drawComponent(PresentationContext context, HtmlComponent component) throws IOException, JspException {
         component.draw(pageContext);
+    }
+
+    protected ViewDestination getInputDestination() {
+        String currentPath = getCurrentPath();
+        ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
+        
+        return new ViewDestination(currentPath, module.getPrefix(), false);       
+    }
+
+    protected String getCurrentPath() {
+        ActionMapping mapping = (ActionMapping) pageContext.findAttribute(Globals.MAPPING_KEY);
+        String currentPath = TagUtils.getInstance().getActionMappingURL(mapping.getPath(), pageContext);
+        String contextPath = ((HttpServletRequest) pageContext.getRequest()).getContextPath();
+    
+        ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
+    
+        if (currentPath.startsWith(contextPath)) {
+            currentPath = currentPath.substring(contextPath.length());
+        }
+    
+        if (module != null && currentPath.startsWith(module.getPrefix())) {
+            currentPath = currentPath.substring(module.getPrefix().length());
+        }
+        
+        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+        if (request.getQueryString() != null) {
+            currentPath = currentPath + "?" + request.getQueryString();
+        }
+        
+        return currentPath;
     }
 }
