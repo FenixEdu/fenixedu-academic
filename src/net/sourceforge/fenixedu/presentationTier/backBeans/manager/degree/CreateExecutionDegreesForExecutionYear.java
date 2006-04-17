@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -117,8 +116,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
             final BolonhaDegreeType bolonhaDegreeType = BolonhaDegreeType.valueOf(getChosenDegreeType());
             final List<SelectItem> result = new ArrayList<SelectItem>();
-            for (final DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
-                    .getDegreeCurricularPlans()) { // Active? (for now doesn't exist in BolonhaDegree)
+            for (final DegreeCurricularPlan degreeCurricularPlan : rootDomainObject.getDegreeCurricularPlans()) { // Active? (for now doesn't exist in BolonhaDegree)
                 if (degreeCurricularPlan.getDegree().isBolonhaDegree()
                         && degreeCurricularPlan.getDegree().getBolonhaDegreeType() == bolonhaDegreeType) {
                     result.add((new SelectItem(degreeCurricularPlan.getIdInternal(),
@@ -166,9 +164,8 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     }
 
     public List getAllCampus() throws FenixFilterException, FenixServiceException {
-        final List<SelectItem> result = new ArrayList<SelectItem>(RootDomainObject.getInstance()
-                .getCampussCount());
-        for (final Campus campus : RootDomainObject.getInstance().getCampuss()) {
+        final List<SelectItem> result = new ArrayList<SelectItem>(rootDomainObject.getCampussCount());
+        for (final Campus campus : rootDomainObject.getCampuss()) {
             result.add(new SelectItem(campus.getName(), campus.getName()));
         }
         return result;

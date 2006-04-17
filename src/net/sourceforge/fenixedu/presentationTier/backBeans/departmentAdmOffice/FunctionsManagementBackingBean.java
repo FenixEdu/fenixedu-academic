@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -739,7 +738,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 && (this.endDateHidden == null || this.endDateHidden.getValue() == null)
                 && this.getExecutionPeriod() != null) {
 
-            ExecutionPeriod executionPeriod = RootDomainObject.getInstance().readExecutionPeriodByOID(
+            ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(
                     this.executionPeriod);
 
             ExecutionPeriod executionPeriodWithDuration = getDurationEndDate(executionPeriod);
@@ -876,7 +875,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public PersonFunction getPersonFunction() throws FenixFilterException, FenixServiceException {
         if (this.personFunction == null) {
-            this.personFunction = (PersonFunction) RootDomainObject.getInstance()
+            this.personFunction = (PersonFunction) rootDomainObject
                     .readAccountabilityByOID(this.getPersonFunctionID());
         }
         return personFunction;
