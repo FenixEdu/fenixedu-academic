@@ -123,7 +123,8 @@
 		dcp="#{DegreeCurricularPlanManagement.dcp}" 
 		organizeBy="<%=request.getParameter("organizeBy")%>"
 		showRules="<%=request.getParameter("showRules")%>"
-		hideCourses="<%=request.getParameter("hideCourses")%>"/>
+		hideCourses="<%=request.getParameter("hideCourses")%>"
+		reportsAvailable="true"/>
 
 	<h:outputText value="<p>" escape="false"/>
 	<h:form>

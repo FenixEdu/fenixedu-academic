@@ -14,6 +14,7 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
     private String toOrder;
     private String hideCourses;
     private String executionYear;
+    private String reportsAvailable;
 
     public String getDcp() {
         return dcp;
@@ -79,6 +80,14 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         this.executionYear = executionYear;
     }
 
+    public String getReportsAvailable() {
+        return reportsAvailable;
+    }
+
+    public void setReportsAvailable(String reportsAvailable) {
+        this.reportsAvailable = reportsAvailable;
+    }
+
     public String getComponentType() {
         return UIDegreeCurricularPlan.COMPONENT_TYPE;
     }
@@ -98,6 +107,7 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         JsfTagUtils.setString(component,"toOrder",this.toOrder);
         JsfTagUtils.setString(component,"hideCourses",this.hideCourses);
         JsfTagUtils.setString(component,"executionYear",this.executionYear);
+        JsfTagUtils.setString(component,"reportsAvailable",this.reportsAvailable);
     }
 
     public void release() {
@@ -110,6 +120,7 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         this.toEdit = null;
         this.hideCourses = null;
         this.executionYear = null;
+        this.reportsAvailable = null;
     }
 
 }

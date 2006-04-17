@@ -1408,6 +1408,12 @@
 			<rtexprvalue>true</rtexprvalue>
 			<description>If present, contexts are filtered accordingly. Type: net.sourceforge.fenixedu.domain.ExecutionYear. Default: false</description>
 		</attribute>
+		<attribute>
+			<name>reportsAvailable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>Indicates if course group reports links are to be available. Type: java.lang.Boolean. Default: false</description>
+		</attribute>
 	</tag>
   <tag>
 		<name>breadCrumbs</name>

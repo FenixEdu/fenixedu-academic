@@ -54,6 +54,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             final Boolean onlyStructure = (this.getBooleanAttribute("onlyStructure") != null) ? (Boolean) this.getBooleanAttribute("onlyStructure") : Boolean.FALSE;
             final Boolean toOrder = (this.getBooleanAttribute("toOrder") != null) ? (Boolean) this.getBooleanAttribute("toOrder") : Boolean.FALSE;
             final Boolean hideCourses = (this.getBooleanAttribute("hideCourses") != null) ? (Boolean) this.getBooleanAttribute("hideCourses") : Boolean.FALSE;
+            final Boolean reportsAvailable = (this.getBooleanAttribute("hideCourses") != null) ? (Boolean) this.getBooleanAttribute("hideCourses") : Boolean.FALSE;
             if (this.getAttributes().get("executionYear") != null) {
                 executionYear = (ExecutionYear) this.getAttributes().get("executionYear"); 
             }
@@ -69,7 +70,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                 dcpBuffer.append("[DCP ").append(dcp.getIdInternal()).append("] ").append(dcp.getName());
                 //System.out.println(dcpBuffer);
 
-                new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder, hideCourses, executionYear).encodeBegin(facesContext);
+                new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder, hideCourses, reportsAvailable, executionYear).encodeBegin(facesContext);
             }
         }
     }

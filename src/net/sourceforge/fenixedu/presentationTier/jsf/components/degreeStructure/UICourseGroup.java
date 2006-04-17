@@ -21,13 +21,14 @@ public class UICourseGroup extends UIDegreeModule {
     private Boolean onlyStructure;
     private Boolean toOrder;
     private Boolean hideCourses;
+    private Boolean reportsAvailable;
     
     public UICourseGroup() {
         super();
         this.courseGroup = (CourseGroup) super.degreeModule;
     }
 
-    public UICourseGroup(DegreeModule courseGroup, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, Boolean onlyStructure, Boolean toOrder, Boolean hideCourses, ExecutionYear executionYear) throws IOException {
+    public UICourseGroup(DegreeModule courseGroup, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, Boolean onlyStructure, Boolean toOrder, Boolean hideCourses, Boolean reportsAvailable, ExecutionYear executionYear) throws IOException {
         super(courseGroup, previousContext, toEdit, showRules, depth, tabs, executionYear);
         
         if (toOrder && (!onlyStructure || !toEdit)) {
@@ -37,6 +38,7 @@ public class UICourseGroup extends UIDegreeModule {
         this.onlyStructure = onlyStructure;
         this.toOrder = toOrder;
         this.hideCourses = hideCourses;
+        this.reportsAvailable = reportsAvailable;
     }
 
     public String getFamily() {
@@ -75,13 +77,14 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void encodeRoot() throws IOException {
-        writer.startElement("p", this);
-        writer.startElement("a", this);
-        this.encodeLinkHref("../../bolonhaManager/curricularPlans/courseGroupReport.faces", "&courseGroupID=" + this.courseGroup.getIdInternal(), true);
-        writer.write("Relatórios de Plano Curricular");
-        writer.endElement("a");
-        writer.endElement("p");
-        
+        if (reportsAvailable) {
+            writer.startElement("p", this);
+            writer.startElement("a", this);
+            this.encodeLinkHref("../../bolonhaManager/curricularPlans/courseGroupReport.faces", "&courseGroupID=" + this.courseGroup.getIdInternal(), true);
+            writer.write("Relatórios de Plano Curricular");
+            writer.endElement("a");
+            writer.endElement("p");
+        }
         if (this.onlyStructure) {
             if (this.toEdit) {
                 if (!this.toOrder) {
@@ -119,7 +122,7 @@ public class UICourseGroup extends UIDegreeModule {
 
     private void encodeChildCourseGroups() throws IOException {
         for (Context context : this.courseGroup.getSortedChildContextsWithCourseGroupsByExecutionYear(this.executionYear)) {
-            new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses, this.executionYear).encodeBegin(facesContext);
+            new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses, this.reportsAvailable, this.executionYear).encodeBegin(facesContext);
         }
     }
 
@@ -201,7 +204,7 @@ public class UICourseGroup extends UIDegreeModule {
     private void encodeHeader() throws IOException {
         writer.startElement("tr", this);
 
-        encodeName(true);    
+        encodeName(reportsAvailable);    
         
         if (this.toEdit) {
             if (this.onlyStructure) {
