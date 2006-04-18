@@ -39,7 +39,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     private Double ectsCredits;
     private String prevailingScientificArea;
 
-    public List<Degree> getBolonhaDegrees() throws FenixFilterException, FenixServiceException {
+    public List<Degree> getBolonhaDegrees() {
         final List<Degree> result = Degree.readBolonhaDegrees();
         
         final ComparatorChain chainComparator = new ComparatorChain();
@@ -50,7 +50,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         return result; 
     }
     
-    public List<Degree> getFilteredBolonhaDegrees() throws FenixFilterException, FenixServiceException {
+    public List<Degree> getFilteredBolonhaDegrees() {
         final Set<Degree> result = new HashSet<Degree>();
         for (final Degree degree : Degree.readBolonhaDegrees()) {
             for (final DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
@@ -79,11 +79,11 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         this.degreeId = degreeId;
     }
     
-    public Degree getDegree() throws FenixFilterException, FenixServiceException {
+    public Degree getDegree() {
         return (degree == null) ? (degree = rootDomainObject.readDegreeByOID(getDegreeId())) : degree;
     }
     
-    public String getName() throws FenixFilterException, FenixServiceException {
+    public String getName() {
         return (name == null && getDegree() != null) ? (name = getDegree().getNome()) : name;
     }
 
@@ -91,7 +91,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         this.name = name;
     }    
 
-    public String getNameEn() throws FenixFilterException, FenixServiceException {
+    public String getNameEn() {
         return (nameEn == null && getDegree() != null) ? (nameEn = getDegree().getNameEn()) : nameEn;
     }
 
@@ -99,7 +99,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         this.nameEn = nameEn;
     }
 
-    public String getAcronym() throws FenixFilterException, FenixServiceException {
+    public String getAcronym() {
         return (acronym == null && getDegree() != null) ? (acronym = getDegree().getAcronym()) : acronym;
     }
 
@@ -107,7 +107,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         this.acronym = acronym;
     }
 
-    public String getBolonhaDegreeType() throws FenixFilterException, FenixServiceException {
+    public String getBolonhaDegreeType() {
         return (bolonhaDegreeType == null && getDegree() != null) ? (bolonhaDegreeType = getDegree().getBolonhaDegreeType().getName()) : bolonhaDegreeType;
     }
 
@@ -115,7 +115,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         this.bolonhaDegreeType = bolonhaDegreeType;
     }
 
-    public String getGradeScale() throws FenixFilterException, FenixServiceException {
+    public String getGradeScale() {
         return (gradeScale == null && getDegree() != null) ? (gradeScale = getDegree().getGradeScale().getName()) : gradeScale;
     }
 
@@ -123,7 +123,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         this.gradeScale = gradeScale;
     }
 
-    public Double getEctsCredits() throws FenixFilterException, FenixServiceException {
+    public Double getEctsCredits() {
         if (getBolonhaDegreeType() != null && !getBolonhaDegreeType().equals(this.NO_SELECTION)) {
             ectsCredits = BolonhaDegreeType.valueOf(getBolonhaDegreeType()).getDefaultEctsCredits();
         } else if (ectsCredits == null && getDegree() != null) {
@@ -137,7 +137,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         this.ectsCredits = ectsCredits;
     }
     
-    public String getPrevailingScientificArea() throws FenixFilterException, FenixServiceException {
+    public String getPrevailingScientificArea() {
         return (prevailingScientificArea == null && getDegree() != null) ? (prevailingScientificArea = getDegree().getPrevailingScientificArea()) : prevailingScientificArea;
     }
 
@@ -166,7 +166,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         return result;
     }
     
-    public String createDegree() throws FenixFilterException, FenixServiceException {
+    public String createDegree() {
         if (this.bolonhaDegreeType.equals(this.NO_SELECTION)) {// || this.gradeScale.equals(this.NO_SELECTION)) {
             this.setErrorMessage(scouncilBundle.getString("choose.request"));
             return "";
@@ -183,7 +183,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         return changeDegree("CreateDegree", args, "degree.created", "error.creatingDegree");
     }
     
-    public String editDegree() throws FenixFilterException, FenixServiceException {
+    public String editDegree() {
         if (this.bolonhaDegreeType != null && this.bolonhaDegreeType.equals(this.NO_SELECTION)) {// || this.gradeScale.equals(this.NO_SELECTION)) {
             this.setErrorMessage(scouncilBundle.getString("choose.request"));
             return "";
