@@ -55,7 +55,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
-        DegreeType degreeType = oldInfoDegree.getTipoCurso();
+        DegreeType degreeType = (DegreeType) oldInfoDegree.getTipoCurso();
 
         readDegreeForm.set("name", oldInfoDegree.getNome());
         readDegreeForm.set("code", oldInfoDegree.getSigla());

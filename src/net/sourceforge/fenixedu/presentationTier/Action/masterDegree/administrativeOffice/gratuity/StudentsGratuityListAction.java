@@ -137,7 +137,7 @@ public class StudentsGratuityListAction extends DispatchAction {
 
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
             InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
-            DegreeType degreeTypeEnum = infoDegree.getTipoCurso();
+            DegreeType degreeTypeEnum = (DegreeType) infoDegree.getTipoCurso();
             MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
             String degreeType = messageResources.getMessage(degreeTypeEnum.name());
 

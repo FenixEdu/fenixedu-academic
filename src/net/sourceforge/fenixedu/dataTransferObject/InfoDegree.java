@@ -1,9 +1,3 @@
-/*
- * InfoDegree.java
- * 
- * Created on 25 de Novembro de 2002, 1:07
- */
-
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
@@ -14,11 +8,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
-/**
- * @author tfc130
- */
 public class InfoDegree extends InfoObject implements Comparable {
 
     protected String sigla;
@@ -27,11 +17,13 @@ public class InfoDegree extends InfoObject implements Comparable {
 
     protected String nameEn;
 
-    protected DegreeType tipoCurso;
+    protected boolean isBolonhaDegree;
+
+    protected Enum tipoCurso;
 
     private List infoDegreeCurricularPlans = null;
 
-    private List infoDegreeInfos = null; // added by Tânia Pousão
+    private List infoDegreeInfos = null;
 
 	private List infoCoordinators;
 	
@@ -51,6 +43,15 @@ public class InfoDegree extends InfoObject implements Comparable {
         setNameEn(nameEn);
         setTipoCurso(degreeType);
     }
+    
+    public String toString() {
+        String result = "[INFOCURSO";
+        result += ", sigla=" + this.sigla;
+        result += ", nome=" + this.nome;
+        result += ", tipoCurso=" + this.tipoCurso;
+        result += "]";
+        return result;
+    }
 
     public String getSigla() {
         return this.sigla;
@@ -68,6 +69,14 @@ public class InfoDegree extends InfoObject implements Comparable {
         this.nome = nome;
     }
 
+    public String getNameEn() {
+        return nameEn;
+    }
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
+    }
+    
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof InfoDegree) {
@@ -77,50 +86,26 @@ public class InfoDegree extends InfoObject implements Comparable {
         return resultado;
     }
 
-    public String toString() {
-        String result = "[INFOCURSO";
-        result += ", sigla=" + this.sigla;
-        result += ", nome=" + this.nome;
-        result += ", tipoCurso=" + this.tipoCurso;
-        result += "]";
-        return result;
+    public boolean isBolonhaDegree() {
+        return isBolonhaDegree;
     }
 
-    /**
-     * @return DegreeType
-     */
-    public DegreeType getTipoCurso() {
+    public Enum getTipoCurso() {
         return tipoCurso;
     }
 
-    /**
-     * Sets the tipoCurso.
-     * 
-     * @param degreeType
-     *            The degreeType to set
-     */
-    public void setTipoCurso(DegreeType tipoCurso) {
+    public void setTipoCurso(Enum tipoCurso) {
         this.tipoCurso = tipoCurso;
     }
 
-    /**
-     * @return List
-     */
     public List getInfoDegreeCurricularPlans() {
         return infoDegreeCurricularPlans;
     }
 
-    /**
-     * Sets the infoDegreeCurricularPlans.
-     * 
-     * @param infoDegreeCurricularPlans
-     *            The infoDegreeCurricularPlans to set
-     */
     public void setInfoDegreeCurricularPlans(List infoDegreeCurricularPlans) {
         this.infoDegreeCurricularPlans = infoDegreeCurricularPlans;
     }
 
-    // alphabetic order
     public int compareTo(Object arg0) {
         InfoDegree degree = (InfoDegree) arg0;
         return this.getNome().compareTo(degree.getNome());
@@ -133,31 +118,23 @@ public class InfoDegree extends InfoObject implements Comparable {
     public void setInfoDegreeInfos(List infoDegreeInfos) {
         this.infoDegreeInfos = infoDegreeInfos;
     }
-
-	public void copyFromDomain(Degree degree){
-		super.copyFromDomain(degree);
-		if (degree != null){
-			setNome(degree.getNome());
-			setSigla(degree.getSigla());
-			setTipoCurso(degree.getTipoCurso());
-			setNameEn(degree.getNameEn());
-			setGradeScale(degree.getGradeScale());
-
-            List<InfoDegreeCurricularPlan> degreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
-            for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
-                if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
-                    degreeCurricularPlans.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
-                }
-            }
-            
-            setInfoDegreeCurricularPlans(degreeCurricularPlans);
-        }
+    
+    public List getInfoCoordinators() {
+        return infoCoordinators;
     }
 
-    /**
-     * @param degree
-     * @return
-     */
+    public void setInfoCoordinators(List infoCoordinators) {
+        this.infoCoordinators = infoCoordinators;
+    }
+
+    public GradeScale getGradeScale() {
+        return this.gradeScale;
+    }
+
+    public void setGradeScale(GradeScale gradeScale) {
+        this.gradeScale = gradeScale;
+    }
+
     public static InfoDegree newInfoFromDomain(Degree degree) {
         InfoDegree infoDegree = null;
         if (degree != null) {
@@ -167,21 +144,27 @@ public class InfoDegree extends InfoObject implements Comparable {
         return infoDegree;
     }
 
-    public void copyToDomain(InfoDegree infoDegree, Degree degree) {
-        super.copyToDomain(infoDegree, degree);
-        degree.setNome(infoDegree.getNome());
-        degree.setSigla(infoDegree.getSigla());
-        degree.setTipoCurso(infoDegree.getTipoCurso());
-        degree.setNameEn(infoDegree.getNameEn());
-		degree.setGradeScale(infoDegree.getGradeScale());        
-    }
+    public void copyFromDomain(Degree degree) {
+        super.copyFromDomain(degree);
+        if (degree != null) {
+            isBolonhaDegree = degree.isBolonhaDegree();
+            if (isBolonhaDegree) {
+                setSigla(degree.getAcronym());
+                setTipoCurso(degree.getBolonhaDegreeType());
+            } else {
+                setSigla(degree.getSigla());
+                setTipoCurso(degree.getTipoCurso());
+            }
+            setNome(degree.getNome());
+            setNameEn(degree.getNameEn());
+            setGradeScale(degree.getGradeScale());
 
-    public String getNameEn() {
-        return nameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
+            List<InfoDegreeCurricularPlan> degreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
+            for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+                degreeCurricularPlans.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
+            }
+            setInfoDegreeCurricularPlans(degreeCurricularPlans);
+        }
     }
 
     public void prepareEnglishPresentation(Locale locale) {
@@ -191,22 +174,5 @@ public class InfoDegree extends InfoObject implements Comparable {
             }
         }
     }
-
-    public List getInfoCoordinators() {
-        return infoCoordinators;
-    }
-
-	public void setInfoCoordinators(List infoCoordinators)
-	{
-		this.infoCoordinators = infoCoordinators;
-	}
-
-	public GradeScale getGradeScale() {
-		return this.gradeScale;
-	}
-
-	public void setGradeScale(GradeScale gradeScale) {
-		this.gradeScale = gradeScale;
-	}
 
 }
