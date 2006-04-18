@@ -20,6 +20,10 @@ public class JodaTimeInputRenderer extends DateInputRenderer {
 		public Object convert(Class type, Object value) {
 			Date date = (Date) super.convert(type, value);
 			
+            if (date == null) {
+                return null;
+            }
+            
 			return YearMonthDay.fromDateFields(date);
 		}
     }

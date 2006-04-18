@@ -176,6 +176,10 @@ public class PartialInputRenderer extends DateInputRenderer {
         public Object convert(Class type, Object value) {
             Date date = (Date) this.dateConverter.convert(type, value);
             
+            if (date == null) {
+                return null;
+            }
+            
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             

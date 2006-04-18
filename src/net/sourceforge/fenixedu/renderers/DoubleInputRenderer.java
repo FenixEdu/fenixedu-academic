@@ -22,8 +22,12 @@ public class DoubleInputRenderer extends NumberInputRenderer {
 
         @Override
         public Object convert(Class type, Object value) {
-            String numberText = (String) value;
+            String numberText = ((String) value).trim();
 
+            if (numberText.length() == 0) {
+                return null;
+            }
+            
             try {
                 return Double.parseDouble(numberText);
             } catch (NumberFormatException e) {

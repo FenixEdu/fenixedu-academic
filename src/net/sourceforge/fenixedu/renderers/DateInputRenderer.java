@@ -121,8 +121,18 @@ public class DateInputRenderer extends TextFieldRenderer {
 
         @Override
         public Object convert(Class type, Object value) {
+            if (value == null) {
+                return null;
+            }
+            
+            String text = ((String) value).trim();
+            
+            if (text.length() == 0) {
+                return null;
+            }
+            
             try {
-                return format.parse((String) value);
+                return format.parse(text);
             } catch (ParseException e) {
                 throw new ConversionException("could not convert input \"" + value + "\" to a date", e);
             }

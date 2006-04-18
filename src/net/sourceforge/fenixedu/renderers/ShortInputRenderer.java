@@ -40,7 +40,11 @@ public class ShortInputRenderer extends IntegerInputRenderer {
 
         @Override
         public Object convert(Class type, Object value) {
-            String numberText = (String) value;
+            String numberText = ((String) value).trim();
+
+            if (numberText.length() == 0) {
+                return null;
+            }
             
             try {
                 return Short.parseShort(numberText.trim(), getBase());
