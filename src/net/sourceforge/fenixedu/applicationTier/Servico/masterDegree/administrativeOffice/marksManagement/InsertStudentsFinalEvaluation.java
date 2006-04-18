@@ -9,8 +9,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -20,18 +22,18 @@ public class InsertStudentsFinalEvaluation extends Service {
 	public List run(List<InfoEnrolmentEvaluation> evaluations, Integer teacherNumber,
 			Date evaluationDate, IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
-		List<InfoEnrolmentEvaluation> infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
+		final List<InfoEnrolmentEvaluation> infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
 
-        Teacher teacher = Teacher.readByNumber(teacherNumber);
+        final Teacher teacher = Teacher.readByNumber(teacherNumber);
         if (teacher == null) {
             throw new NonExistingServiceException();
         }
 
 		for (InfoEnrolmentEvaluation infoEnrolmentEvaluation : evaluations) {
-			Student student = rootDomainObject.readStudentByOID(infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
+			final Student student = rootDomainObject.readStudentByOID(infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
 			infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().setNumber(student.getNumber());
 
-			EnrolmentEvaluation enrolmentEvaluationFromDb = rootDomainObject.readEnrolmentEvaluationByOID(infoEnrolmentEvaluation.getIdInternal());
+			final EnrolmentEvaluation enrolmentEvaluationFromDb = findEnrolmentEvaluationByIDForStudent(student, infoEnrolmentEvaluation.getIdInternal());
 			try {
 				enrolmentEvaluationFromDb.insertStudentFinalEvaluationForMasterDegree(
 						infoEnrolmentEvaluation.getGrade(), teacher.getPerson(), evaluationDate);
@@ -42,6 +44,19 @@ public class InsertStudentsFinalEvaluation extends Service {
 		}
 
 		return infoEvaluationsWithError;
+	}
+
+	private EnrolmentEvaluation findEnrolmentEvaluationByIDForStudent(final Student student, final Integer idInternal) {
+		for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
+			for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+				for (final EnrolmentEvaluation enrolmentEvaluation : enrolment.getEvaluationsSet()) {
+					if (enrolmentEvaluation.getIdInternal().equals(idInternal)) {
+						return enrolmentEvaluation;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 }
