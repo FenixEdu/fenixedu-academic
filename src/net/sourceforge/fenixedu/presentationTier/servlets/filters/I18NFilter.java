@@ -74,7 +74,11 @@ public class I18NFilter implements Filter {
                 setDefaultLocale(request, httpSession);
             }
             
-            LanguageUtils.setLocale((Locale) httpSession.getAttribute(Globals.LOCALE_KEY));
+            Locale locale = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
+            LanguageUtils.setLocale(locale);
+            
+            request.removeAttribute(Globals.LOCALE_KEY);
+            request.setAttribute(Globals.LOCALE_KEY, locale);
         }
 
         chain.doFilter(request, response);
