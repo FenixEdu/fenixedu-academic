@@ -8898,17 +8898,6 @@
 			<chain name="ManagerOrGEPAuthorization" />
 		</filterChains>
 	</service>
-    <service>
-		<name>AutoCompleteSimpleSearchService</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSimpleSearchService
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="DepartmentMemberOrTeacherAuthorization" />
-		</filterChains>
-	</service>
 	<service>
     	<name>ReadTeacherServiceDistributionByTeachers</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.teacherService.ReadTeacherServiceDistributionByTeachers</implementationClass>

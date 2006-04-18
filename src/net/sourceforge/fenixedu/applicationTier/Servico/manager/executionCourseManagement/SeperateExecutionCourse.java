@@ -33,7 +33,7 @@ public class SeperateExecutionCourse extends Service {
         final ExecutionCourse originExecutionCourse = rootDomainObject.readExecutionCourseByOID( originExecutionCourseOid);
         ExecutionCourse destinationExecutionCourse = rootDomainObject.readExecutionCourseByOID( destinationExecutionCourseId);
         if (destinationExecutionCourse == null) {
-            destinationExecutionCourse = createNewExecutionCourse(persistentObject, originExecutionCourse);
+            destinationExecutionCourse = createNewExecutionCourse(originExecutionCourse);
             destinationExecutionCourse.createSite();
             ExecutionCourseUtils.copyBibliographicReference(originExecutionCourse, destinationExecutionCourse);
             ExecutionCourseUtils.copyEvaluationMethod(originExecutionCourse, destinationExecutionCourse);           
@@ -111,8 +111,7 @@ public class SeperateExecutionCourse extends Service {
         }
     }
 
-    private ExecutionCourse createNewExecutionCourse(IPersistentObject persistentObject,
-            ExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
+    private ExecutionCourse createNewExecutionCourse(ExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
         ExecutionCourse destinationExecutionCourse = DomainFactory.makeExecutionCourse();
         destinationExecutionCourse.setComment("");
         destinationExecutionCourse.setExecutionPeriod(originExecutionCourse.getExecutionPeriod());
