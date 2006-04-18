@@ -43,10 +43,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public static CurricularCourse readCurricularCourseByOID(Integer curricularCourseID) {
-        return (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
-    }
-
     protected CurricularCourse() {
         super();
         this.setOjbConcreteClass(CurricularCourse.class.getName());

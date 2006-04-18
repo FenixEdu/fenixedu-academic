@@ -34,10 +34,6 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
     
-    public static CourseGroup readCourseGroupByOID(Integer courseGroupID) {
-        return (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(courseGroupID);
-    }
-    
     protected CourseGroup() {
         super();
         setOjbConcreteClass(CourseGroup.class.getName());
