@@ -12,8 +12,6 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -66,7 +64,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         return (CourseGroup) rootDomainObject.readDegreeModuleByOID(courseGroupID);
     }
 
-    public List<SelectItem> getCourseGroups() {
+    public List<SelectItem> getCourseGroups() throws FenixFilterException, FenixServiceException {
         return (courseGroups == null) ? (courseGroups = readCourseGroups()) : courseGroups;
     }
     
@@ -162,7 +160,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         }
     }
     
-    private List<SelectItem> readCourseGroups() {
+    private List<SelectItem> readCourseGroups() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(CourseGroup.class);
         final Set<CourseGroup> allParents = getCourseGroup(getParentCourseGroupID()).getAllParentCourseGroups();
