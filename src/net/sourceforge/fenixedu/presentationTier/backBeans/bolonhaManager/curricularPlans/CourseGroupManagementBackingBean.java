@@ -12,6 +12,8 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -40,15 +42,15 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         this.courseGroupID = courseGroupID;
     }
     
-    public String getName() throws FenixFilterException, FenixServiceException {
+    public String getName() {
         return (name == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getName() : name;    
     }
 
-    public String getNameEn() throws FenixFilterException, FenixServiceException {
+    public String getNameEn() {
         return (nameEn == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getNameEn() : nameEn;    
     }
     
-    public String getParentName() throws FenixFilterException, FenixServiceException {
+    public String getParentName() {
         return (getParentCourseGroupID() != null) ? getCourseGroup(getParentCourseGroupID()).getName() : null;
     }
 
@@ -60,15 +62,15 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         this.nameEn = nameEn;
     }
 
-    public CourseGroup getCourseGroup(Integer courseGroupID) throws FenixFilterException, FenixServiceException {
-        return (CourseGroup) readDomainObject(CourseGroup.class, courseGroupID);
+    public CourseGroup getCourseGroup(Integer courseGroupID) {
+        return (CourseGroup) rootDomainObject.readDegreeModuleByOID(courseGroupID);
     }
 
-    public List<SelectItem> getCourseGroups() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getCourseGroups() {
         return (courseGroups == null) ? (courseGroups = readCourseGroups()) : courseGroups;
     }
     
-    public List<String> getRulesLabels() throws FenixFilterException, FenixServiceException {
+    public List<String> getRulesLabels() {
         final List<String> resultLabels = new ArrayList<String>();
         for (final CurricularRule curricularRule : getCourseGroup(getCourseGroupID()).getParticipatingCurricularRules()) {
             resultLabels.add(CurricularRuleLabelFormatter.getLabel(curricularRule));
@@ -76,7 +78,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         return resultLabels;
     }
     
-    public String createCourseGroup() throws FenixFilterException {
+    public String createCourseGroup() {
         try {
             final Object args[] = { getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(),
                     getNameEn(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
@@ -94,7 +96,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         return "";
     }
 
-    public String editCourseGroup() throws FenixFilterException {
+    public String editCourseGroup() {
         try {
             final Object args[] = { getCourseGroupID(), getContextID(), getName(), getNameEn(),
                     getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
@@ -112,7 +114,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         return "";
     }
 
-    public String deleteCourseGroup() throws FenixFilterException {
+    public String deleteCourseGroup() {
         try {
             final Object args[] = { getCourseGroupID(), getContextID() };
             ServiceUtils.executeService(getUserView(), "DeleteContextFromDegreeModule", args);
@@ -160,7 +162,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         }
     }
     
-    private List<SelectItem> readCourseGroups() throws FenixFilterException, FenixServiceException {
+    private List<SelectItem> readCourseGroups() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(CourseGroup.class);
         final Set<CourseGroup> allParents = getCourseGroup(getParentCourseGroupID()).getAllParentCourseGroups();
