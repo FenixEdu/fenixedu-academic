@@ -143,7 +143,7 @@ public class TabularListRenderer extends CollectionRenderer {
 
         @Override
         protected int getNumberOfColumns() {
-            return 1 + getNumberOfLinks();
+            return 1 + getNumberOfLinks() + (isCheckable() ? 1 : 0);
         }
 
         @Override
@@ -153,7 +153,7 @@ public class TabularListRenderer extends CollectionRenderer {
         
         @Override
         protected HtmlComponent getHeaderComponent(int columnIndex) {
-            if (columnIndex == 0) {
+            if (columnIndex == (isCheckable() ? 1 : 0)) {
                 String description;
                 
                 if (isListTitleKey()) {
