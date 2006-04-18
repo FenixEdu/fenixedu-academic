@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -44,6 +43,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
+    public static CurricularCourse readCurricularCourseByOID(Integer curricularCourseID) {
+        return (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
+    }
+
     protected CurricularCourse() {
         super();
         this.setOjbConcreteClass(CurricularCourse.class.getName());
