@@ -237,7 +237,7 @@ public class UICourseGroup extends UIDegreeModule {
         }
         
         String name = null;
-        if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
+        if (!facesContext.getViewRoot().getLocale().getLanguage().equals(Locale.ENGLISH.getLanguage())) {
             name = this.courseGroup.getName() + " ";    
         } else {
             name = this.courseGroup.getNameEn() + " ";

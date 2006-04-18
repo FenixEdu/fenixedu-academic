@@ -100,7 +100,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
 
         String name = null;
-        if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
+        if (!facesContext.getViewRoot().getLocale().getLanguage().equals(Locale.ENGLISH.getLanguage())) {
             name = this.curricularCourse.getName();
         } else {
             name = this.curricularCourse.getNameEn();
