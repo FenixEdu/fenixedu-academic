@@ -182,7 +182,7 @@ public class UIDegreeCurricularPlan extends UIInput {
     
     private void encodeCurricularCourses(CurricularPeriod curricularPeriod) throws IOException {
         for (Context context : curricularPeriod.getContexts()) {
-            if (context.getChildDegreeModule().isLeaf()) {
+            if (context.getChildDegreeModule().isLeaf() && (executionYear == null || context.isValid(executionYear))) {
                 CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
                 
                 curricularCourse.getContactLoad(curricularPeriod);
