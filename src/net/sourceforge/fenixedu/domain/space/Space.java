@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
 import org.joda.time.YearMonthDay;
 
 import dml.runtime.RelationAdapter;
@@ -18,7 +16,7 @@ public abstract class Space extends Space_Base {
 
     protected Space() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        //setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(this.getClass().getName());
     }
 

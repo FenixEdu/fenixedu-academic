@@ -1,11 +1,15 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 import org.joda.time.YearMonthDay;
 
 public class Floor extends Floor_Base {
 
     public Floor(final Space suroundingSpace, final Integer level) {
         super();
+
+        setRootDomainObject(RootDomainObject.getInstance());
 
         if (suroundingSpace == null) {
             throw new NullPointerException("error.surrounding.space");

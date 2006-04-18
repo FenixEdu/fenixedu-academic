@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 import org.joda.time.YearMonthDay;
 
 public class Room extends Room_Base {
@@ -11,7 +13,7 @@ public class Room extends Room_Base {
 
     public Room(final Space suroundingSpace, final String name) {
         super();
-
+        setRootDomainObject(RootDomainObject.getInstance());
         if (suroundingSpace == null) {
             throw new NullPointerException("error.surrounding.space");
         }
