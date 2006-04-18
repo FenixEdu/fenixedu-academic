@@ -41,7 +41,7 @@
     <attribute>
       <name>locale</name>
       <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
       <description>
         Locale to use for localizing this page.  Expressions
         must evaluate to a java.util.Locale or to a String
