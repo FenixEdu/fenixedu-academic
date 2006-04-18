@@ -139,9 +139,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             writer.writeAttribute("style", "width: 70em;", null);
 
             encodeHeader(curricularPeriod);
-            if (curricularPeriod.hasAnyContexts()) {
-                encodeCurricularCourses(curricularPeriod);
-            } else {
+            if (!encodeCurricularCourses(curricularPeriod)) {
                 encodeEmptySemesterInfo();
             }
             
@@ -180,9 +178,13 @@ public class UIDegreeCurricularPlan extends UIInput {
     
     private Map<CurricularPeriod, List<Context>> toRepeat =  new HashMap<CurricularPeriod, List<Context>>();
     
-    private void encodeCurricularCourses(CurricularPeriod curricularPeriod) throws IOException {
+    private boolean encodeCurricularCourses(CurricularPeriod curricularPeriod) throws IOException {
+        boolean anyCurricularCourseEncoded = false;
+        
         for (Context context : curricularPeriod.getContexts()) {
             if (context.getChildDegreeModule().isLeaf() && (executionYear == null || context.isValid(executionYear))) {
+                anyCurricularCourseEncoded = true;
+                
                 CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
                 
                 curricularCourse.getContactLoad(curricularPeriod);
@@ -202,6 +204,8 @@ public class UIDegreeCurricularPlan extends UIInput {
                 new UICurricularCourse(check.getChildDegreeModule(), check, this.toEdit, this.showRules, this.executionYear).encodeInNextPeriod(facesContext);
             }
         }
+        
+        return anyCurricularCourseEncoded;
     }
 
     private void remindToEncodeInNextPeriod(CurricularPeriod curricularPeriod, Context context) {
