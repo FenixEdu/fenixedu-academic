@@ -153,7 +153,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 				maximumNumberOfGroupElements));
 		infoFinalWorkProposal.setObservations(observations);
 		infoFinalWorkProposal.setLocation(location);
-		DegreeType tipoCurso = DegreeType.valueOf(degreeType);
+		DegreeType tipoCurso = (degreeType != null && degreeType.length() > 0) ? DegreeType.valueOf(degreeType) : null;
 		infoFinalWorkProposal.setDegreeType(tipoCurso);
 
 		infoFinalWorkProposal.setOrientator(new InfoTeacher());

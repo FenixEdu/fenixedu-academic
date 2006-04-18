@@ -631,7 +631,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         infoFinalWorkProposal.setMaximumNumberOfGroupElements(new Integer(maximumNumberOfGroupElements));
         infoFinalWorkProposal.setObservations(observations);
         infoFinalWorkProposal.setLocation(location);
-        infoFinalWorkProposal.setDegreeType(DegreeType.valueOf(degreeType));
+        final DegreeType dt = (degreeType != null && degreeType.length() > 0) ? DegreeType.valueOf(degreeType) : null;
+        infoFinalWorkProposal.setDegreeType(dt);
 
         infoFinalWorkProposal.setOrientator(new InfoTeacher());
         infoFinalWorkProposal.getOrientator().setIdInternal(new Integer(orientatorOID));
