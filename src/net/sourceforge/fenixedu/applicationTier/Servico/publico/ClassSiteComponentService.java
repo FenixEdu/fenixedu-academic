@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
  * @author Jo�o Mota
@@ -43,7 +42,7 @@ public class ClassSiteComponentService extends Service {
         PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
         SchoolClass domainClass;
         if (classId == null) {
-            domainClass = getDomainClass(className, curricularYear, executionPeriod, executionDegree, persistentSupport);
+            domainClass = getDomainClass(className, curricularYear, executionPeriod, executionDegree);
             if (domainClass == null) {
                 throw new NonExistingServiceException();
             }
@@ -58,7 +57,7 @@ public class ClassSiteComponentService extends Service {
     }
 
     private SchoolClass getDomainClass(String className, Integer curricularYear,
-            ExecutionPeriod executionPeriod, ExecutionDegree executionDegree, ISuportePersistente persistentSupport)
+            ExecutionPeriod executionPeriod, ExecutionDegree executionDegree)
             throws ExcepcaoPersistencia {
 
         SchoolClass domainClass = null;

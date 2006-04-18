@@ -64,8 +64,7 @@ public class PrepareDegreesListByStudentNumber extends Service {
 
         // select the first execution degree or the execution degree of the
         // student logged
-        InfoExecutionDegree infoExecutionDegree = selectExecutionDegree(persistentSupport,
-                infoExecutionsDegreesList, executionDegreeId, student, degreeType);
+        InfoExecutionDegree infoExecutionDegree = selectExecutionDegree(infoExecutionsDegreesList, executionDegreeId, student, degreeType);
 
         // it is return a list where the first element is the degree
         // pre-select and the tail is all degrees
@@ -76,8 +75,7 @@ public class PrepareDegreesListByStudentNumber extends Service {
         return result;
     }
 
-    private InfoExecutionDegree selectExecutionDegree(ISuportePersistente persistentSupport,
-            List infoExecutionDegreeList, Integer executionDegreeIdChosen, Student student,
+    private InfoExecutionDegree selectExecutionDegree(List infoExecutionDegreeList, Integer executionDegreeIdChosen, Student student,
             DegreeType degreeType) throws ExcepcaoPersistencia {
         InfoExecutionDegree infoExecutionDegree = null;
 

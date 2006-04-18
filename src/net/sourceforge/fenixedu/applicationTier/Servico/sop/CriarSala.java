@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -36,7 +35,7 @@ public class CriarSala extends Service {
             throw new ExistingServiceException("Duplicate Entry: " + infoSala.getNome());
         }
 
-        final OldBuilding building = findBuilding(persistentSupport, infoSala.getEdificio());
+        final OldBuilding building = findBuilding(infoSala.getEdificio());
 
         final OldRoom room = writeRoom(infoSala, building);
 
@@ -44,7 +43,7 @@ public class CriarSala extends Service {
 
     }
 
-    protected OldBuilding findBuilding(final ISuportePersistente persistentSupport, final String edificio)
+    protected OldBuilding findBuilding(final String edificio)
             throws ExcepcaoPersistencia {
         final List buildings = (List) persistentObject.readAll(OldBuilding.class);
         return (OldBuilding) CollectionUtils.find(buildings, new Predicate() {

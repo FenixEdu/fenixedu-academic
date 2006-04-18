@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -135,34 +134,33 @@ public class ReadCoursesInformation extends Service {
         }
 
         List infoRepersistentSupportonsibleTeachers = getInfoRepersistentSupportonsibleTeachers(
-                executionCourse, persistentSupport);
+                executionCourse);
         infoSiteCourseInformation.setInfoResponsibleTeachers(infoRepersistentSupportonsibleTeachers);
 
         List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-        List infoCurricularCourses = getInfoCurricularCourses(curricularCourses, persistentSupport,
+        List infoCurricularCourses = getInfoCurricularCourses(curricularCourses,
                 executionYear);
         infoSiteCourseInformation.setInfoCurricularCourses(infoCurricularCourses);
 
-        List infoCurriculums = getInfoCurriculums(curricularCourses, persistentSupport, executionYear);
+        List infoCurriculums = getInfoCurriculums(curricularCourses, executionYear);
         infoSiteCourseInformation.setInfoCurriculums(infoCurriculums);
 
-        List infoLecturingTeachers = getInfoLecturingTeachers(executionCourse, persistentSupport);
+        List infoLecturingTeachers = getInfoLecturingTeachers(executionCourse);
         infoSiteCourseInformation.setInfoLecturingTeachers(infoLecturingTeachers);
 
-        List infoBibliographicReferences = getInfoBibliographicReferences(executionCourse,
-                persistentSupport);
+        List infoBibliographicReferences = getInfoBibliographicReferences(executionCourse);
         infoSiteCourseInformation.setInfoBibliographicReferences(infoBibliographicReferences);
 
         List infoLessons = getInfoLessons(executionCourse);
         infoSiteCourseInformation.setInfoLessons(getFilteredInfoLessons(infoLessons));
         infoSiteCourseInformation.setNumberOfTheoLessons(getNumberOfLessons(infoLessons,
-                ShiftType.TEORICA.name(), persistentSupport));
+                ShiftType.TEORICA.name()));
         infoSiteCourseInformation.setNumberOfPratLessons(getNumberOfLessons(infoLessons,
-                ShiftType.PRATICA.name(), persistentSupport));
+                ShiftType.PRATICA.name()));
         infoSiteCourseInformation.setNumberOfTheoPratLessons(getNumberOfLessons(infoLessons,
-                ShiftType.TEORICO_PRATICA.name(), persistentSupport));
+                ShiftType.TEORICO_PRATICA.name()));
         infoSiteCourseInformation.setNumberOfLabLessons(getNumberOfLessons(infoLessons,
-                ShiftType.LABORATORIAL.name(), persistentSupport));
+                ShiftType.LABORATORIAL.name()));
         CourseReport courseReport = executionCourse.getCourseReport();
         if (courseReport == null) {
             InfoCourseReport infoCourseReport = new InfoCourseReport();
@@ -175,8 +173,7 @@ public class ReadCoursesInformation extends Service {
         return infoSiteCourseInformation;
     }
 
-    public static Integer getNumberOfLessons(List infoLessons, String lessonType,
-            ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
+    public static Integer getNumberOfLessons(List infoLessons, String lessonType) throws ExcepcaoPersistencia {
         final String lessonTypeForPredicate = lessonType;
         List lessonsOfType = (List) CollectionUtils.select(infoLessons, new Predicate() {
 
@@ -254,8 +251,7 @@ public class ReadCoursesInformation extends Service {
         return infoLesson;
     }
 
-    private List getInfoBibliographicReferences(ExecutionCourse executionCourse,
-            ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
+    private List getInfoBibliographicReferences(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         List bibliographicReferences = executionCourse.getAssociatedBibliographicReferences();
         List infoBibliographicReferences = new ArrayList();
         Iterator iter = bibliographicReferences.iterator();
@@ -268,8 +264,7 @@ public class ReadCoursesInformation extends Service {
         return infoBibliographicReferences;
     }
 
-    private List getInfoLecturingTeachers(ExecutionCourse executionCourse,
-            ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
+    private List getInfoLecturingTeachers(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
         List professorShips = executionCourse.getProfessorships();
         List infoLecturingTeachers = new ArrayList();
@@ -282,7 +277,7 @@ public class ReadCoursesInformation extends Service {
         return infoLecturingTeachers;
     }
 
-    private List getInfoCurriculums(List curricularCourses, ISuportePersistente persistentSupport,
+    private List getInfoCurriculums(List curricularCourses, 
             ExecutionYear executionYear) throws ExcepcaoPersistencia {
         List infoCurriculums = new ArrayList();
         Iterator iter = curricularCourses.iterator();
@@ -291,7 +286,7 @@ public class ReadCoursesInformation extends Service {
 
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                     .newInfoFromDomain(curricularCourse);
-            List infoScopes = getInfoScopes(curricularCourse.getScopesSet(), persistentSupport);
+            List infoScopes = getInfoScopes(curricularCourse.getScopesSet());
             infoCurricularCourse.setInfoScopes(infoScopes);
             Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionYear.getEndDate());
             InfoCurriculum infoCurriculum = null;
@@ -306,8 +301,7 @@ public class ReadCoursesInformation extends Service {
         return infoCurriculums;
     }
 
-    private List getInfoRepersistentSupportonsibleTeachers(ExecutionCourse executionCourse,
-            ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
+    private List getInfoRepersistentSupportonsibleTeachers(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
         List repersistentSupportonsiblesFor = executionCourse.responsibleFors();
 
@@ -322,15 +316,14 @@ public class ReadCoursesInformation extends Service {
         return infoRepersistentSupportonsibleTeachers;
     }
 
-    private List getInfoCurricularCourses(List curricularCourses, ISuportePersistente persistentSupport,
-            ExecutionYear executionYear) throws ExcepcaoPersistencia {
+    private List getInfoCurricularCourses(List curricularCourses, ExecutionYear executionYear) throws ExcepcaoPersistencia {
         List infoCurricularCourses = new ArrayList();
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
             CurricularCourse curricularCourse = (CurricularCourse) iter.next();
             Set<CurricularCourseScope> curricularCourseScopes = curricularCourse.findCurricularCourseScopesIntersectingPeriod(
                     executionYear.getBeginDate(), executionYear.getEndDate());
-            List infoScopes = getInfoScopes(curricularCourseScopes, persistentSupport);
+            List infoScopes = getInfoScopes(curricularCourseScopes);
 
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                     .newInfoFromDomain(curricularCourse);
@@ -340,7 +333,7 @@ public class ReadCoursesInformation extends Service {
         return infoCurricularCourses;
     }
 
-    private List getInfoScopes(Set<CurricularCourseScope> scopes, ISuportePersistente persistentSupport) {
+    private List getInfoScopes(Set<CurricularCourseScope> scopes) {
         List infoScopes = new ArrayList();
         Iterator iter = scopes.iterator();
         while (iter.hasNext()) {

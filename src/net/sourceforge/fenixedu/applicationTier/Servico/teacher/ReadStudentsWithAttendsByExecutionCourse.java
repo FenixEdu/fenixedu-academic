@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -234,7 +233,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
 				infoComposition.setAttendingStudentInfoDCP(infoDCP);
 
-				Map infoShifts = getShiftsByAttends(shifts, iFrequenta, persistentSupport, clonedShifts);
+				Map infoShifts = getShiftsByAttends(shifts, iFrequenta, clonedShifts);
 				infoComposition.setInfoShifts(infoShifts);
 
 				Map infoStudentGroups = getInfoStudentGroupsByAttends(studentGroupsMap, iFrequenta);
@@ -343,8 +342,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		return degreeCurricularPlans;
 	}
 
-	private Map getShiftsByAttends(final List shifts, final Attends attend,
-			final ISuportePersistente persistentSupport, final Map<Integer, InfoShift> clonedShifts)
+	private Map getShiftsByAttends(final List shifts, final Attends attend, final Map<Integer, InfoShift> clonedShifts)
 			throws ExcepcaoPersistencia {
 		final Map result = new HashMap();
 

@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -48,7 +47,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         } else {
             curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(courseCode);
 
-            infoStudentList = getCurricularCourseStudents(curricularCourse, persistentSupport);
+            infoStudentList = getCurricularCourseStudents(curricularCourse);
 
         }
 
@@ -56,7 +55,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         return siteView;
     }
 
-    private List getCurricularCourseStudents(CurricularCourse curricularCourse, ISuportePersistente persistentSupport)
+    private List getCurricularCourseStudents(CurricularCourse curricularCourse)
             throws ExcepcaoPersistencia {
         List infoStudentList;
 

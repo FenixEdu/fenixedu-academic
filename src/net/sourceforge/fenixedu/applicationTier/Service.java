@@ -11,7 +11,7 @@ public class Service implements pt.utl.ist.berserk.logic.serviceManager.IService
 	protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
 	@Deprecated
-	protected static final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+	private static final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 	@Deprecated
     protected static final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();

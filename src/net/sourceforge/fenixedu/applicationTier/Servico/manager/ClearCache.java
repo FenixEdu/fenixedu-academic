@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ClearCache extends Service {
 
 	public Boolean run() throws ExcepcaoPersistencia {
-        persistentSupport.clearCache();
 		return Boolean.TRUE;
 	}
 

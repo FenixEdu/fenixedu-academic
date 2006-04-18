@@ -31,14 +31,13 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 public class ReadExamsMapByRooms extends Service {
 
     public List run(InfoExecutionPeriod infoExecutionPeriod, List<InfoRoom> infoRooms) throws Exception {
         final List<InfoRoomExamsMap> infoRoomExamMapList = new ArrayList<InfoRoomExamsMap>();
 
-        final InfoPeriod period = calculateExamsSeason(persistentSupport, infoExecutionPeriod
+        final InfoPeriod period = calculateExamsSeason(infoExecutionPeriod
                 .getInfoExecutionYear().getYear(), infoExecutionPeriod.getSemester().intValue());
 
         final Calendar startSeason1 = period.getStartDate();
@@ -104,8 +103,7 @@ public class ReadExamsMapByRooms extends Service {
 //        return result;
 //    }
 //
-    private InfoPeriod calculateExamsSeason(final ISuportePersistente persistentSupport,
-            final String year, final int semester) throws ExcepcaoPersistencia {
+    private InfoPeriod calculateExamsSeason(final String year, final int semester) throws ExcepcaoPersistencia {
 
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
         final List<ExecutionDegree> executionDegreesList = executionYear.getExecutionDegrees();

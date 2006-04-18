@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -43,8 +42,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends Serv
 
         List responsibleFors = getResponsibleForsByDegree(executionDegree);
 
-        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors,
-                persistentSupport);
+        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors);
 
         Collections.sort(detailedProfessorships, new Comparator() {
 
@@ -110,8 +108,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends Serv
         return responsibleFors;
     }
 
-    protected List getDetailedProfessorships(List professorships, final List responsibleFors,
-            ISuportePersistente persistentSupport) {
+    protected List getDetailedProfessorships(List professorships, final List responsibleFors) {
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
                 new Transformer() {
 

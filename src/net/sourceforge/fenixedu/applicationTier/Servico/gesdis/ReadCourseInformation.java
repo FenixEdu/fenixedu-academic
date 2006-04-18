@@ -118,13 +118,13 @@ public class ReadCourseInformation extends Service {
         List infoLessons = getInfoLessons(executionCourse);
         infoSiteCourseInformation.setInfoLessons(getFilteredInfoLessons(infoLessons));
         infoSiteCourseInformation.setNumberOfTheoLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
-                ShiftType.TEORICA.name(), persistentSupport));
+                ShiftType.TEORICA.name()));
         infoSiteCourseInformation.setNumberOfPratLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
-                ShiftType.PRATICA.name(), persistentSupport));
+                ShiftType.PRATICA.name()));
         infoSiteCourseInformation.setNumberOfTheoPratLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
-                ShiftType.TEORICO_PRATICA.name(), persistentSupport));
+                ShiftType.TEORICO_PRATICA.name()));
         infoSiteCourseInformation.setNumberOfLabLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
-                ShiftType.LABORATORIAL.name(), persistentSupport));
+                ShiftType.LABORATORIAL.name()));
         CourseReport courseReport = executionCourse.getCourseReport();
 
         if (courseReport == null) {
