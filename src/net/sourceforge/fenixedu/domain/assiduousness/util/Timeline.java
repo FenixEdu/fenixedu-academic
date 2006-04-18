@@ -199,7 +199,7 @@ public class Timeline {
  
     private List<TimePoint> findTimePointsByAttribute(AttributeType attribute) {
         List<TimePoint> timePointList = new ArrayList<TimePoint>();
-        TimePoint startPoint = startPoint = findIntervalStartPointByAttribute(attribute);
+        TimePoint startPoint = findIntervalStartPointByAttribute(attribute);
         TimePoint endPoint = findIntervalEndPointByAttribute(attribute);
         if ((startPoint != null) && (endPoint != null)) {
             timePointList.add(startPoint);

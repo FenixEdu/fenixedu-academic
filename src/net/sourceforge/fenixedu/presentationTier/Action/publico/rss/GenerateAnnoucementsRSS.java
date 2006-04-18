@@ -20,7 +20,7 @@ public class GenerateAnnoucementsRSS extends RSSAction{
 	protected ChannelIF getRSSChannel(HttpServletRequest request) throws Exception {
 		String id = request.getParameter("id");
 		Object[] args = {ExecutionCourse.class, Integer.valueOf(id)};
-		ExecutionCourse executionCourse = executionCourse = (ExecutionCourse) ServiceManagerServiceFactory.executeService(null, "ReadDomainObject", args);
+		ExecutionCourse executionCourse = (ExecutionCourse) ServiceManagerServiceFactory.executeService(null, "ReadDomainObject", args);
 		ChannelBuilder builder = new ChannelBuilder();
     	ChannelIF channel = builder.createChannel(executionCourse.getNome());
     	channel.setDescription("Anúncios da disciplina " + executionCourse.getNome());
