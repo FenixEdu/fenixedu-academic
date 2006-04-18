@@ -218,6 +218,13 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
                     && (getExecutionCourseID() == null || getExecutionCourseID().equals(executionCourse.getIdInternal()))) {
                 for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
                     if (evaluation instanceof WrittenEvaluation) {
+                    	if (evaluation instanceof Exam) {
+                    		final Exam exam = (Exam) evaluation;
+                    		if (!exam.isExamsMapPublished()) {
+                    			continue;
+                    		}
+                    	}
+
                         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
                         final String evaluationTypeClassname = getEvaluationTypeClassname();
                         if (evaluationTypeClassname == null

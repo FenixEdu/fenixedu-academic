@@ -15,6 +15,7 @@ import javax.faces.component.html.HtmlInputHidden;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -61,6 +62,13 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
         final String evaluationType = getEvaluationTypeString();
         for (final WrittenEvaluation writtenEvaluation : this.getStudent().getWrittenEvaluations(
                 getExecutionPeriod())) {
+        	if (writtenEvaluation instanceof Exam) {
+        		final Exam exam = (Exam) writtenEvaluation;
+        		if (!exam.isExamsMapPublished()) {
+        			continue;
+        		}
+        	}
+
             if (writtenEvaluation.getClass().getName().equals(evaluationType)) {
                 try {
                     if (writtenEvaluation.isInEnrolmentPeriod()) {
