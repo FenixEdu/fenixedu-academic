@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 
-<ft:tilesView definition="definition.public.mainPageIST" attributeName="body-inline">
+<ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.mainPageIST" attributeName="body-inline">
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="bundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>
 
