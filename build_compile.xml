@@ -68,25 +68,25 @@
 		<mkdir dir="${build.home}/images/logs"/>
 
 		<sequential>
-			<copy todir="${build.home}">
+			<copy encoding="${encoding}" todir="${build.home}">
 				<fileset dir="${web-content}" >
 					<include name="**/*.*"/>
 					<exclude name="WEB-INF//*.*"/>
 				</fileset>
 			</copy>
 
-			<copy todir="${build.home.webinf.classes}">
+			<copy encoding="${encoding}" todir="${build.home.webinf.classes}">
 				<fileset dir="${config}"/>
 				<fileset file="build.properties"/>
 			</copy>
 
-			<copy todir="${build.home.webinf}">
+			<copy encoding="${encoding}" todir="${build.home.webinf}">
 				<fileset dir="${config.web}" >
 					<include name="**/*.*"/>
 				</fileset>
 			</copy>
 
-			<copy todir="${build.home.webinf.libs}">
+			<copy encoding="${encoding}" todir="${build.home.webinf.libs}">
 				<fileset dir="${lib}" >
 					<include name="*.jar"/>
 				</fileset>
@@ -105,14 +105,14 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 
 	<target name="prepare-institution" if="institution.project">
-		<copy todir="${build.home}" overwrite="true">
+		<copy encoding="${encoding}" todir="${build.home}" overwrite="true">
 			<fileset dir="${institution.web-content}" >
 				<include name="**/*.*"/>
 				<exclude name="WEB-INF//*.*"/>
 			</fileset>
 		</copy>
 
-		<copy todir="${build.home.webinf.classes}" overwrite="true">
+		<copy encoding="${encoding}" todir="${build.home.webinf.classes}" overwrite="true">
 			<fileset dir="${institution.config}"/>
 		</copy>
 	</target>
@@ -120,7 +120,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	<target name="replace-property-values">
 
 		<parallel>
-			<replace dir="${build.home.webinf.classes}/OJB/"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}/OJB/"
 					 propertyFile="build.properties">
 				<include name="repository_database.xml"/>
 				<replacefilter token="@db.user@"
@@ -177,7 +177,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				    			   property="db.personFilter.log"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="Domain.xml"/>
 				<replacefilter token="@db.slide.driver@" 
@@ -190,7 +190,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			    			   property="db.slide.pass"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="cms.properties"/>
 				<replacefilter token="@cms.mailer.username@" 
@@ -199,7 +199,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			    			   property="cms.mailer.password"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="SMTPConfiguration.properties"/>
 				<replacefilter token="@mail.smtp.host@" 
@@ -210,7 +210,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 
 
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="slide.properties"/>
 				<replacefilter token="@slide.config@" 
@@ -225,7 +225,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			    			   property="db.slide.pass"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="IstFtpServerConfig.properties"/>
 				<replacefilter 
@@ -245,7 +245,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	                 property="ftp.IST.scp.args"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="DegreeGradesFtpServerConfig.properties"/>
 				<replacefilter 
@@ -259,7 +259,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	                 property="ftp.degree.grades.server.address"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="logAnalyser.properties"/>
 				<include name="log4j.xml"/>
@@ -271,7 +271,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			  				   property="log.profile.filename"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="OJB.properties"/>
 				<replacefilter token="@ObjectCacheClass@"
@@ -280,7 +280,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			    			   property="JdbcAccessClass"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="oscache.properties"/>
 				<replacefilter token="@cache.event.listeners@"
@@ -289,7 +289,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			    			   property="cache.cluster.multicast.ip"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="SMSConfiguration.properties"/>
 				<replacefilter token="@sms.gateway.host@"
@@ -318,14 +318,14 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			    			   property="sms.delivery.password"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="GratuitySituationCreatorTask.properties"/>
 				<replacefilter token="@gratuity.situation.creator.task.hour@"
 		    			   property="gratuity.situation.creator.task.hour"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="configuration.properties"/>
 				<replacefilter token="@app.name@"
@@ -361,7 +361,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 						    property="language"/>	
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="log4j.xml"/>
 				<replacefilter token="@log4j.email.smtp.host@"
@@ -380,7 +380,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			  				   property="log.profile.filename"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="projectsManagement.properties"/>
 				<replacefilter token="@db.projectManagement.user@"
@@ -391,7 +391,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 							   property="db.projectManagement.alias"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}/resources"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}/resources"
 					 propertyFile="build.properties">
 				<include name="ApplicationResources*.properties"/>
 				<include name="ApplicationResourcesSOP*.properties"/>
@@ -400,7 +400,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 							   value="${login.page}"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="logAnalyser.properties"/>
 				<replacefilter token="@login.page@"
@@ -413,7 +413,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			  				   property="log.profile.filename"/>
 			</replace>
 
-			<replace dir="${build.home.webinf}"
+			<replace encoding="${encoding}" dir="${build.home.webinf}"
 					 propertyFile="build.properties">
 				<include name="web.xml"/>
 				<replacefilter 
@@ -424,14 +424,14 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				    property="manager.filter.pattern"/>
 			</replace>
 
-			<replace dir="${build.home.webinf}/conf" propertyFile="build.properties">
+			<replace encoding="${encoding}" dir="${build.home.webinf}/conf" propertyFile="build.properties">
 				<include name="validation*.xml"/>
 				<replacefilter 
 				    token="@validation.doctype.url@" 
 				    property="struts.validation.doctype.url"/>
 			</replace>
 
-			<replace dir="${build.home}"
+			<replace encoding="${encoding}" dir="${build.home}"
 					 propertyFile="build.properties">
 				<include name="publico/index.html"/>
 				<include name="publico/degreeSite/mainNavigation_without_teaching.jsp"/>
@@ -440,7 +440,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 					    property="institution.url"/>
 			</replace>
 
-			<replace dir="${build.home}"
+			<replace encoding="${encoding}" dir="${build.home}"
 					 propertyFile="build.properties">
 				<include name="student/enrollment/warning.jsp"/>
 				<include name="degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
@@ -448,7 +448,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter token="@enrollment.faq.url@"
 			    			   property="enrollment.faq.url"/>
 			</replace>
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="services.xml"/>
 				<replacefilter token="@authenticationService@"
@@ -456,7 +456,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter token="@changePassService@"
 					property="changePassService"/>
 			</replace>
-			<replace dir="${build.home.webinf.classes}"
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="berserk.properties"/>
 				<replacefilter token="@application.filterBroker@"
@@ -548,7 +548,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 	
 	<target name="write-path-access-control-configuration-file">
-		<copy file="build.properties" tofile="${build.home.webinf.classes}/.hostAccessControl.properties">
+		<copy encoding="${encoding}" file="build.properties" tofile="${build.home.webinf.classes}/.hostAccessControl.properties">
 			<filterchain>
 				<linecontainsregexp>
 					<regexp pattern="^host.control.(path|name)."/>
@@ -576,7 +576,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 
 	<target name="i18nDefault"
     		depends="prepare">
-		<copy todir="${build.home.webinf.classes}/resources">
+		<copy encoding="${encoding}" todir="${build.home.webinf.classes}/resources">
 			<fileset dir="${build.home.webinf.classes}/resources" >
 				<include name="*_pt.properties"/>
 			</fileset>
@@ -637,7 +637,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		
 		<jar destfile="${lib}/${renderers.lib.name}" basedir="${build.home.webinf.classes}" 
 			 includes="${renderers.package.dir}/**" />
-		<copy file="${lib}/${renderers.lib.name}" todir="${build.home.webinf.libs}"/>
+		<copy encoding="${encoding}" file="${lib}/${renderers.lib.name}" todir="${build.home.webinf.libs}"/>
 
 		<delete dir="${build.home.webinf.classes}/${renderers.package.dir}" />
 	</target>
