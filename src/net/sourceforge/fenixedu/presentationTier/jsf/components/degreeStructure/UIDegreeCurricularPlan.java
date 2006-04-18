@@ -348,9 +348,9 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("li", this);
         writer.startElement("span", this);
         writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue("" + bundle, acronym)).append(" - ");
+        writer.append(this.getBundleValue(bundle, acronym)).append(" - ");
         writer.endElement("span");
-        writer.append(this.getBundleValue("" + bundle, full));
+        writer.append(this.getBundleValue(bundle, full));
         if (explanation != null) {
             writer.append(explanation);
         }
