@@ -30,6 +30,14 @@ public class Shift extends Shift_Base {
         }
     }
 
+	@Override
+	public void setTipo(final ShiftType tipo) {
+		super.setTipo(tipo);
+		for (final Lesson lesson : getAssociatedLessonsSet()) {
+			lesson.setTipo(tipo);
+		}
+	}
+
 	public boolean canBeDeleted() {
 	    if (hasAnyAssociatedSummaries()
                 || hasAnyAssociatedStudentGroups()
