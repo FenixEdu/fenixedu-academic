@@ -13,6 +13,11 @@
 		<f:param value="#{bolonhaBundle['curricularPlan']}"/>
 	</h:outputFormat>
 	
+	<h:panelGroup rendered="#{empty CurricularCourseManagement.degreeCurricularPlan.executionDegrees}">
+		<h:outputText value="<p><em>#{bolonhaBundle['error.curricularPlanHasNoExecutionDegrees']}</em><p>" escape="false"/>
+	</h:panelGroup>
+
+	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.executionDegrees}">
 	<h:form>	
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
@@ -141,5 +146,6 @@
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['return']}" action="curricularPlansManagement"/>
 		<h:outputText value="</p>" escape="false"/>
 	</h:form>
+	</h:panelGroup>
 
 </ft:tilesView>
