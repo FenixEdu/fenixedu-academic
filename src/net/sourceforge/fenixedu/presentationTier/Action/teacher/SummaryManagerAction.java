@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -377,6 +378,16 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             request.setAttribute("objectCode", executionCourseId);
 
             InfoSummary infoSummaryToInsert = buildSummaryToInsert(request);
+
+            if (infoSummaryToInsert.getSummaryDate() != null
+                    && DateFormatUtil.isAfter("yyyyMMdd",
+                            infoSummaryToInsert.getSummaryDate().getTime(), Calendar.getInstance()
+                                    .getTime())) {
+                ActionErrors errors = new ActionErrors();
+                errors.add("error", new ActionError("error.summary.date.after.current.date"));
+                saveErrors(request, errors);
+                return prepareInsertSummary(mapping, form, request, response);
+            }
 
             Object[] args = { executionCourseId, infoSummaryToInsert };
             ServiceUtils.executeService(userView, "InsertSummary", args);
