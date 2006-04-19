@@ -114,12 +114,15 @@
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
 		</td>
 		<td>
-			<html:link href="<%= pageContext.findAttribute("dspaceBaseDownloadUrl") + "/" + dspaceBitstreamIdentification + "/" + filename %>" ><bean:write name="displayName"/></html:link>
+			<html:link href="<%= pageContext.findAttribute("dspaceBaseDownloadUrl") + "/" + dspaceBitstreamIdentification + "/" + filename %>" ><bean:write name="displayName"/>&nbsp;&nbsp;(<bean:message key="<%=permittedGroupType.toString() %>" bundle="ENUMERATION_RESOURCES"/>)</html:link>
 		</td>
 		<td>&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
 		</td>
 		<td>
-			<html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode + "&fileItemId=" + fileItemId %>"   onclick="<%= "return confirm('Tem a certeza que deseja apagar o ficheiro "+displayName+"?')"%>" >Apagar Ficheiro</html:link>
+			<html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode + "&fileItemId=" + fileItemId %>"   onclick="<%= "return confirm('Tem a certeza que deseja apagar o ficheiro "+displayName+"?')"%>" ><bean:message key="label.teacher.siteAdministration.viewSection.deleteItemFile"/></html:link>
+		</td>
+		<td>
+			<html:link page="<%= "/editItemFilePermissions.do?method=prepareEditItemFilePermissions&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode + "&fileItemId=" + fileItemId %>" ><bean:message key="label.teacher.siteAdministration.viewSection.editItemFilePermissions"/></html:link>
 		</td>
 		
 		</tr>

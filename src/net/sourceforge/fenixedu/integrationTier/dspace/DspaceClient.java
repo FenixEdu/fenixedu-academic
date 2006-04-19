@@ -14,6 +14,7 @@ import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.dspace.external.interfaces.remoteManager.objects.FileDelete;
 import org.dspace.external.interfaces.remoteManager.objects.FileDeleteResponse;
+import org.dspace.external.interfaces.remoteManager.objects.FilePermissionChange;
 import org.dspace.external.interfaces.remoteManager.objects.FileUpload;
 import org.dspace.external.interfaces.remoteManager.objects.FileUploadResponse;
 import org.dspace.external.interfaces.remoteManager.objects.UploadedFileDescriptor;
@@ -59,11 +60,12 @@ public class DspaceClient {
 
         // TODO: change transport channel to RMI
 
+        PostMethod filePost = new PostMethod(remoteInterfaceUrl);
+        DspaceResponse response;
         try {
-            PostMethod filePost = new PostMethod(remoteInterfaceUrl);
+            HttpClient client = new HttpClient();
 
             Part[] parts = new Part[5];
-
             parts[0] = new StringPart("username", username, DSPACE_ENCODING);
             parts[1] = new StringPart("password", password, DSPACE_ENCODING);
             parts[2] = new StringPart("method", "uploadFile", DSPACE_ENCODING);
@@ -72,70 +74,115 @@ public class DspaceClient {
 
             filePost.setRequestEntity(new MultipartRequestEntity(parts, filePost.getParams()));
 
-            HttpClient client = new HttpClient();
             client.executeMethod(filePost);
 
-            DspaceResponse response = getDspaceResponse(filePost.getResponseBodyAsString());
-
-            filePost.releaseConnection();
-
-            if (!response.responseCode.equals(SUCCESS_CODE)) {
-                throw new DspaceClientException(response.responseCode);
-            }
-
-            FileUploadResponse fileUploadResponse = FileUploadResponse
-                    .createFromXml(response.responseMessage);
-
-            if (fileUploadResponse.getError() != null) {
-                throw new DspaceClientException(fileUploadResponse.getError());
-            }
-
-            return fileUploadResponse.getUploadedFileDescriptor();
+            response = getDspaceResponse(filePost.getResponseBodyAsString());
 
         } catch (HttpException e) {
             throw new DspaceClientException(e);
         } catch (IOException e) {
             throw new DspaceClientException(e);
+        } finally {
+            filePost.releaseConnection();
         }
+
+        if (!response.responseCode.equals(SUCCESS_CODE)) {
+            throw new DspaceClientException(response.responseCode);
+        }
+
+        FileUploadResponse fileUploadResponse = FileUploadResponse
+                .createFromXml(response.responseMessage);
+
+        if (fileUploadResponse.getError() != null) {
+            throw new DspaceClientException(fileUploadResponse.getError());
+        }
+
+        return fileUploadResponse.getUploadedFileDescriptor();
     }
 
     public static void deleteFile(String bitstreamIdentification) throws DspaceClientException {
 
         // TODO: change transport channel to RMI
 
-        try {
-            PostMethod post = new PostMethod(remoteInterfaceUrl);
+        FileDelete fileDelete = new FileDelete(bitstreamIdentification);
 
-            FileDelete fileDelete = new FileDelete(bitstreamIdentification);
+        PostMethod post = new PostMethod(remoteInterfaceUrl);
+        DspaceResponse response;
+        try {
+
+            HttpClient client = new HttpClient();
 
             post.addParameter("username", username);
             post.addParameter("password", password);
             post.addParameter("method", "deleteFile");
             post.addParameter("message", fileDelete.toXml());
 
-            HttpClient client = new HttpClient();
             client.executeMethod(post);
 
-            DspaceResponse response = getDspaceResponse(post.getResponseBodyAsString());
-
-            post.releaseConnection();
-
-            if (!response.responseCode.equals(SUCCESS_CODE)) {
-                throw new DspaceClientException(response.responseCode);
-            }
-
-            FileDeleteResponse fileDeleteResponse = FileDeleteResponse
-                    .createFromXml(response.responseMessage);
-
-            if (fileDeleteResponse.getError() != null) {
-                throw new DspaceClientException(fileDeleteResponse.getError());
-            }
+            response = getDspaceResponse(post.getResponseBodyAsString());
 
         } catch (HttpException e) {
             throw new DspaceClientException(e);
         } catch (IOException e) {
             throw new DspaceClientException(e);
+        } finally {
+            post.releaseConnection();
         }
+
+        if (!response.responseCode.equals(SUCCESS_CODE)) {
+            throw new DspaceClientException(response.responseCode);
+        }
+
+        FileDeleteResponse fileDeleteResponse = FileDeleteResponse
+                .createFromXml(response.responseMessage);
+
+        if (fileDeleteResponse.getError() != null) {
+            throw new DspaceClientException(fileDeleteResponse.getError());
+        }
+    }
+
+    public static void changeFilePermissions(String bitstreamIdentification, Boolean privateFile)
+            throws DspaceClientException {
+
+        // TODO: change transport channel to RMI
+
+        PostMethod post = new PostMethod(remoteInterfaceUrl);
+        DspaceResponse response;
+        try {
+
+            FilePermissionChange filePermissionChange = new FilePermissionChange(
+                    bitstreamIdentification, privateFile);
+
+            HttpClient client = new HttpClient();
+
+            post.addParameter("username", username);
+            post.addParameter("password", password);
+            post.addParameter("method", "changeFilePermissions");
+            post.addParameter("message", filePermissionChange.toXml());
+
+            client.executeMethod(post);
+
+            response = getDspaceResponse(post.getResponseBodyAsString());
+
+        } catch (HttpException e) {
+            throw new DspaceClientException(e);
+        } catch (IOException e) {
+            throw new DspaceClientException(e);
+        } finally {
+            post.releaseConnection();
+        }
+
+        if (!response.responseCode.equals(SUCCESS_CODE)) {
+            throw new DspaceClientException(response.responseCode);
+        }
+
+        FileDeleteResponse fileDeleteResponse = FileDeleteResponse
+                .createFromXml(response.responseMessage);
+
+        if (fileDeleteResponse.getError() != null) {
+            throw new DspaceClientException(fileDeleteResponse.getError());
+        }
+
     }
 
     private static DspaceResponse getDspaceResponse(String rawResponse) {

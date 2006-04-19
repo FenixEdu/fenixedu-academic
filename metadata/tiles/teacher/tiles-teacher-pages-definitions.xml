@@ -477,8 +477,9 @@
 		<put name="body" value="/teacher/weeklyWorkLoad.jsp" />
 	</definition>
 	
-	<definition name="sendMail" extends="definition.teacher.two-column">
- 		<put name="navLocal" value="/teacher/navbar.jsp"/>
-		<put name="body" value="/cms/messaging/sendMail.jsp" />
+	<definition name="edit-item-file-permissions" extends="definition.teacher.siteAdministration">
+		<put name="body" value="/teacher/editItemFilePermissions.jsp" />
+	    <put name="navLocal" value="/teacher/sectionsNavbar.jsp" type="page"/>
 	</definition>
+		
 </tiles-definitions>

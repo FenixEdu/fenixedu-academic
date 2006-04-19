@@ -103,5 +103,15 @@
 	  <put name="title" value="/commons/blank.jsp"/>
 	  <put name="link" value="/commons/blank.jsp"/>
 	</definition>	
-
+	
+	<definition name="definition.teacher.siteAdministration" page="/layout/teacherLayout_2col.jsp">
+	  <put name="serviceName" value="Portal Docente" />	
+	  <put name="institutionName" value="Instituto Superior Técnico" />
+	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
+	  <put name="navLocal" value="/teacher/sectionsNavbar.jsp"/>
+	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	  <put name="body" value="/commons/blank.jsp" />
+	  <put name="footer" value="/copyright.jsp" />
+	</definition>
+	
 </tiles-definitions>

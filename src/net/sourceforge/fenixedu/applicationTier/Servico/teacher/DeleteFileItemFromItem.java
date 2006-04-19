@@ -16,18 +16,18 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteFileItemFromItem extends Service {
 
-    public void run(Integer itemID, Integer fileItemID)
+    public void run(Integer itemId, Integer fileItemId)
             throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
-        final Item item = rootDomainObject.readItemByOID(itemID);
-        final FileItem fileItem = rootDomainObject.readFileItemByOID(fileItemID);
+        final Item item = rootDomainObject.readItemByOID(itemId);
+        final FileItem fileItem = rootDomainObject.readFileItemByOID(fileItemId);
         
         item.removeFileItems(fileItem);
 
         try {
             DspaceClient.deleteFile(fileItem.getDspaceBitstreamIdentification());
         } catch (DspaceClientException e) {
-            throw new FenixServiceException(e.getMessage());
+            throw new FenixServiceException(e.getMessage(),e);
         }
     }
 

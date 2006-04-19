@@ -64,7 +64,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.domain.FileItem;
 import net.sourceforge.fenixedu.domain.FileItemPermittedGroupType;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -940,7 +942,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             FenixServiceException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Integer itemID = getItemCode(request);
+        Integer itemId = getItemCode(request);
         DynaActionForm fileUploadForm = (DynaActionForm) form;
         FormFile formFile = (FormFile) fileUploadForm.get("theFile");
         String displayName = fileUploadForm.getString("displayName");
@@ -967,7 +969,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         try {
             temporaryFile = createTemporaryFile(formFile);
 
-            Object[] args = {itemID, temporaryFile, formFile.getFileName(), displayName,
+            Object[] args = { itemId, temporaryFile, formFile.getFileName(), displayName,
                     fileItemPermittedGroupType };
 
             ServiceUtils.executeService(userView, "CreateFileItemForItem", args);
@@ -998,6 +1000,62 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             if (temporaryFile != null) {
                 temporaryFile.delete();
             }
+        }
+
+        return viewSection(mapping, form, request, response);
+    }
+
+    public ActionForward prepareEditItemFilePermissions(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException, FenixServiceException {
+        HttpSession session = request.getSession(false);
+        IUserView userView = getUserView(request);
+        DynaActionForm editItemFilePermissionsForm = (DynaActionForm) form;
+        Integer fileItemId = getFileItemId(request);
+        Integer itemId = getItemCode(request);
+
+        ISiteComponent itemsComponent = new InfoSiteItems();
+        readSiteView(request, itemsComponent, null, itemId, null);
+
+        FileItem fileItem = (FileItem) ServiceUtils.executeService(userView, "ReadDomainObject",
+                new Object[] { FileItem.class, fileItemId });
+
+        editItemFilePermissionsForm.set("fileItemId", fileItem.getIdInternal());
+        editItemFilePermissionsForm.set("itemCode", itemId);
+        editItemFilePermissionsForm.set("permittedGroupType", fileItem.getPermittedGroupType()
+                .toString());
+
+        request.setAttribute("fileItem", fileItem);
+
+        return mapping.findForward("editItemFilePermissions");
+    }
+
+    public ActionForward editItemFilePermissions(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException, FenixServiceException {
+        HttpSession session = request.getSession(false);
+        IUserView userView = getUserView(request);
+        DynaActionForm editItemFilePermissionsForm = (DynaActionForm) form;
+        Integer fileItemId = (Integer) editItemFilePermissionsForm.get("fileItemId");
+        Integer itemId = (Integer) editItemFilePermissionsForm.get("itemCode");
+        FileItemPermittedGroupType permittedGroupType = FileItemPermittedGroupType
+                .valueOf(editItemFilePermissionsForm.getString("permittedGroupType"));
+
+        try {
+            ServiceUtils.executeService(userView, "EditItemFilePermissions", new Object[] { itemId,
+                    fileItemId, permittedGroupType });
+        } catch (FenixServiceException ex) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors
+                    .add(
+                            "error.teacher.siteAdministration.editItemFilePermissions.unableToChangeFilePermissions",
+                            new ActionError(
+                                    "error.teacher.siteAdministration.editItemFilePermissions.unableToChangeFilePermissions"));
+
+            saveErrors(request, actionErrors);
+
+            return prepareEditItemFilePermissions(mapping, editItemFilePermissionsForm, request,
+                    response);
         }
 
         return viewSection(mapping, form, request, response);
@@ -1162,15 +1220,15 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     private Integer getFileItemId(HttpServletRequest request) {
-        Integer itemCode = null;
-        String itemCodeString = request.getParameter("fileItemId");
-        if (itemCodeString == null) {
-            itemCodeString = (String) request.getAttribute("fileItemId");
+        Integer fileItemId = null;
+        String fileItemIdString = request.getParameter("fileItemId");
+        if (fileItemIdString != null) {
+            fileItemId = Integer.valueOf(fileItemIdString);
+        } else {
+            fileItemId = (Integer) request.getAttribute("fileItemId");
         }
-        if (itemCodeString != null) {
-            itemCode = new Integer(itemCodeString);
-        }
-        return itemCode;
+
+        return fileItemId;
     }
 
     public ActionForward editItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,

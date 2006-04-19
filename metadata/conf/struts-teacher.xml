@@ -842,6 +842,14 @@
 	   		<form-property name="itemCode" type="java.lang.String"/>
    			<form-property name="fileName" type="java.lang.String"/>
 		</form-bean>		
+		
+		<form-bean name="editItemFilePermissionsForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="fileItemId" type="java.lang.Integer"/>
+	   		<form-property name="itemCode" type="java.lang.Integer" />
+   			<form-property name="permittedGroupType" type="java.lang.String"/>
+		</form-bean>		
 
     </form-beans>
 
@@ -2188,6 +2196,12 @@
 				parameter="method">
 			<forward name="showWeeklyWorkLoad" path="weekly-work-load" />
 		</action>
+		
+		<action path="/editItemFilePermissions" input="/editItemFilePermissions.do?method=prepareEditItemFilePermissions" parameter="method" name="editItemFilePermissionsForm"
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" scope="request">
+            <forward name="editItemFilePermissions" path="edit-item-file-permissions"/>
+            <forward name="viewSection" path="/viewSection.jsp"/>
+        </action>
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
