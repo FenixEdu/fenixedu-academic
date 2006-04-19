@@ -64,7 +64,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         return (CourseGroup) rootDomainObject.readDegreeModuleByOID(courseGroupID);
     }
 
-    public List<SelectItem> getCourseGroups() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getCourseGroups() {
         return (courseGroups == null) ? (courseGroups = readCourseGroups()) : courseGroups;
     }
     
@@ -160,7 +160,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         }
     }
     
-    private List<SelectItem> readCourseGroups() throws FenixFilterException, FenixServiceException {
+    private List<SelectItem> readCourseGroups() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(CourseGroup.class);
         final Set<CourseGroup> allParents = getCourseGroup(getParentCourseGroupID()).getAllParentCourseGroups();

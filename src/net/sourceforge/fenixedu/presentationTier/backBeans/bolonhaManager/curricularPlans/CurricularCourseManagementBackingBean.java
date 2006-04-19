@@ -6,8 +6,10 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curri
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -18,10 +20,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -105,7 +108,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return getAndHoldIntegerParameter("contextIDToDelete");
     }
 
-    public Integer getCourseGroupID() throws FenixFilterException, FenixServiceException {
+    public Integer getCourseGroupID() {
         if (courseGroupID == null) {
             courseGroupID = getAndHoldIntegerParameter("courseGroupID");
             if (courseGroupID == null) {
@@ -129,7 +132,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         this.curricularCourseID = curricularCourseID;
     }
     
-    public Integer getDepartmentUnitID() throws FenixFilterException, FenixServiceException {
+    public Integer getDepartmentUnitID() {
         if (getViewState().getAttribute("departmentUnitID") == null && getCurricularCourse() != null) {
             getViewState().setAttribute("departmentUnitID",
                     getCurricularCourse().getCompetenceCourse().getDepartmentUnit().getIdInternal());
@@ -141,7 +144,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("departmentUnitID", departmentUnitID);
     }
 
-    public Integer getCompetenceCourseID() throws FenixFilterException, FenixServiceException {
+    public Integer getCompetenceCourseID() {
         if (competenceCourseID == null && getCurricularCourse() != null) {
             competenceCourseID = getCurricularCourse().getCompetenceCourse().getIdInternal();
         }
@@ -152,23 +155,23 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         this.competenceCourseID = resetCompetenceCourseID ? Integer.valueOf(0) : competenceCourseID;
     }
 
-    public List<SelectItem> getDepartmentUnits() throws FenixFilterException {
+    public List<SelectItem> getDepartmentUnits() {
         return (departmentUnits == null) ? (departmentUnits = readDepartmentUnits()) : departmentUnits;
     }
 
-    public List<SelectItem> getCompetenceCourses() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getCompetenceCourses() {
         return readCompetenceCourses();
     }
 
-    public List<SelectItem> getCourseGroups() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getCourseGroups() {
         return (courseGroups == null) ? (courseGroups = readDegreeModules(CourseGroup.class)) : courseGroups;
     }
     
-    public List<SelectItem> getCurricularCourses() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getCurricularCourses() {
         return (curricularCourses == null) ? (curricularCourses = readDegreeModules(CurricularCourse.class)) : curricularCourses;
     }
 
-    public List<SelectItem> getCurricularYears() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getCurricularYears() {
         final int years = getDegreeCurricularPlan().getDegree().getBolonhaDegreeType().getYears();
         final List<SelectItem> result = new ArrayList<SelectItem>(years);
         result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
@@ -187,48 +190,41 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException,
-            FenixServiceException {
-        return (degreeCurricularPlan == null) ? (degreeCurricularPlan = (DegreeCurricularPlan) readDomainObject(
-                DegreeCurricularPlan.class, getDegreeCurricularPlanID()))
-                : degreeCurricularPlan;
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        return (degreeCurricularPlan == null) ? (degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanID())) : degreeCurricularPlan;
     }
 
-    public CourseGroup getCourseGroup() throws FenixFilterException, FenixServiceException {
-        return (courseGroup == null) ? (courseGroup = (CourseGroup) readDomainObject(CourseGroup.class,
-                getCourseGroupID())) : courseGroup;
+    public CourseGroup getCourseGroup() {
+        return (courseGroup == null) ? (courseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(getCourseGroupID())) : courseGroup;
     }
 
-    public Unit getDepartmentUnit() throws FenixFilterException, FenixServiceException {
+    public Unit getDepartmentUnit() {
        if (getDepartmentUnitID() != null && !getDepartmentUnitID().equals(0)) {
-           return (Unit) readDomainObject(Unit.class, getDepartmentUnitID());
+           return (Unit) rootDomainObject.readPartyByOID(getDepartmentUnitID());
        }
        return null;
     }
     
-    public CompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
+    public CompetenceCourse getCompetenceCourse() {
         if (competenceCourse == null && getCompetenceCourseID() != null && !getCompetenceCourseID().equals(0)) {
-            competenceCourse = (CompetenceCourse) readDomainObject(CompetenceCourse.class, getCompetenceCourseID()); 
+            competenceCourse = rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseID()); 
         }
         return competenceCourse;
     }
     
-    public CurricularCourse getCurricularCourse() throws FenixFilterException, FenixServiceException {
-        return (curricularCourse == null && getCurricularCourseID() != null) ? (curricularCourse = (CurricularCourse) readDomainObject(
-                CurricularCourse.class, getCurricularCourseID()))
-                : curricularCourse;
+    public CurricularCourse getCurricularCourse() {
+        return (curricularCourse == null && getCurricularCourseID() != null) ? (curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(getCurricularCourseID())) : curricularCourse;
     }
 
-    private Context getContext(Integer contextID) throws FenixFilterException, FenixServiceException {
-        return (context == null && contextID != null) ? (context = (Context) readDomainObject(
-                Context.class, contextID)) : context;
+    private Context getContext(Integer contextID) {
+        return (context == null && contextID != null) ? (context = rootDomainObject.readContextByOID(contextID)) : context;
     }
 
     public void resetCompetenceCourse(ValueChangeEvent event) {
         resetCompetenceCourseID = true;
     }
 
-    public Double getWeight() throws FenixFilterException, FenixServiceException {
+    public Double getWeight() {
         if (weight == null) {
             weight = (getCurricularCourse() != null) ? getCurricularCourse().getWeigth() : Double.valueOf(0);
         }
@@ -239,7 +235,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         this.weight = weight;
     }
     
-    public String getPrerequisites() throws FenixFilterException, FenixServiceException {
+    public String getPrerequisites() {
         if (prerequisites == null && getCurricularCourse() != null) {
             prerequisites = getCurricularCourse().getPrerequisites();
         }
@@ -250,7 +246,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         this.prerequisites = prerequisites;
     }
 
-    public String getPrerequisitesEn() throws FenixFilterException, FenixServiceException {
+    public String getPrerequisitesEn() {
         if (prerequisitesEn == null && getCurricularCourse() != null) {
             prerequisitesEn = getCurricularCourse().getPrerequisitesEn();
         }
@@ -261,7 +257,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         this.prerequisitesEn = prerequisitesEn;
     }
 
-    public Integer getCurricularYearID() throws FenixFilterException, FenixServiceException {
+    public Integer getCurricularYearID() {
         if (curricularYearID == null && getContext(getContextID()) != null) {            
             curricularYearID = getContext(getContextID()).getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR);
         } else if (curricularYearID == null && getAndHoldIntegerParameter("curricularYearID") != null) {
@@ -274,7 +270,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         this.curricularYearID = curricularYearID;
     }
 
-    public Integer getCurricularSemesterID() throws FenixFilterException, FenixServiceException {
+    public Integer getCurricularSemesterID() {
         if (curricularSemesterID == null && getContext(getContextID()) != null) {
             curricularSemesterID = getContext(getContextID()).getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER);
         } else if (curricularSemesterID == null && getAndHoldIntegerParameter("curricularSemesterID") != null) {
@@ -287,7 +283,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         this.curricularSemesterID = curricularSemesterID;
     }
     
-    public String getSelectedCurricularCourseType() throws FenixFilterException, FenixServiceException {
+    public String getSelectedCurricularCourseType() {
         if (getViewState().getAttribute("selectedCurricularCourseType") == null) {
             if (getCurricularCourse() != null) {
                 setSelectedCurricularCourseType(getCurricularCourse().getType().name());
@@ -302,7 +298,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("selectedCurricularCourseType", selectedCurricularCourseType);
     }
     
-    public String getName() throws FenixFilterException, FenixServiceException {
+    public String getName() {
         if (getViewState().getAttribute("name") == null && getCurricularCourse() != null) {
             setName(getCurricularCourse().getName());
         }
@@ -313,7 +309,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("name", name);
     }
     
-    public String getNameEn() throws FenixFilterException, FenixServiceException {
+    public String getNameEn() {
         if (getViewState().getAttribute("nameEn") == null && getCurricularCourse() != null) {
             setNameEn(getCurricularCourse().getNameEn());            
         }
@@ -324,7 +320,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("nameEn", nameEn);
     }
     
-    public List<String> getRulesLabels() throws FenixFilterException, FenixServiceException {
+    public List<String> getRulesLabels() {
         final List<String> resultLabels = new ArrayList<String>();
         for (final CurricularRule curricularRule : getCurricularCourse().getParticipatingCurricularRules()) {
             resultLabels.add(CurricularRuleLabelFormatter.getLabel(curricularRule));
@@ -332,19 +328,17 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return resultLabels;
     }
     
-    public boolean isToDelete() throws FenixFilterException, FenixServiceException {
+    public boolean isToDelete() {
         if (getCurricularCourse() != null) {
             toDelete = getCurricularCourse().getParentContextsCount() == 1; // Last context?
         }
         return toDelete;
     }
     
-    public Integer getExecutionYearID() throws FenixFilterException, FenixServiceException {
+    public Integer getExecutionYearID() {
         if (getViewState().getAttribute("executionYearID") == null) {
             if (getAndHoldIntegerParameter("executionYearID") != null) {
                 setExecutionYearID(getAndHoldIntegerParameter("executionYearID"));
-            } else {
-                setExecutionYearID(getCurrentExecutionYear().getIdInternal());
             }
         }
         return (Integer) getViewState().getAttribute("executionYearID");
@@ -354,19 +348,19 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("executionYearID", executionYearID);
     }
     
-    public ExecutionYear getExecutionYear() throws FenixFilterException, FenixServiceException {
-        return RootDomainObject.getInstance().readExecutionYearByOID(getExecutionYearID());
+    public ExecutionYear getExecutionYear() {
+        return rootDomainObject.readExecutionYearByOID(getExecutionYearID());
     }
     
-    protected InfoExecutionYear getCurrentExecutionYear() throws FenixFilterException, FenixServiceException {
-        return (InfoExecutionYear) ServiceUtils.executeService(getUserView(), "ReadCurrentExecutionYear", new Object[] {});
+    protected InfoExecutionYear getCurrentExecutionYear() {
+        return InfoExecutionYear.newInfoFromDomain(ExecutionYear.readCurrentExecutionYear());
     }
     
-    public List<SelectItem> getExecutionYearItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionYearItems() {
         return (executionYearItems == null) ? (executionYearItems = readExecutionYearItems()) : executionYearItems;
     }
     
-    public Integer getBeginExecutionPeriodID() throws FenixFilterException, FenixServiceException {
+    public Integer getBeginExecutionPeriodID() {
         if (getViewState().getAttribute("beginExecutionPeriodID") == null && getContext(getContextID()) != null) {
             setBeginExecutionPeriodID(getContext(getContextID()).getBeginExecutionPeriod().getIdInternal());
         }
@@ -377,7 +371,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("beginExecutionPeriodID", beginExecutionPeriodID);
     }
     
-    public Integer getEndExecutionPeriodID() throws FenixFilterException, FenixServiceException {
+    public Integer getEndExecutionPeriodID() {
         if (getViewState().getAttribute("endExecutionPeriodID") == null && getContext(getContextID()) != null) {
             setEndExecutionPeriodID((getContext(getContextID()).getEndExecutionPeriod() != null) ?
                     getContext(getContextID()).getEndExecutionPeriod().getIdInternal() : Integer.valueOf(NO_SELECTION));
@@ -389,17 +383,17 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("endExecutionPeriodID", endExecutionPeriodID);
     }
     
-    public List<SelectItem> getBeginExecutionPeriodItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getBeginExecutionPeriodItems() {
         return readExecutionPeriodItems();
     }
 
-    public List<SelectItem> getEndExecutionPeriodItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getEndExecutionPeriodItems() {
         final List<SelectItem> result = new ArrayList<SelectItem>(readExecutionPeriodItems());
         result.add(0, new SelectItem(NO_SELECTION, bolonhaBundle.getString("opened")));
         return result;
     }
    
-    protected List<SelectItem> readExecutionPeriodItems() throws FenixServiceException, FenixFilterException {
+    protected List<SelectItem> readExecutionPeriodItems() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         final List<ExecutionPeriod> notClosedExecutionPeriods = ExecutionPeriod.readNotClosedExecutionPeriods();
@@ -413,11 +407,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
     
-    public List<Context> getCurricularCourseParentContexts() throws FenixFilterException, FenixServiceException {
+    public List<Context> getCurricularCourseParentContexts() {
         return getCurricularCourse().getParentContextsByExecutionYear(getExecutionYear());
     }
 
-    public String createCurricularCourse() throws FenixFilterException {        
+    public String createCurricularCourse() {        
         try {
             checkCourseGroup();
             checkCurricularSemesterAndYear();
@@ -444,9 +438,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return "buildCurricularPlan";
     }
     
-    private Object[] getArgumentsToCreate() throws FenixFilterException, FenixServiceException,
-            FenixActionException {
-
+    private Object[] getArgumentsToCreate() throws FenixActionException {
         final CurricularCourseType curricularCourseType = CurricularCourseType.valueOf(getSelectedCurricularCourseType());
         if (curricularCourseType.equals(CurricularCourseType.NORMAL_COURSE)) {
 
@@ -481,7 +473,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return "";
     }
     
-    private Object[] getArgumentsToEdit() throws FenixFilterException, FenixServiceException, FenixActionException {
+    private Object[] getArgumentsToEdit() throws FenixActionException {
         final CurricularCourseType curricularCourseType = CurricularCourseType.valueOf(getSelectedCurricularCourseType());
         if (curricularCourseType.equals(CurricularCourseType.NORMAL_COURSE)) {
             checkCompetenceCourse();
@@ -494,25 +486,25 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return null;
     }
     
-    private void checkCompetenceCourse() throws FenixFilterException, FenixServiceException, FenixActionException  {
+    private void checkCompetenceCourse() throws FenixActionException  {
         if (getCompetenceCourseID() == null || getCompetenceCourseID().intValue() == 0) {
             throw new FenixActionException("error.mustChooseACompetenceCourse");
         }
     }
     
-    private void checkCourseGroup() throws FenixFilterException, FenixServiceException, FenixActionException {
+    private void checkCourseGroup() throws FenixActionException {
         if (getCourseGroupID() == null || getCourseGroupID().equals(this.NO_SELECTION)) {
             throw new FenixActionException("error.mustChooseACourseGroup");
         }
     }
 
-    private void checkCurricularCourse() throws FenixFilterException, FenixServiceException, FenixActionException {
+    private void checkCurricularCourse() throws FenixActionException {
         if (getCurricularCourseID() == null || getCurricularCourseID().equals(this.NO_SELECTION)) {
             throw new FenixActionException("error.mustChooseACurricularCourse");
         }
     }
     
-    private void checkCurricularCourseNameAndNameEn() throws FenixFilterException, FenixServiceException, FenixActionException {
+    private void checkCurricularCourseNameAndNameEn() throws FenixActionException {
         if (getName() == null || getName().equals("")) {
             throw new FenixActionException("error.mustDefineNameOrNameEn");
         }
@@ -521,7 +513,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    private void checkCurricularSemesterAndYear() throws FenixFilterException, FenixServiceException, FenixActionException {
+    private void checkCurricularSemesterAndYear() throws FenixActionException {
         if (getCurricularSemesterID() == null || getCurricularSemesterID().equals(this.NO_SELECTION)) {
             throw new FenixActionException("error.mustChooseACurricularSemester");
         }
@@ -599,7 +591,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                 : (Integer) getViewState().getAttribute("endExecutionPeriodID");
     }
     
-    public void tryDeleteContext(ActionEvent event) throws FenixFilterException, FenixServiceException {
+    public void tryDeleteContext(ActionEvent event) throws FenixFilterException {
         if (!isToDelete()) {
             deleteContext(event);
         } else {
@@ -625,11 +617,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return "";
     }
     
-    public String editCurricularCourseReturnPath() throws FenixFilterException, FenixServiceException {
+    public String editCurricularCourseReturnPath() {
         return !toDelete ? "" : "deleteCurricularCourseContext";
     }
 
-    private List<SelectItem> readDepartmentUnits() throws FenixFilterException {
+    private List<SelectItem> readDepartmentUnits() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final Unit unit : UnitUtils.readAllDepartmentUnits()) {
             result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
@@ -639,7 +631,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    private List<SelectItem> readCompetenceCourses() throws FenixFilterException, FenixServiceException {
+    private List<SelectItem> readCompetenceCourses() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         final Unit departmentUnit = getDepartmentUnit();
         if (departmentUnit != null) {
@@ -659,7 +651,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
     
-    private List<SelectItem> readDegreeModules(Class<? extends DegreeModule> clazz) throws FenixFilterException, FenixServiceException {
+    private List<SelectItem> readDegreeModules(Class<? extends DegreeModule> clazz) {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(clazz);
         for (final List<DegreeModule> degreeModules : degreeModulesSet) {
@@ -674,20 +666,27 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
     
-    private List<SelectItem> readExecutionYearItems() throws FenixServiceException, FenixFilterException {
+    private List<SelectItem> readExecutionYearItems() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
-        final InfoExecutionYear currentInfoExecutionYear = (InfoExecutionYear) ServiceUtils
-                .executeService(getUserView(), "ReadCurrentExecutionYear", new Object[] {});
-        result.add(new SelectItem(currentInfoExecutionYear.getIdInternal(), currentInfoExecutionYear.getYear()));
-        
-        final List<InfoExecutionYear> notClosedInfoExecutionYears = (List<InfoExecutionYear>) ServiceUtils
-                .executeService(getUserView(), "ReadNotClosedExecutionYears", new Object[] {});
-        for (final InfoExecutionYear notClosedInfoExecutionYear : notClosedInfoExecutionYears) {
-            if (notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
-                result.add(new SelectItem(notClosedInfoExecutionYear.getIdInternal(), notClosedInfoExecutionYear.getYear()));
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        for (ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegrees()) {
+            result.add(new SelectItem(executionDegree.getExecutionYear().getIdInternal(), executionDegree.getExecutionYear().getYear()));
+            if (executionDegree.getExecutionYear().equals(currentExecutionYear)) {
+                setExecutionYearID(currentExecutionYear.getIdInternal());
             }
         }
+        
         return result;
     }
+    
+    public Degree getDegree() {
+        return getDegreeCurricularPlan().getDegree();
+    }
+    
+    public String getDegreeLocaleSensitiveName() {
+        final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+        return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? getDegree().getNameEn() : getDegree().getNome();
+    }
+
 }
