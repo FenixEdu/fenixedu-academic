@@ -11,9 +11,7 @@
 		</logic:equal>
 	</logic:present>
 </p>
-<logic:messagesPresent>
-	<html:errors />
-</logic:messagesPresent>
+<span class="error"><html:errors/></span>
 <html:form action="/showTeacherProfessorshipsForManagement">
 	<html:hidden property="idInternal" />	
 	<table width="100%">

@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -22,14 +25,7 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class RemoveProfessorshipAction extends Action {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
-     */
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
@@ -40,7 +36,14 @@ public class RemoveProfessorshipAction extends Action {
 
         IUserView userView = SessionUtils.getUserView(request);
         Object[] arguments = { executionCourseId, teacherId };
-        ServiceUtils.executeService(userView, "RemoveProfessorshipByDepartment", arguments);
+        try {
+            ServiceUtils.executeService(userView, "RemoveProfessorshipByDepartment", arguments);            
+        } catch (DomainException e) {
+            ActionErrors errors = new ActionErrors();
+            errors.add("error", new ActionError(e.getMessage()));
+            saveErrors(request, errors);
+        }
+        
         return mapping.findForward("successfull-delete");
     }
 }

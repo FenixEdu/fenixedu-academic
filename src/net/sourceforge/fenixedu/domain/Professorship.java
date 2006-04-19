@@ -46,10 +46,10 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public void delete() {
         if (canBeDeleted()) {
-            this.removeExecutionCourse();
-            this.removeTeacher();
+            removeExecutionCourse();
+            removeTeacher();
             removeRootDomainObject();
-            super.deleteDomainObject();
+            deleteDomainObject();
         } else {
             throw new DomainException("error.remove.professorship");
         }
