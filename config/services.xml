@@ -9533,15 +9533,6 @@
         <filterChains>
         	<chain name="ScientificCouncilAuthorization"></chain>
         </filterChains>     
-    </service>        
-	<service>
-   	 	<name>DomainObjectStringPropertyFormatter</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DomainObjectStringPropertyFormatter</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="ManagerAuthorization"></chain>
-        </filterChains>     
     </service>
     <service>
 		<name>KerberosExternalAuthentication</name>

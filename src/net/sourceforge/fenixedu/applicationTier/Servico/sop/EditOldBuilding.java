@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditOldBuilding extends Service {
 
     public void run(final Integer buildingID, final Integer campusID) throws ExcepcaoPersistencia, ExistingServiceException {
-        final OldBuilding building = (OldBuilding) persistentObject.readByOID(OldBuilding.class, buildingID);
+        final OldBuilding building = rootDomainObject.readOldBuildingByOID(buildingID);
         final Campus campus = rootDomainObject.readCampusByOID(campusID);
         building.setCampus(campus);
     }

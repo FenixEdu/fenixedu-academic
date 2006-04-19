@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
-import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -15,7 +15,7 @@ import org.apache.commons.collections.Predicate;
 public class CreateBuilding extends Service {
 
     public void run(final String buildingName, final Integer campusID) throws ExcepcaoPersistencia, ExistingServiceException {
-        final List buildings = (List) persistentObject.readAll(OldBuilding.class);
+        final Set buildings = rootDomainObject.getOldBuildingsSet();
 
         if (exists(buildings, buildingName)) {
             throw new ExistingServiceException();
@@ -28,7 +28,7 @@ public class CreateBuilding extends Service {
         building.setCampus(campus);
     }
 
-    protected boolean exists(final List buildings, final String buildingName) {
+    protected boolean exists(final Set buildings, final String buildingName) {
         final OldBuilding building = (OldBuilding) CollectionUtils.find(buildings, new Predicate() {
             public boolean evaluate(Object arg0) {
                 final OldBuilding building = (OldBuilding) arg0;

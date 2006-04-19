@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
-import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -41,7 +41,7 @@ public class EditarSala extends Service {
 
 	protected OldBuilding findBuilding(final String edificio)
 			throws ExcepcaoPersistencia {
-		final List<OldBuilding> buildings = (List<OldBuilding>) persistentObject.readAll(OldBuilding.class);
+		final Set<OldBuilding> buildings = rootDomainObject.getOldBuildingsSet();
 		return (OldBuilding) CollectionUtils.find(buildings, new Predicate() {
 			public boolean evaluate(Object arg0) {
 				final OldBuilding building = (OldBuilding) arg0;

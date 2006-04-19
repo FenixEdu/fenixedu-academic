@@ -162,12 +162,13 @@ public class MergePersonsDispatchAction extends FenixDispatchAction {
 
         Integer person1ID = Integer.valueOf(request.getParameter("person1ID"));
         Integer person2ID = Integer.valueOf(request.getParameter("person2ID"));
+        final Person person1 = (Person) rootDomainObject.readPartyByOID(person1ID);
+        final Person person2 = (Person) rootDomainObject.readPartyByOID(person2ID);
 
         Integer sourceOrder = Integer.valueOf(request.getParameter("source"));
         String slotName = request.getParameter("slotName");
 
-        Object[] args = { (sourceOrder == 1) ? person1ID : person2ID,
-                (sourceOrder == 1) ? person2ID : person1ID, Person.class, slotName };
+        Object[] args = { (sourceOrder == 1) ? person1 : person2, (sourceOrder == 1) ? person2 : person1, slotName };
         ServiceUtils.executeService(userView, "TransferDomainObjectProperty", args);
 
         return choosePersons(mapping, form, request, response);

@@ -4,8 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
@@ -20,25 +20,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author Pica
  * @author Barbosa
  */
-public class ReadGrantSubsidy extends ReadDomainObjectService {
+public class ReadGrantSubsidy extends Service {
 
-	protected Class getDomainObjectClass() {
-		return GrantSubsidy.class;
-	}
-
-	protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+	protected InfoGrantSubsidy newInfoFromDomain(DomainObject domainObject) {
 		return InfoGrantSubsidyWithContract.newInfoFromDomain((GrantSubsidy) domainObject);
 	}
 
 	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
-		InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) super.run(objectId);
-
-		// TODO The ReadDomainObjectService only reads 2level depth of
-		// references to other objects.
-		// In this case we have InfoGrantSubsidy and its reference to
-		// InfoGrantContract.
-		// Now we need to get the references of InfoGrantContract, e.g.,
-		// InfoGrantOwner
+		final GrantSubsidy grantSubsidy = rootDomainObject.readGrantSubsidyByOID(objectId);
+		InfoGrantSubsidy infoGrantSubsidy = newInfoFromDomain(grantSubsidy);
 
 		InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
 				.newInfoFromDomain(rootDomainObject.readGrantContractByOID(infoGrantSubsidy

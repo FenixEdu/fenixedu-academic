@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
@@ -36,12 +35,6 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
     @Override
     protected Class getDomainObjectClass() {
         return ShiftProfessorship.class;
-    }
-
-    protected DomainObject readObjectByUnique(DomainObject domainObject, ISuportePersistente persistentSupport)
-            throws ExcepcaoPersistencia {
-        
-        return (Professorship) domainObject;
     }
 
 }

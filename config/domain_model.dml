@@ -7800,6 +7800,13 @@ relation RootDomainObjectOldRoom {
 	}
 }
 
+relation RootDomainObjectOldBuilding {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.space.OldBuilding playsRole oldBuildings {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectIdentification {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.Identification playsRole identifications {

@@ -13,18 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
@@ -72,22 +67,23 @@ public class DomainObjectStringPropertyFormatterDispatchAction extends FenixDisp
             HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException,
             FenixFilterException, FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+//        IUserView userView = SessionUtils.getUserView(request);
+//
+//        DynaActionForm actionForm = (DynaActionForm) form;
+//        String domainObjectClass = (String) actionForm.get("domainObjectClass");
+//        String slotName = (String) actionForm.get("slotName");
+//
+//        Object[] args = { Class.forName(domainObjectClass), slotName };
+//        ServiceUtils.executeService(userView, "DomainObjectStringPropertyFormatter", args);
+    	throw new RuntimeException("No longer supported...");
 
-        DynaActionForm actionForm = (DynaActionForm) form;
-        String domainObjectClass = (String) actionForm.get("domainObjectClass");
-        String slotName = (String) actionForm.get("slotName");
-
-        Object[] args = { Class.forName(domainObjectClass), slotName };
-        ServiceUtils.executeService(userView, "DomainObjectStringPropertyFormatter", args);
-
-        ActionMessages actionMessages = new ActionMessages();
-        actionMessages.add("formatCompleted", new ActionMessage("label.property.format.ok", ""));
-        saveMessages(request, actionMessages);
-        
-        request.setAttribute("domainClasses", getClasses());
-
-        return mapping.findForward("propertyFormatter");
+//        ActionMessages actionMessages = new ActionMessages();
+//        actionMessages.add("formatCompleted", new ActionMessage("label.property.format.ok", ""));
+//        saveMessages(request, actionMessages);
+//        
+//        request.setAttribute("domainClasses", getClasses());
+//
+//        return mapping.findForward("propertyFormatter");
     }
 
     private List<LabelValueBean> getClasses() {
