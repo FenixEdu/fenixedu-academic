@@ -9533,8 +9533,8 @@
         <filterChains>
         	<chain name="ScientificCouncilAuthorization"></chain>
         </filterChains>     
-    </service>
-    <service>
+    </service>        
+	<service>
 		<name>KerberosExternalAuthentication</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateKerberos</implementationClass>
 		<description />
@@ -9650,6 +9650,15 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 		</filterChains>
+	</service>	
+	<service>
+		<name>EditItemFilePermissions</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditItemFilePermissions</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization" />
+		</filterChains>
 	</service>
 	<service>
 		<name>DeleteResearchEvent</name>
@@ -9659,4 +9668,13 @@
 		<filterChains>
 		</filterChains>
 	</service>
+<!-- 	<service>
+		<name>GroupCheckService</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.externalServices.GroupCheckService</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+-->
 </serviceDefinitions>
