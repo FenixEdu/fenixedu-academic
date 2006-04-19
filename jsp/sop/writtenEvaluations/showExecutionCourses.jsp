@@ -21,7 +21,7 @@
 		<h:panelGrid columns="1" styleClass="infoselected">
 			<h:outputText value="#{bundleSOP['property.executionPeriod']}: <b>#{SOPEvaluationManagementBackingBean.executionPeriodLabel}</b>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.context.degree']}: <b>#{SOPEvaluationManagementBackingBean.executionDegreeLabel}</b>" escape="false"/>
-			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: <b> </b>" escape="false"/>
+			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: <b> #{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString} </b>" escape="false"/>
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false"/>
 

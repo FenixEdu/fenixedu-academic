@@ -24,7 +24,7 @@
 			
 			<h:outputText value="#{bundleSOP['property.context.degree']}: #{SOPEvaluationManagementBackingBean.executionDegreeLabel}" escape="false"/>
 			
-			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: " escape="false"/>
+			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: #{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}" escape="false"/>
 			
 			<h:outputText value="#{bundleSOP['property.aula.disciplina']}: <b>#{SOPEvaluationManagementBackingBean.executionCourse.nome}</b>" escape="false"/>
 		</h:panelGrid>
