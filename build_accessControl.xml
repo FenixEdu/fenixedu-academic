@@ -31,7 +31,7 @@
 				</fileset>
 			</classpath>
 			<fileset dir="${build.home.webinf.classes}">
-				<include name="**/domain/**/*.*"/>
+				<include name="**/domain/**/*.class"/>
 				<exclude name="**/domain/**/*_Base*"/>
 				<exclude name="**/domain/RootDomainObject*"/>
 			</fileset>
@@ -51,7 +51,7 @@
       </classpath>
 			
 			<fileset dir="${build.home.webinf.classes}">
-				<include name="**/domain/**/*.*"/>
+				<include name="**/domain/**/*.class"/>
 				<exclude name="**/domain/**/*_Base*"/>
 				<exclude name="**/domain/RootDomainObject*"/>
 			</fileset>
