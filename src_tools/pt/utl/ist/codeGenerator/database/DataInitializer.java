@@ -10,11 +10,10 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 public class DataInitializer {
 
-    private static ISuportePersistente persistentSupport = null;
-
     public static void main(String[] args) {
+    	ISuportePersistente persistentSupport = null;
         try {
-            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        	persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             SuportePersistenteOJB.fixDescriptors();
             persistentSupport.iniciarTransaccao();
             initialize();
@@ -23,7 +22,9 @@ public class DataInitializer {
             ex.printStackTrace();
 
             try {
-                persistentSupport.cancelarTransaccao();
+            	if (persistentSupport != null) {
+            		persistentSupport.cancelarTransaccao();
+            	}
             } catch (ExcepcaoPersistencia e) {
                 throw new Error(e);
             }

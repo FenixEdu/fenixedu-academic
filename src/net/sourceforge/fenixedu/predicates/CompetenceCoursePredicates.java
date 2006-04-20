@@ -12,13 +12,12 @@ import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -128,9 +127,7 @@ public class CompetenceCoursePredicates {
     
     private static boolean isMemberOfDegreeCurricularPlansGroup(Person person)
             throws ExcepcaoPersistencia {
-        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Collection<DegreeCurricularPlan> degreeCurricularPlans = ps.getIPersistentObject().readAll(
-                DegreeCurricularPlan.class);
+        Collection<DegreeCurricularPlan> degreeCurricularPlans = RootDomainObject.getInstance().getDegreeCurricularPlans();
 
         Collection<IGroup> groups = new ArrayList<IGroup>();
         for (DegreeCurricularPlan plan : degreeCurricularPlans) {

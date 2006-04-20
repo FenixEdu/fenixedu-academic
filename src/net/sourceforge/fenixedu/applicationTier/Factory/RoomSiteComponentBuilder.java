@@ -36,8 +36,6 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 
 /**
@@ -180,8 +178,6 @@ public class RoomSiteComponentBuilder {
 
     private InfoPeriod calculateLessonsSeason(ExecutionPeriod executionPeriod) throws Exception {
         try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             int semester = executionPeriod.getSemester().intValue();
 
             List executionDegreesList = ExecutionDegree.getAllByExecutionYear(executionPeriod.getExecutionYear().getYear());

@@ -50,6 +50,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.ojb.broker.core.proxy.ProxyHelper;
@@ -246,7 +247,7 @@ public class DomainBrowserServlet extends HttpServlet {
         try {
             supPers.beginTransaction();
 
-            Collection insts = supPers.getIPersistentObject().readAll(params.javaClass);
+            Collection insts = RootDomainObject.readAllDomainObjects(params.javaClass);
             renderCollection(out, insts, params.domClass, params);
             
         } finally {
@@ -397,7 +398,7 @@ public class DomainBrowserServlet extends HttpServlet {
                     try {
                         supPers.beginTransaction();
                         
-                        Collection insts = supPers.getIPersistentObject().readAll(Class.forName(domClass.getFullName()));
+                        Collection insts = RootDomainObject.readAllDomainObjects(Class.forName(domClass.getFullName()));
                         if (insts.size() == 0) {
                             out.print("<P>Can't check ");
                             out.print(domClass.getFullName());
