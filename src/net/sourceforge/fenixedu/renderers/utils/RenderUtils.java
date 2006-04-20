@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.renderers.utils;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.text.Collator;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -360,7 +362,16 @@ public class RenderUtils {
             }
 
             private int compareSlots(Object o1, Object o2, String slot) {
-                return new BeanComparator(slot).compare(o1, o2);
+                try {
+                    if (String.class.isAssignableFrom(PropertyUtils.getPropertyType(o1, slot))) {
+                        return new BeanComparator(slot, Collator.getInstance()).compare(o1, o2);
+                    }
+                    else {
+                        return new BeanComparator(slot).compare(o1, o2);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                } 
             }
             
         };
@@ -375,7 +386,14 @@ public class RenderUtils {
      * Obtains the renderer's view state processed and contained in the current request.
      */
     public static IViewState getViewState() {
-        return (IViewState) RenderersRequestProcessor.getCurrentRequest().getAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+        List<IViewState> viewStates = (List<IViewState>) RenderersRequestProcessor.getCurrentRequest().getAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+        
+        if (viewStates != null && viewStates.size() > 0) {
+            return viewStates.get(0);
+        }
+        else {
+            return null;
+        }
     }
     
     /**
@@ -386,9 +404,12 @@ public class RenderUtils {
      */
     public static void setViewState(IViewState viewState) throws InstantiationException, IllegalAccessException, IOException, ClassNotFoundException {
         HttpServletRequest currentRequest = RenderersRequestProcessor.getCurrentRequest();
+     
+        List<IViewState> viewStates = new ArrayList<IViewState>();
+        viewStates.add(viewState);
         
         ComponentLifeCycle.getInstance().restoreComponent(viewState);
-        ComponentLifeCycle.getInstance().prepareDestination(viewState, currentRequest);
+        ComponentLifeCycle.getInstance().prepareDestination(viewStates, currentRequest);
     }
 
     /**
