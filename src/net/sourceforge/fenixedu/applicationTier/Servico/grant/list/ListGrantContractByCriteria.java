@@ -141,8 +141,10 @@ public class ListGrantContractByCriteria extends Service {
 			List<GrantContractRegime> result = new ArrayList<GrantContractRegime>();
 			Date ToTheDate = null;
 			
-			List<GrantContractRegime> grantContractRegimes = rootDomainObject.getGrantContractRegimes();
-			ComparatorChain comparatorChain = new ComparatorChain(new BeanComparator("grantContract.grantOwner.number"), true);
+            List<GrantContractRegime> grantContractRegimes = new ArrayList<GrantContractRegime>();
+			grantContractRegimes.addAll(rootDomainObject.getGrantContractRegimes());
+            
+			ComparatorChain comparatorChain = new ComparatorChain(new BeanComparator("grantContract.grantOwner.number"), true);            
 	        Collections.sort(grantContractRegimes, comparatorChain);
 	        Collections.reverse(grantContractRegimes);
 	        for (final GrantContractRegime grantContractRegime : ((List<GrantContractRegime>) grantContractRegimes)) {
@@ -258,7 +260,8 @@ public class ListGrantContractByCriteria extends Service {
 	  			throws FenixServiceException,FenixFilterException, ExcepcaoPersistencia {
 			Integer result =new Integer(0);
 			
-			List<GrantContractRegime> grantContractRegimes = rootDomainObject.getGrantContractRegimes();
+			List<GrantContractRegime> grantContractRegimes = new ArrayList<GrantContractRegime>();
+            grantContractRegimes.addAll(rootDomainObject.getGrantContractRegimes());
 			ComparatorChain comparatorChain = new ComparatorChain(new BeanComparator("grantContract.grantOwner.number"), true);
 	        Collections.sort(grantContractRegimes, comparatorChain);
 	        Collections.reverse(grantContractRegimes);
