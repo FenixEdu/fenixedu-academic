@@ -586,13 +586,6 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>RepositoryDescriptorPerThreadFilter</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.MetadataManager.RepositoryDescriptorPerThreadFilter</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-    </filter>
-    <filter>
         <name>DirectiveCouncilAuthorization</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Filtro.DirectiveCouncilAuthorizationFilter</implementationClass>

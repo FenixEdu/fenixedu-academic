@@ -641,15 +641,6 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>RepositoryDescriptorPerThreadFilter</name>
-        <expression>
-            RepositoryDescriptorPerThreadFilter</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>
-            net.sourceforge.fenixedu.applicationTier.Filtro.MetadataManager.RepositoryDescriptorPerThreadFilter</filterClass>
-    </filterChain>
-    <filterChain>
         <name>DirectiveCouncilAuthorization</name>
         <expression>DirectiveCouncilAuthorization</expression>
         <description/>
