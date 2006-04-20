@@ -37,13 +37,26 @@ public class CreateMasterDegreeCandidate extends Service {
             throws Exception {
 
         // Read the Execution of this degree in the current execution Year
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-        Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber, identificationDocumentType);
-        
-        MasterDegreeCandidate masterDegreeCandidate = person.getMasterDegreeCandidateByExecutionDegree(executionDegree);
-        if (masterDegreeCandidate != null) {
-            throw new ExistingServiceException();
+        final ExecutionDegree executionDegree = rootDomainObject
+                .readExecutionDegreeByOID(executionDegreeID);
+        Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
+                identificationDocumentType);
+
+        if (person == null) {
+            // Create the new Person
+            person = DomainFactory.makePerson(name, identificationDocumentNumber,
+                    identificationDocumentType, Gender.MALE, "T" + System.currentTimeMillis());
+        } else {
+            MasterDegreeCandidate existingMasterDegreeCandidate = person
+                    .getMasterDegreeCandidateByExecutionDegree(executionDegree);
+            if (existingMasterDegreeCandidate != null) {
+                throw new ExistingServiceException();
+            }
         }
+
+        person.addPersonRoleByRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
+        person.addPersonRoleByRoleType(RoleType.PERSON);
+        
 
         // Set the Candidate's Situation
         CandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
@@ -55,28 +68,14 @@ public class CreateMasterDegreeCandidate extends Service {
         candidateSituation.setDate(actualDate.getTime());
 
         // Create the Candidate
-        masterDegreeCandidate = DomainFactory.makeMasterDegreeCandidate();
+        MasterDegreeCandidate masterDegreeCandidate = DomainFactory.makeMasterDegreeCandidate();
         masterDegreeCandidate.addSituations(candidateSituation);
         masterDegreeCandidate.setSpecialization(degreeType);
         masterDegreeCandidate.setExecutionDegree(executionDegree);
-        masterDegreeCandidate.setCandidateNumber(executionDegree.generateCandidateNumberForSpecialization(degreeType));
-
-        Role personRole = Role.getRoleByRoleType(RoleType.PERSON);
-        if (person == null) {
-            // Create the new Person
-            person = DomainFactory.makePerson(name, identificationDocumentNumber,
-                    identificationDocumentType, Gender.MALE, "T" + System.currentTimeMillis());
-        }
-
-        if (!person.hasRole(RoleType.PERSON)) {
-            person.addPersonRoles(personRole);
-        }
+        masterDegreeCandidate.setCandidateNumber(executionDegree
+                .generateCandidateNumberForSpecialization(degreeType));
 
         masterDegreeCandidate.setPerson(person);
-
-        if (!person.hasRole(RoleType.MASTER_DEGREE_CANDIDATE)) {
-            person.addPersonRoles(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_CANDIDATE));
-        }
 
         // Return the new Candidate
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson

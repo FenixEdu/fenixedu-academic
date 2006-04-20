@@ -251,7 +251,7 @@ public class ExecutionDegree extends ExecutionDegree_Base {
     public Integer generateCandidateNumberForSpecialization(Specialization specialization) {
         int maxCandidateNumber = 0;
         for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
-            if (masterDegreeCandidate.getSpecialization() == specialization) {
+            if (masterDegreeCandidate.getSpecialization() == specialization && masterDegreeCandidate.getCandidateNumber() != null) {
                 maxCandidateNumber = Math.max(maxCandidateNumber, masterDegreeCandidate.getCandidateNumber());
             }
         }
