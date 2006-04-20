@@ -662,8 +662,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         Function function = this.getFunction();
 
         final Object[] argsToRead = { function.getIdInternal(), function.getUnit().getIdInternal(),
-                function.getName(), function.getBeginDate(), function.getEndDate(), function.getType(),
-                this.principalFunctionID };
+                function.getName(), function.getBeginDate(), function.getEndDate(),
+                function.getFunctionType(), this.principalFunctionID };
 
         return executeCreateNewFunctionService(argsToRead);
     }
@@ -688,8 +688,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         Function function = this.getFunction();
 
         final Object[] argsToRead = { function.getIdInternal(), function.getUnit().getIdInternal(),
-                function.getName(), function.getBeginDate(), function.getEndDate(), function.getType(),
-                null };
+                function.getName(), function.getBeginDate(), function.getEndDate(),
+                function.getFunctionType(), null };
 
         try {
             ServiceUtils.executeService(getUserView(), "CreateNewFunction", argsToRead);
@@ -858,9 +858,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 && this.getUnitIDHidden().getValue() != null
                 && !this.getUnitIDHidden().getValue().equals("")) {
 
-            this.unit = (Unit) rootDomainObject.readPartyByOID(
-                    Integer.valueOf(this.getUnitIDHidden().getValue().toString()));            
-        }        
+            this.unit = (Unit) rootDomainObject.readPartyByOID(Integer.valueOf(this.getUnitIDHidden()
+                    .getValue().toString()));
+        }
         if (toRemoveParentUnit) {
             getParentUnitsRelationTypes();
         } else {
@@ -922,7 +922,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 && this.getFunctionIDHidden().getValue() != null
                 && !this.getFunctionIDHidden().getValue().equals("")) {
 
-            this.function = rootDomainObject.readFunctionByOID(Integer.valueOf(this
+            this.function = (Function) rootDomainObject.readAccountabilityTypeByOID(Integer.valueOf(this
                     .getFunctionIDHidden().getValue().toString()));
         }
         return function;
@@ -969,8 +969,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getFunctionTypeName() throws FenixFilterException, FenixServiceException {
         if (this.functionTypeName == null && this.getFunction() != null
-                && this.getFunction().getType() != null) {
-            this.functionTypeName = this.getFunction().getType().getName();
+                && this.getFunction().getFunctionType() != null) {
+            this.functionTypeName = this.getFunction().getFunctionType().getName();
         }
         return functionTypeName;
     }

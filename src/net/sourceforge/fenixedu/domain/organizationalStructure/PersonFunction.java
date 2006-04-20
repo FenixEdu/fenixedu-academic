@@ -7,29 +7,28 @@ import org.joda.time.YearMonthDay;
 
 public class PersonFunction extends PersonFunction_Base {
 
-    public PersonFunction(Party parentParty, Party childParty, AccountabilityType accountabilityType) {        
+    public PersonFunction(Party parentParty, Party childParty, Function function) {        
         super();
         setParentParty(parentParty);
         setChildParty(childParty);
-        setAccountabilityType(accountabilityType);        
+        setAccountabilityType(function);             
     }
 
-    public void edit(Function function, YearMonthDay begin, YearMonthDay end, Double credits) {
-        this.setFunction(function);
-        this.setCredits(credits);
-        this.setBeginDate(begin);
+    public void edit(Function function, YearMonthDay begin, YearMonthDay end, Double credits) {        
+        setAccountabilityType(function);
+        setCredits(credits);
+        setBeginDate(begin);
         if (end != null && end.isBefore(begin)) {
             throw new DomainException("error.endDateBeforeBeginDate");
         }
-        this.setEndDate(end);
+        setEndDate(end);
     }
     
     public Person getPerson(){
         return (Person) this.getChildParty();
     }
-    
-    public void delete(){
-        removeFunction();
-        super.delete();
-    }
+        
+    public Function getFunction(){
+        return (Function) this.getAccountabilityType();
+    } 
 }

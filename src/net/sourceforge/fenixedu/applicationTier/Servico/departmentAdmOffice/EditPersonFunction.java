@@ -26,7 +26,7 @@ public class EditPersonFunction extends Service {
             throw new FenixServiceException("error.no.personFunction");
         }
 
-        Function function = rootDomainObject.readFunctionByOID(functionID);
+        Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
 
         if (function == null) {
             throw new FenixServiceException("erro.noFunction");

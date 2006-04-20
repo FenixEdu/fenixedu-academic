@@ -15,8 +15,7 @@ public class DeleteUnit extends Service {
         Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
         if(unit == null){
             throw new FenixServiceException("error.noUnit");
-        }
-        
+        }        
         unit.delete();        
     }
     

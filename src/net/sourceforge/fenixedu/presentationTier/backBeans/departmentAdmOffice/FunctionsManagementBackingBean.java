@@ -348,7 +348,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         RoleType personTypeAux = RoleType.valueOf(personType);
         if (personTypeAux.equals(RoleType.EMPLOYEE)) {
             List<Employee> allEmployees = new ArrayList<Employee>();
-            allEmployees.addAll(readAllDomainObjects(Employee.class));
+            allEmployees.addAll(rootDomainObject.getEmployees());
             for (Employee employee : allEmployees) {
                 if (employee.getEmployeeNumber().equals(personNumber)) {
                     if (!employee.getPerson().hasRole(RoleType.TEACHER)) {
@@ -359,7 +359,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             }
         } else if (personTypeAux.equals(RoleType.TEACHER)) {
             List<Teacher> allTeachers = new ArrayList<Teacher>();
-            allTeachers.addAll(readAllDomainObjects(Teacher.class));
+            allTeachers.addAll(rootDomainObject.getTeachers());
             for (Teacher teacher : allTeachers) {
                 if (teacher.getTeacherNumber().equals(personNumber)) {
                     allPersons.add(teacher.getPerson());
@@ -368,7 +368,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             }
         } else if (personTypeAux.equals(RoleType.STUDENT)) {
             List<Student> allStudents = new ArrayList<Student>();
-            allStudents.addAll(readAllDomainObjects(Student.class));
+            allStudents.addAll(rootDomainObject.getStudents());
             for (Student student : allStudents) {
                 if (student.getNumber().equals(personNumber)) {
                     allPersons.add(student.getPerson());
@@ -377,7 +377,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             }
         } else if (personTypeAux.equals(RoleType.GRANT_OWNER)) {
             List<GrantOwner> allGrantOwner = new ArrayList<GrantOwner>();
-            allGrantOwner.addAll(readAllDomainObjects(GrantOwner.class));
+            allGrantOwner.addAll(rootDomainObject.getGrantOwners());
             for (GrantOwner grantOwner : allGrantOwner) {
                 if (grantOwner.getNumber().equals(personNumber)) {
                     allPersons.add(grantOwner.getPerson());
@@ -470,7 +470,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
-        List<ExecutionYear> allExecutionYears = readAllDomainObjects(ExecutionYear.class);
+        List<ExecutionYear> allExecutionYears = rootDomainObject.getExecutionYears();
         List<SelectItem> list = new ArrayList<SelectItem>();
         String[] year = null;
 
@@ -693,8 +693,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 && (this.beginDateHidden == null || this.beginDateHidden.getValue() == null)
                 && this.getExecutionPeriod() != null) {
 
-            ExecutionPeriod executionPeriod = (ExecutionPeriod) readDomainObject(ExecutionPeriod.class,
-                    this.executionPeriod);
+            ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(this.executionPeriod);
 
             this.beginDate = (executionPeriod != null) ? DateFormatUtil.format("dd/MM/yyyy",
                     executionPeriod.getBeginDate()) : null;
@@ -738,8 +737,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 && (this.endDateHidden == null || this.endDateHidden.getValue() == null)
                 && this.getExecutionPeriod() != null) {
 
-            ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(
-                    this.executionPeriod);
+            ExecutionPeriod executionPeriod = rootDomainObject
+                    .readExecutionPeriodByOID(this.executionPeriod);
 
             ExecutionPeriod executionPeriodWithDuration = getDurationEndDate(executionPeriod);
             this.endDate = DateFormatUtil.format("dd/MM/yyyy", executionPeriodWithDuration.getEndDate());
@@ -875,8 +874,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public PersonFunction getPersonFunction() throws FenixFilterException, FenixServiceException {
         if (this.personFunction == null) {
-            this.personFunction = (PersonFunction) rootDomainObject
-                    .readAccountabilityByOID(this.getPersonFunctionID());
+            this.personFunction = (PersonFunction) rootDomainObject.readAccountabilityByOID(this
+                    .getPersonFunctionID());
         }
         return personFunction;
     }
@@ -934,7 +933,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     private Integer getCurrentExecutionPeriodID() throws FenixFilterException, FenixServiceException {
-        List<ExecutionPeriod> allExecutionPeriods = readAllDomainObjects(ExecutionPeriod.class);
+        List<ExecutionPeriod> allExecutionPeriods = rootDomainObject.getExecutionPeriods();
         for (ExecutionPeriod period : allExecutionPeriods) {
             if (period.getState().equals(PeriodState.CURRENT)) {
                 return period.getIdInternal();

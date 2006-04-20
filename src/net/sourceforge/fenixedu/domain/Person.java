@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -73,7 +71,7 @@ public class Person extends Person_Base {
             throw new DomainException("error.person.existentPerson");
         }
 
-        checkConditionsToCreateNewPerson(personToCreate.getUsername(), personToCreate
+        checkConditionsToCreateNewPerson(personToCreate
                 .getNumeroDocumentoIdentificacao(), personToCreate.getTipoDocumentoIdentificacao(), this);
 
         createUserAndLoginEntity(personToCreate.getUsername());
@@ -91,7 +89,7 @@ public class Person extends Person_Base {
             IDDocumentType identificationDocumentType, Gender gender, String username) {
 
         super();
-        checkConditionsToCreateNewPerson(username, identificationDocumentNumber,
+        checkConditionsToCreateNewPerson(identificationDocumentNumber,
                 identificationDocumentType, this);
 
         createUserAndLoginEntity(username);
@@ -111,7 +109,7 @@ public class Person extends Person_Base {
             String homepage, String email, String documentIDNumber, IDDocumentType documentType) {
 
         super();
-        checkConditionsToCreateNewPerson(null, documentIDNumber, documentType, this);
+        checkConditionsToCreateNewPerson(documentIDNumber, documentType, this);
 
         setNome(name);
         setGender(gender);
@@ -141,7 +139,7 @@ public class Person extends Person_Base {
             IDDocumentType documentType) {
 
         super();
-        checkConditionsToCreateNewPerson(username, documentIDNumber, documentType, this);
+        checkConditionsToCreateNewPerson(documentIDNumber, documentType, this);
 
         createUserAndLoginEntity(username);
 
@@ -162,7 +160,7 @@ public class Person extends Person_Base {
     }
 
     public void edit(InfoPerson personToEdit, Country country) {
-        checkConditionsToCreateNewPerson(personToEdit.getUsername(), personToEdit
+        checkConditionsToCreateNewPerson(personToEdit
                 .getNumeroDocumentoIdentificacao(), personToEdit.getTipoDocumentoIdentificacao(), this);
 
         setProperties(personToEdit);
@@ -172,7 +170,7 @@ public class Person extends Person_Base {
     }
 
     public void update(InfoPerson updatedPersonalData, Country country) {
-        checkConditionsToCreateNewPerson(updatedPersonalData.getUsername(), updatedPersonalData
+        checkConditionsToCreateNewPerson(updatedPersonalData
                 .getNumeroDocumentoIdentificacao(), updatedPersonalData.getTipoDocumentoIdentificacao(),
                 this);
         updateProperties(updatedPersonalData);
@@ -202,16 +200,15 @@ public class Person extends Person_Base {
         setEmail(email);
     }
 
-    private void checkConditionsToCreateNewPerson(final String username, final String documentIDNumber,
-            final IDDocumentType documentType, Person thisPerson) {
+    private void checkConditionsToCreateNewPerson(final String documentIDNumber, final IDDocumentType documentType, Person thisPerson) {
 
         if (documentIDNumber != null
                 && documentType != null
                 && checkIfDocumentNumberIdAndDocumentIdTypeExists(documentIDNumber, documentType,
                         thisPerson)) {
-            
+
             throw new DomainException("error.person.existent.docIdAndType");
-        }     
+        }
     }
 
     private Login getLoginIdentification() {
@@ -265,11 +262,11 @@ public class Person extends Person_Base {
         if (getUser() == null) {
             throw new DomainException("error.person.unExistingUser");
         }
-        
+
         if (Login.checkIfUsernameExists(newUsername, this.getLoginIdentification())) {
             throw new DomainException("error.person.existingUsername");
-        }  
-        
+        }
+
         setUsername(newUsername);
     }
 
@@ -613,8 +610,7 @@ public class Person extends Person_Base {
     }
 
     public PersonFunction addPersonFunction(Function function) {
-        return new PersonFunction(function.getUnit(), this, AccountabilityType
-                .readAccountabilityTypeByType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION));
+        return new PersonFunction(function.getUnit(), this, function);
     }
 
     /**
@@ -1130,7 +1126,7 @@ public class Person extends Person_Base {
 
     public static boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
             final IDDocumentType documentType, Person thisPerson) {
-       
+
         for (final Person person : Person.readAllPersons()) {
             if (!person.equals(thisPerson) && person.getDocumentIdNumber().equals(documentIDNumber)
                     && person.getIdDocumentType().equals(documentType)) {

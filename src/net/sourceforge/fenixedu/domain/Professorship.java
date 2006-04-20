@@ -27,6 +27,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse,
             Teacher teacher, Double hours) throws MaxResponsibleForExceed, InvalidCategory {
+       
         if (responsibleFor == null || executionCourse == null || teacher == null)
             throw new NullPointerException();
 

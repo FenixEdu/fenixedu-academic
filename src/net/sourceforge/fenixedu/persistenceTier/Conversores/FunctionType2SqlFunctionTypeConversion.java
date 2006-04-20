@@ -21,7 +21,9 @@ public class FunctionType2SqlFunctionTypeConversion implements FieldConversion {
     }
 
     public Object sqlToJava(Object source) throws ConversionException {
-        
+        if(source == null || source.equals("")){
+            return null;
+        }              
         if (source instanceof String) {
             String src = (String) source;
             return FunctionType.valueOf(src);

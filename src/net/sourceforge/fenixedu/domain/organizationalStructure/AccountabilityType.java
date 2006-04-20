@@ -6,9 +6,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class AccountabilityType extends AccountabilityType_Base {
     
-    public AccountabilityType(AccountabilityTypeEnum accountabilityTypeEnum) {
+    protected AccountabilityType() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(RootDomainObject.getInstance());        
+        setOjbConcreteClass(getClass().getName());
+    }
+    
+    public AccountabilityType(AccountabilityTypeEnum accountabilityTypeEnum) {
+        this();
         setType(accountabilityTypeEnum);
     }
 

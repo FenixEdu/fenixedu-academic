@@ -1353,15 +1353,6 @@ class net.sourceforge.fenixedu.domain.GratuityValues extends net.sourceforge.fen
 	Integer keyEmployee;
 }
 
-class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends net.sourceforge.fenixedu.domain.DomainObject {
-	String name;
-	Date beginDate;
-	Date endDate;
-	FunctionType type;
-	Integer keyUnit;
-	Integer keyParentInherentFunction;
-}
-
 class net.sourceforge.fenixedu.domain.finalDegreeWork.Group extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionDegree;
 	Integer keyProposalAttributed;
@@ -2503,16 +2494,16 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	PartyType type;
 	Integer keyPartyType;
 }
-	  class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
+	class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		String acronym;
-	Integer costCenterCode;
-	Integer keyDepartment;	
-	Integer keyDegree;
+		Integer costCenterCode;
+		Integer keyDepartment;	
+		Integer keyDegree;
 		Date beginDate;
 		Date endDate;		
-}
+	}
 
-	  class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
+	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
 		Integer keyCms;
 		Integer keyEmployee;
 		Integer keyTeacher;
@@ -2522,7 +2513,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyAssociatedPersonAccount;
 		Integer keyResearcher;
 		Integer keyUser;
-        Integer keyHomepage;
+	    Integer keyHomepage;
 		String area;
 		String fiscalCode;
 		String mobile;
@@ -2555,7 +2546,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	    MaritalStatus maritalStatus;
 	    Gender gender;
 	    IDDocumentType idDocumentType; 
-	 }
+	}
 	 
 class net.sourceforge.fenixedu.domain.organizationalStructure.PartyType extends net.sourceforge.fenixedu.domain.DomainObject {	
 	PartyType type;
@@ -2563,7 +2554,17 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.PartyType extends 
 	 
 class net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType extends net.sourceforge.fenixedu.domain.DomainObject {	
 	AccountabilityType type;
+	String name;
+    String ojbConcreteClass;
 }	 
+
+	class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType {
+		Date beginDate;
+		Date endDate;
+		FunctionType functionType;
+		Integer keyUnit;
+		Integer keyParentInherentFunction;
+	}
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule extends net.sourceforge.fenixedu.domain.DomainObject {	
 	Integer keyAccountabilityType;
@@ -6036,13 +6037,6 @@ relation AnyCurricularCourseDepartmentUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole departmentUnit;
 }
 
-relation PersonFunctionFunction {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole function;	 
-	net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction playsRole accountabilities {
-	   multiplicity *;
-	}
-}
-
 relation AccountabilityAccountabilityType {
 	net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType playsRole accountabilityType;	 
 	net.sourceforge.fenixedu.domain.organizationalStructure.Accountability playsRole accountabilities {
@@ -7355,13 +7349,6 @@ relation RootDomainObjectEventParticipation {
 relation RootDomainObjectWebSite {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.WebSite playsRole webSites {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectFunction {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole functions {
 		multiplicity *;
 	}
 }

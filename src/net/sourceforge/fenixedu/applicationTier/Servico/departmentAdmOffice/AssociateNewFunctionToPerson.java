@@ -27,7 +27,7 @@ public class AssociateNewFunctionToPerson extends Service {
             throw new FenixServiceException("error.noPerson");
         }
                        
-        Function function = rootDomainObject.readFunctionByOID(functionID);
+        Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
         
         if(function == null){
             throw new FenixServiceException("error.noFunction");

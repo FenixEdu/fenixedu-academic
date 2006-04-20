@@ -14,46 +14,48 @@ public class Function extends Function_Base {
     }
 
     public void edit(String functionName, Date beginDate, Date endDate, FunctionType type, Unit unit,
-            Function parentInherentFunction) {       
-        this.setName(functionName);
+            Function parentInherentFunction) {
+
+        if(functionName == null && functionName.equals("")){
+            throw new DomainException("error.no.function.name");
+        }
+        this.setName(functionName);        
         this.setBeginDate(beginDate);
-        if(endDate != null && endDate.before(beginDate)){
+        if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.endDateBeforeBeginDate");
         }
         this.setEndDate(endDate);
-        this.setType(type);
+        this.setFunctionType(type);
         this.setUnit(unit);
         this.setParentInherentFunction(parentInherentFunction);
+        this.setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
     }
 
     public boolean isActive(Date currentDate) {
-        return (this.getEndDate() == null
-                || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(), currentDate) || this
-                        .getEndDate().after(currentDate)));            
+        return (this.getEndDate() == null || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(),
+                currentDate) || this.getEndDate().after(currentDate)));
     }
-    
+
     public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        return (!this.getBeginDate().after(endDate)
-                && (this.getEndDate() == null || !this.getEndDate().before(beginDate)));            
+        return (!this.getBeginDate().after(endDate) && (this.getEndDate() == null || !this.getEndDate()
+                .before(beginDate)));
     }
 
     public void delete() {
-        if (!hasAnyAccountabilities() && !hasAnyInherentFunctions()) {            
+        if (!hasAnyAccountabilities() && !hasAnyInherentFunctions()) {
             removeParentInherentFunction();
             removeUnit();
             removeRootDomainObject();
-            super.deleteDomainObject();
+            deleteDomainObject();
         } else {
             throw new DomainException("error.delete.function");
         }
     }
-    
-    public List<PersonFunction> getPersonFunctions(){
+
+    public List<PersonFunction> getPersonFunctions() {
         List<PersonFunction> personFunctions = new ArrayList();
         for (Accountability accountability : getAccountabilities()) {
-            if(accountability.isPersonFunction()){
-                personFunctions.add((PersonFunction) accountability);
-            }
+            personFunctions.add((PersonFunction) accountability);
         }
         return personFunctions;
     }
