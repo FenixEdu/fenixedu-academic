@@ -64,6 +64,8 @@ public class RootDomainObjectGenerator {
             StringBuilder resultSourceCode = new StringBuilder();
             resultSourceCode.append(rootObjectSourceCode.substring(0, lastBrace));
 
+            appendClosureAccessMap(resultSourceCode);
+
             Formatter methods = new Formatter(resultSourceCode);
             DomainClass rootDomainObjectClass = getModel().findClass(CLASS_NAME);
             for (Iterator<Role> iter = rootDomainObjectClass.getRoleSlots(); iter.hasNext();) {
@@ -85,6 +87,8 @@ public class RootDomainObjectGenerator {
                             className);
                     
                     usedNames.add(className);
+
+                    appendAddToClosureAccessMap(resultSourceCode, otherDomainClass, slotName);
                 }
             }
 
@@ -95,10 +99,56 @@ public class RootDomainObjectGenerator {
 
     }
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
+	private void appendClosureAccessMap(final StringBuilder resultSourceCode) {
+        resultSourceCode.append("\n\tprivate interface DomainObjectReader {");
+        resultSourceCode.append("\n\t\tpublic DomainObject readDomainObjectByOID(final Integer idInternal);");
+        resultSourceCode.append("\n\t\tpublic java.util.Set readAllDomainObjects();");
+        resultSourceCode.append("\n\t}");
+    	resultSourceCode.append("\n\tprivate static final java.util.Map<String, DomainObjectReader> closureAccessMap = new java.util.HashMap<String, DomainObjectReader>();");
+        resultSourceCode.append("\n\tpublic static DomainObject readDomainObjectByOID(final Class domainClass, final Integer idInternal) {");
+        resultSourceCode.append("\n\t\tif (domainClass != null) {");
+        resultSourceCode.append("\n\t\t\tfinal DomainObjectReader domainObjectReader = closureAccessMap.get(domainClass.getName());");
+        resultSourceCode.append("\n\t\t\tif (domainObjectReader != null) {");
+        resultSourceCode.append("\n\t\t\t\treturn domainObjectReader.readDomainObjectByOID(idInternal);");
+        resultSourceCode.append("\n\t\t\t} else if (domainClass != Object.class && domainClass != DomainObject.class) {");
+        resultSourceCode.append("\n\t\t\t\treturn readDomainObjectByOID(domainClass.getSuperclass(), idInternal);");
+        resultSourceCode.append("\n\t\t\t}");
+        resultSourceCode.append("\n\t\t}");
+        resultSourceCode.append("\n\t\treturn null;");
+        resultSourceCode.append("\n\t}");
+        resultSourceCode.append("\n\tpublic static java.util.Set readAllDomainObjects(final Class domainClass) {");
+        resultSourceCode.append("\n\t\tif (domainClass != null) {");
+        resultSourceCode.append("\n\t\t\tfinal DomainObjectReader domainObjectReader = closureAccessMap.get(domainClass.getName());");
+        resultSourceCode.append("\n\t\t\tif (domainObjectReader != null) {");
+        resultSourceCode.append("\n\t\t\t\treturn domainObjectReader.readAllDomainObjects();");
+        resultSourceCode.append("\n\t\t\t} else if (domainClass != Object.class && domainClass != DomainObject.class) {");
+        resultSourceCode.append("\n\t\t\t\treturn readAllDomainObjects(domainClass.getSuperclass());");
+        resultSourceCode.append("\n\t\t\t}");
+        resultSourceCode.append("\n\t\t}");
+        resultSourceCode.append("\n\t\treturn null;");
+        resultSourceCode.append("\n\t}");
+	}
+
+    private void appendAddToClosureAccessMap(final StringBuilder resultSourceCode, final DomainClass otherDomainClass, final String slotName) {
+    	resultSourceCode.append("\n\t{");
+    	resultSourceCode.append("\n\t\tclosureAccessMap.put(");
+    	resultSourceCode.append(otherDomainClass.getFullName());
+    	resultSourceCode.append(".class.getName(), new DomainObjectReader() {");
+    	resultSourceCode.append("\n\t\t\tpublic DomainObject readDomainObjectByOID(final Integer idInternal) {");
+    	resultSourceCode.append("\n\t\t\t\treturn read");
+    	resultSourceCode.append(otherDomainClass.getName());
+    	resultSourceCode.append("ByOID(idInternal);");
+    	resultSourceCode.append("\n\t\t\t}");
+    	resultSourceCode.append("\n\t\t\tpublic java.util.Set readAllDomainObjects() {");
+    	resultSourceCode.append("\n\t\t\t\treturn get");
+    	resultSourceCode.append(slotName);
+    	resultSourceCode.append("Set();");
+    	resultSourceCode.append("\n\t\t\t}");
+    	resultSourceCode.append("\n\t\t});");
+    	resultSourceCode.append("\n\t}");
+	}
+
+	public static void main(String[] args) {
 
         if (args.length < 2) {
             System.err.println("Invalid Number of Arguments");
@@ -117,7 +167,7 @@ public class RootDomainObjectGenerator {
         System.exit(0);
     }
 
-    public static String readFile(final String filename) throws IOException {
+	public static String readFile(final String filename) throws IOException {
         
         final StringBuilder fileContents = new StringBuilder();
         String str= null;

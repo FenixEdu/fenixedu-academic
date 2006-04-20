@@ -10,6 +10,10 @@ public class RootDomainObject extends RootDomainObject_Base {
 
     private static RootDomainObject instance = null;
 
+    private interface DomainObjectReader {
+    	public DomainObject readDomainObjectByOID();
+    }
+
     public static synchronized void init() {
         if (instance == null) {
             final ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();

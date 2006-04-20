@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadDomainObject<E> extends Service {
 
     public E run(Class<E> clazz, final Integer domainObjectOID) throws ExcepcaoPersistencia {
-        return (E) persistentObject.readByOID(clazz, domainObjectOID);
+        return (E) rootDomainObject.readDomainObjectByOID(clazz, domainObjectOID);
     }
+
 }

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadAllDomainObjects<E> extends Service {
 
     public Collection<E> run(Class<E> clazz) throws ExcepcaoPersistencia {
-        return (Collection<E>) persistentObject.readAll(clazz);
+        return (Collection<E>) rootDomainObject.readAllDomainObjects(clazz);
     }
 
 }
