@@ -254,7 +254,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             return "";
         }
     }
-
+    
     public GradeScale getGradeScaleChain() {
         return super.getGradeScale() != null ? super.getGradeScale() : getDegree().getGradeScaleChain();
     }
@@ -276,6 +276,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return studentCurricularPlan;
     }
 
+    public List<ExecutionDegree> getSortedExecutionDegrees() {
+        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>(getExecutionDegrees());
+        
+        Collections.sort(result, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR);
+        
+        return result;
+    }
+    
     public ExecutionDegree getExecutionDegreeByYear(ExecutionYear executionYear) {
         for (ExecutionDegree executionDegree : getExecutionDegrees()) {
             if (executionDegree.getExecutionYear().equals(executionYear)) {
@@ -283,6 +291,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return null;
+    }
+    
+    public ExecutionDegree getMostRecentExecutionDegree() {
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        ExecutionDegree result = getExecutionDegreeByYear(currentExecutionYear);
+        for (ExecutionDegree executionDegree : getSortedExecutionDegrees()) {
+            if (result == null) {
+                result = executionDegree;
+            } else if (result.getExecutionYear().compareTo(executionDegree.getExecutionYear()) > 0) {
+                result = executionDegree;
+            }
+        }
+        return result;
     }
 
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(ExecutionPeriod executionPeriod) {
