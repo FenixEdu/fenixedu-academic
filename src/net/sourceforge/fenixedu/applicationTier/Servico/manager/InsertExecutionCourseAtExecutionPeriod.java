@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 /**
  * @author lmac1 modified by Fernanda Quitério
@@ -23,35 +22,31 @@ public class InsertExecutionCourseAtExecutionPeriod extends Service {
         ExecutionCourse executionCourse = DomainFactory.makeExecutionCourse();
         ExecutionPeriod executionPeriod = null;
         ExecutionCourse existentExecutionCourse = null;
-        try {
-        	executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
-            if (executionPeriod == null) {
-                throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-            }
+        executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
-            existentExecutionCourse = executionPeriod.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
+        if (executionPeriod == null) {
+        	throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+        }
 
-            if (existentExecutionCourse != null) {
-                throw new ExistingPersistentException();
-            }
+        existentExecutionCourse = executionPeriod.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
 
-            executionCourse.setNome(infoExecutionCourse.getNome());
-            executionCourse.setExecutionPeriod(executionPeriod);
-            executionCourse.setSigla(infoExecutionCourse.getSigla());
-            executionCourse.setLabHours(infoExecutionCourse.getLabHours());
-            executionCourse.setPraticalHours(infoExecutionCourse.getPraticalHours());
-            executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
-            executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
-            executionCourse.setComment(infoExecutionCourse.getComment());
+        if (existentExecutionCourse != null) {
+        	throw new ExistingServiceException("A disciplina execução com sigla "
+        			+ existentExecutionCourse.getSigla() + " e período execução "
+        			+ executionPeriod.getName() + "-" + executionPeriod.getExecutionYear().getYear());
+        }
 
-            executionCourse.createSite();            
-            
-        } catch (ExistingPersistentException existingException) {
-            throw new ExistingServiceException("A disciplina execução com sigla "
-                    + existentExecutionCourse.getSigla() + " e período execução "
-                    + executionPeriod.getName() + "-" + executionPeriod.getExecutionYear().getYear(),
-                    existingException);
-        }                
-	}	
+        executionCourse.setNome(infoExecutionCourse.getNome());
+        executionCourse.setExecutionPeriod(executionPeriod);
+        executionCourse.setSigla(infoExecutionCourse.getSigla());
+        executionCourse.setLabHours(infoExecutionCourse.getLabHours());
+        executionCourse.setPraticalHours(infoExecutionCourse.getPraticalHours());
+        executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
+        executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
+        executionCourse.setComment(infoExecutionCourse.getComment());
+
+        executionCourse.createSite();            
+	}
+
 }

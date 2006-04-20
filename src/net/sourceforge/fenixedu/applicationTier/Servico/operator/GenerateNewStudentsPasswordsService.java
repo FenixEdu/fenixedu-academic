@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 /**
  * @author Nuno Correia
@@ -25,8 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentExc
  */
 public class GenerateNewStudentsPasswordsService extends Service {
 
-    public List run(Integer fromNumber, Integer toNumber) throws ExistingPersistentException,
-            ExcepcaoPersistencia {
+    public List run(Integer fromNumber, Integer toNumber) {
 
         List infoPersonList = new ArrayList();
 

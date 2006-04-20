@@ -31,8 +31,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -42,8 +40,7 @@ public class ChangeGuideSituation extends Service {
 
     public void run(Integer guideNumber, Integer guideYear, Integer guideVersion, Date paymentDate,
             String remarks, String situationOfGuideString, String paymentType, IUserView userView)
-            throws ExcepcaoInexistente, FenixServiceException, ExistingPersistentException,
-            ExcepcaoPersistencia {
+            throws ExcepcaoInexistente, FenixServiceException {
 
         Guide guide = Guide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
 

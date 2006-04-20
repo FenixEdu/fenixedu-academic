@@ -14,7 +14,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -31,7 +30,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 public class CreateLesson extends Service {
 
@@ -49,7 +47,7 @@ public class CreateLesson extends Service {
         }
         boolean resultB = validNoInterceptingLesson(infoLesson.getInfoRoomOccupation());
         if (result.isSUCESS() && resultB) {
-            try {
+
                 InfoShiftServiceResult infoShiftServiceResult = valid(shift, infoLesson);
                 if (infoShiftServiceResult.isSUCESS()) {
                     RoomOccupation roomOccupation = DomainFactory.makeRoomOccupation();
@@ -75,9 +73,7 @@ public class CreateLesson extends Service {
                 } else {
                     throw new InvalidLoadException(infoShiftServiceResult.toString());
                 }
-            } catch (ExistingPersistentException ex) {
-                throw new ExistingServiceException(ex);
-            }
+
         } else {
             if (!resultB) {
                 throw new InterceptingLessonException();

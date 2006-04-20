@@ -62,6 +62,20 @@
 		<echo level="info" message="Processing of ${dml.definition.file.completed} finished."/>
 	</target>
 
+    <target name="update-RootDomainObject"
+    		description="Adds specific readByOID methods to RootDomainObject.">
+		<java classname="pt.utl.ist.fenix.tools.codeGenerator.RootDomainObjectGenerator" fork="true">
+			<arg value="${src_gen}"/>
+			<arg value="${dml.definition.file.completed}"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>			
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    	<antcall target="clean-all"/>
+    </target>
 	
     <target name="clean-all"
     		description="Removes any generated files">
@@ -107,56 +121,6 @@
 			<src path="${src_tools}"/>
 		</javac>
 	</target>
-
-    <target name="generate-root-domain-object-relations"
-    		description="Generate relations with RootDomainObject.">
-    	<delete file="${dml.definition.file.completed}"/>
-    	<copy file="${dml.definition.file}" tofile="${dml.definition.file.completed}"/>
-		<java classname="pt.utl.ist.fenix.tools.dml.OneToManyRelationGenerator" fork="true">
-			<arg value="${dml.definition.file}"/>
-			<arg value="net.sourceforge.fenixedu.domain.RootDomainObject"/>
-			<arg value="${dml.definition.file.completed}"/>
-			<arg value="append"/>
-			<classpath>
-				<pathelement path="${build.home.temp.classes}"/>
-				<pathelement path="${build.home.webinf.classes}"/>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-			</classpath>
-		</java>
-    </target>
-
-    <target name="generate-DAOs"
-    		description="Generate DAO skeletons."
-    		depends="compile">
-		<java classname="pt.utl.ist.codeGenerator.DAOGenerator" fork="true">
-			<classpath>
-				<pathelement path="${build.home.temp.classes}"/>
-				<pathelement path="${build.home.webinf.classes}"/>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-			</classpath>
-		</java>
-    	<antcall target="clean-all"/>
-    </target>
-	
-    <target name="update-RootDomainObject"
-    		description="Adds specific readByOID methods to RootDomainObject."
-    		depends="compile">
-		<java classname="pt.utl.ist.codeGenerator.RootDomainObjectGenerator" fork="true">
-			<arg value="${src_gen}"/>
-			<arg value="${dml.definition.file.completed}"/>
-			<classpath>
-				<pathelement path="${build.home.temp.classes}"/>			
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
-			</classpath>
-		</java>
-    	<antcall target="clean-all"/>
-    </target>
 	
     <target name="generate-OJBMetadata"
     		description="Adds specific readByOID methods to RootDomainObject."
@@ -191,41 +155,5 @@
 			</classpath>
 		</java>
     </target>
-
-    <target name="dmlGenerator"
-    		description="Generate DML file from OJB Mapping.">
-		<java classname="net.sourceforge.fenixedu.tools.DMLGenerator" fork="true">
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                	<exclude name="**/berserk.jar"/>
-                </fileset>
-			</classpath>
-		</java>
-    	<antcall target="clean-all"/>
-    </target>
-
-	  <target name="eliminate-domain-object-interfaces"
-	          description="Eliminates domain object interfaces.">
-	  	<ant antfile="build_verifier.xml" target="analysis-compile"/>
-	    <java classname="pt.utl.ist.codeDegenerator.DomainObjectInterfaceEliminator" fork="true">
-	      <classpath refid="classpath.analysis"/>
-	      <arg value="-d"/>
-	      <arg value="${dml.definition.file.completed}"/>
-	      <arg value="-f"/>
-	      <arg value="${basedir}"/>
-	      <arg value="-i"/>
-	      <arg value="CVS"/>
-	      <arg value="-i"/>
-		  <arg value="build"/>
-	      <arg value="-i"/>
-	      <arg value=".class"/>
-	   	  <arg value="-i"/>
-	   	  <arg value=".jar"/>
-	   	  <arg value="-i"/>
-	   	  <arg value="src_gen"/>
-	    </java>
-	  </target>
 
 </project>

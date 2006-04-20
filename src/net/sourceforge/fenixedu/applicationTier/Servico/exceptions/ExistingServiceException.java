@@ -1,9 +1,3 @@
-/*
- * ExistingPersistentException.java
- *
- * Febuary 28th, 2003, Sometime in the morning
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
 /**
