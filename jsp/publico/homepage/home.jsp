@@ -12,12 +12,16 @@
 			<bean:write name="homepage" property="name"/>
 		</h1>
 
+		<br/>
+		
 		<logic:equal name="homepage" property="showPhoto" value="true">
 			<bean:define id="homepageID" name="homepage" property="idInternal"/>
 			<p>
 				<html:img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&homepageID=" + homepageID.toString() %>"/>
 			</p>
+		<br/>
 		</logic:equal>
+	
 
 		<logic:equal name="homepage" property="showUnit" value="true">
 		<p><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
