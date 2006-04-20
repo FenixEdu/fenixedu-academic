@@ -65,8 +65,9 @@ public class EditGrantOwner extends Service {
         }
 
         // create or edit person information
-        if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {
-            person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);
+        if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {            
+            infoGrantOwner.getPersonInfo().setUsername("T" + System.currentTimeMillis());
+            person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);            
         } else {
             person = (Person) rootDomainObject.readPartyByOID(infoGrantOwner.getPersonInfo()
                     .getIdInternal());
@@ -74,8 +75,9 @@ public class EditGrantOwner extends Service {
         }
 
         // verify if person is new
-        if (person.getUsername() != null)
+        if (infoGrantOwner.getPersonInfo().getIdInternal() != null){
             grantOwner = checkIfGrantOwnerExists(infoGrantOwner.getGrantOwnerNumber());
+        }
 
         // create or edit grantOwner information
         Integer maxNumber = null;
@@ -85,15 +87,15 @@ public class EditGrantOwner extends Service {
             grantOwner = DomainFactory.makeGrantOwner();
 
             if (!person.hasRole(RoleType.PERSON)) {
-                person.getPersonRoles().add(Role.getRoleByRoleType(RoleType.PERSON));
+                person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
             }
-            person.getPersonRoles().add(Role.getRoleByRoleType(RoleType.GRANT_OWNER));
+            person.addPersonRoles(Role.getRoleByRoleType(RoleType.GRANT_OWNER));
         }        
         grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner, maxNumber);
-
-        // Generate the GrantOwner's Person Username
-        if (person.getUsername() == null || person.getUsername().length() == 0)
+       
+        if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {   
             person.changeUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()));
+        }
         return grantOwner.getIdInternal();
     }
 }
