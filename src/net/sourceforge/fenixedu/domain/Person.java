@@ -325,6 +325,12 @@ public class Person extends Person_Base {
         return null;
     }
 
+    public void addPersonRoleByRoleType(RoleType roleType) {
+        if (!this.hasRole(roleType)) {
+            this.addPersonRoles(Role.getRoleByRoleType(roleType));
+        }
+    }
+
     public Boolean hasRole(final RoleType roleType) {
         for (final Role role : this.getPersonRoles()) {
             if (role.getRoleType() == roleType) {
@@ -795,6 +801,8 @@ public class Person extends Person_Base {
                 return person.hasRole(RoleType.EMPLOYEE);
             case DELEGATE:
                 return person.hasRole(RoleType.STUDENT);
+            case MASTER_DEGREE_CANDIDATE:
+                return true;
             case PERSON:
                 return true;
             default:
