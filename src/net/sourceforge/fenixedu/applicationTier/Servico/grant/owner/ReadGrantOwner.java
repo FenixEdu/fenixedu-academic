@@ -20,9 +20,10 @@ public class ReadGrantOwner extends ReadDomainObjectService {
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoGrantOwnerWithPerson.newInfoFromDomain((GrantOwner) domainObject);
     }
-    
-    protected Class getDomainObjectClass() {
-        return GrantOwner.class;
-    }
+
+	@Override
+	protected DomainObject readDomainObject(final Integer idInternal) {
+		return rootDomainObject.readGrantOwnerByOID(idInternal);
+	}
 
 }

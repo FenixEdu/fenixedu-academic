@@ -14,21 +14,14 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalPro
  * @author jpvl
  */
 public class ReadTeacherDegreeFinalProjectStudentByOID extends ReadDomainObjectService {
-    private static ReadTeacherDegreeFinalProjectStudentByOID service = new ReadTeacherDegreeFinalProjectStudentByOID();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadTeacherDegreeFinalProjectStudentByOID getService() {
-        return service;
-    }
-
-    protected Class getDomainObjectClass() {
-        return TeacherDegreeFinalProjectStudent.class;
-    }
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain((TeacherDegreeFinalProjectStudent) domainObject);
     }
+
+	@Override
+	protected DomainObject readDomainObject(final Integer idInternal) {
+		return rootDomainObject.readTeacherDegreeFinalProjectStudentByOID(idInternal);
+	}
 
 }

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public abstract class DeleteDomainObjectService extends Service {
     
     public void run(Integer objectId) throws Exception {
-		DomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
+		DomainObject domainObject = readDomainObject(objectId);
 
 		if ((domainObject == null) || !canDelete(domainObject)) {
 			throw new NonExistingServiceException("The object does not exist");
@@ -24,6 +24,6 @@ public abstract class DeleteDomainObjectService extends Service {
 		return true;
 	}
 
-	protected abstract Class getDomainObjectClass();
+	protected abstract DomainObject readDomainObject(final Integer idInternal);
 	protected abstract void deleteDomainObject(DomainObject domainObject) throws ExcepcaoPersistencia;
 }

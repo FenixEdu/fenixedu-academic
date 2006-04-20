@@ -28,10 +28,6 @@ public class ReadGrantContract extends ReadDomainObjectService {
                 .newInfoFromDomain((GrantContract) domainObject);
     }
 
-    protected Class getDomainObjectClass() {
-        return GrantContract.class;
-    }
-
     public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
 
         GrantContract grantContract = rootDomainObject.readGrantContractByOID(objectId);
@@ -45,5 +41,10 @@ public class ReadGrantContract extends ReadDomainObjectService {
 
         return infoGrantContract;
     }
+
+	@Override
+	protected DomainObject readDomainObject(final Integer idInternal) {
+		return rootDomainObject.readGrantContractByOID(idInternal);
+	}
 
 }

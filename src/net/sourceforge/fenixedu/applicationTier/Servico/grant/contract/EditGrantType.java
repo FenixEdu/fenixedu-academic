@@ -26,11 +26,6 @@ public class EditGrantType extends EditDomainObjectService {
 	}
 
 	@Override
-	protected Class getDomainObjectClass() {
-		return GrantType.class;
-	}
-
-	@Override
 	protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) {
 		InfoGrantType infoGrantType = (InfoGrantType) infoObject;
 		GrantType grantType = (GrantType) domainObject;
@@ -42,6 +37,11 @@ public class EditGrantType extends EditDomainObjectService {
 		grantType.setSigla(infoGrantType.getSigla());
 		grantType.setSource(infoGrantType.getSource());
 		grantType.setState(infoGrantType.getState());
+	}
+
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readGrantTypeByOID(idInternal);
 	}
     
 }

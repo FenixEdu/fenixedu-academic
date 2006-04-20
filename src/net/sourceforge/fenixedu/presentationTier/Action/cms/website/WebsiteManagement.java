@@ -72,7 +72,7 @@ public class WebsiteManagement extends FenixDispatchAction {
             for (int i = 0; i < parts.length; i++) {
                 String oid = parts[i];
                 
-                parents.add((Bin) readObject(request, oid, "cms.websiteManagement.parent.notFound", Bin.class));
+                parents.add((Bin) rootDomainObject.readContentByOID(Integer.valueOf(oid)));
             }
             
             request.setAttribute("parents", parents);
@@ -135,32 +135,39 @@ public class WebsiteManagement extends FenixDispatchAction {
     //
     
     protected Content getContent(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-        return (Content) getObject(request, "oid", "cms.websiteManagement.content.notFound", Content.class);
+        Integer oid;
+        try {
+            oid = Integer.parseInt(request.getParameter("oid"));
+        } catch (NumberFormatException e) {
+            addError(request, "cms.websiteManagement.content.notFound");
+            return null;
+        }
+
+        return (Content) rootDomainObject.readContentByOID(oid);
     }
 
     protected Bin getParent(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-        return (Bin) getObject(request, "parent", "cms.websiteManagement.parent.notFound", Bin.class);
+        Integer oid;
+        try {
+        	oid = Integer.parseInt(request.getParameter("parent"));
+        } catch (NumberFormatException e) {
+            addError(request, "cms.websiteManagement.parent.notFound");
+            return null;
+        }
+
+        return (Bin) rootDomainObject.readContentByOID(oid);
     }
     
     protected Content getChild(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-        return (Content) getObject(request, "child", "cms.websiteManagement.child.notFound", Content.class);
-    }
-    
-    protected Object getObject(HttpServletRequest request, String name, String errorKey, Class type) throws FenixFilterException, FenixServiceException {
-        return readObject(request, request.getParameter(name), errorKey, type);
-    }
-    
-    protected Object readObject(HttpServletRequest request, String id, String errorKey, Class type) throws FenixFilterException, FenixServiceException {
         Integer oid;
         try {
-            oid = Integer.parseInt(id);
+        	oid = Integer.parseInt(request.getParameter("child"));
         } catch (NumberFormatException e) {
-            addError(request, errorKey);
+            addError(request, "cms.websiteManagement.child.notFound");
             return null;
         }
-        
-        IUserView userView = SessionUtils.getUserView(request);
-        return ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { type, oid });
+
+        return (Content) rootDomainObject.readContentByOID(oid);
     }
     
     protected ActionForward proceedWithContent(String name, String destination, ActionMapping mapping, HttpServletRequest request) throws FenixFilterException, FenixServiceException {

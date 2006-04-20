@@ -32,9 +32,9 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
         return DomainFactory.makeShiftProfessorship();
     }
 
-    @Override
-    protected Class getDomainObjectClass() {
-        return ShiftProfessorship.class;
-    }
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readShiftProfessorshipByOID(idInternal);
+	}
 
 }

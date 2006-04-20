@@ -71,9 +71,9 @@ public class EditGrantContractMovement extends EditDomainObjectService {
         return DomainFactory.makeGrantContractMovement();
     }
 
-    @Override
-    protected Class getDomainObjectClass() {
-        return GrantContractMovement.class;
-    }
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readGrantContractMovementByOID(idInternal);
+	}
 
 }

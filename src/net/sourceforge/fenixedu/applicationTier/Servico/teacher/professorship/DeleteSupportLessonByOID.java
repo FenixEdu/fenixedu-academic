@@ -7,13 +7,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteSupportLessonByOID extends DeleteDomainObjectService {
 
-    protected Class getDomainObjectClass() {
-        return SupportLesson.class;
-    }
-
 	protected void deleteDomainObject(DomainObject domainObject) throws ExcepcaoPersistencia {
         SupportLesson supportLesson = (SupportLesson) domainObject;
         supportLesson.delete();
+	}
+
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readSupportLessonByOID(idInternal);
 	}
 
 }

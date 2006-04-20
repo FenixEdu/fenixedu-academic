@@ -21,8 +21,9 @@ public class ReadGrantType extends ReadDomainObjectService {
         return InfoGrantType.newInfoFromDomain((GrantType) domainObject);
     }
 
-    protected Class getDomainObjectClass() {
-        return GrantType.class;
-    }
+	@Override
+	protected DomainObject readDomainObject(final Integer idInternal) {
+		return rootDomainObject.readGrantTypeByOID(idInternal);
+	}
 
 }

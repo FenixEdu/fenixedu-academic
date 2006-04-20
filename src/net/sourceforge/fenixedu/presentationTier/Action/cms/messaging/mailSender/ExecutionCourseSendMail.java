@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailAddress;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -37,8 +36,7 @@ public abstract class ExecutionCourseSendMail extends ContextualGroupMailSenderA
 
 		String executionCourseIdString = (String) ((String[]) previousRequestParameters.get("objectCode"))[0];
 
-		ExecutionCourse executionCourse = (ExecutionCourse) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {
-				ExecutionCourse.class, new Integer(executionCourseIdString) });
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseIdString));
 
 		EMailAddress address = null;
 		if (executionCourse.getSite().getMail() != null) {

@@ -60,7 +60,7 @@ public class RoleGroupOperationsManagement extends FenixDispatchAction {
         Person person = this.getLoggedPerson(request);
 
         Integer roleId = (Integer) addGroupForm.get("selectedRole");
-        Role role = (Role) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { Role.class, roleId });
+        Role role = rootDomainObject.readRoleByOID(roleId);
 
         RoleGroup group = new RoleGroup(role);
         Object[] args = new Object[] { person, name, description, group };

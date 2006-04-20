@@ -310,9 +310,7 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 		{
 			IUserView userView = SessionUtils.getUserView(request);
 			Integer websiteId = new Integer(request.getParameter("websiteId"));
-			Website websiteToDelete = (Website) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[]
-			{ Website.class, websiteId });
-			;
+			Website websiteToDelete = (Website) rootDomainObject.readContentByOID(websiteId);
 			if (websiteToDelete != null)
 			{
 				ServiceUtils.executeService(userView, "DeleteWebsite", new Object[]
@@ -339,11 +337,8 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 	{
 		try
 		{
-			IUserView userView = SessionUtils.getUserView(request);
 			Integer websiteId = new Integer(request.getParameter("websiteId"));
-			Website websiteToView = (Website) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[]	
-			{ Website.class, websiteId });
-			;
+			Website websiteToView = (Website) rootDomainObject.readContentByOID(websiteId);
 			request.setAttribute("website",websiteToView);
 		}
 		catch (Exception e)

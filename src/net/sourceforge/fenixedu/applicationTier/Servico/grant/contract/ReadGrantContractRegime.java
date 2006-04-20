@@ -15,13 +15,14 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
  */
 public class ReadGrantContractRegime extends ReadDomainObjectService {
 
-    protected Class getDomainObjectClass() {
-        return GrantContractRegime.class;
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoGrantContractRegimeWithTeacherAndContract
                 .newInfoFromDomain((GrantContractRegime) domainObject);
     }
+
+	@Override
+	protected DomainObject readDomainObject(final Integer idInternal) {
+		return rootDomainObject.readGrantContractByOID(idInternal);
+	}
 
 }

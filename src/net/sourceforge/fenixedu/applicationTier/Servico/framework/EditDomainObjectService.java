@@ -120,7 +120,7 @@ public abstract class EditDomainObjectService extends Service {
 
 	protected abstract DomainObject createNewDomainObject(InfoObject infoObject);
 
-	protected abstract Class getDomainObjectClass();
+	protected abstract DomainObject readDomainObject(final Integer idInternal);
 
 	protected abstract void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
             throws ExcepcaoPersistencia,
@@ -133,8 +133,7 @@ public abstract class EditDomainObjectService extends Service {
 		// if the editing means alter unique keys or the there is no unique
 		// then read by oid to get the object from database.
 		if (objectFromDatabase == null && !isNew(infoObject)) {
-			objectFromDatabase = persistentObject.readByOID(getDomainObjectClass(),
-					infoObject.getIdInternal());
+			objectFromDatabase = readDomainObject(infoObject.getIdInternal());
 			// if the object still null then the object doesn't exist.
 			if (objectFromDatabase == null) {
 				throw new NonExistingServiceException("Object doesn't exist!");

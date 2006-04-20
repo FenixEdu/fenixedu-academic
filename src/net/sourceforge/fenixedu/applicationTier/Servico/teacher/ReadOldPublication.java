@@ -17,12 +17,13 @@ import net.sourceforge.fenixedu.domain.teacher.OldPublication;
  */
 public class ReadOldPublication extends ReadDomainObjectService {
 
-    protected Class getDomainObjectClass() {
-        return OldPublication.class;
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoOldPublication.newInfoFromDomain((OldPublication) domainObject);
     }
+
+	@Override
+	protected DomainObject readDomainObject(final Integer idInternal) {
+		return rootDomainObject.readOldPublicationByOID(idInternal);
+	}
 
 }

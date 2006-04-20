@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -83,13 +82,12 @@ public class MailingListManagement extends FenixDispatchAction
 	public ActionForward viewMailingList(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
 	{
-		IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm mailingListForm = (DynaActionForm) actionForm;
 		Integer mailingListID = (Integer) mailingListForm.get("mailingListID");
 		MailingList mailingListToView = null;
 		try
 		{		
-			mailingListToView = (MailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class, mailingListID});
+			mailingListToView = (MailingList) rootDomainObject.readContentByOID(mailingListID);
 		}
 		catch (Exception e)
 		{
@@ -144,15 +142,14 @@ public class MailingListManagement extends FenixDispatchAction
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
 	{
 		MessageResources resources = this.getResources(request, "CMS_RESOURCES");
-		IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm mailingListForm = (DynaActionForm) actionForm;
 		Integer mailingListID = (Integer) mailingListForm.get("mailingListID");
 		Boolean threaded = (Boolean) mailingListForm.get("threaded");
 		MailingList mailingListToView = null;
 		try
 		{
-			mailingListToView = (MailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class,mailingListID});
-			
+			mailingListToView = (MailingList) rootDomainObject.readContentByOID(mailingListID);
+
 			ActionMessages messages = new ActionMessages();
 			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.messaging.mailingList.create.sucessMessage.label"));
 			saveMessages(request, messages);

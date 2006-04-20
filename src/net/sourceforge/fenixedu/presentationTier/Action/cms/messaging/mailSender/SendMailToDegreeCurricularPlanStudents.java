@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -48,8 +47,7 @@ public class SendMailToDegreeCurricularPlanStudents extends ContextualGroupMailS
 	@Override
 	protected IGroup[] getGroupsToSend(IUserView userView, SendMailForm form, Map previousRequestParameters) throws FenixFilterException, FenixServiceException, FenixActionException {
 		String degreeCurricularPlanID = ((String[])previousRequestParameters.get("degreeCurricularPlanID"))[0];
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {
-				DegreeCurricularPlan.class, Integer.parseInt(degreeCurricularPlanID) });
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(Integer.parseInt(degreeCurricularPlanID));
 
 		IGroup group = new DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup(degreeCurricularPlan);
 		

@@ -42,8 +42,8 @@ public class EditStudentCourseReport extends EditDomainObjectService {
     }
 
 	@Override
-    protected Class getDomainObjectClass() {
-        return StudentCourseReport.class;
-    }
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readStudentCourseReportByOID(idInternal);
+	}
 
 }

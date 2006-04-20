@@ -35,11 +35,6 @@ public class EditGrantSubsidy extends EditDomainObjectService {
     }
 
     @Override
-    protected Class getDomainObjectClass() {
-        return GrantSubsidy.class;
-    }
-
-    @Override
     protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject)
             throws FenixServiceException, ExcepcaoPersistencia {
         /*
@@ -70,5 +65,10 @@ public class EditGrantSubsidy extends EditDomainObjectService {
     public void run(InfoGrantSubsidy infoGrantSubsidy) throws Exception {
         super.run(new Integer(0), infoGrantSubsidy);
     }
+
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readGrantSubsidyByOID(idInternal);
+	}
 
 }

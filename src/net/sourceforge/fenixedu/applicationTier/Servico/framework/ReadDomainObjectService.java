@@ -16,8 +16,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * @author jpvl
  */
 public abstract class ReadDomainObjectService extends Service {
+
 	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
-		DomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
+		DomainObject domainObject = readDomainObject(objectId);
 		InfoObject infoObject = null;
 
 		if (domainObject != null) {
@@ -27,20 +28,8 @@ public abstract class ReadDomainObjectService extends Service {
 		return infoObject;
 	}
 
-	/**
-	 * This is the class in witch the broker will read and delete the
-	 * DomainObject
-	 * 
-	 * @return
-	 */
-	protected abstract Class getDomainObjectClass();
+	protected abstract DomainObject readDomainObject(final Integer idInternal);
 
-	/**
-	 * This method invokes the cloneing to convert from DomainObject to
-	 * InfoObject
-	 * 
-	 * @param infoObject
-	 * @return
-	 */
 	protected abstract InfoObject newInfoFromDomain(DomainObject domainObject);
+
 }

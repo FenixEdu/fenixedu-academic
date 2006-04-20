@@ -40,9 +40,9 @@ public class EditStudentCourseReport extends EditDomainObjectService {
         return DomainFactory.makeStudentCourseReport();
     }
 
-    @Override
-    protected Class getDomainObjectClass() {
-        return StudentCourseReport.class;
-    }
+	@Override
+	protected DomainObject readDomainObject(final Integer idInternal) {
+		return rootDomainObject.readStudentCourseReportByOID(idInternal);
+	}
 
 }

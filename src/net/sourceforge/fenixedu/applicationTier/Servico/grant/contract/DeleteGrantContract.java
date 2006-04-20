@@ -14,10 +14,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 public class DeleteGrantContract extends DeleteDomainObjectService {
 
-    protected Class getDomainObjectClass() {
-        return GrantContract.class;
-    }
-
     protected void doBeforeDelete(DomainObject domainObject, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
         GrantContract grantContract = (GrantContract) domainObject;
@@ -70,5 +66,10 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
         GrantContract grantContract = (GrantContract) domainObject;
         grantContract.delete();
     }
+
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readGrantContractByOID(idInternal);
+	}
 
 }

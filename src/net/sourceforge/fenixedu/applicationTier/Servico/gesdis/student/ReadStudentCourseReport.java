@@ -17,12 +17,13 @@ import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
  */
 public class ReadStudentCourseReport extends ReadDomainObjectService {
 
-    protected Class getDomainObjectClass() {
-        return StudentCourseReport.class;
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoStudentCourseReport.newInfoFromDomain((StudentCourseReport) domainObject);
     }
+
+	@Override
+	protected DomainObject readDomainObject(final Integer idInternal) {
+		return rootDomainObject.readStudentCourseReportByOID(idInternal);
+	}
 
 }

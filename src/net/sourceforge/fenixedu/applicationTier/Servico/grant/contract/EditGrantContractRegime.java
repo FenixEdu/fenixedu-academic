@@ -55,11 +55,6 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     }
 
     @Override
-    protected Class getDomainObjectClass() {
-        return GrantContractRegime.class;
-    }
-
-    @Override
     protected DomainObject readObjectByUnique(InfoObject infoObject) throws ExcepcaoPersistencia {
         InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
         return rootDomainObject.readGrantContractRegimeByOID(infoGrantContractRegime.getIdInternal());
@@ -165,5 +160,10 @@ public class EditGrantContractRegime extends EditDomainObjectService {
         }
         return infoPerson;
     }
+
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readGrantContractRegimeByOID(idInternal);
+	}
 
 }

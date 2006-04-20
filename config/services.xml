@@ -15,13 +15,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadDomainObjectsByInternalID</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadDomainObjectsByInternalID</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>	
-	<service>
 		<name>CheckIsAliveService</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService</implementationClass>
 		<description />

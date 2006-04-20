@@ -7,13 +7,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteGrantContractMovement extends DeleteDomainObjectService {
 
-    protected Class getDomainObjectClass() {
-        return GrantContractMovement.class;
-    }
-
 	protected void deleteDomainObject(DomainObject domainObject) throws ExcepcaoPersistencia {
         GrantContractMovement grantContractMovement = (GrantContractMovement) domainObject;
         grantContractMovement.delete();
+	}
+
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readGrantContractByOID(idInternal);
 	}
 
 }

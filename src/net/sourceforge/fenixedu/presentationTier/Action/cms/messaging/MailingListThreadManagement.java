@@ -17,14 +17,11 @@ import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -42,8 +39,6 @@ public class MailingListThreadManagement extends FenixDispatchAction
 	public ActionForward viewThread(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
 	{
-
-		IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm mailingListForm = (DynaActionForm) actionForm;
 		Integer conversationId = (Integer) mailingListForm.get("threadId");
 		Integer mailingListID = (Integer) mailingListForm.get("mailingListID");
@@ -52,8 +47,8 @@ public class MailingListThreadManagement extends FenixDispatchAction
 		MailingList mailingListToView = null; 
 		try
 		{
-			mailConversationToView = (MailConversation) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailConversation.class,conversationId});
-			mailingListToView = (MailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class,mailingListID});
+			mailConversationToView = (MailConversation) rootDomainObject.readContentByOID(conversationId);
+			mailingListToView = (MailingList) rootDomainObject.readContentByOID(mailingListID);
 		}
 		catch (Exception e)
 		{
@@ -99,7 +94,6 @@ public class MailingListThreadManagement extends FenixDispatchAction
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
 	{
 		MessageResources resources = this.getResources(request, "CMS_RESOURCES");
-		IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm mailingListForm = (DynaActionForm) actionForm;
 		Integer mailingListID = (Integer) mailingListForm.get("mailingListID");
 		Integer threadID = (Integer) mailingListForm.get("threadId");
@@ -107,8 +101,8 @@ public class MailingListThreadManagement extends FenixDispatchAction
 		MailingList mailingListToView = null; 
 		try
 		{
-			mailConversationToView = (MailConversation) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailConversation.class,threadID});
-			mailingListToView = (MailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class,mailingListID});
+			mailConversationToView = (MailConversation) rootDomainObject.readContentByOID(threadID);
+			mailingListToView = (MailingList) rootDomainObject.readContentByOID(mailingListID);
 		}
 		catch (Exception e)
 		{

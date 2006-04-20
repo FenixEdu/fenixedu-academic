@@ -7,13 +7,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteGrantPart extends DeleteDomainObjectService {
 
-    protected Class getDomainObjectClass() {
-        return GrantPart.class;
-    }
-
 	protected void deleteDomainObject(DomainObject domainObject) throws ExcepcaoPersistencia {
 	    GrantPart grantPart = (GrantPart) domainObject;
         grantPart.delete();
+	}
+
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readGrantPartByOID(idInternal);
 	}
 
 }

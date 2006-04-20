@@ -15,12 +15,13 @@ import net.sourceforge.fenixedu.domain.Professorship;
  */
 public class ReadProfessorshipByOID extends ReadDomainObjectService {
 
-    protected Class getDomainObjectClass() {
-        return Professorship.class;
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoProfessorshipWithAll.newInfoFromDomain((Professorship) domainObject);
     }
+
+	@Override
+	protected DomainObject readDomainObject(final Integer idInternal) {
+		return rootDomainObject.readProfessorshipByOID(idInternal);
+	}
 
 }

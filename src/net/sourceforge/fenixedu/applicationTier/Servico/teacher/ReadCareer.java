@@ -18,14 +18,15 @@ import net.sourceforge.fenixedu.domain.teacher.Career;
  */
 public class ReadCareer extends ReadDomainObjectService {
 
-    protected Class getDomainObjectClass() {
-        return Career.class;
-    }
-
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         InfoCareer infoCarrerWithInfoTeacher = InfoCareer.newInfoFromDomain((Career) domainObject); 
     	infoCarrerWithInfoTeacher.setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(((Career) domainObject).getTeacher()));
         return infoCarrerWithInfoTeacher;
     }
+
+	@Override
+	protected DomainObject readDomainObject(final Integer idInternal) {
+		return rootDomainObject.readCareerByOID(idInternal);
+	}
 
 }
