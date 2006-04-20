@@ -99,6 +99,7 @@ function writeRichText(rte, html, width, height, buttons, readOnly) {
 			document.writeln('				<option value="Courier New, Courier, mono">Courier New</option>');
 			document.writeln('				<option value="Times New Roman, Times, serif">Times New Roman</option>');
 			document.writeln('				<option value="Verdana, Arial, Helvetica, sans-serif">Verdana</option>');
+			document.writeln('				<option value="Symbol, Times New Roman, sans-serif">Symbol</option>');
 			document.writeln('			</select>');
 			document.writeln('		</td>');
 			document.writeln('		<td>');
