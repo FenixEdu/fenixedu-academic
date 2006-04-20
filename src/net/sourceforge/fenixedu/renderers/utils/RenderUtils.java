@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.renderers.utils;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.text.Collator;
 import java.text.MessageFormat;
 import java.util.ArrayList;
