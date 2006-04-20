@@ -50,7 +50,7 @@ public class LongInputRenderer extends IntegerInputRenderer {
             try {
                 return Long.parseLong(numberText.trim(), getBase());
             } catch (NumberFormatException e) {
-                throw new ConversionException("Could not convert input '" + value + "' to a long", e);
+                throw new ConversionException("renderers.converter.long", e, true, value);
             }
         }
         

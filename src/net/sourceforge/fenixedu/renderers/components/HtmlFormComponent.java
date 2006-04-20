@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.renderers.components;
 
+import java.lang.reflect.Constructor;
+
 import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.renderers.components.controllers.Controllable;
@@ -9,6 +11,8 @@ import net.sourceforge.fenixedu.renderers.components.converters.Convertible;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
 public abstract class HtmlFormComponent extends HtmlComponent implements Convertible, Controllable, SlotChanger, Validatable {
 
@@ -23,6 +27,8 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
     private MetaSlotKey slotKey;
 
     private boolean disabled;
+    
+    private HtmlValidator validator;
     
     public HtmlFormComponent() {
         super();
@@ -63,6 +69,36 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
         return null;
     }
 
+    public HtmlValidator getValidator() {
+        return this.validator;
+    }
+
+    public void setValidator(HtmlValidator validator) {
+        this.validator = validator;
+    }
+
+    public void setValidator(MetaSlot slot) {
+        Class<HtmlValidator> validatorType = slot.getValidator();
+        
+        if (validatorType == null) {
+            setValidator((HtmlValidator) null);
+            return;
+        }
+    
+        Constructor<HtmlValidator> constructor;
+        try {
+            constructor = validatorType.getConstructor(new Class[] { Validatable.class });
+    
+            HtmlValidator validator = constructor.newInstance(this);
+            RenderUtils.setProperties(validator, slot.getValidatorProperties());
+            
+            setValidator(validator);
+        } catch (Exception e) {
+            throw new RuntimeException("could not create validator '" + validatorType.getName() + "' for slot '"
+                    + slot.getName() + "': ", e);
+        }
+    }
+    
     public boolean hasController() {
         return controller != null;
     }

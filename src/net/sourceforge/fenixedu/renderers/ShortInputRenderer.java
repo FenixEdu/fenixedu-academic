@@ -49,7 +49,7 @@ public class ShortInputRenderer extends IntegerInputRenderer {
             try {
                 return Short.parseShort(numberText.trim(), getBase());
             } catch (NumberFormatException e) {
-                throw new ConversionException("Could not convert input '" + value + "' to a short", e);
+                throw new ConversionException("renderers.converter.short", e, true, value);
             }
         }
         

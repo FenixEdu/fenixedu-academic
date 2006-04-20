@@ -94,4 +94,10 @@ public interface IViewState extends Serializable {
     public void addHiddenSlot(HiddenSlot slot);
 
     public List<HiddenSlot> getHiddenSlots();
+    
+    public List<ViewStateMessage> setMessages(List<ViewStateMessage> messages);
+
+    public List<ViewStateMessage> getMessages();
+    
+    public void addMessage(ViewStateMessage message);
 }

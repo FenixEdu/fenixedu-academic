@@ -10,6 +10,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,6 +35,8 @@ public class ViewState implements IViewState {
     private Class contextClass;
 
     private Map<String, Object> attributes;
+    
+    transient private List<ViewStateMessage> messages;
     
     // Hidden slots, filled from context
     
@@ -77,6 +81,8 @@ public class ViewState implements IViewState {
         this.skipUpdate = false;
         this.updateComponentTree = true;
         this.postBack = false;
+        
+        this.messages = new ArrayList<ViewStateMessage>();
     }
 
     public String getId() {
@@ -255,24 +261,44 @@ public class ViewState implements IViewState {
     // Serialization utils
     //
 
-    public static String encodeToBase64(IViewState state) throws IOException {
+    private static String encodeObjectToBase64(Object object) throws IOException {
         ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
-        ObjectOutputStream stream = new ObjectOutputStream(byteOutputStream);
+        GZIPOutputStream zipStream = new GZIPOutputStream(byteOutputStream);
 
-        stream.writeObject(state);
+        ObjectOutputStream stream = new ObjectOutputStream(zipStream);
+
+        stream.writeObject(object);
         stream.close();
 
         return new String(Base64.encodeBase64(byteOutputStream.toByteArray()));
     }
+    
+    public static String encodeListToBase64(List<IViewState> viewStates) throws IOException {
+        return encodeObjectToBase64(viewStates);
+    }
+    
+    public static String encodeToBase64(IViewState state) throws IOException {
+        return encodeObjectToBase64(state);
+    }
 
-    public static IViewState decodeFromBase64(String encodedState) throws IOException,
-            ClassNotFoundException {
+    private static Object decodeObjectFromBase64(String encodedState) throws IOException, ClassNotFoundException {
         byte[] decodedForm = Base64.decodeBase64(encodedState.getBytes());
 
         ByteArrayInputStream byteInputStream = new ByteArrayInputStream(decodedForm);
-        ObjectInputStream stream = new ObjectInputStream(byteInputStream);
+        GZIPInputStream zipStream = new GZIPInputStream(byteInputStream);
+        
+        ObjectInputStream stream = new ObjectInputStream(zipStream);
 
-        return (IViewState) stream.readObject();
+        return stream.readObject();
+    }
+    
+    public static List<IViewState> decodeListFromBase64(String encodedState) throws IOException, ClassNotFoundException {
+        return (List<IViewState>) decodeObjectFromBase64(encodedState);
+    }
+    
+    public static IViewState decodeFromBase64(String encodedState) throws IOException,
+            ClassNotFoundException {
+        return (IViewState) decodeObjectFromBase64(encodedState);
     }
 
     public void setContext(PresentationContext context) {
@@ -302,4 +328,26 @@ public class ViewState implements IViewState {
         
         return this.hiddenSlots;
     }
+
+    public List<ViewStateMessage> setMessages(List<ViewStateMessage> messages) {
+        ensureMessageList();
+        return this.messages = messages;
+    }
+
+    public List<ViewStateMessage> getMessages() {
+        ensureMessageList();
+        return this.messages;
+    }
+
+    public void addMessage(ViewStateMessage message) {
+        ensureMessageList();
+        this.messages.add(message);
+    }
+
+    private void ensureMessageList() {
+        if (this.messages == null) {
+            this.messages = new ArrayList<ViewStateMessage>();
+        }
+    }
+    
 }

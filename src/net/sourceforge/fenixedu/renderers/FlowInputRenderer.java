@@ -144,7 +144,7 @@ public class FlowInputRenderer extends InputRenderer {
             
             HtmlText label = new HtmlText(slot.getLabel());
             HtmlComponent component = renderSlot(slot);
-            HtmlValidator validator = getValidator(slot, findValidatableComponent(component)); 
+            HtmlValidator validator = getValidator(findValidatableComponent(component), slot); 
 
             if (isLabelExcluded() && validator == null) {
                 return component;

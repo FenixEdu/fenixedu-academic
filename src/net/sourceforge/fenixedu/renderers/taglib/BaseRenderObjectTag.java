@@ -12,6 +12,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
+import net.sourceforge.fenixedu.renderers.model.UserIdentityFactory;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -189,6 +190,8 @@ public abstract class BaseRenderObjectTag extends TagSupport {
         Properties properties = getRenderProperties();
         
         PresentationContext context = createPresentationContext(object, layout, schema, properties);
+        context.getViewState().setUser(UserIdentityFactory.create((HttpServletRequest) this.pageContext.getRequest()));
+        
         HtmlComponent component = renderObject(context, object);
 
         try {

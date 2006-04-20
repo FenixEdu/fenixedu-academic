@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.renderers.taglib;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-public class LayoutConfigTag extends TagSupport {
+public class LayoutConfigTag extends TagSupport implements PropertyContainerTag {
 
 	private String name = null;
 	private BaseRenderObjectTag parent = null;
@@ -28,18 +28,17 @@ public class LayoutConfigTag extends TagSupport {
 	}
 
 	public int doStartTag() throws JspException {
-		parent = (BaseRenderObjectTag) findAncestorWithClass(this, BaseRenderObjectTag.class);
+		this.parent = (BaseRenderObjectTag) findAncestorWithClass(this, BaseRenderObjectTag.class);
 		
-		if (parent != null) {
-			if (getName() != null) {
-				parent.setLayout(getName());
-			}
-			
-			return EVAL_BODY_INCLUDE;
+        if (this.parent == null) {
+            throw new RuntimeException("layout tag can only be used inside a renderer tag");
+        }
+
+		if (getName() != null) {
+			this.parent.setLayout(getName());
 		}
-		else {
-			return SKIP_BODY;
-		}
+		
+		return EVAL_BODY_INCLUDE;
 	}
 	
     public int doEndTag() throws JspException {

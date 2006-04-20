@@ -183,12 +183,14 @@ public class PartialInputRenderer extends DateInputRenderer {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             
-            Object partial = convertCalendarToPartial(type, calendar);
-
-            return partial;
+            try {
+                return convertCalendarToPartial(type, calendar);
+            } catch (Exception e) {
+                throw new ConversionException("fenix.renderers.converter.partial", e, true, value);
+            }
         }
 
-        private Object convertCalendarToPartial(Class type, Calendar calendar) {
+        private Object convertCalendarToPartial(Class type, Calendar calendar) throws Exception {
             if (type.equals(Partial.class)) {
                 Partial partial = new Partial();
                 
@@ -222,13 +224,9 @@ public class PartialInputRenderer extends DateInputRenderer {
                 // ASSUMPTION
                 // assume that we want a subtype of BasePartial and that the subtype implements the factory
                 // method fromCalendarField(Calendar calendar)
-                try {
-                    Method method = type.getMethod("fromCalendarFields", new Class[] { Calendar.class });
-                    
-                    return method.invoke(null, new Object[] { calendar });
-                } catch (Exception e) {
-                    throw new ConversionException("could not convert to instace of " + type, e);
-                }
+                Method method = type.getMethod("fromCalendarFields", new Class[] { Calendar.class });
+                
+                return method.invoke(null, new Object[] { calendar });
             }
         }
         

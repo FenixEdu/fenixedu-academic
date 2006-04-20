@@ -185,26 +185,5 @@ public abstract class TabularLayout extends Layout {
             rowIndex++;
         }
     }
-
-    protected HtmlValidator getValidator(Validatable inputComponent, MetaSlot slot) {
-        Class<HtmlValidator> validatorType = slot.getValidator();
     
-        if (validatorType == null) {
-            return null;
-        }
-    
-        Constructor<HtmlValidator> constructor;
-        try {
-            constructor = validatorType.getConstructor(new Class[] { Validatable.class });
-    
-            HtmlValidator validator = constructor.newInstance(inputComponent);
-            RenderUtils.setProperties(validator, slot.getValidatorProperties());
-            
-            return validator;
-        } catch (Exception e) {
-            logger.warn("could not create validator '" + validatorType.getName() + "' for slot '"
-                    + slot.getName() + "': " + e);
-            return null;
-        }
-    }
 }

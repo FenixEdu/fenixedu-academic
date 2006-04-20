@@ -152,7 +152,7 @@ public class RenderUtils {
         return resources;
     }
     
-    public static String getFormatedResourceString(String key, String ... args) {
+    public static String getFormatedResourceString(String key, Object ... args) {
         String text = getResourceString(key);
         
         MessageFormat format = new MessageFormat(text);

@@ -30,7 +30,7 @@ public class FloatInputRenderer extends NumberInputRenderer {
             try {
                 return Float.parseFloat(numberText);
             } catch (NumberFormatException e) {
-                throw new ConversionException("could not convert '" + value + "' to a float", e);
+                throw new ConversionException("renderers.converter.float", e, true, value);
             }
         }
         

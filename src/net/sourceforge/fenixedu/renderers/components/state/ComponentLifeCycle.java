@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlMultipleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.controllers.Controllable;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
+import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.contexts.InputContext;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
@@ -127,6 +128,10 @@ public class ComponentLifeCycle {
         }
     }
 
+    //
+    // Main
+    //
+    
     private static ComponentLifeCycle instance = new ComponentLifeCycle();
     
     public static ActionForward execute(HttpServletRequest request) throws Exception {
@@ -140,75 +145,83 @@ public class ComponentLifeCycle {
     public ActionForward doLifeCycle(HttpServletRequest request) throws Exception {
         
         EditRequest editRequest = new EditRequest(request);
-        IViewState viewState = editRequest.getViewState();
+        List<IViewState> viewStates = editRequest.getAllViewStates();
 
-        HtmlComponent component = restoreComponent(viewState);
-        
-        viewState.setSkipUpdate(false);
-        viewState.setCurrentDestination((ViewDestination) null);
-        
-        ComponentCollector collector = null;
-        
-        viewState.setUpdateComponentTree(true);
-        while (viewState.getUpdateComponentTree()) {
-            viewState.setUpdateComponentTree(false);
+        for (IViewState viewState : viewStates) {
+            HtmlComponent component = restoreComponent(viewState);
             
-            collector = new ComponentCollector(viewState, component);           
-            updateComponent(collector, editRequest);
+            viewState.setSkipUpdate(false);
+            viewState.setCurrentDestination((ViewDestination) null);
             
-            runControllers(collector, viewState);
-            component = viewState.getComponent();
-        }
-
-        if (! viewState.skipUpdate()) { // EXPERIMENTAL
-            viewState.setValid(validateComponent(component));
-
-            if (viewState.isValid()) {
-                // updateMetaObject can get convert errors
-                viewState.setValid(updateMetaObject(collector, editRequest));
+            ComponentCollector collector = null;
+            
+            viewState.setUpdateComponentTree(true);
+            while (viewState.getUpdateComponentTree()) {
+                viewState.setUpdateComponentTree(false);
+                
+                collector = new ComponentCollector(viewState, component);
+                updateComponent(collector, editRequest);
+                
+                runControllers(collector, viewState);
+                component = viewState.getComponent();
             }
+    
+            if (! viewState.skipUpdate()) { // EXPERIMENTAL
+                viewState.setValid(validateComponent(viewState, component, viewState.getMetaObject()));
+    
+                if (viewState.isValid()) {
+                    // updateMetaObject can get convert errors
+                    viewState.setValid(updateMetaObject(collector, editRequest, viewState));
+                }
+            
+                if (viewState.isValid() && !viewState.skipUpdate()) {
+                    // updateDomain can get convert errors
+                    updateDomain(collector, viewState);
+                }
+            }
+        }
         
-            if (viewState.isValid() && !viewState.skipUpdate()) {
-                // updateDomain can get convert errors
-                updateDomain(collector, editRequest);
-            }
-        }
-
-        ViewDestination destination = getDestination(viewState);
-        prepareDestination(viewState, editRequest);
+        ViewDestination destination = getDestination(viewStates);
+        prepareDestination(viewStates, editRequest);
 
         return buildForward(destination);
     }
     
-    private ViewDestination getDestination(IViewState viewState) {
-        ViewDestination destination;
+    private ViewDestination getDestination(List<IViewState> viewStates) {
+        ViewDestination destination = null;
         
-        if (viewState.skipUpdate()) {
-            destination = viewState.getCurrentDestination();
-
-            if (destination == null) {
-                destination = viewState.getInputDestination();
+        for (IViewState viewState : viewStates) {
+            if (viewState.skipUpdate()) {
+                destination = viewState.getCurrentDestination();
+    
+                if (destination == null) {
+                    destination = viewState.getInputDestination();
+                }
             }
-        }
-        else {
-            destination = viewState.getCurrentDestination();
-        
-            if (destination == null) {
-                // TODO: remove hardcoded?
-                destination = viewState.getDestination(viewState.isValid() ? "success" : "invalid");
+            else {
+                destination = viewState.getCurrentDestination();
+            
+                if (destination == null) {
+                    // TODO: remove hardcoded?
+                    destination = viewState.getDestination(viewState.isValid() ? "success" : "invalid");
+                }
+                
+                if (destination == null && !viewState.isValid()) {
+                    destination = viewState.getInputDestination();
+                }
             }
             
-            if (destination == null && !viewState.isValid()) {
-                destination = viewState.getInputDestination();
+            if (destination != null) {
+                break;
             }
-        }        
+        }
 
         return destination;
     }
 
-    private boolean validateComponent(HtmlComponent component) {
+    private boolean validateComponent(IViewState viewState, HtmlComponent component, MetaObject metaObject) {
         boolean valid = true;
-
+        
         List<HtmlComponent> validators = component.getChildren(new Predicate() {
 
             public boolean evaluate(Object component) {
@@ -217,11 +230,54 @@ public class ComponentLifeCycle {
             
         });
         
+        if (validators.isEmpty()) {
+            List<HtmlComponent> formComponents = component.getChildren(new Predicate() {
+
+                public boolean evaluate(Object object) {
+                    if (! (object instanceof HtmlFormComponent)) {
+                        return false;
+                    }
+                    
+                    HtmlFormComponent formComponent = (HtmlFormComponent) object;
+                    return formComponent.getTargetSlot() != null;
+                }
+                
+            });
+            
+            if (component instanceof HtmlFormComponent) {
+                formComponents.add(component);
+            }
+            
+            if (! formComponents.isEmpty()) {
+                HtmlFormComponent formComponent = (HtmlFormComponent) formComponents.get(0);
+                
+                HtmlValidator validator = formComponent.getValidator();
+                
+                if (validator == null) {
+                    MetaSlotKey key = formComponent.getTargetSlot();
+                    MetaSlot slot = getMetaSlot(metaObject, key);
+                    
+                    formComponent.setValidator(slot);
+                    validator = formComponent.getValidator();
+                }
+                
+                if (validator != null) {
+                    validators.add(validator);
+                }
+            }
+        }
+
         for (HtmlComponent validator : validators) {
             HtmlValidator htmlValidator = (HtmlValidator) validator;
             
             htmlValidator.performValidation();
             valid = valid && htmlValidator.isValid();
+            
+            if (! htmlValidator.isValid()) { // validator message
+                if (metaObject instanceof MetaSlot) {
+                    viewState.addMessage(new ViewStateMessage((MetaSlot) metaObject, htmlValidator.getErrorMessage()));
+                }
+            }
         }
         
         return valid;
@@ -240,9 +296,9 @@ public class ComponentLifeCycle {
         }
     }
 
-    public void prepareDestination(IViewState viewState, HttpServletRequest request)
+    public void prepareDestination(List<IViewState> viewStates, HttpServletRequest request)
             throws IOException, ClassNotFoundException {
-        request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, viewState);
+        request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, viewStates);
     }
 
     public HtmlComponent restoreComponent(IViewState viewState) throws InstantiationException, IllegalAccessException {
@@ -289,17 +345,14 @@ public class ComponentLifeCycle {
         }
     }
 
-    private void updateDomain(ComponentCollector collector, EditRequest editRequest) throws IOException, ClassNotFoundException {
-        IViewState viewState = editRequest.getViewState();
-        MetaObject metaObject = viewState.getMetaObject();
-        
-        metaObject.commit();
+    private void updateDomain(ComponentCollector collector, IViewState viewState) throws IOException, ClassNotFoundException {
+        viewState.getMetaObject().commit();
     }
     
     /**
      * @return true if no conversion error occurs
      */
-    private boolean updateMetaObject(ComponentCollector collector, EditRequest editRequest) throws Exception {
+    private boolean updateMetaObject(ComponentCollector collector, EditRequest editRequest, IViewState viewState) throws Exception {
         boolean hasConvertError = false;
 
         List<HtmlFormComponent> formComponents = collector.getFormComponents();       
@@ -310,7 +363,7 @@ public class ComponentLifeCycle {
                 continue;
             }
             
-            MetaSlot metaSlot = getMetaSlot(editRequest.getViewState().getMetaObject(), targetSlot);
+            MetaSlot metaSlot = getMetaSlot(viewState.getMetaObject(), targetSlot);
 
             if (metaSlot == null) {
                 continue;
@@ -321,8 +374,7 @@ public class ComponentLifeCycle {
                 metaSlot.setObject(finalValue);
             } catch (Exception e) {
                 logger.warn("failed to do conversion for slot " + metaSlot.getName() + ": " + e);
-
-                addConvertError(editRequest, formComponent, metaSlot, e);
+                addConvertError(viewState, metaSlot, e);
                 hasConvertError = true;
             }
         }
@@ -332,6 +384,15 @@ public class ComponentLifeCycle {
     }
 
     private MetaSlot getMetaSlot(MetaObject metaObject, MetaSlotKey targetSlot) {
+        if (metaObject instanceof MetaSlot) {
+            if (metaObject.getKey().equals(targetSlot)) {
+                return (MetaSlot) metaObject;
+            }
+            else {
+                metaObject = ((MetaSlot) metaObject).getMetaObject(); // HACK: for hidden slots
+            }
+        }
+
         // search in normal slots
         for (MetaSlot slot : metaObject.getSlots()) {
             if (slot.getKey().equals(targetSlot)) {
@@ -349,14 +410,8 @@ public class ComponentLifeCycle {
         return null;
     }
 
-    private void addConvertError(EditRequest editRequest, HtmlFormComponent formComponent, MetaSlot metaSlot, Exception exception) {
-        // TODO: cfgi, really add errors to request
-//        String message = RenderUtils.getResourceString("convert.error");
-//
-//        ActionMessages messages = getErrors(editRequest);
-//        messages.add(editRequest.getViewState().getId(), new ActionMessage(message, false));
-//
-//        saveErrors(editRequest, messages);
+    private void addConvertError(IViewState viewState, MetaSlot metaSlot, Exception exception) {
+        viewState.addMessage(new ViewStateMessage(metaSlot, exception.getLocalizedMessage()));
     }
 
     private ActionForward buildForward(ViewDestination destination) {

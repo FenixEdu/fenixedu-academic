@@ -50,7 +50,8 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
 
     @Override
     protected ActionForward processActionPerform(HttpServletRequest request, HttpServletResponse response, Action action, ActionForm form, ActionMapping mapping) throws IOException, ServletException {
-        if (request.getParameter(LifeCycleConstants.VIEWSTATE_PARAM_NAME) != null && request.getAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME) == null) {
+        if ((request.getParameterValues(LifeCycleConstants.VIEWSTATE_PARAM_NAME) != null || request.getParameterValues(LifeCycleConstants.VIEWSTATE_LIST_PARAM_NAME) != null) 
+                && request.getAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME) == null) {
  
             // TODO: check if we should do this only after forwarding
             request.setAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME, true);

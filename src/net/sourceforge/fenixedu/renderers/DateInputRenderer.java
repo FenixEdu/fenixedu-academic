@@ -134,7 +134,7 @@ public class DateInputRenderer extends TextFieldRenderer {
             try {
                 return format.parse(text);
             } catch (ParseException e) {
-                throw new ConversionException("could not convert input \"" + value + "\" to a date", e);
+                throw new ConversionException("renderers.converter.date", e, true, value);
             }
         }
     }

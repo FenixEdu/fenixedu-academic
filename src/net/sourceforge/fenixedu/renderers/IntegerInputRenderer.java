@@ -67,7 +67,7 @@ public class IntegerInputRenderer extends NumberInputRenderer {
             try {
                 return Integer.parseInt(numberText.trim(), getBase());
             } catch (NumberFormatException e) {
-                throw new ConversionException("Could not convert input '" + value + "' to a integer", e);
+                throw new ConversionException("renderers.converter.integer", e, true, value);
             }
         }
         

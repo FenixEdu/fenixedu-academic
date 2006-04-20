@@ -126,6 +126,14 @@ public class HiddenSlotTag extends TagSupport {
     }
 	
     protected void addHiddenSlot(String slot, Object value, String converterName) throws JspException {
+        if (slot == null) {
+            slot = getContainerParent().getSlot();
+        }
+        
+        if (slot == null) {
+            throw new RuntimeException("slot must be defined or directly or in the parent edit tag");
+        }
+        
         Class<Converter> converter = null;
         
         if (converterName != null) {

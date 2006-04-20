@@ -66,6 +66,16 @@
     </attribute>
     
     <attribute>
+      <name>slot</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Allows to specify a slot directly without having to define a schema that contains
+        only that specific slot.
+      </description>
+    </attribute>
+
+    <attribute>
       <name>template</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -166,6 +176,16 @@
     </attribute>
 
     <attribute>
+      <name>slot</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Allows to specify a slot directly without having to define a schema that contains
+        only that specific slot.
+      </description>
+    </attribute>
+
+    <attribute>
       <name>oid</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -207,8 +227,53 @@
          Indicates if the tag is beeing used inside. This controls if a form tag is generated or not.
       </description>
     </attribute>
+
+    <attribute>
+      <name>visible</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         Makes the editor invisible. This attribute can be used with an hidden tag to pass an hidden value.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>validator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         Allows to specify the validator class to be used.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>converter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         Allows to specify the converter class to be used.
+      </description>
+    </attribute>
   </tag>
   
+  <tag>
+    <name>validator</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.ValidatorTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Allows you tho specify the validator of a slot edition and give extra properties to that validator.
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+            The name of the validator class.
+      </description>
+    </attribute>
+  </tag>
+
   <tag>
     <name>destination</name>
     <tag-class>net.sourceforge.fenixedu.renderers.taglib.EditLinkTag</tag-class>
@@ -254,25 +319,6 @@
     </attribute>
   </tag>
   
-  <tag>
-    <name>layout</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutConfigTag</tag-class>
-    <body-content>JSP</body-content>
-    <description>
-      Allows selection and configuration of a specific layout. The use of this tag overrides the
-      attributes 'layout' and 'template' of the parent tag.
-    </description>
-
-    <attribute>
-      <name>name</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-      <description>
-        	The name of the layout that will be used to render the object.
-      </description>
-    </attribute>
-  </tag>
-
   <tag>
     <name>view</name>
     <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixViewObjectTag</tag-class>
@@ -398,10 +444,10 @@
 
   <tag>
     <name>property</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutPropertyTag</tag-class>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.PropertyTag</tag-class>
     <body-content>empty</body-content>
     <description>
-    		Sets a specific property of the layout.
+    		Sets a specific property of the layout or validator.
     </description>
 
     <attribute>
@@ -426,15 +472,15 @@
   <tag>
     <name>hidden</name>
     <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixHiddenSlotTag</tag-class>
-    <body-content>JSP</body-content>
+    <body-content>empty</body-content>
     <description>
       Permites the user to supply slots that are context dependant and are nor present
       in the schema or provided by the user.
     </description>
-
+    
     <attribute>
       <name>slot</name>
-      <required>true</required>
+      <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
@@ -526,6 +572,29 @@
       <type>java.lang.Boolean</type>
       <description>
         Indicates that that all values for the slot should be collected in a list.
+      </description>
+    </attribute>
+  </tag>
+  
+  <tag>
+    <name>context</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.ContextTag</tag-class>
+    <body-content>JSP</body-content>
+
+  </tag>
+
+  <tag>
+    <name>message</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.MessageTag</tag-class>
+    <body-content>empty</body-content>
+
+    <attribute>
+      <name>for</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Selects the context id used to fetch the message.
       </description>
     </attribute>
   </tag>

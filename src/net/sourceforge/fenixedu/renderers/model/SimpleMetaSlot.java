@@ -115,6 +115,13 @@ public class SimpleMetaSlot implements MetaSlot {
 
     public void setUser(UserIdentity user) {
         this.user = user;
+        
+        // When we are using a slot directly instead of accessing it though the base meta object
+        if (getMetaObject() != null) {
+            if (getMetaObject().getUser() == null || !getMetaObject().getUser().equals(user)) { // avoid recursion
+                getMetaObject().setUser(user);
+            }
+        }
     }
 
     public UserIdentity getUser() {
@@ -201,7 +208,9 @@ public class SimpleMetaSlot implements MetaSlot {
     }
 
     public void commit() {
-        // nothing to be done
+        // delegate to parent meta object
+        // ASSUMPTION: the commit process will only include slots that were changed
+        getMetaObject().commit(); 
     }
 
 }

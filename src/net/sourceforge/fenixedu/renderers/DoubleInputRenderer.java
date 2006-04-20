@@ -31,7 +31,7 @@ public class DoubleInputRenderer extends NumberInputRenderer {
             try {
                 return Double.parseDouble(numberText);
             } catch (NumberFormatException e) {
-                throw new ConversionException("could not convert '" + value + "' to a double", e);
+                throw new ConversionException("renderers.converter.double", e, true, value);
             }
         }
     }

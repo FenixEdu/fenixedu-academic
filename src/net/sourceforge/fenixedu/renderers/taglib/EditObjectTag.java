@@ -29,9 +29,8 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
+import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
-import org.apache.struts.Globals;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.taglib.TagUtils;
 
@@ -39,18 +38,39 @@ public class EditObjectTag extends BaseRenderObjectTag {
     
     private boolean nested;
     
+    private boolean visible;
+
     private String action;
+
+    private String slot;
+    
+    private String validator;
+    
+    private String converter;
     
     private Map<String, ViewDestination> destinations;
     
     private List<HiddenSlot> hiddenSlots;
     
+    private Properties validatorProperties;
+    
     public EditObjectTag() {
         super();
 
         this.nested = false;
+        this.visible = true;
+        
         this.destinations = new Hashtable<String, ViewDestination>();
         this.hiddenSlots = new ArrayList<HiddenSlot>();
+        this.validatorProperties = new Properties();
+    }
+
+    public boolean isVisible() {
+        return this.visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public boolean isNested() {
@@ -69,33 +89,47 @@ public class EditObjectTag extends BaseRenderObjectTag {
         this.action = action;
     }
 
+    public String getSlot() {
+        return this.slot;
+    }
+
+    public void setSlot(String slot) {
+        this.slot = slot;
+    }
+
+    public String getConverter() {
+        return this.converter;
+    }
+
+    public void setConverter(String converter) {
+        this.converter = converter;
+    }
+
+    public String getValidator() {
+        return this.validator;
+    }
+
+    public void setValidator(String validator) {
+        this.validator = validator;
+    }
+
     @Override
     public void release() {
         super.release();
 
         this.nested = false;
+        this.visible = true;
         this.action = null;
+        this.slot = null;
+        this.converter = null;
+        this.validator = null;
         this.destinations = new Hashtable<String, ViewDestination>();
         this.hiddenSlots = new ArrayList<HiddenSlot>();
+        this.validatorProperties = new Properties();
     }
 
     protected boolean isPostBack() {
-        IViewState viewState = getViewState();
-
-        if (viewState == null) {
-            return false;
-        }
-
-        if (getId() == null) {
-            if (viewState.getId() != null) {
-                return false;
-            }
-        }
-        else if (! getId().equals(viewState.getId())) {
-            return false;
-        }
-        
-        return getInputDestination().equals(viewState.getInputDestination());
+        return getViewState() != null;
     }
 
     @Override
@@ -135,7 +169,12 @@ public class EditObjectTag extends BaseRenderObjectTag {
         if (isPostBack()) {
             return retrieveComponent();
         } else {
-            return RenderKit.getInstance().render(context, object);
+            if (getSlot() == null) {
+                return RenderKit.getInstance().render(context, object);
+            }
+            else {
+                return RenderKit.getInstance().render(context, context.getMetaObject().getObject());
+            }
         }
     }
 
@@ -145,6 +184,8 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
     @Override
     protected void drawComponent(PresentationContext context, HtmlComponent component) throws JspException, IOException {
+        component.setVisible(isVisible());
+        
         InputContext inputContext = (InputContext) context;
         IViewState viewState = inputContext.getViewState();
 
@@ -162,10 +203,15 @@ public class EditObjectTag extends BaseRenderObjectTag {
             viewState.addHiddenSlot(slot);
         }
 
-        HtmlHiddenField htmlViewStateField = new HtmlHiddenField(LifeCycleConstants.VIEWSTATE_PARAM_NAME, ViewState.encodeToBase64(viewState));
-        hiddenFields.add(htmlViewStateField);
+        if (hasParentForm()) {
+            addViewStateToParentForm(viewState);
+        }
+        else {
+            HtmlHiddenField htmlViewStateField = new HtmlHiddenField(LifeCycleConstants.VIEWSTATE_PARAM_NAME, ViewState.encodeToBase64(viewState));
+            hiddenFields.add(htmlViewStateField);
+        }
         
-        if (isNested()) {
+        if (isNested() || getSlot() != null) {
             HtmlInlineContainer container = new HtmlInlineContainer();
             
             for (HtmlHiddenField field : hiddenFields) {
@@ -196,6 +242,15 @@ public class EditObjectTag extends BaseRenderObjectTag {
         componentToDraw.draw(pageContext);
     }
 
+    protected void addViewStateToParentForm(IViewState viewState) {
+        ContextTag parent = (ContextTag) findAncestorWithClass(this, ContextTag.class);
+        parent.addViewState(viewState);
+    }
+
+    protected boolean hasParentForm() {
+        return findAncestorWithClass(this, ContextTag.class) != null;
+    }
+
     protected String getActionPath() {
         HttpServletResponse response = (HttpServletResponse) this.pageContext.getResponse();
         
@@ -209,7 +264,42 @@ public class EditObjectTag extends BaseRenderObjectTag {
     }
 
     protected IViewState getViewState() {
-        return (IViewState) pageContext.findAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+        List<IViewState> viewStates = (List<IViewState>) pageContext.findAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+        
+        if (viewStates == null) {
+            return null;
+        }
+        
+        for (IViewState viewState : viewStates) {
+            if (getId() == null) {
+                if (viewState.getId() != null) {
+                    continue;
+                }
+            }
+            else if (! getId().equals(viewState.getId())) {
+                continue;
+            }
+            
+            if (! getInputDestination().equals(viewState.getInputDestination())) {
+                continue;
+            }
+            
+            if (getSlot() != null) {
+                if (! (viewState.getMetaObject() instanceof MetaSlot)) {
+                    continue;
+                }
+
+                MetaSlot metaSlot = (MetaSlot) viewState.getMetaObject();
+                
+                if (! metaSlot.getName().equals(getSlot())) {
+                        continue;
+                }
+            }
+
+            return viewState;
+        }
+        
+        return null;
     }
     
     protected IViewState createViewState(Object targetObject) {
@@ -217,7 +307,15 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
         if (isPostBack()) {
             viewState = getViewState();
-            updateHiddenSlots(viewState.getMetaObject());
+
+            MetaObject metaObject = viewState.getMetaObject();
+            
+            if (metaObject instanceof MetaSlot) {
+                updateHiddenSlots(((MetaSlot) metaObject).getMetaObject()); 
+            }
+            else {
+                updateHiddenSlots(metaObject);
+            }
         }
         else {
             viewState = new ViewState(getId());
@@ -226,7 +324,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
             viewState.setProperties(getRenderProperties());
             viewState.setRequest((HttpServletRequest) pageContext.getRequest());
             
-            Schema schema = RenderKit.getInstance().findSchema(getSchema());
+            Schema schema = getComputedSchema(targetObject);
             MetaObject metaObject = createMetaObject(targetObject, schema);
             viewState.setMetaObject(metaObject);
             
@@ -243,6 +341,59 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
         
         return viewState;
+    }
+
+    protected Schema getComputedSchema(Object targetObject) {
+        if (getSlot() == null) {
+            return RenderKit.getInstance().findSchema(getSchema());
+        }
+        else {
+            Schema schema = new Schema(null, targetObject.getClass());
+            
+            SchemaSlotDescription slotDescription = new SchemaSlotDescription(getSlot());
+            slotDescription.setValidator(getValidatorClass());
+            slotDescription.setConverter(getConverterClass());
+            
+            if (slotDescription.getValidator() != null) {
+                slotDescription.setValidatorProperties(getValidatorProperties());
+            }
+            
+            schema.addSlotDescription(slotDescription);
+            
+            return schema;
+        }
+    }
+
+    protected Properties getValidatorProperties() {
+        return this.validatorProperties;
+    }
+
+    protected Class<Converter> getConverterClass() {
+        String converterName = getConverter();
+        
+        if (converterName == null) {
+            return null;
+        }
+        
+        try {
+            return (Class<Converter>) Class.forName(converterName);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("specified converter does not exist: " + converterName, e);
+        }
+    }
+
+    protected Class<HtmlValidator> getValidatorClass() {
+        String validatorName = getValidator();
+        
+        if (validatorName == null) {
+            return null;
+        }
+        
+        try {
+            return (Class<HtmlValidator>) Class.forName(validatorName);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("specified validator does not exist: " + validatorName, e);
+        }
     }
 
     private void updateHiddenSlots(MetaObject metaObject) {
@@ -268,41 +419,22 @@ public class EditObjectTag extends BaseRenderObjectTag {
             slot.setKey(metaSlot.getKey());
         }
         
-        return metaObject;
+        if (getSlot() == null) {
+            return metaObject;
+        }
+        else {
+            for (MetaSlot slot : metaObject.getSlots()) {
+                if (slot.getName().equals(getSlot())) {
+                    return slot;
+                }
+            }
+            
+            throw new RuntimeException("specified slot '" + getSlot() + "' does not exist in object " + targetObject);
+        }
     }
 
     protected MetaObject getNewMetaObject(Object targetObject, Schema schema) {
         return MetaObjectFactory.createObject(targetObject, schema);
-    }
-
-    protected ViewDestination getInputDestination() {
-        String currentPath = getCurrentPath();
-        ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
-        
-        return new ViewDestination(currentPath, module.getPrefix(), false);       
-    }
-    
-    protected String getCurrentPath() {
-        ActionMapping mapping = (ActionMapping) pageContext.findAttribute(Globals.MAPPING_KEY);
-        String currentPath = TagUtils.getInstance().getActionMappingURL(mapping.getPath(), pageContext);
-        String contextPath = ((HttpServletRequest) pageContext.getRequest()).getContextPath();
-
-        ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
-
-        if (currentPath.startsWith(contextPath)) {
-            currentPath = currentPath.substring(contextPath.length());
-        }
-
-        if (module != null && currentPath.startsWith(module.getPrefix())) {
-            currentPath = currentPath.substring(module.getPrefix().length());
-        }
-        
-        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-        if (request.getQueryString() != null) {
-            currentPath = currentPath + "?" + request.getQueryString();
-        }
-        
-        return currentPath;
     }
 
     private ViewDestination normalizeDestination(ViewDestination destination, String currentPath, String module) {
@@ -345,5 +477,9 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
         
         return null;
+    }
+    
+    public void addValidatorProperty(String name, String value) {
+        this.validatorProperties.setProperty(name, value);
     }
 }

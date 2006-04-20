@@ -190,7 +190,7 @@
 
   <tag>
     <name>property</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutPropertyTag</tag-class>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.PropertyTag</tag-class>
     <body-content>empty</body-content>
     <description>
       Sets a specific property of the layout.
