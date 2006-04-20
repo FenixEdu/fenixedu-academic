@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -19,7 +17,20 @@ import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
 public class Degree extends Degree_Base {
+
+	public static final ComparatorChain DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE = new ComparatorChain();
+	public static final ComparatorChain DEGREE_COMPARATOR_BY_NAME_AND_BOLONHA_DEGREE_TYPE = new ComparatorChain();
+
+	static {
+		DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("tipoCurso"));
+		DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("nome"));
+		DEGREE_COMPARATOR_BY_NAME_AND_BOLONHA_DEGREE_TYPE.addComparator(new BeanComparator("bolonhaDegreeType"));
+		DEGREE_COMPARATOR_BY_NAME_AND_BOLONHA_DEGREE_TYPE.addComparator(new BeanComparator("nome"));
+	}
 
     protected Degree() {
         super();
