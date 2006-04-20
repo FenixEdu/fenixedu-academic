@@ -22,51 +22,49 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditGrantPaymentEntity extends Service {
 
-    public void run(InfoGrantCostCenter infoObject) throws FenixServiceException,
-    				ExcepcaoPersistencia{
-        GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject.readGrantPaymentEntityByOID(infoObject.getIdInternal() );
-        if(grantCostCenter == null){
-        	grantCostCenter = DomainFactory.makeGrantCostCenter();
-        } 
+    public void run(InfoGrantCostCenter infoObject) throws FenixServiceException, ExcepcaoPersistencia {
+        GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject
+                .readGrantPaymentEntityByOID(infoObject.getIdInternal());
+        if (grantCostCenter == null) {
+            grantCostCenter = DomainFactory.makeGrantCostCenter();
+        }
         grantCostCenter.setDesignation(infoObject.getDesignation());
         grantCostCenter.setNumber(infoObject.getNumber());
 
-        if (infoObject.getInfoResponsibleTeacher() != null) {            
-            Teacher teacher = Teacher.readByNumber(infoObject
-                    .getInfoResponsibleTeacher().getTeacherNumber());
+        if (infoObject.getInfoResponsibleTeacher() != null) {
+            Teacher teacher = Teacher.readByNumber(infoObject.getInfoResponsibleTeacher()
+                    .getTeacherNumber());
             if (teacher == null)
                 throw new GrantOrientationTeacherNotFoundException();
             grantCostCenter.setResponsibleTeacher(teacher);
         }
     }
 
-    public void run(InfoGrantProject infoObject) throws FenixServiceException,
-    				ExcepcaoPersistencia {
-        GrantProject grantProject = (GrantProject) rootDomainObject.readGrantPaymentEntityByOID(infoObject.getIdInternal() );
-        if(grantProject == null){
-        	grantProject = DomainFactory.makeGrantProject();
-        } 
-    	grantProject.setDesignation(infoObject.getDesignation());
-    	grantProject.setNumber(infoObject.getNumber());
-    	//Grant Cost Center
-    	if (infoObject.getInfoGrantCostCenter() != null ){
-	    	final GrantCostCenter  grantCostCenter = (GrantCostCenter) rootDomainObject.readGrantPaymentEntityByOID(infoObject.getInfoGrantCostCenter().getIdInternal());
-	    	if(grantCostCenter == null)
-	    		throw new GrantOrientationTeacherNotFoundException();
-	    	grantProject.setGrantCostCenter(grantCostCenter);
-	    	
-    	}
-    	
-    	//ResponsibleTeacher
-    	if (infoObject.getInfoResponsibleTeacher() != null) {            
-            Teacher teacher = Teacher.readByNumber(infoObject
-                    .getInfoResponsibleTeacher().getTeacherNumber());
+    public void run(InfoGrantProject infoObject) throws FenixServiceException, ExcepcaoPersistencia {
+        GrantProject grantProject = (GrantProject) rootDomainObject
+                .readGrantPaymentEntityByOID(infoObject.getIdInternal());
+        if (grantProject == null) {
+            grantProject = DomainFactory.makeGrantProject();
+        }
+        grantProject.setDesignation(infoObject.getDesignation());
+        grantProject.setNumber(infoObject.getNumber());
+        // Grant Cost Center
+        if (infoObject.getInfoGrantCostCenter() != null) {
+            final GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject
+                    .readGrantPaymentEntityByOID(infoObject.getInfoGrantCostCenter().getIdInternal());
+            if (grantCostCenter == null)
+                throw new GrantOrientationTeacherNotFoundException();
+            grantProject.setGrantCostCenter(grantCostCenter);
+
+        }
+
+        // ResponsibleTeacher
+        if (infoObject.getInfoResponsibleTeacher() != null) {
+            Teacher teacher = Teacher.readByNumber(infoObject.getInfoResponsibleTeacher()
+                    .getTeacherNumber());
             if (teacher == null)
                 throw new GrantOrientationTeacherNotFoundException();
             grantProject.setResponsibleTeacher(teacher);
         }
-
-    	
-     }
-      
+    }
 }

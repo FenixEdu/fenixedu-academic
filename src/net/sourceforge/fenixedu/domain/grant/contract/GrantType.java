@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.grant.contract;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
