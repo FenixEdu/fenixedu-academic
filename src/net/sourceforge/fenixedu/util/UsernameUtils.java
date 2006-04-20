@@ -4,10 +4,16 @@
 package net.sourceforge.fenixedu.util;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -52,16 +58,22 @@ public class UsernameUtils extends FenixUtil {
             String istUsername = null; 
             String username = person.getUsername().toUpperCase().trim();
             
-            if(username.startsWith("D")) {
+            if(username.startsWith("D") && person.getTeacher() != null) {
                 istUsername = ist + sumNumber(username.substring(1), 10000);
-            }else if(username.startsWith("F")) {
+            }else if(username.startsWith("F") && person.getEmployee() != null) {
                 istUsername = ist + sumNumber(username.substring(1), 20000);
-            }else if(username.startsWith("B")) {
+            }else if(username.startsWith("B") && person.getGrantOwner() != null) {
                 istUsername = ist + sumNumber(username.substring(1), 30000);
-            }else if(username.startsWith("M")) {
+            }else if(username.startsWith("M") && person.getStudentByType(DegreeType.MASTER_DEGREE) != null) {
                 istUsername = ist + sumNumber(username.substring(1), 40000);
-            }else if(username.startsWith("L")) {
+            }else if(username.startsWith("L") && person.getStudentByType(DegreeType.DEGREE) != null) {
                 istUsername = ist + sumNumber(username.substring(1), 100000);
+            }else if(username.startsWith("C")) {
+                return person.getIstUsername();
+            }else if(username.startsWith("P")){
+                User user = Collections.max(RootDomainObject.getInstance().getUsers(), User.USER_UID_COMPARATOR);
+                Integer maxIstNumber = Integer.valueOf(user.getUserUId().replaceFirst("[a-zA-Z]+", ""));
+                istUsername = ist + (maxIstNumber + 1);
             }
             
             return istUsername;
