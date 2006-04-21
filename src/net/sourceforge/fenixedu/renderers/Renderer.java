@@ -205,4 +205,20 @@ public abstract class Renderer {
         RenderKit kit = RenderKit.getInstance(); 
         return kit.render(newContext, value, type);
     }
+    
+    /**
+     * Same as previous method but does the rendering with the specified renderer. The renderer
+     * must know how to handle the value of the slot. 
+     */
+    protected HtmlComponent renderSlot(Renderer renderer, MetaSlot slot) {
+        PresentationContext newContext = getContext().createSubContext(slot);
+        newContext.setLayout(slot.getLayout());
+        newContext.setProperties(slot.getProperties());
+
+        Object value = slot.getObject();
+        Class type = slot.getType();
+        
+        RenderKit kit = RenderKit.getInstance(); 
+        return kit.renderUsing(renderer, newContext, value, type);
+    }
 }
