@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -53,7 +54,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = { ExecutionYear.class };
-        List<ExecutionYear> executionYears = (List<ExecutionYear>) ServiceUtils.executeService(userView,
+        Collection<ExecutionYear> executionYears = (List<ExecutionYear>) ServiceUtils.executeService(userView,
                 "ReadAllDomainObjects", args);
 
         List<ExecutionYear> notClosedExecutionYears = (List<ExecutionYear>) CollectionUtils.select(
