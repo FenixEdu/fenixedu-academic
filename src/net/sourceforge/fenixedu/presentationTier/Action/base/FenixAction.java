@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.ExcepcaoSessaoInexistente;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
@@ -16,6 +17,8 @@ import org.apache.struts.action.ActionMapping;
 
 public abstract class FenixAction extends Action {
 
+    protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+    
     protected HttpSession getSession(HttpServletRequest request) throws ExcepcaoSessaoInexistente {
         HttpSession result = request.getSession(false);
         if (result == null) {
