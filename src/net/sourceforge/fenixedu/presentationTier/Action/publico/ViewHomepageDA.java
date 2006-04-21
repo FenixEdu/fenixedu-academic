@@ -72,7 +72,7 @@ public class ViewHomepageDA extends FenixContextDispatchAction {
     public ActionForward emailPng(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final String email = getEmailString(request);
-        final byte[] pngFile = TextPngCreator.createPng("Sleek", 25, "000000", email);
+        final byte[] pngFile = TextPngCreator.createPng("arial", 12, "000000", email);
         response.setContentType("image/png");
         response.getOutputStream().write(pngFile);
         response.getOutputStream().close();

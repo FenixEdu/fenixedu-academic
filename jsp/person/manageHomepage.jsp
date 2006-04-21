@@ -7,7 +7,7 @@
 <h2 class="mtop05"><bean:message key="title.manage.homepage" bundle="HOMEPAGE_RESOURCES"/></h2>
 
 <div class="infoop2">
-<p class="mvert0"><bean:message key="description.manage.homepage" bundle="HOMEPAGE_RESOURCES"/></p>
+<p class="mvert0"><bean:message key="message.homepage.info" bundle="HOMEPAGE_RESOURCES"/></p>
 </div>
 
 <p><span class="error"><html:errors/></span></p>
