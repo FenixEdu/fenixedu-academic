@@ -22,6 +22,7 @@ public class RootDomainObject extends RootDomainObject_Base {
                 final IPersistentObject persistentObject = suportePersistente.getIPersistentObject();
                 instance = persistentObject.readRootDomainObject();
                 suportePersistente.confirmarTransaccao();
+                instance.initAccessClosures();
             } catch (ExcepcaoPersistencia e) {
                 throw new Error("error.root.domain.object.not.retrieved", e);
             }

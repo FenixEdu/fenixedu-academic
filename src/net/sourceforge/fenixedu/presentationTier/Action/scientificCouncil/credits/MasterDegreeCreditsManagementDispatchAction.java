@@ -54,7 +54,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = { ExecutionYear.class };
-        Collection<ExecutionYear> executionYears = (List<ExecutionYear>) ServiceUtils.executeService(userView,
+        Collection<ExecutionYear> executionYears = (Collection<ExecutionYear>) ServiceUtils.executeService(userView,
                 "ReadAllDomainObjects", args);
 
         List<ExecutionYear> notClosedExecutionYears = (List<ExecutionYear>) CollectionUtils.select(
