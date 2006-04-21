@@ -2,9 +2,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<bean:define id="degreeType" type="java.lang.String" toScope="request"><bean:write name="degreeType"/></bean:define>
-&nbsp;&nbsp;<bean:message key="<%= degreeType.toString() %>" bundle="ENUMERATION_RESOURCES"/> :
+<bean:define id="degreeType" type="java.lang.String" toScope="request">
+	<bean:write name="degreeType"/>
+</bean:define>
+
+&nbsp;&nbsp;<h3><bean:message key="<%= degreeType.toString() %>" bundle="ENUMERATION_RESOURCES"/> :</h3>
 <BR/>
+
 <TABLE>
 	<logic:iterate id="degree" name="oldDegrees">
 		<logic:equal name="degree" property="tipoCurso" value="<%= degreeType.toString() %>">
@@ -34,7 +38,7 @@
 	</logic:iterate>
 
 	<logic:iterate id="bolonhaDegree" name="bolonhaDegrees">
-		<logic:equal name="bolonhaDegree" property="tipoCurso" value="<%= degreeType.toString() %>">
+		<logic:equal name="bolonhaDegree" property="bolonhaDegreeType" value="<%= degreeType.toString() %>">
 			<bean:define id="degreeAcronym" name="bolonhaDegree" property="acronym"/>
 			<bean:define id="degreeName" name="bolonhaDegree" property="name"/>
 			<TR>
