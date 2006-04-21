@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credi
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,13 +57,13 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
         IUserView userView = SessionUtils.getUserView(request);
-        List<ExecutionPeriod> executionPeriods = (List<ExecutionPeriod>) ServiceUtils.executeService(
+        Collection<ExecutionPeriod> executionPeriods = (Collection<ExecutionPeriod>) ServiceUtils.executeService(
                 userView, "ReadAllDomainObjects", new Object[] { ExecutionPeriod.class });
         List filteredExecutionPeriods = filterExecutionPeriods(executionPeriods);
         Collections.sort(filteredExecutionPeriods, new BeanComparator("value"));
         request.setAttribute("executionPeriods", filteredExecutionPeriods);
 
-        List<Department> departments = (List<Department>) ServiceUtils.executeService(userView,
+        Collection<Department> departments = (Collection<Department>) ServiceUtils.executeService(userView,
                 "ReadAllDomainObjects", new Object[] { Department.class });
         Iterator departmentOrderedIterator = new OrderedIterator(departments.iterator(),
                 new BeanComparator("name"));
@@ -113,7 +114,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         Integer departmentID = (Integer) dynaForm.get("departmentID");
         Map<Department, List<TeacherCreditsReportDTO>> teachersCreditsByDepartment = new HashMap<Department, List<TeacherCreditsReportDTO>>();
         if (departmentID == 0) {
-            List<Department> departments = (List<Department>) ServiceUtils.executeService(userView,
+            Collection<Department> departments = (Collection<Department>) ServiceUtils.executeService(userView,
                     "ReadAllDomainObjects", new Object[] { Department.class });
             for (Department department : departments) {
                 Unit unit = department.getDepartmentUnit();
@@ -333,7 +334,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         Integer departmentID = Integer.parseInt(request.getParameter("departmentID"));
         Map<Department, List<TeacherCreditsReportDTO>> teachersCreditsByDepartment = new HashMap<Department, List<TeacherCreditsReportDTO>>();
         if (departmentID == 0) {
-            List<Department> departments = (List<Department>) ServiceUtils.executeService(userView,
+            Collection<Department> departments = (Collection<Department>) ServiceUtils.executeService(userView,
                     "ReadAllDomainObjects", new Object[] { Department.class });
             for (Department department : departments) {
                 Unit unit = department.getDepartmentUnit();
@@ -393,7 +394,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
      * @param executionPeriods
      * @return
      */
-    private List filterExecutionPeriods(List<ExecutionPeriod> executionPeriods) {
+    private List filterExecutionPeriods(Collection<ExecutionPeriod> executionPeriods) {
         List filteredExecutionPeriods = new ArrayList();
         for (ExecutionPeriod executionPeriod : executionPeriods) {
             if (!executionPeriod.getState().equals(PeriodState.CLOSED)

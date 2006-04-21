@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -104,7 +105,7 @@ public class SendMailBackingBean extends FenixBackingBean {
         final Boolean executionCourseResponsibles = getExecutionCourseResponsibles();
         if (executionCourseResponsibles.booleanValue()) {
             final Object[] args = { ExecutionYear.class };
-            final List<ExecutionYear> executionYears = (List<ExecutionYear>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
+            final Collection<ExecutionYear> executionYears = (Collection<ExecutionYear>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
             for (final ExecutionYear executionYear : executionYears) {
                 if (executionYear.getState().equals(PeriodState.CURRENT)) {
                     for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
@@ -147,7 +148,7 @@ public class SendMailBackingBean extends FenixBackingBean {
 
 	private void addEmailsForDegreeType(final List<String> emails, final DegreeType degreeType) throws FenixServiceException, FenixFilterException {
         final Object[] args = { ExecutionYear.class };
-        final List<ExecutionYear> executionYears = (List<ExecutionYear>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
+        final Collection<ExecutionYear> executionYears = (Collection<ExecutionYear>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
         for (final ExecutionYear executionYear : executionYears) {
             if (executionYear.getState().equals(PeriodState.CURRENT)) {
                 for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {

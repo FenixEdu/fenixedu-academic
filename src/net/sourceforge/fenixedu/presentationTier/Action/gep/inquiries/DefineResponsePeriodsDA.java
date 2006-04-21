@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
         final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer.valueOf(executionPeriodIDString) : null;
 
         final Object[] args = new Object[] { ExecutionPeriod.class };
-        final List<ExecutionPeriod> executionPeriods = (List<ExecutionPeriod>)
+        final Collection<ExecutionPeriod> executionPeriods = (Collection<ExecutionPeriod>)
                 ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
 
         ExecutionPeriod selectedExecutionPeriod = null;

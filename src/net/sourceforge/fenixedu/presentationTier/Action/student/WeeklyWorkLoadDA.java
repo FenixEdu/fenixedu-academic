@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.student;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -93,7 +92,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             FenixServiceException {
 
         final Object[] args = { ExecutionPeriod.class };
-        final List<ExecutionPeriod> executionPeriods = (List<ExecutionPeriod>) executeService(request, "ReadAllDomainObjects", args);
+        final Collection<ExecutionPeriod> executionPeriods = (Collection<ExecutionPeriod>) executeService(request, "ReadAllDomainObjects", args);
         final Set<ExecutionPeriod> sortedExecutionPeriods = new TreeSet<ExecutionPeriod>(executionPeriods);
         request.setAttribute("executionPeriods", sortedExecutionPeriods);
 
@@ -200,7 +199,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         return exeutionPeriodIDString == null || exeutionPeriodIDString.length() == 0 ? null : Integer.valueOf(exeutionPeriodIDString);
     }
 
-    private ExecutionPeriod findExecutionPeriod(final List<ExecutionPeriod> executionPeriods, final Integer executionPeriodID) {
+    private ExecutionPeriod findExecutionPeriod(final Collection<ExecutionPeriod> executionPeriods, final Integer executionPeriodID) {
         for (final ExecutionPeriod executionPeriod : executionPeriods) {
             if (executionPeriodID == null && executionPeriod.getState().equals(PeriodState.CURRENT)) {
                 return executionPeriod;

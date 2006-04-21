@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -548,7 +549,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
                     i++;
                 }
 
-                final List<ExecutionPeriod> executionPeriods = (List<ExecutionPeriod>) ServiceUtils
+                final Collection<ExecutionPeriod> executionPeriods = (Collection<ExecutionPeriod>) ServiceUtils
                         .executeService(userView, "ReadAllDomainObjects",
                                 new Object[] { ExecutionPeriod.class });
                 final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();

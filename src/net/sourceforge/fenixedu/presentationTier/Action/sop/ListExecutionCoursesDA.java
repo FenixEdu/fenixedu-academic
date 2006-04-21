@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.sop;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
         final IUserView userView = getUserView(request);
 
         final Object args1[] = { ExecutionPeriod.class };
-        final List<ExecutionPeriod> executionPeriods = (List<ExecutionPeriod>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args1);
+        final Collection<ExecutionPeriod> executionPeriods = (Collection<ExecutionPeriod>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args1);
         final List<ExecutionPeriod> sortedExecutionPeriods = new ArrayList<ExecutionPeriod>(executionPeriods);
         Collections.sort(sortedExecutionPeriods);
         Collections.reverse(sortedExecutionPeriods);

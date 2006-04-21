@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -390,7 +391,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         return executionPeriods;
     }
 
-    private List<LabelValueBean> getAllDepartments(List<Department> allDepartments) {
+    private List<LabelValueBean> getAllDepartments(Collection<Department> allDepartments) {
         List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
         for (Department department : allDepartments) {
             LabelValueBean labelValueBean = new LabelValueBean();
@@ -404,10 +405,10 @@ public class SummariesControlAction extends FenixDispatchAction {
 
     private void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException,
             FenixServiceException {
-        List<Department> allDepartments = new ArrayList<Department>();
+        Collection<Department> allDepartments = new ArrayList<Department>();
         Object[] args = { Department.class };
 
-        allDepartments = (List<Department>) ServiceManagerServiceFactory.executeService(null,
+        allDepartments = (Collection<Department>) ServiceManagerServiceFactory.executeService(null,
                 "ReadAllDomainObjects", args);
 
         List<LabelValueBean> departments = getAllDepartments(allDepartments);

@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.department;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
         Integer executionPeriodID = Integer.valueOf(request.getParameter("executionPeriodId"));
         ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(userView,
                 "ReadDomainExecutionPeriodByOID", new Object[] { executionPeriodID });
-        List<Category> categories = (List<Category>) ServiceUtils.executeService(userView,
+        Collection<Category> categories = (Collection<Category>) ServiceUtils.executeService(userView,
                 "ReadAllDomainObjects", new Object[] { Category.class });
         List<Category> monitorCategories = (List<Category>) CollectionUtils.select(categories, new Predicate(){
             public boolean evaluate(Object object) {

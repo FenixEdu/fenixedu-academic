@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.base;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -130,9 +130,9 @@ public class FenixBackingBean {
     }
 
     @Deprecated
-    public List readAllDomainObjects(final Class clazz) throws FenixFilterException,
+    public Collection readAllDomainObjects(final Class clazz) throws FenixFilterException,
             FenixServiceException {
-        return (List) ServiceUtils
+        return (Collection) ServiceUtils
                 .executeService(getUserView(), "ReadAllDomainObjects", new Object[] { clazz });
     }
 

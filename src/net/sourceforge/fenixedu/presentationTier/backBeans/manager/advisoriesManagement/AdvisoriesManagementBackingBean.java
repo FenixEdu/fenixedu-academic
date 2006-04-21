@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -44,12 +45,10 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
     }
 
     public List<Advisory> getAllAdvisories() throws FenixFilterException, FenixServiceException {
-
         if (allAdvisories == null) {
             allAdvisories = new ArrayList<Advisory>();
             Date currentDate = Calendar.getInstance().getTime();
-            List<Advisory> allAdvisories_ = readAllDomainObjects(Advisory.class);
-            for (Advisory advisory : allAdvisories_) {
+            for (Advisory advisory : rootDomainObject.getAdvisorysSet()) {
                 if (advisory.getExpires() != null
                         && (DateFormatUtil.equalDates("yyyyMMddHHmm", advisory.getExpires(), currentDate) || advisory
                                 .getExpires().after(currentDate))) {

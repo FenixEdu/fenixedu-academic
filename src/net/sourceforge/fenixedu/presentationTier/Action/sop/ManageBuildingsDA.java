@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.sop;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,12 +29,12 @@ public class ManageBuildingsDA extends FenixDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
 
         final Object args1[] = { OldBuilding.class };
-        final List buildings = (List) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args1);
+        final List buildings = new ArrayList((Collection) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args1));
         Collections.sort(buildings, new BeanComparator("name"));
         request.setAttribute("buildings", buildings);
 
         final Object args2[] = { Campus.class };
-        final List campuss = (List) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args2);
+        final List campuss = new ArrayList((Collection) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args2));
         Collections.sort(campuss, new BeanComparator("name"));
         request.setAttribute("campuss", campuss);
 
