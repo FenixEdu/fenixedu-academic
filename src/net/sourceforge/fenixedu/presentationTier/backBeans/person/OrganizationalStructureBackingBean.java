@@ -526,8 +526,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public Unit getUnit() throws FenixFilterException, FenixServiceException {
         if (unit == null) {
-            final Object[] argsUnitToRead = { Unit.class, Integer.valueOf(this.unitID) };
-            this.unit = (Unit) ServiceUtils.executeService(null, "ReadDomainObject", argsUnitToRead);
+        	this.unit = (Unit) rootDomainObject.readPartyByOID(Integer.valueOf(this.unitID));
         }
         return unit;
     }
