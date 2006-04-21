@@ -33,10 +33,34 @@
 
 			&nbsp;&nbsp;<A href="loginPage.jsp">Login Page</A><BR/><BR/>
 
-			<bean:define id="degreeType" type="java.lang.String" toScope="request"><%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %></bean:define>
+			<h2><bean:message key="old.degrees" bundle="GLOBAL_RESOURCES"/></h2>
+
+			<bean:define id="degreeType" type="java.lang.String" toScope="request">
+				<%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %>
+			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
-			<BR/>
-			<bean:define id="degreeType" type="java.lang.String" toScope="request"><%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %></bean:define>
+			
+			<bean:define id="degreeType" type="java.lang.String" toScope="request">
+				<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>
+			</bean:define>
+			<jsp:include page="degreesTable.jsp"/>
+
+			<hr style="margin-top: 2em; margin-bottom: 2em"/>
+
+			<h2><bean:message key="bolonha.degrees" bundle="GLOBAL_RESOURCES"/></h2>
+			<bean:define id="degreeType" type="java.lang.String" toScope="request">
+				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.DEGREE.toString() %>
+			</bean:define>
+			<jsp:include page="degreesTable.jsp"/>
+			
+			<bean:define id="degreeType" type="java.lang.String" toScope="request">
+				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.MASTER_DEGREE.toString() %>
+			</bean:define>
+			<jsp:include page="degreesTable.jsp"/>
+
+			<bean:define id="degreeType" type="java.lang.String" toScope="request">
+				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.toString() %>
+			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
 
 		</DIV>
