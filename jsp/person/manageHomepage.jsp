@@ -57,19 +57,17 @@
 		<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
 		</td>
 	</tr>
-	<tr><td class="leftcol"><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:</td>
-		<td>
-			<html:checkbox property="showUnit" value="true"/>
-			<logic:present name="UserView" property="person.employee.currentContract.workingUnit">
+	<logic:present name="UserView" property="person.employee.currentContract.workingUnit">
+		<tr>
+			<td class="leftcol">
+				<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
+			</td>
+			<td>
+				<html:checkbox property="showUnit" value="true"/>
 				<bean:write name="UserView" property="person.employee.currentContract.workingUnit.name"/>
-			</logic:present>
-			<logic:iterate id="student" name="UserView" property="person.students">
-				<logic:present name="student" property="activeStudentCurricularPlan">
-					<bean:write name="student" property="activeStudentCurricularPlan.degreeCurricularPlan.degree.presentationName"/>
-				</logic:present>
-			</logic:iterate>
-		</td>
-	</tr>
+			</td>
+		</tr>
+	</logic:present>
 	<logic:present name="UserView" property="person.teacher">
 		<logic:present name="UserView" property="person.employee.currentContract">
 			<tr>
@@ -85,6 +83,61 @@
 			</tr>
 		</logic:present>
 	</logic:present>
+	<logic:notEmpty name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
+		<tr>
+			<td class="leftcol">
+				<bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:
+			</td>
+			<td>
+				<html:checkbox property="showActiveStudentCurricularPlans" value="true"/>
+				<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
+					<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+					<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+					<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+				</logic:iterate>
+				<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
+					<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+					<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+					<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+				</logic:iterate>
+			</td>
+		</tr>
+	</logic:notEmpty>
+	<logic:notEmpty name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
+		<tr>
+			<td class="leftcol">
+				<bean:message key="label.homepage.showAlumniDegrees" bundle="HOMEPAGE_RESOURCES"/>:
+			</td>
+			<td>
+				<html:checkbox property="showAlumniDegrees" value="true"/>
+				<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
+					<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+					<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+					<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+				</logic:iterate>
+				<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
+					<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+					<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+					<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+				</logic:iterate>
+			</td>
+		</tr>
+	</logic:notEmpty>
+<!--
+	<tr><td class="leftcol"><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:</td>
+		<td>
+			<html:checkbox property="showUnit" value="true"/>
+			<logic:present name="UserView" property="person.employee.currentContract.workingUnit">
+				<bean:write name="UserView" property="person.employee.currentContract.workingUnit.name"/>
+			</logic:present>
+			<logic:iterate id="student" name="UserView" property="person.students">
+				<logic:present name="student" property="activeStudentCurricularPlan">
+					<bean:write name="student" property="activeStudentCurricularPlan.degreeCurricularPlan.degree.presentationName"/>
+				</logic:present>
+			</logic:iterate>
+		</td>
+	</tr>
+-->
 	<tr><td class="leftcol"><bean:message key="label.homepage.showPhoto" bundle="HOMEPAGE_RESOURCES"/>:</td><td> <html:checkbox property="showPhoto" value="true"/> <html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" /> </td></tr>
 	<tr><td class="leftcol"><bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>:</td>
 		<td style="vertical-align: center;">

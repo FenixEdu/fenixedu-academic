@@ -10,7 +10,8 @@ public class SubmitHomepage extends Service {
     public void run(final Person person, final Boolean activated, final String name, final Boolean showUnit,
     		final Boolean showCategory, final Boolean showPhoto, final Boolean showEmail, final Boolean showTelephone,
     		final Boolean showWorkTelephone, final Boolean showMobileTelephone, final Boolean showAlternativeHomepage,
-    		final Boolean showResearchUnitHomepage, final Boolean showCurrentExecutionCourses) {
+    		final Boolean showResearchUnitHomepage, final Boolean showCurrentExecutionCourses,
+    		final Boolean showActiveStudentCurricularPlans, final Boolean showAlumniDegrees) {
     	Homepage homepage = person.getHomepage();
     	if (homepage == null) {
     		homepage = DomainFactory.makeHomepage();
@@ -29,6 +30,8 @@ public class SubmitHomepage extends Service {
     	homepage.setShowAlternativeHomepage(showAlternativeHomepage);
     	homepage.setShowResearchUnitHomepage(showResearchUnitHomepage);
     	homepage.setShowCurrentExecutionCourses(showCurrentExecutionCourses);
+    	homepage.setShowActiveStudentCurricularPlans(showActiveStudentCurricularPlans);
+    	homepage.setShowAlumniDegrees(showAlumniDegrees);
     }
 
 }

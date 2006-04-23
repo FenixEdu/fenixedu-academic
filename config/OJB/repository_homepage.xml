@@ -76,6 +76,16 @@
 	    column="SHOW_CURRENT_EXECUTION_COURSES"
 	    jdbc-type="BIT"
 	/>
+	<field-descriptor
+	    name="showActiveStudentCurricularPlans"
+	    column="SHOW_ACTIVE_STUDENT_CURRICULAR_PLANS"
+	    jdbc-type="BIT"
+	/>
+	<field-descriptor
+	    name="showAlumniDegrees"
+	    column="SHOW_ALUMNI_DEGREES"
+	    jdbc-type="BIT"
+	/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.homepage.Blog" table="BLOG">

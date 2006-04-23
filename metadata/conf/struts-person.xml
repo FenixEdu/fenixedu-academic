@@ -101,6 +101,8 @@
         <form-property name="showAlternativeHomepage" type="java.lang.String" />
         <form-property name="showResearchUnitHomepage" type="java.lang.String" />
         <form-property name="showCurrentExecutionCourses" type="java.lang.String" />
+        <form-property name="showActiveStudentCurricularPlans" type="java.lang.String" />
+        <form-property name="showAlumniDegrees" type="java.lang.String" />
       </form-bean>
     </form-beans>
 

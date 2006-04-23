@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add new options to homepage" alterTableHomepage.sql

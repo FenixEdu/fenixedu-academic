@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -29,9 +30,11 @@ import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.State;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
 /**
@@ -39,6 +42,13 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  */
 
 public class StudentCurricularPlan extends StudentCurricularPlan_Base {
+
+	public static final Comparator STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME = new ComparatorChain();
+	static {
+		((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso"));
+		((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.name"));		
+	}
+
     protected Map acumulatedEnrollments; // For enrollment purposes only
 
     protected Integer creditsInSecundaryArea; // For enrollment purposes only

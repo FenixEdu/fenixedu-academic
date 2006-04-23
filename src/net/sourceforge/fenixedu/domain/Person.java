@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.research.result.Publication;
 import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -1216,4 +1217,28 @@ public class Person extends Person_Base {
         }
         return allPersons;
     }
+
+    public SortedSet<StudentCurricularPlan> getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
+    	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
+    	for (final Student student : getStudentsSet()) {
+    		final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+    		if (studentCurricularPlan != null) {
+    			studentCurricularPlans.add(studentCurricularPlan);
+    		}
+    	}
+    	return studentCurricularPlans;
+    }
+
+    public SortedSet<StudentCurricularPlan> getCompletedStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
+    	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
+    	for (final Student student : getStudentsSet()) {
+    		for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
+    			if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.CONCLUDED) {
+    				studentCurricularPlans.add(studentCurricularPlan);
+    			}
+    		}
+    	}
+    	return studentCurricularPlans;
+    }
+
 }

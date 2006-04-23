@@ -41,6 +41,7 @@ public class ManageHomepageDA extends FenixDispatchAction {
             dynaActionForm.set("showAlternativeHomepage", homepage.getShowAlternativeHomepage().toString());
             dynaActionForm.set("showResearchUnitHomepage", homepage.getShowResearchUnitHomepage().toString());
             dynaActionForm.set("showCurrentExecutionCourses", homepage.getShowCurrentExecutionCourses().toString());
+            dynaActionForm.set("showActiveStudentCurricularPlans", homepage.getShowCurrentExecutionCourses().toString());
     	} else {
             dynaActionForm.set("name", person.getName());
         }
@@ -65,6 +66,8 @@ public class ManageHomepageDA extends FenixDispatchAction {
     	final String showAlternativeHomepage = (String) dynaActionForm.get("showAlternativeHomepage");
     	final String showResearchUnitHomepage = (String) dynaActionForm.get("showResearchUnitHomepage");
     	final String showCurrentExecutionCourses = (String) dynaActionForm.get("showCurrentExecutionCourses");
+    	final String showActiveStudentCurricularPlans = (String) dynaActionForm.get("showActiveStudentCurricularPlans");
+    	final String showAlumniDegrees = (String) dynaActionForm.get("showAlumniDegrees"); 
 
     	final Object[] args = {
     			getUserView(request).getPerson(),
@@ -79,7 +82,9 @@ public class ManageHomepageDA extends FenixDispatchAction {
     			Boolean.valueOf(showMobileTelephone),
     			Boolean.valueOf(showAlternativeHomepage),
     			Boolean.valueOf(showResearchUnitHomepage),
-    			Boolean.valueOf(showCurrentExecutionCourses) };
+    			Boolean.valueOf(showCurrentExecutionCourses),
+    			Boolean.valueOf(showActiveStudentCurricularPlans),
+    			Boolean.valueOf(showAlumniDegrees)};
     	executeService(request, "SubmitHomepage", args);
 
         return prepare(mapping, actionForm, request, response);

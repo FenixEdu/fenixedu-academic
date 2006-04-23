@@ -29,12 +29,6 @@
 				<bean:write name="homepage" property="person.employee.currentContract.workingUnit.name"/>
 				<br/>
 			</logic:present>
-			<logic:iterate id="student" name="homepage" property="person.students">
-				<logic:present name="student" property="activeStudentCurricularPlan">
-					<bean:write name="student" property="activeStudentCurricularPlan.degreeCurricularPlan.degree.presentationName"/>
-					<br/>
-				</logic:present>
-			</logic:iterate>
 		</p>
 		</logic:equal>
 
@@ -47,6 +41,52 @@
 				</logic:present>
 			</logic:present>
 		</p>
+		</logic:equal>
+
+		<logic:equal name="homepage" property="showActiveStudentCurricularPlans" value="true">
+			<p>
+				<bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:
+				<logic:iterate id="studentCurricularPlan" name="homepage" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
+					<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+					<html:link href="<%= url %>">
+						<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+						<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+						<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+					</html:link>
+				</logic:iterate>
+				<logic:iterate id="studentCurricularPlan" name="homepage" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
+					,
+					<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+					<html:link href="<%= url %>">
+						<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+						<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+						<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+					</html:link>
+				</logic:iterate>
+			</p>
+		</logic:equal>
+
+		<logic:equal name="homepage" property="showAlumniDegrees" value="true">
+			<p>
+				<bean:message key="label.homepage.showAlumniDegrees" bundle="HOMEPAGE_RESOURCES"/>:
+				<logic:iterate id="studentCurricularPlan" name="homepage" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
+					<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+					<html:link href="<%= url %>">
+						<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+						<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+						<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+					</html:link>
+				</logic:iterate>
+				<logic:iterate id="studentCurricularPlan" name="homepage" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
+					,
+					<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+					<html:link href="<%= url %>">
+						<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+						<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+						<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+					</html:link>
+				</logic:iterate>
+			</p>
 		</logic:equal>
 
 		<logic:equal name="homepage" property="showEmail" value="true">
@@ -98,10 +138,17 @@
 			<logic:present name="homepage" property="person.teacher">
 				<logic:present name="homepage" property="person.employee.currentContract">
 					<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" length="1">
-						<bean:write name="executionCourse" property="nome"/>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+						<html:link href="<%= url %>">
+							<bean:write name="executionCourse" property="nome"/>
+						</html:link>
 					</logic:iterate>
 					<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" offset="1">
-						, <bean:write name="executionCourse" property="nome"/>
+						,
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+						<html:link href="<%= url %>">
+							<bean:write name="executionCourse" property="nome"/>
+						</html:link>
 					</logic:iterate>
 					<br/>
 				</logic:present>
