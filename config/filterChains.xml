@@ -1044,4 +1044,11 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+     <filterChain>
+        <name>DepartmentMemberOrTeacherOrEmployeeAuthorization</name>
+        <expression>DepartmentMemberAuthorization || TeacherAuthorization || EmployeeAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 </filterChainsDefinitions>
