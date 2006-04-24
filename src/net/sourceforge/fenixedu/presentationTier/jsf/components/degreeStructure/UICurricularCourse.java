@@ -182,23 +182,69 @@ public class UICurricularCourse extends UIDegreeModule {
     }
 
     public void encodeInNextPeriod(FacesContext facesContext) throws IOException {
-        if (previousContext.getCurricularPeriod().getNext() != null) {
-            this.facesContext = facesContext;
-            this.writer = facesContext.getResponseWriter();
+        this.facesContext = facesContext;
+        this.writer = facesContext.getResponseWriter();
+        
+        writer.startElement("tr", this);
+        
+        encodeName(false);
+
+        writer.startElement("td", this);
+        writer.writeAttribute("class", "smalltxt", null);
+        if (!byYears) {
+            writer.writeAttribute("align", "center", null);
+            writer.append(previousContext.getCurricularPeriod().getParent().getOrder() + " "  
+                    + getBundleValue("EnumerationResources", previousContext.getCurricularPeriod().getParent().getPeriodType().name() + ".ABBREVIATION") + ", " 
+                    + (previousContext.getCurricularPeriod().getOrder() + 1) + " " 
+                    + getBundleValue("EnumerationResources", previousContext.getCurricularPeriod().getPeriodType().name() + ".ABBREVIATION"));
+        } else {
+            writer.append(previousContext.getParentCourseGroup().getName());
+        }
+        writer.endElement("td");
+
+        encodeRegime();
+        
+        writer.startElement("td", this);
+        if (!this.curricularCourse.isOptional()) {
+            writer.writeAttribute("class", "smalltxt", null);
+            writer.writeAttribute("class", "aright", null);
             
-            writer.startElement("tr", this);
+            writer.startElement("span", this);
+            writer.writeAttribute("style", "color: #888", null);
+            writer.append(this.getBundleValue("BolonhaManagerResources", "contactLessonHoursAcronym")).append("-");
+            writer.endElement("span");
+            writer.append(this.curricularCourse.getCompetenceCourse().getContactLoad(previousContext.getCurricularPeriod().getOrder() + 1).toString()).append(" ");
+
+            writer.startElement("span", this);
+            writer.writeAttribute("style", "color: #888", null);
+            writer.append(this.getBundleValue("BolonhaManagerResources", "autonomousWorkAcronym")).append("-");
+            writer.endElement("span");
+            writer.append(this.curricularCourse.getCompetenceCourse().getAutonomousWorkHours(previousContext.getCurricularPeriod().getOrder() + 1).toString()).append(" ");
             
-            encodeName(false);
-            encodeContext(previousContext.getCurricularPeriod().getNext());
-            encodeRegime();
-            encodeLoadsAndCredits(previousContext.getCurricularPeriod().getNext());
-            
+            writer.startElement("span", this);
+            writer.writeAttribute("style", "color: #888", null);
+            writer.append(this.getBundleValue("BolonhaManagerResources", "totalLoadAcronym")).append("-");
+            writer.endElement("span");
+            writer.append(this.curricularCourse.getCompetenceCourse().getTotalLoad(previousContext.getCurricularPeriod().getOrder() + 1).toString());
+            writer.endElement("td");
+
             writer.startElement("td", this);
+            writer.writeAttribute("class", "smalltxt", null);
+            writer.writeAttribute("class", "aright", null);
+            writer.append(this.getBundleValue("BolonhaManagerResources", "credits.abbreviation")).append(" ");
+            writer.append(this.curricularCourse.getCompetenceCourse().getEctsCredits(previousContext.getCurricularPeriod().getOrder() + 1).toString());
+        } else {
             writer.append("&nbsp;");
             writer.endElement("td");
-            
-            writer.endElement("tr");
+            writer.startElement("td", this);
         }
+        writer.endElement("td");
+
+        writer.startElement("td", this);
+        writer.append("&nbsp;");
+        writer.endElement("td");
+        
+        writer.endElement("tr");
     }
 
     private void encodeCurricularCourseOptions() throws IOException {
