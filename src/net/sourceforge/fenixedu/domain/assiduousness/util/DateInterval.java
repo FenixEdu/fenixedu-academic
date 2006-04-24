@@ -47,6 +47,8 @@ public class DateInterval {
     		return (containsDate(interval.getStartDate()) || containsDate(interval.getEndDate()));
     }
     
-    
+    public String toString() {
+    		return new String(getStartDate().toString() + " - " + getEndDate().toString());
+    }
     
 }
