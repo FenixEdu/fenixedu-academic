@@ -102,9 +102,6 @@ public class UICourseGroup extends UIDegreeModule {
         } else {
             if (this.courseGroup.hasAnyChildContexts()) {
                 encodeChildCourseGroups();
-                if (this.courseGroup.getParentDegreeCurricularPlan().getDegreeStructure().hasAnyChilds()) {
-                    encodeSubtitles();
-                }
             } else {
                 writer.startElement("table", this);
                 writer.startElement("tr", this);
@@ -145,10 +142,6 @@ public class UICourseGroup extends UIDegreeModule {
                 }
 
                 encodeChildCourseGroups();
-                
-                if (this.courseGroup.getParentDegreeCurricularPlan().getDegreeStructure().hasAnyChilds()) {
-                    encodeSubtitles();
-                }
             } else {
                 writer.startElement("table", this);
                 writer.startElement("tr", this);
@@ -170,42 +163,6 @@ public class UICourseGroup extends UIDegreeModule {
         }
     }
 
-    private void encodeSubtitles() throws IOException {
-        writer.startElement("ul", this);
-        writer.writeAttribute("class", "nobullet mtop2", null);
-        writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
-        writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
-
-        encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(), null);
-        encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
-
-        encodeSubtitleElement("BolonhaManagerResources", "contactLessonHoursAcronym", "contactLessonHours", null);
-        encodeSubtitleElement("BolonhaManagerResources", "autonomousWorkAcronym", "autonomousWork", null);
-
-        StringBuilder explanation = new StringBuilder();
-        explanation.append(" (");
-        explanation.append(this.getBundleValue("BolonhaManagerResources", "contactLessonHoursAcronym"));
-        explanation.append(" + ");
-        explanation.append(this.getBundleValue("BolonhaManagerResources", "autonomousWorkAcronym"));
-        explanation.append(")");
-        encodeSubtitleElement("BolonhaManagerResources", "totalLoadAcronym", "totalLoad", explanation);
-        
-        writer.endElement("ul");
-    }
-
-    private void encodeSubtitleElement(String bundle, String acronym, String full, StringBuilder explanation) throws IOException {
-        writer.startElement("li", this);
-        writer.startElement("span", this);
-        writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue("" + bundle, acronym)).append(" - ");
-        writer.endElement("span");
-        writer.append(this.getBundleValue("" + bundle, full));
-        if (explanation != null) {
-            writer.append(explanation);
-        }
-        writer.endElement("li");
-    }
-    
     private void encodeSelf() throws IOException {
         int width = (this.onlyStructure) ? 50 : 70;
         int courseGroupIndent = this.depth * 3;

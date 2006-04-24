@@ -72,6 +72,10 @@ public class UIDegreeCurricularPlan extends UIInput {
 
                 new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder, hideCourses, reportsAvailable, executionYear).encodeBegin(facesContext);
             }
+            
+            if (dcp.hasDegreeStructure() && dcp.getDegreeStructure().hasAnyChilds()) {
+                encodeSubtitles();
+            }
         }
     }
 
@@ -102,7 +106,6 @@ public class UIDegreeCurricularPlan extends UIInput {
                 for (CurricularPeriod child : degreeStructure.getSortedChilds()) {
                     encodePeriodTable(child);
                 }
-                encodeSubtitles();
             }
         }
     }
