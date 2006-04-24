@@ -24,6 +24,7 @@ public class Periodicity extends Periodicity_Base {
     // Return true if definedInterval contains the date and the date's day of week is in WorkWeek
     public boolean isDefinedInDate(YearMonthDay date) {
     		DateTime dateAtMidnight = date.toDateTimeAtMidnight();
+    		System.out.println(dateAtMidnight);
     		if (getDefinedInterval().contains(dateAtMidnight) && getWorkWeek().contains(dateAtMidnight)) {
     			return true;
     		}

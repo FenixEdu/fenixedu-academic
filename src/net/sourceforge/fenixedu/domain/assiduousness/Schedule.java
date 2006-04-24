@@ -17,7 +17,7 @@ public class Schedule extends Schedule_Base {
 	
 	// Return true if the Schedule is valid in the interval
 	public boolean isDefinedInInterval(DateInterval interval) {
-		return interval.containsInterval(getValidInterval());
+		return getValidInterval().containsInterval(interval);
 	}
 
 	// Return true if the Schedule valid interval constains date
@@ -29,6 +29,7 @@ public class Schedule extends Schedule_Base {
     public WorkSchedule workScheduleWithDate(YearMonthDay date) {
     		Iterator<WorkSchedule> workSchedulesIt = getWorkScheduleIterator();
     		while(workSchedulesIt.hasNext()) {
+//    			System.out.println("iterando nos wk");
     			WorkSchedule workSchedule = workSchedulesIt.next();
     			if (workSchedule.isDefinedInDate(date)) {
     				return workSchedule;

@@ -27,12 +27,13 @@ public class WorkSchedule extends WorkSchedule_Base {
     public static WorkSchedule createWorkSchedule(WorkScheduleType workScheduleType, Periodicity periodicity) {
     		WorkSchedule wk = new WorkSchedule();
     		wk.setWorkScheduleType(workScheduleType);
-    		
+    		wk.setPeriodicity(periodicity);
     		return wk;
     }
     
     // Returns true if the WorkSchedule
     public boolean isDefinedInDate(YearMonthDay date) {
+    		System.out.println(date);
     		return getPeriodicity().isDefinedInDate(date);
     }
     
@@ -97,7 +98,7 @@ public class WorkSchedule extends WorkSchedule_Base {
     		wsType.calculateFixedPeriodDuration(dailyBalance, timeline);
 
     		if (wsType.definedMeal()) {
-    			System.out.println("actualizar o meal");
+    			System.out.println("actualizar a meal");
     			wsType.checkMealDurationAccordingToRules(dailyBalance);
     		}
 //          System.out.println("total worked ->" + dailyBalance.getNormalWorkPeriod1Balance().plus(dailyBalance.getNormalWorkPeriod2Balance()).minus(this.getNormalWorkPeriod().

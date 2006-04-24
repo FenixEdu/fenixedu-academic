@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-public class PersonalCard extends PersonalCard_Base {
+public class JustificationType extends JustificationType_Base {
     
-    public  PersonalCard() {
+    public JustificationType() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }

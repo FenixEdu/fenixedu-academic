@@ -22,24 +22,24 @@ public class Leave extends Leave_Base {
     }
     
     public DateTime getEndDate() {
-    		return getStartDate().plus(getDuration());
+    		return getDate().plus(getDuration());
     	
     }
     public Interval getTotalInterval() {
-    		return new Interval(getStartDate(), getDuration());
+    		return new Interval(getDate(), getDuration());
     }
     
     // Check if the Leave occured in a particular date
     public boolean occuredInDate(YearMonthDay date) {
-    		return ((getStartDate().toYearMonthDay().isAfter(date) || getStartDate().toYearMonthDay().isEqual(date))
+    		return ((getDate().toYearMonthDay().isAfter(date) || getDate().toYearMonthDay().isEqual(date))
     			&& (getEndDate().toYearMonthDay().isBefore(date) || getEndDate().toYearMonthDay().isEqual(date))); 
     }
     
     // Converts a Leave interval to TimePoint
     public List<TimePoint> toTimePoints(AttributeType attribute) {
         List<TimePoint> timePointList = new ArrayList<TimePoint>();
-        timePointList.add(new TimePoint(getStartDate().toTimeOfDay(), attribute));
-        timePointList.add(new TimePoint((getStartDate().plus(getDuration())).toTimeOfDay(), attribute));
+        timePointList.add(new TimePoint(getDate().toTimeOfDay(), attribute));
+        timePointList.add(new TimePoint((getDate().plus(getDuration())).toTimeOfDay(), attribute));
         return timePointList;
     }
     
