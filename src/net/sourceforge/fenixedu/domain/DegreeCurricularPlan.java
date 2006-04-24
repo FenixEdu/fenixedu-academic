@@ -44,7 +44,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
-    private final String DCP_ROOT_NAME = "_ROOT_NAME";
 
     public DegreeCurricularPlan() {
         super();
@@ -128,7 +127,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         newStructureFieldsChange(CurricularStage.DRAFT, null);
 
-        CourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME, name + this.DCP_ROOT_NAME);
+        CourseGroup dcpRoot = new CourseGroup(name, name);
         this.setRoot(dcpRoot);
 
         if (curricularPeriod == null) {
