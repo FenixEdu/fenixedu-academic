@@ -8,7 +8,7 @@
 		<li>
 			<bean:define id="homepageID" name="homepage" property="idInternal"/>
 			<html:link page="<%= "/viewHomepage.do?method=show&homepageID=" + homepageID.toString() %>">
-				Home
+				<bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.home"/>
 			</html:link>
 	    </li>
     </logic:present>
