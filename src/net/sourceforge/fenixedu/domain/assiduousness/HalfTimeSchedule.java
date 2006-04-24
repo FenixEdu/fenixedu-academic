@@ -34,8 +34,8 @@ public class HalfTimeSchedule extends HalfTimeSchedule_Base {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
-
-	public static HalfTimeSchedule fillHalfTimeSchedule(NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPlatforms, Meal mealPeriod, TimeInterval workDay, String acronym) {
+	
+	public static HalfTimeSchedule makeHalfTimeSchedule(NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPlatforms, Meal mealPeriod, TimeInterval workDay, String acronym) {
         HalfTimeSchedule newHalfTimeSchedule = new HalfTimeSchedule();
         newHalfTimeSchedule.setNormalWorkPeriod(normalWorkPeriod);
         newHalfTimeSchedule.setFixedPeriod(fixedPlatforms);
@@ -152,7 +152,7 @@ public class HalfTimeSchedule extends HalfTimeSchedule_Base {
 	    }
 	    
         // TODO alterar isto da appresentacao
-	    HalfTimeSchedule halfTimeSchedule = fillHalfTimeSchedule(regularSchedule, fixedPeriods, mealPeriod, workDay, null);
+	    HalfTimeSchedule halfTimeSchedule = makeHalfTimeSchedule(regularSchedule, fixedPeriods, mealPeriod, workDay, null);
 	    return halfTimeSchedule;
 	}
     
