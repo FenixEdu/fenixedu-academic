@@ -22,7 +22,7 @@ public class EditCourseGroup extends Service {
             throw new FenixServiceException("error.noCourseGroup");
         }
         final Context context = rootDomainObject.readContextByOID(contextID);
-        if (context == null) {
+        if (context == null && !courseGroup.isRoot()) {
             throw new FenixServiceException("error.noContext");
         }
 
