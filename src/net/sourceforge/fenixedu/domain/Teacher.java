@@ -81,9 +81,9 @@ public class Teacher extends Teacher_Base {
     }
 
     public Boolean canAddPublicationToTeacherInformationSheet(PublicationArea area) {
-        // NOTA : a linha seguinte cont�m um n�mero expl�cito quando n�o
+        // NOTA : a linha seguinte cont???m um n???mero expl???cito quando n???o
         // deve.
-        // Isto deve ser mudado! Mas esta mudan�a implica tornar expl�cito o
+        // Isto deve ser mudado! Mas esta mudan???a implica tornar expl???cito o
         // conceito de Ficha de docente.
         return new Boolean(countPublicationsInArea(area) < 5);
 
@@ -601,6 +601,10 @@ public class Teacher extends Teacher_Base {
         Integer numberOfDaysInPeriod = null, maxDays = 0;
         TeacherServiceExemption teacherServiceExemption = null;
         OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
+        
+        if(occupationPeriod == null){
+        	return null;
+        }
 
         Date begin = occupationPeriod.getStart();
         Date end = occupationPeriod.getEnd();
