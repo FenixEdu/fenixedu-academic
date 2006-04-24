@@ -69,7 +69,7 @@ public class ProcessSibsPaymentFile extends Service {
         findDuplicatesAndMarkThem(sibsPaymentFileEntries, totalPaymentEntries);
 
         // lets build transactions for the entries in file
-       
+
         for (int i = 0; i < totalPaymentEntries; i++) {
 
             SibsPaymentFileEntry sibsPaymentFileEntry = sibsPaymentFileEntries.get(i);
@@ -302,9 +302,8 @@ public class ProcessSibsPaymentFile extends Service {
 
         // next check if the gratuity or insurance payment is repeated in
         // database
-        List sibsPaymentFileEntryList = SibsPaymentFileEntry.readByYearAndStudentNumberAndPaymentType(
-                sibsPaymentFileEntry.getYear(), sibsPaymentFileEntry.getStudentNumber(),
-                sibsPaymentFileEntry.getPaymentType());
+        List sibsPaymentFileEntryList = SibsPaymentFileEntry
+                .readByYearAndStudentNumberAndPaymentTypeExceptFileEntry(sibsPaymentFileEntry);
         if (sibsPaymentFileEntryList.size() > 0) {
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
                 sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);

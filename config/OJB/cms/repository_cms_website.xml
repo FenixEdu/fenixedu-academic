@@ -75,8 +75,8 @@
         jdbc-type="VARCHAR"
     />   
     <field-descriptor
-        name="keyType"
-        column="NAME"
+        name="keyWebsiteType"
+        column="KEY_TYPE"
         jdbc-type="VARCHAR"
     />       
     <field-descriptor
