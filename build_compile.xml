@@ -669,7 +669,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		<ant antfile="build_accessControl.xml"/>
 	</target>
 
-	<target name="compile-without-access-control" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-all-properties, generate, base-compile">
+	<target name="compile-without-access-control" description="Compile application" depends="i18nDefault, write-all-properties, compile-domain,compile-renderers, generate, base-compile">
 		<ant antfile="build_accessControl.xml" target="void-inject"/>
 	</target>
 
