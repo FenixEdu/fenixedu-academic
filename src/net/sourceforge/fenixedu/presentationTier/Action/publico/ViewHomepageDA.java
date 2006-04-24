@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -10,16 +9,19 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Contract;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -67,6 +69,140 @@ public class ViewHomepageDA extends FenixContextDispatchAction {
     	}
 
         return mapping.findForward("list-homepages");
+    }
+
+    public ActionForward listTeachers(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	final SortedMap<Unit, SortedSet<Homepage>> homepages = new TreeMap<Unit, SortedSet<Homepage>>(Unit.UNIT_COMPARATOR_BY_NAME);
+    	for (final Teacher teacher : rootDomainObject.getTeachersSet()) {
+    		final Person person = teacher.getPerson();
+    		final Employee employee = person.getEmployee();
+    		if (employee != null) {
+    			final Contract contract = employee.getCurrentContract();
+    			if (contract != null) {
+    				final Unit unit = contract.getWorkingUnit();
+    				final SortedSet<Homepage> unitHomepages;
+    				if (homepages.containsKey(unit)) {
+    					unitHomepages = homepages.get(unit);
+    				} else {
+    					unitHomepages = new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME);
+    					homepages.put(unit, unitHomepages);
+    				}
+    				final Homepage homepage = person.getHomepage();
+    				if (homepage != null && homepage.getActivated().booleanValue()) {
+    					unitHomepages.add(homepage);
+    				}
+    			}
+    		}
+    	}
+    	request.setAttribute("homepages", homepages);
+
+    	final String selectedPage = request.getParameter("selectedPage");
+    	if (selectedPage != null) {
+    		request.setAttribute("selectedPage", selectedPage);
+    	}
+
+        return mapping.findForward("list-homepages-teachers");
+    }
+
+    public ActionForward listEmployees(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	final SortedMap<Unit, SortedSet<Homepage>> homepages = new TreeMap<Unit, SortedSet<Homepage>>(Unit.UNIT_COMPARATOR_BY_NAME);
+    	for (final Employee employee : rootDomainObject.getEmployeesSet()) {
+    		final Person person = employee.getPerson();
+    		if (person != null) {
+    			final Teacher teacher = person.getTeacher();
+    			if (teacher == null) {
+    				final Contract contract = employee.getCurrentContract();
+    				if (contract != null) {
+    					final Unit unit = contract.getWorkingUnit();
+    					final SortedSet<Homepage> unitHomepages;
+        				if (homepages.containsKey(unit)) {
+        					unitHomepages = homepages.get(unit);
+        				} else {
+        					unitHomepages = new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME);
+        					homepages.put(unit, unitHomepages);
+        				}
+        				final Homepage homepage = person.getHomepage();
+        				if (homepage != null && homepage.getActivated().booleanValue()) {
+        					unitHomepages.add(homepage);
+        				}
+    				}
+    			}
+    		}
+    	}
+    	request.setAttribute("homepages", homepages);
+
+    	final String selectedPage = request.getParameter("selectedPage");
+    	if (selectedPage != null) {
+    		request.setAttribute("selectedPage", selectedPage);
+    	}
+
+        return mapping.findForward("list-homepages-employees");
+    }
+
+    public ActionForward listStudents(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+    	for (final Student student : rootDomainObject.getStudentsSet()) {
+    		final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+    		if (studentCurricularPlan != null) {
+    			final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+    			final Degree degree = degreeCurricularPlan.getDegree();
+    			final Person person = student.getPerson();
+    			final SortedSet<Homepage> degreeHomepages;
+				if (homepages.containsKey(degree)) {
+					degreeHomepages = homepages.get(degree);
+				} else {
+					degreeHomepages = new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME);
+					homepages.put(degree, degreeHomepages);
+				}
+				final Homepage homepage = person.getHomepage();
+				if (homepage != null && homepage.getActivated().booleanValue()) {
+					degreeHomepages.add(homepage);
+				}
+    		}
+    	}
+    	request.setAttribute("homepages", homepages);
+
+    	final String selectedPage = request.getParameter("selectedPage");
+    	if (selectedPage != null) {
+    		request.setAttribute("selectedPage", selectedPage);
+    	}
+
+        return mapping.findForward("list-homepages-students");
+    }
+
+    public ActionForward listAlumni(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+    	for (final Student student : rootDomainObject.getStudentsSet()) {
+    		for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
+   				final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+   				final Degree degree = degreeCurricularPlan.getDegree();
+   				final Person person = student.getPerson();
+   				final SortedSet<Homepage> degreeHomepages;
+   				if (homepages.containsKey(degree)) {
+   					degreeHomepages = homepages.get(degree);
+   				} else {
+   					degreeHomepages = new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME);
+   					homepages.put(degree, degreeHomepages);
+   				}
+   				final Homepage homepage = person.getHomepage();
+   				if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.CONCLUDED
+   						&& homepage != null && homepage.getActivated().booleanValue()) {
+   					degreeHomepages.add(homepage);
+   				}
+    		}
+    	}
+    	request.setAttribute("homepages", homepages);
+
+    	final String selectedPage = request.getParameter("selectedPage");
+    	if (selectedPage != null) {
+    		request.setAttribute("selectedPage", selectedPage);
+    	}
+
+        return mapping.findForward("list-homepages-alumni");
     }
 
     public ActionForward emailPng(ActionMapping mapping, ActionForm actionForm,

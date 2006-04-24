@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.homepage;
 
+import java.text.Collator;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class Homepage extends Homepage_Base {
 
-	public static final Comparator HOMEPAGE_COMPARATOR_BY_NAME = new BeanComparator("name");
+	public static final Comparator HOMEPAGE_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
 
     private static final Set<String> namePartsToIgnore = new HashSet<String>(5);
     static {

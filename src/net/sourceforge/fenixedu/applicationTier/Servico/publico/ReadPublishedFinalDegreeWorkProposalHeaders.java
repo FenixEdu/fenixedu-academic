@@ -31,6 +31,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders extends Service {
         final List finalDegreeWorkProposalHeaders = new ArrayList();
 
         final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+        if (executionDegree != null && executionDegree.getScheduling() != null) {
         Set<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().findPublishedProposals();
         if (finalDegreeWorkProposals != null) {
             for (final Proposal proposal : finalDegreeWorkProposals) {
@@ -111,6 +112,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders extends Service {
                     finalDegreeWorkProposalHeaders.add(finalDegreeWorkProposalHeader);
                 }
             }
+        }
         }
 
         return finalDegreeWorkProposalHeaders;

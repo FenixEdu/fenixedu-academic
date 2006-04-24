@@ -153,6 +153,18 @@
 	<definition name="list-homepages" extends="definition.public.homepage">
 		<put name="body" value="/publico/homepage/list.jsp"/>
 	</definition>
+	<definition name="list-homepages-teachers" extends="definition.public.homepage">
+		<put name="body" value="/publico/homepage/listTeachers.jsp"/>
+	</definition>
+	<definition name="list-homepages-employees" extends="definition.public.homepage">
+		<put name="body" value="/publico/homepage/listEmployees.jsp"/>
+	</definition>
+	<definition name="list-homepages-students" extends="definition.public.homepage">
+		<put name="body" value="/publico/homepage/listStudents.jsp"/>
+	</definition>
+	<definition name="list-homepages-alumni" extends="definition.public.homepage">
+		<put name="body" value="/publico/homepage/listAlumni.jsp"/>
+	</definition>
 	<definition name="homepage-stats" extends="definition.public.homepage">
 		<put name="body" value="/publico/homepage/stats.jsp"/>
 	</definition>
