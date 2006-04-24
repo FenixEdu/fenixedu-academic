@@ -74,7 +74,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             }
             
             if (dcp.hasDegreeStructure() && dcp.getDegreeStructure().hasAnyChilds()) {
-                encodeSubtitles();
+                encodeSubtitles(facesContext);
             }
         }
     }
@@ -320,7 +320,10 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
     }
 
-    private void encodeSubtitles() throws IOException {
+    private void encodeSubtitles(FacesContext facesContext) throws IOException {
+        this.facesContext = facesContext;
+        this.writer = facesContext.getResponseWriter();
+        
         writer.startElement("br", this);
         writer.append("&nbsp;");
         writer.endElement("br");
