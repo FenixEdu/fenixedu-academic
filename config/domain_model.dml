@@ -102,6 +102,7 @@ valueType net.sourceforge.fenixedu.domain.accessControl.Group                   
 valueType org.joda.time.YearMonthDay															as YearMonthDay;
 valueType java.math.BigDecimal																	as BigDecimal;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.CardState                          as CardState;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.CardType                           as CardType;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleType                       as ScheduleType;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ClockingState                      as ClockingState;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.DayType                            as DayType;
@@ -1482,6 +1483,14 @@ class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fen
 		String password;
 		Boolean isPassInKerberos;
 	}
+	
+	class net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard extends net.sourceforge.fenixedu.domain.Identification {	
+		Integer keyCard;			
+		CardState cardState;
+		DateTime lastModifiedDate;
+		Integer keyModifiedBy;
+	}	
+	
   
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
@@ -2843,7 +2852,12 @@ class net.sourceforge.fenixedu.domain.assiduousness.Assiduousness extends net.so
 	AssiduousnessStatus status;
 }
 
+class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegimeHistory extends net.sourceforge.fenixedu.domain.DomainObject {
+	DateInterval validInterval;
+}
+
 class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord extends net.sourceforge.fenixedu.domain.DomainObject {
+	DateTime date;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Schedule extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2925,7 +2939,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.Leave extends net.sourceforg
 		Duration duration;
 }
 
-class net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.assiduousness.JustificationType extends net.sourceforge.fenixedu.domain.DomainObject {
         String acronym;
         String description;
         DayType dayType;
@@ -2935,23 +2949,14 @@ class net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive extends 
 class net.sourceforge.fenixedu.domain.assiduousness.MonthlyBalance extends net.sourceforge.fenixedu.domain.DomainObject {
 }
 
-class net.sourceforge.fenixedu.domain.assiduousness.AnualBalance extends net.sourceforge.fenixedu.domain.DomainObject {
-}
-
 class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime extends net.sourceforge.fenixedu.domain.DomainObject {
 	String description;
 	String acronym;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Card extends net.sourceforge.fenixedu.domain.DomainObject {
-        String cardID;
-        CardState state;
-}
-
-class net.sourceforge.fenixedu.domain.assiduousness.PersonalCard extends net.sourceforge.fenixedu.domain.assiduousness.Card {
-}
-
-class net.sourceforge.fenixedu.domain.assiduousness.SubstituteCard extends net.sourceforge.fenixedu.domain.assiduousness.Card {
+        Integer cardID;
+        CardType state;
 }
 
 
@@ -5968,8 +5973,8 @@ relation ClockingClockDoneInUnit {
 }
 }
 
-relation JustificationHasMotive {
-	net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive playsRole motive {
+relation JustificationHasJustificationType {
+	net.sourceforge.fenixedu.domain.assiduousness.JustificationType playsRole justificationType {
 		multiplicity 1;
 	}
 	net.sourceforge.fenixedu.domain.assiduousness.Justification playsRole justifications {
@@ -7000,9 +7005,9 @@ relation RootDomainObjectMasterDegreeCandidate {
 	}
 }
 
-relation RootDomainObjectJustificationMotive {
+relation RootDomainObjectJustificationType {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive playsRole justificationMotives {
+	net.sourceforge.fenixedu.domain.assiduousness.JustificationType playsRole justificationTypes {
 		multiplicity *;
 	}
 }
@@ -7821,13 +7826,6 @@ relation RootDomainObjectPeriodicity {
 relation RootDomainObjectMonthlyBalance {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.MonthlyBalance playsRole monthlyBalances {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectAnualBalance {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.AnualBalance playsRole anualBalances {
 		multiplicity *;
 	}
 }
