@@ -59,4 +59,18 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
         return result;
     }
 
+    public static List<SibsPaymentFileEntry> readByYearAndStudentNumberAndPaymentTypeExceptFileEntry(
+            SibsPaymentFileEntry paymentFileEntry) {
+        final List<SibsPaymentFileEntry> result = new ArrayList<SibsPaymentFileEntry>();
+        for (final SibsPaymentFileEntry sibsPaymentFileEntry : RootDomainObject.getInstance()
+                .getSibsPaymentFileEntrysSet()) {
+            if (sibsPaymentFileEntry != paymentFileEntry && sibsPaymentFileEntry.getYear().equals(paymentFileEntry.getYear())
+                    && sibsPaymentFileEntry.getStudentNumber().equals(paymentFileEntry.getStudentNumber())
+                    && sibsPaymentFileEntry.getPaymentType().equals(paymentFileEntry.getPaymentType())) {
+                result.add(sibsPaymentFileEntry);
+            }
+        }
+        return result;
+    }
+    
 }
