@@ -97,13 +97,8 @@ public class InsertNewProjectAccess extends Service {
         Person person = Person.readPersonByUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
-        
-        Date currentDate = Calendar.getInstance().getTime();
-        for (ProjectAccess projectAccess : person.getProjectAccesses()) {
-            if (projectAccess.getEnd().before(currentDate)) {
-                projectAccess.delete();
-            }
-        }
+
+        deletePastProjectAccesses(person);
         
         Boolean isCostCenter = Boolean.FALSE;
         RoleType roleType = RoleType.PROJECTS_MANAGER;
