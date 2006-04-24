@@ -371,7 +371,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getEctsCredits(null);
     }
     
-    public double getEctsCredits(Integer order) {
+    public Double getEctsCredits(Integer order) {
         double result = 0.0;
         if (getRecentCompetenceCourseInformation() != null) {
             result = getRecentCompetenceCourseInformation().getEctsCredits(order);
