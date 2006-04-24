@@ -53,7 +53,10 @@ public class CourseGroup extends CourseGroup_Base {
         this.checkDuplicateBrotherNames(name, nameEn);
         setName(StringFormatter.prettyPrint(name));
         setNameEn(StringFormatter.prettyPrint(nameEn));
-        context.edit(beginExecutionPeriod, endExecutionPeriod);
+        
+        if (!this.isRoot() && context != null) {
+            context.edit(beginExecutionPeriod, endExecutionPeriod);            
+        }
     }
 
     public Boolean getCanBeDeleted() {
