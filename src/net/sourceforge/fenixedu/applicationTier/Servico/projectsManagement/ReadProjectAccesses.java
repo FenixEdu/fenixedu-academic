@@ -44,7 +44,9 @@ public class ReadProjectAccesses extends Service {
     public List run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
         Integer personCoordinator = new Integer(userNumber);
         
-        List<ProjectAccess> projectAcessesList = ProjectAccess.getAllByPersonUsernameAndCoordinator(username, personCoordinator, true);
+        final Person person = Person.readPersonByUsername(username);
+        List<ProjectAccess> projectAcessesList = person.readProjectAccessesByCoordinator(personCoordinator);
+            //ProjectAccess.getAllByPersonUsernameAndCoordinator(username, personCoordinator, true);
         List<InfoProjectAccess> infoProjectAcessesList = new ArrayList<InfoProjectAccess>();
 
         IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();

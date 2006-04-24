@@ -27,46 +27,36 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
  */
 public class InsertNewProjectAccess extends Service {
 
-    public void run(String userView, String costCenter, String username, GregorianCalendar beginDate, GregorianCalendar endDate, String userNumber)
-            throws ExcepcaoPersistencia {
+    public void run(String userView, String costCenter, String username, GregorianCalendar beginDate,
+            GregorianCalendar endDate, String userNumber) throws ExcepcaoPersistencia {
         Person person = Person.readPersonByUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
-        
+
         deletePastProjectAccesses(person);
-        
+
         IPersistentSuportOracle po = PersistentSuportOracle.getInstance();
         Integer coordinatorCode = new Integer(userNumber);
-        Boolean isCostCenter = Boolean.FALSE;
-        RoleType roleType = RoleType.PROJECTS_MANAGER;
-        if (costCenter != null && !costCenter.equals("")) {
-            roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
-            isCostCenter = Boolean.TRUE;
-        }
-        if (!hasProjectsManagerRole(person, roleType)) {
-            person.getPersonRoles().add(Role.getRoleByRoleType(roleType));
-        }
-        
+        Boolean isCostCenter = setProjectsRoles(person, costCenter);
+
         List<Integer> projectCodes = new ArrayList<Integer>();
-        
-        List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndCoordinator(username, coordinatorCode, true);
+
+        List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndCoordinator(username,
+                coordinatorCode, true);
         for (ProjectAccess access : accesses) {
             Integer keyProject = access.getKeyProject();
-            
-            if (! projectCodes.contains(keyProject)) {
+            if (!projectCodes.contains(keyProject)) {
                 projectCodes.add(keyProject);
             }
         }
-        
-        List projectList = po.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes);
 
-        for (int i = 0; i < projectList.size(); i++) {
-            Project project = (Project) projectList.get(i);
-            
+        List<Project> projectList = po.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(
+                coordinatorCode, projectCodes);
+
+        for (Project project : projectList) {
             if (ProjectAccess.getByPersonAndProject(person, new Integer(project.getProjectCode())) == null) {
                 throw new IllegalArgumentException();
             }
-            
             ProjectAccess projectAccess = DomainFactory.makeProjectAccess();
             projectAccess.setPerson(person);
             projectAccess.setKeyProjectCoordinator(coordinatorCode);
@@ -75,6 +65,56 @@ public class InsertNewProjectAccess extends Service {
             projectAccess.setEndDate(endDate);
             projectAccess.setCostCenter(isCostCenter);
         }
+
+    }
+
+    public void run(String userView, String costCenter, String username, String[] projectCodes,
+            GregorianCalendar beginDate, GregorianCalendar endDate, String userNumber)
+            throws ExcepcaoPersistencia {
+        Person person = Person.readPersonByUsername(username);
+        if (person == null)
+            throw new IllegalArgumentException();
+
+        Boolean isCostCenter = setProjectsRoles(person, costCenter);
+
+        for (int i = 0; i < projectCodes.length; i++) {
+            Integer projectCode = new Integer(projectCodes[i]);
+            ProjectAccess projectAccess = getPersonOldProjectAccess(person, projectCode);
+            if (projectAccess == null) {
+                projectAccess = DomainFactory.makeProjectAccess();
+                projectAccess.setPerson(person);
+                projectAccess.setKeyProjectCoordinator(new Integer(userNumber));
+                projectAccess.setKeyProject(projectCode);
+                projectAccess.setCostCenter(isCostCenter);
+            }
+            projectAccess.setBeginDate(beginDate);
+            projectAccess.setEndDate(endDate);
+        }
+
+        deletePastProjectAccesses(person);
+    }
+
+    private ProjectAccess getPersonOldProjectAccess(Person person, Integer projectCode) {
+        for (ProjectAccess projectAccess : person.getProjectAccesses()) {
+            if (projectAccess.getKeyProject().equals(projectCode)) {
+                return projectAccess;
+            }
+        }
+        return null;
+    }
+
+    private Boolean setProjectsRoles(Person person, String costCenter) {
+        Boolean isCostCenter = Boolean.FALSE;
+        RoleType roleType = RoleType.PROJECTS_MANAGER;
+        if (costCenter != null && !costCenter.equals("")) {
+            roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
+            isCostCenter = Boolean.TRUE;
+        }
+
+        if (!hasProjectsManagerRole(person, roleType)) {
+            person.getPersonRoles().add(Role.getRoleByRoleType(roleType));
+        }
+        return isCostCenter;
     }
 
     private void deletePastProjectAccesses(Person person) {
@@ -86,39 +126,9 @@ public class InsertNewProjectAccess extends Service {
                 projectAccessesToRemove.add(projectAccess);
             }
         }
-        
+
         for (ProjectAccess projectAccess : projectAccessesToRemove) {
             projectAccess.delete();
-        }
-    }
-
-    public void run(String userView, String costCenter, String username, String[] projectCodes, GregorianCalendar beginDate,
-            GregorianCalendar endDate, String userNumber) throws ExcepcaoPersistencia {
-        Person person = Person.readPersonByUsername(username);
-        if (person == null)
-            throw new IllegalArgumentException();
-
-        deletePastProjectAccesses(person);
-        
-        Boolean isCostCenter = Boolean.FALSE;
-        RoleType roleType = RoleType.PROJECTS_MANAGER;
-        if (costCenter != null && !costCenter.equals("")) {
-            roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
-            isCostCenter = Boolean.TRUE;
-        }
-
-        if (!hasProjectsManagerRole(person, roleType)) {
-            person.getPersonRoles().add(Role.getRoleByRoleType(roleType));
-        }
-
-        for (int i = 0; i < projectCodes.length; i++) {
-            ProjectAccess projectAccess = DomainFactory.makeProjectAccess();
-            projectAccess.setPerson(person);
-            projectAccess.setKeyProjectCoordinator(new Integer(userNumber));
-            projectAccess.setKeyProject(new Integer(projectCodes[i]));
-            projectAccess.setBeginDate(beginDate);
-            projectAccess.setEndDate(endDate);
-            projectAccess.setCostCenter(isCostCenter);
         }
     }
 

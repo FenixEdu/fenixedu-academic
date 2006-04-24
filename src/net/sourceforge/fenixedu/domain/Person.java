@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.domain.research.result.Authorship;
 import net.sourceforge.fenixedu.domain.research.result.Patent;
 import net.sourceforge.fenixedu.domain.research.result.Publication;
@@ -31,6 +32,7 @@ import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -1239,6 +1241,20 @@ public class Person extends Person_Base {
     		}
     	}
     	return studentCurricularPlans;
+    }
+
+    public List<ProjectAccess> readProjectAccessesByCoordinator(Integer coordinatorCode) {
+        List<ProjectAccess> result = new ArrayList<ProjectAccess>();
+        Date currentDate = Calendar.getInstance().getTime();
+        for (ProjectAccess projectAccess : getProjectAccessesSet()) {
+            if(projectAccess.getKeyProjectCoordinator().equals(coordinatorCode)) {
+                if (!DateFormatUtil.isBefore("yyyy/MM/dd", currentDate, projectAccess.getBegin())
+                        && !DateFormatUtil.isAfter("yyyy/MM/dd", currentDate, projectAccess.getEnd())) {
+                    result.add(projectAccess);
+                }
+            }
+        }
+        return result;
     }
 
 }
