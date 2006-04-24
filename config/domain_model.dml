@@ -2955,8 +2955,8 @@ class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime extends 
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Card extends net.sourceforge.fenixedu.domain.DomainObject {
-        Integer cardID;
-        CardType state;
+       Integer cardID;
+       CardType type;
 }
 
 
