@@ -167,7 +167,7 @@ public class UIDegreeModule extends UIInput {
             writer.writeAttribute("colspan", "2", null);    
         }
         writer.writeAttribute("style", "color: #888;", null);
-        writer.append(CurricularRuleLabelFormatter.getLabel(curricularRule));
+        writer.append(CurricularRuleLabelFormatter.getLabel(curricularRule, facesContext.getViewRoot().getLocale()));
         writer.endElement("td");
     }
 
