@@ -675,9 +675,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public List<List<DegreeModule>> getDcpDegreeModulesIncludingFullPath(
             Class<? extends DegreeModule> clazz) {
+        
         final List<List<DegreeModule>> result = new ArrayList<List<DegreeModule>>();
-        this.getRoot().collectChildDegreeModulesIncludingFullPath(clazz, result,
-                new ArrayList<DegreeModule>());
+        final List<DegreeModule> path = new ArrayList<DegreeModule>();
+        
+        if (clazz.equals(CourseGroup.class)) {
+            path.add(this.getRoot());
+            
+            result.add(path);
+        }
+        
+        this.getRoot().collectChildDegreeModulesIncludingFullPath(clazz, result, path);
+        
         return result;
     }
 

@@ -23,7 +23,7 @@ public class UIDegreeCurricularPlan extends UIInput {
 
     public static final String COMPONENT_FAMILY = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan";
 
-    protected static final int ROOT_DEPTH = -1;
+    protected static final int ROOT_DEPTH = 0;
 
     private boolean toEdit;
     private boolean showRules;

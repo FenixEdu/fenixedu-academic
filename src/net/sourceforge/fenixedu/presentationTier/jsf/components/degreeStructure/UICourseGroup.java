@@ -69,7 +69,7 @@ public class UICourseGroup extends UIDegreeModule {
         this.writer = facesContext.getResponseWriter();
         
         if (this.courseGroup.isRoot()) {
-            encodeRoot();
+            encodeVisibleRoot();
         } else {
             encodeSelf();
             encodeChildCourseGroups();
@@ -102,6 +102,50 @@ public class UICourseGroup extends UIDegreeModule {
         } else {
             if (this.courseGroup.hasAnyChildContexts()) {
                 encodeChildCourseGroups();
+                if (this.courseGroup.getParentDegreeCurricularPlan().getDegreeStructure().hasAnyChilds()) {
+                    encodeSubtitles();
+                }
+            } else {
+                writer.startElement("table", this);
+                writer.startElement("tr", this);
+                writer.startElement("td", this);
+                writer.writeAttribute("align", "center", null);
+                writer.startElement("i", this);
+                writer.append(this.getBundleValue("BolonhaManagerResources", "empty.curricularPlan"));
+                writer.endElement("i");
+                writer.endElement("td");
+                writer.endElement("tr");
+                writer.endElement("table");
+            }
+        }
+    }
+
+    private void encodeVisibleRoot() throws IOException {
+        if (this.onlyStructure) {
+            writer.startElement("table", this);
+            writer.writeAttribute("class", "showinfo3 mbottom0 mtop05", null);
+            encodeHeader();
+            encodeChildCourseGroups();
+            writer.endElement("table");
+        } else {
+            writer.startElement("table", this);
+            writer.writeAttribute("class", "showinfo3 mvert0", null);
+            writer.writeAttribute("style", "width: 70em;", null);
+
+            encodeHeader();
+            if (this.courseGroup.hasAnyChildContexts()) {
+                if (this.showRules && this.courseGroup.hasAnyCurricularRules()) {
+                    encodeCurricularRules();    
+                }
+                writer.endElement("table");
+
+                if (!this.hideCourses && this.courseGroup.getSortedChildContextsWithCurricularCoursesByExecutionYear(executionYear).size() > 0) {
+                    encodeChildCurricularCourses(70, (this.depth + 1) * 3);
+                    //encodeSumsFooter(sums);
+                }
+
+                encodeChildCourseGroups();
+                
                 if (this.courseGroup.getParentDegreeCurricularPlan().getDegreeStructure().hasAnyChilds()) {
                     encodeSubtitles();
                 }
@@ -167,17 +211,11 @@ public class UICourseGroup extends UIDegreeModule {
         int courseGroupIndent = this.depth * 3;
         
         if (!this.onlyStructure) {
-            if (this.depth == BASE_DEPTH) {
-                writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo3 mvert0", null);
-                writer.writeAttribute("style", "width: " + width + "em;", null);
-            } else if (this.depth > BASE_DEPTH) {
-                writer.startElement("div", this);
-                writer.writeAttribute("style", "padding-left: " + courseGroupIndent + "em;", null);
-                writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo3 mvert0", null);
-                writer.writeAttribute("style", "width: " + String.valueOf(width - (this.depth * 3)) +"em;", null);
-            }
+            writer.startElement("div", this);
+            writer.writeAttribute("style", "padding-left: " + courseGroupIndent + "em;", null);
+            writer.startElement("table", this);
+            writer.writeAttribute("class", "showinfo3 mvert0", null);
+            writer.writeAttribute("style", "width: " + String.valueOf(width - (this.depth * 3)) +"em;", null);
         }
 
         encodeHeader();
@@ -188,9 +226,7 @@ public class UICourseGroup extends UIDegreeModule {
             }
 
             writer.endElement("table");
-            if (this.depth > BASE_DEPTH) {
-                writer.endElement("div");
-            }
+            writer.endElement("div");
             
             if (!this.hideCourses && this.courseGroup.getSortedChildContextsWithCurricularCoursesByExecutionYear(executionYear).size() > 0) {
                 encodeChildCurricularCourses(width, courseGroupIndent);
@@ -209,7 +245,9 @@ public class UICourseGroup extends UIDegreeModule {
         if (this.toEdit) {
             if (this.onlyStructure) {
                 if (this.toOrder) {
-                    encodeOrderOptions();
+                    if (!this.courseGroup.isRoot()) {
+                        encodeOrderOptions();    
+                    }
                 } else {
                     encodeEditOptions();
                 }
@@ -224,9 +262,9 @@ public class UICourseGroup extends UIDegreeModule {
     private void encodeName(boolean linkable) throws IOException {
         if (this.onlyStructure) {
             writer.startElement("td", this);
-            if (this.depth == BASE_DEPTH) {
+            if (this.courseGroup.isRoot()) {
                 writer.startElement("strong", this);       
-            } else if (this.depth > BASE_DEPTH) {
+            } else {
                 writer.writeAttribute("style", "padding-left: " + String.valueOf((this.depth + 2)) + "em;", null);
             }
         } else {
@@ -252,7 +290,7 @@ public class UICourseGroup extends UIDegreeModule {
         }
          
         if (this.onlyStructure) {
-            if (this.depth == BASE_DEPTH) {
+            if (this.courseGroup.isRoot()) {
                 writer.endElement("strong");       
             } 
             writer.endElement("td");
@@ -282,18 +320,18 @@ public class UICourseGroup extends UIDegreeModule {
 
     private void encodeEditOptions() throws IOException {
         writer.startElement("td", this);
-        writer.writeAttribute("class", "aright", null);
+        writer.writeAttribute("class", "aleft", null);
         writer.append("(");
         String createAssociateAditionalParameters = "&parentCourseGroupID=" + this.courseGroup.getIdInternal() + "&toOrder=false";
-        String editDeleteaditionalParameters = "&courseGroupID=" + this.courseGroup.getIdInternal() + "&contextID=" + this.previousContext.getIdInternal() + "&toOrder=false";
+        String editAndDeleteAditionalParameters = "&courseGroupID=" + this.courseGroup.getIdInternal() + ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getIdInternal()) : "") + "&toOrder=false";
         encodeLink("createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
         writer.append(" , ");
         encodeLink("associateCourseGroup.faces", createAssociateAditionalParameters, false, "associate.course.group");
         writer.append(" , ");
-        encodeLink("editCourseGroup.faces", editDeleteaditionalParameters, false, "edit");
-        if (this.executionYear == null) {
+        encodeLink("editCourseGroup.faces", editAndDeleteAditionalParameters, false, "edit");
+        if (!this.courseGroup.isRoot() && this.executionYear == null) {
             writer.append(" , ");
-            encodeLink("deleteCourseGroup.faces", editDeleteaditionalParameters, false, "delete");
+            encodeLink("deleteCourseGroup.faces", editAndDeleteAditionalParameters, false, "delete");
         }
         writer.append(") ");
         writer.endElement("td");
@@ -315,7 +353,7 @@ public class UICourseGroup extends UIDegreeModule {
     
     private void encodeChildCurricularCourses(int width, int courseGroupIndent) throws IOException {
         writer.startElement("div", this);
-        writer.writeAttribute("class", (this.depth == BASE_DEPTH) ? "indent3" : "indent" + (courseGroupIndent + 3), null);
+        writer.writeAttribute("class", (this.courseGroup.isRoot()) ? "indent3" : "indent" + (courseGroupIndent + 3), null);
         writer.startElement("table", this);
         writer.writeAttribute("class", "showinfo3 mvert0", null);
         writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3)  + "em;", null);
