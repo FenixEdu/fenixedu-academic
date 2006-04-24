@@ -20,6 +20,11 @@
 				<bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
 			</html:link>
 		</li>
+		<li>
+			<html:link page="/viewTeacherService/viewTeacherService.faces">
+				<bean:message key="link.teacherService" />
+			</html:link>
+		</li>
 	</ul>
 
 	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
