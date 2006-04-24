@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 public class ReadTeacherServiceDistributionByTeachers extends Service {
 	
 
-	public List run(String username, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia, ParseException {		
+	public List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia, ParseException {		
 		
 		final List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
 		for(Integer executionPeriodID : executionPeriodsIDs){
@@ -49,7 +49,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		
 		DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
 
-		Department department = Teacher.readTeacherByUsername(username).getCurrentWorkingDepartment();
+		Department department =  rootDomainObject.readDepartmentByOID(departmentId); 
 		
 		for (ExecutionPeriod executionPeriodEntry : executionPeriodList) {
 											

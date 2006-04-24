@@ -8,7 +8,7 @@
 
 
 
-<ft:tilesView definition="departmentMember.masterPage"
+<ft:tilesView definition="departmentAdmOffice.masterPage"
 	attributeName="body-inline">
 	
 <style>

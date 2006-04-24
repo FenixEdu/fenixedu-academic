@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.tea
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByCourseDTO.ExecutionCourseDistributionServiceEntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO.TeacherDistributionServiceEntryDTO;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -204,18 +206,19 @@ public class ViewTeacherService extends FenixBackingBean {
 	private List<SelectItem> getExecutionPeriods() throws FenixFilterException,
 			FenixServiceException {
 
+		ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources");
+		
 		List<SelectItem> result = new ArrayList<SelectItem>();
-		result.add(new SelectItem(BOTH_SEMESTERS_ID, "Ambos os Semestres"));
-		result.add(new SelectItem(FIRST_SEMESTER_ID, "1º Semestre"));
-		result.add(new SelectItem(SECOND_SEMESTER_ID, "2º Semestre"));
+		result.add(new SelectItem(BOTH_SEMESTERS_ID, rb.getString("label.teacherService.bothSemesters")));
+		result.add(new SelectItem(FIRST_SEMESTER_ID, rb.getString("label.teacherService.firstSemester")));
+		result.add(new SelectItem(SECOND_SEMESTER_ID, rb.getString("label.teacherService.secondSemester")));
 
 		return result;
 
 	}
 
 	public String getDepartmentName() {
-		return getUserView().getPerson().getTeacher()
-				.getLastWorkingDepartment().getRealName();
+		return getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getRealName();
 	}
 
 	public String getTeacherService() throws FenixFilterException,
@@ -241,8 +244,8 @@ public class ViewTeacherService extends FenixBackingBean {
 			FenixServiceException {
 
 		List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
-               
-		Object[] args = { getUserView().getPerson().getUsername(),
+        		
+		Object[] args = { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(),
 				ExecutionPeriodsIDs};
 
 		this.teacherServiceDTO = (List<TeacherDistributionServiceEntryDTO>) ServiceUtils
@@ -256,12 +259,13 @@ public class ViewTeacherService extends FenixBackingBean {
 
 		List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
-		Object[] args = { getUserView().getPerson().getUsername(),
+		Object[] args = { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(),
 				ExecutionPeriodsIDs };
-
+		
 		this.executionCourseServiceDTO = (List<ExecutionCourseDistributionServiceEntryDTO>) ServiceUtils
-				.executeService(getUserView(),
-						"ReadTeacherServiceDistributionByCourse", args);
+		.executeService(getUserView(),
+				"ReadTeacherServiceDistributionByCourse", args);
+
 	}
 
 	private List<Integer> buildExecutionPeriodsIDsList()
@@ -343,6 +347,9 @@ public class ViewTeacherService extends FenixBackingBean {
 	private final int VIEW_COURSE_INFORMATION = 5;
 
 	private final int VIEW_STUDENTS_ENROLMENTS = 6;
+	
+	private final int VIEW_CREDITS_INFORMATION = 7;
+	
 
 	public UISelectItems getViewOptionsItems() throws FenixFilterException,
 			FenixServiceException {
@@ -353,18 +360,42 @@ public class ViewTeacherService extends FenixBackingBean {
 
 		return viewOptionsItems;
 	}
+	
+	
+	public UISelectItems getViewByTeacherOptionsItems() throws FenixFilterException,
+		FenixServiceException {
+		if (this.viewOptionsItems == null) {
+			this.viewOptionsItems = new UISelectItems();
+			viewOptionsItems.setValue(this.getByTeacherViewOptions());
+		}
+		
+		return viewOptionsItems;
+	}
 
 	private List<SelectItem> getViewOptions() throws FenixFilterException,
 			FenixServiceException {
+		
+		ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources");
 
 		List<SelectItem> result = new ArrayList<SelectItem>();
-		result.add(new SelectItem(VIEW_COURSE_INFORMATION, "Ver informações curriculares"));
-		result.add(new SelectItem(VIEW_STUDENTS_ENROLMENTS, "Ver inscrições de alunos"));
-		result.add(new SelectItem(VIEW_HOURS_PER_SHIFT, "Ver horas por turno"));
-		result.add(new SelectItem(VIEW_STUDENTS_PER_SHIFT, "Ver alunos por turno"));
+		result.add(new SelectItem(VIEW_COURSE_INFORMATION, rb.getString("label.teacherService.viewCourseInfo")));
+		result.add(new SelectItem(VIEW_STUDENTS_ENROLMENTS, rb.getString("label.teacherService.viewStudentsEnrolments")));
+		result.add(new SelectItem(VIEW_HOURS_PER_SHIFT, rb.getString("label.teacherService.viewHoursPerShift")));
+		result.add(new SelectItem(VIEW_STUDENTS_PER_SHIFT, rb.getString("label.teacherService.viewStudentsPerShift")));
 		
 		return result;
 	}
+	
+	private List<SelectItem> getByTeacherViewOptions() throws FenixFilterException,
+		FenixServiceException {
+		
+		ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources");	
+		List<SelectItem> result = new ArrayList<SelectItem>();
+		result.add(new SelectItem(VIEW_CREDITS_INFORMATION, rb.getString("label.teacherService.viewCreditsInfo")));
+		
+		return result;
+	}
+	
 
 	public Integer[] getSelectedViewOptions() {
 		if (selectedViewOptions == null) {
@@ -372,17 +403,32 @@ public class ViewTeacherService extends FenixBackingBean {
 		}
 		return selectedViewOptions;
 	}
+	
+	public Integer[] getSelectedViewByTeacherOptions() {
+		if (selectedViewOptions == null) {
+			selectedViewOptions = new Integer[] {VIEW_CREDITS_INFORMATION};
+		}
+		return selectedViewOptions;
+	}
 
 	public void setSelectedViewOptions(Integer[] selectedViewOptions) {
+		this.selectedViewOptions = selectedViewOptions;
+	}
+	
+	public void setSelectedViewByTeacherOptions(Integer[] selectedViewOptions) {
 		this.selectedViewOptions = selectedViewOptions;
 	}
 
 	public void setViewOptionsItems(UISelectItems viewOptionsItems) {
 		this.viewOptionsItems = viewOptionsItems;
 	}
+	
+	public void setViewByTeacherOptionsItems(UISelectItems viewOptionsItems) {
+		this.viewOptionsItems = viewOptionsItems;
+	}
 
 	private boolean isOptionSelected(int option) {
-		Integer[] selectedOptions = getSelectedViewOptions();
+		Integer[] selectedOptions = getSelectedViewByTeacherOptions();
 		
 		for (int i = 0; i < selectedOptions.length; i++) {
 			if (selectedOptions[i] == option) {
@@ -406,6 +452,10 @@ public class ViewTeacherService extends FenixBackingBean {
 
 	public boolean getViewStudentsEnrolments() {
 		return isOptionSelected(VIEW_STUDENTS_ENROLMENTS);
+	}
+	
+	public boolean getViewCreditsInformation() {
+		return isOptionSelected(VIEW_CREDITS_INFORMATION);
 	}
 
 	public InfoExecutionYear getPreviousExecutionYear() throws FenixFilterException, FenixServiceException {

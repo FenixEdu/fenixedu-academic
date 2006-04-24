@@ -30,11 +30,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadTeacherServiceDistributionByCourse extends Service {
 
-	public List run(String username, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia {
 			
-		Teacher teacher = Teacher.readTeacherByUsername(username);
-
-		Department department = teacher.getCurrentWorkingDepartment();
+		Department department =  rootDomainObject.readDepartmentByOID(departmentId); 
 
 		List<CompetenceCourse> competenceCourseList = department.getCompetenceCourses();
 		

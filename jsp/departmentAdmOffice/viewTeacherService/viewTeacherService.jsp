@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 
-<ft:tilesView definition="departmentMember.masterPage"
+<ft:tilesView definition="departmentAdmOffice.masterPage"
 	attributeName="body-inline">
 	
 <style>

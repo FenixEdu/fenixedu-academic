@@ -8897,7 +8897,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
@@ -8906,7 +8906,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
