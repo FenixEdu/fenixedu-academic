@@ -119,7 +119,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 
 	<target name="replace-property-values">
 
-		<parallel>
+		<sequential>
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}/OJB/"
 					 propertyFile="build.properties">
 				<include name="repository_database.xml"/>
@@ -462,7 +462,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter token="@application.filterBroker@"
 			  				   property="application.filterBroker"/>
 			</replace>
-		</parallel>
+		</sequential>
 	</target>
 
     <!-- = = = = = = = = = = = = = = = = =
