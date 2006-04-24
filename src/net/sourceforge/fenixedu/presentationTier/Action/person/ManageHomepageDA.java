@@ -41,7 +41,8 @@ public class ManageHomepageDA extends FenixDispatchAction {
             dynaActionForm.set("showAlternativeHomepage", homepage.getShowAlternativeHomepage().toString());
             dynaActionForm.set("showResearchUnitHomepage", homepage.getShowResearchUnitHomepage().toString());
             dynaActionForm.set("showCurrentExecutionCourses", homepage.getShowCurrentExecutionCourses().toString());
-            dynaActionForm.set("showActiveStudentCurricularPlans", homepage.getShowCurrentExecutionCourses().toString());
+            dynaActionForm.set("showActiveStudentCurricularPlans", homepage.getShowActiveStudentCurricularPlans().toString());
+            dynaActionForm.set("showAlumniDegrees", homepage.getShowAlumniDegrees().toString());
     	} else {
             dynaActionForm.set("name", person.getName());
         }
