@@ -19,6 +19,9 @@ public class AddContextToCourseGroup extends Service {
         if (courseGroup == null || parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
+        if (courseGroup.isRoot()) {
+            throw new FenixServiceException("error.cannotAddContextToRoot");
+        }
         courseGroup.addContext(parentCourseGroup, null, getBeginExecutionPeriod(beginExecutionPeriodID),
                 getEndExecutionPeriod(endExecutionPeriodID));
     }

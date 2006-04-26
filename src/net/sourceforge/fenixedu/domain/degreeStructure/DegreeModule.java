@@ -5,13 +5,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 
 public abstract class DegreeModule extends DegreeModule_Base {
@@ -30,6 +30,10 @@ public abstract class DegreeModule extends DegreeModule_Base {
     
     public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
             ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+        
+        if (this.isRoot()) {
+            throw new DomainException("degreeModule.cannot.add.context.to.root");
+        }
         
         checkContextsFor(parentCourseGroup, curricularPeriod, null);
         checkOwnRestrictions(parentCourseGroup, curricularPeriod);
