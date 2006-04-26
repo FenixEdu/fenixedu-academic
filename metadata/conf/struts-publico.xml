@@ -495,17 +495,6 @@
     	<forward name="Sucess" path="/viewExamsByDegreeAndCurricularYear.jsp"/>
 	</action>
 	
-    <action input="/chooseExamsMapContextDA.do?method=prepare&amp;page=0"
-            name="chooseExamsMapContextForm"
-            parameter="method"
-            path="/chooseExamsMapContextDA"
-            scope="request"
-            validate="false"
-            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ChooseExamsMapContextDA"
-            >
-		<forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
-        <forward name="showExamsMap" path="/viewExamsMap.do?method=view"/>
-    </action>
     <action input="/chooseExamsMapContextDANew.do?method=prepare&amp;page=0"
             name="chooseExamsMapContextForm"
             parameter="method"
@@ -517,22 +506,9 @@
         <forward name="prepare" path="/chooseExamsMapContextDANew.do?method=choose&amp;page=0"/>
         <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
         <forward name="showExamsMap" path="/viewExamsMapNew.do?method=view"/>
+        <forward name="viewExamsMap" path="viewExamsMap"/>
     </action>
 
-    <action path="/viewExamsMap"
-            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewExamsMapDA"
-            parameter="method"
-            name="examForm"
-            validate="false"
-			input="/notFound.do"
-            >
-			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
-                key="error.exams.period.undefined" 
-                handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
-        <forward name="viewExamsMap" path="viewExamsMapOld"/>
-        <forward name="viewExecutionCourseByCode" path="/siteViewer.do?method=executionCourseViewer"/>
-        <forward name="Sucess" path="viewAllExamsByDegreeAndCurricularYear"/>
-    </action>
     <action path="/viewExamsMapNew"
             type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewExamsMapDANew"
             parameter="method"
