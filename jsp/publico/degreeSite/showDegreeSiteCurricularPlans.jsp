@@ -6,45 +6,76 @@
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState" %>
 
-<logic:present name="infoDegreeCurricularPlan">
-
-<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
-<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> 
-<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
-&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="public.degree.information.label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
-		<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />	
+<bean:define id="institutionUrl" type="java.lang.String">
+	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
+</bean:define>
+<div class="breadcumbs">
+	<a href="<%= institutionUrl %>">
+		<bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
+	</a>
+	<bean:define id="institutionUrlTeaching" type="java.lang.String">
+		<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
+		<bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/>
+	</bean:define>
+	&nbsp;&gt;&nbsp;
+	<a href="<%=institutionUrlTeaching%>">
+		<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/>
+	</a>
+	<logic:present name="degree">
 		&nbsp;&gt;&nbsp;
-		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString()  %>">
-			<bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" />
+		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
+			<logic:equal name="degree" property="bolonhaDegree" value="false">
+				<bean:write name="degree" property="sigla"/>
+			</logic:equal>
+			<logic:equal name="degree" property="bolonhaDegree" value="true">
+				<bean:write name="degree" property="acronym"/>
+			</logic:equal>
 		</html:link>
-		 &nbsp;&gt;&nbsp;<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
-	</div>		
+	</logic:present>
+	&nbsp;&gt;&nbsp;
+	<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+</div>
 
-<p><span class="error"><html:errors/></span></p>
+<!-- COURSE NAME -->
+<h1>
+	<logic:equal name="degree" property="bolonhaDegree" value="true">
+		<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="bolonhaDegreeType.name"/>
+	</logic:equal>
+	<logic:equal name="degree" property="bolonhaDegree" value="false">
+		<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/>
+	</logic:equal>
+	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in"/>
+	<logic:present name="inEnglish">
+		<logic:equal name="inEnglish" value="false">
+			<bean:write name="degree" property="nome"/>
+		</logic:equal>
+		<logic:equal name="inEnglish" value="true">
+			<bean:write name="degree" property="nameEn"/>
+		</logic:equal>
+	</logic:present>
+</h1>
 
-	<!-- COURSE NAME -->
-	<h1>
-	    <bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso.name"/>
-	    <logic:equal name="degreeType" value="DEGREE" >
-		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.degreeType" />
-		</logic:equal>    
-		<logic:equal name="degreeType" value="MASTER_DEGREE" >
-		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.masterDegreeType" />
-		</logic:equal>  
-		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
-		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
-	</h1>
+<em><span class="error0"><html:errors/></span></em>
+
+<logic:present name="infoDegreeCurricularPlan">
 
 	<!-- CURRICULAR PLAN -->
 	<h2 class="greytxt">
 		<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
-		<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.of" />
+		<bean:write name="infoDegreeCurricularPlan" property="name"/>
 		<logic:notEmpty name="infoDegreeCurricularPlan" property="initialDate">
-			<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
-			<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
+			<logic:empty name="infoDegreeCurricularPlan" property="endDate">
+				(<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.since" />
+				<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />
+				<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>)
+			</logic:empty>
 			<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
+				(<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.of" />
+				<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />
+				<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
+				<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.to" />
 				<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
-				-<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>
+				<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>)
 			</logic:notEmpty>
 		</logic:notEmpty>	
 	</h2>
@@ -56,9 +87,19 @@
 					<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
 					<bean:define id="degreeInitials" name="infoDegreeCurricularPlan" property="infoDegree.sigla"/>
 					<bean:define id="nameDegreeCurricularPlan" name="infoDegreeCurricularPlan" property="name"/>
-					<html:link page="<%= "/prepareConsultCurricularPlanNew.do?method=prepare&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;nameDegreeCurricularPlan=" + pageContext.findAttribute("nameDegreeCurricularPlan") + "&amp;degreeInitials=" + pageContext.findAttribute("degreeInitials") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" >
-						<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.courses" /></strong>
-					</html:link>
+					<logic:equal name="degree" property="bolonhaDegree" value="false">
+						<html:link page="<%= "/prepareConsultCurricularPlanNew.do?method=prepare&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;nameDegreeCurricularPlan=" + pageContext.findAttribute("nameDegreeCurricularPlan") + "&amp;degreeInitials=" + pageContext.findAttribute("degreeInitials") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" >
+							<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.courses" /></strong>
+						</html:link>					
+					</logic:equal>
+					<logic:equal name="degree" property="bolonhaDegree" value="true">
+						<html:link page="<%= "/degreeSite/showDegreeCurricularPlanBolonha.faces?degreeID=" + request.getAttribute("degreeID")
+						+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() 
+						+ "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)
+						+ "&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false"%>"  >
+							<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.courses" /></strong>
+						</html:link>					
+					</logic:equal>
 				</td>
 			</tr>		
 			<tr>
@@ -140,11 +181,23 @@
 			</logic:present>		
 		 </table> 
 	</div>
-				
+		
+	<h2 class="arrow_bullet">
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularPlanDescription" />
+	</h2>
+	<logic:empty name="infoDegreeCurricularPlan" property="description">
+		<p><i><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="not.available" /></i></p>
+	</logic:empty>
 	<logic:notEmpty name="infoDegreeCurricularPlan" property="description">
 		<p><bean:write name="infoDegreeCurricularPlan" property="description" filter="false" /></p>
-	</logic:notEmpty>	
+	</logic:notEmpty>
 
-	<span class="px10"><p><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.responsability.information.degree" /></p></span>				 
+</logic:present>
 
-</logic:present>	
+<p style="margin-top: 2em;">
+	<span class="px10">
+		<i>
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.responsability.information.degree" />
+		</i>
+	</span>
+</p>

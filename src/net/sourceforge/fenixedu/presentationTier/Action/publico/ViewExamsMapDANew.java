@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -38,109 +37,74 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
-    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
-        HttpSession session = request.getSession(true);
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+        final HttpSession session = request.getSession(true);
 
         if (session != null) {
-			String[] allCurricularYears = { "1", "2", "3", "4", "5" };
-			
-		   List<Integer> curricularYears = new ArrayList<Integer>(allCurricularYears.length);
-		   for (int i = 0; i < allCurricularYears.length; i++) {
-               curricularYears.add(Integer.valueOf(allCurricularYears[i]));    
-           }
-
-		   request.setAttribute("curricularYearList", curricularYears);
-        	
-		   IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
-		   Integer degreeId = getFromRequest("degreeID", request);
-		   request.setAttribute("degreeID", degreeId);
-
-		   Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-		   request.setAttribute("executionDegreeID", executionDegreeId);
-
-		   Integer index = getFromRequest("index", request);
-		   request.setAttribute("index", index);
-		   Integer indice = getFromRequest("indice", request);
-		   request.setAttribute("indice", indice);
-
-		   List lista = (List)request.getAttribute ("lista");
-		   request.setAttribute("lista",lista);
-		   Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
-		   request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
-
-		   Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+            // inEnglish
+            Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
             request.setAttribute("inEnglish", inEnglish);
 
+            // index
+            Integer index = getFromRequest("index", request);
+            request.setAttribute("index", index);
+            
+            // curricularYearList
+            String[] allCurricularYears = { "1", "2", "3", "4", "5" };
+            List<Integer> curricularYears = new ArrayList<Integer>(allCurricularYears.length);
+            for (int i = 0; i < allCurricularYears.length; i++) {
+                curricularYears.add(Integer.valueOf(allCurricularYears[i]));
+            }
+            request.setAttribute("curricularYearList", curricularYears);
+
+            // degreeID
+            Integer degreeId = getFromRequest("degreeID", request);
+            request.setAttribute("degreeID", degreeId);
+
+            // degreeCurricularPlanID
+            Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+
+            // lista
+            List lista = (List) request.getAttribute("lista");
+            request.setAttribute("lista", lista);
+
+            // SessionConstants.EXECUTION_DEGREE, infoDegreeCurricularPlan
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+            request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+            if (infoExecutionDegree == null) {
+                request.setAttribute("infoDegreeCurricularPlan", "");
+            } else {
+                request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree.getInfoDegreeCurricularPlan());
+            }
+
+            // indice
+            Integer indice = getFromRequest("indice", request);
+            request.setAttribute("indice", indice);
+
+            // SessionConstants.EXECUTION_PERIOD, SessionConstants.EXECUTION_PERIOD_OID
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
             request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
             request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+            // executionDegreeID
+            Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+            request.setAttribute("executionDegreeID", executionDegreeId);
 
-            if (infoExecutionDegree== null) 
-				request.setAttribute("infoDegreeCurricularPlan","");
-			else {
-            	request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree
-                   	 .getInfoDegreeCurricularPlan());
-			}
-            
-            request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-         
-            Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-
-            InfoExamsMap infoExamsMap;
+            // SessionConstants.INFO_EXAMS_MAP
+            request.removeAttribute(SessionConstants.INFO_EXAMS_MAP);
             try {
-                infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView,
-                        "ReadFilteredExamsMap", args);
+                final IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+                final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
+                final InfoExamsMap infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView, "ReadFilteredExamsMap", args);
+                infoExamsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().prepareEnglishPresentation(getLocale(request));
+                request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
             } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException(e);
+                return mapping.findForward("viewExamsMap");
             }
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-            infoDegreeCurricularPlan = infoExamsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan();
-            infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
-            infoExamsMap.getInfoExecutionDegree().setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-           // infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-            
-          //  infoExamsMap.setInfoExecutionDegree(infoExecutionDegree);
-            request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
-
         }
 
         return mapping.findForward("viewExamsMap");
-    }
-
-    private Integer getFromRequest(String parameter, HttpServletRequest request) {
-        Integer parameterCode = null;
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null) {
-            parameterCodeString = (String) request.getAttribute(parameter);
-        }
-        if (parameterCodeString != null) {
-            try {
-                parameterCode = new Integer(parameterCodeString);
-            } catch (Exception exception) {
-                return null;
-            }
-        }
-        return parameterCode;
-    }
-
-    private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
-        Boolean parameterBoolean = null;
-
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null) {
-            parameterCodeString = (String) request.getAttribute(parameter);
-        }
-        if (parameterCodeString != null) {
-            try {
-                parameterBoolean = new Boolean(parameterCodeString);
-            } catch (Exception exception) {
-                return null;
-            }
-        }
-        return parameterBoolean;
     }
 
 }

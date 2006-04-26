@@ -5,46 +5,70 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
-<logic:present name="infoDegreeInfo">
-<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
-<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> 
-<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
-&nbsp;&gt;&nbsp; <a href="<%= institutionUrlTeaching %>"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education" /></a>
-		<bean:define id="degreeType" name="infoDegreeInfo" property="infoDegree.tipoCurso" />	
-		&nbsp;&gt;&nbsp; 
-		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID")  %>">
-			<bean:write name="infoDegreeInfo" property="infoDegree.sigla" />
+<bean:define id="institutionUrl" type="java.lang.String">
+	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
+</bean:define>
+<div class="breadcumbs">
+	<a href="<%= institutionUrl %>">
+		<bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
+	</a>
+	<bean:define id="institutionUrlTeaching" type="java.lang.String">
+		<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
+		<bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/>
+	</bean:define>
+	&nbsp;&gt;&nbsp;
+	<a href="<%=institutionUrlTeaching%>">
+		<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/>
+	</a>
+	<logic:present name="degree">
+		&nbsp;&gt;&nbsp;
+		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
+			<logic:equal name="degree" property="bolonhaDegree" value="false">
+				<bean:write name="degree" property="sigla"/>
+			</logic:equal>
+			<logic:equal name="degree" property="bolonhaDegree" value="true">
+				<bean:write name="degree" property="acronym"/>
+			</logic:equal>
 		</html:link>
-		&nbsp;&gt;&nbsp;<bean:message key="public.degree.information.label.accessRequirements"  bundle="PUBLIC_DEGREE_INFORMATION" />
-	</div>
+	</logic:present>
+	&nbsp;&gt;&nbsp;
+	<bean:message key="public.degree.information.label.accessRequirements"  bundle="PUBLIC_DEGREE_INFORMATION" />
+</div>
 
-<p><span class="error"><html:errors/></span></p>
-	
-	<!-- COURSE NAME -->
-	<h1>
-	    <bean:define id="degreeType" name="infoDegreeInfo" property="infoDegree.tipoCurso.name"/>
-		<logic:equal name="degreeType" value="DEGREE" >
-		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.degreeType" />
-		</logic:equal>    
-		<logic:equal name="degreeType" value="MASTER_DEGREE" >
-		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.masterDegreeType" />
-		</logic:equal>   
+<!-- COURSE NAME -->
+<h1>
+	<logic:equal name="degree" property="bolonhaDegree" value="true">
+		<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="bolonhaDegreeType.name"/>
+	</logic:equal>
+	<logic:equal name="degree" property="bolonhaDegree" value="false">
+		<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/>
+	</logic:equal>
+	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in"/>
+	<logic:present name="inEnglish">
+		<logic:equal name="inEnglish" value="false">
+			<bean:write name="degree" property="nome"/>
+		</logic:equal>
+		<logic:equal name="inEnglish" value="true">
+			<bean:write name="degree" property="nameEn"/>
+		</logic:equal>
+	</logic:present>
+</h1>
 
-		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
-		<bean:write name="infoDegreeInfo" property="infoDegree.nome" />
-	</h1>
-	
-	<!-- ACCESS REQUIREMENTS SITE -->
-	<h2 class="greytxt">
-		<bean:define id="executionPeriod" name="<%= SessionConstants.EXECUTION_PERIOD %>" scope="request" />
-		<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear" />
-		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.accessRequirements" />
-		<bean:write name="executionYear" property="year" />
-	</h2>
+<h2 class="greytxt">
+	<bean:define id="executionPeriod" name="<%= SessionConstants.EXECUTION_PERIOD %>" scope="request" />
+	<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear" />
+	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.accessRequirements" />
+	<bean:write name="executionYear" property="year" />
+</h2>
 
+<em><span class="error0"><html:errors/></span></em>
+
+<logic:present name="infoDegreeInfo">	
 	<!-- TEST REQUIREMENTS -->
 	<logic:notEmpty name="infoDegreeInfo" property="testIngression">
-		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.testRequirements" /></h2>  
+		<h2 class="arrow_bullet">
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.testRequirements" />
+		</h2>  
 		<p><bean:write name="infoDegreeInfo" property="testIngression" filter="false" /></p>
 	</logic:notEmpty>
   
@@ -90,7 +114,7 @@
 	<logic:empty name="infoDegreeInfo" property="markAverage">
 	<logic:empty name="infoDegreeInfo" property="markMin">
 	<logic:empty name="infoDegreeInfo" property="markMax">
-		<p><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.public.DegreeInfoNotPresent" /></span></p>
+		<p><i><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="not.available" /></i></p>
 	</logic:empty>
 	</logic:empty>
 	</logic:empty>	
@@ -99,8 +123,13 @@
 	</logic:empty>
 	</logic:empty>	
 	</logic:empty> 
-
-	<div class="clear"></div>
-	<p><span class="px10"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.responsability.information.degree" /></span></p>				 
-
+	
 </logic:present>
+
+<p style="margin-top: 2em;">
+	<span class="px10">
+		<i>
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.responsability.information.degree" />
+		</i>
+	</span>
+</p>

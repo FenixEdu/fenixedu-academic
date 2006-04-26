@@ -55,31 +55,32 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 
         request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
 
-        final List<InfoExecutionDegree> infoExecutionDegreeList;
         try {
             final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
-            infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
+            final List<InfoExecutionDegree> infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
+
+            if (!infoExecutionDegreeList.isEmpty()) {
+                List<LabelValueBean> executionPeriodsLabelValueList = new ArrayList<LabelValueBean>();
+                InfoExecutionDegree infoExecutionDegree1 = infoExecutionDegreeList.get(0);
+                executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionDegree1.getInfoExecutionYear().getYear(), "" + infoExecutionDegree1.getInfoExecutionYear().getIdInternal()));
+
+                for (int i = 1; i < infoExecutionDegreeList.size(); i++) {
+                    final InfoExecutionDegree infoExecutionDegree = infoExecutionDegreeList.get(i);
+
+                    if (infoExecutionDegree.getInfoExecutionYear().getYear() != infoExecutionDegree1.getInfoExecutionYear().getYear()) {
+                        executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionDegree.getInfoExecutionYear().getYear(), "" + infoExecutionDegree.getInfoExecutionYear().getIdInternal()));
+                        infoExecutionDegree1 = infoExecutionDegreeList.get(i);
+                    }
+                }
+
+                if (executionPeriodsLabelValueList.size() > 1) {
+                    request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+                } else {
+                    request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
+                }
+            }
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
-        }
-
-        List<LabelValueBean> executionPeriodsLabelValueList = new ArrayList<LabelValueBean>();
-        InfoExecutionDegree infoExecutionDegree1 = infoExecutionDegreeList.get(0);
-        executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionDegree1.getInfoExecutionYear().getYear(), "" + infoExecutionDegree1.getInfoExecutionYear().getIdInternal()));
-
-        for (int i = 1; i < infoExecutionDegreeList.size(); i++) {
-            final InfoExecutionDegree infoExecutionDegree = infoExecutionDegreeList.get(i);
-
-            if (infoExecutionDegree.getInfoExecutionYear().getYear() != infoExecutionDegree1.getInfoExecutionYear().getYear()) {
-                executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionDegree.getInfoExecutionYear().getYear(), "" + infoExecutionDegree.getInfoExecutionYear().getIdInternal()));
-                infoExecutionDegree1 = (InfoExecutionDegree) infoExecutionDegreeList.get(i);
-            }
-        }
-
-        if (executionPeriodsLabelValueList.size() > 1) {
-            request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
-        } else {
-            request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
         }
 
         List<LabelValueBean> anosCurriculares = new ArrayList<LabelValueBean>();
