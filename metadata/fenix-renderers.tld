@@ -103,6 +103,34 @@
          Indicates if the tag is beeing used inside. This controls if a form tag is generated or not.
       </description>
     </attribute>
+    
+    <attribute>
+      <name>visible</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         Makes the editor invisible. This attribute can be used with an hidden tag to pass an hidden value.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>validator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         Allows to specify the validator class to be used.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>converter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         Allows to specify the converter class to be used.
+      </description>
+    </attribute>
+    
   </tag>
   
   <tag>
@@ -590,11 +618,63 @@
 
     <attribute>
       <name>for</name>
-      <required>true</required>
+      <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
         Selects the context id used to fetch the message.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>show</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Selects what should be displayed. Possible options are 'label' or 'message'. If 'label' is choosen
+        then the label of the slot associated to the message will be printed. In all the other cases
+        the message itself is printed.
+      </description>
+    </attribute>
+  </tag>
+  
+  <tag>
+    <name>messages</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.MessagesTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+        This tag is to be used as a parent of 'message' tags with no 'for' attribute.
+    </description>
+
+    <attribute>
+      <name>for</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Selects the context id used to fetch the message.
+      </description>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>hasMessages</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.HasMessagesTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+        This tag is used to make a conditional inclusion of the body depending
+        if messages exist for the specified presentation context or the default
+        context.
+    </description>
+
+    <attribute>
+      <name>for</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Selects the context id.
       </description>
     </attribute>
   </tag>

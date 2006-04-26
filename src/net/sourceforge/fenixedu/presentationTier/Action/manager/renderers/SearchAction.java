@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -40,7 +41,7 @@ public class SearchAction extends DispatchAction {
     }
 
     private SearchBean getBean(HttpServletRequest request) {
-        ViewState viewState = (ViewState) request.getAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+        ViewState viewState = (ViewState) RenderUtils.getViewState();
         return (SearchBean) viewState.getMetaObject().getObject();
     }
 }

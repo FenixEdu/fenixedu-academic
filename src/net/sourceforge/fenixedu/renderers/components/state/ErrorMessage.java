@@ -4,13 +4,14 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 
-public class ViewStateMessage implements Serializable {
+public class ErrorMessage implements Serializable {
     
     private MetaSlot slot;
     private String message;
     
-    public ViewStateMessage(MetaSlot slot, String message) {
+    public ErrorMessage(MetaSlot slot, String message) {
         super();
+        
         this.slot = slot;
         this.message = message;
     }

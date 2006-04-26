@@ -103,6 +103,10 @@ public class DomainMetaObject implements MetaObject {
         this.slots.add(metaSlot);
     }
 
+    public boolean removeSlot(MetaSlot slot) {
+        return this.slots.remove(slot);
+    }
+    
     public List<MetaSlot> getHiddenSlots() {
         return this.hiddenSlots;
     }

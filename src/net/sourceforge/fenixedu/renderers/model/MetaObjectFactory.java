@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.renderers.model;
 
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 
@@ -16,6 +18,10 @@ public abstract class MetaObjectFactory {
         return currentFactory;
     }
     
+    public static MultipleMetaObject createObjectCollection() {
+        return currentFactory.createMetaObjectCollection();
+    }
+
     public static MetaObject createObject(Object object, Schema schema) {
         Schema usedSchema = schema;
         
@@ -40,6 +46,8 @@ public abstract class MetaObjectFactory {
         return currentFactory.createMetaSlot(metaObject, slotDescription);
     }
 
+    public abstract MultipleMetaObject createMetaObjectCollection();
+    
     public abstract MetaObject createMetaObject(Object object, Schema schema);
     
     public abstract MetaObject createMetaObject(Class type, Schema schema);

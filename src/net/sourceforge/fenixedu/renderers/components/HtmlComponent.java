@@ -235,4 +235,32 @@ public abstract class HtmlComponent implements Serializable {
             
         });
     }
+    
+    public static HtmlComponent getComponent(HtmlComponent component, Predicate predicate) {
+        if (component == null) {
+            return null;
+        }
+        
+        if (predicate.evaluate(component)) {
+            return component;
+        }
+        
+        return component.getChild(predicate);
+    }
+    
+    public static List<HtmlComponent> getComponents(HtmlComponent component, Predicate predicate) {
+        if (component == null) {
+            return new ArrayList<HtmlComponent>();
+        }
+        
+        if (predicate.evaluate(component)) {
+            List<HtmlComponent> results = new ArrayList<HtmlComponent>();
+            results.add(component);
+            
+            return results;
+        }
+        else {
+            return component.getChildren(predicate);
+        }
+    }
 }

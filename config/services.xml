@@ -8906,7 +8906,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
+        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
@@ -9661,7 +9661,16 @@
 		<filterChains>
 		</filterChains>
 	</service>
-	<service>
+    <service>
+        <name>CommitMetaObjects</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.renderers.CommitMetaObjects</implementationClass>
+        <description>Commits al meta objects in a list making all commits transactional as a whole</description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <!-- empty -->
+        </filterChains>
+    </service>
+    <service>
    	 	<name>DomainObjectStringPropertyFormatter</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DomainObjectStringPropertyFormatter</implementationClass>
         <description></description>

@@ -10,26 +10,26 @@ import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 public class DefaultMetaObjectFactory extends MetaObjectFactory {
 
     @Override
+    public MultipleMetaObject createMetaObjectCollection() {
+        return new SimpleMetaObjectCollection();
+    }
+
+    @Override
     public MetaObject createMetaObject(Object object, Schema schema) {
-        MetaObject metaObject;
-        
         if (object instanceof Collection) {
-            SimpleMetaObjectCollection metaObjectCollection = new SimpleMetaObjectCollection();
-            metaObjectCollection.setSchema(schema.getName());
+            MultipleMetaObject multipleMetaObject = createMetaObjectCollection();
             
             for (Iterator iter = ((Collection) object).iterator(); iter.hasNext();) {
                 Object element = (Object) iter.next();
                 
-                metaObjectCollection.addMetaObject(createOneMetaObject(element, schema));
+                multipleMetaObject.add(createOneMetaObject(element, schema));
             }
             
-            metaObject = metaObjectCollection;
+            return multipleMetaObject;
         }
         else {
-            metaObject = createOneMetaObject(object, schema);
+            return createOneMetaObject(object, schema);
         }
-        
-        return metaObject;
     }
 
     @Override
@@ -92,4 +92,5 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
         
         return metaSlot;
     }
+
 }

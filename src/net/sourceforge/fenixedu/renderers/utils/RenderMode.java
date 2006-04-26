@@ -11,7 +11,13 @@ public class RenderMode {
         addMode("output");
         addMode("input");
     }
+
+    private String name;
     
+    public RenderMode(String name) {
+        this.name = name;
+    }
+
     /**
      * @throws NullPointerException if name is null
      */
@@ -20,10 +26,15 @@ public class RenderMode {
     }
     
     public static void addMode(String name) {
-        RenderMode.modes.put(name, new RenderMode());
+        RenderMode.modes.put(name, new RenderMode(name));
     }
     
     public static Collection<RenderMode> getAllModes() {
         return RenderMode.modes.values();
+    }
+
+    @Override
+    public String toString() {
+        return "RenderMode[" + this.name + "]";
     }
 }

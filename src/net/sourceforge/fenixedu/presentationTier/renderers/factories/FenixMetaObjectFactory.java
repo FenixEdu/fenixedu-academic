@@ -6,12 +6,18 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.renderers.model.DefaultMetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
+import net.sourceforge.fenixedu.renderers.model.MultipleMetaObject;
 import net.sourceforge.fenixedu.renderers.model.SimpleMetaSlot;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 
 public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
     
+    @Override
+    public MultipleMetaObject createMetaObjectCollection() {
+        return new DomainCollectionMetaObject();
+    }
+
     @Override
     protected MetaObject createOneMetaObject(Object object, Schema schema) {
         if (object instanceof DomainObject) {

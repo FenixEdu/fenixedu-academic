@@ -13,7 +13,10 @@ public interface MetaObject extends Serializable {
     public Class getType();
     public String getSchema();
     public MetaObjectKey getKey();
+
     public List<MetaSlot> getSlots();
+    public void addSlot(MetaSlot slot);
+    public boolean removeSlot(MetaSlot slot);
 
     //
     // Interaction with framework

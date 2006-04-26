@@ -6,13 +6,17 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import net.sourceforge.fenixedu.renderers.components.state.ErrorMessage;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
-import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
-import net.sourceforge.fenixedu.renderers.components.state.ViewStateMessage;
+
+import org.apache.log4j.Logger;
 
 public class MessageTag extends TagSupport {
-
+    private static final Logger logger = Logger.getLogger(MessageTag.class);
+    
     private String forName;
+
+    private String showWhat;
     
     public String getFor() {
         return this.forName;
@@ -22,39 +26,72 @@ public class MessageTag extends TagSupport {
         this.forName = forName;
     }
 
+    public String getShow() {
+        return this.showWhat;
+    }
+
+    public void setShow(String show) {
+        this.showWhat = show;
+    }
+
+    @Override
+    public void release() {
+        super.release();
+        
+        this.forName = null;
+        this.showWhat = null;
+    }
+
     @Override
     public int doStartTag() throws JspException {
-        IViewState viewState = getViewStateWithId(getFor());
+        ErrorMessage message = getMessage();
         
-        if (viewState == null) {
-            return SKIP_BODY;
-        }
-
-        List<ViewStateMessage> messages = viewState.getMessages();
-        if (! messages.isEmpty()) {
-            writeMessage(messages.get(0));
+        if (message != null) {
+            writeMessage(message);
         }
         
         return SKIP_BODY;
     }
 
-    private IViewState getViewStateWithId(String id) {
-        List<IViewState> viewStates = (List<IViewState>) pageContext.findAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+    private ErrorMessage getMessage() {
+        MessagesTag parent = (MessagesTag) findAncestorWithClass(this, MessagesTag.class);
         
-        if (viewStates != null) {
-            for (IViewState state : viewStates) {
-                if (state.getId() != null && state.getId().equals(id)) {
-                    return state;
-                }
+        if (getFor() == null || parent != null) {
+            return parent.getCurrentMessage();
+        }
+        else {
+            if (parent != null) {
+                logger.warn("parent 'messages' tag is beeing ignored since 'for' attribute was defined");
+            }
+            
+            IViewState viewState = HasMessagesTag.getViewStateWithId(this.pageContext, getFor());
+            
+            if (viewState == null) {
+                return null;
+            }
+
+            List<ErrorMessage> messages = viewState.getMessages();
+            if (! messages.isEmpty()) {
+                return messages.get(0);
             }
         }
-        
+
         return null;
     }
 
-    private void writeMessage(ViewStateMessage message) throws JspException {
+    private void writeMessage(ErrorMessage message) throws JspException {
         try {
-            pageContext.getOut().write(message.getMessage());
+            if ("slot".equalsIgnoreCase(getShow()) || "label".equalsIgnoreCase(getShow())) {
+                if (message.getSlot() != null) {
+                    pageContext.getOut().write(message.getSlot().getLabel());
+                }
+                else {
+                    logger.warn("asked to show " + getShow() + " but not " + getShow() + " was defined");
+                }
+            }
+            else {
+                pageContext.getOut().write(message.getMessage());
+            }
         } catch (IOException e) {
             throw new JspException(e);
         }

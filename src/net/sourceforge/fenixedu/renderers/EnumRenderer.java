@@ -26,7 +26,7 @@ public class EnumRenderer extends OutputRenderer {
         }
         
         if (description == null) {
-        	description = enumerate.toString();
+        	    description = enumerate.toString();
         }
         
         return description;

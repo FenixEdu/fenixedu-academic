@@ -13,13 +13,16 @@ import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
 import net.sourceforge.fenixedu.renderers.components.HtmlMultipleHiddenField;
 import net.sourceforge.fenixedu.renderers.components.HtmlMultipleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.controllers.Controllable;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
-import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.contexts.InputContext;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
+import net.sourceforge.fenixedu.renderers.model.MultipleMetaObject;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
@@ -44,14 +47,13 @@ public class ComponentLifeCycle {
             this.formComponents = new ArrayList<HtmlFormComponent>();
             this.controllers = new ArrayList<HtmlController>();
             
-            visit(component);
+            collect(component);
             
             InputContext context = (InputContext) viewState.getContext();
-            visit(context.getForm().getSubmitButton());
-            visit(context.getForm().getCancelButton());
-            
-            addHiddenComponents(viewState);
+            collect(context.getForm().getSubmitButton());
+            collect(context.getForm().getCancelButton());
 
+            addHiddenComponents(viewState);
         }
 
         private void addHiddenComponents(IViewState viewState) {
@@ -79,7 +81,7 @@ public class ComponentLifeCycle {
             return this.controllers;
         }
     
-        private void visit(HtmlComponent component) {
+        private void collect(HtmlComponent component) {
             Predicate isFormComponent = new Predicate() {
                 public boolean evaluate(Object component) {
                     if (component instanceof HtmlFormComponent) {
@@ -94,11 +96,7 @@ public class ComponentLifeCycle {
                 }
             };
 
-            if (isFormComponent.evaluate(component)) {
-                this.formComponents.add((HtmlFormComponent) component);
-            }
-            
-            List<HtmlComponent> components = component.getChildren(isFormComponent);
+            List<HtmlComponent> components = HtmlFormComponent.getComponents(component, isFormComponent);
             for (HtmlComponent comp : components) {
                 this.formComponents.add((HtmlFormComponent) comp);
             }
@@ -117,11 +115,7 @@ public class ComponentLifeCycle {
                 }
             };
     
-            if (hasController.evaluate(component)) {
-                this.controllers.add(((Controllable) component).getController());
-            }
-    
-            components = component.getChildren(hasController);
+            components = HtmlFormComponent.getComponents(component, hasController);
             for (HtmlComponent comp : components) {
                 this.controllers.add(((Controllable) comp).getController());
             }
@@ -147,6 +141,9 @@ public class ComponentLifeCycle {
         EditRequest editRequest = new EditRequest(request);
         List<IViewState> viewStates = editRequest.getAllViewStates();
 
+        boolean allValid = true;
+        boolean anySkip = false;
+        
         for (IViewState viewState : viewStates) {
             HtmlComponent component = restoreComponent(viewState);
             
@@ -173,12 +170,14 @@ public class ComponentLifeCycle {
                     // updateMetaObject can get convert errors
                     viewState.setValid(updateMetaObject(collector, editRequest, viewState));
                 }
-            
-                if (viewState.isValid() && !viewState.skipUpdate()) {
-                    // updateDomain can get convert errors
-                    updateDomain(collector, viewState);
-                }
             }
+            
+            allValid = allValid && viewState.isValid();
+            anySkip = anySkip || viewState.skipUpdate();
+        }
+
+        if (allValid && !anySkip) {
+            updateDomain(viewStates);
         }
         
         ViewDestination destination = getDestination(viewStates);
@@ -231,7 +230,7 @@ public class ComponentLifeCycle {
         });
         
         if (validators.isEmpty()) {
-            List<HtmlComponent> formComponents = component.getChildren(new Predicate() {
+            List<HtmlComponent> formComponents = HtmlComponent.getComponents(component, new Predicate() {
 
                 public boolean evaluate(Object object) {
                     if (! (object instanceof HtmlFormComponent)) {
@@ -243,10 +242,6 @@ public class ComponentLifeCycle {
                 }
                 
             });
-            
-            if (component instanceof HtmlFormComponent) {
-                formComponents.add(component);
-            }
             
             if (! formComponents.isEmpty()) {
                 HtmlFormComponent formComponent = (HtmlFormComponent) formComponents.get(0);
@@ -275,7 +270,19 @@ public class ComponentLifeCycle {
             
             if (! htmlValidator.isValid()) { // validator message
                 if (metaObject instanceof MetaSlot) {
-                    viewState.addMessage(new ViewStateMessage((MetaSlot) metaObject, htmlValidator.getErrorMessage()));
+                    viewState.addMessage(new ErrorMessage((MetaSlot) metaObject, htmlValidator.getErrorMessage()));
+                }
+                else {
+                    HtmlFormComponent validatedFormComponent = (HtmlFormComponent) htmlValidator.getComponent();
+                    MetaSlotKey key = validatedFormComponent.getTargetSlot();
+                    
+                    if (key != null) {
+                        MetaSlot slot = getMetaSlot(metaObject, key);
+                        
+                        if (slot != null) {
+                            viewState.addMessage(new ErrorMessage(slot, htmlValidator.getErrorMessage()));
+                        }
+                    }
                 }
             }
         }
@@ -311,14 +318,20 @@ public class ComponentLifeCycle {
         InputContext context = (InputContext) contextClass.newInstance();
         context.setLayout(layout);
         context.setProperties(properties);
-        context.setViewState(viewState);
         
+        context.setViewState(viewState);
+        viewState.setContext(context);
+
         MetaObject metaObject = viewState.getMetaObject();
         metaObject.setUser(viewState.getUser());
 
-        Object object = viewState.getMetaObject().getObject();
-        viewState.setComponent(RenderKit.getInstance().render(context, object));
-        viewState.setContext(context);
+        if (metaObject instanceof MetaSlot && viewState.getHiddenSlots().size() > 0) {
+            viewState.setComponent(new HtmlText());
+        }
+        else {
+            Object object = metaObject.getObject();
+            viewState.setComponent(RenderKit.getInstance().render(context, object, metaObject.getType()));
+        }
 
         return viewState.getComponent();
     }
@@ -345,8 +358,29 @@ public class ComponentLifeCycle {
         }
     }
 
-    private void updateDomain(ComponentCollector collector, IViewState viewState) throws IOException, ClassNotFoundException {
-        viewState.getMetaObject().commit();
+    private void updateDomain(List<IViewState> viewStates) {
+        List<MetaObject> metaObjectsToCommit = new ArrayList<MetaObject>();
+        MultipleMetaObject metaObjectCollection = MetaObjectFactory.createObjectCollection();
+        
+        for (IViewState state : viewStates) {
+            MetaObject metaObject = state.getMetaObject();
+         
+            if (metaObject instanceof MetaSlot) {
+                metaObject = ((MetaSlot) metaObject).getMetaObject();
+            }
+            
+            if (! metaObjectsToCommit.contains(metaObject)) {
+                metaObjectsToCommit.add(metaObject);
+            }
+            
+            metaObjectCollection.setUser(state.getUser());
+        }
+        
+        for (MetaObject object : metaObjectsToCommit) {
+            metaObjectCollection.add(object);
+        }
+
+        metaObjectCollection.commit();
     }
     
     /**
@@ -362,7 +396,7 @@ public class ComponentLifeCycle {
             if (targetSlot == null) {
                 continue;
             }
-            
+
             MetaSlot metaSlot = getMetaSlot(viewState.getMetaObject(), targetSlot);
 
             if (metaSlot == null) {
@@ -389,7 +423,10 @@ public class ComponentLifeCycle {
                 return (MetaSlot) metaObject;
             }
             else {
-                metaObject = ((MetaSlot) metaObject).getMetaObject(); // HACK: for hidden slots
+                // HACK: for hidden slots
+                // although we may be editing a slot directly hidden slots
+                // are still added to the base meta object
+                metaObject = ((MetaSlot) metaObject).getMetaObject(); 
             }
         }
 
@@ -411,7 +448,7 @@ public class ComponentLifeCycle {
     }
 
     private void addConvertError(IViewState viewState, MetaSlot metaSlot, Exception exception) {
-        viewState.addMessage(new ViewStateMessage(metaSlot, exception.getLocalizedMessage()));
+        viewState.addMessage(new ErrorMessage(metaSlot, exception.getLocalizedMessage()));
     }
 
     private ActionForward buildForward(ViewDestination destination) {

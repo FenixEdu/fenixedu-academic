@@ -52,15 +52,15 @@ public class SimpleMetaObject implements MetaObject {
     public void addSlot(MetaSlot slot) {
         this.slots.add(slot);
     }
-    
+
+    public boolean removeSlot(MetaSlot slot) {
+        return this.slots.remove(slot);
+    }
+
     public List<MetaSlot> getHiddenSlots() {
         return this.hiddenSlots;
     }
     
-    public List<MetaSlot> getHiddelSlots() {
-        return this.hiddenSlots;
-    }
-
     public void addHiddenSlot(MetaSlot slot) {
         this.hiddenSlots.add(slot);
     }

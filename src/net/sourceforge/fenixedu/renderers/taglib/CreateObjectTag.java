@@ -4,7 +4,9 @@ import javax.servlet.jsp.JspException;
 
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
+import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
+import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 
 public class CreateObjectTag extends EditObjectTag {
     private String type;
@@ -19,7 +21,27 @@ public class CreateObjectTag extends EditObjectTag {
 
     @Override
     protected MetaObject getNewMetaObject(Object targetObject, Schema schema) {
-        return MetaObjectFactory.createObject((Class) targetObject, schema);
+        ContextTag parent = (ContextTag) findAncestorWithClass(this, ContextTag.class);
+        
+        if (parent == null || getSlot() == null) {
+            return MetaObjectFactory.createObject((Class) targetObject, schema);
+        }
+
+        MetaObject metaObject = parent.getMetaObject();
+        if (metaObject == null) {
+            metaObject = MetaObjectFactory.createObject((Class) targetObject, schema);
+            parent.setMetaObject(metaObject);
+        }
+        else {
+            SchemaSlotDescription slotDescription = schema.getSlotDescription(getSlot());
+
+            if (slotDescription != null) { // when hidden values are given
+                MetaSlot slot = MetaObjectFactory.createSlot(metaObject, slotDescription);
+                metaObject.addSlot(slot);
+            }
+        }
+        
+        return metaObject;
     }
 
     @Override

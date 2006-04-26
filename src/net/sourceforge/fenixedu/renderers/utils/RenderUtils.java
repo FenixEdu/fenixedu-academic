@@ -154,8 +154,11 @@ public class RenderUtils {
     public static String getFormatedResourceString(String key, Object ... args) {
         String text = getResourceString(key);
         
-        MessageFormat format = new MessageFormat(text);
+        if (text == null) {
+            return key;
+        }
         
+        MessageFormat format = new MessageFormat(text);
         return format.format(args);
     }
     

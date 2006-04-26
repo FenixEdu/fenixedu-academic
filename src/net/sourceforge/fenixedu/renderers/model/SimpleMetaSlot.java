@@ -159,7 +159,14 @@ public class SimpleMetaSlot implements MetaSlot {
     public List<MetaSlot> getSlots() {
         return MetaObjectFactory.createObject(getObject(), RenderKit.getInstance().findSchema(getSchema())).getSlots();
     }
-    
+
+    public void addSlot(MetaSlot slot) {
+    }
+
+    public boolean removeSlot(MetaSlot slot) {
+        return false;
+    }
+
     public List<MetaSlot> getHiddenSlots() {
         return new ArrayList<MetaSlot>();
     }

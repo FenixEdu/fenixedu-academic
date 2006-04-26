@@ -21,8 +21,13 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
         return this.metaObjects;
     }
 
-    public void addMetaObject(MetaObject metaObject) {
+    public void add(MetaObject metaObject) {
         this.metaObjects.add(metaObject);
+    }
+    
+    
+    public boolean remove(MetaObject metaObject) {
+        return this.metaObjects.remove(metaObject);
     }
     
     public UserIdentity getUser() {
@@ -51,6 +56,7 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
         return ArrayList.class;
     }
 
+    @Deprecated
     public List<MetaSlot> getSlots() {
         List<MetaSlot> slots = new ArrayList<MetaSlot>();
         
@@ -59,6 +65,13 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
         }
         
         return slots;
+    }
+
+    public void addSlot(MetaSlot slot) {
+    }
+
+    public boolean removeSlot(MetaSlot slot) {
+        return false;
     }
 
     public MetaObjectKey getKey() {
@@ -92,4 +105,5 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
             metaObject.commit();
         }
     }
+
 }

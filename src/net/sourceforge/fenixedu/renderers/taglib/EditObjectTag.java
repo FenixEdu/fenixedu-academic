@@ -166,6 +166,10 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
     @Override
     protected HtmlComponent renderObject(PresentationContext context, Object object) {
+        if (! isVisible()) {
+            return null;
+        }
+        
         if (isPostBack()) {
             return retrieveComponent();
         } else {
@@ -173,7 +177,8 @@ public class EditObjectTag extends BaseRenderObjectTag {
                 return RenderKit.getInstance().render(context, object);
             }
             else {
-                return RenderKit.getInstance().render(context, context.getMetaObject().getObject());
+                MetaObject metaObject = context.getMetaObject();
+                return RenderKit.getInstance().render(context, metaObject.getObject(), metaObject.getType());
             }
         }
     }
@@ -184,8 +189,6 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
     @Override
     protected void drawComponent(PresentationContext context, HtmlComponent component) throws JspException, IOException {
-        component.setVisible(isVisible());
-        
         InputContext inputContext = (InputContext) context;
         IViewState viewState = inputContext.getViewState();
 
@@ -193,6 +196,11 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
         List<HtmlHiddenField> hiddenFields = new ArrayList<HtmlHiddenField>();
         for (HiddenSlot slot : this.hiddenSlots) {
+            if (getSlot() != null) {
+                MetaSlot metaSlot = (MetaSlot) viewState.getMetaObject();
+                slot.setKey(metaSlot.getKey());
+            }
+
             for (String value : slot.getValues()) {
                 HtmlHiddenField field = new HtmlHiddenField(slot.getName(), value);
                 field.setTargetSlot(slot.getKey());
@@ -218,7 +226,9 @@ public class EditObjectTag extends BaseRenderObjectTag {
                 container.addChild(field);    
             }
           
-            container.addChild(component);
+            if (component != null) {
+                container.addChild(component);
+            }
             
             componentToDraw = container;
         }
@@ -350,15 +360,18 @@ public class EditObjectTag extends BaseRenderObjectTag {
         else {
             Schema schema = new Schema(null, targetObject.getClass());
             
-            SchemaSlotDescription slotDescription = new SchemaSlotDescription(getSlot());
-            slotDescription.setValidator(getValidatorClass());
-            slotDescription.setConverter(getConverterClass());
-            
-            if (slotDescription.getValidator() != null) {
-                slotDescription.setValidatorProperties(getValidatorProperties());
+            if (isVisible()) {
+                SchemaSlotDescription slotDescription = new SchemaSlotDescription(getSlot());
+    
+                slotDescription.setValidator(getValidatorClass());
+                slotDescription.setConverter(getConverterClass());
+                
+                if (slotDescription.getValidator() != null) {
+                    slotDescription.setValidatorProperties(getValidatorProperties());
+                }
+                
+                schema.addSlotDescription(slotDescription);
             }
-            
-            schema.addSlotDescription(slotDescription);
             
             return schema;
         }
@@ -416,14 +429,22 @@ public class EditObjectTag extends BaseRenderObjectTag {
             
             MetaSlot metaSlot = MetaObjectFactory.createSlot(metaObject, slotDescription);
             metaObject.addHiddenSlot(metaSlot);
+        
             slot.setKey(metaSlot.getKey());
         }
-        
+
+
         if (getSlot() == null) {
             return metaObject;
         }
         else {
             for (MetaSlot slot : metaObject.getSlots()) {
+                if (slot.getName().equals(getSlot())) {
+                    return slot;
+                }
+            }
+            
+            for (MetaSlot slot : metaObject.getHiddenSlots()) {
                 if (slot.getName().equals(getSlot())) {
                     return slot;
                 }
@@ -454,11 +475,18 @@ public class EditObjectTag extends BaseRenderObjectTag {
     }
 
     public void addHiddenSlot(String slot, boolean multiple, String value, Class<Converter> converter) {
+        if (getSlot() != null) {
+            setVisible(false);
+        }
+        
         HiddenSlot hiddenSlot = getHiddenSlot(slot);
         
         if (hiddenSlot == null) {
-            hiddenSlot = new HiddenSlot(slot, value, converter);
+            if (getSlot() != null && this.hiddenSlots.size() > 0) {
+                throw new RuntimeException("can only pass hidden values to slot '" + getSlot() + "'");
+            }
             
+            hiddenSlot = new HiddenSlot(slot, value, converter);
             this.hiddenSlots.add(hiddenSlot);
         }
         else {
