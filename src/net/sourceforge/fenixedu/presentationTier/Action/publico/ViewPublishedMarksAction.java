@@ -52,16 +52,4 @@ public class ViewPublishedMarksAction extends FenixContextDispatchAction {
         return mapping.findForward("viewPublishedMarks");
     }
 
-    private Integer getFromRequest(String parameter, HttpServletRequest request) {
-        Integer parameterCode = null;
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null) {
-            parameterCodeString = (String) request.getAttribute(parameter);
-        }
-        if (parameterCodeString != null) {
-            parameterCode = new Integer(parameterCodeString);
-        }
-        return parameterCode;
-
-    }
 }

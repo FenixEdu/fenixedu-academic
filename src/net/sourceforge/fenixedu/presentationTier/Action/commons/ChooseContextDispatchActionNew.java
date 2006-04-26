@@ -1,11 +1,3 @@
-/**
- * Project sop 
- * 
- * Package presentationTier.Action.common
- * 
- * Created on 8/Jan/2003
- *
- */
 package net.sourceforge.fenixedu.presentationTier.Action.commons;
 
 import java.util.ArrayList;
@@ -55,17 +47,19 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
     protected static final String CURRICULAR_YEAR_PARAMETER = "curricularYear";
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        final HttpSession session = request.getSession(false);
 
+        if (session != null) {
             String inputPage = request.getParameter(SessionConstants.INPUT_PAGE);
-            String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
-            if (inputPage != null)
+            if (inputPage != null) {
                 request.setAttribute(SessionConstants.INPUT_PAGE, inputPage);
-            if (nextPage != null)
+            }
+            
+            String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
+            if (nextPage != null) {
                 request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+            }
 
             setExecutionContext(request);
 
@@ -75,23 +69,57 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             Integer degreeId = getFromRequest("degreeID", request);
             request.setAttribute("degreeID", degreeId);
 
-            List executionPeriodsLabelValueList = new ArrayList();
-            executionPeriodsLabelValueList = getList(degreeCurricularPlanId);
+            // lista
+            List<LabelValueBean> executionPeriodsLabelValueList = buildExecutionPeriodsLabelValueList(degreeCurricularPlanId);
             if (executionPeriodsLabelValueList.size() > 1) {
                 request.setAttribute("lista", executionPeriodsLabelValueList);
-
             } else {
                 request.removeAttribute("lista");
             }
 
             return mapping.findForward("prepare");
 
+        } else {
+            throw new Exception();    
         }
-
-        throw new Exception();
-        // nao ocorre... pedido passa pelo filtro Autorizacao
     }
 
+    private List<LabelValueBean> buildExecutionPeriodsLabelValueList(Integer degreeCurricularPlanId) throws FenixActionException {
+        List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
+        try {
+            final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
+            infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        } catch (FenixFilterException e) {
+            throw new FenixActionException(e);
+        }
+
+        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+        for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
+            Object args[] = { infoExecutionDegree.getInfoExecutionYear() };
+            try {
+                List<InfoExecutionPeriod> infoExecutionPeriodsList = (List<InfoExecutionPeriod>) ServiceUtils.executeService(null, "ReadNotClosedPublicExecutionPeriodsByExecutionYear", args);
+
+                for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
+                    result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - " + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), 
+                            infoExecutionPeriodIter.getIdInternal().toString()));
+                }
+            } catch (FenixServiceException e) {
+                throw new FenixActionException(e);
+            } catch (FenixFilterException e) {
+                throw new FenixActionException(e);
+            }
+        }
+
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("value"));
+        Collections.sort(result, comparatorChain);
+        Collections.reverse(result);
+        
+        return result;
+    }
+    
     public ActionForward preparePublic(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         String inputPage = request.getParameter(SessionConstants.INPUT_PAGE);
@@ -235,16 +263,10 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        List executionPeriodsLabelValueList = new ArrayList();
-        try {
-            executionPeriodsLabelValueList = getList(degreeCurricularPlanId);
-        } catch (Exception e) {
-            throw new FenixActionException(e);
-        }
-
+        // lista
+        List<LabelValueBean> executionPeriodsLabelValueList = buildExecutionPeriodsLabelValueList(degreeCurricularPlanId);
         if (executionPeriodsLabelValueList.size() > 1) {
             request.setAttribute("lista", executionPeriodsLabelValueList);
-
         } else {
             request.removeAttribute("lista");
         }
@@ -371,63 +393,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
         }
         return infoExecutionPeriod;
-    }
-
-    private Integer getFromRequest(String parameter, HttpServletRequest request) {
-        Integer parameterCode = null;
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null) {
-            parameterCodeString = (String) request.getAttribute(parameter);
-        }
-        if (parameterCodeString != null) {
-            try {
-                parameterCode = new Integer(parameterCodeString);
-            } catch (Exception exception) {
-                return null;
-            }
-        }
-        return parameterCode;
-    }
-
-    private List getList(Integer degreeCurricularPlanId) throws Exception {
-        Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
-        InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-
-        List infoExecutionDegreeList = new ArrayList();
-        try {
-            infoExecutionDegreeList = (List) ServiceUtils.executeService(null,
-                    "ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
-        } catch (FenixServiceException e) {
-            throw new Exception(e);
-        }
-
-        List<LabelValueBean> executionPeriodsLabelValueList = new ArrayList<LabelValueBean>();
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("infoExecutionYear.idInternal"));
-
-        Collections.sort(infoExecutionDegreeList, comparatorChain);
-        Collections.reverse(infoExecutionDegreeList);
-        for (int i = 0; i < infoExecutionDegreeList.size(); i++) {
-            infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(i);
-
-            Object args[] = { infoExecutionDegree.getInfoExecutionYear() };
-            List infoExecutionPeriodsList = new ArrayList();
-            try {
-                infoExecutionPeriodsList = (List) ServiceUtils.executeService(null,
-                        "ReadNotClosedPublicExecutionPeriodsByExecutionYear", args);
-            } catch (FenixServiceException e) {
-                throw new Exception(e);
-            }
-            for (int j = 0; j < infoExecutionPeriodsList.size(); j++) {
-                InfoExecutionPeriod infoExecutionPeriod1 = (InfoExecutionPeriod) infoExecutionPeriodsList
-                        .get(j);
-                executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod1.getName()
-                        + " - " + infoExecutionPeriod1.getInfoExecutionYear().getYear(), ""
-                        + infoExecutionPeriod1.getIdInternal()));
-
-            }
-        }
-        return executionPeriodsLabelValueList;
     }
 
 }

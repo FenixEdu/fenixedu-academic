@@ -22,5 +22,22 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 
         return actionForward;
     }
+    
+    protected Integer getFromRequest(String parameter, HttpServletRequest request) {
+        if (request.getParameter(parameter) != null) {
+            return Integer.valueOf(request.getParameter(parameter));
+        } else if (request.getAttribute(parameter) != null) {
+            if (request.getAttribute(parameter) instanceof String) {
+                return Integer.valueOf((String) request.getAttribute(parameter));
+            } else if (request.getAttribute(parameter) instanceof Integer) {
+                return (Integer) request.getAttribute(parameter);
+            }
+        }
+        return null;
+    }
+
+    protected Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
+        return (request.getParameter(parameter) != null) ? Boolean.valueOf(request.getParameter(parameter)) : (Boolean) request.getAttribute(parameter);
+    }
 
 }
