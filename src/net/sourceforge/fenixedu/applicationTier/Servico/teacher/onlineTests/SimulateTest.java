@@ -53,7 +53,7 @@ public class SimulateTest extends Service {
         int notResponseNumber = 0;
         List<String> errors = new ArrayList<String>();
 
-        TestScope testScope = TestScope.readByDomainObject(TestScope.class, executionCourseId);
+        TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
 
         if (testScope == null) {
             ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);

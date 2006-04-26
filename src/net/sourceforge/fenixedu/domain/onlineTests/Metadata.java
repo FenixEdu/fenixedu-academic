@@ -77,58 +77,70 @@ public class Metadata extends Metadata_Base {
         }
         return visibleQuestions;
     }
-    
+
     public String correctFileName(String fileName) {
         String original = fileName.replaceAll(".xml", "");
         String newName = fileName;
         for (int i = 1;; i++) {
-        	if(getQuestionByFileName(newName) == null) {
-        		return newName;
-        	}
+            if (getQuestionByFileName(newName) == null) {
+                return newName;
+            }
             newName = original.concat("(" + i + ").xml");
-        }    	
+        }
     }
-    
+
     public Question getQuestionByFileName(String fileName) {
-    	for (Question question : this.getQuestions()) {
-			if(question.getXmlFileName().equalsIgnoreCase(fileName)) {
-				return question;
-			}
-		}
-    	return null;
+        for (Question question : this.getQuestions()) {
+            if (question.getXmlFileName().equalsIgnoreCase(fileName)) {
+                return question;
+            }
+        }
+        return null;
     }
 
     public void delete() {
-        for (;!getQuestions().isEmpty();getQuestions().get(0).delete());
+        for (; !getQuestions().isEmpty(); getQuestions().get(0).delete())
+            ;
         removeExecutionCourse();
         removeRootDomainObject();
         super.deleteDomainObject();
     }
 
-    public static Set<Metadata> findVisibleMetadataFromExecutionCourseNotOfTestQuestion(final ExecutionCourse executionCourse, final TestQuestion testQuestion) {
-    	final Set<Metadata> visibleMetadata = new HashSet<Metadata>();
-    	for (final Metadata metadata : executionCourse.getMetadatasSet()) {
-    		if (metadata != testQuestion.getQuestion().getMetadata() && metadata.getVisibility() != null && metadata.getVisibility().booleanValue()) {
-    			visibleMetadata.add(metadata);
-    		}
-    	}
-    	return visibleMetadata;
+    public static Set<Metadata> findVisibleMetadataFromExecutionCourseNotOfTest(
+            final ExecutionCourse executionCourse, final Test test) {
+        final Set<Metadata> testMetadatas = new HashSet<Metadata>();
+        for (final TestQuestion testQuestion : test.getTestQuestionsSet()) {
+            testMetadatas.add(testQuestion.getQuestion().getMetadata());
+        }
+
+        final Set<Metadata> visibleMetadata = new HashSet<Metadata>();
+        for (final Metadata metadata : executionCourse.getMetadatasSet()) {
+            if (metadata.getVisibility() != null && metadata.getVisibility().booleanValue()
+                    && !testMetadatas.contains(metadata)) {
+                visibleMetadata.add(metadata);
+            }
+        }
+
+        return visibleMetadata;
     }
 
-	public static Set<Metadata> findVisibleMetadataFromExecutionCourseNotOfTestQuestion(final ExecutionCourse executionCourse, final DistributedTest distributedTest) {
-		final Set<Metadata> distributedTestMetadata = new HashSet<Metadata>();
-		for (final StudentTestQuestion studentTestQuestion : distributedTest.getDistributedTestQuestionsSet()) {
-			distributedTestMetadata.add(studentTestQuestion.getQuestion().getMetadata());
-		}
+    public static Set<Metadata> findVisibleMetadataFromExecutionCourseNotOfDistributedTest(
+            final ExecutionCourse executionCourse, final DistributedTest distributedTest) {
+        final Set<Metadata> distributedTestMetadata = new HashSet<Metadata>();
+        for (final StudentTestQuestion studentTestQuestion : distributedTest
+                .getDistributedTestQuestionsSet()) {
+            distributedTestMetadata.add(studentTestQuestion.getQuestion().getMetadata());
+        }
 
-    	final Set<Metadata> visibleMetadata = new HashSet<Metadata>();
-    	for (final Metadata metadata : executionCourse.getMetadatasSet()) {
-    		if (metadata.getVisibility() != null && metadata.getVisibility().booleanValue() && !distributedTestMetadata.contains(metadata)) {
-    			visibleMetadata.add(metadata);
-    		}
-    	}
+        final Set<Metadata> visibleMetadata = new HashSet<Metadata>();
+        for (final Metadata metadata : executionCourse.getMetadatasSet()) {
+            if (metadata.getVisibility() != null && metadata.getVisibility().booleanValue()
+                    && !distributedTestMetadata.contains(metadata)) {
+                visibleMetadata.add(metadata);
+            }
+        }
 
-    	return visibleMetadata;
-	}
+        return visibleMetadata;
+    }
 
 }

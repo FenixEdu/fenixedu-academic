@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -22,20 +22,23 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadMetadatas extends Service {
 
-    public List<InfoMetadata> run(Integer executionCourseId, Integer testId, Boolean isDistributedTest) throws ExcepcaoPersistencia {
-    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+    public List<InfoMetadata> run(Integer executionCourseId, Integer testId, Boolean isDistributedTest)
+            throws ExcepcaoPersistencia {
+        final ExecutionCourse executionCourse = rootDomainObject
+                .readExecutionCourseByOID(executionCourseId);
 
         final Set<Metadata> metadatas;
         if (testId == null) {
             metadatas = executionCourse.findVisibleMetadata();
         } else if (isDistributedTest == false) {
-        	final TestQuestion testQuestion = rootDomainObject.readTestQuestionByOID(testId);
-            metadatas = Metadata.findVisibleMetadataFromExecutionCourseNotOfTestQuestion(executionCourse, testQuestion);
+            final Test test = rootDomainObject.readTestByOID(testId);
+            metadatas = Metadata.findVisibleMetadataFromExecutionCourseNotOfTest(executionCourse, test);
         } else if (isDistributedTest == true) {
-        	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(testId);
-        	metadatas = Metadata.findVisibleMetadataFromExecutionCourseNotOfTestQuestion(executionCourse, distributedTest);
+            final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(testId);
+            metadatas = Metadata.findVisibleMetadataFromExecutionCourseNotOfDistributedTest(
+                    executionCourse, distributedTest);
         } else {
-        	return null;
+            return null;
         }
 
         final List<InfoMetadata> infoMetadataList = new ArrayList<InfoMetadata>(metadatas.size());
