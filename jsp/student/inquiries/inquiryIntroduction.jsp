@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
-<%@ page import="net.sourceforge.fenixedu.util.StringAppender" %>
+<%@ page import="pt.utl.ist.fenix.tools.util.StringAppender" %>
 
 <link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
 
