@@ -14,7 +14,6 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -36,14 +35,10 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     private Integer[] selectedPersonsIDsToAdd;
     private Integer[] selectedPersonsIDsToRemove;
 
-    public Collection<SelectItem> getDegreeCurricularPlans() throws FenixFilterException,
-            FenixServiceException {
-
+    public Collection<SelectItem> getDegreeCurricularPlans() {
         List<SelectItem> result = new ArrayList<SelectItem>();
-        List<InfoDegreeCurricularPlan> degreeCurricularPlans = (List<InfoDegreeCurricularPlan>) ServiceUtils
-                .executeService(getUserView(), "ReadDegreeCurricularPlans", null);
 
-        for (InfoDegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+        for (DegreeCurricularPlan degreeCurricularPlan : rootDomainObject.getDegreeCurricularPlans()) {
             result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), degreeCurricularPlan
                     .getName()));
         }
@@ -72,42 +67,28 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         selectedPersonsIDsToRemove = null;
     }
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixServiceException,
-            FenixFilterException {
-        Object[] args = { DegreeCurricularPlan.class, getSelectedCurricularPlanID() };
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) ServiceUtils
-                .executeService(getUserView(), "ReadDomainObject", args);
-        return degreeCurricularPlan;
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        return rootDomainObject.readDegreeCurricularPlanByOID(getSelectedCurricularPlanID());
     }
 
-    private Department getDepartment() throws FenixServiceException, FenixFilterException {
-
+    private Department getDepartment() {
         if (getSelectedDepartmentID() != null) {
-            Object[] args = { Department.class, getSelectedDepartmentID() };
-            Department department = (Department) ServiceUtils.executeService(getUserView(),
-                    "ReadDomainObject", args);
-            return department;
+            return rootDomainObject.readDepartmentByOID(getSelectedDepartmentID());
         }
         return null;
     }
 
-    public List<SelectItem> getDepartments() throws FenixFilterException, FenixServiceException {
-
-        Object[] args = { Department.class };
-        Collection<Department> departments = (Collection<Department>) ServiceUtils.executeService(
-                getUserView(), "ReadAllDomainObjects", args);
-
+    public List<SelectItem> getDepartments() {
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(0, scouncilBundle.getString("choose")));
-        for (Department department : departments) {
+        for (Department department : rootDomainObject.getDepartments()) {
             result.add(new SelectItem(department.getIdInternal(), department.getRealName()));
         }
 
         return result;
     }
 
-    public List<SelectItem> getGroupMembers() throws FenixFilterException, FenixServiceException {
-
+    public List<SelectItem> getGroupMembers(){
         List<SelectItem> result = new ArrayList<SelectItem>();
 
         Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
@@ -120,7 +101,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         return result;
     }
     
-    public List<String> getGroupMembersLabels() throws FenixFilterException, FenixServiceException {
+    public List<String> getGroupMembersLabels(){
         List<String> result = new ArrayList<String>();
 
         Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
@@ -133,7 +114,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         return result;
     }
 
-    public List<SelectItem> getDepartmentEmployees() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getDepartmentEmployees() {
         List<SelectItem> result = new ArrayList<SelectItem>();
 
         Department department = getDepartment();
