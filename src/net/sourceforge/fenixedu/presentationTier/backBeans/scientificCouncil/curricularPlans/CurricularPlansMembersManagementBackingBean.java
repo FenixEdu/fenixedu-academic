@@ -35,18 +35,6 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     private Integer[] selectedPersonsIDsToAdd;
     private Integer[] selectedPersonsIDsToRemove;
 
-    public Collection<SelectItem> getDegreeCurricularPlans() {
-        List<SelectItem> result = new ArrayList<SelectItem>();
-
-        for (DegreeCurricularPlan degreeCurricularPlan : rootDomainObject.getDegreeCurricularPlans()) {
-            result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), degreeCurricularPlan
-                    .getName()));
-        }
-
-        return result;
-
-    }
-
     public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
         if (selectedPersonsIDsToAdd != null) {
             Object[] args = { getDegreeCurricularPlan(), selectedPersonsIDsToAdd, null };
