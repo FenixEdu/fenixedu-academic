@@ -23,11 +23,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -64,8 +62,6 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 
             Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
-            
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
             
             List<LabelValueBean> executionPeriodsLabelValueList = buildExecutionPeriodsLabelValueList(degreeCurricularPlanId);
             if (executionPeriodsLabelValueList.size() > 1) {
