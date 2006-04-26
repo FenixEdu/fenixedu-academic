@@ -23,7 +23,7 @@ public class GrantOwner extends GrantOwner_Base {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     public GrantContract readGrantContractByNumber(final Integer contractNumber) {
         for (final GrantContract grantContract : this.getGrantContractsSet()) {
             if (grantContract.getContractNumber().equals(contractNumber)) {
@@ -32,13 +32,15 @@ public class GrantOwner extends GrantOwner_Base {
         }
         return null;
     }
-    
+
     public GrantContract readGrantContractWithMaximumContractNumber() {
-        return Collections.max(this.getGrantContractsSet(), new Comparator<GrantContract>() {
-            public int compare(GrantContract o1, GrantContract o2) {
-                return o1.getContractNumber().compareTo(o2.getContractNumber());
-            }
-        });
+        List<GrantContract> grantContracts = this.getGrantContracts();
+        return (!grantContracts.isEmpty()) ? Collections.max(this.getGrantContractsSet(),
+                new Comparator<GrantContract>() {
+                    public int compare(GrantContract o1, GrantContract o2) {
+                        return o1.getContractNumber().compareTo(o2.getContractNumber());
+                    }
+                }) : null;
     }
 
     public static Integer readMaxGrantOwnerNumber() {
@@ -55,7 +57,7 @@ public class GrantOwner extends GrantOwner_Base {
         }
         return null;
     }
-    
+
     public static Integer countAllGrantOwnerByName(String name) {
         return readAllGrantOwnersByName(name).size();
     }
@@ -82,7 +84,7 @@ public class GrantOwner extends GrantOwner_Base {
     }
 
     public static List<GrantOwner> readAllGrantOwnersBySpan(Integer spanNumber,
-            Integer numberOfElementsInSpan, String orderBy) {       
+            Integer numberOfElementsInSpan, String orderBy) {
         List<GrantOwner> grantOwners = new ArrayList<GrantOwner>();
         grantOwners.addAll(RootDomainObject.getInstance().getGrantOwners());
         if (!grantOwners.isEmpty()) {
@@ -101,11 +103,10 @@ public class GrantOwner extends GrantOwner_Base {
         Date currentDate = Calendar.getInstance().getTime();
         int counter = 0;
         boolean exit = false;
-        
+
         for (GrantOwner grantOwner : RootDomainObject.getInstance().getGrantOwners()) {
             for (GrantContract grantContract : grantOwner.getGrantContracts()) {
-                if (grantType != null
-                        && grantContract.getGrantType().equals(grantType)) {
+                if (grantType != null && grantContract.getGrantType().equals(grantType)) {
                     for (GrantContractRegime grantContractRegime : grantContract.getContractRegimes()) {
                         if (justActiveContracts != null && justActiveContracts.booleanValue()
                                 && grantContractRegime.getDateEndContract().before(currentDate)
@@ -129,14 +130,14 @@ public class GrantOwner extends GrantOwner_Base {
                         exit = true;
                         break;
                     }
-                    if(exit){
+                    if (exit) {
                         exit = false;
                         break;
                     }
                 }
             }
-        }        
+        }
         return counter;
     }
-    
+
 }

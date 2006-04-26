@@ -24,7 +24,8 @@ public class CreateOrEditGrantContract extends Service {
         final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(infoGrantContract.getGrantOwnerInfo().getIdInternal());
         final GrantContract grantContract;
         if (infoGrantContract.getContractNumber() == null) {
-            final Integer maxNumber = grantOwner.readGrantContractWithMaximumContractNumber().getContractNumber();
+            GrantContract maxGrantContract = grantOwner.readGrantContractWithMaximumContractNumber();
+            final Integer maxNumber = (maxGrantContract != null) ? maxGrantContract.getContractNumber() : 0;
             final Integer newContractNumber = Integer.valueOf(maxNumber + 1);
             infoGrantContract.setContractNumber(newContractNumber);
             grantContract = DomainFactory.makeGrantContract();

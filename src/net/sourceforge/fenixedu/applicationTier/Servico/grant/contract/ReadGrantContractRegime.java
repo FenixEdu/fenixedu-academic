@@ -22,7 +22,7 @@ public class ReadGrantContractRegime extends ReadDomainObjectService {
 
 	@Override
 	protected DomainObject readDomainObject(final Integer idInternal) {
-		return rootDomainObject.readGrantContractByOID(idInternal);
+		return rootDomainObject.readGrantContractRegimeByOID(idInternal);
 	}
 
 }
