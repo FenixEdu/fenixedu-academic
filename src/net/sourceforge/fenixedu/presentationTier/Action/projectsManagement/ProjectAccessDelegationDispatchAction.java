@@ -79,7 +79,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
                     }
 
                     final List projectList = (List) ServiceUtils.executeService(userView, "ReadProjectWithoutPersonAccess", new Object[] {
-                            userView.getUtilizador(), costCenter, username });
+                            userView.getUtilizador(), costCenter, personAccessesList });
                     request.setAttribute("projectList", projectList);
                     return mapping.findForward("showPersonAccesses");
                 }

@@ -41,20 +41,15 @@ public class InsertNewProjectAccess extends Service {
 
         List<Integer> projectCodes = new ArrayList<Integer>();
 
-        List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndCoordinator(username,
-                coordinatorCode, true);
-        for (ProjectAccess access : accesses) {
-            Integer keyProject = access.getKeyProject();
-            if (!projectCodes.contains(keyProject)) {
-                projectCodes.add(keyProject);
-            }
+        for (ProjectAccess projectAccess : person.readProjectAccessesByCoordinator(coordinatorCode)) {
+            projectCodes.add(projectAccess.getKeyProject());
         }
 
         List<Project> projectList = po.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(
                 coordinatorCode, projectCodes);
 
         for (Project project : projectList) {
-            if (ProjectAccess.getByPersonAndProject(person, new Integer(project.getProjectCode())) == null) {
+            if (ProjectAccess.getByPersonAndProject(person, new Integer(project.getProjectCode())) != null) {
                 throw new IllegalArgumentException();
             }
             ProjectAccess projectAccess = DomainFactory.makeProjectAccess();
