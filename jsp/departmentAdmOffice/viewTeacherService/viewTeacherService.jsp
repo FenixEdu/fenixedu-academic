@@ -141,7 +141,7 @@ text-align: right;
 					<h:outputText value="<td colspan=8 class='backwhite' style='background-color: #fff;'>" escape="false" />
 						<h:outputText value="<ul>" escape="false" />
 							<fc:dataRepeater value="#{teacher.executionCourseTeacherServiceList}" var="coursesList">
-								<h:outputText value="<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}\##{coursesList.executionCourseIdInternal}'>" escape="false"/>
+								<h:outputText value="<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{coursesList.executionCourseIdInternal}'>" escape="false"/>
 								<h:outputText value="#{coursesList.description} " escape="false" />	
 							 	<h:outputText value="#{bundle['label.teacherService.hours']}" escape="false" />
 							 	<h:outputText value="</a></li>" escape="false"/>
