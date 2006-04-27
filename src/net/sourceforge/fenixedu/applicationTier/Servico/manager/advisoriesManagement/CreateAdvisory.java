@@ -42,23 +42,22 @@ public class CreateAdvisory extends Service {
         advisory.setExpires(infoAdvisory.getExpires());
         advisory.setMessage(infoAdvisory.getMessage());
         advisory.setSender(infoAdvisory.getSender());
-     
+
         Role role = Role.getRoleByRoleType(RoleType.PERSON);
         List<Person> people = role.getAssociatedPersons();
-              
+
         for (Person person : people) {
-            if ((advisoryRecipients.equals(AdvisoryRecipients.STUDENTS) && hasRole(person,
-                    RoleType.STUDENT))
-                    || (advisoryRecipients.equals(AdvisoryRecipients.TEACHERS) && hasRole(person,
-                            RoleType.TEACHER))
-                    || (advisoryRecipients.equals(AdvisoryRecipients.EMPLOYEES) && hasRole(person,
-                            RoleType.EMPLOYEE))) {
-          
-                person.getAdvisories().add(advisory);
-                advisory.getPeople().add(person);
+            if ((advisoryRecipients.equals(AdvisoryRecipients.STUDENTS) && person
+                    .hasRole(RoleType.STUDENT))
+                    || (advisoryRecipients.equals(AdvisoryRecipients.TEACHERS) && person
+                            .hasRole(RoleType.TEACHER))
+                    || (advisoryRecipients.equals(AdvisoryRecipients.EMPLOYEES) && person
+                            .hasRole(RoleType.EMPLOYEE))) {
+
+                person.addAdvisories(advisory);
             }
         }
-        
+
         return Boolean.TRUE;
     }
 
