@@ -38,6 +38,7 @@ public class ReadStudentTestQuestionImage extends Service {
             throw new FenixServiceException();
 
         Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
+        
 
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyQuestion().equals(questionId)) {

@@ -8,6 +8,7 @@
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 	<bean:define id="infoQuestion" name="infoTestQuestion" property="question" />
 	<bean:define id="exerciseCode" name="infoQuestion" property="idInternal" />
+	<bean:define id="metadataId" name="infoQuestion" property="infoMetadata.idInternal" />
 	<bean:define id="testQuestionCode" name="infoTestQuestion" property="idInternal" />
 	<span class="error"><html:errors /></span>
 
@@ -75,6 +76,7 @@
 		<br />
 		<h2><bean:message key="title.example" /></h2>
 		<%request.setAttribute("iquestion", infoQuestion);
+		request.setAttribute("metadataId", metadataId);
         %>
 		<jsp:include page="showQuestion.jsp">
 			<jsp:param name="showResponses" value="true" />

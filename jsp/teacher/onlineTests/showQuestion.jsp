@@ -5,7 +5,7 @@
 <logic:present name="iquestion">
 
 <bean:define id="showResponses" value='<%=request.getParameter("showResponses")%>'/>
-
+<bean:define id="metadataCode" name="metadataId" />
 <bean:define id="questionCode" name="iquestion" property="idInternal"/>
 <bean:define id="index" value="0"/>
 <bean:define id="imageLabel" value="false"/>
@@ -15,7 +15,7 @@
 	<bean:define id="questionLabel" name="questionBody" property="label"/>
 	<% if (((String)questionLabel).startsWith("image/")){%>
 		<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-		<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
+		<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()+"&amp;metadataCode="+metadataCode%>"/>
 		<logic:equal name="imageLabel" value="true">
 			</td><td>
 		</logic:equal>
@@ -61,7 +61,7 @@
 	<bean:define id="optionLabel" name="optionBody" property="label"/>
 	<% if (((String)optionLabel).startsWith("image/")){ %>
 		<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-		<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
+		<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()+"&amp;metadataCode="+metadataCode%>"/>
 	<% } else if (((String)optionLabel).equals("image_label")){%>
 		<logic:equal name="imageLabel" value="false">
 		<bean:define id="imageLabel" value="true"/>
@@ -163,7 +163,7 @@
 			<bean:define id="optionLabel" name="optionBody" property="label"/>
 			<%if (((String)optionLabel).startsWith("image/")){ %>
 				<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-				<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
+				<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()+"&amp;metadataCode="+metadataCode%>"/>
 			<%} else if (((String)optionLabel).equals("image_label")){%>
 				<logic:equal name="imageLabel" value="false">
 					<bean:define id="imageLabel" value="true"/>
@@ -245,7 +245,7 @@
 				<bean:define id="feedbackLabel" name="feedback" property="label"/>
 				<%if (((String)feedbackLabel).startsWith("image/")){%>
 					<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;feedbackCode="+rpIndex+"&amp;imgType="+feedbackLabel.toString()%>"/>
+					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;feedbackCode="+rpIndex+"&amp;imgType="+feedbackLabel.toString()+"&amp;metadataCode="+metadataCode%>"/>
 					<logic:equal name="imageLabel" value="true">
 						</td><td>
 					</logic:equal>

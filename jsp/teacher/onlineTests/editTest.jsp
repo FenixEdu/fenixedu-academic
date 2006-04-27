@@ -65,7 +65,9 @@
 			<bean:message key="link.removeTestQuestion" />
 			</html:link></div></td>
 		</tr></table>
-		<% request.setAttribute("iquestion", thisQuestion); %>
+		<bean:define id="metadataId" name="thisQuestion" property="infoMetadata.idInternal"/>
+		<% request.setAttribute("iquestion", thisQuestion); 
+		request.setAttribute("metadataId", metadataId);%>
 		<jsp:include page="showQuestion.jsp">
 			<jsp:param name="showResponses" value="false"/>
 		</jsp:include>

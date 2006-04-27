@@ -161,12 +161,13 @@ function back(){
 
 
 					<div class="gen-button"><html:link
-						page="<%= "/exercisesEdition.do?method=prepareRemoveExerciseVariation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;exerciseCode=" + pageContext.findAttribute("exerciseCode") + "&amp;variationCode=" + questionCode  + "&amp;order=" + pageContext.findAttribute("order")+ "&amp;asc=" + pageContext.findAttribute("asc")%>">
+						page="<%= "/exercisesEdition.do?method=prepareRemoveExerciseVariation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;exerciseCode=" + pageContext.findAttribute("exerciseCode") + "&amp;variationCode=" + questionCode  + "&amp;order=" + pageContext.findAttribute("order")+ "&amp;asc=" + pageContext.findAttribute("asc")+"&amp;metadataCode="+metadataId%>">
 						<bean:message key="label.remove" />
 					</html:link></div>
-					<%request.setAttribute("iquestion", iquestion);
-
-        %>
+					<%
+					request.setAttribute("iquestion", iquestion);
+					request.setAttribute("metadataId", metadataId);
+			       %>
 					<jsp:include page="showQuestion.jsp">
 						<jsp:param name="showResponses" value="true" />
 					</jsp:include>

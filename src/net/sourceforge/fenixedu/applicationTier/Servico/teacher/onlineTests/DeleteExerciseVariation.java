@@ -25,10 +25,17 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class DeleteExerciseVariation extends Service {
 
-    public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
+    public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode, Integer metadataCode) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
-        Question question = rootDomainObject.readQuestionByOID(questionCode);
+        Question question = null;
+        Metadata metadata = rootDomainObject.readMetadataByOID(metadataCode);
+        for (Question visibleQuestion : metadata.getVisibleQuestions()) {
+            if(visibleQuestion.getIdInternal().equals(questionCode)){
+                question = visibleQuestion; 
+            }
+        }
+        
         if (question == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -49,7 +56,6 @@ public class DeleteExerciseVariation extends Service {
                     testQuestion.setQuestion(getNewQuestion(question));
                 }
             }
-            Metadata metadata = question.getMetadata();
             if (question.getStudentTestsQuestions() == null || question.getStudentTestsQuestions().size() == 0) {
                 question.delete();
                 if (metadata.getQuestionsCount() <= 1) {

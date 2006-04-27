@@ -18,20 +18,29 @@ public class ReadQuestion extends Service {
     public InfoQuestion run(Integer executionCourseId, Integer metadataId, Integer questionId, String path) throws FenixServiceException,
             ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
+        
+        Metadata metadata = rootDomainObject.readMetadataByOID(metadataId);
+                
         Question question = null;
         if (questionId == null || questionId.equals(new Integer(-1))) {
             if (metadataId == null)
                 throw new InvalidArgumentsServiceException();
-
-            Metadata metadata = rootDomainObject.readMetadataByOID(metadataId);
+            
             if (metadata == null || metadata.getVisibleQuestions() == null && metadata.getVisibleQuestions().size() == 0) {
                 throw new InvalidArgumentsServiceException();
             }
 
             question = metadata.getVisibleQuestions().get(0);
         } else {
-            question = rootDomainObject.readQuestionByOID(questionId);
+            
+            for (Question visibleQuestion : metadata.getVisibleQuestions()) {
+                if(visibleQuestion.getIdInternal().equals(questionId)){
+                    question = visibleQuestion;
+                    break;
+                }
+            }            
         }
+        
         if (question == null) {
             throw new InvalidArgumentsServiceException();
         }

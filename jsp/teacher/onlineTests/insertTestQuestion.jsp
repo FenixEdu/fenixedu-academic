@@ -141,6 +141,7 @@
 		<h2><bean:message key="title.example" /></h2>
 
 		<%request.setAttribute("iquestion", pageContext.findAttribute("infoQuestion"));
+		request.setAttribute("metadataId", metadataCode);
         %>
 		<jsp:include page="showQuestion.jsp">
 			<jsp:param name="showResponses" value="true" />

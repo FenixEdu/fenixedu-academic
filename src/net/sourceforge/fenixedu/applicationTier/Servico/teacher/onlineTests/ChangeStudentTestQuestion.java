@@ -51,8 +51,10 @@ public class ChangeStudentTestQuestion extends Service {
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException,
             ExcepcaoPersistencia {
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
-
-        Question oldQuestion = rootDomainObject.readQuestionByOID(oldQuestionId);
+        
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        Question oldQuestion = distributedTest.findQuestionByOID(oldQuestionId); 
+        
         if (oldQuestion == null)
             throw new InvalidArgumentsServiceException();
 
@@ -74,35 +76,34 @@ public class ChangeStudentTestQuestion extends Service {
             distributedTestList = oldQuestion.findDistributedTests();
         else {
             distributedTestList = new HashSet<DistributedTest>();
-            DistributedTest distributedTest = rootDomainObject
-                    .readDistributedTestByOID(distributedTestId);
+
             if (distributedTest == null)
                 throw new InvalidArgumentsServiceException();
             distributedTestList.add(distributedTest);
 
         }
         boolean canDelete = true;
-        for (DistributedTest distributedTest : distributedTestList) {
+        for (DistributedTest currentDistributedTest : distributedTestList) {
             Collection<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
             InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory = new InfoSiteDistributedTestAdvisory();
             infoSiteDistributedTestAdvisory.setInfoDistributedTest(InfoDistributedTest
-                    .newInfoFromDomain(distributedTest));
+                    .newInfoFromDomain(currentDistributedTest));
             infoSiteDistributedTestAdvisory.setInfoAdvisory(InfoAdvisory.newInfoFromDomain(getAdvisory(
-                    distributedTest, path.replace('\\', '/'))));
+                    currentDistributedTest, path.replace('\\', '/'))));
 
             if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
                 Student student = rootDomainObject.readStudentByOID(studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
-            	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(oldQuestion, student, distributedTest));
+            	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(oldQuestion, student, currentDistributedTest));
             } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
                 Student student = rootDomainObject.readStudentByOID(studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
-                Integer order = StudentTestQuestion.findStudentTestQuestion(oldQuestion, student, distributedTest).getTestQuestionOrder();
-                studentsTestQuestionList = distributedTest.findStudentTestQuestionsByTestQuestionOrder(order);
+                Integer order = StudentTestQuestion.findStudentTestQuestion(oldQuestion, student, currentDistributedTest).getTestQuestionOrder();
+                studentsTestQuestionList = currentDistributedTest.findStudentTestQuestionsByTestQuestionOrder(order);
             } else
-                studentsTestQuestionList = StudentTestQuestion.findStudentTestQuestions(oldQuestion, distributedTest);
+                studentsTestQuestionList = StudentTestQuestion.findStudentTestQuestions(oldQuestion, currentDistributedTest);
 
             List<InfoStudent> group = new ArrayList<InfoStudent>();
 
@@ -133,7 +134,7 @@ public class ChangeStudentTestQuestion extends Service {
                             new TestType(TestType.EVALUATION))) {
                         OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
                         Attends attend = studentTestQuestion.getStudent().readAttendByExecutionCourse(
-                                ((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));
+                                ((ExecutionCourse) currentDistributedTest.getTestScope().getDomainObject()));
                         Mark mark = onlineTest.getMarkByAttend(attend);
                         if (mark != null) {
                             mark.setMark(getNewStudentMark(studentTestQuestion.getDistributedTest(),

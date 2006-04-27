@@ -45,24 +45,21 @@ public class ChangeStudentTestQuestionMark extends Service {
             ExcepcaoPersistencia {
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
         path = path.replace('\\', '/');
+        
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        Question question = distributedTest.findQuestionByOID(questionId); 
+                
         List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-        	final Question question = rootDomainObject.readQuestionByOID(questionId);
-        	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         	final Student student = rootDomainObject.readStudentByOID(studentId);
         	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(question, student, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST_VARIATION) {
-        	final Question question = rootDomainObject.readQuestionByOID(questionId);
-        	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
             studentsTestQuestionList.addAll(StudentTestQuestion.findStudentTestQuestions(question, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-        	final Question question = rootDomainObject.readQuestionByOID(questionId);
-        	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         	final Student student = rootDomainObject.readStudentByOID(studentId);
         	final StudentTestQuestion studentTestQuestion = StudentTestQuestion.findStudentTestQuestion(question, student, distributedTest);
             studentsTestQuestionList.addAll(distributedTest.findStudentTestQuestionsByTestQuestionOrder(studentTestQuestion.getTestQuestionOrder()));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS) {
-        	final Question question = rootDomainObject.readQuestionByOID(questionId);
             studentsTestQuestionList.addAll(question.getStudentTestsQuestionsSet());
         }
         for (StudentTestQuestion studentTestQuestion : studentsTestQuestionList) {

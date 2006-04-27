@@ -11,7 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.QuestionOption;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
@@ -23,31 +26,46 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class ReadQuestionImage extends Service {
 
-    private String path = new String();
-
-    public String run(Integer exerciseId, Integer imageId, String path) throws FenixServiceException, ExcepcaoPersistencia {
-        this.path = path.replace('\\', '/');
-        Question question = rootDomainObject.readQuestionByOID(exerciseId);
-        ParseQuestion parse = new ParseQuestion();
-        String image;
-        try {
-            image = parse.parseQuestionImage(question.getXmlFile(), imageId.intValue(), this.path);
-        } catch (Exception e) {
-            throw new FenixServiceException(e);
+    public String run(Integer exerciseId, Integer metadataCode, Integer imageId, String path) throws FenixServiceException, ExcepcaoPersistencia {
+        
+        Metadata metadata = rootDomainObject.readMetadataByOID(metadataCode);
+        for (Question question : metadata.getVisibleQuestions()) {
+            if(question.getIdInternal().equals(exerciseId)){
+                ParseQuestion parse = new ParseQuestion();
+                String image;
+                try {
+                    image = parse.parseQuestionImage(question.getXmlFile(), imageId.intValue(), path.replace('\\', '/'));
+                } catch (Exception e) {
+                    throw new FenixServiceException(e);
+                }
+                return image;
+                
+            }
         }
-        return image;
+        return null;
     }
 
     public String run(Integer distributedTestId, Integer questionId, String optionShuffle, Integer imageId, String path)
             throws FenixServiceException, ExcepcaoPersistencia {
-        this.path = path.replace('\\', '/');
-        Question question = rootDomainObject.readQuestionByOID(questionId);
+        
+        Question question = null;
+        Test test = rootDomainObject.readTestByOID(distributedTestId);
+        for (TestQuestion testQuestion : test.getTestQuestions()) {
+            if(testQuestion.getQuestion().getIdInternal().equals(questionId)){
+                question = testQuestion.getQuestion();
+                break;
+            }
+        }
+        if(question == null){
+            throw new FenixServiceException("Unexisting Question!!!!!");
+        }
+                
         InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
         try {
             ParseQuestion parse = new ParseQuestion();
             infoStudentTestQuestion.setQuestion(InfoQuestion.newInfoFromDomain(question));
             infoStudentTestQuestion.setOptionShuffle(optionShuffle);
-            infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, this.path);
+            infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, path.replace('\\', '/'));
         } catch (Exception e) {
             throw new FenixServiceException(e);
         }

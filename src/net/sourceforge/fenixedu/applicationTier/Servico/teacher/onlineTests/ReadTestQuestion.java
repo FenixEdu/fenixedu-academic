@@ -29,7 +29,7 @@ public class ReadTestQuestion extends Service {
 			String path) throws FenixServiceException, ExcepcaoPersistencia {
 		this.path = path.replace('\\', '/');
         final Test test = rootDomainObject.readTestByOID(testId);
-        final Question question = rootDomainObject.readQuestionByOID(questionId);
+        final Question question = test.findQuestionByOID(questionId);
         final TestQuestion testQuestion = test.getTestQuestion(question);
 		InfoTestQuestion infoTestQuestion = InfoTestQuestionWithInfoQuestion
 				.newInfoFromDomain(testQuestion);
