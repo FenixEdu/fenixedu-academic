@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class InfoExamsMap extends InfoObject implements Serializable {
 
-    List executionCourses;
+    List<InfoExecutionCourse> executionCourses;
 
     List curricularYears;
 
@@ -68,7 +68,7 @@ public class InfoExamsMap extends InfoObject implements Serializable {
     /**
      * @return
      */
-    public List getExecutionCourses() {
+    public List<InfoExecutionCourse> getExecutionCourses() {
         return executionCourses;
     }
 
@@ -110,7 +110,7 @@ public class InfoExamsMap extends InfoObject implements Serializable {
     /**
      * @param list
      */
-    public void setExecutionCourses(List list) {
+    public void setExecutionCourses(List<InfoExecutionCourse> list) {
         executionCourses = list;
     }
 
