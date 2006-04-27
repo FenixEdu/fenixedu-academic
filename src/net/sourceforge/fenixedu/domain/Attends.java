@@ -67,7 +67,7 @@ public class Attends extends Attends_Base {
             removeAluno();
             removeDisciplinaExecucao();
             removeEnrolment();
-            
+
             removeRootDomainObject();
             deleteDomainObject();
         } else {
@@ -203,7 +203,8 @@ public class Attends extends Attends_Base {
                 DateTimeFieldType.dayOfWeek(), 1);
         final DateMidnight thisMonday = new DateMidnight().withField(DateTimeFieldType.dayOfWeek(), 1);
         final Period period = new Period(firstMonday, thisMonday);
-        return (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks();
+        return (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks()
+                + (Double.valueOf(StrictMath.ceil((period.getDays() / 7.0))).intValue());
     }
 
     public Set<WeeklyWorkLoad> getSortedWeeklyWorkLoads() {
@@ -277,14 +278,14 @@ public class Attends extends Attends_Base {
 
     public static List<Attends> readByDegreeCurricularPlanAndExecutionPeriod(
             DegreeCurricularPlan degreeCurricularPlan, ExecutionPeriod executionPeriod) {
-        
+
         Set<Attends> attends = new HashSet<Attends>();
         for (Attends attend : RootDomainObject.getInstance().getAttendss()) {
-            if (attend.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod) && 
-                    attend.getEnrolment().getStudentCurricularPlan().equals(degreeCurricularPlan)) {
+            if (attend.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)
+                    && attend.getEnrolment().getStudentCurricularPlan().equals(degreeCurricularPlan)) {
                 attends.add(attend);
             }
-        }               
-        return new ArrayList<Attends>(attends);               
+        }
+        return new ArrayList<Attends>(attends);
     }
 }
