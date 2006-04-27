@@ -83,4 +83,12 @@ public class Test extends Test_Base {
         super.deleteDomainObject();
     }
 
+    public Question findQuestionByOID(Integer questionId){
+        for (TestQuestion testQuestion: this.getTestQuestions()) {
+            if(testQuestion.getQuestion().getIdInternal().equals(questionId)){
+                return testQuestion.getQuestion();
+            }
+        }
+        return null;
+    }
 }

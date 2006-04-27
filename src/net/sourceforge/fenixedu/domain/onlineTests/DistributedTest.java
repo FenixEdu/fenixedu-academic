@@ -263,4 +263,12 @@ public class DistributedTest extends DistributedTest_Base {
         return getDistributedTestQuestionsSet().size() / getNumberOfQuestions().intValue();
     }
 
+    public Question findQuestionByOID(Integer questionId){
+        for (StudentTestQuestion studentTestQuestion : this.getDistributedTestQuestions()) {
+            if(studentTestQuestion.getQuestion().getIdInternal().equals(questionId)){
+                return studentTestQuestion.getQuestion();
+            }
+        }
+        return null;
+    }
 }

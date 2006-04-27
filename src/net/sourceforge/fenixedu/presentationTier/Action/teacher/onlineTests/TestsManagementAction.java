@@ -374,6 +374,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         String studentCode = request.getParameter("studentCode");
         String optionShuffle = request.getParameter("optionShuffle");
         Integer testCode = getCodeFromRequest(request, "testCode");
+        Integer metadataCode = getCodeFromRequest(request, "metadataCode");
 
         String feedbackCode = request.getParameter("feedbackCode");
         String path = getServlet().getServletContext().getRealPath("/");
@@ -393,7 +394,7 @@ public class TestsManagementAction extends FenixDispatchAction {
                 throw new FenixActionException(e);
             }
         } else {
-            Object[] args = { exerciseCode, imgCode, path };
+            Object[] args = { exerciseCode, metadataCode, imgCode, path };
             try {
                 img = (String) ServiceUtils.executeService(userView, "ReadQuestionImage", args);
             } catch (FenixServiceException e) {

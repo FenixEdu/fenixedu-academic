@@ -728,14 +728,16 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         request.setAttribute("objectCode", executionCourseId);
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
+        Integer metadataCode = getCodeFromRequest(request, "metadataCode");
+        
         try {
             List<LabelValueBean> result = (List<LabelValueBean>) ServiceUtils.executeService(userView, "DeleteExerciseVariation", new Object[] {
-                    executionCourseId, variationCode });
+                    executionCourseId, variationCode, metadataCode });
             if (result == null || result.size() == 0) {
                 return prepareEditExercise(mapping, form, request, response);
             }
             request.setAttribute("studentsList", result);
-            InfoQuestion infoQuestion = (InfoQuestion) ServiceUtils.executeService(userView, "ReadQuestion", new Object[] { executionCourseId, null,
+            InfoQuestion infoQuestion = (InfoQuestion) ServiceUtils.executeService(userView, "ReadQuestion", new Object[] { executionCourseId, metadataCode,
                     variationCode, getServlet().getServletContext().getRealPath("/") });
             request.setAttribute("infoQuestion", infoQuestion);
         } catch (FenixServiceException e) {

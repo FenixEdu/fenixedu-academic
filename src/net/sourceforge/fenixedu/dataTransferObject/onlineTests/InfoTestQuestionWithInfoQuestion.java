@@ -13,7 +13,7 @@ public class InfoTestQuestionWithInfoQuestion extends InfoTestQuestion {
     public void copyFromDomain(TestQuestion testQuestion) {
         super.copyFromDomain(testQuestion);
         if (testQuestion != null) {
-            setQuestion(InfoQuestion.newInfoFromDomain(testQuestion.getQuestion()));
+            setQuestion(InfoQuestionWithInfoMetadata.newInfoFromDomain(testQuestion.getQuestion()));
         }
     }
 
