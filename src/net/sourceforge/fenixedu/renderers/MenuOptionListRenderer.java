@@ -152,6 +152,9 @@ public class MenuOptionListRenderer extends InputRenderer {
         public HtmlComponent createComponent(Object object, Class type) {
             HtmlMenu menu = new HtmlMenu();
             
+            String defaultOptionTitle = RenderUtils.getResourceString("renderers.menu.default.title");
+            menu.createDefaultOption(defaultOptionTitle).setSelected(object == null);
+            
             RenderKit kit = RenderKit.getInstance();
             Schema schema = kit.findSchema(getEachSchema()); 
             
@@ -183,7 +186,7 @@ public class MenuOptionListRenderer extends InputRenderer {
             
             Converter converter = getConverter();
             if (converter != null) {
-                menu.setConverter(converter);
+                menu.setConverter(new OptionConverter(converter));
             }
             
             menu.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
@@ -199,5 +202,27 @@ public class MenuOptionListRenderer extends InputRenderer {
             }
         }
 
+    }
+    
+    private static class OptionConverter extends Converter {
+
+        private Converter converter;
+
+        public OptionConverter(Converter converter) {
+            this.converter = converter;
+        }
+
+        @Override
+        public Object convert(Class type, Object value) {
+            String textValue = (String) value;
+            
+            if (textValue == null || textValue.length() == 0) {
+                return null;
+            }
+            else {
+                return this.converter.convert(type, value);
+            }
+        }
+        
     }
 }
