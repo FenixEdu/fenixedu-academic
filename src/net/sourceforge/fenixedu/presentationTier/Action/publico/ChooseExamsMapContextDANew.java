@@ -23,14 +23,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
@@ -41,6 +42,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
@@ -84,38 +86,6 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         }
     }
 
-    private List<LabelValueBean> buildExecutionPeriodsLabelValueList(Integer degreeCurricularPlanId) throws Exception {
-        List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
-        try {
-            final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
-            infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
-        } catch (FenixServiceException e) {
-            throw new Exception(e);
-        }
-
-        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
-        for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
-            Object args[] = { infoExecutionDegree.getInfoExecutionYear() };
-            try {
-                List<InfoExecutionPeriod> infoExecutionPeriodsList = (List<InfoExecutionPeriod>) ServiceUtils.executeService(null, "ReadNotClosedPublicExecutionPeriodsByExecutionYear", args);
-
-                for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
-                    result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - " + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), 
-                            infoExecutionPeriodIter.getIdInternal().toString()));
-                }
-            } catch (FenixServiceException e) {
-                throw new Exception(e);
-            }
-        }
-
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("value"));
-        Collections.sort(result, comparatorChain);
-        Collections.reverse(result);
-        
-        return result;
-    }
-
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         final HttpSession session = request.getSession(false);
         SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
@@ -127,21 +97,6 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
             // index
             Integer indexValue = getFromRequest("index", request);
             request.setAttribute("index", indexValue);
-            
-            // curricularYearList
-            final Boolean selectAllCurricularYears = (Boolean) chooseExamContextoForm.get("selectAllCurricularYears");
-            final String[] selectedCurricularYears;
-            if (selectAllCurricularYears != null && selectAllCurricularYears) {
-                String[] allCurricularYears = { "1", "2", "3", "4", "5" };
-                selectedCurricularYears = allCurricularYears;
-            } else {
-                selectedCurricularYears = (String[]) chooseExamContextoForm.get("selectedCurricularYears"); 
-            }
-            final List<Integer> curricularYears = new ArrayList<Integer>(selectedCurricularYears.length);
-            for (String selectedCurricularYear : selectedCurricularYears) {
-                curricularYears.add(Integer.valueOf(selectedCurricularYear));
-            }
-            request.setAttribute("curricularYearList", curricularYears);
             
             // degreeID
             Integer degreeId = (Integer) chooseExamContextoForm.get("degreeID");
@@ -157,6 +112,11 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
                 request.setAttribute("degree", degreeCurricularPlan.getDegree());    
             }
 
+            // curricularYearList
+            final Boolean selectAllCurricularYears = (Boolean) chooseExamContextoForm.get("selectAllCurricularYears");
+            final List<Integer> curricularYears = buildCurricularYearList(selectAllCurricularYears, degreeCurricularPlan.getDegree(), chooseExamContextoForm);
+            request.setAttribute("curricularYearList", curricularYears);
+            
             // lista
             List<LabelValueBean> executionPeriodsLabelValueList = buildExecutionPeriodsLabelValueList(degreeCurricularPlanId);
             if (executionPeriodsLabelValueList.size() > 1) {
@@ -238,4 +198,23 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         }
     }
 
+    private List<Integer> buildCurricularYearList(Boolean allCurricularYears, Degree degree, DynaActionForm chooseExamContextoForm) {
+        if (allCurricularYears == null || allCurricularYears) {
+            return degree.buildFullCurricularYearList();
+        } else {
+            return buildSelectedList(chooseExamContextoForm);
+        }
+    }
+
+    private List<Integer> buildSelectedList(DynaActionForm chooseExamContextoForm) {
+        String[] selectedCurricularYears = (String[]) chooseExamContextoForm.get("selectedCurricularYears"); 
+        
+        List<Integer> result = new ArrayList<Integer>(selectedCurricularYears.length);
+        for (String selectedCurricularYear : selectedCurricularYears) {
+            result.add(Integer.valueOf(selectedCurricularYear));
+        }
+        
+        return result;
+    }
+    
 }

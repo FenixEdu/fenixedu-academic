@@ -84,42 +84,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         }
     }
 
-    private List<LabelValueBean> buildExecutionPeriodsLabelValueList(Integer degreeCurricularPlanId) throws FenixActionException {
-        List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
-        try {
-            final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
-            infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        } catch (FenixFilterException e) {
-            throw new FenixActionException(e);
-        }
-
-        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
-        for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
-            Object args[] = { infoExecutionDegree.getInfoExecutionYear() };
-            try {
-                List<InfoExecutionPeriod> infoExecutionPeriodsList = (List<InfoExecutionPeriod>) ServiceUtils.executeService(null, "ReadNotClosedPublicExecutionPeriodsByExecutionYear", args);
-
-                for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
-                    result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - " + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), 
-                            infoExecutionPeriodIter.getIdInternal().toString()));
-                }
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            } catch (FenixFilterException e) {
-                throw new FenixActionException(e);
-            }
-        }
-
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("value"));
-        Collections.sort(result, comparatorChain);
-        Collections.reverse(result);
-        
-        return result;
-    }
-    
     public ActionForward preparePublic(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         String inputPage = request.getParameter(SessionConstants.INPUT_PAGE);
@@ -247,8 +211,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
     }
 
     public ActionForward nextPagePublic(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
         ActionErrors errors = new ActionErrors();

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -111,42 +110,6 @@ public class ViewClassesActionNew extends FenixContextAction {
         } 
         
         return mapping.findForward("Sucess");
-    }
-    
-    private List<LabelValueBean> buildExecutionPeriodsLabelValueList(Integer degreeCurricularPlanId) throws FenixActionException {
-        List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
-        try {
-            final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
-            infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        } catch (FenixFilterException e) {
-            throw new FenixActionException(e);
-        }
-
-        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
-        for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
-            Object args[] = { infoExecutionDegree.getInfoExecutionYear() };
-            try {
-                List<InfoExecutionPeriod> infoExecutionPeriodsList = (List<InfoExecutionPeriod>) ServiceUtils.executeService(null, "ReadNotClosedPublicExecutionPeriodsByExecutionYear", args);
-
-                for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
-                    result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - " + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), 
-                            infoExecutionPeriodIter.getIdInternal().toString()));
-                }
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            } catch (FenixFilterException e) {
-                throw new FenixActionException(e);
-            }
-        }
-
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("value"));
-        Collections.sort(result, comparatorChain);
-        Collections.reverse(result);
-        
-        return result;
     }
     
 }

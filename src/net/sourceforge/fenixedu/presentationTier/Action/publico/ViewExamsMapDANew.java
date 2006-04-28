@@ -8,7 +8,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
@@ -49,14 +47,6 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
             Integer index = getFromRequest("index", request);
             request.setAttribute("index", index);
             
-            // curricularYearList
-            String[] allCurricularYears = { "1", "2", "3", "4", "5" };
-            List<Integer> curricularYears = new ArrayList<Integer>(allCurricularYears.length);
-            for (int i = 0; i < allCurricularYears.length; i++) {
-                curricularYears.add(Integer.valueOf(allCurricularYears[i]));
-            }
-            request.setAttribute("curricularYearList", curricularYears);
-
             // degreeID
             Integer degreeId = getFromRequest("degreeID", request);
             request.setAttribute("degreeID", degreeId);
@@ -65,6 +55,13 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
             Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
+            // curricularYearList
+            List<Integer> curricularYears = (List<Integer>) request.getAttribute("curricularYearList");
+            if (curricularYears == null) {
+                curricularYears = rootDomainObject.readDegreeByOID(degreeId).buildFullCurricularYearList();
+            }
+            request.setAttribute("curricularYearList", curricularYears);
+            
             // lista
             List lista = (List) request.getAttribute("lista");
             request.setAttribute("lista", lista);
