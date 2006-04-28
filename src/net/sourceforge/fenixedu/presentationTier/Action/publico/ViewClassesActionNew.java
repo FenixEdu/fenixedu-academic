@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +47,12 @@ public class ViewClassesActionNew extends FenixContextAction {
             e.printStackTrace();
         }
 
+        Boolean inEnglish = (Boolean) request.getAttribute("inEnglish");
+        if (inEnglish == null) {
+            inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
+        }
+        request.setAttribute("inEnglish", inEnglish);
+        
         // index
         Integer index = (Integer) request.getAttribute("index");
         request.setAttribute("index", index);
@@ -99,6 +105,9 @@ public class ViewClassesActionNew extends FenixContextAction {
                 final Object[] args = { infoExecutionDegree, infoExecutionPeriod, null};
                 List<InfoClass> classList = (List<InfoClass>) ServiceUtils.executeService(null, "LerTurmas", args);
                 
+                ComparatorChain comparatorChain = new ComparatorChain();
+                comparatorChain.addComparator(new BeanComparator("anoCurricular"));
+                Collections.sort(classList, comparatorChain);
                 request.setAttribute("classList", classList);
             } catch (NonExistingServiceException e) {
                 errors.add("nonExisting", new ActionError("error.exception.noStudents"));
