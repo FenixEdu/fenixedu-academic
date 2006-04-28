@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
@@ -17,7 +14,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public class RetrieveUserInformation extends FenixDispatchAction {
+public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
 
     private static final String SUCCESS_CODE = "SUCCESS";
 
@@ -66,16 +63,6 @@ public class RetrieveUserInformation extends FenixDispatchAction {
 
         return null;
 
-    }
-
-    private void writeResponse(HttpServletResponse response, String responseCode, String responseMessage)
-            throws IOException {
-        response.setContentType("text/html");
-        OutputStream outputStream = response.getOutputStream();
-
-        outputStream.write((responseCode + "\n").getBytes());
-
-        outputStream.write(responseMessage.getBytes());
     }
 
     /**

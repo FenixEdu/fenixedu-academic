@@ -375,6 +375,15 @@ public class Unit extends Unit_Base {
         return null;
     }
 
+    public Unit getChildUnitByAcronym(String acronym) {
+        for (Unit subUnit : getSubUnits()) {
+            if ((subUnit.getAcronym() != null) && (subUnit.getAcronym().equals(acronym))) {
+                return subUnit;
+            }
+        }
+        return null;
+    }
+
     public static List<Unit> readAllUnits() {
         List<Unit> allUnits = new ArrayList<Unit>();
         for (Party party : RootDomainObject.getInstance().getPartys()) {
@@ -401,4 +410,5 @@ public class Unit extends Unit_Base {
         }
         return null;
     }
+
 }

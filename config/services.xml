@@ -9679,7 +9679,7 @@
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
     </service>
-<!-- 	<service>
+ 	<service>
 		<name>GroupCheckService</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.externalServices.GroupCheckService</implementationClass>
 		<description />
@@ -9687,5 +9687,4 @@
 		<filterChains>
 		</filterChains>
 	</service>
--->
 </serviceDefinitions>

@@ -75,10 +75,22 @@ public class UnitUtils {
             }
         }
         return result;
-    }    
+    }
 
     private static String getLabel(String key) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources");
         return bundle.getString(key);
+    }
+
+    public static Unit readUnitWithoutParentstByAcronym(String acronym) throws ExcepcaoPersistencia {
+        List<Unit> topUnits = readAllUnitsWithoutParents();
+
+        for (Unit topUnit : topUnits) {
+            if (topUnit.getAcronym() != null && topUnit.getAcronym().equals(acronym)) {
+                return topUnit;
+            }
+        }
+
+        return null;
     }
 }

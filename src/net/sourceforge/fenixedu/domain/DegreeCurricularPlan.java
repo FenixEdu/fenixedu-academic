@@ -479,6 +479,28 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return null;
     }
 
+    public CurricularCourse getCurricularCourseByAcronym(String acronym) {
+        for (CurricularCourse curricularCourse : getCurricularCourses()) {
+            if (curricularCourse.getAcronym().equals(acronym))
+                return curricularCourse;
+        }
+        return null;
+    }
+
+    @Override
+    public List<CurricularCourse> getCurricularCourses() {
+        if (getDegree().isBolonhaDegree()) {
+            List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+            for (DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
+                result.add((CurricularCourse) degreeModule);
+            }
+
+            return result;
+        } else {
+            return super.getCurricularCourses();
+        }
+    }
+
     public List<Branch> getCommonAreas() {
         return (List) CollectionUtils.select(getAreas(), new Predicate() {
             public boolean evaluate(Object obj) {
@@ -866,10 +888,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return null;
     }
 
-    public Set<CurricularCourseScope> findCurricularCourseScopesIntersectingPeriod(final Date beginDate, final Date endDate) {
+    public Set<CurricularCourseScope> findCurricularCourseScopesIntersectingPeriod(final Date beginDate,
+            final Date endDate) {
         final Set<CurricularCourseScope> curricularCourseScopes = new HashSet<CurricularCourseScope>();
         for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
-            curricularCourseScopes.addAll(curricularCourse.findCurricularCourseScopesIntersectingPeriod(beginDate, endDate));
+            curricularCourseScopes.addAll(curricularCourse.findCurricularCourseScopesIntersectingPeriod(
+                    beginDate, endDate));
         }
         return curricularCourseScopes;
     }

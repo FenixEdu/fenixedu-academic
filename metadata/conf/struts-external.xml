@@ -47,6 +47,13 @@
 	        parameter="method"
 			validate="true">
     	</action>
+
+    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.GroupCheck"
+            path="/groupCheck"
+	        scope="request"
+	        parameter="method"
+			validate="true">
+    	</action>
     	
    		
 	</action-mappings>
