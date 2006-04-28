@@ -30,9 +30,9 @@ public abstract class InputRenderer extends Renderer {
         return (InputContext) getContext();
     }
     
-    protected HtmlSimpleValueComponent findValidatableComponent(HtmlComponent component) {
-        if (component instanceof HtmlSimpleValueComponent) {
-            return (HtmlSimpleValueComponent) component;
+    protected Validatable findValidatableComponent(HtmlComponent component) {
+        if (component instanceof Validatable) {
+            return (Validatable) component;
         } else {
             List<HtmlComponent> children = component.getChildren(new Predicate() {
 
@@ -48,7 +48,7 @@ public abstract class InputRenderer extends Renderer {
             });
 
             if (children.size() > 0) {
-                return (HtmlSimpleValueComponent) children.get(0);
+                return (Validatable) children.get(0);
             }
         }
         
@@ -56,6 +56,10 @@ public abstract class InputRenderer extends Renderer {
     }
     
     protected HtmlValidator getValidator(Validatable inputComponent, MetaSlot slot) {
+        if (inputComponent == null) {
+            return null;
+        }
+        
         inputComponent.setValidator(slot);
         return inputComponent.getValidator();
     }

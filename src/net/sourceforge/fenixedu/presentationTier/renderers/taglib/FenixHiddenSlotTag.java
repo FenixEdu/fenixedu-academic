@@ -19,6 +19,7 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
 
     private String oid;
     private String type;
+    private boolean isCollection;
     
     public String getOid() {
         return this.oid;
@@ -37,19 +38,16 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
     }
 
     @Override
+    public void release() {
+        super.release();
+        
+        this.isCollection = false;
+    }
+
+    @Override
     protected Object findObject() throws JspException {
         if (getName() != null) {
-            Object object = super.findObject();
-            
-            // HACK: to ease the use of hidden slots
-            if (object instanceof DomainObject) {
-                setConverter(getNextDomainObjectConverter());
-
-                DomainObject domainObject = (DomainObject) object;
-                return MetaObjectFactory.createObject(domainObject, null).getKey().toString();
-            }
-            
-            return object;
+            return super.findObject();
         }
         else {
             if (getOid() == null || getType() == null) {
@@ -66,6 +64,35 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
         }
     }
     
+    @Override
+    protected void addHiddenSlot(String slot, Object value, String converterName) throws JspException {
+        if (value instanceof Collection) {
+            this.isCollection = true;
+            
+            Collection collection = (Collection) value;
+
+            for (Object object : collection) {
+                addHiddenSlot(slot, object, converterName);
+            }
+        }
+        else if (value instanceof DomainObject) {
+            String usedConverterName = getNextDomainObjectConverter();
+            
+            DomainObject domainObject = (DomainObject) value;
+            String objectValue = MetaObjectFactory.createObject(domainObject, null).getKey().toString();
+            
+            addHiddenSlot(slot, objectValue, usedConverterName);
+        }
+        else {
+            super.addHiddenSlot(slot, value, converterName);
+        }
+    }
+
+    @Override
+    protected boolean isMultiple() {
+        return super.isMultiple() || this.isCollection;
+    }
+
     private String getNextDomainObjectConverter() {
         if (getConverter() != null) {
             return getConverter();
@@ -75,33 +102,12 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
         if (slot != null) {
             return DomainObjectKeyArrayConverter.class.getName();
         }
-        else {
-            return isMultiple() ? DomainObjectKeyArrayConverter.class.getName() : DomainObjectKeyConverter.class.getName();
+        
+        if (isMultiple()) {
+            return DomainObjectKeyArrayConverter.class.getName();
         }
-    }
 
-    @Override
-    protected void addHiddenSlot(String slot, Object value, String converterName) throws JspException {
-        if (value instanceof Collection) {
-            Collection collection = (Collection) value;
-
-            for (Object object : collection) {
-                if (object instanceof DomainObject) {
-                    String usedConverterName = getNextDomainObjectConverter();
-                    
-                    DomainObject domainObject = (DomainObject) object;
-                    String objectValue = MetaObjectFactory.createObject(domainObject, null).getKey().toString();
-                    
-                    addHiddenSlot(slot, objectValue, usedConverterName);
-                }
-                else {
-                    addHiddenSlot(slot, object, converterName);
-                }
-            }
-        }
-        else {
-            super.addHiddenSlot(slot, value, converterName);
-        }
+        return DomainObjectKeyConverter.class.getName();
     }
 
     protected Object getPersistentObject() throws JspException {

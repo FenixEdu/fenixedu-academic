@@ -6,6 +6,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
+import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
@@ -92,13 +93,13 @@ public class StandardInputRenderer extends InputRenderer {
     class ObjectInputTabularLayout extends TabularLayout {
         public Logger logger = Logger.getLogger(ObjectInputTabularLayout.class);
 
-        protected Map<Integer, HtmlSimpleValueComponent> inputComponents;
+        protected Map<Integer, Validatable> inputComponents;
 
         private MetaObject object;
 
         public ObjectInputTabularLayout(MetaObject object) {
             this.object = object;
-            this.inputComponents = new HashMap<Integer, HtmlSimpleValueComponent>();
+            this.inputComponents = new HashMap<Integer, Validatable>();
         }
 
         @Override
@@ -131,7 +132,7 @@ public class StandardInputRenderer extends InputRenderer {
 
                 break;
             case 2:
-                HtmlSimpleValueComponent inputComponent = inputComponents.get(rowIndex);
+                Validatable inputComponent = inputComponents.get(rowIndex);
 
                 if (inputComponent != null) {
                     component = getValidator(inputComponent, this.object.getSlots().get(rowIndex));
