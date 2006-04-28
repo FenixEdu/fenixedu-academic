@@ -68,6 +68,8 @@ public class ViewState implements IViewState {
 
     private boolean skipUpdate;
 
+    private boolean skipValidation;
+
     private boolean updateComponentTree;
     
     private boolean postBack;
@@ -79,6 +81,7 @@ public class ViewState implements IViewState {
 
         this.valid = true;
         this.skipUpdate = false;
+        this.skipValidation = false;
         this.updateComponentTree = true;
         this.postBack = false;
         
@@ -121,6 +124,14 @@ public class ViewState implements IViewState {
         this.skipUpdate = skipUpdate;
     }
 
+    public boolean skipValidation() {
+        return this.skipValidation;
+    }
+    
+    public void setSkipValidation(boolean skipValidation) {
+        this.skipValidation = skipValidation;
+    }
+    
     public boolean isValid() {
         return this.valid;
     }

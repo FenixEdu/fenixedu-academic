@@ -31,6 +31,10 @@ public interface IViewState extends Serializable {
 
     public void setSkipUpdate(boolean skipUpdate);
 
+    public boolean skipValidation();
+
+    public void setSkipValidation(boolean skipValidation);
+
     public boolean isValid();
 
     public void setUpdateComponentTree(boolean updateTree);

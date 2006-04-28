@@ -81,6 +81,14 @@ public class ViewStateWrapper implements IViewState {
         viewState.setSkipUpdate(skipUpdate);
     }
 
+    public void setSkipValidation(boolean skipValidation) {
+        this.viewState.setSkipValidation(skipValidation);
+    }
+
+    public boolean skipValidation() {
+        return this.viewState.skipValidation();
+    }
+    
     public boolean isValid() {
         return viewState.isValid();
     }
@@ -196,5 +204,4 @@ public class ViewStateWrapper implements IViewState {
     public List<ErrorMessage> setMessages(List<ErrorMessage> messages) {
         return this.viewState.setMessages(messages);
     }
-    
 }

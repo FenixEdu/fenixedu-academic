@@ -148,6 +148,7 @@ public class ComponentLifeCycle {
             HtmlComponent component = restoreComponent(viewState);
             
             viewState.setSkipUpdate(false);
+            viewState.setSkipValidation(false);
             viewState.setCurrentDestination((ViewDestination) null);
             
             ComponentCollector collector = null;
@@ -164,7 +165,9 @@ public class ComponentLifeCycle {
             }
     
             if (! viewState.skipUpdate()) { // EXPERIMENTAL
-                viewState.setValid(validateComponent(viewState, component, viewState.getMetaObject()));
+                if (! viewState.skipValidation()) {
+                    viewState.setValid(validateComponent(viewState, component, viewState.getMetaObject()));
+                }
     
                 if (viewState.isValid()) {
                     // updateMetaObject can get convert errors
