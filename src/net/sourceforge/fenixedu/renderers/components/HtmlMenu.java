@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 public class HtmlMenu extends HtmlSimpleValueComponent {
 
     private Integer size;
-    private boolean disabled;
     private Integer tabIndex;
 
     private List<HtmlMenuEntry> entries;
