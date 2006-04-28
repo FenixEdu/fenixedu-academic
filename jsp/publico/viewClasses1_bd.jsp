@@ -6,65 +6,6 @@
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-
-<bean:define id="institutionUrl" type="java.lang.String">
-	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
-</bean:define>
-<div class="breadcumbs">
-	<a href="<%= institutionUrl %>">
-		<bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
-	</a>
-	<bean:define id="institutionUrlTeaching" type="java.lang.String">
-		<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
-		<bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/>
-	</bean:define>
-	&nbsp;&gt;&nbsp;
-	<a href="<%=institutionUrlTeaching%>">
-		<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/>
-	</a>
-	<logic:present name="degree">
-		&nbsp;&gt;&nbsp;
-		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
-			<logic:equal name="degree" property="bolonhaDegree" value="false">
-				<bean:write name="degree" property="sigla"/>
-			</logic:equal>
-			<logic:equal name="degree" property="bolonhaDegree" value="true">
-				<bean:write name="degree" property="acronym"/>
-			</logic:equal>
-		</html:link>
-		&nbsp;&gt;&nbsp;
-
-		<logic:present name="<%=SessionConstants.INFO_DEGREE_CURRICULAR_PLAN%>">
-			<bean:define id="infoDegreeCurricularPlan" name="<%=SessionConstants.INFO_DEGREE_CURRICULAR_PLAN%>"/>
-		</logic:present>
-
-		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()+ "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>" >
-			<bean:write name="infoDegreeCurricularPlan" property="name" />
-		</html:link>
-		&nbsp;&gt;&nbsp;
-		<bean:message  key="public.degree.information.label.exams" bundle="PUBLIC_DEGREE_INFORMATION" /> 
-	</logic:present>
-</div>
-
-<!-- COURSE NAME -->
-<h1>
-	<logic:equal name="degree" property="bolonhaDegree" value="true">
-		<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="bolonhaDegreeType.name"/>
-	</logic:equal>
-	<logic:equal name="degree" property="bolonhaDegree" value="false">
-		<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/>
-	</logic:equal>
-	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in"/>
-	<logic:present name="inEnglish">
-		<logic:equal name="inEnglish" value="false">
-			<bean:write name="degree" property="nome"/>
-		</logic:equal>
-		<logic:equal name="inEnglish" value="true">
-			<bean:write name="degree" property="nameEn"/>
-		</logic:equal>
-	</logic:present>
-</h1>
-
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> >
 <bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
@@ -82,6 +23,14 @@
 	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.classes"/> 	
 </div>	
 
+<%--
+<!-- PÃ?ï¿½GINA EM INGLÃŠï¿½S -->
+	<div class="version">
+		<span class="px10">
+			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;inEnglish=true&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") %>" >english version</html:link> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
+	</span>	
+	</div>--%>
+
 <h1>
     <bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso.name"/>
     <logic:equal name="degreeType" value="DEGREE" >
@@ -93,36 +42,8 @@
 	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
 	<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 </h1>
-<%-- 
 
-<logic:present name="infoDegreeCurricularPlan">
-
-	<!-- CURRICULAR PLAN -->
-	<h2 class="greytxt">
-		<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
-		<bean:write name="infoDegreeCurricularPlan" property="name"/>
-		<logic:notEmpty name="infoDegreeCurricularPlan" property="initialDate">
-			<logic:empty name="infoDegreeCurricularPlan" property="endDate">
-				(<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.since" />
-				<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />
-				<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>)
-			</logic:empty>
-			<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
-				(<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.of" />
-				<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />
-				<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
-				<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.to" />
-				<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
-				<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>)
-			</logic:notEmpty>
-		</logic:notEmpty>	
-	</h2>
-
-	<h2 class="arrow_bullet">
-		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.exams" />
-	</h2>
-
-	<h2 class="greytxt">
+<h2 class="greytxt">
 	<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.of" />
 	<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
@@ -131,9 +52,9 @@
 		<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
 		-<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>
 	</logic:notEmpty>
-	</h2>
-	
-	<logic:present name="lista" scope="request">
+</h2>
+
+<logic:present name="lista" scope="request">
 	<bean:define id="listaNew" name="lista" />
 	<html:form action="/chooseContextDANew.do" method="GET">
 		<html:hidden property="<%SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
@@ -145,7 +66,7 @@
 		<html:hidden property="nextPage" value="classSearch"/>
 		<html:hidden property="inputPage" value="chooseContext"/>
 		
-	
+
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 			    <td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.property.executionPeriod"/>:</td>
@@ -160,9 +81,9 @@
 			</tr>
 		</table>
 	</html:form> 
-	</logic:present>
-	
-	<logic:present name="classList">	
+</logic:present>
+
+<logic:present name="classList">	
 	<table class="tab_lay" cellspacing="0" cellpadding="0" width="50%">
 		<tr>
 			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.property.class"/></th>
@@ -182,15 +103,13 @@
 			<td class="<%= rowColor %>"><jsp:getProperty name="classview" property="anoCurricular"/></td>
 		</tr>	
 	</logic:iterate>
-	</table>
-	</logic:present>
-	
-	<logic:notPresent name="classview"  >	
+</table>
+</logic:present>
+
+<logic:notPresent name="classview"  >	
 	<table align="center" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.message.public.notfound.classes"/></span></td>
 		</tr>
 	</table>
-	</logic:notPresent>
-</logic:present>
---%>
+</logic:notPresent>
