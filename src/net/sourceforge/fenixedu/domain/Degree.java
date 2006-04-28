@@ -372,4 +372,23 @@ public class Degree extends Degree_Base {
         return null;
     }
 
+    public List<Integer> buildFullCurricularYearList() {
+        List<Integer> result = new ArrayList<Integer>();
+        
+        if (this.isBolonhaDegree()) {
+            for (int i = 1; i <= this.getBolonhaDegreeType().getYears(); i++) {
+                result.add(i);
+            }
+        } else if (this.getTipoCurso().equals(DegreeType.DEGREE)) {
+            for (int i = 1; i <= 5; i++) {
+                result.add(i);
+            }
+        } else if (this.getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
+            for (int i = 1; i <= 2; i++) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+
 }
