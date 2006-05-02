@@ -42,15 +42,25 @@
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 	</h1>
 
+	<!-- CURRICULAR PLAN -->
 	<h2 class="greytxt">
 		<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
-		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.of" />
-		<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
-		<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
-		<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
-			<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
-			-<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>
-		</logic:notEmpty>
+		<bean:write name="infoDegreeCurricularPlan" property="name"/>
+		<logic:notEmpty name="infoDegreeCurricularPlan" property="initialDate">
+			<logic:empty name="infoDegreeCurricularPlan" property="endDate">
+				(<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.since" />
+				<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />
+				<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>)
+			</logic:empty>
+			<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
+				(<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.of" />
+				<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />
+				<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
+				<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.to" />
+				<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
+				<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>)
+			</logic:notEmpty>
+		</logic:notEmpty>	
 	</h2>
 
 	<html:form action="/prepareConsultCurricularPlanNew.do" method="GET" >
