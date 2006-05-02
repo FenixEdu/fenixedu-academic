@@ -105,10 +105,12 @@ public class ViewClassesActionNew extends FenixContextAction {
                 final Object[] args = { infoExecutionDegree, infoExecutionPeriod, null};
                 List<InfoClass> classList = (List<InfoClass>) ServiceUtils.executeService(null, "LerTurmas", args);
                 
-                ComparatorChain comparatorChain = new ComparatorChain();
-                comparatorChain.addComparator(new BeanComparator("anoCurricular"));
-                Collections.sort(classList, comparatorChain);
-                request.setAttribute("classList", classList);
+                if (!classList.isEmpty()) {
+                    ComparatorChain comparatorChain = new ComparatorChain();
+                    comparatorChain.addComparator(new BeanComparator("anoCurricular"));
+                    Collections.sort(classList, comparatorChain);
+                    request.setAttribute("classList", classList);
+                }
             } catch (NonExistingServiceException e) {
                 errors.add("nonExisting", new ActionError("error.exception.noStudents"));
                 saveErrors(request, errors);
