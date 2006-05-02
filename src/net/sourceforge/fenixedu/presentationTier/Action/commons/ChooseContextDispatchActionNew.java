@@ -10,14 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularYearAndSemesterAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixDateAndTimeDispatchAction;
@@ -82,6 +87,17 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         } else {
             throw new Exception();    
         }
+    }
+
+    // TODO When session is removed from SOP, use method with same name from RequestUtils
+    private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+        if (infoExecutionPeriod == null) {
+            IUserView userView = SessionUtils.getUserView(request);
+            infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod", new Object[0]);
+            request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+        }
+        return infoExecutionPeriod;
     }
 
     public ActionForward preparePublic(ActionMapping mapping, ActionForm form,
@@ -150,6 +166,20 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
     }
 
+    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
+        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+        Iterator iterator = executionDegreeList.iterator();
+
+        while (iterator.hasNext()) {
+            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+                    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
+                return true;
+
+        }
+        return false;
+    }
+
     public ActionForward nextPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
@@ -210,152 +240,101 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         // nao ocorre... pedido passa pelo filtro Autorizacao
     }
 
-    public ActionForward nextPagePublic(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-        DynaActionForm escolherContextoForm = (DynaActionForm) form;
-        ActionErrors errors = new ActionErrors();
+    public ActionForward nextPagePublic(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        final HttpSession session = request.getSession(false);
         SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
+        
+        final ActionErrors errors = new ActionErrors();
+        final DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+        // degreeID
+        final Integer degreeId = getFromRequest("degreeID", request);
+        request.setAttribute("degreeID", degreeId);
 
-        Integer semestre = infoExecutionPeriod.getSemester();
-        Integer anoCurricular = (Integer) escolherContextoForm.get("curYear");
-
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        // degreeCurricularPlanID
+        final Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
         // lista
-        List<LabelValueBean> executionPeriodsLabelValueList = buildExecutionPeriodsLabelValueList(degreeCurricularPlanId);
+        final List<LabelValueBean> executionPeriodsLabelValueList = buildExecutionPeriodsLabelValueList(degreeCurricularPlanId);
         if (executionPeriodsLabelValueList.size() > 1) {
             request.setAttribute("lista", executionPeriodsLabelValueList);
         } else {
             request.removeAttribute("lista");
         }
-
-        Integer degreeId = getFromRequest("degreeID", request);
-        request.setAttribute("degreeID", degreeId);
-
+        
+        // curYear
+        final Integer anoCurricular = (Integer) escolherContextoForm.get("curYear");
         request.setAttribute("curYear", anoCurricular);
-        request.setAttribute("semester", semestre);
-        Integer indice = (Integer) escolherContextoForm.get("indice");
-        if (indice == null)
-            indice = getFromRequest("indice", request);
-        request.setAttribute("indice", indice);
-        escolherContextoForm.set("indice", indice);
-        Object argsLerLicenciaturas[] = null;
-        if (indice != null) {
-            InfoExecutionPeriod infoExecutionPeriod2 = new InfoExecutionPeriod();
-            Object args[] = { indice };
+        
+        // infoDegreeCurricularPlan
+        if (degreeCurricularPlanId != null) {
+            final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+            
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan);
+            infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
+            request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+        }
+        
+        // indice, SessionConstants.EXECUTION_PERIOD, SessionConstants.EXECUTION_PERIOD_OID
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+        Integer executionPeriodID = (Integer) escolherContextoForm.get("indice");
+        if (executionPeriodID == null) {
+            executionPeriodID = getFromRequest("indice", request);
+        }
+        if (executionPeriodID != null) {
             try {
-                infoExecutionPeriod2 = (InfoExecutionPeriod) ServiceManagerServiceFactory
-                        .executeService(null, "ReadExecutionPeriodByOID", args);
+                final Object args[] = { executionPeriodID };
+                infoExecutionPeriod = (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(null, "ReadExecutionPeriodByOID", args);
             } catch (FenixServiceException e) {
                 errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
                 saveErrors(request, errors);
-                return (new ActionForward(mapping.getInput()));
-            }
-            infoExecutionPeriod = infoExecutionPeriod2;
-            RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod2);
-            argsLerLicenciaturas = new Object[] { infoExecutionPeriod2.getInfoExecutionYear()
-                    .getIdInternal() };
-        } else {
-            argsLerLicenciaturas = new Object[] { infoExecutionPeriod.getInfoExecutionYear()
-                    .getIdInternal() };
-        }
-
-        List infoExecutionDegreeList;
-        try {
-            infoExecutionDegreeList = (List) ServiceUtils.executeService(null,
-                    "ReadExecutionDegreesByExecutionYearId", argsLerLicenciaturas);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-
-        InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-        Iterator iterator = infoExecutionDegreeList.iterator();
-        while (iterator.hasNext()) {
-            infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-            if (infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().equals(
-                    degreeCurricularPlanId)) {
-                request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-                request
-                        .setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal()
-                                .toString());
-                request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree);
-                break;
+                return new ActionForward(mapping.getInput());
             }
         }
-
-        if (infoExecutionDegree == null) {
-            return mapping.findForward("Licenciatura execucao inexistente");
-        }
-
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-        infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
-        infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
-
-        infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-
-        RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
-        request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree
-                .getInfoDegreeCurricularPlan());
-
+        request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
+        escolherContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
+        RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
         request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-        request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal()
-                .toString());
+        request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+        request.setAttribute("semester", infoExecutionPeriod.getSemester());
+        
+        // SessionConstants.EXECUTION_DEGREE, executionDegreeID, infoExecutionDegree
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionPeriod.getExecutionYear());
+        if (executionDegree == null) {
+            executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
+            
+            if (executionDegree != null) {
+                infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear().readExecutionPeriodForSemester(1));
+                request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
+                escolherContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
+                RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
+                request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+                request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+                request.setAttribute("semester", infoExecutionPeriod.getSemester());
+            }
+        }
+        
+        if (executionDegree != null) {
+            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear.newInfoFromDomain(executionDegree);
+            request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+            request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal().toString());
+            RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
+            
+            infoExecutionDegree.getInfoDegreeCurricularPlan().prepareEnglishPresentation(getLocale(request));
+            request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree.getInfoDegreeCurricularPlan());
+            request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree.getInfoDegreeCurricularPlan());
+        }
+
         String nextPage = request.getParameter("nextPage");
         if (nextPage != null) {
             return mapping.findForward(nextPage);
+        } else {
+            throw new FenixActionException();
         }
-
-        // TODO : throw a proper exception
-        throw new FenixActionException("SomeOne is messing around with the links");
-
-    }
-
-    /**
-     * Method existencesOfInfoDegree.
-     * 
-     * @param executionDegreeList
-     * @param infoExecutionDegree
-     * @return int
-     */
-    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
-        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-        Iterator iterator = executionDegreeList.iterator();
-
-        while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-                    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
-                return true;
-
-        }
-        return false;
-    }
-
-    /**
-     * Method setExecutionContext.
-     * 
-     * @param request
-     */
-    // TODO When session is removed from SOP, use method with same name from
-    // RequestUtils
-    private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
-
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-        if (infoExecutionPeriod == null) {
-            IUserView userView = SessionUtils.getUserView(request);
-            infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView,
-                    "ReadCurrentExecutionPeriod", new Object[0]);
-
-            request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
-        }
-        return infoExecutionPeriod;
+        
     }
 
 }
