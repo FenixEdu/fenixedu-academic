@@ -26,24 +26,31 @@ public class GroupCheck extends ExternalInterfaceDispatchAction {
      * 
      * The response has the following format: <RESPONSE_CODE>\n<BOOLEAN_VALUE>
      * 
-     * <RESPONSE_CODE> = NON_EXISTING_GROUP || SUCESS || NOT_AUTHORIZED ||
-     * UNEXPECTED_ERROR <BOOLEAN_VALUE> = TRUE || FALSE
+     * 
+     * 
+     * <RESPONSE_CODE> = NON_EXISTING_GROUP | SUCESS | NOT_AUTHORIZED |
+     * UNEXPECTED_ERROR
+     * 
+     * <BOOLEAN_VALUE> = true || false
+     * 
+     * 
      * 
      */
     public ActionForward check(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String query = request.getParameter("query");
 
-        Boolean result = false;
+        String responseMessage = "";
         String responseCode;
 
         if (!HostAccessControl.isAllowed(this, request)) {
             responseCode = NOT_AUTHORIZED_CODE;
         } else {
             try {
-                result = (Boolean) ServiceUtils.executeService(null, "GroupCheckService",
+                Boolean result = (Boolean) ServiceUtils.executeService(null, "GroupCheckService",
                         new Object[] { query });
 
+                responseMessage = result.toString().toLowerCase();
                 responseCode = SUCCESS_CODE;
             } catch (NonExistingServiceException e) {
                 responseCode = NON_EXISTING_GROUP_CODE;
@@ -53,7 +60,7 @@ public class GroupCheck extends ExternalInterfaceDispatchAction {
 
         }
 
-        writeResponse(response, responseCode, result.toString().toUpperCase());
+        writeResponse(response, responseCode, responseMessage);
 
         return null;
     }
