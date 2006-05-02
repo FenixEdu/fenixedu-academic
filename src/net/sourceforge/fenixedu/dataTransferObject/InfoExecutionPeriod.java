@@ -143,7 +143,11 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable {
     public int compareTo(Object arg0) {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
         int yearCmp = this.getInfoExecutionYear().compareTo(infoExecutionPeriod.getInfoExecutionYear());
-        return yearCmp + this.getSemester().intValue() - infoExecutionPeriod.getSemester().intValue();
+        if (yearCmp != 0) {
+            return yearCmp;
+        } else {
+            return this.getSemester().intValue() - infoExecutionPeriod.getSemester().intValue();
+        }
     }
 
     /**
