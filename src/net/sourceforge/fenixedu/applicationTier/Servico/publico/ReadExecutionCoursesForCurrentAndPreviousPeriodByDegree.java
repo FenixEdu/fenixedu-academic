@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -14,68 +13,49 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * 
- * @author Luis Cruz
- */
-public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends Service
-{
+public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends Service {
 
-    public Object run(Integer degreeOID) throws ExcepcaoPersistencia {
-        List executionCourseViews = new ArrayList();
+    public List<ExecutionCourseView> run(Integer degreeOID) {
+        List<ExecutionCourseView> result = new ArrayList<ExecutionCourseView>();
 
         ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        ExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
+        ExecutionPeriod previousExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
 
         Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
-        List<DegreeCurricularPlan> degreeCurricularPlans = degree.getDegreeCurricularPlans();
 
-        Set processedExecutionCourses = new HashSet();
+        Set<String> processedExecutionCourses = new HashSet<String>();
+        for (DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+            for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+                for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+                    ExecutionPeriod executionPeriodFromExecutionCourse = executionCourse.getExecutionPeriod();
 
-        for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-            if (degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
-                List curricularCourses = degreeCurricularPlan.getCurricularCourses();
+                    if (executionPeriodFromExecutionCourse.equals(currentExecutionPeriod)
+                            || (previousExecutionPeriod != null && executionPeriodFromExecutionCourse.equals(previousExecutionPeriod))) {
+                        
+                        for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                            String key = generateExecutionCourseKey(executionCourse,curricularCourseScope);
 
-                for (Iterator iteratorCC = curricularCourses.iterator(); iteratorCC.hasNext();) {
-                    CurricularCourse curricularCourse = (CurricularCourse) iteratorCC.next();
-                    List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-                   
-
-                    for (Iterator iteratorEC = executionCourses.iterator(); iteratorEC.hasNext();) {
-                        ExecutionCourse executionCourse = (ExecutionCourse) iteratorEC.next();
-                        ExecutionPeriod executionPeriodFromExecutionCourse = executionCourse.getExecutionPeriod();
-                       
-                        if (executionPeriodFromExecutionCourse.getIdInternal().equals(currentExecutionPeriod.getIdInternal())
-                                || (previouseExecutionPeriod != null && executionPeriodFromExecutionCourse.getIdInternal().equals(previouseExecutionPeriod.getIdInternal()))) {
-                            for (Iterator iteratorCCS = curricularCourse.getScopes().iterator(); iteratorCCS.hasNext();) {
-                                CurricularCourseScope curricularCourseScope = (CurricularCourseScope) iteratorCCS.next();
-
-                                String key = generateExecutionCourseKey(executionCourse, curricularCourseScope);
-
-                                if (!processedExecutionCourses.contains(key)) {
-                                    ExecutionCourseView executionCourseView = new ExecutionCourseView();
-                                    executionCourseView.setExecutionCourseOID(executionCourse.getIdInternal());
-                                    executionCourseView.setExecutionCourseName(executionCourse.getNome());
-                                    executionCourseView.setSemester(executionCourse.getExecutionPeriod().getSemester());                        
-                                    executionCourseView.setCurricularYear(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear());
-                                    executionCourseView.setExecutionPeriodOID(executionCourse.getExecutionPeriod().getIdInternal());
-                                    executionCourseView.setAnotation(curricularCourseScope.getAnotation());
-                                    executionCourseView.setDegreeCurricularPlanAnotation(degreeCurricularPlan.getAnotation());
-                                    executionCourseViews.add(executionCourseView);
-                                    processedExecutionCourses.add(key);
-                                }
+                            if (!processedExecutionCourses.contains(key)) {
+                                ExecutionCourseView executionCourseView = new ExecutionCourseView();
+                                executionCourseView.setExecutionCourseOID(executionCourse.getIdInternal());
+                                executionCourseView.setExecutionCourseName(executionCourse.getNome());
+                                executionCourseView.setSemester(executionCourse.getExecutionPeriod().getSemester());
+                                executionCourseView.setCurricularYear(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear());
+                                executionCourseView.setExecutionPeriodOID(executionCourse.getExecutionPeriod().getIdInternal());
+                                executionCourseView.setAnotation(curricularCourseScope.getAnotation());
+                                executionCourseView.setDegreeCurricularPlanAnotation(degreeCurricularPlan.getAnotation());
+                                
+                                processedExecutionCourses.add(key);
+                                result.add(executionCourseView);
                             }
                         }
                     }
-                }                
+                }
             }
         }
 
-        return executionCourseViews;
-
+        return result;
     }
 
     private String generateExecutionCourseKey(ExecutionCourse executionCourse, CurricularCourseScope curricularCourseScope) {
