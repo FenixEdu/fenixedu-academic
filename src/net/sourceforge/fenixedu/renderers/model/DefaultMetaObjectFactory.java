@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.renderers.model;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import com.sun.tools.corba.se.idl.EnumEntry;
 
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
@@ -55,17 +58,47 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
     }
 
     protected MetaObject createOneMetaObject(Object object, Schema schema) {
-        SimpleMetaObject metaObject = new SimpleMetaObject(object);
-        metaObject.setSchema(schema.getName());
-        
-        List<SchemaSlotDescription> slotDescriptions = schema.getSlotDescriptions(); 
-        for (SchemaSlotDescription description : slotDescriptions) {
-            SimpleMetaSlot metaSlot = (SimpleMetaSlot) createMetaSlot(metaObject, description);
+        if (isPrimitiveObject(object)) {
+            return new PrimitiveMetaObject(object);
+        }
+        else {
+            SimpleMetaObject metaObject = new SimpleMetaObject(object);
+            metaObject.setSchema(schema.getName());
             
-            metaObject.addSlot(metaSlot);
+            List<SchemaSlotDescription> slotDescriptions = schema.getSlotDescriptions(); 
+            for (SchemaSlotDescription description : slotDescriptions) {
+                SimpleMetaSlot metaSlot = (SimpleMetaSlot) createMetaSlot(metaObject, description);
+                
+                metaObject.addSlot(metaSlot);
+            }
+            
+            return metaObject;
+        }
+    }
+
+    private boolean isPrimitiveObject(Object object) {
+        Class[] primitiveTypes = new Class[] {
+                String.class,
+                Number.class,
+                Integer.TYPE,
+                Long.TYPE,
+                Short.TYPE,
+                Character.TYPE,
+                Float.TYPE,
+                Double.TYPE,
+                Date.class,
+                Enum.class
+        };
+        
+        for (int i = 0; i < primitiveTypes.length; i++) {
+            Class type = primitiveTypes[i];
+            
+            if (type.isAssignableFrom(object.getClass())) {
+                return true;
+            }
         }
         
-        return metaObject;
+        return false;
     }
 
     @Override

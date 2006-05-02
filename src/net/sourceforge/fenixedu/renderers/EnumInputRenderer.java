@@ -83,21 +83,21 @@ public class EnumInputRenderer extends InputRenderer {
             
         };
     }
-}
+    
+    public static class EnumConverter extends Converter {
 
-class EnumConverter extends Converter {
-
-    @Override
-    public Object convert(Class type, Object value) {
-        Object[] enums = type.getEnumConstants();
-        
-        for (int i = 0; i < enums.length; i++) {
-            if (enums[i].toString().equals(value)) {
-                return enums[i];
+        @Override
+        public Object convert(Class type, Object value) {
+            Object[] enums = type.getEnumConstants();
+            
+            for (int i = 0; i < enums.length; i++) {
+                if (enums[i].toString().equals(value)) {
+                    return enums[i];
+                }
             }
+            
+            return null;
         }
         
-        return null;
     }
-    
 }

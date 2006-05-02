@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
