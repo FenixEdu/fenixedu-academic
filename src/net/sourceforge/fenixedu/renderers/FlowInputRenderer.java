@@ -41,6 +41,10 @@ public class FlowInputRenderer extends InputRenderer {
     public String getEachClasses() {
         return this.eachClasses;
     }
+    
+    private boolean hideValidators;
+    
+    private String validatorClasses;
 
     /**
      * Allows to specify the class attribute for each one
@@ -119,7 +123,35 @@ public class FlowInputRenderer extends InputRenderer {
     public void setLabelExcluded(boolean labelExcluded) {
         this.labelExcluded = labelExcluded;
     }
+    
+    public boolean isHideValidators() {
+        return this.hideValidators;
+    }
 
+    /**
+     * Allows you to suppress the inclusion of the validator messages in the 
+     * standard layout. This is specilly usefull if you want to show all messages
+     * in one place in the page.
+     * 
+     * @property
+     */
+    public void setHideValidators(boolean hideValidators) {
+        this.hideValidators = hideValidators;
+    }
+
+    public String getValidatorClasses() {
+        return this.validatorClasses;
+    }
+
+    /**
+     * Configure the html classes to apply to the validator messages.
+     * 
+     * @property
+     */
+    public void setValidatorClasses(String validatorClasses) {
+        this.validatorClasses = validatorClasses;
+    }
+    
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new FlowObjectInputRenderer(getInputContext().getMetaObject());
@@ -162,9 +194,11 @@ public class FlowInputRenderer extends InputRenderer {
             
             container.addChild(component);
             
-            if (validator != null) {
+            if (validator != null && !isHideValidators()) {
+                validator.setClasses(getValidatorClasses());
                 container.addChild(validator);
             }
+            
             return container;
         }
     }

@@ -56,6 +56,7 @@ public class InputMenuOptionListRenderer extends MenuOptionListRenderer {
         this.filterClass = filterClass;
     }
 
+    // HACK: duplicated code, id=inputChoices.selectPossibilitiesAndConverter
     @Override
     protected Converter getConverter() {
         if (getProviderClass() != null) {
@@ -80,6 +81,7 @@ public class InputMenuOptionListRenderer extends MenuOptionListRenderer {
         }
     }
 
+    // HACK: duplicated code, id=inputChoices.selectPossibilitiesAndConverter
     @Override
     protected Collection getPossibleObjects() {
         if (getProviderClass() != null) {
@@ -117,6 +119,7 @@ public class InputMenuOptionListRenderer extends MenuOptionListRenderer {
         }
     }
     
+    // HACK: duplicated code, id=inputChoices.selectPossibilitiesAndConverter
     private Collection readAllChoicesByType(String choiceType) {
         try {
             Class type = Class.forName(choiceType);

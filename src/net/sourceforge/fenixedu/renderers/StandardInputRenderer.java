@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
@@ -55,6 +54,16 @@ public class StandardInputRenderer extends InputRenderer {
 
     private String columnClasses;
 
+    private String validatorClasses;
+    
+    private boolean hideValidators;
+    
+    public StandardInputRenderer() {
+        super();
+        
+        this.hideValidators = false;
+    }
+
     public String getColumnClasses() {
         return columnClasses;
     }
@@ -85,6 +94,34 @@ public class StandardInputRenderer extends InputRenderer {
         this.rowClasses = rowClasses;
     }
     
+    public boolean isHideValidators() {
+        return this.hideValidators;
+    }
+
+    /**
+     * Allows you to suppress the inclusion of the validator messages in the 
+     * standard layout. This is specilly usefull if you want to show all messages
+     * in one place in the page.
+     * 
+     * @property
+     */
+    public void setHideValidators(boolean hideValidators) {
+        this.hideValidators = hideValidators;
+    }
+
+    public String getValidatorClasses() {
+        return this.validatorClasses;
+    }
+
+    /**
+     * Configure the html classes to apply to the validator messages.
+     * 
+     * @property
+     */
+    public void setValidatorClasses(String validatorClasses) {
+        this.validatorClasses = validatorClasses;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new ObjectInputTabularLayout(getContext().getMetaObject());
@@ -132,17 +169,26 @@ public class StandardInputRenderer extends InputRenderer {
 
                 break;
             case 2:
-                Validatable inputComponent = inputComponents.get(rowIndex);
-
-                if (inputComponent != null) {
-                    component = getValidator(inputComponent, this.object.getSlots().get(rowIndex));
-
-                    if (component == null) {
-                        component = new HtmlText();
-                    }
-                } else {
+                if (isHideValidators()) {
                     component = new HtmlText();
                 }
+                else {
+                    Validatable inputComponent = inputComponents.get(rowIndex);
+    
+                    if (inputComponent != null) {
+                        component = getValidator(inputComponent, this.object.getSlots().get(rowIndex));
+    
+                        if (component != null) {
+                            component.setClasses(getValidatorClasses());
+                        }
+                        else {
+                            component = new HtmlText();
+                        }
+                    } else {
+                        component = new HtmlText();
+                    }
+                }
+                
                 break;
             default:
                 component = new HtmlText();
