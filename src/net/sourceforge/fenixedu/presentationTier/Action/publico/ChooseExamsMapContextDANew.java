@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -126,27 +127,10 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
             }
             
             // infoDegreeCurricularPlan
-            List<InfoDegreeCurricularPlan> infoDegreeCurricularPlanList = null;
-            try {
-                final Object[] args1 = { degreeId };
-                infoDegreeCurricularPlanList = (List<InfoDegreeCurricularPlan>) ServiceManagerServiceFactory.executeService(null, "ReadPublicDegreeCurricularPlansByDegree", args1);
-            } catch (FenixServiceException e) {
-                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-                saveErrors(request, errors);
-                return new ActionForward(mapping.getInput());
-            }
-            ComparatorChain comparatorChain = new ComparatorChain();
-            comparatorChain.addComparator(new BeanComparator("state"));
-            comparatorChain.addComparator(new BeanComparator("initialDate"), true);
-            Collections.sort(infoDegreeCurricularPlanList, comparatorChain);
             if (degreeCurricularPlanId != null) {
-                for (InfoDegreeCurricularPlan infoDegreeCurricularPlanElem : infoDegreeCurricularPlanList) {
-                    if (infoDegreeCurricularPlanElem.getIdInternal().equals(degreeCurricularPlanId)) {
-                        infoDegreeCurricularPlanElem.prepareEnglishPresentation(getLocale(request));
-                        request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlanElem);
-                        break;
-                    }
-                }
+                InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan);
+                infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
+                request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
             }
 
             // indice, SessionConstants.EXECUTION_PERIOD, SessionConstants.EXECUTION_PERIOD_OID
@@ -175,12 +159,14 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
             if (executionDegree == null) {
                 executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
                 
-                infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear().readExecutionPeriodForSemester(1));
-                request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
-                chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
-                RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
-                request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-                request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+                if (executionDegree != null) {
+                    infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear().readExecutionPeriodForSemester(1));
+                    request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
+                    chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
+                    RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
+                    request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+                    request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+                }
             }
             
             if (executionDegree != null) {
