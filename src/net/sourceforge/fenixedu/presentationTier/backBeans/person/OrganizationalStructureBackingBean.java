@@ -114,6 +114,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         PartyTypeEnum partyType = null;
         boolean flag = false;
         boolean flag1 = false;
+        boolean subUnitIsEmpty = true;
 
         for (Unit unit : allUnits) {
 
@@ -144,13 +145,33 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     }
 
                 } else if (unit.getType() == null) {
-                    if (flag1 == false) {
-                        buffer.append("<div class='mtop2' style='color: #aaa;'>- - - - - - - -");
-                        buffer.append("</div>\r\n");
-                        flag1 = true;
-                    } else {
-                        buffer.append("<div class='mtop2'>");
-                        buffer.append("</div>\r\n");
+                    if ((subUnitIsEmpty = ValidEmptyType(unit))){
+	                    if (flag1 == false) {
+	                        buffer.append("<div class='mtop2' style='color: #aaa;'>- - - - - - - -");
+	                        buffer.append("</div>\r\n");
+	                        flag1 = true;
+	                    } else {
+	                        buffer.append("<div class='mtop2'>");
+	                        buffer.append("</div>\r\n");
+	                    }
+                    }else{
+                    	if(!unit.getSubUnits().isEmpty() ){
+                    		if((unit.getSubUnits().get(0).getType().equals(PartyTypeEnum.DEGREE_UNIT)) 
+                    				|| (unit.getSubUnits().get(0).getType().equals(PartyTypeEnum.RESEARCH_UNIT))){
+                    			 if (!partyType.equals(unit.getSubUnits().get(0).getType())) {   
+                    			    partyType = unit.getSubUnits().get(0).getType();
+	                                buffer.append("<h3 class='mtop2'>").append(
+	                                        this.bundle.getString(partyType.getName()));
+	                                buffer.append("</h3>\r\n");
+                    			 }
+                    			 else if (flag == false) {
+                                     buffer.append("<h3 class='mtop2'>").append(
+                                             this.bundle.getString(partyType.getName()));
+                                     buffer.append("</h3>\r\n");
+                                     flag = true;
+                                 }
+                    		}
+                    	}
                     }
                 }
 
@@ -209,7 +230,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         return buffer.toString();
     }
-
+    
+	 public boolean ValidEmptyType (Unit unit){
+		 if (!unit.getSubUnits().isEmpty()){
+			 if(unit.getSubUnits().get(0).getType() != null){
+				 return false;
+			 }
+		 }
+		 return true;
+	 }
     public List<Unit> getAllUnitsWithoutParent() throws FenixFilterException, FenixServiceException,
             ExcepcaoPersistencia {
         Unit istUnit = UnitUtils.readUnitWithoutParentstByName(UnitUtils.IST_UNIT_NAME);
@@ -306,6 +335,16 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             } else {
                 buffer.append(this.bundle.getString(this.getUnit().getType().getName()));
             }
+        }else if(this.getUnit().getType() == null){
+        	if((unit.getSubUnits().get(0).getType().equals(PartyTypeEnum.DEGREE_UNIT))) {
+        		buffer.append(" - ");
+        		buffer.append(this.bundle.getString(PartyTypeEnum.DEGREE_UNIT.getName()));
+        	}
+        	if((unit.getSubUnits().get(0).getType().equals(PartyTypeEnum.RESEARCH_UNIT))){
+        		buffer.append(" - ");
+        		buffer.append(this.bundle.getString(PartyTypeEnum.RESEARCH_UNIT.getName()));
+        	}
+        	
         }
         buffer.append("</em></p>");
         buffer.append("<h2>").append(this.getUnit().getName()).append("</h2>");
