@@ -11,6 +11,7 @@ public class HtmlMenu extends HtmlSimpleValueComponent {
 
     private Integer size;
     private Integer tabIndex;
+    private String onChange;
 
     private List<HtmlMenuEntry> entries;
     
@@ -34,6 +35,14 @@ public class HtmlMenu extends HtmlSimpleValueComponent {
 
     public void setTabIndex(int tabIndex) {
         this.tabIndex = tabIndex;
+    }
+
+    public String getOnChange() {
+        return onChange;
+    }
+
+    public void setOnChange(String onChange) {
+        this.onChange = onChange;
     }
 
     public HtmlMenuGroup createGroup(String label) {
@@ -86,6 +95,8 @@ public class HtmlMenu extends HtmlSimpleValueComponent {
         tag.setName("select");
         
         tag.setAttribute("size", getSize());
+        tag.setAttribute("onChange", getOnChange());
+        
         if (isDisabled()) {
             tag.setAttribute("disabled", true);
         }

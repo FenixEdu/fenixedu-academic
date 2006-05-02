@@ -15,6 +15,8 @@ public class HtmlInputComponent extends HtmlSimpleValueComponent {
     private String accessKey;
     
     private String size;
+    
+    private String onChange;
 
     public HtmlInputComponent(String type) {
         super();
@@ -66,6 +68,14 @@ public class HtmlInputComponent extends HtmlSimpleValueComponent {
         this.tabIndex = tabIndex;
     }
 
+    public String getOnChange() {
+        return onChange;
+    }
+
+    public void setOnChange(String onChange) {
+        this.onChange = onChange;
+    }
+
     @Override
     public HtmlTag getOwnTag(PageContext context) {
         HtmlTag tag = super.getOwnTag(context);
@@ -78,10 +88,11 @@ public class HtmlInputComponent extends HtmlSimpleValueComponent {
             tag.setAttribute("disabled", true);
         }
 
-        tag.setAttribute("alt", this.alternateText);
-        tag.setAttribute("tabindex", this.tabIndex);
-        tag.setAttribute("accesskey", this.accessKey);
-        tag.setAttribute("size", this.size);
+        tag.setAttribute("alt", getAlternateText());
+        tag.setAttribute("tabindex", getTabIndex());
+        tag.setAttribute("accesskey", getAccessKey());
+        tag.setAttribute("size", getSize());
+        tag.setAttribute("onchange", getOnChange());
         
         return tag;
     }

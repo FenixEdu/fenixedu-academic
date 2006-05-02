@@ -285,12 +285,12 @@ public class EditObjectTag extends BaseRenderObjectTag {
                 if (viewState.getId() != null) {
                     continue;
                 }
+
+                if (! getInputDestination().equals(viewState.getInputDestination())) {
+                    continue;
+                }
             }
             else if (! getId().equals(viewState.getId())) {
-                continue;
-            }
-            
-            if (! getInputDestination().equals(viewState.getInputDestination())) {
                 continue;
             }
             

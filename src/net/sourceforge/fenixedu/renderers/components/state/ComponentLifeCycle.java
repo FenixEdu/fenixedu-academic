@@ -147,6 +147,7 @@ public class ComponentLifeCycle {
         for (IViewState viewState : viewStates) {
             HtmlComponent component = restoreComponent(viewState);
             
+            viewState.setValid(true);
             viewState.setSkipUpdate(false);
             viewState.setSkipValidation(false);
             viewState.setCurrentDestination((ViewDestination) null);

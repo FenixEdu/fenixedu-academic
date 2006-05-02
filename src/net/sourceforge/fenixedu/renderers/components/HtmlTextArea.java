@@ -9,6 +9,7 @@ public class HtmlTextArea extends HtmlSimpleValueComponent {
     private Integer rows;
     private Integer columns;
     private boolean readOnly;
+    private String onChange;
     
     public Integer getColumns() {
         return this.columns;
@@ -34,6 +35,14 @@ public class HtmlTextArea extends HtmlSimpleValueComponent {
         this.rows = rows;
     }
 
+    public String getOnChange() {
+        return onChange;
+    }
+
+    public void setOnChange(String onChange) {
+        this.onChange = onChange;
+    }
+
     @Override
     public HtmlTag getOwnTag(PageContext context) {
         HtmlTag tag = super.getOwnTag(context);
@@ -43,6 +52,7 @@ public class HtmlTextArea extends HtmlSimpleValueComponent {
         
         tag.setAttribute("rows", getRows());
         tag.setAttribute("cols", getColumns());
+        tag.setAttribute("onChange", getOnChange());
         
         if (isReadOnly()) {
             tag.setAttribute("readonly", "readonly");

@@ -180,16 +180,16 @@ public abstract class HtmlComponent implements Serializable {
         tag.setAttribute("style", getStyle());
         tag.setAttribute("title", getTitle());
         
-        tag.setAttribute("onclick", getOnClick());;
-        tag.setAttribute("ondblclick", getOnDblClick());;
-        tag.setAttribute("onmousedown", getOnMouseDown());;
-        tag.setAttribute("onmouseup", getOnMouseUp());;
-        tag.setAttribute("onmouseover", getOnMouseOver());;
-        tag.setAttribute("onmousemove", getOnMouseMove());;
-        tag.setAttribute("onmouseout", getOnMouseOut());;
-        tag.setAttribute("onkeypress", getOnKeyPress());;
-        tag.setAttribute("onkeydown", getOnKeyDown());;
-        tag.setAttribute("onkeyup", getOnKeyUp());;
+        tag.setAttribute("onclick", getOnClick());
+        tag.setAttribute("ondblclick", getOnDblClick());
+        tag.setAttribute("onmousedown", getOnMouseDown());
+        tag.setAttribute("onmouseup", getOnMouseUp());
+        tag.setAttribute("onmouseover", getOnMouseOver());
+        tag.setAttribute("onmousemove", getOnMouseMove());
+        tag.setAttribute("onmouseout", getOnMouseOut());
+        tag.setAttribute("onkeypress", getOnKeyPress());
+        tag.setAttribute("onkeydown", getOnKeyDown());
+        tag.setAttribute("onkeyup", getOnKeyUp());
         
         tag.setVisible(isVisible());
         
@@ -263,4 +263,5 @@ public abstract class HtmlComponent implements Serializable {
             return component.getChildren(predicate);
         }
     }
+
 }
