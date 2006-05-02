@@ -1,30 +1,17 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
+<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<bean:define id="institutionUrlStudents" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/perfil/aluno.shtml</bean:define>
+<bean:define id="institutionUrlTeachers" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/perfil/docente.shtml</bean:define>
+<bean:define id="institutionUrlEmployees" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/perfil/funcionario.shtml</bean:define>
+<bean:define id="institutionUrlCandidates" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/perfil/candidato.shtml</bean:define>
+<bean:define id="institutionUrlInternational" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/perfil/international.shtml</bean:define>
 <ul>
-	<li>
-		<html:link page="/viewHomepage.do?method=list">
-			<bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.listings"/>
-		</html:link>
-    </li>
+	<li><a href="<%= institutionUrl %>">In&iacute;cio</a></li>
+  	<li><a href="<%= institutionUrlStudents %>">Aluno</a></li>
+  	<li><a href="<%= institutionUrlTeachers %>">Docente</a></li>
+	<li><a href="<%= institutionUrlEmployees %>">N&atilde;o Docente</a></li>
+	<li><a href="<%= institutionUrlCandidates %>">Candidato</a></li>	
+  	<li><a href="<%= institutionUrlInternational %>">International</a></li>
 </ul>
-
-<%--
-	<li>
-		<html:link page="/l1">
-			Blogs
-		</html:link>
-    </li>
-	<li>
-		<html:link page="/l1">
-			Forums
-		</html:link>
-    </li>
-	<li>
-		<html:link page="/viewHomepage.do?method=stats">
-			<bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.statistics"/>
-		</html:link>
-    </li>
---%>
