@@ -18,12 +18,14 @@
 				<fr:property name="key(down)" value="researcher.interestsManagement.down"/>
 				<fr:property name="bundle(down)" value="RESEARCHER_RESOURCES"/>
 				<fr:property name="order(down)" value="0"/>
-
+				<fr:property name="excludedFromLast(down)" value="true"/>
+				
 				<fr:property name="link(up)" value="/interests/interestsManagement.do?method=up"/>
 				<fr:property name="param(up)" value="idInternal/oid"/>
 				<fr:property name="key(up)" value="researcher.interestsManagement.up"/>
 				<fr:property name="bundle(up)" value="RESEARCHER_RESOURCES"/>
 				<fr:property name="order(up)" value="1"/>
+				<fr:property name="excludedFromFirst(up)" value="true"/>
 
 				<fr:property name="link(edit)" value="/interests/interestsManagement.do?method=prepareEditInterest"/>
 				<fr:property name="param(edit)" value="idInternal/oid"/>
