@@ -26,6 +26,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatc
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 
 import pt.utl.ist.fenix.tools.image.TextPngCreator;
 
@@ -36,8 +38,15 @@ public class ViewHomepageDA extends FenixContextDispatchAction {
     	final String homepageIDString = request.getParameter("homepageID");
     	final Integer homepageID = Integer.valueOf(homepageIDString);
     	final Homepage homepage = (Homepage) readDomainObject(request, Homepage.class, homepageID);
-    	request.setAttribute("homepage", homepage);
-        return mapping.findForward("view-homepage");
+    	if (homepage == null || !homepage.getActivated().booleanValue()) {
+    		final ActionMessages actionMessages = new ActionMessages();
+    		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("homepage.not.found"));
+    		saveMessages(request, actionMessages);
+    		return list(mapping, actionForm, request, response);
+    	} else {
+    		request.setAttribute("homepage", homepage);
+    		return mapping.findForward("view-homepage");
+    	}
     }
 
     public ActionForward notFound(ActionMapping mapping, ActionForm actionForm,
@@ -52,11 +61,13 @@ public class ViewHomepageDA extends FenixContextDispatchAction {
     		homepages.put("" + ((char) i), new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME));
     	}
     	for (final Homepage homepage : rootDomainObject.getHomepagesSet()) {
-    		final String key = homepage.getName().substring(0, 1);
-    		final SortedSet<Homepage> sortedSet;
-    		if (homepages.containsKey(key)) {
-    			sortedSet = homepages.get(key);
-    			sortedSet.add(homepage);
+    		if (homepage.getActivated().booleanValue()) {
+    			final String key = homepage.getName().substring(0, 1);
+    			final SortedSet<Homepage> sortedSet;
+    			if (homepages.containsKey(key)) {
+    				sortedSet = homepages.get(key);
+    				sortedSet.add(homepage);
+    			}
     		}
     	}
     	request.setAttribute("homepages", homepages);
@@ -181,17 +192,19 @@ public class ViewHomepageDA extends FenixContextDispatchAction {
    				final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
    				final Degree degree = degreeCurricularPlan.getDegree();
    				final Person person = student.getPerson();
-   				final SortedSet<Homepage> degreeHomepages;
-   				if (homepages.containsKey(degree)) {
-   					degreeHomepages = homepages.get(degree);
-   				} else {
-   					degreeHomepages = new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME);
-   					homepages.put(degree, degreeHomepages);
-   				}
-   				final Homepage homepage = person.getHomepage();
-   				if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.CONCLUDED
-   						&& homepage != null && homepage.getActivated().booleanValue()) {
-   					degreeHomepages.add(homepage);
+   				if (person != null) {
+   					final SortedSet<Homepage> degreeHomepages;
+   					if (homepages.containsKey(degree)) {
+   						degreeHomepages = homepages.get(degree);
+   					} else {
+   						degreeHomepages = new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME);
+   						homepages.put(degree, degreeHomepages);
+   					}
+   					final Homepage homepage = person.getHomepage();
+   					if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.CONCLUDED
+   							&& homepage != null && homepage.getActivated().booleanValue()) {
+   						degreeHomepages.add(homepage);
+   					}
    				}
     		}
     	}

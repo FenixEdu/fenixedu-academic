@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+<%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="string" %>
 
 <logic:present name="homepage">
 	<logic:equal name="homepage" property="activated" value="true">
@@ -24,7 +25,8 @@
 	
 
 		<logic:equal name="homepage" property="showUnit" value="true">
-		<p><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
+		<p>
+			<!--<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:-->
 			<logic:present name="homepage" property="person.employee.currentContract.workingUnit">
 				<bean:write name="homepage" property="person.employee.currentContract.workingUnit.name"/>
 				<br/>
@@ -33,10 +35,15 @@
 		</logic:equal>
 
 		<logic:equal name="homepage" property="showCategory" value="true">
-		<p><bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>:
+		<p>
+			<!--<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>:-->
 			<logic:present name="homepage" property="person.teacher">
 				<logic:present name="homepage" property="person.employee.currentContract">
-					<bean:write name="homepage" property="person.teacher.category.longName"/>
+					<string:capitalizeAllWords>
+						<string:lowerCase>
+							<bean:write name="homepage" property="person.teacher.category.longName"/>
+						</string:lowerCase>
+					</string:capitalizeAllWords>
 					<br/>
 				</logic:present>
 			</logic:present>

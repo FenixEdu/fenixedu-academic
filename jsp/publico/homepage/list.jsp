@@ -4,6 +4,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
+<html:messages id="message" message="true" bundle="HOMEPAGE_RESOURCES">
+	<span class="error">
+		<bean:write name="message"/>
+	</span>
+	<br/><br/>
+</html:messages>
+
 <bean:define id="selectedPage" type="java.lang.String" name="selectedPage"/>
 
 <logic:present name="homepages">
