@@ -38,7 +38,7 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
         if (request.getParameter(parameter) != null) {
             return Integer.valueOf(request.getParameter(parameter));
         } else if (request.getAttribute(parameter) != null) {
-            if (request.getAttribute(parameter) instanceof String) {
+            if (request.getAttribute(parameter) instanceof String && !((String) request.getAttribute(parameter)).equals("null")) {
                 return Integer.valueOf((String) request.getAttribute(parameter));
             } else if (request.getAttribute(parameter) instanceof Integer) {
                 return (Integer) request.getAttribute(parameter);
