@@ -100,12 +100,8 @@ public abstract class DomainObject extends DomainObject_Base implements Serializ
 
     protected final void deleteDomainObject() {
         if (lockMode) {
-            try {
                 PersistenceSupportFactory.getDefaultPersistenceSupport()
                         .getIPersistentObject().deleteByOID(this.getClass(), getIdInternal());
-            } catch (ExcepcaoPersistencia e) {
-                throw new Error("Couldn't delete object", e);
-            }
         }
     }
 

@@ -60,11 +60,7 @@ public class DomainReference<T extends DomainObject> implements Serializable {
         ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentObject persistentObject = persistenceSupport.getIPersistentObject();
         
-        try {
-            this.object = (T) persistentObject.readByOID(getType(), getOid());
-        } catch (ExcepcaoPersistencia e) {
-            throw new DomainException("reference.notFound.object", e, getType().getName(), getOid().toString());
-        }
+        this.object = (T) persistentObject.readByOID(getType(), getOid());
 
         return this.object;
     }
