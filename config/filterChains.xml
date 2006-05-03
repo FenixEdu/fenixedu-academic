@@ -98,13 +98,6 @@
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>	
-	<filterChain>
-        <name>CreditsManagerOrManagerAuthorization</name>
-        <expression>CreditsManagerAuthorization || ManagerAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
         <name>ExecutionCourseResponsibleForTeacherAuthorization</name>

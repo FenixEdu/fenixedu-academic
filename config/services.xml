@@ -8686,7 +8686,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="CreditsManagerOrManagerAuthorization"></chain>
+        	<chain name="ManagerOrCientificCouncilAuthentication"></chain>
         </filterChains>     
     </service>  
     <service>
@@ -8695,7 +8695,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="CreditsManagerOrManagerAuthorization"></chain>
+        	<chain name="ManagerOrCientificCouncilAuthentication"></chain>
         </filterChains>     
     </service>
     <service>
@@ -8704,7 +8704,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="CreditsManagerOrManagerAuthorization"></chain>
+        	<chain name="ManagerOrCientificCouncilAuthentication"></chain>
         </filterChains>     
     </service>
    <service>

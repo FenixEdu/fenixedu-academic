@@ -35,6 +35,11 @@
 			<bean:message key="label.credits.navigation.header"/>
 		</li>
 		<li>
+			<html:link page="/functionsManagement/personSearchForFunctionsManagement.faces" >
+				<bean:message key="link.managementPositions.management"/>
+			</html:link>
+		</li>
+		<li>
 			<html:link page="/creditsReport.do?method=prepare">
 		  		<bean:message key="link.credits.viewReport"/>
 		  	</html:link>
