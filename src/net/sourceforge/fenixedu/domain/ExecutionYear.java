@@ -66,6 +66,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
         final ExecutionYear executionYear = (ExecutionYear) object;
         return getYear().compareTo(executionYear.getYear());
     }
+    
+    public boolean isAfter(ExecutionYear executionYear) {
+        return this.compareTo(executionYear) > 0;
+    }
 
     public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
         final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
@@ -141,4 +145,5 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
         }
         return null;
     }
+
 }
