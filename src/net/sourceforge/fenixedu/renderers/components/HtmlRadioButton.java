@@ -4,31 +4,31 @@ import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 
-public class HtmlCheckBox extends HtmlInputComponent {
+public class HtmlRadioButton extends HtmlInputComponent {
 
     private String text;
     
     private boolean checked;
 
-    public HtmlCheckBox() {
-        super("checkbox");
+    public HtmlRadioButton() {
+        super("radio");
         
         this.checked = false;
     }
     
-    public HtmlCheckBox(boolean checked) {
+    public HtmlRadioButton(boolean checked) {
         this();
         
         this.checked = checked;
     }
 
-    public HtmlCheckBox(String text) {
+    public HtmlRadioButton(String text) {
         this();
         
         this.text = text;
     }
     
-    public HtmlCheckBox(String text, boolean checked) {
+    public HtmlRadioButton(String text, boolean checked) {
         this();
         
         this.text = text;
