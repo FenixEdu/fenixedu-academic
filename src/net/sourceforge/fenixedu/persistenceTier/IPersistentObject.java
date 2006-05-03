@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public interface IPersistentObject {
 
-    void deleteByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia;
+    void deleteByOID(Class classToQuery, Integer oid);
 
-    public DomainObject readByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia;
+    public DomainObject readByOID(Class classToQuery, Integer oid);
 
-    public RootDomainObject readRootDomainObject() throws ExcepcaoPersistencia;
+    public RootDomainObject readRootDomainObject();
 
 }

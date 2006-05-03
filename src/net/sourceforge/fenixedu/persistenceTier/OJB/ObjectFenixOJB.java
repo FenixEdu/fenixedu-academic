@@ -40,11 +40,11 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
      *            Object to delete
      * @throws ExcepcaoPersistencia
      */
-    public void delete(Object obj) throws ExcepcaoPersistencia {
+    public void delete(Object obj) {
 	Transaction.deleteObject(obj);
     }
 
-    public final void deleteByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia {
+    public final void deleteByOID(Class classToQuery, Integer oid) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", oid);
         Object object = queryObject(classToQuery, criteria);
@@ -76,7 +76,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         return queryList(queryCriteria);
     }
 
-    protected Object queryObject(Class classToQuery, Criteria criteria) throws ExcepcaoPersistencia {
+    protected Object queryObject(Class classToQuery, Criteria criteria) {
         PersistenceBroker pb = getCurrentPersistenceBroker();
         Query query = getQuery(classToQuery, criteria);
         return pb.getObjectByQuery(query);
@@ -115,13 +115,13 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         return object;
     }
 
-    public DomainObject readByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia {
+    public DomainObject readByOID(Class classToQuery, Integer oid) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", oid);
         return (DomainObject) queryObject(classToQuery, criteria);
     }
 
-    public RootDomainObject readRootDomainObject() throws ExcepcaoPersistencia {
+    public RootDomainObject readRootDomainObject() {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", Integer.valueOf(1));
         return (RootDomainObject) queryObject(RootDomainObject.class, criteria);
