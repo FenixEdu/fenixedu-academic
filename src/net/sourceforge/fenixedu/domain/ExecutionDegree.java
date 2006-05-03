@@ -29,7 +29,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  * @author rpfi
  */
 
-public class ExecutionDegree extends ExecutionDegree_Base {
+public class ExecutionDegree extends ExecutionDegree_Base implements Comparable {
 
     public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME;
     public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR;
@@ -146,6 +146,17 @@ public class ExecutionDegree extends ExecutionDegree_Base {
                 || periodExamsSecondSemesterBegin.after(periodExamsSecondSemesterEnd)) {
             throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
         }
+    }
+
+    public int compareTo(Object object) {
+        final ExecutionDegree executionDegree = (ExecutionDegree) object; 
+        final ExecutionYear executionYear = executionDegree.getExecutionYear();
+
+        return getExecutionYear().compareTo(executionYear);
+    }
+
+    public boolean isAfter(ExecutionDegree executionDegree) {
+        return this.compareTo(executionDegree) > 0;
     }
 
     public boolean isFirstYear() {
