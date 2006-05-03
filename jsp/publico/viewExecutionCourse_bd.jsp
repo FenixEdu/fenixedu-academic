@@ -102,9 +102,9 @@
         <logic:notEmpty name="component" property="responsibleTeachers">	
 			<h2><bean:message key="label.lecturingTeachers"/></h2>	
             	<logic:iterate id="infoResponsableTeacher" name="component" property="responsibleTeachers">
-					<bean:define id="personID" type="java.lang.Integer" name="infoResponsableTeacher" property="infoPerson.idInternal"/>
-					<% net.sourceforge.fenixedu.domain.Person person = (net.sourceforge.fenixedu.domain.Person) net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readPartyByOID(personID);
-						request.setAttribute("person", person);
+					<bean:define id="teacherID" type="java.lang.Integer" name="infoResponsableTeacher" property="idInternal"/>
+					<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readTeacherByOID(teacherID).getPerson();
+					   request.setAttribute("person", person);
 					%>
 
 	<logic:present name="person" property="homepage">
@@ -137,8 +137,8 @@
 			</logic:empty>
             <logic:iterate id="infoTeacher" name="component" property="lecturingTeachers">
 				<br />
-				<bean:define id="personID" type="java.lang.Integer" name="infoTeacher" property="infoPerson.idInternal"/>
-				<% net.sourceforge.fenixedu.domain.Person person = (net.sourceforge.fenixedu.domain.Person) net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readPartyByOID(personID);
+				<bean:define id="teacherID" type="java.lang.Integer" name="infoTeacher" property="idInternal"/>
+				<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readTeacherByOID(teacherID).getPerson();
 				   request.setAttribute("person", person);
 				%>
 	<logic:present name="person" property="homepage">
