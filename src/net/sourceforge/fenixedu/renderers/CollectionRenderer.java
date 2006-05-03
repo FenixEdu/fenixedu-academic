@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,10 +15,8 @@ import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.utils.RenderKit;
+import net.sourceforge.fenixedu.renderers.model.MultipleMetaObject;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -526,15 +523,16 @@ public class CollectionRenderer extends OutputRenderer {
         }
 
         private List<MetaObject> getMetaObjects(Collection collection) {
-            String schemaName = getContext().getMetaObject().getSchema();
-            Schema schema = RenderKit.getInstance().findSchema(schemaName);
-            
             List<MetaObject> metaObjects = new ArrayList<MetaObject>();
+            MultipleMetaObject multipleMetaObject = (MultipleMetaObject) getContext().getMetaObject();
             
-            for (Iterator iter = collection.iterator(); iter.hasNext();) {
-                Object collectionObject = (Object) iter.next();
-                
-                metaObjects.add(MetaObjectFactory.createObject(collectionObject, schema));
+            for (Object object : collection) {
+                for (MetaObject metaObject : multipleMetaObject.getAllMetaObjects()) {
+                    if (object.equals(metaObject.getObject())) {
+                        metaObjects.add(metaObject);
+                        break;
+                    }
+                }
             }
             
             return metaObjects;

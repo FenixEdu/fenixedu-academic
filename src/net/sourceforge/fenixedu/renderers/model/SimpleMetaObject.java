@@ -7,6 +7,8 @@ import java.util.Properties;
 public class SimpleMetaObject implements MetaObject {
 
     private Object object;
+    private int code;
+    
     private String schema;
     private List<MetaSlot> slots;
     
@@ -17,6 +19,8 @@ public class SimpleMetaObject implements MetaObject {
         super();
 
         this.object = object;
+        this.code = object == null ? 0 : object.hashCode();
+        
         this.slots = new ArrayList<MetaSlot>();
         this.hiddenSlots = new ArrayList<MetaSlot>();
     }
@@ -66,7 +70,7 @@ public class SimpleMetaObject implements MetaObject {
     }
 
     public SimpleMetaObjectKey getKey() {
-        return new SimpleMetaObjectKey(getObject(), getType());
+        return new SimpleMetaObjectKey(getType(), this.code);
     }
 
     public Properties getProperties() {

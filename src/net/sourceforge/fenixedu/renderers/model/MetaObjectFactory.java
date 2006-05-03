@@ -25,8 +25,16 @@ public abstract class MetaObjectFactory {
     public static MetaObject createObject(Object object, Schema schema) {
         Schema usedSchema = schema;
         
-        if (usedSchema == null) {
+        if (usedSchema == null && !(object instanceof Collection)) {
             usedSchema = SchemaFactory.create(object);
+        }
+        
+        if (usedSchema == null && object instanceof Collection) {
+            Collection collection = (Collection) object;
+            
+            if (! collection.isEmpty()) {
+                usedSchema = SchemaFactory.create(collection.iterator().next());    
+            }
         }
         
         return currentFactory.createMetaObject(object, usedSchema);

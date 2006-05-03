@@ -88,6 +88,10 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
                 Enum.class
         };
         
+        if (object == null) {
+            return true;
+        }
+        
         for (int i = 0; i < primitiveTypes.length; i++) {
             Class type = primitiveTypes[i];
             

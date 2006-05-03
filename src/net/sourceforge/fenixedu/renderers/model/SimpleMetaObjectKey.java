@@ -2,20 +2,12 @@ package net.sourceforge.fenixedu.renderers.model;
 
 public class SimpleMetaObjectKey implements MetaObjectKey {
 
-    private Object object;
     private Class type;
+    private int code;
 
-    public SimpleMetaObjectKey(Object object, Class type) {
-        this.object = object;
+    public SimpleMetaObjectKey(Class type, int code) {
         this.type = type;
-    }
-
-    public Object getObject() {
-        return object;
-    }
-
-    public Class getType() {
-        return type;
+        this.code = code;
     }
 
     @Override
@@ -25,16 +17,16 @@ public class SimpleMetaObjectKey implements MetaObjectKey {
         }
         
         SimpleMetaObjectKey otherKey = (SimpleMetaObjectKey) other;
-        return this.object.equals(otherKey.object) && this.type.equals(otherKey.type);
+        return this.code == otherKey.code && this.type.equals(otherKey.type);
     }
 
     @Override
     public int hashCode() {
-        return this.object.hashCode() + this.type.hashCode();
+        return this.code + this.type.hashCode();
     }
 
     @Override
     public String toString() {
-        return this.type.getName();
+        return this.type.getName() + ":" + this.code;
     }
 }

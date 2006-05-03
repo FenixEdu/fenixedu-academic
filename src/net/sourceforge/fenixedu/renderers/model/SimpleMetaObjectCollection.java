@@ -25,7 +25,6 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
         this.metaObjects.add(metaObject);
     }
     
-    
     public boolean remove(MetaObject metaObject) {
         return this.metaObjects.remove(metaObject);
     }
