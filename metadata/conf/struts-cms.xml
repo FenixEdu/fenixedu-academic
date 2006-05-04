@@ -174,44 +174,7 @@
 			>
 		</action>						
 		<!--  =================================================-->	
-		
-
-		<!--  ============= by gedl 18-10-2005  ================-->		
-		<action path="/mailingListManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.MailingListManagement"
-			parameter="method"
-			scope="request"
-			name="mailingListForm"
-			>
-			<forward name="showPrepareCreateMailingList" path="showPrepareCreateMailingList"/>
-			<forward name="showMailingList" path="showMailingList"/>						
-		</action>						
-		<!--  =================================================-->			
-
-		<!--  ============= by gedl 3-11-2005  ================-->		
-		<action path="/mailingListThreadManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.MailingListThreadManagement"
-			parameter="method"
-			scope="request"
-			name="mailingListForm"
-			attribute="mailingListForm"
-			>
-			<forward name="showThread" path="showThread"/>						
-		</action>						
-		<!--  =================================================-->			
-		
-		<!--  ============= by gedl 9-11-2005  ================-->		
-		<action path="/mailMessageManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.MailMessageManagement"
-			parameter="method"
-			scope="request"
-			name="mailingListForm"
-			attribute="mailingListForm"
-			>
-			<forward name="showThread" path="showThread"/>						
-		</action>						
-		<!--  =================================================-->	
-		
+						
 		<!--  ============= by gedl 15-11-2005  ================-->		
 		<action path="/cmsConfigurationManagement"
 			type="net.sourceforge.fenixedu.presentationTier.Action.cms.basic.CmsConfigurationManagement"

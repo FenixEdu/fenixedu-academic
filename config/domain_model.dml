@@ -189,7 +189,6 @@ class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourcef
 	String reference;
 }
 
-
 class net.sourceforge.fenixedu.domain.homepage.Blog extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyHomepage;
 	String name;
@@ -314,6 +313,20 @@ class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.f
 	String shortName;
 }
 
+class net.sourceforge.fenixedu.domain.messaging.ConversationThread extends net.sourceforge.fenixedu.domain.DomainObject {
+   Date creationDate;
+   String subject;
+   Integer keyForum;
+   Integer keyCreator;
+}
+   
+class net.sourceforge.fenixedu.domain.messaging.ConversationMessage extends net.sourceforge.fenixedu.domain.DomainObject {
+   Date creationDate;
+   String body;
+   Integer keyConversationThread;
+   Integer keyCreator;
+}
+
 class net.sourceforge.fenixedu.domain.PersonalGroup extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 	String description;
@@ -339,22 +352,6 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
 }
     class net.sourceforge.fenixedu.domain.cms.Bin extends net.sourceforge.fenixedu.domain.cms.Content {
        }
-       class net.sourceforge.fenixedu.domain.cms.messaging.MailingList extends net.sourceforge.fenixedu.domain.cms.Bin {
-       String address;
-       Integer keyQueue;
-       Boolean closed;
-       Boolean membersOnly;
-       Boolean replyToList;
-       Group group;
-       }
-       
-       class net.sourceforge.fenixedu.domain.cms.messaging.MailConversation extends net.sourceforge.fenixedu.domain.cms.Bin {
-       String subject;
-       }
-       
-    class net.sourceforge.fenixedu.domain.cms.messaging.MailMessage extends net.sourceforge.fenixedu.domain.cms.Content {
-       String body;
-    }
     
     class net.sourceforge.fenixedu.domain.cms.website.WebsiteType extends net.sourceforge.fenixedu.domain.DomainObject
      {
@@ -386,10 +383,6 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
     		Boolean urgent;
     }    
     
-class net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue extends net.sourceforge.fenixedu.domain.DomainObject
-{
-    	   Integer keyMailingList;
-}
 
 class net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration extends net.sourceforge.fenixedu.domain.DomainObject
 {
@@ -401,12 +394,6 @@ class net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration extend
 	Integer maxAttachmentSize; /* in bytes */
 	Integer maxMessageSize; /* in bytes */
 }
-
-class net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias extends net.sourceforge.fenixedu.domain.DomainObject
-{
-	String address;
-}
-
 
 class net.sourceforge.fenixedu.domain.degreeStructure.Context extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer order;
@@ -1167,6 +1154,21 @@ class net.sourceforge.fenixedu.domain.support.FAQSection extends net.sourceforge
 	Integer keyParentSection;
 }
 
+class net.sourceforge.fenixedu.domain.messaging.Forum extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+	Date creationDate;
+	String name;
+	String description;
+	Group readersGroup;
+	Group writersGroup;
+	Integer keyOwner;
+}
+
+class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum extends net.sourceforge.fenixedu.domain.messaging.Forum {
+   Integer keyExecutionCourse;
+}
+
+
 
 class net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult extends net.sourceforge.fenixedu.domain.DomainObject {
     String p13;
@@ -1567,7 +1569,6 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
     Date end;
 }
 
-
 class net.sourceforge.fenixedu.domain.Mark extends net.sourceforge.fenixedu.domain.DomainObject {
     String publishedMark;
     String mark;
@@ -1654,7 +1655,7 @@ class net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter ex
     Integer keyWhoEmployee;
     Date when;
 }
-
+   
 class net.sourceforge.fenixedu.domain.NonAffiliatedTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
     String name;
     Integer keyInstitutionUnit;
@@ -3537,6 +3538,30 @@ relation CompetenceCourseUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole competenceCourseGroupUnit;
 }
 
+relation ConversationMessagePerson {
+	net.sourceforge.fenixedu.domain.messaging.ConversationMessage playsRole conversationMessages {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.Person playsRole creator;
+}
+
+relation ConversationThreadConversationMessage {
+	net.sourceforge.fenixedu.domain.messaging.ConversationMessage playsRole conversationMessages {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThread;
+}
+
+relation ConversationThreadPerson {
+	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThreads {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.Person playsRole creator;
+}
+
 relation DislocatedStudentCountry {
 	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole concluedStudents {
 		multiplicity *;
@@ -3728,6 +3753,16 @@ relation EvaluationExecutionCourse {
 		multiplicity *;
 	}
 }
+
+relation ExecutionCourseForumExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	
+	net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum playsRole foruns {
+		multiplicity *;
+	}
+}
+
+
 
 relation WrittenEvaluationEnrolmentExam {
 	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
@@ -4486,34 +4521,6 @@ relation LessonShift {
 	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
 
-relation MailingListAlias {
-	net.sourceforge.fenixedu.domain.cms.messaging.MailingList playsRole mailingLists
-	{
-		multiplicity *;
-	}
-    net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias playsRole aliases 	
-    {
-    	multiplicity *;
-    }
-}
-
-relation MailingListQueue {
-	net.sourceforge.fenixedu.domain.cms.messaging.MailingList playsRole mailingList;
-    net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue playsRole queue;
-}
-
-relation MailingListQueueOutgoingMails {
-	net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue playsRole queue
-	{
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.cms.messaging.MailMessage playsRole messages
-	{
-		multiplicity *;
-	}
-
-}
-
 relation MarkAttends {
 	net.sourceforge.fenixedu.domain.Mark playsRole associatedMarks {
 		multiplicity *;
@@ -4643,6 +4650,23 @@ relation MasterDegreeThesisDataVersionAssistentGuider {
 		multiplicity *;
 	}
 }
+
+relation ForumConversationThread {
+	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThreads {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.messaging.Forum playsRole forum;
+}
+
+relation ForumOwner {
+	net.sourceforge.fenixedu.domain.messaging.Forum playsRole foruns {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.Person playsRole owner;
+}
+
 
 relation MetadataFromExecutionCourse {
     net.sourceforge.fenixedu.domain.onlineTests.Metadata playsRole metadatas {
@@ -6347,6 +6371,13 @@ relation RootDomainObjectGlossaryEntry {
 	}
 }
 
+relation RootDomainObjectForum {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.messaging.Forum playsRole foruns {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectMetadata {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.onlineTests.Metadata playsRole metadatas {
@@ -6592,13 +6623,6 @@ relation RootDomainObjectParty {
 	}
 }
 
-relation RootDomainObjectMailAddressAlias {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias playsRole mailAddressAliass {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectOldInquiriesCoursesRes {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRess {
@@ -6616,13 +6640,6 @@ relation RootDomainObjectReimbursementGuide {
 relation RootDomainObjectFAQSection {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.support.FAQSection playsRole fAQSections {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectMailQueue {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue playsRole mailQueues {
 		multiplicity *;
 	}
 }

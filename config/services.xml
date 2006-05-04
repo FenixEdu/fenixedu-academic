@@ -8808,17 +8808,6 @@
     </service>  
 	<!--############# CMS ####################-->  
     <service>
-		<name>WriteMailingList</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.WriteMailingList
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="WriteMailingListPreFilterChain" />
-		</filterChains>
-	</service>
-    <service>
 		<name>ProcessReceivedMail</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ProcessReceivedMail
@@ -8828,14 +8817,6 @@
 		<filterChains>
 			<chain name="ProcessReceivedMailPreFilterChain" />
 		</filterChains>		
-	</service>
-    <service>
-		<name>ReadMailingListsWithOutgoingMails</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ReadMailingListsWithOutgoingMails
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
 	</service>
     <!-- ======================================  -->  
  <!-- =========by gedl 15-11-2005============  -->
