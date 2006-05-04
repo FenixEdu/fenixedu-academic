@@ -193,15 +193,15 @@ public class ViewStateWrapper implements IViewState {
         return this.viewState.getHiddenSlots();
     }
 
-    public void addMessage(ErrorMessage message) {
+    public void addMessage(Message message) {
         this.viewState.addMessage(message);
     }
 
-    public List<ErrorMessage> getMessages() {
+    public List<Message> getMessages() {
         return this.viewState.getMessages();
     }
 
-    public List<ErrorMessage> setMessages(List<ErrorMessage> messages) {
+    public List<Message> setMessages(List<Message> messages) {
         return this.viewState.setMessages(messages);
     }
 }

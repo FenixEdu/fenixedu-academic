@@ -6,8 +6,10 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.renderers.components.state.ErrorMessage;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.components.state.Message;
+import net.sourceforge.fenixedu.renderers.components.state.SlotMessage;
+import net.sourceforge.fenixedu.renderers.components.state.Message.Type;
 
 import org.apache.log4j.Logger;
 
@@ -15,7 +17,7 @@ public class MessageTag extends TagSupport {
     private static final Logger logger = Logger.getLogger(MessageTag.class);
     
     private String forName;
-
+    private String type;
     private String showWhat;
     
     public String getFor() {
@@ -28,6 +30,14 @@ public class MessageTag extends TagSupport {
 
     public String getShow() {
         return this.showWhat;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setShow(String show) {
@@ -44,7 +54,7 @@ public class MessageTag extends TagSupport {
 
     @Override
     public int doStartTag() throws JspException {
-        ErrorMessage message = getMessage();
+        Message message = getMessage();
         
         if (message != null) {
             writeMessage(message);
@@ -53,7 +63,7 @@ public class MessageTag extends TagSupport {
         return SKIP_BODY;
     }
 
-    private ErrorMessage getMessage() {
+    private Message getMessage() {
         MessagesTag parent = (MessagesTag) findAncestorWithClass(this, MessagesTag.class);
         
         if (getFor() == null || parent != null) {
@@ -70,7 +80,7 @@ public class MessageTag extends TagSupport {
                 return null;
             }
 
-            List<ErrorMessage> messages = viewState.getMessages();
+            List<Message> messages = viewState.getMessages();
             if (! messages.isEmpty()) {
                 return messages.get(0);
             }
@@ -79,24 +89,51 @@ public class MessageTag extends TagSupport {
         return null;
     }
 
-    private void writeMessage(ErrorMessage message) throws JspException {
-        try {
-            if ("slot".equalsIgnoreCase(getShow()) || "label".equalsIgnoreCase(getShow())) {
-                if (message.getSlot() != null) {
-                    pageContext.getOut().write(message.getSlot().getLabel());
+    private void writeMessage(Message message) throws JspException {
+        Type type = getMessageType();
+        
+        if (type == null || type.equals(message.getType())) {
+            try {
+                if ("slot".equalsIgnoreCase(getShow()) || "label".equalsIgnoreCase(getShow())) {
+                    if (message instanceof SlotMessage) {
+                        SlotMessage slotMessage = (SlotMessage) message;
+    
+                        if (slotMessage.getSlot() != null) {
+                            pageContext.getOut().write(slotMessage.getSlot().getLabel());
+                        }
+                        else {
+                            logger.warn("asked to show " + getShow() + " but not " + getShow() + " was defined");
+                        }
+                    }
                 }
                 else {
-                    logger.warn("asked to show " + getShow() + " but not " + getShow() + " was defined");
+                    pageContext.getOut().write(message.getMessage());
                 }
+            } catch (IOException e) {
+                throw new JspException(e);
             }
-            else {
-                pageContext.getOut().write(message.getMessage());
-            }
-        } catch (IOException e) {
-            throw new JspException(e);
         }
     }
     
+    private Type getMessageType() {
+        MessagesTag parent = (MessagesTag) findAncestorWithClass(this, MessagesTag.class);
+
+        if (getType() != null) {
+            if (parent != null && parent.getMessageType() != null) {
+                logger.warn("parent 'messages' tag is beeing ignored since the 'type' attribute was specified");
+            }
+            
+            return Type.valueOf(getType());
+        }
+        else {
+            if (parent != null) {
+                return parent.getMessageType();
+            }
+        }
+        
+        return null;
+    }
+
     @Override
     public int doEndTag() throws JspException {
         return EVAL_PAGE;

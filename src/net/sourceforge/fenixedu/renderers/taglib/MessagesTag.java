@@ -1,25 +1,29 @@
 package net.sourceforge.fenixedu.renderers.taglib;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import net.sourceforge.fenixedu.renderers.components.state.ErrorMessage;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.components.state.Message;
+import net.sourceforge.fenixedu.renderers.components.state.Message.Type;
 
 import org.apache.log4j.Logger;
 
 public class MessagesTag extends BodyTagSupport {
     private static final Logger logger = Logger.getLogger(MessagesTag.class);
     
-    private Iterator<ErrorMessage> iterator;
-    private ErrorMessage message;
+    private Iterator<Message> iterator;
+    private Message message;
     
     private String forName;
+    private String type;
     
     public String getFor() {
         return this.forName;
@@ -27,6 +31,14 @@ public class MessagesTag extends BodyTagSupport {
 
     public void setFor(String forName) {
         this.forName = forName;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
@@ -46,8 +58,46 @@ public class MessagesTag extends BodyTagSupport {
             return SKIP_BODY;
         }
         
-        this.iterator = viewState.getMessages().iterator();
+        this.iterator = getMessagesIterator(viewState, getType());
         return goNext(true);
+    }
+
+    private Iterator<Message> getMessagesIterator(IViewState viewState, String type) {
+        Type messageType = getMessageType();
+
+        if (messageType == null) {
+            return viewState.getMessages().iterator();
+        }
+        else {
+            List<Message> messages = new ArrayList<Message>();
+            
+            for (Message message : viewState.getMessages()) {
+                if (messageType.equals(message.getType())) {
+                    messages.add(message);
+                }
+            }
+            
+            return messages.iterator();
+        }
+    }
+
+    public Type getMessageType() {
+        HasMessagesTag parent = (HasMessagesTag) findAncestorWithClass(this, HasMessagesTag.class);
+
+        if (getType() != null) {
+            if (parent != null && parent.getMessageType() != null) {
+                logger.warn("parent 'hasMessage' tag is beeing ignored since the 'type' attribute was specified");
+            }
+            
+            return Type.valueOf(getType().toUpperCase());
+        }
+        else {
+            if (parent != null) {
+                return parent.getMessageType();
+            }
+        }
+        
+        return null;
     }
 
     private String getViewStateId() {
@@ -108,11 +158,11 @@ public class MessagesTag extends BodyTagSupport {
         return EVAL_PAGE;
     }
 
-    private void setCurrentMessage(ErrorMessage message) {
+    private void setCurrentMessage(Message message) {
         this.message = message;
     }
 
-    public ErrorMessage getCurrentMessage() {
+    public Message getCurrentMessage() {
         return this.message;
     }
 

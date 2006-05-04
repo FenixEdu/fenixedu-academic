@@ -36,7 +36,7 @@ public class ViewState implements IViewState {
 
     private Map<String, Object> attributes;
     
-    transient private List<ErrorMessage> messages;
+    transient private List<Message> messages;
     
     // Hidden slots, filled from context
     
@@ -85,7 +85,7 @@ public class ViewState implements IViewState {
         this.updateComponentTree = true;
         this.postBack = false;
         
-        this.messages = new ArrayList<ErrorMessage>();
+        this.messages = new ArrayList<Message>();
     }
 
     public String getId() {
@@ -340,24 +340,24 @@ public class ViewState implements IViewState {
         return this.hiddenSlots;
     }
 
-    public List<ErrorMessage> setMessages(List<ErrorMessage> messages) {
+    public List<Message> setMessages(List<Message> messages) {
         ensureMessageList();
         return this.messages = messages;
     }
 
-    public List<ErrorMessage> getMessages() {
+    public List<Message> getMessages() {
         ensureMessageList();
         return this.messages;
     }
 
-    public void addMessage(ErrorMessage message) {
+    public void addMessage(Message message) {
         ensureMessageList();
         this.messages.add(message);
     }
 
     private void ensureMessageList() {
         if (this.messages == null) {
-            this.messages = new ArrayList<ErrorMessage>();
+            this.messages = new ArrayList<Message>();
         }
     }
     

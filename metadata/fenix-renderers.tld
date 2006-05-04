@@ -637,6 +637,17 @@
         the message itself is printed.
       </description>
     </attribute>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Selects the type of the messages to show. The type can be one of 'global', 'validation',
+        or 'conversion'.
+      </description>
+    </attribute>
   </tag>
   
   <tag>
@@ -654,6 +665,17 @@
       <type>java.lang.String</type>
       <description>
         Selects the context id used to fetch the message.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Selects the type of the messages to show. The type can be one of 'global', 'validation',
+        or 'conversion'.
       </description>
     </attribute>
   </tag>
@@ -675,6 +697,17 @@
       <type>java.lang.String</type>
       <description>
         Selects the context id.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Selects the type of the messages to show. The type can be one of 'global', 'validation',
+        or 'conversion'.
       </description>
     </attribute>
   </tag>

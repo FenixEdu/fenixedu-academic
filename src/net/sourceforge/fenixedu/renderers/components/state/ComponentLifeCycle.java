@@ -273,7 +273,7 @@ public class ComponentLifeCycle {
             
             if (! htmlValidator.isValid()) { // validator message
                 if (metaObject instanceof MetaSlot) {
-                    viewState.addMessage(new ErrorMessage((MetaSlot) metaObject, htmlValidator.getErrorMessage()));
+                    viewState.addMessage(new ValidationMessage((MetaSlot) metaObject, htmlValidator.getErrorMessage()));
                 }
                 else {
                     HtmlFormComponent validatedFormComponent = (HtmlFormComponent) htmlValidator.getComponent();
@@ -283,7 +283,7 @@ public class ComponentLifeCycle {
                         MetaSlot slot = getMetaSlot(metaObject, key);
                         
                         if (slot != null) {
-                            viewState.addMessage(new ErrorMessage(slot, htmlValidator.getErrorMessage()));
+                            viewState.addMessage(new ValidationMessage(slot, htmlValidator.getErrorMessage()));
                         }
                     }
                 }
@@ -451,7 +451,7 @@ public class ComponentLifeCycle {
     }
 
     private void addConvertError(IViewState viewState, MetaSlot metaSlot, Exception exception) {
-        viewState.addMessage(new ErrorMessage(metaSlot, exception.getLocalizedMessage()));
+        viewState.addMessage(new ConversionMessage(metaSlot, exception.getLocalizedMessage()));
     }
 
     private ActionForward buildForward(ViewDestination destination) {

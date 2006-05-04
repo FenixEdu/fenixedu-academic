@@ -99,9 +99,9 @@ public interface IViewState extends Serializable {
 
     public List<HiddenSlot> getHiddenSlots();
     
-    public List<ErrorMessage> setMessages(List<ErrorMessage> messages);
+    public List<Message> setMessages(List<Message> messages);
 
-    public List<ErrorMessage> getMessages();
+    public List<Message> getMessages();
     
-    public void addMessage(ErrorMessage message);
+    public void addMessage(Message message);
 }
