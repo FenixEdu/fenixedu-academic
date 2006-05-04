@@ -293,12 +293,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
     
     public ExecutionDegree getMostRecentExecutionDegree() {
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         ExecutionDegree result = getExecutionDegreeByYear(currentExecutionYear);
-        for (ExecutionDegree executionDegree : getSortedExecutionDegrees()) {
-            if (result == null) {
-                result = executionDegree;
-            } else if (result.getExecutionYear().compareTo(executionDegree.getExecutionYear()) > 0) {
+        
+        if (result != null) {
+            return result;
+        }
+        
+        for (final ExecutionDegree executionDegree : getSortedExecutionDegrees()) {
+            if (result == null || result.isBefore(executionDegree)) {
                 result = executionDegree;
             }
         }
