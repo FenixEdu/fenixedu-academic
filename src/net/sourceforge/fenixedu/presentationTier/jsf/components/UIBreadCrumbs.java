@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 public class UIBreadCrumbs extends UIInput {
 
     private static final String CRUMB_SEPERATOR = "&nbsp;&gt;&nbsp;";
-    private static final String DEGREE_SITE_LINK = "/showDegreeSite.do?method=showDescription&amp;degreeID=";
+    private static final String DEGREE_SITE_LINK = "/publico/showDegreeSite.do?method=showDescription&degreeID=";
 
     public static final String COMPONENT_TYPE = UIBreadCrumbs.class.getName();
     public static final String COMPONENT_FAMILY = UIBreadCrumbs.class.getName();
@@ -53,7 +53,7 @@ public class UIBreadCrumbs extends UIInput {
         responseWriter.write(CRUMB_SEPERATOR);
         writeLink(responseWriter, institutionUrl + linkInstitution, labelEducation);
         responseWriter.write(CRUMB_SEPERATOR);
-        writeLink(responseWriter, DEGREE_SITE_LINK + degree.getIdInternal(), degree.getSigla());
+        writeLink(responseWriter, context.getExternalContext().getRequestContextPath() + DEGREE_SITE_LINK + degree.getIdInternal(), (degree.isBolonhaDegree()) ? degree.getAcronym() : degree.getSigla());
         responseWriter.write(CRUMB_SEPERATOR);
         responseWriter.write(trailingCrumb);
         writeBR(responseWriter);
