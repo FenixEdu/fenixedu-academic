@@ -44,7 +44,7 @@
 				<bean:write name="nonAffiliatedTeacher" property="name"/>
 			</td>
 			<td>
-				<bean:write name="nonAffiliatedTeacher" property="institution.name"/>
+				<bean:write name="nonAffiliatedTeacher" property="institutionUnit.name"/>
 			</td>							
 		</tr>
 	</logic:iterate>	
