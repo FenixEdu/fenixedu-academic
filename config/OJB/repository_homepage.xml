@@ -86,6 +86,17 @@
 	    column="SHOW_ALUMNI_DEGREES"
 	    jdbc-type="BIT"
 	/>
+	<field-descriptor
+		name="researchUnitHomepage"
+		column="RESEARCH_UNIT_HOMEPAGE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="researchUnit"
+		column="RESEARCH_UNIT"
+		jdbc-type="LONGVARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
+	/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.homepage.Blog" table="BLOG">

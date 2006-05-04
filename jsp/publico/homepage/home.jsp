@@ -50,6 +50,26 @@
 		</p>
 		</logic:equal>
 
+		<logic:equal name="homepage" property="showResearchUnitHomepage" value="true">
+			<!--<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>:-->
+			<logic:present name="homepage" property="person.teacher">
+				<logic:present name="homepage" property="person.employee.currentContract">
+					<logic:present name="homepage" property="researchUnitHomepage">
+						<logic:present name="homepage" property="researchUnit">
+							<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
+							<p>
+								<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
+								<html:link href="<%= url %>">
+									<bean:write name="homepage" property="researchUnit.content"/> 
+								</html:link>
+								<br/>
+							</p>
+						</logic:present>
+					</logic:present>
+				</logic:present>
+			</logic:present>
+		</logic:equal>
+
 		<logic:equal name="homepage" property="showActiveStudentCurricularPlans" value="true">
 			<p>
 				<bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:

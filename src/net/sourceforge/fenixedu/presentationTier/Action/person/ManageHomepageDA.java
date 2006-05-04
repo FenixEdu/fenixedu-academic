@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -43,6 +44,8 @@ public class ManageHomepageDA extends FenixDispatchAction {
             dynaActionForm.set("showCurrentExecutionCourses", homepage.getShowCurrentExecutionCourses().toString());
             dynaActionForm.set("showActiveStudentCurricularPlans", homepage.getShowActiveStudentCurricularPlans().toString());
             dynaActionForm.set("showAlumniDegrees", homepage.getShowAlumniDegrees().toString());
+            dynaActionForm.set("researchUnitHomepage", homepage.getResearchUnitHomepage());
+            dynaActionForm.set("researchUnit", homepage.getResearchUnit() != null ? homepage.getResearchUnit().getContent() : null);
     	} else {
             dynaActionForm.set("name", person.getName());
         }
@@ -68,7 +71,16 @@ public class ManageHomepageDA extends FenixDispatchAction {
     	final String showResearchUnitHomepage = (String) dynaActionForm.get("showResearchUnitHomepage");
     	final String showCurrentExecutionCourses = (String) dynaActionForm.get("showCurrentExecutionCourses");
     	final String showActiveStudentCurricularPlans = (String) dynaActionForm.get("showActiveStudentCurricularPlans");
-    	final String showAlumniDegrees = (String) dynaActionForm.get("showAlumniDegrees"); 
+    	final String showAlumniDegrees = (String) dynaActionForm.get("showAlumniDegrees");
+    	final String researchUnitHomepage = (String) dynaActionForm.get("researchUnitHomepage");
+    	final String researchUnit = (String) dynaActionForm.get("researchUnit");
+    	final MultiLanguageString researchUnitMultiLanguageString;
+    	if (researchUnit != null && researchUnit.length() > 0) {
+    		researchUnitMultiLanguageString = new MultiLanguageString();
+    		researchUnitMultiLanguageString.setContent(researchUnit);
+    	} else {
+    		researchUnitMultiLanguageString = null;
+    	}
 
     	final Object[] args = {
     			getUserView(request).getPerson(),
@@ -85,7 +97,9 @@ public class ManageHomepageDA extends FenixDispatchAction {
     			Boolean.valueOf(showResearchUnitHomepage),
     			Boolean.valueOf(showCurrentExecutionCourses),
     			Boolean.valueOf(showActiveStudentCurricularPlans),
-    			Boolean.valueOf(showAlumniDegrees)};
+    			Boolean.valueOf(showAlumniDegrees),
+    			researchUnitHomepage,
+    			researchUnitMultiLanguageString};
     	executeService(request, "SubmitHomepage", args);
 
         return prepare(mapping, actionForm, request, response);

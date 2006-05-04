@@ -81,6 +81,32 @@
 					</logic:present>
 				</td>
 			</tr>
+			<tr>
+				<td class="leftcol">
+					<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>
+				</td>
+				<td>
+					<html:checkbox property="showResearchUnitHomepage" value="true"/>
+					<table>
+						<tr>
+							<td>
+								<bean:message key="label.homepage.research.unit.homepage" bundle="HOMEPAGE_RESOURCES"/>
+							</td>
+							<td>
+								<html:text property="researchUnitHomepage"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<bean:message key="label.homepage.research.unit.name" bundle="HOMEPAGE_RESOURCES"/>
+							</td>
+							<td>
+								<html:text property="researchUnit"/>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
 		</logic:present>
 	</logic:present>
 	<logic:notEmpty name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName">

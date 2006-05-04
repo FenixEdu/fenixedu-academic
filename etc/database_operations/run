@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Dropping Old Cms Tables" DropOldCmsMessagingTables.sql
 execute "Creating Messaging Tables" CreateMessagingTables.sql
+execute "Alter Event Participation Table" alterTableHomepage.sql

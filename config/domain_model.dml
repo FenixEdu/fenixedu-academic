@@ -1469,6 +1469,8 @@ class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.
 	Boolean showCurrentExecutionCourses;
 	Boolean showActiveStudentCurricularPlans;
 	Boolean showAlumniDegrees;
+	MultiLanguageString researchUnit;
+	String researchUnitHomepage;
     String myUrl;
 }
 

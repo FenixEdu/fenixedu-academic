@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class SubmitHomepage extends Service {
 
@@ -11,7 +12,9 @@ public class SubmitHomepage extends Service {
     		final Boolean showCategory, final Boolean showPhoto, final Boolean showEmail, final Boolean showTelephone,
     		final Boolean showWorkTelephone, final Boolean showMobileTelephone, final Boolean showAlternativeHomepage,
     		final Boolean showResearchUnitHomepage, final Boolean showCurrentExecutionCourses,
-    		final Boolean showActiveStudentCurricularPlans, final Boolean showAlumniDegrees) {
+    		final Boolean showActiveStudentCurricularPlans, final Boolean showAlumniDegrees,
+    		final String researchUnitHomepage, final MultiLanguageString researchUnit) {
+
     	Homepage homepage = person.getHomepage();
     	if (homepage == null) {
     		homepage = DomainFactory.makeHomepage();
@@ -32,6 +35,8 @@ public class SubmitHomepage extends Service {
     	homepage.setShowCurrentExecutionCourses(showCurrentExecutionCourses);
     	homepage.setShowActiveStudentCurricularPlans(showActiveStudentCurricularPlans);
     	homepage.setShowAlumniDegrees(showAlumniDegrees);
+    	homepage.setResearchUnitHomepage(researchUnitHomepage);
+    	homepage.setResearchUnit(researchUnit);
     }
 
 }
