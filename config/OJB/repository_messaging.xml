@@ -12,7 +12,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum" table="EXECUTION_COURSE_FORUM">
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum" table="FORUM">
 	<field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
@@ -55,6 +55,11 @@
     <field-descriptor
         name="keyOwner"
         column="KEY_OWNER"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
     />
     <field-descriptor
