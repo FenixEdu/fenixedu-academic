@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.gep;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -78,7 +80,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
         Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
 
         Object[] argsScopes = { degreeCurricularPlanID, executionYearID };
-        List scopes = (List) ServiceUtils
+        Set<CurricularCourseScope> scopes = (Set<CurricularCourseScope>) ServiceUtils
                 .executeService(userView,
                         "ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID",
                         argsScopes);
