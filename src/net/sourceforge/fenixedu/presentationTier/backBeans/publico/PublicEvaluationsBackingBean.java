@@ -13,8 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -30,9 +28,7 @@ import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -60,7 +56,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 		return (degreeID == null) ? degreeID = getAndHoldIntegerParameter("degreeID") : degreeID;
     }
 
-	public Integer getDegreeCurricularPlanID() throws FenixFilterException, FenixServiceException {
+	public Integer getDegreeCurricularPlanID() {
 		if (degreeCurricularPlanID == null) {
 			degreeCurricularPlanID = getAndHoldIntegerParameter("degreeCurricularPlanID");
 			if (degreeCurricularPlanID == null) {
@@ -70,7 +66,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 		return degreeCurricularPlanID;
     }
 
-	public Integer getExecutionPeriodID() throws FenixFilterException, FenixServiceException {
+	public Integer getExecutionPeriodID() {
 		if (executionPeriodID == null || !contains(getExecutionPeriodSelectItems(), executionPeriodID)) {
 			executionPeriodID = getAndHoldIntegerParameter("executionPeriodID");
 			if (executionPeriodID == null) {
@@ -84,20 +80,19 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         return (curricularYearID == null) ? curricularYearID = getAndHoldIntegerParameter("curricularYearID") : curricularYearID;
     }
 
-	public Degree getDegree() throws FenixFilterException, FenixServiceException {
+	public Degree getDegree() {
         if (degree == null) {
-            final Object[] args = { Degree.class, getDegreeID() };
-            degree = (Degree) ServiceUtils.executeService(getUserView(), "ReadDomainObject", args);
+            degree = rootDomainObject.readDegreeByOID(getDegreeID());
         }
         return degree;
     }
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
         final Degree degree = getDegree();
         final Integer degreeCurricularPlanID = getDegreeCurricularPlanID();
         if (degree != null && degreeCurricularPlanID != null) {
         	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
-        		if (degreeCurricularPlanID.equals(degreeCurricularPlan.getIdInternal()) && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
+        		if (degreeCurricularPlanID.equals(degreeCurricularPlan.getIdInternal())) {
         			return degreeCurricularPlan;
         		}
         	}
@@ -105,21 +100,11 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         return null;
     }
 
-    public DegreeCurricularPlan getMostRecentDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
-        DegreeCurricularPlan mostRecentDegreeCurricularPlan = null;
-        for (final DegreeCurricularPlan degreeCurricularPlan : getDegree().getDegreeCurricularPlans()) {
-            if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
-                final Date initialDate = degreeCurricularPlan.getInitialDate();
-                final Date mostRecentInitialDate = degreeCurricularPlan.getInitialDate();
-                if (mostRecentDegreeCurricularPlan == null || initialDate.after(mostRecentInitialDate)) {
-                    mostRecentDegreeCurricularPlan = degreeCurricularPlan;
-                }
-            }
-        }
-        return mostRecentDegreeCurricularPlan;
+    public DegreeCurricularPlan getMostRecentDegreeCurricularPlan() {
+        return getDegree().getMostRecentDegreeCurricularPlan();
     }
 
-    public ExecutionPeriod getExecutionPeriod() throws FenixFilterException, FenixServiceException {
+    public ExecutionPeriod getExecutionPeriod() {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final Integer executionPeriodID = getExecutionPeriodID();
         if (degreeCurricularPlan != null && executionPeriodID != null) {
@@ -144,17 +129,16 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         return false;
     }
 
-    public CurricularYear getCurricularYear() throws FenixFilterException, FenixServiceException {
+    public CurricularYear getCurricularYear() {
         final Integer curricularYearID = getCurricularYearID();
         if (curricularYearID != null) {
-            final Object[] args = { CurricularYear.class, curricularYearID };
-            return (CurricularYear) ServiceUtils.executeService(getUserView(), "ReadDomainObject", args);
+            return rootDomainObject.readCurricularYearByOID(curricularYearID);
         } else {
             return null;
         }
     }
 
-    private ExecutionPeriod getMostRecentExecutionPeriod() throws FenixFilterException, FenixServiceException {
+    private ExecutionPeriod getMostRecentExecutionPeriod() {
     	ExecutionPeriod mostRecentExecutionPeriod = null;
 
     	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
@@ -179,28 +163,25 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     	return mostRecentExecutionPeriod;
 	}
 
-    public String getDegreeName() throws FenixFilterException, FenixServiceException {
+    public String getDegreeName() {
         final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         return locale.getLanguage().equalsIgnoreCase("en") ? getDegree().getNameEn() : getDegree().getNome();
     }
 
-    public List<SelectItem> getDegreeCurricularPlanSelectItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getDegreeCurricularPlanSelectItems() {
         final List<SelectItem> degreeCurricularPlanSelectItems = new ArrayList<SelectItem>();
 
         final Degree degree = getDegree();
         if (degree != null) {
-            for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
-                if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
-                    final Date initialDate = degreeCurricularPlan.getInitialDate();
-                    degreeCurricularPlanSelectItems.add(new SelectItem(degreeCurricularPlan.getIdInternal(), yearFormat.format(initialDate)));
-                }
+            for (final DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
+                degreeCurricularPlanSelectItems.add(new SelectItem(degreeCurricularPlan.getIdInternal(), degreeCurricularPlan.getName()));
             }
         }
 
         return degreeCurricularPlanSelectItems;
     }
 
-    public List<SelectItem> getExecutionPeriodSelectItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionPeriodSelectItems() {
         final List<SelectItem> executionPeriodSelectItems = new ArrayList<SelectItem>();
 
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
@@ -216,17 +197,17 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         return executionPeriodSelectItems;
     }
 
-    public List<SelectItem> getCurricularYearSelectItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getCurricularYearSelectItems() {
         final List<SelectItem> curricularYearSelectItems = new ArrayList<SelectItem>();
-        curricularYearSelectItems.add(new SelectItem(1, "1"));
-        curricularYearSelectItems.add(new SelectItem(2, "2"));
-        curricularYearSelectItems.add(new SelectItem(3, "3"));
-        curricularYearSelectItems.add(new SelectItem(4, "4"));
-        curricularYearSelectItems.add(new SelectItem(5, "5"));
+        
+        for (Integer curricularYear : getDegree().buildFullCurricularYearList()) {
+            curricularYearSelectItems.add(new SelectItem(curricularYear, String.valueOf(curricularYear)));
+        }
+
         return curricularYearSelectItems;
     }
 
-    public List<CalendarLink> getCalendarLinks() throws FenixFilterException, FenixServiceException {
+    public List<CalendarLink> getCalendarLinks() {
         List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
 
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
@@ -336,7 +317,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         this.executionPeriodID = executionPeriodID;
     }
 
-    public Date getBeginDate() throws FenixFilterException, FenixServiceException {
+    public Date getBeginDate() {
     	final ExecutionPeriod executionPeriod = getExecutionPeriod();
     	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
     	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
@@ -354,7 +335,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     	return null;
     }
 
-    public Date getEndDate() throws FenixFilterException, FenixServiceException {
+    public Date getEndDate() {
     	final ExecutionPeriod executionPeriod = getExecutionPeriod();
     	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
     	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
