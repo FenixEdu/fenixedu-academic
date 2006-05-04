@@ -38,15 +38,16 @@
 		<fc:breadCrumbs degree="#{publicEvaluations.degree}" trailingCrumb="#{bundle['public.degree.information.label.evaluations']}"/>
 	
 				
-		<h:outputText value="<h3>" escape="false"/>
-		<h:outputText value="#{bundleEnum[publicEvaluations.degree.tipoCurso.name]}"/>
+		<h:outputText value="<h1>" escape="false"/>
+		<h:outputText rendered="#{!publicEvaluations.degree.bolonhaDegree}" value="#{bundleEnum[publicEvaluations.degree.tipoCurso.name]}"/>
+		<h:outputText rendered="#{publicEvaluations.degree.bolonhaDegree}" value="#{bundleEnum[publicEvaluations.degree.bolonhaDegreeType.name]}"/>
 		<h:outputText value="#{bundle['public.degree.information.label.in']}"/>
 		<h:outputText value="#{publicEvaluations.degreeName}"/>
-		<h:outputText value="</h3>" escape="false"/>
+		<h:outputText value="</h1>" escape="false"/>
 		
-		<h:outputText value="<br/>" escape="false"/>
+		<h:outputFormat value="<h2 class='greytxt'>#{bundle['public.degree.information.label.evaluations']}</h2>" escape="false"/>
 
-		<h:outputText value="<p>#{bundle['public.degree.curricular.plan.of']}: " escape="false"/>
+		<h:outputText value="<p>#{bundle['public.degree.information.label.curricularPlan']}: " escape="false"/>
 		<h:selectOneMenu id="degreeCurricularPlanID" value="#{publicEvaluations.degreeCurricularPlanID}"
 				onchange="this.form.submit();">
 			<f:selectItems value="#{publicEvaluations.degreeCurricularPlanSelectItems}"/>
