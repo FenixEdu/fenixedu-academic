@@ -46,5 +46,6 @@ public abstract class Forum extends Forum_Base {
 
         return false;
     }
+    
 
 }

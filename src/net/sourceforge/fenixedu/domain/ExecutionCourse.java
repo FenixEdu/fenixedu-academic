@@ -46,6 +46,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 .addComparator(new BeanComparator("executionPeriod"));
         ((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME)
                 .addComparator(new BeanComparator("nome", Collator.getInstance()));
+
     }
 
     public ExecutionCourse() {
@@ -910,13 +911,28 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         this.addForuns(executionCourseForum);
     }
 
-    private boolean hasForumWithName(String name) {
+    public boolean hasForumWithName(String name) {
         for (ExecutionCourseForum executionCourseForum : getForuns()) {
             if (executionCourseForum.getName().equalsIgnoreCase(name)) {
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public void addForuns(ExecutionCourseForum forum) {
+        if (forum.getName() != null) {
+            checkIfCanAddForum(forum.getName());
+        }
+
+        super.addForuns(forum);
+    }
+
+    public void checkIfCanAddForum(String name) {
+        if (hasForumWithName(name)) {
+            throw new DomainException("executionCourse.already.existing.forum");
+        }
     }
 
 }
