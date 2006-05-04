@@ -90,6 +90,10 @@ public class DefaultValues {
     //
     //The first argument will always have the null value when the method is called. 
     
+    private boolean isEmptyString(String value) {
+        return value == null || value.length() == 0;
+    }
+    
     public Object createValue(Object o, Class type, String defaultValue) throws InstantiationException, IllegalAccessException {
         return null;//type.newInstance();
     }
@@ -99,6 +103,10 @@ public class DefaultValues {
     }
     
     public Number createValue(Number n, Class type, String defaultValue) {
+        if (isEmptyString(defaultValue)) {
+            return null;
+        }
+        
         try {
             return new Integer(defaultValue != null ? defaultValue : "0");
         } catch (NumberFormatException e) {
@@ -114,6 +122,10 @@ public class DefaultValues {
     }
     
     public Integer createValue(Integer i, Class type, String defaultValue) {
+        if (isEmptyString(defaultValue)) {
+            return null;
+        }
+
         try {
             return new Integer(defaultValue != null ? defaultValue : "0");
         } catch (NumberFormatException e) {
@@ -124,6 +136,10 @@ public class DefaultValues {
     }
 
     public Float createValue(Float n, Class type, String defaultValue) {
+        if (isEmptyString(defaultValue)) {
+            return null;
+        }
+
         try {
             return new Float(defaultValue != null ? defaultValue : "0.0");
         } catch (NumberFormatException e) {
@@ -134,10 +150,18 @@ public class DefaultValues {
     }
 
     public Boolean createValue(Boolean b, Class type, String defaultValue) {
+        if (isEmptyString(defaultValue)) {
+            return null;
+        }
+
         return new Boolean(defaultValue != null ? defaultValue : "false");
     }
     
     public Date createValue(Date d, Class type, String defaultValue) {
+        if (isEmptyString(defaultValue)) {
+            return null;
+        }
+
         if (defaultValue != null) {
             try {
                 return new SimpleDateFormat("dd/MM/yyyy").parse(defaultValue);
@@ -151,6 +175,10 @@ public class DefaultValues {
     }
     
     public Enum createValue(Enum e, Class type, String defaultValue) {
+        if (isEmptyString(defaultValue)) {
+            return null;
+        }
+
         Object[] constants = type.getEnumConstants();
         
         if (defaultValue != null) {
