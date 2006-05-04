@@ -159,6 +159,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         return this.compareTo(executionDegree) > 0;
     }
 
+    public boolean isBefore(ExecutionDegree executionDegree) {
+        return this.compareTo(executionDegree) < 0;
+    }
+
     public boolean isFirstYear() {
 
         List<ExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
