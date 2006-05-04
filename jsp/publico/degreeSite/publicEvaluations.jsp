@@ -6,8 +6,8 @@
 
 <ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.mainPageIST" attributeName="body-inline">
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="bundle"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="bundleApplication"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>
-
 
 <style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
 
@@ -54,29 +54,32 @@
 		</h:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 
-		<h:outputText value="<p>#{bundle['public.execution.period']}: " escape="false"/>
-		<h:selectOneMenu id="executionPeriodID" value="#{publicEvaluations.executionPeriodID}"
-				onchange="this.form.submit();">
-			<f:selectItems value="#{publicEvaluations.executionPeriodSelectItems}"/>
-		</h:selectOneMenu>
-		<h:outputText value="</p>" escape="false"/>
+		<h:outputText rendered="#{empty publicEvaluations.mostRecentExecutionPeriod}" value="<em>#{bundleApplication['error.curricularPlanHasNoExecutionDegreesInNotClosedYears']}</em>"escape="false"/>
+		<h:panelGroup rendered="#{!empty publicEvaluations.mostRecentExecutionPeriod}">
+			<h:outputText value="<p>#{bundle['public.execution.period']}: " escape="false"/>
+			<h:selectOneMenu id="executionPeriodID" value="#{publicEvaluations.executionPeriodID}"
+					onchange="this.form.submit();">
+				<f:selectItems value="#{publicEvaluations.executionPeriodSelectItems}"/>
+			</h:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
+	
+			<h:outputText value="<p>#{bundle['public.curricular.year']}: " escape="false"/>
+			<h:selectOneMenu id="curricularYearID" value="#{publicEvaluations.curricularYearID}"
+					onchange="this.form.submit();">
+				<f:selectItem itemLabel="#{bundle['public.curricular.years.all']}" itemValue=""/>
+				<f:selectItems value="#{publicEvaluations.curricularYearSelectItems}"/>
+			</h:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
+	
+			<h:outputText value="<br/>" escape="false"/>
+			
+		 	<fc:fenixCalendar 
+			 		begin="#{publicEvaluations.beginDate}" 
+			 		end="#{publicEvaluations.endDate}"
+			 		editLinkPage="#{publicEvaluations.applicationContext}/publico/viewSite.do"
+			 		editLinkParameters="#{publicEvaluations.calendarLinks}"/>
 
-		<h:outputText value="<p>#{bundle['public.curricular.year']}: " escape="false"/>
-		<h:selectOneMenu id="curricularYearID" value="#{publicEvaluations.curricularYearID}"
-				onchange="this.form.submit();">
-			<f:selectItem itemLabel="#{bundle['public.curricular.years.all']}" itemValue=""/>
-			<f:selectItems value="#{publicEvaluations.curricularYearSelectItems}"/>
-		</h:selectOneMenu>
-		<h:outputText value="</p>" escape="false"/>
-
-		<h:outputText value="<br/>" escape="false"/>
-		
-	 	<fc:fenixCalendar 
-		 		begin="#{publicEvaluations.beginDate}" 
-		 		end="#{publicEvaluations.endDate}"
-		 		editLinkPage="#{publicEvaluations.applicationContext}/publico/viewSite.do"
-		 		editLinkParameters="#{publicEvaluations.calendarLinks}"/>
-
+		</h:panelGroup>
 	</h:form>
 
 </ft:tilesView>

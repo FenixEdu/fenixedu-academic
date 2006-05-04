@@ -138,7 +138,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         }
     }
 
-    private ExecutionPeriod getMostRecentExecutionPeriod() {
+    public ExecutionPeriod getMostRecentExecutionPeriod() {
     	ExecutionPeriod mostRecentExecutionPeriod = null;
 
     	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
