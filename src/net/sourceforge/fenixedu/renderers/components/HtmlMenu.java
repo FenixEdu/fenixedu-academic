@@ -25,7 +25,7 @@ public class HtmlMenu extends HtmlSimpleValueComponent {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 
@@ -33,7 +33,7 @@ public class HtmlMenu extends HtmlSimpleValueComponent {
         return tabIndex;
     }
 
-    public void setTabIndex(int tabIndex) {
+    public void setTabIndex(Integer tabIndex) {
         this.tabIndex = tabIndex;
     }
 

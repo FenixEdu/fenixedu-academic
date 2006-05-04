@@ -8,10 +8,17 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class HtmlEditor extends HtmlSimpleValueComponent {
 
-    private Integer width;
+    private int width;
     private int heigth;
     
-    public Integer getHeigth() {
+    public HtmlEditor() {
+        super();
+        
+        setWidth(600);
+        setHeigth(400);
+    }
+
+    public int getHeigth() {
         return this.heigth;
     }
 
@@ -19,7 +26,7 @@ public class HtmlEditor extends HtmlSimpleValueComponent {
         this.heigth = heigth;
     }
 
-    public Integer getWidth() {
+    public int getWidth() {
         return this.width;
     }
 

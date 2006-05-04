@@ -12,7 +12,7 @@ public class HtmlMenuGroup extends HtmlMenuEntry {
     private List<HtmlMenuOption> options;
     
     public HtmlMenuGroup(String label) {
-        super(label, null);
+        super(label, false);
         
         this.options = new ArrayList<HtmlMenuOption>();
     }

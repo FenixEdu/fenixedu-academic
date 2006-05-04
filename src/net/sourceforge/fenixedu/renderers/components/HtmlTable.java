@@ -14,15 +14,10 @@ public class HtmlTable extends HtmlComponent {
     private HtmlTableHeader header;
 
     private String summary;
-
-    private String width;
-
+    private String width; // can be "100%"
     private String border;
-
     private String cellSpacing;
-
     private String cellPadding;
-    
     private String caption;
     
     // frame and rules were ignored

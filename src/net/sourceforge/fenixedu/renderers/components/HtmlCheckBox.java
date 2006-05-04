@@ -68,18 +68,18 @@ public class HtmlCheckBox extends HtmlInputComponent {
     public HtmlTag getOwnTag(PageContext context) {
         HtmlTag tag =  super.getOwnTag(context);
         
-        if (this.checked) {
-            tag.setAttribute("checked", this.checked);
+        if (isChecked()) {
+            tag.setAttribute("checked", "checked");
         }
 
-        if (this.text == null) {
+        if (getText() == null) {
             return tag;
         }
         
         HtmlTag span = new HtmlTag("span");
         
         span.addChild(tag);
-        span.addChild(new HtmlTag(null, this.text));
+        span.addChild(new HtmlTag(null, getText()));
 
         return span;
     }

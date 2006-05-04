@@ -30,8 +30,6 @@ public class HtmlTableCell extends HtmlComponent {
     private String scope;
     private String rowspan;
     private String colspan;
-    private String width;
-    private String height;
     private String align;
     private String valign;
     
@@ -99,22 +97,6 @@ public class HtmlTableCell extends HtmlComponent {
         this.scope = scope;
     }
 
-    public void setWidth(String width) {
-        this.width = width;
-    }
-
-    public String getWidth() {
-        return width;
-    }
-    
-    public String getHeight() {
-        return height;
-    }
-
-    public void setHeight(String height) {
-        this.height = height;
-    }
-    
     public String getAlign() {
         return align;
     }
@@ -160,16 +142,14 @@ public class HtmlTableCell extends HtmlComponent {
         
         tag.setName(type.toString());
         
-        tag.setAttribute("abbr", abbr);
-        tag.setAttribute("axis", axis);
-        tag.setAttribute("headers", headers);
-        tag.setAttribute("scope", scope);
-        tag.setAttribute("rowspan", rowspan);
-        tag.setAttribute("colspan", colspan);
-        tag.setAttribute("width", width);
-        tag.setAttribute("height", height);
-        tag.setAttribute("align", align);
-        tag.setAttribute("valign", valign);
+        tag.setAttribute("abbr", getAbbr());
+        tag.setAttribute("axis", getAxis());
+        tag.setAttribute("headers", getHeaders());
+        tag.setAttribute("scope", getScope());
+        tag.setAttribute("rowspan", getRowspan());
+        tag.setAttribute("colspan", getColspan());
+        tag.setAttribute("align", getAlign());
+        tag.setAttribute("valign", getValign());
         
         if (data != null) {
             tag.addChild(this.data.getOwnTag(context));

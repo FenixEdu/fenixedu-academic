@@ -7,20 +7,20 @@ import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 public abstract class HtmlMenuEntry extends HtmlComponent {
 
     private String label;
-    private Boolean disabled;
+    private boolean disabled;
     
-    public HtmlMenuEntry(String label, Boolean disabled) {
+    public HtmlMenuEntry(String label, boolean disabled) {
         super();
         
         this.label = label;
         this.disabled = disabled;
     }
 
-    public Boolean isDisabled() {
+    public boolean isDisabled() {
         return disabled;
     }
 
-    public void setDisabled(Boolean disabled) {
+    public void setDisabled(boolean disabled) {
         this.disabled = disabled;
     }
 
@@ -37,7 +37,10 @@ public abstract class HtmlMenuEntry extends HtmlComponent {
         HtmlTag tag = super.getOwnTag(context);
         
         tag.setAttribute("label", this.label);
-        tag.setAttribute("disabeld", this.disabled);
+        
+        if (isDisabled()) {
+            tag.setAttribute("disabled", "disabled");
+        }
         
         return tag;
     }

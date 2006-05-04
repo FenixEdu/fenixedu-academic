@@ -25,7 +25,7 @@ public class BooleanInputRenderer extends InputRenderer {
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
                 HtmlCheckBox checkBox = new HtmlCheckBox();
-                checkBox.setChecked((Boolean) object);
+                checkBox.setChecked(object == null ? false : (Boolean) object);
                 
                 InputContext context = getInputContext();
                 checkBox.setTargetSlot((MetaSlotKey) context.getMetaObject().getKey());
