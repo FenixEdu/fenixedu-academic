@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -346,17 +347,54 @@ public class Degree extends Degree_Base {
         return result;
     }
 
+    public DegreeCurricularPlan getMostRecentDegreeCurricularPlan() {
+        ExecutionDegree mostRecentExecutionDegree = null;
+        boolean mustGetByInitialDate = false;
+        
+        for (final DegreeCurricularPlan degreeCurricularPlan : this.getActiveDegreeCurricularPlans()) {
+            final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
+            if (mostRecentExecutionDegree == null) { 
+                mostRecentExecutionDegree = executionDegree;
+            } else {
+                if (mostRecentExecutionDegree.getExecutionYear().equals(executionDegree.getExecutionYear())) {
+                    mustGetByInitialDate = true;
+                } else if (mostRecentExecutionDegree.isBefore(executionDegree)) {
+                    mustGetByInitialDate = false;
+                    mostRecentExecutionDegree = executionDegree;
+                }
+            }
+        }
+        
+        if (mustGetByInitialDate) {
+            // investigate dcps initial dates
+            return getMostRecentDegreeCurricularPlanByInitialDate();
+        } else {
+            return mostRecentExecutionDegree.getDegreeCurricularPlan();    
+        }
+    }
+    
+    private DegreeCurricularPlan getMostRecentDegreeCurricularPlanByInitialDate() {
+        DegreeCurricularPlan mostRecentDegreeCurricularPlan = null;
+        for (final DegreeCurricularPlan degreeCurricularPlan : this.getActiveDegreeCurricularPlans()) {
+            final Date initialDate = degreeCurricularPlan.getInitialDate();
+            final Date mostRecentInitialDate = degreeCurricularPlan.getInitialDate();
+            if (mostRecentDegreeCurricularPlan == null || initialDate.after(mostRecentInitialDate)) {
+                mostRecentDegreeCurricularPlan = degreeCurricularPlan;
+            }
+        }
+        return mostRecentDegreeCurricularPlan;
+    }
+    
     public List<DegreeCurricularPlan> getActiveDegreeCurricularPlans() {
         List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 
         for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
-            if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
+            if (degreeCurricularPlan.getState() == null || degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
                 result.add(degreeCurricularPlan);
             }
         }
 
         return result;
-
     }
 
     // -------------------------------------------------------------
