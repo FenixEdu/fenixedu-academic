@@ -151,6 +151,11 @@ Documentation:
           valid as a menu option text. Use the <tt>format</tt> property if possible. -->
     <renderer mode="input" type="java.lang.Object" layout="menu-select" class="net.sourceforge.fenixedu.presentationTier.renderers.InputMenuOptionListRenderer"/>
 
+    <!--@ Can be used to fill a slot with one of many possible objects. The objects are presented in an html menu. 
+          Note that since the selection is made through a menu the presentatio of each object must be short and 
+          valid as a menu option text. Use the <tt>format</tt> property if possible. -->    
+	<renderer mode="input" type="java.lang.Object" layout="menu-select-postback" class="net.sourceforge.fenixedu.presentationTier.renderers.InputMenuOptionListRendererWithPostback"/>
+
     <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
     <!--@ This layout allows an html text string to be edited with the fenix javascript html editor. 
           If the current browser is not supported by the html editor then it falls back to a simple text area. -->
@@ -189,7 +194,9 @@ Documentation:
     <!--@ The default input layout for an enumeration presents an html menu with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->
     <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>
-    <renderer mode="input" type="java.lang.Enum" layout="radio" class="net.sourceforge.fenixedu.renderers.EnumRadioInputRenderer"/>
+    <renderer mode="input" type="java.lang.Enum" layout="radio" class="net.sourceforge.fenixedu.renderers.EnumRadioInputRenderer">
+    	<property name="style" value="list-style:none"/>
+    </renderer>
     <renderer mode="input" type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateInputRenderer"/>
 
 	<!--@ The layout year-month allows you to insert a joda time partial given a month and a year -->
@@ -245,7 +252,6 @@ Documentation:
         <property name="htmlSeparator" value=" - "/>
     </renderer>
 
-    
     <!-- FIXME: this should be removed, used for renderers examples only -->
     <renderer type="java.lang.Object" layout="nice-details-table" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
         <property name="classes" value="style1"/>
