@@ -36,10 +36,18 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
     
     protected Integer getFromRequest(String parameter, HttpServletRequest request) {
         if (request.getParameter(parameter) != null) {
-            return Integer.valueOf(request.getParameter(parameter));
+            try {
+                return Integer.valueOf(request.getParameter(parameter));    
+            } catch (NumberFormatException e) {
+                return null;
+            }
         } else if (request.getAttribute(parameter) != null) {
-            if (request.getAttribute(parameter) instanceof String && !((String) request.getAttribute(parameter)).equals("null")) {
-                return Integer.valueOf((String) request.getAttribute(parameter));
+            if (request.getAttribute(parameter) instanceof String) {
+                try {
+                    return Integer.valueOf((String) request.getAttribute(parameter));    
+                } catch (NumberFormatException e) {
+                    return null;
+                }
             } else if (request.getAttribute(parameter) instanceof Integer) {
                 return (Integer) request.getAttribute(parameter);
             }
