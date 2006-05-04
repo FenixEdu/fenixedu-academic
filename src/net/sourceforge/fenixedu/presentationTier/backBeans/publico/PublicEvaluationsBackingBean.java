@@ -146,7 +146,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
             for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
             	final ExecutionYear executionYear = executionDegree.getExecutionYear();
             	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-            		if (executionPeriod.getState() != PeriodState.NOT_OPEN) {
+            		if (executionPeriod.getState() != PeriodState.CLOSED) {
             			if (mostRecentExecutionPeriod == null) {
             				mostRecentExecutionPeriod = executionPeriod;
             			} else {
@@ -188,7 +188,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
         	final ExecutionYear executionYear = executionDegree.getExecutionYear();
         	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-        		if (executionPeriod.getState() != PeriodState.NOT_OPEN) {
+        		if (executionPeriod.getState() != PeriodState.CLOSED) {
         			executionPeriodSelectItems.add(new SelectItem(executionPeriod.getIdInternal(), executionPeriod.getName() + " " + executionYear.getYear()));
         		}
         	}
