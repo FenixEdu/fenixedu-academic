@@ -286,12 +286,6 @@
 
 
 	<!-- Turmas -->	
-	<action path="/viewClasses"
-              type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassesAction"
-              >
-          <forward name="Sucess" path="/viewClasses.jsp"/>
-      </action>
-      
       <action path="/viewClassesNew"
               type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassesActionNew"
               name="chooseSearchContextForm"
