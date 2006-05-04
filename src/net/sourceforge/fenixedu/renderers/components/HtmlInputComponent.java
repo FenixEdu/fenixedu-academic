@@ -40,11 +40,11 @@ public class HtmlInputComponent extends HtmlSimpleValueComponent {
         this.alternateText = alternateText;
     }
 
-    public int getTabIndex() {
+    public Integer getTabIndex() {
         return tabIndex;
     }
 
-    public void setTabIndex(int tabIndex) {
+    public void setTabIndex(Integer tabIndex) {
         this.tabIndex = tabIndex;
     }
 
@@ -62,10 +62,6 @@ public class HtmlInputComponent extends HtmlSimpleValueComponent {
 
     public void setSize(String size) {
         this.size = size;
-    }
-
-    public void setTabIndex(Integer tabIndex) {
-        this.tabIndex = tabIndex;
     }
 
     public String getOnChange() {
