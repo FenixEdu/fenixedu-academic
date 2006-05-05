@@ -132,8 +132,10 @@ valueType net.sourceforge.fenixedu.domain.research.result.PatentStatus							as 
 valueType net.sourceforge.fenixedu.domain.research.result.FormatType							as FormatType;
 valueType net.sourceforge.fenixedu.domain.research.result.ProductType							as ProductType;
 valueType net.sourceforge.fenixedu.domain.FileItemPermittedGroupType							as FileItemPermittedGroupType;
-
 valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.EventParticipationRole					as EventParticipationRole;
+valueType net.sourceforge.fenixedu.domain.MarkSheetType					as MarkSheetType;
+valueType net.sourceforge.fenixedu.domain.MarkSheetState					as MarkSheetState;
+
 /*
 *
 * Class definitions
@@ -888,18 +890,29 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
     EnrolmentEvaluationType enrolmentEvaluationType;
 }
 
-			//Isto ï¿½ da estrutura antiga, faz sentido ainda?
+	// Isto é da estrutura antiga, faz sentido ainda?
     class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
     
     class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
-		    //
 
 class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyEnrolment;
 }
 
+class net.sourceforge.fenixedu.domain.MarkSheet extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyExecutionPeriod;
+    Integer keyResponsibleTeacher;
+    Integer keyEmployee;
+    Integer keyCurricularCourse;
+    String checkSum;
+    Date creationDate;
+    Date evaluationDate;
+    Date confirmationDate;
+    MarkSheetType markSheetType;
+    MarkSheetState markSheetState;
+}
 
 class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforge.fenixedu.domain.DomainObject {
     String checkSum;
@@ -913,6 +926,7 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
     String grade;
     EnrolmentEvaluationType enrolmentEvaluationType;
     EnrolmentEvaluationState enrolmentEvaluationState;
+    Integer keyMarkSheet;
 }
 
 
@@ -1031,6 +1045,7 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	Integer keyCampus;
 	Integer keyGratuityValues;
 	Integer keyScheduling;
+	Integer keyPeriodExamsSpecialSeason;
 }
 
 
@@ -3318,13 +3333,6 @@ relation CurricularCourseCompetenceCourse {
 	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourse;
 }
 
-/*relation CurricularCourseEnrolment {
-	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
-}*/
-
 relation CurricularCourseEnrolmentLog {
 	net.sourceforge.fenixedu.domain.log.EnrolmentLog playsRole enrolmentLogs {
 		multiplicity *;
@@ -3921,6 +3929,12 @@ relation ExecutionDegreePeriodLessonsSecondSemester {
 	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole periodLessonsSecondSemester;
 }
 
+relation ExecutionDegreePeriodExamsSpecialSeason {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreesForExamsSpecialSeason {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole periodExamsSpecialSeason;
+}
 
 relation ExecutionPeriodContextBegin {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole beginExecutionPeriod;
@@ -7884,4 +7898,46 @@ relation RootDomainObjectMonthlyBalance {
 	net.sourceforge.fenixedu.domain.assiduousness.MonthlyBalance playsRole monthlyBalances {
 		multiplicity *;
 	}
+}
+
+relation RootDomainMarkSheet {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.MarkSheet playsRole markSheets {
+		multiplicity *;
+	}
+}
+
+relation MarkSheetTeacher {
+    net.sourceforge.fenixedu.domain.MarkSheet playsRole markSheets {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
+}
+
+relation MarkSheetEmployee {
+    net.sourceforge.fenixedu.domain.MarkSheet playsRole markSheets {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+relation MarkSheetCurricularCourse {
+    net.sourceforge.fenixedu.domain.MarkSheet playsRole markSheets {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+relation MarkSheetEnrolmentEvaluation {
+    net.sourceforge.fenixedu.domain.MarkSheet playsRole markSheet;
+    net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole enrolmentEvaluations {
+        multiplicity *;
+    }
+}
+
+relation MarkSheetExecutionPeriod {
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+    net.sourceforge.fenixedu.domain.MarkSheet playsRole markSheets {
+        multiplicity *;
+    }
 }
