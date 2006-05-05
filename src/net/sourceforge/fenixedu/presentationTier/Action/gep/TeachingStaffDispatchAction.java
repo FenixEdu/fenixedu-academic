@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.gep;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -84,12 +86,15 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
                 .executeService(userView,
                         "ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID",
                         argsScopes);
+        
+        SortedSet<CurricularCourseScope> sortedScopes = new TreeSet<CurricularCourseScope>(CurricularCourseScope.CURRICULAR_COURSE_NAME_COMPARATOR);
+        sortedScopes.addAll(scopes);
 
         Object[] argsExecutionYear = { executionYearID };
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
                 "ReadExecutionYearByID", argsExecutionYear);
 
-        request.setAttribute("curricularCourseScopes", scopes);
+        request.setAttribute("curricularCourseScopes", sortedScopes);
         request.setAttribute("executionYear", infoExecutionYear.getYear());
 
         return mapping.findForward("chooseExecutionCourse");
