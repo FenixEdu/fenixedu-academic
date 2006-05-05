@@ -56,6 +56,14 @@
 <%=(((Integer)numberRowsPrevious1_2).intValue() != 0) || (((Integer)numberRowsPrevious3_4).intValue() != 0) || (((Integer)numberRowsPrevious5).intValue() != 0)%>
 </bean:define>
 
+<!-- INFO MESSAGES -->
+<logic:equal value="false" name="renderCurrentExecutionPeriod">
+	<p><em><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="no.execution.courses.for.current.execution.period"/></em></p>
+</logic:equal>
+<logic:equal value="false" name="renderPreviousExecutionPeriod">
+	<p><em><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="no.execution.courses.for.previous.execution.period"/></em></p>
+</logic:equal>
+
 <!-- TOP LINKS -->
 <ul>
 	<logic:equal value="true" name="renderCurrentExecutionPeriod">
@@ -74,14 +82,6 @@
 			</li>
 		</logic:equal>
 	</logic:equal>
-
-	<logic:equal value="false" name="renderCurrentExecutionPeriod">
-		<p><em><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="no.execution.courses.for.current.execution.period"/></em></p>
-	</logic:equal>
-	<logic:equal value="false" name="renderPreviousExecutionPeriod">
-		<p><em><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="no.execution.courses.for.previous.execution.period"/></em></p>
-	</logic:equal>
-	
 </ul>
 
 <!-- CURRENT EXECUTION PERIOD -->
