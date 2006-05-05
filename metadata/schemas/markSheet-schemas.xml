@@ -1,0 +1,144 @@
+<schema name="markSheet.base"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean">
+	<slot name="executionPeriod" key="label.executionPeriod"
+		layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsNotClosedPublicProvider" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.ExecutionPeriod" />
+		<property name="format"
+			value="${executionYear.year} - ${semester}º Sem" />
+	</slot>
+	<slot name="degree" key="label.degree"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypeDegrees" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.Degree" />
+		<property name="format" value="${name}" />
+	</slot>
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlansForDegree" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
+		<property name="format" value="${name}" />
+	</slot>
+	<slot name="curricularCourse" key="label.curricularCourse"
+		layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCoursesForDegreeCurricularPlan" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.CurricularCourse" />
+		<property name="eachLayout" value="values-dash" />
+		<property name="eachSchema" value="curricularCourse.name.code" />
+	</slot>
+</schema>
+
+<schema name="curricularCourse.name.code"
+	type="net.sourceforge.fenixedu.domain.CurricularCourse">
+	<slot name="name" />
+	<slot name="code" />
+</schema>
+
+<schema name="markSheet.search"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean"
+	extends="markSheet.base">
+
+	<slot name="teacherNumber" key="label.teacher">
+		<property name="size" value="8" />
+		<property name="maxLength" value="6" />
+	</slot>
+	<slot name="evaluationDate" key="label.evaluationDate">
+	<!--  
+		<validator
+			class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy" />
+			<property name="message" value="error.invalid.date.format" />
+			<property name="key" value="true" />
+		</validator>
+		-->
+		<property name="size" value="12" />
+		<property name="maxLength" value="10" />
+	</slot>
+	<slot name="markSheetState" key="label.markSheetState" />
+	<slot name="markSheetType" key="label.markSheetType" />
+</schema>
+
+<schema name="markSheet.view"
+		type="net.sourceforge.fenixedu.domain.MarkSheet">
+		
+	<slot name="responsibleTeacher.teacherNumber" key="label.teacher" />
+	<slot name="evaluationDate" key="label.evaluationDate" />
+	<slot name="markSheetState" key="label.markSheetState" />
+	<slot name="markSheetType" key="label.markSheetType" />
+	<slot name="enrolmentEvaluationsCount" />
+</schema>
+
+<schema name="markSheet.create.step.one"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean"
+	extends="markSheet.base">
+
+	<slot name="teacherNumber" key="label.teacher" 
+		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="size" value="8" />
+		<property name="maxLength" value="6" />
+	</slot>
+	<slot name="evaluationDate" key="label.evaluationDate">
+		<validator
+			class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy" />
+			<property name="message" value="error.invalid.date.format" />
+			<property name="key" value="true" />
+		</validator>
+		<property name="size" value="12" />
+		<property name="maxLength" value="10" />
+	</slot>
+	<slot name="markSheetType" key="label.markSheetType"
+		layout="radio"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="markSheet.view.step2"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean">
+	
+	<slot name="degree.name" key="label.degree"/>
+	<slot name="degreeCurricularPlan.name" key="label.degreeCurricularPlan" />
+	<slot name="curricularCourse" layout="format" key="label.curricularCourse" >
+		<property name="format" value="${name} (${code})" />
+	</slot>
+	<slot name="executionPeriod" layout="format" key="label.executionPeriod">
+		<property name="format" value="${semester}º ${executionYear.year}" />
+	</slot>
+	<slot name="teacher" layout="format" key="label.teacher">
+		<property name="format" value="${person.name} (${teacherNumber})" />
+	</slot>
+	<slot name="evaluationDate" key="label.evaluationDate"/>
+	<slot name="markSheetType"  key="label.markSheetType"/>
+</schema>
+
+<schema name="markSheet.create.step.two"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean">
+	
+	<slot name="enrolment.studentCurricularPlan.student.number" read-only="true" key="label.student.number"/>
+	<slot name="enrolment.studentCurricularPlan.student.person.name" read-only="true" key="label.student.name"/>	
+	<slot name="grade" key="label.grade" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.GradeValidator">
+		<property name="size" value="4" />
+		<property name="maxLength" value="2" />
+	</slot>
+	<slot name="evaluationDate" key="label.evaluationDate">
+		<validator
+			class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy" />
+			<property name="message" value="error.invalid.date.format" />
+			<property name="key" value="true" />
+		</validator>
+		<property name="size" value="12" />
+		<property name="maxLength" value="10" />
+	</slot>
+</schema>
