@@ -47,15 +47,15 @@
 		
 		<h:outputFormat value="<h2 class='greytxt'>#{bundle['public.degree.information.label.evaluations']}</h2>" escape="false"/>
 
-		<h:outputText value="<p>#{bundle['public.degree.information.label.curricularPlan']}: " escape="false"/>
-		<h:selectOneMenu id="degreeCurricularPlanID" value="#{publicEvaluations.degreeCurricularPlanID}"
-				onchange="this.form.submit();">
-			<f:selectItems value="#{publicEvaluations.degreeCurricularPlanSelectItems}"/>
-		</h:selectOneMenu>
-		<h:outputText value="</p>" escape="false"/>
+		<h:outputText rendered="#{empty publicEvaluations.degree.mostRecentDegreeCurricularPlan}" value="<p><em>#{bundleApplication['error.curricularPlanHasNoExecutionDegreesInNotClosedYears']}</em></p>"escape="false"/>
+		<h:panelGroup rendered="#{!empty publicEvaluations.degree.mostRecentDegreeCurricularPlan}">
+			<h:outputText value="<p>#{bundle['public.degree.information.label.curricularPlan']}: " escape="false"/>
+			<h:selectOneMenu id="degreeCurricularPlanID" value="#{publicEvaluations.degreeCurricularPlanID}"
+					onchange="this.form.submit();">
+				<f:selectItems value="#{publicEvaluations.degreeCurricularPlanSelectItems}"/>
+			</h:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
 
-		<h:outputText rendered="#{empty publicEvaluations.mostRecentExecutionPeriod}" value="<em>#{bundleApplication['error.curricularPlanHasNoExecutionDegreesInNotClosedYears']}</em>"escape="false"/>
-		<h:panelGroup rendered="#{!empty publicEvaluations.mostRecentExecutionPeriod}">
 			<h:outputText value="<p>#{bundle['public.execution.period']}: " escape="false"/>
 			<h:selectOneMenu id="executionPeriodID" value="#{publicEvaluations.executionPeriodID}"
 					onchange="this.form.submit();">
