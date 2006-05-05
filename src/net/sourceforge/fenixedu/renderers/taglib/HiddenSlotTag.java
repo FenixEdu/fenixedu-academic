@@ -102,6 +102,8 @@ public class HiddenSlotTag extends TagSupport {
     }
 
     public int doStartTag() throws JspException {
+        validateAttributes();
+        
 		setContainerParent((EditObjectTag) findAncestorWithClass(this, EditObjectTag.class));
 		
 		if (getContainerParent() == null) {
@@ -120,6 +122,28 @@ public class HiddenSlotTag extends TagSupport {
         
         return SKIP_BODY;
 	}
+
+    protected void validateAttributes() throws JspException {
+        if (getName() == null && getValue() == null) {
+            throw new JspException("you must define either the 'name' or 'value' attributes");
+        }
+        
+        if (getName() == null && getProperty() != null) {
+            throw new JspException("you must define the 'name' attribute to use the 'property' attribute");
+        }
+
+        if (getName() == null && getScope() != null) {
+            throw new JspException("you must define the 'name' attribute to use the 'scope' attribute");
+        }
+
+        if (getName() != null && getValue() != null) {
+            throw new JspException("you can't define both the 'name' and 'value' attributes");
+        }
+
+        if (getName() != null && getConverter() != null) {
+            throw new JspException("you can't define both the 'name' and 'converter' attributes, converter is to be used with the 'value' attribute only");
+        }
+    }
 
     protected Object findObject() throws JspException {
         return TagUtils.getInstance().lookup(pageContext, getName(), getProperty(), getScope());

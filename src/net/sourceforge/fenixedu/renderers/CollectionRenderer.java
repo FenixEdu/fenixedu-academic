@@ -198,7 +198,7 @@ public class CollectionRenderer extends OutputRenderer {
      * This property allows you to specify a string to be included as
      * a suffix of each cell in the table. The suffix value can have
      * a repeating pattern as {@linkplain #setRowClasses(String) rowClasses}.
-     * This means that, for the example above, a prefix of <code>",years old,"</code>
+     * This means that, for the example above, a suffix of <code>"years old"</code>
      * would produce rows like:
      * 
      * <table border="1">
@@ -316,7 +316,7 @@ public class CollectionRenderer extends OutputRenderer {
      * You can specify several parameters by separating the with a comma. The full
      * syntax of the <code>param</code> property is:
      * <pre>
-     *  &lt;slot&gt[&lt;name&gt]?[=&lt;value&gt]?
+     *  &lt;slot&gt[/&lt;name&gt]?[=&lt;value&gt]?
      * </pre>
      * 
      * <dl>

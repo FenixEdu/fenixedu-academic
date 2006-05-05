@@ -738,4 +738,72 @@
     </attribute>
   </tag>
   
+  <tag>
+    <name>default</name>
+    <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixDefaultValueTag</tag-class>
+    <body-content>JSP</body-content>
+
+    <attribute>
+      <name>slot</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        The name of the slot that is beeing configured
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Specifies the name of the page attribute to fetch. This attribute is related to
+        'scope'.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Specifies the name of the property to fetch. The value must follow the Apache BeanUtils
+        naming convention for bean properties. If this attribute is not specified then the
+        object refered with the attribute 'name' will be used.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+            The scope where the object will be searched. If no scope is specified the object will be
+            searched using PageContext.findAttribute(name).
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>converter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         Allows to specify the converter class to be used.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        The custom value that will be used as the slot's value.
+      </description>
+    </attribute>
+
+  </tag>
+
 </taglib>

@@ -59,7 +59,11 @@ public class StringRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                String string = String.valueOf(object == null ? "" : object);
+                if (object == null) {
+                    return new HtmlText();
+                }
+                
+                String string = String.valueOf(object);
                 
                 if (! isLink() || string == null) {
                     return new HtmlText(string);
