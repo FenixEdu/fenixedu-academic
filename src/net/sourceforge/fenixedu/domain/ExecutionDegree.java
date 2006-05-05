@@ -493,5 +493,32 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         
         return null;
     }
+    
+
+    public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
+        OccupationPeriod occupationPeriod = getOccupationPeriodFor(executionPeriod, markSheetType);        
+        return (occupationPeriod != null && occupationPeriod.containsDay(evaluationDate));
+    }
+    
+    public OccupationPeriod getOccupationPeriodFor(ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
+        OccupationPeriod occupationPeriod = null;
+        switch (markSheetType) {
+        case NORMAL:
+        case IMPROVEMENT:
+            if (executionPeriod.getSemester().equals(Integer.valueOf(1))) {
+                occupationPeriod = this.getPeriodExamsFirstSemester();
+            } else {
+                occupationPeriod = this.getPeriodExamsSecondSemester();
+            }
+            break;
+            
+        case SPECIAL_SEASON:
+            occupationPeriod = this.getPeriodExamsSpecialSeason();
+            break;
+            
+        default:
+        }        
+        return occupationPeriod;
+    }
 
 }

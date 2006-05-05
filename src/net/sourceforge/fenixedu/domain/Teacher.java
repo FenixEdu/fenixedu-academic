@@ -109,6 +109,15 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
+    public Professorship responsibleFor(ExecutionCourse executionCourse) {
+        for (final Professorship professorship : this.getProfessorships()) {
+            if (professorship.getResponsibleFor() && professorship.getExecutionCourse() == executionCourse) {
+                return professorship;
+            }
+        }
+        return null;
+    }
+
     public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> executionCourses)
             throws MaxResponsibleForExceed, InvalidCategory {
 
@@ -870,5 +879,30 @@ public class Teacher extends Teacher_Base {
     	proposals.addAll(getAssociatedProposalsByCoorientatorSet());
     	proposals.addAll(getAssociatedProposalsByOrientatorSet());
     	return proposals;
+    }
+    
+    public boolean isResponsibleFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+        for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+            if(executionCourse.getExecutionPeriod() == executionPeriod) {
+                return responsibleFor(executionCourse) != null;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear) {
+        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+            if(executionDegree.getExecutionYear() == executionYear) {
+                return executionDegree.getCoordinatorByTeacher(this) != null;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isResponsibleOrCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan,
+            CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+
+        return isResponsibleFor(curricularCourse, executionPeriod)
+                || isCoordinatorFor(degreeCurricularPlan, executionPeriod.getExecutionYear());
     }
 }

@@ -6,11 +6,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
+import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -29,6 +33,9 @@ import org.apache.commons.lang.StringUtils;
 public class Enrolment extends Enrolment_Base {
 
     private Integer accumulatedWeight;
+    static {
+        EnrolmentEvaluation.EnrolmentEnrolmentEvaluation.addListener(new EnrolmentEnrolmentEvaluationListener());
+    }
     
     public Enrolment() {
     	super();
@@ -265,7 +272,7 @@ public class Enrolment extends Enrolment_Base {
         });
     }
 
-    private EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
+    public EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
             final EnrolmentEvaluationState state, final EnrolmentEvaluationType type) {
         return (EnrolmentEvaluation) CollectionUtils.find(getEvaluations(), new Predicate() {
 
@@ -485,15 +492,23 @@ public class Enrolment extends Enrolment_Base {
 
         });
     }
-
-    public boolean hasSpecialSeason() {
+    
+    private boolean hasEnrolmentEvaluationByType(EnrolmentEvaluationType enrolmentEvaluationType) {
         for (EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
             if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
-                    EnrolmentEvaluationType.SPECIAL_SEASON)) {
+                    enrolmentEvaluationType)) {
                 return true;
             }
         }
         return false;
+    }
+    
+    public boolean hasImprovement() {
+        return hasEnrolmentEvaluationByType(EnrolmentEvaluationType.IMPROVEMENT);
+    }
+
+    public boolean hasSpecialSeason() {
+        return hasEnrolmentEvaluationByType(EnrolmentEvaluationType.SPECIAL_SEASON);
     }
 
     public Integer getFinalGrade() {
@@ -559,4 +574,90 @@ public class Enrolment extends Enrolment_Base {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    public EnrolmentEvaluation addNewEnrolmentEvaluation(
+            EnrolmentEvaluationState enrolmentEvaluationState,
+            EnrolmentEvaluationType enrolmentEvaluationType, Person responsibleFor, String grade,
+            Date availableDate, Date examDate) {
+        return new EnrolmentEvaluation(this, enrolmentEvaluationState, enrolmentEvaluationType,
+                responsibleFor, grade, availableDate, examDate);
+    }
+
+    public boolean hasAssociatedMarkSheet(MarkSheetType markSheetType) {
+        for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
+            if (enrolmentEvaluation.hasMarkSheet()
+                    && enrolmentEvaluation.getEnrolmentEvaluationType() == markSheetType
+                            .getEnrolmentEvaluationType()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private EnrolmentEvaluation getEnrolmentEvaluationFinal() {
+        final SortedSet<EnrolmentEvaluation> normal = new TreeSet<EnrolmentEvaluation>(EnrolmentEvaluation.SORT_SAME_TYPE_GRADE);
+        final SortedSet<EnrolmentEvaluation> specialSeason = new TreeSet<EnrolmentEvaluation>(EnrolmentEvaluation.SORT_SAME_TYPE_GRADE);
+        final SortedSet<EnrolmentEvaluation> improvment = new TreeSet<EnrolmentEvaluation>(EnrolmentEvaluation.SORT_SAME_TYPE_GRADE);
+        
+        for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
+            
+            if (enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ)
+                    || enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ)) {
+                
+                switch (enrolmentEvaluation.getEnrolmentEvaluationType()) {
+                case NORMAL:
+                case EQUIVALENCE: normal.add(enrolmentEvaluation); break;
+                case IMPROVEMENT: improvment.add(enrolmentEvaluation); break;
+                case SPECIAL_SEASON: specialSeason.add(enrolmentEvaluation); break;
+                default:
+                    break;
+                }
+            }
+        }
+        
+        final SortedSet<EnrolmentEvaluation> finalGrade = new TreeSet<EnrolmentEvaluation>(EnrolmentEvaluation.SORT_BY_GRADE);
+        
+        if(!normal.isEmpty()) {
+            finalGrade.add(normal.last());
+        }
+        if(!specialSeason.isEmpty()) {
+            finalGrade.add(specialSeason.last());
+        }
+        if(!improvment.isEmpty()) {
+            finalGrade.add(improvment.last());
+        }
+        
+        return finalGrade.last();
+    }
+    
+    public IGrade getGradeFinal() {
+        switch (this.getEnrollmentState()) {
+        case APROVED: return getEnrolmentEvaluationFinal().getGradeWrapper();
+        case TEMPORARILY_ENROLLED:
+        case ENROLLED: return null;
+        case NOT_EVALUATED: return GradeFactory.getInstance().getGrade("NA");
+        case NOT_APROVED: return GradeFactory.getInstance().getGrade("RE");
+        default:
+            throw new DomainException("error.enrolment.invalid.enrolment.state");
+        }
+    }
+    
+    private static class EnrolmentEnrolmentEvaluationListener extends dml.runtime.RelationAdapter<EnrolmentEvaluation, Enrolment> {
+        
+        @Override
+        public void afterAdd(EnrolmentEvaluation enrolmentEvaluation, Enrolment enrolment) {
+            if(enrolmentEvaluation != null && enrolment != null) {
+                enrolment.calculateNewEnrolmentState(enrolmentEvaluation.getEnrolmentEvaluationState());
+            }
+        }
+        
+    }
+    
+    public void calculateNewEnrolmentState(EnrolmentEvaluationState enrolmentEvaluationState) {
+        //TODO: anulled
+        if(enrolmentEvaluationState == EnrolmentEvaluationState.FINAL_OBJ || enrolmentEvaluationState == EnrolmentEvaluationState.RECTIFICATION_OBJ ) {
+            EnrolmentEvaluation enrolmentEvaluationFinal = getEnrolmentEvaluationFinal();
+            this.setEnrollmentState(enrolmentEvaluationFinal.getEnrollmentStateByGrade());
+        }
+    }
 }

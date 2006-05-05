@@ -2,12 +2,15 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
@@ -24,6 +27,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -934,6 +939,105 @@ public class CurricularCourse extends CurricularCourse_Base {
             }
         }
         return curricularCourseScopes;
+    }
+    
+    public Set<Enrolment> getEnrolmentsNotInAnyMarkSheet(MarkSheetType markSheetType, ExecutionPeriod executionPeriod) {
+        final Set<Enrolment> result = new HashSet<Enrolment>();
+        
+        for (final CurriculumModule curriculumModule : this.getCurriculumModulesSet()) {
+            if (curriculumModule instanceof Enrolment) {
+                final Enrolment enrolment = (Enrolment) curriculumModule;
+                
+                if (enrolment.getExecutionPeriod() == executionPeriod && markSheetType.getEnrolmentEvaluationType() == enrolment.getEnrolmentEvaluationType()) {
+                    if (!enrolment.hasAssociatedMarkSheet(markSheetType)) {
+                        result.add(enrolment);
+                    }
+                } else if(markSheetType == MarkSheetType.IMPROVEMENT) {
+                    if(enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(markSheetType)) {
+                        for(final Attends attends: enrolment.getAttendsSet()){
+                            if(attends.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod){
+                                result.add(enrolment);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    
+    public MarkSheet createMarkSheet(ExecutionPeriod executionPeriod,
+            Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType,
+            Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
+
+            return new MarkSheet(this, executionPeriod, responsibleTeacher, evaluationDate,
+                    markSheetType, MarkSheetState.NOT_CONFIRMED, markSheetEnrolmentEvaluationBeans);
+    }
+    
+    //TODO:
+    public void confirmMarkSheet() {
+        
+    }
+
+    //TODO:
+    public MarkSheet rectifyEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation, Teacher responsibleTeacher,
+            Employee employee, Date evaluationDate, String grade) {
+        
+        if (responsibleTeacher == null || employee == null || evaluationDate == null || grade == null || grade.length() == 0) {
+            throw new DomainException("error.markSheet.invalid.arguments");
+        }
+        final MarkSheet markSheet = enrolmentEvaluation.getMarkSheet();
+        if (markSheet == null) {
+            throw new DomainException("error.enrolmentEvaluation.doesnot.has.marksheet");
+        }
+        if (markSheet.isNotConfirmed()) {
+            throw new DomainException("error.markSheet.must.be.confirmed");
+        }
+        enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED_OBJ);
+        enrolmentEvaluation.generateCheckSum();
+        markSheet.generateCheckSum();
+
+        MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade);
+        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), responsibleTeacher, employee, markSheet.getMarkSheetType(), Collections.singletonList(markSheetEnrolmentEvaluationBean));
+        
+        return rectificationMarkSheet;
+    }
+
+    //TODO:
+    public MarkSheet createRectificationMarkSheet(ExecutionPeriod executionPeriod,
+            Teacher responsibleTeacher, Employee employee, MarkSheetType markSheetType,
+            List<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
+        
+        MarkSheet markSheet = new MarkSheet(this, executionPeriod, responsibleTeacher, new Date(),
+                markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, markSheetEnrolmentEvaluationBeans);
+        markSheet.setEmployee(employee);
+        markSheet.generateCheckSum();
+        return markSheet;
+    }
+
+    public Collection<MarkSheet> searchMarkSheets(ExecutionPeriod executionPeriod, Teacher teacher, Date evaluationDate, MarkSheetState markSheetState, MarkSheetType markSheetType) {
+        String dateFormat = "dd/MM/yyyy";
+        Collection<MarkSheet> result = new HashSet<MarkSheet>();
+
+        for (final MarkSheet markSheet : this.getMarkSheetsSet()) {
+            if (executionPeriod != null && markSheet.getExecutionPeriod() != executionPeriod) {
+                continue;
+            }
+            if (teacher != null && markSheet.getResponsibleTeacher() != teacher) {
+                continue;
+            }
+            if (evaluationDate != null && DateFormatUtil.compareDates(dateFormat, markSheet.getEvaluationDate(), evaluationDate) != 0) {
+                continue;
+            }
+            if (markSheetState != null && markSheet.getMarkSheetState() != markSheetState) {
+                continue;
+            }
+            if (markSheetType != null && markSheet.getMarkSheetType() != markSheetType) {
+                continue;
+            }
+            result.add(markSheet);            
+        }
+        return result;
     }
 
 }

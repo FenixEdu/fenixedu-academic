@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -9,35 +10,77 @@ import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
+import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 
-/**
- * @author dcs-rjao 24/Mar/2003
- */
+import org.apache.commons.beanutils.BeanComparator;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
 
+    public static final Comparator<EnrolmentEvaluation> SORT_BY_STUDENT_NUMBER = new BeanComparator(
+            "enrolment.studentCurricularPlan.student.number");
+    
+    public static final Comparator<EnrolmentEvaluation> SORT_SAME_TYPE_GRADE = new Comparator<EnrolmentEvaluation>() {
+        public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
+            if (o1.getEnrolmentEvaluationType() != o2.getEnrolmentEvaluationType()) {
+                throw new RuntimeException("error.enrolmentEvaluation.different.types");
+            }
+            if (o1.getEnrolmentEvaluationState().getWeight() == o2.getEnrolmentEvaluationState()
+                    .getWeight()) {
+                return o1.compareMyWhenAlteredDateToAnotherWhenAlteredDate(o2.getWhen());
+            }
+            return o1.getEnrolmentEvaluationState().getWeight()
+                    - o2.getEnrolmentEvaluationState().getWeight();
+        }
+    };
+
+    public static final Comparator<EnrolmentEvaluation> SORT_BY_GRADE = new Comparator<EnrolmentEvaluation>() {
+        public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
+            return o1.getGradeWrapper().compareTo(o2.getGradeWrapper());
+        }
+    };
+
     private static final String RECTIFICATION = "RECTIFICAÇÃO";
 
-	public EnrolmentEvaluation() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
-	
-	public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType type) {
-		this();
-		setEnrolment(enrolment);
-		setEnrolmentEvaluationType(type);
-	}
+    public EnrolmentEvaluation() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
+    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType type) {
+        this();
+        if (enrolment == null || type == null) {
+            throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
+        }
+        setEnrolment(enrolment);
+        setEnrolmentEvaluationType(type);
+    }
+
+    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,
+            EnrolmentEvaluationType type, Person responsibleFor, String grade, Date availableDate,
+            Date examDate) {
+
+        this(enrolment, type);
+
+        if (enrolmentEvaluationState == null || responsibleFor == null || examDate == null) {
+            throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
+        }
+        setEnrolmentEvaluationState(enrolmentEvaluationState);
+        setPersonResponsibleForGrade(responsibleFor);
+        setGrade(grade);
+        setGradeAvailableDate(availableDate);
+        setExamDate(examDate);
+
+        generateCheckSum();
+    }
+
     public int compareTo(Object o) {
         EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
         EnrollmentState myEnrolmentState = this.getEnrollmentStateByGrade(this.getGrade());
-        EnrollmentState otherEnrolmentState = this.getEnrollmentStateByGrade(enrolmentEvaluation.getGrade());
+        EnrollmentState otherEnrolmentState = this.getEnrollmentStateByGrade(enrolmentEvaluation
+                .getGrade());
         String otherGrade = enrolmentEvaluation.getGrade();
         Date otherWhenAltered = enrolmentEvaluation.getWhen();
 
@@ -86,7 +129,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         if (this.getGrade() == null) {
             myGrade = new Integer(0);
         } else {
-
             myGrade = Integer.valueOf(this.getGrade());
         }
         if (grade == null) {
@@ -109,9 +151,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         if (myEnrolmentState.equals(EnrollmentState.APROVED)) {
             return compareMyGradeToAnotherGrade(otherGrade);
         }
-
         return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
-
     }
 
     private int compareForNotEqualStates(EnrollmentState myEnrolmentState,
@@ -138,27 +178,21 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         if (grade == null) {
             return EnrollmentState.NOT_EVALUATED;
         }
-
         if (grade.equals("")) {
             return EnrollmentState.NOT_EVALUATED;
         }
-
         if (grade.equals("0")) {
             return EnrollmentState.NOT_EVALUATED;
         }
-
         if (grade.equals("NA")) {
             return EnrollmentState.NOT_EVALUATED;
         }
-
         if (grade.equals("RE")) {
             return EnrollmentState.NOT_APROVED;
         }
-
         if (grade.equals("AP")) {
             return EnrollmentState.APROVED;
         }
-
         return EnrollmentState.APROVED;
     }
 
@@ -186,109 +220,149 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         return getEnrollmentStateByGrade() == EnrollmentState.APROVED;
     }
 
-	public void edit(Person responsibleFor, String grade, Date availableDate, Date examDate, String checksum) {
-		
-        setCheckSum(checksum);
+    public void edit(Person responsibleFor, String grade, Date availableDate, Date examDate) {
+        if (responsibleFor == null) {
+            throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
+        }
         setGrade(grade);
         setGradeAvailableDate(availableDate);
         setPersonResponsibleForGrade(responsibleFor);
-		
-		if (examDate == null && grade == null)
-			setExamDate(null);
-		
-		else if (examDate == null && grade != null)
-			setExamDate(availableDate);
-		
-		else
-			setExamDate(examDate);
-	}
-	
-	
-	public void confirmSubmission(Employee employee, String observation) {
-		
-        setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
-        Calendar calendar = Calendar.getInstance();
-        setWhen(calendar.getTime());
+
+        if (examDate != null) {
+            setExamDate(examDate);
+        } else if (grade == null) {
+            setExamDate(null);
+        } else {
+            setExamDate(availableDate);
+        }
+        generateCheckSum();
+    }
+
+    public void confirmSubmission(Employee employee, String observation) {
+
+        setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ); // TODO:
+                                                                            // change
+                                                                            // enrolmentState
+        setWhen(Calendar.getInstance().getTime());
         setEmployee(employee);
         setObservation(observation);
-        setCheckSum("");
-		
-		Enrolment enrolment = getEnrolment();
-        EnrollmentState newEnrolmentState = EnrollmentState.APROVED;
 
+        EnrollmentState newEnrolmentState = EnrollmentState.APROVED;
         if (MarkType.getRepMarks().contains(getGrade())) {
             newEnrolmentState = EnrollmentState.NOT_APROVED;
         } else if (MarkType.getNaMarks().contains(getGrade())) {
             newEnrolmentState = EnrollmentState.NOT_EVALUATED;
         }
-        enrolment.setEnrollmentState(newEnrolmentState);
-	}
-	
-	
-	
-	
-	public void delete() {
-		removePersonResponsibleForGrade();
-		removeEmployee();
-		removeEnrolment();
-		
-		removeRootDomainObject();
+        this.getEnrolment().setEnrollmentState(newEnrolmentState);
+    }
+
+    public boolean getCanBeDeleted() {
+        return isTemporary();
+    }
+
+    private boolean isTemporary() {
+        return getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ);
+    }
+
+    public void delete() {
+
+        if (!getCanBeDeleted()) {
+            throw new DomainException("error.enrolmentEvaluation.cannot.be.deleted");
+        }
+
+        removePersonResponsibleForGrade();
+        removeEmployee();
+        removeEnrolment();
+        removeMarkSheet();
+
+        removeRootDomainObject();
         super.deleteDomainObject();
-	}
-	
-	public void insertStudentFinalEvaluationForMasterDegree(String grade, Person responsibleFor, Date examDate) 
-		throws DomainException {
-		
-		DegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan();
+    }
 
-		if (grade == null || grade.length() == 0) {	
-		
-			if (getGrade() != null && getGrade().length() > 0)
-				edit(null, null, null, null, null);
-		} 
-		
-		else if (grade != null && grade.length() > 0) {
-		
-			if (degreeCurricularPlan.isGradeValid(grade)) {
-				Calendar calendar = Calendar.getInstance();
-				edit(responsibleFor, grade, calendar.getTime(), examDate, "");
-			}
-		
-			else
-				throw new DomainException("error.invalid.grade");
-		}
-	}
-	
-	
-	
-	public void alterStudentEnrolmentEvaluationForMasterDegree(String grade, Employee employee, Person responsibleFor,
-			EnrolmentEvaluationType evaluationType, Date evaluationAvailableDate, Date examDate, String observation) 
-				throws DomainException {
+    public void insertStudentFinalEvaluationForMasterDegree(String grade, Person responsibleFor,
+            Date examDate) throws DomainException {
 
-		Enrolment enrolment = getEnrolment();
-		DegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan();
-        		
-		if (grade.equals("0") || grade.equals("")) {
+        DegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan()
+                .getDegreeCurricularPlan();
 
-            EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, getEnrolmentEvaluationType());
-			enrolmentEvaluation.confirmSubmission(employee, observation);
-			enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
+        if (grade == null || grade.length() == 0) {
+
+            if (getGrade() != null && getGrade().length() > 0)
+                edit(null, null, null, null);
+        }
+
+        else if (grade != null && grade.length() > 0) {
+
+            if (degreeCurricularPlan.isGradeValid(grade)) {
+                Calendar calendar = Calendar.getInstance();
+                edit(responsibleFor, grade, calendar.getTime(), examDate);
+            }
+
+            else
+                throw new DomainException("error.invalid.grade");
+        }
+    }
+
+    public void alterStudentEnrolmentEvaluationForMasterDegree(String grade, Employee employee,
+            Person responsibleFor, EnrolmentEvaluationType evaluationType, Date evaluationAvailableDate,
+            Date examDate, String observation) throws DomainException {
+
+        Enrolment enrolment = getEnrolment();
+        DegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan()
+                .getDegreeCurricularPlan();
+
+        if (grade.equals("0") || grade.equals("")) {
+
+            EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment,
+                    getEnrolmentEvaluationType());
+            enrolmentEvaluation.confirmSubmission(employee, observation);
+            enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
 
         } else {
 
-			if (degreeCurricularPlan.isGradeValid(grade)) {
-				
-				EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, evaluationType);
-				enrolmentEvaluation.edit(responsibleFor, grade, evaluationAvailableDate, examDate, "");
-				enrolmentEvaluation.confirmSubmission(employee, observation);
-			}
-			
-			else
-				throw new DomainException("error.invalid.grade");
+            if (degreeCurricularPlan.isGradeValid(grade)) {
+
+                EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment,
+                        evaluationType);
+                enrolmentEvaluation.edit(responsibleFor, grade, evaluationAvailableDate, examDate);
+                enrolmentEvaluation.confirmSubmission(employee, observation);
+            }
+
+            else
+                throw new DomainException("error.invalid.grade");
         }
-	}
+    }
 
     public IGrade getGradeWrapper() {
         return GradeFactory.getInstance().getGrade(getGrade());
     }
+
+    protected void generateCheckSum() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(DateFormatUtil.format("yyyy/MM/dd", getExamDate())).append(getGrade())
+                .append(getEnrolmentEvaluationType());
+        stringBuilder.append(getEnrolment().getStudentCurricularPlan().getStudent().getNumber());
+        setCheckSum(FenixDigestUtils.createDigest(stringBuilder.toString()));
+    }
+    
+    @Override
+    public void setEnrolmentEvaluationState(EnrolmentEvaluationState enrolmentEvaluationState) {
+        checkNewEnrolmentEvaluationState(enrolmentEvaluationState);
+        super.setEnrolmentEvaluationState(enrolmentEvaluationState);
+        this.getEnrolment().calculateNewEnrolmentState(enrolmentEvaluationState);
+    }
+
+    private void checkNewEnrolmentEvaluationState(EnrolmentEvaluationState enrolmentEvaluationState) {
+        if (this.getEnrolmentEvaluationState() != null) {
+            if(this.getEnrolmentEvaluationState().getWeight() > enrolmentEvaluationState.getWeight()){
+                throw new DomainException("invalid enrolmentEvaluationState");
+            }
+        }
+    }
+
+    @Override
+    public void setGrade(String grade) {
+        super.setGrade((grade != null) ? grade.toUpperCase() : null);
+    }
+
 }
