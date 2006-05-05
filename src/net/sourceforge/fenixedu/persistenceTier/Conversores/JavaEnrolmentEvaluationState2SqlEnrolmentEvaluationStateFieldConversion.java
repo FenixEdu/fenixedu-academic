@@ -32,7 +32,7 @@ public class JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConver
     public Object sqlToJava(Object source) {
         if (source instanceof Integer) {
             Integer src = (Integer) source;
-            return new EnrolmentEvaluationState(src);
+            return EnrolmentEvaluationState.valueOf(src);
         }
 
         return source;

@@ -11,34 +11,45 @@ public class EnrolmentEvaluationState extends FenixUtil {
 
     public static final int TEMPORARY = 2;
 
-    //	public static final int RECTIFIED = 2;
-    //	public static final int RECTIFICATION = 3;
+    public static final int RECTIFIED = 5;
+    
+    public static final int RECTIFICATION = 3;
+    
     public static final int ANNULED = 4;
 
     public static final EnrolmentEvaluationState FINAL_OBJ = new EnrolmentEvaluationState(
-            EnrolmentEvaluationState.FINAL);
+            EnrolmentEvaluationState.FINAL, 2);
 
     public static final EnrolmentEvaluationState TEMPORARY_OBJ = new EnrolmentEvaluationState(
-            EnrolmentEvaluationState.TEMPORARY);
+            EnrolmentEvaluationState.TEMPORARY, 1);
 
-    //	public static final EnrolmentEvaluationState RECTIFIED_OBJ = new
-    // EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED);
-    //	public static final EnrolmentEvaluationState RECTIFICATION_OBJ = new
-    // EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFICATION);
+    public static final EnrolmentEvaluationState RECTIFIED_OBJ = new EnrolmentEvaluationState(
+            EnrolmentEvaluationState.RECTIFIED, 3);
+    
+    public static final EnrolmentEvaluationState RECTIFICATION_OBJ = new EnrolmentEvaluationState(
+            EnrolmentEvaluationState.RECTIFICATION, 4);
+    
     public static final EnrolmentEvaluationState ANNULED_OBJ = new EnrolmentEvaluationState(
-            EnrolmentEvaluationState.ANNULED);
+            EnrolmentEvaluationState.ANNULED, 0);
 
     private Integer state;
+    
+    private int weight;
 
-    public EnrolmentEvaluationState() {
-    }
-
-    public EnrolmentEvaluationState(int state) {
+    private EnrolmentEvaluationState(int state, int weight) {
         this.state = new Integer(state);
+        this.weight = weight;
     }
 
-    public EnrolmentEvaluationState(Integer state) {
-        this.state = state;
+    public static EnrolmentEvaluationState valueOf(Integer state) {
+        switch(state) {
+        case FINAL: return FINAL_OBJ;
+        case TEMPORARY: return TEMPORARY_OBJ;
+        case RECTIFIED: return RECTIFIED_OBJ;
+        case RECTIFICATION: return RECTIFICATION_OBJ;
+        case ANNULED: return ANNULED_OBJ;
+        default: return null;
+        }
     }
 
     /**
@@ -49,6 +60,10 @@ public class EnrolmentEvaluationState extends FenixUtil {
      */
     public java.lang.Integer getState() {
         return state;
+    }
+    
+    public int getWeight() {
+        return weight;
     }
 
     /**
