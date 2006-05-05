@@ -26,8 +26,4 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-execute "Add root domain object keys to messaging tables" AddRootDomainObjectKeyToMessagingTables.sql
-execute "Creating forum bookmark table" CreateForumBookmarkTable.sql
 
-execute "Create MarkSheet Table" createMarkSheetTable.sql
-execute "Add KeyMarkSheet column to EnrolmentEvaluation table" alterEnrolmentEvaluationTable.sql
