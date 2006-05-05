@@ -6380,6 +6380,20 @@ relation RootDomainObjectForum {
 	}
 }
 
+relation RootDomainObjectConversationThread {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThreads {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectConversationMessage {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.messaging.ConversationMessage playsRole conversatioMessages {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectMetadata {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.onlineTests.Metadata playsRole metadatas {

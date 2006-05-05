@@ -36,7 +36,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
-	</service>
+	</service>net.sourceforge.fenixedu.applicationTier.Servico.messaging
 	<service>
 		<name>AddSchoolClassesToShift</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AddSchoolClassesToShift</implementationClass>
@@ -200,6 +200,24 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>WriteExecutionCourseForum</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.WriteExecutionCourseForum</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>
+	<service>
+		<name>WriteThread</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.WriteThread</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>	
+	<service>
+		<name>WriteMessage</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.WriteMessage</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>		
+	<service>
 		<name>EditarTurno</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditarTurno</implementationClass>
 		<description />
@@ -207,7 +225,7 @@
 		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
 		</filterChains>
-	</service>
+	</service>	
 	<service>
 		<name>LerAlunosDeTurno</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerAlunosDeTurno</implementationClass>

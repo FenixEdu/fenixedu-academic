@@ -486,6 +486,21 @@
 		<slot name="event.fee"/>
 		<slot name="event.eventType"/>
 	</schema>
+	
+	<schema name="messaging.viewForuns.forum" type="net.sourceforge.fenixedu.domain.messaging.Forum">
+		<slot name="name"/>
+		<slot name="description"/>
+		<slot name="creationDate"/>
+	</schema>
+	
+	<schema name="conversationThread.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
+    	<slot name="name"/>
+	</schema>
+	
+	<schema name="conversationMessage.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
+    	<slot name="body"/>
+    	<slot name="conversationThread.subject"/>
+	</schema>
 
 	&researcher;
 </schemas>

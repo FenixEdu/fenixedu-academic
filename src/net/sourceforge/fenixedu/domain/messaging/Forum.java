@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.messaging;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -20,6 +21,8 @@ public abstract class Forum extends Forum_Base {
     public void init(Person owner, String name, String description, Group readersGroup,
             Group writersGroup) {
         setCreationDate(Calendar.getInstance().getTime());
+        setOjbConcreteClass(this.getClass().getName());
+        setRootDomainObject(RootDomainObject.getInstance());
         setOwner(owner);
         setName(name);
         setDescription(description);

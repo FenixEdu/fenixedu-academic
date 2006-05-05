@@ -31,7 +31,19 @@
         <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
             <forward name="Success" path="index"/>
         </action>
-
+        
+        <action path="/dummy" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.Dummy">
+            <forward name="Success" path="index"/>
+        </action>
+        
+        <action path="/forunsManagement" 
+        		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.ForunsManagement"
+        		parameter="method">
+            <forward name="viewForuns" path="viewForuns"/>
+            <forward name="viewForum" path="viewForum"/>    
+            <forward name="createThread" path="createThread"/>    
+        </action>
+               
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>

@@ -4,8 +4,8 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.Person;
 
-public class ConversationMessage extends ConversationMessage_Base {
     
+public class ConversationMessage extends ConversationMessage_Base {
     public  ConversationMessage() {
         super();
     }

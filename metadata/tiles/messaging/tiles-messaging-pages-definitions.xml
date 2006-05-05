@@ -3,7 +3,18 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="index" extends="messaging.masterPage">
-
+	</definition>
+	
+	<definition name="viewForuns" extends="messaging.masterPage">
+		 <put name="body" value="/messaging/viewForuns.jsp"/>
 	</definition>
 
+	<definition name="createThread" extends="messaging.masterPage">
+		 <put name="body" value="/messaging/createThread.jsp"/>
+	</definition>
+
+	<definition name="viewForum" extends="messaging.masterPage">
+		 <put name="body" value="/messaging/viewForum.jsp"/>
+	</definition>	
+	
 </tiles-definitions>

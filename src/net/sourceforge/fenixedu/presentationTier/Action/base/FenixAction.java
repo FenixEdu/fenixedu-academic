@@ -26,7 +26,6 @@ public abstract class FenixAction extends Action {
         }
         return result;
     }
-
     protected IUserView getUserView(HttpServletRequest request) {
     	return SessionUtils.getUserView(request);
     }
