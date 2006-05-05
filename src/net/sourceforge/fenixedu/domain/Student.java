@@ -210,30 +210,41 @@ public class Student extends Student_Base {
 
     public Double getApprovationRatio() {
         if (this.approvationRatio == null) {
-            calculateApprovationRatioAndArithmeticMeanIfActive(null);
+            calculateApprovationRatioAndArithmeticMeanIfActive(true);
         }
         return this.approvationRatio;
     }
 
     public Double getArithmeticMean() {
         if (this.arithmeticMean == null) {
-            calculateApprovationRatioAndArithmeticMeanIfActive(null);
+            calculateApprovationRatioAndArithmeticMeanIfActive(true);
         }
         return this.arithmeticMean;
     }
 
-    public void calculateApprovationRatioAndArithmeticMeanIfActive(ExecutionYear currentExecutionYear) {
+    public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
 
         int enrollmentsNumber = 0;
         int approvedEnrollmentsNumber = 0;
         int actualApprovedEnrollmentsNumber = 0;
         int totalGrade = 0;
 
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
+
         for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
             for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
-                if (enrolment.getCondition() != EnrollmentCondition.INVISIBLE
-                        && (currentExecutionYear == null || enrolment.getExecutionPeriod()
-                                .getExecutionYear() != currentExecutionYear)) {
+                if (enrolment.getCondition() == EnrollmentCondition.INVISIBLE) {
+                    continue;
+                }
+
+                ExecutionYear enrolmentExecutionYear = enrolment.getExecutionPeriod().getExecutionYear();
+                if (onlyPreviousExecutionYear && (previousExecutionYear != enrolmentExecutionYear)) {
+                    continue;
+                }
+
+                if (enrolmentExecutionYear != currentExecutionYear) {
+
                     enrollmentsNumber++;
                     if (enrolment.getEnrollmentState() == EnrollmentState.APROVED) {
                         actualApprovedEnrollmentsNumber++;
@@ -269,7 +280,7 @@ public class Student extends Student_Base {
 
     public Integer getApprovedEnrollmentsNumber() {
         if (this.approvedEnrollmentsNumber == null) {
-            calculateApprovationRatioAndArithmeticMeanIfActive(null);
+            calculateApprovationRatioAndArithmeticMeanIfActive(true);
         }
         return approvedEnrollmentsNumber;
     }

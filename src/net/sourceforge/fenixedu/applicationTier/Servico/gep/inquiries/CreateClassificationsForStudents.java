@@ -103,7 +103,7 @@ public class CreateClassificationsForStudents extends Service {
                 if (student.getRegistrationYear() == currentExecutionYear) {
                     firstYearStudents.add(student);
                 } else {
-                    student.calculateApprovationRatioAndArithmeticMeanIfActive(currentExecutionYear);
+                    student.calculateApprovationRatioAndArithmeticMeanIfActive(true);
                     otherYearsStudents.add(student);
                 }
             }
