@@ -1,0 +1,36 @@
+package net.sourceforge.fenixedu.presentationTier.renderers.providers;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+import net.sourceforge.fenixedu.renderers.DataProvider;
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+
+import org.apache.commons.beanutils.BeanComparator;
+
+public class DegreeTypeDegrees implements DataProvider {
+
+    public Object provide(Object source) {
+
+        final List<Degree> result = new ArrayList<Degree>();
+        for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+            if (degree.getTipoCurso() == DegreeType.DEGREE
+                    || degree.getBolonhaDegreeType() == BolonhaDegreeType.DEGREE) {
+                result.add(degree);
+            }
+        }
+        Collections.sort(result, new BeanComparator("name"));
+        return result;
+    }
+
+    public Converter getConverter() {
+        return new DomainObjectKeyConverter();
+    }
+
+}
