@@ -33,19 +33,18 @@
 	</ul>
 </fr:hasMessages>
 
-<html:form action="/createMarkSheet.do?method=createMarkSheetStepTwo" method="post">
-	<fr:context>
-		<fr:edit id="edit-invisible" name="edit" visible="false" nested="true"/>
+<fr:form action="/createMarkSheet.do?method=createMarkSheetStepTwo">
 
-		<fr:edit id="edit-enrolments" name="edit" property="enrolmentEvaluationBeans" 
-				 schema="markSheet.create.step.two" layout="tabular-editable"
-	             nested="true">
-			<fr:layout>
-				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
-			</fr:layout>
-		</fr:edit>
-	</fr:context>
+	<fr:edit id="edit-invisible" name="edit" visible="false" nested="true"/>
+
+	<fr:edit id="edit-enrolments" name="edit" property="enrolmentEvaluationBeans" 
+			 schema="markSheet.create.step.two" layout="tabular-editable"
+             nested="true">
+		<fr:layout>
+			<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
+		</fr:layout>
+	</fr:edit>
 	<br/>
 	<html:submit><bean:message key="label.submit.markSheet" /></html:submit>
 	<html:cancel><bean:message key="label.back"/></html:cancel>
-</html:form>
+</fr:form>
