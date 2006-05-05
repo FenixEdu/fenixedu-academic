@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.curriculum;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 import org.apache.commons.lang.StringUtils;
 
 class Grade implements IGrade {
@@ -44,6 +46,29 @@ class Grade implements IGrade {
     public GradeType getGradeType() {
         return gradeType;
     }
+
+    
+    //very important: don't change this
+    public int compareTo(IGrade o) {
+        if(this.getGradeType() == o.getGradeType()) {
+            if(this.getGradeType() == GradeType.GRADEFIVE || this.getGradeType() == GradeType.GRADETWENTY) {
+                Integer grade1 = (Integer) this.getGrade();
+                Integer grade2 = (Integer) o.getGrade();
+                return grade1.compareTo(grade2);
+            } else {
+                return 0;
+            }
+        }
+        if(this.getGradeType() == GradeType.GRADENA || this.getGradeType() == GradeType.GRADERE) {
+            return 1;
+        }
+        if(o.getGradeType() == GradeType.GRADENA || o.getGradeType() == GradeType.GRADERE) {
+            return -1;
+        }
+        
+        throw new DomainException("error.grade.different.grade.types");
+    }
+
 }
 
 public class GradeFactory {
