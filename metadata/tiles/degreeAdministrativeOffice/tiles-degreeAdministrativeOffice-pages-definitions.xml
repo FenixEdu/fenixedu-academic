@@ -138,4 +138,21 @@
 		<put name="body" value="/degreeAdministrativeOffice/equivalences/createCurricularCourseEquivalencies.jsp"></put>
 	</definition>
 	
+	<!-- ===================== MarkSheet Management ====================== -->
+	<definition name="show.markSheetManagement.search.page" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/markSheetManagement.jsp"></put>
+	</definition>
+	
+	<definition name="show.markSheetManagement.create.page.step1" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/createMarkSheetStep1.jsp"></put>
+	</definition>
+	
+	<definition name="show.markSheetManagement.create.page.step2" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/createMarkSheetStep2.jsp"></put>
+	</definition>
+	
+	<definition name="show.markSheetManagement.remove" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/removeMarkSheet.jsp"></put>
+	</definition>
+	
 </tiles-definitions>
