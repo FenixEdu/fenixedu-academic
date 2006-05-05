@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.renderers;
 
-import java.util.Collection;
-
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
@@ -203,6 +201,6 @@ public class TabularInputRenderer extends InputRenderer {
     protected Layout getLayout(Object object, Class type) {
         this.collectionRenderer.setContext(getContext());
 
-        return this.collectionRenderer.new CollectionTabularLayout((Collection) object);
+        return this.collectionRenderer.getLayout(object, type);
     }
 }
