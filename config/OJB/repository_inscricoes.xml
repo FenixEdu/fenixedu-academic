@@ -655,17 +655,18 @@
 		column="KEY_ENROLMENT"
 		jdbc-type="INTEGER"
 	/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-	
-	
-	
-	
-	
+    <field-descriptor
+    	name="ackOptLock"
+    	column="ACK_OPT_LOCK"
+    	jdbc-type="INTEGER"
+    	locking="false"
+    />
+	<field-descriptor
+		name="keyMarkSheet"
+		column="KEY_MARKSHEET"
+		jdbc-type="INTEGER"
+	/>
+
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
