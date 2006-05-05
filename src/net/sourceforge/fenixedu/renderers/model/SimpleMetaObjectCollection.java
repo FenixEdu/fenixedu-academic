@@ -7,7 +7,6 @@ import java.util.Properties;
 public class SimpleMetaObjectCollection implements MultipleMetaObject {
 
     private List<MetaObject> metaObjects;
-    private String schema;
     
     private transient UserIdentity user;
 
@@ -84,12 +83,13 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
     public void setProperties(Properties properties) {
     }
 
-    public void setSchema(String name) {
-        this.schema = name;
-    }
-    
     public String getSchema() {
-        return this.schema;
+        if (getAllMetaObjects().isEmpty()) {
+            return null;
+        }
+        else {
+            return this.getAllMetaObjects().get(0).getSchema();
+        }
     }
 
     public List<MetaSlot> getHiddenSlots() {
