@@ -1164,11 +1164,16 @@ class net.sourceforge.fenixedu.domain.messaging.Forum extends net.sourceforge.fe
 	Integer keyOwner;
 }
 
-class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum extends net.sourceforge.fenixedu.domain.messaging.Forum {
-   Integer keyExecutionCourse;
+	class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum extends net.sourceforge.fenixedu.domain.messaging.Forum {
+	   Integer keyExecutionCourse;
+	}
+
+
+class net.sourceforge.fenixedu.domain.messaging.ForumBookmark extends net.sourceforge.fenixedu.domain.DomainObject {
+	Boolean receivePostsByEmail;
+    Integer keyPerson;
+	Integer keyForum;
 }
-
-
 
 class net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult extends net.sourceforge.fenixedu.domain.DomainObject {
     String p13;
@@ -4064,6 +4069,39 @@ relation FileEntryPerson {
     net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
+relation ForumConversationThread {
+	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThreads {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.messaging.Forum playsRole forum;
+}
+
+relation ForumOwner {
+	net.sourceforge.fenixedu.domain.messaging.Forum playsRole foruns {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.Person playsRole owner;
+}
+
+relation ForumBookmarkForum {
+	net.sourceforge.fenixedu.domain.messaging.ForumBookmark playsRole forumBookmarks {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.messaging.Forum playsRole forum;
+}
+
+relation ForumBookmarkPerson {
+	net.sourceforge.fenixedu.domain.messaging.ForumBookmark playsRole forumBookmarks {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+
 relation GaugingTestResultStudent {
     net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
     net.sourceforge.fenixedu.domain.Student playsRole student;
@@ -4651,22 +4689,6 @@ relation MasterDegreeThesisDataVersionAssistentGuider {
 	net.sourceforge.fenixedu.domain.Teacher playsRole assistentGuiders {
 		multiplicity *;
 	}
-}
-
-relation ForumConversationThread {
-	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThreads {
-		multiplicity *;
-	}
-	
-	net.sourceforge.fenixedu.domain.messaging.Forum playsRole forum;
-}
-
-relation ForumOwner {
-	net.sourceforge.fenixedu.domain.messaging.Forum playsRole foruns {
-		multiplicity *;
-	}
-	
-	net.sourceforge.fenixedu.domain.Person playsRole owner;
 }
 
 

@@ -145,3 +145,31 @@
         jdbc-type="INTEGER"
     />
 </class-descriptor>
+
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ForumBookmark -->
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ForumBookmark" table="FORUM_BOOKMARK">
+	<field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor
+        name="receivePostsByEmail"
+        column="RECEIVE_POSTS_BY_EMAIL"
+        jdbc-type="BIT"
+    />    
+    <field-descriptor
+        name="keyPerson"
+        column="KEY_PERSON"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor
+        name="keyForum"
+        column="KEY_FORUM"
+        jdbc-type="INTEGER"
+    />
+</class-descriptor>

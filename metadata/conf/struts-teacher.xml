@@ -2202,6 +2202,13 @@
             <forward name="editItemFilePermissions" path="edit-item-file-permissions"/>
             <forward name="viewSection" path="/viewSection.jsp"/>
         </action>
+        
+        <!-- Execution Course Forum Management -->
+        <action path="/executionCourseForumManagement" parameter="method" scope="request" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ExecutionCourseForumManagementDispatchAction" 
+            validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
+            <forward name="viewForuns" path="view-execution-course-foruns" />
+        </action>
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>

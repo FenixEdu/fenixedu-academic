@@ -27,3 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add root domain object keys to messaging tables" AddRootDomainObjectKeyToMessagingTables.sql
+execute "Creating forum bookmark table" CreateForumBookmarkTable.sql
+

@@ -1,0 +1,4 @@
+<schema name="executionCourseForum.view.nameOnly" type="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum">
+	<slot name="name"/>
+</schema>
+
