@@ -150,15 +150,16 @@ public class CreateClassificationsForStudents extends Service {
             }
         }
         studentsClassifications.put('F', weakStudents);
-        students.removeAll(weakStudents);
+        List<Student> otherStudents = new ArrayList<Student>(students); 
+        otherStudents.removeAll(weakStudents);
 
         char classification = 'A';
-        ListIterator<Student> studentsIter = students.listIterator(students.size());
+        ListIterator<Student> studentsIter = otherStudents.listIterator(otherStudents.size());
         for (int i = limits.length - 1; i > 0; i--) {
 
-            int groundLimitIndex = (int) Math.ceil(students.size() * (limits[i - 1] / 100.0));
-            Double groundLimitValue = (Double) fieldGetter.transform(students.get(groundLimitIndex));            
-            Double  maxValue = (Double) fieldGetter.transform(students.get(students.size() - 1));
+            int groundLimitIndex = (int) Math.ceil(otherStudents.size() * (limits[i - 1] / 100.0));
+            Double groundLimitValue = (Double) fieldGetter.transform(otherStudents.get(groundLimitIndex));            
+            Double  maxValue = (Double) fieldGetter.transform(otherStudents.get(otherStudents.size() - 1));
             if(maxValue.equals(groundLimitValue)){
                 groundLimitValue -= 0.0000000001;
             }
@@ -171,17 +172,20 @@ public class CreateClassificationsForStudents extends Service {
             studentsIter.next();
             groundLimitIndex = studentsIter.nextIndex();
 
-            studentsClassifications.put(classification, students.subList(groundLimitIndex, limitIndex));
+            studentsClassifications.put(classification, otherStudents.subList(groundLimitIndex, limitIndex));
 
             classification++;
         }
 
-//        List<Student> weakStudents = students.subList((int) Math.ceil(students.size()
-//                * (limits[0] / 100.0)), studentsIter.nextIndex());
-//        for (Student weakStudent : weakStudents) {
-//            fieldSetter.execute(new GenericPair<Student, Character>(weakStudent, classification));
-//        }
-//        studentsClassifications.put(classification, weakStudents);
+        
+        List<Student> lastStudents = otherStudents.subList((int) Math.ceil(otherStudents.size()
+                * (limits[0] / 100.0)), studentsIter.nextIndex());
+        for (Student lastStudent : lastStudents) {
+            fieldSetter.execute(new GenericPair<Student, Character>(lastStudent, 'E'));
+        }
+        List<Student> allLastStudents = new ArrayList<Student>(lastStudents);
+        allLastStudents.addAll(studentsClassifications.get('E'));
+        studentsClassifications.put('E', allLastStudents); 
         return studentsClassifications;
     }
 
