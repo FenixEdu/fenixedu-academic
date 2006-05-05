@@ -247,20 +247,21 @@ public class ComponentLifeCycle {
             });
             
             if (! formComponents.isEmpty()) {
-                HtmlFormComponent formComponent = (HtmlFormComponent) formComponents.get(0);
-                
-                HtmlValidator validator = formComponent.getValidator();
-                
-                if (validator == null) {
-                    MetaSlotKey key = formComponent.getTargetSlot();
-                    MetaSlot slot = getMetaSlot(metaObject, key);
+                for (HtmlComponent boundComponent : formComponents) {
+                    HtmlFormComponent formComponent = (HtmlFormComponent) boundComponent;
+                    HtmlValidator validator = formComponent.getValidator();
                     
-                    formComponent.setValidator(slot);
-                    validator = formComponent.getValidator();
-                }
-                
-                if (validator != null) {
-                    validators.add(validator);
+                    if (validator == null) {
+                        MetaSlotKey key = formComponent.getTargetSlot();
+                        MetaSlot slot = getMetaSlot(metaObject, key);
+                        
+                        formComponent.setValidator(slot);
+                        validator = formComponent.getValidator();
+                    }
+                    
+                    if (validator != null) {
+                        validators.add(validator);
+                    }
                 }
             }
         }
