@@ -55,8 +55,11 @@ public class FormatRenderer extends OutputRenderer {
 
         @Override
         public HtmlComponent createComponent(Object object, Class type) {
-            String formatedObject = RenderUtils.getFormatedProperties(getFormat(), object);
+            if (object == null) {
+                return new HtmlText();
+            }
             
+            String formatedObject = RenderUtils.getFormatedProperties(getFormat(), object);
             return new HtmlText(formatedObject);
         }
 
