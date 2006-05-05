@@ -46,6 +46,8 @@ public class MenuOptionListRenderer extends InputRenderer {
 
     private DataProvider provider;
     
+    private String sortBy;
+    
     public String getFormat() {
         return this.format;
     }
@@ -103,6 +105,21 @@ public class MenuOptionListRenderer extends InputRenderer {
         this.providerClass = providerClass;
     }
 
+    public String getSortBy() {
+        return this.sortBy;
+    }
+
+    /**
+     * With this property you can set the criteria used to sort the collection
+     * beeing presented. The accepted syntax for the criteria can be seen in
+     * {@link RenderUtils#sortCollectionWithCriteria(Collection, String)}.
+     * 
+     * @property
+     */
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new MenuOptionLayout();
@@ -135,7 +152,14 @@ public class MenuOptionListRenderer extends InputRenderer {
         if (getProviderClass() != null) {
             try {
                 DataProvider provider = getProvider();
-                return (Collection) provider.provide(object);
+                Collection collection = (Collection) provider.provide(object);
+                
+                if (getSortBy() == null) {
+                    return collection;
+                }
+                else {
+                    return RenderUtils.sortCollectionWithCriteria(collection, getSortBy());
+                }
             }
             catch (Exception e) {
                 throw new RuntimeException("exception while executing data provider", e);

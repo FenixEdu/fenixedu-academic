@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderMode;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 /**
  * This renderer can be used as the input for a list of objects. The list of
@@ -45,6 +46,8 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
     private String providerClass;
 
     private DataProvider provider;
+
+    private String sortBy;
     
     /**
      * This property allows you to configure the class attribute for each
@@ -123,7 +126,22 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
     public void setProviderClass(String providerClass) {
         this.providerClass = providerClass;
     }
+    
+    public String getSortBy() {
+        return this.sortBy;
+    }
 
+    /**
+     * With this property you can set the criteria used to sort the collection
+     * beeing presented. The accepted syntax for the criteria can be seen in
+     * {@link RenderUtils#sortCollectionWithCriteria(Collection, String)}.
+     * 
+     * @property
+     */
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+    
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new CheckBoxListLayout();
@@ -156,7 +174,14 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
         if (getProviderClass() != null) {
             try {
                 DataProvider provider = getProvider();
-                return (Collection) provider.provide(object);
+                Collection collection = (Collection) provider.provide(object);
+                
+                if (getSortBy() == null) {
+                    return collection;
+                }
+                else {
+                    return RenderUtils.sortCollectionWithCriteria(collection, getSortBy());
+                }
             }
             catch (Exception e) {
                 throw new RuntimeException("exception while executing data provider", e);

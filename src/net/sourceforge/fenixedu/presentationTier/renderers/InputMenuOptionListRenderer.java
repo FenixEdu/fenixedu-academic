@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObje
 import net.sourceforge.fenixedu.renderers.EnumInputRenderer;
 import net.sourceforge.fenixedu.renderers.MenuOptionListRenderer;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 /**
  * Fenix extension to the {@link net.sourceforge.fenixedu.renderers.MenuOptionListRenderer}.
@@ -107,10 +108,10 @@ public class InputMenuOptionListRenderer extends MenuOptionListRenderer {
                         }
                     }
                     
-                    return result;
+                    return RenderUtils.sortCollectionWithCriteria(result, getSortBy());
                 }
                 else {
-                    return allChoices;
+                    return RenderUtils.sortCollectionWithCriteria(allChoices, getSortBy());
                 }
             }
             catch (Exception e) {
