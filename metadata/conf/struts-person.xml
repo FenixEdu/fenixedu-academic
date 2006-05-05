@@ -105,6 +105,7 @@
         <form-property name="showAlumniDegrees" type="java.lang.String" />
         <form-property name="researchUnitHomepage" type="java.lang.String" />
         <form-property name="researchUnit" type="java.lang.String" />
+        <form-property name="showCurrentAttendingExecutionCourses" type="java.lang.String" />
       </form-bean>
     </form-beans>
 

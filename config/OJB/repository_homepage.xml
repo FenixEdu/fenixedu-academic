@@ -97,6 +97,11 @@
 		jdbc-type="LONGVARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
 	/>
+	<field-descriptor
+	    name="showCurrentAttendingExecutionCourses"
+	    column="SHOW_CURRENT_ATTENDING_EXECUTION_COURSES"
+	    jdbc-type="BIT"
+	/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.homepage.Blog" table="BLOG">

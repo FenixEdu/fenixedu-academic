@@ -46,6 +46,7 @@ public class ManageHomepageDA extends FenixDispatchAction {
             dynaActionForm.set("showAlumniDegrees", homepage.getShowAlumniDegrees().toString());
             dynaActionForm.set("researchUnitHomepage", homepage.getResearchUnitHomepage());
             dynaActionForm.set("researchUnit", homepage.getResearchUnit() != null ? homepage.getResearchUnit().getContent() : null);
+            dynaActionForm.set("showCurrentAttendingExecutionCourses", homepage.getShowCurrentAttendingExecutionCourses().toString());
     	} else {
             dynaActionForm.set("name", person.getName());
         }
@@ -81,6 +82,7 @@ public class ManageHomepageDA extends FenixDispatchAction {
     	} else {
     		researchUnitMultiLanguageString = null;
     	}
+    	final String showCurrentAttendingExecutionCourses = (String) dynaActionForm.get("showCurrentAttendingExecutionCourses");
 
     	final Object[] args = {
     			getUserView(request).getPerson(),
@@ -99,7 +101,8 @@ public class ManageHomepageDA extends FenixDispatchAction {
     			Boolean.valueOf(showActiveStudentCurricularPlans),
     			Boolean.valueOf(showAlumniDegrees),
     			researchUnitHomepage,
-    			researchUnitMultiLanguageString};
+    			researchUnitMultiLanguageString,
+    			Boolean.valueOf(showCurrentAttendingExecutionCourses) };
     	executeService(request, "SubmitHomepage", args);
 
         return prepare(mapping, actionForm, request, response);

@@ -13,7 +13,8 @@ public class SubmitHomepage extends Service {
     		final Boolean showWorkTelephone, final Boolean showMobileTelephone, final Boolean showAlternativeHomepage,
     		final Boolean showResearchUnitHomepage, final Boolean showCurrentExecutionCourses,
     		final Boolean showActiveStudentCurricularPlans, final Boolean showAlumniDegrees,
-    		final String researchUnitHomepage, final MultiLanguageString researchUnit) {
+    		final String researchUnitHomepage, final MultiLanguageString researchUnit,
+    		final Boolean showCurrentAttendingExecutionCourses) {
 
     	Homepage homepage = person.getHomepage();
     	if (homepage == null) {
@@ -37,6 +38,7 @@ public class SubmitHomepage extends Service {
     	homepage.setShowAlumniDegrees(showAlumniDegrees);
     	homepage.setResearchUnitHomepage(researchUnitHomepage);
     	homepage.setResearchUnit(researchUnit);
+    	homepage.setShowCurrentAttendingExecutionCourses(showCurrentAttendingExecutionCourses);
     }
 
 }

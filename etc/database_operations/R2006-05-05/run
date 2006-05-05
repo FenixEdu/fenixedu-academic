@@ -27,6 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Dropping Old Cms Tables" DropOldCmsMessagingTables.sql
-execute "Creating Messaging Tables" CreateMessagingTables.sql
 execute "Alter Homepage Table" alterTableHomepage.sql
