@@ -1,0 +1,64 @@
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Department -->
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.MarkSheet" table="MARKSHEET">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyExecutionPeriod"
+		column="KEY_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	 />
+	 <field-descriptor
+		name="keyResponsibleTeacher"
+		column="KEY_RESPONSIBLE_TEACHER"
+		jdbc-type="INTEGER"
+	 />
+	 <field-descriptor
+		name="keyEmployee"
+		column="KEY_EMPLOYEE"
+		jdbc-type="INTEGER"
+	 />
+	 <field-descriptor
+		name="keyCurricularCourse"
+		column="KEY_CURRICULAR_COURSE"
+		jdbc-type="INTEGER"
+	 />
+	<field-descriptor
+		name="creationDate"
+		column="CREATION_DATE"
+		jdbc-type="TIMESTAMP"
+	/>
+	<field-descriptor
+		name="evaluationDate"
+		column="EVALUATION_DATE"
+		jdbc-type="TIMESTAMP"
+	/>
+	<field-descriptor
+		name="confirmationDate"
+		column="CONFIRMATION_DATE"
+		jdbc-type="TIMESTAMP"
+	/>
+	<field-descriptor
+		name="checkSum"
+		column="CHECKSUM"
+		jdbc-type="VARCHAR"
+	/>
+    <field-descriptor
+        name="markSheetType"
+        column="MARKSHEET_TYPE"
+        jdbc-type="VARCHAR"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkSheetType2SqlMarkSheetTypeFieldConversion"
+    />                  
+    <field-descriptor
+        name="markSheetState"
+        column="MARKSHEET_STATE"
+        jdbc-type="VARCHAR"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkSheetState2SqlMarkSheetStateFieldConversion"
+    />
+</class-descriptor>   

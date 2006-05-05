@@ -81,6 +81,7 @@
 <!ENTITY studentCurriculum SYSTEM "repository_student_curriculum.xml">
 <!ENTITY homepage SYSTEM "repository_homepage.xml">
 <!ENTITY fileItem SYSTEM "repository_fileItem.xml">
+<!ENTITY markSheet SYSTEM "repository_marksheet.xml">
 <!ENTITY messaging SYSTEM "repository_messaging.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
@@ -168,7 +169,8 @@
     &studentCurriculum;
     &homepage;
     &fileItem;
-    &messaging;
+    &markSheet;
+	&messaging;
 
     <!-- Middleware -->
     <!--&middleware;-->
