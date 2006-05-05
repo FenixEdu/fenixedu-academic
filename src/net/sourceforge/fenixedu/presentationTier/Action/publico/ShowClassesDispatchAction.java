@@ -36,7 +36,8 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final Integer degreeOID = new Integer(request.getParameter("degreeOID"));
         request.setAttribute("degreeID", degreeOID);
-
+        request.setAttribute("degree", rootDomainObject.readDegreeByOID(degreeOID));
+        
         getInfoDegreeCurricularPlan(request, degreeOID);
 
         final IUserView userView = SessionUtils.getUserView(request);
