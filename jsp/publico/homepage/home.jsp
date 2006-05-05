@@ -29,6 +29,10 @@
 			<!--<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:-->
 			<logic:present name="homepage" property="person.employee.currentContract.workingUnit">
 				<bean:write name="homepage" property="person.employee.currentContract.workingUnit.name"/>
+				<logic:iterate id="parentUnit" name="homepage" property="person.employee.currentContract.workingUnit.parentByOrganizationalStructureAccountabilityType">
+					<br/>
+					<bean:write name="parentUnit" property="name"/>
+				</logic:iterate>
 				<br/>
 			</logic:present>
 		</p>
@@ -112,6 +116,29 @@
 				</logic:iterate>
 			</p>
 		</logic:equal>
+
+		<logic:notEmpty name="homepage" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
+			<logic:equal name="homepage" property="showCurrentAttendingExecutionCourses" value="true">
+				<p>
+					<bean:message key="label.homepage.showCurrentAttendingExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
+					<logic:iterate id="attend" name="homepage" property="person.currentAttends" length="1">
+						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+						<html:link href="<%= url %>">
+							<bean:write name="executionCourse" property="nome"/>
+						</html:link>
+					</logic:iterate>
+					<logic:iterate id="attend" name="homepage" property="person.currentAttends" offset="1">
+						,
+						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+						<html:link href="<%= url %>">
+							<bean:write name="executionCourse" property="nome"/>
+						</html:link>
+					</logic:iterate>
+				</p>
+			</logic:equal>
+		</logic:notEmpty>
 
 		<logic:equal name="homepage" property="showAlumniDegrees" value="true">
 			<p>

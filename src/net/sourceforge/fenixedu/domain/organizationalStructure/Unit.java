@@ -411,4 +411,14 @@ public class Unit extends Unit_Base {
         return null;
     }
 
+    public Set<Unit> getParentByOrganizationalStructureAccountabilityType() {
+    	final Set<Unit> result = new HashSet<Unit>();
+    	for (final Accountability accountability : getParentsSet()) {
+    		if (accountability.getAccountabilityType().getType() == AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE
+    				&& accountability.getParentParty() instanceof Unit) {
+    			result.add((Unit) accountability.getParentParty());
+    		}
+    	}
+    	return result;
+    }
 }

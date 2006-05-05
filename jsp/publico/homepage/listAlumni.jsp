@@ -7,7 +7,7 @@
 <logic:present name="homepages">
 	<logic:notPresent name="selectedPage">
 		<logic:iterate id="entry" name="homepages">
-			<html:link page="/viewHomepage.do?method=listStudents" paramId="selectedPage" paramName="entry" paramProperty="key.idInternal">
+			<html:link page="/viewHomepage.do?method=listAlumni" paramId="selectedPage" paramName="entry" paramProperty="key.idInternal">
 				<bean:message name="entry" property="key.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
 				<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
 				<bean:write name="entry" property="key.name"/>

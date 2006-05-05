@@ -53,156 +53,197 @@
 	<p><strong><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/>:</strong></p>
 
 	<table class="tform01">
-	<tr><td class="leftcol"><bean:message key="label.homepage.name" bundle="HOMEPAGE_RESOURCES"/>:</td><td><html:text property="name" size="50"/><br />
-		<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
-		</td>
-	</tr>
-	<logic:present name="UserView" property="person.employee.currentContract.workingUnit">
 		<tr>
 			<td class="leftcol">
-				<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
+				<bean:message key="label.homepage.name" bundle="HOMEPAGE_RESOURCES"/>:
 			</td>
-			<td>
-				<html:checkbox property="showUnit" value="true"/>
-				<bean:write name="UserView" property="person.employee.currentContract.workingUnit.name"/>
+			<td colspan="3">
+				<html:text property="name" size="50"/>
+				<br />
+				<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
 			</td>
 		</tr>
-	</logic:present>
-	<logic:present name="UserView" property="person.teacher">
-		<logic:present name="UserView" property="person.employee.currentContract">
+		<logic:present name="UserView" property="person.employee.currentContract.workingUnit">
 			<tr>
 				<td class="leftcol">
-					<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>
+					<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
 				</td>
 				<td>
-					<html:checkbox property="showCategory" value="true"/>
-					<logic:present name="UserView" property="person.teacher">
-						<bean:write name="UserView" property="person.teacher.category.longName"/>
-					</logic:present>
+					<html:checkbox property="showUnit" value="true"/>
 				</td>
-			</tr>
-			<tr>
-				<td class="leftcol">
-					<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>
-				</td>
-				<td>
-					<html:checkbox property="showResearchUnitHomepage" value="true"/>
-					<table>
-						<tr>
-							<td>
-								<bean:message key="label.homepage.research.unit.homepage" bundle="HOMEPAGE_RESOURCES"/>
-							</td>
-							<td>
-								<html:text property="researchUnitHomepage"/>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<bean:message key="label.homepage.research.unit.name" bundle="HOMEPAGE_RESOURCES"/>
-							</td>
-							<td>
-								<html:text property="researchUnit"/>
-							</td>
-						</tr>
-					</table>
+				<td colspan="2">
+					<p>
+						<bean:write name="UserView" property="person.employee.currentContract.workingUnit.name"/>
+						<logic:iterate id="parentUnit" name="UserView" property="person.employee.currentContract.workingUnit.parentByOrganizationalStructureAccountabilityType">
+							<br/>
+							<bean:write name="parentUnit" property="name"/>
+						</logic:iterate>
+					</p>
 				</td>
 			</tr>
 		</logic:present>
-	</logic:present>
-	<logic:notEmpty name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
-		<tr>
-			<td class="leftcol">
-				<bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:
-			</td>
-			<td>
-				<html:checkbox property="showActiveStudentCurricularPlans" value="true"/>
-				<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
-					<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
-					<html:link href="<%= url %>">
-						<logic:present name="studentCurricularPlan" property="specialization.name">
-							<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
-								<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
-							</logic:equal>
-							<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
-								<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
-							</logic:notEqual>
+		<logic:present name="UserView" property="person.teacher">
+			<logic:present name="UserView" property="person.employee.currentContract">
+				<tr>
+					<td class="leftcol">
+						<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>
+					</td>
+					<td>
+						<html:checkbox property="showCategory" value="true"/>
+					</td>
+					<td colspan="2">
+						<logic:present name="UserView" property="person.teacher">
+							<bean:write name="UserView" property="person.teacher.category.longName"/>
 						</logic:present>
-						<logic:notPresent name="studentCurricularPlan" property="specialization.name">
-							<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
-						</logic:notPresent>
-						<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
-						<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
-					</html:link>
-				</logic:iterate>
-				<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
-					,
-					<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
-					<html:link href="<%= url %>">
-						<logic:present name="studentCurricularPlan" property="specialization.name">
-							<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
-								<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
-							</logic:equal>
-							<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+					</td>
+				</tr>
+				<tr>
+					<td class="leftcol" rowspan="2">
+						<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>
+					</td>
+					<td rowspan="2">
+						<html:checkbox property="showResearchUnitHomepage" value="true"/>
+					</td>					
+					<td>
+						<bean:message key="label.homepage.research.unit.homepage" bundle="HOMEPAGE_RESOURCES"/>
+					</td>
+					<td>
+						<html:text property="researchUnitHomepage"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<bean:message key="label.homepage.research.unit.name" bundle="HOMEPAGE_RESOURCES"/>
+					</td>
+					<td>
+						<html:text property="researchUnit"/>
+					</td>
+				</tr>
+			</logic:present>
+		</logic:present>
+		<logic:notEmpty name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
+			<tr>
+				<td class="leftcol">
+					<bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:
+				</td>
+				<td class="leftcol">
+					<html:checkbox property="showActiveStudentCurricularPlans" value="true"/>
+				</td>
+				<td colspan="2">
+					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+						<html:link href="<%= url %>">
+							<logic:present name="studentCurricularPlan" property="specialization.name">
+								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
+								</logic:equal>
+								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+									<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+								</logic:notEqual>
+							</logic:present>
+							<logic:notPresent name="studentCurricularPlan" property="specialization.name">
 								<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
-							</logic:notEqual>
-						</logic:present>
-						<logic:notPresent name="studentCurricularPlan" property="specialization.name">
-							<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
-						</logic:notPresent>
-						<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
-						<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
-					</html:link>
-				</logic:iterate>
-			</td>
-		</tr>
-	</logic:notEmpty>
-	<logic:notEmpty name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
-		<tr>
-			<td class="leftcol">
-				<bean:message key="label.homepage.showAlumniDegrees" bundle="HOMEPAGE_RESOURCES"/>:
-			</td>
-			<td>
-				<html:checkbox property="showAlumniDegrees" value="true"/>
-				<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
-					<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
-					<html:link href="<%= url %>">
-						<logic:present name="studentCurricularPlan" property="specialization.name">
-							<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
-								<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
-							</logic:equal>
-							<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+							</logic:notPresent>
+							<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+							<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+						</html:link>
+					</logic:iterate>
+					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
+						,
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+						<html:link href="<%= url %>">
+							<logic:present name="studentCurricularPlan" property="specialization.name">
+								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
+								</logic:equal>
+								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+									<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+								</logic:notEqual>
+							</logic:present>
+							<logic:notPresent name="studentCurricularPlan" property="specialization.name">
 								<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
-							</logic:notEqual>
-						</logic:present>
-						<logic:notPresent name="studentCurricularPlan" property="specialization.name">
-							<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
-						</logic:notPresent>
-						<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
-						<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
-					</html:link>
-				</logic:iterate>
-				<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
-					,
-					<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
-					<html:link href="<%= url %>">
-						<logic:present name="studentCurricularPlan" property="specialization.name">
-							<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
-								<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
-							</logic:equal>
-							<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+							</logic:notPresent>
+							<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+							<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+						</html:link>
+					</logic:iterate>
+				</td>
+			</tr>
+			<tr>
+				<td class="leftcol">
+					<bean:message key="label.homepage.showCurrentAttendingExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
+				</td>
+				<td class="leftcol">
+					<html:checkbox property="showCurrentAttendingExecutionCourses" value="true"/>
+				</td>
+				<td colspan="2">
+					<logic:iterate id="attend" name="UserView" property="person.currentAttends" length="1">
+						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+						<html:link href="<%= url %>">
+							<bean:write name="executionCourse" property="nome"/>
+						</html:link>
+					</logic:iterate>
+					<logic:iterate id="attend" name="UserView" property="person.currentAttends" offset="1">
+						,
+						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+						<html:link href="<%= url %>">
+							<bean:write name="executionCourse" property="nome"/>
+						</html:link>
+					</logic:iterate>
+				</td>
+			</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
+			<tr>
+				<td class="leftcol">
+					<bean:message key="label.homepage.showAlumniDegrees" bundle="HOMEPAGE_RESOURCES"/>:
+				</td>
+				<td class="leftcol">
+					<html:checkbox property="showAlumniDegrees" value="true"/>
+				</td>
+				<td colspan="2">
+					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+						<html:link href="<%= url %>">
+							<logic:present name="studentCurricularPlan" property="specialization.name">
+								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
+								</logic:equal>
+								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+									<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+								</logic:notEqual>
+							</logic:present>
+							<logic:notPresent name="studentCurricularPlan" property="specialization.name">
 								<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
-							</logic:notEqual>
-						</logic:present>
-						<logic:notPresent name="studentCurricularPlan" property="specialization.name">
-							<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
-						</logic:notPresent>
-						<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
-						<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
-					</html:link>
-				</logic:iterate>
-			</td>
-		</tr>
-	</logic:notEmpty>
+							</logic:notPresent>
+							<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+							<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+						</html:link>
+					</logic:iterate>
+					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
+						,
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+						<html:link href="<%= url %>">
+							<logic:present name="studentCurricularPlan" property="specialization.name">
+								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
+								</logic:equal>
+								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
+									<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+								</logic:notEqual>
+							</logic:present>
+							<logic:notPresent name="studentCurricularPlan" property="specialization.name">
+								<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+							</logic:notPresent>
+							<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+							<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+						</html:link>
+					</logic:iterate>
+				</td>
+			</tr>
+		</logic:notEmpty>
 <!--
 	<tr><td class="leftcol"><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:</td>
 		<td>
@@ -218,69 +259,118 @@
 		</td>
 	</tr>
 -->
-	<tr><td class="leftcol"><bean:message key="label.homepage.showPhoto" bundle="HOMEPAGE_RESOURCES"/>:</td><td> <html:checkbox property="showPhoto" value="true"/> <html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" /> </td></tr>
-	<tr><td class="leftcol"><bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>:</td>
-		<td style="vertical-align: center;">
-			<html:checkbox property="showEmail" value="true"/>
-			<bean:write name="UserView" property="person.email"/>
-			<%--
-			<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&personID=<bean:write name="UserView" property="person.idInternal"/></bean:define>
-			<html:img align="middle" src="<%= emailURL %>"/>
-			 --%>
-		</td>
-	</tr>
-	<tr><td class="leftcol"><bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>:</td>
-		<td>
-			<html:checkbox property="showTelephone" value="true"/> <bean:write name="UserView" property="person.phone"/>
-		</td>
-	</tr>
-	<tr><td class="leftcol"><bean:message key="label.homepage.showWorkTelephone" bundle="HOMEPAGE_RESOURCES"/>:</td>
-		<td>
-			<html:checkbox property="showWorkTelephone" value="true"/>
-			<bean:write name="UserView" property="person.workPhone"/>
-		</td>
-	</tr>
-	<tr><td class="leftcol"><bean:message key="label.homepage.showMobileTelephone" bundle="HOMEPAGE_RESOURCES"/>:</td>
-		<td>
-		<html:checkbox property="showMobileTelephone" value="true"/>
-		<bean:write name="UserView" property="person.mobile"/>
-		</td>
-	</tr>
+		<tr>
+			<td class="leftcol">
+				<bean:message key="label.homepage.showPhoto" bundle="HOMEPAGE_RESOURCES"/>:
+			</td>
+			<td>
+				<html:checkbox property="showPhoto" value="true"/>
+			</td>
+			<td colspan="2">
+				<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" />
+			</td>
+		</tr>
+
+		<tr>
+			<td class="leftcol">
+				<bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>:
+			</td>
+			<td style="vertical-align: center;">
+				<html:checkbox property="showEmail" value="true"/>
+			</td>
+			<td style="vertical-align: center;" colspan="2">
+				<bean:write name="UserView" property="person.email"/>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="leftcol">
+				<bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>:
+			</td>
+			<td>
+				<html:checkbox property="showTelephone" value="true"/>
+			</td>
+			<td colspan="2">
+				<bean:write name="UserView" property="person.phone"/>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="leftcol">
+				<bean:message key="label.homepage.showWorkTelephone" bundle="HOMEPAGE_RESOURCES"/>:
+			</td>
+			<td>
+				<html:checkbox property="showWorkTelephone" value="true"/>
+			</td>
+			<td colspan="2">
+				<bean:write name="UserView" property="person.workPhone"/>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="leftcol">
+				<bean:message key="label.homepage.showMobileTelephone" bundle="HOMEPAGE_RESOURCES"/>:
+			</td>
+			<td>
+				<html:checkbox property="showMobileTelephone" value="true"/>
+			</td>
+			<td colspan="2">
+				<bean:write name="UserView" property="person.mobile"/>
+			</td>
+		</tr>
 	
-	<tr><td class="leftcol"><bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/>:</td>
-		<td>
-			<html:checkbox property="showAlternativeHomepage" value="true"/>
-			<bean:define id="url" type="java.lang.String" name="UserView" property="person.webAddress"/>
-			<html:link href="<%= url %>">
-				<bean:write name="UserView" property="person.webAddress"/>
-			</html:link>
-		</td>
-	</tr>
-	
-	<logic:present name="UserView" property="person.teacher">
-	<logic:present name="UserView" property="person.employee.currentContract">
-	<tr><td class="leftcol"><bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:</td>
-		<td>
-			<html:checkbox property="showCurrentExecutionCourses" value="true"/>
-			<logic:iterate id="executionCourse" name="UserView" property="person.teacher.currentExecutionCourses" length="1">
-				<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+		<tr>
+			<td class="leftcol">
+				<bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/>:
+			</td>
+			<td>
+				<html:checkbox property="showAlternativeHomepage" value="true"/>
+			</td>
+			<td colspan="2">
+				<bean:define id="url" type="java.lang.String" name="UserView" property="person.webAddress"/>
 				<html:link href="<%= url %>">
-					<bean:write name="executionCourse" property="nome"/>
+					<bean:write name="UserView" property="person.webAddress"/>
 				</html:link>
-			</logic:iterate>
-			<logic:iterate id="executionCourse" name="UserView" property="person.teacher.currentExecutionCourses" offset="1">
-				, 
-				<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
-				<html:link href="<%= url %>">
-					<bean:write name="executionCourse" property="nome"/>
-				</html:link>
-			</logic:iterate>
-		</td>
-	</tr>
-	</logic:present>
-	</logic:present>
+			</td>
+		</tr>
 	
-	<tr><td class="leftcol"></td><td><html:submit styleClass="mvert05"><bean:message key="person.homepage.submit" bundle="HOMEPAGE_RESOURCES"/></html:submit></td></tr>
+		<logic:present name="UserView" property="person.teacher">
+			<logic:present name="UserView" property="person.employee.currentContract">
+				<tr>
+					<td class="leftcol">
+						<bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
+					</td>
+					<td>
+						<html:checkbox property="showCurrentExecutionCourses" value="true"/>
+					</td>
+					<td colspan="2">
+						<logic:iterate id="executionCourse" name="UserView" property="person.teacher.currentExecutionCourses" length="1">
+							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+							<html:link href="<%= url %>">
+								<bean:write name="executionCourse" property="nome"/>
+							</html:link>
+						</logic:iterate>
+						<logic:iterate id="executionCourse" name="UserView" property="person.teacher.currentExecutionCourses" offset="1">
+							, 
+							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+							<html:link href="<%= url %>">
+								<bean:write name="executionCourse" property="nome"/>
+							</html:link>
+						</logic:iterate>
+					</td>
+				</tr>
+			</logic:present>
+		</logic:present>
+	
+		<tr>
+			<td class="leftcol">
+			</td>
+			<td colspan="3">
+				<html:submit styleClass="mvert05">
+					<bean:message key="person.homepage.submit" bundle="HOMEPAGE_RESOURCES"/>
+				</html:submit>
+			</td>
+		</tr>
 	</table>
 
 </html:form>

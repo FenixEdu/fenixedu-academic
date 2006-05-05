@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -1255,6 +1256,20 @@ public class Person extends Person_Base {
             }
         }
         return result;
+    }
+
+    public SortedSet<Attends> getCurrentAttends() {
+    	final SortedSet<Attends> attends = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR);
+    	for (final Student student : getStudentsSet()) {
+    		for (final Attends attend : student.getAssociatedAttendsSet()) {
+    			final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+    			final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+    			if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
+    				attends.add(attend);
+    			}
+    		}
+    	}
+    	return attends;
     }
 
 }
