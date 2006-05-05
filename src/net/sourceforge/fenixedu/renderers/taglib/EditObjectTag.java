@@ -368,7 +368,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
     }
 
     protected Schema getComputedSchema(Object targetObject) {
-        if (getSlot() == null) {
+        if (getSlot() == null && isVisible()) {
             return RenderKit.getInstance().findSchema(getSchema());
         }
         else {
