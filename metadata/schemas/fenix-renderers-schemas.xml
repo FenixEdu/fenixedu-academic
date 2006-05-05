@@ -5,6 +5,7 @@
 -->
 <!DOCTYPE schemas SYSTEM "fenix-renderers-schemas.dtd" [
 	<!ENTITY researcher SYSTEM "researcher-schemas.xml">
+	<!ENTITY markSheet SYSTEM "markSheet-schemas.xml">
 	<!ENTITY messaging SYSTEM "messaging-schemas.xml">
 ]>
 
@@ -504,5 +505,6 @@
 	</schema>
 
 	&researcher;
+	&markSheet;
 	&messaging;
 </schemas>
