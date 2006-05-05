@@ -141,6 +141,16 @@ public class CreateClassificationsForStudents extends Service {
                 limits.length);
 
         Collections.sort(students, new BeanComparator(field));
+        
+        List<Student> weakStudents = new ArrayList<Student>();
+        for (Student student : students) {
+            if(((Double) fieldGetter.transform(student)) == 0.0){
+                weakStudents.add(student);
+                fieldSetter.execute(new GenericPair<Student, Character>(student, 'F'));
+            }
+        }
+        studentsClassifications.put('F', weakStudents);
+        students.removeAll(weakStudents);
 
         char classification = 'A';
         ListIterator<Student> studentsIter = students.listIterator(students.size());
@@ -166,12 +176,12 @@ public class CreateClassificationsForStudents extends Service {
             classification++;
         }
 
-        List<Student> weakStudents = students.subList((int) Math.ceil(students.size()
-                * (limits[0] / 100.0)), studentsIter.nextIndex());
-        for (Student weakStudent : weakStudents) {
-            fieldSetter.execute(new GenericPair<Student, Character>(weakStudent, classification));
-        }
-        studentsClassifications.put(classification, weakStudents);
+//        List<Student> weakStudents = students.subList((int) Math.ceil(students.size()
+//                * (limits[0] / 100.0)), studentsIter.nextIndex());
+//        for (Student weakStudent : weakStudents) {
+//            fieldSetter.execute(new GenericPair<Student, Character>(weakStudent, classification));
+//        }
+//        studentsClassifications.put(classification, weakStudents);
         return studentsClassifications;
     }
 
