@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
+import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -398,6 +399,24 @@ public class RenderUtils {
         }
     }
     
+    /**
+     * Obtains the renderer's view state processed and contained in the current request that has the given id.
+     */
+    public static IViewState getViewState(String id) {
+        List<IViewState> viewStates = (List<IViewState>) RenderersRequestProcessor.getCurrentRequest().getAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+        
+        if (viewStates != null) {
+            for (IViewState state : viewStates) {
+                if (id.equals(state.getId())) {
+                    return state;
+                }
+                
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Updates the current request to contain a custom view state. This methods is intended to be used
      * with a view state obtained from it's serialized form and not directly with {@link #getViewState()}.
