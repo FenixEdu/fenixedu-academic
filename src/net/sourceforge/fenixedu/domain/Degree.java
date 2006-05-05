@@ -369,7 +369,7 @@ public class Degree extends Degree_Base {
             // investigate dcps initial dates
             return getMostRecentDegreeCurricularPlanByInitialDate();
         } else {
-            return mostRecentExecutionDegree.getDegreeCurricularPlan();    
+            return (mostRecentExecutionDegree != null) ? mostRecentExecutionDegree.getDegreeCurricularPlan() : null;    
         }
     }
     
