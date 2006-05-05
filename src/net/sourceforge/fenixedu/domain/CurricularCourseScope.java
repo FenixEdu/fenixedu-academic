@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
@@ -11,6 +12,16 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class CurricularCourseScope extends CurricularCourseScope_Base {
 
+    public static Comparator<CurricularCourseScope> CURRICULAR_COURSE_NAME_COMPARATOR = new Comparator<CurricularCourseScope>() {
+        public int compare(CurricularCourseScope c1, CurricularCourseScope c2) {
+            int nameComparation = c1.getCurricularCourse().getName().compareTo(c2.getCurricularCourse().getName());
+            if(nameComparation != 0){
+                return nameComparation;                
+            }            
+            return c1.getCurricularCourse().getIdInternal().compareTo(c2.getCurricularCourse().getIdInternal());
+        }  
+    };
+    
 	public CurricularCourseScope() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
