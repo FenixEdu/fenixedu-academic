@@ -1,0 +1,46 @@
+/*
+ * Created on May 3, 2006
+ */
+package net.sourceforge.fenixedu.presentationTier.renderers.validators;
+
+import net.sourceforge.fenixedu.renderers.components.Validatable;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
+
+public class GradeValidator extends HtmlValidator {
+
+    public GradeValidator(Validatable component) {
+        super(component);
+        setMessage("renderers.validator.grade");
+        setKey(true);
+    }
+
+    @Override
+    public void performValidation() {
+        String grade = getComponent().getValue();
+
+        if (grade == null || grade.length() == 0 || grade.equalsIgnoreCase("NA") || grade.equalsIgnoreCase("RE") || grade.equalsIgnoreCase("AP")) {
+            setValid(true);
+        } else {
+            try {
+                Integer integer = Integer.valueOf(grade);
+                
+                if (! (integer >= 10 && integer <= 20)) {
+                    setValid(false);
+                } else {
+                    setValid(true);
+                }
+
+            } catch (NumberFormatException e) {
+                setValid(false);
+            }
+        }
+    }
+    
+    @Override
+    protected String getResourceMessage(String message) {
+        return RenderUtils.getFormatedResourceString(message, getComponent().getValue());
+    }
+
+
+}
