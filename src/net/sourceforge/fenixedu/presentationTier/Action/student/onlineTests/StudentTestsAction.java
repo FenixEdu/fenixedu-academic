@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.onlineTests;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.NotAuth
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentDistributedTests;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -54,8 +56,9 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         List studentExecutionCoursesList = null;
         try {
-            studentExecutionCoursesList = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByStudentTests", new Object[] { userView
-                    .getUtilizador() });
+        	final Collection<Student> students = userView.getPerson().getStudentsSet();
+        	final Object[] args = { students.isEmpty() ? null : students.iterator().next() };
+            studentExecutionCoursesList = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByStudentTests", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

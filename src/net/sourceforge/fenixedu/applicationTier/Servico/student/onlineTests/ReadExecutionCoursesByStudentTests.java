@@ -19,8 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionCoursesByStudentTests extends Service {
 
-    public Object run(String userName) throws ExcepcaoPersistencia {
-        final Student student = Student.readByUsername(userName);
+    public Object run(final Student student) throws ExcepcaoPersistencia {
         final List<Attends> attends = student.getAssociatedAttends();
 
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
