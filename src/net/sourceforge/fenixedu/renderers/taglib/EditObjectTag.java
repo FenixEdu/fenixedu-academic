@@ -34,6 +34,8 @@ import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.taglib.TagUtils;
 
+import com.sun.faces.taglib.html_basic.FormTag;
+
 public class EditObjectTag extends BaseRenderObjectTag {
     
     private boolean nested;
@@ -219,7 +221,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
             hiddenFields.add(htmlViewStateField);
         }
         
-        if (isNested() || getSlot() != null) {
+        if (isNested() || hasFormParent() || getSlot() != null) {
             HtmlInlineContainer container = new HtmlInlineContainer();
             
             for (HtmlHiddenField field : hiddenFields) {
@@ -250,6 +252,18 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
         
         componentToDraw.draw(pageContext);
+    }
+
+    private boolean hasFormParent() {
+        if (findAncestorWithClass(this, FormTag.class) != null) {
+            return true;
+        }
+        
+        if (findAncestorWithClass(this, net.sourceforge.fenixedu.renderers.taglib.FormTag.class) != null) {
+            return true;
+        }
+        
+        return false;
     }
 
     protected void addViewStateToParentForm(IViewState viewState) {

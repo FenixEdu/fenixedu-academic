@@ -711,4 +711,31 @@
       </description>
     </attribute>
   </tag>
+
+  <tag>
+    <name>form</name>
+    <tag-class>net.sourceforge.fenixedu.renderers.taglib.FormTag</tag-class>
+    <body-content>JSP</body-content>
+
+    <attribute>
+      <name>action</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        The path to were the form will be submited. This path is module-relative.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>encoding</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Selects the encoding of the form.
+      </description>
+    </attribute>
+  </tag>
+  
 </taglib>
