@@ -2011,7 +2011,7 @@
 			scope="request" 
 			parameter="method"
             input="/editPublication.do?method=lightPrepare" 
-			validate="false">
+			validate="true">
             <forward name="edit" path="edit-publication"/>
             <forward name="searchAuthors" path="search-authors-for-edit-publication"/>
 			<forward name="done" path="/publicationManagement.do"/>
