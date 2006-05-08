@@ -71,9 +71,13 @@ public class UsernameUtils extends FenixUtil {
             }else if(username.startsWith("C")) {
                 return person.getIstUsername();
             }else if(username.startsWith("P")){
-                User user = Collections.max(RootDomainObject.getInstance().getUsers(), User.USER_UID_COMPARATOR);
-                Integer maxIstNumber = Integer.valueOf(user.getUserUId().replaceFirst("[a-zA-Z]+", ""));
-                istUsername = ist + (maxIstNumber + 1);
+            	if (RootDomainObject.getInstance().getUsers().isEmpty()) {
+            		istUsername = ist + "0000001";
+            	} else {
+            		User user = Collections.max(RootDomainObject.getInstance().getUsers(), User.USER_UID_COMPARATOR);
+            		Integer maxIstNumber = Integer.valueOf(user.getUserUId().replaceFirst("[a-zA-Z]+", ""));
+            		istUsername = ist + (maxIstNumber + 1);
+            	}
             }
             
             return istUsername;
