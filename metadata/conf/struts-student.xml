@@ -782,6 +782,14 @@
   			<forward name="showWeeklyWorkLoad" path="show-weekly-work-load"/>
   		</action>
   		
+	 	<action path="/viewExecutionCourseForuns"
+  			type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewExecutionCourseForunsDispatchAction"
+  			scope="request"
+  			parameter="method"
+  			>
+  			<forward name="viewForuns" path="view-execution-course-foruns"/>
+  		</action>
+  		
 	</action-mappings>     
 
     

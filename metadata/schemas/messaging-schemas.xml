@@ -2,3 +2,20 @@
 	<slot name="name"/>
 </schema>
 
+<schema name="forum.view-with-topics-and-message-count" type="net.sourceforge.fenixedu.domain.messaging.Forum">
+	<slot name="name" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.name"/>
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
+	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.creationDate"/>
+	<slot name="conversationThreadsCount" key="label.forum.totalConversationThreads"/>
+	<slot name="conversationMessagesCount" key="label.forum.totalConversationMessages"/>
+</schema>
+
+<schema name="conversationThread.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
+   	<slot name="name"/>
+</schema>
+
+<schema name="conversationMessage.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
+   	<slot name="body"/>
+   	<slot name="conversationThread.subject"/>
+</schema>
+

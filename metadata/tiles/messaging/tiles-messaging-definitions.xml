@@ -8,7 +8,6 @@
 	  <put name="serviceName" value="Serviço de Comunicações" />
 	  <put name="navLocal" value="/messaging/messagingNavLocal.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
-	  <put name="body-context" value="/commons/contextMessages.jsp"/>
 	  <put name="body" value="/messaging/start.jsp"/>
       <put name="footer" value="/copyright.jsp" />
 	</definition>	

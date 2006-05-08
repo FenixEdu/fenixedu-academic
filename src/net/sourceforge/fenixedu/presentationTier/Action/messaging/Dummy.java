@@ -27,23 +27,23 @@ import org.apache.struts.action.ActionMapping;
 public class Dummy extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException {
 
-	IUserView userView = this.getUserView(request);
-	WriteExecutionCourseForumParameters parameters = new WriteExecutionCourseForumParameters();
-	parameters.description="Descrição dummy sempre baixo ";
-	parameters.name="Forum IRS";
-	parameters.owner=userView.getPerson();
-	Group group = new PersonGroup(userView.getPerson());
-	parameters.readersGroup=group;
-	parameters.writersGroup=group;
-	try {
-	    ServiceManagerServiceFactory.executeService(userView,
-	    	"WriteExecutionCourseForum", new Object[]{parameters});
-	} catch (Exception e) {
-	    throw new FenixActionException(e);
-	}
+        IUserView userView = this.getUserView(request);
+        WriteExecutionCourseForumParameters parameters = new WriteExecutionCourseForumParameters();
+        parameters.description = "Descrição dummy sempre baixo ";
+        parameters.name = "Forum IRS";
+        parameters.owner = userView.getPerson();
+        Group group = new PersonGroup(userView.getPerson());
+        parameters.readersGroup = group;
+        parameters.writersGroup = group;
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "WriteExecutionCourseForum",
+                    new Object[] { parameters });
+        } catch (Exception e) {
+            throw new FenixActionException(e);
+        }
 
-	return mapping.findForward("Success");
+        return mapping.findForward("Success");
     }
 }

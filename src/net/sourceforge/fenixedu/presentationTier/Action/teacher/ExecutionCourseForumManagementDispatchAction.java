@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -47,12 +50,15 @@ public class ExecutionCourseForumManagementDispatchAction extends FenixDispatchA
 
         if (request.getParameter("createForum") != null) {
             ServiceUtils.executeService(getUserView(request), "CreateExecutionCourseForum",
-                    new Object[] { executionCourseId, userView.getPerson().getIdInternal(),"Geral",
+                    new Object[] { executionCourseId, userView.getPerson().getIdInternal(), "Geral",
                             "Lista geral de discussão" });
         }
 
-        SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadCourseInformation",
-                new Object[] { executionCourseId });
+        ISiteComponent commonComponent = new InfoSiteCommon();
+        Object[] args = { executionCourseId, commonComponent, null, null, null, null };
+
+        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
+                .executeService(userView, "TeacherAdministrationSiteComponentService", args);
         request.setAttribute("siteView", siteView);
         request.setAttribute("objectCode", executionCourseId);
 

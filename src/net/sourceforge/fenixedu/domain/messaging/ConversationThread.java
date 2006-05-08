@@ -21,5 +21,5 @@ public class ConversationThread extends ConversationThread_Base {
         ConversationMessage conversationMessage = new ConversationMessage(creator, body);
         this.addConversationMessages(conversationMessage);
     }
-
+   
 }

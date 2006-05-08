@@ -6,31 +6,13 @@
 
 <logic:present name="forum">
 
-	<fr:view name="forum" layout="tabular" schema="messaging.viewForuns.forum">
-
+	<h2><bean:message key="label.viewForum.title"/></h2>
+	
+	<fr:view name="forum" schema="forum.view-with-topics-and-message-count">
+		<fr:layout name="tabular">
+	        <fr:property name="classes" value="style1"/>
+	        <fr:property name="columnClasses" value="listClasses,"/>
+	    </fr:layout>
 	</fr:view>
-
-asas<br>
-	<%
-	java.util.HashMap parameters = new java.util.HashMap();
-	parameters.put("method","prepareCreateThreadAndMessage");
-	parameters.put("forumId",request.getParameter("forumId"));
-	request.setAttribute("parameters",parameters);
-	%>
-	
-	<html:link action="/forunsManagement" name="parameters">
-		papada doce
-	</html:link>
-	
-bla<br>
-	getConversationThreads:
-	
-	<fr:view name="forum" property="conversationThreads" layout="tabular" schema="messaging.viewForuns.forum">
-
-	</fr:view>	
-
-
-	
-	
 	
 </logic:present>

@@ -49,6 +49,15 @@ public abstract class Forum extends Forum_Base {
 
         return false;
     }
-    
+
+    public int getConversationMessagesCount() {
+        int total = 0;
+
+        for (ConversationThread conversationThread : getConversationThreads()) {
+            total += conversationThread.getConversationMessagesCount();
+        }
+        
+        return total;
+    }
 
 }

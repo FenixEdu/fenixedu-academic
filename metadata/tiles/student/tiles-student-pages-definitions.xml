@@ -187,4 +187,8 @@
 		<put name="body" value="/student/weeklyWorkLoad.jsp" />
 	</definition>
 	
+	<definition name="view-execution-course-foruns" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewExecutionCourseForuns.jsp" />
+	</definition>
+	
 </tiles-definitions>
