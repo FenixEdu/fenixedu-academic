@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.renderers;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -12,8 +11,8 @@ import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.HtmlTextInput;
-import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import net.sourceforge.fenixedu.renderers.converters.DateConverter;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 
@@ -32,8 +31,6 @@ import org.apache.struts.util.RequestUtils;
  */
 public class DateInputRenderer extends TextFieldRenderer {
 
-    private static final String DEFAULT_FORMAT = "dd/MM/yyyy";
-    
     private String format;
     
     /**
@@ -51,7 +48,7 @@ public class DateInputRenderer extends TextFieldRenderer {
     }
 
     public String getFormat() {
-        return this.format == null ? DEFAULT_FORMAT : format;
+        return this.format == null ? DateConverter.DEFAULT_FORMAT : format;
     }
 
     public boolean isFormatSet() {
@@ -110,33 +107,6 @@ public class DateInputRenderer extends TextFieldRenderer {
             super.applyStyle(container.getChildren().get(0));
         }
         
-    }
-    
-    public static class DateConverter extends Converter {
-        private SimpleDateFormat format;
-        
-        public DateConverter(SimpleDateFormat format) {
-            this.format = format;
-        }
-
-        @Override
-        public Object convert(Class type, Object value) {
-            if (value == null) {
-                return null;
-            }
-            
-            String text = ((String) value).trim();
-            
-            if (text.length() == 0) {
-                return null;
-            }
-            
-            try {
-                return format.parse(text);
-            } catch (ParseException e) {
-                throw new ConversionException("renderers.converter.date", e, true, value);
-            }
-        }
     }
     
 }

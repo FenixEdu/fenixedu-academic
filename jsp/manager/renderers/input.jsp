@@ -12,6 +12,8 @@
         <li><a href="#validator">Let's validate the input before you do more harm</a></li>
         <li><a href="#define-validator">What is a validator?</a></li>
         <li><a href="#create">How do we create new objects?</a></li>
+        <li><a href="#defaults">Can I choose the default values?</a></li>
+        <li><a href="#dynamic-defaults">Hey! Default values in schemas are bad</a></li>
         <li><a href="#create-multiple">Can I create multiple objects at the same time?</a></li>
         <li><a href="#hidden">And if the user does not provide enough input?</a></li>
     </ul>
@@ -221,7 +223,7 @@ public class RegexpValidator extends HtmlValidator {
     by the renderer. The getters and setters allow you to specify the <code>regexp</code> from the
     schema's definition. The <code>getResourceMessage</code> was overriden to allow the resource string 
     to display the <code>regexp</code> used. The main method, <code>performValidation</code> does
-    what you would expect: gets the text from the component beeing validated, and sets this validator
+    what you would expect: gets the text from the component being validated, and sets this validator
     valid only if the component value mathes the regular expression.
 </p>
 
@@ -297,6 +299,9 @@ public class RegexpValidator extends HtmlValidator {
     the viewstate is preserved and the form presentation is associated with that viewstate.
 </p>
 
+<h3>Can I choose the default values?</h3>
+<a name="defaults"></a>
+
 <p>
     As you may have noticed, all fields appear blank at first. This happens because we don't have 
     an instance to provide the values, so new default values are presented. Nevertheless you can 
@@ -335,6 +340,80 @@ public class RegexpValidator extends HtmlValidator {
     </div>
 </div>
 
+<h3>Hey! Default values in schemas are bad</h3>
+<a name="dynamic-defaults"></a>
+
+<p>
+    Indeed they are. But they are simple and are directly tied to the schema, that is,
+    to the place were you tell how you want the object to be presented. The default value,
+    as presented before, allows you to statically specify values that are independent from the
+    context were the schema is being used. This works reasonably well for enumerates or some
+    strings but is less good for complex values that cannot be easily represented as a string.
+</p>
+
+<p>
+    So, you can also specify default values for slots directly in the page. To do this you need
+    to use the tag <tt>fr:default</tt> inside a <tt>fr:create</tt> tag. There is only one required
+    attribute for the <tt>fr:default</tt> tag. The <tt>slot</tt> attribute allows you to specify 
+    the name of the slot for which you are defining the default value. All other attributes allow 
+    you two ways to specify the concrete value.
+</p>
+
+<p>
+    You can use either the <tt>name</tt>, <tt>property</tt>, and <tt>scope</tt> attributes to
+    select a value that is already accessible from the page or the <tt>value</tt> and 
+    <tt>converter</tt> attributes to create a value from a string. The last approach is similar
+    to specifying the default value in the schema but allows you to create a dynamic default
+    and indicate how to convert it. Off course, most of the attributes are optional. You can ommit
+    <tt>property</tt> or <tt>scope</tt>, as you can ommit <tt>the converter</tt>, but you must
+    always specify one of the <tt>name</tt> or <tt>value</tt> attributes.
+</p>
+
+<div style="border-left: 1px solid #AAAAAA; padding-left: 10px;">
+    <!-- Code -->
+    <div>
+        <p><strong>Code</strong></p>
+        <pre>&lt;fr:create id=&quot;dynamic-defaults&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot; schema=&quot;person.create-minimal&quot;&gt;
+    &lt;fr:layout name=&quot;tabular&quot;&gt;
+        &lt;fr:property name=&quot;classes&quot; value=&quot;style1&quot;/&gt;
+        &lt;fr:property name=&quot;columnClasses&quot; value=&quot;listClasses,,&quot;/&gt;
+    &lt;/fr:layout&gt;
+    
+    &lt;fr:default slot=&quot;nome&quot; name=&quot;UserView&quot; property=&quot;person.nome&quot;/&gt;
+    &lt;fr:default slot=&quot;username&quot; value=&quot;&lt;%= &quot;p&quot; + 12345 %&gt;&quot;/&gt;
+    &lt;fr:default slot=&quot;idDocumentType&quot; value=&quot;IDENTITY_CARD&quot; 
+                converter=&quot;net.sourceforge.fenixedu.renderers.converters.EnumConverter&quot;/&gt;
+    &lt;fr:default slot=&quot;isPassInKerberos&quot; value=&quot;true&quot;/&gt;
+&lt;/fr:create&gt;</pre>
+    </div>
+
+    <!-- Result -->
+    <div>
+        <p><strong>Result</strong></p>
+        <div style="border: 1px solid #000; padding: 20px 20px 20px 20px">
+            <fr:create id="dynamic-defaults" type="net.sourceforge.fenixedu.domain.Person" schema="person.create-minimal">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="style1"/>
+                    <fr:property name="columnClasses" value="listClasses,,"/>
+                </fr:layout>
+                
+                <fr:default slot="nome" name="UserView" property="person.nome"/>
+                <fr:default slot="username" value="<%= "p" + 12345 %>"/>
+                <fr:default slot="idDocumentType" value="IDENTITY_CARD" 
+                            converter="net.sourceforge.fenixedu.renderers.converters.EnumConverter"/>
+                <fr:default slot="isPassInKerberos" value="true"/>
+            </fr:create>
+        </div>
+    </div>
+</div>
+
+<p>
+    <strong>Note</strong> that you can only specify slots that were defined in the schema beeing used.
+    The use of any other slot will result in an error. If you specify a value that is not of the
+    same type of the slot you can get the error immediately or only after submission, there no garantie
+    that the error will be detected early.
+</p>
+
 <h3>Can I create multiple objects at the same time?</h3>
 <a name="create-multiple"></a>
 
@@ -344,7 +423,7 @@ public class RegexpValidator extends HtmlValidator {
 </p>
 
 <ul>
-  <li>The objects beeing created must all be related directly or indirectly</li>
+  <li>The objects being created must all be related directly or indirectly</li>
   <li>You can reach all the objects (from a source object) with relations of multiplicity 1</li>
 </ul>
 
@@ -381,7 +460,7 @@ public class RegexpValidator extends HtmlValidator {
 
 <p>
     When creating the person, the renderers will try to set the <code>username</code> and <code>plainPassword</code>
-    of an <code>User</code> object that does not exist (because the person is now beeing created). In that case
+    of an <code>User</code> object that does not exist (because the person is now being created). In that case
     the <code>user object</code> will automatically created. It will be associated to the person and the the 
     values will be set on the newly created <code>User</code> object.
 </p>
@@ -399,13 +478,13 @@ public class RegexpValidator extends HtmlValidator {
 <p>
     Sometimes you want the user to fill some of the object's slots and want to fill the remaining slots yourself. Or
     some slots are dependant of the context. For example, if you are editing some structure and want to create a child,
-    then the parent may be already determined from the context were the child is beeing created. So the user provides
+    then the parent may be already determined from the context were the child is being created. So the user provides
     basic information for the child and you provide the parent automatically.
 </p>
 
 <p>
     It's important to notice that I am not talking about creating the object and then set the value sof the slots that
-    the user didn't provided. The situation here beeing described is the user submiting all the required information
+    the user didn't provided. The situation here being described is the user submiting all the required information
     without having the capability to edit some of them. The techinque used is similar to the hidden fields techinque. 
     The only difference is that those values are associated with slots.
 </p>
@@ -454,7 +533,7 @@ public class RegexpValidator extends HtmlValidator {
 
 <p>
     Another important, but easy to miss, aspect of the example is the <code>multiple</code> attribute. This attribute
-    indicates that the value is to be translated into a list, that is, that several values are, in fact, beeing
+    indicates that the value is to be translated into a list, that is, that several values are, in fact, being
     provided for the same slot. If <code>multiple</code> was not provided then the slot would be set with a single
     value ... unless tha value was in fact a list. This is complicated and you have several possiblities to specify 
     an hidden slot and how it should be handled. 
@@ -509,6 +588,6 @@ public class RegexpValidator extends HtmlValidator {
 <p style="margin-top: 50px; padding-top: 10px; border-top: 1px solid #AAAAAA">
     <span style="float: left;"><a href="#top">Top</a></span>
     <span style="float: right;">
-        Next: <html:link page="/renderers/actions.do">The third situation: renderers meet actions</html:link>
+        Next: <html:link page="/renderers/steroids.do">The third situation: input on steroids</html:link>
     </span>
 </p>

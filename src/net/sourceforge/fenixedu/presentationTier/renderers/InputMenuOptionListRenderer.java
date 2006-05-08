@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
-import net.sourceforge.fenixedu.renderers.EnumInputRenderer;
 import net.sourceforge.fenixedu.renderers.MenuOptionListRenderer;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import net.sourceforge.fenixedu.renderers.converters.EnumConverter;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 /**
@@ -71,7 +71,7 @@ public class InputMenuOptionListRenderer extends MenuOptionListRenderer {
                     return new DomainObjectKeyConverter(); 
                 }
                 else if (Enum.class.isAssignableFrom(choiceTypeClass)) {
-                    return new EnumInputRenderer.EnumConverter();
+                    return new EnumConverter();
                 }
                 else {
                     return null;

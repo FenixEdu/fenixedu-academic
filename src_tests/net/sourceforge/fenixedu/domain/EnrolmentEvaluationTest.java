@@ -184,7 +184,7 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		
 		setUpEdit();
 				
-		normalEvaluation.edit(newResponsibleFor, newGrade, newAvailableDate, newExamDate, newChecksum);
+		normalEvaluation.edit(newResponsibleFor, newGrade, newAvailableDate, newExamDate);
 
 		assertTrue("Failed to assign personResponsibleForGrade", normalEvaluation.getPersonResponsibleForGrade().equals(newResponsibleFor));
 		assertTrue("Failed to assign grade", normalEvaluation.getGrade().equals(newGrade));
@@ -193,7 +193,7 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		assertTrue("Failed to assign checkSum", normalEvaluation.getCheckSum().equals(newChecksum));
 
 		
-		evaluationToClear.edit(null, null, null, null, null);
+		evaluationToClear.edit(null, null, null, null);
 		
 		assertFalse("Failed to clear personResponsibleForGrade", evaluationToClear.hasPersonResponsibleForGrade());
 		assertNull("Failed to clear grade", evaluationToClear.getGrade());
@@ -202,7 +202,7 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		assertNull("Failed to clear checkSum", evaluationToClear.getCheckSum());
 		
 		
-		evaluationWithoutExamDate.edit(newResponsibleFor, newGrade, newAvailableDate, null, newChecksum);
+		evaluationWithoutExamDate.edit(newResponsibleFor, newGrade, newAvailableDate, null);
 				
 		assertTrue("Failed to assign personResponsibleForGrade", evaluationWithoutExamDate.getPersonResponsibleForGrade().equals(newResponsibleFor));
 		assertTrue("Failed to assign grade", evaluationWithoutExamDate.getGrade().equals(newGrade));

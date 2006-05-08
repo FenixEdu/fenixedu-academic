@@ -5,6 +5,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.renderers.DateInputRenderer;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import net.sourceforge.fenixedu.renderers.converters.DateConverter;
 
 import org.joda.time.YearMonthDay;
 

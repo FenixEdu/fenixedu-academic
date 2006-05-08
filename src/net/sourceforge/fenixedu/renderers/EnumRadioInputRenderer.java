@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButton;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButtonList;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
+import net.sourceforge.fenixedu.renderers.converters.EnumConverter;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;

@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.renderers;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenu;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenuOption;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import net.sourceforge.fenixedu.renderers.converters.EnumConverter;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -85,65 +83,5 @@ public class EnumInputRenderer extends InputRenderer {
             }
             
         };
-    }
-    
-    public static class EnumConverter extends Converter {
-
-        private Class enumClass;
-        
-        public EnumConverter() {
-            super();
-        }
-
-        public EnumConverter(Class enumClass) {
-            super();
-
-            this.enumClass = enumClass;
-        }
-
-        @Override
-        public Object convert(Class type, Object value) {
-            Object[] enums;
-            
-            if (this.enumClass == null) {
-                enums = type.getEnumConstants();
-            }
-            else {
-                enums = this.enumClass.getEnumConstants();
-            }
-            
-            for (int i = 0; i < enums.length; i++) {
-                if (enums[i].toString().equals(value)) {
-                    return enums[i];
-                }
-            }
-            
-            return null;
-        }
-        
-    }
-    
-    public static class EnumArrayConverter extends Converter{
-
-        private EnumConverter concreteConverter;
-        
-        public EnumArrayConverter(Class enumClass) {
-            this.concreteConverter = new EnumConverter(enumClass);
-        }
-        
-        @Override
-        public Object convert(Class type, Object value) {
-            List enumValues = new ArrayList();
-         
-            String[] values = (String[]) value;
-            for (int i = 0; i < values.length; i++) {
-                String enumString = values[i];
-                
-                enumValues.add(this.concreteConverter.convert(type, enumString));
-            }
-            
-            return enumValues;
-        }
-    
     }
 }

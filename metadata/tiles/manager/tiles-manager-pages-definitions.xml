@@ -485,6 +485,10 @@
         <put name="body" value="/manager/renderers/input.jsp" />
     </definition>
 
+    <definition name="renderers.steroids" extends="definition.manager.masterPage" >
+        <put name="body" value="/manager/renderers/steroids.jsp" />
+    </definition>
+
     <definition name="renderers.actions" extends="definition.manager.masterPage" >
         <put name="body" value="/manager/renderers/actions.jsp" />
     </definition>
