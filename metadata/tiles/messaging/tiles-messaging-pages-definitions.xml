@@ -9,12 +9,17 @@
 		 <put name="body" value="/messaging/viewForuns.jsp"/>
 	</definition>
 
-	<definition name="createThread" extends="messaging.masterPage">
-		 <put name="body" value="/messaging/createThread.jsp"/>
+	<definition name="createThreadAndMessage" extends="messaging.masterPage">
+		 <put name="body" value="/messaging/createThreadAndMessage.jsp"/>
 	</definition>
 
 	<definition name="viewForum" extends="messaging.masterPage">
 		 <put name="body" value="/messaging/viewForum.jsp"/>
+	</definition>
+
+
+	<definition name="viewThread" extends="messaging.masterPage">
+		 <put name="body" value="/messaging/viewThread.jsp"/>
 	</definition>	
 	
 </tiles-definitions>

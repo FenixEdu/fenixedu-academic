@@ -41,7 +41,7 @@ public abstract class HtmlSimpleValueComponent extends HtmlFormComponent {
             try {
                 return slot.getConverter().newInstance().convert(slot.getType(), getValue());
             } catch (Exception e) {
-                throw new RuntimeException("converter specified in meta slot generated an exception", e);
+                throw new RuntimeException("converter specified in meta slot generated an exception: " + e, e);
             }
         }
         

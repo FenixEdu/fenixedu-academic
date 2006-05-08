@@ -29,7 +29,7 @@ public class TextAreaInputRenderer extends InputRenderer {
      * 
      * @property
      */
-    public void setColumns(int columns) {
+    public void setColumns(Integer columns) {
         this.columns = columns;
     }
 
@@ -42,7 +42,7 @@ public class TextAreaInputRenderer extends InputRenderer {
      * 
      * @property
      */
-    public void setRows(int rows) {
+    public void setRows(Integer rows) {
         this.rows = rows;
     }
 

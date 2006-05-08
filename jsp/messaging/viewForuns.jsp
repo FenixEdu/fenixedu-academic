@@ -4,12 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-
-asdasdasdasdsadsda
 <h3><bean:message key="label.viewForuns.title" /></h3>
 
 <logic:present name="foruns">
-	<fr:view name="foruns" layout="tabular" schema="messaging.viewForuns.forum">
+	<fr:view name="foruns" layout="tabular" schema="forum.view-with-name-description-and-creation-date">
 		<fr:layout>
 		    <fr:property name="classes" value="style1"/>
       		<fr:property name="columnClasses" value="listClasses,"/>

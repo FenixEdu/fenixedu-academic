@@ -41,7 +41,8 @@
         		parameter="method">
             <forward name="viewForuns" path="viewForuns"/>
             <forward name="viewForum" path="viewForum"/>    
-            <forward name="createThread" path="createThread"/>    
+            <forward name="createThreadAndMessage" path="createThreadAndMessage"/>    
+            <forward name="viewThread" path="viewThread"/>    
         </action>
                
     </action-mappings>

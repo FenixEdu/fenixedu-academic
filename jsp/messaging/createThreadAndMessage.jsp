@@ -6,17 +6,19 @@
 
 <logic:present name="forum">
 
-	<fr:view name="forum" layout="tabular" schema="messaging.viewForuns.forum">
+	<fr:view name="forum" layout="tabular" schema="forum.view-with-topics-and-message-count">
 
 	</fr:view>
 	
 	<bean:define id="forumId" name="forum" property="idInternal"/>
 	
 	<fr:create type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage" layout="tabular"
-           schema="conversationMessage.create"
-           action="<%="/forunsManagement.do?method=createThreadAndMessage&forumId="+forumId %>">
+           schema="conversationThreadAndMessage.create"
+           action="<%="/forunsManagement.do?method=viewForum&forumId="+forumId %>">
 
-           <fr:hidden slot="forum" name="forum"/>
+           <fr:hidden slot="creator" name="person"/>
+           <fr:hidden slot="conversationThread.creator" name="person"/>
+           <fr:hidden slot="conversationThread.forum" name="forum"/>
 	</fr:create>
 
 
