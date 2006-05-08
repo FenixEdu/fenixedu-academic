@@ -48,6 +48,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso"));
 		((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.name"));		
 	}
+    
+    public static final Comparator STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME = new ComparatorChain();
+    static {
+        ((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.name"));
+        ((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME).addComparator(new BeanComparator("student.number"));        
+        ((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME).addComparator(new BeanComparator("student.person.name"));
+    }
 
     protected Map acumulatedEnrollments; // For enrollment purposes only
 
