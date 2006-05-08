@@ -98,42 +98,42 @@
 						 	<logic:present name="enrollment" property="infoNormalEnrolmentEvaluation.grade">
 							 	<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="NA">
 									<logic:notEqual name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
-										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 									</logic:notEqual>
 									<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
-										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.notEvaluated" bundle="ENUMERATION_RESOURCES" />
 									</logic:equal>
 								</logic:equal>
 								<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="RE">
 									<logic:notEqual name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
-										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 									</logic:notEqual>
 									<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
-										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.notApproved" bundle="ENUMERATION_RESOURCES" />
 									</logic:equal>									
 								</logic:equal>
 								<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="AP">
 									<logic:notEqual name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
-										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 									</logic:notEqual>
 									<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
-										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 										<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
 									</logic:equal>																		
 								</logic:equal>
 								<logic:greaterThan name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="0">
 									 <logic:lessThan name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="101">
 										<logic:notEqual name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
-											value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+											value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 											<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
 										</logic:notEqual>
 										<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.state" 
-											value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+											value="<%= EnrolmentEvaluationState.FINAL_OBJ.toString() %>">
 											<bean:write name="enrollment" property="infoNormalEnrolmentEvaluation.grade"/>
 										</logic:equal>	
 									</logic:lessThan>
