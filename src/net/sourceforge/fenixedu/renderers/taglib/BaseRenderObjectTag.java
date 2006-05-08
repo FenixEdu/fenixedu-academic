@@ -176,7 +176,7 @@ public abstract class BaseRenderObjectTag extends TagSupport {
     public int doEndTag() throws JspException {
         Object object = getTargetObject();
         
-        if (object == null) {
+        if (object == null && !isNullAccepted()) {
             throw new RuntimeException("cannot present the null value, name='" + getName() + "' property='" + getProperty() + "' scope='" + getScope() + "'");
         }
         
@@ -202,6 +202,10 @@ public abstract class BaseRenderObjectTag extends TagSupport {
         
         release(); // force release
         return EVAL_PAGE;
+    }
+
+    protected boolean isNullAccepted() {
+        return false;
     }
 
     protected Collection sortCollection(Collection collection) {

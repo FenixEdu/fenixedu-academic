@@ -185,6 +185,11 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
     }
 
+    @Override
+    protected boolean isNullAccepted() {
+        return getSlot() != null;
+    }
+
     protected HtmlComponent retrieveComponent() {
         return getViewState().getComponent();
     }
