@@ -345,12 +345,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setCheckSum(FenixDigestUtils.createDigest(stringBuilder.toString()));
     }
     
-    @Override
+    /*    @Override
     public void setEnrolmentEvaluationState(EnrolmentEvaluationState enrolmentEvaluationState) {
         checkNewEnrolmentEvaluationState(enrolmentEvaluationState);
         super.setEnrolmentEvaluationState(enrolmentEvaluationState);
         this.getEnrolment().calculateNewEnrolmentState(enrolmentEvaluationState);
-    }
+    }*/
 
     private void checkNewEnrolmentEvaluationState(EnrolmentEvaluationState enrolmentEvaluationState) {
         if (this.getEnrolmentEvaluationState() != null) {
