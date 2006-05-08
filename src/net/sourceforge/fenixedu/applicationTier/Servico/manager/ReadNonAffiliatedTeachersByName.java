@@ -22,11 +22,11 @@ public class ReadNonAffiliatedTeachersByName extends Service {
 
     public List run(String nameToSearch) throws ExcepcaoPersistencia{
         String names[] = nameToSearch.split(" ");
-        StringBuilder nonAffiliatedTeacherName = new StringBuilder("%");
+        StringBuilder nonAffiliatedTeacherName = new StringBuilder(".*");
 
         for (int i = 0; i <= names.length - 1; i++) {
             nonAffiliatedTeacherName.append(names[i]);
-            nonAffiliatedTeacherName.append("%");
+            nonAffiliatedTeacherName.append(".*");
         }
 
         Set<NonAffiliatedTeacher> nonAffiliatedTeachers = NonAffiliatedTeacher.findNonAffiliatedTeacherByName(nonAffiliatedTeacherName.toString());
