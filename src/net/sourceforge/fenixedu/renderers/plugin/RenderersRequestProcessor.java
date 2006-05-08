@@ -50,23 +50,28 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
 
     @Override
     protected ActionForward processActionPerform(HttpServletRequest request, HttpServletResponse response, Action action, ActionForm form, ActionMapping mapping) throws IOException, ServletException {
-        if ((request.getParameterValues(LifeCycleConstants.VIEWSTATE_PARAM_NAME) != null || request.getParameterValues(LifeCycleConstants.VIEWSTATE_LIST_PARAM_NAME) != null) 
-                && request.getAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME) == null) {
- 
-            // TODO: check if we should do this only after forwarding
-            request.setAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME, true);
-            
-            try {
-                ActionForward forward = ComponentLifeCycle.execute(request);
-                if (forward != null) {
-                    return forward;
+        try {
+            if ((request.getParameterValues(LifeCycleConstants.VIEWSTATE_PARAM_NAME) != null || request.getParameterValues(LifeCycleConstants.VIEWSTATE_LIST_PARAM_NAME) != null) 
+                    && request.getAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME) == null) {
+     
+                request.setAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME, true);
+                
+                try {
+                    ActionForward forward = ComponentLifeCycle.execute(request);
+                    if (forward != null) {
+                        return forward;
+                    }
+                } catch (Exception e) {
+                    throw new ServletException("exception during the component lifecyle processing", e);
                 }
-            } catch (Exception e) {
-                throw new ServletException("exception during the component lifecyle processing", e);
             }
+
+            // TODO: exception thrown here may cause unexpected behaviour
+            return super.processActionPerform(request, response, action, form, mapping);
         }
-        
-        return super.processActionPerform(request, response, action, form, mapping);
+        catch (Exception e) {
+            return processException(request, response, e, form, mapping);
+        }
     }
 
 }
