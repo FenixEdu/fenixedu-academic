@@ -73,11 +73,8 @@
 				</td>
 				<td colspan="2">
 					<p>
-						<bean:write name="UserView" property="person.employee.currentContract.workingUnit.name"/>
-						<logic:iterate id="parentUnit" name="UserView" property="person.employee.currentContract.workingUnit.parentByOrganizationalStructureAccountabilityType">
-							<br/>
-							<bean:write name="parentUnit" property="name"/>
-						</logic:iterate>
+						<bean:define id="currentUnit" name="UserView" property="person.employee.currentContract.workingUnit" toScope="request"/>
+						<jsp:include page="unitStructure.jsp"/>
 					</p>
 				</td>
 			</tr>
