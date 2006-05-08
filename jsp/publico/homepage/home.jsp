@@ -20,7 +20,6 @@
 			<p>
 				<html:img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&homepageID=" + homepageID.toString() %>"/>
 			</p>
-		<br/>
 		</logic:equal>
 	
 
@@ -28,12 +27,8 @@
 		<p>
 			<!--<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:-->
 			<logic:present name="homepage" property="person.employee.currentContract.workingUnit">
-				<bean:write name="homepage" property="person.employee.currentContract.workingUnit.name"/>
-				<logic:iterate id="parentUnit" name="homepage" property="person.employee.currentContract.workingUnit.parentByOrganizationalStructureAccountabilityType">
-					<br/>
-					<bean:write name="parentUnit" property="name"/>
-				</logic:iterate>
-				<br/>
+				<bean:define id="currentUnit" name="homepage" property="person.employee.currentContract.workingUnit" toScope="request"/>
+				<jsp:include page="unitStructure.jsp"/>
 			</logic:present>
 		</p>
 		</logic:equal>
@@ -60,14 +55,36 @@
 				<logic:present name="homepage" property="person.employee.currentContract">
 					<logic:present name="homepage" property="researchUnitHomepage">
 						<logic:present name="homepage" property="researchUnit">
-							<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
-							<p>
-								<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
-								<html:link href="<%= url %>">
-									<bean:write name="homepage" property="researchUnit.content"/> 
-								</html:link>
-								<br/>
-							</p>
+							<bean:define id="researchUnitHomepage" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
+							<logic:match name="homepage" property="researchUnitHomepage" value="http://"></logic:match>
+								<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
+								<p>
+									<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
+									<html:link href="<%= url %>">
+										<bean:write name="homepage" property="researchUnit.content"/> 
+									</html:link>
+								</p>
+							</logic:match>
+							<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://"></logic:match>
+								<logic:match name="homepage" property="researchUnitHomepage" value="https://"></logic:match>
+									<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
+									<p>
+										<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
+										<html:link href="<%= url %>">
+											<bean:write name="homepage" property="researchUnit.content"/> 
+										</html:link>
+									</p>
+								</logic:match>
+								<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://"></logic:match>
+									<bean:define id="url" type="java.lang.String">http://<bean:write name="homepage" property="researchUnitHomepage"/></bean:define>
+									<p>
+										<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
+										<html:link href="<%= url %>">
+											<bean:write name="homepage" property="researchUnit.content"/> 
+										</html:link>
+									</p>
+								</logic:notMatch>
+							</logic:notMatch>
 						</logic:present>
 					</logic:present>
 				</logic:present>
@@ -184,7 +201,7 @@
 		</logic:equal>
 
 		<logic:equal name="homepage" property="showEmail" value="true">
-		<p><bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>:
+		<p>
 			<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
 			<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 			<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&personID=<bean:write name="homepage" property="person.idInternal"/></bean:define>
