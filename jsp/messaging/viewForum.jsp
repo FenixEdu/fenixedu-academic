@@ -38,7 +38,7 @@
 		    </fr:layout>
 		</fr:view>
 
-		<bean:message key="label.viewForum.page"/>&nbsp;
+		<strong><bean:message key="label.viewForum.page"/></strong>&nbsp;
 		<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>
 		<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
 		<logic:equal name="currentPageNumberString" value="<%=pageNumber.toString()%>">

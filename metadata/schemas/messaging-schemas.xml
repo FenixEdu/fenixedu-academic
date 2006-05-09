@@ -5,13 +5,24 @@
 <schema name="forum.view-with-topics-and-message-count" type="net.sourceforge.fenixedu.domain.messaging.Forum">
 	<slot name="name" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.name"/>
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
-	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.creationDate"/>
 	<slot name="conversationThreadsCount" key="label.forum.totalConversationThreads"/>
 	<slot name="conversationMessagesCount" key="label.forum.totalConversationMessages"/>
 </schema>
 
 <schema name="conversationThread.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
-   	<slot name="name"/>
+   	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="conversationThread.view-full" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
+   	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject"/>
+   	<slot name="creator" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creator" layout="person-email-identity">
+		<property name="collapsed" value="true"/>
+		<property name="text" value="name"/>
+		<property name="address" value="email"/>
+	</slot>
+   	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creationDate">
+		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
+	</slot>
 </schema>
 
 <schema name="conversationThreadAndMessage.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
