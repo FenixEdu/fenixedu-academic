@@ -287,7 +287,7 @@ public class Enrolment extends Enrolment_Base {
 
     public List<EnrolmentEvaluation> getEnrolmentEvaluationsByEnrolmentEvaluationState(final EnrolmentEvaluationState evaluationState){
     	List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
-    	for (EnrolmentEvaluation evaluation : result) {
+    	for (EnrolmentEvaluation evaluation : getEvaluationsSet()) {
 			if(evaluation.getEnrolmentEvaluationState().equals(evaluationState)) {
 				result.add(evaluation);
 			}
