@@ -196,13 +196,14 @@ SearchBean bean = (SearchBean) viewState.getMetaObject().getObject();
 </div>
 
 <p>
-    There is also a default behaviour that is important to know. By default there are two destination names
+    There is also a default behaviour that is important to know. By default there are three destination names
     that are used if provided:
 </p>
 
 <dl>
   <dt><code>"success"</code></dt><dd>is used if the submission is valid and has no errors</dd>
   <dt><code>"invalid"</code></dt><dd>is used when some validation fails</dd>
+  <dt><code>"cancel"</code></dt><dd>is used when the cancel button is pressed</dd>
 </dl>
 
 <p>
