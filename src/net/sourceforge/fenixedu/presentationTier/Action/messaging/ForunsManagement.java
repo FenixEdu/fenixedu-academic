@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -12,6 +13,9 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
@@ -31,7 +35,7 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ForunsManagement extends FenixDispatchAction {
 
-    private static final int CONVERSATION_THREADS_PAGE_SIZE = 10;
+    private static final Integer DEFAULT_PAGE_SIZE = 10;
 
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
@@ -42,38 +46,34 @@ public class ForunsManagement extends FenixDispatchAction {
         return mapping.findForward("viewForuns");
     }
 
-    private GenericPair<List<ConversationThread>, List<Integer>> getConversationThreadsPage(Forum forum,
-            Integer pageNumber) {
+    @SuppressWarnings("unchecked")
+    private GenericPair<List, List<Integer>> pageList(List listToPage, Integer pageNumber,
+            Integer pageSize, Comparator comparator) {
+        int listSize = listToPage.size();
+        int totalPages = (int) StrictMath.ceil(listSize / Double.valueOf(pageSize));
 
-        List<ConversationThread> conversationThreads = new ArrayList<ConversationThread>(forum
-                .getConversationThreads());
-
-        int totalPages = (int) StrictMath.ceil(conversationThreads.size()
-                / Double.valueOf(CONVERSATION_THREADS_PAGE_SIZE));
-
-        List<Integer> pages = new ArrayList<Integer>();
+        List<Integer> pageNumbers = new ArrayList<Integer>();
         for (int i = 1; i <= totalPages; i++) {
-            pages.add(i);
+            pageNumbers.add(i);
         }
 
-        Collections.sort(conversationThreads,
-                ConversationThread.CONVERSATION_THREAD_COMPARATOR_BY_CREATION_DATE);
-
-        Collections.reverse(conversationThreads);
-
-        int startIndex = (pageNumber - 1) * CONVERSATION_THREADS_PAGE_SIZE;
-        int endIndex = startIndex + (CONVERSATION_THREADS_PAGE_SIZE - 1);
-        int lastIndex = (conversationThreads.size() > 0) ? (conversationThreads.size() - 1) : 0;
+        int startIndex = (pageNumber - 1) * pageSize;
+        int endIndex = startIndex + (pageSize - 1);
+        int lastIndex = (listSize > 0) ? (listSize - 1) : 0;
 
         if (endIndex > lastIndex) {
             endIndex = lastIndex;
         }
 
-        return new GenericPair<List<ConversationThread>, List<Integer>>(conversationThreads.subList(
-                startIndex, endIndex), pages);
+        List sortedList = new ArrayList(listToPage);
+        Collections.sort(sortedList, comparator);
+        Collections.reverse(sortedList);
 
+        return new GenericPair<List, List<Integer>>(sortedList.subList(startIndex, endIndex),
+                pageNumbers);
     }
 
+    @SuppressWarnings("unchecked")
     public ActionForward viewForum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -81,8 +81,8 @@ public class ForunsManagement extends FenixDispatchAction {
         request.setAttribute("forum", forum);
 
         Integer pageNumber = getPageNumber(request);
-        GenericPair<List<ConversationThread>, List<Integer>> result = getConversationThreadsPage(forum,
-                pageNumber);
+        GenericPair<List, List<Integer>> result = pageList(forum.getConversationThreads(), pageNumber,
+                DEFAULT_PAGE_SIZE, ConversationThread.CONVERSATION_THREAD_COMPARATOR_BY_CREATION_DATE);
         List<ConversationThread> conversationThreadsPage = result.getLeft();
         List<Integer> pageNumbers = result.getRight();
 
@@ -94,17 +94,22 @@ public class ForunsManagement extends FenixDispatchAction {
     }
 
     public ActionForward prepareCreateThreadAndMessage(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
 
         Forum forum = getRequestedForum(request);
         request.setAttribute("forum", forum);
+
+        IUserView userView = getUserView(request);
+        request.setAttribute("person", userView.getPerson());
 
         return mapping.findForward("createThreadAndMessage");
 
     }
 
     public ActionForward viewThread(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
         request.setAttribute("forum", this.getRequestedForum(request));
         request.setAttribute("thread", this.getRequestedThread(request));
         request.setAttribute("person", this.getLoggedPerson(request));
