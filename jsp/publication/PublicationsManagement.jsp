@@ -61,7 +61,7 @@
 					</td>
 
 					<td class="listClasses" style="text-align:left">
-						<html:link page="/editPublication.do?method=prepare"
+						<html:link page="/editPublication.do?method=prepare&page=0"
 							paramId="idInternal"
 							paramName="infoPublication" 
 							paramProperty="idInternal">
@@ -69,7 +69,7 @@
 						</html:link>
 					</td>
 					<td class="listClasses" style="text-align:left">
-						<html:link page="/prepareDeletePublication.do"
+						<html:link page="/prepareDeletePublication.do?page=0"
 							paramId="idInternal"
 							paramName="infoPublication" 
 							paramProperty="idInternal">
@@ -89,7 +89,7 @@
 					<bean:message key="message.publications.insert" />
 				</html:link>
 				--%>
-				<html:link page="/insertNewPublication.do?method=prepare"><bean:message key="message.publications.insert" /></html:link>
+				<html:link page="/insertNewPublication.do?method=prepare&page=0"><bean:message key="message.publications.insert" /></html:link>
 			</div>
 		<br />
 </logic:present>

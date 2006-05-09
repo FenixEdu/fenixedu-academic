@@ -9,6 +9,7 @@
 	<html:hidden property="method"/>
 	<html:hidden property="idInternal"/>
 	<html:hidden property="index" />
+	<html:hidden property="page" value="1" />
 
 	<bean:define id="authorsNameList" name="insertPublicationForm" property="authorsName" type="String[]" />
 

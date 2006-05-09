@@ -1090,9 +1090,11 @@
 	</form>-->
 	
 	<form name="insertPublicationForm" >
+<!--
 		<field property="searchedAuthorName" depends="required">
 			<arg0 key="message.publication.stringNomeSearch" resource="true"/>
 		</field>
+-->
 		<field property="edition" depends="integer" page="1">
 			<arg0 key="message.publicationAttribute.notValidate.value.edition" resource="true"/>
 		</field>
