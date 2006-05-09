@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -144,7 +145,7 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 
         InfoEnrolmentEvaluation newEnrolmentEvaluation = null;
         try {
-            Object args[] = { userView, infoEnrolmentTemp.getIdInternal() };
+            Object args[] = { userView, studentNumber, DegreeType.MASTER_DEGREE, infoEnrolmentTemp.getIdInternal() };
             newEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory
                     .executeService(userView, "ReadInfoEnrolmentEvaluationByEvaluationOID", args);
         } catch (ExistingServiceException e) {

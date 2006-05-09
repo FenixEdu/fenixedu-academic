@@ -19,13 +19,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadInfoEnrolmentEvaluationByEvaluationOID extends Service {
 
-    public InfoEnrolmentEvaluation run(IUserView userView, Integer enrolmentOID)
+    public InfoEnrolmentEvaluation run(IUserView userView, Integer studentNumber, DegreeType degreeType, Integer enrolmentOID)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
-        Student student = userView.getPerson().getStudentByType(DegreeType.DEGREE);
-        if (student == null) {
-            student = userView.getPerson().getStudentByType(DegreeType.MASTER_DEGREE);
-        }
-        final Enrolment enrolment = student.findEnrolmentByEnrolmentID(enrolmentOID);
+    	final Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+    	final Enrolment enrolment = student.findEnrolmentByEnrolmentID(enrolmentOID); 
+    	
         return (new GetEnrolmentGrade()).run(enrolment);
     }
 
