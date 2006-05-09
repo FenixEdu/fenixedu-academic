@@ -4,11 +4,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -19,8 +22,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created
- *         on May 5, 2006, 10:42:00 AM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on May 5, 2006, 10:42:00
+ *         AM
  * 
  */
 public class ForunsManagement extends FenixDispatchAction {
@@ -75,12 +78,17 @@ public class ForunsManagement extends FenixDispatchAction {
 	return mapping.findForward("createThreadAndMessage");
     }
 
-    public ActionForward viewThread(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward viewThread(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	request.setAttribute("forum", this.getRequestedForum(request));
 	request.setAttribute("thread", this.getRequestedThread(request));
 	request.setAttribute("person", this.getLoggedPerson(request));
 	request.setAttribute("showReplyBox", this.getShowReplyBox(request));
+
+	SortedSet<ConversationMessage> messages = new TreeSet<ConversationMessage>(
+		ConversationMessage.CONVERSATION_MESSAGE_COMPARATOR_BY_CREATION_DATE);
+	messages.addAll(this.getRequestedThread(request).getConversationMessages());
+	request.setAttribute("messages", messages);
 
 	return mapping.findForward("viewThread");
     }
