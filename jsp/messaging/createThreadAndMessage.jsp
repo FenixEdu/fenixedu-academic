@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%> 
 
+<html:errors/>
+
 <logic:present name="forum">
 
 	<fr:view name="forum" layout="tabular" schema="forum.view-with-topics-and-message-count">

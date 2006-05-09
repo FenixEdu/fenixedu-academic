@@ -10,54 +10,58 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public abstract class Forum extends Forum_Base {
 
     public Forum() {
-        super();
+	super();
     }
 
     public Forum(Person owner, String name, String description, Group readersGroup, Group writersGroup) {
-        super();
-        init(owner, name, description, readersGroup, writersGroup);
+	super();
+	init(owner, name, description);
     }
 
-    public void init(Person owner, String name, String description, Group readersGroup,
-            Group writersGroup) {
-        setCreationDate(Calendar.getInstance().getTime());
-        setOjbConcreteClass(this.getClass().getName());
-        setRootDomainObject(RootDomainObject.getInstance());
-        setOwner(owner);
-        setName(name);
-        setDescription(description);
-        setReadersGroup(readersGroup);
-        setWritersGroup(writersGroup);
+    public void init(Person owner, String name, String description) {
+	setCreationDate(Calendar.getInstance().getTime());
+	setOjbConcreteClass(this.getClass().getName());
+	setRootDomainObject(RootDomainObject.getInstance());
+	setOwner(owner);
+	setName(name);
+	setDescription(description);
     }
 
     public void createConversationThread(Person creator, String subject) {
-        if (hasConversationThreadWithSubject(subject)) {
-            throw new DomainException("forum.already.existing.conversation.thread");
-        } else {
-            ConversationThread conversationThread = new ConversationThread(creator, subject);
-            this.addConversationThreads(conversationThread);
-        }
+	checkIfCanAddConversationThreadWithSubject(subject);
+	ConversationThread conversationThread = new ConversationThread(creator, subject);
+	this.addConversationThreads(conversationThread);
 
     }
 
     private boolean hasConversationThreadWithSubject(String subject) {
-        for (ConversationThread conversationThread : getConversationThreads()) {
-            if (conversationThread.getSubject().equalsIgnoreCase(subject)) {
-                return true;
-            }
-        }
+	for (ConversationThread conversationThread : getConversationThreads()) {
+	    if (conversationThread.getSubject().equalsIgnoreCase(subject)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 
-        return false;
+    public void checkIfCanAddConversationThreadWithSubject(String subject) {
+	if (hasConversationThreadWithSubject(subject)) {
+	    throw new DomainException("forum.already.existing.conversation.thread");
+	}
     }
 
     public int getConversationMessagesCount() {
-        int total = 0;
+	int total = 0;
 
-        for (ConversationThread conversationThread : getConversationThreads()) {
-            total += conversationThread.getConversationMessagesCount();
-        }
-        
-        return total;
+	for (ConversationThread conversationThread : getConversationThreads()) {
+	    total += conversationThread.getConversationMessagesCount();
+	}
+
+	return total;
     }
 
+    @Override
+    public void addConversationThreads(ConversationThread conversationThread) {
+	checkIfCanAddConversationThreadWithSubject(conversationThread.getSubject());
+	super.addConversationThreads(conversationThread);
+    }
 }

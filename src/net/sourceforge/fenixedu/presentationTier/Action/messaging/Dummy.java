@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.WriteExecutionCourseForum.WriteExecutionCourseForumParameters;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -34,9 +32,6 @@ public class Dummy extends FenixAction {
         parameters.description = "Descrição dummy sempre baixo ";
         parameters.name = "Forum IRS";
         parameters.owner = userView.getPerson();
-        Group group = new PersonGroup(userView.getPerson());
-        parameters.readersGroup = group;
-        parameters.writersGroup = group;
         try {
             ServiceManagerServiceFactory.executeService(userView, "WriteExecutionCourseForum",
                     new Object[] { parameters });

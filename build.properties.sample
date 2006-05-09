@@ -20,10 +20,10 @@ index.html.link.localhost=siteMap.do
 index.html.link.localhost.localdomain=siteMap.do
 index.html.link.salad21=loginPage.jsp
 index.html.link.salad21.ist.utl.pt=loginPage.jsp
-login.page=https://fenix.ist.utl.pt/privado
+login.page=https://localhost:8080/ciapl/privado
 institution.url=http://www.ist.utl.pt
 
-institution.project=/home/gedl/workspace/fenix-head
+#institution.project=/home/gedl/workspace/fenix-head
 
 language=pt
 #

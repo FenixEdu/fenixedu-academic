@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 
@@ -20,14 +19,12 @@ public class WriteExecutionCourseForum extends Service {
     {
 	public String name;
 	public String description;
-	public Group readersGroup;
-	public Group writersGroup;
 	public Person owner;
     }
     
     public Forum run(WriteExecutionCourseForumParameters p)
     {
-	Forum forum = new ExecutionCourseForum(p.owner,p.name,p.description,p.readersGroup,p.writersGroup);
+	Forum forum = new ExecutionCourseForum(p.owner,p.name,p.description);
 	
 	return forum;
     }

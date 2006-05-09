@@ -41,18 +41,6 @@
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="readersGroup"
-        column="READERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />
-    <field-descriptor
-        name="writersGroup"
-        column="WRITERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />
-    <field-descriptor
         name="keyOwner"
         column="KEY_OWNER"
         jdbc-type="INTEGER"

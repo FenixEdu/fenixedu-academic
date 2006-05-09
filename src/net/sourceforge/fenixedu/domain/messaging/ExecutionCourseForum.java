@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.messaging;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 public class ExecutionCourseForum extends ExecutionCourseForum_Base {
 
@@ -13,12 +12,11 @@ public class ExecutionCourseForum extends ExecutionCourseForum_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public ExecutionCourseForum(Person owner, String name, String description, Group readersGroup,
-            Group writersGroup) {
+    public ExecutionCourseForum(Person owner, String name, String description) {
         super();
         setOjbConcreteClass(this.getClass().getName());
         setRootDomainObject(RootDomainObject.getInstance());
-        init(owner, name, description, readersGroup, writersGroup);
+        init(owner, name, description);
     }
 
     @Override
