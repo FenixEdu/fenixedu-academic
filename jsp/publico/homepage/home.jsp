@@ -56,7 +56,7 @@
 					<logic:present name="homepage" property="researchUnitHomepage">
 						<logic:present name="homepage" property="researchUnit">
 							<bean:define id="researchUnitHomepage" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
-							<logic:match name="homepage" property="researchUnitHomepage" value="http://"></logic:match>
+							<logic:match name="homepage" property="researchUnitHomepage" value="http://">
 								<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
 								<p>
 									<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
@@ -65,8 +65,8 @@
 									</html:link>
 								</p>
 							</logic:match>
-							<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://"></logic:match>
-								<logic:match name="homepage" property="researchUnitHomepage" value="https://"></logic:match>
+							<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://">
+								<logic:match name="homepage" property="researchUnitHomepage" value="https://">
 									<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
 									<p>
 										<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
@@ -75,7 +75,7 @@
 										</html:link>
 									</p>
 								</logic:match>
-								<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://"></logic:match>
+								<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://">
 									<bean:define id="url" type="java.lang.String">http://<bean:write name="homepage" property="researchUnitHomepage"/></bean:define>
 									<p>
 										<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
