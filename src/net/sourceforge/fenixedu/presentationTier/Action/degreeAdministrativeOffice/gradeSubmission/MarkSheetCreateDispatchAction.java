@@ -92,16 +92,14 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     }
 
     private void checkIfEvaluationDateIsInExamsPeriod(MarkSheetManagementCreateBean createBean, HttpServletRequest request, ActionMessages actionMessages) {
-        
         ExecutionDegree executionDegree = createBean.getDegreeCurricularPlan().getExecutionDegreeByYear(createBean.getExecutionPeriod().getExecutionYear());
         
-        if(executionDegree == null || !executionDegree.isEvaluationDateInExamPeriod(createBean.getEvaluationDate(), createBean.getExecutionPeriod(), createBean.getMarkSheetType())) {
-        
+        if (executionDegree == null || !executionDegree.isEvaluationDateInExamPeriod(createBean.getEvaluationDate(), createBean.getExecutionPeriod(), createBean.getMarkSheetType())) {
+            addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriod");
+        } else {
             OccupationPeriod occupationPeriod = executionDegree.getOccupationPeriodFor(createBean.getExecutionPeriod(), createBean.getMarkSheetType());
            
             if (occupationPeriod == null) {
-                addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriod");
-            } else {
                 addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriodWithDates",
                         DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getStart()),
                         DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getEnd()));
