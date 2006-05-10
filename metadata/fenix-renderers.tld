@@ -131,6 +131,14 @@
       </description>
     </attribute>
     
+    <attribute>
+      <name>service</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         The name of the service that should be called to make the changes to the domain. 
+      </description>
+    </attribute>
   </tag>
   
   <tag>
@@ -280,6 +288,15 @@
       <rtexprvalue>true</rtexprvalue>
       <description>
          Allows to specify the converter class to be used.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>service</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         The name of the service that should be called to make the changes to the domain. 
       </description>
     </attribute>
   </tag>
