@@ -56,13 +56,9 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
      
                 request.setAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME, true);
                 
-                try {
-                    ActionForward forward = ComponentLifeCycle.execute(request);
-                    if (forward != null) {
-                        return forward;
-                    }
-                } catch (Exception e) {
-                    throw new ServletException("exception during the component lifecyle processing", e);
+                ActionForward forward = ComponentLifeCycle.execute(request);
+                if (forward != null) {
+                    return forward;
                 }
             }
 
