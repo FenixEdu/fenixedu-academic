@@ -31,7 +31,6 @@ public class Dummy extends FenixAction {
         WriteExecutionCourseForumParameters parameters = new WriteExecutionCourseForumParameters();
         parameters.description = "Descrição dummy sempre baixo ";
         parameters.name = "Forum IRS";
-        parameters.owner = userView.getPerson();
         try {
             ServiceManagerServiceFactory.executeService(userView, "WriteExecutionCourseForum",
                     new Object[] { parameters });

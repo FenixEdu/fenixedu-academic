@@ -12,11 +12,11 @@ public class ExecutionCourseForum extends ExecutionCourseForum_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public ExecutionCourseForum(Person owner, String name, String description) {
+    public ExecutionCourseForum(String name, String description) {
         super();
         setOjbConcreteClass(this.getClass().getName());
         setRootDomainObject(RootDomainObject.getInstance());
-        init(owner, name, description);
+        init(name, description);
     }
 
     @Override

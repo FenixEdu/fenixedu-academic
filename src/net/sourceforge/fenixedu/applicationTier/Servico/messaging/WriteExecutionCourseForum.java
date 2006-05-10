@@ -19,12 +19,11 @@ public class WriteExecutionCourseForum extends Service {
     {
 	public String name;
 	public String description;
-	public Person owner;
     }
     
     public Forum run(WriteExecutionCourseForumParameters p)
     {
-	Forum forum = new ExecutionCourseForum(p.owner,p.name,p.description);
+	Forum forum = new ExecutionCourseForum(p.name,p.description);
 	
 	return forum;
     }

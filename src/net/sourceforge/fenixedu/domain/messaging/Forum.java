@@ -13,16 +13,15 @@ public abstract class Forum extends Forum_Base {
 	super();
     }
 
-    public Forum(Person owner, String name, String description, Group readersGroup, Group writersGroup) {
+    public Forum(String name, String description, Group readersGroup, Group writersGroup) {
 	super();
-	init(owner, name, description);
+	init(name, description);
     }
 
-    public void init(Person owner, String name, String description) {
+    public void init(String name, String description) {
 	setCreationDate(Calendar.getInstance().getTime());
 	setOjbConcreteClass(this.getClass().getName());
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOwner(owner);
 	setName(name);
 	setDescription(description);
     }

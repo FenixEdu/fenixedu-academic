@@ -54,7 +54,7 @@
 						
 						<fr:create type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage" layout="tabular"
 					           schema="conversationMessage.create"
-					           action="<%="/forunsManagement.do?method=viewThread&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false" %>">
+					           action="<%="/forunsManagement.do?method=createMessage&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false" %>">
 					
 					           <fr:hidden slot="creator" name="person"/>
 					           <fr:hidden slot="conversationThread" name="thread"/>
@@ -63,7 +63,8 @@
 					</logic:equal>
 					
 					<h2><bean:message key="label.viewThread.threads"/></h2>
-					<logic:iterate id="conversationMessage" name="messages" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
+					<logic:iterate indexId="currentMessageId" id="conversationMessage" name="messages" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
+						<html:link linkName="<%=currentMessageId.toString()%>"/>
 						<fr:view name="conversationMessage" layout="tabular" schema="conversationMessage.view-with-author-creationDate-and-body">			
 						<fr:layout>
 								<fr:property name="style" value="width:100%"/>
@@ -72,6 +73,20 @@
 							</fr:layout>
 						</fr:view>
 					</logic:iterate>
+					
+					<strong><bean:message key="label.viewForum.page"/></strong>&nbsp;
+					<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>
+					<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
+						<logic:equal name="currentPageNumberString" value="<%=pageNumber.toString()%>">
+							<bean:write name="pageNumber"/>
+						</logic:equal>
+						<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
+							<html:link action="<%="forunsManagement.do?method=viewForum&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber +"&threadId="+threadId%>">								
+								<bean:write name="pageNumber"/>
+							</html:link>			
+						</logic:notEqual>
+					</logic:iterate>
+					
 				</logic:present>
 		</logic:present>
 	</logic:present>

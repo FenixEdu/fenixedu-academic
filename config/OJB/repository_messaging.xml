@@ -41,11 +41,6 @@
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="keyOwner"
-        column="KEY_OWNER"
-        jdbc-type="INTEGER"
-    />
-    <field-descriptor
         name="keyExecutionCourse"
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"

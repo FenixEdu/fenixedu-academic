@@ -46,8 +46,6 @@
             <forward name="viewForum" path="viewForum"/>    
             <forward name="createThreadAndMessage" path="createThreadAndMessage"/>    
             <forward name="viewThread" path="viewThread"/>
-
-
         </action>
                
     </action-mappings>

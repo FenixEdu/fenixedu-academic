@@ -899,14 +899,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return visibleMetadata;
     }
 
-    public void createForum(Person owner, String name, String description, Group readersGroup,
-	    Group writersGroup) {
+    public void createForum(String name, String description) {
 
 	if (hasForumWithName(name)) {
 	    throw new DomainException("executionCourse.already.existing.forum");
 	}
 
-	ExecutionCourseForum executionCourseForum = new ExecutionCourseForum(owner, name, description);
+	ExecutionCourseForum executionCourseForum = new ExecutionCourseForum(name, description);
 	this.addForuns(executionCourseForum);
     }
 

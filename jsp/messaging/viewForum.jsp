@@ -41,15 +41,15 @@
 		<strong><bean:message key="label.viewForum.page"/></strong>&nbsp;
 		<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>
 		<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
-		<logic:equal name="currentPageNumberString" value="<%=pageNumber.toString()%>">
-			<bean:write name="pageNumber"/>
-		</logic:equal>
-		<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
-			<bean:define id="forumId" name="forum" property="idInternal" />
-			<html:link action="<%="forunsManagement.do?method=viewForum&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber%>">
+			<logic:equal name="currentPageNumberString" value="<%=pageNumber.toString()%>">
 				<bean:write name="pageNumber"/>
-			</html:link>			
-		</logic:notEqual>
+			</logic:equal>
+			<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
+				<bean:define id="forumId" name="forum" property="idInternal" />
+				<html:link action="<%="forunsManagement.do?method=viewForum&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber%>">
+					<bean:write name="pageNumber"/>
+				</html:link>			
+			</logic:notEqual>
 		</logic:iterate>
 	</logic:notEmpty>
 	

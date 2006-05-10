@@ -1174,7 +1174,6 @@ class net.sourceforge.fenixedu.domain.messaging.Forum extends net.sourceforge.fe
 	Date creationDate;
 	String name;
 	String description;
-	Integer keyOwner;
 }
 
 	class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum extends net.sourceforge.fenixedu.domain.messaging.Forum {
