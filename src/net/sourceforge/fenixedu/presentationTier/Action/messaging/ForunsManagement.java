@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,7 +67,8 @@ public class ForunsManagement extends FenixDispatchAction {
         Collections.sort(sortedList, comparator);
         Collections.reverse(sortedList);
 
-        return new GenericPair<List, List<Integer>>(sortedList.subList(startIndex, endIndex),
+        //must add 1 to endIndex, since subList excludes the final element
+        return new GenericPair<List, List<Integer>>(sortedList.subList(startIndex, endIndex+1),
                 pageNumbers);
     }
 
@@ -110,15 +109,20 @@ public class ForunsManagement extends FenixDispatchAction {
     public ActionForward viewThread(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException {
+	ConversationThread thread = this.getRequestedThread(request);
+	
+	Integer pageNumber = getPageNumber(request);
+	GenericPair<List, List<Integer>> result = pageList(thread.getConversationMessages(), pageNumber,
+                DEFAULT_PAGE_SIZE, ConversationMessage.CONVERSATION_MESSAGE_COMPARATOR_BY_CREATION_DATE);
+	List<Integer> pageNumbers = result.getRight();
+	
         request.setAttribute("forum", this.getRequestedForum(request));
-        request.setAttribute("thread", this.getRequestedThread(request));
+        request.setAttribute("thread", thread);
         request.setAttribute("person", this.getLoggedPerson(request));
         request.setAttribute("showReplyBox", this.getShowReplyBox(request));
-
-        SortedSet<ConversationMessage> messages = new TreeSet<ConversationMessage>(
-                ConversationMessage.CONVERSATION_MESSAGE_COMPARATOR_BY_CREATION_DATE);
-        messages.addAll(this.getRequestedThread(request).getConversationMessages());
-        request.setAttribute("messages", messages);
+        request.setAttribute("currentPageNumber", pageNumber);
+        request.setAttribute("pageNumbers", pageNumbers);                        
+        request.setAttribute("messages", result.getLeft());
 
         return mapping.findForward("viewThread");
     }
