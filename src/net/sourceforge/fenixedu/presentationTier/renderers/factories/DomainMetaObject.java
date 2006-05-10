@@ -30,11 +30,14 @@ public class DomainMetaObject implements MetaObject {
     private transient DomainObject object;
     private transient UserIdentity userIdentity;
 
+    private String service;
+
     protected DomainMetaObject() {
         this.slots = new ArrayList<MetaSlot>();
         this.hiddenSlots = new ArrayList<MetaSlot>();
 
         this.properties = new Properties();
+        this.service = "UpdateObjects";
     }
     
     public DomainMetaObject(DomainObject object) {
@@ -150,15 +153,11 @@ public class DomainMetaObject implements MetaObject {
 
     protected Object callService(List<ObjectChange> changes) {
         try {
-            return ServiceUtils.executeService(getUserView(), getServiceName(), new Object[] { changes });
+            return ServiceUtils.executeService(getUserView(), getService(), new Object[] { changes });
         } catch (Exception e) {
             // TODO: do something with the exception
             throw new DomainException("domain.metaobject.service.failed", e);
         }
-    }
-
-    protected String getServiceName() {
-        return "UpdateObjects";
     }
 
     public void setSchema(String name) {
@@ -168,4 +167,13 @@ public class DomainMetaObject implements MetaObject {
     public String getSchema() {
         return schema;
     }
+
+    public String getService() {
+        return this.service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
 }

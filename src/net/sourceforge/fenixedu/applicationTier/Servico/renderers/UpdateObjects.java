@@ -31,6 +31,8 @@ public class UpdateObjects extends Service {
 
     public Collection run(List<ObjectChange> changes) throws ExcepcaoPersistencia, ClassNotFoundException,
             IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+        beforeRun(changes);
+        
         Hashtable<ObjectKey, Object> objects = new Hashtable<ObjectKey, Object>();
 
         for (ObjectChange change : changes) {
@@ -39,7 +41,27 @@ public class UpdateObjects extends Service {
             setProperty(object, change.slot, change.value);
         }
         
+        afterRun(objects.values());
+        
         return objects.values();
+    }
+
+    /**
+     * Executed before any change is made to the domain.
+     * 
+     * @param changes the list of changes planed for the domain
+     */
+    protected void beforeRun(List<ObjectChange> changes) {
+        // nothing
+    }
+
+    /**
+     * Executed after all changes are made to the domain. This includes the creation of new objects.
+     * 
+     * @param touchedObjects the objects that were edited in the interface or created
+     */
+    protected void afterRun(Collection<Object> touchedObjects) {
+        // nothing
     }
 
     protected void setProperty(Object object, String slot, Object value) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {

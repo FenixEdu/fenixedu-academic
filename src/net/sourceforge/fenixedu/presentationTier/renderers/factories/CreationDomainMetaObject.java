@@ -16,6 +16,7 @@ public class CreationDomainMetaObject extends DomainMetaObject implements Creati
         super();
 
         this.type = type;
+        setService("CreateObjects");
     }
 
     @Override
@@ -39,11 +40,6 @@ public class CreationDomainMetaObject extends DomainMetaObject implements Creati
 
     public MetaObjectKey getKey() {
         return new CreationMetaObjectKey(getType());
-    }
-
-    @Override
-    protected String getServiceName() {
-        return "CreateObjects";
     }
 
     @Override

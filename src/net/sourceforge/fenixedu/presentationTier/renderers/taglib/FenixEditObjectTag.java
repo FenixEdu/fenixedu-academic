@@ -4,6 +4,9 @@ import javax.servlet.jsp.JspException;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.renderers.factories.DomainMetaObject;
+import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.taglib.EditObjectTag;
 
 public class FenixEditObjectTag extends EditObjectTag {
@@ -11,6 +14,8 @@ public class FenixEditObjectTag extends EditObjectTag {
     
     private String type;
 
+    private String service;
+    
     public String getOid() {
         return oid;
     }
@@ -25,6 +30,14 @@ public class FenixEditObjectTag extends EditObjectTag {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getService() {
+        return this.service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
     }
 
     @Override
@@ -60,10 +73,25 @@ public class FenixEditObjectTag extends EditObjectTag {
     }
 
     @Override
+    protected MetaObject createMetaObject(Object targetObject, Schema schema) {
+        MetaObject metaObject = super.createMetaObject(targetObject, schema);
+        
+        if (getService() != null && metaObject instanceof DomainMetaObject) {
+            DomainMetaObject domainMetaObject = (DomainMetaObject) metaObject;
+            
+            domainMetaObject.setService(getService());
+        }
+        
+        return metaObject;
+    }
+
+    @Override
     public void release() {
         super.release();
         
         this.oid = null;
         this.type = null;
+        this.service = null;
     }
+
 }
