@@ -278,13 +278,15 @@ public class Attends extends Attends_Base {
 
     public static List<Attends> readByDegreeCurricularPlanAndExecutionPeriod(
             DegreeCurricularPlan degreeCurricularPlan, ExecutionPeriod executionPeriod) {
-
-        Set<Attends> attends = new HashSet<Attends>();
-        for (Attends attend : RootDomainObject.getInstance().getAttendss()) {
-            if (attend.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)
-                    && attend.getEnrolment().getStudentCurricularPlan().equals(degreeCurricularPlan)) {
-                attends.add(attend);
-            }
+        final Set<Attends> attends = new HashSet<Attends>();
+        for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
+        	for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+        		for (final Attends attend : enrolment.getAttendsSet()) {
+        			if (attend.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
+        				attends.add(attend);
+        			}
+        		}
+        	}
         }
         return new ArrayList<Attends>(attends);
     }
