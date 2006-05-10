@@ -119,7 +119,17 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
+        // FIXME: in the future, a curricular course may be included in contexts of diferent curricular plans
         return getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan();
+    }
+    
+    @Override
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        return (getCurricularStage().equals(CurricularStage.OLD)) ? super.getDegreeCurricularPlan() : this.getParentDegreeCurricularPlan();  
+    }
+    
+    public Degree getDegree() {
+        return getDegreeCurricularPlan().getDegree();
     }
 
     public void edit(Double weight, String prerequisites, String prerequisitesEn,
