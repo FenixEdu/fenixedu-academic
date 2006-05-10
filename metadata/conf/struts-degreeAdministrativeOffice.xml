@@ -463,6 +463,7 @@
 				name="markSheetManagementForm"
 				scope="request">
        		<forward name="searchMarkSheet" path="show.markSheetManagement.search.page"/>
+       		<forward name="viewMarkSheet" path="markSheetManagement.viewMarkSheet"/>
        		<forward name="removeMarkSheet" path="show.markSheetManagement.remove"/>
        		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>       		
        		

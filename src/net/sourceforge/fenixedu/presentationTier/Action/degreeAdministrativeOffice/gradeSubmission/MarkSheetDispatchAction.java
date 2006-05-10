@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -73,6 +74,15 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         return mapping.findForward("removeMarkSheet");
     }
     
+    public ActionForward viewMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        DynaActionForm form = (DynaActionForm) actionForm;
+        Integer markSheetID = (Integer) form.get("msID");
+        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+
+        request.setAttribute("markSheet", markSheet);
+        return mapping.findForward("viewMarkSheet");
+    }
+    
     public ActionForward deleteMarkSheet(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
@@ -92,4 +102,5 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         
         return mapping.findForward("searchMarkSheetFilled");
     }
+    
 }

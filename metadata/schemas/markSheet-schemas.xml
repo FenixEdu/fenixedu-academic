@@ -17,7 +17,7 @@
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypeDegrees" />
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.Degree" />
-		<property name="format" value="${name}" />
+		<property name="format" value="Licenciatura em ${name}" />
 	</slot>
 	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
 		layout="menu-select-postback"
@@ -78,6 +78,27 @@
 	<slot name="markSheetState" key="label.markSheetState" />
 	<slot name="markSheetType" key="label.markSheetType" />
 	<slot name="enrolmentEvaluationsCount" />
+</schema>
+
+<schema name="markSheet.view.extended"
+		type="net.sourceforge.fenixedu.domain.MarkSheet">
+
+	<slot name="curricularCourse.degree.name" key="label.degree"/>
+	<slot name="curricularCourse.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />
+	<slot name="curricularCourse" layout="format" key="label.curricularCourse" >
+		<property name="format" value="${name} (${code})" />
+	</slot>
+	<slot name="year" layout="format" key="label.executionPeriod">
+		<property name="format" value="${executionYear.year}" />
+	</slot>
+	<slot name="semester" layout="format" key="label.curricular.course.semester">
+		<property name="format" value="${semester}º" />
+	</slot>
+	<slot name="responsibleTeacher" layout="format" key="label.teacher">
+		<property name="format" value="${person.name} (D${teacherNumber})" />
+	</slot>
+	<slot name="markSheetType"  key="label.markSheetType"/>
+	<slot name="evaluationDate" key="label.evaluationDate"/>
 </schema>
 
 <schema name="markSheet.create.step.one"

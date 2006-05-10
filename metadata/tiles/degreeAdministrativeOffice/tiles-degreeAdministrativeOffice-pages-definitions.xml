@@ -151,6 +151,10 @@
 		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/createMarkSheetStep2.jsp"></put>
 	</definition>
 	
+	<definition name="markSheetManagement.viewMarkSheet" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/viewMarkSheet.jsp"></put>
+	</definition>
+	
 	<definition name="show.markSheetManagement.remove" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/removeMarkSheet.jsp"></put>
 	</definition>
