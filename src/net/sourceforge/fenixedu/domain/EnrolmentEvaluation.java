@@ -364,5 +364,9 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     public void setGrade(String grade) {
         super.setGrade((grade != null) ? grade.toUpperCase() : null);
     }
+    
+    public Student getStudent() {
+        return this.getEnrolment().getStudentCurricularPlan().getStudent();
+    }
 
 }
