@@ -6,10 +6,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.EMail;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -78,13 +79,13 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 		DynaActionForm form = (DynaActionForm) actionForm;
 
 		Integer[] degreeCurricularPlanIds = (Integer[]) form.get("degreeCurricularPlanIds");
-		
+		final String fromName = form.getString("fromAddress");
+		final String fromAddress = form.getString("fromAddress");
+
 		//Obtaining the current execution period
 		//FIXME: THIS SHOULD BE PARAMETRIZABLE
 		InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod", null);
 		List<InfoInquiriesEmailReminderReport> reportList = new ArrayList<InfoInquiriesEmailReminderReport>(degreeCurricularPlanIds.length);
-		
-		ResourceBundle bundle = ResourceBundle.getBundle("resources.InquiriesResources");
 		
 		for(int i = 0; i < degreeCurricularPlanIds.length; i++) {
 						
@@ -101,7 +102,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 			report.setNumberDegreeStudents(studentsList.size());
 
 			for(InfoStudentWithAttendsAndInquiriesRegistries student : studentsList) {
-				sendEmailReminder(request, student, currentExecutionPeriod, report, form, bundle);
+				sendEmailReminder(request, student, currentExecutionPeriod, report, form, fromName, fromAddress);
 			}
 			
 
@@ -116,12 +117,9 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	
 	private boolean sendEmailReminder(HttpServletRequest request,
 			InfoStudentWithAttendsAndInquiriesRegistries student, InfoExecutionPeriod currentExecutionPeriod,
-			InfoInquiriesEmailReminderReport report, DynaActionForm form, ResourceBundle bundle) {
+			InfoInquiriesEmailReminderReport report, DynaActionForm form, String fromName, String fromAddress) {
 
 		String emailAddress = student.getInfoPerson().getEmail();
-		
-		
-		EMail email = null;
 
 		int numberUnansweredInquiries = 0;
 				
@@ -146,7 +144,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 		report.addNumberInquiries(student.getAttends().size());
 		report.addUnansweredInquiries(numberUnansweredInquiries);
 
-		if(!EMail.emailAddressFormatIsValid(emailAddress)) {
+		if(!EmailSender.emailAddressFormatIsValid(emailAddress)) {
 			return false;
 		} 
         report.addStudentsWithEmail(1);
@@ -159,18 +157,11 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 		String body = bodyIntro + "\n" + unevaluatedCoursesNames + "\n" + bodyEnd;
 		
 		String subject = (String) form.get("bodyTextSubject");
-		
-		String originMail = bundle.getString("message.inquiries.email.reminder.origin.mail");
 
-        if (!request.getServerName().equals("localhost")) {
-            email = new EMail("mail.adm", originMail);
+		final Collection<String> bccs = new ArrayList<String>(1);
+		bccs.add(emailAddress);
 
-		} else {
-            email = new EMail("mail.rnl.ist.utl.pt", originMail);
-			subject += " (localhost)";
-        }
-
-		if(email.send(emailAddress, subject, body)) {
+		if(EmailSender.send(fromName, fromAddress, null, null, bccs, subject, body).isEmpty()) {
 			report.addSentEmails(1);
 			return true;
 		}

@@ -11,7 +11,15 @@
 			<arg0 key="message.error.curriculumHistoric.degreeCurricularPlan" resource="true"/>
 		</field>
 	</form>
-	
+
+	<form name="sendEmailReminderForm">
+		<field property="fromName" depends="required" page="1">
+			<arg0 key="title.inquiries.reminder.sender.name" resource="true"/>
+		</field>
+		<field property="fromAddress" depends="required" page="1">
+			<arg0 key="title.inquiries.reminder.sender.email" resource="true"/>
+		</field>
+	</form>	
 	
   </formset>
 </form-validation>

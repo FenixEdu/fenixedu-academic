@@ -34,6 +34,8 @@
         	<form-property type="java.lang.String" name="method" />
         	<form-property type="java.lang.Integer" name="page" />
 			<form-property type="java.lang.Integer[]" name="degreeCurricularPlanIds"/>
+			<form-property type="java.lang.String" name="fromName" />
+			<form-property type="java.lang.String" name="fromAddress" />
 			<form-property type="java.lang.String" name="bodyTextSubject" />
 			<form-property type="java.lang.String" name="bodyTextIntro" />
 			<form-property type="java.lang.String" name="bodyTextEnd" />

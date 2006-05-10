@@ -19,21 +19,30 @@
 
 <br/>
 
+<span class="error"><html:errors/></span>
 
 <logic:present name='<%= InquiriesUtil.DEGREE_CURRICULAR_PLANS_LIST %>'>
 		<p class="caps"><strong>
 			<bean:message key="title.inquiries.edit.reminder" bundle="INQUIRIES_RESOURCES"/>
 		</strong></p>
 		
+	<html:form action="/sendEmailReminder">
+		<html:hidden property="method" value="sendEmails" />
+		<html:hidden property="page" value="1" />
+
+		<font class="underline italic">
+			<bean:message key="title.inquiries.reminder.sender.name" bundle="INQUIRIES_RESOURCES"/>
+		</font>
+		&nbsp;
+		<html:text property="fromName"/>
+		<br/>
+
 		<font class="underline italic">
 			<bean:message key="title.inquiries.reminder.sender.email" bundle="INQUIRIES_RESOURCES"/>
 		</font>
 		&nbsp;
-		<bean:message key="message.inquiries.email.reminder.origin.mail" bundle="INQUIRIES_RESOURCES"/>
+		<html:text property="fromAddress"/>
 		<br/>
-
-	<html:form action="/sendEmailReminder">
-		<html:hidden property="method" value="sendEmails" />
 
 		<p class="underline italic">
 			<bean:message key="title.inquiries.reminder.subject" bundle="INQUIRIES_RESOURCES"/>
