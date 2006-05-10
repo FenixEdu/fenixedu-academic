@@ -8,7 +8,7 @@
 	<h2><bean:message key="label.viewForum.title"/></h2>
 	
 	<!-- Forum Details -->
-	<fr:view name="forum" schema="forum.view-with-topics-and-message-count">
+	<fr:view name="forum" schema="forum.view-full">
 		<fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,"/>

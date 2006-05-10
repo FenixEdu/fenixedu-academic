@@ -67,8 +67,8 @@ public class ForunsManagement extends FenixDispatchAction {
 	    pageNumbers.add(i);
 	}
 	// must add 1 to endIndex, since subList excludes the final element
-	return new GenericPair<List, List<Integer>>(sortedList.subList(startIndex, listSize>0?endIndex + 1:0),
-		pageNumbers);
+	return new GenericPair<List, List<Integer>>(sortedList.subList(startIndex,
+		listSize > 0 ? endIndex + 1 : 0), pageNumbers);
     }
 
     /**
