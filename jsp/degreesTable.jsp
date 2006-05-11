@@ -17,7 +17,7 @@
 	
 	<logic:iterate id="degree" name="degrees" type="net.sourceforge.fenixedu.domain.Degree">
 		<logic:equal name="degree" property="degreeType" value="<%= degreeType.toString() %>">
-			<%if (renderBolonha.equals("false") || (renderBolonha.equals("true") && degree.isBolonhaDegree())) { %>
+			<%if ((renderBolonha.equals("false") && !degree.isBolonhaDegree())|| (renderBolonha.equals("true") && degree.isBolonhaDegree())) { %>
 				<bean:define id="degreeCode" name="degree" property="sigla"/>
 				<bean:define id="degreeName" name="degree" property="nome"/>
 				<TR>
