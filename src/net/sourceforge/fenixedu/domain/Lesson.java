@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.util.date.TimePeriod;
 public class Lesson extends Lesson_Base {
 
     public Lesson() {
-    	super();
-    	setRootDomainObject(RootDomainObject.getInstance());
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, OldRoom sala,
             RoomOccupation roomOccupation, Shift shift) {
-    	this();
+        this();
         setDiaSemana(diaSemana);
         setInicio(inicio);
         setFim(fim);
@@ -35,7 +35,7 @@ public class Lesson extends Lesson_Base {
         removeSala();
         removeShift();
         getRoomOccupation().delete();
-        
+
         removeRootDomainObject();
         deleteDomainObject();
     }
@@ -68,7 +68,7 @@ public class Lesson extends Lesson_Base {
 
     public void setFim(Calendar fim) {
         if (fim != null) {
-            this.setEnd(fim.getTime());    
+            this.setEnd(fim.getTime());
         } else {
             this.setEnd(null);
         }
@@ -79,4 +79,27 @@ public class Lesson extends Lesson_Base {
         return timePeriod.hours().doubleValue();
     }
 
+    public double hoursAfter(int hour) {
+
+        final Calendar start = this.getInicio();
+        final Calendar end = this.getFim();
+
+        final Calendar specifiedHour = Calendar.getInstance();
+        specifiedHour.setTime(this.getEnd());
+        specifiedHour.set(Calendar.HOUR_OF_DAY, hour);
+        specifiedHour.set(Calendar.MINUTE, 0);
+        specifiedHour.set(Calendar.SECOND, 0);
+        specifiedHour.set(Calendar.MILLISECOND, 0);
+
+        if (!start.before(specifiedHour)) {
+            TimePeriod timePeriod = new TimePeriod(start, end);
+            return timePeriod.hours().doubleValue();
+            
+        } else if (end.after(specifiedHour)) {
+            TimePeriod timePeriod = new TimePeriod(specifiedHour, end);
+            return timePeriod.hours().doubleValue();
+        }
+        
+        return 0.0;
+    }
 }

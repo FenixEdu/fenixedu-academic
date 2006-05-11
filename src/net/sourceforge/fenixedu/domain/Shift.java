@@ -56,6 +56,16 @@ public class Shift extends Shift_Base {
         }
         return hours;
     }
+    
+    public double hoursAfter(int hour) {
+        double hours = 0;
+        List lessons = this.getAssociatedLessons();
+        for (int i = 0; i < lessons.size(); i++) {
+            Lesson lesson = (Lesson) lessons.get(i);
+            hours += lesson.hoursAfter(hour);
+        }
+        return hours;
+    }
 
     public void associateSchoolClass(SchoolClass schoolClass) {
         if (schoolClass == null) {

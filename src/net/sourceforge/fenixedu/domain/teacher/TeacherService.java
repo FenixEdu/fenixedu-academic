@@ -39,7 +39,6 @@ public class TeacherService extends TeacherService_Base {
         if (getServiceItems().isEmpty()) {
             removeTeacher();
             removeExecutionPeriod();
-            
             removeRootDomainObject();
             deleteDomainObject();
         } else {
@@ -91,9 +90,13 @@ public class TeacherService extends TeacherService_Base {
     public Double getTeachingDegreeCredits() {
         double credits = 0;
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
-            if (!degreeTeachingService.getProfessorship().getExecutionCourse().isMasterDegreeOnly()) {
-                credits += degreeTeachingService.getShift().hours()
-                        * (degreeTeachingService.getPercentage().doubleValue() / 100);
+            ExecutionCourse executionCourse = degreeTeachingService.getProfessorship()
+                    .getExecutionCourse();
+            if (!executionCourse.isMasterDegreeOnly()) {
+                double hoursAfter20PM = degreeTeachingService.getShift().hoursAfter(20);
+                double hoursBefore20PM = degreeTeachingService.getShift().hours() - hoursAfter20PM;
+                credits += hoursBefore20PM * (degreeTeachingService.getPercentage().doubleValue() / 100);
+                credits += (hoursAfter20PM * (degreeTeachingService.getPercentage().doubleValue() / 100)) * 1.5;
             }
         }
         return round(credits);

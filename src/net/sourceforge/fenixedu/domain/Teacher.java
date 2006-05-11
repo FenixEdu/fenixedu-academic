@@ -451,7 +451,6 @@ public class Teacher extends Teacher_Base {
     public int getHoursByCategory(Date begin, Date end) {
 
         List<TeacherLegalRegimen> list = getAllLegalRegimensWithoutEndSituations(begin, end);
-
         if (list.isEmpty()) {
             return 0;
         } else {
@@ -561,12 +560,13 @@ public class Teacher extends Teacher_Base {
 
     public int getCreditsForServiceExemption(ExecutionPeriod executionPeriod,
             TeacherServiceExemption teacherServiceExemption) {
-        OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
+            
         if (teacherServiceExemption != null
                 && teacherServiceExemption.isServiceExemptionToCountInCredits()) {
             Integer daysBetween = CalendarUtil.getNumberOfDaysBetweenDates(teacherServiceExemption
                     .getStart(), teacherServiceExemption.getEnd());
-            if (occupationPeriod.containsDay(teacherServiceExemption.getStart())) {
+            
+            if(executionPeriod.containsDay(teacherServiceExemption.getStart())) {
                 if (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)) {
                     return 6;
                 } else if (daysBetween > 90) { // to be considered long term
@@ -574,31 +574,12 @@ public class Teacher extends Teacher_Base {
                     return getHoursByCategory(executionPeriod);
                 }
             } else {
-                occupationPeriod = getLessonsPeriod(executionPeriod.getPreviousExecutionPeriod());
-                if (occupationPeriod != null
-                        && occupationPeriod.containsDay(teacherServiceExemption.getStart())
-                        && daysBetween > 185) { // more than 6 months
+                if(daysBetween > 185 ) { // more than 6 months
                     if (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)) {
                         return 6;
                     } else {
                         return getHoursByCategory(executionPeriod);
-                    }
-                } else {
-                    if (executionPeriod.containsDay(teacherServiceExemption.getStart())) {
-                        if (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)) {
-                            return 6;
-                        } else {
-                            return getHoursByCategory(executionPeriod);
-                        }
-                    } else if (executionPeriod.getPreviousExecutionPeriod().containsDay(
-                            teacherServiceExemption.getStart())
-                            && daysBetween > 185) { // more than 6 months
-                        if (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)) {
-                            return 6;
-                        } else {
-                            return getHoursByCategory(executionPeriod);
-                        }
-                    }
+                    }                
                 }
             }
         }
