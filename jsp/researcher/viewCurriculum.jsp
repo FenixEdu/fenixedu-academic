@@ -129,6 +129,13 @@
 		<!-- Patents -->
 		<h3 id='patentsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.patentsTitle"/> </span> </h3>
 		
+		<fr:view name="UserView" property="person.personAuthorshipsWithPatents">
+			<fr:layout>
+				<fr:property name="eachLayout" value="values-comma"/>
+				<fr:property name="eachSchema" value="authorship.result"/>
+			</fr:layout>
+		</fr:view>
+		
 		<!-- Products -->
 		<h3 id='productsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.productsTitle"/> </span> </h3>
 		
