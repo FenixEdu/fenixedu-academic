@@ -179,12 +179,16 @@ public class ComponentLifeCycle {
             anySkip = anySkip || viewState.skipUpdate();
         }
 
-        if (allValid && !anySkip) {
-            updateDomain(viewStates);
+        ViewDestination destination;
+        try {
+            if (allValid && !anySkip) {
+                updateDomain(viewStates);
+            }
+        } 
+        finally {
+            destination = getDestination(viewStates);
+            prepareDestination(viewStates, editRequest);
         }
-        
-        ViewDestination destination = getDestination(viewStates);
-        prepareDestination(viewStates, editRequest);
 
         return buildForward(destination);
     }
@@ -460,13 +464,8 @@ public class ComponentLifeCycle {
             return null;
         }
         
-        ActionForward forward = new ActionForward();
-
-        forward.setPath(destination.getPath());
-        forward.setModule(destination.getModule());
-        forward.setRedirect(destination.getRedirect());
-
-        return forward;
+        return destination.getActionForward();
     }
+
 }
 

@@ -12,21 +12,29 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
+import net.sourceforge.fenixedu.renderers.components.state.ViewState;
+import net.sourceforge.fenixedu.renderers.plugin.ExceptionHandler;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
-public abstract class FenixDispatchAction extends DispatchAction {
+public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
     
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
@@ -116,5 +124,30 @@ public abstract class FenixDispatchAction extends DispatchAction {
     	final String value = dynaActionForm.getString(string);
     	return value == null || value.length() == 0 ? null : Integer.valueOf(value);
 	}
+
+    public ActionForward processException(HttpServletRequest request, ActionForward input, Exception e) {
+	if (! (e instanceof DomainException)) {
+	    return null;
+	}
+	
+	DomainException domainException = (DomainException) e;
+	ActionMessages messages = getMessages(request);
+	
+	if (messages == null) {
+	    messages = new ActionMessages();
+	}
+	
+	messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(domainException.getKey(), domainException.getArgs()));
+	saveMessages(request, messages);
+	
+	IViewState viewState = RenderUtils.getViewState();
+	ViewDestination destination = viewState.getDestination("exception");
+	if (destination != null) {
+	    return destination.getActionForward();
+	}
+	else {
+	    return input;
+	}
+    }
 
 }

@@ -8,7 +8,7 @@
 
 <logic:present name="forum">
 	
-	<h2><bean:message key="label.createThreadAndMessage.title"/></h2>
+	<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.createThreadAndMessage.title"/></h2>
 	
 	<fr:view name="forum" layout="tabular" schema="forum.view-full">
 		<fr:layout name="tabular">
@@ -26,6 +26,8 @@
            <fr:hidden slot="conversationThread.creator" name="person"/>
            <fr:hidden slot="conversationThread.forum" name="forum"/>
            <fr:destination name="cancel" path="<%="/forunsManagement.do?method=viewForum&forumId="+forumId%>"/>
+
+           <fr:destination name="exception" path="<%="/forunsManagement.do?method=viewForum&forumId="+forumId%>"/>
 	</fr:create>
 
 

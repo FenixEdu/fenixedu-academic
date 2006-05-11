@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
+import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -66,7 +69,25 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
             return super.processActionPerform(request, response, action, form, mapping);
         }
         catch (Exception e) {
-            return processException(request, response, e, form, mapping);
+            if (action instanceof ExceptionHandler) {
+        	ExceptionHandler handler = (ExceptionHandler) action;
+        	
+        	// TODO: ensure that a view state is present when an exception occurs
+        	IViewState viewState = RenderUtils.getViewState(); 
+        	ViewDestination destination = viewState.getInputDestination();
+        	ActionForward input = destination.getActionForward();
+        	
+        	ActionForward forward = handler.processException(request, input, e);
+        	if (forward != null) {
+        	    return forward;
+        	}
+        	else {
+        	    return processException(request, response, e, form, mapping);
+        	}
+            }
+            else {
+        	return processException(request, response, e, form, mapping);
+            }
         }
     }
 

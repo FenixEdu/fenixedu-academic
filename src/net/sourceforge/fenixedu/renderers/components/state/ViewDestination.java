@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.renderers.components.state;
 
 import java.io.Serializable;
 
+import org.apache.struts.action.ActionForward;
+
 public class ViewDestination implements Serializable {
 
     private String path;
@@ -40,6 +42,16 @@ public class ViewDestination implements Serializable {
         this.redirect = redirect;
     }
 
+    public ActionForward getActionForward() {
+        ActionForward forward = new ActionForward();
+
+        forward.setPath(getPath());
+        forward.setModule(getModule());
+        forward.setRedirect(getRedirect());
+
+        return forward;
+    }
+    
     @Override
     public boolean equals(Object other) {
         if (! (other instanceof ViewDestination)) {

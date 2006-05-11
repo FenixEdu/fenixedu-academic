@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h3><bean:message key="label.viewForuns.title" /></h3>
+<h3><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForuns.title" /></h3>
 
 <logic:present name="foruns">
 	<fr:view name="foruns" layout="tabular" schema="forum.view-with-name-description-and-creation-date">
@@ -14,6 +14,7 @@
 			<fr:property name="link(view)" value="/forunsManagement.do?method=viewForum"/>
 			<fr:property name="param(view)" value="idInternal/forumId"/>
 			<fr:property name="key(view)" value="messaging.viewForum.link"/>
+			<fr:property name="bundle(view)" value="MESSAGING_RESOURCES"/>
 		</fr:layout>
 	</fr:view>
 </logic:present>

@@ -50,8 +50,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public ExecutionCourse() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	init();
+    }
+
+    private void init() {
+	setRootDomainObject(RootDomainObject.getInstance());
+	this.createForum(getNome(), getNome());
     }
 
     public List<Grouping> getGroupings() {

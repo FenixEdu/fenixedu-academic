@@ -21,12 +21,12 @@
 				%>
 			
 				<bean:define id="conversationMessages" name="thread" property="conversationMessages" />
-					<h2><bean:message key="label.viewThread.title"/></h2>
+					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.title"/></h2>
 					
 					<html:link action="<%="/forunsManagement.do?method=viewForum&forumId="+forumId %>">
 						<bean:write name="forum" property="name"/>
 					</html:link>
-					<bean:message key="messaging.breadCrumSeparator.label"/> 
+					<bean:message bundle="MESSAGING_RESOURCES" key="messaging.breadCrumSeparator.label"/> 
 					<bean:write name="thread" property="subject"/> 					
 					
 					<fr:view name="thread" layout="tabular" schema="conversationThread.view-with-subject-creation-date-and-message-count">
@@ -34,7 +34,7 @@
 						    <fr:property name="classes" value="style1"/>
 				      		<fr:property name="columnClasses" value="listClasses,"/>
 						</fr:layout>
-					</fr:view>
+					</fr:view>	Integer pageNumber = getPageNumber(request);
 			
 						
 					<logic:equal name="showReplyBox" value="false">
@@ -43,7 +43,7 @@
 						%>
 						
 						<html:link action="/forunsManagement" name="parameters">
-							<bean:message key="link.viewThread.showReplyBox"/>
+							<bean:message bundle="MESSAGING_RESOURCES" key="link.viewThread.showReplyBox"/>
 						</html:link>
 					</logic:equal>
 					
@@ -62,7 +62,7 @@
 						</fr:create>						
 					</logic:equal>
 					
-					<h2><bean:message key="label.viewThread.threads"/></h2>
+					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.threads"/></h2>
 					<logic:iterate indexId="currentMessageId" id="conversationMessage" name="messages" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
 						<html:link linkName="<%=currentMessageId.toString()%>"/>
 						<fr:view name="conversationMessage" layout="tabular" schema="conversationMessage.view-with-author-creationDate-and-body">			
@@ -74,7 +74,7 @@
 						</fr:view>
 					</logic:iterate>
 					
-					<strong><bean:message key="label.viewForum.page"/></strong>&nbsp;
+					<strong><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/></strong>&nbsp;
 					<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>
 					<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
 						<logic:equal name="currentPageNumberString" value="<%=pageNumber.toString()%>">

@@ -305,6 +305,20 @@
         		input="/manageHomepage.do?method=prepare">
           <forward name="show-manage-homepage" path="show-manage-homepage"/>
         </action>
+        
+       <action path="/forunsManagement" 
+       		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.ForunsManagement"
+       		parameter="method"
+       		input="/forunsManagement.do?method=start">
+           <exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
+               key=""
+               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />            		
+           <forward name="viewForuns" path="viewForuns"/>
+           <forward name="viewForum" path="viewForum"/>    
+           <forward name="createThreadAndMessage" path="createThreadAndMessage"/>    
+           <forward name="viewThread" path="viewThread"/>
+       </action>
+       
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
@@ -313,6 +327,7 @@
     <!-- ========== Message Resources Definitions ============================ -->
    	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
+    <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.HomepageResources" key="HOMEPAGE_RESOURCES" null="false"/>
 
@@ -321,10 +336,21 @@
       <set-property property="pathnames" 
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-person.xml"/>
     </plug-in>
-    
+    <plug-in className="net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin">
+	    <set-property property="config" 
+	                  value="/WEB-INF/fenix-renderers-config.xml"
+	    />    
+	</plug-in>    
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/person/tiles-person-pages-definitions.xml,/WEB-INF/tiles/person/tiles-person-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml" />
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,
+					  		 /WEB-INF/tiles/person/tiles-person-pages-definitions.xml,
+					  		 /WEB-INF/tiles/person/tiles-person-definitions.xml,
+					  		 /WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,
+					  		 /WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml,
+		  	  		 	     /WEB-INF/tiles/messaging/tiles-messaging-definitions.xml,
+		            	     /WEB-INF/tiles/messaging/tiles-messaging-pages-definitions.xml"
+		/>		            	     
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    

@@ -9,14 +9,19 @@ public class DomainCollectionMetaObject extends SimpleMetaObjectCollection {
 
     @Override
     public void commit() {
-        try {
-            ServiceUtils.executeService(getUserView(), "CommitMetaObjects", new Object[] { getAllMetaObjects() });
-        } catch (Exception e) {
-            throw new DomainException("domain.metaobject.service.failed", e);
-        }
+	try {
+	    ServiceUtils.executeService(getUserView(), "CommitMetaObjects",
+		    new Object[] { getAllMetaObjects() });
+	} catch (Exception e) {
+	    if (e instanceof DomainException) {
+		throw (DomainException) e;
+	    } else {
+		throw new DomainException("domain.metaobject.service.failed", e);
+	    }
+	}
     }
-    
+
     protected IUserView getUserView() {
-        return ((FenixUserIdentity) getUser()).getUserView();
+	return ((FenixUserIdentity) getUser()).getUserView();
     }
 }

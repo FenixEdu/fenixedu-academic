@@ -2,7 +2,7 @@
 	<slot name="name"/>
 </schema>
 
-<schema name="forum.view-full" type="net.sourceforge.fenixedu.domain.messaging.Forum">
+<schema bundle="MESSAGING_RESOURCES" name="forum.view-full" type="net.sourceforge.fenixedu.domain.messaging.Forum">
 	<slot name="name" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.name"/>
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
 	<slot name="conversationThreadsCount" key="label.forum.totalConversationThreads"/>
@@ -13,11 +13,11 @@
 	
 </schema>
 
-<schema name="conversationThread.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
+<schema bundle="MESSAGING_RESOURCES" name="conversationThread.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
 	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 
-<schema name="conversationThread.view-full" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
+<schema bundle="MESSAGING_RESOURCES" name="conversationThread.view-full" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
    	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject"/>
    	<slot name="creator" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creator" layout="person-email-identity">
 		<property name="collapsed" value="true"/>
@@ -29,7 +29,7 @@
 	</slot>
 </schema>
 
-<schema name="conversationThreadAndMessage.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
+<schema bundle="MESSAGING_RESOURCES" name="conversationThreadAndMessage.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
    	<slot name="conversationThread.subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
    	<slot name="body" layout="htmlEditor" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
  		<property name="columns" value="60"/>
@@ -39,7 +39,7 @@
    	</slot>
 </schema>
 
-<schema name="conversationMessage.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
+<schema bundle="MESSAGING_RESOURCES" name="conversationMessage.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
    	<slot name="body" layout="htmlEditor" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
    		<property name="columns" value="60"/>
  		<property name="width" value="60"/>
@@ -49,7 +49,7 @@
 </schema>
 
 
-<schema name="forum.view-with-name-description-and-creation-date" type="net.sourceforge.fenixedu.domain.messaging.Forum">
+<schema bundle="MESSAGING_RESOURCES" name="forum.view-with-name-description-and-creation-date" type="net.sourceforge.fenixedu.domain.messaging.Forum">
 	<slot name="name" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.name"/>
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
 	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.creationDate">
@@ -57,15 +57,15 @@
 	</slot>
 </schema>
 
-<schema name="conversationThread.view-with-subject-creation-date-and-message-count" type="net.sourceforge.fenixedu.domain.messaging.Forum">
-	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.name"/>
+<schema bundle="MESSAGING_RESOURCES" name="conversationThread.view-with-subject-creation-date-and-message-count" type="net.sourceforge.fenixedu.domain.messaging.Forum">
+	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject"/>
 	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creationDate">
 		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
 	</slot>
 	<slot name="conversationMessagesCount" key="label.forum.totalConversationMessages"/>	
 </schema>
 
-<schema name="conversationMessage.view-with-author-creationDate-and-body" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
+<schema bundle="MESSAGING_RESOURCES" name="conversationMessage.view-with-author-creationDate-and-body" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
 	<slot name="creator" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.creator" layout="person-email-identity">
 		<property name="collapsed" value="false"/>
 		<property name="text" value="name"/>

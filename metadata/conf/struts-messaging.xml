@@ -35,19 +35,7 @@
         <action path="/dummy" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.Dummy">
             <forward name="Success" path="index"/>
         </action>
-        
-        <action path="/forunsManagement" 
-        		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.ForunsManagement"
-        		parameter="method">
-            <exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
-                key=""
-                handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />            		
-            <forward name="viewForuns" path="viewForuns"/>
-            <forward name="viewForum" path="viewForum"/>    
-            <forward name="createThreadAndMessage" path="createThreadAndMessage"/>    
-            <forward name="viewThread" path="viewThread"/>
-        </action>
-               
+                            
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
