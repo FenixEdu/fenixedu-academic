@@ -219,6 +219,15 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     public boolean isApproved() {
         return getEnrollmentStateByGrade() == EnrollmentState.APROVED;
     }
+    
+    public void edit(Person responsibleFor, Date evaluationDate) {
+        if (responsibleFor == null) {
+            throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
+        }
+        setPersonResponsibleForGrade(responsibleFor);
+        setExamDate(evaluationDate);
+        generateCheckSum();
+    }
 
     public void edit(Person responsibleFor, String grade, Date availableDate, Date examDate) {
         if (responsibleFor == null) {
@@ -239,10 +248,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public void confirmSubmission(Employee employee, String observation) {
-
-        setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ); // TODO:
-                                                                            // change
-                                                                            // enrolmentState
+        
+        setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ); 
         setWhen(Calendar.getInstance().getTime());
         setEmployee(employee);
         setObservation(observation);
