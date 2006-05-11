@@ -455,18 +455,17 @@
        	</action>
        	
 		<!-- ==================== MarkSheet Management ================== -->
-
 		<action path="/markSheetManagement"
 				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchDispatchAction"
 				input="show.markSheetManagement.search.page"
 				parameter="method"
 				name="markSheetManagementForm"
 				scope="request">
+				
        		<forward name="searchMarkSheet" path="show.markSheetManagement.search.page"/>
        		<forward name="viewMarkSheet" path="markSheetManagement.viewMarkSheet"/>
        		<forward name="removeMarkSheet" path="show.markSheetManagement.remove"/>
        		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>       		
-       		
 		</action>
 		
 		<action path="/createMarkSheet"
@@ -475,9 +474,21 @@
 				parameter="method"
 				name="markSheetManagementForm"
 				scope="request">
+				
        		<forward name="createMarkSheetStep1" path="show.markSheetManagement.create.page.step1"/>
        		<forward name="createMarkSheetStep2" path="show.markSheetManagement.create.page.step2"/>
        		<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>
+		</action>
+		
+		<action path="/editMarkSheet"
+				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetEditDispatchAction"
+				input="/markSheetManagement.do?method=prepareSearchMarkSheet"
+				parameter="method"
+				name="markSheetManagementForm"
+				scope="request">
+				
+       		<forward name="editMarkSheet" path="show.markSheetManagement.edit.page"/>
+       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
 		</action>
 		
 	</action-mappings>
