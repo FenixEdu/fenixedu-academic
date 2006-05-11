@@ -17,7 +17,7 @@ public class ChangePasswordKerberos extends Service {
 		Person person = userView.getPerson();
 
 		try {
-			if(person.getIstUsername() != null) {
+			if(person.hasIstUsername()) {
 				if(person.getIsPassInKerberos()) {
 	        		Script.verifyPass(person.getIstUsername(), oldPassword);
 	        		person.changePassword(oldPassword, newPassword);

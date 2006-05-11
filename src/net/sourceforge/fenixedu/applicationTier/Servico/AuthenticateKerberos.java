@@ -24,7 +24,7 @@ public class AuthenticateKerberos extends Authenticate {
         if (person == null) {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }
-        if (person.getIstUsername() != null) {
+        if (person.hasIstUsername()) {
             if (person.getIsPassInKerberos()) {
                 try {
                     Script.verifyPass(person.getIstUsername(), password);

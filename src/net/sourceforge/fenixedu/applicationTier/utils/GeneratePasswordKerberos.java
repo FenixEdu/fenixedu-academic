@@ -39,7 +39,7 @@ public class GeneratePasswordKerberos implements IGeneratePassword {
 	public String generatePassword(Person person){
 		try {
 			String password = randPass.getPass(PropertiesManager.getIntegerProperty("passSize"));
-	    	if(person.getIstUsername() != null) {
+	    	if(person.hasIstUsername()) {
 	    		if (person.getIsPassInKerberos()) {
 					Script.changeKerberosPass(person.getIstUsername(), password);
 				} else {
