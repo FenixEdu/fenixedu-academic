@@ -74,7 +74,7 @@
 								<bean:message key="label.markSheet.view" />
 							</html:link>
 							<% if(markSheet.getMarkSheetState() == net.sourceforge.fenixedu.domain.MarkSheetState.RECTIFICATION_NOT_CONFIRMED || markSheet.getMarkSheetState() == net.sourceforge.fenixedu.domain.MarkSheetState.NOT_CONFIRMED){ %>
-								<html:link action='<%= "/markSheetManagement.do?method=prepareEditMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
+								<html:link action='<%= "/editMarkSheet.do?method=prepareEditMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
 									<bean:message key="label.markSheet.edit" />
 								</html:link>
 								<html:link action='<%= "/markSheetManagement.do?method=prepareDeleteMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
