@@ -16,7 +16,7 @@ public class Patent extends Patent_Base {
         super();
     }
  
-    public Patent(MultiLanguageString title, MultiLanguageString description, Integer patentNumber,
+    public Patent(MultiLanguageString title, MultiLanguageString description, String patentNumber,
     		PatentType patentType, PatentStatus patentStatus, Partial registrationDate, Partial approvalDate, 
     		Country country, String local, Integer numberPages, FormatType format, String language, String url,
     	    List<Person> authors) {
@@ -46,7 +46,7 @@ public class Patent extends Patent_Base {
 		
     }
     
-    public void edit(MultiLanguageString title, MultiLanguageString description, Integer patentNumber,
+    public void edit(MultiLanguageString title, MultiLanguageString description, String patentNumber,
     		PatentType patentType, PatentStatus patentStatus, Partial registrationDate, Partial approvalDate, 
     		Country country, String local, Integer numberPages, FormatType format, String language, String url,
     	    List<Person> authors) {

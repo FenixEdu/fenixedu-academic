@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,25 +16,32 @@ public class Result extends Result_Base {
         setOjbConcreteClass(getClass().getName());
     }
  
-    protected void setAuthorships(List<Person> authors) {
+    public void setAuthorships(List<Person> authors) {
     	removeAuthorships();
-	    int i = 1;
-	    for (final Iterator iterator = authors.iterator(); iterator.hasNext(); i++) {
-	        final Person author = (Person) iterator.next();
+	    for (Person person : authors) {
 	        final Authorship authorship = new Authorship();
-	
-	        authorship.setAuthor(author);
+            
+	        authorship.setAuthor(person);
 	        authorship.setResult(this);
-	        authorship.setOrder(new Integer(i));
+	        authorship.setOrder(new Integer(authors.indexOf(person)));
 	    }
 	}
-	
-	protected void removeAuthorships() {
+    
+    public List<Person> getAuthorships(){
+        List<Person> authorsList = new ArrayList<Person>();
+        
+        for (Authorship author : getResultAuthorships()) {
+            authorsList.add(author.getAuthor());
+        }
+        return authorsList;
+    }
+    
+	public void removeAuthorships() {
 	    for (Iterator<Authorship> iterator = getResultAuthorshipsIterator(); iterator.hasNext(); ) {
 	        Authorship authorship = iterator.next();
 	        iterator.remove();
+            //((Authorship) rootDomainObject.readAuthorshipByOID(authorship.getIdInternal())).delete();
 	        authorship.delete();
 	    }
-	    
 	}
 }
