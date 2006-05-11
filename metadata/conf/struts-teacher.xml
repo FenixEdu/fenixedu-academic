@@ -851,6 +851,13 @@
    			<form-property name="permittedGroupType" type="java.lang.String"/>
 		</form-bean>		
 
+		<form-bean name="showProfessorshipsForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="page" type="java.lang.Integer"/>
+	   		<form-property name="executionPeriodID" type="java.lang.String"/>
+		</form-bean>		
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -994,6 +1001,18 @@
         <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.IndexTeacherAction">
             <forward name="success" path="df.page.teacher-index"/>
         </action>
+
+        <action path="/showProfessorships"
+        		name="showProfessorshipsForm"
+        		parameter="method"
+        		scope="request" 
+        		input="/showProfessorships.do?method=list" 
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ShowProfessorshipsDA"
+				validate="false">
+			<forward name="list" path="list-professorships"/>
+        </action>
+
+
         <action path="/manageExecutionCourses" type="org.apache.struts.actions.ForwardAction" 
             parameter="df.page.management.execution-courses" name="executionPeriodForm" scope="request" attribute="executionPeriodForm"/>
         <!--	<action	path="/manageCredits" type="org.apache.struts.actions.ForwardAction" parameter="df.page.management.credits" />	 -->
