@@ -255,13 +255,13 @@ public class RegexpValidator extends HtmlValidator {
         &lt;/validator&gt;
         &lt;property name=&quot;size&quot; value=&quot;50&quot;/&gt;
     &lt;/slot&gt;
-    &lt;slot name=&quot;username&quot; default=&quot;pxxxxx&quot;
+    &lt;slot name=&quot;username&quot;
           validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
-    &lt;slot name=&quot;idDocumentType&quot; default=&quot;IDENTITY_CARD&quot;
+    &lt;slot name=&quot;idDocumentType&quot; 
           validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
     &lt;slot name=&quot;numeroDocumentoIdentificacao&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
     &lt;slot name=&quot;gender&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
-    &lt;slot name=&quot;maritalStatus&quot; default=&quot;UNKNOWN&quot;
+    &lt;slot name=&quot;maritalStatus&quot; 
           validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
     &lt;slot name=&quot;isPassInKerberos&quot;/&gt;
 &lt;/schema&gt;</pre>
