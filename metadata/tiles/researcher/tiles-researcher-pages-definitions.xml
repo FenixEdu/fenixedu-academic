@@ -49,4 +49,27 @@
     <definition name="events.edit.editEvent" extends="researcher.masterPage">
         <put name="body" value="/researcher/events/editEvent.jsp"></put>
     </definition>
+
+    <!-- patents definitions -->
+    <definition name="patents.listPatents" 
+    			extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/patents/listPatents.jsp"></put>
+    </definition>
+    <definition name="patents.createEditPatent" 
+        extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/patents/createEditPatent.jsp"></put>
+    </definition>
+    <definition name="patents.deletePatent" 
+        extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/patents/deletePatent.jsp"></put>
+    </definition>
+    <definition name="patents.patentDetails" 
+        extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/patents/patentDetails.jsp"></put>
+    </definition>
+    
+    <definition name="authors.manageAuthors" 
+        extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/manageResultAuthorships.jsp"></put>
+    </definition>
 </tiles-definitions>
