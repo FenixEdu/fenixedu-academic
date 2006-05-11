@@ -21,14 +21,14 @@ public class CreateDegree extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final List<Degree> degrees = Degree.readBolonhaDegrees();
+        final List<Degree> degrees = rootDomainObject.getDegrees();
 
         for (Degree degree : degrees) {
-            if (degree.getAcronym().equalsIgnoreCase(acronym)) {
+            if (degree.getSigla().equalsIgnoreCase(acronym)) {
                 throw new FenixServiceException("error.existing.degree.acronym");
             }
             if ((degree.getNome().equalsIgnoreCase(name) || degree.getNameEn().equalsIgnoreCase(nameEn))
-                    && degree.getBolonhaDegreeType().equals(bolonhaDegreeType)) {
+                    && degree.getDegreeType().equals(bolonhaDegreeType)) {
                 throw new FenixServiceException("error.existing.degree.name.and.type");
             }
         }

@@ -100,7 +100,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public String getAcronym() {
-        return (acronym == null && getDegree() != null) ? (acronym = getDegree().getAcronym()) : acronym;
+        return (acronym == null && getDegree() != null) ? (acronym = getDegree().getSigla()) : acronym;
     }
 
     public void setAcronym(String acronym) {

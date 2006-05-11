@@ -24,13 +24,10 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public class Degree extends Degree_Base {
 
 	public static final ComparatorChain DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE = new ComparatorChain();
-	public static final ComparatorChain DEGREE_COMPARATOR_BY_NAME_AND_BOLONHA_DEGREE_TYPE = new ComparatorChain();
 
 	static {
-		DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("tipoCurso"));
+		DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("degreeType.name"));
 		DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("nome"));
-		DEGREE_COMPARATOR_BY_NAME_AND_BOLONHA_DEGREE_TYPE.addComparator(new BeanComparator("bolonhaDegreeType"));
-		DEGREE_COMPARATOR_BY_NAME_AND_BOLONHA_DEGREE_TYPE.addComparator(new BeanComparator("nome"));
 	}
 
     protected Degree() {
@@ -41,8 +38,12 @@ public class Degree extends Degree_Base {
     public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,
             String concreteClassForDegreeCurricularPlans) {
         this();
-        commonFieldsChange(name, nameEn, gradeScale);
-        oldStructureFieldsChange(code, degreeType);
+        commonFieldsChange(name, nameEn, code, gradeScale);
+
+        if (degreeType == null) {
+            throw new DomainException("degree.degree.type.not.null");
+        }
+        this.setTipoCurso(degreeType);
 
         if (concreteClassForDegreeCurricularPlans == null) {
             throw new DomainException("degree.concrete.class.not.null");
@@ -55,63 +56,59 @@ public class Degree extends Degree_Base {
     public Degree(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
             Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea) {
         this();
-        commonFieldsChange(name, nameEn, gradeScale);
-        newStructureFieldsChange(acronym, bolonhaDegreeType, ectsCredits, prevailingScientificArea);
+        commonFieldsChange(name, nameEn, acronym, gradeScale);
+        newStructureFieldsChange(bolonhaDegreeType, ectsCredits, prevailingScientificArea);
     }
 
-    private void commonFieldsChange(String name, String nameEn, GradeScale gradeScale) {
+    private void commonFieldsChange(String name, String nameEn, String code, GradeScale gradeScale) {
         if (name == null) {
             throw new DomainException("degree.name.not.null");
         } else if (nameEn == null) {
             throw new DomainException("degree.name.en.not.null");
-        }
+        } else if (code == null) {
+            throw new DomainException("degree.code.not.null");
+        } 
 
         this.setNome(name.trim());
         this.setNameEn(nameEn.trim());
+        this.setSigla(code.trim());
         this.setGradeScale(gradeScale);
     }
 
-    private void oldStructureFieldsChange(String code, DegreeType degreeType) {
-        if (code == null) {
-            throw new DomainException("degree.code.not.null");
-        } else if (degreeType == null) {
-            throw new DomainException("degree.degree.type.not.null");
-        }
-
-        this.setSigla(code.trim());
-        this.setTipoCurso(degreeType);
-    }
-
-    private void newStructureFieldsChange(String acronym, BolonhaDegreeType bolonhaDegreeType,
-            Double ectsCredits, String prevailingScientificArea) {
-        if (acronym == null) {
-            throw new DomainException("degree.acronym.not.null");
-        } else if (bolonhaDegreeType == null) {
+    private void newStructureFieldsChange(BolonhaDegreeType bolonhaDegreeType, Double ectsCredits, String prevailingScientificArea) {
+        if (bolonhaDegreeType == null) {
             throw new DomainException("degree.degree.type.not.null");
         } else if (ectsCredits == null) {
             throw new DomainException("degree.ectsCredits.not.null");
         }
 
-        this.setAcronym(acronym.trim());
         this.setBolonhaDegreeType(bolonhaDegreeType);
         this.setEctsCredits(ectsCredits);
         this.setPrevailingScientificArea(prevailingScientificArea.trim());
     }
 
-    public void edit(String name, String nameEn, String code, DegreeType degreeType,
-            GradeScale gradeScale) {
-        commonFieldsChange(name, nameEn, gradeScale);
-        oldStructureFieldsChange(code, degreeType);
+    public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
+        commonFieldsChange(name, nameEn, code, gradeScale);
+        
+        if (degreeType == null) {
+            throw new DomainException("degree.degree.type.not.null");
+        }
+        this.setTipoCurso(degreeType);
 
-        if (!hasAnyDegreeInfos())
+        if (!hasAnyDegreeInfos()) {
             new DegreeInfo(this);
+        }
     }
 
     public void edit(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
             Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea) {
         checkIfCanEdit(bolonhaDegreeType);
-        commonFieldsChange(name, nameEn, gradeScale);
-        newStructureFieldsChange(acronym, bolonhaDegreeType, ectsCredits, prevailingScientificArea);
+        commonFieldsChange(name, nameEn, acronym, gradeScale);
+        newStructureFieldsChange(bolonhaDegreeType, ectsCredits, prevailingScientificArea);
+        
+        if (!hasAnyDegreeInfos()) {
+            new DegreeInfo(this);
+        }
     }
 
     private void checkIfCanEdit(final BolonhaDegreeType bolonhaDegreeType) {
@@ -176,6 +173,18 @@ public class Degree extends Degree_Base {
             deleteDomainObject();
         } else {
             throw new DomainException("error.degree.has.degree.curricular.plans");
+        }
+    }
+
+    public Enum getDegreeType() {
+        return (isBolonhaDegree()) ? getBolonhaDegreeType() : getTipoCurso();
+    }
+
+    public void setDegreeType(Enum degreeType) {
+        if (degreeType instanceof BolonhaDegreeType) {
+            setBolonhaDegreeType((BolonhaDegreeType)degreeType);
+        } else {
+            setTipoCurso((DegreeType)degreeType);
         }
     }
 

@@ -13,7 +13,7 @@
 	<html:hidden property="executionDegreeID" value="<%= executionDegreeID.toString() %>"/>
 	
 	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.associate.teachers.in.charge"/></h3>
-	<h3><b><bean:write name="executionDegree" property="degreeCurricularPlan.degree.acronym"/>-<bean:write name="executionDegree" property="degreeCurricularPlan.degree.nome"/> (<bean:write name="executionDegree" property="executionYear.year"/>)</b></h3>
+	<h3><b><bean:write name="executionDegree" property="degreeCurricularPlan.degree.sigla"/>-<bean:write name="executionDegree" property="degreeCurricularPlan.degree.nome"/> (<bean:write name="executionDegree" property="executionYear.year"/>)</b></h3>
 	
 	<div class='simpleblock4'>
 		<p>	

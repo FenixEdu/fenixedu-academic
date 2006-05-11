@@ -25,21 +25,21 @@ public class EditDegree extends Service {
 
         if (degreeToEdit == null) {
             throw new NonExistingServiceException();
-        } else if (!degreeToEdit.getAcronym().equalsIgnoreCase(acronym)
+        } else if (!degreeToEdit.getSigla().equalsIgnoreCase(acronym)
                 || !degreeToEdit.getNome().equalsIgnoreCase(name)
                 || !degreeToEdit.getBolonhaDegreeType().equals(bolonhaDegreeType)) {
 
-        	final List<Degree> degrees = Degree.readBolonhaDegrees();
+        	final List<Degree> degrees = rootDomainObject.getDegrees();
             
             // assert unique degree code and unique pair name/type
             for (Degree degree : degrees) {
                 if (degree != degreeToEdit) {
-                    if (degree.getAcronym().equalsIgnoreCase(acronym)) {
+                    if (degree.getSigla().equalsIgnoreCase(acronym)) {
                         throw new FenixServiceException("error.existing.degree.acronym");
                     }
                     if ((degree.getNome().equalsIgnoreCase(name) || degree.getNameEn().equalsIgnoreCase(
                             nameEn))
-                            && degree.getBolonhaDegreeType().equals(bolonhaDegreeType)) {
+                            && degree.getDegreeType().equals(bolonhaDegreeType)) {
                         throw new FenixServiceException("error.existing.degree.name.and.type");
                     }
                 }

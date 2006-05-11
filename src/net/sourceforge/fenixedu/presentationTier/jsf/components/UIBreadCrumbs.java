@@ -53,7 +53,7 @@ public class UIBreadCrumbs extends UIInput {
         responseWriter.write(CRUMB_SEPERATOR);
         writeLink(responseWriter, institutionUrl + linkInstitution, labelEducation);
         responseWriter.write(CRUMB_SEPERATOR);
-        writeLink(responseWriter, context.getExternalContext().getRequestContextPath() + DEGREE_SITE_LINK + degree.getIdInternal(), (degree.isBolonhaDegree()) ? degree.getAcronym() : degree.getSigla());
+        writeLink(responseWriter, context.getExternalContext().getRequestContextPath() + DEGREE_SITE_LINK + degree.getIdInternal(), degree.getSigla());
         responseWriter.write(CRUMB_SEPERATOR);
         responseWriter.write(trailingCrumb);
         writeBR(responseWriter);

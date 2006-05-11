@@ -147,14 +147,8 @@ public class InfoDegree extends InfoObject implements Comparable {
     public void copyFromDomain(Degree degree) {
         super.copyFromDomain(degree);
         if (degree != null) {
-            isBolonhaDegree = degree.isBolonhaDegree();
-            if (isBolonhaDegree) {
-                setSigla(degree.getAcronym());
-                setTipoCurso(degree.getBolonhaDegreeType());
-            } else {
-                setSigla(degree.getSigla());
-                setTipoCurso(degree.getTipoCurso());
-            }
+            setSigla(degree.getSigla());
+            setTipoCurso((degree.isBolonhaDegree()) ? degree.getBolonhaDegreeType() : degree.getTipoCurso());
             setNome(degree.getNome());
             setNameEn(degree.getNameEn());
             setGradeScale(degree.getGradeScale());

@@ -53,11 +53,6 @@
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"
 	/>
 	<field-descriptor
-		name="acronym"
-		column="ACRONYM"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
 		name="ectsCredits"
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"

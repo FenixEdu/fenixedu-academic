@@ -7,7 +7,7 @@
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
 	<h:outputText value="<i>#{DegreeManagement.degree.nome}" escape="false"/>
-	<h:outputText value=" (#{DegreeManagement.degree.acronym})</i>" escape="false"/>
+	<h:outputText value=" (#{DegreeManagement.degree.sigla})</i>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['degree']}" />
 	</h:outputFormat>

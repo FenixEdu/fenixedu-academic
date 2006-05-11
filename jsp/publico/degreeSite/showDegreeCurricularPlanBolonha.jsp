@@ -20,7 +20,7 @@
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
 	<h:outputLink value="../showDegreeSite.do" >
-		<h:outputText value="#{CurricularCourseManagement.degreeCurricularPlan.degree.acronym}"/>
+		<h:outputText value="#{CurricularCourseManagement.degreeCurricularPlan.degree.sigla}"/>
 		<f:param name="method" value="showDescription"/>
 		<f:param name="degreeID" value="#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}"/>
 	</h:outputLink>

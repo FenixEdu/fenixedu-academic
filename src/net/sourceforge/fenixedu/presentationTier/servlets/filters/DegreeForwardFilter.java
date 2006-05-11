@@ -18,8 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 /**
@@ -84,10 +85,6 @@ public class DegreeForwardFilter implements Filter {
                 chain.doFilter(request, response);
                 return;
             }
-        } catch (FenixServiceException e2) {
-            throw new ServletException(e2);
-        } catch (FenixFilterException e) {
-            throw new ServletException(e);
         } catch (IOException e) {
             throw new ServletException(e);
         }
@@ -128,30 +125,18 @@ public class DegreeForwardFilter implements Filter {
         response.sendRedirect(forwardURI.toString());
     }
 
-    /**
-     * @param string
-     * @return
-     * @throws FenixServiceException
-     */
-    private boolean isDegree(final String string) throws FenixServiceException, FenixFilterException {
+    private boolean isDegree(final String string) {
+        List<Degree> degrees = RootDomainObject.getInstance().getDegrees();
 
-        List<InfoDegree> listDegrees = (List<InfoDegree>) ServiceUtils.executeService(null, "ReadDegrees", null);
-
-        if (listDegrees != null) {
-            for (final InfoDegree infoDegree : listDegrees) {
-                if (infoDegree.getSigla().equalsIgnoreCase(string)) {
-                    return true;
-                }
+        for (final Degree degree : degrees) {
+            if (degree.getSigla().equalsIgnoreCase(string)) {
+                return true;
             }
         }
 
         return false;
     }
 
-    /**
-     * @return
-     * @throws FenixServiceException
-     */
     private InfoExecutionPeriod getCurrentExecutionPeriod() throws FenixServiceException, FenixFilterException {
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(

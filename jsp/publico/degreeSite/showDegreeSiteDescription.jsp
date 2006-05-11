@@ -26,12 +26,7 @@
 	</a>
 	<logic:present name="degree">
 		&nbsp;&gt;&nbsp;
-		<logic:equal name="degree" property="bolonhaDegree" value="false">
-			<bean:write name="degree" property="sigla"/>
-		</logic:equal>
-		<logic:equal name="degree" property="bolonhaDegree" value="true">
-			<bean:write name="degree" property="acronym"/>
-		</logic:equal>
+		<bean:write name="degree" property="sigla"/>
 	</logic:present>
 </div>
 

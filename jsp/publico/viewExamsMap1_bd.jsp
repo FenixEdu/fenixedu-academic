@@ -16,12 +16,7 @@
 	<logic:present name="degree">
 		&nbsp;&gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
-			<logic:equal name="degree" property="bolonhaDegree" value="false">
-				<bean:write name="degree" property="sigla"/>
-			</logic:equal>
-			<logic:equal name="degree" property="bolonhaDegree" value="true">
-				<bean:write name="degree" property="acronym"/>
-			</logic:equal>
+			<bean:write name="degree" property="sigla"/>
 		</html:link>
 		&nbsp;&gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()+ "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>" >

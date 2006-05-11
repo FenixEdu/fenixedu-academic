@@ -6,7 +6,7 @@
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	
 	<h:outputText value="<i>#{DegreeManagement.degree.nome}" escape="false"/>
-	<h:outputText value=" (#{DegreeManagement.degree.acronym})</i>" escape="false"/>
+	<h:outputText value=" (#{DegreeManagement.degree.sigla})</i>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['edit.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['degree']}" />
 	</h:outputFormat>

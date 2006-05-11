@@ -22,16 +22,12 @@ public class SiteMapAction extends FenixAction {
 			HttpServletRequest request, HttpServletResponse response)
 			throws FenixActionException, FenixFilterException,
 			FenixServiceException {
-		final TreeSet<Degree> oldDegrees = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
-		final TreeSet<Degree> bolonhaDegrees = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_BOLONHA_DEGREE_TYPE);
+		final TreeSet<Degree> degrees = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
 		for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
-			if (degree.isBolonhaDegree())
-				bolonhaDegrees.add(degree);
-			else
-				oldDegrees.add(degree);
+		    degrees.add(degree);
 		}
-		request.setAttribute("oldDegrees", oldDegrees);
-		request.setAttribute("bolonhaDegrees", bolonhaDegrees);
+		request.setAttribute("degrees", degrees);
 		return mapping.findForward("site-map");
 	}
+    
 }
