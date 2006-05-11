@@ -18,12 +18,14 @@
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
 			<bean:write name="degree" property="sigla"/>
 		</html:link>
-		&nbsp;&gt;&nbsp;
-		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()+ "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>" >
-			<bean:write name="infoDegreeCurricularPlan" property="name" />
-		</html:link>
-		&nbsp;&gt;&nbsp;
-		<bean:message  key="public.degree.information.label.exams" bundle="PUBLIC_DEGREE_INFORMATION" /> 
+		<logic:present name="infoDegreeCurricularPlan" >
+			&nbsp;&gt;&nbsp;
+			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()+ "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>" >
+				<bean:write name="infoDegreeCurricularPlan" property="name" />
+			</html:link>
+			&nbsp;&gt;&nbsp;
+			<bean:message  key="public.degree.information.label.exams" bundle="PUBLIC_DEGREE_INFORMATION" />
+		</logic:present>
 	</logic:present>
 </div>
 
@@ -45,6 +47,10 @@
 		</logic:equal>
 	</logic:present>
 </h1>
+
+<logic:notPresent name="infoDegreeCurricularPlan" >
+	<p><em><bean:message bundle="DEFAULT" key="error.impossibleExecutionDegreeList"/></em></p>
+</logic:notPresent>
 
 <logic:present name="infoDegreeCurricularPlan" >
 
