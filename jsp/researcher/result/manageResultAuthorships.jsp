@@ -19,7 +19,7 @@
 	<logic:equal name="action" value="editPatent" >
 		<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.editPatentUseCase.title"/></h2>
 	</logic:equal>
-	<logic:equal name="action" value="createPublicationt" >
+	<logic:equal name="action" value="createPublication" >
 		<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.createPublicationUseCase.title"/></h2>
 	</logic:equal>
 	<logic:equal name="action" value="editPublication" >
