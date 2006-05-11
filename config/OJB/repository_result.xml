@@ -143,7 +143,7 @@
 	/>
 	<field-descriptor
 	   name="type"    
-	   column="TYPE"  
+	   column="PATENT_TYPE"  
 	   jdbc-type="VARCHAR"
 	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.PatentType2SqlPatentTypeConversion"
     />
@@ -177,7 +177,7 @@
 	/>
     <field-descriptor
 		name="format"
-		column="FORMAT"
+		column="FORMAT_TYPE"
 		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.FormatType2SqlFormatTypeConversion"
 	/>
