@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,11 +9,18 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.MarkSheet;
+import net.sourceforge.fenixedu.domain.MarkSheetType;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -64,6 +73,15 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         return mapping.getInputForward();
     }
     
+    public ActionForward viewMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        DynaActionForm form = (DynaActionForm) actionForm;
+        Integer markSheetID = (Integer) form.get("msID");
+        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+
+        request.setAttribute("markSheet", markSheet);
+        return mapping.findForward("viewMarkSheet");
+    }
+    
     public ActionForward prepareDeleteMarkSheet(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
@@ -72,15 +90,6 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         request.setAttribute("markSheet", rootDomainObject.readMarkSheetByOID(markSheetID));
         
         return mapping.findForward("removeMarkSheet");
-    }
-    
-    public ActionForward viewMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        DynaActionForm form = (DynaActionForm) actionForm;
-        Integer markSheetID = (Integer) form.get("msID");
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
-
-        request.setAttribute("markSheet", markSheet);
-        return mapping.findForward("viewMarkSheet");
     }
     
     public ActionForward deleteMarkSheet(ActionMapping mapping,
@@ -103,4 +112,29 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         return mapping.findForward("searchMarkSheetFilled");
     }
     
+    protected void checkIfEvaluationDateIsInExamsPeriod(DegreeCurricularPlan degreeCurricularPlan,
+            ExecutionPeriod executionPeriod, Date evaluationDate, MarkSheetType markSheetType,
+            HttpServletRequest request, ActionMessages actionMessages) {
+        
+        ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionPeriod.getExecutionYear());
+        
+        if (executionDegree == null || !executionDegree.isEvaluationDateInExamPeriod(evaluationDate, executionPeriod, markSheetType)) {
+            addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriod");
+        } else {
+            OccupationPeriod occupationPeriod = executionDegree.getOccupationPeriodFor(executionPeriod, markSheetType);
+            if (occupationPeriod == null) {
+                addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriodWithDates",
+                        DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getStart()),
+                        DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getEnd()));
+            }
+        }
+    }
+
+    protected void checkIfTeacherIsResponsibleOrCoordinator(DegreeCurricularPlan degreeCurricularPlan, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod, Integer teacherNumber, Teacher teacher, HttpServletRequest request, ActionMessages actionMessages) {
+        if (teacher == null) {
+            addMessage(request, actionMessages, "error.noTeacher", String.valueOf(teacherNumber));
+        } else if (!teacher.isResponsibleOrCoordinatorFor(degreeCurricularPlan, curricularCourse, executionPeriod)) {
+            addMessage(request, actionMessages, "error.teacherNotResponsibleOrNorCoordinator");
+        }
+    }
 }
