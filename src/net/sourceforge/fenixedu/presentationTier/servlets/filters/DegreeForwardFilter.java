@@ -80,12 +80,16 @@ public class DegreeForwardFilter implements Filter {
             tokens = tokensTemp;
         }
 
-        String degreeCode = tokens[0];
-        if (!degreeCode.contains(("-pB"))) {
-        	degreeCode += "-pB";
-        }
         try {
-            if (tokens.length != 1 || !isDegree(degreeCode)) {
+            if (tokens.length != 1) {
+                chain.doFilter(request, response);
+                return;
+            }
+            String degreeCode = tokens[0];
+            if (!degreeCode.contains(("-pB"))) {
+            	degreeCode += "-pB";
+            }
+        	if (tokens.length != 1 || !isDegree(degreeCode)) {
                 chain.doFilter(request, response);
                 return;
             }
@@ -94,6 +98,11 @@ public class DegreeForwardFilter implements Filter {
         }
 
         StringBuilder forwardURI = new StringBuilder(context);
+
+        String degreeCode = tokens[0];
+        if (!degreeCode.contains(("-pB"))) {
+        	degreeCode += "-pB";
+        }
 
         Integer degreeId;
         try {
@@ -132,7 +141,7 @@ public class DegreeForwardFilter implements Filter {
         List<Degree> degrees = RootDomainObject.getInstance().getDegrees();
 
         for (final Degree degree : degrees) {
-            if (degree.getSigla().equalsIgnoreCase(string)) {
+            if (degree.getSigla() != null && degree.getSigla().equalsIgnoreCase(string)) {
                 return true;
             }
         }
