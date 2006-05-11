@@ -68,19 +68,22 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
         labelList.add(new GenericPair<Object, Boolean>("label.module", true));
         labelList.add(new GenericPair<Object, Boolean>(": ", false));
         labelList.add(new GenericPair<Object, Boolean>(getPrecedenceDegreeModule().getName(), false));
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>("label.with", true));
-        labelList.add(new GenericPair<Object, Boolean>(", ", false));
         
-        labelList.add(new GenericPair<Object, Boolean>("label.in", true));
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>("label.minimum", true));
-        labelList.add(new GenericPair<Object, Boolean>(", ", false));
-        
-        labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>("label.credits", true));
-        
+        if (getMinimum().doubleValue() != 0.0) {
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.with", true));
+            labelList.add(new GenericPair<Object, Boolean>(", ", false));
+            
+            labelList.add(new GenericPair<Object, Boolean>("label.in", true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.minimum", true));
+            labelList.add(new GenericPair<Object, Boolean>(", ", false));
+            
+            labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.credits", true));
+        }
+            
         if (getContextCourseGroup() != null) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inContext", true));
