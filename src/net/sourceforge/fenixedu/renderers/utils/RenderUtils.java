@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -438,5 +439,19 @@ public class RenderUtils {
      */
     public static void invalidateViewState() {
         RenderersRequestProcessor.getCurrentRequest().setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);
+    }
+    
+    public static boolean invalidateViewState(String id) {
+        List<IViewState> viewStates = (List<IViewState>) RenderersRequestProcessor.getCurrentRequest().getAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+        for (Iterator<IViewState> iter = viewStates.iterator(); iter.hasNext();) {
+            IViewState viewState = iter.next();
+            
+            if (id.equals(viewState.getId())) {
+                iter.remove();
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
