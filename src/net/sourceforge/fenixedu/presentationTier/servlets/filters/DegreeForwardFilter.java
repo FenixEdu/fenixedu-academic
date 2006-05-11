@@ -92,6 +92,9 @@ public class DegreeForwardFilter implements Filter {
         StringBuilder forwardURI = new StringBuilder(context);
 
         String degreeCode = tokens[0];
+        if (degreeCode.indexOf("-pB") < 0) {
+        	degreeCode += "-pB";
+        }
         Integer degreeId;
         try {
             degreeId = getDegreeId(degreeCode);
