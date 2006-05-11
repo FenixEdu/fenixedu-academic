@@ -9710,4 +9710,13 @@
 		<filterChains>
 		</filterChains>
 	</service>
+	<service>
+		<name>DeletePatent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeletePatent</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service>
 </serviceDefinitions>

@@ -2704,7 +2704,7 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 	}
 	
 	class net.sourceforge.fenixedu.domain.research.result.Patent extends net.sourceforge.fenixedu.domain.research.result.Result {
-		Integer patentNumber;
+		String patentNumber;
 		PatentType type;
 		PatentStatus status;
 		Partial registrationDate;
