@@ -80,8 +80,12 @@ public class DegreeForwardFilter implements Filter {
             tokens = tokensTemp;
         }
 
+        String degreeCode = tokens[0];
+        if (!degreeCode.contains(("-pB"))) {
+        	degreeCode += "-pB";
+        }
         try {
-            if (tokens.length != 1 || !isDegree(tokens[0])) {
+            if (tokens.length != 1 || !isDegree(degreeCode)) {
                 chain.doFilter(request, response);
                 return;
             }
@@ -91,10 +95,6 @@ public class DegreeForwardFilter implements Filter {
 
         StringBuilder forwardURI = new StringBuilder(context);
 
-        String degreeCode = tokens[0];
-        if (degreeCode.indexOf("-pB") < 0) {
-        	degreeCode += "-pB";
-        }
         Integer degreeId;
         try {
             degreeId = getDegreeId(degreeCode);
