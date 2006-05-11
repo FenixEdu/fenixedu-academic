@@ -28,6 +28,16 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public class UsernameUtils extends FenixUtil {
 
+	public static boolean shouldHaveUID(Person person) {
+		if(person.getUsername().matches("[A-Z]+[0-9]+")){
+			String letters = person.getUsername().replaceFirst("[0-9]+", "");
+			return (letters.equals("D") || letters.equals("F") || letters.equals("B") || letters.equals("M") || letters.equals("L") || letters.equals("P"));
+		} else {
+			return false;
+		}
+		
+	}
+	
     /**
      * This method is used to determine what should be the person's current
      * username. Note - this method is NOT resposible for actually removing the
