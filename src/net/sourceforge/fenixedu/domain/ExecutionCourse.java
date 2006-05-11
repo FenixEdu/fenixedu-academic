@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -959,6 +960,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (hasForumWithName(name)) {
             throw new DomainException("executionCourse.already.existing.forum");
         }
+    }
+
+    public SortedSet<Degree> getDegreesSortedByDegreeName() {
+    	final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+    	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+    		final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+    		degrees.add(degreeCurricularPlan.getDegree());
+    	}
+    	return degrees;
     }
 
 }

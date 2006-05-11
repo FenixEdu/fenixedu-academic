@@ -19,7 +19,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.util.LabelValueBean;
 
 public class ShowProfessorshipsDA extends FenixDispatchAction {
 
@@ -28,21 +27,24 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
 
     	final IUserView userView = getUserView(request);
     	final DynaActionForm dynaActionForm = (DynaActionForm) form;
-    	final String executionPeriodIDString = dynaActionForm.getString("executionPeriodID");
+    	final String executionPeriodIDString = request.getParameter("executionPeriodID");
+
+    	final SortedSet<ExecutionPeriod> executionPeriods = new TreeSet<ExecutionPeriod>();
 
     	final ExecutionPeriod selectedExecutionPeriod;
-    	if (executionPeriodIDString != null && executionPeriodIDString.length() > 0) {
-    		selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(Integer.valueOf(executionPeriodIDString));
-    	} else {
+    	if (executionPeriodIDString == null) {
     		selectedExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+    		executionPeriods.add(selectedExecutionPeriod);
+    		dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+    	} else if (executionPeriodIDString.length() > 0) {
+    		selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(Integer.valueOf(executionPeriodIDString));
+    		dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+    	} else {
+    		selectedExecutionPeriod = null;
+    		dynaActionForm.set("executionPeriodID", "");
     	}
-    	dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
 
-    	final SortedSet<LabelValueBean> executionPeriodLabelValueBeans = new TreeSet<LabelValueBean>();
-    	executionPeriodLabelValueBeans.add(LabelValueBeanUtils.executionPeriodLabelValueBean(selectedExecutionPeriod));
-    	request.setAttribute("executionPeriodLabelValueBeans", executionPeriodLabelValueBeans);
-
-    	final SortedSet<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+    	final SortedSet<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
     	request.setAttribute("executionCourses", executionCourses);
 
     	if (userView != null) {
@@ -54,14 +56,16 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
     					final ExecutionCourse executionCourse = professorship.getExecutionCourse();
     					final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
 
-    					executionPeriodLabelValueBeans.add(LabelValueBeanUtils.executionPeriodLabelValueBean(executionPeriod));
-    					if (executionPeriod == selectedExecutionPeriod) {
+    					executionPeriods.add(executionPeriod);
+    					if (selectedExecutionPeriod == null || selectedExecutionPeriod == executionPeriod) {
     						executionCourses.add(executionCourse);
     					}
     				}
     			}
     		}
     	}
+
+    	request.setAttribute("executionPeriodLabelValueBeans", LabelValueBeanUtils.executionPeriodLabelValueBeans(executionPeriods, true));
 
         return mapping.findForward("list");
     }

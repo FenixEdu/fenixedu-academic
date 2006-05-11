@@ -4,6 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
+<bean:define id="hostURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/</bean:define>
+
 <span class="error"><html:errors/></span>
 
 <h2><bean:message key="label.professorships"/></h2>
@@ -14,11 +18,12 @@
 			<bean:message key="property.executionPeriod"/>:
     	</td>
 		<td nowrap="nowrap">
-			<html:form action="/manageExecutionCourses" >
-				<html:hidden property="method" value="perform"/>
+			<html:form action="/showProfessorships" >
+				<html:hidden property="method" value="list"/>
 				<html:hidden property="page" value="1"/>
-				<html:select property="selectedExecutionPeriodId" size="1" onchange="this.form.submit();">
-					<html:options labelProperty="label" property="value" collection="executionPeriodLabelValueBeans" />
+				<html:select property="executionPeriodID" size="1" onchange="this.form.submit();">
+					<html:option key="option.all.execution.periods" value=""/>
+					<html:options labelProperty="label" property="value" collection="executionPeriodLabelValueBeans"/>
 				</html:select>
 			</html:form>
     	</td>
@@ -46,12 +51,23 @@
 	<logic:iterate id="executionCourse" name="executionCourses">
 		<tr>
 			<td class="listClasses" style="text-align:left">
-				<bean:write name="executionCourse" property="sigla"/>
+				<html:link page="/manageExecutionCourse.do" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+					<bean:write name="executionCourse" property="sigla"/>
+				</html:link>
 			</td>
 			<td class="listClasses" style="text-align:left">
-				<bean:write name="executionCourse" property="nome"/>
+				<html:link page="/manageExecutionCourse.do" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+					<bean:write name="executionCourse" property="nome"/>
+				</html:link>
 			</td>
 			<td class="listClasses" style="text-align:left">
+				<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
+					<bean:define id="degreeCode" type="java.lang.String" name="degree" property="sigla"/>
+					<bean:define id="degreeLabel" type="java.lang.String"><bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/> <bean:message key="label.in"/> <bean:write name="degree" property="name"/></bean:define>
+					<html:link href="<%= hostURL + degreeCode %>" title="<%= degreeLabel %>">
+						<bean:write name="degreeCode"/>
+					</html:link>
+				</logic:iterate>
 			</td>
 			<td class="listClasses" style="text-align:left">
 				<bean:write name="executionCourse" property="executionPeriod.qualifiedName"/>
