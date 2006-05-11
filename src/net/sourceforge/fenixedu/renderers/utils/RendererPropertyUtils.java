@@ -86,6 +86,8 @@ public class RendererPropertyUtils {
      * @return
      */
     static public Object getProperty(Object object, String name, boolean create) {
+        String message = "could not get property '" + name + "' for object '" + object + "'";
+
         try {
             int index = name.indexOf(".");
             if (index == -1) {
@@ -102,8 +104,14 @@ public class RendererPropertyUtils {
             else {
                 return getProperty(target, remaining, create);
             }
-        } catch (Exception e) {
-            throw new RuntimeException("could not get property '" + name + "' for object '" + object + "'", e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(message, e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(message, e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(message, e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(message, e);
         }
     }
     
@@ -115,6 +123,8 @@ public class RendererPropertyUtils {
      * 
      */
     static public void setProperty(Object object, String name, Object value, boolean create) {
+        String message = "could not set property '" + name + "' for object '" + object + "' with value '" + value + "'";
+        
         try {
             int index = name.lastIndexOf(".");
             if (index == -1) {
@@ -129,8 +139,14 @@ public class RendererPropertyUtils {
             if (target != null) {
                 PropertyUtils.setProperty(target, remaining, value);
             }
-        } catch (Exception e) {
-            throw new RuntimeException("could not set property '" + name + "' for object '" + object + "' with value '" + value + "'", e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(message, e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(message, e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(message, e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(message, e);
         }
     }
 }

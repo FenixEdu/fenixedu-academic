@@ -154,8 +154,9 @@ public class DomainMetaObject implements MetaObject {
     protected Object callService(List<ObjectChange> changes) {
         try {
             return ServiceUtils.executeService(getUserView(), getService(), new Object[] { changes });
+        } catch (DomainException e) {
+            throw e;
         } catch (Exception e) {
-            // TODO: do something with the exception
             throw new DomainException("domain.metaobject.service.failed", e);
         }
     }
