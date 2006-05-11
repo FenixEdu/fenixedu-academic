@@ -9695,6 +9695,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>EditMarkSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.EditMarkSheet</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	
+	<service>
 		<name>SearchMarkSheets</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.SearchMarkSheets</implementationClass>
 		<description />
