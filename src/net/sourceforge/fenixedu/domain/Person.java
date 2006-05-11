@@ -1271,5 +1271,16 @@ public class Person extends Person_Base {
     	}
     	return attends;
     }
+    
+    public boolean hasIstUsername() {
+    	if(this.getIstUsername() != null) {
+    		return true;
+    	}
+    	if(UsernameUtils.shouldHaveUID(this)) {
+    		this.setIstUsername(UsernameUtils.updateIstUsername(this));
+    		return true;
+    	}
+    	return false;
+    }
 
 }
