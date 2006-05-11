@@ -9,7 +9,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,7 +27,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -36,14 +34,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
@@ -106,12 +101,17 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
             // degreeCurricularPlanID
             Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
-            final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-            if (!degreeCurricularPlan.getDegree().getIdInternal().equals(degreeId)) {
-                throw new FenixActionException();
+            final DegreeCurricularPlan degreeCurricularPlan;
+            if (degreeCurricularPlanId == null) {
+                degreeCurricularPlan = rootDomainObject.readDegreeByOID(degreeId).getMostRecentDegreeCurricularPlan();
             } else {
-                request.setAttribute("degree", degreeCurricularPlan.getDegree());    
+                degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+                if (!degreeCurricularPlan.getDegree().getIdInternal().equals(degreeId)) {
+                    throw new FenixActionException();
+                } 
             }
+            
+            request.setAttribute("degree", degreeCurricularPlan.getDegree());
 
             // curricularYearList
             final Boolean selectAllCurricularYears = (Boolean) chooseExamContextoForm.get("selectAllCurricularYears");
@@ -119,7 +119,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
             request.setAttribute("curricularYearList", curricularYears);
             
             // lista
-            List<LabelValueBean> executionPeriodsLabelValueList = buildExecutionPeriodsLabelValueList(degreeCurricularPlanId);
+            List<LabelValueBean> executionPeriodsLabelValueList = buildExecutionPeriodsLabelValueList(degreeCurricularPlan.getIdInternal());
             if (executionPeriodsLabelValueList.size() > 1) {
                 request.setAttribute("lista", executionPeriodsLabelValueList);
             } else {
@@ -127,11 +127,9 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
             }
             
             // infoDegreeCurricularPlan
-            if (degreeCurricularPlanId != null) {
-                InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan);
-                infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
-                request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-            }
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan);
+            infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
+            request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
 
             // indice, SessionConstants.EXECUTION_PERIOD, SessionConstants.EXECUTION_PERIOD_OID
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
