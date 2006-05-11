@@ -45,6 +45,6 @@
 		</fr:layout>
 	</fr:edit>
 	<br/>
-	<html:submit><bean:message key="label.submit.markSheet" /></html:submit>
+	<html:submit><bean:message key="label.markSheet.submit" /></html:submit>
 	<html:cancel><bean:message key="label.back"/></html:cancel>
 </fr:form>
