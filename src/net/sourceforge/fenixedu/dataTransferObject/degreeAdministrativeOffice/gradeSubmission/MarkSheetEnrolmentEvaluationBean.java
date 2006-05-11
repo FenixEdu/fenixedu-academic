@@ -5,12 +5,16 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 
 public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     
     private String grade;
     private Date evaluationDate;    
     private DomainReference<Enrolment> enrolment;
+
+    // used to edit
+    private DomainReference<EnrolmentEvaluation> enrolmentEvaluation;
     
     public MarkSheetEnrolmentEvaluationBean() {        
     }
@@ -43,5 +47,17 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+    
+    public EnrolmentEvaluation getEnrolmentEvaluation() {
+        return (this.enrolmentEvaluation == null) ? null : this.enrolmentEvaluation.getObject();
+    }
+
+    public void setEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation) {
+        this.enrolmentEvaluation = (enrolmentEvaluation != null) ? new DomainReference<EnrolmentEvaluation>(enrolmentEvaluation) : null;
+        //TODO: ????????????
+        if (this.enrolmentEvaluation != null) {
+            setEnrolment(this.enrolmentEvaluation.getObject().getEnrolment());
+        }
     }
 }
