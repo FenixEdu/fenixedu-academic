@@ -33,7 +33,7 @@
 					<bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" />
 				</html:link>&gt;&nbsp;
 				<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  + "&amp;index=" + request.getAttribute("index")  %>" >
-				<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+					<bean:write name="infoDegreeCurricularPlan" property="name" />
 				</html:link>&gt;&nbsp; 
 				<html:link page="<%= "/chooseContextDANew.do?method=nextPagePublic&nextPage=classSearch&inputPage=chooseContext&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)+ "&amp;degreeID=" + request.getAttribute("degreeID")+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() %>" >
 					<bean:message  key="public.degree.information.label.classes"  bundle="PUBLIC_DEGREE_INFORMATION" />
