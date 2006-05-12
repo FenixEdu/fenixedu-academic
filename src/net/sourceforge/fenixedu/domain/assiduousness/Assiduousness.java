@@ -18,7 +18,7 @@ public class Assiduousness extends Assiduousness_Base {
     public Assiduousness(Employee employee) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-        setEmployee(employee);
+        //setEmployee(employee);
     }
 
     public List calculateIntervalBalance(DateInterval interval) {
