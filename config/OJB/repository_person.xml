@@ -307,7 +307,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.Identification" table="IDENTIFICATION">
 	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.Login"/>
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard"/>
+<!-- <extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard"/>  -->	
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -415,7 +415,7 @@
 
 <!-- ***********************************
      Definitions for net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard
-     *********************************** -->
+     *********************************** 
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard" table="IDENTIFICATION">
 	
 	<field-descriptor
@@ -480,4 +480,4 @@
 	   column="KEY_MODIFIED_BY"  
 	   jdbc-type="INTEGER"
     />	
-</class-descriptor>
+</class-descriptor> -->
