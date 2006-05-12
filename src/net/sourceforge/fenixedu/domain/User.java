@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard;
 
 /**
  * @author mrsp
@@ -54,5 +58,15 @@ public class User extends User_Base {
             }
         }
         return null;
+    }
+
+    public List<IdentificationCard> getIdentificationCards() {
+        List<IdentificationCard> cards = new ArrayList<IdentificationCard>();
+        for (Identification identification : this.getIdentifications()) {
+            if (identification instanceof IdentificationCard) {
+                cards.add((IdentificationCard) identification);
+            }
+        }
+        return cards;
     }
 }

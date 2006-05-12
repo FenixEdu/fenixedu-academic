@@ -103,15 +103,11 @@ valueType org.joda.time.YearMonthDay															as YearMonthDay;
 valueType java.math.BigDecimal																	as BigDecimal;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.CardState                          as CardState;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.CardType                           as CardType;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleType                       as ScheduleType;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.ClockingState                      as ClockingState;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.DayType                            as DayType;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup                 as JustificationGroup;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationMotiveType            as JustificationMotiveType;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType                  as JustificationType;
 valueType net.sourceforge.fenixedu.domain.assiduousness.WorkWeek                                as WorkWeek;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval                       as TimeInterval;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval                       as DateInterval;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessStatus                as AssiduousnessStatus;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState                 as AssiduousnessState;
 valueType org.joda.time.DateTime                                                                as DateTime;
 valueType org.joda.time.Duration                                                                as Duration;
 valueType org.joda.time.Interval                                                                as Interval;
@@ -839,7 +835,6 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	String employeeID;
     DateTime seniority;
     
-    Integer keyPermanentCard;
     Integer keyUnit;
 }
 
@@ -1510,8 +1505,7 @@ class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fen
 		CardState cardState;
 		DateTime lastModifiedDate;
 		Integer keyModifiedBy;
-	}	
-	
+	}
   
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
@@ -2869,45 +2863,79 @@ class net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod extends
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Assiduousness extends net.sourceforge.fenixedu.domain.DomainObject {
-	AssiduousnessStatus status;
+	Integer keyEmployee;
+	Integer keySchedule;
 }
 
-class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegimeHistory extends net.sourceforge.fenixedu.domain.DomainObject {
+/*class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegimeHistory extends net.sourceforge.fenixedu.domain.DomainObject {
 	DateInterval validInterval;
-}
+}*/
 
 class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyAssiduousness;
 	DateTime date;
+	String ojbConcreteClass;
+}
+
+class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus extends net.sourceforge.fenixedu.domain.DomainObject {
+	String description;
+	AssiduousnessState state;
+	DateTime lastModifiedDate;
+	Integer keyModifiedBy;
+}
+
+class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory extends net.sourceforge.fenixedu.domain.DomainObject {
+	YearMonthDay beginDate;
+	YearMonthDay endDate;
+	Integer keyAssiduousnessStatus;
+	Integer keyAssiduousness;
+	DateTime lastModifiedDate;
+	Integer keyModifiedBy;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Schedule extends net.sourceforge.fenixedu.domain.DomainObject {
-	DateInterval validInterval;
+	YearMonthDay beginDate;
+	YearMonthDay endDate;
+	Integer keyAssiduousness;
+	DateTime lastModifiedDate;
+	Integer keyModifiedBy;
+	Boolean exception;
 }
 
-class net.sourceforge.fenixedu.domain.assiduousness.NormalWorkPeriod extends net.sourceforge.fenixedu.domain.DomainObject{
-	TimeInterval normalWorkPeriod1;
-	TimeInterval normalWorkPeriod2;
-}
-
-class net.sourceforge.fenixedu.domain.assiduousness.FixedPeriod extends net.sourceforge.fenixedu.domain.DomainObject{
-	TimeInterval fixedPeriod1;
-	TimeInterval fixedPeriod2;
+class net.sourceforge.fenixedu.domain.assiduousness.WorkPeriod extends net.sourceforge.fenixedu.domain.DomainObject{
+	TimeOfDay firstPeriod;
+	Duration firstPeriodDuration;
+	TimeOfDay secondPeriod;
+	Duration secondPeriodDuration;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Meal extends net.sourceforge.fenixedu.domain.DomainObject{
-	TimeInterval mealBreak;
+	TimeOfDay beginMealBreak;
+	TimeOfDay endMealBreak;
 	Duration mandatoryMealDiscount;
 	Duration minimumMealBreakInterval;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule extends net.sourceforge.fenixedu.domain.DomainObject{
-	Boolean exception;
-	DateTime creationDate;
+	Integer keyPeriodicity;
+	Integer keyWorkScheduleType;
+	WorkWeek workWeek;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType extends net.sourceforge.fenixedu.domain.DomainObject {
-	TimeInterval workDay; //expediente
+	TimeOfDay workTime;
+	Duration workTimeDuration;
+	TimeOfDay clockingTime;
+	Duration clockingTimeDuration;
 	String acronym;
+	Integer keyNormalWorkPeriod;
+	Integer keyFixedWorkPeriod;
+	DateTime lastModifiedDate;
+	Integer keyMeal;
+	Integer keyModifiedBy;
+	String ojbConcreteClass;
+	YearMonthDay beginValidDate;
+	YearMonthDay endValidDate;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.FlexibleSchedule extends net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType {
@@ -2919,39 +2947,32 @@ class net.sourceforge.fenixedu.domain.assiduousness.ContinuousSchedule extends n
 class net.sourceforge.fenixedu.domain.assiduousness.ScheduleExemption extends net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType { 
 }
 
-class net.sourceforge.fenixedu.domain.assiduousness.OneHourExemptionSchedule extends net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType {
-}
-
-class net.sourceforge.fenixedu.domain.assiduousness.TwoHoursExemptionSchedule extends net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType {
-}
-
-class net.sourceforge.fenixedu.domain.assiduousness.CustomFlexibleSchedule extends net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType {
+class net.sourceforge.fenixedu.domain.assiduousness.HourExemptionSchedule extends net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType {
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.HalfTimeSchedule extends net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType {
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Periodicity extends net.sourceforge.fenixedu.domain.DomainObject {
-	Interval definedInterval;
-	WorkWeek workWeek;
+	Integer workWeekNumber;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Clocking extends net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord {
-        DateTime date;
-        ClockingState state;
+        Integer keyClockUnit;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.ClockUnit extends net.sourceforge.fenixedu.domain.DomainObject {
-        String unitID;
         String acronym;
         String name;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Justification extends net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord {
-		DateTime startDate;
-		JustificationMotiveType motiveType; // OC, JH, Saldo
- 		DateTime creationDate;
+	Integer keyJustificationMotive;
+	DateTime lastModifiedDate;
+	Integer keyModifiedBy;
+	String notes;
 }
+
 class net.sourceforge.fenixedu.domain.assiduousness.MissingClocking extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
 }
 
@@ -2959,11 +2980,14 @@ class net.sourceforge.fenixedu.domain.assiduousness.Leave extends net.sourceforg
 		Duration duration;
 }
 
-class net.sourceforge.fenixedu.domain.assiduousness.JustificationType extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive extends net.sourceforge.fenixedu.domain.DomainObject {
         String acronym;
         String description;
+        JustificationType justificationType;
         DayType dayType;
-        JustificationGroup group;       
+        JustificationGroup justificationGroup;
+        DateTime lastModifiedDate;
+		Integer keyModifiedBy;       
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.MonthlyBalance extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2975,8 +2999,8 @@ class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime extends 
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Card extends net.sourceforge.fenixedu.domain.DomainObject {
-       Integer cardID;
-       CardType type;
+        Integer cardID;
+        CardType type;
 }
 
 
@@ -3046,6 +3070,30 @@ relation AnswerExportProposal {
 	net.sourceforge.fenixedu.domain.Person playsRole receiverPerson;
 }
 
+relation AssiduousnessAssiduousnessStatusHistory {
+	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
+	
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistories {
+		multiplicity *;
+	}
+}
+
+relation AssiduousnessAssiduousnessRecord {
+	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
+	
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
+		multiplicity *;
+	}
+}
+
+relation AssiduousnessStatusAssiduousnessStatusHistory {
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus playsRole assiduousnessStatus;
+	
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistories {
+		multiplicity *;
+	}
+}
+
 relation AttendsEnrolment {
 	net.sourceforge.fenixedu.domain.Attends playsRole attends {
 		multiplicity *;
@@ -3104,6 +3152,14 @@ relation PersonHasPersonalGroups {
 	{
 		multiplicity *;
 	}
+}
+
+relation CardIdentificationCard
+{
+	net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard playsRole identificationCards {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.assiduousness.Card playsRole card;
 }
 
 relation CmsConfiguration
@@ -3630,6 +3686,19 @@ relation AdvisoryFromDistributedTests {
     }
 }
 
+relation EmployeeAssiduousnessStatus {
+    net.sourceforge.fenixedu.domain.Employee playsRole modifiedBy;
+    net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus playsRole modifiedAssiduousnessStatus {
+        multiplicity *;
+    }
+}
+
+relation EmployeeAssiduousnessStatusHistory {
+    net.sourceforge.fenixedu.domain.Employee playsRole modifiedBy;
+    net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory playsRole modifiedAssiduousnessStatusHistory {
+        multiplicity *;
+    }
+}
 
 relation EmployeeHistoricEmployee {
     net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole historicList {
@@ -3662,15 +3731,6 @@ relation EmployeeHistoricSalaryCostCenter {
     net.sourceforge.fenixedu.domain.CostCenter playsRole salaryCostCenter;
 }
 
-
-relation EmployeeHistoricStatusAssiduidade {
-    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole associatedEmployeeHistorics {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.StatusAssiduidade playsRole status;
-}
-
-
 relation EmployeeHistoricWorkingPlaceCostCenter {
     net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole workingPlaceCostCenterAssociatedEmployeeHistorics {
         multiplicity *;
@@ -3678,11 +3738,38 @@ relation EmployeeHistoricWorkingPlaceCostCenter {
     net.sourceforge.fenixedu.domain.CostCenter playsRole workingPlaceCostCenter;
 }
 
+relation EmployeeIdentificationCard {
+    net.sourceforge.fenixedu.domain.Employee playsRole modifiedBy;
+    net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard playsRole modifiedIdentificationCards{
+        multiplicity *;
+    }
+}
+
+relation EmployeeJustification {
+    net.sourceforge.fenixedu.domain.Employee playsRole modifiedBy;
+    net.sourceforge.fenixedu.domain.assiduousness.Justification playsRole modifiedJustifications{
+        multiplicity *;
+    }
+}
+
+relation EmployeeJustificationMotive {
+    net.sourceforge.fenixedu.domain.Employee playsRole modifiedBy;
+    net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive playsRole modifiedJustificationMotives{
+        multiplicity *;
+    }
+}
+
 relation EmployeePerson {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
+relation EmployeeWorkScheduleType {
+    net.sourceforge.fenixedu.domain.Employee playsRole modifiedBy;
+    net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType playsRole modifiedWorkScheduleTypes{
+        multiplicity *;
+    }
+}
 
 relation EnrolmentCreditsInAnySecundaryArea {
     net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea playsRole creditsInAnySecundaryAreas {
@@ -4548,6 +4635,13 @@ relation ItemFileItem {
 	}
 	
 	net.sourceforge.fenixedu.domain.FileItem playsRole fileItems {
+		multiplicity *;
+	}
+}
+
+relation JustificationMotiveJustification {
+	net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive playsRole justificationMotive;
+	net.sourceforge.fenixedu.domain.assiduousness.Justification playsRole justifications {
 		multiplicity *;
 	}
 }
@@ -5931,13 +6025,9 @@ relation AdviseTeacherAdviseService {
 
 // Assiduousness
 
-relation EmployeeHasAssiduousness {
-	net.sourceforge.fenixedu.domain.Employee playsRole employee {
-		multiplicity 1;
-    }
-	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness {
-		multiplicity 1;
-	}
+relation EmployeeAssiduousness {
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
 }
 
 relation EmployeeWorksForUnit {
@@ -5949,98 +6039,70 @@ relation EmployeeWorksForUnit {
     }
 }
 
-relation AssiduousnessHasAssiduousnessRecord {
-	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness {
-		multiplicity 1;
-	}
-	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
-		multiplicity *;
-	}
-}               
-
-relation AssiduousnessHasSchedule {
+relation AssiduousnessSchedule {
 	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedules {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness {
-		multiplicity 1;
- 	}
+	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
 }
 
-relation ScheduleHasWorkSchedule {
-	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedule {
-		multiplicity 1;
-    }
-	net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule playsRole workSchedule {
+relation ScheduleEmployee {
+	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedules {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole modifiedBy;
+}
+
+relation ScheduleWorkSchedule {
+	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedules{
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule playsRole workSchedules {
 		multiplicity *;
     }
 }
 
-relation WorkScheduleHasWorkScheduleType {
+relation WorkScheduleWorkScheduleType {
 	net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule playsRole workSchedules {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType playsRole workScheduleType {
-		multiplicity 1;
-	}
+	net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType playsRole workScheduleType;
 }
 
-
-
-relation WorkScheduleTypeHasNormalPeriod {
-	net.sourceforge.fenixedu.domain.assiduousness.NormalWorkPeriod playsRole normalWorkPeriod {
-		multiplicity 1;
-    }
-	net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType playsRole workSchedulesType {
+relation WorkScheduleTypeNormalWorkPeriod {
+	net.sourceforge.fenixedu.domain.assiduousness.WorkPeriod playsRole normalWorkPeriod;
+	net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType playsRole normalWorkScheduleTypes {
 		multiplicity *;
 	}
 }
 
-relation WorkScheduleTypeHasMealPeriod {
-	net.sourceforge.fenixedu.domain.assiduousness.Meal playsRole meal {
-		multiplicity 1;
-	}
-	net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType playsRole workSchedulesType {
-		multiplicity *;
-	}
-	}
-
-relation WorkScheduleTypeHasFixedPeriod {
-	net.sourceforge.fenixedu.domain.assiduousness.FixedPeriod playsRole fixedPeriod {
-		multiplicity 1;
-	}
-	net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType playsRole workSchedulesType {
+relation WorkScheduleTypeFixedWorkPeriod {
+	net.sourceforge.fenixedu.domain.assiduousness.WorkPeriod playsRole fixedWorkPeriod;
+	net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType playsRole fixedWorkScheduleTypes {
 		multiplicity *;
 	}
 }
 
-relation WorkScheduleHasPeriodicity {
+relation WorkScheduleTypeMeal{
+	net.sourceforge.fenixedu.domain.assiduousness.Meal playsRole meal;
+	net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType playsRole workScheduleTypes {
+		multiplicity *;
+	}
+}
+
+relation WorkSchedulePeriodicity {
 	net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule playsRole workSchedule {
-		multiplicity 1;
+		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.assiduousness.Periodicity playsRole periodicity {
-		multiplicity 1;
- 	}
+	net.sourceforge.fenixedu.domain.assiduousness.Periodicity playsRole periodicity;
 }
 
-relation ClockingClockDoneInUnit {
+relation ClockUnitClocking {
 	net.sourceforge.fenixedu.domain.assiduousness.Clocking playsRole clockings {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.assiduousness.ClockUnit playsRole clockUnit {
-		multiplicity 1;
+	net.sourceforge.fenixedu.domain.assiduousness.ClockUnit playsRole clockUnit;
 }
-}
-
-relation JustificationHasJustificationType {
-	net.sourceforge.fenixedu.domain.assiduousness.JustificationType playsRole justificationType {
-		multiplicity 1;
-	}
-	net.sourceforge.fenixedu.domain.assiduousness.Justification playsRole justifications {
-		multiplicity *;
-	}
-}
-
 
 relation CurricularRuleDegreeModule {
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModuleToApplyRule;
@@ -6264,7 +6326,26 @@ relation PartyEventParticipation {
  * 
  */
 
+relation RootDomainObjectAssiduousnessRecord {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
+		multiplicity *;
+	}
+}
 
+relation RootDomainObjectAssiduousnessStatus {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus playsRole assiduousnessStatus {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAssiduousnessStatusHistory {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistory {
+		multiplicity *;
+	}
+}
 
 relation RootDomainObjectSummary {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
@@ -6283,6 +6364,13 @@ relation RootDomainObjectCurricularCourseGroup {
 relation RootDomainObjectInsuranceValue {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.InsuranceValue playsRole insuranceValues {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectClockUnit {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.ClockUnit playsRole clockUnits {
 		multiplicity *;
 	}
 }
@@ -6455,13 +6543,6 @@ relation RootDomainObjectPublicationsNumber {
 	}
 }
 
-relation RootDomainObjectAssiduousnessRecord {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectBlogEntry {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.homepage.BlogEntry playsRole blogEntrys {
@@ -6549,13 +6630,6 @@ relation RootDomainObjectWebSiteItem {
 relation RootDomainObjectCurricularYear {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.CurricularYear playsRole curricularYears {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectFixedPeriod {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.FixedPeriod playsRole fixedPeriods {
 		multiplicity *;
 	}
 }
@@ -6654,13 +6728,6 @@ relation RootDomainObjectSection {
 relation RootDomainObjectBlogEntryComment {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.homepage.BlogEntryComment playsRole blogEntryComments {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectClockUnit {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.ClockUnit playsRole clockUnits {
 		multiplicity *;
 	}
 }
@@ -7071,9 +7138,9 @@ relation RootDomainObjectMasterDegreeCandidate {
 	}
 }
 
-relation RootDomainObjectJustificationType {
+relation RootDomainObjectJustificationMotive {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.JustificationType playsRole justificationTypes {
+	net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive playsRole justificationMotives {
 		multiplicity *;
 	}
 }
@@ -7505,13 +7572,6 @@ relation RootDomainObjectGrantInsurance {
 	}
 }
 
-relation RootDomainObjectStatusAssiduidade {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.StatusAssiduidade playsRole statusAssiduidades {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectGrantPart {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole grantParts {
@@ -7743,13 +7803,6 @@ relation RootDomainObjectRole {
 	}
 }
 
-relation RootDomainObjectNormalWorkPeriod {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.NormalWorkPeriod playsRole normalWorkPeriods {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectWrittenEvaluationEnrolment {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
@@ -7875,6 +7928,14 @@ relation RootDomainObjectIdentification {
 		multiplicity *;
 	}
 }
+
+relation RootDomainObjectWorkPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.WorkPeriod playsRole workPeriods {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectWorkScheduleType {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType playsRole workScheduleTypes {

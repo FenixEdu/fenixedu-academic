@@ -5,136 +5,141 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.EnumSet;
 
-import org.joda.time.Duration;
-
-import net.sourceforge.fenixedu.presentationTier.util.DTO;
-import net.sourceforge.fenixedu.presentationTier.util.PresentationConstants;
-
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
-import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidNormalWorkPeriod1IntervalException;
-import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidNormalWorkPeriod2IntervalException;
-import net.sourceforge.fenixedu.domain.exceptions.assiduousness.NormalWorkPeriod1StartsBeforeWorkDayException;
-import net.sourceforge.fenixedu.domain.exceptions.assiduousness.NormalWorkPeriod2EndsAfterWorkDayException;
-import net.sourceforge.fenixedu.domain.exceptions.assiduousness.NormalWorkPeriodExceedsLegalDayDurationException;
-import net.sourceforge.fenixedu.domain.exceptions.assiduousness.InvalidMealBreakIntervalException;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
-import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
-import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleType;
-import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
+
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.TimeOfDay;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author velouria
- *
+ * 
  */
 public class ScheduleExemption extends ScheduleExemption_Base {
 
-	public ScheduleExemption() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
-
-	public static ScheduleExemption fillScheduleExemption(NormalWorkPeriod normalWorkPeriod,Meal mealPeriod, TimeInterval workDay) {
-        ScheduleExemption newScheduleExemption = new ScheduleExemption();
-        newScheduleExemption.setNormalWorkPeriod(normalWorkPeriod);
-        newScheduleExemption.setMeal(mealPeriod);
-        newScheduleExemption.setWorkDay(workDay);
-        return newScheduleExemption;
-	}
+    public ScheduleExemption(String acronym, YearMonthDay beginValidDate, YearMonthDay endValidDate,
+            TimeOfDay dayTime, Duration dayTimeDuration, TimeOfDay clockingTime,
+            Duration clockingTimeDuration, WorkPeriod normalWorkPeriod, Meal meal,
+            DateTime lastModifiedDate, Employee modifiedBy) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setOjbConcreteClass(this.getClass().getName());
+        setAcronym(acronym);
+        setWorkTime(dayTime);
+        setWorkTimeDuration(dayTimeDuration);
+        setClockingTime(clockingTime);
+        setClockingTimeDuration(clockingTimeDuration);
+        setNormalWorkPeriod(normalWorkPeriod);
+        setMeal(meal);
+        setBeginValidDate(beginValidDate);
+        setEndValidDate(endValidDate);
+        setLastModifiedDate(lastModifiedDate);
+        setModifiedBy(modifiedBy);
+    }
 
     // Exemption Schedule is now allowed to have overtime
     public Duration countOvertimeWorkDone(Clocking clockingIn, Clocking clockingOut) {
         return Duration.ZERO;
     }
-    
-    
+
     // Returns the schedule Attributes
     public Attributes getAttributes() {
-        EnumSet<AttributeType> attributes = EnumSet.of(AttributeType.NORMAL_WORK_PERIOD_1, AttributeType.NORMAL_WORK_PERIOD_2, AttributeType.MEAL);
+        EnumSet<AttributeType> attributes = EnumSet.of(AttributeType.NORMAL_WORK_PERIOD_1,
+                AttributeType.NORMAL_WORK_PERIOD_2, AttributeType.MEAL);
         return new Attributes(attributes);
     }
 
-    
-    
-	public static ScheduleExemption createScheduleExemption(DTO presentationDTO) throws FenixDomainException {
-	    
-//	    /** criacao dos objectos **/
-//	    Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
-//	    Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
-//	    Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
-//	    
-//	    Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay, (Integer)presentationDTO.get(PresentationConstants.END_YEAR), 
-//	            (Integer)presentationDTO.get(PresentationConstants.END_MONTH), (Integer)presentationDTO.get(PresentationConstants.END_DAY));
-	    	    
-	    // expediente
-	    TimeInterval workDay = createWorkDay((Integer)presentationDTO.get(PresentationConstants.START_WORK_DAY_HOURS),
-                (Integer)presentationDTO.get(PresentationConstants.START_WORK_DAY_MINUTES),
-                (Integer)presentationDTO.get(PresentationConstants.END_WORK_DAY_HOURS),
-                (Integer)presentationDTO.get(PresentationConstants.END_WORK_DAY_MINUTES),
-                ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_WORK_DAY)).booleanValue());
-	            
-	    	    
-	    // horario normal 1
-	    TimeInterval normalWorkPeriod1 = createTimeInterval((Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_1_HOURS),
-	            (Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_1_MINUTES),
-	            (Integer)presentationDTO.get(PresentationConstants.END_REGULAR_SCHEDULE_1_HOURS),
-	            (Integer)presentationDTO.get(PresentationConstants.END_REGULAR_SCHEDULE_1_MINUTES),
-	            ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_REGULAR_SCHEDULE_1)).booleanValue(), new InvalidNormalWorkPeriod1IntervalException());
+    // public static ScheduleExemption createScheduleExemption(DTO presentationDTO) throws
+    // FenixDomainException {
+    //	    
+    // // /** criacao dos objectos **/
+    // // Integer startYear = (Integer)presentationDTO.get(PresentationConstants.START_YEAR);
+    // // Integer startMonth = (Integer)presentationDTO.get(PresentationConstants.START_MONTH);
+    // // Integer startDay = (Integer)presentationDTO.get(PresentationConstants.START_DAY);
+    // //
+    // // Interval validFromTo = createValidFromToInterval(startYear, startMonth, startDay,
+    // (Integer)presentationDTO.get(PresentationConstants.END_YEAR),
+    // // (Integer)presentationDTO.get(PresentationConstants.END_MONTH),
+    // (Integer)presentationDTO.get(PresentationConstants.END_DAY));
+    //	    	    
+    // // expediente
+    // TimeInterval workDay =
+    // createWorkDay((Integer)presentationDTO.get(PresentationConstants.START_WORK_DAY_HOURS),
+    // (Integer)presentationDTO.get(PresentationConstants.START_WORK_DAY_MINUTES),
+    // (Integer)presentationDTO.get(PresentationConstants.END_WORK_DAY_HOURS),
+    // (Integer)presentationDTO.get(PresentationConstants.END_WORK_DAY_MINUTES),
+    // ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_WORK_DAY)).booleanValue());
+    //	            
+    //	    	    
+    // // horario normal 1
+    // TimeInterval normalWorkPeriod1 =
+    // createTimeInterval((Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_1_HOURS),
+    // (Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_1_MINUTES),
+    // (Integer)presentationDTO.get(PresentationConstants.END_REGULAR_SCHEDULE_1_HOURS),
+    // (Integer)presentationDTO.get(PresentationConstants.END_REGULAR_SCHEDULE_1_MINUTES),
+    // ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_REGULAR_SCHEDULE_1)).booleanValue(),
+    // new InvalidNormalWorkPeriod1IntervalException());
+    //
+    // // horario normal 2
+    // TimeInterval normalWorkPeriod2 =
+    // createTimeInterval((Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_2_HOURS),
+    // (Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_2_MINUTES),
+    // (Integer)presentationDTO.get(PresentationConstants.END_REGULAR_SCHEDULE_2_HOURS),
+    // (Integer)presentationDTO.get(PresentationConstants.END_REGULAR_SCHEDULE_2_MINUTES),
+    // ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_REGULAR_SCHEDULE_2)).booleanValue(),
+    // new InvalidNormalWorkPeriod2IntervalException());
+    //        
+    // // intervalo de refeicao
+    // TimeInterval mealBreak =
+    // createTimeInterval(((Integer)presentationDTO.get(PresentationConstants.START_MEAL_BREAK_HOURS)),
+    // ((Integer)presentationDTO.get(PresentationConstants.START_MEAL_BREAK_MINUTES)),
+    // ((Integer)presentationDTO.get(PresentationConstants.END_MEAL_BREAK_HOURS)),
+    // ((Integer)presentationDTO.get(PresentationConstants.END_MEAL_BREAK_MINUTES)),
+    // ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_MEAL_BREAK)).booleanValue(), new
+    // InvalidMealBreakIntervalException());
+    //        
+    // // workdays
+    // //// EnumSet<WeekDay> workDays = createWorkDays(true, true, true, true, true, true);
+    // ////
+    // // // regime
+    // // List<AssiduousnessRegime> regimes =
+    // (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
+    //        
+    // /** verificacoes que dependem de varios objectos simultaneamente **/
+    // NormalWorkPeriod regularSchedule = null;
+    // if ((normalWorkPeriod1 != null) && (normalWorkPeriod2 != null)) {
+    // // criacao do horario normal
+    //
+    // regularSchedule = new NormalWorkPeriod(normalWorkPeriod1, normalWorkPeriod2);
+    // // verificar se horario normal totaliza as horas que era suposto
+    // // TODO verificar isto com funcionarios
+    // if
+    // (regularSchedule.getTotalNormalWorkPeriodDuration().compareTo(DomainConstants.EXEMPTION_DAY_DURATION)
+    // != 0) {
+    // System.out.println("erro: hn e' maior que trabalho flexivel permitido");
+    // throw new NormalWorkPeriodExceedsLegalDayDurationException();
+    // }
+    // if (workDay != null) {
+    // // Se inicio de expediente for depois do horario normal 1 da' erro!
+    // if (workDay.getStartTime().isAfter(normalWorkPeriod1.getStartTime())) {
+    // System.out.println("erro: expediente comeca depois do hn1");
+    // throw new NormalWorkPeriod1StartsBeforeWorkDayException();
+    // }
+    // // Se fim de expediente for antes do horario normal 2 da' erro!
+    // if (workDay.getEndTime().isBefore(normalWorkPeriod2.getEndTime())) {
+    // System.out.println("erro: expediente acaba antes do hn2");
+    // throw new NormalWorkPeriod2EndsAfterWorkDayException();
+    // }
+    // }
+    // }
+    //	    
+    // Meal mealPeriod = new Meal(mealBreak);
+    // ScheduleExemption scheduleExemption = fillScheduleExemption(regularSchedule, mealPeriod, workDay);
+    // return scheduleExemption;
+    // }
 
-	    // horario normal 2
-	    TimeInterval normalWorkPeriod2 = createTimeInterval((Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_2_HOURS),
-	            (Integer)presentationDTO.get(PresentationConstants.START_REGULAR_SCHEDULE_2_MINUTES),
-	            (Integer)presentationDTO.get(PresentationConstants.END_REGULAR_SCHEDULE_2_HOURS),
-	            (Integer)presentationDTO.get(PresentationConstants.END_REGULAR_SCHEDULE_2_MINUTES),
-	            ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_REGULAR_SCHEDULE_2)).booleanValue(), new InvalidNormalWorkPeriod2IntervalException());
-        
-        // intervalo de refeicao 
-	    TimeInterval mealBreak = createTimeInterval(((Integer)presentationDTO.get(PresentationConstants.START_MEAL_BREAK_HOURS)),
-                    ((Integer)presentationDTO.get(PresentationConstants.START_MEAL_BREAK_MINUTES)),
-                    ((Integer)presentationDTO.get(PresentationConstants.END_MEAL_BREAK_HOURS)),
-                    ((Integer)presentationDTO.get(PresentationConstants.END_MEAL_BREAK_MINUTES)),
-                    ((Boolean)presentationDTO.get(PresentationConstants.NEXT_DAY_MEAL_BREAK)).booleanValue(), new InvalidMealBreakIntervalException());
-        
-        // workdays
-////        EnumSet<WeekDay> workDays = createWorkDays(true, true, true, true, true, true);
-////        
-//        // regime
-//        List<AssiduousnessRegime> regimes = (List<AssiduousnessRegime>)presentationDTO.get(PresentationConstants.REGIMES);
-        
-	    /** verificacoes que dependem de varios objectos simultaneamente **/
-	    NormalWorkPeriod regularSchedule = null;
-	    if ((normalWorkPeriod1 != null) && (normalWorkPeriod2 != null)) {
-	        // criacao do horario normal
-
-	        regularSchedule = new NormalWorkPeriod(normalWorkPeriod1, normalWorkPeriod2);
-	        // verificar se horario normal totaliza as horas que era suposto
-	        // TODO verificar isto com funcionarios
-	        if (regularSchedule.getTotalNormalWorkPeriodDuration().compareTo(DomainConstants.EXEMPTION_DAY_DURATION) != 0) {
-	            System.out.println("erro: hn e' maior que trabalho flexivel permitido");
-                throw new NormalWorkPeriodExceedsLegalDayDurationException();
-	        }
-	        if (workDay != null) {
-	            // Se inicio de expediente for depois do horario normal 1 da' erro!
-	            if (workDay.getStartTime().isAfter(normalWorkPeriod1.getStartTime())) {
-	                System.out.println("erro: expediente comeca depois do hn1");
-                    throw new NormalWorkPeriod1StartsBeforeWorkDayException();
-	            }
-	            // Se fim de expediente for antes do horario normal 2 da' erro!
-	            if (workDay.getEndTime().isBefore(normalWorkPeriod2.getEndTime())) {
-                    System.out.println("erro: expediente acaba antes do hn2");
-                    throw new NormalWorkPeriod2EndsAfterWorkDayException();
-	            }
-	        }
-	    }
-	    
-	    Meal mealPeriod = new Meal(mealBreak);
-	    ScheduleExemption scheduleExemption = fillScheduleExemption(regularSchedule, mealPeriod, workDay);
-	    return scheduleExemption;
-	}
-
-    
-    public ScheduleType getType() {
-        return ScheduleType.EXEMPTION;
-    }    
 }

@@ -18,7 +18,7 @@ import org.joda.time.DateTime;
 
 public class WorkWeek implements Serializable {
     
-    public static final WorkWeek WORK_WEEK = new WorkWeek(EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY));
+    public static final WorkWeek WORK_WEEK = new WorkWeek(EnumSet.range(WeekDay.MONDAY, WeekDay.SUNDAY));
 
     // set containing the week days
     private EnumSet<WeekDay> days;
@@ -74,12 +74,4 @@ public class WorkWeek implements Serializable {
     		}
     		return false;
     }
-    
-    // TRASH
-    public void printf() {
-        for (WeekDay day: getDays()) {
-            System.out.println(day.toString());
-        }
-    }
-
 }

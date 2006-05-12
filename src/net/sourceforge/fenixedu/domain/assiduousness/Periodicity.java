@@ -1,34 +1,36 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
-import org.joda.time.YearMonthDay;
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class Periodicity extends Periodicity_Base {
-    
-    public  Periodicity() {
+
+    public Periodicity(Integer workWeekNumber) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+        setWorkWeekNumber(workWeekNumber);
     }
-    
-    
-    public static Periodicity createPeriodicity(Interval definedInterval, WorkWeek workWeek) {
-    		Periodicity periodicity = new Periodicity();
-    		periodicity.setDefinedInterval(definedInterval);
-    		periodicity.setWorkWeek(workWeek);
-    		return periodicity;
+
+    // Return true if definedInterval contains the date and the date's day of
+    // week is in WorkWeek
+    // public boolean isDefinedInDate(YearMonthDay date) {
+    // DateTime dateAtMidnight = date.toDateTimeAtMidnight();
+    // if (getDefinedInterval().contains(dateAtMidnight) && getWorkWeek().contains(dateAtMidnight)) {
+    // return true;
+    // }
+    // return false;
+    // }
+    //
+    // public Interval getDefinedInterval() {
+    // return new Interval(getBeginDate(), getEndDate());
+    // }
+    public void delete() {
+        if (canBeDeleted()) {
+            removeRootDomainObject();
+            deleteDomainObject();
+        }
     }
-    
-    // Return true if definedInterval contains the date and the date's day of week is in WorkWeek
-    public boolean isDefinedInDate(YearMonthDay date) {
-    		DateTime dateAtMidnight = date.toDateTimeAtMidnight();
-    		System.out.println(dateAtMidnight);
-    		if (getDefinedInterval().contains(dateAtMidnight) && getWorkWeek().contains(dateAtMidnight)) {
-    			return true;
-    		}
-    		return false;
+
+    public boolean canBeDeleted() {
+        return !hasAnyWorkSchedule();
     }
-    
 }

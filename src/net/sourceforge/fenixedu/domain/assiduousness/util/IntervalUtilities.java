@@ -9,12 +9,10 @@ public class IntervalUtilities {
 
     // Convertes an interval to a list with 2 time points.
     public static List<TimePoint> toTimePointList(Interval interval, AttributeType attribute) {
-        List<TimePoint> timePointList = new ArrayList();
+        List<TimePoint> timePointList = new ArrayList<TimePoint>();
         timePointList.add(new TimePoint(interval.getStart().toTimeOfDay(), attribute));
         timePointList.add(new TimePoint(interval.getEnd().toTimeOfDay(), attribute));
         return timePointList;
     }
 
-    
-    
 }

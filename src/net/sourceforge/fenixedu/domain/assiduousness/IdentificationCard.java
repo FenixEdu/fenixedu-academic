@@ -1,9 +1,29 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.assiduousness.util.CardState;
+
+import org.joda.time.DateTime;
+
 public class IdentificationCard extends IdentificationCard_Base {
-    
-    public  IdentificationCard() {
+
+    public IdentificationCard(Person person, Card card, DateTime beginDate, DateTime endDate,
+            CardState cardState, DateTime lastModifiedDate, Employee modifiedBy) {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setUser(person.getUser());
+        setCard(card);
+        setCardState(cardState);
+        if (cardState.equals(CardState.TAKEN)) {
+            setActive(true);
+        } else {
+            setActive(false);
+        }
+        setBeginDate(beginDate);
+        setEndDate(endDate);
+        setLastModifiedDate(lastModifiedDate);
+        setModifiedBy(modifiedBy);
     }
-    
 }

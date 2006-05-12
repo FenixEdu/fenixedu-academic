@@ -307,7 +307,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.Identification" table="IDENTIFICATION">
 	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.Login"/>
-	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard"/>
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -413,3 +413,71 @@
     /> 
 </class-descriptor>
 
+<!-- ***********************************
+     Definitions for net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard
+     *********************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard" table="IDENTIFICATION">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor 
+	    name="ojbConcreteClass"
+	    column="CLASS_NAME"
+	    jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+        name="beginDate"
+        column="BEGIN_DATE"
+        jdbc-type="TIMESTAMP"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
+    />
+	<field-descriptor
+	    name="endDate"
+	    column="END_DATE"
+	    jdbc-type="TIMESTAMP"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
+	/>
+	<field-descriptor
+        name="active"
+        column="ACTIVE"
+        jdbc-type="INTEGER"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
+    />
+    <field-descriptor 
+	   name="keyUser"    
+	   column="KEY_USER"  
+	   jdbc-type="INTEGER"
+    />	
+    <field-descriptor
+        name="keyRootDomainObject"
+        column="KEY_ROOT_DOMAIN_OBJECT"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor 
+	   name="keyCard"    
+	   column="KEY_CARD"  
+	   jdbc-type="INTEGER"
+    />	
+    <field-descriptor
+	    name="cardState"
+	    column="CARD_STATE"
+	    jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.CardState2SqlVarcharConverter"
+	/>
+	<field-descriptor
+        name="lastModifiedDate"
+        column="LAST_MODIFIED_DATE"
+        jdbc-type="TIMESTAMP"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
+    />
+     <field-descriptor 
+	   name="keyModifiedBy"    
+	   column="KEY_MODIFIED_BY"  
+	   jdbc-type="INTEGER"
+    />	
+</class-descriptor>
