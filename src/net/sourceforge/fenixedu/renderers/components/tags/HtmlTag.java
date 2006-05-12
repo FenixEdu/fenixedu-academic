@@ -29,6 +29,7 @@ public class HtmlTag {
         this.attributes = new Hashtable<String, String>();
         this.children = new ArrayList<HtmlTag>();
         this.visible = true;
+        this.text = "";
     }
     
     public HtmlTag(String name) {

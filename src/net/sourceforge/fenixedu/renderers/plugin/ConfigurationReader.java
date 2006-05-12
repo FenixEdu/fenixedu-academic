@@ -67,6 +67,8 @@ public class ConfigurationReader {
     public void readAll(ServletContext context) throws ServletException {
         readConfiguration(context);
         readSchemas(context);
+        
+        logger.info("configuration read");
     }
     
     public void readSchemas(ServletContext context) throws ServletException {

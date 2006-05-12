@@ -110,6 +110,12 @@ Documentation:
         <property name="destinyLayout" value="tabular"/>
     </renderer>
     
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="autoComplete" class="net.sourceforge.fenixedu.presentationTier.renderers.AutoCompleteInputRenderer">
+        <property name="autoCompleteItemsStyleClass" value="autoCompleteItems"/>
+        <property name="autoCompleteStyleClass" value="autoComplete"/>
+        <property name="minChars" value="3"/>
+    </renderer>
+    
     <renderer layout="nestedTemplateLayout" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
         <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/showPersonalExpectationTemplate.jsp"/>
     </renderer>

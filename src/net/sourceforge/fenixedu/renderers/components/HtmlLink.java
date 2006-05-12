@@ -145,7 +145,7 @@ public class HtmlLink extends HtmlComponent {
         this.moduleRelative = moduleRelative;
         
         if (moduleRelative) {
-            setContextRelative(moduleRelative);
+            setContextRelative(true);
         }
     }
 
@@ -181,7 +181,7 @@ public class HtmlLink extends HtmlComponent {
         return tag;
     }
 
-    private String calculateUrl() {
+    public String calculateUrl() {
         StringBuilder buffer = new StringBuilder();
         
         if (getModule() != null) {

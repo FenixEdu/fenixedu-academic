@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.converters;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
@@ -38,6 +39,22 @@ public class DomainObjectKeyConverter extends Converter {
         } catch (ClassNotFoundException e) {
             throw new ConversionException("invalid type in key: " + key, e);
         }
+    }
+
+    public static String code(String type, String oid) {
+        return type + ":" + oid;
+    }
+
+    public static String code(String type, Integer oid) {
+        return code(type, oid.toString());
+    }
+
+    public static String code(Class type, Integer oid) {
+        return code(type.getName(), oid.toString());
+    }
+    
+    public static String code(DomainObject object) {
+        return code(object.getClass(), object.getIdInternal());
     }
 
 }

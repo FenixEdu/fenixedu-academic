@@ -9711,6 +9711,17 @@
 		<filterChains>
 		</filterChains>
 	</service>
+    <service>
+        <name>SearchObjects</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchObjects</implementationClass>
+        <description>
+            Generic service to search all objects of a certain type that have a string property
+            that matches some user input.
+        </description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
 	<service>
 		<name>DeleteMarkSheet</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.DeleteMarkSheet</implementationClass>
