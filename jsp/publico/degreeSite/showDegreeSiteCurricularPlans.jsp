@@ -84,7 +84,7 @@
 					<bean:define id="nameDegreeCurricularPlan" name="infoDegreeCurricularPlan" property="name"/>
 					<logic:equal name="degree" property="bolonhaDegree" value="false">
 						<html:link page="<%= "/prepareConsultCurricularPlanNew.do?method=prepare&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;nameDegreeCurricularPlan=" + pageContext.findAttribute("nameDegreeCurricularPlan") + "&amp;degreeInitials=" + pageContext.findAttribute("degreeInitials") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" >
-							<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.courses" /></strong>
+							<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curriculum" /></strong>
 						</html:link>					
 					</logic:equal>
 					<logic:equal name="degree" property="bolonhaDegree" value="true">
@@ -92,7 +92,7 @@
 						+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() 
 						+ "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)
 						+ "&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false"%>"  >
-							<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.courses" /></strong>
+							<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curriculum" /></strong>
 						</html:link>					
 					</logic:equal>
 				</td>
