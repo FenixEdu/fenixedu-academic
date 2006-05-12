@@ -6024,11 +6024,11 @@ relation AdviseTeacherAdviseService {
 }
 
 // Assiduousness
-
+ /*
 relation EmployeeAssiduousness {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
-}
+}*/
 
 relation EmployeeWorksForUnit {
 	net.sourceforge.fenixedu.domain.Employee playsRole employees {

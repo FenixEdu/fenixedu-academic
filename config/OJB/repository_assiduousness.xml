@@ -39,11 +39,11 @@
   	column="ACTIVE" 
   	jdbc-type="BIT"
   />
-  <field-descriptor
+<!-- <field-descriptor
     name="keyAssiduousness"
     column="KEY_ASSIDUOUSNESS"
     jdbc-type="INTEGER"
-  />
+  />  -->  
 </class-descriptor>
 
 <!-- Employee 
