@@ -217,6 +217,12 @@
 	 	jdbc-type="LONGVARCHAR"
 	 	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaBibliographicReferences2SqlBibliographicReferencesFieldConversion"
 	 />
+	 <field-descriptor
+		name="competenceCourseLevel"
+		column="COMPETENCE_COURSE_LEVEL"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCompetenceCourseLevelType2SqlCompetenceCourseLevelTypeFieldConversion"
+	/>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->

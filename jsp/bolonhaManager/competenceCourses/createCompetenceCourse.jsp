@@ -54,7 +54,17 @@
 		<h:outputText value="<p><label>#{bolonhaBundle['acronym']}: </label>" escape="false"/>
 		<h:inputText id="acronym" required="true" maxlength="10" size="9" value="#{CompetenceCourseManagement.acronym}"/>
 		<h:message styleClass="error0" for="acronym" />
-		<h:outputText value="</p>" escape="false"/>	
+		<h:outputText value="</p>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{bolonhaBundle['competenceCourseLevel']}: </label>" escape="false"/>
+		<fc:selectOneMenu value="#{CompetenceCourseManagement.competenceCourseLevel}">
+			<f:selectItem itemValue="" itemLabel="#{enumerationBundle['dropDown.Default']}"/>
+			<f:selectItem itemValue="FIRST_CYCLE" itemLabel="#{enumerationBundle['FIRST_CYCLE']}"/>
+			<f:selectItem itemValue="SECOND_CYCLE" itemLabel="#{enumerationBundle['SECOND_CYCLE']}"/>
+			<f:selectItem itemValue="TECHNOLOGICAL" itemLabel="#{enumerationBundle['TECHNOLOGICAL']}"/>
+			<f:selectItem itemValue="SCIENTIFIC" itemLabel="#{enumerationBundle['SCIENTIFIC']}"/>
+		</fc:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
 		
 		<h:outputText value="<p><label>#{bolonhaBundle['basic']}: </label>" escape="false"/>
 		<h:selectBooleanCheckbox value="#{CompetenceCourseManagement.basic}"></h:selectBooleanCheckbox>

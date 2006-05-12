@@ -131,6 +131,7 @@ valueType net.sourceforge.fenixedu.domain.FileItemPermittedGroupType							as Fi
 valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.EventParticipationRole					as EventParticipationRole;
 valueType net.sourceforge.fenixedu.domain.MarkSheetType					as MarkSheetType;
 valueType net.sourceforge.fenixedu.domain.MarkSheetState					as MarkSheetState;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel     as CompetenceCourseLevel;
 
 /*
 *
@@ -773,6 +774,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformatio
     String evaluationMethodEn;
     Date endDate;
     BibliographicReferences bibliographicReferences;
+    CompetenceCourseLevel competenceCourseLevel;
 }
 	
 class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad extends net.sourceforge.fenixedu.domain.DomainObject {

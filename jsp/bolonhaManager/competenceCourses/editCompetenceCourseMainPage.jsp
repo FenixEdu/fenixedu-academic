@@ -61,7 +61,10 @@ padding-right: 10px;
 	<h:outputText value="<li><strong>#{bolonhaBundle['nameEn']} (en): </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}</li>" escape="false" />
 	<h:outputText value="<li><strong>#{bolonhaBundle['acronym']}: </strong>" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}</li>" escape="false"/>	
+	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}</li>" escape="false"/>
+	<h:outputText value="<li><strong>#{bolonhaBundle['competenceCourseLevel']}: </strong>" escape="false"/>
+	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.competenceCourseLevel]}</li>" escape="false" rendered="#{!empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}"/>	
+	<h:outputText value="<em>#{bolonhaBundle['label.notDefined']}</em></li>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}"/>	
 	<h:outputText value="<li><strong>#{bolonhaBundle['type']}: </strong>" escape="false"/>
 	<h:outputText value="#{bolonhaBundle['basic']}</li>" rendered="#{CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
 	<h:outputText value="#{bolonhaBundle['nonBasic']}</li>" rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>

@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
@@ -227,7 +228,20 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public void setRegime(String regime) {
         getViewState().setAttribute("regime", regime);
-    }   
+    }
+    
+    public String getCompetenceCourseLevel() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("competenceCourseLevel") == null && getCompetenceCourse() != null) {
+            if (getCompetenceCourse().getCompetenceCourseLevel() != null) {
+                setCompetenceCourseLevel(getCompetenceCourse().getCompetenceCourseLevel().getName());
+            }
+        }
+        return (String) getViewState().getAttribute("competenceCourseLevel");
+    }
+
+    public void setCompetenceCourseLevel(String competenceCourseLevel) {
+        getViewState().setAttribute("competenceCourseLevel", competenceCourseLevel);
+    }
     
     public Integer getNumberOfPeriods() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("numberOfPeriods") == null) {
@@ -368,7 +382,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     public CompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
         if (competenceCourse == null && getCompetenceCourseID() != null) {
-            competenceCourse = (CompetenceCourse) readDomainObject(CompetenceCourse.class, getCompetenceCourseID()); 
+            competenceCourse = rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseID()); 
         }
         return competenceCourse;
     }
@@ -567,14 +581,28 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return (getBibliographicReferences() != null) ? getBibliographicReferences().size() : 0;
     }
     
+    private CompetenceCourseLevel getEnumCompetenceCourseLevel() throws FenixFilterException, FenixServiceException {
+        return (getCompetenceCourseLevel() == null || getCompetenceCourseLevel().length() == 0) ? null
+                : CompetenceCourseLevel.valueOf(getCompetenceCourseLevel());
+    }
+    
+    private boolean isCompetenceCourseLevelValid() throws FenixFilterException, FenixServiceException {
+        return getEnumCompetenceCourseLevel() != null;
+    }
+    
     public String createCompetenceCourse() {
         try {
-            final Object args[] = { getName(), getNameEn(), getAcronym(), getBasic(),
-                    RegimeType.SEMESTRIAL, getCompetenceCourseGroupUnitID() };
-            final CompetenceCourse competenceCourse = (CompetenceCourse) ServiceUtils.executeService(
-                    getUserView(), "CreateCompetenceCourse", args);
-            setCompetenceCourse(competenceCourse);
-            return "setCompetenceCourseLoad";
+            if (isCompetenceCourseLevelValid()) {
+                final Object args[] = { getName(), getNameEn(), getAcronym(), getBasic(),
+                        RegimeType.SEMESTRIAL, getEnumCompetenceCourseLevel(), getCompetenceCourseGroupUnitID() };
+                final CompetenceCourse competenceCourse = (CompetenceCourse) ServiceUtils.executeService(
+                        getUserView(), "CreateCompetenceCourse", args);
+                setCompetenceCourse(competenceCourse);
+                return "setCompetenceCourseLoad";
+                
+            } else {
+                addErrorMessage(bolonhaResources.getString("error.mustSetCompetenceCourseLevel"));
+            }
         } catch (FenixFilterException e) {
             addErrorMessage(bolonhaResources.getString("error.creatingCompetenceCourse"));
         } catch (ExistingCompetenceCourseInformationException e) {
@@ -584,7 +612,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         } 
         return "";
     }
-    
+
     public String createCompetenceCourseLoad() {
         try {
             setCompetenceCourseLoad();
@@ -611,10 +639,16 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     public String editCompetenceCourse() {
         try {
-            final Object args[] = {getCompetenceCourseID(), getName(), getNameEn(), getAcronym(), getBasic(),
-                    CurricularStage.valueOf(getStage()), false };
-            ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
-            return "editCompetenceCourseMainPage";
+            if (isCompetenceCourseLevelValid()) {
+                final Object args[] = { getCompetenceCourseID(), getName(), getNameEn(), getAcronym(),
+                        getBasic(), getEnumCompetenceCourseLevel(), CurricularStage.valueOf(getStage()),
+                        Boolean.FALSE };
+                ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
+                return "editCompetenceCourseMainPage";
+                
+            } else {
+                addErrorMessage(bolonhaResources.getString("error.mustSetCompetenceCourseLevel"));
+            }
         } catch (FenixFilterException e) {
             addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
         } catch (ExistingCompetenceCourseInformationException e) {

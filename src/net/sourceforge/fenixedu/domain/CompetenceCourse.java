@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
@@ -43,12 +44,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public CompetenceCourse(String name, String nameEn, String acronym, Boolean basic,
-            RegimeType regimeType, CurricularStage curricularStage, Unit unit) {
+            RegimeType regimeType, CompetenceCourseLevel competenceCourseLevel,
+            CurricularStage curricularStage, Unit unit) {
+     
         this();
         super.setCurricularStage(curricularStage);
         super.setCompetenceCourseGroupUnit(unit);
-        super.addCompetenceCourseInformations(new CompetenceCourseInformation(name.trim(), nameEn.trim(), acronym.trim(), basic,
-                regimeType, null));
+        super.addCompetenceCourseInformations(new CompetenceCourseInformation(name.trim(),
+                nameEn.trim(), acronym.trim(), basic, regimeType, competenceCourseLevel, null));
     }
 
     public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours,
@@ -120,13 +123,13 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
     }
 
-    public void edit(String name, String nameEn, String acronym, Boolean basic,
+    public void edit(String name, String nameEn, String acronym, Boolean basic, CompetenceCourseLevel competenceCourseLevel,
             CurricularStage curricularStage, boolean scientificCouncilEdit) {
         if (curricularStage.equals(CurricularStage.APPROVED)) {
             super.setCreationDate(Calendar.getInstance().getTime());
         }
         setCurricularStage(curricularStage);
-        getRecentCompetenceCourseInformation().edit(name.trim(), nameEn.trim(), acronym.trim(), basic);
+        getRecentCompetenceCourseInformation().edit(name.trim(), nameEn.trim(), acronym.trim(), basic, competenceCourseLevel);
     }
 
     private void checkIfCanEdit(boolean scientificCouncilEdit) {
@@ -213,6 +216,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public void setRegime(RegimeType regimeType) {
         getRecentCompetenceCourseInformation().setRegime(regimeType);
+    }
+    
+    public CompetenceCourseLevel getCompetenceCourseLevel() {
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
+                .getCompetenceCourseLevel() : null;
     }
 
     public List<CompetenceCourseLoad> getCompetenceCourseLoads() {
@@ -548,4 +556,5 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
         return result;
     }
+
 }

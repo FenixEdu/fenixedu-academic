@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -21,10 +22,13 @@ public class EditCompetenceCourse extends Service {
     }
 
     public void run(Integer competenceCourseID, String name, String nameEn, String acronym,
-            Boolean basic, CurricularStage curricularStage, Boolean scientificCouncilEdit) throws ExcepcaoPersistencia, FenixServiceException {
+            Boolean basic, CompetenceCourseLevel competenceCourseLevel, CurricularStage curricularStage,
+            Boolean scientificCouncilEdit) throws ExcepcaoPersistencia, FenixServiceException {
+        
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         checkIfCanEditCompetenceCourse(competenceCourse, name.trim(), nameEn.trim(), acronym.trim());
-        competenceCourse.edit(name, nameEn, acronym, basic, curricularStage, scientificCouncilEdit);
+        competenceCourse.edit(name, nameEn, acronym, basic, competenceCourseLevel, curricularStage,
+                scientificCouncilEdit);
     }
     
     public void run(Integer competenceCourseID, String year, String title, String authors, String reference,
@@ -34,11 +38,14 @@ public class EditCompetenceCourse extends Service {
         competenceCourse.createBibliographicReference(year, title, authors, reference, buildUrl(url), bibliographicReferenceType);
     }
     
-    public void run(Integer competenceCourseID, Integer bibliographicReferenceID, String year, String title, String authors, String reference,
+    public void run(Integer competenceCourseID, Integer bibliographicReferenceID, String year,
+            String title, String authors, String reference,
             BibliographicReferenceType bibliographicReferenceType, String url)
-            throws ExcepcaoPersistencia, FenixServiceException {        
+            throws ExcepcaoPersistencia, FenixServiceException {
+        
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
-        competenceCourse.editBibliographicReference(bibliographicReferenceID, year, title, authors, reference, buildUrl(url), bibliographicReferenceType);
+        competenceCourse.editBibliographicReference(bibliographicReferenceID, year, title, authors,
+                reference, buildUrl(url), bibliographicReferenceType);
     }
     
     public void run(Integer competenceCourseID, Integer bibliographicReferenceID) throws ExcepcaoPersistencia, FenixServiceException {        

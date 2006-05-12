@@ -3,13 +3,8 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
-
-
-
-
 <ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/DepartmentMemberResources" var="bundle"/>
-
 
 <style>
 table.vtsbc {
