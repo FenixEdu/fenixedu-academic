@@ -51,12 +51,12 @@
 	<logic:iterate id="executionCourse" name="executionCourses">
 		<tr>
 			<td class="listClasses" style="text-align:left">
-				<html:link page="/manageExecutionCourse.do" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 					<bean:write name="executionCourse" property="sigla"/>
 				</html:link>
 			</td>
 			<td class="listClasses" style="text-align:left">
-				<html:link page="/manageExecutionCourse.do" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 					<bean:write name="executionCourse" property="nome"/>
 				</html:link>
 			</td>

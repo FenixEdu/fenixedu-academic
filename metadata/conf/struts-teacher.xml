@@ -1011,11 +1011,13 @@
 				validate="false">
 			<forward name="list" path="list-professorships"/>
         </action>
+        <action path="/manageExecutionCourse"
+        		parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
+			<forward name="instructions" path="manage-execution-course-instructions"/>
+        </action>
 
 
-        <action path="/manageExecutionCourses" type="org.apache.struts.actions.ForwardAction" 
-            parameter="df.page.management.execution-courses" name="executionPeriodForm" scope="request" attribute="executionPeriodForm"/>
-        <!--	<action	path="/manageCredits" type="org.apache.struts.actions.ForwardAction" parameter="df.page.management.credits" />	 -->
         <action path="/viewSite" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ReadSite">
             <forward name="viewSite" path="/viewSite.jsp"/>
             <!--		<forward name="viewSite" path="df.page.initial.management.execution_course"/>-->

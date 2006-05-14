@@ -12,11 +12,6 @@
 		extends="definition.teacher.one-column">
 		<put name="body" value="/teacher/viewProfessorships_bd.jsp" />
 	</definition>
-	<definition name="df.page.management.execution-courses" 
-		extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
-		<put name="body" value="/teacher/viewProfessorships_bd.jsp" />
-	</definition>
 	<definition name="df.teacher.showShiftsPercentageTable" 
 		extends="definition.teacher.two-column">
 		<put name="body" 
@@ -56,7 +51,7 @@
 	<definition name="showEmailForm" extends="definition.teacher.two-column">
 		<put name="executionCourseName" 
 			value="/teacher/executionCourseName.jsp" />
-		<put name="navLocal" value="/teacher/navbar.jsp" type="page"/>
+		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" type="page"/>
 		<put name="footer" value="/sop/commonFooterSop.jsp" />
 		<put name="body" value="/teacher/sendEmailForm.jsp"/>
 	</definition>
@@ -473,7 +468,7 @@
 	</definition>
 	
 	<definition name="weekly-work-load" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/navbar.jsp"/>
+		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/teacher/weeklyWorkLoad.jsp" />
 	</definition>
 	
@@ -483,17 +478,21 @@
 	</definition>
 
 	<definition name="sendMail" extends="definition.teacher.two-column">
- 		<put name="navLocal" value="/teacher/navbar.jsp"/>
+ 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/cms/messaging/sendMail.jsp" />
 	</definition>
 
 	<definition name="view-execution-course-foruns" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/navbar.jsp"/>
+		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/teacher/viewExecutionCourseForuns.jsp" />
 	</definition>
 
 	<definition name="list-professorships" extends="teacher-information">
 		<put name="body" value="/teacher/listProfessorships.jsp" />
+	</definition>
+
+	<definition name="manage-execution-course-instructions" extends="execution-course-administration">
+		<put name="body" value="/teacher/manageExecutionCourseInstructions.jsp" />
 	</definition>
 
 </tiles-definitions>

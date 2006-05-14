@@ -4,15 +4,8 @@
 <style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style> <!-- Import new CSS for this section: #navlateral  -->
 	
 <ul>
-<!--
   <li>
   	<html:link href="<%= request.getContextPath() + "/teacher/showProfessorships.do?method=list" %>">
-  		<bean:message key="link.manage.executionCourse"/> New
-  	</html:link>
-  </li>
--->
-  <li>
-  	<html:link href="<%= request.getContextPath() + "/teacher/manageExecutionCourses.do" %>">
   		<bean:message key="link.manage.executionCourse"/>
   	</html:link>
   </li>

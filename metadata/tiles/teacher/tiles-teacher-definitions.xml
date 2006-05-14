@@ -28,7 +28,7 @@
 	  <put name="serviceName" value="Portal Docente" />	
 	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
-	  <put name="navLocal" value="/teacher/navbar.jsp"/>
+	  <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	  <put name="body" value="/commons/blank.jsp" />
 	  <put name="footer" value="/copyright.jsp" />	  
@@ -38,7 +38,7 @@
 	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
-	  <put name="navLocal" value="/teacher/navbar.jsp" type="page"/>
+	  <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" type="page"/>
 	  <put name="footer" value="/copyright.jsp" />
 	  <put name="body" value="/commons/blank.jsp" />
 	</definition>
@@ -55,20 +55,19 @@
 	    <put name="navLocal" value="/teacher/commons/creditsManagementLocalNavigationBar.jsp"/>	
 	</definition>
 	<definition name="df.teacher.site.administration" extends="definition.teacher.two-column">
-	    <put name="navLocal" value="/teacher/navbar.jsp"/>	
-	</definition>
-	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.MyProfessorships">
-		<put name="title" value="/commons/blank.jsp"/>
-	    <put name="link" value="/commons/blank.jsp"/>
-   	    <put name="professorshipList" />
+	    <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>	
 	</definition>
 	<definition name="teacher-information" extends="df.page.teacher-index">
     	<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 	</definition>
+	<definition name="execution-course-administration" extends="definition.teacher.testsPage">
+		<put name="executionCourseName" value="/teacher/commons/manageExecutionCourseHeader.jsp"/>
+    	<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
+	</definition>
  	<definition name="course-information" extends="definition.teacher.two-column">
 		<put name="body-context" value="/commons/blank.jsp"></put>
         <!-- VER	/gesdis/courseInformationContext.jsp-->
-        <put name="navLocal" value="/teacher/navbar.jsp" type="page"/>
+        <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" type="page"/>
     </definition>
     
 	<definition name="definition.teacher.two-column.extra-menu" extends="df.layout.two-column.extra-menu">	  

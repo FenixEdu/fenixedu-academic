@@ -14,6 +14,6 @@
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	</definition>
 	<definition name="df.teacher.site.administration" extends="definition.teacher.two-column">
-	    <put name="navLocal" value="/teacher/navbar.jsp"/>	
+	    <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>	
 	</definition>
 </tiles-definitions>
