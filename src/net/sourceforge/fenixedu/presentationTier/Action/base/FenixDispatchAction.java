@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
-import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.plugin.ExceptionHandler;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -43,7 +42,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return super.execute(mapping, actionForm, request, response);
     }
 
-    protected IUserView getUserView(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    protected IUserView getUserView(HttpServletRequest request) {
         return SessionUtils.getUserView(request);
     }
 
