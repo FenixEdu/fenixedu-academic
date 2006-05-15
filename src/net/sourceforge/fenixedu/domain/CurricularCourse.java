@@ -117,6 +117,10 @@ public class CurricularCourse extends CurricularCourse_Base {
     public boolean isRoot() {
         return false;
     }
+    
+    public boolean isBolonha() {
+        return !getCurricularStage().equals(CurricularStage.OLD);
+    }
 
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
         // FIXME: in the future, a curricular course may be included in contexts of diferent curricular plans
@@ -125,7 +129,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     
     @Override
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-        return (getCurricularStage().equals(CurricularStage.OLD)) ? super.getDegreeCurricularPlan() : this.getParentDegreeCurricularPlan();  
+        return (isBolonha()) ? this.getParentDegreeCurricularPlan() : super.getDegreeCurricularPlan();  
     }
     
     public Degree getDegree() {
