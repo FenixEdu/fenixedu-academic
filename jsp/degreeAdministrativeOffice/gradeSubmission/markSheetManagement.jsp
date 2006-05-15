@@ -73,7 +73,8 @@
 							<html:link action='<%= "/markSheetManagement.do?method=viewMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
 								<bean:message key="label.markSheet.view" />
 							</html:link>
-							<% if(markSheet.getMarkSheetState() == net.sourceforge.fenixedu.domain.MarkSheetState.RECTIFICATION_NOT_CONFIRMED || markSheet.getMarkSheetState() == net.sourceforge.fenixedu.domain.MarkSheetState.NOT_CONFIRMED){ %>
+							
+							<logic:equal name="markSheet" property="notConfirmed" value="true">
 								<html:link action='<%= "/editMarkSheet.do?method=prepareEditMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
 									<bean:message key="label.markSheet.edit" />
 								</html:link>
@@ -83,11 +84,13 @@
 								<html:link action='<%= "/markSheetManagement.do?method=prepareConfirmMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
 									<bean:message key="label.markSheet.confirm" />
 								</html:link>
-							<% } else { %>
+							</logic:equal>
+							
+							<logic:equal name="markSheet" property="notConfirmed" value="false">
 								<html:link action='<%= "/markSheetManagement.do?method=prepareRectifyMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
 									<bean:message key="label.markSheet.rectify" />
 								</html:link>
-							<% } %>																					
+							</logic:equal>
 						</td>
 					</tr>
 				</logic:iterate>
