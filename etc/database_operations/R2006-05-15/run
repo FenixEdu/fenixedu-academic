@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Result Table" alterTableResult.sql
+execute "Add CompetenceCourseLevel column" alterCompetenceCourseInformationTable.sql
