@@ -101,7 +101,9 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 
         ActionMessages actionMessages = createActionMessages();
         try {
+            
             ServiceUtils.executeService(getUserView(request), "EditMarkSheet", new Object[] { editBean });
+            return mapping.findForward("searchMarkSheetFilled");
 
         } catch (NotAuthorizedFilterException e) {
             addMessage(request, actionMessages, "error.notAuthorized");
@@ -110,7 +112,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         } catch (DomainException e) {
             addMessage(request, actionMessages, e.getMessage(), e.getArgs());
         }
-        return mapping.findForward("searchMarkSheetFilled");
+        return mapping.findForward("editMarkSheet");
     }
     
     public ActionForward searchMarkSheet(ActionMapping mapping, ActionForm actionForm,
