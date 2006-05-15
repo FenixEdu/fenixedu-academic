@@ -52,7 +52,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public ExecutionCourse() {
 	super();
-	init();
     }
 
     private void init() {
