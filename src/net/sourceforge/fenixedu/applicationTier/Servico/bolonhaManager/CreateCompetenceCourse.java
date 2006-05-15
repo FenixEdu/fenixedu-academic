@@ -25,13 +25,13 @@ public class CreateCompetenceCourse extends Service {
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");
         }
-        checkIfCanCreateCompetenceCourse(name.trim(), nameEn.trim(), acronym.trim());
+        checkIfCanCreateCompetenceCourse(name.trim(), nameEn.trim());
         return DomainFactory.makeCompetenceCourse(name, nameEn, acronym, basic, regimeType,
                 competenceCourseLevel, CurricularStage.DRAFT, unit);
     }
 
-    private void checkIfCanCreateCompetenceCourse(final String name, final String nameEn,
-            final String acronym) throws ExcepcaoPersistencia, FenixServiceException {
+    private void checkIfCanCreateCompetenceCourse(final String name, final String nameEn)
+            throws FenixServiceException {
 
         final String normalizedName = StringFormatter.normalize(name);
         final String normalizedNameEn = StringFormatter.normalize(nameEn);
