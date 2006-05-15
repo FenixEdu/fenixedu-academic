@@ -9692,6 +9692,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
+			<chain name="MarkSheetManagementAuthorization"/>
 		</filterChains>
 	</service>
 	<service>
@@ -9700,6 +9701,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
+			<chain name="MarkSheetManagementAuthorization"/>
 		</filterChains>
 	</service>
 	
@@ -9709,9 +9711,19 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
+			<chain name="MarkSheetManagementAuthorization"/>
 		</filterChains>
 	</service>
-    <service>
+	<service>
+		<name>DeleteMarkSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.DeleteMarkSheet</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="MarkSheetManagementAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
         <name>SearchObjects</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchObjects</implementationClass>
         <description>
@@ -9722,14 +9734,6 @@
         <filterChains>
         </filterChains>
     </service>
-	<service>
-		<name>DeleteMarkSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.DeleteMarkSheet</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>
-	</service>
 	<service>
 		<name>DeletePatent</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeletePatent</implementationClass>
