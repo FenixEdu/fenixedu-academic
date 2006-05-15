@@ -50,7 +50,7 @@
 	</logic:notEmpty>
 	
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToAppend">
-		<br/>
+		<br/><br/>
 		<bean:message key="label.markSheet.students.without.grade" />:
 		<br/>
 		<fr:edit id="append-enrolments" name="edit" property="enrolmentEvaluationBeansToAppend" 
