@@ -4,10 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
-<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-<bean:define id="hostURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/</bean:define>
-
 <p>
 	<span class="error">
 		<html:errors/>
@@ -31,36 +27,48 @@
 			<bean:message key="label.in"/>
 			<bean:write name="degree" property="nome"/>
 		</h3>
-		<logic:iterate id="curriculum" name="curricularCourse" property="associatedCurriculums">
-			<blockquote>
-				<h4>
-					<bean:write name="curricularCourse" property="name"/>: <bean:message key="title.program"/>
-				</h4>
-				<bean:write name="curriculum" property="program" filter="false"/>
-				<logic:present name="curriculum" property="programEn">
-					<br/>
-					<h4>
-						<bean:write name="curricularCourse" property="name"/>: <bean:message key="title.program.eng"/>
-					</h4>
-					<bean:write name="curriculum" property="programEn" filter="false"/>
-				</logic:present>
-			</blockquote>
 
-			<bean:define id="url" type="java.lang.String">/editProgram.do?method=prepareEditProgram&amp;curriculumID=<bean:write name="curriculum" property="idInternal"/></bean:define>
-			<logic:notPresent name="curricularCourse" property="competenceCourse">
-				<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-					<bean:message key="button.edit"/>
-				</html:link>
-			</logic:notPresent>
-			<logic:present name="curricularCourse" property="competenceCourse">
-				<logic:equal name="curricularCourse" property="competenceCourse.curricularStage" value="OLD">
+		<logic:equal name="curricularCourse" property="isBolonha" value="true">
+			<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
+			<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
+				<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
+				<blockquote>
+					<h4>
+						<bean:write name="competenceCourse" property="name"/>: <bean:message key="title.program"/>
+					</h4>
+					<bean:write name="competenceCourse" property="program" filter="false"/>
+					<logic:present name="competenceCourse" property="programEn">
+						<br/>
+						<h4>
+							<bean:write name="competenceCourse" property="name"/>: <bean:message key="title.program.eng"/>
+						</h4>
+						<bean:write name="competenceCourse" property="programEn" filter="false"/>
+					</logic:present>
+				</blockquote>
+			</logic:equal>
+		</logic:equal>
+
+		<logic:notEqual name="curricularCourse" property="isBolonha" value="true">
+			<logic:iterate id="curriculum" name="curricularCourse" property="associatedCurriculums">
+				<blockquote>
+					<h4>
+						<bean:write name="curricularCourse" property="name"/>: <bean:message key="title.program"/>
+					</h4>
+					<bean:write name="curriculum" property="program" filter="false"/>
+					<logic:present name="curriculum" property="programEn">
+						<br/>
+						<h4>
+							<bean:write name="curricularCourse" property="name"/>: <bean:message key="title.program.eng"/>
+						</h4>
+						<bean:write name="curriculum" property="programEn" filter="false"/>
+					</logic:present>
+				</blockquote>
+				<bean:define id="url" type="java.lang.String">/editProgram.do?method=prepareEditProgram&amp;curriculumID=<bean:write name="curriculum" property="idInternal"/></bean:define>
 					<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 						<bean:message key="button.edit"/>
 					</html:link>
-				</logic:equal>
-			</logic:present>
-
-		</logic:iterate>
+			</logic:iterate>
+		</logic:notEqual>
 
 		<br/>
 		<br/>

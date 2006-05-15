@@ -862,6 +862,7 @@
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
 	   		<form-property name="page" type="java.lang.Integer"/>
+	   		<form-property name="curriculumID" type="java.lang.String"/>
 	   		<form-property name="program" type="java.lang.String"/>
 	   		<form-property name="programEn" type="java.lang.String"/>
 		</form-bean>
@@ -1032,6 +1033,7 @@
         		input="/editProgram.do?method=prepareEditProgram&amp;page=0"
 				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
 			<forward name="edit-program" path="manage-execution-course-program-edit"/>
+			<forward name="program" path="manage-execution-course-program"/>
         </action>
 
 

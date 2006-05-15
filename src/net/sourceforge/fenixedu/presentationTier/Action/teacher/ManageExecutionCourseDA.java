@@ -4,17 +4,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 public class ManageExecutionCourseDA extends FenixDispatchAction {
 
@@ -39,9 +44,34 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     	final String curriculumIDString = request.getParameter("curriculumID");
     	if (executionCourse != null && curriculumIDString != null && curriculumIDString.length() > 0) {
     		final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
+    		if (curriculum != null) {
+    			final DynaActionForm dynaActionForm = (DynaActionForm) form;
+    			dynaActionForm.set("program", curriculum.getProgram());
+    			dynaActionForm.set("programEn", curriculum.getProgramEn());
+    		}
     		request.setAttribute("curriculum", curriculum);
     	}
     	return mapping.findForward("edit-program");
+    }
+
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		final DynaActionForm dynaActionForm = (DynaActionForm) form;
+		final String curriculumIDString = request.getParameter("curriculumID");
+		final String program = dynaActionForm.getString("program");
+		final String programEn = dynaActionForm.getString("programEn");
+
+		final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+		final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
+		final InfoCurriculum infoCurriculum = new InfoCurriculum();
+		infoCurriculum.setProgram(program);
+		infoCurriculum.setProgramEn(programEn);
+		final IUserView userView = getUserView(request);
+
+        final Object args[] = { executionCourse.getIdInternal(), curriculum.getCurricularCourse().getIdInternal(), infoCurriculum, userView.getUtilizador() };
+        ServiceManagerServiceFactory.executeService(userView, "EditProgram", args);
+
+    	return mapping.findForward("program");
     }
 
 	private void getExecutionCourseFromParameterAndSetItInRequest(final HttpServletRequest request) {

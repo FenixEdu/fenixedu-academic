@@ -54,18 +54,18 @@
 				<bean:message key="link.objectives"/>
 			</html:link>
 		</li>
-<!--
 		<li>
 			<html:link page="/manageExecutionCourse.do?method=program" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.program"/> New
+				<bean:message key="link.program"/>
 			</html:link>
 		</li>
--->
+<!-- Old interface... must delete associated artifacts.
 		<li>
 			<html:link page="/programManagerDA.do?method=viewProgram" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.program"/>
 			</html:link>
 		</li>
+-->
 		<li>
 			<html:link page="/viewEvaluationMethod.do?method=viewEvaluationMethod" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.evaluationMethod"/>

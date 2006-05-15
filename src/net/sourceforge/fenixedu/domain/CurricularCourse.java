@@ -129,7 +129,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
     
     public boolean isBolonha() {
-        return !getCurricularStage().equals(CurricularStage.OLD);
+        return !(getCurricularStage() == CurricularStage.OLD);
+    }
+
+    public boolean getIsBolonha() {
+        return isBolonha();
     }
 
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
