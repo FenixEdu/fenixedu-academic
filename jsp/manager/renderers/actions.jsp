@@ -102,7 +102,7 @@ request.setAttribute("bean", bean);</pre>
 </p>
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px">
-    <pre>ViewState viewState = (ViewState) request.getAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+    <pre>ViewState viewState = (ViewState) RenderUtils.getViewState();
 SearchBean bean = (SearchBean) viewState.getMetaObject().getObject();
 
 // search person
