@@ -52,11 +52,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public ExecutionCourse() {
 	super();
+	init();
     }
 
     private void init() {
 	setRootDomainObject(RootDomainObject.getInstance());
-	this.createForum(getNome(), getNome());
+//	this.createForum(getNome(), getNome());
     }
 
     public List<Grouping> getGroupings() {
