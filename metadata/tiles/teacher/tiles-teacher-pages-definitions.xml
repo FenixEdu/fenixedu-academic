@@ -492,7 +492,15 @@
 	</definition>
 
 	<definition name="manage-execution-course-instructions" extends="execution-course-administration">
-		<put name="body" value="/teacher/manageExecutionCourseInstructions.jsp" />
+		<put name="body" value="/teacher/executionCourse/instructions.jsp" />
+	</definition>
+
+	<definition name="manage-execution-course-program" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/program.jsp" />
+	</definition>
+
+	<definition name="manage-execution-course-program-edit" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/editProgram.jsp" />
 	</definition>
 
 </tiles-definitions>

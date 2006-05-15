@@ -858,6 +858,14 @@
 	   		<form-property name="executionPeriodID" type="java.lang.String"/>
 		</form-bean>		
 
+		<form-bean name="programForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="page" type="java.lang.Integer"/>
+	   		<form-property name="program" type="java.lang.String"/>
+	   		<form-property name="programEn" type="java.lang.String"/>
+		</form-bean>
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1015,6 +1023,15 @@
         		parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
 			<forward name="instructions" path="manage-execution-course-instructions"/>
+			<forward name="program" path="manage-execution-course-program"/>
+        </action>
+        <action path="/editProgram"
+        		parameter="method"
+        		name="programForm"
+        		scope="request" 
+        		input="/editProgram.do?method=prepareEditProgram&amp;page=0"
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
+			<forward name="edit-program" path="manage-execution-course-program-edit"/>
         </action>
 
 
