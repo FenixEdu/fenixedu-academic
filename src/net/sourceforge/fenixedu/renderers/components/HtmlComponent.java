@@ -13,15 +13,31 @@ import org.apache.commons.collections.Predicate;
 
 public abstract class HtmlComponent implements Serializable {
 
+    public enum TextDirection {
+        RIGTH_TO_LEFT,
+        LEFT_TO_RIGHT;
+        
+        public String toString() {
+            if (this == RIGTH_TO_LEFT) {
+                return "rtl";
+            }
+            else {
+                return "ltr";
+            }
+        }
+    };
+    
     private boolean visible;
     
-    // %core
+    // %coreattrs
     private String id;
     private String classes;
     private String style;
     private String title;
     
-    // TODO: %i18n
+    // %i18n
+    private String language;
+    private TextDirection direction;
     
     // %event
     private String onClick;
@@ -75,6 +91,22 @@ public abstract class HtmlComponent implements Serializable {
         this.title = title;
     }
         
+    public TextDirection getDirection() {
+        return this.direction;
+    }
+
+    public void setDirection(TextDirection direction) {
+        this.direction = direction;
+    }
+
+    public String getLanguage() {
+        return this.language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     public boolean isVisible() {
         return visible;
     }
@@ -179,6 +211,12 @@ public abstract class HtmlComponent implements Serializable {
         tag.setAttribute("class", getClasses());
         tag.setAttribute("style", getStyle());
         tag.setAttribute("title", getTitle());
+        
+        tag.setAttribute("lang", getLanguage());
+        
+        if (getDirection() != null) {
+            tag.setAttribute("dir", getDirection().toString());
+        }
         
         tag.setAttribute("onclick", getOnClick());
         tag.setAttribute("ondblclick", getOnDblClick());

@@ -15,8 +15,11 @@ import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MultipleMetaObject;
+import net.sourceforge.fenixedu.renderers.schemas.Schema;
+import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -506,7 +509,7 @@ public class CollectionRenderer extends OutputRenderer {
     protected int getNumberOfLinks() {
         return this.links.size();
     }
-    
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         Collection sortedCollection = RenderUtils.sortCollectionWithCriteria((Collection) object, getSortBy());
@@ -524,14 +527,25 @@ public class CollectionRenderer extends OutputRenderer {
 
         private List<MetaObject> getMetaObjects(Collection collection) {
             List<MetaObject> metaObjects = new ArrayList<MetaObject>();
-            MultipleMetaObject multipleMetaObject = (MultipleMetaObject) getContext().getMetaObject();
             
-            for (Object object : collection) {
-                for (MetaObject metaObject : multipleMetaObject.getAllMetaObjects()) {
-                    if (object.equals(metaObject.getObject())) {
-                        metaObjects.add(metaObject);
-                        break;
+            MetaObject contextMetaObject = getContext().getMetaObject();
+            if (contextMetaObject instanceof MultipleMetaObject) {
+                // reuse meta objects
+                MultipleMetaObject multipleMetaObject = (MultipleMetaObject) getContext().getMetaObject();
+                
+                for (Object object : collection) {
+                    for (MetaObject metaObject : multipleMetaObject.getAllMetaObjects()) {
+                        if (object.equals(metaObject.getObject())) {
+                            metaObjects.add(metaObject);
+                            break;
+                        }
                     }
+                }
+            }
+            else {
+                Schema schema = RenderKit.getInstance().findSchema(contextMetaObject.getSchema());
+                for (Object object : collection) {
+                    metaObjects.add(MetaObjectFactory.createObject(object, schema));
                 }
             }
             
@@ -569,11 +583,22 @@ public class CollectionRenderer extends OutputRenderer {
                 return new HtmlText();
             }
             else if (columnIndex < getNumberOfColumns() - getNumberOfLinks()) {
-                String slotLabel = getObject(0).getSlots().get(columnIndex - (isCheckable() ? 1 : 0)).getLabel();
+                String slotLabel = getLabel(columnIndex);
                 return new HtmlText(slotLabel);
             }
             else {
                 return new HtmlText();
+            }
+        }
+
+        protected String getLabel(int columnIndex) {
+            int realIndex = columnIndex - (isCheckable() ? 1 : 0);
+            
+            if (realIndex >= 0) {
+                return getObject(0).getSlots().get(realIndex).getLabel();
+            }
+            else {
+                return "";
             }
         }
 

@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.renderers;
 
+import net.sourceforge.fenixedu.renderers.CollectionRenderer.CollectionTabularLayout;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlInputComponent;
+import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 
 /**
@@ -201,6 +205,48 @@ public class TabularInputRenderer extends InputRenderer {
     protected Layout getLayout(Object object, Class type) {
         this.collectionRenderer.setContext(getContext());
 
-        return this.collectionRenderer.getLayout(object, type);
+        final CollectionTabularLayout layout = (CollectionTabularLayout) this.collectionRenderer.getLayout(object, type);
+        return new TabularLayout() {
+
+            @Override
+            protected boolean hasHeader() {
+                return layout.hasHeader();
+            }
+
+            @Override
+            protected int getNumberOfColumns() {
+                return layout.getNumberOfColumns();
+            }
+
+            @Override
+            protected int getNumberOfRows() {
+                return layout.getNumberOfRows();
+            }
+
+            @Override
+            protected HtmlComponent getHeaderComponent(int columnIndex) {
+                return layout.getHeaderComponent(columnIndex);
+            }
+
+            @Override
+            protected HtmlComponent getComponent(int rowIndex, int columnIndex) {
+                HtmlComponent component = layout.getComponent(rowIndex, columnIndex);
+                
+                Validatable validatable = findValidatableComponent(component);
+                if (validatable instanceof HtmlInputComponent) {
+                    HtmlInputComponent input = (HtmlInputComponent) validatable;
+                    
+                    String label = layout.getLabel(columnIndex);
+                    
+                    if (label != null && label.length() > 0) {
+                        input.setAlternateText(label);
+                    }
+                }
+                
+                return component;
+            }
+            
+        };
     }
+
 }

@@ -31,6 +31,10 @@ public abstract class InputRenderer extends Renderer {
     }
     
     protected Validatable findValidatableComponent(HtmlComponent component) {
+        if (component == null) {
+            return null;
+        }
+        
         if (component instanceof Validatable) {
             return (Validatable) component;
         } else {

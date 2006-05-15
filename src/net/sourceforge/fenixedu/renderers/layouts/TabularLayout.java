@@ -99,6 +99,10 @@ public abstract class TabularLayout extends Layout {
                 for (int columnIndex = 0; columnIndex < columnNumber; columnIndex++) {
                     HtmlTableCell cell = row.createCell();
 
+                    if (isHeader(rowIndex, columnIndex)) {
+                        cell.setType(HtmlTableCell.CellType.HEADER);
+                    }
+                    
                     cell.setBody(getComponent(rowIndex, columnIndex));
                 }
             } catch (Exception e) {
@@ -122,6 +126,10 @@ public abstract class TabularLayout extends Layout {
     protected abstract HtmlComponent getHeaderComponent(int columnIndex);
 
     protected abstract HtmlComponent getComponent(int rowIndex, int columnIndex);
+    
+    protected boolean isHeader(int rowIndex, int columnIndex) {
+        return false;
+    }
     
     @Override
     public void applyStyle(HtmlComponent component) {

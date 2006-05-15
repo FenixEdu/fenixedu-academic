@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
@@ -155,18 +157,36 @@ public class StandardInputRenderer extends InputRenderer {
         }
 
         @Override
+        protected boolean isHeader(int rowIndex, int columnIndex) {
+            return columnIndex == 0;
+        }
+
+        @Override
         protected HtmlComponent getComponent(int rowIndex, int columnIndex) {
             HtmlComponent component;
 
             switch (columnIndex) {
             case 0:
                 MetaSlot slot = this.object.getSlots().get(rowIndex);
-                component = new HtmlText(slot.getLabel());
+
+                HtmlLabel label = new HtmlLabel();
+                label.setFor(slot.getKey().toString());
+                label.setText(slot.getLabel());
+                
+                component = label;
                 break;
             case 1:
-                component = renderSlot(this.object.getSlots().get(rowIndex));
-                inputComponents.put(rowIndex, findValidatableComponent(component));
-
+                slot = this.object.getSlots().get(rowIndex);
+                
+                component = renderSlot(slot);
+                Validatable validatable = findValidatableComponent(component);
+                
+                HtmlFormComponent formComponent = (HtmlFormComponent) validatable;
+                if (formComponent.getId() == null) {
+                    formComponent.setId(slot.getKey().toString());
+                }
+                
+                inputComponents.put(rowIndex, validatable);
                 break;
             case 2:
                 if (isHideValidators()) {

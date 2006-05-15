@@ -109,6 +109,11 @@ public class StandardObjectRenderer extends OutputRenderer {
         }
 
         @Override
+        protected boolean isHeader(int rowIndex, int columnIndex) {
+            return columnIndex == 0;
+        }
+        
+        @Override
         protected HtmlComponent getComponent(int rowIndex, int columnIndex) {
             if (columnIndex == 0) {
                 MetaSlot slot = this.object.getSlots().get(rowIndex);
