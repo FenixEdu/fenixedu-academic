@@ -25,7 +25,7 @@ public class MarkSheet extends MarkSheet_Base {
             Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
 
         this();
-        checkParameters(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState);
+        checkParameters(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState, markSheetEnrolmentEvaluationBeans);
         init(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState);
 
         if (getMarkSheetState() == MarkSheetState.RECTIFICATION) {
@@ -40,12 +40,15 @@ public class MarkSheet extends MarkSheet_Base {
 
     private void checkParameters(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType,
-            MarkSheetState markSheetState) {
+            MarkSheetState markSheetState, Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
 
         if (curricularCourse == null || executionPeriod == null || responsibleTeacher == null
                 || evaluationDate == null || markSheetType == null || markSheetState == null) {
             throw new DomainException("error.markSheet.invalid.arguments");
-        } 
+        }
+        if (markSheetEnrolmentEvaluationBeans.size() == 0) {
+            throw new DomainException("error.markSheet.create.with.invalid.enrolmentEvaluations.number");
+        }
         checkIfTeacherIsResponsibleOrCoordinator(curricularCourse, executionPeriod, responsibleTeacher);
         checkIfEvaluationDateIsInExamsPeriod(getExecutionDegree(curricularCourse, executionPeriod), executionPeriod, evaluationDate, markSheetType);
     }
@@ -172,8 +175,9 @@ public class MarkSheet extends MarkSheet_Base {
             setResponsibleTeacher(responsibleTeacher);
             setEvaluationDate(newEvaluationDate);
             
-            editEnrolmentEvaluationsWithSameMarkSheetEvaluationDate(responsibleTeacher,
+            editMarkSheetEnrolmentEvaluationsWithSameEvaluationDate(responsibleTeacher,
                     oldEvaluationDate, newEvaluationDate, getEnrolmentEvaluationsSet());
+            
             generateCheckSum();
             
         } else {
@@ -181,7 +185,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    private void editEnrolmentEvaluationsWithSameMarkSheetEvaluationDate(Teacher responsibleTeacher,
+    private void editMarkSheetEnrolmentEvaluationsWithSameEvaluationDate(Teacher responsibleTeacher,
             Date oldEvaluationDate, Date newEvaluationDate,
             Set<EnrolmentEvaluation> enrolmentEvaluationsToEdit) {
         
@@ -198,18 +202,33 @@ public class MarkSheet extends MarkSheet_Base {
     public void edit(
             Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeansToEdit,
             Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeansToAppend,
-            Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToRemove) {
+            Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeansToRemove) {
         
         if (isNotConfirmed()) {
+            
+            checkIfEnrolmentEvaluationsNumberIsValid(markSheetEnrolmentEvaluationBeansToEdit,
+                    markSheetEnrolmentEvaluationBeansToAppend, markSheetEnrolmentEvaluationBeansToRemove);
 
             editEnrolmentEvaluations(markSheetEnrolmentEvaluationBeansToEdit);
-            removeEnrolmentEvaluations(enrolmentEvaluationBeansToRemove);
+            removeEnrolmentEvaluations(markSheetEnrolmentEvaluationBeansToRemove);
             appendEnrolmentEvaluations(markSheetEnrolmentEvaluationBeansToAppend);
             
             generateCheckSum();
             
         } else {
             throw new DomainException("error.markSheet.already.confirmed");
+        }
+    }
+
+    private void checkIfEnrolmentEvaluationsNumberIsValid(
+            Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeansToEdit,
+            Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeansToAppend,
+            Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeansToRemove) {
+        
+        if (markSheetEnrolmentEvaluationBeansToEdit.size() == 0
+                && markSheetEnrolmentEvaluationBeansToAppend.size() == 0
+                && markSheetEnrolmentEvaluationBeansToRemove.size() == getEnrolmentEvaluationsCount()) {
+            throw new DomainException("error.markSheet.edit.with.invalid.enrolmentEvaluations.number");
         }
     }
     
