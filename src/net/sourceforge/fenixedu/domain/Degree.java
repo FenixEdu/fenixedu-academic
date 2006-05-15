@@ -257,8 +257,7 @@ public class Degree extends Degree_Base {
         for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
             if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
                 for (CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-                    if (course.getCurricularStage() != null
-                            && course.getCurricularStage().equals(CurricularStage.OLD)) {
+                    if (!course.isBolonha()) {
                         for (ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
                             if (executionCourse.getExecutionPeriod().getExecutionYear().equals(
                                     executionYear)) {
@@ -279,8 +278,7 @@ public class Degree extends Degree_Base {
         for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
             if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
                 for (CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-                    if (course.getCurricularStage() != null
-                            && course.getCurricularStage().equals(CurricularStage.OLD)) {
+                    if (!course.isBolonha()) {
                         xpto: for (ExecutionCourse executionCourse : course
                                 .getAssociatedExecutionCourses()) {
                             if (executionCourse.getExecutionPeriod().getExecutionYear().equals(
