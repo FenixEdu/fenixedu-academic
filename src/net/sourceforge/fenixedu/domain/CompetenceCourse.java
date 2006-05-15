@@ -54,6 +54,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
                 nameEn.trim(), acronym.trim(), basic, regimeType, competenceCourseLevel, null));
     }
 
+    public boolean isBolonha() {
+        return !getCurricularStage().equals(CurricularStage.OLD);
+    }
+
     public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours,
             Double laboratorialHours, Double seminaryHours, Double fieldWorkHours,
             Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
@@ -205,6 +209,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
                 .getAcronym() : null;
     }
 
+    public void setAcronym(String acronym) {
+        getRecentCompetenceCourseInformation().setAcronym(acronym);
+    }
+    
     public boolean isBasic() {
         return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
                 .getBasic().booleanValue() : false;
