@@ -175,6 +175,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
 
+    public boolean isBolonha() {
+        return !getCurricularStage().equals(CurricularStage.OLD);
+    }
+    
     public void approve(ExecutionYear beginExecutionYear) {
         if (beginExecutionYear == null) {
             throw new DomainException("error.invalid.execution.year");
@@ -241,7 +245,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String print() {
-        if (!this.getCurricularStage().equals(CurricularStage.OLD)) {
+        if (this.isBolonha()) {
             StringBuilder dcp = new StringBuilder();
 
             dcp.append("[DCP ").append(this.getIdInternal()).append("] ").append(this.getName()).append(
@@ -380,9 +384,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public List<CurricularCourse> getCurricularCoursesByBasicAttribute(Boolean basic) {
         List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
         for (CurricularCourse curricularCourse : getCurricularCourses()) {
-            if (curricularCourse.getCurricularStage() != null
-                    && curricularCourse.getCurricularStage().equals(CurricularStage.OLD)
-                    && curricularCourse.getBasic().equals(basic)) {
+            if (!curricularCourse.isBolonha() && curricularCourse.getBasic().equals(basic)) {
                 curricularCourses.add(curricularCourse);
             }
         }
@@ -872,7 +874,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             if (!degreeCurricularPlan.getDegree().isBolonhaDegree()) {
                 if (degreeCurricularPlan.getDegree().getTipoCurso().equals(degreeType)
                         && degreeCurricularPlan.getState().equals(state)
-                        && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
+                        && !degreeCurricularPlan.isBolonha()) {
                     result.add(degreeCurricularPlan);
                 }
             }
