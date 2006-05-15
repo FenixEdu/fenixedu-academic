@@ -23,7 +23,7 @@ public class ContextPredicates {
 
             DegreeCurricularPlan parentDegreeCurricularPlan = context.getParentCourseGroup()
                     .getParentDegreeCurricularPlan();
-            if (parentDegreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
+            if (!parentDegreeCurricularPlan.isBolonha()) {
                 return true;
             }
 

@@ -22,7 +22,7 @@ public class CourseGroupPredicates {
         public boolean evaluate(CourseGroup cg) {
 
             DegreeCurricularPlan parentDegreeCurricularPlan = cg.getParentDegreeCurricularPlan();
-            if (parentDegreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
+            if (!parentDegreeCurricularPlan.isBolonha()) {
                 return true;
             }
 

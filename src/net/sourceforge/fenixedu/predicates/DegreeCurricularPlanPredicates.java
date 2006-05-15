@@ -20,7 +20,7 @@ public class DegreeCurricularPlanPredicates {
 
         public boolean evaluate(DegreeCurricularPlan dcp) {
             
-            if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
+            if (!dcp.isBolonha()) {
                 return true;
             }
             
@@ -56,7 +56,7 @@ public class DegreeCurricularPlanPredicates {
                 return true;
             }
             
-            if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
+            if (!dcp.isBolonha()) {
                 return true;
             }
             
@@ -71,7 +71,7 @@ public class DegreeCurricularPlanPredicates {
 
         public boolean evaluate(DegreeCurricularPlan dcp) {
             
-            if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
+            if (!dcp.isBolonha()) {
                 return true;
             }
             

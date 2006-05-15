@@ -630,7 +630,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             sameCompetenceCurricularCourses = new ArrayList<CurricularCourse>();
             for (CurricularCourse course : curricularCourse.getCompetenceCourse()
                     .getAssociatedCurricularCourses()) {
-                if (course.getCurricularStage().equals(CurricularStage.OLD)) {
+                if (!course.isBolonha()) {
                     sameCompetenceCurricularCourses.add(course);
                 }
             }

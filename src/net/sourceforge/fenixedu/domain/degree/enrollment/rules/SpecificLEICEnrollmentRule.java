@@ -380,7 +380,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	private void addOldCurricularCourses(Set<CurricularCourse> allCurricularCourses, List<CurricularCourseGroup> curricularCourseGroups) {
         for (CurricularCourseGroup curricularCourseGroup : curricularCourseGroups) {
             for (CurricularCourse curricularCourse : curricularCourseGroup.getCurricularCourses()) {
-                if (curricularCourse.getCurricularStage().equals(CurricularStage.OLD)) {
+                if (!curricularCourse.isBolonha()) {
                     allCurricularCourses.add(curricularCourse);
                 }
             }

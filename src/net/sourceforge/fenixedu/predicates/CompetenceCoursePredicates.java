@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -29,7 +28,7 @@ public class CompetenceCoursePredicates {
 
         public boolean evaluate(CompetenceCourse competenceCourse) {
 
-            if (competenceCourse.getCurricularStage().equals(CurricularStage.OLD)) {
+            if (!competenceCourse.isBolonha()) {
                 return true;
             }
 
@@ -67,7 +66,7 @@ public class CompetenceCoursePredicates {
 
         public boolean evaluate(CompetenceCourse competenceCourse) {
 
-            if (competenceCourse.getCurricularStage().equals(CurricularStage.OLD)) {
+            if (!competenceCourse.isBolonha()) {
                 return true;
             }
 

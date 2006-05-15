@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 public class ReadAllCurricularCoursesByCompetenceCourse extends Service {
 
@@ -19,7 +18,7 @@ public class ReadAllCurricularCoursesByCompetenceCourse extends Service {
 		
         List<CurricularCourse> result = new ArrayList<CurricularCourse>();
         for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
-            if (curricularCourse.getCurricularStage().equals(CurricularStage.OLD)) {
+            if (!curricularCourse.isBolonha()) {
                 result.add(curricularCourse);
             }
         }
