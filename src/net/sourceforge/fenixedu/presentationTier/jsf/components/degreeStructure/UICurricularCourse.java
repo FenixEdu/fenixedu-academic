@@ -123,7 +123,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.writeAttribute("class", "smalltxt", null);
         if (!byYears) {
             writer.writeAttribute("align", "center", null);
-            writer.append(CurricularPeriodLabelFormatter.getFullLabel(curricularPeriod, getLocale(), true));
+            writer.append(CurricularPeriodLabelFormatter.getFullLabel(curricularPeriod, true));
         } else {
             writer.append(previousContext.getParentCourseGroup().getName());
         }

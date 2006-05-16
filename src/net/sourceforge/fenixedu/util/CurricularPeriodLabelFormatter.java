@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.util;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.faces.context.FacesContext;
+
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 
 /**
@@ -15,21 +17,13 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 public class CurricularPeriodLabelFormatter {
 
     public static String getLabel(CurricularPeriod curricularPeriod, boolean abbreviated) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources");
-        return getLabel(curricularPeriod, bundle, abbreviated);
-    }
-
-    public static String getLabel(CurricularPeriod curricularPeriod, Locale locale, boolean abbreviated) {
+        final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources", locale);
         return getLabel(curricularPeriod, bundle, abbreviated);
     }
 
     public static String getFullLabel(CurricularPeriod curricularPeriod, boolean abbreviated) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources");
-        return getFullLabel(curricularPeriod, bundle, abbreviated);
-    }
-
-    public static String getFullLabel(CurricularPeriod curricularPeriod, Locale locale, boolean abbreviated) {
+        final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources", locale);
         return getFullLabel(curricularPeriod, bundle, abbreviated);
     }
