@@ -35,14 +35,14 @@
 
 <fr:form action="/createMarkSheet.do?method=createMarkSheetStepTwo">
 
-	<fr:edit id="edit-invisible" name="edit" visible="false" nested="true"/>
+	<fr:edit id="edit-invisible" name="edit" visible="false"/>
 
 	<fr:edit id="edit-enrolments" name="edit" property="enrolmentEvaluationBeans" 
-			 schema="markSheet.create.step.two" layout="tabular-editable"
-             nested="true">
+			 schema="markSheet.create.step.two" layout="tabular-editable">
 		<fr:layout>
 			<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
 		</fr:layout>
+		<fr:destination name="invalid" path="/createMarkSheet.do?method=createMarkSheetStepTwoInvalid"/>
 	</fr:edit>
 	<br/>
 	<html:submit><bean:message key="label.markSheet.submit" /></html:submit>
