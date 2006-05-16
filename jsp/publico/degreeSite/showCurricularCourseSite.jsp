@@ -23,7 +23,7 @@
 	&nbsp;&gt;&nbsp;
 	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() %>" >
 	<!-- &amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + " -->
-		<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+		<bean:write name="infoCurricularCourse" property="infoDegreeCurricularPlan.name" />
 	</html:link>
 	&nbsp;&gt;&nbsp;
 	<html:link page="<%= "/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
@@ -44,81 +44,112 @@
 	<bean:write name="infoDegree" property="nome" />
 </h1>
 
-<h2><span class="greytxt"><bean:write name="infoCurricularCourse" property="name" /></span></h2>
+<!-- CURRICULAR PLAN -->
+<h2 class="greytxt">
+	<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+	<bean:write name="infoCurricularCourse" property="infoDegreeCurricularPlan.name"/>
+	<logic:notEmpty name="infoCurricularCourse" property="infoDegreeCurricularPlan.initialDate">
+		<logic:empty name="infoCurricularCourse" property="infoDegreeCurricularPlan.endDate">
+			(<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.since" />
+			<bean:define id="initialDate" name="infoCurricularCourse" property="infoDegreeCurricularPlan.initialDate" />
+			<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>)
+		</logic:empty>
+		<logic:notEmpty name="infoCurricularCourse" property="infoDegreeCurricularPlan.endDate">
+			(<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.of" />
+			<bean:define id="initialDate" name="infoCurricularCourse" property="infoDegreeCurricularPlan.initialDate" />
+			<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.to" />
+			<bean:define id="endDate" name="infoCurricularCourse" property="infoDegreeCurricularPlan.endDate" />	
+			<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>)
+		</logic:notEmpty>
+	</logic:notEmpty>	
+</h2>
+
+<br/>
+<h2 class="greytxt">
+	<bean:write name="infoCurricularCourse" property="name" />
+</h2>
 
 <!-- EXECUTION COURSES LINK  -->
 <logic:present name="infoCurricularCourse" property="infoAssociatedExecutionCourses" />
-<bean:size id="listSize" name="infoCurricularCourse" property="infoAssociatedExecutionCourses" />
-
-<logic:greaterThan name="listSize" value="0">
-<div class="col_right">
-  <table class="box" cellspacing="0">
-		<tr>
-			<td class="box_header"><strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.courses" /></strong></td>
-		</tr>
-		<tr>
-			<td class="box_cell">
+	<bean:size id="listSize" name="infoCurricularCourse" property="infoAssociatedExecutionCourses" />
+	<logic:greaterThan name="listSize" value="0">
+		<div class="col_right">
+		  <table class="box" cellspacing="0">
+				<tr>
+					<td class="box_header"><strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.courses" /></strong></td>
+				</tr>
 				<logic:iterate id="infoExecutionCourse" name="infoCurricularCourse" property="infoAssociatedExecutionCourses">
 					<logic:notEqual name="infoExecutionCourse" property="infoExecutionPeriod.state.stateCode" value="NO">
-						<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" />
-						<p>
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseID").toString() + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>"  >
-							<bean:write name="infoExecutionCourse" property="nome" />&nbsp;(<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>&nbsp;-&nbsp;<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>)
-						</html:link>
-						</p>
+						<tr>
+							<td class="box_cell">
+								<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" />
+								<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseID").toString() + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>"  >
+									<bean:write name="infoExecutionCourse" property="nome" />&nbsp;(<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>&nbsp;-&nbsp;<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>)
+								</html:link>
+							</td>
+						</tr>
 					</logic:notEqual>
 				</logic:iterate>
-			</td>
-		</tr>  
-  </table>
-</div>
-</logic:greaterThan>
+		  </table>
+		</div>
+	</logic:greaterThan>
 </logic:present>
 
 <p><span class="error"><html:errors/></span></p>
 
 <!-- 	CURRICULAR COURSE SCOPES  -->
 <logic:present name="infoCurricularCourse" property="infoScopes">
-	<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.scope" />	</h2>
-	<ul>
-		<logic:iterate id="infoCurricularCourseScope" name="infoCurricularCourse" property="infoScopes">
-		<li>
+	<h2 class='arrow_bullet'>
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.scope" />	
+	</h2>
+	<logic:iterate id="infoCurricularCourseScope" name="infoCurricularCourse" property="infoScopes">
+		<fieldset style="margin-bottom: 1em; border: 0" >
 			<logic:notEmpty name="infoCurricularCourseScope" property="infoBranch.name">
 				<logic:notEqual name="infoCurricularCourseScope" property="infoBranch.name" value="">	
-					<bean:write name="infoCurricularCourseScope" property="infoBranch.name"/>&nbsp;
+					<p>
+						<label style="float: left; text-align: right; width: 10em;">
+							<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.group"/>:&nbsp;
+						</label>
+						<bean:write name="infoCurricularCourseScope" property="infoBranch.name"/>
+					</p>
 	 			</logic:notEqual>
 			</logic:notEmpty>
-				
+					
 			<logic:notEmpty name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year">
-				<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" value="">					
-					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>&nbsp;<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>&nbsp;
-					</logic:notEqual>
+				<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" value="">
+					<p>
+						<label style="float: left; text-align: right; width: 10em;">
+							<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.curricular.period"/>:&nbsp;
+						</label>
+						<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>
+						<logic:notEmpty name="infoCurricularCourseScope" property="infoCurricularSemester.semester">
+							<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.semester" value="">	
+								<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester"/>
+				 			</logic:notEqual>
+						</logic:notEmpty>
+					</p>						
+				</logic:notEqual>
 			</logic:notEmpty>
 				
-			<logic:notEmpty name="infoCurricularCourseScope" property="infoCurricularSemester.semester">
-				<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.semester" value="">					
-					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester"/>&nbsp;<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>&nbsp;
-	 			</logic:notEqual>
-			</logic:notEmpty>
-		</li>
-		</logic:iterate>		
-	</ul>
+		</fieldset>
+	</logic:iterate>
 </logic:present>
 
 <!-- CURRICULAR COURSE INFO -->
 <logic:present name="infoCurriculum" property="generalObjectives">
-<logic:notEmpty name="infoCurriculum" property="generalObjectives">
-	<logic:notEqual name="infoCurriculum" property="generalObjectives" value="">
-		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.generalObjectives" />	</h2>
-		<p><bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></p>
-	</logic:notEqual>
-</logic:notEmpty>
+	<logic:notEmpty name="infoCurriculum" property="generalObjectives">
+		<logic:notEqual name="infoCurriculum" property="generalObjectives" value="">
+			<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.generalObjectives" />	</h2>
+			<p><bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></p>
+		</logic:notEqual>
+	</logic:notEmpty>
 </logic:present>
 
 <logic:present name="infoCurriculum" property="operacionalObjectives">
 <logic:notEmpty name="infoCurriculum" property="operacionalObjectives">
 	<logic:notEqual name="infoCurriculum" property="operacionalObjectives" value="">
-		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.operacionalObjectives" /></h2>
+		<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.operacionalObjectives" /></h2>
 		<p><bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/></p>
 	</logic:notEqual>
 </logic:notEmpty> 
@@ -127,7 +158,7 @@
 <logic:present name="infoCurriculum" property="program">
 <logic:notEmpty name="infoCurriculum" property="program">
 	<logic:notEqual name="infoCurriculum" property="program" value="">
-		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.program" /></h2>	
+		<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.program" /></h2>	
 		<p><bean:write name="infoCurriculum" property="program" filter="false" /></p>	
 	</logic:notEqual>
 </logic:notEmpty>
