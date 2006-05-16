@@ -7,37 +7,37 @@ import org.joda.time.YearMonthDay;
 public class DailyBalance {
     
 	private YearMonthDay date;
-    	private Duration normalWorkPeriod1Balance;
-    private Duration normalWorkPeriod2Balance;
+	private Duration workedOnNormalWorkPeriod;
     private Duration fixedPeriodAbsence;
     private Duration lunchBreak;
     private Boolean irregular; // corresponde ao A do verbete - anomalia
     private Boolean justification; // corresponde ao J do verbete - justificacao
-    private int overtime; // corresponde ao X do verbete - horas extraordinarias
+    private Boolean missingClocking; // indica se houve missing clocking TODO ver isto melhor
+    private int overtime; // corresponde ao X do  verbete - horas extraordinarias
     private String comment;
     
     private WorkSchedule workSchedule;
     private List<Clocking> clockingList;
 	private List<Leave> leaveList;
+    private List<MissingClocking> missingClockingList;
 	
     public DailyBalance() {
         super();
     }
 
-    public DailyBalance(YearMonthDay date) {
+    public DailyBalance(YearMonthDay date, WorkSchedule workSchedule) {
     		this();
     		setDate(date);
-    		setWorkSchedule(null);
+    		setWorkSchedule(workSchedule);
     		setClockingList(null);
     		setLeaveList(null);
+    		setMissingClockingList(null);
     		setComment(null);
     		setIrregular(false);
     		setJustification(false);
     		setOvertime(0);
-    		
     		setFixedPeriodAbsence(Duration.ZERO);
-    		setNormalWorkPeriod1Balance(Duration.ZERO);
-    		setNormalWorkPeriod2Balance(Duration.ZERO);
+    		setWorkedOnNormalWorkPeriod(Duration.ZERO);
     		setLunchBreak(Duration.ZERO);
     }
     
@@ -55,7 +55,20 @@ public class DailyBalance {
 			this.clockingList = clockingList;
 		}
 	}
-		
+
+    public List<MissingClocking> getMissingClockingList() {
+        return missingClockingList;
+    }
+    
+    // Assigns clockingList to Daily Balance's clockingList. If the list size's is odd sets the irregular (Anomalia) flag;
+    public void setMissingClockingList(List<MissingClocking> missingClockingList) {
+        if (missingClockingList != null) {
+            setMissingClocking(true);
+        }
+        this.missingClockingList = missingClockingList;
+    }
+
+    
 	public String getComment() {
 		return comment;
 	}
@@ -96,6 +109,14 @@ public class DailyBalance {
 		this.justification = justification;
 	}
 
+    public Boolean getMissingClocking() {
+        return missingClocking;
+    }
+
+    public void setMissingClocking(Boolean missingClocking) {
+        this.missingClocking = missingClocking;
+    }
+    
 	public List<Leave> getLeaveList() {
 		return leaveList;
 	}
@@ -118,22 +139,18 @@ public class DailyBalance {
 		this.lunchBreak = lunchBreak;
 	}
 
-	public Duration getNormalWorkPeriod1Balance() {
-		return normalWorkPeriod1Balance;
+	public Duration getWorkedOnNormalWorkPeriod() {
+		return workedOnNormalWorkPeriod;
 	}
 
-	public void setNormalWorkPeriod1Balance(Duration normalWorkPeriod1Balance) {
-		this.normalWorkPeriod1Balance = normalWorkPeriod1Balance;
+	public void setWorkedOnNormalWorkPeriod(Duration workedOnNormalWorkPeriod) {
+        if (workedOnNormalWorkPeriod.isShorterThan(Duration.ZERO)) {
+            this.workedOnNormalWorkPeriod = Duration.ZERO;
+        } else {
+            this.workedOnNormalWorkPeriod = workedOnNormalWorkPeriod;
+        }
 	}
-
-	public Duration getNormalWorkPeriod2Balance() {
-		return normalWorkPeriod2Balance;
-	}
-
-	public void setNormalWorkPeriod2Balance(Duration normalWorkPeriod2Balance) {
-		this.normalWorkPeriod2Balance = normalWorkPeriod2Balance;
-	}
-
+    
 	public int getOvertime() {
 		return overtime;
 	}
@@ -150,9 +167,22 @@ public class DailyBalance {
 		this.workSchedule = workSchedule;
 	}
     
+
+    public Duration getNormalWorkPeriodBalance() {
+        Duration normalWorkPeriodBalance = getWorkedOnNormalWorkPeriod().minus(getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
+        Duration normalWorkPeriodAbsence = Duration.ZERO.minus(this.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
+//        System.out.println("absence: " + normalWorkPeriodAbsence.toPeriod().toString());
+        if (normalWorkPeriodBalance.isShorterThan(normalWorkPeriodAbsence)) {
+            System.out.println(normalWorkPeriodBalance.toPeriod().toString() + " e menor que " + normalWorkPeriodAbsence.toPeriod().toString());
+            return normalWorkPeriodAbsence;
+        } else {
+//            System.out.println("wnwp" + getWorkedOnNormalWorkPeriod());
+//            System.out.println("wnwp" + getWorkedOnNormalWorkPeriod());
+            return getWorkedOnNormalWorkPeriod().minus(getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
+        }
+    }
 	
-	
-	
+	// put this on Utils class
     public boolean isOdd(int number) {
     		if (number % 2 != 0) {
     			return true;
