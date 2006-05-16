@@ -54,6 +54,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private Integer curricularSemesterID = null;
     private Integer contextID = null;
     private Integer curricularCourseID = null;
+    private Integer executionPeriodOID = null;
     private boolean resetCompetenceCourseID = false;
     private boolean toDelete = false;
     
@@ -130,6 +131,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     
     public void setCurricularCourseID(Integer curricularCourseID) {
         this.curricularCourseID = curricularCourseID;
+    }
+    
+    public Integer getExecutionPeriodOID() {
+        return (executionPeriodOID == null) ? (executionPeriodOID = getAndHoldIntegerParameter("executionPeriodOID")) : executionPeriodOID;
+    }
+    
+    public void setExecutionPeriodOID(Integer executionPeriodOID) {
+        this.executionPeriodOID = executionPeriodOID;
     }
     
     public Integer getDepartmentUnitID() {
@@ -687,6 +696,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public String getDegreeLocaleSensitiveName() {
         final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? getDegree().getNameEn() : getDegree().getNome();
+    }
+
+    public Boolean getRenderInEnglish() {
+        final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+        return locale.getLanguage().equals(Locale.ENGLISH.getLanguage());
     }
 
 }
