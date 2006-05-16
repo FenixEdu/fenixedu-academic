@@ -571,6 +571,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			description="Generate java code">
 		<ant antfile="build_codeGenerator.xml" target="generate-domain"/>
 		<ant antfile="build_codeGenerator.xml" target="update-RootDomainObject"/>
+		<ant antfile="build_codeGenerator.xml" target="generateDeprecatedDateGettersAndSetters"/>
 	</target>
 
 	<target name="i18nDefault"
