@@ -61,4 +61,14 @@
         jdbc-type="VARCHAR"
         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkSheetState2SqlMarkSheetStateFieldConversion"
     />
+    <field-descriptor
+		name="submittedByTeacher"
+		column="SUBMITTED_BY_TEACHER"
+		jdbc-type="BIT"
+	/>
+	<field-descriptor
+		name="printed"
+		column="PRINTED"
+		jdbc-type="BIT"
+	/>
 </class-descriptor>   

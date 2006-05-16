@@ -908,6 +908,8 @@ class net.sourceforge.fenixedu.domain.MarkSheet extends net.sourceforge.fenixedu
     Date confirmationDate;
     MarkSheetType markSheetType;
     MarkSheetState markSheetState;
+    Boolean submittedByTeacher;
+    Boolean printed;
 }
 
 class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforge.fenixedu.domain.DomainObject {

@@ -17,16 +17,17 @@ public class MarkSheet extends MarkSheet_Base {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setCreationDate(new Date());
+        setPrinted(Boolean.FALSE);
     }
 
     public MarkSheet(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType,
-            MarkSheetState markSheetState,
+            MarkSheetState markSheetState, Boolean submittedByTeacher,
             Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
 
         this();
         checkParameters(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState, markSheetEnrolmentEvaluationBeans);
-        init(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState);
+        init(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState, submittedByTeacher);
 
         if (getMarkSheetState() == MarkSheetState.RECTIFICATION) {
             addEnrolmentEvaluationsWithoutResctrictions(responsibleTeacher,
@@ -87,7 +88,7 @@ public class MarkSheet extends MarkSheet_Base {
 
     private void init(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType,
-            MarkSheetState markSheetState) {
+            MarkSheetState markSheetState, Boolean submittedByTeacher) {
         
         setMarkSheetState(markSheetState);
         setCurricularCourse(curricularCourse);
@@ -95,6 +96,7 @@ public class MarkSheet extends MarkSheet_Base {
         setResponsibleTeacher(responsibleTeacher);
         setEvaluationDate(evaluationDate);
         setMarkSheetType(markSheetType);
+        setSubmittedByTeacher((submittedByTeacher == null) ? Boolean.FALSE : submittedByTeacher);
     }
 
     private void addEnrolmentEvaluationsWithoutResctrictions(Teacher responsibleTeacher,
@@ -123,6 +125,7 @@ public class MarkSheet extends MarkSheet_Base {
                         markSheetEnrolmentEvaluationBean, executionDegree);
             } else {
                 // TODO:
+                throw new DomainException("error.markSheet");
             }
         }
     }
@@ -247,6 +250,7 @@ public class MarkSheet extends MarkSheet_Base {
                         enrolmentEvaluationBean.getEvaluationDate());
             } else {
                 // TODO:
+                throw new DomainException("error.markSheet");
             }
         }
     }

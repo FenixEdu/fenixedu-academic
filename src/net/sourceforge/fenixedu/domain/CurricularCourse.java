@@ -995,11 +995,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
     
     public MarkSheet createMarkSheet(ExecutionPeriod executionPeriod,
-            Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType,
+            Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType, Boolean submittedByTeacher,
             Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
 
             return new MarkSheet(this, executionPeriod, responsibleTeacher, evaluationDate,
-                    markSheetType, MarkSheetState.NOT_CONFIRMED, markSheetEnrolmentEvaluationBeans);
+                    markSheetType, MarkSheetState.NOT_CONFIRMED, submittedByTeacher, markSheetEnrolmentEvaluationBeans);
     }
     
     //TODO:
@@ -1026,18 +1026,18 @@ public class CurricularCourse extends CurricularCourse_Base {
         markSheet.generateCheckSum();
 
         MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade);
-        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), responsibleTeacher, employee, markSheet.getMarkSheetType(), Collections.singletonList(markSheetEnrolmentEvaluationBean));
+        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), responsibleTeacher, employee, markSheet.getMarkSheetType(), Boolean.FALSE, Collections.singletonList(markSheetEnrolmentEvaluationBean));
         
         return rectificationMarkSheet;
     }
 
     //TODO:
     public MarkSheet createRectificationMarkSheet(ExecutionPeriod executionPeriod,
-            Teacher responsibleTeacher, Employee employee, MarkSheetType markSheetType,
+            Teacher responsibleTeacher, Employee employee, MarkSheetType markSheetType, Boolean submittedByTeacher,
             List<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
         
         MarkSheet markSheet = new MarkSheet(this, executionPeriod, responsibleTeacher, new Date(),
-                markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, markSheetEnrolmentEvaluationBeans);
+                markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, submittedByTeacher, markSheetEnrolmentEvaluationBeans);
         markSheet.setEmployee(employee);
         markSheet.generateCheckSum();
         return markSheet;

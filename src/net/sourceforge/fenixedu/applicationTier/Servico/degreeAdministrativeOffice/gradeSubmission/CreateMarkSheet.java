@@ -30,7 +30,9 @@ public class CreateMarkSheet extends Service {
                 markSheetManagementCreateBean.getExecutionPeriod(),
                 markSheetManagementCreateBean.getTeacher(),
                 markSheetManagementCreateBean.getEvaluationDate(),
-                markSheetManagementCreateBean.getMarkSheetType(), enrolmentEvaluationBeanList);
+                markSheetManagementCreateBean.getMarkSheetType(),
+                Boolean.FALSE,
+                enrolmentEvaluationBeanList);
     }
 
 }
