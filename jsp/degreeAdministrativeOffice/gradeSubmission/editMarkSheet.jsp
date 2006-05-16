@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<fr:form action="/editMarkSheet.do?">
+<fr:form action="/editMarkSheet.do">
 
 	<html:hidden name="markSheetManagementForm" property="method" value="editMarkSheet" />
 	<html:hidden name="markSheetManagementForm" property="epID" />
@@ -34,6 +34,7 @@
 	
 	<fr:edit id="edit-markSheet" name="edit" schema="markSheet.edit" layout="tabular" nested="true"/>
 	<html:submit onclick="this.form.method.value='updateMarkSheet';"><bean:message key="label.markSheet.update" /></html:submit>
+	<br/>
 	
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToEdit">
 		<br/><br/>
