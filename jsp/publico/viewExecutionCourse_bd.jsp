@@ -15,6 +15,7 @@
 		<span class="error"><p><bean:message key="message.public.notfound.executionCourse"/></p></span>
 	</logic:notPresent>
 
+
 	<bean:define id="component" name="siteView" property="commonComponent" />
 	<bean:define id="curricularCoursesList" name="component" property="associatedDegreesByDegree" />
 	<div id="contextual_nav">
@@ -24,25 +25,12 @@
 					<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
 					<bean:define id="degreeID" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.idInternal" />
 					<bean:define id="degreeCurricularPlanID" name="curricularCourse" property="infoDegreeCurricularPlan.idInternal" />
-					<bean:define id="initialDate" name="curricularCourse" property="infoDegreeCurricularPlan.initialDate" />
-					<bean:define id="initialYear" value='<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>' />
 		
-					<li><html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseId") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  pageContext.getAttribute("degreeID") %>"> 	
-						<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>	
-		
-						<logic:greaterThan name="size" value="1">
-							<logic:match name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="Licenciatura">
-								<bean:write name="initialYear" />
-							</logic:match>
-						</logic:greaterThan>
-
-						<logic:match name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="Mestrado">	
-							<bean:define id="endDate" name="curricularCourse" property="infoDegreeCurricularPlan.endDate" />
-							<bean:define id="endYear" value='<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")+1) %>' />
-							<bean:write name="initialYear" />/<bean:write name="endYear" />
-						</logic:match>
-			
-					</html:link></li>
+					<li>
+						<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseId") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  pageContext.getAttribute("degreeID") %>">
+							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.name"/>
+						</html:link>
+					</li>
 				</logic:iterate>
 		</ul>
 	</div>
