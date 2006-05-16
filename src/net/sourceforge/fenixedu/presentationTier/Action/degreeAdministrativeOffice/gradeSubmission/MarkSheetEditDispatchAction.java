@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementEditBean;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.MarkSheet;
@@ -46,7 +45,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         editBean.setEvaluationDate(markSheet.getEvaluationDate());
         editBean.setMarkSheet(markSheet);
         editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(markSheet));
-        editBean.setEnrolmentEvaluationBeansToAppend(getEnrolmentEvaluationBeansToAppend(editBean.getCurricularCourse(), markSheet));    
+        editBean.setEnrolmentEvaluationBeansToAppend(getEnrolmentEvaluationBeansToAppend(markSheet));    
         
         return mapping.findForward("editMarkSheet");
     }
@@ -72,13 +71,11 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
             try {
                 ServiceUtils.executeService(getUserView(request), "EditMarkSheet", new Object[] {
                         editBean.getMarkSheet(), editBean.getTeacher(), editBean.getEvaluationDate() });
-
-                editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(editBean
-                        .getMarkSheet()));
-                editBean.setEnrolmentEvaluationBeansToAppend(getEnrolmentEvaluationBeansToAppend(
-                        editBean.getCurricularCourse(), editBean.getMarkSheet()));
-
+                
+                editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(editBean.getMarkSheet()));
                 RenderUtils.invalidateViewState("edit-marksheet-enrolments");
+                
+                editBean.setEnrolmentEvaluationBeansToAppend(getEnrolmentEvaluationBeansToAppend(editBean.getMarkSheet()));
                 RenderUtils.invalidateViewState("append-enrolments");
 
             } catch (NotAuthorizedFilterException e) {
@@ -138,8 +135,8 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         return enrolmentEvaluationBeansToEdit;
     }
     
-    private Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationBeansToAppend(CurricularCourse curricularCourse, MarkSheet markSheet) {
-        Collection<Enrolment> enrolments = curricularCourse.getEnrolmentsNotInAnyMarkSheet(markSheet.getMarkSheetType(), markSheet.getExecutionPeriod());
+    private Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationBeansToAppend(MarkSheet markSheet) {
+        Collection<Enrolment> enrolments = markSheet.getCurricularCourse().getEnrolmentsNotInAnyMarkSheet(markSheet.getMarkSheetType(), markSheet.getExecutionPeriod());
         Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToAppend = new HashSet<MarkSheetEnrolmentEvaluationBean>();
         for (Enrolment enrolment : enrolments) {
             MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean();
@@ -149,5 +146,4 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         }
         return enrolmentEvaluationBeansToAppend;
     }
-
 }
