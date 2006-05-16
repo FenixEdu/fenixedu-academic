@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Printed and SubmittedByTeacher columns to MarkSheet" alterMarkSheetTable.sql
