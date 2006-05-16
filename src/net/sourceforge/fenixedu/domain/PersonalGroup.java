@@ -4,6 +4,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.IGroup;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 public class PersonalGroup extends PersonalGroup_Base implements IGroup{
     
@@ -38,5 +39,15 @@ public class PersonalGroup extends PersonalGroup_Base implements IGroup{
 	{
 		return this.getGroup().getElements();
 	}
+
+    @Deprecated
+    public Group getGroup() {
+        return super.getConcreteGroup();
+    }
+
+    @Deprecated
+    public void setGroup(Group group) {
+        super.setConcreteGroup(group);
+    }
  
 }

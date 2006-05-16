@@ -180,8 +180,8 @@ public class Authenticate extends Service implements Serializable {
     private void setLoginHostNameAndDateTime(final String remoteHost, Person person) {
         User user = person.getUser();
         user.setLastLoginHost(user.getCurrentLoginHost());
-        user.setLastLoginDateTime(user.getCurrentLoginDateTime());
-        user.setCurrentLoginDateTime(new DateTime());
+        user.setLastLoginDateTimeDateTime(user.getCurrentLoginDateTimeDateTime());
+        user.setCurrentLoginDateTimeDateTime(new DateTime());
         user.setCurrentLoginHost(remoteHost);               
     }
 

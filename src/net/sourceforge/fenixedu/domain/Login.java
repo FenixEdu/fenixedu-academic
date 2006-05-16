@@ -20,7 +20,7 @@ public class Login extends Login_Base {
         }
         this.setUser(user);
         this.setUsername(username);
-        this.setBeginDate(new DateTime());
+        this.setBeginDateDateTime(new DateTime());
     }
 
     public static Login readLoginByUsername(String username) {

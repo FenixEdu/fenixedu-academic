@@ -244,4 +244,16 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     	return null;
     }
 
+    @Deprecated
+    public Integer getOrder() {
+        return super.getChildOrder();
+    }
+
+    @Deprecated
+    public void setOrder(Integer order) {
+        super.setChildOrder(order);
+    }
+    
+    
+
 }

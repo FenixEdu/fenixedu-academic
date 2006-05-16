@@ -21,8 +21,8 @@ public class IdentificationCard extends IdentificationCard_Base {
         } else {
             setActive(false);
         }
-        setBeginDate(beginDate);
-        setEndDate(endDate);
+        setBeginDateDateTime(beginDate);
+        setEndDateDateTime(endDate);
         setLastModifiedDate(lastModifiedDate);
         setModifiedBy(modifiedBy);
     }
