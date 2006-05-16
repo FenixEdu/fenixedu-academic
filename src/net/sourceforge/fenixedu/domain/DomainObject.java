@@ -71,7 +71,6 @@ public abstract class DomainObject extends DomainObject_Base implements Serializ
         // jcachopo: This should be changed in the future...
         ensureIdInternal();
         Transaction.storeNewObject(this);
-        setAckOptLock(Integer.valueOf(1));
     }
 
 	private void ensureIdInternal() {
