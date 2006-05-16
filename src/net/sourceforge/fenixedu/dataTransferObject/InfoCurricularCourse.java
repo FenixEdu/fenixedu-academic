@@ -36,7 +36,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 
     private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 
-    private List infoScopes;
+    private List<InfoCurricularCourseScope> infoScopes;
 
     private List infoAssociatedExecutionCourses;
 
@@ -298,7 +298,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
      * @param infoScopes
      *            The infoScopes to set
      */
-    public void setInfoScopes(List infoScopes) {
+    public void setInfoScopes(List<InfoCurricularCourseScope> infoScopes) {
         this.infoScopes = infoScopes;
     }
 
@@ -588,10 +588,14 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
     
     public void prepareEnglishPresentation(Locale locale) {
-        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {        
-            if (!(this.nameEn==null)&&!(this.nameEn.length()==0)&&!(this.nameEn=="")){
+        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) { 
+            if (this.nameEn != null && this.nameEn.length() != 0 && this.nameEn != "") {
                 this.name = this.nameEn;
-           }
+            }
+            
+            for (InfoCurricularCourseScope infoCurricularCourseScope : this.infoScopes) {
+                infoCurricularCourseScope.prepareEnglishPresentation(locale);
+            }
         }
     }
     

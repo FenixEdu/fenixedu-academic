@@ -136,7 +136,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
             this.generalObjectives  = this.generalObjectivesEn;
             this.operacionalObjectives = this.operacionalObjectivesEn;
             this.program = this.programEn;
-           // this.infoCurricularCourse.prepareEnglishPresentation(locale);
+            this.infoCurricularCourse.prepareEnglishPresentation(locale);
         }
     }
     public String toString() {

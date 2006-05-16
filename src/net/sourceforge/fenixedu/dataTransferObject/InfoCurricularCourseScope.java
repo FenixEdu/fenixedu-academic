@@ -7,6 +7,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 
@@ -173,6 +174,12 @@ public class InfoCurricularCourseScope extends InfoObject {
 
     public void setAnotation(String anotation) {
         this.anotation = anotation;
+    }
+
+    public void prepareEnglishPresentation(Locale locale) {
+        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {        
+            this.infoBranch.prepareEnglishPresentation(locale);
+        }
     }
     
 }
