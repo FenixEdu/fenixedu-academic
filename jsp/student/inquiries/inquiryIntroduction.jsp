@@ -5,7 +5,18 @@
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="pt.utl.ist.fenix.tools.util.StringAppender" %>
 
-<link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+@import "<%= request.getContextPath() %>/CSS/inquiries_style.css";
+</style>
+
+<style type="text/css">
+#inquiry p {
+margin-top: 0;
+margin-bottom: 0;	
+}
+</style>
+
 
 <noscript>
 	<span class="error"><bean:message key="error.message.inquiries.javascript.disabled" bundle="INQUIRIES_RESOURCES"/></span>
@@ -16,7 +27,6 @@
 <br/>
 
 <logic:present name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
-	<br/>
 	<logic:notEmpty name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 		<strong><bean:message key="title.inquiries.choose.course" bundle="INQUIRIES_RESOURCES"/></strong>
 		<ul>
@@ -32,7 +42,6 @@
 </logic:present>
 
 <logic:present name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>'>
-	<br/>
 	<logic:notEmpty name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>'>
 		<p><strong>
 			<bean:message key="title.inquiries.evaluated.courses" bundle="INQUIRIES_RESOURCES"/>

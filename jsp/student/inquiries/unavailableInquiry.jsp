@@ -4,7 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 
-<link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+@import "<%= request.getContextPath() %>/CSS/inquiries_style.css";
+</style>
 
 <logic:present name='<%= InquiriesUtil.INQUIRY_MESSAGE_KEY %>'>
 	<bean:define id="messageKey" name='<%= InquiriesUtil.INQUIRY_MESSAGE_KEY %>' />

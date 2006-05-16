@@ -7,7 +7,10 @@
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="net.sourceforge.fenixedu.domain.ShiftType" %>
 
-<link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+@import "<%= request.getContextPath() %>/CSS/inquiries_style.css";
+</style>
+
 
 <noscript>
 	<font class="error">
@@ -26,18 +29,24 @@
 
 <div id="inquiry">
 
-	<p class="center">
-		<bean:message key="title.inquiries.GEP" bundle="INQUIRIES_RESOURCES"/>
+	<p>
+		<em><bean:message key="title.inquiries.GEP" bundle="INQUIRIES_RESOURCES"/></em>
 	</p>
-	<h2 class="center caps">
+	<h2>
 		<bean:message key="title.inquiries.course.evaluation" bundle="INQUIRIES_RESOURCES"/>
 	</h2>
-	<h3 class="center caps">
-		<bean:message key="title.inquiries.student.inquiry" bundle="INQUIRIES_RESOURCES"/>
+	<h3>
+		<bean:message key="title.inquiries.student.inquiry" bundle="INQUIRIES_RESOURCES"/>: <span class="bluetxt"><bean:write name='<%= InquiriesUtil.ATTENDING_EXECUTION_COURSE %>' property="nome" /></span>
 	</h3>
 
+<!-- 
+	<p><span class="bluetxt"><bean:write name='<%= InquiriesUtil.ATTENDING_EXECUTION_COURSE %>' property="nome" /></span></p>
+-->
+	
+	<div class="infoop2">
 	<bean:message key="message.inquiries.instructions" bundle="INQUIRIES_RESOURCES"/>
-
+	</div>
+	
 	<p><strong>
 		<bean:message key="title.inquiries.inquiry.structure" bundle="INQUIRIES_RESOURCES"/>
 	</strong></p>
@@ -115,7 +124,6 @@
 								</td>
 							</tr>
 						</table>
-
 					</td>
 				</tr>
 
@@ -1428,11 +1436,13 @@
 			
 		</div>	
 
-		<div id="submit" style="text-align: right;">
+		<div id="submit">
 			<p>
 				<strong>
 					<bean:message key="message.inquiries.preview.info" bundle="INQUIRIES_RESOURCES"/>
 				</strong>
+			</p>
+			<p>
 				<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='submitInquiry';" %>'>
 					<bean:message key="button.inquiries.preview.inquiry" bundle="INQUIRIES_RESOURCES"/>
 				</html:submit>
@@ -1441,6 +1451,8 @@
 				<strong>
 					<bean:message key="message.inquiries.definitive.submition.info" bundle="INQUIRIES_RESOURCES"/>
 				</strong>
+			</p>
+			<p>
 				<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='saveInquiry';" %>'>
 					<bean:message key="button.inquiries.submit" bundle="INQUIRIES_RESOURCES"/>
 				</html:submit>

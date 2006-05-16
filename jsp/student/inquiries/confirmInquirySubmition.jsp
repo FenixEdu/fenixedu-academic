@@ -7,7 +7,9 @@
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="net.sourceforge.fenixedu.domain.ShiftType" %>
 
-<link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+@import "<%= request.getContextPath() %>/CSS/inquiries_style.css";
+</style>
 
 <noscript>
 	<font class="error">
@@ -27,12 +29,7 @@
 		<bean:message key="title.inquiries.student.inquiry" bundle="INQUIRIES_RESOURCES"/>
 	</h3>
 
-	<%---
-	TEXTO AQUI!!!!
-	<h3>CONFIRME OS DADOS ANTES DE CONFIRMAR A SUBMISS&Aacute;O</h3>
-	--%>
-
-	<p><strong>
+	<p class="mbottom0"><strong>
 		<bean:message key="message.inquiries.verify.data" bundle="INQUIRIES_RESOURCES"/>
 	</strong></p>
 
@@ -911,11 +908,13 @@
 		</div>
 
 
-		<div id="submit" style="text-align: right;">
+		<div id="submit">
 			<p>
 				<strong>
 					<bean:message key="message.inquiries.edit.info" bundle="INQUIRIES_RESOURCES"/>
 				</strong>
+			</p>
+			<p>
 				<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='editInquiry';" %>'>
 					<bean:message key="button.inquiries.edit.inquiry" bundle="INQUIRIES_RESOURCES"/>
 				</html:submit>
@@ -924,6 +923,8 @@
 				<strong>
 					<bean:message key="message.inquiries.definitive.submition.info" bundle="INQUIRIES_RESOURCES"/>
 				</strong>
+			</p>
+			<p>
 				<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='saveInquiry';" %>'>
 					<bean:message key="button.inquiries.submit" bundle="INQUIRIES_RESOURCES"/>
 				</html:submit>
