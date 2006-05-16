@@ -78,4 +78,14 @@ public class WorkPeriod extends WorkPeriod_Base {
     public boolean canBeDeleted() {
         return !(hasAnyFixedWorkScheduleTypes() || hasAnyNormalWorkScheduleTypes());
     }
+    
+    public boolean isSecondWorkPeriodDefined() {
+        if (getSecondPeriod() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }
+        
