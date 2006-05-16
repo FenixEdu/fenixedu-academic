@@ -8,7 +8,11 @@ public enum BolonhaDegreeType {
 
     MASTER_DEGREE(CurricularPeriodType.TWO_YEAR,2,120),
 
-    INTEGRATED_MASTER_DEGREE(CurricularPeriodType.FIVE_YEAR, 5,300);
+    INTEGRATED_MASTER_DEGREE(CurricularPeriodType.FIVE_YEAR,5,300),
+    
+    ADVANCED_STUDIES_DIPLOMA(CurricularPeriodType.YEAR,1,30),
+    
+    ADVANCED_FORMATION_DIPLOMA(CurricularPeriodType.YEAR,1,30);
 
     private CurricularPeriodType curricularPeriodType;
     private int years;
