@@ -893,6 +893,48 @@ public class CurricularCourse extends CurricularCourse_Base {
         return super.getBasic();
     }
 
+    public String getObjectives() {
+        if (this.getCompetenceCourse() != null) {
+            return this.getCompetenceCourse().getObjectives();
+        }
+        return null;
+    }
+
+    public String getObjectivesEn() {
+        if (this.getCompetenceCourse() != null) {
+            return this.getCompetenceCourse().getObjectivesEn();
+        }
+        return null;
+    }
+
+    public String getProgram() {
+        if (this.getCompetenceCourse() != null) {
+            return this.getCompetenceCourse().getProgram();
+        }
+        return null;
+    }
+
+    public String getProgramEn() {
+        if (this.getCompetenceCourse() != null) {
+            return this.getCompetenceCourse().getProgramEn();
+        }
+        return null;
+    }
+
+    public String getEvaluationMethod() {
+        if (this.getCompetenceCourse() != null) {
+            return this.getCompetenceCourse().getEvaluationMethod();
+        }
+        return null;
+    }
+
+    public String getEvaluationMethodEn() {
+        if (this.getCompetenceCourse() != null) {
+            return this.getCompetenceCourse().getEvaluationMethodEn();
+        }
+        return null;
+    }
+
     public RegimeType getRegime() {
         if (this.getCompetenceCourse() != null) {
             return this.getCompetenceCourse().getRegime();
