@@ -15,7 +15,7 @@ padding: 0.5em;
 
 <h2><bean:message key="link.weekly.work.load"/></h2>
 
-<div class="instructions">
+<div class="infoop2">
 	<logic:present name="previousWeek">
 		<bean:define id="start" type="org.joda.time.DateTime" name="previousWeek" property="start"/>
 		<bean:define id="end" type="org.joda.time.DateTime" name="previousWeek" property="end"/>
@@ -40,8 +40,6 @@ padding: 0.5em;
 
 <br/>
 
-
-
 <html:form action="/weeklyWorkLoad.do">
 	<html:hidden property="method" value="prepare"/>
 	<html:hidden property="page" value="0"/>
@@ -52,7 +50,7 @@ padding: 0.5em;
 </html:form>
 
 
-<p><span class="error"><html:errors/></span></p>
+<p><html:errors/></p>
 
 
 <bean:define id="contact_tooltip" type="java.lang.String"><bean:message key="title.weekly.work.load.contact.tooltip"/></bean:define>
@@ -98,7 +96,8 @@ padding: 0.5em;
 
 
 
-<p class="mbottom0"><span class="attention">Atenção:</span> Deve submeter uma disciplina de cada vez e preencher os três campos (Contacto, Estudo Autónomo e Outro).</p>
+<p class="mbottom0"><span class="attention">Atenção:</span> Deve submeter uma disciplina de cada vez e preencher os três campos (Contacto, Trabalho Autónomo e Outro).</p>
+
 
 	<logic:present name="firstAttends" property="responseWeek">
 		<bean:define id="previousWeek" name="firstAttends" property="responseWeek"/>
@@ -147,13 +146,13 @@ padding: 0.5em;
 								<bean:write name="attend" property="disciplinaExecucao.nome"/>
 							</td>
 							<td title="<%= contact_tooltip %>">
-								<html:text size="3" property="contact"/>
+								<html:text size="3" maxlength="3" property="contact"/>
 							</td>
 							<td  title="<%= autonomousStudy_tooltip %>">
-								<html:text size="3" property="autonomousStudy"/>
+								<html:text size="3" maxlength="3" property="autonomousStudy"/>
 							</td>
 							<td title="<%= other_tooltip %>">
-								<html:text size="3" property="other"/>
+								<html:text size="3" maxlength="3" property="other"/>
 							</td>
 							<td>
 								<html:submit onclick='<%= submitConfirm %>'>

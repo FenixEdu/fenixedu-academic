@@ -263,7 +263,7 @@ margin: 0;
 padding: 0.2em 0.5em 0.2em 0em;
 }
 
-.error0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #ffeadd; color: #c00; }
+.error0 { margin: 1em 0; padding: 0.1em 0.3em 0.1em 0.3em; background-color: #ffeadd; color: #c00; }
 .error1, .error2, .error3 { background-color: #fee; color: #c00; }
 .error1 { border: 2px solid #c00; }
 .error1 h4 { border-bottom: 1px dotted #d00; background: #fff url(../../pics/error01.gif) 6px 50% no-repeat; color: #c00; }
