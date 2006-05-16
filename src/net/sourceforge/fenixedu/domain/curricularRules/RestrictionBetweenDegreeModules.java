@@ -70,20 +70,20 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
         labelList.add(new GenericPair<Object, Boolean>(getPrecedenceDegreeModule().getName(), false));
         
         if (getMinimum().doubleValue() != 0.0) {
-            labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>("label.with", true));
-            labelList.add(new GenericPair<Object, Boolean>(", ", false));
-            
-            labelList.add(new GenericPair<Object, Boolean>("label.in", true));
-            labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>("label.minimum", true));
-            labelList.add(new GenericPair<Object, Boolean>(", ", false));
-            
-            labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
-            labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>("label.credits", true));
+        labelList.add(new GenericPair<Object, Boolean>(" ", false));
+        labelList.add(new GenericPair<Object, Boolean>("label.with", true));
+        labelList.add(new GenericPair<Object, Boolean>(", ", false));
+        
+        labelList.add(new GenericPair<Object, Boolean>("label.in", true));
+        labelList.add(new GenericPair<Object, Boolean>(" ", false));
+        labelList.add(new GenericPair<Object, Boolean>("label.minimum", true));
+        labelList.add(new GenericPair<Object, Boolean>(", ", false));
+        
+        labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+        labelList.add(new GenericPair<Object, Boolean>(" ", false));
+        labelList.add(new GenericPair<Object, Boolean>("label.credits", true));
         }
-            
+        
         if (getContextCourseGroup() != null) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inContext", true));
@@ -97,6 +97,18 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
     public boolean evaluate(Class< ? extends DomainObject> object) {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    @Deprecated
+    public Double getMinimum() {
+        // TODO Auto-generated method stub
+        return super.getMinimumCredits();
+    }
+
+    @Deprecated
+    public void setMinimum(Double minimum) {
+        // TODO Auto-generated method stub
+        super.setMinimumCredits(minimum);
     }
     
 }

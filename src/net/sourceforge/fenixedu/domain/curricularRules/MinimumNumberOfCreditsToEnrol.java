@@ -76,5 +76,17 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
         // TODO Auto-generated method stub
         return false;
     }
+
+    @Deprecated
+    public Double getMinimum() {
+        return super.getMinimumCredits();
+    }
+
+    @Deprecated
+    public void setMinimum(Double minimum) {
+        super.setMinimumCredits(minimum);
+    }
+    
+    
     
 }

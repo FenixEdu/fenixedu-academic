@@ -16,5 +16,14 @@ public class GaugingTestResult extends GaugingTestResult_Base {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
+    
+    public Double getCf() {
+        Long rounded = new Long(Math.round(Double.valueOf(getCfString().replace(',', '.')).doubleValue() * 10));
+        return new Double(rounded.doubleValue() / 10);
+    }
+        
+    public void setCf(Double cf) {
+        setCfString(cf.toString());
+    }
 
 }

@@ -101,4 +101,26 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
         // no domain parameters 
     }
 
+    @Deprecated
+    public Integer getMaximum() {
+        return super.getMaximumLimit();
+    }
+
+    @Deprecated
+    public Integer getMinimum() {
+        return super.getMinimumLimit();
+    }
+
+    @Deprecated
+    public void setMaximum(Integer maximum) {
+        super.setMaximumLimit(maximum);
+    }
+
+    @Deprecated
+    public void setMinimum(Integer minimum) {
+        super.setMinimumLimit(minimum);
+    }
+    
+    
+
 }

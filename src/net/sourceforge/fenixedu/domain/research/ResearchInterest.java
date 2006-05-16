@@ -124,4 +124,15 @@ public class ResearchInterest extends ResearchInterest_Base {
             }
         }
     }
+
+    @Deprecated
+    public Integer getOrder() {
+        return super.getInterestOrder();
+    }
+
+    @Deprecated
+    public void setOrder(Integer order) {
+        super.setInterestOrder(order);
+    }
+    
 }

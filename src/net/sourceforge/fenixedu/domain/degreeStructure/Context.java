@@ -113,4 +113,15 @@ public class Context extends Context_Base implements Comparable<Context> {
             throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
         }
     }
+
+    @Deprecated
+    public Integer getOrder() {
+        return super.getChildOrder();
+    }
+
+    @Deprecated
+    public void setOrder(Integer order) {
+        super.setChildOrder(order);
+    }
+    
 }

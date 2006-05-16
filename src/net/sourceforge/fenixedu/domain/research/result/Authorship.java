@@ -33,5 +33,17 @@ public class Authorship extends Authorship_Base {
         removeRootDomainObject();
         deleteDomainObject();
     }
+
+    @Deprecated
+    public Integer getOrder() {
+        return super.getAuthorOrder();
+    }
+
+    @Deprecated
+    public void setOrder(Integer order) {
+        super.setAuthorOrder(order);
+    }
+    
+    
 }
 

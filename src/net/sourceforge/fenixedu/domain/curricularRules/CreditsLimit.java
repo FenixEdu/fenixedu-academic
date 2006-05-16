@@ -89,4 +89,25 @@ public class CreditsLimit extends CreditsLimit_Base {
         // no domain parameters
     }
 
+    @Deprecated
+    public Double getMaximum() {
+        return super.getMaximumCredits();
+    }
+
+    @Deprecated
+    public Double getMinimum() {
+        return super.getMinimumCredits();
+    }
+
+    @Deprecated
+    public void setMaximum(Double maximum) {
+        super.setMaximumCredits(maximum);
+    }
+
+    @Deprecated
+    public void setMinimum(Double minimum) {
+        super.setMinimumCredits(minimum);
+    }
+
+    
 }

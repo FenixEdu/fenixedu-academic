@@ -28,5 +28,17 @@ public class CaseStudyChoice extends CaseStudyChoice_Base {
         removeRootDomainObject();
         deleteDomainObject();
     }
+
+    @Deprecated
+    public Integer getOrder() {
+        return super.getPreferenceOrder();
+    }
+
+    @Deprecated
+    public void setOrder(Integer order) {
+        super.setPreferenceOrder(order);
+    }
+    
+    
     
 }

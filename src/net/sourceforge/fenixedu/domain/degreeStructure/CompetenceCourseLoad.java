@@ -66,4 +66,16 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
     public int compareTo(Object o) {
         return getOrder().compareTo(((CompetenceCourseLoad) o).getOrder());
     }
+
+    @Deprecated
+    public Integer getOrder() {
+        return super.getLoadOrder();
+    }
+
+    @Deprecated
+    public void setOrder(Integer order) {
+        super.setLoadOrder(order);
+    }
+    
+    
 }
