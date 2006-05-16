@@ -26,3 +26,7 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add Printed and SubmittedByTeacher columns to MarkSheet" alterMarkSheetTable.sql
+execute "Assiduousness stuff" assiduousness-tables-tmp.sql
+execute "Research stuff" alterResearchProjectTables.sql
