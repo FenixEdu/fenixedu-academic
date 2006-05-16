@@ -104,6 +104,11 @@ public class UIDegreeModule extends UIInput {
         Map requestParameterMap = this.facesContext.getExternalContext().getRequestParameterMap();
         StringBuilder href = new StringBuilder();
         href.append(page).append("?");
+
+        if (requestParameterMap.get("degreeID") != null) {
+            href.append("degreeID=").append(requestParameterMap.get("degreeID")).append("&");
+        }
+        
         Object dcpId = null;
         if (requestParameterMap.get("degreeCurricularPlanID") != null) {
             dcpId = requestParameterMap.get("degreeCurricularPlanID");
@@ -111,12 +116,17 @@ public class UIDegreeModule extends UIInput {
             dcpId = requestParameterMap.get("dcpId");
         }
         href.append("degreeCurricularPlanID=").append(dcpId);
+        
         if (this.executionYear != null) {
             href.append("&executionYearID=").append(this.executionYear.getIdInternal());
+        } else if (requestParameterMap.get("executionPeriodOID") != null) {
+            href.append("&executionPeriodOID=").append(requestParameterMap.get("executionPeriodOID"));
         }
+        
         if (aditionalParameters != null) {
             href.append(aditionalParameters);
         }
+        
         href.append("&organizeBy=").append(requestParameterMap.get("organizeBy"));
         href.append("&showRules=").append(requestParameterMap.get("showRules"));
         href.append("&hideCourses=").append(requestParameterMap.get("hideCourses"));
