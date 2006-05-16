@@ -118,11 +118,15 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         
         ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionPeriod.getExecutionYear());
         
-        if (executionDegree == null || !executionDegree.isEvaluationDateInExamPeriod(evaluationDate, executionPeriod, markSheetType)) {
+        if (executionDegree == null) {
             addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriod");
-        } else {
+            
+        } else if (! executionDegree.isEvaluationDateInExamPeriod(evaluationDate, executionPeriod, markSheetType)) {
+            
             OccupationPeriod occupationPeriod = executionDegree.getOccupationPeriodFor(executionPeriod, markSheetType);
             if (occupationPeriod == null) {
+                addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriod");
+            } else {
                 addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriodWithDates",
                         DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getStart()),
                         DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getEnd()));
