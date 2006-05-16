@@ -40,7 +40,7 @@ public class Schedule extends Schedule_Base {
     public DateInterval getValidInterval() {
         return new DateInterval(getBeginDate(), getEndDate());
     }
-
+    
     // Return true if the Schedule is valid in the interval
     public boolean isDefinedInInterval(DateInterval interval) {
         return getValidInterval().containsInterval(interval);
@@ -51,18 +51,26 @@ public class Schedule extends Schedule_Base {
         return getValidInterval().containsDate(date);
     }
 
+    // Returns the valid interval week number of a given YearMonthDay date
+    public int getValidIntervalWeekNumberOfDate(YearMonthDay date) {
+        return (new DateInterval(this.getValidInterval().getStartDate(), date)).numberOfWeeks();
+    }
+    
     // Returns the Employee's work schedule for a particular date
     public WorkSchedule workScheduleWithDate(YearMonthDay date) {
         Iterator<WorkSchedule> workSchedulesIt = getWorkSchedulesIterator();
+        int weekNumber = getValidIntervalWeekNumberOfDate(date);
         while (workSchedulesIt.hasNext()) {
             WorkSchedule workSchedule = workSchedulesIt.next();
-            if (workSchedule.isDefinedInDate(date)) {
+            if (workSchedule.isDefinedInDate(date, weekNumber)) {
                 return workSchedule;
             }
         }
         return null;
     }
 
+    
+    
     public void delete() {
         removeRootDomainObject();
         removeAssiduousness();

@@ -10,19 +10,11 @@ public class Periodicity extends Periodicity_Base {
         setWorkWeekNumber(workWeekNumber);
     }
 
-    // Return true if definedInterval contains the date and the date's day of
-    // week is in WorkWeek
-    // public boolean isDefinedInDate(YearMonthDay date) {
-    // DateTime dateAtMidnight = date.toDateTimeAtMidnight();
-    // if (getDefinedInterval().contains(dateAtMidnight) && getWorkWeek().contains(dateAtMidnight)) {
-    // return true;
-    // }
-    // return false;
-    // }
-    //
-    // public Interval getDefinedInterval() {
-    // return new Interval(getBeginDate(), getEndDate());
-    // }
+    // If weekNumber is multiple of workWeekNumber then it occurs in that week...
+    public boolean occur(int weekNumber) {
+        return (weekNumber % getWorkWeekNumber() == 0);
+    }
+    
     public void delete() {
         if (canBeDeleted()) {
             removeRootDomainObject();
