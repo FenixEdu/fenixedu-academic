@@ -67,7 +67,16 @@
 				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.toString() %>
 			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
-
+			
+			<bean:define id="degreeType" type="java.lang.String" toScope="request">
+				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.ADVANCED_STUDIES_DIPLOMA.toString() %>
+			</bean:define>
+			<jsp:include page="degreesTable.jsp"/>
+			
+			<bean:define id="degreeType" type="java.lang.String" toScope="request">
+				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.ADVANCED_FORMATION_DIPLOMA.toString() %>
+			</bean:define>
+			<jsp:include page="degreesTable.jsp"/>
 		</DIV>
 	</BODY>
 </html:html>
