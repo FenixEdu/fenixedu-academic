@@ -113,10 +113,20 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         } catch (NotAuthorizedFilterException e) {
             addMessage(request, actionMessages, "error.notAuthorized");
         } catch (DomainException e) {
-            addMessage(request, actionMessages, e.getMessage());
+            addMessage(request, actionMessages, e.getMessage(), e.getArgs());
         }
         
         request.setAttribute("edit", createBean);
+        return mapping.findForward("createMarkSheetStep2");
+    }
+    
+    public ActionForward createMarkSheetStepTwoInvalid(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        /*
+         * - This method is used when a validation error occurs. Instead of creating a new bean we use the existing one.
+         * - If we dont't use this method, the createMarkSheetStep1 is called (input method) and a new create bean is created. 
+         */
+        request.setAttribute("edit", RenderUtils.getViewState("edit-invisible").getMetaObject().getObject());
         return mapping.findForward("createMarkSheetStep2");
     }
 
