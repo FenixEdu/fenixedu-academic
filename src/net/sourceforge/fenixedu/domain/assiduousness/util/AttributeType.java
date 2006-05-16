@@ -14,5 +14,8 @@ public enum AttributeType {
     WORKED4,
     WORKED5, // 10
     //
-    IRREGULAR;
+    IRREGULAR,
+    
+    // JUSTIFICATION
+    BALANCE;
 }

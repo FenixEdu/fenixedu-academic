@@ -43,6 +43,15 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
         setModifiedBy(modifiedBy);
     }
 
+    // Returns the schedule Attributes
+    public Attributes getAttributes() {
+        EnumSet<AttributeType> attributes = EnumSet.of(AttributeType.NORMAL_WORK_PERIOD_1,
+                AttributeType.NORMAL_WORK_PERIOD_2, AttributeType.FIXED_PERIOD_1,
+                AttributeType.FIXED_PERIOD_2, AttributeType.MEAL);
+        return new Attributes(attributes);
+    }
+
+    
     // TODO verify this...
     // method
     // public static FlexibleSchedule createFlexibleSchedule(DTO presentationDTO)
@@ -56,15 +65,8 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
     // return null;
     // }
     // }
-
-    // Returns the schedule Attributes
-    public Attributes getAttributes() {
-        EnumSet<AttributeType> attributes = EnumSet.of(AttributeType.NORMAL_WORK_PERIOD_1,
-                AttributeType.NORMAL_WORK_PERIOD_2, AttributeType.FIXED_PERIOD_1,
-                AttributeType.FIXED_PERIOD_2, AttributeType.MEAL);
-        return new Attributes(attributes);
-    }
-
+   
+    
     /*
      * Creates a FlexibleSchedule from the presentation data TODO find a better name
      */

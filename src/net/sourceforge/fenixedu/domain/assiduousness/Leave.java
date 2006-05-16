@@ -9,9 +9,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 
-import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -53,14 +54,17 @@ public class Leave extends Leave_Base {
         timePointList.add(new TimePoint((getDate().plus(getDuration())).toTimeOfDay(), attribute));
         return timePointList;
     }
-
-    public static void plotListInTimeline(List<Leave> leaveList, Iterator<AttributeType> attributesIt,
-            Timeline timeline) {
-        List<TimePoint> pointList = new ArrayList<TimePoint>();
-        for (Leave leave : leaveList) {
-            pointList.addAll(leave.toTimePoints(attributesIt.next()));
-        }
-        timeline.plotList(pointList);
+    
+   	public static void plotListInTimeline(List<Leave> leaveList, Iterator<AttributeType> attributesIt, Timeline timeline) {
+   		List<TimePoint> pointList = new ArrayList<TimePoint>();
+   		for (Leave leave: leaveList) {
+            if (leave.getJustificationMotive().getJustificationType() == JustificationType.BALANCE) {
+                pointList.addAll(leave.toTimePoints(AttributeType.BALANCE));
+            } else {
+                pointList.addAll(leave.toTimePoints(attributesIt.next()));
+            }
+   		}
+   		timeline.plotList(pointList);
     }
 
 }

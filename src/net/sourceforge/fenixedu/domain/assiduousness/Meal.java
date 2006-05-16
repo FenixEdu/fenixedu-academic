@@ -60,10 +60,12 @@ public class Meal extends Meal_Base {
     // Se funcionario almocar em mais do que 1 hora nao desconta nada
     // senao devolve o que falta para que a hora de almoco seja 1 hora.
     public Duration calculateMealDiscount(Duration lunchBreak) {
-        if (lunchBreak.isLongerThan(getMandatoryMealDiscount())) {
-            return Duration.ZERO;
+        if (lunchBreak.isShorterThan(getMandatoryMealDiscount()) || lunchBreak.isEqual(getMandatoryMealDiscount())) {
+            System.out.println("almocou em menos de 1 hora");
+            System.out.println("desconto refeicao " + lunchBreak.minus(getMandatoryMealDiscount()).toPeriod().toString());
+            return lunchBreak.minus(getMandatoryMealDiscount());
         } else {
-            return (getMandatoryMealDiscount().minus(lunchBreak));
+            return Duration.ZERO;
         }
     }
 

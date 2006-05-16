@@ -96,7 +96,7 @@ public class DomainConstants {
     // public final static Duration MINIMUM_BREAK_INTERVAL = new
     // Duration(MINIMUM_BREAK_INTERVAL_MILLISECS);
     //        
-    // /* Regimes de Horários */
+    // /* Regimes de Horï¿½rios */
     // public static final String REGIME_NORMAL = new String("normal");
     // public static final String REGIME_TE = new String("trabalhadorEstudante");
     // public static final String REGIME_IPF = new String("isencaoPeriodoFixo");
@@ -171,12 +171,6 @@ public class DomainConstants {
     // public static final Duration MAX_VALIDITY_DURATION = new Duration(2* 3600 * 1000); // 2 years
     // public static final Duration HALFTIME_DAY_DURATION = new Duration(3* 3600 * 1000 + 30* 3600 *
     // 1000); // (17.5 hours)/(5 days) => 3.5 hours per day
-    // TODO check this out
-    public static final TimeOfDay MORNING_PERIOD_END = new TimeOfDay(13, 0, 0); // The morning period
-                                                                                // ends at 13:00
-
-    public static final Duration MAX_MORNING_WORK = new Duration(5 * 3600 * 1000); // 5 hours in
-                                                                                    // milliseconds
 
     /* Trabalho Nocturno */
     // public final static TimeOfDay NIGHT_SHIFT_START = new TimeOfDay(20,0); // starts at 8 pm
@@ -191,6 +185,7 @@ public class DomainConstants {
 
     public final static TimeOfDay TIMELINE_END = new TimeOfDay(23, 59, 59);
 
+    // Semana de trabalho
     public final static WorkWeek WORKDAYS = new WorkWeek(EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY));
 
     // Marcacoes
