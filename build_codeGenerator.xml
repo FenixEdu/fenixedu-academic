@@ -121,7 +121,7 @@
 			<src path="${src_tools}"/>
 		</javac>
 	</target>
-	
+
     <target name="generate-OJBMetadata"
     		description="Adds specific readByOID methods to RootDomainObject."
     		depends="compile">
@@ -136,7 +136,7 @@
 				</fileset>
 			</classpath>
 		</java>
-    </target>
+    </target>	
 
     <target name="generate-OJBMetadataWithDebug"
     		description="Adds specific readByOID methods to RootDomainObject."
@@ -156,4 +156,112 @@
 		</java>
     </target>
 
+    <target name="fixColumnsNames"
+    		depends="compile">
+		<java classname="net.sourceforge.fenixedu.tools.FixColumnsNames" fork="true">
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    </target>
+
+	<target name="fixColumnsNames-debug"
+    		depends="compile">
+		<java classname="net.sourceforge.fenixedu.tools.FixColumnsNames" fork="true"
+			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"
+		>
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    </target>
+	
+    <target name="changeVarcharColumnsToLongvarcharColumns"
+    		depends="compile">
+		<java classname="net.sourceforge.fenixedu.tools.ChangeVarcharColumnsToLongvarcharColumns" fork="true">
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    </target>
+				
+	<target name="changeDMLDateTypes"
+    		depends="compile">
+		<java classname="net.sourceforge.fenixedu.tools.CheckAndFixDMLDateTypes" fork="true">
+			<arg value="${dml.definition.file.completed}"/>
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    </target>
+	
+	<target name="changeDMLDateTypes-debug"
+    		depends="compile">
+		<java classname="net.sourceforge.fenixedu.tools.CheckAndFixDMLDateTypes" fork="true"
+			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"			
+		>
+			<arg value="${dml.definition.file.completed}"/>
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    </target>	
+		
+	<target name="checkConversors"
+    		depends="compile">
+		<java classname="net.sourceforge.fenixedu.tools.CheckOJBConversors" fork="true">
+			<arg value="${dml.definition.file.completed}"/>
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    </target>
+	
+	<target name="checkConversors-debug"
+    		depends="compile">
+		<java classname="net.sourceforge.fenixedu.tools.CheckOJBConversors" fork="true"
+			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"
+		>
+			<arg value="${dml.definition.file.completed}"/>
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    </target>
+	
+    <target name="generateDeprecatedDateGettersAndSetters" >
+		<java classname="pt.utl.ist.fenix.tools.codeGenerator.DeprecatedDatesGettersAndSettersGenerator" fork="true">
+			<arg value="${src_gen}"/>
+			<arg value="${dml.definition.file.completed}"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>			
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    	<antcall target="clean-all"/>
+    </target>	
+	
 </project>
