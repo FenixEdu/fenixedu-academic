@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.assiduousness.util;
 
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 import org.joda.time.DateTime;
+import org.joda.time.PeriodType;
 
 // The purpose of this class is to define Intervals with partials
 public class DateInterval {
@@ -46,6 +48,14 @@ public class DateInterval {
     public boolean containsInterval(DateInterval interval) {
     		return (containsDate(interval.getStartDate()) || containsDate(interval.getEndDate()));
     }
+    
+    // Return the interval number of days
+    public int numberOfWeeks() {
+        Interval interval = new Interval(startDate.toDateMidnight(), endDate.toDateMidnight());
+        return interval.toPeriod(PeriodType.weeks()).getWeeks();
+    }
+    
+    
     
     public String toString() {
     		return new String(getStartDate().toString() + " - " + getEndDate().toString());
