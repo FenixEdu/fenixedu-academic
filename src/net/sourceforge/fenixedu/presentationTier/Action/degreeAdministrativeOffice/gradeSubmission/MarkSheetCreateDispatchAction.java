@@ -101,17 +101,13 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     public ActionForward createMarkSheetStepTwo(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        MarkSheetManagementCreateBean markSheetManagementCreateBean = (MarkSheetManagementCreateBean) RenderUtils
+        MarkSheetManagementCreateBean createBean = (MarkSheetManagementCreateBean) RenderUtils
                 .getViewState("edit-invisible").getMetaObject().getObject();
-        markSheetManagementCreateBean
-                .setEnrolmentEvaluationBeans((Collection<MarkSheetEnrolmentEvaluationBean>) RenderUtils
-                        .getViewState("edit-enrolments").getMetaObject().getObject());
 
         ActionMessages actionMessages = createActionMessages();
         try {
 
-            ServiceUtils.executeService(getUserView(request), "CreateMarkSheet",
-                    new Object[] { markSheetManagementCreateBean });
+            ServiceUtils.executeService(getUserView(request), "CreateMarkSheet", new Object[] { createBean });
             return mapping.findForward("searchMarkSheet");
 
         } catch (NotAuthorizedFilterException e) {
@@ -119,6 +115,8 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         } catch (DomainException e) {
             addMessage(request, actionMessages, e.getMessage());
         }
+        
+        request.setAttribute("edit", createBean);
         return mapping.findForward("createMarkSheetStep2");
     }
 
