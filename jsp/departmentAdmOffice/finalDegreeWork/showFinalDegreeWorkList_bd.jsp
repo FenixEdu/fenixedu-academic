@@ -8,7 +8,7 @@
 <strong>
 	<bean:message key="message.final.degree.work.administration"/>
 </strong>
-<bean:write name="executionDegree" property="executionYear.nextExecutionYear.year"/>
+<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
 
 <br />
 <br />
@@ -232,6 +232,18 @@
 	</table>
 </html:form>
 
+<br />
+<br />
+
+<html:link page="/finalDegreeWorkProposal.do?method=proposalsXLS&amp;page=0" paramId="executionDegreeOID" paramName="executionDegreeOID">
+	Listagem em excel
+</html:link>
+<br />
+<html:link page="/finalDegreeWorkProposal.do?method=detailedProposalList&amp;page=0" paramId="executionDegreeOID" paramName="executionDegreeOID">
+	Listagem para imprimir
+</html:link>
+
+<br />
 <br />
 <html:form action="/finalDegreeWorkProposal">
 	<html:hidden property="method" value="createNewFinalDegreeWorkProposal"/>

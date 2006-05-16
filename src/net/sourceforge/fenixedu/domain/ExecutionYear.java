@@ -150,4 +150,9 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
         return null;
     }
 
+    public String getNextYearsYearString() {
+    	final int yearPart1 = Integer.parseInt(getYear().substring(0, 4)) + 1;
+    	final int yearPart2 = Integer.parseInt(getYear().substring(5, 9)) + 1;
+    	return Integer.toString(yearPart1) + getYear().charAt(4) + Integer.toString(yearPart2);
+    }
 }

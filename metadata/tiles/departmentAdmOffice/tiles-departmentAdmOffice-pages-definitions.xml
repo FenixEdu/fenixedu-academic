@@ -247,5 +247,8 @@
 	<definition name="df.page.manageFinalDegreeWorks" extends="departmentAdmOffice.masterPage">
 		<put name="body" value="/departmentAdmOffice/finalDegreeWork/manageFinalDegreeWorks.jsp" />
 	</definition>
+	<definition name="detailed-proposal-list" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/finalDegreeWork/detailedProposalList_bd.jsp" />
+	</definition>
 
 </tiles-definitions>

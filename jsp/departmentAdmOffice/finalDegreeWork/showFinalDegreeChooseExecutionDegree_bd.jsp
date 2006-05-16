@@ -26,7 +26,7 @@
 						+ "&amp;executionDegreeOID="
 						+ executionDegreeOID.toString()
 						%>">
-					<bean:write name="executionDegree" property="executionYear.nextExecutionYear.year"/>
+					<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
 				</html:link>
 			</td>
 		</tr>
