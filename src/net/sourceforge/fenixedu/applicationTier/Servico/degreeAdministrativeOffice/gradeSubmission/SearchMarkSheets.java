@@ -4,8 +4,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
@@ -26,7 +26,7 @@ public class SearchMarkSheets extends Service {
                 searchBean.getEvaluationDate(), searchBean.getMarkSheetState(),
                 searchBean.getMarkSheetType());
         
-        Map<MarkSheetType, MarkSheetSearchResultBean> result = new HashMap<MarkSheetType, MarkSheetSearchResultBean>();
+        Map<MarkSheetType, MarkSheetSearchResultBean> result = new TreeMap<MarkSheetType, MarkSheetSearchResultBean>();
         for (MarkSheet sheet : markSheets) {
             addToMap(result, sheet);
         }
