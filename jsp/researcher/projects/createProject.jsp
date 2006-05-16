@@ -10,12 +10,8 @@
 		
 	<h2/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProject.useCasetitle"/> </h2>
   	
-	<strong>
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.title"/> 1 :
-	</strong>
-	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.searchProject"/> >
  	<strong>
- 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.title"/> 2 :
+ 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.title"/> 1 :
  	</strong>
  	<u><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.insertData"/></u>
 		
@@ -28,6 +24,10 @@
   	<br/>
  	<br/>
 		
+	
+	<h3/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProject.participants"/> </h3>
+	
+	<h3/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProject.data"/> </h3>
 	
 	<fr:create type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation" schema="projectParticipation.create-defaults" action="/projects/projectsManagement.do?method=listProjects">
 		<fr:hidden slot="party" name="party"/>

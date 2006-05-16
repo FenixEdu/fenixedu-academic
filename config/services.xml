@@ -9585,6 +9585,15 @@
 		</filterChains>
 	</service> 
 	<service>
+		<name>CreateProjectParticipant</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.CreateProjectParticipant</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service> 
+	<service>
 		<name>ChangeResearchInterestOrder</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.ChangeResearchInterestOrder</implementationClass>
 		<description />

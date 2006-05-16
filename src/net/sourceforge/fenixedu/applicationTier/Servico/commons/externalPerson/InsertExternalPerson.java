@@ -28,4 +28,45 @@ public class InsertExternalPerson extends Service {
                 homepage, email, String.valueOf(System.currentTimeMillis()), institutionLocation);
     }
 
+    
+    /**
+     * This method will always create an ExternalPerson and an Unit
+     * @param personName - Name of the ExternalPerson to be created
+     * @param organizationName - Name of the Unit to be created and associated with the ExternalPerson
+     * @return the newly created ExternalPerson
+     * @throws ExcepcaoPersistencia
+     */
+    public ExternalPerson run(String personName, String organizationName) throws ExcepcaoPersistencia {
+        
+        final Unit organization = DomainFactory.makeUnit();
+        organization.setName(organizationName);
+        
+        return DomainFactory.makeExternalPerson(personName, Gender.MALE, null, null, null,
+                null, null, String.valueOf(System.currentTimeMillis()), organization);
+    }
+    
+    
+  
+    /**
+     * This method will create an ExternalPerson and associate an existing Unit to it
+     * @param personName - Name of the ExternalPerson to be created
+     * @param organization - The unit that the newly created will be associated with
+     * @return the newly created ExternalPerson
+     * @throws FenixServiceException If there is already an externalPerson with the same name in the same unit
+     * @throws ExcepcaoPersistencia
+     */
+    public ExternalPerson run(String personName, Unit organization) throws FenixServiceException,
+            ExcepcaoPersistencia {
+
+        ExternalPerson storedExternalPerson = null;
+
+        storedExternalPerson = ExternalPerson.readByNameAndAddressAndInstitutionID(personName,
+                null, organization.getIdInternal());   
+        if (storedExternalPerson != null)
+            throw new ExistingServiceException(
+                    "error.exception.commons.externalPerson.existingExternalPerson");
+
+        return DomainFactory.makeExternalPerson(personName, Gender.MALE, null, null, null,
+                null, null, String.valueOf(System.currentTimeMillis()), organization);
+    }
 }

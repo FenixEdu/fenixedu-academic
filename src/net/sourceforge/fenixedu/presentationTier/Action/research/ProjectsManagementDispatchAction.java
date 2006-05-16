@@ -34,31 +34,11 @@ public class ProjectsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final IUserView userView = getUserView(request);
-        final Integer oid = Integer.parseInt(request.getParameter("oid"));
+        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
         
         ServiceUtils.executeService(userView, "DeleteResearchProject", new Object[] { oid });
         
         return listProjects(mapping, form, request, response);  
     }
-    
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        final Integer oid = Integer.parseInt(request.getParameter("oid"));
-
-        for( Project project : rootDomainObject.getProjects()) {
-            if (project.getIdInternal().equals(oid)) {
-                final int personIdInternal = getUserView(request).getPerson().getIdInternal();
-                for (ProjectParticipation participation: project.getProjectParticipations()) {
-                    if (participation.getParty().getIdInternal() == personIdInternal) {
-                        request.setAttribute("selectedProjectParticipation", participation);
-                    }
-                }
-            }
-        }
-        
-        request.setAttribute("party", getUserView(request).getPerson());
-        return mapping.findForward("ProjectSelected");  
-    }    
     
 }

@@ -13,21 +13,21 @@
 				<fr:property name="subLayout" value="values"/>
 				<fr:property name="subSchema" value="project.summary"/>
 			
-				<fr:property name="link(edit)" value="/projects/projectsManagement.do?method=edit"/>
-				<fr:property name="param(edit)" value="idInternal/oid"/>
-				<fr:property name="key(edit)" value="researcher.project.projectsManagement.edit"/>
-				<fr:property name="bundle(edit)" value="RESEARCHER_RESOURCES"/>
-				<fr:property name="order(edit)" value="1"/>
+				<fr:property name="link(view)" value="/projects/viewProject.do?method=prepare"/>
+				<fr:property name="param(view)" value="idInternal/projectId"/>
+				<fr:property name="key(view)" value="researcher.project.projectsManagement.view"/>
+				<fr:property name="bundle(view)" value="RESEARCHER_RESOURCES"/>
+				<fr:property name="order(view)" value="1"/>
 
 				<fr:property name="link(delete)" value="/projects/projectsManagement.do?method=delete"/>
-				<fr:property name="param(delete)" value="idInternal/oid"/>
+				<fr:property name="param(delete)" value="idInternal/projectId"/>
 				<fr:property name="key(delete)" value="researcher.project.projectsManagement.delete"/>
 				<fr:property name="bundle(delete)" value="RESEARCHER_RESOURCES"/>
 				<fr:property name="order(delete)" value="2"/>
 			</fr:layout>
 		</fr:view>
 		
-	<html:link page="/projects/createProject.do?method=prepareSearchProjectTitle"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.createProject" /></html:link>
+	<html:link page="/projects/createProject.do?method=prepareCreateProject"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.createProject" /></html:link>
 </logic:present>
 		
 <br/>

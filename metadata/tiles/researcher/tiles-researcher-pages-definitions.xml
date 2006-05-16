@@ -15,14 +15,23 @@
     <definition name="projects.projectsManagement" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/projectsManagement.jsp"></put>
     </definition>
-    <definition name="projects.searchProject" extends="researcher.masterPage">
-        <put name="body" value="/researcher/projects/searchProject.jsp"></put>
-    </definition>
     <definition name="projects.selectProject" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/searchProject.jsp"></put>
     </definition>
-    <definition name="projects.editProject" extends="researcher.masterPage">
-        <put name="body" value="/researcher/projects/editProject.jsp"></put>
+    <definition name="projects.editProjectData" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/editProjectData.jsp"></put>
+    </definition>
+    <definition name="projects.editProjectParticipants" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/editProjectParticipants.jsp"></put>
+    </definition>
+    <definition name="projects.manageEvents" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/manageEvents.jsp"></put>
+    </definition>
+        <definition name="projects.associateEvent" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/associateEvent.jsp"></put>
+    </definition>
+    <definition name="projects.viewProject" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/viewProject.jsp"></put>
     </definition>
     <definition name="projects.createProject" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/createProject.jsp"></put>

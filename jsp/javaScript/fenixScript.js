@@ -1,6 +1,6 @@
 function autoCompleteUpdate(autoCompleteField, selectedElement)
 {
-	autoCompleteField.value = selectedElement.name;
+	autoCompleteField.value = selectedElement.getAttribute("name");
 	document.getElementById(autoCompleteField.id + '_AutoComplete').value = selectedElement.id;
 }
 

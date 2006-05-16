@@ -1,5 +1,5 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.project.Project"
-	table="PROJECT">
+	table="RESEARCH_PROJECT">
 	
 	<field-descriptor
 		name="idInternal"
@@ -7,6 +7,18 @@
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
+	/>
+
+	<field-descriptor
+		name="number"
+		column="NUMBER"
+		jdbc-type="INTEGER"
+	/>
+
+	<field-descriptor
+	    name="acronym"
+	    column="ACRONYM"
+	    jdbc-type="VARCHAR"
 	/>
 	
 	<field-descriptor
@@ -103,25 +115,11 @@
         jdbc-type="INTEGER"
     />
     
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="projects"
-			element-class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
-			indirection-table="PROJECT_EVENT"
-			>
-		<fk-pointing-to-this-class column="KEY_EVENT"/>
-		<fk-pointing-to-element-class column="KEY_PROJECT"/>
-	</collection-descriptor>
-		
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         	name="eventParticipations"
-         	element-class-ref="net.sourceforge.fenixedu.domain.research.event.EventParticipation">
-         <inverse-foreignkey field-ref="keyEvent"/>
-    </collection-descriptor>
 </class-descriptor>
 
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation"
-	table="PROJECT_PARTICIPATION">
+	table="RESEARCH_PROJECT_PARTICIPATION">
 	
 	<field-descriptor
 		name="idInternal"
@@ -184,7 +182,7 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.event.EventParticipation"
-	table="EVENT_PARTICIPATION">
+	table="RESEARCH_EVENT_PARTICIPATION">
 	
 	<field-descriptor
 		name="idInternal"
@@ -233,5 +231,37 @@
 	    <foreignkey field-ref="keyParty"/>
     </reference-descriptor>
 	
+</class-descriptor>
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation"
+	table="RESEARCH_PROJECT_RESEARCH_EVENT_ASSOCIATION">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	
+	<field-descriptor
+		name="keyProject"
+		column="KEY_PROJECT"
+		jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor
+		name="keyEvent" 
+		column="KEY_EVENT"
+		jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor
+	   name="role"    
+	   column="ROLE"  
+		jdbc-type="VARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectParticipationType2SqlProjectParticipationTypeConversion"
+	/>
 </class-descriptor>
 

@@ -7,12 +7,7 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">		
-		<form-bean name="createProjectForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-				dynamic="true">
-			<form-property name="searchedProjectTitle" type="java.lang.String"/>
-		</form-bean>
-		
+	
 		<form-bean name="changeLocaleForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
@@ -100,14 +95,31 @@
 		
 		<action path="/projects/createProject"
 				type="net.sourceforge.fenixedu.presentationTier.Action.research.CreateProjectDispatchAction"
-				name="createProjectForm"
 				scope="request"
 				parameter="method">
-			<forward name="SearchProject" path="projects.searchProject"/>
-			<forward name="SelectProject" path="projects.searchProject"/>
-			<forward name="ProjectSelected" path="projects.editProject"/>
 			<forward name="CreateProject" path="projects.createProject"/>
 		    <forward name="Success" path="projects.projectsManagement"/>
+		</action>
+
+		<action path="/projects/editProject"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.EditProjectDispatchAction"
+				scope="request"
+				parameter="method">
+			<forward name="EditProjectData" path="projects.editProjectData"/>
+			<forward name="EditProjectParticipants" path="projects.editProjectParticipants"/>
+			<forward name="ManageAssociatedEvents" path="projects.manageEvents"/>
+			<forward name="AssociateEvent" path="projects.associateEvent"/>
+		    <forward name="Success" path="projects.editProject"/>
+		</action>
+		
+		
+
+		<action path="/projects/viewProject"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.ViewProjectDispatchAction"
+				scope="request"
+				parameter="method">
+			<forward name="ViewProject" path="projects.viewProject"/>
+		    <forward name="Success" path="projects.editProject"/>
 		</action>
 
 		<action path="/events/eventsManagement" 

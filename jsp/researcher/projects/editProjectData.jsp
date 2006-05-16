@@ -6,26 +6,26 @@
 
 <logic:present role="RESEARCHER">		
 
+	<bean:define id="projectId" name="selectedProject" property="idInternal" />
+
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.superUseCaseTitle"/></em>
 		
-	<h2/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.useCasetitle"/> </h2>
+	<h2/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.data.useCasetitle"/> </h2>
   	
 	<br/>
-	<br/>
-	
+
 	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProjectUseCase.editDataExplanation"/>
   	
   	<br/>
-  	<br/>
 		
+	<h3/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.data"/> </h3>
 	
-	<fr:edit name="selectedProjectParticipation" schema="projectParticipation.edit-defaults" action="/projects/projectsManagement.do?method=listProjects">
-		<fr:hidden slot="party" name="party"/>
+	<fr:edit name="selectedProject" schema="project.edit-defaults" action="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>">
 	    <fr:layout name="tabular">
     	    <fr:property name="classes" value="style1"/>
         	<fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
-	    <fr:destination name="cancel" path="/projects/projectsManagement.do?method=listProjects"/>
+	    <fr:destination name="cancel" path="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>"/>
 	</fr:edit>
 	
 </logic:present>
