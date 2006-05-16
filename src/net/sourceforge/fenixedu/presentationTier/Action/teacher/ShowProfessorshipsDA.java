@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -44,7 +47,7 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
     		dynaActionForm.set("executionPeriodID", "");
     	}
 
-    	final SortedSet<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+    	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
     	request.setAttribute("executionCourses", executionCourses);
 
     	if (userView != null) {
@@ -64,6 +67,7 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
     			}
     		}
     	}
+    	Collections.sort(executionCourses, ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
 
     	request.setAttribute("executionPeriodLabelValueBeans", LabelValueBeanUtils.executionPeriodLabelValueBeans(executionPeriods, true));
 
