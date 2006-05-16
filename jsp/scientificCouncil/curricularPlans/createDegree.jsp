@@ -52,7 +52,7 @@
 
 		<h:outputText value="<p><label>#{scouncilBundle['ectsCredits']}:</label>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText id="ectsCredits" value="#{DegreeManagement.ectsCredits}" disabled="true" maxlength="3" size="2"/>
+			<h:inputText id="ectsCredits" value="#{DegreeManagement.ectsCredits}" disabled="true" maxlength="5" size="4"/>
 			<h:message for="ectsCredits" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
