@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,8 +11,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,13 +30,18 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWo
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
+import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -41,6 +49,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
+import net.sourceforge.fenixedu.util.report.Spreadsheet;
+import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -55,6 +65,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author Luis Cruz
@@ -1013,6 +1024,155 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     	dynaActionForm.set("otherExecutionDegreeID", null);
 
     	return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward proposalsXLS(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws FenixActionException, FenixFilterException, FenixServiceException {
+
+    	final String executionDegreeOIDString = request.getParameter("executionDegreeOID");
+    	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(executionDegreeOIDString));
+    	final ExecutionYear executionYear = executionDegree.getExecutionYear();
+    	final String year = executionYear.getYear();
+    	final Integer yearPart1 = Integer.valueOf(Integer.valueOf(year.substring(0, 4)).intValue() + 1);
+    	final Integer yearPart2 = Integer.valueOf(Integer.valueOf(year.substring(5, 9)).intValue() + 1);
+    	final String yearString = yearPart1 + "-" + yearPart2;
+
+        try {
+            response.setContentType("text/plain");
+            response.setHeader("Content-disposition", "attachment; filename=proposals_" + yearString + ".xls");
+
+            ServletOutputStream writer = response.getOutputStream();
+            final Spreadsheet spreadsheet = new Spreadsheet("Proposals " + yearString);
+            setHeaders(spreadsheet);
+            fillSpreadSheet(executionDegree, spreadsheet);
+            spreadsheet.exportToXLSSheet(writer);
+
+            writer.flush();
+            response.flushBuffer();
+        } catch (IOException e) {
+            throw new FenixServiceException();
+        }
+        return null;
+    }
+
+	private void setHeaders(final Spreadsheet spreadsheet) {
+		spreadsheet.setHeader("Número");
+		spreadsheet.setHeader("Estado da Proposta");
+		spreadsheet.setHeader("Títilo");
+		spreadsheet.setHeader("Número Orientador");
+		spreadsheet.setHeader("Nome Orientador");
+		spreadsheet.setHeader("Número Coorientador");
+		spreadsheet.setHeader("Nome Coorientador");
+		spreadsheet.setHeader("Percentagem Créditos Orientador");
+		spreadsheet.setHeader("Percentagem Créditos Coorientador");
+		spreadsheet.setHeader("Enquadramento");
+		spreadsheet.setHeader("Objectivos");
+		spreadsheet.setHeader("Descrição");
+		spreadsheet.setHeader("Requisitos");
+		spreadsheet.setHeader("Resultado esperado");
+		spreadsheet.setHeader("URL");
+		spreadsheet.setHeader("Área de Especialização");
+		spreadsheet.setHeader("Número mínimo de elementos do grupo");
+		spreadsheet.setHeader("Número máximo de elementos do grupo");
+		spreadsheet.setHeader("Adequação a Dissertação");
+		spreadsheet.setHeader("Observações");
+		spreadsheet.setHeader("Localização da realização do TFC");
+	}
+
+	private static final MessageResources applicationResources = MessageResources.getMessageResources("resources/ApplicationResources");
+	private static final MessageResources enumerationResources = MessageResources.getMessageResources("resources/EnumerationResources");
+
+	private void fillSpreadSheet(final ExecutionDegree executionDegree, final Spreadsheet spreadsheet) {
+		int maxNumberStudentsPerGroup = 0;
+
+		final Scheduleing scheduleing = executionDegree.getScheduling();
+    	final SortedSet<Proposal> proposals = new TreeSet<Proposal>(new BeanComparator("proposalNumber"));
+    	proposals.addAll(scheduleing.getProposalsSet());
+		for (final Proposal proposal : proposals) {
+			final Row row = spreadsheet.addRow();
+			row.setCell(proposal.getProposalNumber().toString());
+			if (proposal.getGroupAttributed() != null) {
+				row.setCell("Atribuido");
+			} else if (proposal.getStatus() != null) {
+				row.setCell(proposal.getStatus().getKey());
+			} else {
+				row.setCell("");
+			}
+			row.setCell(proposal.getTitle());
+			row.setCell(proposal.getOrientator().getTeacherNumber().toString());
+			row.setCell(proposal.getOrientator().getPerson().getName());
+			if (proposal.getCoorientator() != null) {
+				row.setCell(proposal.getCoorientator().getTeacherNumber().toString());
+				row.setCell(proposal.getCoorientator().getPerson().getName());
+			} else {
+				row.setCell("");
+				row.setCell("");				
+			}
+			row.setCell(proposal.getOrientatorsCreditsPercentage().toString());
+			row.setCell(proposal.getCoorientatorsCreditsPercentage().toString());
+			row.setCell(proposal.getFraming());
+			row.setCell(proposal.getObjectives());
+			row.setCell(proposal.getDescription());
+			row.setCell(proposal.getRequirements());
+			row.setCell(proposal.getDeliverable());
+			row.setCell(proposal.getUrl());
+			final StringBuilder branches = new StringBuilder();
+			boolean appendSeperator = false;
+			for (final Branch branch : proposal.getBranchesSet()) {
+				if (appendSeperator) {
+					branches.append(", ");
+				} else {
+					appendSeperator = true;
+				}
+				branches.append(branch.getName());
+			}
+			row.setCell(branches.toString());
+			row.setCell(proposal.getMinimumNumberOfGroupElements().toString());
+			row.setCell(proposal.getMaximumNumberOfGroupElements().toString());
+			if (proposal.getDegreeType() == null) {
+				row.setCell(applicationResources.getMessage("label.both"));
+			} else {
+				row.setCell(enumerationResources.getMessage(proposal.getDegreeType().toString()));
+			}
+			row.setCell(proposal.getObservations());
+			row.setCell(proposal.getLocation());
+			if (proposal.getGroupAttributed() != null) {
+				int i = 0;
+				for (final GroupStudent groupStudent : proposal.getGroupAttributed().getGroupStudentsSet()) {
+					final Student student = groupStudent.getStudent();
+					row.setCell(student.getNumber().toString());
+					row.setCell(student.getPerson().getName());
+					maxNumberStudentsPerGroup = Math.max(maxNumberStudentsPerGroup, ++i);
+				}
+			} else if (proposal.getGroupAttributedByTeacher() != null) {
+				int i = 0;
+				for (final GroupStudent groupStudent : proposal.getGroupAttributedByTeacher().getGroupStudentsSet()) {
+					final Student student = groupStudent.getStudent();
+					row.setCell(student.getNumber().toString());
+					row.setCell(student.getPerson().getName());
+					maxNumberStudentsPerGroup = Math.max(maxNumberStudentsPerGroup, ++i);
+				}				
+			}
+		}
+
+		for (int i = 0; i < maxNumberStudentsPerGroup; i++) {
+			spreadsheet.setHeader("Número aluno " + (i + 1));
+			spreadsheet.setHeader("Nome aluno " + (i + 1));
+		}
+	}
+
+    public ActionForward detailedProposalList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException, FenixServiceException {
+    	final String executionDegreeOIDString = request.getParameter("executionDegreeOID");
+    	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(executionDegreeOIDString));
+    	request.setAttribute("executionDegree", executionDegree);
+    	request.setAttribute("scheduling", executionDegree.getScheduling());
+    	request.setAttribute("degreeCurricularPlanID", executionDegree.getDegreeCurricularPlan().getIdInternal());
+    	request.setAttribute("executionDegreeOID", executionDegree.getIdInternal());
+    	final SortedSet<Proposal> proposals = new TreeSet<Proposal>(new BeanComparator("proposalNumber"));
+    	proposals.addAll(executionDegree.getScheduling().getProposalsSet());
+    	request.setAttribute("proposals", proposals);
+    	return mapping.findForward("detailed-proposal-list");
     }
 
 }

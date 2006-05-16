@@ -176,6 +176,7 @@
 </table>
 
 <br />
+
 <html:form action="/setFinalDegreeWorkCandidacyRequirements">
 	<html:hidden property="method" value="setFinalDegreeCandidacyRequirements"/>
 	<html:hidden property="page" value="1"/>
@@ -233,6 +234,19 @@
 </html:form>
 
 <br />
+<br />
+
+<html:link page="/finalDegreeWorkProposal.do?method=proposalsXLS&amp;page=0" paramId="executionDegreeOID" paramName="executionDegreeOID">
+	Listagem em excel
+</html:link>
+<br />
+<html:link page="/finalDegreeWorkProposal.do?method=detailedProposalList&amp;page=0" paramId="executionDegreeOID" paramName="executionDegreeOID">
+	Listagem para imprimir
+</html:link>
+
+<br />
+<br />
+
 <html:form action="/finalDegreeWorkProposal">
 	<html:hidden property="method" value="createNewFinalDegreeWorkProposal"/>
 	<html:hidden property="page" value="0"/>
