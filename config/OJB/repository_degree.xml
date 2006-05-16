@@ -2,71 +2,18 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.Degree -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Degree" table="DEGREE">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="sigla"
-		column="CODE"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="nome"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="nameEn"
-		column="NAME_EN"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="tipoCurso"
-		column="TYPE_DEGREE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
-	/>
-	<field-descriptor
-		name="concreteClassForDegreeCurricularPlans"
-		column="CLASS_NAME_FOR_DEGREE_CURRICULAR_PLANS"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="keyUnit"
-		column="KEY_UNIT"
-		jdbc-type="INTEGER"
-	 />
-	<field-descriptor
-		name="bolonhaDegreeType"
-		column="BOLONHA_DEGREE_TYPE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaBolonhaDegreeType2SqlBolonhaDegreeTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="gradeScale"
-		column="GRADE_SCALE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"
-	/>
-	<field-descriptor
-		name="ectsCredits"
-		column="ECTS_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="prevailingScientificArea"
-		column="PREVAILING_SCIENTIFIC_AREA"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="keyRootDomainObject"
-		column="KEY_ROOT_DOMAIN_OBJECT"
-		jdbc-type="INTEGER"
-	 />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

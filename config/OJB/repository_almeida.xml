@@ -2,180 +2,46 @@
 <class-descriptor class="middleware.almeida.Almeida_aluno"
   table="almeida_aluno"
 >
-  <field-descriptor id="38"
-    name="numero"
-    column="numero"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-  <field-descriptor id="39"
-    name="nome"
-    column="nome"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="40"
-    name="nascimento"
-    column="nascimento"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="41"
-    name="bi"
-    column="bi"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="42"
-    name="curso"
-    column="curso"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="43"
-    name="ramo"
-    column="ramo"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="44"
-    name="sexo"
-    column="sexo"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="45"
-    name="nacionalidade"
-    column="nacionalidade"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="46"
-    name="freguesia"
-    column="freguesia"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="47"
-    name="concelho"
-    column="concelho"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="48"
-    name="distrito"
-    column="distrito"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="49"
-    name="nomepai"
-    column="nomePai"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="50"
-    name="nomemae"
-    column="nomeMae"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="51"
-    name="morada"
-    column="morada"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="52"
-    name="localidademorada"
-    column="localidadeMorada"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="53"
-    name="cp"
-    column="cp"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="54"
-    name="localidadecp"
-    column="localidadeCP"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="55"
-    name="telefone"
-    column="telefone"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="56"
-    name="email"
-    column="email"
-    jdbc-type="VARCHAR"
-  />
+  
+      
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </class-descriptor>
 
 <class-descriptor class="middleware.almeida.Almeida_inscricoes"
   table="almeida_inscricoes"
 >
-  <field-descriptor id="16"
-    name="codint"
-    column="codInt"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-  <field-descriptor id="17"
-    name="numero"
-    column="numero"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="18"
-    name="ano"
-    column="ano"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="19"
-    name="semestre"
-    column="semestre"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="20"
-    name="coddis"
-    column="codDis"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="21"
-    name="anoinscricao"
-    column="anoInscricao"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="22"
-    name="curso"
-    column="curso"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="23"
-    name="ramo"
-    column="ramo"
-    jdbc-type="VARCHAR"
-  />
+  
+      
+  
+  
+  
+  
+  
+  
+  
 </class-descriptor>
 
 <class-descriptor class="middleware.almeida.Almeida_nacionalidade"
   table="almeida_nacionalidade"
 >
-  <field-descriptor id="4"
-    name="numero"
-    column="numero"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-  <field-descriptor id="5"
-    name="nome"
-    column="nome"
-    jdbc-type="VARCHAR"
-  />
+  
+      
+  
 </class-descriptor>

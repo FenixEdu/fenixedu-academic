@@ -1,133 +1,97 @@
-
 <!-- Definitions for . -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Employee" table="ass_FUNCIONARIO">
-  <field-descriptor
-    name="idInternal"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-    autoincrement="true"
-  />
-  <field-descriptor
-   	name="ackOptLock"
-  	column="ACK_OPT_LOCK"
-   	jdbc-type="INTEGER"
-   	locking="false"
-  />
-  <field-descriptor
-    name="keyPerson"
-    column="chavePessoa"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="employeeNumber"
-    column="numeroMecanografico"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="workingHours"
-    column="chaveHorarioActual"
-    jdbc-type="INTEGER"
-   />
-  <field-descriptor
-    name="antiquity"
-    column="antiguidade"
-    jdbc-type="DATE"
-  />    
-  <field-descriptor
-  	name="active" 
-  	column="ACTIVE" 
-  	jdbc-type="BIT"
-  />
-<!-- <field-descriptor
-    name="keyAssiduousness"
-    column="KEY_ASSIDUOUSNESS"
-    jdbc-type="INTEGER"
-  />  -->  
+  
+  
+  
+  
+  
+      
+  
+<!--   -->  
 </class-descriptor>
 
 <!-- Employee 
 <class-descriptor class="net.sourceforge.fenixedu.domain.Employee" table="ass_EMPLOYEE">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK"	jdbc-type="INTEGER" locking="false"/>
 	
-	<field-descriptor name="keyPerson" column="KEY_PERSON" jdbc-type="INTEGER"/>
-	<field-descriptor name="seniority" column="SENIORITY" jdbc-type="TIMESTAMP"/>    
-	<field-descriptor name="keyUnit" column="KEY_UNIT" jdbc-type="INTEGER"/>	 ?? já está ligado pelo contrato -->
-	<!-- <field-descriptor name="keyAssiduousness" column="KEY_ASSIDUOUSNESS" jdbc-type="INTEGER"/>	-->
-		
+	
+  
+	
+	    
+		 ?? já está ligado pelo contrato -->
+	<!-- 	-->
+
 	<!-- old fields -->
 	<!-- 
-	<field-descriptor name="employeeNumber" column="EMPLOYEE_NUMBER" jdbc-type="INTEGER"/>
-	<field-descriptor name="active" column="ACTIVE" jdbc-type="BIT"/>
-	<field-descriptor name="cardEmployeeHistory" column="KEY_CARD_EMPLOYEE_HISTORY" jdbc-type="INTEGER"/>	
+	
+	
+		
 </class-descriptor> -->
-
+   
 <!-- Card -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.Card" table="CARD">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="cardID" column="CARD_ID" jdbc-type="INTEGER"/>
-	<field-descriptor name="type" column="TYPE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.CardType2SqlVarcharConverter"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
+	
 </class-descriptor>
-
+   
 <!-- Regime -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime" table="ASSIDUOUSNESS_REGIME">
-	<field-descriptor name="idInternal" column="INTERNAL_ID" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR"/>
-	<field-descriptor name="acronym" column="ACRONYM" jdbc-type="VARCHAR"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
+	
 </class-descriptor>
-
+  
 <!-- Assiduousness -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.Assiduousness" table="ASSIDUOUSNESS">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keyEmployee" column="KEY_EMPLOYEE" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
 </class-descriptor>
-
+	
 <!-- Schedule -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.Schedule" table="SCHEDULE">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keyAssiduousness" column="KEY_ASSIDUOUSNESS" jdbc-type="INTEGER"/>
-	<field-descriptor name="beginDate" column="BEGIN_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>
-	<field-descriptor name="endDate" column="END_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="exception" column="EXCEPTION" jdbc-type="BIT"/>	
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>	
-    <field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
+		
+		
+	
+    	
+    
 </class-descriptor>
-
+	
 <!-- Schedule Work Schedule
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.Schedule" table="SCHEDULE_WORK_SCHEDULE">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keySchedule" column="KEY_SCHEDULE" jdbc-type="INTEGER"/>
-	<field-descriptor name="WorkSchedule" column="WORK_SCHEDULE" jdbc-type="INTEGER"/>
+	
+	
+	
+	
 </class-descriptor>
 -->
 <!-- Work Schedule -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule" table="WORK_SCHEDULE">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keyPeriodicity" column="KEY_PERIODICITY" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyWorkScheduleType" column="KEY_WORK_SCHEDULE_TYPE" jdbc-type="INTEGER"/>
-	<field-descriptor name="workWeek" column="WORK_WEEK" jdbc-type="LONGVARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.WorkWeek2SqlVarcharConverter"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
+	
+	
 </class-descriptor>
-
+	
 <!-- Periodicity -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.Periodicity" table="PERIODICITY">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="workWeekNumber" column="WORK_WEEK_NUMBER" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
 </class-descriptor>
-
+	
 <!-- Work Schedule Type-->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType" table="WORK_SCHEDULE_TYPE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.FlexibleSchedule"/>
@@ -135,144 +99,144 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.HalfTimeSchedule"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.ContinuousSchedule"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.HourExemptionSchedule"/>
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="acronym" column="ACRONYM" jdbc-type="VARCHAR"/>
-	<field-descriptor name="workTime" column="WORK_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="workTimeDuration" column="WORK_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="clockingTime" column="CLOCKING_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="clockingTimeDuration" column="CLOCKING_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="keyNormalWorkPeriod" column="KEY_NORMAL_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyFixedWorkPeriod" column="KEY_FIXED_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyMeal" column="KEY_MEAL" jdbc-type="INTEGER"/>	
-	<field-descriptor name="beginValidDate" column="BEGIN_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="endValidDate" column="END_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>	
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+		
+	
+		
+	
+	
+	
+		
+		
+		
+	
+    	
+	
+	
 </class-descriptor>
-
+	
 <!-- Work Period-->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.WorkPeriod" table="WORK_PERIOD">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="firstPeriod" column="FIRST_PERIOD" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="firstPeriodDuration" column="FIRST_PERIOD_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="secondPeriod" column="SECOND_PERIOD" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="secondPeriodDuration" column="SECOND_PERIOD_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+		
+	
+		
+	
+	
 </class-descriptor>
-
+	
 <!-- Meal-->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.Meal" table="MEAL">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="beginMealBreak" column="BEGIN_MEAL_BREAK" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="endMealBreak" column="END_MEAL_BREAK" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="mandatoryMealDiscount" column="MANDATORY_MEAL_DISCOUNT" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="minimumMealBreakInterval" column="MINIMUM_MEAL_BREAK_INTERVAL" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+		
+		
+	
+	
+	
 </class-descriptor>
-
+	
 <!-- flexible -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.FlexibleSchedule" table="WORK_SCHEDULE_TYPE">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="acronym" column="ACRONYM" jdbc-type="VARCHAR"/>
-	<field-descriptor name="workTime" column="WORK_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="workTimeDuration" column="WORK_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="clockingTime" column="CLOCKING_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="clockingTimeDuration" column="CLOCKING_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="keyNormalWorkPeriod" column="KEY_NORMAL_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyFixedWorkPeriod" column="KEY_FIXED_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyMeal" column="KEY_MEAL" jdbc-type="INTEGER"/>	
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="beginValidDate" column="BEGIN_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="endValidDate" column="END_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>	
-    <field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
-</class-descriptor>	
+	
+	
+	
+		
+	
+		
+	
+	
+	
+		
+	
+		
+		
+	
+    	
+    
+</class-descriptor>
 
 <!-- exemption -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.ScheduleExemption" table="WORK_SCHEDULE_TYPE">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="acronym" column="ACRONYM" jdbc-type="VARCHAR"/>
-	<field-descriptor name="workTime" column="WORK_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="workTimeDuration" column="WORK_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="clockingTime" column="CLOCKING_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="clockingTimeDuration" column="CLOCKING_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="keyNormalWorkPeriod" column="KEY_NORMAL_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyFixedWorkPeriod" column="KEY_FIXED_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyMeal" column="KEY_MEAL" jdbc-type="INTEGER"/>	
-	<field-descriptor name="beginValidDate" column="BEGIN_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="endValidDate" column="END_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>	
-    <field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+		
+	
+		
+	
+	
+	
+		
+		
+		
+	
+	
+    	
+    
 </class-descriptor>	
 
 <!-- halftime -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.HalfTimeSchedule" table="WORK_SCHEDULE_TYPE">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="acronym" column="ACRONYM" jdbc-type="VARCHAR"/>
-	<field-descriptor name="workTime" column="WORK_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="workTimeDuration" column="WORK_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="clockingTime" column="CLOCKING_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="clockingTimeDuration" column="CLOCKING_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="keyNormalWorkPeriod" column="KEY_NORMAL_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyFixedWorkPeriod" column="KEY_FIXED_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyMeal" column="KEY_MEAL" jdbc-type="INTEGER"/>	
-	<field-descriptor name="beginValidDate" column="BEGIN_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="endValidDate" column="END_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>	
-    <field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+		
+	
+		
+	
+	
+	
+		
+		
+		
+	
+	
+    	
+    
 </class-descriptor>	
 
 <!-- ContinuousSchedule -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.ContinuousSchedule" table="WORK_SCHEDULE_TYPE">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="acronym" column="ACRONYM" jdbc-type="VARCHAR"/>
-	<field-descriptor name="workTime" column="WORK_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="workTimeDuration" column="WORK_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="clockingTime" column="CLOCKING_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="clockingTimeDuration" column="CLOCKING_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="keyNormalWorkPeriod" column="KEY_NORMAL_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyFixedWorkPeriod" column="KEY_FIXED_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyMeal" column="KEY_MEAL" jdbc-type="INTEGER"/>	
-	<field-descriptor name="beginValidDate" column="BEGIN_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="endValidDate" column="END_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>	
-    <field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+		
+	
+		
+	
+	
+	
+		
+		
+		
+	
+	
+    	
+    
 </class-descriptor>	
 
 <!-- HourExemption -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.HourExemptionSchedule" table="WORK_SCHEDULE_TYPE">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="acronym" column="ACRONYM" jdbc-type="VARCHAR"/>
-	<field-descriptor name="workTime" column="WORK_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="workTimeDuration" column="WORK_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="clockingTime" column="CLOCKING_TIME" jdbc-type="TIME" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion"/>	
-	<field-descriptor name="clockingTimeDuration" column="CLOCKING_TIME_DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="keyNormalWorkPeriod" column="KEY_NORMAL_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyFixedWorkPeriod" column="KEY_FIXED_WORK_PERIOD" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyMeal" column="KEY_MEAL" jdbc-type="INTEGER"/>	
-	<field-descriptor name="beginValidDate" column="BEGIN_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="endValidDate" column="END_VALID_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>	
-    <field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+		
+	
+		
+	
+	
+	
+		
+		
+		
+	
+	
+    	
+    
 </class-descriptor>	
 
 <!-- AssiduousnessRecord -->
@@ -280,12 +244,12 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.Justification"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.Clocking"/>
 	
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keyAssiduousness" column="KEY_ASSIDUOUSNESS" jdbc-type="INTEGER"/>
-	<field-descriptor name="startDate" column="DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
+	
+	
 </class-descriptor>
 
 <!-- Justification -->
@@ -293,356 +257,191 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.MissingClocking"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.Leave"/>
 	
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keyAssiduousness" column="KEY_ASSIDUOUSNESS" jdbc-type="INTEGER"/>
-	<field-descriptor name="date" column="DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-	<field-descriptor name="keyJustificationMotive" column="KEY_JUSTIFICATION_MOTIVE" jdbc-type="INTEGER"/>
-	<field-descriptor name="notes" column="NOTES" jdbc-type="VARCHAR"/>
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>	
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>    
+	
+	
+	
+	
+	
+	
+	
+    	
+	
+	    
 </class-descriptor>
 
 <!-- MissingClocking -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.MissingClocking" table="ASSIDUOUSNESS_RECORD">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keyAssiduousness" column="KEY_ASSIDUOUSNESS" jdbc-type="INTEGER"/>
-	<field-descriptor name="date" column="DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-	<field-descriptor name="notes" column="NOTES" jdbc-type="VARCHAR"/>
-	<field-descriptor name="keyJustificationMotive" column="KEY_JUSTIFICATION_MOTIVE" jdbc-type="INTEGER"/>
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
+	
+	
+	
+    
+	
+	
 </class-descriptor>
 
 <!-- Leave -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.Leave" table="ASSIDUOUSNESS_RECORD">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keyAssiduousness" column="KEY_ASSIDUOUSNESS" jdbc-type="INTEGER"/>
-	<field-descriptor name="date" column="DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-	<field-descriptor name="notes" column="NOTES" jdbc-type="VARCHAR"/>
-	<field-descriptor name="duration" column="DURATION" jdbc-type="BIGINT" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter"/>
-	<field-descriptor name="keyJustificationMotive" column="KEY_JUSTIFICATION_MOTIVE" jdbc-type="INTEGER"/>
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
+	
+	
+	
+	
+    
+	
+	
 </class-descriptor>
 
 <!-- Clocking -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.Clocking" table="ASSIDUOUSNESS_RECORD">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keyAssiduousness" column="KEY_ASSIDUOUSNESS" jdbc-type="INTEGER"/>
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="date" column="DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.DateTime2SqlTimestampConverter"/>
-	<field-descriptor name="keyClockUnit" column="KEY_CLOCK_UNIT" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
+	
+	
+	
 </class-descriptor>
 
 <!-- Clock Unit -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.ClockUnit" table="CLOCK_UNIT">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="acronym" column="ACRONYM" jdbc-type="VARCHAR"/>
-	<field-descriptor name="name" column="NAME" jdbc-type="VARCHAR"/>	
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+		
+	
 </class-descriptor>
 
 <!-- Justification Motive-->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" table="JUSTIFICATION_MOTIVE">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="acronym" column="ACRONYM" jdbc-type="VARCHAR"/>
-	<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR"/>
-	<field-descriptor name="justificationType" column="JUSTIFICATION_TYPE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JustificationType2SqlVarcharConverter"/>
-	<field-descriptor name="dayType" column="DAY_TYPE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.DayType2SqlVarcharConverter"/>
-	<field-descriptor name="justificationGroup" column="JUSTIFICATION_GROUP" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JustificationGroup2SqlVarcharConverter"/>
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>	
-    <field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
+	
+	
+	
+	
+    	
+    
 </class-descriptor>
 
 <!--
 <class-descriptor class="net.sourceforge.fenixedu.domain.Administrative"
   table="ass_FUNC_NAO_DOCENTE"
 >
-  <field-descriptor
-    name="idInternal"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-    autoincrement="true"
-  />
-  <field-descriptor
-   	name="ackOptLock"
-  	column="ACK_OPT_LOCK"
-   	jdbc-type="INTEGER"
-   	locking="false"
-  />
-  <field-descriptor
-    name="keyEmployee"
-    column="chaveFuncionario"
-    jdbc-type="INTEGER"
-  />
+  
+  
+  
     
 </class-descriptor> -->
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.EmployeeHistoric"
   table="ass_FUNCIONARIO_HISTORICO"
 >
-  <field-descriptor
-    name="idInternal"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-    autoincrement="true"
-  />
-  <field-descriptor
-  	name="ackOptLock"
-    column="ACK_OPT_LOCK"
-    jdbc-type="INTEGER"
-    locking="false"
-  />
-  <field-descriptor
-    name="keyEmployee"
-    column="chaveFuncionario"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="keyResponsableEmployee"
-    column="chaveFuncResponsavel"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="keyWorkingPlaceCostCenter"
-    column="chaveCCLocalTrabalho"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="keyMailingCostCenter"
-    column="chaveCCCorrespondencia"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="keySalaryCostCenter"
-    column="chaveCCVencimento"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="calendar"
-    column="calendario"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor
-    name="keyStatus"
-    column="chaveStatus"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="beginDate"
-    column="dataInicio"
-    jdbc-type="DATE"
-  />
-  <field-descriptor
-    name="endDate"
-    column="dataFim"
-    jdbc-type="DATE"
-  />
-  <field-descriptor
-    name="who"
-    column="quem"
-    jdbc-type="INTEGER"    
-  />
-  <field-descriptor
-    name="when"
-    column="quando"
-    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-  />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+
+     
+
+  
+  
+    
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.CostCenter" 
 	table="ass_CENTRO_CUSTO">
-  <field-descriptor id="0"
-    name="idInternal"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-    autoincrement="true"
-  />    
-  <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-  />
-  <field-descriptor 
-  	name="code" 
-  	column="sigla" 
-  	jdbc-type="VARCHAR"/>
-  <field-descriptor 
-  	name="departament" 
-  	column="departamento" 
-  	jdbc-type="VARCHAR"/>
-  <field-descriptor 
-  	name="section1" 
-  	column="seccao1" 
-  	jdbc-type="VARCHAR"/>
-  <field-descriptor 
-  	name="section2" 
-  	column="seccao2" 
-  	jdbc-type="VARCHAR"/>
+      
+  
+  
+  
+  
+  
 </class-descriptor>
 
 <!-- Assiduousness Status-->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus" table="ASSIDUOUSNESS_STATUS">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR"/>
-	<field-descriptor name="state" column="STATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.AssiduousnessStatusState2SqlVarcharConverter"/>
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
+	
+    
+	
 </class-descriptor>
-
+	
 <!-- Assiduousness Status History -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory" table="ASSIDUOUSNESS_STATUS_HISTORY">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keyAssiduousnessStatus" column="KEY_ASSIDUOUSNESS_STATUS" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyAssiduousness" column="KEY_ASSIDUOUSNESS" jdbc-type="INTEGER"/>
-	<field-descriptor name="beginDate" column="BEGIN_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="endDate" column="END_DATE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"/>	
-	<field-descriptor name="lastModifiedDate" column="LAST_MODIFIED_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"/>	
-    <field-descriptor name="keyModifiedBy" column="KEY_MODIFIED_BY" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyRootDomainObject" column="KEY_ROOT_DOMAIN_OBJECT" jdbc-type="INTEGER"/>
+	
+	
+	
+	
+		
+		
+		
+    
+	
 </class-descriptor>
 
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.StatusAssiduidade" 
 	table="ass_STATUS">
-  <field-descriptor 
-  	name="idInternal" 
-  	column="codigoInterno" 
-  	jdbc-type="INTEGER"
-    primarykey="true" autoincrement="true"/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-  <field-descriptor 
-  	name="sigla" 
-  	column="sigla" 
-  	jdbc-type="VARCHAR"/>
-  <field-descriptor 
-  	name="designacao" 
-  	column="designacao" 
-  	jdbc-type="VARCHAR"/>
-  <field-descriptor 
-  	name="estado" 
-  	column="estado" 
-  	jdbc-type="VARCHAR"/>
-  <field-descriptor 
-  	name="assiduidade" 
-  	column="assiduidade" 
-  	jdbc-type="VARCHAR"/>
-  <field-descriptor
-    name="quem"
-    column="quem"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="quando"
-    column="quando"
-    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-  />  	
+  
+      
+  
+  
+  
+  
+  
+    	
 </class-descriptor>
 
 <!--<class-descriptor class="net.sourceforge.fenixedu.domain.Funcionario"
   table="ass_FUNCIONARIO"
 >
-  <field-descriptor id="0"
-    name="codigoInterno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-    autoincrement="true"
-  />
-  <field-descriptor id="1"
-    name="chavePessoa"
-    column="chavePessoa"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="2"
-    name="numeroMecanografico"
-    column="numeroMecanografico"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="3"
-    name="chaveHorarioActual"
-    column="chaveHorarioActual"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="4"
-    name="antiguidade"
-    column="antiguidade"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="5"
-    name="chaveFuncResponsavel"
-    column="chaveFuncResponsavel"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="6"
-    name="chaveCCLocalTrabalho"
-    column="chaveCCLocalTrabalho"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="7"
-    name="chaveCCCorrespondencia"
-    column="chaveCCCorrespondencia"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="8"
-    name="chaveCCVencimento"
-    column="chaveCCVencimento"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="9"
-    name="calendario"
-    column="calendario"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="10"
-    name="chaveStatus"
-    column="chaveStatus"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="11"
-    name="dataInicio"
-    column="dataInicio"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="12"
-    name="dataFim"
-    column="dataFim"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="13"
-    name="quem"
-    column="quem"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="14"
-    name="quando"
-    column="quando"
-    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-  />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+
+     
+
+      
 </class-descriptor>-->

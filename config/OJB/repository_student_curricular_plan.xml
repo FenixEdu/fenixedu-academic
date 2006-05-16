@@ -6,104 +6,25 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEM"/>    
 
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="keyStudent"
-		column="KEY_STUDENT"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyDegreeCurricularPlan"
-		column="KEY_DEGREE_CURRICULAR_PLAN"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="currentState"
-		column="CURRENT_STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="startDate"
-		column="START_DATE"
-		jdbc-type="DATE"
-	/>
-	<field-descriptor
-		name="specialization"
-		column="SPECIALIZATION"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
-	/>
-	<field-descriptor
-		name="keyBranch"
-		column="KEY_SPECIALIZATION_BRANCH"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="givenCredits"
-		column="GIVEN_CREDITS"
-		jdbc-type="FLOAT"
-	/>
-	<field-descriptor
-		name="completedCourses"
-		column="COMPLETED_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="enrolledCourses"
-		column="ENROLLED_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="classification"
-		column="CLASSIFICATION"
-		jdbc-type="FLOAT"
-	/>
-	<field-descriptor 
-		name="observations"
-		column="OBSERVATIONS"
-		jdbc-type="LONGVARCHAR"
-	/>
-    <field-descriptor
-		name="keyEmployee"
-		column="KEY_EMPLOYEE"
-		jdbc-type="INTEGER"	
-	/>
-    <field-descriptor
-		name="keyMasterDegreeThesis"
-		column="KEY_MASTER_DEGREE_THESIS"
-		jdbc-type="INTEGER"	
-	/>	
-	<field-descriptor
-		name="when"
-		column="WHEN_ALTER"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>
-	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
 	
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_CURRICULUM_GROUP"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    
+    	
+	
+	
+	
+		
 	
 	
 		
@@ -119,110 +40,27 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC" table="STUDENT_CURRICULAR_PLAN">
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="keyStudent"
-		column="KEY_STUDENT"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyMasterDegreeThesis"
-		column="KEY_MASTER_DEGREE_THESIS"
-		jdbc-type="INTEGER"	
-	/>	
-	<field-descriptor
-		name="keyDegreeCurricularPlan"
-		column="KEY_DEGREE_CURRICULAR_PLAN"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="currentState"
-		column="CURRENT_STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="startDate"
-		column="START_DATE"
-		jdbc-type="DATE"
-	/>
-	<field-descriptor
-		name="specialization"
-		column="SPECIALIZATION"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
-	/>
-	<field-descriptor
-		name="keyBranch"
-		column="KEY_SPECIALIZATION_BRANCH"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keySecundaryBranch"
-		column="KEY_SECUNDARY_BRANCH"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="givenCredits"
-		column="GIVEN_CREDITS"
-		jdbc-type="FLOAT"
-	/>
-	<field-descriptor
-		name="completedCourses"
-		column="COMPLETED_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="enrolledCourses"
-		column="ENROLLED_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="classification"
-		column="CLASSIFICATION"
-		jdbc-type="FLOAT"
-	/>
-	<field-descriptor 
-		name="observations"
-		column="OBSERVATIONS"
-		jdbc-type="LONGVARCHAR"
-	/>
-    <field-descriptor
-		name="keyEmployee"
-		column="KEY_EMPLOYEE"
-		jdbc-type="INTEGER"	
-	/>
-	<field-descriptor
-		name="when"
-		column="WHEN_ALTER"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>
-	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
 	
 	
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_CURRICULUM_GROUP"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
+	
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    
+	
+	
+	
+	
+	
 	
 	
 	    
@@ -237,110 +75,27 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC" table="STUDENT_CURRICULAR_PLAN">
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="keyStudent"
-		column="KEY_STUDENT"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyDegreeCurricularPlan"
-		column="KEY_DEGREE_CURRICULAR_PLAN"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyMasterDegreeThesis"
-		column="KEY_MASTER_DEGREE_THESIS"
-		jdbc-type="INTEGER"	
-	/>	
-	<field-descriptor
-		name="currentState"
-		column="CURRENT_STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="startDate"
-		column="START_DATE"
-		jdbc-type="DATE"
-	/>
-	<field-descriptor
-		name="specialization"
-		column="SPECIALIZATION"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
-	/>
-	<field-descriptor
-		name="keyBranch"
-		column="KEY_SPECIALIZATION_BRANCH"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="givenCredits"
-		column="GIVEN_CREDITS"
-		jdbc-type="FLOAT"
-	/>
-	<field-descriptor
-		name="completedCourses"
-		column="COMPLETED_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="enrolledCourses"
-		column="ENROLLED_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="classification"
-		column="CLASSIFICATION"
-		jdbc-type="FLOAT"
-	/>
-	<field-descriptor 
-		name="observations"
-		column="OBSERVATIONS"
-		jdbc-type="LONGVARCHAR"
-	/>
-    <field-descriptor
-		name="keyEmployee"
-		column="KEY_EMPLOYEE"
-		jdbc-type="INTEGER"	
-	/>
-	<field-descriptor
-		name="when"
-		column="WHEN_ALTER"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>
-	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-	<field-descriptor
-		name="keySecundaryBranch"
-		column="KEY_SECUNDARY_BRANCH"
-		jdbc-type="INTEGER"
-	/>
 	
 	
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_CURRICULUM_GROUP"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>	
+	
+	
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    
+	
+	
+	
+	
+	
+		
 	
 	
 	    
@@ -355,104 +110,25 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEM" table="STUDENT_CURRICULAR_PLAN">
 
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="keyStudent"
-		column="KEY_STUDENT"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyDegreeCurricularPlan"
-		column="KEY_DEGREE_CURRICULAR_PLAN"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="currentState"
-		column="CURRENT_STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="startDate"
-		column="START_DATE"
-		jdbc-type="DATE"
-	/>
-	<field-descriptor
-		name="specialization"
-		column="SPECIALIZATION"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
-	/>
-	<field-descriptor
-		name="keyBranch"
-		column="KEY_SPECIALIZATION_BRANCH"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="givenCredits"
-		column="GIVEN_CREDITS"
-		jdbc-type="FLOAT"
-	/>
-	<field-descriptor
-		name="completedCourses"
-		column="COMPLETED_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="enrolledCourses"
-		column="ENROLLED_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="classification"
-		column="CLASSIFICATION"
-		jdbc-type="FLOAT"
-	/>
-	<field-descriptor 
-		name="observations"
-		column="OBSERVATIONS"
-		jdbc-type="LONGVARCHAR"
-	/>
-    <field-descriptor
-		name="keyEmployee"
-		column="KEY_EMPLOYEE"
-		jdbc-type="INTEGER"	
-	/>
-    <field-descriptor
-		name="keyMasterDegreeThesis"
-		column="KEY_MASTER_DEGREE_THESIS"
-		jdbc-type="INTEGER"	
-	/>	
-	<field-descriptor
-		name="when"
-		column="WHEN_ALTER"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>
-	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
 	
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_CURRICULUM_GROUP"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    
+    	
+	
+	
+	
+		
 	
 		
 	    

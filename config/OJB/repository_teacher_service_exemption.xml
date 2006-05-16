@@ -2,45 +2,13 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption" table="TEACHER_SERVICE_EXEMPTION">
 
-      <field-descriptor 
-      		name="idInternal" 
-      		column="ID_INTERNAL"
-      		jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-	   />
-      <field-descriptor 
-      		name="keyTeacher" 
-      		column="KEY_TEACHER" 
-      		jdbc-type="INTEGER"
-      />
-      <field-descriptor 
-      		name="type" 
-      		column="TYPE" 
-      		jdbc-type="VARCHAR" 
-      		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ServiceExemptionTypeFieldConversion"
-      />
-      <field-descriptor 
-      		name="start" 
-      		column="START_DATE" 
-      		jdbc-type="DATE"       		
-      />
-      <field-descriptor 
-      		name="end" 
-      		column="END_DATE" 
-      		jdbc-type="DATE"       		
-      /> 
-      <field-descriptor 
-      		name="institution" 
-      		column="INSTITUTION" 
-      		jdbc-type="VARCHAR"       		
-      />            
-      <field-descriptor	
-      		name="ackOptLock"
-      		column="ACK_OPT_LOCK"	
-      		jdbc-type="INTEGER"	
-      		locking="false"
-      />
+      
+      
+      
+      
+       
+                  
+      
       
       
       

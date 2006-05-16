@@ -2,155 +2,34 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.Student -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Student" table="STUDENT">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="number"
-		column="NUMBER"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyPerson"
-		column="KEY_PERSON"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="state"
-		column="STATE"
-		jdbc-type="INTEGER"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentState2SqlStudentStateFieldConversion"         
-	/>
-	<field-descriptor
-		name="degreeType"
-		column="DEGREE_TYPE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"         
-	/>
-	<field-descriptor
-		name="keyStudentKind"
-		column="KEY_STUDENT_KIND"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyRegistrationYear"
-		column="KEY_REGISTRATION_YEAR"
-		jdbc-type="INTEGER"      	
-	/>
-	<field-descriptor
-		name="payedTuition"
-		column="PAYED_TUITION"
-		jdbc-type="BIT"
-	/>
-	<field-descriptor
-		name="specialSeason"
-		column="SPECIAL_SEASON"
-		jdbc-type="BIT"
-	/>
-	<field-descriptor
-		name="enrollmentForbidden"
-		column="ENROLLMENT_FORBIDDEN"
-		jdbc-type="BIT"
-	/>
-	<field-descriptor
-		name="entryPhase"
-		column="ENTRY_PHASE"
-		jdbc-type="INTEGER"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.EntryPhase2SqlEntryPhaseFieldConversion"         
-	/>
-	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-	<field-descriptor 
-        name="entryGrade"
-        column="ENTRY_GRADE"
-        jdbc-type="DOUBLE"
-	/>
-	<field-descriptor 
-        name="contigent"
-        column="CONTIGENT"
-        jdbc-type="VARCHAR"
-	/>
-	<field-descriptor 
-        name="ingression"
-        column="INGRESSION"
-        jdbc-type="VARCHAR"
-	/>
-	<field-descriptor 
-        name="istUniversity"
-        column="IST_UNIVERSITY"
-        jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="flunked"
-		column="FLUNKED"
-		jdbc-type="BIT"
-	/>
-	<field-descriptor
-		name="requestedChangeDegree"
-		column="REQUESTED_CHANGE_DEGREE"
-		jdbc-type="BIT"
-	/>
-	<field-descriptor
-		name="requestedChangeBranch"
-		column="REQUESTED_CHANGE_BRANCH"
-		jdbc-type="BIT"
-	/>
-	<field-descriptor
-		name="keyDislocatedStudent"
-		column="KEY_DISLOCATED_STUDENT"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="interruptedStudies"
-		column="INTERRUPTED_STUDIES"
-		jdbc-type="BIT"
-	/>
-	<field-descriptor
-		name="entryGradeClassification"
-		column="ENTRY_GRADE_CLASSIFICATION"
-		jdbc-type="CHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion"
-	/>
-	<field-descriptor
-		name="approvationRatioClassification"
-		column="APPROVATION_RATIO_CLASSIFICATION"
-		jdbc-type="CHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion"
-	/>
-	<field-descriptor
-		name="arithmeticMeanClassification"
-		column="ARITHMETIC_MEAN_CLASSIFICATION"
-		jdbc-type="CHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion"
-	/>
-	<field-descriptor
-		name="keySenior"
-		column="KEY_SENIOR"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyAssociatedGaugingTestResult"
-		column="KEY_ASSOCIATED_GAUGING_TEST_RESULT"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyAssociatedTutor"
-		column="KEY_ASSOCIATED_TUTOR"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyPersonalDataUseInquiryAnswers"
-		column="KEY_PERSONAL_DATA_USE_INQUIRY_ANSWERS"
-		jdbc-type="INTEGER"
-	/>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 			
 	
 	

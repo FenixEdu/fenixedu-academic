@@ -1,38 +1,26 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.degree.finalProject.DegreeFinalProject"
 		table="DEGREE_FINAL_PROJECT">
-	  <field-descriptor  name="idInternal" column="ID_INTERNAL"  
-							     jdbc-type="INTEGER"  primarykey="true" autoincrement="true"/>
+	  
 
-	  <field-descriptor name="keyExecutionYear" column="KEY_EXECUTION_YEAR" jdbc-type="INTEGER" />
+	  
 
-	  <field-descriptor  name="title" column="TITLE" jdbc-type="VARCHAR" />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+	  
+      
 	     
  </class-descriptor>  
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.degree.finalProject.DegreeFinalProjectOrientation"
 		table="DEGREE_FINAL_PROJECT_ORIENTATION">
-	  <field-descriptor  name="idInternal" column="ID_INTERNAL"  
-							     jdbc-type="INTEGER"  primarykey="true" autoincrement="true"/>
-
-	  <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER" />
-
-	  <field-descriptor   name="keyDegreeFinalProject"  column="KEY_DEGREE_FINAL_PROJECT" jdbc-type="INTEGER" />
 	  
-	  <field-descriptor  name="coOrientation" column="CO_ORIENTATION" jdbc-type="BIT" />
 
-	  <field-descriptor  name="percentage" column="PERCENTAGE" jdbc-type="DOUBLE"/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+	  
+
+	  
+	  
+	  
+
+	  
+      
 	     
 	  
  </class-descriptor>

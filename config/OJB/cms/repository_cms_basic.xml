@@ -1,21 +1,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.cms.Cms" table="CMS_CMS">
-    <field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />    
-    <field-descriptor
-        name="keyConfiguration"
-        column="KEY_CONFIGURATION"
-        jdbc-type="INTEGER"
-    />   
-    <field-descriptor
-        name="name"
-        column="NAME"
-        jdbc-type="VARCHAR"
-    />
+        
+       
+    
 	 
 	
 				
@@ -26,50 +12,14 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailMessage" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.FunctionalityLink"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.WebsiteItem"/>
-    <field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor
-        name="creationDate"
-        column="CREATION_DATE"
-        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>                     
-    <field-descriptor
-        name="keyCreator"
-        column="KEY_CREATOR"
-        jdbc-type="INTEGER"
-    />   
-    <field-descriptor
-        name="name"
-        column="NAME"
-        jdbc-type="VARCHAR"
-    />   
-    <field-descriptor
-        name="description"
-        column="description"
-        jdbc-type="VARCHAR"
-    />           
-    <field-descriptor
-        name="keyCms"
-        column="KEY_CMS"
-        jdbc-type="INTEGER"
-    />
-	 <field-descriptor
-        name="readersGroup"
-        column="READERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />                  
-    <field-descriptor
-        name="writersGroup"
-        column="WRITERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />
+    
+                         
+       
+       
+               
+    
+	                   
+    
 		      
 	 	 
 		
@@ -81,50 +31,14 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailConversation" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.Website"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.WebsiteSection"/>
-    <field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor
-        name="creationDate"
-        column="CREATION_DATE"
-        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>                     
-    <field-descriptor
-        name="keyCreator"
-        column="KEY_CREATOR"
-        jdbc-type="INTEGER"
-    />   
-    <field-descriptor
-        name="name"
-        column="NAME"
-        jdbc-type="VARCHAR"
-    />   
-    <field-descriptor
-        name="description"
-        column="description"
-        jdbc-type="VARCHAR"
-    />           
-  <field-descriptor
-        name="keyCms"
-        column="KEY_CMS"
-        jdbc-type="INTEGER"
-    />     
-     <field-descriptor
-        name="readersGroup"
-        column="READERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />                  
-    <field-descriptor
-        name="writersGroup"
-        column="WRITERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />        
+    
+                         
+       
+       
+               
+       
+                       
+            
 		        
 	 
 	
@@ -135,47 +49,13 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration"
                   table="CMS_CONFIGURATION">                                    
-    <field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    /> 
-    <field-descriptor
-        name="mailingListsHost"
-        column="MAILING_LIST_HOST"
-        jdbc-type="VARCHAR"
-    />                           
-    <field-descriptor
-        name="smtpServerAddress"
-        column="SMTP_SERVER_ADDRESS"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="filterNonTextualAttachments"
-        column="FILTER_NON_TEXTUAL_ATTACHMENTS"
-        jdbc-type="BIT"
-    />        
-    <field-descriptor
-        name="conversationReplyMarkers"
-        column="CONVERSATION_REPLY_MARKERS"
-        jdbc-type="VARCHAR"
-    />        
-    <field-descriptor
-        name="maxAttachmentSize"
-        column="MAX_ATTACHMENT_SIZE"
-        jdbc-type="INTEGER"
-    />     
-    <field-descriptor
-        name="maxMessageSize"
-        column="MAX_MESSAGE_SIZE"
-        jdbc-type="INTEGER"
-    />         
-    <field-descriptor
-        name="keyCms"
-        column="KEY_CMS"
-        jdbc-type="INTEGER"
-    />        
+     
+                               
+    
+            
+            
+         
+             
+            
 	    
 </class-descriptor>

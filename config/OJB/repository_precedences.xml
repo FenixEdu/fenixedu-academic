@@ -1,7 +1,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.Precedence" table="PRECEDENCE">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="keyCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
+    
+	
+	
     
     
 </class-descriptor>
@@ -22,83 +22,83 @@
 </class-descriptor>
 	
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply" table="RESTRICTION">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
-    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     
-	<field-descriptor name="periodToApplyRestriction" column="PERIOD_TO_APPLY" jdbc-type="INTEGER" nullable="false" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConversion"/>
+    
+          
+	
+    
+	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses" table="RESTRICTION">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
-    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     
-	<field-descriptor name="numberOfCurricularCourses" column="NUMBER_OF_CURRICULAR_COURSE_DONE" jdbc-type="INTEGER" nullable="false"/>
+    
+          
+	
+    
+	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionNotDoneCurricularCourse" table="RESTRICTION">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.precedences.RestrictionNotEnrolledInCurricularCourse"/>
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
-    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     
-	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
+    
+          
+	
+    
+	
     
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionNotEnrolledInCurricularCourse" table="RESTRICTION">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
-    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     
-	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
+    
+          
+	
+    
+	
     
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse" table="RESTRICTION">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse"/>
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
-    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     
-	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
+    
+          
+	
+    
+	
     
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse" table="RESTRICTION">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse"/>
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
-    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     
-	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
+    
+          
+	
+    
+	
     
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse" table="RESTRICTION">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
-    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     
-	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
+    
+          
+	
+    
+	
     
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse" table="RESTRICTION">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
-    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
     
-	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
+    
+          
+	
+    
+	
     
 </class-descriptor>

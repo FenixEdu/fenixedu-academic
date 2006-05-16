@@ -1,187 +1,44 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.homepage.Homepage" table="HOMEPAGE">
-    <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-	/>
-	<field-descriptor
-        name="keyPerson"
-        column="KEY_PERSON"
-        jdbc-type="INTEGER"
-    />
-	<field-descriptor
-        name="keyBlog"
-        column="KEY_BLOG"
-        jdbc-type="INTEGER"
-    />
-	<field-descriptor
-	    name="activated"
-	    column="ACTIVATED"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="name"
-	    column="NAME"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	    name="showUnit"
-	    column="SHOW_UNIT"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="showPhoto"
-	    column="SHOW_PHOTO"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="showEmail"
-	    column="SHOW_EMAIL"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="showTelephone"
-	    column="SHOW_TELEPHONE"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="showWorkTelephone"
-	    column="SHOW_WORK_TELEPHONE"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="showMobileTelephone"
-	    column="SHOW_MOBILE_TELEPHONE"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="showAlternativeHomepage"
-	    column="SHOW_ALTERNATIVE_HOMEPAGE"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="showResearchUnitHomepage"
-	    column="SHOW_RESEARCH_UNIT_HOMEPAGE"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="showCategory"
-	    column="SHOW_CATEGORY"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="showCurrentExecutionCourses"
-	    column="SHOW_CURRENT_EXECUTION_COURSES"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="showActiveStudentCurricularPlans"
-	    column="SHOW_ACTIVE_STUDENT_CURRICULAR_PLANS"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-	    name="showAlumniDegrees"
-	    column="SHOW_ALUMNI_DEGREES"
-	    jdbc-type="BIT"
-	/>
-	<field-descriptor
-		name="researchUnitHomepage"
-		column="RESEARCH_UNIT_HOMEPAGE"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="researchUnit"
-		column="RESEARCH_UNIT"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
-	<field-descriptor
-	    name="showCurrentAttendingExecutionCourses"
-	    column="SHOW_CURRENT_ATTENDING_EXECUTION_COURSES"
-	    jdbc-type="BIT"
-	/>
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.homepage.Blog" table="BLOG">
-    <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-	/>
-	<field-descriptor
-        name="keyHomepage"
-        column="KEY_HOMEPAGE"
-        jdbc-type="INTEGER"
-    />
-	<field-descriptor
-	    name="name"
-	    column="NAME"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	    name="about"
-	    column="ABOUT"
-	    jdbc-type="VARCHAR"
-	/>
+    
+	
+	
+	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.homepage.BlogEntry" table="BLOG_ENTRY">
-    <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-	/>
-	<field-descriptor
-        name="keyBlog"
-        column="KEY_BLOG"
-        jdbc-type="INTEGER"
-    />
-	<field-descriptor
-	    name="posted"
-	    column="POSTED"
-	    jdbc-type="TIMESTAMP"
-	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-	/>
-	<field-descriptor
-	    name="title"
-	    column="TITLE"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	    name="content"
-	    column="CONTENT"
-	    jdbc-type="VARCHAR"
-	/>
+    
+	
+	
+	
+	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.homepage.BlogEntryComment" table="BLOG_ENTRY_COMMENT">
-    <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-	/>
-	<field-descriptor
-        name="keyBlogEntries"
-        column="KEY_BLOG_ENTRIES"
-        jdbc-type="INTEGER"
-    />
-	<field-descriptor
-	    name="posted"
-	    column="POSTED"
-	    jdbc-type="TIMESTAMP"
-	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-	/>
-	<field-descriptor
-	    name="comment"
-	    column="COMMENT"
-	    jdbc-type="VARCHAR"
-	/>
+    
+	
+	
+	
 </class-descriptor>

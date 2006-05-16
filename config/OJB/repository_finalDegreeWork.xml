@@ -1,151 +1,34 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal"
    	  table="FINAL_DEGREE_WORK_PROPOSAL"
    >
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      <field-descriptor
-      	name="proposalNumber"
-      	column="PROPOSAL_NUMBER"
-      	jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="keyScheduleing"
-         column="KEY_SCHEDULEING"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="title"
-         column="TITLE"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="keyOrientator"
-         column="KEY_ORIENTATOR"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="keyCoorientator"
-         column="KEY_COORIENTATOR"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="orientatorsCreditsPercentage"
-         column="ORIENTATORS_CREDITS_PERCENTAGE"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="coorientatorsCreditsPercentage"
-         column="COORIENTATORS_CREDITS_PERCENTAGE"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="companionName"
-         column="COMPANION_NAME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="companionMail"
-         column="COMPANION_MAIL"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="companionPhone"
-         column="COMPANION_PHONE"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="framing"
-         column="FRAMING"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor
-         name="objectives"
-         column="OBJECTIVES"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor
-         name="description"
-         column="DESCRIPTION"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor
-         name="requirements"
-         column="REQUIREMENTS"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor
-         name="deliverable"
-         column="DELIVERAVLE"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor
-         name="url"
-         column="URL"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="minimumNumberOfGroupElements"
-         column="MINIMUM_NUMBER_OF_GROUP_ELEMENTS"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="maximumNumberOfGroupElements"
-         column="MAXIMUM_NUMBER_OF_GROUP_ELEMENTS"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="location"
-         column="LOCATION"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="degreeType"
-         column="DEGREE_TYPE"
-         jdbc-type="VARCHAR"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
-      />
-      <field-descriptor
-         name="observations"
-         column="OBSERVATIONS"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor
-         name="companyName"
-         column="COMPANY_NAME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="companyAdress"
-         column="COMPANY_ADRESS"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="status"
-         column="STATUS"
-         jdbc-type="INTEGER"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaFinalDegreeWorkProposalStatus2SqlFinalDegreeWorkProposalStatusFieldConversion"
-      />
-      <field-descriptor
-         name="keyGroupAttributedByTeacher"
-         column="KEY_GROUP_ATTRIBUTED_BY_TEACHER"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="keyGroupAttributed"
-         column="KEY_GROUP_ATTRIBUTED"
-         jdbc-type="INTEGER"
-      />
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
       
       
@@ -159,116 +42,30 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing"
    	  table="FINAL_DEGREE_WORK_SCHEDULEING"
    >
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      <field-descriptor
-      	name="currentProposalNumber"
-      	column="CURRENT_PROPOSAL_NUMBER"
-      	jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="startOfProposalPeriodDate"
-         column="START_OF_PROPOSAL_PERIOD_DATE"
-         jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"
-      />      
-      <field-descriptor
-         name="startOfProposalPeriodTime"
-         column="START_OF_PROPOSAL_PERIOD_TIME"
-         jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-      />      
-      <field-descriptor
-         name="endOfProposalPeriodDate"
-         column="END_OF_PROPOSAL_PERIOD_DATE"
-         jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"
-      />
-      <field-descriptor
-         name="endOfProposalPeriodTime"
-         column="END_OF_PROPOSAL_PERIOD_TIME"
-		 jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-      />
-      <field-descriptor
-         name="startOfCandidacyPeriodDate"
-         column="START_OF_CANDIDACY_PERIOD_DATE"
-         jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"
-      />      
-      <field-descriptor
-         name="startOfCandidacyPeriodTime"
-         column="START_OF_CANDIDACY_PERIOD_TIME"
-         jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-      />      
-      <field-descriptor
-         name="endOfCandidacyPeriodDate"
-         column="END_OF_CANDIDACY_PERIOD_DATE"
-         jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"
-      />
-      <field-descriptor
-         name="endOfCandidacyPeriodTime"
-         column="END_OF_CANDIDACY_PERIOD_TIME"
-         jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-      />
-      <field-descriptor
-      	name="minimumNumberOfCompletedCourses"
-      	column="MINIMUM_NUMBER_OF_COMPLETED_COURSES"
-      	jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="minimumNumberOfStudents"
-      	column="MINIMUM_NUMBER_OF_STUDENTS"
-      	jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="maximumNumberOfStudents"
-      	column="MAXIMUM_NUMBER_OF_STUDENTS"
-      	jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="maximumNumberOfProposalCandidaciesPerGroup"
-      	column="MAXIMUM_NUMBER_OF_PROPOSAL_CANDIDACIES_PER_GROUP"
-      	jdbc-type="INTEGER"
-      />
+      
+      
+      
+            
+            
+      
+      
+            
+            
+      
+      
+      
+      
+      
+      
       
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.finalDegreeWork.Group"
    	  table="FINAL_DEGREE_WORK_GROUP"
    >
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      <field-descriptor
-         name="keyExecutionDegree"
-         column="KEY_EXECUTION_DEGREE"
-         jdbc-type="INTEGER"
-      />
+      
+      
+      
       
 	
 	
@@ -277,34 +74,11 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal"
    	  table="FINAL_DEGREE_WORK_GROUP_PROPOSAL"
    >
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      <field-descriptor
-         name="keyFinalDegreeDegreeWorkGroup"
-         column="KEY_FINAL_DEGREE_WORK_GROUP"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="keyFinalDegreeWorkProposal"
-         column="KEY_FINAL_DEGREE_WORK_PROPOSAL"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="orderOfPreference"
-         column="ORDER_OF_PREFERENCE"
-         jdbc-type="INTEGER"
-      />
+      
+      
+      
+      
+      
       
       
 </class-descriptor>
@@ -312,34 +86,11 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent"
    	  table="FINAL_DEGREE_WORK_GROUP_STUDENT"
    >
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      <field-descriptor
-         name="keyFinalDegreeDegreeWorkGroup"
-         column="KEY_FINAL_DEGREE_WORK_GROUP"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="keyStudent"
-         column="KEY_STUDENT"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="keyFinalDegreeWorkProposalConfirmation"
-         column="KEY_FINAL_DEGREE_WORK_PROPOSAL_CONFIRMATION"
-         jdbc-type="INTEGER"
-      />
+      
+      
+      
+      
+      
       
       
       

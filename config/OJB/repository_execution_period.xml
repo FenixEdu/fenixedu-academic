@@ -1,62 +1,18 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.ExecutionPeriod"
          table="EXECUTION_PERIOD"
 		 >
-       <field-descriptor
-          name="idInternal"
-          column="ID_INTERNAL"
-          jdbc-type="INTEGER"
-          primarykey="true"
-          autoincrement="true"/>
-       <field-descriptor
-          name="name"
-          column="NAME"
-          jdbc-type="VARCHAR"/>
-        <field-descriptor
-          name="keyExecutionYear"
-          column="KEY_EXECUTION_YEAR"
-          jdbc-type="INTEGER"/>
-        <field-descriptor
-          name="keyPreviousExecutionPeriod"
-          column="KEY_PREVIOUS_EXECUTION_PERIOD"
-          jdbc-type="INTEGER"/>
-		<field-descriptor
-          name="keyNextExecutionPeriod"
-          column="KEY_NEXT_EXECUTION_PERIOD"
-          jdbc-type="INTEGER"/>
-        <field-descriptor
-          name="state"
-          column="STATE"
-	      conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodState2SqlPeriodState"
-          jdbc-type="VARCHAR"/>
-        <field-descriptor
-          name="semester"
-          column="SEMESTER"
-          jdbc-type="INTEGER"/>          
-        <field-descriptor
-          name="beginDate"
-          column="BEGIN_DATE"
-          jdbc-type="DATE"
-          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"/>
-        <field-descriptor
-          name="endDate"
-          column="END_DATE"
-          jdbc-type="DATE"
-          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"/>
-        <field-descriptor
-          name="inquiryResponseBegin"
-          column="INQUIRY_RESPONSE_BEGIN"
-          jdbc-type="TIMESTAMP"
-          conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"/>
-        <field-descriptor
-          name="inquiryResponseEnd"
-          column="INQUIRY_RESPONSE_END"
-          jdbc-type="TIMESTAMP"
-          conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"/>
-       <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"/>
+       
+       
+        
+        
+		
+        
+                  
+        
+        
+        
+        
+       
 	         
         
 	   

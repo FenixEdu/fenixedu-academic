@@ -2,303 +2,68 @@
      Definitions for net.sourceforge.fenixedu.domain.Person 
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Person" table="PARTY">
-    <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-	/>
-	<field-descriptor
-        name="keyRootDomainObject"
-        column="KEY_ROOT_DOMAIN_OBJECT"
-        jdbc-type="INTEGER"
-    />	
-	<field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-    />
-	<field-descriptor
-	    name="name"
-	    column="NAME"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	    name="type"
-	    column="PARTY_TYPE"
-	    jdbc-type="VARCHAR"
-	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.PartyType2SQLPartyTypeFieldConversion"
-	/>
-	<field-descriptor
-	    name="ojbConcreteClass"
-	    column="CLASS_NAME"
-	    jdbc-type="VARCHAR"
-	/>
-    <field-descriptor
-        name="documentIdNumber"
-        column="DOCUMENT_ID_NUMBER"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="emissionLocationOfDocumentId"
-        column="EMISSION_LOCATION_OF_DOCUMENT_ID"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="emissionDateOfDocumentId"
-        column="EMISSION_DATE_OF_DOCUMENT_ID"
-        jdbc-type="DATE"
-    />
-    <field-descriptor
-        name="expirationDateOfDocumentId"
-        column="EXPERATION_DATE_OF_DOCUMENT_ID"
-        jdbc-type="DATE"
-    />
-    <field-descriptor
-        name="dateOfBirth"
-        column="DATE_OF_BIRTH"
-        jdbc-type="DATE"
-    />
-    <field-descriptor
-        name="nameOfFather"
-        column="NAME_OF_FATHER"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="nameOfMother"
-        column="NAME_OF_MOTHER"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="parishOfBirth"
-        column="PARISH_OF_BIRTH"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="districtSubdivisionOfBirth"
-        column="DISTRICT_SUBDIVISION_OF_BIRTH"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="districtOfBirth"
-        column="DISTRICT_OF_BIRTH"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="address"
-        column="ADDRESS"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="area"
-        column="AREA"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="areaCode"
-        column="AREA_CODE"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="areaOfAreaCode"
-        column="AREA_OF_AREA_CODE"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="parishOfResidence"
-        column="PARISH_OF_RESIDENCE"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="districtSubdivisionOfResidence"
-        column="DISTRICT_SUBDIVISION_OF_RESIDENCE"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="districtOfResidence"
-        column="DISTRICT_OF_RESIDENCE"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="phone"
-        column="PHONE"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="mobile"
-        column="MOBILE"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="workPhone"
-        column="WORK_PHONE"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="email"
-        column="EMAIL"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="availableEmail"
-        column="AVAILABLE_EMAIL"
-        jdbc-type="BIT"
-    />
-    <field-descriptor
-        name="webAddress"
-        column="WEB_ADRDRESS"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="availableWebSite"
-        column="AVAILABLE_WEBSITE"
-        jdbc-type="BIT"
-    />
-    <field-descriptor
-        name="socialSecurityNumber"
-        column="SOCIAL_SECURITY_NUMBER"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="profession"
-        column="PROFESSION"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="keyPais"
-        column="KEY_COUNTRY"
-        jdbc-type="INTEGER"
-    />
-    <field-descriptor
-        name="fiscalCode"
-        column="FISCAL_CODE"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="idDocumentType"
-        column="TYPE_ID_DOCUMENT"
-        jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoDocId2SqlTipoDocIdFieldConversion"
-    />
-    <field-descriptor
-        name="gender"
-        column="SEX"
-        jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSex2SqlSexFieldConversion"
-    />
-    <field-descriptor
-        name="maritalStatus"
-        column="MARITAL_STATUS"
-        jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMaritalStatus2SqlMaritalStatusFieldConversion"
-    />
-	<field-descriptor
-        name="availablePhoto"
-        column="AVAILABLE_PHOTO"
-        jdbc-type="BIT"
-    />
-    <field-descriptor 
-	   name="keyExternalPerson"    
-	   column="KEY_EXTERNAL_PERSON"  
-	   jdbc-type="INTEGER"
-    />
-	<field-descriptor 
-	   name="keyEmployee"    
-	   column="KEY_EMPLOYEE"  
-	   jdbc-type="INTEGER"
-    />
-   	<field-descriptor 
-	   name="keyTeacher"    
-	   column="KEY_TEACHER"  
-	   jdbc-type="INTEGER"
-    />
- 	<field-descriptor 
-	   name="keyGrantOwner"    
-	   column="KEY_GRANT_OWNER"  
-	   jdbc-type="INTEGER"
-    />
-    <field-descriptor
-        name="keyCms"
-        column="KEY_CMS"
-        jdbc-type="INTEGER"
-    />      
-    <field-descriptor
-        name="keyPersonalPhoto"
-        column="KEY_PERSONAL_PHOTO"
-        jdbc-type="INTEGER"
-    /> 
-	<field-descriptor
-        name="keyHomepage"
-        column="KEY_HOMEPAGE"
-        jdbc-type="INTEGER"
-    />
-	<field-descriptor 
-	    name="keyPartyType"
-	    column="KEY_PARTY_TYPE"
-	    jdbc-type="INTEGER"
-	/>
-	<field-descriptor 
-	   name="keyAssociatedPersonAccount"    
-	   column="KEY_PERSON_ACCOUNT"  
-	   jdbc-type="INTEGER"
-    />	
-    <field-descriptor 
-	   name="keyUser"    
-	   column="KEY_USER"  
-	   jdbc-type="INTEGER"
-    />	
+    
+		
+	
+	
+	
+	
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	
+    
+	
+   	
+ 	
+          
+     
+	
+	
+		
+    	
 </class-descriptor>
 
 <!-- ***********************************
      Definitions for net.sourceforge.fenixedu.domain.User 
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.User" table="USER">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-        name="keyRootDomainObject"
-        column="KEY_ROOT_DOMAIN_OBJECT"
-        jdbc-type="INTEGER"
-    />
-	<field-descriptor
-	    name="userUId"
-	    column="USER_UID"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	    name="lastLoginHost"
-	    column="LAST_LOGIN_HOST"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	    name="currentLoginHost"
-	    column="CURRENT_LOGIN_HOST"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	    name="lastLoginDateTime"
-	    column="LAST_LOGIN_DATE_TIME"
-	    jdbc-type="TIMESTAMP" 
-	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-	/>
-	<field-descriptor
-	    name="currentLoginDateTime"
-	    column="CURRENT_LOGIN_DATE_TIME"
-	    jdbc-type="TIMESTAMP"
-	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-	/>	  
-	<field-descriptor
-        name="keyPerson"
-        column="KEY_PERSON"
-        jdbc-type="INTEGER"
-    />  
+	
+	
+	
+	
+	
+	
+		  
+	  
 </class-descriptor>
 
 <!-- ***********************************
@@ -308,46 +73,13 @@
 	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.Login"/>
 <!-- <extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard"/>  -->	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>	
-	<field-descriptor 
-	    name="ojbConcreteClass"
-	    column="CLASS_NAME"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-        name="beginDate"
-        column="BEGIN_DATE"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-    />
-	<field-descriptor
-	    name="endDate"
-	    column="END_DATE"
-		jdbc-type="TIMESTAMP" 
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-	/>
-	<field-descriptor
-        name="active"
-        column="ACTIVE"
-        jdbc-type="INTEGER"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
-    />
-    <field-descriptor 
-	   name="keyUser"    
-	   column="KEY_USER"  
-	   jdbc-type="INTEGER"
-    />	
-    <field-descriptor
-        name="keyRootDomainObject"
-        column="KEY_ROOT_DOMAIN_OBJECT"
-        jdbc-type="INTEGER"
-    />
+		
+	
+	
+	
+	
+    	
+    
 	  
 </class-descriptor>
 
@@ -356,128 +88,32 @@
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Login" table="IDENTIFICATION">
 	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor 
-	    name="ojbConcreteClass"
-	    column="CLASS_NAME"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-        name="beginDate"
-        column="BEGIN_DATE"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-    />
-	<field-descriptor
-	    name="endDate"
-	    column="END_DATE"
-		jdbc-type="TIMESTAMP" 
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-	/>
-	<field-descriptor
-        name="active"
-        column="ACTIVE"
-        jdbc-type="INTEGER"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
-    />
-    <field-descriptor 
-	   name="keyUser"    
-	   column="KEY_USER"  
-	   jdbc-type="INTEGER"
-    />	
-    <field-descriptor
-        name="keyRootDomainObject"
-        column="KEY_ROOT_DOMAIN_OBJECT"
-        jdbc-type="INTEGER"
-    />
-	<field-descriptor
-	    name="username"
-	    column="USERNAME"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	    name="password"
-	    column="PASSWORD"
-	    jdbc-type="VARCHAR"
-	/>
-    <field-descriptor
-        name="isPassInKerberos"
-        column="IS_PASS_KERBEROS"
-        jdbc-type="BIT"
-    /> 
+	
+	
+	
+	
+	
+    	
+    
+	
+	
+     
 </class-descriptor>
 
-<!-- ***********************************
+ ***********************************
      Definitions for net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard
      *********************************** 
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard" table="IDENTIFICATION">
 	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor 
-	    name="ojbConcreteClass"
-	    column="CLASS_NAME"
-	    jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-        name="beginDate"
-        column="BEGIN_DATE"
-        jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-    />
-	<field-descriptor
-	    name="endDate"
-	    column="END_DATE"
-	    jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-	/>
-	<field-descriptor
-        name="active"
-        column="ACTIVE"
-        jdbc-type="INTEGER"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
-    />
-    <field-descriptor 
-	   name="keyUser"    
-	   column="KEY_USER"  
-	   jdbc-type="INTEGER"
-    />	
-    <field-descriptor
-        name="keyRootDomainObject"
-        column="KEY_ROOT_DOMAIN_OBJECT"
-        jdbc-type="INTEGER"
-    />
-    <field-descriptor 
-	   name="keyCard"    
-	   column="KEY_CARD"  
-	   jdbc-type="INTEGER"
-    />	
-    <field-descriptor
-	    name="cardState"
-	    column="CARD_STATE"
-	    jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.CardState2SqlVarcharConverter"
-	/>
-	<field-descriptor
-        name="lastModifiedDate"
-        column="LAST_MODIFIED_DATE"
-        jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion"
-    />
-     <field-descriptor 
-	   name="keyModifiedBy"    
-	   column="KEY_MODIFIED_BY"  
-	   jdbc-type="INTEGER"
-    />	
-</class-descriptor> -->
+	
+	
+	
+	
+	
+    	
+    
+    	
+    
+	
+     	
+</class-descriptor> 

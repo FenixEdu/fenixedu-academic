@@ -7,83 +7,29 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction" table="REIMBURSEMENT_TRANSACTION">
 	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
+	
     
-    <field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
+    
 	
-	<field-descriptor
-	   	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-	/>
 	
-	<field-descriptor
-	   	name="value"
-      	column="VALUE"
-      	jdbc-type="DOUBLE"
-	/>
 	
-	<field-descriptor
-	   	name="transactionDate"
-      	column="TRANSACTION_DATE"
-      	jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>
 	
-	<field-descriptor 
-		name="remarks"
-		column="REMARKS" 
-		jdbc-type="LONGVARCHAR" 
-	/>
 	
-	<field-descriptor 
-	     name="paymentType"
-	     column="PAYMENT_TYPE"
-	     jdbc-type="VARCHAR"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPaymentType2SqlPaymentTypeFieldConversion"
-	/>
 	
-	<field-descriptor 
-	     name="transactionType"
-	     column="TRANSACTION_TYPE"
-	     jdbc-type="VARCHAR"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTransactionType2SqlTransactionTypeFieldConversion"
-	/>
 	
-	<field-descriptor
-         name="wasInternalBalance"
-         column="WAS_INTERNAL_BALANCE"
-         jdbc-type="INTEGER"
-         conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
-    />
+	
+	
+	
+	
+	
+	
+	
 		
-	<field-descriptor 
-	    name="keyReimbursementGuideEntry"
-	    column="KEY_REIMBURSEMENT_GUIDE_ENTRY"
-	    jdbc-type="INTEGER"
-	/>
 	
-	<field-descriptor 
-	    name="keyResponsiblePerson"
-	    column="KEY_RESPONSIBLE_PERSON"
-	    jdbc-type="INTEGER"
-	/>
 	
-	<field-descriptor 
-	    name="keyPersonAccount"
-	    column="KEY_PERSON_ACCOUNT"
-	    jdbc-type="INTEGER"
-	/>
+	
+	
+	
 		
 	
 	

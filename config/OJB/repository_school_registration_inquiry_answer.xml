@@ -4,59 +4,16 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers" table="PERSONAL_DATA_USE_INQUIRY_ANSWERS">
-  <field-descriptor
-    name="idInternal"
-    column="ID_INTERNAL"
-    jdbc-type="INTEGER"
-	primarykey="true"
-	autoincrement="true"
-  />
-  <field-descriptor
-    name="keyStudent"
-    column="KEY_STUDENT"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor
-    name="answer1"
-    column="ANSWER1"
-    jdbc-type="BIT"
-  />
-  <field-descriptor
-    name="answer2"
-    column="ANSWER2"
-    jdbc-type="BIT"
-  />
-  <field-descriptor
-    name="answer3"
-    column="ANSWER3"
-    jdbc-type="BIT"
-  />
-  <field-descriptor
-    name="answer4"
-    column="ANSWER4"
-    jdbc-type="BIT"
-  />
-  <field-descriptor
-    name="answer5"
-    column="ANSWER5"
-    jdbc-type="BIT"
-  />
-  <field-descriptor
-    name="answer6"
-    column="ANSWER6"
-    jdbc-type="BIT"
-  />
-  <field-descriptor
-    name="answer7"
-    column="ANSWER7"
-    jdbc-type="BIT"
-  />
-  <field-descriptor
-    name="ackOptLock"
-    column="ACK_OPT_LOCK"
-    jdbc-type="INTEGER"
-	locking="false"
-  />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   
 </class-descriptor>
@@ -65,42 +22,14 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.student.ResidenceCandidacies		 -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.ResidenceCandidacies" table="RESIDENCE_CANDIDACIES">
-	<field-descriptor
-    	name="idInternal"
-    	column="ID_INTERNAL"
-    	jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-  	/>
-  	<field-descriptor
-    	name="keyStudent"
-    	column="KEY_STUDENT"
-   	 	jdbc-type="INTEGER"
- 	/>
-  	<field-descriptor
-    	name="candidate"
-    	column="CANDIDATE"
-   	 	jdbc-type="BIT"
- 	/>
-  	<field-descriptor
-    	name="observations"
-    	column="OBSERVATIONS"
-   	 	jdbc-type="VARCHAR"
- 	/>
+	
+  	
+  	
+  	
 
-	<field-descriptor
-		name="creationDate"
-		column="CREATION_DATE"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>
+	
 
-	<field-descriptor
-	    name="ackOptLock"
-	    column="ACK_OPT_LOCK"
-	    jdbc-type="INTEGER"
-		locking="false"
-	  />
+	
 
 	
 </class-descriptor>

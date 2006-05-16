@@ -7,51 +7,20 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Site"
                   table="SITE">
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor id="2"
-        name="keyExecutionCourse"
-        column="KEY_EXECUTION_COURSE"
-        jdbc-type="INTEGER"
-	/>
-         
-    <field-descriptor id="3"
-         name="alternativeSite"
-         column="ALTERNATIVE_SITE"
-    	 jdbc-type="VARCHAR"/>
-    	 
-   	<field-descriptor id="4"
-         name="mail"
-         column="MAIL"
-    	 jdbc-type="VARCHAR"/>
     
-    <field-descriptor id="5"
-         name="initialStatement"
-         column="INITIAL_STATEMENT"
-    	 jdbc-type="VARCHAR"/>
+    
+         
+    
+    	 
+   	
+    
+    
 
     	 
-    <field-descriptor id="6"
-         name="introduction"
-         column="INTRODUCTION"
-    	  jdbc-type="LONGVARCHAR"
-    />
+    
     	 
-    <field-descriptor id="7"
-         name="style"
-         column="STYLE"
-    	 jdbc-type="VARCHAR"/>		 	 
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+    		 	 
+      
 	
     
 
@@ -68,44 +37,13 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Announcement"
                   table="ANNOUNCEMENT">
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor id="2"
-        name="title"
-        column="TITLE"
-        jdbc-type="VARCHAR"
-	/>
-    <field-descriptor id="3"
-        name="creationDate"
-        column="CREATION_DATE"
-        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>
-    <field-descriptor id="4"
-        name="lastModifiedDate"
-        column="LAST_MODIFICATION_DATE"
-        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>
-    <field-descriptor id="5"
-        name="information"
-        column="INFORMATION"
-        jdbc-type="LONGVARCHAR"
-	/>
-    <field-descriptor id="6"
-        name="keySite"
-        column="KEY_SITE"
-        jdbc-type="INTEGER"
-	/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+    
+    
+    
+    
+    
+    
+      
 	
     
     
@@ -121,46 +59,15 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.Section"
    	  table="SECTION"
    >
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-      <field-descriptor id="2"
-         name="name"
-         column="NAME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="3"
-         name="sectionOrder"
-         column="SECTION_ORDER"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="4"
-         name="keySite"
-         column="KEY_SITE"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="5"
-         name="keySuperiorSection"
-         column="KEY_SUPERIOR_SECTION"
-         jdbc-type="INTEGER"
-      />
+    
+      
+      
+      
+      
     
     
-      <field-descriptor id="6"
-         name="lastModifiedDate"
-         column="LAST_MODIFIED_DATE"
-         jdbc-type="DATE"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+      
+      
       
       
       	
@@ -177,45 +84,13 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.Item"
    	  table="ITEM"
    >
-      <field-descriptor id="1"
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="name"
-         column="NAME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="3"
-         name="itemOrder"
-         column="ITEM_ORDER"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="4"
-         name="information"
-         column="INFORMATION"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor id="5"
-         name="urgent"
-         column="URGENT"
-         jdbc-type="INTEGER"
-         conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
-      />
-      <field-descriptor id="6"
-         name="keySection"
-         column="KEY_SECTION"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+      
+      
+      
+      
+      
+      
+      
       
    </class-descriptor>
 
@@ -227,56 +102,20 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.BibliographicReference"
                   table="BIBLIOGRAPHIC_REFERENCE">
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
     
-    <field-descriptor id="2"
-        name="title"
-        column="TITLE"
-         jdbc-type="LONGVARCHAR"
-	/>
     
-    <field-descriptor id="3"
-        name="authors"
-        column="AUTHORS"
-          jdbc-type="LONGVARCHAR"       
-	/>
     
-    <field-descriptor id="4"
-        name="reference"
-        column="REFERENCE"
-          jdbc-type="LONGVARCHAR"
-	/>
     
-    <field-descriptor id="5"
-        name="year"
-        column="YEAR"
-          jdbc-type="LONGVARCHAR"
-	/>
+    
+    
+    
+    
+    
 	
-	<field-descriptor id="6"
-        name="optional"
-        column="OPTIONAL"
-        jdbc-type="INTEGER"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
-	/>
+	
 		   
-    <field-descriptor id="7"
-        name="keyExecutionCourse"
-        column="KEY_EXECUTION_COURSE"
-        jdbc-type="INTEGER"
-	/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+    
+      
 	
     
     
@@ -287,27 +126,18 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.SupportLesson"  table="SUPPORT_LESSON">
 	
-	<field-descriptor	name="idInternal"  column="ID_INTERNAL" jdbc-type="INTEGER"
-						        primarykey="true" autoincrement="true"/>
+	
 						        
-    <field-descriptor  name="weekDay" column="WEEKDAY" jdbc-type="INTEGER"
-						        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.DiaSemana2EnumDiaSemanaFieldConversion" />
     
-    <field-descriptor  name="startTime" column="START_TIME" jdbc-type="TIME"
-    						    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"/>
+    
+    
     						    
-    <field-descriptor name="endTime" column="END_TIME" jdbc-type="TIME"
-					           conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion" />
-        
-    <field-descriptor name="place" column="PLACE" jdbc-type="VARCHAR" />
     
-	<field-descriptor name="keyProfessorship" column="KEY_PROFESSORSHIP" jdbc-type="INTEGER"/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+        
+    
+    
+	
+      
 
 	
 
@@ -318,36 +148,13 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.EvaluationMethod"
                   table="EVALUATION_METHOD">
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor id="2"
-        name="keyExecutionCourse"
-        column="KEY_EXECUTION_COURSE"
-        jdbc-type="INTEGER"
-	/>
+    
+    
          
-    <field-descriptor id="3"
-         name="evaluationElements"
-         column="EVALUATION_ELEMENTS"
-    	  jdbc-type="LONGVARCHAR"
-        />
+    
     	 
-    <field-descriptor id="4"
-         name="evaluationElementsEn"
-         column="EVALUATION_ELEMENTS_EN"
-    	  jdbc-type="LONGVARCHAR"
-        />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+    
+      
         
     
 </class-descriptor>
@@ -356,39 +163,12 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.Professorship -->
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Professorship" table="PROFESSORSHIPS">
-	<field-descriptor
-		name="idInternal"
-		column="INTERNAL_CODE"
-		jdbc-type="INTEGER"
-		primarykey="true"
-        autoincrement="true"
-		/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-	<field-descriptor 
-        name="keyTeacher"
-        column="KEY_TEACHER"
-        jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-        name="keyExecutionCourse"
-        column="KEY_EXECUTION_COURSE"
-        jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-        name="hours"
-        column="HOURS"
-        jdbc-type="FLOAT"
-    /> 
-	<field-descriptor
-        name="responsibleFor"
-        column="RESPONSIBLE_FOR"
-        jdbc-type="BIT"
-	/>   
+	
+      
+	
+	
+	 
+	   
 	
 	
 	
@@ -404,92 +184,23 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Summary"
                   table="SUMMARY">
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor id="2"
-        name="title"
-        column="TITLE"
-        jdbc-type="VARCHAR"
-	/>
-    <field-descriptor id="3"
-        name="summaryDate"
-        column="SUMMARY_DATE"
-        jdbc-type="DATE"
-	/>
-	  <field-descriptor id="4"
-        name="summaryHour"
-        column="SUMMARY_HOUR"
-        jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Date2TimeFieldConversion"
-	/>
-    <field-descriptor id="5"
-        name="lastModifiedDate"
-        column="LAST_MODIFICATION_DATE"
-        jdbc-type="TIMESTAMP"
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>
-    <field-descriptor id="6"
-        name="summaryText"
-        column="SUMMARY_TEXT"
-        jdbc-type="LONGVARCHAR"
-	/>
-    <field-descriptor id="7"
-        name="keyExecutionCourse"
-        column="KEY_EXECUTION_COURSE"
-        jdbc-type="INTEGER"
-	/>	
-	<field-descriptor id="8"
-        name="summaryType"
-        column="SUMMARY_TYPE"
-        jdbc-type="VARCHAR"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TipoAula2EnumTipoAulaFieldConversion"
-	/>	
+    
+    
+    
+	  
+    
+    
+    	
+		
 	
-	<field-descriptor
-        name="keyShift"
-        column="KEY_SHIFT"
-        jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-        name="keyProfessorship"
-        column="KEY_PROFESSORSHIP"
-        jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-        name="keyTeacher"
-        column="KEY_TEACHER"
-        jdbc-type="INTEGER"
-	/>		
-	<field-descriptor
-        name="keyRoom"
-        column="KEY_ROOM"
-        jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-        name="teacherName"
-        column="TEACHER_NAME"
-        jdbc-type="LONGVARCHAR"
-	/>		
-	<field-descriptor
-        name="studentsNumber"
-        column="STUDENTS_NUMBER"
-        jdbc-type="INTEGER"
-	/>    
-	<field-descriptor
-	  	name="isExtraLesson" 
-  		column="EXTRA_LESSON" 
-	  	jdbc-type="BIT"/>
-    <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-    />
+		
+		
+			
+		
+			
+	    
+	
+    
     
     
     
@@ -502,37 +213,14 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.StudentGroup"
                   table="STUDENT_GROUP">
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor id="2"
-        name="groupNumber"
-        column="GROUP_NUMBER"
-        jdbc-type="INTEGER"
-	/>
-         
-    <field-descriptor id="3"
-         name="keyShift"
-         column="KEY_SHIFT"
-    	  jdbc-type="INTEGER"
-    />
     
-	<field-descriptor id="4"
-         name="keyGrouping"
-         column="KEY_GROUPING"
-    	  jdbc-type="INTEGER"
-    />	 
+    
+         
+    
+    
+		 
 
-	 <field-descriptor
-	  	name="ackOptLock"
-	  	column="ACK_OPT_LOCK"
-	  	jdbc-type="INTEGER"
-	  	locking="false"
-	  />
+	 
 	    
     
 
@@ -548,81 +236,28 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.Grouping"
                   table="GROUPING">
     
-	<field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-         
-    <field-descriptor id="2"
-         name="maximumCapacity"
-         column="MAXIMUM_CAPACITY"
-    	  jdbc-type="INTEGER"
-    />
-    	 
-    <field-descriptor id="3"
-         name="minimumCapacity"
-         column="MINIMUM_CAPACITY"
-    	  jdbc-type="INTEGER"
-    />
-        
-    <field-descriptor id="4"
-         name="idealCapacity"
-         column="IDEAL_CAPACITY"
-    	  jdbc-type="INTEGER"
-    />
-
-    <field-descriptor id="5"
-         name="enrolmentPolicy"
-         column="ENROLMENT_POLICY"
-    	 jdbc-type="INTEGER"
-    	 conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrolmentGroupPolicyType2SqlEnrolmentGroupPolicyTypeFieldConversion"
-    />
-    
-    <field-descriptor id="6"
-         name="groupMaximumNumber"
-         column="GROUP_MAXIMUM_NUMBER"
-    	  jdbc-type="INTEGER"
-    />
-
-	<field-descriptor id="7"
-		name="name"
-        column="NAME"
-    	jdbc-type="VARCHAR"
-    />
 	
-	<field-descriptor id="8"
-		name="shiftType"
-        column="SHIFT_TYPE"
-    	jdbc-type="VARCHAR"
-    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TipoAula2EnumTipoAulaFieldConversion"
-    />
+         
     
-    <field-descriptor id="9"
-        name="enrolmentBeginDayDate"
-        column="ENROLMENT_BEGIN_DAY"
-        jdbc-type="TIMESTAMP"
-    />
+    	 
+    
+        
+    
 
-    <field-descriptor id="10"
-        name="enrolmentEndDayDate"
-        column="ENROLMENT_END_DAY"
-        jdbc-type="TIMESTAMP"
-    /> 
+    
+    
+    
+
+	
+	
+	
+    
+    
+
+     
     		
-    <field-descriptor id="11"
-         name="projectDescription"
-         column="PROJECT_DESCRIPTION"
-    	  jdbc-type="LONGVARCHAR"
-       />           
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />       
+               
+             
 	
 	
 	
@@ -636,27 +271,11 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.gesdis.CourseReport -->
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.gesdis.CourseReport" table="COURSE_REPORT">
-    <field-descriptor name="idInternal"
-        			  column="ID_INTERNAL"
-        			  jdbc-type="INTEGER"
-        			  primarykey="true"
-			          autoincrement="true"/>
-    <field-descriptor name="keyExecutionCourse"
-    				  column="KEY_EXECUTION_COURSE"
-    				  jdbc-type="INTEGER"/>
-	<field-descriptor name="report"
-					  column="REPORT"
-					  jdbc-type="LONGVARCHAR"/>
-    <field-descriptor name="lastModificationDate" 
-    				  column="LAST_MODIFICATION_DATE" 
-    				  jdbc-type="TIMESTAMP"
-    				  conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"/>  					  
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+    
+    
+	
+      					  
+      
 	 
 </class-descriptor>
 
@@ -664,33 +283,13 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport -->
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport" table="STUDENT_COURSE_REPORT">
-    <field-descriptor name="idInternal"
-        			  column="ID_INTERNAL"
-        			  jdbc-type="INTEGER"
-        			  primarykey="true"
-			          autoincrement="true"/>
-    <field-descriptor name="keyCurricularCourse"
-    				  column="KEY_CURRICULAR_COURSE"
-    				  jdbc-type="INTEGER"/>
-	<field-descriptor name="studentReport"
-					  column="STUDENT_REPORT"
-					  jdbc-type="LONGVARCHAR"/>
-	<field-descriptor name="strongPoints"
-					  column="STRONG_POINTS"
-					  jdbc-type="LONGVARCHAR"/>
-	<field-descriptor name="weakPoints"
-					  column="WEAK_POINTS"
-					  jdbc-type="LONGVARCHAR"/>
-    <field-descriptor name="lastModificationDate" 
-    				  column="LAST_MODIFICATION_DATE" 
-    				  jdbc-type="TIMESTAMP"
-    				  conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"/>  					  
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+    
+    
+	
+	
+	
+      					  
+      
 	 
 </class-descriptor>
   
@@ -698,33 +297,14 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.gesdis.CourseHistoric -->
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.gesdis.CourseHistoric" table="COURSE_HISTORIC">
-    <field-descriptor name="idInternal"
-        			  column="ID_INTERNAL"
-        			  jdbc-type="INTEGER"
-        			  primarykey="true"
-			          autoincrement="true"/>
-    <field-descriptor name="keyCurricularCourse"
-    				  column="KEY_CURRICULAR_COURSE"
-    				  jdbc-type="INTEGER"/>
-    <field-descriptor name="enrolled"
-    				  column="ENROLLED"
-    				  jdbc-type="INTEGER"/>
-    <field-descriptor name="evaluated"
-    				  column="EVALUATED"
-    				  jdbc-type="INTEGER"/>
-    <field-descriptor name="approved"
-    				  column="APPROVED"
-    				  jdbc-type="INTEGER"/>
-	<field-descriptor name="curricularYear"
-					  column="CURRICULAR_YEAR"
-					  jdbc-type="VARCHAR"/>
-    <field-descriptor name="semester"
-    				  column="SEMESTER"
-    				  jdbc-type="INTEGER"/>  					  
-    <field-descriptor name="ackOptLock"
-                      column="ACK_OPT_LOCK"
-                      jdbc-type="INTEGER"
-                      locking="false"/>
+    
+    
+    
+    
+    
+	
+      					  
+    
 
 	 
 </class-descriptor>
@@ -734,50 +314,14 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.ExportGrouping"
                   table="GROUPING_EXECUTION_COURSE">
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    /> 
-    <field-descriptor id="2"
-         name="keyGrouping"
-         column="KEY_GROUPING"
-    	  jdbc-type="INTEGER"
-    />
-    <field-descriptor id="3"
-         name="keyExecutionCourse"
-         column="KEY_EXECUTION_COURSE"
-    	  jdbc-type="INTEGER"
-    />
-    <field-descriptor id="4"
-		name="proposalState"
-        column="PROPOSAL_STATE"
-    	jdbc-type="INTEGER"
-    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProposalState2EnumProposalStateFieldConversion"
-    />
-    <field-descriptor id="5"
-         name="keySenderPerson"
-         column="KEY_SENDER_PERSON"
-    	  jdbc-type="INTEGER"
-    />
-    <field-descriptor id="6"
-         name="keyReceiverPerson"
-         column="KEY_RECEIVER_PERSON"
-    	  jdbc-type="INTEGER"
-    />
-	<field-descriptor id="7"
-         name="keySenderExecutionCourse"
-         column="KEY_SENDER_EXECUTION_COURSE"
-    	  jdbc-type="INTEGER"
-    />
-    <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-    />
+     
+    
+    
+    
+    
+    
+	
+    
         
     
 	

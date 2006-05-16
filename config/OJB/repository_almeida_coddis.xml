@@ -2,26 +2,8 @@
 <class-descriptor class="middleware.almeida.Almeida_coddisc"
   table="almeida_coddisc"
 >
-  <field-descriptor id="1"
-    name="codint"
-    column="codint"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-  <field-descriptor id="2"
-    name="coddis"
-    column="coddis"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="3"
-    name="nomedis"
-    column="nomedis"
-    jdbc-type="VARCHAR"
-  />
+  
+      
+  
+  
 </class-descriptor>

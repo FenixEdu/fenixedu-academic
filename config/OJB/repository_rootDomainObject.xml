@@ -1,11 +1,5 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.RootDomainObject" table="ROOT_DOMAIN_OBJECT">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-		/>
+	
 
 	
 	

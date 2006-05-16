@@ -3,33 +3,13 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.FileEntry" table="FILE_ENTRY">
 	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
 	
-	<field-descriptor 
-	    name="keyPerson"
-	    column="KEY_PERSON"
-	    jdbc-type="INTEGER"
-	/>
 	
-    <field-descriptor
-        name="content"
-        column="CONTENT"
-        jdbc-type="BLOB"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaByteArray2SqlByteArrayFieldConversion"
-    />
+	
+	
+    
 
-    <field-descriptor    
-        name="contentType"        
-        column="CONTENT_TYPE"        
-        jdbc-type="VARCHAR"        
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaContentType2SqlContentTypeFieldConversion"        
-    />    	
+        	
 	
 	
 

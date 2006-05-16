@@ -7,399 +7,95 @@
 <class-descriptor class="middleware.sigla.Plano_curricular_2003final"
   table="plano_curricular_2003final"
 >
-  <field-descriptor id="26"
-    name="idInternal"
-    column="Id_Internal"
-    jdbc-type="INTEGER"
-    primarykey="true"
-    autoincrement="true"
-  />
-  <field-descriptor id="27"
-    name="ano_lectivo"
-    column="Ano_Lectivo"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="28"
-    name="codigo_lic"
-    column="Codigo_Lic"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="29"
-    name="codigo_ramo"
-    column="Codigo_Ramo"
-    jdbc-type="LONGVARCHAR"     
-  />
-  <field-descriptor id="30"
-    name="ano_curricular"
-    column="Ano_Curricular"
-    jdbc-type="LONGVARCHAR"      
-  />
-  <field-descriptor id="31"
-    name="semestre"
-    column="Semestre"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="32"
-    name="codigo_disc"
-    column="Codigo_Disc"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="33"
-    name="nome_disc"
-    column="Nome_Disc"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="34"
-    name="ciencia_base"
-    column="ciencia_base"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="35"
-    name="ender_web"
-    column="ender_web"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="36"
-    name="objectivos"
-    column="Objectivos"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="37"
-    name="progr_res"
-    column="Progr_Res"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="38"
-    name="bib_princ_1"
-    column="bib_princ_1"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="39"
-    name="bib_princ_2"
-    column="bib_princ_2"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="40"
-    name="bib_princ_3"
-    column="bib_princ_3"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="41"
-    name="bib_sec_1"
-    column="bib_sec_1"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="42"
-    name="bib_sec_2"
-    column="bib_sec_2"
-   jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="43"
-    name="bib_sec_3"
-    column="bib_sec_3"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="44"
-    name="crit_av"
-    column="Crit_Av"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="45"
-    name="data_act"
-    column="data_act"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="46"
-    name="ingles_nome_disc"
-    column="Ingles_Nome_Disc"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="47"
-    name="ingles_objectivos"
-    column="Ingles_Objectivos"
-   jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="48"
-    name="ingles_progr_res"
-    column="Ingles_Progr_Res"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="49"
-    name="ingles_crit_av"
-    column="Ingles_Crit_Av"
-   jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="50"
-    name="ingles_relatorio"
-    column="Ingles_relatorio"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="51"
-    name="ingles_data_act"
-    column="Ingles_data_act"
-    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.sigla.Curr_lic_ingles"
   table="curr_lic_ingles"
 >
-<field-descriptor id="1"
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-  <field-descriptor id="2"
-    name="ano_lectivo"
-    column="Ano_Lectivo"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="3"
-    name="codigo_lic"
-    column="Codigo_Lic"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="4"
-    name="codigo_ramo"
-    column="Codigo_Ramo"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="5"
-    name="ano_curricular"
-    column="Ano_Curricular"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="6"
-    name="semestre"
-    column="Semestre"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="7"
-    name="codigo_disc"
-    column="Codigo_Disc"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="8"
-    name="nome_disc"
-    column="Nome_Disc"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="9"
-    name="objectivos"
-    column="Objectivos"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="10"
-    name="progr_res"
-    column="Progr_Res"
-     jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="11"
-    name="crit_av"
-    column="Crit_Av"
-    jdbc-type="LONGVARCHAR"
-  />
+
   
-  <field-descriptor id="12"
-    name="observacoes"
-    column="Observacoes"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="13"
-    name="no_mec_act"
-    column="no_mec_act"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="14"
-    name="objectivos_op"
-    column="objectivos_op"
-    jdbc-type="LONGVARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.sigla.Curr_licenciatura"
   table="curr_licenciatura"
 >
-<field-descriptor id="1"
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-  <field-descriptor id="2"
-    name="ano_lectivo"
-    column="Ano_Lectivo"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="3"
-    name="codigo_lic"
-    column="Codigo_Lic"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="4"
-    name="codigo_ramo"
-    column="Codigo_Ramo"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="5"
-    name="ano_curricular"
-    column="Ano_Curricular"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="6"
-    name="semestre"
-    column="Semestre"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="7"
-    name="codigo_disc"
-    column="Codigo_Disc"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="8"
-    name="nome_disc"
-    column="Nome_Disc"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="9"
-    name="ender_web"
-    column="ender_web"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="10"
-    name="objectivos"
-    column="Objectivos"
-     jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="11"
-    name="progr_res"
-    column="Progr_Res"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="12"
-    name="bib_princ_1"
-    column="bib_princ_1"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="13"
-    name="bib_princ_2"
-    column="bib_princ_2"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="14"
-    name="bib_princ_3"
-    column="bib_princ_3"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="15"
-    name="bib_sec_1"
-    column="bib_sec_1"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="16"
-    name="bib_sec_2"
-    column="bib_sec_2"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="17"
-    name="bib_sec_3"
-    column="bib_sec_3"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="18"
-    name="crit_av"
-    column="Crit_Av"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="19"
-    name="no_mec_act"
-    column="no_mec_act"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="20"
-    name="objectivos_op"
-    column="objectivos_op"
-     jdbc-type="LONGVARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
  
 </class-descriptor>
 
 <class-descriptor class="middleware.sigla.Responsavel"
   table="responsavel"
 >
-<field-descriptor id="1"
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-  <field-descriptor id="2"
-    name="ano_lectivo"
-    column="Ano_Lectivo"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="3"
-    name="cod_curso"
-    column="Cod_Curso"
-    jdbc-type="INTEGER"
-  />
-   <field-descriptor id="4"
-    name="ano_curr"
-    column="Ano_Curr"
-    jdbc-type="INTEGER"
-  />
-   <field-descriptor id="5"
-    name="semestre"
-    column="Semestre"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="6"
-    name="cod_ramo"
-    column="Cod_Ramo"
-    jdbc-type="INTEGER"
-  /> 
-  <field-descriptor id="7"
-    name="cod_disc"
-    column="Cod_Disc"
-    jdbc-type="VARCHAR"
-  />
+
   
-  <field-descriptor id="8"
-    name="no_mec"
-    column="No_Mec"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="9"
-    name="observacoes"
-    column="Observacoes"
-    jdbc-type="LONGVARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+   
+   
+   
+  
+  
+  
+  
+      
 </class-descriptor>

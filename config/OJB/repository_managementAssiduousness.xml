@@ -2,55 +2,15 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter"
   table="MONEY_COST_CENTER"
 >
-	<field-descriptor
-	    name="idInternal"
-	    column="ID_INTERNAL"
-	    jdbc-type="INTEGER"
-	    primarykey="true"
-	    autoincrement="true"
-	/>
-	<field-descriptor
-	   	name="ackOptLock"
-	  	column="ACK_OPT_LOCK"
-	   	jdbc-type="INTEGER"
-	   	locking="false"
-	/>
-	<field-descriptor
-	    name="initialValue"
-	    column="INITIAL_VALUE"
-	    jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-	    name="totalValue"
-	    column="TOTAL_VALUE"
-	    jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-	    name="spentValue"
-	    column="SPENT_VALUE"
-	    jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-	    name="year"
-	    column="YEAR"
-	    jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-	   	name="keyCostCenter"
-	   	column="KEY_COST_CENTER"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-	   	name="keyWhoEmployee"
-	   	column="KEY_EMPLOYEE"
-		jdbc-type="INTEGER"
-	/>   	   	
-	<field-descriptor
-		name="when"
-		column="WHEN_ALTER"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>   
+	
+	
+	
+	
+	
+	
+	
+	   	   	
+	   
   	
       
 </class-descriptor>
@@ -58,126 +18,29 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork"
   table="EXTRA_WORK"
 >
-	<field-descriptor
-    	name="idInternal"
-	    column="ID_INTERNAL"
-	    jdbc-type="INTEGER"
-	    primarykey="true"
-	    autoincrement="true"
-	/>
-  	<field-descriptor
-   		name="ackOptLock"
-	  	column="ACK_OPT_LOCK"
-	   	jdbc-type="INTEGER"
-	   	locking="false"
-  	/>
-	<field-descriptor
-    	name="day"
-	    column="DAY"
-    	jdbc-type="DATE"
-  	/>  
-  	<field-descriptor  
-		name="beginHour" 
-		column="BEGIN_HOUR" 
-		jdbc-type="TIME"
-    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-	/>
-  	<field-descriptor  
-		name="endHour" 
-		column="END_HOUR" 
-		jdbc-type="TIME"
-    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-	/>
-	<field-descriptor
-	    name="mealSubsidy"
-	    column="MEAL_SUBSIDY"
-	    jdbc-type="INTEGER"
-	/>
-  	<field-descriptor  
-		name="diurnalFirstHour" 
-		column="DIURNAL_FIRST_HOUR" 
-		jdbc-type="TIME"
-    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-	/>
-  	<field-descriptor  
-		name="diurnalAfterSecondHour" 
-		column="DIURNAL_AFTER_SECOND_HOUR" 
-		jdbc-type="TIME"
-    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-	/>
-  	<field-descriptor  
-		name="nocturnalFirstHour" 
-		column="NOCTURNAL_FIRST_HOUR" 
-		jdbc-type="TIME"
-    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-	/>
-  	<field-descriptor  
-		name="nocturnalAfterSecondHour" 
-		column="NOCTURNAL_AFTER_SECOND_HOUR" 
-		jdbc-type="TIME"
-    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-	/>
-  	<field-descriptor  
-		name="restDay" 
-		column="REST_DAY" 
-		jdbc-type="TIME"
-    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-	/>
-	<field-descriptor
-  		name="mealSubsidyAuthorized" 
-  		column="MEAL_SUBSIDY_AUTHORIZED" 
-  		jdbc-type="BIT"/>  
-	<field-descriptor
-  		name="diurnalFirstHourAuthorized" 
-  		column="DIURNAL_FIRST_HOUR_AUTHORIZED" 
-  		jdbc-type="BIT"/>  
-	<field-descriptor
-  		name="diurnalAfterSecondHourAuthorized" 
-  		column="DIURNAL_AFTER_SECOND_HOUR_AUTHORIZED" 
-  		jdbc-type="BIT"/>  
-	<field-descriptor
-  		name="nocturnalFirstHourAuthorized" 
-  		column="NOCTURNAL_FIRST_HOUR_AUTHORIZED" 
-  		jdbc-type="BIT"/>  
-	<field-descriptor
-  		name="nocturnalAfterSecondHourAuthorized" 
-  		column="NOCTURNAL_AFTER_SECOND_HOUR_AUTHORIZED" 
-  		jdbc-type="BIT"/>  
-	<field-descriptor
-  		name="restDayAuthorized" 
-  		column="REST_DAY_AUTHORIZED" 
-  		jdbc-type="BIT"/>	
-    <field-descriptor
-  		name="dayPerWeek" 
-  		column="DAY_PER_WEEK" 
-  		jdbc-type="BIT"
-	/>
-	<field-descriptor
-  		name="holiday" 
-  		column="HOLIDAY" 
-  		jdbc-type="BIT"
-	/>
-	<field-descriptor
-  		name="remuneration" 
-  		column="REMUNERATION" 
-  		jdbc-type="BIT"
-	/> 	 
-	<field-descriptor
-	   	name="keyEmployee"
-	   	column="KEY_EMPLOYEE"
-		jdbc-type="INTEGER"
-	/>  
-	<field-descriptor
-	   	name="keyWhoEmployee"
-	   	column="KEY_EMPLOYEE_DB"
-		jdbc-type="INTEGER"
-	/>   	   	
-	<field-descriptor
-		name="when"
-		column="WHEN_ALTER"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>   
+	
+  	
+	  
+  	
+  	
+	
+  	
+  	
+  	
+  	
+  	
+	  
+	  
+	  
+	  
+	  
+		
+    
+	
+	 	 
+	  
+	   	   	
+	   
      
      
 </class-descriptor>
@@ -185,115 +48,27 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests"
   table="EXTRA_WORK_REQUESTS"
 >
-	<field-descriptor
-    	name="idInternal"
-	    column="ID_INTERNAL"
-	    jdbc-type="INTEGER"
-	    primarykey="true"
-	    autoincrement="true"
-	/>
-  	<field-descriptor
-   		name="ackOptLock"
-	  	column="ACK_OPT_LOCK"
-	   	jdbc-type="INTEGER"
-	   	locking="false"
-  	/>
-	<field-descriptor
-    	name="beginDate"
-	    column="BEGIN_DATE"
-    	jdbc-type="DATE"
-  	/>  
-  	<field-descriptor  
-		name="endDate" 
-		column="END_DATE" 
-		jdbc-type="DATE"
-	/>
-	<field-descriptor
-  		name="option1" 
-  		column="OPTION_1" 
-  		jdbc-type="BIT"
-	/>  
-	<field-descriptor
-  		name="option2" 
-  		column="OPTION_2" 
-  		jdbc-type="BIT"
-	/>  
-	<field-descriptor
-  		name="option3" 
-  		column="OPTION_3" 
-  		jdbc-type="BIT"
-	/>  
-	<field-descriptor
-  		name="option4" 
-  		column="OPTION_4" 
-  		jdbc-type="BIT"
-	/>  
-	<field-descriptor
-  		name="option5" 
-  		column="OPTION_5" 
-  		jdbc-type="BIT"
-	/>  
-	<field-descriptor
-  		name="option6" 
-  		column="OPTION_6" 
-  		jdbc-type="BIT"
-	/>  
-	<field-descriptor
-  		name="option7" 
-  		column="OPTION_7" 
-  		jdbc-type="BIT"
-	/>  
-	<field-descriptor
-  		name="option8" 
-  		column="OPTION_8" 
-  		jdbc-type="BIT"
-	/>  
-	<field-descriptor
-  		name="option9" 
-  		column="OPTION_9" 
-  		jdbc-type="BIT"
-	/>  
-	<field-descriptor
-  		name="option10" 
-  		column="OPTION_10" 
-  		jdbc-type="BIT"
-	/>  
-	<field-descriptor
-  		name="option11" 
-  		column="OPTION_11" 
-  		jdbc-type="BIT"
-	/>  
-	<field-descriptor
-  		name="option12" 
-  		column="OPTION_12" 
-  		jdbc-type="BIT"
-	/> 
-	<field-descriptor
-	   	name="keyEmployee"
-	   	column="KEY_EMPLOYEE"
-		jdbc-type="INTEGER"
-	/> 
-	<field-descriptor
-	   	name="keyCostCenterExtraWork"
-	   	column="KEY_COST_CENTER_EXTRA_WORK"
-		jdbc-type="INTEGER"
-	/>  
-	<field-descriptor
-	   	name="keyCostCenterMoney"
-	   	column="KEY_COST_CENTER_MONEY"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-	   	name="keyWhoEmployee"
-	   	column="KEY_EMPLOYEE_DB"
-		jdbc-type="INTEGER"
-	/>   	   	
-	<field-descriptor
-		name="when"
-		column="WHEN_ALTER"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>   
+	
+  	
+	  
+  	
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	 
+	 
+	  
+	
+	   	   	
+	   
      
   	
   	
@@ -303,60 +78,16 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation"
   table="EXTRA_WORK_COMPENSATION"
 >
-	<field-descriptor
-    	name="idInternal"
-	    column="ID_INTERNAL"
-	    jdbc-type="INTEGER"
-	    primarykey="true"
-	    autoincrement="true"
-	/>
-  	<field-descriptor
-   		name="ackOptLock"
-	  	column="ACK_OPT_LOCK"
-	   	jdbc-type="INTEGER"
-	   	locking="false"
-  	/>
-	<field-descriptor
-    	name="beginDate"
-	    column="BEGIN_DATE"
-    	jdbc-type="DATE"
-  	/>  
-  	<field-descriptor  
-		name="endDate" 
-		column="END_DATE" 
-		jdbc-type="DATE"
-	/>	
-	<field-descriptor
-  		name="dayPerWeek" 
-  		column="DAY_PER_WEEK" 
-  		jdbc-type="BIT"
-	/>
-	<field-descriptor
-  		name="holiday" 
-  		column="HOLIDAY" 
-  		jdbc-type="BIT"
-	/>
-	<field-descriptor
-  		name="remuneration" 
-  		column="REMUNERATION" 
-  		jdbc-type="BIT"
-	/> 		
-	<field-descriptor
-	   	name="keyEmployee"
-	   	column="KEY_EMPLOYEE"
-		jdbc-type="INTEGER"
-	/>  
-	<field-descriptor
-	   	name="keyWhoEmployee"
-	   	column="KEY_EMPLOYEE_DB"
-		jdbc-type="INTEGER"
-	/>   	   	
-	<field-descriptor
-		name="when"
-		column="WHEN_ALTER"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>   
+	
+  	
+	  
+  		
+	
+	
+	 		
+	  
+	   	   	
+	   
      
      
 </class-descriptor>
@@ -365,62 +96,16 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric"
   table="EXTRA_WORK_HISTORIC"
 >
-	<field-descriptor
-    	name="idInternal"
-	    column="ID_INTERNAL"
-	    jdbc-type="INTEGER"
-	    primarykey="true"
-	    autoincrement="true"
-	/>
-  	<field-descriptor
-   		name="ackOptLock"
-	  	column="ACK_OPT_LOCK"
-	   	jdbc-type="INTEGER"
-	   	locking="false"
-  	/>	
-  	<field-descriptor
-   		name="year"
-	  	column="YEAR"
-	   	jdbc-type="INTEGER"
-  	/> 	
-   	<field-descriptor
-   			name="serviceDismissalPerYear"
-   			column="SERVICE_DISMISSAL_PER_YEAR"
-   			jdbc-type="INTEGER"
-   	/>  		
-   	<field-descriptor
-   			name="holidaysNumberPerYear"
-   			column="HOLIDAYS_NUMBER_PER_YEAR"
-   			jdbc-type="INTEGER"
-   	/>
-  	<field-descriptor  
-		name="hoursExtraWorkPerYear" 
-		column="HOURS_EXTRAWORK_PER_YEAR" 
-		jdbc-type="TIME"
-    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-	/>
-  	<field-descriptor  
-		name="hoursExtraWorkPerDay" 
-		column="HOURS_EXTRAWORK_PER_DAY" 
-		jdbc-type="TIME"
-    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
-	/> 
-	<field-descriptor
-	   	name="keyEmployee"
-	   	column="KEY_EMPLOYEE"
-		jdbc-type="INTEGER"
-	/>  
-	<field-descriptor
-	   	name="keyWhoEmployee"
-	   	column="KEY_EMPLOYEE_DB"
-		jdbc-type="INTEGER"
-	/>   	   	
-	<field-descriptor
-		name="when"
-		column="WHEN_ALTER"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>   
+	
+  		
+  	 	
+   	  		
+   	
+  	
+  	 
+	  
+	   	   	
+	   
      
      
 </class-descriptor>

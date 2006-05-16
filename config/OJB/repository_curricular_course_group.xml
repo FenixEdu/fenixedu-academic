@@ -11,50 +11,14 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="keyBranch"
-		column="KEY_BRANCH"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="areaType"
-		column="AREA_TYPE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaAreaType2SqlAreaTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="minimumValue"
-		column="MINIMUM_VALUE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="maximumValue"
-		column="MAXIMUM_VALUE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-    <field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>      
-    <field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
+	
+	
+	
+	
+	
+	
+          
+    
 			
 	
 	
@@ -64,44 +28,13 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="keyBranch"
-		column="KEY_BRANCH"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minimumValue"
-		column="MINIMUM_VALUE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="maximumValue"
-		column="MAXIMUM_VALUE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="false"
-	/>
-    <field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>      
-     <field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
+	
+	
+	
+	
+	
+          
+     
 			
 	
 	

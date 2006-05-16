@@ -5,34 +5,11 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.Coordinator"
    	  table="COORDINATOR"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-     <field-descriptor
-		name="responsible"
-		column="RESPONSIBLE"
-		jdbc-type="BIT"
-	/>
-      <field-descriptor
-		name="keyTeacher"
-		column="KEY_TEACHER"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyExecutionDegree"
-		column="KEY_EXECUTION_DEGREE"
-		jdbc-type="INTEGER"
-	/>
+      
+      
+     
+      
+	
        
 	    
    </class-descriptor>
@@ -41,188 +18,46 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeInfo"
    	table="DEGREE_INFO"
    	>
-	    <field-descriptor id="1"
-	        name="idInternal"
-	        column="ID_INTERNAL"
-	        jdbc-type="INTEGER"
-	        primarykey="true"
-	        autoincrement="true"
-	    />   	
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-			<field-descriptor
-				name="keyDegree"
-				column="KEY_DEGREE"
-				jdbc-type="INTEGER"
-			/>
-   		<field-descriptor
-   			name="description"
-   			column="DESCRIPTION"
-        jdbc-type="LONGVARCHAR"
-   		/>				    
-   		<field-descriptor
-   			name="objectives"
-   			column="OBJECTIVES"
-        jdbc-type="LONGVARCHAR"
-   		/>
-   		<field-descriptor
-   			name="history"
-   			column="HISTORY"
-        jdbc-type="LONGVARCHAR"
-   		/>
-   		<field-descriptor
-   			name="professionalExits"
-   			column="PROFESSIONAL_EXITS"
-        jdbc-type="LONGVARCHAR"
-   		/>
-   		<field-descriptor
-   			name="additionalInfo"
-   			column="ADDITIONAL_INFO"
-        jdbc-type="LONGVARCHAR"
-   		/>
-   		<field-descriptor
-   			name="links"
-   			column="LINKS"
-        jdbc-type="LONGVARCHAR"
-   		/>
-   		<field-descriptor
-   			name="testIngression"
-   			column="TEST_INGRESSION"
-        jdbc-type="LONGVARCHAR"
-   		/>
-   		<field-descriptor
-   			name="driftsInitial"
-   			column="DRIFTS_INITIAL"
-   			jdbc-type="INTEGER"
-   		/>   
-   		<field-descriptor
-   			name="driftsFirst"
-   			column="DRIFTS_FIRST"
-   			jdbc-type="INTEGER"
-   		/>      		   		
-   		<field-descriptor
-   			name="driftsSecond"
-   			column="DRIFTS_SECOND"
-   			jdbc-type="INTEGER"
-   		/>  
-   		<field-descriptor
-   			name="classifications"
-   			column="CLASSIFICATIONS"
-        jdbc-type="LONGVARCHAR"
-   		/>   		
-   		<field-descriptor
-   			name="markMin"
-   			column="MARK_MIN"
-   			jdbc-type="DOUBLE"
-   		/>   		
-   		<field-descriptor
-   			name="markMax"
-   			column="MARK_MAX"
-   			jdbc-type="DOUBLE"
-   		/>   		
-   		<field-descriptor
-   			name="markAverage"
-   			column="MARK_AVERAGE"
-   			jdbc-type="DOUBLE"
-   		/>   		
-   		<field-descriptor
-   			name="descriptionEn"
-   			column="DESCRIPTION_EN"
-        jdbc-type="LONGVARCHAR"
-   		/>	   		
-  		<field-descriptor
-   			name="objectivesEn"
-   			column="OBJECTIVES_EN"
-        jdbc-type="LONGVARCHAR"
-   		/>
-   		<field-descriptor
-   			name="historyEn"
-   			column="HISTORY_EN"
-        jdbc-type="LONGVARCHAR"
-   		/>
-   		<field-descriptor
-   			name="professionalExitsEn"
-   			column="PROFESSIONAL_EXITS_EN"
-        jdbc-type="LONGVARCHAR"
-   		/>
-   		<field-descriptor
-   			name="additionalInfoEn"
-   			column="ADDITIONAL_INFO_EN"
-        jdbc-type="LONGVARCHAR"
-   		/>
-   		<field-descriptor
-   			name="linksEn"
-   			column="LINKS_EN"
-        jdbc-type="LONGVARCHAR"
-   		/>
-   		<field-descriptor
-   			name="testIngressionEn"
-   			column="TEST_INGRESSION_EN"
-        jdbc-type="LONGVARCHAR"
-   		/>   		
-   		<field-descriptor
-   			name="classificationsEn"
-   			column="CLASSIFICATIONS_EN"
-        jdbc-type="LONGVARCHAR"
-   		/>      		
-   		<field-descriptor
-   			name="qualificationLevel"
-   			column="QUALIFICATION_LEVEL"
-        jdbc-type="LONGVARCHAR"
-   		/>   
-   		<field-descriptor
-   			name="qualificationLevelEn"
-   			column="QUALIFICATION_LEVEL_EN"
-        jdbc-type="LONGVARCHAR"
-   		/>      
-   		<field-descriptor
-   			name="recognitions"
-   			column="RECOGNITIONS"
-        jdbc-type="LONGVARCHAR"
-   		/>   
-   		<field-descriptor
-   			name="recognitionsEn"
-   			column="RECOGNITIONS_EN"
-        jdbc-type="LONGVARCHAR"
-   		/>    				   		
-   		<field-descriptor
-   			name="lastModificationDate"
-   			column="LAST_MODIFICATION_DATE"
-   			jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-   		/>   				
+	       	
+      
+			
+   						    
+   		
+   		
+   		
+   		
+   		
+   		
+   		   
+   		      		   		
+   		  
+   		   		
+   		   		
+   		   		
+   		   		
+   			   		
+  		
+   		
+   		
+   		
+   		
+   		   		
+   		      		
+   		   
+   		      
+   		   
+   		    				   		
+   		   				
 	         	   	
    </class-descriptor>	
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.Tutor -->    
    <class-descriptor class="net.sourceforge.fenixedu.domain.Tutor"
    	table="TUTOR_SHIP">
-   		<field-descriptor id="1"
-	        name="idInternal"
-	        column="ID_INTERNAL"
-	        jdbc-type="INTEGER"
-	        primarykey="true"
-	        autoincrement="true"
-	    />   	
-      	<field-descriptor
-      		name="ackOptLock"
-	      	column="ACK_OPT_LOCK"
-    	  	jdbc-type="INTEGER"
-      		locking="false"
-      	/>
-		<field-descriptor
-			name="keyTeacher"
-			column="KEY_TEACHER"
-			jdbc-type="INTEGER"
-		/>
-		<field-descriptor
-			name="keyStudent"
-			column="KEY_STUDENT"
-			jdbc-type="INTEGER"
-		/>
+   		   	
+      	
+		
+		
 	     
 	     
    </class-descriptor>

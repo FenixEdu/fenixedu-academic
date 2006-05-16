@@ -10,125 +10,28 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA"/>    
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET"/>    
     
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="state"
-		column="STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="initialDate"
-		column="INITIAL_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="endDate"
-		column="END_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="keyDegree"
-		column="KEY_DEGREE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyRootDomainObject"
-		column="KEY_ROOT_DOMAIN_OBJECT"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="degreeDuration"
-		column="DEGREE_DURATION"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minimalYearForOptionalCourses"
-		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="neededCredits"
-		column="NEEDED_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="markType"
-		column="MARK_TYPE"
-		jdbc-type="INTEGER"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="numerusClausus"
-		column="NUMERUS_CLAUSUS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-	/>	
-	<field-descriptor
-		name="descriptionEn"
-		column="DESCRIPTION_EN"
-		jdbc-type="LONGVARCHAR"
-	/>	  
-	<field-descriptor
-		name="concreteClassForStudentCurricularPlans"
-		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="anotation"
-		column="ANOTATION"
-		jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-		name="gradeScale"
-		column="GRADE_SCALE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
-	/>
-	<field-descriptor
-		name="curricularStage"
-		column="CURRICULAR_STAGE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
-	/>
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_DEGREE_MODULE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyDegreeStructure"
-		column="KEY_DEGREE_CURRICULAR_PERIOD"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-        name="curricularPlanMembersGroup"
-        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		  
+	
+	
+	
+	
+	
+		
+	
 		
 	
 	
@@ -146,120 +49,27 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC --> 
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC" table="DEGREE_CURRICULAR_PLAN">
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="state"
-		column="STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="initialDate"
-		column="INITIAL_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="endDate"
-		column="END_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="keyDegree"
-		column="KEY_DEGREE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="degreeDuration"
-		column="DEGREE_DURATION"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minimalYearForOptionalCourses"
-		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="neededCredits"
-		column="NEEDED_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="markType"
-		column="MARK_TYPE"
-		jdbc-type="INTEGER"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="numerusClausus"
-		column="NUMERUS_CLAUSUS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-	/>	
-	<field-descriptor
-		name="descriptionEn"
-		column="DESCRIPTION_EN"
-		jdbc-type="LONGVARCHAR"
-	/>	  
-	<field-descriptor
-		name="concreteClassForStudentCurricularPlans"
-		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="anotation"
-		column="ANOTATION"
-		jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-		name="gradeScale"
-		column="GRADE_SCALE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
-	/>
-	<field-descriptor
-		name="curricularStage"
-		column="CURRICULAR_STAGE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
-	/>
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_DEGREE_MODULE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyDegreeStructure"
-		column="KEY_DEGREE_CURRICULAR_PERIOD"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-        name="curricularPlanMembersGroup"
-        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		  
+	
+	
+	
+	
+	
+		
+	
 			
 		
 	
@@ -277,120 +87,27 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC --> 
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC" table="DEGREE_CURRICULAR_PLAN">
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="state"
-		column="STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="initialDate"
-		column="INITIAL_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="endDate"
-		column="END_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="keyDegree"
-		column="KEY_DEGREE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="degreeDuration"
-		column="DEGREE_DURATION"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minimalYearForOptionalCourses"
-		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="neededCredits"
-		column="NEEDED_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="markType"
-		column="MARK_TYPE"
-		jdbc-type="INTEGER"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="numerusClausus"
-		column="NUMERUS_CLAUSUS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-	/>	
-	<field-descriptor
-		name="descriptionEn"
-		column="DESCRIPTION_EN"
-		jdbc-type="LONGVARCHAR"
-	/>	  
-	<field-descriptor
-		name="concreteClassForStudentCurricularPlans"
-		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="anotation"
-		column="ANOTATION"
-		jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-		name="gradeScale"
-		column="GRADE_SCALE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
-	/>
-	<field-descriptor
-		name="curricularStage"
-		column="CURRICULAR_STAGE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
-	/>
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_DEGREE_MODULE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyDegreeStructure"
-		column="KEY_DEGREE_CURRICULAR_PERIOD"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-        name="curricularPlanMembersGroup"
-        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		  
+	
+	
+	
+	
+	
+		
+	
 				
 	
 	
@@ -407,120 +124,27 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS --> 
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS" table="DEGREE_CURRICULAR_PLAN">
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="state"
-		column="STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="initialDate"
-		column="INITIAL_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="endDate"
-		column="END_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="keyDegree"
-		column="KEY_DEGREE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="degreeDuration"
-		column="DEGREE_DURATION"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minimalYearForOptionalCourses"
-		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="neededCredits"
-		column="NEEDED_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="markType"
-		column="MARK_TYPE"
-		jdbc-type="INTEGER"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="numerusClausus"
-		column="NUMERUS_CLAUSUS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-	/>	
-	<field-descriptor
-		name="descriptionEn"
-		column="DESCRIPTION_EN"
-		jdbc-type="LONGVARCHAR"
-	/>	  
-	<field-descriptor
-		name="concreteClassForStudentCurricularPlans"
-		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="anotation"
-		column="ANOTATION"
-		jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-		name="gradeScale"
-		column="GRADE_SCALE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
-	/>
-	<field-descriptor
-		name="curricularStage"
-		column="CURRICULAR_STAGE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
-	/>
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_DEGREE_MODULE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyDegreeStructure"
-		column="KEY_DEGREE_CURRICULAR_PERIOD"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-        name="curricularPlanMembersGroup"
-        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		  
+	
+	
+	
+	
+	
+		
+	
 			
 	
 	
@@ -538,120 +162,27 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC --> 
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC" table="DEGREE_CURRICULAR_PLAN">
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="state"
-		column="STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="initialDate"
-		column="INITIAL_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="endDate"
-		column="END_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="keyDegree"
-		column="KEY_DEGREE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="degreeDuration"
-		column="DEGREE_DURATION"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minimalYearForOptionalCourses"
-		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="neededCredits"
-		column="NEEDED_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="markType"
-		column="MARK_TYPE"
-		jdbc-type="INTEGER"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="numerusClausus"
-		column="NUMERUS_CLAUSUS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-	/>	
-	<field-descriptor
-		name="descriptionEn"
-		column="DESCRIPTION_EN"
-		jdbc-type="LONGVARCHAR"
-	/>	  
-	<field-descriptor
-		name="concreteClassForStudentCurricularPlans"
-		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="anotation"
-		column="ANOTATION"
-		jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-		name="gradeScale"
-		column="GRADE_SCALE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
-	/>
-	<field-descriptor
-		name="curricularStage"
-		column="CURRICULAR_STAGE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
-	/>
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_DEGREE_MODULE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyDegreeStructure"
-		column="KEY_DEGREE_CURRICULAR_PERIOD"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-        name="curricularPlanMembersGroup"
-        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		  
+	
+	
+	
+	
+	
+		
+	
 			
 		
 	
@@ -669,120 +200,27 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM --> 
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM" table="DEGREE_CURRICULAR_PLAN">
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="state"
-		column="STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="initialDate"
-		column="INITIAL_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="endDate"
-		column="END_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="keyDegree"
-		column="KEY_DEGREE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="degreeDuration"
-		column="DEGREE_DURATION"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minimalYearForOptionalCourses"
-		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="neededCredits"
-		column="NEEDED_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="markType"
-		column="MARK_TYPE"
-		jdbc-type="INTEGER"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="numerusClausus"
-		column="NUMERUS_CLAUSUS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-	/>	
-	<field-descriptor
-		name="descriptionEn"
-		column="DESCRIPTION_EN"
-		jdbc-type="LONGVARCHAR"
-	/>	  
-	<field-descriptor
-		name="concreteClassForStudentCurricularPlans"
-		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="anotation"
-		column="ANOTATION"
-		jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-		name="gradeScale"
-		column="GRADE_SCALE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
-	/>
-	<field-descriptor
-		name="curricularStage"
-		column="CURRICULAR_STAGE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
-	/>
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_DEGREE_MODULE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyDegreeStructure"
-		column="KEY_DEGREE_CURRICULAR_PERIOD"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-        name="curricularPlanMembersGroup"
-        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		  
+	
+	
+	
+	
+	
+		
+	
 			
 		
 	
@@ -799,120 +237,27 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA --> 
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA" table="DEGREE_CURRICULAR_PLAN">
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="state"
-		column="STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="initialDate"
-		column="INITIAL_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="endDate"
-		column="END_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="keyDegree"
-		column="KEY_DEGREE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="degreeDuration"
-		column="DEGREE_DURATION"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minimalYearForOptionalCourses"
-		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="neededCredits"
-		column="NEEDED_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="markType"
-		column="MARK_TYPE"
-		jdbc-type="INTEGER"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="numerusClausus"
-		column="NUMERUS_CLAUSUS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-	/>	
-	<field-descriptor
-		name="descriptionEn"
-		column="DESCRIPTION_EN"
-		jdbc-type="LONGVARCHAR"
-	/>	  
-	<field-descriptor
-		name="concreteClassForStudentCurricularPlans"
-		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="anotation"
-		column="ANOTATION"
-		jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-		name="gradeScale"
-		column="GRADE_SCALE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
-	/>	
-	<field-descriptor
-		name="curricularStage"
-		column="CURRICULAR_STAGE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
-	/>
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_DEGREE_MODULE"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-		name="keyDegreeStructure"
-		column="KEY_DEGREE_CURRICULAR_PERIOD"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-        name="curricularPlanMembersGroup"
-        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		  
+	
+	
+		
+	
+		
+		
+	
 			
 		
 	
@@ -929,120 +274,27 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET --> 
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET" table="DEGREE_CURRICULAR_PLAN">
-	<field-descriptor
-		name="ojbConcreteClass"
-		column="CLASS_NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="state"
-		column="STATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
-	/>
-	<field-descriptor
-		name="initialDate"
-		column="INITIAL_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="endDate"
-		column="END_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-	/>
-	<field-descriptor
-		name="keyDegree"
-		column="KEY_DEGREE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="degreeDuration"
-		column="DEGREE_DURATION"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minimalYearForOptionalCourses"
-		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="neededCredits"
-		column="NEEDED_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="markType"
-		column="MARK_TYPE"
-		jdbc-type="INTEGER"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="numerusClausus"
-		column="NUMERUS_CLAUSUS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-	/>	
-	<field-descriptor
-		name="descriptionEn"
-		column="DESCRIPTION_EN"
-		jdbc-type="LONGVARCHAR"
-	/>	  
-	<field-descriptor
-		name="concreteClassForStudentCurricularPlans"
-		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="anotation"
-		column="ANOTATION"
-		jdbc-type="LONGVARCHAR"
-	/>
-	<field-descriptor
-		name="gradeScale"
-		column="GRADE_SCALE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGradeScale2SqlGradeScaleFieldConversion"		
-	/>
-	<field-descriptor
-		name="curricularStage"
-		column="CURRICULAR_STAGE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularStage2SqlCurricularStageFieldConversion"
-	/>
-	<field-descriptor
-		name="keyRoot"
-		column="KEY_DEGREE_MODULE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyDegreeStructure"
-		column="KEY_DEGREE_CURRICULAR_PERIOD"
-		jdbc-type="INTEGER"
-	/>	
-	<field-descriptor
-        name="curricularPlanMembersGroup"
-        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
-        jdbc-type="BLOB"
-        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
-    />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		  
+	
+	
+	
+	
+	
+		
+	
 			
 		
 	

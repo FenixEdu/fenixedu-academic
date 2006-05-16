@@ -1,119 +1,42 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.project.Project"
 	table="RESEARCH_PROJECT">
 	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
+	
+	
+	
 
-	<field-descriptor
-		name="number"
-		column="NUMBER"
-		jdbc-type="INTEGER"
-	/>
+	
+	
+	
+	
+	
 
-	<field-descriptor
-	    name="acronym"
-	    column="ACRONYM"
-	    jdbc-type="VARCHAR"
-	/>
 	
-	<field-descriptor
-		name="title"
-		column="TITLE"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
 	
-	<field-descriptor
-		name="projectAbstract"
-		column="ABSTRACT"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
-
-	<field-descriptor
-		name="startDate"
-		column="START_DATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonth2SqlStringFieldConversion"
-	/>
 	
-	<field-descriptor
-		name="endDate"
-		column="END_DATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonth2SqlStringFieldConversion"
-	/>
 	
-	<field-descriptor
-	   name="projectType"    
-	   column="TYPE"  
-	   jdbc-type="VARCHAR"
-	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectType2SqlProjectTypeConversion"
-    /> 
+	 
 	
 
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.event.Event" table="RESEARCH_EVENT">
 	
-	<field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-	/>
 	
-	<field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
 	
-	<field-descriptor
-		name="startDate"
-		column="START_DATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
-	/>
 	
-	<field-descriptor
-		name="endDate"
-		column="END_DATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
-	/>
 	
-	<field-descriptor
-		name="eventLocation"
-		column="LOCATION"
-		jdbc-type="VARCHAR"
-	/>
+	
+	
+	
+	
+	
 
-	<field-descriptor
-		name="fee"
-		column="FEE"
-		jdbc-type="BIT"
-	/>
+	
 
-	<field-descriptor 
-	   name="eventType"    
-	   column="TYPE"  
-	   jdbc-type="VARCHAR"
-	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ResearchEventType2SqlResearchEventTypeConversion"
-    />
+	
     
-    <field-descriptor
-        name="keyRootDomainObject"
-        column="KEY_ROOT_DOMAIN_OBJECT"
-        jdbc-type="INTEGER"
-    />
+    
     
 </class-descriptor>
 
@@ -121,101 +44,40 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation"
 	table="RESEARCH_PROJECT_PARTICIPATION">
 	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
 	
-	<field-descriptor
-		name="keyProject"
-		column="KEY_PROJECT"
-		jdbc-type="INTEGER"
-	/>
 	
-	<field-descriptor
-		name="keyParty" 
-		column="KEY_PARTY"
-		jdbc-type="INTEGER"
-	/>
 	
-	<field-descriptor
-	   name="role"    
-	   column="ROLE"  
-		jdbc-type="VARCHAR"
-	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectParticipationType2SqlProjectParticipationTypeConversion"
-	/>
+	
+	
+	
+	
 </class-descriptor>
 
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.ResearchInterest"
 	table="RESEARCH_INTEREST">
 	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
 	
-	<field-descriptor
-		name="keyParty" 
-		column="KEY_PARTY"
-		jdbc-type="INTEGER"
-	/>
 	
-	<field-descriptor
-		name="interest"
-		column="INTEREST"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
 	
-	<field-descriptor
-	   name="order"    
-	   column="INTEREST_ORDER"  
-		jdbc-type="INTEGER"
-	/>	
+	
+	
+	
+		
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.event.EventParticipation"
 	table="RESEARCH_EVENT_PARTICIPATION">
 	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
 	
-	<field-descriptor
-		name="keyEvent" 
-		column="KEY_EVENT"
-		jdbc-type="INTEGER"
-	/>
 	
-	<field-descriptor
-		name="keyParty" 
-		column="KEY_PARTY"
-		jdbc-type="INTEGER"
-	/>
 	
-	<field-descriptor
-	   name="role"    
-	   column="ROLE"  
-	   jdbc-type="VARCHAR"
-	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.EventParticipationRole2SqlEventParticipationRoleConversion"
-    /> 
+	
+	
+	
+	 
     
-    <field-descriptor
-        name="keyRootDomainObject"
-        column="KEY_ROOT_DOMAIN_OBJECT"
-        jdbc-type="INTEGER"
-    />
+    
     
     <reference-descriptor auto-retrieve="false" 
 		name="event"
@@ -233,35 +95,14 @@
 	
 </class-descriptor>
 
-
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation"
 	table="RESEARCH_PROJECT_RESEARCH_EVENT_ASSOCIATION">
 	
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
 	
-	<field-descriptor
-		name="keyProject"
-		column="KEY_PROJECT"
-		jdbc-type="INTEGER"
-	/>
 	
-	<field-descriptor
-		name="keyEvent" 
-		column="KEY_EVENT"
-		jdbc-type="INTEGER"
-	/>
 	
-	<field-descriptor
-	   name="role"    
-	   column="ROLE"  
-		jdbc-type="VARCHAR"
-	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectParticipationType2SqlProjectParticipationTypeConversion"
-	/>
+	
+	
+	
+	
 </class-descriptor>
-

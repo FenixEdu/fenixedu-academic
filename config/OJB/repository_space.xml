@@ -4,23 +4,9 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Floor" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Room" />
 
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-			/>
-	<field-descriptor
-			name="ojbConcreteClass"
-			column="CLASS_NAME"
-			jdbc-type="VARCHAR"
-			/>
-	<field-descriptor
-			name="keySuroundingSpace"
-			column="KEY_SUROUNDING_SPACE"
-			jdbc-type="INTEGER"
-			/>
+	
+	
+	
 	
 	
 	
@@ -32,263 +18,86 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.FloorInformation" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.RoomInformation" />
 
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-			/>
-	<field-descriptor
-			name="ojbConcreteClass"
-			column="CLASS_NAME"
-			jdbc-type="VARCHAR"
-			/>
-	<field-descriptor
-			name="validUntil"
-			column="VALID_UNTIL"
-			jdbc-type="VARCHAR"
-			conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
-			/>
-	<field-descriptor
-			name="keySpace"
-			column="KEY_SPACE"
-			jdbc-type="INTEGER"
-			/>
+	
+	
+	
+	
 	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Campus" table="SPACE">
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-			/>
-	<field-descriptor
-			name="ojbConcreteClass"
-			column="CLASS_NAME"
-			jdbc-type="VARCHAR"
-			/>
-	<field-descriptor
-			name="keySuroundingSpace"
-			column="KEY_SUROUNDING_SPACE"
-			jdbc-type="INTEGER"
-			/>
+	
+	
+	
 	
 	
 	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.CampusInformation" table="SPACE_INFORMATION">
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-			/>
-	<field-descriptor
-			name="ojbConcreteClass"
-			column="CLASS_NAME"
-			jdbc-type="VARCHAR"
-			/>
-	<field-descriptor
-			name="validUntil"
-			column="VALID_UNTIL"
-			jdbc-type="VARCHAR"
-			conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
-			/>
-	<field-descriptor
-			name="keySpace"
-			column="KEY_SPACE"
-			jdbc-type="INTEGER"
-			/>
-	<field-descriptor
-			name="name"
-			column="NAME"
-			jdbc-type="VARCHAR"
-			/>
+	
+	
+	
+	
+	
 	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Building" table="SPACE">
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-			/>
-	<field-descriptor
-			name="ojbConcreteClass"
-			column="CLASS_NAME"
-			jdbc-type="VARCHAR"
-			/>
-	<field-descriptor
-			name="keySuroundingSpace"
-			column="KEY_SUROUNDING_SPACE"
-			jdbc-type="INTEGER"
-			/>
+	
+	
+	
 	
 	
 	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.BuildingInformation" table="SPACE_INFORMATION">
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-			/>
-	<field-descriptor
-			name="ojbConcreteClass"
-			column="CLASS_NAME"
-			jdbc-type="VARCHAR"
-			/>
-	<field-descriptor
-			name="validUntil"
-			column="VALID_UNTIL"
-			jdbc-type="VARCHAR"
-			conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
-			/>
-	<field-descriptor
-			name="keySpace"
-			column="KEY_SPACE"
-			jdbc-type="INTEGER"
-			/>
-	<field-descriptor
-			name="name"
-			column="NAME"
-			jdbc-type="VARCHAR"
-			/>
+	
+	
+	
+	
+	
 	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Floor" table="SPACE">
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-			/>
-	<field-descriptor
-			name="ojbConcreteClass"
-			column="CLASS_NAME"
-			jdbc-type="VARCHAR"
-			/>
-	<field-descriptor
-			name="keySuroundingSpace"
-			column="KEY_SUROUNDING_SPACE"
-			jdbc-type="INTEGER"
-			/>
+	
+	
+	
 	
 	
 	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.FloorInformation" table="SPACE_INFORMATION">
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-			/>
-	<field-descriptor
-			name="ojbConcreteClass"
-			column="CLASS_NAME"
-			jdbc-type="VARCHAR"
-			/>
-	<field-descriptor
-			name="validUntil"
-			column="VALID_UNTIL"
-			jdbc-type="VARCHAR"
-			conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
-			/>
-	<field-descriptor
-			name="keySpace"
-			column="KEY_SPACE"
-			jdbc-type="INTEGER"
-			/>
-	<field-descriptor
-			name="level"
-			column="LEVEL"
-			jdbc-type="INTEGER"
-			/>
+	
+	
+	
+	
+	
 	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceOccupation" table="SPACE_OCCUPATION">
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-			/>
-	<field-descriptor
-			name="ojbConcreteClass"
-			column="CLASS_NAME"
-			jdbc-type="VARCHAR"
-			/>
+	
+	
 </class-descriptor>			
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Room" table="SPACE">
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-			/>
-	<field-descriptor
-			name="ojbConcreteClass"
-			column="CLASS_NAME"
-			jdbc-type="VARCHAR"
-			/>
-	<field-descriptor
-			name="keySuroundingSpace"
-			column="KEY_SUROUNDING_SPACE"
-			jdbc-type="INTEGER"
-			/>
+	
+	
+	
 	
 	
 	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomInformation" table="SPACE_INFORMATION">
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-			/>
-	<field-descriptor
-			name="ojbConcreteClass"
-			column="CLASS_NAME"
-			jdbc-type="VARCHAR"
-			/>
-	<field-descriptor
-			name="validUntil"
-			column="VALID_UNTIL"
-			jdbc-type="VARCHAR"
-			conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
-			/>
-	<field-descriptor
-			name="keySpace"
-			column="KEY_SPACE"
-			jdbc-type="INTEGER"
-			/>
-	<field-descriptor
-			name="name"
-			column="NAME"
-			jdbc-type="VARCHAR"
-			/>
+	
+	
+	
+	
+	
 
 </class-descriptor>

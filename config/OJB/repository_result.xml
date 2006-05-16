@@ -5,197 +5,47 @@
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.Patent" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.Product" />
  
-	<field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-	/>
-	<field-descriptor
-		name="title"
-		column="TITLE"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
-	<field-descriptor
-		name="titleOld"
-		column="TITLE_OLD"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
-	<field-descriptor
-		name="descriptionOld"
-		column="DESCRIPTION_OLD"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="url"
-		column="URL"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	    name="ojbConcreteClass"
-	    column="CLASS_NAME"
-	    jdbc-type="VARCHAR"
-	/>
+	
+	
+	
+	
+	
+	
+	
 
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.Product" table="RESULT">
-    <field-descriptor
-    	name="idInternal"
-    	column="ID_INTERNAL"
-    	jdbc-type="INTEGER"
-    	primarykey="true"
-    	autoincrement="true"
-    />
-	<field-descriptor
-		name="title"
-		column="TITLE"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
-   	<field-descriptor
-   		name="titleOld"
-   		column="TITLE_OLD"
-   		jdbc-type="VARCHAR"
-   	/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
-	<field-descriptor
-		name="descriptionOld"
-		column="DESCRIPTION_OLD"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="url"
-		column="URL"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="productInternalId"
-		column="PRODUCT_INTERNAL_ID"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	   name="type"    
-	   column="TYPE"  
-	   jdbc-type="VARCHAR"
-	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProductType2SqlProductTypeConversion"
-    />    
-    <field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-    />
+    
+	
+   	
+	
+	
+	
+	
+	    
+    
 
 </class-descriptor>
 	
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.Patent" table="RESULT">
-    <field-descriptor
-    	name="idInternal"
-    	column="ID_INTERNAL"
-    	jdbc-type="INTEGER"
-    	primarykey="true"
-    	autoincrement="true"
-    />
-	<field-descriptor
-		name="title"
-		column="TITLE"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
-   	<field-descriptor
-   		name="titleOld"
-   		column="TITLE_OLD"
-   		jdbc-type="VARCHAR"
-   	/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
-	<field-descriptor
-		name="descriptionOld"
-		column="DESCRIPTION_OLD"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="url"
-		column="URL"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="patentNumber"
-		column="PATENT_NUMBER"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-	   name="type"    
-	   column="PATENT_TYPE"  
-	   jdbc-type="VARCHAR"
-	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.PatentType2SqlPatentTypeConversion"
-    />
-    <field-descriptor
-	   name="status"    
-	   column="STATUS"  
-	   jdbc-type="VARCHAR"
-	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.PatentStatus2SqlPatentStatusConversion"
-    />
-    <field-descriptor
-		name="registrationDate"
-		column="REGISTRATION_DATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonth2SqlStringFieldConversion"
-	/>
-    <field-descriptor
-		name="approvalDate"
-		column="APPROVAL_DATE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonth2SqlStringFieldConversion"
-	/>
-    <field-descriptor
-		name="keyCountry"
-		column="KEY_COUNTRY"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="language"
-		column="LANGUAGE"
-		jdbc-type="VARCHAR"
-	/>
-    <field-descriptor
-		name="format"
-		column="FORMAT_TYPE"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.FormatType2SqlFormatTypeConversion"
-	/>
-	<field-descriptor
-		name="numberPages"
-		column="NUMBER_PAGES"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="local"
-		column="LOCAL"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-    />
+    
+	
+   	
+	
+	
+	
+	
+	
+    
+    
+    
+    
+	
+    
+	
+	
+	
 
 </class-descriptor>
 
@@ -203,115 +53,101 @@
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.research.result.PublicationTypeAttribute -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.PublicationTypeAttribute" table="PUBLICATION_ATTRIBUTE">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="keyPublicationType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyAttribute" column="KEY_ATTRIBUTE" jdbc-type="INTEGER"/>
-	<field-descriptor name="required" column="REQUIRED" jdbc-type="BIT"/>
+    
+	
+	
+	
+	
 
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.research.result.PublicationType -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.PublicationType" table="PUBLICATION_TYPE">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="publicationType" column="PUBLICATION_TYPE" jdbc-type="VARCHAR"/>
+    
+	
+	
 
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.research.result.Attribute -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.Attribute" table="ATTRIBUTE">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="attributeType" column="ATTRIBUTE_TYPE" jdbc-type="VARCHAR"/>
+    
+	
+	
 
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.Publication" table="RESULT">
 
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor
-		name="title"
-		column="TITLE"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
-   	<field-descriptor name="titleOld" column="TITLE_OLD" jdbc-type="VARCHAR"/>
-	<field-descriptor
-		name="description"
-		column="DESCRIPTION"
-		jdbc-type="LONGVARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion"
-	/>
-	<field-descriptor
-		name="descriptionOld"
-		column="DESCRIPTION_OLD"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor name="url" column="URL" jdbc-type="VARCHAR"/>
-	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
+    
+	
+   	
+	
+	
+	
+	
 
-    <field-descriptor name="keyType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER" nullable="false"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-	<field-descriptor name="subType" column="SUB_TYPE" jdbc-type="VARCHAR"/>
-	<field-descriptor name="journalName" column="JOURNAL_NAME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="volume" column="VOLUME" jdbc-type="VARCHAR"/>
-	<field-descriptor name="editor" column="EDITOR" jdbc-type="VARCHAR"/>
-	<field-descriptor name="month" column="MONTH" jdbc-type="VARCHAR"/>
-	<field-descriptor name="year" column="YEAR" jdbc-type="INTEGER"/>
-	<field-descriptor name="month_end" column="MONTH_END" jdbc-type="VARCHAR"/>
-	<field-descriptor name="year_end" column="YEAR_END" jdbc-type="INTEGER"/>
-	<field-descriptor name="conference" column="CONFERENCE" jdbc-type="VARCHAR"/>
-	<field-descriptor name="instituition" column="INSTITUITION" jdbc-type="VARCHAR"/>
-	<field-descriptor name="firstPage" column="FIRST_PAGE" jdbc-type="INTEGER"/>
-	<field-descriptor name="lastPage" column="LAST_PAGE" jdbc-type="INTEGER"/>
-	<field-descriptor name="language" column="LANGUAGE" jdbc-type="VARCHAR"/>
-	<field-descriptor name="country" column="COUNTRY" jdbc-type="VARCHAR"/>
-	<field-descriptor name="issn" column="ISSN" jdbc-type="INTEGER"/>
-	<field-descriptor name="isbn" column="ISBN" jdbc-type="INTEGER"/>
-	<field-descriptor name="format" column="FORMAT" jdbc-type="VARCHAR"/>
-	<field-descriptor name="scope" column="SCOPE" jdbc-type="VARCHAR"/>
-	<field-descriptor name="edition" column="EDITION" jdbc-type="INTEGER"/>
-	<field-descriptor name="editorCity" column="EDITOR_CITY" jdbc-type="VARCHAR"/>
-	<field-descriptor name="numberPages" column="NUMBER_PAGES" jdbc-type="INTEGER"/>
-	<field-descriptor name="fascicle" column="FASCICLE" jdbc-type="INTEGER"/>
-	<field-descriptor name="serie" column="SERIE" jdbc-type="INTEGER"/>
-	<field-descriptor name="university" column="UNIVERSITY" jdbc-type="VARCHAR"/>
-	<field-descriptor name="local" column="LOCAL" jdbc-type="VARCHAR"/>
-	<field-descriptor name="originalLanguage" column="ORIGINAL_LANGUAGE" jdbc-type="VARCHAR"/>
-	<field-descriptor name="translatedAuthor" column="TRANSLATED_AUTHOR" jdbc-type="VARCHAR"/>
-	<field-descriptor name="criticizedAuthor" column="CRITICIZED_AUTHOR" jdbc-type="VARCHAR"/>
-	<field-descriptor name="publicationType" column="TYPE" jdbc-type="VARCHAR"/>
-	<field-descriptor name="number" column="NUMBER" jdbc-type="INTEGER"/>
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
    
 </class-descriptor>
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.research.result.PublicationSubtype -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.PublicationSubtype" table="PUBLICATION_SUBTYPE">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <field-descriptor name="keyPublicationType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER" nullable="false"/>
-    <field-descriptor name="subtype" column="SUBTYPE" jdbc-type="VARCHAR"/>
+    
+	
+    
+    
 
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.research.result.PublicationFormat -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.PublicationFormat" table="PUBLICATION_FORMAT">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
-    <field-descriptor name="format" column="FORMAT" jdbc-type="VARCHAR"/>
+    
+	
+    
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.research.result.Authorship -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.Authorship" table="AUTHORSHIP">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true" />
-	<field-descriptor name="keyResult" column="KEY_RESULT" jdbc-type="INTEGER" />
-	<field-descriptor name="keyAuthor" column="KEY_AUTHOR" jdbc-type="INTEGER" />
-	<field-descriptor name="order" column="AUTHOR_ORDER" jdbc-type="INTEGER" />
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
+	
+	
+	
+	
+	
 
 </class-descriptor>		
   		
@@ -319,11 +155,11 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.research.result.PublicationTeacher -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.PublicationTeacher" table="PUBLICATION_TEACHER">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="keyPublication" column="KEY_PUBLICATION" jdbc-type="INTEGER"/>
-	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
-	<field-descriptor name="publicationArea" column="PUBLICATION_AREA" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationArea2SqlPublicationAreaFieldConversion"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
+	
+	
+	
+	
+	
 
 </class-descriptor>					
 <!-- Mapping of User defined classses ends here -->

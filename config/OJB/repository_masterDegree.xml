@@ -8,98 +8,27 @@
 		table="MASTER_DEGREE_CANDIDATE"
 	>
 	
-	  <field-descriptor id="1"
-	     name="idInternal"    
-	     column="ID_INTERNAL"  
-	     jdbc-type="INTEGER"
-	     primarykey="true"
-	     autoincrement="true"
-	   />
+	  
 
-	  <field-descriptor id="2"
-	     name="keyPerson"
-	     column="PERSON_KEY"
-	     jdbc-type="INTEGER"
-	  />
+	  
 
-	  <field-descriptor id="3"
-	     name="keyExecutionDegree"
-	     column="EXECUTION_DEGREE_KEY"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor id="4"
-	     name="candidateNumber"
-	     column="CANDIDATE_NUMBER"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor id="5"
-	     name="specialization"
-	     column="SPECIALIZATION"
-	     jdbc-type="VARCHAR"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
-	  />
-	  <field-descriptor id="6"
-	     name="majorDegree"
-	     column="MAJOR_DEGREE"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="7"
-	     name="majorDegreeSchool"
-	     column="MAJOR_DEGREE_SCHOOL"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="8"
-	     name="majorDegreeYear"
-	     column="MAJOR_DEGREE_YEAR"
-	     jdbc-type="INTEGER"
-	  />
-	 <field-descriptor id="9"
-	     name="average"
-	     column="AVERAGE"
-	     jdbc-type="DOUBLE"
-	  />
+	  
+	  
+	  
+	  
+	  
+	  
+	 
 
-	 <field-descriptor id="10"
-	     name="specializationArea"
-	     column="SPECIALIZATION_AREA"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor id="11"
-	     name="substituteOrder"
-	     column="SUBSTITUTE_ORDER"
-	     jdbc-type="INTEGER"
-	  />
-	 <field-descriptor id="12"
-	     name="givenCredits"
-	     column="GIVEN_CREDITS"
-	     jdbc-type="DOUBLE"
-	  />
-	 <field-descriptor id="12"
-	     name="givenCreditsRemarks"
-	     column="GIVEN_CREDITS_REMARKS"
-     	 jdbc-type="LONGVARCHAR"/>
-     <field-descriptor id="13"
-         name="courseAssistant"
-         column="COURSE_ASSISTANT"
-         jdbc-type="BIT"/>
-     <field-descriptor id="14"
-         name="coursesToAssist"
-         column="COURSES_TO_ASSIST"
-         jdbc-type="LONGVARCHAR"/>
-     <field-descriptor id="15"
-         name="keyGuider"
-         column="TEACHER_KEY"
-         jdbc-type="INTEGER"/>
-     <field-descriptor id="16"
-         name="hasGuider"
-         column="HAS_GUIDER"
-         jdbc-type="BIT"/> 
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+	 
+	  
+	 
+	 
+     
+     
+     
+      
+      
 
       	  
 	  
@@ -121,51 +50,18 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.CandidateSituation"
 		table="CANDIDATE_SITUATION">
 
-      <field-descriptor
-	     name="idInternal"    
-	     column="ID_INTERNAL"  
-	     jdbc-type="INTEGER"
-	     primarykey="true"
-	     autoincrement="true"
-	  />
+      
 	 
-	  <field-descriptor
-	     name="date"
-	     column="DATE"
-	     jdbc-type="DATE"
-	  />
 	  
-	  <field-descriptor
-	     name="remarks"
-	     column="REMARKS"
-	     jdbc-type="LONGVARCHAR"	     
-	  />
 	  
-	  <field-descriptor
-	     name="validation"
-	     column="VALIDATION"
-	     jdbc-type="INTEGER"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaState2SQLStateFieldConversion"
-	  />
 	  
-	  <field-descriptor
-	     name="keyMasterDegreeCandidate"
-	     column="CANDIDATE_KEY"
-	     jdbc-type="INTEGER"
-	  />
+	  
+	  
+	  
+	  
 
-	  <field-descriptor
-	     name="situation"
-	     column="SITUATION"
-	     jdbc-type="INTEGER"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSituationName2SqlSituationNameFieldConversion"
-	  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+	  
+      
 	  
 	  
 		
@@ -178,41 +74,12 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.Price"
 		table="PRICE"
 	>
-	  <field-descriptor 
-	     name="idInternal"    
-	     column="ID_INTERNAL"  
-	     jdbc-type="INTEGER"
-	     primarykey="true"
-	     autoincrement="true"
-	  />
-	  <field-descriptor 
-	     name="graduationType"
-	     column="GRADUATION_TYPE"
-	     jdbc-type="VARCHAR"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGraduationType2SqlGraduationTypeFieldConversion"
-	  />
-	  <field-descriptor id="2"
-	     name="documentType"
-	     column="DOCUMENT_TYPE"
-	     jdbc-type="VARCHAR"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDocumentType2SqlDocumentTypeFieldConversion"
-	  />
-	  <field-descriptor 
-	     name="description"
-	     column="DESCRIPTION"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor 
-	     name="price"
-	     column="PRICE"
-	     jdbc-type="DOUBLE"
-	  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+	  
+	  
+	  
+	  
+	  
+      
 	  
 	 </class-descriptor>
 	 
@@ -224,87 +91,24 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.Guide"
 		table="GUIDE"
 	>
-	  <field-descriptor 
-	     name="idInternal"    
-	     column="ID_INTERNAL"  
-	     jdbc-type="INTEGER"
-	     primarykey="true"
-	     autoincrement="true"
-	  />
-	  <field-descriptor 
-	     name="number"
-	     column="NUMBER"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor 
-	     name="year"
-	     column="YEAR"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor 
-	     name="keyContributor"
-	     column="KEY_CONTRIBUTOR"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor 
-	     name="keyPerson"
-	     column="KEY_PERSON"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor 
-	     name="total"
-	     column="TOTAL"
-	     jdbc-type="DOUBLE"
-	  />
-	  <field-descriptor 
-	     name="remarks"
-	     column="REMARKS"
-	     jdbc-type="LONGVARCHAR"
-	  />
-	  <field-descriptor 
-	     name="guideRequester"
-	     column="GUIDE_REQUESTER"
-	     jdbc-type="VARCHAR"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGuideRequester2SqlGuideRequesterFieldConversion"
-	  />
-	  <field-descriptor 
-	     name="keyExecutionDegree"
-	     column="KEY_EXECUTION_DEGREE"
-	     jdbc-type="INTEGER"
-	  />
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 
-	  <field-descriptor 
-	     name="paymentType"
-	     column="PAYMENT_TYPE"
-	     jdbc-type="VARCHAR"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPaymentType2SqlPaymentTypeFieldConversion"
-	  />
+	  
 
-	 <field-descriptor 
-	     name="creationDate"
-	     column="CREATION_DATE"
-         
-         jdbc-type="DATE"
-	 />
+	 
 	
-	 <field-descriptor 
-	     name="version"
-	     column="VERSION"
-	     jdbc-type="INTEGER"
-     />
+	 
 	
-	<field-descriptor 
-	     name="paymentDate"
-	     column="PAYMENT_DATE"
-         
-         jdbc-type="DATE"
-	 />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+	
+      
 	 
  	  
       
@@ -328,56 +132,15 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.GuideEntry"
 		table="GUIDE_ENTRY"
 	>
-	  <field-descriptor 
-	     name="idInternal"    
-	     column="ID_INTERNAL"  
-	     jdbc-type="INTEGER"
-	     primarykey="true"
-	     autoincrement="true"
-	  />
-	  <field-descriptor 
-	     name="keyGuide"
-	     column="KEY_GUIDE"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor 
-	     name="graduationType"
-	     column="GRADUATION_TYPE"
-	     jdbc-type="VARCHAR"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGraduationType2SqlGraduationTypeFieldConversion"
-	  />
-	  <field-descriptor 
-	     name="documentType"
-	     column="DOCUMENT_TYPE"
-	     jdbc-type="VARCHAR"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDocumentType2SqlDocumentTypeFieldConversion"
-	  />
-	  <field-descriptor 
-	     name="description"
-	     column="DESCRIPTION"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor 
-	     name="price"
-	     column="PRICE"
-	     jdbc-type="DOUBLE"
-	  />
-	  <field-descriptor 
-	     name="quantity"
-	     column="QUANTITY"
-	     jdbc-type="INTEGER"
-	  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      <field-descriptor 
-	     name="keyPaymentTransaction"
-	     column="KEY_PAYMENT_TRANSACTION"
-	     jdbc-type="INTEGER"
-	  />
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+      
+      
 	  
 	   
 
@@ -396,47 +159,14 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.GuideSituation"
 		table="GUIDE_SITUATION"
 	>
-	  <field-descriptor 
-	     name="idInternal"    
-	     column="ID_INTERNAL"  
-	     jdbc-type="INTEGER"
-	     primarykey="true"
-	     autoincrement="true"
-	  />
-	  <field-descriptor 
-	     name="keyGuide"
-	     column="KEY_GUIDE"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor 
-	     name="situation"
-	     column="SITUATION"
-	     jdbc-type="VARCHAR"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGuideSituation2SqlGuideSituationFieldConversion"
-	  />
-	  <field-descriptor 
-	     name="date"
-	     column="DATE"
-	     jdbc-type="DATE"
-	  />
-	    <field-descriptor 
-	     name="remarks"
-	     column="REMARKS"
-	     jdbc-type="VARCHAR"
-	  />
+	  
+	  
+	  
+	  
+	    
 
-	    <field-descriptor 
-	     name="state"
-	     column="STATE"
-	     jdbc-type="INTEGER"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaState2SQLStateFieldConversion"
-	  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+	    
+      
 	  
 	   
 
@@ -450,40 +180,13 @@
       <class-descriptor class="net.sourceforge.fenixedu.domain.Contributor"
               table="CONTRIBUTOR"
       >
-        <field-descriptor 
-           name="idInternal"    
-           column="ID_INTERNAL"  
-           jdbc-type="INTEGER"
-           primarykey="true"
-           autoincrement="true"
-        />
-		<field-descriptor
-	        name="keyRootDomainObject"
-	        column="KEY_ROOT_DOMAIN_OBJECT"
-	        jdbc-type="INTEGER"
-	    />
-        <field-descriptor
-           name="contributorNumber"
-           column="CONTRIBUTOR_NUMBER"
-           jdbc-type="INTEGER"
-         />
+        
+		
+        
  
-         <field-descriptor
-            name="contributorName"
-            column="CONTRIBUTOR_NAME"
-            jdbc-type="VARCHAR"
-         />
-         <field-descriptor 
-            name="contributorAddress"
-            column="CONTRIBUTOR_ADDRESS"
-            jdbc-type="VARCHAR"
-         />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+         
+         
+      
 	
 
 </class-descriptor>
@@ -495,38 +198,15 @@
       <class-descriptor class="net.sourceforge.fenixedu.domain.CandidateEnrolment"
               table="CANDIDATE_ENROLMENT"
       >
-        <field-descriptor 
-           name="idInternal"    
-           column="ID_INTERNAL"  
-           jdbc-type="INTEGER"
-           primarykey="true"
-           autoincrement="true"
-        />
         
-        <field-descriptor 
-           name="keyMasterDegreeCandidate"
-           column="KEY_MASTER_DEGREE_CANDIDATE"
-           jdbc-type="INTEGER"
-        />
+        
+        
 		
-	<!--	<field-descriptor 
-           name="curricularCourseScopeKey"
-           column="KEY_CURRICULAR_COURSE_SCOPE"
-           jdbc-type="INTEGER"
-        />-->
+	<!--	-->
 
-		<field-descriptor 
-           name="keyCurricularCourse"
-           column="KEY_CURRICULAR_COURSE"
-           jdbc-type="INTEGER"
-        />
+		
         
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+      
         
 	   
 		
@@ -549,25 +229,10 @@
               table="MASTER_DEGREE_THESIS"
       >
       
-      <field-descriptor 
-           name="idInternal"    
-           column="ID_INTERNAL"  
-           jdbc-type="INTEGER"
-           primarykey="true"
-           autoincrement="true"
-        />
+      
         
-      <field-descriptor 
-           name="keyStudentCurricularPlan"    
-           column="KEY_STUDENT_CURRICULAR_PLAN"  
-           jdbc-type="INTEGER"
-        />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+      
+      
         
     
         
@@ -585,50 +250,18 @@
               table="MASTER_DEGREE_THESIS_DATA_VERSION"
       >
       
-      <field-descriptor 
-           name="idInternal"    
-           column="ID_INTERNAL"  
-           jdbc-type="INTEGER"
-           primarykey="true"
-           autoincrement="true"
-        />  
         
-        <field-descriptor 
-           name="keyMasterDegreeThesis"    
-           column="KEY_MASTER_DEGREE_THESIS"  
-           jdbc-type="INTEGER"
-        />
         
-        <field-descriptor 
-           name="keyResponsibleEmployee"    
-           column="KEY_EMPLOYEE"  
-           jdbc-type="INTEGER"
-        />
         
-		<field-descriptor 
-           name="dissertationTitle"    
-           column="DISSERTATION_TITLE"  
-           jdbc-type="VARCHAR"
-        />
         
-		<field-descriptor 
-           name="lastModification"    
-           column="LAST_MODIFICATION"  
-           jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-        />
         
-        <field-descriptor
-	     name="currentState"
-	     column="CURRENT_STATE"
-	     jdbc-type="INTEGER"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaState2SQLStateFieldConversion"
-	  	/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+        
+		
+        
+		
+        
+        
+      
                 
         
         
@@ -652,69 +285,24 @@
               table="MASTER_DEGREE_PROOF_VERSION"
       >
       
-      <field-descriptor 
-           name="idInternal"    
-           column="ID_INTERNAL"  
-           jdbc-type="INTEGER"
-           primarykey="true"
-           autoincrement="true"
-        />  
         
-        <field-descriptor 
-           name="keyMasterDegreeThesis"    
-           column="KEY_MASTER_DEGREE_THESIS"  
-           jdbc-type="INTEGER"
-        />
         
-        <field-descriptor 
-           name="keyResponsibleEmployee"    
-           column="KEY_EMPLOYEE"  
-           jdbc-type="INTEGER"
-        />
         
-        <field-descriptor 
-           name="lastModification"    
-           column="LAST_MODIFICATION"  
-           jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-        />
-
-        <field-descriptor 
-           name="proofDate"    
-           column="PROOF_DATE"  
-           jdbc-type="DATE"
-        />
-
-        <field-descriptor 
-           name="thesisDeliveryDate"    
-           column="THESIS_DELIVERY_DATE"  
-           jdbc-type="DATE"
-        />        
-
-        <field-descriptor 
-           name="finalResult"    
-           column="FINAL_RESULT"  
-           jdbc-type="VARCHAR"
-           conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMasterDegreeClassification2SQLMasterDegreeClassificationFieldConversion"
-        />          
-
-        <field-descriptor 
-           name="attachedCopiesNumber"    
-           column="ATTACHED_COPIES_NUMBER"  
-           jdbc-type="INTEGER"
-        />
         
-        <field-descriptor
-	     name="currentState"
-	     column="CURRENT_STATE"
-	     jdbc-type="INTEGER"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaState2SQLStateFieldConversion"
-	  	/>  
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+        
+        
+        
+
+        
+
+                
+
+                  
+
+        
+        
+          
+      
 
 		      	  
 
@@ -735,32 +323,13 @@
               table="EXTERNAL_PERSON"
       >
       
-      <field-descriptor 
-           name="idInternal"    
-           column="ID_INTERNAL"  
-           jdbc-type="INTEGER"
-           primarykey="true"
-           autoincrement="true"
-        />  
         
-        <field-descriptor 
-           name="keyPerson"    
-           column="KEY_PERSON"  
-           jdbc-type="INTEGER"
-        />     
         
-        <field-descriptor 
-           name="keyInstitutionUnit"    
-           column="KEY_UNIT"  
-           jdbc-type="INTEGER" 
-        /> 
+             
+        
+         
           
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+      
 
 				
 	  
@@ -780,34 +349,11 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide"
 		table="REIMBURSEMENT_GUIDE"
 	>
-	  <field-descriptor 
-	     name="idInternal"    
-	     column="ID_INTERNAL"  
-	     jdbc-type="INTEGER"
-	     primarykey="true"
-	     autoincrement="true"
-	  />
-	  <field-descriptor 
-	     name="number"
-	     column="NUMBER"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor 
-	     name="keyGuide"
-	     column="KEY_GUIDE"
-	     jdbc-type="INTEGER"
-	  />
-	 <field-descriptor 
-	     name="creation"
-	     column="CREATION_DATE"
-         jdbc-type="DATE"
-	 />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+	  
+	  
+	  
+	 
+      
  	 
       
       
@@ -821,56 +367,15 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation"
 		table="REIMBURSEMENT_GUIDE_SITUATION"
 	>
-	  <field-descriptor 
-	     name="idInternal"    
-	     column="ID_INTERNAL"  
-	     jdbc-type="INTEGER"
-	     primarykey="true"
-	     autoincrement="true"
-	  />
-	  <field-descriptor 
-	     name="state"
-	     column="STATE"
-	     jdbc-type="INTEGER"
-	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaState2SQLStateFieldConversion"
-	  />
-	  <field-descriptor 
-	     name="keyReimbursementGuide"
-	     column="KEY_REIMBURSEMENT_GUIDE"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor 
-	     name="remarks"
-	     column="REMARKS"
-	     jdbc-type="LONGVARCHAR"
-	  />
-	  <field-descriptor 
-	     name="keyEmployee"
-	     column="KEY_EMPLOYEE"
-	     jdbc-type="INTEGER"
-	  />
-	 <field-descriptor 
-	     name="modification"
-	     column="MODIFICATION_DATE"
-         jdbc-type="DATE"
-	 />
-	 <field-descriptor 
-	     name="official"
-	     column="OFFICIAL_DATE"
-         jdbc-type="DATE"
-	 />	 
-	 <field-descriptor 
-	     name="reimbursementGuideState"
-	     column="REIMBURSEMENT_GUIDE_STATE"
-         jdbc-type="VARCHAR"         		 
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversion"
-	 />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+	  
+	  
+	  
+	  
+	  
+	 
+	 	 
+	 
+      
  	  
   	
 
@@ -882,44 +387,13 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry"
 		table="REIMBURSEMENT_GUIDE_ENTRY"
 	>
-	  <field-descriptor 
-	     name="idInternal"    
-	     column="ID_INTERNAL"  
-	     jdbc-type="INTEGER"
-	     primarykey="true"
-	     autoincrement="true"
-	  />
-	  <field-descriptor 
-	     name="keyReimbursementGuide"
-	     column="KEY_REIMBURSEMENT_GUIDE"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor 
-	     name="keyGuideEntry"
-	     column="KEY_GUIDE_ENTRY"
-	     jdbc-type="INTEGER"
-	  />
-	  <field-descriptor 
-	     name="value"
-	     column="VALUE"
-	     jdbc-type="DOUBLE"
-	  />
-	  <field-descriptor 
-	     name="justification"
-	     column="JUSTIFICATION"
-	     jdbc-type="LONGVARCHAR"
-	  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />      
-	  <field-descriptor 
-	     name="keyReimbursementTransaction"
-	     column="KEY_REIMBURSEMENT_TRANSACTION"
-	     jdbc-type="INTEGER"
-	  />
+	  
+	  
+	  
+	  
+	  
+            
+	  
       
       
       
@@ -932,77 +406,19 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.GratuityValues"
 		table="GRATUITY_VALUES"
 	>
-	<field-descriptor 
-    	name="idInternal"    
-        column="ID_INTERNAL"  
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-   	/>
-   	<field-descriptor
-   		name="anualValue"
-   		column="ANUAL_VALUE"
-   		jdbc-type="DOUBLE"
-   	/>
-   	<field-descriptor
-   		name="scholarShipValue"
-   		column="SCHOLARSHIP_VALUE"
-   		jdbc-type="DOUBLE"
-   	/>
-   	<field-descriptor
-   		name="finalProofValue"
-   		column="FINAL_PROOF_VALUE"
-   		jdbc-type="DOUBLE"
-   	/>
-   	<field-descriptor
-   		name="courseValue"
-   		column="COURSE_VALUE"
-   		jdbc-type="DOUBLE"
-   	/>
-   	<field-descriptor
-   		name="creditValue"
-   		column="CREDIT_VALUE"
-   		jdbc-type="DOUBLE"
-   	/>
-   	<field-descriptor
-   		name="proofRequestPayment"
-   		column="PROOF_REQUEST_PAYMENT"
-   		jdbc-type="BIT"
-   	/>
-   	<field-descriptor
-   		name="startPayment"
-   		column="START_PAYMENT"
-   		jdbc-type="DATE"
-   		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-   	/>
-   	<field-descriptor
-   		name="endPayment"
-   		column="END_PAYMENT"
-   		jdbc-type="DATE"
-   		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-   	/>
-   	<field-descriptor
-   		name="keyExecutionDegree"
-   		column="KEY_EXECUTION_DEGREE"
-   		jdbc-type="INTEGER"
-   	/>
-   	<field-descriptor
-   		name="keyEmployee"
-   		column="KEY_EMPLOYEE"
-   		jdbc-type="INTEGER"
-   	/>   	   	
-	<field-descriptor
-		name="when"
-		column="WHEN_ALTER"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>   	
-    <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-    />   	
+	
+   	
+   	
+   	
+   	
+   	
+   	
+   	
+   	
+   	
+   	   	   	
+	   	
+       	
     
         
 	
@@ -1017,71 +433,18 @@
 	<class-descriptor class="net.sourceforge.fenixedu.domain.GratuitySituation"
 		table="GRATUITY_SITUATION"
 	>
-	<field-descriptor 
-    	name="idInternal"    
-        column="ID_INTERNAL"  
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-   	/>
-  <field-descriptor
-   		name="remainingValue"
-   		column="REMAINING_VALUE"
-   		jdbc-type="DOUBLE"   		
-   	/>
-   	<field-descriptor
-   		name="totalValue"
-   		column="TOTAL_VALUE"
-   		jdbc-type="DOUBLE"   		
-   	/>
-   	<field-descriptor
-   		name="exemptionPercentage"
-   		column="EXEMPTION_PERCENTAGE"
-   		jdbc-type="INTEGER"   		
-   	/>
-   	<field-descriptor
-   		name="exemptionValue"
-   		column="EXEMPTION_VALUE"
-   		jdbc-type="DOUBLE"   		
-   	/>   	
-   	<field-descriptor
-   		name="exemptionType"
-   		column="EXEMPTION_TYPE"
-   		jdbc-type="VARCHAR"   	
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion"   			   		
-   	/>
-   	<field-descriptor
-   		name="exemptionDescription"
-   		column="EXEMPTION_DESCRIPTION"
-   		jdbc-type="VARCHAR"   		
-   	/>
-   	<field-descriptor
-   		name="keyGratuityValues"
-   		column="KEY_GRATUITY"
-   		jdbc-type="INTEGER"   		
-   	/>
-   	<field-descriptor
-   		name="keyStudentCurricularPlan"
-   		column="KEY_STUDENT_CURRICULAR_PLAN"
-   		jdbc-type="INTEGER"   		
-   	/>   	   	   	   	   	  
-    <field-descriptor
-		name="keyEmployee"
-		column="KEY_EMPLOYEE"
-		jdbc-type="INTEGER"	
-	/>
-	<field-descriptor
-		name="when"
-		column="WHEN_ALTER"
-		jdbc-type="TIMESTAMP"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>   	 	
-    <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-    />    
+	
+  
+   	
+   	
+   	   	
+   	
+   	
+   	
+   	   	   	   	   	   	  
+    
+	   	 	
+        
     
         
        
@@ -1092,46 +455,13 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.PaymentPhase"
 		table="PAYMENT_PHASE"
 	>
-	<field-descriptor 
-    	name="idInternal"    
-        column="ID_INTERNAL"  
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-   	/> 
-   	<field-descriptor
-   		name="startDate"
-   		column="START_DATE"
-   		jdbc-type="DATE"
-   		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-   	/>
-   	<field-descriptor
-   		name="endDate"
-   		column="END_DATE"
-   		jdbc-type="DATE"
-   		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-   	/>  
-   	<field-descriptor
-   		name="value"
-   		column="VALUE"
-   		jdbc-type="DOUBLE"   		   		
-   	/>
-   	<field-descriptor
-   		name="description"
-   		column="DESCRIPTION"
-   		jdbc-type="VARCHAR"   		
-   	/>
-   	<field-descriptor
-   		name="keyGratuityValues"
-   		column="KEY_GRATUITY"
-   		jdbc-type="INTEGER"   		
-   	/>
-   	<field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-    />      	    
+	 
+   	
+   	  
+   	
+   	
+   	
+   	      	    
     
 </class-descriptor>
 <!-- End of definitions for class PaymentPhase -->
@@ -1139,24 +469,9 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile"
 		table="SIBS_PAYMENT_FILE"
 	>
-	<field-descriptor 
-    	name="idInternal"    
-        column="ID_INTERNAL"  
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-   	/> 
-   	<field-descriptor
-   		name="filename"
-   		column="FILENAME"
-   		jdbc-type="VARCHAR"   		
-   	/>
-   	<field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-    />
+	 
+   	
+   	
           	    
 </class-descriptor>
 
@@ -1167,56 +482,15 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry"
 		table="SIBS_PAYMENT_FILE_ENTRY"
 	>
-	<field-descriptor 
-    	name="idInternal"    
-        column="ID_INTERNAL"  
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-   	/> 
-   	<field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-    />
-    <field-descriptor
-   		name="keySibsPaymentFile"
-   		column="KEY_SIBS_PAYMENT_FILE"
-   		jdbc-type="INTEGER"   		
-   	/>
-   	<field-descriptor
-   		name="year"
-   		column="YEAR"
-   		jdbc-type="INTEGER"   		
-   	/>
-   	<field-descriptor
-   		name="studentNumber"
-   		column="STUDENT_NUMBER"
-   		jdbc-type="INTEGER"   		
-   	/>
-   	<field-descriptor
-   		name="paymentType"
-   		column="PAYMENT_TYPE"
-   		jdbc-type="VARCHAR"   		
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSibsPaymentType2SQLSibsPaymentTypeFieldConversion"
-   	/>
-   	<field-descriptor
-   		name="transactionDate"
-   		column="TRANSACTION_DATE"
-   		jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"   		
-   	/>
-   	<field-descriptor
-   		name="payedValue"
-   		column="PAYED_VALUE"
-   		jdbc-type="DOUBLE"   		
-   	/>
-   	<field-descriptor
-   		name="paymentStatus"
-   		column="PAYMENT_STATUS"
-   		jdbc-type="VARCHAR"   		
-   		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSibsPaymentStatus2SQLSibsPaymentStatusFieldConversion"
-   	/>
+	 
+   	
+    
+   	
+   	
+   	
+   	
+   	
+   	
           	    
 </class-descriptor>
 <!-- End of definitions for class SibsPaymentFileEntry -->

@@ -13,81 +13,25 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum" table="FORUM">
-	<field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor
-        name="ojbConcreteClass"
-        column="CLASS_NAME"
-        jdbc-type="VARCHAR"
-    />    
-    <field-descriptor
-        name="creationDate"
-        column="CREATION_DATE"
-        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>             
-	<field-descriptor
-        name="name"
-        column="NAME"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="description"
-        column="DESCRIPTION"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="keyExecutionCourse"
-        column="KEY_EXECUTION_COURSE"
-        jdbc-type="INTEGER"
-    />
-    <field-descriptor
-        name="keyRootDomainObject"
-        column="KEY_ROOT_DOMAIN_OBJECT"
-        jdbc-type="INTEGER"
-    />
+	
+        
+                 
+	
+    
+    
+    
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ConversationThread -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ConversationThread" table="CONVERSATION_THREAD">
-	<field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />    
-    <field-descriptor
-        name="creationDate"
-        column="CREATION_DATE"
-        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>
-	<field-descriptor
-        name="subject"
-        column="SUBJECT"
-        jdbc-type="VARCHAR"
-    />             
-    <field-descriptor
-        name="keyCreator"
-        column="KEY_CREATOR"
-        jdbc-type="INTEGER"
-    />
-    <field-descriptor
-        name="keyForum"
-        column="KEY_FORUM"
-        jdbc-type="INTEGER"
-    />
-        <field-descriptor
-        name="keyRootDomainObject"
-        column="KEY_ROOT_DOMAIN_OBJECT"
-        jdbc-type="INTEGER"
-    />
+	    
+    
+	             
+    
+    
+        
  
 </class-descriptor>
 
@@ -95,64 +39,20 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ConversationMessage -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ConversationMessage" table="CONVERSATION_MESSAGE">
-	<field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />    
-    <field-descriptor
-        name="creationDate"
-        column="CREATION_DATE"
-        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	/>             
-    <field-descriptor
-        name="body"
-        column="BODY"
-        jdbc-type="LONGVARCHAR"
-    />
-    <field-descriptor
-        name="keyConversationThread"
-        column="KEY_CONVERSATION_THREAD"
-        jdbc-type="INTEGER"
-    />
-    <field-descriptor
-        name="keyCreator"
-        column="KEY_CREATOR"
-        jdbc-type="INTEGER"
-    />
-        <field-descriptor
-        name="keyRootDomainObject"
-        column="KEY_ROOT_DOMAIN_OBJECT"
-        jdbc-type="INTEGER"
-    />
+	    
+                 
+    
+    
+    
+        
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ForumBookmark -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ForumBookmark" table="FORUM_BOOKMARK">
-	<field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor
-        name="receivePostsByEmail"
-        column="RECEIVE_POSTS_BY_EMAIL"
-        jdbc-type="BIT"
-    />    
-    <field-descriptor
-        name="keyPerson"
-        column="KEY_PERSON"
-        jdbc-type="INTEGER"
-    />
-    <field-descriptor
-        name="keyForum"
-        column="KEY_FORUM"
-        jdbc-type="INTEGER"
-    />
+	
+        
+    
+    
 </class-descriptor>

@@ -2,79 +2,20 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.ExecutionCourse -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.ExecutionCourse"  table="EXECUTION_COURSE">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="nome"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="sigla"
-		column="CODE"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="theoreticalHours"
-		column="THEORETICAL_HOURS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="praticalHours"
-		column="PRATICAL_HOURS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="theoPratHours"
-		column="THEO_PRAT_HOURS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="labHours"
-		column="LAB_HOURS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="keyExecutionPeriod"
-		column="KEY_EXECUTION_PERIOD"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyCourseReport"
-		column="KEY_COURSE_REPORT"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyEvaluationMethod"
-		column="KEY_EVALUATION_METHOD"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keySite"
-		column="KEY_SITE"
-		jdbc-type="INTEGER"
-	/>
-    <field-descriptor
-    	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-    />
-	<field-descriptor
-		 name="comment"
-         column="COMMENT"
-        jdbc-type="LONGVARCHAR"
-	/>	
-	<field-descriptor
-		 name="keyExecutionCourseWebsite"
-         column="KEY_EXECUTION_COURSE_WEBSITE"
-        jdbc-type="INTEGER"
-	/>		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    
+		
+			
 	
 		
 	

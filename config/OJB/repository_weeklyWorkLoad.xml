@@ -1,35 +1,9 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad" table="WEEKLY_WORK_LOAD">
-	<field-descriptor
-			name="idInternal"
-			column="ID_INTERNAL"
-			jdbc-type="INTEGER"
-			primarykey="true"
-			autoincrement="true"
-		/>
-	<field-descriptor
-			name="keyAttends"
-			column="KEY_ATTENDS"
-			jdbc-type="INTEGER"
-		/>
-	<field-descriptor
-			name="weekOffset"
-			column="WEEK_OFFSET"
-			jdbc-type="INTEGER"
-		/>
-	<field-descriptor
-			name="contact"
-			column="CONTACT"
-			jdbc-type="INTEGER"
-		/>
-	<field-descriptor
-			name="autonomousStudy"
-			column="AUTONOMOUS_STUDY"
-			jdbc-type="INTEGER"
-		/>
-	<field-descriptor
-			name="other"
-			column="OTHER"
-			jdbc-type="INTEGER"
-		/>
+	
+	
+	
+	
+	
+	
 	
 </class-descriptor>

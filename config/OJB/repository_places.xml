@@ -3,24 +3,9 @@
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Campus -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Campus" table="CAMPUS">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>	
-	<field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-	  	jdbc-type="INTEGER"
-	  	locking="false"
-	/>
+		
+	
+	
                 
    
 </class-descriptor>

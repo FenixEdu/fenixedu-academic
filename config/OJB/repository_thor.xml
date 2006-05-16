@@ -2,215 +2,57 @@
 <class-descriptor class="middleware.thor.Atribuicaodisciplinas"
   table="AtribuicaoDisciplinas"
 >
-  <field-descriptor id="0"
-    name="numepoca"
-    column="NumEpoca"
-    jdbc-type="SMALLINT"
-  />
-  <field-descriptor id="1"
-    name="turma"
-    column="Turma"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="2"
-    name="disciplina"
-    column="Disciplina"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="3"
-    name="tipoaula"
-    column="TipoAula"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="4"
-    name="numdivisao"
-    column="NumDivisao"
-    jdbc-type="SMALLINT"
-  />
-  <field-descriptor id="5"
-    name="horasmax"
-    column="HorasMax"
-    jdbc-type="DOUBLE"
-  />
-  <field-descriptor id="6"
-    name="horasdadas"
-    column="HorasDadas"
-    jdbc-type="SMALLINT"
-  />
-  <field-descriptor id="7"
-    name="horasaula"
-    column="HorasAula"
-    jdbc-type="DOUBLE"
-  />
-  <field-descriptor id="8"
-    name="alunosdivisao"
-    column="AlunosDivisao"
-    jdbc-type="SMALLINT"
-  />
-  <field-descriptor id="9"
-    name="salapreferencial"
-    column="SalaPreferencial"
-    jdbc-type="VARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.thor.Aulas"
   table="Aulas"
 >
-  <field-descriptor id="0"
-    name="id"
-    column="id"
-    jdbc-type="SMALLINT"
-    primarykey="true"
-  />
-  <field-descriptor id="1"
-    name="numepoca"
-    column="NumEpoca"
-    jdbc-type="SMALLINT"
-  />
-  <field-descriptor id="2"
-    name="turma"
-    column="Turma"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="3"
-    name="dia"
-    column="Dia"
-    jdbc-type="SMALLINT"
-  />
-  <field-descriptor id="4"
-    name="hora"
-    column="Hora"
-    jdbc-type="SMALLINT"
-  />
-  <field-descriptor id="5"
-    name="disciplina"
-    column="Disciplina"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="6"
-    name="tipoaula"
-    column="TipoAula"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="7"
-    name="numturno"
-    column="NumTurno"
-    jdbc-type="SMALLINT"
-  />
-  <field-descriptor id="8"
-    name="sala"
-    column="Sala"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="9"
-    name="fixa"
-    column="Fixa"
-    jdbc-type="TINYINT"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.thor.Disciplinas"
   table="Disciplinas"
 >
-  <field-descriptor id="0"
-    name="sigla"
-    column="Sigla"
-    jdbc-type="VARCHAR"
-    primarykey="true"
-  />
-  <field-descriptor id="1"
-    name="nome"
-    column="Nome"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="2"
-    name="aulas_teoricas"
-    column="Aulas_Teoricas"
-    jdbc-type="TINYINT"
-  />
-  <field-descriptor id="3"
-    name="aulas_praticas"
-    column="Aulas_Praticas"
-    jdbc-type="TINYINT"
-  />
-  <field-descriptor id="4"
-    name="tipo_sala_teorica"
-    column="Tipo_Sala_Teorica"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="5"
-    name="tipo_sala_pratica"
-    column="Tipo_Sala_Pratica"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="6"
-    name="tipo_sala_teorica_pratica"
-    column="Tipo_Sala_Teorica_Pratica"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="7"
-    name="tipo_sala_laboratorio"
-    column="Tipo_Sala_Laboratorio"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="8"
-    name="epoca_inicio"
-    column="Epoca_Inicio"
-    jdbc-type="SMALLINT"
-  />
-  <field-descriptor id="9"
-    name="epoca_fim"
-    column="Epoca_Fim"
-    jdbc-type="SMALLINT"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.thor.Turmas"
   table="Turmas"
 >
-  <field-descriptor id="0"
-    name="sigla"
-    column="Sigla"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="1"
-    name="titulo"
-    column="Titulo"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="2"
-    name="epoca_inicio"
-    column="Epoca_Inicio"
-    jdbc-type="DOUBLE"
-  />
-  <field-descriptor id="3"
-    name="epoca_fim"
-    column="Epoca_Fim"
-    jdbc-type="VARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+      
 </class-descriptor>

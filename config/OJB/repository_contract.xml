@@ -3,49 +3,14 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.Contract" 
 	table="CONTRACT">
 	
-	<field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-	/>
-	<field-descriptor 
-	   name="beginDate"    
-	   column="BEGIN_DATE"  
-	   jdbc-type="DATE"
-    />
-	<field-descriptor 	
-	   name="endDate"    
-	   column="END_DATE"  
-	   jdbc-type="DATE"
-    />
-	<field-descriptor  
-	   name="keySalaryUnit"    
-	   column="KEY_SALARY_UNIT"  
-	   jdbc-type="INTEGER"
-    />
-	<field-descriptor 
-	   name="keyMailingUnit"    
-	   column="KEY_MAILING_UNIT"  
-	   jdbc-type="INTEGER"
-    />
-	<field-descriptor  
-	   name="keyWorkingUnit"    
-	   column="KEY_WORKING_UNIT"  
-	   jdbc-type="INTEGER"
-    />    
-	<field-descriptor  
-	   name="keyEmployee"    
-	   column="KEY_EMPLOYEE"  
-	   jdbc-type="INTEGER"
-    />
-	<field-descriptor 
-	   name="contractType"    
-	   column="CONTRACT_TYPE"  
-	   jdbc-type="VARCHAR"
-	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ContractType2SqlContractTypeConversion"
-    /> 
+	
+	
+	
+	
+	
+	    
+	
+	 
 	
 
 	

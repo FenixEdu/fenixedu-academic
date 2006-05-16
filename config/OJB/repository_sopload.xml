@@ -4,189 +4,53 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.SOPAtribuicaoDisciplinas"
    	  table="SOPATRIBUICAO_DISCIPLINAS"
    >
-      <field-descriptor id="1"
-         name="codigoInterno"
-         column="CODIGO_INTERNO"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="numeroEpoca"
-         column="NUMERO_EPOCA"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="3"
-         name="turma"
-         column="TURMA"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="6"
-         name="disciplina"
-         column="DISCIPLINA"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="7"
-         name="tipoAula"
-         column="TIPO_AULA"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="8"
-         name="numeroDivisao"
-         column="NUMERO_DIVISAO"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="9"
-         name="horasMaximas"
-         column="HORAS_MAXIMAS"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+      
+      
+      
+      
+      
+      
+      
+      
    </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.SOPAulas -->
    <class-descriptor class="net.sourceforge.fenixedu.domain.SOPAulas"
    	  table="SOPAULAS"
    >
-      <field-descriptor id="1"
-         name="codigoInterno"
-         column="CODIGO_INTERNO"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="numeroEpoca"
-         column="NUMERO_EPOCA"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="3"
-         name="turma"
-         column="TURMA"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="4"
-         name="dia"
-         column="DIA"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="5"
-         name="hora"
-         column="HORA"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="6"
-         name="disciplina"
-         column="DISCIPLINA"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="7"
-         name="tipoAula"
-         column="TIPO_AULA"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="8"
-         name="numeroTurno"
-         column="NUMERO_TURNO"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="9"
-         name="sala"
-         column="SALA"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="10"
-         name="fixa"
-         column="FIXA"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
    </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.SOPDisciplinas -->
    <class-descriptor class="net.sourceforge.fenixedu.domain.SOPDisciplinas"
    	  table="SOPDISCIPLINAS"
    >
-      <field-descriptor id="1"
-         name="codigoInterno"
-         column="CODIGO_INTERNO"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="sigla"
-         column="SIGLA"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="3"
-         name="nome"
-         column="NOME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+      
+      
+      
+      
    </class-descriptor>
 
    <class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourseLoad"
    	  table="CARGAS_CURRICULARES"
    >
-      <field-descriptor id="1"
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="degreeCode"
-         column="CODE"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="3"
-         name="courseName"
-         column="NAME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="6"
-         name="theoHours"
-         column="THEORETICAL_HOURS"
-         jdbc-type="DOUBLE"
-      />
-      <field-descriptor id="7"
-         name="pratHours"
-         column="PRATICAL_HOURS"
-         jdbc-type="DOUBLE"
-      />
-      <field-descriptor id="8"
-         name="theoPratHours"
-         column="THEO_PRAT_HOURS"
-         jdbc-type="DOUBLE"
-      />
-      <field-descriptor id="9"
-         name="labHours"
-         column="LAB_HOURS"
-         jdbc-type="DOUBLE"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+      
+      
+      
+      
+      
+      
+      
+      
    </class-descriptor>
 <!-- Mapping of User defined classes ends here -->

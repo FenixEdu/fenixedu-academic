@@ -2,965 +2,255 @@
 <class-descriptor class="middleware.posgrad.Posgrad_aluno_mestrado"
   table="posgrad_aluno_mestrado"
 >
-  <field-descriptor id="11"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="12"
-    name="numero"
-    column="numero"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="13"
-    name="codigopessoa"
-    column="codigoPessoa"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="14"
-    name="codigocursomestrado"
-    column="codigoCursoMestrado"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="15"
-    name="especializacao"
-    column="especializacao"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="16"
-    name="anocandidatura"
-    column="anoCandidatura"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="17"
-    name="escolalicenciatura"
-    column="escolaLicenciatura"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="18"
-    name="anolicenciatura"
-    column="anoLicenciatura"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="19"
-    name="media"
-    column="media"
-    jdbc-type="DOUBLE"
-  />
-  <field-descriptor id="20"
-    name="creditos"
-    column="creditos"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="21"
-    name="observacoes"
-    column="observacoes"
-    jdbc-type="VARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_area_cientifica"
   table="posgrad_area_cientifica"
 >
-  <field-descriptor id="4"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="5"
-    name="nome"
-    column="nome"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="6"
-    name="codigocursomestrado"
-    column="codigoCursoMestrado"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="7"
-    name="anolectivo"
-    column="anoLectivo"
-    jdbc-type="VARCHAR"
-  />
   
-  <field-descriptor id="8"
-    name="codigoInternoRamo"
-    column="codigoInternoRamo"
-    jdbc-type="INTEGER"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_candidato_mestrado"
   table="posgrad_candidato_mestrado"
 >
-  <field-descriptor id="37"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="38"
-    name="numerodocumentoidentificacao"
-    column="numeroDocumentoIdentificacao"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="39"
-    name="tipodocumentoidentificacao"
-    column="tipoDocumentoIdentificacao"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="40"
-    name="localemissaodocumentoidentificacao"
-    column="localEmissaoDocumentoIdentificacao"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="41"
-    name="dataemissaodocumentoidentificacao"
-    column="dataEmissaoDocumentoIdentificacao"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="42"
-    name="nome"
-    column="nome"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="43"
-    name="sexo"
-    column="sexo"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="44"
-    name="estadocivil"
-    column="estadoCivil"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="45"
-    name="nascimento"
-    column="nascimento"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="46"
-    name="nomepai"
-    column="nomePai"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="47"
-    name="nomemae"
-    column="nomeMae"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="48"
-    name="nacionalidade"
-    column="nacionalidade"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="49"
-    name="freguesianaturalidade"
-    column="freguesiaNaturalidade"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="50"
-    name="concelhonaturalidade"
-    column="concelhoNaturalidade"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="51"
-    name="distritonaturalidade"
-    column="distritoNaturalidade"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="52"
-    name="morada"
-    column="morada"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="53"
-    name="localidade"
-    column="localidade"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="54"
-    name="codigopostal"
-    column="codigoPostal"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="55"
-    name="freguesiamorada"
-    column="freguesiaMorada"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="56"
-    name="concelhomorada"
-    column="concelhoMorada"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="57"
-    name="distritomorada"
-    column="distritoMorada"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="58"
-    name="telefone"
-    column="telefone"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="59"
-    name="telemovel"
-    column="telemovel"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="60"
-    name="email"
-    column="email"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="61"
-    name="enderecoweb"
-    column="enderecoWeb"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="62"
-    name="numcontribuinte"
-    column="numContribuinte"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="63"
-    name="profissao"
-    column="profissao"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="64"
-    name="licenciatura"
-    column="licenciatura"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="65"
-    name="username"
-    column="username"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="66"
-    name="password"
-    column="password"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="67"
-    name="codigocursomestrado"
-    column="codigoCursoMestrado"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="68"
-    name="numerocandidato"
-    column="numeroCandidato"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="69"
-    name="anocandidatura"
-    column="anoCandidatura"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="70"
-    name="especializacao"
-    column="especializacao"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="71"
-    name="escolalicenciatura"
-    column="escolaLicenciatura"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="72"
-    name="anolicenciatura"
-    column="anoLicenciatura"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="73"
-    name="media"
-    column="media"
-    jdbc-type="DOUBLE"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_candidato_situacao"
   table="posgrad_candidato_situacao"
 >
-  <field-descriptor id="6"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="7"
-    name="codigocandidato"
-    column="codigoCandidato"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="8"
-    name="codigosituacao"
-    column="codigoSituacao"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="9"
-    name="data"
-    column="data"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="10"
-    name="observacoes"
-    column="observacoes"
-    jdbc-type="LONGVARCHAR"
-  />
-  <field-descriptor id="11"
-    name="valido"
-    column="valido"
-    jdbc-type="TINYINT"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_cargo"
   table="posgrad_cargo"
 >
-  <field-descriptor id="2"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="3"
-    name="cargonome"
-    column="cargoNome"
-    jdbc-type="CHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_curso_mestrado"
   table="posgrad_curso_mestrado"
 >
-  <field-descriptor id="3"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="4"
-    name="nomemestrado"
-    column="nomeMestrado"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="5"
-    name="anolectivo"
-    column="anoLectivo"
-    jdbc-type="VARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_disc_area"
   table="posgrad_disc_area"
 >
-  <field-descriptor id="4"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="5"
-    name="codigoareacientifica"
-    column="codigoAreaCientifica"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="6"
-    name="codigodisciplina"
-    column="codigoDisciplina"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="7"
-    name="anolectivo"
-    column="anoLectivo"
-    jdbc-type="VARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_disc_area_aluno"
   table="posgrad_disc_area_aluno"
 >
-  <field-descriptor id="8"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="9"
-    name="codigoaluno"
-    column="codigoAluno"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="10"
-    name="codigoareadisciplina"
-    column="codigoAreaDisciplina"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="11"
-    name="dataexame"
-    column="dataExame"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="12"
-    name="datalancamento"
-    column="dataLancamento"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="13"
-    name="nota"
-    column="nota"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="14"
-    name="equivalencia"
-    column="equivalencia"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="15"
-    name="creditos"
-    column="creditos"
-    jdbc-type="VARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_disciplina"
   table="posgrad_disciplina"
 >
-  <field-descriptor id="3"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="4"
-    name="nome"
-    column="nome"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="5"
-    name="codigocursomestrado"
-    column="codigoCursoMestrado"
-    jdbc-type="INTEGER"
-  />
   
-  <field-descriptor id="6"
-    name="creditos"
-    column="creditos"
-    jdbc-type="DOUBLE"
-  />
-  <field-descriptor id="7"
-    name="sigla"
-    column="sigla"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="8"
-    name="tipo"
-    column="tipo"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="9"
-    name="codigoCurricularCourse"
-    column="codigoCurricularCourse"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="10"
-    name="optativa"
-    column="optativa"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="11"
-    name="semestre"
-    column="semestre"
-    jdbc-type="INTEGER"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_docente"
   table="posgrad_docente"
 >
-  <field-descriptor id="6"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="7"
-    name="cat"
-    column="cat"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="8"
-    name="numdec"
-    column="numdec"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="9"
-    name="bi"
-    column="bi"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="10"
-    name="cont"
-    column="cont"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="11"
-    name="nome"
-    column="nome"
-    jdbc-type="VARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_guia"
   table="posgrad_guia"
 >
-  <field-descriptor id="13"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="14"
-    name="numeroguia"
-    column="numeroGuia"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="15"
-    name="dataemissao"
-    column="dataEmissao"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="16"
-    name="anoguia"
-    column="anoGuia"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="17"
-    name="situacao"
-    column="situacao"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="18"
-    name="entidadecontribuinte"
-    column="entidadeContribuinte"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="19"
-    name="entidadenome"
-    column="entidadeNome"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="20"
-    name="entidademorada"
-    column="entidadeMorada"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="21"
-    name="numeroaluno"
-    column="numeroAluno"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="22"
-    name="tipoaluno"
-    column="tipoAluno"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="23"
-    name="codigocursomestrado"
-    column="codigoCursoMestrado"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="24"
-    name="total"
-    column="total"
-    jdbc-type="FLOAT"
-  />
-  <field-descriptor id="25"
-    name="observacoes"
-    column="observacoes"
-    jdbc-type="LONGVARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_guia_tabela"
   table="posgrad_guia_tabela"
 >
-  <field-descriptor id="3"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="4"
-    name="codigoguia"
-    column="codigoGuia"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="5"
-    name="codigotabela"
-    column="codigoTabela"
-    jdbc-type="INTEGER"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_pagamento_guia"
   table="posgrad_pagamento_guia"
 >
-  <field-descriptor id="5"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="6"
-    name="codigoguia"
-    column="codigoGuia"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="7"
-    name="datapagamento"
-    column="dataPagamento"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="8"
-    name="montante"
-    column="montante"
-    jdbc-type="FLOAT"
-  />
-  <field-descriptor id="9"
-    name="numeroprestacao"
-    column="numeroPrestacao"
-    jdbc-type="INTEGER"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_pessoa"
   table="posgrad_pessoa"
 >
-  <field-descriptor id="29"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="30"
-    name="numerodocumentoidentificacao"
-    column="numeroDocumentoIdentificacao"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="31"
-    name="tipodocumentoidentificacao"
-    column="tipoDocumentoIdentificacao"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="32"
-    name="localemissaodocumentoidentificacao"
-    column="localEmissaoDocumentoIdentificacao"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="33"
-    name="dataemissaodocumentoidentificacao"
-    column="dataEmissaoDocumentoIdentificacao"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="34"
-    name="nome"
-    column="nome"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="35"
-    name="sexo"
-    column="sexo"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="36"
-    name="estadocivil"
-    column="estadoCivil"
-    jdbc-type="CHAR"
-  />
-  <field-descriptor id="37"
-    name="nascimento"
-    column="nascimento"
-    jdbc-type="DATE"
-  />
-  <field-descriptor id="38"
-    name="nomepai"
-    column="nomePai"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="39"
-    name="nomemae"
-    column="nomeMae"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="40"
-    name="nacionalidade"
-    column="nacionalidade"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="41"
-    name="freguesianaturalidade"
-    column="freguesiaNaturalidade"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="42"
-    name="concelhonaturalidade"
-    column="concelhoNaturalidade"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="43"
-    name="distritonaturalidade"
-    column="distritoNaturalidade"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="44"
-    name="morada"
-    column="morada"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="45"
-    name="localidade"
-    column="localidade"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="46"
-    name="codigopostal"
-    column="codigoPostal"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="47"
-    name="freguesiamorada"
-    column="freguesiaMorada"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="48"
-    name="concelhomorada"
-    column="concelhoMorada"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="49"
-    name="distritomorada"
-    column="distritoMorada"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="50"
-    name="telefone"
-    column="telefone"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="51"
-    name="telemovel"
-    column="telemovel"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="52"
-    name="email"
-    column="email"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="53"
-    name="enderecoweb"
-    column="enderecoWeb"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="54"
-    name="numcontribuinte"
-    column="numContribuinte"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="55"
-    name="profissao"
-    column="profissao"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="56"
-    name="username"
-    column="username"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="57"
-    name="password"
-    column="password"
-    jdbc-type="VARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_pessoa_cargo"
   table="posgrad_pessoa_cargo"
 >
-  <field-descriptor id="4"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="5"
-    name="codigopessoa"
-    column="codigoPessoa"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="6"
-    name="codigocargo"
-    column="codigoCargo"
-    jdbc-type="INTEGER"
-  />
-  <field-descriptor id="7"
-    name="data"
-    column="data"
-    jdbc-type="DATE"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_situacao"
   table="posgrad_situacao"
 >
-  <field-descriptor id="2"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="3"
-    name="situacao"
-    column="situacao"
-    jdbc-type="CHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+      
 </class-descriptor>
 
 <class-descriptor class="middleware.posgrad.Posgrad_tabela_precos"
   table="posgrad_tabela_precos"
 >
-  <field-descriptor id="5"
-    name="codigointerno"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-  />
-  <field-descriptor id="6"
-    name="tipo"
-    column="tipo"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="7"
-    name="designacao"
-    column="designacao"
-    jdbc-type="VARCHAR"
-  />
-  <field-descriptor id="8"
-    name="montante"
-    column="montante"
-    jdbc-type="FLOAT"
-  />
-  <field-descriptor id="9"
-    name="valido"
-    column="valido"
-    jdbc-type="INTEGER"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+  
+  
+  
+  
+  
+      
 </class-descriptor>

@@ -5,63 +5,19 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine" />
 
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-         name="keyDegreeModule"
-         column="KEY_DEGREE_MODULE"
-         jdbc-type="INTEGER"
-    />	
-    <field-descriptor
-         name="keyCurriculumGroup"
-         column="KEY_CURRICULUM_GROUP"
-         jdbc-type="INTEGER"
-    />
-    <field-descriptor
-		name="keyRootDomainObject"
-		column="KEY_ROOT_DOMAIN_OBJECT"
-		jdbc-type="INTEGER"
-	/>
+	
+	
+    	
+    
+    
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup" table="CURRICULUM_MODULE">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-    />	
-    <field-descriptor
-         name="keyDegreeModule"
-         column="KEY_DEGREE_MODULE"
-         jdbc-type="INTEGER"
-    />	
-    <field-descriptor
-         name="keyCurriculumGroup"
-         column="KEY_CURRICULUM_GROUP"
-         jdbc-type="INTEGER"
-    />				
-    <field-descriptor
-         name="keyParentStudentCurricularPlan"
-         column="KEY_NEW_STUDENT_CURRICULAR_PLAN"
-         jdbc-type="INTEGER"
-    />			
+	
+		
+    	
+    				
+    			
 
 </class-descriptor>
 
@@ -70,91 +26,29 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.Credits" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.Enrolment" />    
 
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-         name="keyDegreeModule"
-         column="KEY_DEGREE_MODULE"
-         jdbc-type="INTEGER"
-    />	
-    <field-descriptor
-         name="keyCurriculumGroup"
-         column="KEY_CURRICULUM_GROUP"
-         jdbc-type="INTEGER"
-    />
-    <field-descriptor
-		name="keyRootDomainObject"
-		column="KEY_ROOT_DOMAIN_OBJECT"
-		jdbc-type="INTEGER"
-	/>				
+	
+	
+    	
+    
+    				
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.Credits" table="CURRICULUM_MODULE">
 
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-         name="keyDegreeModule"
-         column="KEY_DEGREE_MODULE"
-         jdbc-type="INTEGER"
-    />	
-    <field-descriptor
-         name="keyCurriculumGroup"
-         column="KEY_CURRICULUM_GROUP"
-         jdbc-type="INTEGER"
-    />					
-    <field-descriptor
-         name="givenCredits"
-         column="GIVEN_CREDITS"
-         jdbc-type="INTEGER"
-    />	
+	
+	
+    	
+    					
+    	
 	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence" table="CURRICULUM_MODULE">
 
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-    />		
-    <field-descriptor
-         name="keyDegreeModule"
-         column="KEY_DEGREE_MODULE"
-         jdbc-type="INTEGER"
-    />	
-    <field-descriptor
-         name="keyCurriculumGroup"
-         column="KEY_CURRICULUM_GROUP"
-         jdbc-type="INTEGER"
-    />			
+	
+			
+    	
+    			
 
 	
 </class-descriptor>

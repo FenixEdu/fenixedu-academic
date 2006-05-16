@@ -8,39 +8,12 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.grant.owner.GrantOwner"
    	  table="GRANT_OWNER"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-       <field-descriptor
-		name="keyPerson"
-		column="KEY_PERSON"
-		jdbc-type="INTEGER"
-	/>
-	 <field-descriptor
-		name="number"
-		column="NUMBER"
-		jdbc-type="INTEGER"
-	/>
-	 <field-descriptor
-		name="dateSendCGD"
-		column="DATE_SEND_CGD"
-		jdbc-type="DATE"
-	/>
-	 <field-descriptor
-		name="cardCopyNumber"
-		column="CARD_COPY_NUMBER"
-		jdbc-type="INTEGER"
-	/>
+      
+      
+       
+	 
+	 
+	 
 	   
 	    
 	
@@ -54,54 +27,15 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
    	  table="GRANT_CONTRACT"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-	 <field-descriptor
-		name="contractNumber"
-		column="NUMBER"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="dateAcceptTerm"
-		column="DATE_ACCEPT_TERM"
-		jdbc-type="DATE"
-	/>
-	 <field-descriptor
-		name="endContractMotive"
-		column="END_CONTRACT_MOTIVE"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="keyGrantOwner"
-		column="KEY_GRANT_OWNER"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyGrantType"
-		column="KEY_GRANT_TYPE"
-		jdbc-type="INTEGER"
-	/>
- 	<field-descriptor
-		name="keyGrantCostCenter"
-		column="KEY_COST_CENTER"
-		jdbc-type="INTEGER"
-	/>
- 	<field-descriptor
-		name="keyGrantInsurance"
-		column="KEY_GRANT_INSURANCE"
-		jdbc-type="INTEGER"
-	/>
+      
+      
+	 
+	
+	 
+	
+	
+ 	
+ 	
 </class-descriptor>
    
    
@@ -113,39 +47,12 @@
   <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement"
    	  table="GRANT_CONTRACT_MOVEMENT"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-	 <field-descriptor
-		name="location"
-		column="LOCATION"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="departureDate"
-		column="DATE_DEPARTURE"
-		jdbc-type="DATE"
-	/>
-	 <field-descriptor
-		name="arrivalDate"
-		column="DATE_ARRIVAL"
-		jdbc-type="DATE"
-	/>
-	<field-descriptor
-		name="keyGrantContract"
-		column="KEY_GRANT_CONTRACT"
-		jdbc-type="INTEGER"
-	/>
+      
+      
+	 
+	
+	 
+	
 	 
 	
    </class-descriptor>
@@ -159,70 +66,19 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime"
    	  table="GRANT_CONTRACT_REGIME"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      <field-descriptor
-      	name="state"
-      	column="STATE"
-      	jdbc-type="INTEGER"
-      />
-	  <field-descriptor
-		name="dateBeginContract"
-		column="DATE_BEGIN_CONTRACT"
-		jdbc-type="DATE"
-	  />
-	  <field-descriptor
-		name="dateEndContract"
-		column="DATE_END_CONTRACT"
-		jdbc-type="DATE"
-	  />
-	  <field-descriptor
-		name="dateSendDispatchCC"
-		column="DATE_SEND_DISPATCH_CC"
-		jdbc-type="DATE"
-	  />
-	  <field-descriptor
-		name="dateDispatchCC"
-		column="DATE_DISPATCH_CC"
-		jdbc-type="DATE"
-	  />
-	  <field-descriptor
-		name="dateSendDispatchCD"
-		column="DATE_SEND_DISPATCH_CD"
-		jdbc-type="DATE"
-	  />
-	  <field-descriptor
-		name="dateDispatchCD"
-		column="DATE_DISPATCH_CD"
-		jdbc-type="DATE"
-	  />
-	  <field-descriptor
-		name="keyTeacher"
-		column="KEY_TEACHER"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyGrantContract"
-		column="KEY_GRANT_CONTRACT"
-		jdbc-type="INTEGER"
-	/>
+      
+      
+      
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	
 
-	<field-descriptor
-			name="keyGrantCostCenter"
-			column="KEY_COST_CENTER"
-			jdbc-type="INTEGER"
-		/>
+	
 	 
 	 
 	 		
@@ -235,54 +91,15 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantType"
    	  table="GRANT_TYPE"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-       <field-descriptor
-		name="name"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	 <field-descriptor
-		name="sigla"
-		column="SIGLA"
-		jdbc-type="VARCHAR"
-	/>
-	 <field-descriptor
-		name="minPeriodDays"
-		column="MIN_PERIOD_DAYS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="maxPeriodDays"
-		column="MAX_PERIOD_DAYS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="indicativeValue"
-		column="INDICATIVE_VALUE"
-		jdbc-type="DOUBLE"
-	/>
-	 <field-descriptor
-		name="source"
-		column="SOURCE"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="state"
-		column="STATE"
-		jdbc-type="DATE"
-	/>   
+      
+      
+       
+	 
+	 
+	
+	
+	 
+	   
 		
    </class-descriptor>
    
@@ -293,39 +110,12 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher"
    	  table="GRANT_ORIENTATION_TEACHER"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-       <field-descriptor
-		name="beginDate"
-		column="DATE_BEGIN"
-		jdbc-type="DATE"
-	/>
-	 <field-descriptor
-		name="endDate"
-		column="DATE_END"
-		jdbc-type="DATE"
-	/>
-	 <field-descriptor
-		name="keyOrientationTeacher"
-		column="KEY_GRANT_TEACHER"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyGrantContract"
-		column="KEY_GRANT_CONTRACT"
-		jdbc-type="INTEGER"
-	/>
+      
+      
+       
+	 
+	 
+	
 	
 	 
    </class-descriptor>
@@ -351,44 +141,13 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantProject"
    	  table="GRANT_PAYMENT_ENTITY"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      <field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-      />
-       <field-descriptor
-		name="number"
-		column="NUMBER"
-		jdbc-type="VARCHAR"
-	/>
-	 <field-descriptor
-		name="designation"
-		column="DESIGNATION"
-		jdbc-type="VARCHAR"
-	/>
-	 <field-descriptor
-		name="keyResponsibleTeacher"
-		column="KEY_TEACHER"
-		jdbc-type="INTEGER"
-	  />
-	  <field-descriptor
-		name="keyGrantCostCenter"
-		column="KEY_COST_CENTER"
-		jdbc-type="INTEGER"
-	  />
+      
+      
+      
+       
+	 
+	 
+	  
 	  
 	  
 	  
@@ -402,39 +161,12 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
    	  table="GRANT_PAYMENT_ENTITY"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      <field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-      	name="number"
-      	column="NUMBER"
-      	jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-      	name="designation"
-      	column="DESIGNATION"
-      	jdbc-type="VARCHAR"
-      />
-       <field-descriptor
-		name="keyResponsibleTeacher"
-		column="KEY_TEACHER"
-		jdbc-type="INTEGER"
-	  />
+      
+      
+      
+      
+      
+       
 	  
 	 
 	
@@ -451,39 +183,12 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantPart"
    	  table="GRANT_PART"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-	 <field-descriptor
-		name="percentage"
-		column="PERCENTAGE"
-		jdbc-type="INTEGER"
-	 />
-	 <field-descriptor
-		name="keyGrantPaymentEntity"
-		column="KEY_GRANT_PAYMENT_ENTITY"
-		jdbc-type="INTEGER"
-	 />
-	 <field-descriptor
-		name="keyGrantSubsidy"
-		column="KEY_GRANT_SUBSIDY"
-		jdbc-type="INTEGER"
-	 />
-	 <field-descriptor
-		name="keyResponsibleTeacher"
-		column="KEY_TEACHER"
-		jdbc-type="INTEGER"
-	 />
+      
+      
+	 
+	 
+	 
+	 
 	 
 	
 	
@@ -495,54 +200,15 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy"
    	  table="GRANT_SUBSIDY"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      <field-descriptor		
-      	name="state"
-      	column="STATE"
-      	jdbc-type="INTEGER"
-      />
-      <field-descriptor
-		name="dateBeginSubsidy"
-		column="DATE_BEGIN_SUBSIDY"
-		jdbc-type="DATE"
-	  />
-	  <field-descriptor
-		name="dateEndSubsidy"
-		column="DATE_END_SUBSIDY"
-		jdbc-type="DATE"
-	  />
-	  <field-descriptor
-		name="valueFullName"
-		column="VALUE_FULL_NAME"
-		jdbc-type="VARCHAR"
-	  />
-	 <field-descriptor
-		name="value"
-		column="VALUE"
-		jdbc-type="DOUBLE"
-	 />
-	 <field-descriptor
-		name="totalCost"
-		column="TOTAL_COST"
-		jdbc-type="DOUBLE"
-	 />
-	 <field-descriptor
-		name="keyGrantContract"
-		column="KEY_GRANT_CONTRACT"
-		jdbc-type="INTEGER"
-	 />
+      
+      
+      
+      
+	  
+	  
+	 
+	 
+	 
 	
 	
    </class-descriptor>
@@ -555,44 +221,13 @@
    <class-descriptor class="net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance"
    	  table="GRANT_INSURANCE"
    >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
-      <field-descriptor
-		name="dateBeginInsurance"
-		column="DATE_BEGIN_INSURANCE"
-		jdbc-type="DATE"
-	  />
-	  <field-descriptor
-		name="dateEndInsurance"
-		column="DATE_END_INSURANCE"
-		jdbc-type="DATE"
-	  />
-	 <field-descriptor
-		name="totalValue"
-		column="TOTAL_VALUE"
-		jdbc-type="DOUBLE"
-	 />
-	 <field-descriptor
-		name="keyGrantContract"
-		column="KEY_GRANT_CONTRACT"
-		jdbc-type="INTEGER"
-	 />
-	 <field-descriptor
-		name="keyGrantPaymentEntity"
-		column="KEY_GRANT_PAYMENT_ENTITY"
-		jdbc-type="INTEGER"
-	 />
+      
+      
+      
+	  
+	 
+	 
+	 
 	 
 	
    </class-descriptor>

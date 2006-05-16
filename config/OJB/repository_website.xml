@@ -7,78 +7,24 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.WebSite" table="WEBSITE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.SiteIST" />
-    <field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor
-         name="name"
-         column="NAME"
-    	 jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-         name="mail"
-         column="MAIL"
-    	 jdbc-type="VARCHAR"
-    />         
-    <field-descriptor
-         name="style"
-         column="STYLE"
-    	 jdbc-type="VARCHAR"
-   	/>	    
-	<field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-    />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+    
+    
+             
+    	    
+	
+      
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.SiteIST -->
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.SiteIST" table="WEBSITE">
-    <field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor
-         name="name"
-         column="NAME"
-    	 jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-         name="mail"
-         column="MAIL"
-    	 jdbc-type="VARCHAR"
-    />         
-    <field-descriptor
-         name="style"
-         column="STYLE"
-    	 jdbc-type="VARCHAR"
-   	/>	    
-	<field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-    />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+    
+    
+             
+    	    
+	
+      
 </class-descriptor>
 	
 <!-- ******************************************************************************************************************************* -->
@@ -88,54 +34,15 @@
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.WebSiteSection -->
    <class-descriptor class="net.sourceforge.fenixedu.domain.WebSiteSection" table="WEBSITE_SECTION">
-    <field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor
-         name="name"
-         column="NAME"
-         jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-         name="ftpName"
-         column="FTP_NAME"
-         jdbc-type="VARCHAR"
-    />
-    <field-descriptor
-        name="size"
-         column="SIZE"
-         jdbc-type="INTEGER"
-      />
-    <field-descriptor
-        name="sortingOrder"
-         column="SORTING_ORDER"
-         jdbc-type="CHAR"
-      />
-    <field-descriptor
-        name="whatToSort"
-         column="WHAT_TO_SORT"
-         jdbc-type="CHAR"
-      />
-    <field-descriptor
-        name="excerptSize"
-         column="EXCERPT_SIZE"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="keyWebSite"
-         column="KEY_WEBSITE"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+    
+    
+    
+    
+    
+    
+    
+      
+      
       
     </class-descriptor>
 
@@ -146,90 +53,22 @@
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.WebSite_Item -->
    <class-descriptor class="net.sourceforge.fenixedu.domain.WebSiteItem" table="WEBSITE_ITEM">
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-         name="title"
-         column="TITLE"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="mainEntryText"
-         column="MAIN_ENTRY_TEXT"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor
-         name="excerpt"
-         column="EXCERPT"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor
-         name="published"
-         column="PUBLISHED"
-         jdbc-type="INTEGER"
-         conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
-      />
-	  <field-descriptor
-		 name="creationDate"
-		 column="CREATION_DATE"
-		 jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
-	   />
-      <field-descriptor
-         name="keyEditor"
-         column="KEY_EDITOR"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="authorName"
-         column="AUTHOR_NAME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="authorEmail"
-         column="AUTHOR_EMAIL"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="keywords"
-         column="KEYWORDS"
-         jdbc-type="LONGVARCHAR"
-      />	   
-      <field-descriptor
-         name="onlineBeginDay"
-         column="ONLINE_BEGIN_DAY"
-        jdbc-type="DATE"
-      />
-      <field-descriptor
-         name="onlineEndDay"
-         column="ONLINE_END_DAY"
-        jdbc-type="DATE"
-      />
-      <field-descriptor
-         name="itemBeginDay"
-         column="ITEM_BEGIN_DAY"
-        jdbc-type="DATE"
-      />
-      <field-descriptor
-         name="itemEndDay"
-         column="ITEM_END_DAY"
-        jdbc-type="DATE"
-      />
-      <field-descriptor
-         name="keyWebSiteSection"
-         column="KEY_WEBSITE_SECTION"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+      
+      
+      
+      
+      
+	  
+      
+      
+      
+      	   
+      
+      
+      
+      
+      
+      
       
       
    </class-descriptor>

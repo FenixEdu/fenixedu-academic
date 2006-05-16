@@ -3,38 +3,15 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod" table="CURRICULAR_PERIOD">
 
-	<field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
+	
     
-    <field-descriptor
-        name="keyParent"
-        column="KEY_PARENT"
-        jdbc-type="INTEGER"
-    />      
+          
     
-    <field-descriptor
-        name="keyDegreeCurricularPlan"
-        column="KEY_DEGREE_CURRICULAR_PLAN"
-        jdbc-type="INTEGER"
-    />      
+          
     
-    <field-descriptor
-        name="order"
-        column="CHILD_ORDER"
-        jdbc-type="INTEGER"
-    />      
+          
 
-    <field-descriptor
-        name="periodType"
-        column="PERIOD_TYPE"
-        jdbc-type="VARCHAR"
-        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularPeriodType2SqlCurricularPeriodTypeFieldConversion"
-    />      
+          
 
 		
 

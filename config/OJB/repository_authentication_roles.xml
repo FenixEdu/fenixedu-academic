@@ -4,49 +4,13 @@
      *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Role"
                   table="ROLE">
-    <field-descriptor
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor
-        name="keyRootDomainObject"
-        column="KEY_ROOT_DOMAIN_OBJECT"
-        jdbc-type="INTEGER"
-    />
-    <field-descriptor
-        name="roleType"
-        column="ROLE_TYPE"
-        nullable = "false"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaRoleType2SqlRoleTypeFieldConversion"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor 
-        name="portalSubApplication"
-        column="PORTAL_SUB_APPLICATION"
-		nullable="true"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor 
-        name="page"
-        column="PAGE"
-		nullable="true"
-        jdbc-type="VARCHAR"
-    />
-    <field-descriptor 
-        name="pageNameProperty"
-        column="PAGE_NAME_PROPERTY"
-		nullable="true"
-        jdbc-type="VARCHAR"
-    />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />
+    
+    
+    
+    
+    
+    
+      
      
 
 	
@@ -56,47 +20,19 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.Teacher -->
    <class-descriptor class="net.sourceforge.fenixedu.domain.Teacher" table="TEACHER">
    	  
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="false"
-      />      
-      <field-descriptor
-         name="teacherNumber"
-         column="TEACHER_NUMBER"
-         jdbc-type="INTEGER"/>
-
-      <field-descriptor
-         name="keyPerson"
-         column="KEY_PERSON"
-         jdbc-type="INTEGER"/>
-              
-	 <field-descriptor
-         name="keyServiceProviderRegime"
-         column="KEY_SERVICE_PROVIDER_REGIME"
-         jdbc-type="INTEGER"/>
       
- 	<field-descriptor
-         name="keyPublicationsNumber"
-         column="KEY_PUBLICATIONS_NUMBER"
-         jdbc-type="INTEGER"/>
-    
-	<field-descriptor
-		name="keyRootDomainObject"
-    	column="KEY_ROOT_DOMAIN_OBJECT"
-    	jdbc-type="INTEGER"/>
+            
+      
 
-      <field-descriptor
-         name="keyWeeklyOcupation"
-         column="KEY_WEEKLY_OCCUPATION"
-         jdbc-type="INTEGER"/>
+      
+              
+	 
+      
+ 	
+    
+	
+
+      
 
 
 </class-descriptor>
