@@ -1032,10 +1032,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     	final String executionDegreeOIDString = request.getParameter("executionDegreeOID");
     	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(executionDegreeOIDString));
     	final ExecutionYear executionYear = executionDegree.getExecutionYear();
-    	final String year = executionYear.getYear();
-    	final Integer yearPart1 = Integer.valueOf(Integer.valueOf(year.substring(0, 4)).intValue() + 1);
-    	final Integer yearPart2 = Integer.valueOf(Integer.valueOf(year.substring(5, 9)).intValue() + 1);
-    	final String yearString = yearPart1 + "-" + yearPart2;
+    	final String yearString = executionYear.getNextYearsYearString();
 
         try {
             response.setContentType("text/plain");

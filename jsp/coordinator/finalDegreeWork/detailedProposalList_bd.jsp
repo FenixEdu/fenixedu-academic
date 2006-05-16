@@ -15,7 +15,7 @@
 		</tr>
 		<tr>
 			<td bgcolor="#eae7e4" align="center" colspan="3">
-				<bean:write name="executionDegree" property="executionYear.year"/>
+				<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
 			</td>
 		</tr>
 		<tr>
