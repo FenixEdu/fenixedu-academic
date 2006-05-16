@@ -26,3 +26,8 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter Tables Types" alterTablesTypes.sql
+execute "Rename Columns" renameColumns.sql
+execute "Rename Date Columns" renameDateColumns.sql
+execute "Add Assiduity Missing Columns" addAssiduityMissingColumns.sql
