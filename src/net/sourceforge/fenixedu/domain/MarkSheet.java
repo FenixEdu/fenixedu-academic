@@ -74,7 +74,7 @@ public class MarkSheet extends MarkSheet_Base {
             if (occupationPeriod == null) {
                 throw new DomainException("error.evaluationDateNotInExamsPeriod");
             } else {
-                throw new DomainException("error.evaluationDateNotInExamsPeriod.withEvaluationDateAndDates",
+                throw new DomainException("error.evaluationDateNotInExamsPeriod.withEvaluationDateAndPeriodDates",
                         DateFormatUtil.format("dd/MM/yyyy", evaluationDate),
                         DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getStart()),
                         DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getEnd()));
