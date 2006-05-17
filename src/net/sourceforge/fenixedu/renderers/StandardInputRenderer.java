@@ -169,24 +169,36 @@ public class StandardInputRenderer extends InputRenderer {
             case 0:
                 MetaSlot slot = this.object.getSlots().get(rowIndex);
 
-                HtmlLabel label = new HtmlLabel();
-                label.setFor(slot.getKey().toString());
-                label.setText(slot.getLabel());
+                if (slot.isReadOnly()) {
+                    component = new HtmlText(slot.getLabel()); 
+                }
+                else {
+                    HtmlLabel label = new HtmlLabel();
+                    label.setFor(slot.getKey().toString());
+                    label.setText(slot.getLabel());
+                    
+                    component = label;
+                }
                 
-                component = label;
                 break;
             case 1:
                 slot = this.object.getSlots().get(rowIndex);
                 
                 component = renderSlot(slot);
-                Validatable validatable = findValidatableComponent(component);
                 
-                HtmlFormComponent formComponent = (HtmlFormComponent) validatable;
-                if (formComponent.getId() == null) {
-                    formComponent.setId(slot.getKey().toString());
+                if (! slot.isReadOnly()) {
+                    Validatable validatable = findValidatableComponent(component);
+                    
+                    if (validatable != null) {
+                        HtmlFormComponent formComponent = (HtmlFormComponent) validatable;
+                        if (formComponent.getId() == null) {
+                            formComponent.setId(slot.getKey().toString());
+                        }
+                        
+                        inputComponents.put(rowIndex, validatable);
+                    }
                 }
                 
-                inputComponents.put(rowIndex, validatable);
                 break;
             case 2:
                 if (isHideValidators()) {
