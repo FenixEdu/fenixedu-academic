@@ -107,7 +107,7 @@
 				parameter="method">
 			<forward name="EditProjectData" path="projects.editProjectData"/>
 			<forward name="EditProjectParticipants" path="projects.editProjectParticipants"/>
-			<forward name="ManageAssociatedEvents" path="projects.manageEvents"/>
+			<forward name="EditProjectEventAssociations" path="projects.editProjectEventAssociations"/>
 			<forward name="AssociateEvent" path="projects.associateEvent"/>
 		    <forward name="Success" path="projects.editProject"/>
 		</action>

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.applicationTier.Servico.research;
+package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;

@@ -332,7 +332,7 @@ public class AutoCompleteInputRenderer extends InputRenderer {
 
             private void addSingleScript(HtmlInlineContainer container, HtmlLink link, String scriptName) {
                 link.setUrl("/javaScript/" + scriptName);
-                HtmlScript script = new HtmlScript("text/javascript", link.calculateUrl());
+                HtmlScript script = new HtmlScript("text/javascript", link.calculateUrl(), true);
                 container.addChild(script);
             }
 

@@ -24,8 +24,8 @@
     <definition name="projects.editProjectParticipants" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/editProjectParticipants.jsp"></put>
     </definition>
-    <definition name="projects.manageEvents" extends="researcher.masterPage">
-        <put name="body" value="/researcher/projects/manageEvents.jsp"></put>
+    <definition name="projects.editProjectEventAssociations" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/editProjectEventAssociations.jsp"></put>
     </definition>
         <definition name="projects.associateEvent" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/associateEvent.jsp"></put>

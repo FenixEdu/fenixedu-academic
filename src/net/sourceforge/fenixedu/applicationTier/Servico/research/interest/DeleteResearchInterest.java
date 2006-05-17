@@ -1,17 +1,17 @@
-package net.sourceforge.fenixedu.applicationTier.Servico.research;
+package net.sourceforge.fenixedu.applicationTier.Servico.research.interest;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.research.project.Project;
+import net.sourceforge.fenixedu.domain.research.ResearchInterest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class DeleteResearchProject extends Service {
+public class DeleteResearchInterest extends Service {
 
     public void run(Integer oid) throws ExcepcaoPersistencia, FenixServiceException {
-        Project project = rootDomainObject.readProjectByOID(oid);
-        if(project == null){
+        ResearchInterest researchInterest = rootDomainObject.readResearchInterestByOID(oid);
+        if(researchInterest == null){
             throw new FenixServiceException();
         }
-        project.delete();        
+        researchInterest.delete();        
     }
 }

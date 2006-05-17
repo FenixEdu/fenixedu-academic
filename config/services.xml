@@ -9562,7 +9562,7 @@
 	</service>    
 	<service>
 		<name>DeleteResearchInterest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteResearchInterest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.interest.DeleteResearchInterest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9571,7 +9571,7 @@
 	</service> 	
 	<service>
 		<name>DeleteResearchProject</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteResearchProject</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.project.DeleteResearchProject</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9580,7 +9580,16 @@
 	</service> 
 	<service>
 		<name>CreateProjectParticipant</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.CreateProjectParticipant</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.project.CreateProjectParticipant</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service> 
+	<service>
+		<name>CreateProjectEventAssociation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.project.CreateProjectEventAssociation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9589,7 +9598,7 @@
 	</service> 
 	<service>
 		<name>ChangeResearchInterestOrder</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.ChangeResearchInterestOrder</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.interest.ChangeResearchInterestOrder</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

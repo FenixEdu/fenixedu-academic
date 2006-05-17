@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.applicationTier.Servico.research;
+package net.sourceforge.fenixedu.applicationTier.Servico.research.interest;
 
 import java.util.List;
 

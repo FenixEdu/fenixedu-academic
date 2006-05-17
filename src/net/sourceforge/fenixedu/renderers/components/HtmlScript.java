@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers.components;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
@@ -10,6 +11,7 @@ public class HtmlScript extends HtmlComponent {
     private String contentType;
     private String source;
     private boolean defer;
+    private boolean conditional;
 
     private CharSequence script;
     
@@ -22,6 +24,12 @@ public class HtmlScript extends HtmlComponent {
     
         this.contentType = contentType;
         this.source = source;
+    }
+
+    public HtmlScript(String contentType, String source, boolean conditional) {
+        this(contentType, source);
+    
+        this.conditional = conditional;
     }
 
     public String getCharset() {
@@ -48,6 +56,14 @@ public class HtmlScript extends HtmlComponent {
         this.defer = defer;
     }
 
+    public boolean isConditional() {
+        return conditional;
+    }
+
+    public void setConditional(boolean conditional) {
+        this.conditional = conditional;
+    }
+
     public String getSource() {
         return this.source;
     }
@@ -67,6 +83,11 @@ public class HtmlScript extends HtmlComponent {
     @Override
     public HtmlTag getOwnTag(PageContext context) {
         HtmlTag tag = super.getOwnTag(context);
+
+        if (isConditional() && wasIncluded(context)) {
+            tag.setName(null);
+            return tag;
+        }
         
         tag.setName("script");
         tag.setAttribute("charset", getCharset());
@@ -82,5 +103,22 @@ public class HtmlScript extends HtmlComponent {
         }
         
         return tag;
+    }
+
+    private boolean wasIncluded(PageContext context) {
+        if (getSource() == null) {
+            return false;
+        }
+
+        ServletRequest request = context.getRequest();
+        String sourceName = getClass().getName() + "/included/" + getSource();
+        
+        if (request.getAttribute(sourceName) != null) {
+            return true;
+        }
+        else {
+            request.setAttribute(sourceName, true);
+            return false;
+        }
     }
 }

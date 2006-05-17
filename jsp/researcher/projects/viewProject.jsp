@@ -42,7 +42,7 @@
         	<fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
 	</fr:view>
-	<html:link page="<%="/projects/editProject.do?method=manageAssociatedEvents&projectId="+projectId%>">
+	<html:link page="<%="/projects/editProject.do?method=prepareEditEventAssociations&projectId="+projectId%>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.editAssociatedEvents" />
 	</html:link>  <br/>
 	

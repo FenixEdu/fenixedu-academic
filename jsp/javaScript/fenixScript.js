@@ -13,7 +13,7 @@ function autoCompleteClearValueFieldIfTextIsEmpty(autoCompleteFieldId)
 }
 
 function autoCompleteUpdateValueField(textFieldId, typingValue)
-{   	  		  	  		
+{   	  		  
 	if (document.getElementById(textFieldId).value == '') 
 	{
 		document.getElementById(textFieldId + '_AutoComplete').value = ''; 
