@@ -896,9 +896,10 @@ class net.sourceforge.fenixedu.domain.MarkSheet extends net.sourceforge.fenixedu
     Integer keyEmployee;
     Integer keyCurricularCourse;
     String checkSum;
-	DateTime creationDateDateTime;
-	DateTime evaluationDateDateTime;
-	DateTime confirmationDateDateTime;
+    String reason;    
+    Date creationDate;
+    Date evaluationDate;
+    Date confirmationDate;
     MarkSheetType markSheetType;
     MarkSheetState markSheetState;
     Boolean submittedByTeacher;
