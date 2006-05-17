@@ -1,0 +1,2 @@
+alter table EXECUTION_DEGREE add column KEY_PERIOD_EXAMS_SPECIAL_SEASON int(11) default NULL;
+ 

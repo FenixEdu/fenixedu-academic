@@ -31,3 +31,4 @@ execute "Alter Tables Types" alterTablesTypes.sql
 execute "Rename Columns" renameColumns.sql
 execute "Rename Date Columns" renameDateColumns.sql
 execute "Add Assiduity Missing Columns" addAssiduityMissingColumns.sql
+execute "Add Missing Columns" addMissingColumns.sql
