@@ -1049,42 +1049,42 @@ public class CurricularCourse extends CurricularCourse_Base {
         
     }
 
-    //TODO:
-    public MarkSheet rectifyEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation, Teacher responsibleTeacher,
-            Employee employee, Date evaluationDate, String grade) {
+    public MarkSheet rectifyEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation, Date evaluationDate, String grade, String reason) {
         
-        if (responsibleTeacher == null || employee == null || evaluationDate == null || grade == null || grade.length() == 0) {
+        if (evaluationDate == null || grade == null || grade.length() == 0) {
             throw new DomainException("error.markSheet.invalid.arguments");
         }
         final MarkSheet markSheet = enrolmentEvaluation.getMarkSheet();
         if (markSheet == null) {
             throw new DomainException("error.enrolmentEvaluation.doesnot.has.marksheet");
         }
+
         if (markSheet.isNotConfirmed()) {
             throw new DomainException("error.markSheet.must.be.confirmed");
         }
         enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED_OBJ);
+        enrolmentEvaluation.setWhen(new Date());
         enrolmentEvaluation.generateCheckSum();
         markSheet.generateCheckSum();
 
         MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade);
-        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), responsibleTeacher, employee, markSheet.getMarkSheetType(), Boolean.FALSE, Collections.singletonList(markSheetEnrolmentEvaluationBean));
+        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate, markSheet.getResponsibleTeacher(), markSheet.getMarkSheetType(), Collections.singletonList(markSheetEnrolmentEvaluationBean));
+        rectificationMarkSheet.setReason(reason);
         
         return rectificationMarkSheet;
     }
-
+    
     //TODO:
     public MarkSheet createRectificationMarkSheet(ExecutionPeriod executionPeriod,
-            Teacher responsibleTeacher, Employee employee, MarkSheetType markSheetType, Boolean submittedByTeacher,
-            List<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
-        
-        MarkSheet markSheet = new MarkSheet(this, executionPeriod, responsibleTeacher, new Date(),
-                markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, submittedByTeacher, markSheetEnrolmentEvaluationBeans);
-        markSheet.setEmployee(employee);
-        markSheet.generateCheckSum();
-        return markSheet;
+ 		   Date evaluationDate, Teacher responsibleTeacher, MarkSheetType markSheetType, 
+             List<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
+         
+         MarkSheet markSheet = new MarkSheet(this, executionPeriod, responsibleTeacher, evaluationDate,
+                 markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, Boolean.FALSE, markSheetEnrolmentEvaluationBeans);
+         markSheet.generateCheckSum();
+         return markSheet;
     }
-
+    
     public Collection<MarkSheet> searchMarkSheets(ExecutionPeriod executionPeriod, Teacher teacher, Date evaluationDate, MarkSheetState markSheetState, MarkSheetType markSheetType) {
         String dateFormat = "dd/MM/yyyy";
         Collection<MarkSheet> result = new HashSet<MarkSheet>();

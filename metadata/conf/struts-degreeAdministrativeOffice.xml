@@ -185,6 +185,7 @@
 			<form-property name="ed" type="java.lang.String"/>
 			<form-property name="mss" type="java.lang.String" />
 			<form-property name="mst" type="java.lang.String" />
+			<form-property name="evaluationID" type="java.lang.Integer" />			
 		</form-bean>
 
 	</form-beans>
@@ -466,6 +467,7 @@
        		<forward name="viewMarkSheet" path="markSheetManagement.viewMarkSheet"/>
        		<forward name="removeMarkSheet" path="show.markSheetManagement.remove"/>
        		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>       		
+       		<forward name="confirmMarkSheet" path="show.markSheetManagement.confirm.page"/>       		       		       		
 		</action>
 		
 		<action path="/createMarkSheet"
@@ -478,7 +480,21 @@
        		<forward name="createMarkSheetStep1" path="show.markSheetManagement.create.page.step1"/>
        		<forward name="createMarkSheetStep2" path="show.markSheetManagement.create.page.step2"/>
        		<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>
+       		<forward name="rectifyMarkSheetStep1" path="show.markSheetManagement.rectify.page.step1"/>       		
+       		<forward name="rectifyMarkSheetStep2" path="show.markSheetManagement.rectify.page.step2"/>       		       		       		
 		</action>
+		
+		<action path="/rectifyMarkSheet"
+				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetCreateDispatchAction"
+				input="/rectifyMarkSheet.do?page=0&amp;method=validationError"
+				parameter="method"
+				name="markSheetManagementForm"
+				scope="request">
+       		<forward name="rectifyMarkSheetStep1" path="show.markSheetManagement.rectify.page.step1"/>       		
+       		<forward name="rectifyMarkSheetStep2" path="show.markSheetManagement.rectify.page.step2"/>
+			<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>       	
+       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>			
+		</action>		
 		
 		<action path="/editMarkSheet"
 				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetEditDispatchAction"

@@ -9736,6 +9736,22 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>CreateRectificationMarkSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.CreateRectificationMarkSheet</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>	
+	<service>
+		<name>ConfirmMarkSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.ConfirmMarkSheet</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>		
+	<service>
         <name>SearchObjects</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchObjects</implementationClass>
         <description>

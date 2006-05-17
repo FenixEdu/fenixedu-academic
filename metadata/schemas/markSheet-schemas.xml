@@ -80,14 +80,11 @@
 	<slot name="curricularCourse" layout="format" key="label.curricularCourse" >
 		<property name="format" value="${name} (${code})" />
 	</slot>
-	<slot name="year" layout="format" key="label.executionPeriod">
-		<property name="format" value="${executionYear.year}" />
-	</slot>
-	<slot name="semester" layout="format" key="label.curricular.course.semester">
-		<property name="format" value="${semester}º" />
+	<slot name="executionPeriod" layout="format" key="label.executionPeriod">
+		<property name="format" value="${semester}º ${executionYear.year}" />
 	</slot>
 	<slot name="responsibleTeacher" layout="format" key="label.teacher">
-		<property name="format" value="${person.name} (D${teacherNumber})" />
+		<property name="format" value="${person.name} (${teacherNumber})" />
 	</slot>
 	<slot name="markSheetType"  key="label.markSheetType"/>
 	<slot name="evaluationDate" key="label.evaluationDate"/>
@@ -156,6 +153,13 @@
 	</slot>
 </schema>
 
+<schema name="markSheet.view.evaluation" type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
+	<slot name="enrolment.studentCurricularPlan.student.number" key="label.student.number"/>
+	<slot name="enrolment.studentCurricularPlan.student.person.name" key="label.student.name"/>
+	<slot name="examDate"/>		
+	<slot name="grade"/>
+</schema>	
+
 <schema name="markSheet.view.edit"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementEditBean">
 	
@@ -180,4 +184,37 @@
 <schema name="markSheet.edit.enrolmentEvaluations"
 		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean"
 		extends="markSheet.create.step.two">
+</schema>
+
+<schema name="markSheet.rectify.one"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetRectifyBean">
+	<slot name="studentNumber" key="label.student.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+		<property name="size" value="7" />
+		<property name="maxLength" value="6" />
+	</slot>
+</schema>
+
+<schema name="markSheet.rectify.two"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetRectifyBean">
+	<slot name="enrolmentEvaluation.grade" read-only="true" key="label.actual.grade"/>
+	<slot name="newGrade" key="label.new.grade">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.GradeValidator">
+			<property name="required" value="true"/>
+		</validator>
+		<property name="size" value="2" />
+		<property name="maxLength" value="3" />
+	</slot>
+	<slot name="evaluationDate" key="label.evaluationDate" >
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy" />
+			<property name="message" value="error.invalid.date.format" />
+			<property name="key" value="true" />
+		</validator>
+		<property name="size" value="12" />
+		<property name="maxLength" value="10" />
+	</slot>
+	<slot name="reason" key="label.reason" layout="longText">
+		<property name="columns" value="50"/>
+		<property name="rows" value="3"/>		
+	</slot>
 </schema>

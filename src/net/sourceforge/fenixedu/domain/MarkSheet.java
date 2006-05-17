@@ -29,9 +29,9 @@ public class MarkSheet extends MarkSheet_Base {
         checkParameters(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState, markSheetEnrolmentEvaluationBeans);
         init(curricularCourse, executionPeriod, responsibleTeacher, evaluationDate, markSheetType, markSheetState, submittedByTeacher);
 
-        if (getMarkSheetState() == MarkSheetState.RECTIFICATION) {
+        if (getMarkSheetState() == MarkSheetState.RECTIFICATION_NOT_CONFIRMED) {
             addEnrolmentEvaluationsWithoutResctrictions(responsibleTeacher,
-                    markSheetEnrolmentEvaluationBeans, EnrolmentEvaluationState.RECTIFICATION_OBJ);
+                    markSheetEnrolmentEvaluationBeans, EnrolmentEvaluationState.TEMPORARY_OBJ);
         } else {
             addEnrolmentEvaluationsWithResctrictions(responsibleTeacher,
                     markSheetEnrolmentEvaluationBeans, EnrolmentEvaluationState.TEMPORARY_OBJ);
@@ -288,7 +288,11 @@ public class MarkSheet extends MarkSheet_Base {
         removeCurricularCourse();
         removeResponsibleTeacher();
         removeEmployee();
-        for (; ! getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().get(0).delete());
+        if(hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED)) {
+        	this.getEnrolmentEvaluations().get(0).getEnrolment().alterFromRectifiedToFinalState(this.getMarkSheetType().getEnrolmentEvaluationType());
+        }
+        for (; !getEnrolmentEvaluations().isEmpty(); this.getEnrolmentEvaluations().get(0).delete())
+            ;
         removeRootDomainObject();
         deleteDomainObject();
     }
@@ -471,5 +475,15 @@ public class MarkSheet extends MarkSheet_Base {
             super.setResponsibleTeacher(responsibleTeacher);
         }
     }
+    
+    public EnrolmentEvaluation getEnrolmentEvaluationByStudent(Student student) {
+    	for (EnrolmentEvaluation enrolmentEvaluation : this.getEnrolmentEvaluationsSet()) {
+			if(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().equals(student)) {
+				return enrolmentEvaluation;
+			}
+		}
+    	return null;
+    }
+
 
 }

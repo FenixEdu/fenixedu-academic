@@ -84,10 +84,9 @@
 								<html:link action='<%= "/markSheetManagement.do?method=prepareConfirmMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
 									<bean:message key="label.markSheet.confirm" />
 								</html:link>
-							</logic:equal>
-							
+							</logic:equal>							
 							<logic:equal name="markSheet" property="notConfirmed" value="false">
-								<html:link action='<%= "/markSheetManagement.do?method=prepareRectifyMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
+								<html:link action='<%= "/rectifyMarkSheet.do?method=prepareRectifyMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
 									<bean:message key="label.markSheet.rectify" />
 								</html:link>
 							</logic:equal>

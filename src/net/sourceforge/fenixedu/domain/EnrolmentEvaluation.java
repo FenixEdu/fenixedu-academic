@@ -249,8 +249,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
     public void confirmSubmission(Employee employee, String observation) {
         
-        setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ); 
-        setWhen(Calendar.getInstance().getTime());
+        setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ); // TODO:
+        setWhen(new Date());
         setEmployee(employee);
         setObservation(observation);
 

@@ -159,7 +159,19 @@
 		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/removeMarkSheet.jsp"></put>
 	</definition>
 	
-		<definition name="show.markSheetManagement.edit.page" extends="definition.degreeAdministrativeOffice.masterPage">
+		<definition name="show.markSheetManagement.rectify.page.step1" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"></put>
+	</definition>
+
+	<definition name="show.markSheetManagement.rectify.page.step2" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"></put>
+	</definition>
+	
+	<definition name="show.markSheetManagement.confirm.page" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/confirmMarkSheet.jsp"></put>
+	</definition>
+	
+	<definition name="show.markSheetManagement.edit.page" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/editMarkSheet.jsp"></put>
 	</definition>
 

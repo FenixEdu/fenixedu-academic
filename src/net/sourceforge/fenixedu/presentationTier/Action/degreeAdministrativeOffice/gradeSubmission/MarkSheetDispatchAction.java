@@ -5,7 +5,9 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -111,6 +113,35 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         
         return mapping.findForward("searchMarkSheetFilled");
     }
+    
+    public ActionForward prepareConfirmMarkSheet(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        DynaActionForm form = (DynaActionForm) actionForm;
+        Integer markSheetID = (Integer) form.get("msID");
+        request.setAttribute("markSheet", rootDomainObject.readMarkSheetByOID(markSheetID));
+        
+        return mapping.findForward("confirmMarkSheet");
+    }
+    
+    public ActionForward confirmMarkSheet(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        DynaActionForm form = (DynaActionForm) actionForm;
+        Integer markSheetID = (Integer) form.get("msID");
+        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+        IUserView userView = getUserView(request);
+        ActionMessages actionMessages = new ActionMessages();
+        try {
+            ServiceUtils.executeService(userView, "ConfirmMarkSheet", new Object[] {markSheet, userView.getPerson().getEmployee()});
+        } catch (NotAuthorizedFilterException e) {
+            addMessage(request, actionMessages, "error.notAuthorized");
+        } catch (DomainException e) {
+            addMessage(request, actionMessages, e.getMessage(), e.getArgs());
+        }
+
+        
+        return mapping.findForward("searchMarkSheetFilled");
+    }    
+
     
     protected void checkIfEvaluationDateIsInExamsPeriod(DegreeCurricularPlan degreeCurricularPlan,
             ExecutionPeriod executionPeriod, Date evaluationDate, MarkSheetType markSheetType,

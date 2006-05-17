@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
@@ -659,5 +660,21 @@ public class Enrolment extends Enrolment_Base {
             EnrolmentEvaluation enrolmentEvaluationFinal = getEnrolmentEvaluationFinal();
             this.setEnrollmentState(enrolmentEvaluationFinal.getEnrollmentStateByGrade());
         }
+    }
+    
+    public void alterFromRectifiedToFinalState(EnrolmentEvaluationType enrolmentEvaluationType) {
+    	final EnrolmentEvaluation enrolmentEvaluation = getLatestRectifiedEvaluation(enrolmentEvaluationType);
+    	enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
+    	enrolmentEvaluation.setWhen(new Date());
+    }
+    
+    private EnrolmentEvaluation getLatestRectifiedEvaluation(EnrolmentEvaluationType enrolmentEvaluationType) {
+    	final SortedSet<EnrolmentEvaluation> result = new TreeSet<EnrolmentEvaluation>(new BeanComparator("when"));
+    	for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
+			if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(enrolmentEvaluationType) && enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ)) {
+				result.add(enrolmentEvaluation);
+			}
+		}
+    	return result.last();
     }
 }

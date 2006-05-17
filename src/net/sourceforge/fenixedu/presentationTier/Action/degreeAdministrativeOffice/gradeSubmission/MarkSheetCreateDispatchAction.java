@@ -3,8 +3,11 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,17 +18,24 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean;
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetRectifyBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.MarkSheet;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.action.DynaActionForm;
 
 public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 
@@ -129,5 +139,108 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         request.setAttribute("edit", RenderUtils.getViewState("edit-invisible").getMetaObject().getObject());
         return mapping.findForward("createMarkSheetStep2");
     }
+    
+    public ActionForward prepareRectifyMarkSheet(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    	DynaActionForm form = (DynaActionForm) actionForm;
+    	MarkSheet markSheet = rootDomainObject.readMarkSheetByOID((Integer) form.get("msID"));
+    	MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
+    	rectifyBean.setMarkSheet(markSheet);
+    	
+    	request.setAttribute("rectifyBean", rectifyBean);
+    	request.setAttribute("msID", (Integer) form.get("msID"));
+    	
+    	List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluations());
+    	Collections.sort(enrolmentEvaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
+    	request.setAttribute("enrolmentEvaluations", enrolmentEvaluations);
+    	return mapping.findForward("rectifyMarkSheetStep1");
+    }
+
+
+    public ActionForward rectifyMarkSheetStepOneByEvaluation(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    	DynaActionForm form = (DynaActionForm) actionForm;
+    	Integer evaluationID = (Integer) form.get("evaluationID");
+    	EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(evaluationID);
+    	MarkSheet markSheet = enrolmentEvaluation.getMarkSheet();
+    	MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
+    	rectifyBean.setMarkSheet(markSheet);
+    	rectifyBean.setEnrolmentEvaluation(enrolmentEvaluation);
+    	return rectifyMarkSheetStepOne(mapping, actionForm, request, response, rectifyBean, enrolmentEvaluation);
+    }
+    
+    
+    
+    public ActionForward rectifyMarkSheetStepOneByStudentNumber(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    	MarkSheetRectifyBean rectifyBean = (MarkSheetRectifyBean) RenderUtils.getViewState().getMetaObject().getObject();
+    	
+    	Integer studentNumber = rectifyBean.getStudentNumber();
+    	Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+    	if(student == null) {
+    		ActionMessages actionMessages = new ActionMessages();
+    		addMessage(request, actionMessages, "error.no.student", studentNumber.toString());
+    		return prepareRectifyMarkSheet(mapping, actionForm, request, response);
+    	}
+    	MarkSheet markSheet = rectifyBean.getMarkSheet();
+    	EnrolmentEvaluation enrolmentEvaluation = markSheet.getEnrolmentEvaluationByStudent(student);
+    	
+    	if(enrolmentEvaluation == null) {
+    		ActionMessages actionMessages = new ActionMessages();
+    		addMessage(request, actionMessages, "error.no.student.in.markSheet", studentNumber.toString());    		
+    		return prepareRectifyMarkSheet(mapping, actionForm, request, response);
+    	}
+    	if(enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ)) {
+    		ActionMessages actionMessages = new ActionMessages();
+    		addMessage(request, actionMessages, "error.markSheet.student.alreadyRectified", studentNumber.toString());    		
+    		return prepareRectifyMarkSheet(mapping, actionForm, request, response);
+    	}
+    	return rectifyMarkSheetStepOne(mapping, actionForm, request, response, rectifyBean, enrolmentEvaluation);
+    }
+    
+    private ActionForward rectifyMarkSheetStepOne(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response, MarkSheetRectifyBean rectifyBean, EnrolmentEvaluation enrolmentEvaluation) {
+    	rectifyBean.setEnrolmentEvaluation(enrolmentEvaluation);
+    	request.setAttribute("rectifyBean", rectifyBean);
+    	
+    	return mapping.findForward("rectifyMarkSheetStep2");
+    }   
+    
+
+    public ActionForward rectifyMarkSheetStepTwo(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    	MarkSheetRectifyBean rectifyBean = (MarkSheetRectifyBean) RenderUtils.getViewState().getMetaObject().getObject();
+    	
+        ActionMessages actionMessages = new ActionMessages();
+        try {
+            MarkSheet rectificationMarkSheet = (MarkSheet) ServiceUtils.executeService(getUserView(request), "CreateRectificationMarkSheet", new Object[] {rectifyBean.getMarkSheet(), rectifyBean.getEnrolmentEvaluation(), rectifyBean.getNewGrade(), rectifyBean.getEvaluationDate(), rectifyBean.getReason()});
+            return mapping.findForward("searchMarkSheet");
+        } catch (NotAuthorizedFilterException e) {
+            addMessage(request, actionMessages, "error.notAuthorized");
+            return mapping.findForward("searchMarkSheet");
+        }  catch (DomainException e) {
+            addMessage(request, actionMessages, e.getMessage(), e.getArgs());
+            return rectifyMarkSheetStepOne(mapping, actionForm, request, response, rectifyBean, rectifyBean.getEnrolmentEvaluation());
+        } 
+    }
+    
+    public ActionForward validationError(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    	String[] pages = request.getParameterValues("page");
+    	String page = pages[1];
+    	if(page.equals("1")) {
+    		return prepareRectifyMarkSheet(mapping, actionForm, request, response);
+    	} else  {
+    		return rectifyMarkSheetStepOneByEvaluation(mapping, actionForm, request, response);
+    	}
+
+
+    }
+    
+    public ActionForward prepareSearchMarkSheetFilled(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse   response) {
+    	return mapping.findForward("searchMarkSheetFilled");
+    }
+
 
 }

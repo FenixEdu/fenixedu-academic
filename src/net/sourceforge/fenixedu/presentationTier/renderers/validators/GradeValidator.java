@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
 public class GradeValidator extends HtmlValidator {
+	
+	private boolean required = false; 
 
     public GradeValidator(Validatable component) {
         super(component);
@@ -18,22 +20,28 @@ public class GradeValidator extends HtmlValidator {
     @Override
     public void performValidation() {
         String grade = getComponent().getValue();
-
-        if (grade == null || grade.length() == 0 || grade.equalsIgnoreCase("NA") || grade.equalsIgnoreCase("RE") || grade.equalsIgnoreCase("AP")) {
-            setValid(true);
+        
+        if(isRequired() && (grade == null || grade.length() == 0)) {
+        	setValid(false);
+        	setKey(true);
+            setMessage("renderers.validator.required");
         } else {
-            try {
-                Integer integer = Integer.valueOf(grade);
-                
-                if (! (integer >= 10 && integer <= 20)) {
-                    setValid(false);
-                } else {
-                    setValid(true);
-                }
-
-            } catch (NumberFormatException e) {
-                setValid(false);
-            }
+	        if (grade == null || grade.length() == 0 || grade.equalsIgnoreCase("NA") || grade.equalsIgnoreCase("RE") || grade.equalsIgnoreCase("AP")) {
+	            setValid(true);
+	        } else {
+	            try {
+	                Integer integer = Integer.valueOf(grade);
+	                
+	                if (! (integer >= 10 && integer <= 20)) {
+	                    setValid(false);
+	                } else {
+	                    setValid(true);
+	                }
+	
+	            } catch (NumberFormatException e) {
+	                setValid(false);
+	            }
+	        }
         }
     }
     
@@ -41,6 +49,14 @@ public class GradeValidator extends HtmlValidator {
     protected String getResourceMessage(String message) {
         return RenderUtils.getFormatedResourceString(message, getComponent().getValue());
     }
+
+	public boolean isRequired() {
+		return required;
+	}
+
+	public void setRequired(boolean required) {
+		this.required = required;
+	}
 
 
 }

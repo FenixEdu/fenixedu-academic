@@ -4,11 +4,11 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
-<em><bean:message key="degree.administrative.office"/></em>
+<%@page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
 <h2><bean:message key="label.viewMarkSheet"/></h2>
 
-<html:form action="/markSheetManagement.do?method=printMarkSheet">
-	
+<html:form action="/markSheetManagement.do">
+	<html:hidden property="method" value="printMarkSheet"/>
 	<html:hidden property="epID" />
 	<html:hidden property="dID" />
 	<html:hidden property="dcpID" />
@@ -24,7 +24,8 @@
 	<br/>
 	<table>
 		<tr>
-			<td colspan="2">&nbsp;</td>
+			<td align="left"><bean:message key="label.student.number"/></td>
+			<td align="left"><bean:message key="label.student.name"/></td>			
 			<td align="left"><bean:message key="label.evaluationDate"/></td>
 			<td align="left"><bean:message key="label.grades"/></td>
 			<td align="left">&nbsp;</td>
@@ -32,10 +33,10 @@
 		<logic:iterate id="enrolmentEvaluation" name="markSheet" property="enrolmentEvaluationsSortedByStudentNumber" type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
 			<tr>
 				<td>
-					<bean:write name="enrolmentEvaluation" property="student.person.name"/>
+					<bean:write name="enrolmentEvaluation" property="student.number"/>
 				</td>
 				<td>
-					(L<bean:write name="enrolmentEvaluation" property="student.number"/>)
+					<bean:write name="enrolmentEvaluation" property="student.person.name"/>
 				</td>
 				<td align="left">
                     <dt:format pattern="dd-MM-yyyy">
@@ -57,7 +58,11 @@
 	</table>
 
 	<br/><br/>
-	<html:cancel styleClass="inputbutton"><bean:message key="label.back"/></html:cancel>
+	<bean:define id="mark" name="markSheet" type="net.sourceforge.fenixedu.domain.MarkSheet"/>
+	<bean:define id="checksum" value="<%= FenixDigestUtils.getPrettyCheckSum(mark.getCheckSum())%>"/>
+	<bean:message key="label.checksum"/> : 	<bean:write name="checksum"/>
+	<br/><br/>
+	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
 	<html:submit styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
 	
 </html:form>

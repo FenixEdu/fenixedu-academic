@@ -93,17 +93,20 @@ public class EnrolmentEvaluationState extends FenixUtil {
 
         switch (value) {
         case TEMPORARY:
-            valueS = "PROVISORY";
+            valueS = "TEMPORARY";
             break;
         case FINAL:
             valueS = "FINAL";
             break;
-        //			case RECTIFIED :
-        //				valueS = "RECTIFIED";
-        //				break;
-        //			case RECTIFICATION :
-        //				valueS = "RECTIFICATION";
-        //				break;
+        case RECTIFIED :
+        	valueS = "RECTIFIED";
+        	break;
+        case RECTIFICATION :
+        	valueS = "RECTIFICATION";
+        	break;
+        case ANNULED :
+        	valueS = "ANNULED";
+        	break;        	
         default:
             break;
         }
