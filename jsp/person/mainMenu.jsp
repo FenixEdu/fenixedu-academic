@@ -15,5 +15,5 @@
 	<li class="navheader"><bean:message key="label.navheader.services"  /></li>
 	<li><html:link page="/findPerson.do?method=prepareFindPerson" ><bean:message key="label.person.findPerson"  /></html:link></li>
 	<li><html:link page="/organizationalStructure/structurePage.faces"><bean:message key="label.orgUnit"  /></html:link></li>
-	<li><html:link page="/messaging/forunsManagement.do?method=start"><bean:message key="label.viewForuns" bundle="MESSAGING_RESOURCES" /></html:link></li>
+<%--	<li><html:link page="/messaging/forunsManagement.do?method=start"><bean:message key="label.viewForuns" bundle="MESSAGING_RESOURCES" /></html:link></li> --%>
 </ul>
