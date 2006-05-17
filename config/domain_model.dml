@@ -870,14 +870,14 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 		}
 	
 		class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
-    String createdBy;
-	DateTime creationDateDateTime;
-    Integer keyExecutionPeriod;
-    Integer keyStudentCurricularPlan;
-    EnrollmentState enrollmentState;
-    EnrollmentCondition condition;
-    EnrolmentEvaluationType enrolmentEvaluationType;
-}
+            String createdBy;
+        	DateTime creationDateDateTime;
+            Integer keyExecutionPeriod;
+            Integer keyStudentCurricularPlan;
+            EnrollmentState enrollmentState;
+            EnrollmentCondition condition;
+            EnrolmentEvaluationType enrolmentEvaluationType;
+        }
 
 	// Isto é da estrutura antiga, faz sentido ainda?
     class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
@@ -897,9 +897,9 @@ class net.sourceforge.fenixedu.domain.MarkSheet extends net.sourceforge.fenixedu
     Integer keyCurricularCourse;
     String checkSum;
     String reason;    
-    Date creationDate;
-    Date evaluationDate;
-    Date confirmationDate;
+    DateTime creationDateDateTime;
+    DateTime evaluationDateDateTime;
+    DateTime confirmationDateDateTime;
     MarkSheetType markSheetType;
     MarkSheetState markSheetState;
     Boolean submittedByTeacher;
