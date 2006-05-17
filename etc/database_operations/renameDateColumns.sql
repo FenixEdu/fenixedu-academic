@@ -1,5 +1,5 @@
 alter table FINAL_DEGREE_WORK_SCHEDULEING change column END_OF_CANDIDACY_PERIOD_DATE END_OF_CANDIDACY_PERIOD_DATE_YEAR_MONTH_DAY  date default NULL;
-alter table EVALUATION change column END END_DATE_TIME  time default NULL;
+#alter table EVALUATION change column END END_DATE_TIME  time default NULL;
 alter table TEACHER_SERVICE_ITEM change column START_TIME START_TIME_HOUR_MINUTE_SECOND  time default NULL;
 alter table PUBLICATIONS_NUMBER change column LAST_MODIFICATION_DATE LAST_MODIFICATION_DATE_DATE_TIME  timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP;
 alter table GRANT_CONTRACT change column DATE_ACCEPT_TERM DATE_ACCEPT_TERM_YEAR_MONTH_DAY  date default NULL;
@@ -27,7 +27,7 @@ alter table MARKSHEET change column CREATION_DATE CREATION_DATE_DATE_TIME  datet
 alter table CANDIDATE_SITUATION change column DATE DATE_YEAR_MONTH_DAY  date NOT NULL default '0000-00-00';
 alter table SENT_SMS change column DELIVERY_DATE DELIVERY_DATE_DATE_TIME  datetime NOT NULL default '0000-00-00 00:00:00';
 alter table PROJECT_ACCESS change column END END_DATE_TIME  timestamp NOT NULL default '0000-00-00 00:00:00';
-alter table EVALUATION change column BEGIN BEGIN_DATE_TIME  time default NULL;
+#alter table EVALUATION change column BEGIN BEGIN_DATE_TIME  time default NULL;
 alter table REIMBURSEMENT_GUIDE change column CREATION CREATION_YEAR_MONTH_DAY  date NOT NULL default '0000-00-00';
 alter table SUMMARY change column LAST_MODIFIED_DATE LAST_MODIFIED_DATE_DATE_TIME  timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP;
 alter table FORUM change column CREATION_DATE CREATION_DATE_DATE_TIME  timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP;

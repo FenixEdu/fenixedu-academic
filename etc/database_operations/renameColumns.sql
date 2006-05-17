@@ -98,7 +98,7 @@ alter table OLD_INQUIRIES_TEACHERS_RES change column TOLERANCE_3_5 TOLERANCE3_5 
 alter table STUDENT_TEST_QUESTION change column KEY_XML_DOCUMENT KEY_QUESTION  int(11) unsigned NOT NULL default '0';
 alter table BRANCH change column BRANCH_NAME NAME  varchar(255) NOT NULL default '';
 alter table EXTRA_WORK_REQUESTS change column OPTION_6 OPTION6  tinyint(1) default NULL;
-alter table EVALUATION change column PROJECT_BEGIN BEGIN  timestamp NOT NULL default '0000-00-00 00:00:00';
+alter table EVALUATION change column PROJECT_BEGIN PROJECT_BEGIN_DATE_TIME  timestamp NOT NULL default '0000-00-00 00:00:00';
 alter table ROOM change column FLOOR PISO  int(11) NOT NULL default '0';
 alter table MASTER_DEGREE_THESIS_DATA_VERSION change column KEY_EMPLOYEE KEY_RESPONSIBLE_EMPLOYEE  int(11) NOT NULL default '0';
 alter table OLD_INQUIRIES_TEACHERS_RES change column TOLERANCE_3_11 TOLERANCE3_11  double unsigned default NULL;
@@ -187,7 +187,7 @@ alter table OLD_INQUIRIES_COURSES_RES change column N_ANSWERS_2_5_TEXT NUM_ANSWE
 alter table CANDIDATE_SITUATION change column CANDIDATE_KEY KEY_MASTER_DEGREE_CANDIDATE  int(11) NOT NULL default '0';
 alter table OLD_INQUIRIES_TEACHERS_RES change column N_ANSWERS_3_8 NUM_ANSWERS3_8  int(11) unsigned default NULL;
 alter table OLD_INQUIRIES_TEACHERS_RES change column DEVIATION_3_5 DEVIATION3_5  double unsigned default NULL;
-alter table EVALUATION change column PROJECT_END END  timestamp NOT NULL default '0000-00-00 00:00:00';
+alter table EVALUATION change column PROJECT_END PROJECT_END_DATE_TIME  timestamp NOT NULL default '0000-00-00 00:00:00';
 alter table GRANT_PART change column KEY_TEACHER KEY_RESPONSIBLE_TEACHER  int(11) unsigned default NULL;
 alter table BRANCH change column BRANCH_ACRONYM ACRONYM  varchar(50) default NULL;
 alter table ENROLMENT_EVALUATION change column CHECKSUM CHECK_SUM  varchar(50) default NULL;

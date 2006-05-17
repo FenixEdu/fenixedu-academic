@@ -968,8 +968,8 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 
 	class net.sourceforge.fenixedu.domain.Project extends net.sourceforge.fenixedu.domain.Evaluation {
 	    String name;
-	DateTime beginDateTime;
-	DateTime endDateTime;
+	DateTime projectBeginDateTime;
+	DateTime projectEndDateTime;
         String description;     
 	}
 

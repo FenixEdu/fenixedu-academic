@@ -47,4 +47,27 @@ public class Project extends Project_Base {
 	public EvaluationType getEvaluationType() {
 		return EvaluationType.PROJECT_TYPE;
 	}
+    
+
+    @Deprecated
+    public java.util.Date getBegin(){
+        org.joda.time.DateTime dt = getProjectBeginDateTime();
+        return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
+
+    @Deprecated
+    public void setBegin(java.util.Date date){
+        setProjectBeginDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
+
+    @Deprecated
+    public java.util.Date getEnd(){
+        org.joda.time.DateTime dt = getProjectEndDateTime();
+        return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
+
+    @Deprecated
+    public void setEnd(java.util.Date date){
+        setProjectEndDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
 }
