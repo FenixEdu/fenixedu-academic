@@ -117,6 +117,7 @@ public class SeperateExecutionCourse extends Service {
         destinationExecutionCourse.setExecutionPeriod(originExecutionCourse.getExecutionPeriod());
         destinationExecutionCourse.setLabHours(originExecutionCourse.getLabHours());
         destinationExecutionCourse.setNome(originExecutionCourse.getNome());
+        destinationExecutionCourse.createForum(originExecutionCourse.getNome(), originExecutionCourse.getNome());
         destinationExecutionCourse.setPraticalHours(originExecutionCourse.getPraticalHours());
         destinationExecutionCourse.setSigla(originExecutionCourse.getSigla() + System.currentTimeMillis());
 

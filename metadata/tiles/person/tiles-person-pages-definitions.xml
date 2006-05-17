@@ -44,5 +44,27 @@
     <definition name="show-manage-homepage" extends="definition.person.masterPage" >
 	  <put name="body" value="/person/manageHomepage.jsp" />
 	</definition>
+	
+	<!--  ============== Messaging ===================== -->
+	
+	<definition name="index" extends="definition.person.masterPage">
+	</definition>
+	
+	<definition name="viewForuns" extends="definition.person.masterPage">
+		 <put name="body" value="/messaging/viewForuns.jsp"/>
+	</definition>
+
+	<definition name="createThreadAndMessage" extends="definition.person.masterPage">
+		 <put name="body" value="/messaging/createThreadAndMessage.jsp"/>
+	</definition>
+
+	<definition name="viewForum" extends="definition.person.masterPage">
+		 <put name="body" value="/messaging/viewForum.jsp"/>
+	</definition>
+
+
+	<definition name="viewThread" extends="definition.person.masterPage">
+		 <put name="body" value="/messaging/viewThread.jsp"/>
+	</definition>	
 
 </tiles-definitions>

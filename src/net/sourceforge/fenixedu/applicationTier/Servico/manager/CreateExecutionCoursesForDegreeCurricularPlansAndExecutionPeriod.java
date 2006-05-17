@@ -44,7 +44,8 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
                     executionCourse.setSite(site);
                     executionCourse.setExecutionPeriod(executionPeriod);
                     executionCourse.setNome(curricularCourse.getName());
-
+                    executionCourse.createForum(executionCourse.getNome(), executionCourse.getNome());
+                    
                     String sigla = getUniqueSigla(existentsExecutionCoursesSiglas, curricularCourse
                             .getCode());
 

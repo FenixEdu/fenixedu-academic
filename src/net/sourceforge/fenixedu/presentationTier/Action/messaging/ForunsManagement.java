@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on May 5, 2006, 10:42:00
@@ -121,6 +122,11 @@ public class ForunsManagement extends FenixDispatchAction {
 	ConversationThread thread = this.getRequestedThread(request);
 
 	Integer pageNumber = getPageNumber(request);
+	if (this.getGoToLastPage(request)) {
+	    pageNumber = this.computeNumberOfPages(DEFAULT_PAGE_SIZE, thread
+		    .getConversationMessagesCount());
+	}
+
 	GenericPair<List, List<Integer>> result = pageList(thread.getConversationMessages(), pageNumber,
 		DEFAULT_PAGE_SIZE, ConversationMessage.CONVERSATION_MESSAGE_COMPARATOR_BY_CREATION_DATE);
 	List<Integer> pageNumbers = result.getRight();
@@ -142,6 +148,35 @@ public class ForunsManagement extends FenixDispatchAction {
 
 	ConversationThread t = this.getRequestedThread(request);
 	int lastPage = this.computeNumberOfPages(DEFAULT_PAGE_SIZE, t.getConversationMessagesCount());
+	Integer quotedMessageId = this.getQuotedMessageId(request);
+
+	MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
+	String quotationText = null;
+	if (quotedMessageId != null) {
+	    String quotationLeadingCharacter = resources.getMessage(this.getLocale(request),
+		    "messaging.viewThread.quotationTextLeadingCharacter");
+	    for (ConversationMessage message : t.getConversationMessages()) {
+		if (message.getIdInternal().equals(quotedMessageId)) {
+		    String creatorIstUsername = message.getCreator().getIstUsername();
+		    StringBuffer buffer = new StringBuffer();
+		    StringBuffer authorBuffer = new StringBuffer();
+		    authorBuffer.append(message.getCreator().getName()).append("(").append(
+			    creatorIstUsername).append(")");
+		    String[] messageLines = message.getBody()
+			    .split(System.getProperty("line.separator"));
+		    for (int i = 0; i < messageLines.length; i++) {
+			buffer.append(creatorIstUsername).append(quotationLeadingCharacter).append(
+				messageLines[i]);
+		    }
+		    quotationText = resources.getMessage(this.getLocale(request),
+			    "messaging.viewThread.quotationText", authorBuffer, buffer
+				    .toString());
+		    break;
+		}
+	    }
+	}
+
+	request.setAttribute("quotationText", quotationText);
 	request.setAttribute("pageNumber", Integer.valueOf(lastPage).toString());
 
 	return this.viewThread(mapping, actionForm, request, response);
@@ -149,6 +184,21 @@ public class ForunsManagement extends FenixDispatchAction {
 
     public Integer getForumId(HttpServletRequest request) {
 	return Integer.valueOf(request.getParameter("forumId"));
+    }
+
+    public Boolean getGoToLastPage(HttpServletRequest request) {
+	return Boolean.valueOf(request.getParameter("goToLastPage"));
+    }
+
+    public Integer getQuotedMessageId(HttpServletRequest request) {
+	Integer quotedMessageId = null;
+	try {
+	    quotedMessageId = Integer.valueOf(request.getParameter("quotedMessageId"));
+	} catch (NumberFormatException e) {
+	    // ok, lets just return null
+	}
+
+	return quotedMessageId;
     }
 
     public Integer getPageNumber(HttpServletRequest request) {

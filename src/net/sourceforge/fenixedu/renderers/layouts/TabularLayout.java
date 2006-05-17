@@ -1,16 +1,10 @@
 package net.sourceforge.fenixedu.renderers.layouts;
 
-import java.lang.reflect.Constructor;
-
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlTable;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableHeader;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
-import net.sourceforge.fenixedu.renderers.components.Validatable;
-import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
 import org.apache.log4j.Logger;
 

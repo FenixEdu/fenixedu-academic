@@ -3,9 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import org.apache.commons.beanutils.BeanUtils;
-
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
@@ -13,9 +10,11 @@ import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created
- *         on May 8, 2006, 4:13:15 PM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on May 8, 2006, 4:13:15
+ *         PM
  * 
  */
 public class EmailIdentityRenderer extends OutputRenderer {
@@ -56,9 +55,9 @@ public class EmailIdentityRenderer extends OutputRenderer {
 		    emailHtml.setText(email);
 		    HtmlInlineContainer container = new HtmlInlineContainer();
 		    container.addChild(nameHtml);
-		    container.addChild(new HtmlText("&lt;"));
+		    container.addChild(new HtmlText("<", true));
 		    container.addChild(emailHtml);
-		    container.addChild(new HtmlText("&gt;"));
+		    container.addChild(new HtmlText(">", true));
 
 		    return container;
 		} else {

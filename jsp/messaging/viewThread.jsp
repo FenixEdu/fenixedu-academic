@@ -23,7 +23,7 @@
 				<bean:define id="conversationMessages" name="thread" property="conversationMessages" />
 					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.title"/></h2>
 					
-					<html:link action="<%="/forunsManagement.do?method=viewForum&forumId="+forumId %>">
+					<html:link action="<%="/messaging/forunsManagement.do?method=viewForum&forumId="+forumId %>">
 						<bean:write name="forum" property="name"/>
 					</html:link>
 					<bean:message bundle="MESSAGING_RESOURCES" key="messaging.breadCrumSeparator.label"/> 
@@ -37,15 +37,16 @@
 					</fr:view>	Integer pageNumber = getPageNumber(request);
 			
 						
-					<logic:equal name="showReplyBox" value="false">
+					<logic:notEqual name="showReplyBox" value="true">
 						<%
 							parameters.put("showReplyBox","true");
+							parameters.put("goToLastPage","true");
 						%>
 						
-						<html:link action="/forunsManagement" name="parameters">
+						<html:link action="/messaging/forunsManagement" name="parameters">
 							<bean:message bundle="MESSAGING_RESOURCES" key="link.viewThread.showReplyBox"/>
 						</html:link>
-					</logic:equal>
+					</logic:notEqual>
 					
 					<logic:equal name="showReplyBox" value="true">
 						<%
@@ -54,11 +55,12 @@
 						
 						<fr:create type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage" layout="tabular"
 					           schema="conversationMessage.create"
-					           action="<%="/forunsManagement.do?method=createMessage&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false" %>">
+					           action="<%="/messaging/forunsManagement.do?method=createMessage&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false&goToLastPage=true" %>">
 					
 					           <fr:hidden slot="creator" name="person"/>
 					           <fr:hidden slot="conversationThread" name="thread"/>
-					           <fr:destination name="cancel" path="<%="/forunsManagement.do?method=viewThread&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false" %>"/>
+					           <fr:destination name="cancel" path="<%="/messaging/forunsManagement.do?method=viewThread&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false" %>"/>
+					           <fr:default slot="body" name="quotationText"/>
 						</fr:create>						
 					</logic:equal>
 					
@@ -72,8 +74,22 @@
 					      		<fr:property name="columnClasses" value="listClasses,"/>
 							</fr:layout>
 						</fr:view>
+						<%
+								parameters.clear();
+								parameters.put("showReplyBox","true");
+								parameters.put("goToLastPage","true");
+								parameters.put("forumId",forumId);
+								parameters.put("threadId",threadId);
+								parameters.put("method","createMessage");
+								parameters.put("quotedMessageId",conversationMessage.getIdInternal());
+						%>						
+						<html:link action="/messaging/forunsManagement" name="parameters">
+							<bean:message key="messaging.viewThread.quote" bundle="MESSAGING_RESOURCES"/>
+						</html:link>
+						<br/>
+						<br/>
 					</logic:iterate>
-					
+													
 					<strong><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/></strong>&nbsp;
 					<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>
 					<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
@@ -81,7 +97,7 @@
 							<bean:write name="pageNumber"/>
 						</logic:equal>
 						<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
-							<html:link action="<%="forunsManagement.do?method=viewThread&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber +"&threadId="+threadId%>">								
+							<html:link action="<%="/messaging/forunsManagement.do?method=viewThread&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber +"&threadId="+threadId%>">								
 								<bean:write name="pageNumber"/>
 							</html:link>			
 						</logic:notEqual>

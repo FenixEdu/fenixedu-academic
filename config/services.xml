@@ -200,12 +200,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>WriteExecutionCourseForum</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.WriteExecutionCourseForum</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>
-	<service>
 		<name>WriteThread</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.WriteThread</implementationClass>
 		<description />

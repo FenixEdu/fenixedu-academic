@@ -38,6 +38,7 @@ public class InsertExecutionCourseAtExecutionPeriod extends Service {
         }
 
         executionCourse.setNome(infoExecutionCourse.getNome());
+        executionCourse.createForum(executionCourse.getNome(), executionCourse.getNome());
         executionCourse.setExecutionPeriod(executionPeriod);
         executionCourse.setSigla(infoExecutionCourse.getSigla());
         executionCourse.setLabHours(infoExecutionCourse.getLabHours());

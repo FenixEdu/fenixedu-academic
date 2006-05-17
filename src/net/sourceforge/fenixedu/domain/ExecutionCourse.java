@@ -6,15 +6,11 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -61,7 +57,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     private void init() {
 	setRootDomainObject(RootDomainObject.getInstance());
-	//this.createForum(getNome(), getNome());
     }
 
     public List<Grouping> getGroupings() {
@@ -974,8 +969,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     	}
     	return degrees;
     }
-
-    public SortedSet<CurricularCourse> getCurricularCoursesSortedByDegreeAndCurricularCourseName() {
+    
+      public SortedSet<CurricularCourse> getCurricularCoursesSortedByDegreeAndCurricularCourseName() {
     	try {
     	final SortedSet<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(CurricularCourse.CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME);
     	curricularCourses.addAll(getAssociatedCurricularCoursesSet());

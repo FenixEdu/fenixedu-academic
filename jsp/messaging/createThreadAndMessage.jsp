@@ -21,13 +21,13 @@
 	
 	<fr:create type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage" layout="tabular"
            schema="conversationThreadAndMessage.create"
-           action="<%="/forunsManagement.do?method=viewForum&forumId="+forumId %>">
+           action="<%="/messaging/forunsManagement.do?method=viewForum&forumId="+forumId+"&goToLastPage=true" %>">
            <fr:hidden slot="creator" name="person"/>
            <fr:hidden slot="conversationThread.creator" name="person"/>
            <fr:hidden slot="conversationThread.forum" name="forum"/>
-           <fr:destination name="cancel" path="<%="/forunsManagement.do?method=viewForum&forumId="+forumId%>"/>
+           <fr:destination name="cancel" path="<%="/messaging/forunsManagement.do?method=viewForum&forumId="+forumId%>"/>
 
-           <fr:destination name="exception" path="<%="/forunsManagement.do?method=viewForum&forumId="+forumId%>"/>
+           <fr:destination name="exception" path="<%="/messaging/forunsManagement.do?method=viewForum&forumId="+forumId%>"/>
 	</fr:create>
 
 

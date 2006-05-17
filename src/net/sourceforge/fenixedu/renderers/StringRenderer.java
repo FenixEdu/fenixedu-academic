@@ -18,6 +18,22 @@ public class StringRenderer extends OutputRenderer {
 
     private String linkText;
     
+    private boolean escaped;
+    
+    /**
+     * @return the escape
+     */
+    public boolean isEscaped() {
+        return this.escaped;
+    }
+
+    /**
+     * @param escape the escape to set
+     */
+    public void setEscaped(boolean escaped) {
+        this.escaped = escaped;
+    }
+
     public boolean isLink() {
         return this.isLink;
     }
@@ -66,7 +82,7 @@ public class StringRenderer extends OutputRenderer {
                 String string = String.valueOf(object);
                 
                 if (! isLink() || string == null) {
-                    return new HtmlText(string);
+                    return new HtmlText(string, isEscaped());
                 }
                 else {
                     HtmlLink link = new HtmlLink();

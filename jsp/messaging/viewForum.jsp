@@ -24,7 +24,7 @@
 	<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.threads"/></h2>
 	
 	<!-- Conversation Threads -->
-	<html:link action="/forunsManagement.do?method=prepareCreateThreadAndMessage" paramId="forumId" paramName="forum" paramProperty="idInternal">
+	<html:link action="/messaging/forunsManagement.do?method=prepareCreateThreadAndMessage" paramId="forumId" paramName="forum" paramProperty="idInternal">
 		<bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.createThread"/>
 	</html:link>
 	<br/><br/>
@@ -36,9 +36,10 @@
 	<logic:notEmpty name="conversationThreads">
 		<fr:view name="conversationThreads" schema="conversationThread.view-full">
 			<fr:layout name="tabular">
+				<fr:property name="style" value="width:100%"/>
 		        <fr:property name="classes" value="style1"/>
 		        <fr:property name="columnClasses" value="listClasses,"/>
-       			<fr:property name="link(view)" value="/forunsManagement.do?method=viewThread"/>
+       			<fr:property name="link(view)" value="/messaging/forunsManagement.do?method=viewThread"/>
 				<fr:property name="param(view)" value="forum.idInternal/forumId,idInternal/threadId"/>
 				<fr:property name="key(view)" value="label.viewForum.viewThread"/>
 				<fr:property name="bundle(view)" value="MESSAGING_RESOURCES"/>
@@ -53,7 +54,7 @@
 			</logic:equal>
 			<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
 				<bean:define id="forumId" name="forum" property="idInternal" />
-				<html:link action="<%="forunsManagement.do?method=viewForum&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber%>">
+				<html:link action="<%="/messaging/forunsManagement.do?method=viewForum&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber%>">
 					<bean:write name="pageNumber"/>
 				</html:link>			
 			</logic:notEqual>
