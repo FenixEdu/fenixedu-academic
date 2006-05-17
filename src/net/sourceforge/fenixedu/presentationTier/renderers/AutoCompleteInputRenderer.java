@@ -273,7 +273,7 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                 addScripts(container);
                 
                 MetaSlotKey key = (MetaSlotKey) getContext().getMetaObject().getKey();
-                
+
                 HtmlHiddenField valueField = new HtmlHiddenField();
                 valueField.setTargetSlot(key);
                 valueField.setId(key.toString() + "_AutoComplete");
@@ -282,12 +282,18 @@ public class AutoCompleteInputRenderer extends InputRenderer {
 
                 valueField.setConverter(new AutoCompleteConverter(getClassName()));
                 
+                HtmlHiddenField oldValueField = new HtmlHiddenField();
+                oldValueField.setId(key.toString() + "_OldValue");
+                oldValueField.setName(oldValueField.getId());
+                container.addChild(oldValueField);
+                
                 HtmlTextInput textField = new HtmlTextInput();
                 textField.setId(key.toString());
                 textField.setName(textField.getId());
                 textField.setClasses(getTextFieldStyleClass());
                 textField.setSize(getSize());
-                textField.setOnKeyUp("javascript:autoCompleteUpdateValueField('" + textField.getId() + "', '" + TYPING_VALUE + "');");
+                textField.setOnKeyDown("javascript:autoCompleteKeyDownHandler(event, '" + textField.getId() +"');");
+                textField.setOnKeyUp("javascript:autoCompleteKeyUpHandler(event, '" + textField.getId() + "', '" + TYPING_VALUE + "');");
                 container.addChild(textField);
 
                 if (getRawSlotName() != null) {
