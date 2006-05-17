@@ -46,10 +46,10 @@ import org.apache.commons.beanutils.PropertyUtils;
  */
 public class AutoCompleteInputRenderer extends InputRenderer {
 
-    public static final String SERVLET_URI = "/ajax/AutoCompleteServlet";
+    public static final String SERVLET_URI  = "/ajax/AutoCompleteServlet";
+    public static final String TYPING_VALUE  = "custom";
     
     private static final String SCRIPT_FLAG_KEY = AutoCompleteInputRenderer.class.getName() + "/scripts"; 
-    private static final String TYPING_VALUE    = "custom";
     
     private String rawSlotName;
     
