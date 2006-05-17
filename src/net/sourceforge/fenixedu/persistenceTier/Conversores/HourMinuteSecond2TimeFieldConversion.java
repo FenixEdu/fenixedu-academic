@@ -29,6 +29,11 @@ public class HourMinuteSecond2TimeFieldConversion implements FieldConversion {
             Time time = (Time) source;
             return new HourMinuteSecond(time.getHours(), time.getMinutes(), time.getSeconds());
         }
+        if (source instanceof String) {
+            String time = (String) source;
+            return new HourMinuteSecond(Integer.valueOf(time.substring(0, 2)), Integer.valueOf(time
+                    .substring(3, 5)), Integer.valueOf(time.substring(6, 8)));
+        }
         return source;
     }
 
