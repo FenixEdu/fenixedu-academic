@@ -396,7 +396,6 @@ class net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration extend
 
 class net.sourceforge.fenixedu.domain.degreeStructure.Context extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer childOrder;
-	Integer keyCurricularSemester;
 	Integer keyChildDegreeModule;
 	Integer keyParentCourseGroup;
 	Integer keyBeginExecutionPeriod;
