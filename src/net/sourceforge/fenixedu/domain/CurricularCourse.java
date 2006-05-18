@@ -1043,11 +1043,6 @@ public class CurricularCourse extends CurricularCourse_Base {
             return new MarkSheet(this, executionPeriod, responsibleTeacher, evaluationDate,
                     markSheetType, MarkSheetState.NOT_CONFIRMED, submittedByTeacher, markSheetEnrolmentEvaluationBeans);
     }
-    
-    //TODO:
-    public void confirmMarkSheet() {
-        
-    }
 
     public MarkSheet rectifyEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation, Date evaluationDate, String grade, String reason) {
         
@@ -1074,15 +1069,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         return rectificationMarkSheet;
     }
     
-    //TODO:
     public MarkSheet createRectificationMarkSheet(ExecutionPeriod executionPeriod,
  		   Date evaluationDate, Teacher responsibleTeacher, MarkSheetType markSheetType, 
              List<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
          
-         MarkSheet markSheet = new MarkSheet(this, executionPeriod, responsibleTeacher, evaluationDate,
+         return new MarkSheet(this, executionPeriod, responsibleTeacher, evaluationDate,
                  markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, Boolean.FALSE, markSheetEnrolmentEvaluationBeans);
-         markSheet.generateCheckSum();
-         return markSheet;
     }
     
     public Collection<MarkSheet> searchMarkSheets(ExecutionPeriod executionPeriod, Teacher teacher, Date evaluationDate, MarkSheetState markSheetState, MarkSheetType markSheetType) {
@@ -1096,7 +1088,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (teacher != null && markSheet.getResponsibleTeacher() != teacher) {
                 continue;
             }
-            if (evaluationDate != null && DateFormatUtil.compareDates(dateFormat, markSheet.getEvaluationDate(), evaluationDate) != 0) {
+            if (evaluationDate != null && DateFormatUtil.compareDates(dateFormat, markSheet.getEvaluationDateDateTime().toDate(), evaluationDate) != 0) {
                 continue;
             }
             if (markSheetState != null && markSheet.getMarkSheetState() != markSheetState) {
