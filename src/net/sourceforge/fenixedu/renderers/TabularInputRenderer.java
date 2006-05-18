@@ -110,6 +110,42 @@ public class TabularInputRenderer extends InputRenderer {
         return this.collectionRenderer.getSuffixes();
     }
 
+    public String getBundle(String name) {
+        return this.collectionRenderer.getBundle(name);
+    }
+
+    public String getKey(String name) {
+        return this.collectionRenderer.getKey(name);
+    }
+
+    public String getLink(String name) {
+        return this.collectionRenderer.getLink(name);
+    }
+
+    public String getModule(String name) {
+        return this.collectionRenderer.getModule(name);
+    }
+
+    public String getOrder(String name) {
+        return this.collectionRenderer.getOrder(name);
+    }
+
+    public String getParam(String name) {
+        return this.collectionRenderer.getParam(name);
+    }
+
+    public String getText(String name) {
+        return this.collectionRenderer.getText(name);
+    }
+
+    public boolean isExcludedFromFirst(String name) {
+        return this.collectionRenderer.isExcludedFromFirst(name);
+    }
+
+    public boolean isExcludedFromLast(String name) {
+        return this.collectionRenderer.isExcludedFromLast(name);
+    }
+
     /**
      * @property
      */
@@ -199,6 +235,87 @@ public class TabularInputRenderer extends InputRenderer {
      */
     public void setSortBy(String sortBy) {
         this.collectionRenderer.setSortBy(sortBy);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setBundle(String, String)}.
+     * 
+     * @property
+     */
+    public void setBundle(String name, String value) {
+        this.collectionRenderer.setBundle(name, value);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setKey(String, String)}.
+     * 
+     * @property
+     */
+    public void setKey(String name, String value) {
+        this.collectionRenderer.setKey(name, value);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setLink(String, String)}.
+     * 
+     * @property
+     */
+    public void setLink(String name, String value) {
+        this.collectionRenderer.setLink(name, value);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setModule(String, String)}.
+     * 
+     * @property
+     */
+    public void setModule(String name, String value) {
+        this.collectionRenderer.setModule(name, value);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setOrder(String, String)}.
+     * 
+     * @property
+     */
+    public void setOrder(String name, String value) {
+        this.collectionRenderer.setOrder(name, value);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setParam(String, String)}.
+     * 
+     * @property
+     */
+    public void setParam(String name, String value) {
+        this.collectionRenderer.setParam(name, value);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setText(String, String)}.
+     * 
+     * @property
+     */
+    public void setText(String name, String value) {
+        this.collectionRenderer.setText(name, value);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setExcludedFromFirst(String, String)}.
+     * 
+     * @property
+     */
+    public void setExcludedFromFirst(String name, String value) {
+        this.collectionRenderer.setExcludedFromFirst(name, value);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setExcludedFromLast(String, String)}.
+     * 
+     * @property
+     */
+    public void setExcludedFromLast(String name, String value) {
+        this.collectionRenderer.setExcludedFromLast(name, value);
     }
 
     @Override
