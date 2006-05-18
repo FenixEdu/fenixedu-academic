@@ -879,7 +879,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
             EnrolmentEvaluationType enrolmentEvaluationType;
         }
 
-	// Isto é da estrutura antiga, faz sentido ainda?
+	// Isto ï¿½ da estrutura antiga, faz sentido ainda?
     class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
     
@@ -6034,15 +6034,6 @@ relation EmployeeAssiduousness {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
 }*/
-
-relation EmployeeWorksForUnit {
-	net.sourceforge.fenixedu.domain.Employee playsRole employees {
-        multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit {
-		multiplicity 1;
-    }
-}
 
 relation AssiduousnessSchedule {
 	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedules {
