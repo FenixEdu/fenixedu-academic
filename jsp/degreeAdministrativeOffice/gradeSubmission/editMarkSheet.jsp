@@ -65,5 +65,5 @@
 	<br/>
 	
 	<html:submit><bean:message key="label.markSheet.change" /></html:submit>
-	<html:cancel onclick="this.form.method.value='searchMarkSheet';"><bean:message key="label.back"/></html:cancel>
+	<html:cancel onclick="this.form.method.value='backSearchMarkSheet';"><bean:message key="label.back"/></html:cancel>
 </fr:form>

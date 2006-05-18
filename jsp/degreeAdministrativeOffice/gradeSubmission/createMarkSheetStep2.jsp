@@ -33,7 +33,9 @@
 	</ul>
 </fr:hasMessages>
 
-<fr:form action="/createMarkSheet.do?method=createMarkSheetStepTwo">
+<fr:form action="/createMarkSheet.do">
+
+	<html:hidden name="markSheetManagementForm" property="method" value="createMarkSheetStepTwo" />
 
 	<fr:edit id="edit-invisible" name="edit" visible="false"/>
 
@@ -46,5 +48,5 @@
 	</fr:edit>
 	<br/>
 	<html:submit><bean:message key="label.markSheet.submit" /></html:submit>
-	<html:cancel><bean:message key="label.back"/></html:cancel>
+	<html:cancel onclick="this.form.method.value='backSearchMarkSheet';"><bean:message key="button.cancel"/></html:cancel>
 </fr:form>
