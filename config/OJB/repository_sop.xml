@@ -1,4 +1,4 @@
-<class-descriptor class="net.sourceforge.fenixedu.domain.space.OldBuilding" table="BUILDING">
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.OldBuilding" table="SPACE">
       
       
       
@@ -10,7 +10,7 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.OldRoom"
-   	  table="ROOM"
+   	  table="SPACE"
    >
       
       

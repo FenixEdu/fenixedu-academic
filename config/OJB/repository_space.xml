@@ -44,7 +44,7 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Building" table="SPACE">
-	
+	 <extent-class class-ref="net.sourceforge.fenixedu.domain.space.OldBuilding" />
 	
 	
 	
@@ -85,7 +85,7 @@
 </class-descriptor>			
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Room" table="SPACE">
-	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.OldRoom" />
 	
 	
 	

@@ -33,3 +33,6 @@ execute "Rename Date Columns" renameDateColumns.sql
 execute "Add Assiduity Missing Columns" addAssiduityMissingColumns.sql
 execute "Add Missing Columns" addMissingColumns.sql
 execute "Add REASON to MARKSHEET" alterMarkSheetTableAddReason.sql
+execute "Add columns to Space" alterTableSpace.sql
+executeWithTempFile "Migrate Room To Space" migrateRoomToSpace.sql
+executeWithTempFile "Migrate Building To Space" migrateBuildingToSpace.sql

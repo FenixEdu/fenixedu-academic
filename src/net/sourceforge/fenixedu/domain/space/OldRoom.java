@@ -165,4 +165,14 @@ public class OldRoom extends OldRoom_Base {
     	return oldRooms;
     }
 
+    @Deprecated
+    public String getNome() {
+        return super.getName();
+    }
+
+    @Deprecated
+    public void setNome(String name) {
+        super.setName(name);
+    }
+    
 }
