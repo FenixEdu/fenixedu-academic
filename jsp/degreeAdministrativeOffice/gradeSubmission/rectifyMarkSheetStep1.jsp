@@ -13,7 +13,7 @@
 <h3><u><bean:message key="label.rectifyMarkSheet.step.one"/></u> &gt; <bean:message key="label.rectifyMarkSheet.step.two"/></h3>
 
 <fr:view name="rectifyBean" property="markSheet"
-		schema="markSheet.view.extended"
+		schema="markSheet.view"
 		layout="tabular">
 </fr:view>
 <br/>

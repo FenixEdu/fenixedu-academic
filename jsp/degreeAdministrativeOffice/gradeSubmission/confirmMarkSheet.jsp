@@ -7,7 +7,7 @@
 <%@page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
 <h2><bean:message key="label.confirmMarkSheet"/></h2>
 
-<fr:view name="markSheet" schema="markSheet.view.extended" layout="tabular" />
+<fr:view name="markSheet" schema="markSheet.view" layout="tabular" />
 <br/>
 <fr:view name="markSheet" property="enrolmentEvaluations" schema="markSheet.view.evaluation" layout="tabular"/>
 <br />
