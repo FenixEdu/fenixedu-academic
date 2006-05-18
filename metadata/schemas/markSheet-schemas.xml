@@ -64,16 +64,6 @@
 
 <schema name="markSheet.view"
 		type="net.sourceforge.fenixedu.domain.MarkSheet">
-		
-	<slot name="responsibleTeacher.teacherNumber" key="label.teacher" />
-	<slot name="evaluationDate" key="label.evaluationDate" />
-	<slot name="markSheetState" key="label.markSheetState" />
-	<slot name="markSheetType" key="label.markSheetType" />
-	<slot name="enrolmentEvaluationsCount" key="label.markSheet.totalNumberOfStudents" />
-</schema>
-
-<schema name="markSheet.view.extended"
-		type="net.sourceforge.fenixedu.domain.MarkSheet">
 
 	<slot name="curricularCourse.degree.name" key="label.degree"/>
 	<slot name="curricularCourse.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />
