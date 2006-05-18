@@ -172,4 +172,8 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
             addMessage(request, actionMessages, "error.teacherNotResponsibleOrNorCoordinator");
         }
     }
+
+    public ActionForward backSearchMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        return mapping.findForward("searchMarkSheetFilled");
+    }
 }

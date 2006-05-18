@@ -112,12 +112,6 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         return mapping.findForward("editMarkSheet");
     }
     
-    public ActionForward searchMarkSheet(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
-        return mapping.findForward("searchMarkSheetFilled");
-    }
-
     private MarkSheetManagementEditBean getMarkSheetManagementEditBean() {
         return (MarkSheetManagementEditBean) RenderUtils.getViewState("edit-markSheet").getMetaObject().getObject();
     }
