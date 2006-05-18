@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchResultBean;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -39,23 +41,27 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     }
     
     public ActionForward prepareSearchMarkSheetFilled(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
         
         MarkSheetManagementSearchBean markSheetBean = new MarkSheetManagementSearchBean();
         fillMarkSheetSearchBean(actionForm, request, markSheetBean);
         
-        return searchMarkSheets(mapping, actionForm, request, response, markSheetBean);
+        if (markSheetBean.getCurricularCourse() == null) {
+            return prepareSearchMarkSheet(mapping, actionForm, request, response);
+        } else {
+            return searchMarkSheets(mapping, actionForm, request, response, markSheetBean);
+        }
     }
     
     public ActionForward searchMarkSheets(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
         MarkSheetManagementSearchBean searchBean = (MarkSheetManagementSearchBean) RenderUtils.getViewState().getMetaObject().getObject();
         return searchMarkSheets(mapping, actionForm, request, response, searchBean);
     }
 
     private ActionForward searchMarkSheets(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response, MarkSheetManagementSearchBean searchBean) {
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response, MarkSheetManagementSearchBean searchBean) throws FenixFilterException, FenixServiceException {
       
         ActionMessages actionMessages = createActionMessages();        
         try {
@@ -67,9 +73,9 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             request.setAttribute("searchResult", result);
             request.setAttribute("url", buildUrl(searchBean));
 
-        } catch (FenixFilterException e) {
+        } catch (NotAuthorizedException e) {
             addMessage(request, actionMessages, "error.notAuthorized");
-        } catch (FenixServiceException e) {
+        } catch (InvalidArgumentsServiceException e) {
             addMessage(request, actionMessages, e.getMessage());
         }
         return mapping.getInputForward();
