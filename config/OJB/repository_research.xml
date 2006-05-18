@@ -1,108 +1,11 @@
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.Project"
-	table="RESEARCH_PROJECT">
-	
-	
-	
-	
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.Project" table="RESEARCH_PROJECT"/>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.event.Event" table="RESEARCH_EVENT"/>
 	
-	
-	
-	
-	
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation" table="RESEARCH_PROJECT_PARTICIPATION"/>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.ResearchInterest" table="RESEARCH_INTEREST"/>
 	
-	
-	
-	
-	 
-	
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.event.EventParticipation"	table="RESEARCH_EVENT_PARTICIPATION"/>
 
-</class-descriptor>
-
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.event.Event" table="RESEARCH_EVENT">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-
-	
-    
-    
-    
-</class-descriptor>
-
-
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation"
-	table="RESEARCH_PROJECT_PARTICIPATION">
-	
-	
-	
-	
-	
-	
-	
-	
-</class-descriptor>
-
-
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.ResearchInterest"
-	table="RESEARCH_INTEREST">
-	
-	
-	
-	
-	
-	
-	
-		
-</class-descriptor>
-
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.event.EventParticipation"
-	table="RESEARCH_EVENT_PARTICIPATION">
-	
-	
-	
-	
-	
-	
-	
-	 
-    
-    
-    
-    <reference-descriptor auto-retrieve="false" 
-		name="event"
-		class-ref="net.sourceforge.fenixedu.domain.research.event.Event"
-		>
-	    <foreignkey field-ref="keyEvent"/>
-    </reference-descriptor>
-
-    <reference-descriptor auto-retrieve="false" 
-		name="party"
-		class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Party"
-		>
-	    <foreignkey field-ref="keyParty"/>
-    </reference-descriptor>
-	
-</class-descriptor>
-
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation"
-	table="RESEARCH_PROJECT_RESEARCH_EVENT_ASSOCIATION">
-	
-	
-	
-	
-	
-	
-	
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation" table="RESEARCH_PROJECT_RESEARCH_EVENT_ASSOCIATION"/>

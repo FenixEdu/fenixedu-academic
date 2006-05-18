@@ -115,8 +115,10 @@
 				<fr:property name="eachSchema" value="project.summary"/>
 			</fr:layout>
 		</fr:view>
-		
+
+<%--
 		<!-- Publications -->
+		
 		<h3 id='publicationsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.publicationsTitle"/> </span> </h3>
 		
 		<fr:view name="UserView" property="person.personAuthorships">
@@ -138,7 +140,7 @@
 		
 		<!-- Products -->
 		<h3 id='productsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.productsTitle"/> </span> </h3>
-		
+--%>		
 
 </logic:present>
 		

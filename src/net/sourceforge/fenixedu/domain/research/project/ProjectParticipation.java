@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.research.project;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class ProjectParticipation extends ProjectParticipation_Base {
     

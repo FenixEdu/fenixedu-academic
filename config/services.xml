@@ -9588,6 +9588,15 @@
 		</filterChains>
 	</service> 
 	<service>
+		<name>DeleteProjectParticipant</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.project.DeleteProjectParticipant</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service> 
+	<service>
 		<name>CreateProjectEventAssociation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.project.CreateProjectEventAssociation</implementationClass>
 		<description />

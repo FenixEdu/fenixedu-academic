@@ -59,7 +59,6 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
                 request.setAttribute("participations", participations);
             }
         }  
-        
         return mapping.findForward("EditProjectParticipants");  
     }
     
@@ -111,6 +110,17 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         Integer oid = Integer.parseInt(request.getParameter("projectId"));
         
         ServiceUtils.executeService(userView, "CreateProjectParticipant", new Object[] { fullBean, oid });
+        
+        return prepareEditParticipants(mapping, form, request, response);
+    }    
+    
+    public ActionForward removeParticipant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        
+        final IUserView userView = getUserView(request);
+        Integer participantId = Integer.parseInt(request.getParameter("participantId"));
+        
+        ServiceUtils.executeService(userView, "DeleteProjectParticipant", new Object[] { participantId });
         
         return prepareEditParticipants(mapping, form, request, response);
     }    

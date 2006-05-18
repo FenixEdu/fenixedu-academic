@@ -313,12 +313,6 @@ public class AutoCompleteInputRenderer extends InputRenderer {
             private void addScripts(HtmlInlineContainer container) {
                 HttpServletRequest request = getContext().getViewState().getRequest();
                 
-                if (request.getAttribute(SCRIPT_FLAG_KEY) != null) {
-                    return;
-                }
-                
-                request.setAttribute(SCRIPT_FLAG_KEY, true);
-                
                 HtmlLink link = new HtmlLink();
                 link.setModuleRelative(false);
                 link.setContextRelative(true);
