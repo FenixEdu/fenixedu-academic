@@ -39,7 +39,7 @@ public class DateInputRenderer extends TextFieldRenderer {
      * <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormat</a>
      * 
      * <p>
-     * The default format is {@value #DEFAULT_FORMAT}.
+     * The default format is {@value DateConverter#DEFAULT_FORMAT}.
      * 
      * @property
      */
