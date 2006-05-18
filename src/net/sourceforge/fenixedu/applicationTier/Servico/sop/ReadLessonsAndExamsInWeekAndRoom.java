@@ -152,7 +152,6 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
     }
 
     private InfoPeriod calculateLessonsSeason(ExecutionPeriod executionPeriod) throws FenixServiceException {
-        try {
             int semester = executionPeriod.getSemester().intValue();
 
             String year = executionPeriod.getExecutionYear().getYear();
@@ -190,9 +189,6 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
 
             }
             return new InfoPeriod(startSeason1, endSeason2);
-        } catch (Exception e) {
-            throw new FenixServiceException("Error calculating exams season");
-        }
     }
 
 }

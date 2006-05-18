@@ -65,8 +65,6 @@ public class SearchExecutionCourses extends Service {
 
             public Object transform(Object arg0) {
                 InfoExecutionCourse infoExecutionCourse = null;
-                try {
-
                     // Get the occupancy Levels
                     infoExecutionCourse = getOccupancyLevels(arg0);
 
@@ -78,15 +76,10 @@ public class SearchExecutionCourses extends Service {
                     // fill infomation regarding to teacher report
 
                     getTeacherReportInformation(infoExecutionCourse, arg0);
-
-                } catch (ExcepcaoPersistencia e) {
-                	throw new RuntimeException(e);
-                }
                 return infoExecutionCourse;
             }
 
-            private void getTeacherReportInformation(InfoExecutionCourse infoExecutionCourse, Object arg0)
-                    throws ExcepcaoPersistencia {
+            private void getTeacherReportInformation(InfoExecutionCourse infoExecutionCourse, Object arg0) {
 
                 ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 
@@ -170,7 +163,7 @@ public class SearchExecutionCourses extends Service {
                 }
             }
 
-            private InfoExecutionCourse getOccupancyLevels(Object arg0) throws ExcepcaoPersistencia {
+            private InfoExecutionCourse getOccupancyLevels(Object arg0) {
                 InfoExecutionCourse infoExecutionCourse;
                 // Get the associated Shifs
                 ExecutionCourse executionCourse = (ExecutionCourse) arg0;

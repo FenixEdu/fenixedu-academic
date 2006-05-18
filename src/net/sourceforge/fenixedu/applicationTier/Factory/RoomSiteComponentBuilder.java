@@ -177,7 +177,6 @@ public class RoomSiteComponentBuilder {
     }
 
     private InfoPeriod calculateLessonsSeason(ExecutionPeriod executionPeriod) throws Exception {
-        try {
             int semester = executionPeriod.getSemester().intValue();
 
             List executionDegreesList = ExecutionDegree.getAllByExecutionYear(executionPeriod.getExecutionYear().getYear());
@@ -213,8 +212,5 @@ public class RoomSiteComponentBuilder {
 
             }
             return new InfoPeriod(startSeason1, endSeason2);
-        } catch (Exception e) {
-            throw new FenixServiceException("Error calculating exams season");
-        }
     }
 }

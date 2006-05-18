@@ -67,7 +67,6 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 
             Teacher teacher = null;
             // Read The ExecutionDegree
-            try {
 
                 String ids[] = (String[]) arguments[1];
 
@@ -85,9 +84,6 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
                     }
 
                 }
-            } catch (Exception e) {
-                return false;
-            }
         }
         return true;
     }

@@ -153,13 +153,8 @@ public class CreateLesson extends Service {
         List associatedLessons = shift.getAssociatedLessons();
         for (int i = 0; i < associatedLessons.size(); i++) {
             lesson = (Lesson) associatedLessons.get(i);
-            try {
-                lesson.getIdInternal();
-                duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-            } catch (Exception ex) {
-                // all is ok
-                // the lesson contained a proxy to null.
-            }
+            lesson.getIdInternal();
+            duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
         }
         return duration;
     }
