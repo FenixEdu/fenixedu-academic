@@ -52,6 +52,16 @@ public class Enrolment extends Enrolment_Base {
     	createEnrolmentLog(studentCurricularPlan.getStudent(), EnrolmentAction.ENROL);
     }
     
+    @Deprecated
+    public EnrollmentCondition getCondition() {
+    	return getEnrolmentCondition();
+    }
+    
+    @Deprecated
+    public void setCondition(EnrollmentCondition enrollmentCondition) {
+    	setEnrolmentCondition(enrollmentCondition);
+    }
+    
     public boolean isSpecialSeason()
     {
     	boolean result=false;

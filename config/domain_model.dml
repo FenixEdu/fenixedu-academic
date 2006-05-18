@@ -875,7 +875,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
             Integer keyExecutionPeriod;
             Integer keyStudentCurricularPlan;
             EnrollmentState enrollmentState;
-            EnrollmentCondition condition;
+            EnrollmentCondition enrolmentCondition;
             EnrolmentEvaluationType enrolmentEvaluationType;
         }
 

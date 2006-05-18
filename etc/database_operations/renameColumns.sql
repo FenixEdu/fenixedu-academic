@@ -144,7 +144,7 @@ alter table PERIOD change column START_DATE START  date NOT NULL default '0000-0
 alter table BRANCH change column BRANCH_NAME_EN NAME_EN  varchar(255) default NULL;
 alter table GRATUITY_SITUATION change column WHEN_ALTER WHEN_DATE_TIME  timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP;
 alter table RESTRICTION change column NUMBER_OF_CURRICULAR_COURSE_DONE NUMBER_OF_CURRICULAR_COURSES  int(11) default NULL;
-alter table CURRICULUM_MODULE change column FNL_TMP_STATE CONDITION  varchar(255) NOT NULL default '';
+alter table CURRICULUM_MODULE change column FNL_TMP_STATE ENROLMENT_CONDITION  varchar(255) NOT NULL default '';
 alter table OLD_INQUIRIES_SUMMARY change column AVERAGE_6_2 AVERAGE6_2  double unsigned default NULL;
 alter table DEGREE_MODULE change column MIN_INCREMENT_NAC MINIMUM_VALUE_FOR_ACUMULATED_ENROLLMENTS  int(11) default '1';
 alter table EXTRA_WORK_REQUESTS change column OPTION_11 OPTION11  tinyint(1) default NULL;
