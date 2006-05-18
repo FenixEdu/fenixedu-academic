@@ -14,7 +14,15 @@ public class CachedMetaSlot extends SimpleMetaSlot {
     public CachedMetaSlot(MetaObject metaObject, String name) {
         super(metaObject, name);
         
-        this.isCached = false;
+        setCached(false);
+    }
+
+    public boolean isCached() {
+        return isCached;
+    }
+
+    public void setCached(boolean isCached) {
+        this.isCached = isCached;
     }
 
     @Override
@@ -28,7 +36,7 @@ public class CachedMetaSlot extends SimpleMetaSlot {
 
     @Override
     public Object getObject() {
-        if (this.isCached) {
+        if (isCached()) {
             return this.cachedObject.getObject();
         }
         else {
@@ -41,11 +49,11 @@ public class CachedMetaSlot extends SimpleMetaSlot {
         this.cachedObject = MetaObjectFactory.createObject(object, RenderKit.getInstance().findSchema(getSchema()));
         this.cachedObject.setUser(getUser());
         
-        this.isCached = true;
+        setCached(true);
     }
 
     public Object getCachedObject() {
-        if (this.isCached) {
+        if (isCached()) {
             return this.cachedObject.getObject();
         }
         else {

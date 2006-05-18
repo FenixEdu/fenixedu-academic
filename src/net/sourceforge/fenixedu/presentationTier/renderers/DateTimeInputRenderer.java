@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -59,9 +60,13 @@ public class DateTimeInputRenderer extends InputRenderer {
             public HtmlComponent createComponent(Object object, Class type) {
                 DateTime dateTime = (DateTime) object;
                 
-                Date date = null; 
+                Date date = null;
+                Calendar calendar = null;
+                
                 if (dateTime != null) {
                     date = dateTime.toGregorianCalendar().getTime();
+                    calendar = Calendar.getInstance();
+                    calendar.setTime(date);
                 }
                 
                 MetaSlotKey key = (MetaSlotKey) getInputContext().getMetaObject().getKey();
@@ -91,6 +96,10 @@ public class DateTimeInputRenderer extends InputRenderer {
                 hoursField.setMaxLength(2);
                 container.addChild(hoursField);
                 
+                if (calendar != null) {
+                    hoursField.setValue(String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY)));
+                }
+                
                 container.addChild(new HtmlText("h:"));
                 
                 HtmlTextInput minutesField = new HtmlTextInput();
@@ -98,6 +107,10 @@ public class DateTimeInputRenderer extends InputRenderer {
                 minutesField.setSize("2");
                 minutesField.setMaxLength(2);
                 container.addChild(minutesField);
+                
+                if (calendar != null) {
+                    minutesField.setValue(String.format("%02d", calendar.get(Calendar.MINUTE)));
+                }
                 
                 container.addChild(new HtmlText("m"));
                 

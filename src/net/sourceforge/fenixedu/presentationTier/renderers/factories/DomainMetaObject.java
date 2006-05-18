@@ -140,8 +140,9 @@ public class DomainMetaObject implements MetaObject {
         for (MetaSlot slot : allSlots) {
             CachedMetaSlot cachedSlot = (CachedMetaSlot) slot;
             
-            Object change = cachedSlot.getCachedObject();
-            if (change != null) {
+            if (cachedSlot.isCached()) {
+                Object change = cachedSlot.getCachedObject();
+                
                 ObjectKey key = new ObjectKey(getOid(), getType());
                 ObjectChange objectChange = new ObjectChange(key, cachedSlot.getName(), change);
                 changes.add(objectChange);

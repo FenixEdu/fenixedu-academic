@@ -31,7 +31,7 @@ public class DateTimeValidator extends HtmlValidator {
         
         if (value == null || value.length() == 0) {
             setMessage("renderers.validator.dateTime.required");
-            setValid(isRequired());
+            setValid(! isRequired());
         }
         else {
             if (value.equals(DateTimeConverter.INVALID)) {
