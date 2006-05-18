@@ -118,7 +118,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         try {
 
             ServiceUtils.executeService(getUserView(request), "CreateMarkSheet", new Object[] { createBean });
-            return mapping.findForward("searchMarkSheet");
+            return mapping.findForward("searchMarkSheetFilled");
 
         } catch (NotAuthorizedFilterException e) {
             addMessage(request, actionMessages, "error.notAuthorized");
