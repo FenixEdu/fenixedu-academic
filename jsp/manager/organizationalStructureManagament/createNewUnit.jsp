@@ -36,6 +36,11 @@
 				<h:inputText size="10" value="#{organizationalStructureBackingBean.unitAcronym}"/>				
 			</h:panelGroup>									
 			
+			<h:outputText value="<b>#{bundle['message.webAddress']}</b>" escape="false"/>
+			<h:panelGroup>
+				<h:inputText size="30" value="#{organizationalStructureBackingBean.unitWebAddress}"/>				
+			</h:panelGroup>		
+			
 			<h:outputText value="<b>#{bundle['message.initialDate']}:</b>" escape="false"/>
 			<h:panelGroup>
 				<h:inputText id="beginDate" required="true" size="10" value="#{organizationalStructureBackingBean.unitBeginDate}">

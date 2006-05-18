@@ -135,13 +135,14 @@ public class Unit extends Unit_Base {
     }
 
     public void edit(String unitName, Integer unitCostCenter, String acronym, Date beginDate,
-            Date endDate, PartyTypeEnum type, Unit parentUnit, AccountabilityType accountabilityType) {
+            Date endDate, PartyTypeEnum type, Unit parentUnit, AccountabilityType accountabilityType, String webAddress) {
 
         this.setName(unitName);
         this.setBeginDate(beginDate);
         this.setEndDate(endDate);
-        this.setType(type);
+        this.setType(type);        
         this.setCostCenterCode(unitCostCenter);
+        this.setWebAddress(webAddress);
         if (acronym != null && !acronym.equals("") && this.getType() != null) {
             checkAcronym(acronym, this.getType());
         }

@@ -448,11 +448,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean areAllOptionalCurricularCoursesWithLessTenEnrolments() {
+        int enrolments = 0;
         for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            if (curricularCourse.getEnrolmentsByExecutionPeriod(this.getExecutionPeriod()).size() < 10
-                    && curricularCourse.getType() != null
+            if (curricularCourse.getType() != null
                     && curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE)) {
-                continue;
+                enrolments += curricularCourse.getEnrolmentsByExecutionPeriod(this.getExecutionPeriod())
+                        .size();
+                if (enrolments >= 10) {
+                    return false;
+                }
             } else {
                 return false;
             }
@@ -461,11 +465,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean areAllNotOptionalCurricularCoursesWithLessTenEnrolments() {
+        int enrolments = 0;
         for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            if (curricularCourse.getEnrolmentsByExecutionPeriod(this.getExecutionPeriod()).size() < 10
-                    && (curricularCourse.getType() == null || !curricularCourse.getType().equals(
-                            CurricularCourseType.OPTIONAL_COURSE))) {
-                continue;
+            if (curricularCourse.getType() == null
+                    || !curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE)) {
+                enrolments += curricularCourse.getEnrolmentsByExecutionPeriod(this.getExecutionPeriod())
+                        .size();
+                if (enrolments >= 10) {
+                    return false;
+                }
             } else {
                 return false;
             }

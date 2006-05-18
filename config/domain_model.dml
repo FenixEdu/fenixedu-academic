@@ -2516,6 +2516,7 @@ class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.f
 class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
 	String name;
+	String webAddress;
 	PartyType type;
 	Integer keyPartyType;
 }
@@ -2524,8 +2525,8 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer costCenterCode;
 		Integer keyDepartment;	
 		Integer keyDegree;
-	YearMonthDay beginDateYearMonthDay;
-	YearMonthDay endDateYearMonthDay;
+		YearMonthDay beginDateYearMonthDay;
+		YearMonthDay endDateYearMonthDay;
 	}
 
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
@@ -2542,14 +2543,13 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		String area;
 		String fiscalCode;
 		String mobile;
-		String webAddress;
-	YearMonthDay expirationDateOfDocumentIdYearMonthDay;
+		YearMonthDay expirationDateOfDocumentIdYearMonthDay;
 		String districtOfResidence;
 		String documentIdNumber;
 		Integer keyPais;
 		String profession;
 		String districtSubdivisionOfBirth;
-	YearMonthDay emissionDateOfDocumentIdYearMonthDay;
+		YearMonthDay emissionDateOfDocumentIdYearMonthDay;
 		String address;
 		Boolean availableWebSite;
 		String socialSecurityNumber;
@@ -2566,7 +2566,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Boolean availablePhoto;
 		String email;
 		String districtSubdivisionOfResidence;
-	YearMonthDay dateOfBirthYearMonthDay;
+		YearMonthDay dateOfBirthYearMonthDay;
 		String parishOfResidence;
 	    MaritalStatus maritalStatus;
 	    Gender gender;
@@ -2585,8 +2585,8 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType
 }	 
 
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType {
-	YearMonthDay beginDateYearMonthDay;
-	YearMonthDay endDateYearMonthDay;
+		YearMonthDay beginDateYearMonthDay;
+		YearMonthDay endDateYearMonthDay;
 		FunctionType functionType;
 		Integer keyUnit;
 		Integer keyParentInherentFunction;

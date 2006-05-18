@@ -43,7 +43,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String unitName, unitCostCenter, unitTypeName, unitBeginDate, unitEndDate, unitAcronym;
 
-    private String functionName, functionTypeName, functionBeginDate, functionEndDate,
+    private String functionName, functionTypeName, functionBeginDate, functionEndDate, unitWebAddress,
             unitRelationTypeValue;
 
     private String listingTypeValueToUnits, listingTypeValueToFunctions, departmentID, degreeID;
@@ -350,17 +350,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         for (Degree degree : allDegrees) {
             selectItem = new SelectItem();
 
-            if (degree.getTipoCurso() != null) {
+            if (!degree.isBolonhaDegree()) {
                 if (degree.getTipoCurso().equals(DegreeType.DEGREE)) {
                     selectItem.setLabel("(L) " + degree.getNome());
                 } else if (degree.getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
                     selectItem.setLabel("(M) " + degree.getNome());
                 }
-            } else if (degree.getBolonhaDegreeType() != null) {
+            } else if (degree.isBolonhaDegree()) {
                 if (degree.getBolonhaDegreeType().equals(BolonhaDegreeType.DEGREE)) {
-                    selectItem.setLabel("(L) " + degree.getNome());
+                    selectItem.setLabel("(L-B) " + degree.getNome());
                 } else if (degree.getBolonhaDegreeType().equals(BolonhaDegreeType.MASTER_DEGREE)) {
-                    selectItem.setLabel("(M) " + degree.getNome());
+                    selectItem.setLabel("(M-B) " + degree.getNome());
                 } else if (degree.getBolonhaDegreeType().equals(
                         BolonhaDegreeType.INTEGRATED_MASTER_DEGREE)) {
                     selectItem.setLabel("(MI) " + degree.getNome());
@@ -476,7 +476,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         final Object[] argsToRead = { null, null, this.getUnitName(), this.getUnitCostCenter(),
                 this.getUnitAcronym(), datesResult.getBeginDate(), datesResult.getEndDate(), type,
-                parameters.getDepartmentID(), parameters.getDegreeID(), null };
+                parameters.getDepartmentID(), parameters.getDegreeID(), null, this.getUnitWebAddress() };
 
         return executeCreateNewUnitService(argsToRead, "listAllUnits");
     }
@@ -507,7 +507,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         final Object[] argsToRead = { null, this.getUnit().getIdInternal(), this.getUnitName(),
                 this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
                 datesResult.getEndDate(), type, parameters.getDepartmentID(), parameters.getDegreeID(),
-                accountabilityType };
+                accountabilityType, this.getUnitWebAddress() };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -529,7 +529,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), null, this.getUnitName(),
                 this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
                 datesResult.getEndDate(), type, parameters.getDepartmentID(), parameters.getDegreeID(),
-                null };
+                null, this.getUnitWebAddress() };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -561,7 +561,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
                 this.getUnitAcronym(), this.getUnit().getBeginDate(), this.getUnit().getEndDate(),
                 this.getUnit().getType(), parameters.getDepartmentID(), parameters.getDegreeID(),
-                accountabilityType };
+                accountabilityType, this.getUnit().getWebAddress() };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -575,7 +575,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         final Object[] argsToRead = { this.getUnit().getIdInternal(),
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
                 this.getUnitAcronym(), this.getUnit().getBeginDate(), this.getUnit().getEndDate(),
-                this.getUnit().getType(), parameters.getDepartmentID(), parameters.getDegreeID(), null };
+                this.getUnit().getType(), parameters.getDepartmentID(), parameters.getDegreeID(), null,
+                this.getUnit().getWebAddress() };
 
         return executeCreateNewUnitService(argsToRead, "backToUnitDetails");
     }
@@ -834,6 +835,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void setUnitAcronym(String unitAcronym) {
         this.unitAcronym = unitAcronym;
+    }
+
+    public String getUnitWebAddress() throws FenixFilterException, FenixServiceException {
+        if (this.unitWebAddress == null && this.getChooseUnit() != null) {
+            this.unitWebAddress = this.getChooseUnit().getWebAddress();
+        }
+        return unitWebAddress;
+    }
+
+    public void setUnitWebAddress(String webAddress) {
+        this.unitWebAddress = webAddress;
     }
 
     public String getUnitName() throws FenixFilterException, FenixServiceException {

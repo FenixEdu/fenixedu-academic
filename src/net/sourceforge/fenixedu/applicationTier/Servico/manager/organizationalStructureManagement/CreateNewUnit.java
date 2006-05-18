@@ -21,7 +21,7 @@ public class CreateNewUnit extends Service {
 
     public void run(Integer unitID, Integer parentUnitID, String unitName, String unitCostCenter,
             String acronym, Date beginDate, Date endDate, PartyTypeEnum type, Integer departmentID,
-            Integer degreeID, AccountabilityType accountabilityType) throws ExcepcaoPersistencia,
+            Integer degreeID, AccountabilityType accountabilityType, String webAddress) throws ExcepcaoPersistencia,
             FenixServiceException, DomainException {
 
         Unit unit = null;
@@ -41,7 +41,7 @@ public class CreateNewUnit extends Service {
         }
 
         unit.edit(unitName, costCenterCode, acronym, beginDate, endDate, type, parentUnit,
-                accountabilityType);
+                accountabilityType, webAddress);
 
         setDepartment(departmentID, unit);
         setDegree(degreeID, unit);
