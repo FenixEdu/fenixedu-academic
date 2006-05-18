@@ -13,7 +13,7 @@
 <table width="100%">
 	<tr>
 		<td class="infoop">
-			<bean:message key="label.program.explanation" />
+			<bean:message key="label.objectives.explanation" />
 		</td>
 	</tr>
 </table>
@@ -36,15 +36,26 @@
 				</h3>
 				<blockquote>
 					<h4>
-						<bean:message key="title.program"/>
+						<bean:message key="label.generalObjectives"/>
 					</h4>
-					<bean:write name="competenceCourse" property="program" filter="false"/>
-					<logic:present name="competenceCourse" property="programEn">
+					<bean:write name="competenceCourse" property="objectives" filter="false"/>
+					<logic:present name="competenceCourse" property="generalObjectivesEn">
 						<br/>
 						<h4>
-							<bean:message key="title.program.eng"/>
+							<bean:message key="label.generalObjectives.eng"/>
 						</h4>
-						<bean:write name="competenceCourse" property="programEn" filter="false"/>
+						<bean:write name="competenceCourse" property="generalObjectivesEn" filter="false"/>
+					</logic:present>
+					<h4>
+						<bean:message key="label.operacionalObjectives"/>
+					</h4>
+					<bean:write name="competenceCourse" property="operacionalObjectives" filter="false"/>
+					<logic:present name="competenceCourse" property="operacionalObjectivesEn">
+						<br/>
+						<h4>
+							<bean:message key="label.operacionalObjectives.eng"/>
+						</h4>
+						<bean:write name="competenceCourse" property="operacionalObjectivesEn" filter="false"/>
 					</logic:present>
 				</blockquote>
 			</logic:equal>
@@ -61,18 +72,29 @@
 				</h3>
 				<blockquote>
 					<h4>
-						<bean:message key="title.program"/>
+						<bean:message key="label.generalObjectives"/>
 					</h4>
-					<bean:write name="curriculum" property="program" filter="false"/>
-					<logic:present name="curriculum" property="programEn">
+					<bean:write name="curriculum" property="generalObjectives" filter="false"/>
+					<logic:present name="curriculum" property="generalObjectivesEn">
 						<br/>
 						<h4>
-							<bean:message key="title.program.eng"/>
+							<bean:message key="label.generalObjectives.eng"/>
 						</h4>
-						<bean:write name="curriculum" property="programEn" filter="false"/>
+						<bean:write name="curriculum" property="generalObjectivesEn" filter="false"/>
+					</logic:present>
+					<h4>
+						<bean:message key="label.operacionalObjectives"/>
+					</h4>
+					<bean:write name="curriculum" property="operacionalObjectives" filter="false"/>
+					<logic:present name="curriculum" property="operacionalObjectivesEn">
+						<br/>
+						<h4>
+							<bean:message key="label.operacionalObjectives.eng"/>
+						</h4>
+						<bean:write name="curriculum" property="operacionalObjectivesEn" filter="false"/>
 					</logic:present>
 				</blockquote>
-				<bean:define id="url" type="java.lang.String">/editProgram.do?method=prepareEditProgram&amp;curriculumID=<bean:write name="curriculum" property="idInternal"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/editObjectives.do?method=prepareEditObjectives&amp;curriculumID=<bean:write name="curriculum" property="idInternal"/></bean:define>
 					<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 						<bean:message key="button.edit"/>
 					</html:link>

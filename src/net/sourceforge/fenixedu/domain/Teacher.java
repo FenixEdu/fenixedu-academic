@@ -98,17 +98,6 @@ public class Teacher extends Teacher_Base {
         return result;
     }
 
-    public Professorship responsibleFor(Integer executionCourseId) {
-        List<Professorship> professorships = this.getProfessorships();
-
-        for (Professorship professorship : professorships) {
-            if (professorship.getResponsibleFor()
-                    && professorship.getExecutionCourse().getIdInternal().equals(executionCourseId))
-                return professorship;
-        }
-        return null;
-    }
-
     public Professorship responsibleFor(ExecutionCourse executionCourse) {
         for (final Professorship professorship : this.getProfessorships()) {
             if (professorship.getResponsibleFor() && professorship.getExecutionCourse() == executionCourse) {

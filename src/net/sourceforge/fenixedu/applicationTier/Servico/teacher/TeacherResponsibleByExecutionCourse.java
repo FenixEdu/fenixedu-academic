@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -14,34 +14,20 @@ public class TeacherResponsibleByExecutionCourse extends Service {
 
     public Boolean run(String teacherUserName, Integer executionCourseCode, Integer curricularCourseCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        boolean result = false;
-
-        result = ExecutionCourseResponsibleTeacher(teacherUserName, executionCourseCode)
-                && CurricularCourseNotBasic(curricularCourseCode);
-
-        return new Boolean(result);
+        return Boolean.valueOf(
+        		ExecutionCourseResponsibleTeacher(teacherUserName, executionCourseCode) && CurricularCourseNotBasic(curricularCourseCode));
     }
 
     private boolean ExecutionCourseResponsibleTeacher(String teacherUserName, Integer executionCourseCode)
             throws ExcepcaoPersistencia {
-        boolean result = false;
-
-        Teacher teacher = Teacher.readTeacherByUsername(teacherUserName);
-        Professorship responsibleFor = teacher.responsibleFor(executionCourseCode);
-        if (responsibleFor == null) {
-            result = false;
-        } else {
-            result = true;
-        }
-        return result;
+        final Teacher teacher = Teacher.readTeacherByUsername(teacherUserName);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        return teacher.responsibleFor(executionCourse) != null;
     }
 
     private boolean CurricularCourseNotBasic(Integer curricularCourseCode) throws ExcepcaoPersistencia {
-        boolean result = false;
-        CurricularCourse curricularCourse = null;
-        curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
-        result = curricularCourse.getBasic().equals(Boolean.FALSE);
-
-        return result;
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+        return curricularCourse.getBasic() == Boolean.FALSE;
     }
+
 }

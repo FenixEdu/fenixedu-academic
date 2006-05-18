@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
@@ -13,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -54,7 +52,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     	return mapping.findForward("edit-program");
     }
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		final DynaActionForm dynaActionForm = (DynaActionForm) form;
 		final String curriculumIDString = request.getParameter("curriculumID");
@@ -72,6 +70,53 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         ServiceManagerServiceFactory.executeService(userView, "EditProgram", args);
 
     	return mapping.findForward("program");
+    }
+
+    public ActionForward objectives(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	return mapping.findForward("objectives");
+    }
+
+    public ActionForward prepareEditObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+    	final String curriculumIDString = request.getParameter("curriculumID");
+    	if (executionCourse != null && curriculumIDString != null && curriculumIDString.length() > 0) {
+    		final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
+    		if (curriculum != null) {
+    			final DynaActionForm dynaActionForm = (DynaActionForm) form;
+    			dynaActionForm.set("generalObjectives", curriculum.getGeneralObjectives());
+    			dynaActionForm.set("generalObjectivesEn", curriculum.getGeneralObjectivesEn());
+    			dynaActionForm.set("operacionalObjectives", curriculum.getOperacionalObjectives());
+    			dynaActionForm.set("operacionalObjectivesEn", curriculum.getOperacionalObjectivesEn());
+    		}
+    		request.setAttribute("curriculum", curriculum);
+    	}
+    	return mapping.findForward("edit-objectives");
+    }
+
+    public ActionForward editObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	final DynaActionForm dynaActionForm = (DynaActionForm) form;
+    	final String curriculumIDString = request.getParameter("curriculumID");
+    	final String generalObjectives = dynaActionForm.getString("generalObjectives");
+    	final String generalObjectivesEn = dynaActionForm.getString("generalObjectivesEn");
+    	final String operacionalObjectives = dynaActionForm.getString("operacionalObjectives");
+    	final String operacionalObjectivesEn = dynaActionForm.getString("operacionalObjectivesEn");
+
+    	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+    	final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
+    	final InfoCurriculum infoCurriculum = new InfoCurriculum();
+    	infoCurriculum.setGeneralObjectives(generalObjectives);
+    	infoCurriculum.setGeneralObjectivesEn(generalObjectivesEn);
+    	infoCurriculum.setOperacionalObjectives(operacionalObjectives);
+    	infoCurriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
+    	final IUserView userView = getUserView(request);
+
+    	final Object args[] = { executionCourse.getIdInternal(), curriculum.getCurricularCourse().getIdInternal(), infoCurriculum, userView.getUtilizador() };
+    	ServiceManagerServiceFactory.executeService(userView, "EditObjectives", args);
+
+    	return mapping.findForward("objectives");
     }
 
 	private void getExecutionCourseFromParameterAndSetItInRequest(final HttpServletRequest request) {

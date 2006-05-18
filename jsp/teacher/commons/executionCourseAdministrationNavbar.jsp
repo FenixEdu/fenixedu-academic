@@ -50,7 +50,7 @@
 		</li>
 		<br/>
 		<li>
-			<html:link page="/objectivesManagerDA.do?method=viewObjectives" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/manageExecutionCourse.do?method=objectives" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.objectives"/>
 			</html:link>
 		</li>
@@ -59,13 +59,6 @@
 				<bean:message key="link.program"/>
 			</html:link>
 		</li>
-<!-- Old interface... must delete associated artifacts.
-		<li>
-			<html:link page="/programManagerDA.do?method=viewProgram" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.program"/>
-			</html:link>
-		</li>
--->
 		<li>
 			<html:link page="/viewEvaluationMethod.do?method=viewEvaluationMethod" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.evaluationMethod"/>

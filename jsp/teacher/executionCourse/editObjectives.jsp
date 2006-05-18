@@ -13,7 +13,7 @@
 <table width="100%">
 	<tr>
 		<td class="infoop">
-			<bean:message key="label.program.explanation" />
+			<bean:message key="label.objectives.explanation" />
 		</td>
 	</tr>
 </table>
@@ -29,22 +29,31 @@
 		<bean:write name="curricularCourse" property="name"/>
 	</h3>
 	<blockquote>
-		<html:form action="/editProgram">
-			<html:hidden property="method" value="editProgram"/>
+		<html:form action="/editObjectives">
+			<html:hidden property="method" value="editObjectives"/>
 			<html:hidden property="page" value="1"/>
 			<bean:define id="curriculumID" type="java.lang.Integer" name="curriculum" property="idInternal"/>
 			<html:hidden property="curriculumID" value="<%= curriculumID.toString() %>"/>
 			<bean:define id="executionCourseID" type="java.lang.Integer" name="executionCourse" property="idInternal"/>
 			<html:hidden property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
 			<h4>
-				<bean:message key="title.program"/>
+				<bean:message key="label.generalObjectives"/>
 			</h4>
-			<html:textarea  property="program" cols="50" rows="8"/>
+			<html:textarea  property="generalObjectives" cols="50" rows="8"/>
 			<br/>
 			<h4>
-				<bean:message key="title.program.eng"/>
+				<bean:message key="label.generalObjectives.eng"/>
 			</h4>
-			<html:textarea  property="programEn" cols="50" rows="8"/>
+			<html:textarea  property="generalObjectivesEn" cols="50" rows="8"/>
+			<h4>
+				<bean:message key="label.operacionalObjectives"/>
+			</h4>
+			<html:textarea  property="operacionalObjectives" cols="50" rows="8"/>
+			<br/>
+			<h4>
+				<bean:message key="label.operacionalObjectives.eng"/>
+			</h4>
+			<html:textarea  property="operacionalObjectivesEn" cols="50" rows="8"/>
 
 			<br/>
 			<br/>

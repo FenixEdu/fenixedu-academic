@@ -68,7 +68,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
             }
           
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-            responsibleFor = teacher.responsibleFor(executionCourse.getIdInternal());
+            responsibleFor = teacher.responsibleFor(executionCourse);
 
         } catch (Exception e) {
             return false;

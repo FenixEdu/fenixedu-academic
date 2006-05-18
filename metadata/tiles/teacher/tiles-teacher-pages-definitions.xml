@@ -503,4 +503,12 @@
 		<put name="body" value="/teacher/executionCourse/editProgram.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-objectives" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/objectives.jsp" />
+	</definition>
+
+	<definition name="manage-execution-course-objectives-edit" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/editObjectives.jsp" />
+	</definition>
+
 </tiles-definitions>

@@ -216,20 +216,6 @@
             <form-property name="programEn" type="java.lang.String" />
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
-        <form-bean name="executionCourseObjectivesForm" 
-            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-            <form-property name="generalObjectives" type="java.lang.String" />
-            <form-property name="operacionalObjectives" type="java.lang.String" />
-            <form-property name="generalObjectivesEn" type="java.lang.String" />
-            <form-property name="operacionalObjectivesEn" type="java.lang.String" />
-            <form-property name="page" type="java.lang.Integer" initial="0"/>
-        </form-bean>
-        <form-bean name="executionCourseProgramForm" type="org.apache.struts.validator.DynaValidatorForm" 
-            dynamic="true">
-            <form-property name="program" type="java.lang.String" />
-            <form-property name="programEn" type="java.lang.String" />
-            <form-property name="page" type="java.lang.Integer" initial="0"/>
-        </form-bean>
         <!-- Announcement Forms  -->
         <form-bean name="insertAnnouncementForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
@@ -867,6 +853,17 @@
 	   		<form-property name="programEn" type="java.lang.String"/>
 		</form-bean>
 
+		<form-bean name="objectivesForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="page" type="java.lang.Integer"/>
+	   		<form-property name="curriculumID" type="java.lang.String"/>
+	   		<form-property name="generalObjectives" type="java.lang.String"/>
+	   		<form-property name="generalObjectivesEn" type="java.lang.String"/>
+	   		<form-property name="operacionalObjectives" type="java.lang.String"/>
+	   		<form-property name="operacionalObjectivesEn" type="java.lang.String"/>
+		</form-bean>
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -977,31 +974,6 @@
             <forward name="viewTeachers" path="/viewTeachers.jsp"/>
             <forward name="associateTeacher" path="/associateTeacher.jsp"/>
         </action>
-        <!-- Actions For Objectives and Program -->
-        <action name="executionCourseObjectivesForm" parameter="method" scope="request" 
-            input="/editObjectives.jsp" path="/objectivesManagerDA" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            validate="false" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteObjectives"/>
-            <set-property property="inputForwardName" value="editObjectives"/>
-            <forward name="notAuthorized" path="/objectivesManagerDA.do?method=viewObjectives" />
-            <forward name="viewObjectives" path="/viewObjectives.jsp"/>
-            <forward name="editObjectives" path="/editObjectives.jsp"/>
-        </action>
-        <action name="executionCourseProgramForm" 
-            parameter="method" 
-            scope="request" 
-            input="/editProgram.jsp" 
-            path="/programManagerDA" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            validate="false" 
-            className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSitePrograms"/>
-            <set-property property="inputForwardName" value="editProgram"/>
-            <forward name="notAuthorized" path="/programManagerDA.do?method=viewProgram" />
-            <forward name="viewProgram" path="/viewProgram.jsp"/>
-            <forward name="editProgram" path="/editProgram.jsp"/>
-        </action>
         <action name="executionCourseCurriculumForm" parameter="method" scope="request" 
             input="/viewObjectives.jsp" path="/curriculumManagerDA" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.CurriculumManagerDispatchAction" validate="false" >
@@ -1025,6 +997,7 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
 			<forward name="instructions" path="manage-execution-course-instructions"/>
 			<forward name="program" path="manage-execution-course-program"/>
+			<forward name="objectives" path="manage-execution-course-objectives"/>
         </action>
         <action path="/editProgram"
         		parameter="method"
@@ -1034,6 +1007,15 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
 			<forward name="edit-program" path="manage-execution-course-program-edit"/>
 			<forward name="program" path="manage-execution-course-program"/>
+        </action>
+        <action path="/editObjectives"
+        		parameter="method"
+        		name="objectivesForm"
+        		scope="request" 
+        		input="/editObjectives.do?method=prepareEditObjectives&amp;page=0"
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
+			<forward name="edit-objectives" path="manage-execution-course-objectives-edit"/>
+			<forward name="objectives" path="manage-execution-course-objectives"/>
         </action>
 
 
