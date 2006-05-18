@@ -879,7 +879,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
             EnrolmentEvaluationType enrolmentEvaluationType;
         }
 
-	// Isto ï¿½ da estrutura antiga, faz sentido ainda?
+	// Isto é da estrutura antiga, faz sentido ainda?
     class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
     
@@ -2168,7 +2168,7 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 
 	class net.sourceforge.fenixedu.domain.space.OldRoom extends net.sourceforge.fenixedu.domain.space.Room {
 		Integer keyBuilding;
-		String nome;
+		String name;
 		Integer capacidadeNormal;
 		Integer capacidadeExame;
 		Integer piso;
