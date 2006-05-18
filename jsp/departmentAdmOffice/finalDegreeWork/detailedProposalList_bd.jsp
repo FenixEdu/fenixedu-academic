@@ -5,26 +5,21 @@
 
 <logic:iterate id="finalDegreeWorkProposal" name="proposals">
 	<h2><bean:message key="title.finalDegreeWorkProposal"/></h2>
-	<br />
 
-	<table>
+	<table class="tstyle3 taright th14 breakafter showborder">
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="finalDegreeWorkProposalHeader.year"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="finalDegreeWorkProposalHeader.year"/>:
+			</th>
+			<td>
 				<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="finalDegreeWorkProposalHeader.degree"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="finalDegreeWorkProposalHeader.degree"/>:
+			</th>
+			<td>
 				<logic:iterate id="executionDegreeIter" name="finalDegreeWorkProposal" property="scheduleing.executionDegrees">
 					<bean:write name="executionDegreeIter" property="degreeCurricularPlan.degree.nome"/>
 					<br/>
@@ -32,242 +27,158 @@
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="finalDegreeWorkProposalHeader.number"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="finalDegreeWorkProposalHeader.number"/>:
+			</th>
+			<td>
 				<bean:write name="finalDegreeWorkProposal" property="proposalNumber"/>
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="finalDegreeWorkProposal.status"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="finalDegreeWorkProposal.status"/>:
+			</th>
+			<td>
 				<logic:present name="finalDegreeWorkProposal" property="status">
 					<bean:write name="finalDegreeWorkProposal" property="status.key"/>
 				</logic:present>
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.title"/>
+			<th>
+				<bean:message key="label.teacher.finalWork.title"/>:
+			</th>
+			<td>
+				<span class="attention printbold"><bean:write name="finalDegreeWorkProposal" property="title"/></span>
 			</td>
 		</tr>
+		
+		
+<!-- Orientador	-->
+
 		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="title"/>
+			<th>
+				<bean:message key="label.teacher.finalWork.responsable"/>:
+			</th>
+			<td>
+				<em><bean:message key="label.teacher.finalWork.number"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientator.teacherNumber"/><br/>
+				<em><bean:message key="label.teacher.finalWork.name"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientator.person.nome"/><br/>
+				<em><bean:message key="label.teacher.finalWork.credits.short"/>:</em> <bean:write name="finalDegreeWorkProposal" property="orientatorsCreditsPercentage"/><br/>
 			</td>
 		</tr>
-		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.responsable"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#c2cec8" align="center">
-				<bean:message key="label.teacher.finalWork.number"/>
-			</td>
-			<td bgcolor="#c2cec8" align="center">
-				<bean:message key="label.teacher.finalWork.name"/>
-			</td>
-			<td bgcolor="#c2cec8" align="center">
-				<bean:message key="label.teacher.finalWork.credits.short"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center">
-				<bean:write name="finalDegreeWorkProposal" property="orientator.teacherNumber"/>
-			</td>
-			<td bgcolor="#eae7e4" align="center">
-				<bean:write name="finalDegreeWorkProposal" property="orientator.person.nome"/>
-			</td>
-			<td bgcolor="#eae7e4" align="center">
-				<bean:write name="finalDegreeWorkProposal" property="orientatorsCreditsPercentage"/>
-			</td>
-		</tr>
+	
+
+
+
+<!-- Co-Orientador	-->
+
 		<logic:present name="finalDegreeWorkProposal" property="coorientator">
 			<tr>
-				<td bgcolor="#a2aebc" align="center" colspan="3">
-					<bean:message key="label.teacher.finalWork.coResponsable"/>
-				</td>
-			</tr>
-			<tr>
-				<td bgcolor="#c2cec8" align="center">
-					<bean:message key="label.teacher.finalWork.number"/>
-				</td>
-				<td bgcolor="#c2cec8" align="center">
-					<bean:message key="label.teacher.finalWork.name"/>
-				</td>
-				<td bgcolor="#c2cec8" align="center">
-					<bean:message key="label.teacher.finalWork.credits.short"/>
-				</td>
-			</tr>
-			<tr>
-				<td bgcolor="#eae7e4" align="center">
-					<bean:write name="finalDegreeWorkProposal" property="coorientator.teacherNumber"/>
-				</td>
-				<td bgcolor="#eae7e4" align="center">
-					<bean:write name="finalDegreeWorkProposal" property="coorientator.person.nome"/>
-				</td>
-				<td bgcolor="#eae7e4" align="center">
-					<bean:write name="finalDegreeWorkProposal" property="coorientatorsCreditsPercentage"/>
-				</td>
+				<th>
+					<bean:message key="label.teacher.finalWork.coResponsable"/>:
+				</th>
+				<td>
+					<em><bean:message key="label.teacher.finalWork.number"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientator.teacherNumber"/><br/>
+					<em><bean:message key="label.teacher.finalWork.name"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientator.person.nome"/><br/>
+					<em><bean:message key="label.teacher.finalWork.credits.short"/>:</em> <bean:write name="finalDegreeWorkProposal" property="coorientatorsCreditsPercentage"/><br/>
+				</td>			
 			</tr>
 		</logic:present>
+	
 		<logic:notPresent name="finalDegreeWorkProposal" property="coorientator">
 			<tr>
-				<td bgcolor="#a2aebc" align="center" colspan="3">
-					<bean:message key="label.teacher.finalWork.companion"/>
-				</td>
-			</tr>
-			<tr>
-				<td bgcolor="#c2cec8" align="center">
-					<bean:message key="label.teacher.finalWork.name"/>
-				</td>
-				<td bgcolor="#eae7e4" align="center" colspan="2">
-					<bean:write name="finalDegreeWorkProposal" property="companionName"/>
-				</td>
-			</tr>			
-			<tr>
-				<td bgcolor="#c2cec8" align="center">
-					<bean:message key="label.teacher.finalWork.mail"/>
-				</td>
-				<td bgcolor="#eae7e4" align="center" colspan="2">
-					<bean:write name="finalDegreeWorkProposal" property="companionMail"/>
-				</td>
-			</tr>			
-			<tr>
-				<td bgcolor="#c2cec8" align="center">
-					<bean:message key="label.teacher.finalWork.phone"/>
-				</td>
-				<td bgcolor="#eae7e4" align="center" colspan="2">
-					<bean:write name="finalDegreeWorkProposal" property="companionPhone"/>
-				</td>
-			</tr>			
-			<tr>
-				<td bgcolor="#c2cec8" align="center">
-					<bean:message key="label.teacher.finalWork.companyName"/>
-				</td>
-				<td bgcolor="#eae7e4" align="center" colspan="2">
-					<bean:write name="finalDegreeWorkProposal" property="companyName"/>
-				</td>
-			</tr>			
-			<tr>
-				<td bgcolor="#c2cec8" align="center">
-					<bean:message key="label.teacher.finalWork.companyAdress"/>
-				</td>
-				<td bgcolor="#eae7e4" align="center" colspan="2">
-					<bean:write name="finalDegreeWorkProposal" property="companyAdress"/>
+				<th>
+					<bean:message key="label.teacher.finalWork.companion"/>:
+				</th>
+				<td>
+					<em><bean:message key="label.teacher.finalWork.name"/>:</em> <bean:write name="finalDegreeWorkProposal" property="companionName"/><br/>
+					<em><bean:message key="label.teacher.finalWork.mail"/>:</em> <bean:write name="finalDegreeWorkProposal" property="companionMail"/><br/>
+					<em><bean:message key="label.teacher.finalWork.phone"/>:</em> <bean:write name="finalDegreeWorkProposal" property="companionPhone"/><br/>
+					<em><bean:message key="label.teacher.finalWork.companyName"/>:</em> <bean:write name="finalDegreeWorkProposal" property="companyName"/><br/>
+					<em><bean:message key="label.teacher.finalWork.companyAdress"/>:</em> <bean:write name="finalDegreeWorkProposal" property="companyAdress"/><br/>
 				</td>
 			</tr>
 		</logic:notPresent>
+		
+
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.framing"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="label.teacher.finalWork.framing"/>:
+			</th>
+			<td>
 				<bean:write name="finalDegreeWorkProposal" property="framing"/>
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.objectives"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="label.teacher.finalWork.objectives"/>:
+			</th>
+			<td>
 				<bean:write name="finalDegreeWorkProposal" property="objectives"/>
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.description"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="label.teacher.finalWork.description"/>:
+			</th>
+			<td>
 				<bean:write name="finalDegreeWorkProposal" property="description"/>
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.requirements"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="label.teacher.finalWork.requirements"/>:
+			</th>
+			<td>
 				<bean:write name="finalDegreeWorkProposal" property="requirements"/>
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.deliverable"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="label.teacher.finalWork.deliverable"/>:
+			</th>
+			<td>
 				<bean:write name="finalDegreeWorkProposal" property="deliverable"/>
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.url"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="label.teacher.finalWork.url"/>:
+			</th>
+			<td>
 				<bean:write name="finalDegreeWorkProposal" property="url"/>
 			</td>
 		</tr>
+		
 		<logic:present name="finalDegreeWorkProposal" property="branches">
 			<tr>
-				<td bgcolor="#a2aebc" align="center" colspan="3">
-					<bean:message key="label.teacher.finalWork.priority.info"/>
-				</td>
-			</tr>
+				<th>
+					<bean:message key="label.teacher.finalWork.priority.info"/>:
+				</th>
+			<td>
 			<logic:iterate id="branch" name="finalDegreeWorkProposal" property="branches">
-				<tr>
-					<td bgcolor="#eae7e4" align="center" colspan="3">
-						<bean:write name="branch" property="name"/>
-					</td>
-				</tr>
+				<bean:write name="branch" property="name"/><br/>
 			</logic:iterate>		
+			</td>
+			</tr>
 		</logic:present>
+		
+		
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.numberOfGroupElements"/>
+			<th>
+				<bean:message key="label.teacher.finalWork.numberOfGroupElements"/>:
+			</th>
+			<td>
+				<em><bean:message key="label.teacher.finalWork.minimumNumberGroupElements"/>:</em> <bean:write name="finalDegreeWorkProposal" property="minimumNumberOfGroupElements"/><br/>
+				<em><bean:message key="label.teacher.finalWork.maximumNumberGroupElements"/>:</em> <bean:write name="finalDegreeWorkProposal" property="maximumNumberOfGroupElements"/><br/>
 			</td>
-		</tr>
+		</td>
+		
 		<tr>
-			<td bgcolor="#c2cec8" align="center">
-				<bean:message key="label.teacher.finalWork.minimumNumberGroupElements"/>
-			</td>
-			<td bgcolor="#eae7e4" align="center" colspan="2">
-				<bean:write name="finalDegreeWorkProposal" property="minimumNumberOfGroupElements"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#c2cec8" align="center">
-				<bean:message key="label.teacher.finalWork.maximumNumberGroupElements"/>
-			</td>
-			<td bgcolor="#eae7e4" align="center" colspan="2">
-				<bean:write name="finalDegreeWorkProposal" property="maximumNumberOfGroupElements"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.degreeType"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="label.teacher.finalWork.degreeType"/>:
+			</th>
+			<td>
 				<logic:present name="finalDegreeWorkProposal" property="degreeType">
 					<bean:message bundle="ENUMERATION_RESOURCES" name="finalDegreeWorkProposal" property="degreeType.name"/>
 				</logic:present>
@@ -278,33 +189,31 @@
 				</logic:notPresent>
 			</td>
 		</tr>
+		
+		
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.observations"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="label.teacher.finalWork.observations"/>:
+			</th>
+			<td>
 				<bean:write name="finalDegreeWorkProposal" property="observations"/>
 			</td>
 		</tr>
+		
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				<bean:message key="label.teacher.finalWork.location"/>
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				<bean:message key="label.teacher.finalWork.location"/>:
+			</th>
+			<td>
 				<bean:write name="finalDegreeWorkProposal" property="location"/>
 			</td>
 		</tr>
+		
 		<tr>
-			<td bgcolor="#a2aebc" align="center" colspan="3">
-				Trabalho attribuido a
-			</td>
-		</tr>
-		<tr>
-			<td bgcolor="#eae7e4" align="center" colspan="3">
+			<th>
+				Trabalho attribuído a:
+			</th>
+			<td>
 				<logic:present name="finalDegreeWorkProposal" property="groupAttributed">
 					<logic:iterate id="groupStudent" name="finalDegreeWorkProposal" property="groupAttributed.groupStudentsSet">
 						<bean:write name="groupStudent" property="student.number"/>

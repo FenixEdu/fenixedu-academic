@@ -80,6 +80,17 @@ padding: 0.5em 1em 0.1em 1em;
 font-style: italic;
 }
 
+/* ordenamento das colunas*/
+table.taleft th, table.taleft td { text-align: left; }
+table.taright th, table.taright td { text-align: left; }
+table.talr th { text-align: left; }
+table.talr td { text-align: right; }
+table.tarl th { text-align: right; }
+table.tarl td { text-align: left; }
+
+/* largura da coluna th*/
+table.th14 th { width: 14em; }
+
 .tstyle1a, .tstyle1b, .tstyle1c, .tstyle2, .tstyle3 {
 border-collapse: collapse;
 margin: 1em 0;

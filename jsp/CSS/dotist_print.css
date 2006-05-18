@@ -414,3 +414,10 @@ td.pleft3 { padding-left: 3em; }
 td.pleft4 { padding-left: 4em; }
 td.pleft5 { padding-left: 5em; }
 td.pleft6 { padding-left: 6em; }
+
+.breakafter {page-break-after: always; }
+table.showborder { border-collapse: collapse; }
+table.showborder th, table.showborder td { padding: 2px 4px; }
+table.showborder th { border: 1px solid #aaa; }
+table.showborder td { border: 1px solid #aaa; }
+.printbold { font-weight: bold; }
