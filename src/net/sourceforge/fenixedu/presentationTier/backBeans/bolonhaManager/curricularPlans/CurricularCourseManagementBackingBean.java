@@ -698,9 +698,4 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? getDegree().getNameEn() : getDegree().getNome();
     }
 
-    public Boolean getRenderInEnglish() {
-        final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-        return locale.getLanguage().equals(Locale.ENGLISH.getLanguage());
-    }
-
 }

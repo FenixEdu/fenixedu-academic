@@ -232,4 +232,9 @@ public class FenixBackingBean {
         this.errorMessageArguments = errorMessageArguments;
     }
 
+    public Boolean getRenderInEnglish() {
+        final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+        return locale.getLanguage().equals(Locale.ENGLISH.getLanguage());
+    }
+
 }
