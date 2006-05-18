@@ -273,7 +273,8 @@ public class MarkSheet extends MarkSheet_Base {
                 enrolmentEvaluation.confirmSubmission(employee, "");
             }
             setConfirmationDate(new Date());
-            setMarkSheetState(MarkSheetState.CONFIRMED);
+            setMarkSheetState(hasMarkSheetState(MarkSheetState.NOT_CONFIRMED) ? MarkSheetState.CONFIRMED
+                    : MarkSheetState.RECTIFICATION);
         }
     }
 
