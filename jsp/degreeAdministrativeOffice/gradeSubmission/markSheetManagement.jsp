@@ -62,12 +62,29 @@
 				<tr>
 					<td colspan="2">
 						<strong><bean:message name="markSheetType" property="name" bundle="ENUMERATION_RESOURCES"/></strong>
+						(<bean:write name="markSheetResult" property="totalNumberOfEnroledStudents"/> <bean:message key="label.markSheet.of"/> <bean:write name="markSheetResult" property="totalNumberOfStudents"/> <bean:message key="label.markSheet.evaluatedStudents"/>)
 					</td>
 				</tr>
-				<logic:iterate id="markSheet" name="markSheetResult" property="markSheets" type="net.sourceforge.fenixedu.domain.MarkSheet">
+				<logic:iterate id="markSheet" name="markSheetResult" property="markSheetsSortedByEvaluationDate" type="net.sourceforge.fenixedu.domain.MarkSheet">
 					<tr>
-						<td>
-							<fr:view name="markSheet" layout="values" schema="markSheet.view"/>
+						<td>							
+							<table>
+								<tr>
+									<td>-</td>
+									<td>
+										<bean:define id="evaluationDateDateTime" type="org.joda.time.DateTime" name="markSheet" property="evaluationDateDateTime"/>
+										<bean:define id="evaluationDate" ><%= evaluationDateDateTime.toString("dd/MM/yyyy") %></bean:define>
+										<bean:write name="evaluationDate"/>
+									</td>
+									<td><bean:message name="markSheet" property="markSheetType.name" bundle="ENUMERATION_RESOURCES"/></td>
+									<td>(<bean:write name="markSheet" property="enrolmentEvaluationsCount"/> <bean:message key="label.markSheet.students"/>)</td>
+									<td>- D<bean:write name="markSheet" property="responsibleTeacher.teacherNumber"/> -</td>
+									<td><em><bean:message name="markSheet" property="markSheetState.name" bundle="ENUMERATION_RESOURCES"/></em></td>
+									<logic:equal name="markSheet" property="submittedByTeacher" value="true">
+										<td>(<bean:message key="label.markSheet.submittedByTeacher"/>)</td>
+									</logic:equal>
+								</tr>
+							</table>
 						</td>
 						<td>
 							<html:link action='<%= "/markSheetManagement.do?method=viewMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
