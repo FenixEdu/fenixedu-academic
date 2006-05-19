@@ -24,8 +24,9 @@ public class SimpleMetaSlotWithDefault extends SimpleMetaSlot {
     }
     
     @Override
-    public void setObject(Object object) {
+    public void setObject(Object object) {        
         setProperty(getMetaObject().getObject(), getName(), object);
+        this.createValue = false;
     }
 
     /**
