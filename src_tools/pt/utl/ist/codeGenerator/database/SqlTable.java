@@ -40,7 +40,13 @@ public class SqlTable {
         public void appendCreateTableMySql(final StringBuilder stringBuilder) {
             stringBuilder.append(name);
             stringBuilder.append(" ");
-            stringBuilder.append(mySqlTypeTranslation.get(type));
+            String typeTranslated=mySqlTypeTranslation.get(type);
+            if(typeTranslated==null)
+            {
+            	System.out.println("No mapping defined for generic type "+type+" for the current database! Assuming that the db type will be the same as the generic type... Please review the resulting sql file");
+            	typeTranslated=type;
+            }
+            stringBuilder.append(typeTranslated);
         }
 
         public boolean equals(Object obj) {
