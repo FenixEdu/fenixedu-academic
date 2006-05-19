@@ -5,6 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
+import net.sourceforge.fenixedu._development.MetadataManager;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+
 import pt.utl.ist.codeGenerator.database.DatabaseDescriptorFactory;
 import pt.utl.ist.codeGenerator.database.SqlTable;
 
@@ -12,6 +15,8 @@ public class SQLGenerator {
 
 	public static void main(String[] args) {
 		try {
+	        MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
+	        SuportePersistenteOJB.fixDescriptors();
 			generate(args[0]);
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -1,5 +1,6 @@
 package pt.utl.ist.codeGenerator.database;
 
+import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -11,6 +12,9 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 public class DataInitializer {
 
     public static void main(String[] args) {
+        MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
+        SuportePersistenteOJB.fixDescriptors();
+
     	ISuportePersistente persistentSupport = null;
         try {
         	persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
