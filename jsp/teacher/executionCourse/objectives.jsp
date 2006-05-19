@@ -95,9 +95,9 @@
 					</logic:present>
 				</blockquote>
 				<bean:define id="url" type="java.lang.String">/editObjectives.do?method=prepareEditObjectives&amp;curriculumID=<bean:write name="curriculum" property="idInternal"/></bean:define>
-					<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-						<bean:message key="button.edit"/>
-					</html:link>
+				<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+					<bean:message key="button.edit"/>
+				</html:link>
 			</logic:iterate>
 		</logic:notEqual>
 

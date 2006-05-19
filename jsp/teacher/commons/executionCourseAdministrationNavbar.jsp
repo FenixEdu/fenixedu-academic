@@ -60,7 +60,7 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/viewEvaluationMethod.do?method=viewEvaluationMethod" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/manageExecutionCourse.do?method=evaluationMethod" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.evaluationMethod"/>
 			</html:link>
 		</li>

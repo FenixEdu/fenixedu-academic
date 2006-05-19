@@ -978,15 +978,21 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     	return degrees;
     }
     
-      public SortedSet<CurricularCourse> getCurricularCoursesSortedByDegreeAndCurricularCourseName() {
-    	try {
+	public SortedSet<CurricularCourse> getCurricularCoursesSortedByDegreeAndCurricularCourseName() {
     	final SortedSet<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(CurricularCourse.CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME);
     	curricularCourses.addAll(getAssociatedCurricularCoursesSet());
     	return curricularCourses;
-    	} catch (Exception ex) {
-    		ex.printStackTrace();
-    		throw new RuntimeException(ex);
-    	}
     }
+
+	public Set<CompetenceCourse> getCompetenceCourses() {
+		final Set<CompetenceCourse> competenceCourses = new HashSet<CompetenceCourse>();
+		for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+			final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+			if (competenceCourse != null) {
+				competenceCourses.add(competenceCourse);
+			}
+		}
+		return competenceCourses;
+	}
 
 }

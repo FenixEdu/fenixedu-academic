@@ -1,12 +1,17 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -118,6 +123,61 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     	return mapping.findForward("objectives");
     }
+
+    public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	return mapping.findForward("evaluationMethod");
+    }
+
+    public ActionForward prepareEditEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+    	if (executionCourse != null) {
+   			final DynaActionForm dynaActionForm = (DynaActionForm) form;
+   			dynaActionForm.set("evaluationMethod", getEvaluationMethod(executionCourse));
+   			dynaActionForm.set("evaluationMethodEn", getEvaluationMethodEn(executionCourse));
+    	}
+
+    	return mapping.findForward("edit-evaluationMethod");
+    }
+
+    public ActionForward editEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	final DynaActionForm dynaActionForm = (DynaActionForm) form;
+    	final String evaluationMethod = request.getParameter("evaluationMethod");
+    	final String evaluationMethodEn = dynaActionForm.getString("evaluationMethodEn");
+
+    	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+    	final InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
+    	infoEvaluationMethod.setEvaluationElements(evaluationMethod);
+    	infoEvaluationMethod.setEvaluationElementsEn(evaluationMethodEn);
+    	final IUserView userView = getUserView(request);
+
+    	final Object args[] = { executionCourse.getIdInternal(), null, infoEvaluationMethod };
+    	ServiceManagerServiceFactory.executeService(userView, "EditEvaluation", args);
+
+    	return mapping.findForward("evaluationMethod");
+    }
+
+	private Object getEvaluationMethod(final ExecutionCourse executionCourse) {
+		final EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
+		if (evaluationMethod != null && evaluationMethod.getEvaluationElements() != null) {
+			return evaluationMethod.getEvaluationElements();
+		} else {
+			final Set<CompetenceCourse> competenceCourses = executionCourse.getCompetenceCourses();
+			return competenceCourses.isEmpty() ? null : competenceCourses.iterator().next().getEvaluationMethod();
+		}
+	}
+
+	private Object getEvaluationMethodEn(ExecutionCourse executionCourse) {
+		final EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
+		if (evaluationMethod != null && evaluationMethod.getEvaluationElementsEn() != null) {
+			return evaluationMethod.getEvaluationElementsEn();
+		} else {
+			final Set<CompetenceCourse> competenceCourses = executionCourse.getCompetenceCourses();
+			return competenceCourses.isEmpty() ? null : competenceCourses.iterator().next().getEvaluationMethodEn();
+		}
+	}
 
 	private void getExecutionCourseFromParameterAndSetItInRequest(final HttpServletRequest request) {
     	final String executionCourseIDString = request.getParameter("executionCourseID");

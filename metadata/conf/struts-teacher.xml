@@ -864,6 +864,14 @@
 	   		<form-property name="operacionalObjectivesEn" type="java.lang.String"/>
 		</form-bean>
 
+		<form-bean name="evaluationMethodForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="page" type="java.lang.Integer"/>
+	   		<form-property name="evaluationMethod" type="java.lang.String"/>
+	   		<form-property name="evaluationMethodEn" type="java.lang.String"/>
+		</form-bean>
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -998,6 +1006,7 @@
 			<forward name="instructions" path="manage-execution-course-instructions"/>
 			<forward name="program" path="manage-execution-course-program"/>
 			<forward name="objectives" path="manage-execution-course-objectives"/>
+			<forward name="evaluationMethod" path="manage-execution-course-evaluationMethod"/>
         </action>
         <action path="/editProgram"
         		parameter="method"
@@ -1016,6 +1025,15 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
 			<forward name="edit-objectives" path="manage-execution-course-objectives-edit"/>
 			<forward name="objectives" path="manage-execution-course-objectives"/>
+        </action>
+        <action path="/editEvaluationMethod"
+        		parameter="method"
+        		name="evaluationMethodForm"
+        		scope="request" 
+        		input="/editEvaluationMethod.do?method=prepareEditEvaluationMethod&amp;page=0"
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
+			<forward name="edit-evaluationMethod" path="manage-execution-course-evaluationMethod-edit"/>
+			<forward name="evaluationMethod" path="manage-execution-course-evaluationMethod"/>
         </action>
 
 
@@ -1117,42 +1135,6 @@
                 path="/viewEvaluationEnrolmentManagementMenu.jsp"/>
         </action>
         <!-- End Of Actions For ExamEnrollments -->
-        <!-- start of evaluation mappings -->
-        <action input="/viewSite.jsp" path="/viewEvaluationMethod" parameter="method" scope="request" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" >
-            <forward name="viewEvaluationMethod" path="/viewEvaluationMethod.jsp"/>
-            <forward name="editEvaluationMethod" path="/editEvaluationMethod.jsp"/>
-        </action>
-        <action name="evaluationForm" input="/editEvaluationMethod.jsp" path="/editEvaluationMethod" 
-            parameter="method" scope="request" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            validate="false" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod"/>
-            <set-property property="inputForwardName" value="editEvaluationMethod"/>
-            <forward name="viewEvaluationMethod" path="/viewEvaluationMethod.jsp"/>
-            <forward name="editEvaluationMethod" path="/editEvaluationMethod.jsp"/>
-        </action>
-        <!-- start of evaluation mappings -->
-        <!-- Actions for Teacher credits -->
-        <!--	<action path="/creditsManagement" name="creditsTeacherForm" 
-			input="/creditsManagement.do?page=0&amp;method=prepare"
-			type="net.sourceforge.fenixedu.presentationTier.Action.teacher.credits.TeacherCreditsDispatchAction"
-			parameter="method"
-			validate="true"
-			scope="request">
-		<forward name="showForm" path="df.page.management.credits" />
-	</action> -->
-        <!--	<action 
-		name="executionCourseShiftsPercentageForm"
-		input="/executionCourseShiftsPercentageManager.do?method=show"
-		path="/executionCourseShiftsPercentageManager"
-		parameter="method"
-		scope="request"
-		type="net.sourceforge.fenixedu.presentationTier.Action.teacher.credits.ProfessorShipShiftPercentageDispatchAction"
-		validate="false">
-       <forward name="showTable" path="df.teacher.showShiftsPercentageTable"/>
-       <forward name="acceptSuccess" path="/creditsManagement.do?page=0&amp;method=prepare" redirect="true"/>
-	</action>	 -->
         <action path="/showStudentsEnrolledInExam" scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ShowStudentsEnrolledInExamAction" >
             <forward name="showStudents" path="/showStudentsEnrolledInExam.jsp"/>
