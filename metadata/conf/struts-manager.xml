@@ -1905,6 +1905,10 @@
 		<forward name="insertNewRule" path="insertNewRule"/>
 	</action>
 
+    <action path="/reloadStruts" type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReloadStrutsAction">
+        <forward name="sucess" path="/index.do"/>
+    </action>
+
     <!-- ========= Renderers ================ -->
     <action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">
         <forward name="show" path="domain.view"/>
@@ -1913,7 +1917,7 @@
     <action path="/renderers/reload" type="net.sourceforge.fenixedu.renderers.plugin.ReloadConfigurationAction">
         <forward name="Success" path="renderers.index"/>
     </action>
-    
+
     <!-- FIXME: this is temporary and should be moved. serves only as example -->
     <!-- check also 'tiles-manager-pages-definitions.xml' -->
 

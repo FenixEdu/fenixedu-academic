@@ -202,6 +202,10 @@
 		Struts Example
 	</html:link>
 <p><strong>&raquo; 
+    <html:link module="/manager" page="/reloadStruts.do">
+        Reload Struts Configuration
+    </html:link>
+<p><strong>&raquo; 
 	<html:link module="/manager" module="/manager" page="/changePasswordForward.do">
 		Kerberos Test
 	</html:link>
