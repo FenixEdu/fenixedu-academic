@@ -16,4 +16,5 @@ create table ROOT_DOMAIN_OBJECT (
 	PRIMARY KEY (ID_INTERNAL)
 ) TYPE=InnoDB;
 
-insert into ROOT_DOMAIN_OBJECT values (1);
+alter table ROOT_DOMAIN_OBJECT add column KEY_ROOT_DOMAIN_OBJECT int(11) default null;
+insert into ROOT_DOMAIN_OBJECT values (1,null);
