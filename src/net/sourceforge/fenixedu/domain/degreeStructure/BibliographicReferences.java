@@ -5,12 +5,20 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class BibliographicReferences {       
     private List<BibliographicReference> bibliographicReferencesList;
-    
+
+    public SortedSet<BibliographicReference> getBibliographicReferencesSortedByOrder() {
+    	final SortedSet<BibliographicReference> bibliographicReferences = new TreeSet<BibliographicReference>();
+    	bibliographicReferences.addAll(bibliographicReferencesList);
+    	return bibliographicReferences;
+    }
+
     public List<BibliographicReference> getBibliographicReferencesList() {
         if (this.bibliographicReferencesList == null) {
             this.bibliographicReferencesList = new ArrayList<BibliographicReference>();
@@ -78,7 +86,7 @@ public class BibliographicReferences {
         }
     }
     
-    public class BibliographicReference {
+    public class BibliographicReference implements Comparable<BibliographicReference> {
         private String year;
         private String title;
         private String authors;
@@ -150,6 +158,10 @@ public class BibliographicReferences {
         public void setOrder(Integer order) {
             this.order = order;
         }
+
+		public int compareTo(BibliographicReference bibliographicReference) {
+			return getOrder() - bibliographicReference.getOrder();
+		}
     }
     
     public enum BibliographicReferenceType {        

@@ -872,6 +872,17 @@
 	   		<form-property name="evaluationMethodEn" type="java.lang.String"/>
 		</form-bean>
 
+		<form-bean name="bibliographicReferenceForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="page" type="java.lang.Integer"/>
+	   		<form-property name="title" type="java.lang.String"/>
+	   		<form-property name="authors" type="java.lang.String"/>
+	   		<form-property name="reference" type="java.lang.String"/>
+	   		<form-property name="year" type="java.lang.String"/>
+	   		<form-property name="optional" type="java.lang.String"/>
+		</form-bean>
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1007,6 +1018,7 @@
 			<forward name="program" path="manage-execution-course-program"/>
 			<forward name="objectives" path="manage-execution-course-objectives"/>
 			<forward name="evaluationMethod" path="manage-execution-course-evaluationMethod"/>
+			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
         </action>
         <action path="/editProgram"
         		parameter="method"
@@ -1035,7 +1047,15 @@
 			<forward name="edit-evaluationMethod" path="manage-execution-course-evaluationMethod-edit"/>
 			<forward name="evaluationMethod" path="manage-execution-course-evaluationMethod"/>
         </action>
-
+        <action path="/editBibliographicReference"
+        		parameter="method"
+        		name="bibliographicReferenceForm"
+        		scope="request" 
+        		input="/editBibliographicReference.do?method=prepareEditBibliographicReference&amp;page=0"
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
+			<forward name="edit-bibliographicReference" path="manage-execution-course-bibliographicReference-edit"/>
+			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
+        </action>
 
         <action path="/viewSite" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ReadSite">
             <forward name="viewSite" path="/viewSite.jsp"/>

@@ -6,8 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
@@ -17,6 +20,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -159,6 +163,50 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     	return mapping.findForward("evaluationMethod");
     }
 
+    public ActionForward bibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	return mapping.findForward("bibliographicReference");
+    }
+
+    public ActionForward prepareEditBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+    	final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
+    	if (executionCourse != null && bibliographicReferenceIDString != null && bibliographicReferenceIDString.length() > 0) {
+    		final BibliographicReference bibliographicReference = findBibliographicReference(executionCourse, Integer.valueOf(bibliographicReferenceIDString));
+    		if (bibliographicReference != null) {
+    			final DynaActionForm dynaActionForm = (DynaActionForm) form;
+    			dynaActionForm.set("title", bibliographicReference.getTitle());
+    			dynaActionForm.set("authors", bibliographicReference.getAuthors());
+    			dynaActionForm.set("reference", bibliographicReference.getReference());
+    			dynaActionForm.set("year", bibliographicReference.getYear());
+    			dynaActionForm.set("optional", bibliographicReference.getOptional());
+    		}
+    		request.setAttribute("bibliographicReference", bibliographicReference);
+    	}
+    	return mapping.findForward("edit-bibliographicReference");
+    }
+
+    public ActionForward editBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	final DynaActionForm dynaActionForm = (DynaActionForm) form;
+    	final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
+    	final String title = dynaActionForm.getString("title");
+    	final String authors = dynaActionForm.getString("authors");
+    	final String reference = dynaActionForm.getString("reference");
+    	final String year = dynaActionForm.getString("year");
+    	final String optional = dynaActionForm.getString("optional");
+
+    	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+    	final BibliographicReference bibliographicReference = findBibliographicReference(executionCourse, Integer.valueOf(bibliographicReferenceIDString));
+    	final IUserView userView = getUserView(request);
+
+    	final Object args[] = { bibliographicReference.getIdInternal(), title, authors, reference, year, Boolean.valueOf(optional) };
+    	ServiceManagerServiceFactory.executeService(userView, "EditEvaluation", args);
+
+    	return mapping.findForward("bibliographicReference");
+    }
+
 	private Object getEvaluationMethod(final ExecutionCourse executionCourse) {
 		final EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
 		if (evaluationMethod != null && evaluationMethod.getEvaluationElements() != null) {
@@ -201,6 +249,15 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 						}
 					}
 				}
+			}
+		}
+		return null;
+	}
+
+	private BibliographicReference findBibliographicReference(ExecutionCourse executionCourse, Integer bibliographicReferenceID) {
+		for (final BibliographicReference bibliographicReference : executionCourse.getAssociatedBibliographicReferencesSet()) {
+			if (bibliographicReference.getIdInternal().equals(bibliographicReferenceID)) {
+				return bibliographicReference;
 			}
 		}
 		return null;

@@ -519,4 +519,12 @@
 		<put name="body" value="/teacher/executionCourse/editEvaluationMethod.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-bibliographicReference" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/bibliographicReference.jsp" />
+	</definition>
+
+	<definition name="manage-execution-course-bibliographicReference-edit" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/editBibliographicReference.jsp" />
+	</definition>
+
 </tiles-definitions>
