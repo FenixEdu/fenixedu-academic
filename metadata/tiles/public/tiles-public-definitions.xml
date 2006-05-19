@@ -80,4 +80,13 @@
 		<put name="footer" value="/publico/homepage/footer.jsp" />
 	</definition>	
 
+	<definition name="definition.public.department" page="/layout/istLayout.jsp">
+		<put name="title" value="Instituto Superior Técnico" />
+		<put name="symbols_row" value="/publico/homepage/symbolsRow.jsp" />
+		<put name="profile_navigation" value="/publico/homepage/profileNavigation.jsp" />
+		<put name="main_navigation" value="/publico/department/mainNavigation.jsp" />
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="footer" value="/publico/homepage/footer.jsp" />
+	</definition>	
+
 </tiles-definitions>
