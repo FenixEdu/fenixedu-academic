@@ -22,6 +22,7 @@ public class SqlTable {
         mySqlTypeTranslation.put("TIMESTAMP", "timestamp");
         mySqlTypeTranslation.put("VARCHAR", "text");
         mySqlTypeTranslation.put("BLOB", "blob");
+        mySqlTypeTranslation.put("BIGINT", "bigint(20)");
 
         mySqlTypeTranslation.put(null, "tinyint(1)");
     }
