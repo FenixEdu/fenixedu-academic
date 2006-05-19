@@ -214,7 +214,7 @@ public class Department extends Department_Base {
         return personalExpectations;
     }
 
-    public String retrieveAcronym() {
+    public String getAcronym() {
         final int begin = this.getRealName().indexOf("(");
         final int end = this.getRealName().indexOf(")");
         return this.getRealName().substring(begin + 1, end);
