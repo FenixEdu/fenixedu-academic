@@ -14,9 +14,8 @@ public class ReloadConfigurationAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ConfigurationReader reader = new ConfigurationReader();
         
-        reader.resetConfiguration();
         reader.readAll(getServlet().getServletContext());
         
-        return mapping.findForward("Success");
+        return mapping.findForward("success");
     }
 }

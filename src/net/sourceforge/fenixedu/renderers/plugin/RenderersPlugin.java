@@ -79,6 +79,8 @@ public class RenderersPlugin implements PlugIn {
         MetaObjectFactory.setCurrentFactory(MetaObjectFactory.DEFAULT_FACTORY);
         UserIdentityFactory.setCurrentFactory(UserIdentityFactory.DEFAULT_FACTORY);
         SchemaFactory.setCurrentFactory(SchemaFactory.DEFAULT_FACTORY);
+        
+        initialized = false;
     }
 
     public void init(ActionServlet servlet, ModuleConfig config) throws ServletException {
@@ -87,7 +89,7 @@ public class RenderersPlugin implements PlugIn {
             
             ConfigurationReader reader = new ConfigurationReader(getConfig(), getSchemas());
             reader.readAll(servlet.getServletContext());
-            
+
             initFactories(servlet, config);
         }
         

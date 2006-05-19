@@ -1915,7 +1915,7 @@
     </action>
         
     <action path="/renderers/reload" type="net.sourceforge.fenixedu.renderers.plugin.ReloadConfigurationAction">
-        <forward name="Success" path="renderers.index"/>
+        <forward name="success" path="renderers.index"/>
     </action>
 
     <!-- FIXME: this is temporary and should be moved. serves only as example -->

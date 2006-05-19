@@ -60,11 +60,9 @@ public class ConfigurationReader {
         setSchemas(schemas);
     }
 
-    public void resetConfiguration() {
-        
-    }
-    
     public void readAll(ServletContext context) throws ServletException {
+        RenderKit.reset();
+        
         readConfiguration(context);
         readSchemas(context);
         
