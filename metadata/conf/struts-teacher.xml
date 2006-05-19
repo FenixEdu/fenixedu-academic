@@ -224,16 +224,6 @@
             <form-property name="information" type="java.lang.String" initial=""/>
             <form-property name="page" type="java.lang.Integer" initial="0" />
         </form-bean>
-        <form-bean name="bibliographicReferenceForm" type="org.apache.struts.validator.DynaValidatorForm" 
-            dynamic="true">
-            <form-property name="title" type="java.lang.String" />
-            <form-property name="authors" type="java.lang.String" />
-            <form-property name="reference" type="java.lang.String" />
-            <form-property name="year" type="java.lang.String" />
-            <form-property name="optional" type="java.lang.String" />
-            <form-property name="page" type="java.lang.Integer" initial="0" />
-            <form-property name="method" type="java.lang.String"/>
-        </form-bean>
         <!--Teacher form -->
         <form-bean name="teacherForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="teacherNumber" type="java.lang.String" />
@@ -876,6 +866,8 @@
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
 	   		<form-property name="page" type="java.lang.Integer"/>
+	   		<form-property name="executionCourseID" type="java.lang.String"/>
+	   		<form-property name="bibliographicReferenceID" type="java.lang.String"/>
 	   		<form-property name="title" type="java.lang.String"/>
 	   		<form-property name="authors" type="java.lang.String"/>
 	   		<form-property name="reference" type="java.lang.String"/>
@@ -918,30 +910,6 @@
         <action path="/voidAction" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" name="voidForm">
             <!-- form is not used -->
             <forward name="Success" path="/teacherInformation.do?method=prepareEdit&amp;page=0" />
-        </action>
-        <!-- for editing -->
-        <action path="/bibliographicReferenceManager" parameter="method" scope="session" 
-            name="bibliographicReferenceForm" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography"/>
-            <set-property property="inputForwardName" value="editErrorValidation"/>
-            <forward name="editErrorValidation" 
-                path="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference&amp;page=0"/>
-            <forward name="insertBibliographicReference" path="/createBibliographicReference.do"/>
-            <forward name="editBibliographicReference" path="/editBibliographicReference.jsp"/>
-            <forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
-        </action>
-        <!-- for create -->
-        <action path="/createBibliographicReference" parameter="method" scope="session" 
-            name="bibliographicReferenceForm" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography"/>
-            <set-property property="inputForwardName" value="insertBibliographicReference"/>
-            <forward name="insertBibliographicReference" path="/insertBibliographicReference.jsp"/>
-            <forward name="editBibliographicReference" path="/editBibliographicReference.jsp"/>
-            <forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
         </action>
         <action path="/alternativeSite" parameter="method" scope="session" name="alternativeSiteForm" 
             input="/alternativeSite.do?method=prepareCustomizationOptions&amp;page=0" 
@@ -1054,6 +1022,15 @@
         		input="/editBibliographicReference.do?method=prepareEditBibliographicReference&amp;page=0"
 				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
 			<forward name="edit-bibliographicReference" path="manage-execution-course-bibliographicReference-edit"/>
+			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
+        </action>
+        <action path="/createBibliographicReference"
+        		parameter="method"
+        		name="bibliographicReferenceForm"
+        		scope="request" 
+        		input="/createBibliographicReference.do?method=prepareCreateBibliographicReference&amp;page=0"
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
+			<forward name="create-bibliographicReference" path="manage-execution-course-bibliographicReference-create"/>
 			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
         </action>
 

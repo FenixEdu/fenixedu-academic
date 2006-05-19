@@ -20,6 +20,15 @@
 
 <logic:present name="executionCourse">
 
+	<p>
+		<div class="gen-button">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
+			<html:link page="/createBibliographicReference.do?method=prepareCreateBibliographicReference" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="label.insertBibliographicReference"/>                   		     
+			</html:link>
+		</div>
+	</p>
+
 	<h3>
 		<bean:message key="message.recommendedBibliography"/>
 	</h3>
@@ -44,6 +53,7 @@
 							<br/>
 							<bean:write name="bibliographicReference" property="year" filter="false" />
 							<br/>
+							<br/>
 						</logic:equal>
 					</logic:iterate>
 				</logic:present>
@@ -67,11 +77,10 @@
 					<bean:message key="button.delete"/>
 				</html:link>
 				<br/>
+				<br/>
 			</logic:notEqual>
 		</logic:iterate>		
 	</blockquote>
-
-	<br/>
 
 	<h3>
 		<bean:message key="message.optionalBibliography"/>
@@ -97,6 +106,7 @@
 							<br/>
 							<bean:write name="bibliographicReference" property="year" filter="false" />
 							<br/>
+							<br/>
 						</logic:equal>
 					</logic:iterate>
 				</logic:present>
@@ -119,6 +129,7 @@
 				<html:link page="<%= "/manageExecutionCourse.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 					<bean:message key="button.delete"/>
 				</html:link>
+				<br/>
 				<br/>
 			</logic:equal>
 		</logic:iterate>		

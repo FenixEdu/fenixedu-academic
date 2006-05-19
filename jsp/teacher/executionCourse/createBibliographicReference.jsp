@@ -12,13 +12,11 @@
 	</tr>
 </table>
 
-<logic:present name="bibliographicReference">
+<logic:present name="executionCourse">
 	<blockquote>
-		<html:form action="/editBibliographicReference">
-			<html:hidden property="method" value="editBibliographicReference"/>
+		<html:form action="/createBibliographicReference">
+			<html:hidden property="method" value="createBibliographicReference"/>
 			<html:hidden property="page" value="1"/>
-			<bean:define id="bibliographicReferenceID" type="java.lang.Integer" name="bibliographicReference" property="idInternal"/>
-			<html:hidden property="bibliographicReferenceID" value="<%= bibliographicReferenceID.toString() %>"/>
 			<bean:define id="executionCourseID" type="java.lang.Integer" name="executionCourse" property="idInternal"/>
 			<html:hidden property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
 			<h4>

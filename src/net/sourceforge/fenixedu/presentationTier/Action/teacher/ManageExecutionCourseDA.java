@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
@@ -20,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -168,6 +165,29 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     	return mapping.findForward("bibliographicReference");
     }
 
+    public ActionForward prepareCreateBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	return mapping.findForward("create-bibliographicReference");
+    }
+
+    public ActionForward createBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	final DynaActionForm dynaActionForm = (DynaActionForm) form;
+    	final String title = dynaActionForm.getString("title");
+    	final String authors = dynaActionForm.getString("authors");
+    	final String reference = dynaActionForm.getString("reference");
+    	final String year = dynaActionForm.getString("year");
+    	final String optional = dynaActionForm.getString("optional");
+
+    	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+    	final IUserView userView = getUserView(request);
+
+    	final Object args[] = { executionCourse.getIdInternal(), title, authors, reference, year, Boolean.valueOf(optional) };
+    	ServiceManagerServiceFactory.executeService(userView, "CreateBibliographicReference", args);
+
+    	return mapping.findForward("bibliographicReference");
+    }
+
     public ActionForward prepareEditBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
     	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
@@ -180,7 +200,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     			dynaActionForm.set("authors", bibliographicReference.getAuthors());
     			dynaActionForm.set("reference", bibliographicReference.getReference());
     			dynaActionForm.set("year", bibliographicReference.getYear());
-    			dynaActionForm.set("optional", bibliographicReference.getOptional());
+    			dynaActionForm.set("optional", bibliographicReference.getOptional().toString());
     		}
     		request.setAttribute("bibliographicReference", bibliographicReference);
     	}
@@ -202,7 +222,18 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     	final IUserView userView = getUserView(request);
 
     	final Object args[] = { bibliographicReference.getIdInternal(), title, authors, reference, year, Boolean.valueOf(optional) };
-    	ServiceManagerServiceFactory.executeService(userView, "EditEvaluation", args);
+    	ServiceManagerServiceFactory.executeService(userView, "EditBibliographicReference", args);
+
+    	return mapping.findForward("bibliographicReference");
+    }
+
+    public ActionForward deleteBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
+
+    	final IUserView userView = getUserView(request);
+    	final Object args[] = { Integer.valueOf(bibliographicReferenceIDString) };
+    	ServiceManagerServiceFactory.executeService(userView, "DeleteBibliographicReference", args);
 
     	return mapping.findForward("bibliographicReference");
     }

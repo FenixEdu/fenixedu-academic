@@ -66,12 +66,7 @@
 		</li>
 		<li>
 			<html:link page="/manageExecutionCourse.do?method=bibliographicReference" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.bibliography"/> New
-			</html:link>
-		</li>
-		<li>
-			<html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.bibliography"/> Old
+				<bean:message key="link.bibliography"/>
 			</html:link>
 		</li>
 		<br/>

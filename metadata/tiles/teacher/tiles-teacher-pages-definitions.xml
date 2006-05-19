@@ -527,4 +527,8 @@
 		<put name="body" value="/teacher/executionCourse/editBibliographicReference.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-bibliographicReference-create" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/createBibliographicReference.jsp" />
+	</definition>
+
 </tiles-definitions>
