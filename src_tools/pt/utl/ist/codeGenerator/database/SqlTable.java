@@ -43,7 +43,7 @@ public class SqlTable {
             String typeTranslated=mySqlTypeTranslation.get(type);
             if(typeTranslated==null)
             {
-            	System.out.println("No mapping defined for generic type "+type+" for the current database! Assuming that the db type will be the same as the generic type... Please review the resulting sql file");
+            	System.out.println("No mapping defined for generic type "+type+" for the current database! Assuming that the db type will be the same as the generic type... Please review the resulting sql file for the table "+SqlTable.this.tablename+" and for field "+name);
             	typeTranslated=type;
             }
             stringBuilder.append(typeTranslated);
