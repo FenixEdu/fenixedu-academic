@@ -24,7 +24,8 @@
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
 	<h:outputText value="<br/><h1>#{publicDepartmentBundle['department.teachers']} #{publicDepartmentBundle['from.masculine']} #{CompetenceCourseManagement.selectedDepartmentUnit.department.acronym}</h1>" escape="false"/>
-
+	<h:outputText value="<br/>" escape="false"/>
+	
 	<h:form>
 		<h:dataTable value="#{DepartmentManagement.departmentTeachers}"
 			var="teacher" columnClasses="listClasses" headerClass="listClasses-header" style="width: 70%;">
@@ -38,9 +39,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.teacher.name']}"></h:outputText>
 				</f:facet>
-				<h:outputLink rendered="#{!empty teacher.person.homepage && teacher.person.homepage.activated}" value="../viewHomepage.do" target="_blank">
-					<f:param name="method" value="show"/>
-					<f:param name="homepageID" value="#{teacher.person.homepage.idInternal}"/>					
+				<h:outputLink rendered="#{!empty teacher.person.homepage && teacher.person.homepage.activated}" value="../../homepage/#{teacher.person.user.userUId}" target="_blank">
 					<h:outputText value="#{teacher.person.nome}"/>
 				</h:outputLink>
 				<h:outputText rendered="#{empty teacher.person.homepage || !teacher.person.homepage.activated}" value="#{teacher.person.nome}"/>
