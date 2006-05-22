@@ -39,9 +39,10 @@ public class ChangePersonPasswordAction extends FenixAction {
             String oldPassword = (String) changePasswordForm.get("oldPassword");
             String newPassword = (String) changePasswordForm.get("newPassword");
 
+            ServiceUtils.executeService(userView, "SetUserUID", new Object[] { userView.getPerson() } );
+
             // Check the old Password
             Object args[] = { userView, oldPassword, newPassword };
-
             try {
                 ServiceUtils.executeService(userView, "ChangePasswordKerberosTest", args);
             } catch (InvalidPasswordServiceException e) {

@@ -8,9 +8,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
@@ -68,6 +71,11 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
         Integer personID = new Integer(request.getParameter("personID"));
 
         String password = null;
+
+        final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
+        if (person != null) {
+        	ServiceUtils.executeService(null, "SetUserUID", new Object[] { person } );
+        }
 
         // Change the Password
         try {

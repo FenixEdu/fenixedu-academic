@@ -9780,4 +9780,12 @@
 			<chain name="ResearcherAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>SetUserUID</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SetUserUID</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
 </serviceDefinitions>
