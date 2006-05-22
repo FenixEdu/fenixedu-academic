@@ -2095,6 +2095,7 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing extends net.so
 	HourMinuteSecond startOfProposalPeriodTimeHourMinuteSecond;
 	YearMonthDay startOfProposalPeriodDateYearMonthDay;
 	HourMinuteSecond startOfCandidacyPeriodTimeHourMinuteSecond;
+	Boolean attributionByTeachers;
 }
 
 
@@ -2174,6 +2175,19 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 	}
 
 	class net.sourceforge.fenixedu.domain.space.RoomInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
+/*
+		Integer blueprintNumber;
+		String identification;
+		String description;
+		String classification;
+		BigDecimal area;
+		Boolean heightQuality;
+		Boolean illuminationQuality;
+		Boolean distanceFromSanitaryInstalationsQuality;
+		Boolean securityQuality;
+		Boolean ageQuality;
+		String observations;
+*/
 		String name;
 		BigDecimal area;
 		Boolean hight;

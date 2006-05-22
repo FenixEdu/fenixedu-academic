@@ -143,6 +143,9 @@
 	<definition name="df.page.finalDegreeWork.attribution" extends="definition.student.masterPage">
 		<put name="body" value="/student/finalDegreeWork/attribution.jsp"/>
 	</definition>
+	<definition name="df.page.finalDegreeWork.NoConfirmationInProcessException" extends="definition.student.masterPage">
+		<put name="body" value="/student/finalDegreeWork/noConfirmationInProcess.jsp"/>
+	</definition>
 	
 	<!-- SENIOR INFO DEFINITIONS -->
 	<definition name="senior-info-management" extends="definition.student.masterPage">

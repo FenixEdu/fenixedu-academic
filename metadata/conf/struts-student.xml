@@ -721,8 +721,12 @@
 			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.ConfirmAttributionOfFinalDegreeWork$NoAttributionToConfirmException"
 						key="error.message.NoAttributionToConfirmException"
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.student.finalDegreeWork.FinalDegreeWorkAttributionDA$NoConfirmationInProcessException"
+						key="error.message.NoConfirmationInProcessException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="showFinalDegreeWorkList" path="df.page.finalDegreeWork.attribution"/>
 			<forward name="prepareShowFinalDegreeWorkList" path="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0"/>
+			<forward name="NoConfirmationInProcessException" path="df.page.finalDegreeWork.NoConfirmationInProcessException"/>
 		</action>
 
 		<!-- SENIOR INFORMATION -->

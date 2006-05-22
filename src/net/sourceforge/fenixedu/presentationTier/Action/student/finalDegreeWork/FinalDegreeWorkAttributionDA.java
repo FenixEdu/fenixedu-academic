@@ -12,7 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
@@ -29,7 +31,7 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -37,6 +39,11 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
         InfoGroup infoGroup = (InfoGroup) ServiceUtils.executeService(userView,
                 "ReadFinalDegreeWorkStudentGroupByUsername", args);
         if (infoGroup != null && infoGroup.getGroupProposals() != null) {
+        	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGroup.getExecutionDegree().getIdInternal());
+        	if (executionDegree.getScheduling().getAttributionByTeachers() != Boolean.TRUE) {
+        		return mapping.findForward("NoConfirmationInProcessException");
+        	}
+
             Collections.sort(infoGroup.getGroupProposals(), new BeanComparator("orderOfPreference"));
 
             request.setAttribute("infoGroup", infoGroup);

@@ -80,7 +80,8 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher extends Service {
 						finalDegreeWorkProposalHeader.setEditable(new Boolean(false));
 					}
 
-					if (proposal.getGroupProposals() != null && !proposal.getGroupProposals().isEmpty()) {
+					if (scheduleing != null && scheduleing.getAttributionByTeachers() != null && scheduleing.getAttributionByTeachers().booleanValue() 
+							&& proposal.getGroupProposals() != null && !proposal.getGroupProposals().isEmpty()) {
 						finalDegreeWorkProposalHeader.setGroupProposals(new ArrayList());
 						for (int j = 0; j < proposal.getGroupProposals().size(); j++) {
 							GroupProposal groupProposal = proposal.getGroupProposals().get(j);

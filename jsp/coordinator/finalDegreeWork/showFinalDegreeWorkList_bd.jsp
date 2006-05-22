@@ -222,6 +222,14 @@
 				<html:text property="maximumNumberOfProposalCandidaciesPerGroup" size="2"/>
 			</td>
 		</tr>
+		<tr>
+			<td class="listClasses-header">
+				<bean:message key="finalDegreeWorkCandidacy.requirements.attributionByTeachers"/>
+			</td>
+			<td class="listClasses">
+				<html:checkbox property="attributionByTeachers"/>
+			</td>
+		</tr>
 		
 		<tr>
 			<td colspan="2">

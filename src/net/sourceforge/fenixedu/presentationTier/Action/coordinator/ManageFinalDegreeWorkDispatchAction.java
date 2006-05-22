@@ -255,6 +255,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                             "maximumNumberOfProposalCandidaciesPerGroup", infoScheduleing
                                     .getMaximumNumberOfProposalCandidaciesPerGroup().toString());
                 }
+                finalDegreeWorkCandidacyRequirementsForm.set("attributionByTeachers", infoScheduleing.getAttributionByTeachers());                
 
                 request.setAttribute("finalDegreeWorkCandidacyRequirements",
                         finalDegreeWorkCandidacyRequirementsForm);
@@ -921,6 +922,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 .get("maximumNumberOfStudents");
         String maximumNumberOfProposalCandidaciesPerGroupString = (String) finalDegreeWorkScheduleingForm
                 .get("maximumNumberOfProposalCandidaciesPerGroup");
+        Boolean attributionByTeachers = (Boolean) finalDegreeWorkScheduleingForm.get("attributionByTeachers");
 
         Integer minimumNumberOfCompletedCourses = null;
         if (minimumNumberOfCompletedCoursesString != null
@@ -950,7 +952,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         try {
             Object args[] = { executionDegreeOID, minimumNumberOfCompletedCourses,
                     minimumNumberOfStudents, maximumNumberOfStudents,
-                    maximumNumberOfProposalCandidaciesPerGroup };
+                    maximumNumberOfProposalCandidaciesPerGroup, attributionByTeachers };
             ServiceUtils.executeService(userView, "DefineFinalDegreeWorkCandidacyRequirements", args);
         } catch (NotAuthorizedFilterException e) {
             ActionErrors actionErrors = new ActionErrors();

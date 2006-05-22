@@ -16,7 +16,7 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
 
     public void run(Integer executionDegreeOID, Integer minimumNumberOfCompletedCourses,
             Integer minimumNumberOfStudents, Integer maximumNumberOfStudents,
-            Integer maximumNumberOfProposalCandidaciesPerGroup) throws ExcepcaoPersistencia {
+            Integer maximumNumberOfProposalCandidaciesPerGroup, Boolean attributionByTeachers) throws ExcepcaoPersistencia {
 
         if (executionDegreeOID != null) {
 
@@ -34,8 +34,8 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
                 scheduleing.setMinimumNumberOfCompletedCourses(minimumNumberOfCompletedCourses);
                 scheduleing.setMinimumNumberOfStudents(minimumNumberOfStudents);
                 scheduleing.setMaximumNumberOfStudents(maximumNumberOfStudents);
-                scheduleing
-                        .setMaximumNumberOfProposalCandidaciesPerGroup(maximumNumberOfProposalCandidaciesPerGroup);
+                scheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(maximumNumberOfProposalCandidaciesPerGroup);
+                scheduleing.setAttributionByTeachers(attributionByTeachers);
             }
 
         }

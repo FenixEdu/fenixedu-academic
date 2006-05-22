@@ -33,6 +33,8 @@ public class InfoScheduleing extends InfoObject {
 
     private Integer maximumNumberOfProposalCandidaciesPerGroup;
 
+    private Boolean attributionByTeachers;
+
     /* Construtores */
     public InfoScheduleing() {
         super();
@@ -191,4 +193,12 @@ public class InfoScheduleing extends InfoObject {
             Integer maximumNumberOfProposalCandidaciesPerGroup) {
         this.maximumNumberOfProposalCandidaciesPerGroup = maximumNumberOfProposalCandidaciesPerGroup;
     }
+
+	public Boolean getAttributionByTeachers() {
+		return attributionByTeachers;
+	}
+
+	public void setAttributionByTeachers(Boolean attributionByTeachers) {
+		this.attributionByTeachers = attributionByTeachers;
+	}
 }

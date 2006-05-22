@@ -38,6 +38,7 @@ public class ReadFinalDegreeWorkProposalSubmisionPeriod extends Service {
                     infoScheduleing.setMaximumNumberOfStudents(scheduleing.getMaximumNumberOfStudents());
                     infoScheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(scheduleing
                             .getMaximumNumberOfProposalCandidaciesPerGroup());
+                    infoScheduleing.setAttributionByTeachers(scheduleing.getAttributionByTeachers());
                 }
             }
         }
