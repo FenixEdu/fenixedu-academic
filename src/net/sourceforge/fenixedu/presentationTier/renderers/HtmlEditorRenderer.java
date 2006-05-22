@@ -50,6 +50,13 @@ public class HtmlEditorRenderer extends InputRenderer {
     
     private boolean safe;
     
+    public HtmlEditorRenderer() {
+        super();
+        
+        setWidth(600);
+        setHeigth(400);
+    }
+
     public int getColumns() {
         return this.columns;
     }
