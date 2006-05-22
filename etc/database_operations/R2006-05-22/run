@@ -36,3 +36,5 @@ execute "Add REASON to MARKSHEET" alterMarkSheetTableAddReason.sql
 execute "Add columns to Space" alterTableSpace.sql
 executeWithTempFile "Migrate Room To Space" migrateRoomToSpace.sql
 executeWithTempFile "Migrate Building To Space" migrateBuildingToSpace.sql
+execute "Fix Result Table" fixResultTable.sql
+executeWithTempFile "Add and populate missing fields in FinalDegreeWorkGroup Table" fixMissingColumns.sql

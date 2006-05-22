@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Fix Result Table" fixResultTable.sql
