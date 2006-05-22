@@ -51,12 +51,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public ExecutionCourse() {
-	super();
-	init();
+        super();
+        init();
     }
 
     private void init() {
-	setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public List<Grouping> getGroupings() {
@@ -302,6 +302,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             for (; !getAttends().isEmpty(); getAttends().get(0).delete())
                 ;
 
+            for (; !getForuns().isEmpty(); getForuns().get(0).delete())
+                ;
+
             getAssociatedCurricularCourses().clear();
             getNonAffiliatedTeachers().clear();
             removeExecutionPeriod();
@@ -321,6 +324,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
         for (final Professorship professorship : getProfessorships()) {
             if (!professorship.canBeDeleted()) {
+                return false;
+            }
+        }
+
+        for (ExecutionCourseForum forum : getForuns()) {
+            if (forum.getConversationThreads().size() != 0) {
                 return false;
             }
         }
@@ -949,12 +958,19 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean hasForumWithName(String name) {
+        ExecutionCourseForum executionCourseForum = getForumByName(name);
+
+        return (executionCourseForum == null) ? false : true;
+    }
+
+    public ExecutionCourseForum getForumByName(String name) {
         for (ExecutionCourseForum executionCourseForum : getForuns()) {
             if (executionCourseForum.getName().equalsIgnoreCase(name)) {
-                return true;
+                return executionCourseForum;
             }
         }
-        return false;
+
+        return null;
     }
 
     @Override
@@ -970,29 +986,31 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public SortedSet<Degree> getDegreesSortedByDegreeName() {
-    	final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
-    	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-    		final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-    		degrees.add(degreeCurricularPlan.getDegree());
-    	}
-    	return degrees;
-    }
-    
-	public SortedSet<CurricularCourse> getCurricularCoursesSortedByDegreeAndCurricularCourseName() {
-    	final SortedSet<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(CurricularCourse.CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME);
-    	curricularCourses.addAll(getAssociatedCurricularCoursesSet());
-    	return curricularCourses;
+        final SortedSet<Degree> degrees = new TreeSet<Degree>(
+                Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+            final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+            degrees.add(degreeCurricularPlan.getDegree());
+        }
+        return degrees;
     }
 
-	public Set<CompetenceCourse> getCompetenceCourses() {
-		final Set<CompetenceCourse> competenceCourses = new HashSet<CompetenceCourse>();
-		for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-			final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
-			if (competenceCourse != null) {
-				competenceCourses.add(competenceCourse);
-			}
-		}
-		return competenceCourses;
-	}
+    public SortedSet<CurricularCourse> getCurricularCoursesSortedByDegreeAndCurricularCourseName() {
+        final SortedSet<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(
+                CurricularCourse.CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME);
+        curricularCourses.addAll(getAssociatedCurricularCoursesSet());
+        return curricularCourses;
+    }
+
+    public Set<CompetenceCourse> getCompetenceCourses() {
+        final Set<CompetenceCourse> competenceCourses = new HashSet<CompetenceCourse>();
+        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+            final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+            if (competenceCourse != null) {
+                competenceCourses.add(competenceCourse);
+            }
+        }
+        return competenceCourses;
+    }
 
 }

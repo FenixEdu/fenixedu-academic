@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE struts-config PUBLIC
       "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd" [
-
-      <!ENTITY messagingActions SYSTEM "struts-person.messagingActions.xml">
-      ]
-      >
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
     
     <!-- ========== Data Source Configuration =============================== -->
@@ -309,9 +305,7 @@
         		input="/manageHomepage.do?method=prepare">
           <forward name="show-manage-homepage" path="show-manage-homepage"/>
         </action>
-               
-        &messagingActions;
-               
+                             
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

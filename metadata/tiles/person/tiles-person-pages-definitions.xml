@@ -50,20 +50,20 @@
 	<definition name="index" extends="definition.person.masterPage">
 	</definition>
 	
-	<definition name="viewForuns" extends="definition.person.masterPage">
+	<definition name="view-foruns" extends="definition.person.masterPage">
 		 <put name="body" value="/messaging/viewForuns.jsp"/>
 	</definition>
 
-	<definition name="createThreadAndMessage" extends="definition.person.masterPage">
+	<definition name="create-thread-and-message" extends="definition.person.masterPage">
 		 <put name="body" value="/messaging/createThreadAndMessage.jsp"/>
 	</definition>
 
-	<definition name="viewForum" extends="definition.person.masterPage">
+	<definition name="view-forum" extends="definition.person.masterPage">
 		 <put name="body" value="/messaging/viewForum.jsp"/>
 	</definition>
 
 
-	<definition name="viewThread" extends="definition.person.masterPage">
+	<definition name="view-thread" extends="definition.person.masterPage">
 		 <put name="body" value="/messaging/viewThread.jsp"/>
 	</definition>	
 

@@ -6,65 +6,74 @@
 <%@ page import="net.sourceforge.fenixedu.domain.messaging.Forum" %>
 <%@ page import="net.sourceforge.fenixedu.domain.messaging.ConversationThread" %>
 
+
 <logic:present name="forum">
+	<bean:define id="forumId" name="forum" property="idInternal" />
 	<logic:present name="thread">
+	<bean:define id="contextPrefix" name="contextPrefix" />
+	<bean:define id="threadId" name="thread" property="idInternal" />
 		<logic:present name="person">
-			<logic:present name="messages">
-				<%
-					java.util.Map parameters = new java.util.HashMap();
-					parameters.put("method","viewThread");
-					Integer forumId = ((Forum)request.getAttribute("forum")).getIdInternal();
-					Integer threadId = ((ConversationThread)request.getAttribute("thread")).getIdInternal();							
-					parameters.put("forumId",forumId);
-					parameters.put("threadId",threadId);
-					request.setAttribute("parameters",parameters);
-				%>
-			
+			<logic:present name="messages">			
 				<bean:define id="conversationMessages" name="thread" property="conversationMessages" />
 					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.title"/></h2>
 					
-					<html:link action="<%="/messaging/forunsManagement.do?method=viewForum&forumId="+forumId %>">
+					<html:link action="<%= contextPrefix + "method=viewForum&forumId="+ forumId %>">
 						<bean:write name="forum" property="name"/>
 					</html:link>
 					<bean:message bundle="MESSAGING_RESOURCES" key="messaging.breadCrumSeparator.label"/> 
-					<bean:write name="thread" property="subject"/> 					
+					<bean:write name="thread" property="subject"/>
+					
+					<br/><br/>		
 					
 					<fr:view name="thread" layout="tabular" schema="conversationThread.view-with-subject-creation-date-and-message-count">
 						<fr:layout>
 						    <fr:property name="classes" value="style1"/>
 				      		<fr:property name="columnClasses" value="listClasses,"/>
 						</fr:layout>
-					</fr:view>	Integer pageNumber = getPageNumber(request);
-			
-						
+					</fr:view>
+					
+					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.Messages"/></h2>
+
 					<logic:notEqual name="showReplyBox" value="true">
-						<%
-							parameters.put("showReplyBox","true");
-							parameters.put("goToLastPage","true");
-						%>
-						
-						<html:link action="/messaging/forunsManagement" name="parameters">
-							<bean:message bundle="MESSAGING_RESOURCES" key="link.viewThread.showReplyBox"/>
-						</html:link>
+						<logic:equal name="loggedPersonCanWrite" value="true">
+							<html:link action="<%= contextPrefix + "method=prepareCreateMessage&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=true&goToLastPage=true"%>">
+								<bean:message bundle="MESSAGING_RESOURCES" key="link.viewThread.showReplyBox"/>
+							</html:link>
+						</logic:equal>
 					</logic:notEqual>
-					
-					<logic:equal name="showReplyBox" value="true">
-						<%
-								parameters.put("showReplyBox","false");
-						%>
-						
-						<fr:create type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage" layout="tabular"
+										
+					<logic:equal name="showReplyBox" value="true">						
+						<fr:create id="createMessage"
+								type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean" layout="tabular"
 					           schema="conversationMessage.create"
-					           action="<%="/messaging/forunsManagement.do?method=createMessage&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false&goToLastPage=true" %>">
+					           action="<%= contextPrefix + "method=createMessage&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false&goToLastPage=true" %>">
 					
-					           <fr:hidden slot="creator" name="person"/>
-					           <fr:hidden slot="conversationThread" name="thread"/>
-					           <fr:destination name="cancel" path="<%="/messaging/forunsManagement.do?method=viewThread&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false" %>"/>
-					           <fr:default slot="body" name="quotationText"/>
-						</fr:create>						
+								<fr:hidden slot="creator" name="person"/>
+								<fr:hidden slot="conversationThread" name="thread"/>
+								<logic:present name="quotationText">
+				           			<fr:default slot="body" name="quotationText"/>
+								</logic:present>
+					           <fr:destination name="cancel" path="<%= contextPrefix + "method=viewThread&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false" %>"/>
+						</fr:create>
 					</logic:equal>
 					
-					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.threads"/></h2>
+					<br/><br/>
+				
+					<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>	
+					<strong><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/></strong>&nbsp;
+					<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
+						<logic:equal name="currentPageNumberString" value="<%=pageNumber.toString()%>">
+							<bean:write name="pageNumber"/>
+						</logic:equal>
+						<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
+							<html:link action="<%= contextPrefix +"method=viewThread&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber +"&threadId="+threadId%>">								
+								<bean:write name="pageNumber"/>
+							</html:link>			
+						</logic:notEqual>
+					</logic:iterate>
+					<br/><br/>
+								
+					
 					<logic:iterate indexId="currentMessageId" id="conversationMessage" name="messages" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
 						<html:link linkName="<%=currentMessageId.toString()%>"/>
 						<fr:view name="conversationMessage" layout="tabular" schema="conversationMessage.view-with-author-creationDate-and-body">			
@@ -74,22 +83,16 @@
 					      		<fr:property name="columnClasses" value="listClasses,"/>
 							</fr:layout>
 						</fr:view>
-						<%
-								parameters.clear();
-								parameters.put("showReplyBox","true");
-								parameters.put("goToLastPage","true");
-								parameters.put("forumId",forumId);
-								parameters.put("threadId",threadId);
-								parameters.put("method","createMessage");
-								parameters.put("quotedMessageId",conversationMessage.getIdInternal());
-						%>						
-						<html:link action="/messaging/forunsManagement" name="parameters">
-							<bean:message key="messaging.viewThread.quote" bundle="MESSAGING_RESOURCES"/>
-						</html:link>
+						<logic:equal name="loggedPersonCanWrite" value="true">
+							<bean:define id="quotedMessageId" name="conversationMessage" property="idInternal" />
+							<html:link action="<%=contextPrefix.toString() + "method=prepareCreateMessage&showReplyBox=true&goToLastPage=true&threadId=" + threadId + "&forumId=" + forumId + "&quotedMessageId=" + quotedMessageId%>"> 
+								<bean:message key="messaging.viewThread.quote" bundle="MESSAGING_RESOURCES"/>
+							</html:link>
+						</logic:equal>
 						<br/>
 						<br/>
 					</logic:iterate>
-													
+					
 					<strong><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/></strong>&nbsp;
 					<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>
 					<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
@@ -97,7 +100,7 @@
 							<bean:write name="pageNumber"/>
 						</logic:equal>
 						<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
-							<html:link action="<%="/messaging/forunsManagement.do?method=viewThread&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber +"&threadId="+threadId%>">								
+							<html:link action="<%= contextPrefix + "method=viewThread&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber +"&threadId="+threadId%>">								
 								<bean:write name="pageNumber"/>
 							</html:link>			
 						</logic:notEqual>

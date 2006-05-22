@@ -77,7 +77,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     	return mapping.findForward("program");
     }
-
+    
     public ActionForward objectives(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
     	return mapping.findForward("objectives");
@@ -258,7 +258,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 		}
 	}
 
-	private void getExecutionCourseFromParameterAndSetItInRequest(final HttpServletRequest request) {
+	public static void getExecutionCourseFromParameterAndSetItInRequest(final HttpServletRequest request) {
     	final String executionCourseIDString = request.getParameter("executionCourseID");
     	if (executionCourseIDString != null && executionCourseIDString.length() > 0) {
     		final ExecutionCourse executionCourse = findExecutionCourse(request, Integer.valueOf(executionCourseIDString));
@@ -266,7 +266,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     	}
     }
 
-	private ExecutionCourse findExecutionCourse(final HttpServletRequest request, final Integer executionCourseID) {
+	private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final Integer executionCourseID) {
 		final IUserView userView = getUserView(request);
 		if (userView != null) {
 			final Person person = userView.getPerson();

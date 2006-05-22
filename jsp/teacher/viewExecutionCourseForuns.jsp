@@ -10,15 +10,15 @@
 <br/>
 
 <logic:notEmpty name="foruns">
+	<bean:define id="executionCourseId" name="executionCourse" property="idInternal" />
 	<fr:view name="foruns" layout="tabular-list">
 		<fr:layout>
 			<fr:property name="subLayout" value="values"/>
 			<fr:property name="subSchema" value="executionCourseForum.view.nameOnly"/>
-		
-			<fr:property name="link(view)" value="/forunsManagement.do?method=viewForum"/>
-			<fr:property name="module(view)" value="/messaging"/>
+			<fr:property name="link(view)" value="<%="/executionCourseForumManagement.do?method=viewForum&executionCourseID=" + executionCourseId%>"/>
 			<fr:property name="key(view)" value="link.teacher.executionCourseManagement.foruns.viewForum"/>
 			<fr:property name="param(view)" value="idInternal/forumId"/>
+			
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

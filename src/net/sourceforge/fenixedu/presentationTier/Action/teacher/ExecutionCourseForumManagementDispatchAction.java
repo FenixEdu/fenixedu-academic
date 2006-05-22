@@ -5,18 +5,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.ForunsManagement;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -27,48 +21,32 @@ import org.apache.struts.action.ActionMapping;
  * @author naat
  * 
  */
-public class ExecutionCourseForumManagementDispatchAction extends FenixDispatchAction {
+public class ExecutionCourseForumManagementDispatchAction extends ForunsManagement {
 
-    private Integer getObjectCode(HttpServletRequest request) {
-        Integer objectCode = null;
-        String objectCodeString = request.getParameter("objectCode");
-        if (objectCodeString == null) {
-            objectCodeString = (String) request.getAttribute("objectCode");
-        }
-        if (objectCodeString != null) {
-            objectCode = new Integer(objectCodeString);
-        }
-        return objectCode;
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ManageExecutionCourseDA.getExecutionCourseFromParameterAndSetItInRequest(request);
+        return super.execute(mapping, actionForm, request, response);
     }
 
     public ActionForward viewForuns(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException,
             FenixServiceException {
 
-        IUserView userView = getUserView(request);
-        Integer executionCourseId = getObjectCode(request);
-
-        if (request.getParameter("createForum") != null) {
-            ServiceUtils.executeService(getUserView(request), "CreateExecutionCourseForum",
-                    new Object[] { executionCourseId, userView.getPerson().getIdInternal(), "Geral",
-                            "Lista geral de discussão" });
-        }
-
-        ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args = { executionCourseId, commonComponent, null, null, null, null };
-
-        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
-                .executeService(userView, "TeacherAdministrationSiteComponentService", args);
-        request.setAttribute("siteView", siteView);
-        request.setAttribute("objectCode", executionCourseId);
-
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
         List<ExecutionCourseForum> foruns = executionCourse.getForuns();
 
         request.setAttribute("foruns", foruns);
 
         return mapping.findForward("viewForuns");
+    }
+
+    @Override
+    protected String getContextInformation(HttpServletRequest request) {
+        return "/executionCourseForumManagement.do?executionCourseID="
+                + request.getParameter("executionCourseID");
     }
 
 }

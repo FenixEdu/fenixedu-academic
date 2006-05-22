@@ -482,11 +482,6 @@
 		<put name="body" value="/cms/messaging/sendMail.jsp" />
 	</definition>
 
-	<definition name="view-execution-course-foruns" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
-		<put name="body" value="/teacher/viewExecutionCourseForuns.jsp" />
-	</definition>
-
 	<definition name="list-professorships" extends="teacher-information">
 		<put name="body" value="/teacher/listProfessorships.jsp" />
 	</definition>
@@ -499,6 +494,10 @@
 		<put name="body" value="/teacher/executionCourse/program.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-program-edit" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/editProgram.jsp" />
+	</definition>
+	
 	<definition name="manage-execution-course-program-edit" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/editProgram.jsp" />
 	</definition>
@@ -530,5 +529,21 @@
 	<definition name="manage-execution-course-bibliographicReference-create" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/createBibliographicReference.jsp" />
 	</definition>
-
+	
+	<definition name="view-foruns" extends="execution-course-administration">
+		<put name="body" value="/teacher/viewExecutionCourseForuns.jsp" />
+	</definition>
+	
+	<definition name="view-forum" extends="execution-course-administration">
+		<put name="body" value="/messaging/viewForum.jsp" />
+	</definition>
+	
+	<definition name="create-thread-and-message" extends="execution-course-administration">
+		<put name="body" value="/messaging/createThreadAndMessage.jsp" />
+	</definition>
+	
+	<definition name="view-thread" extends="execution-course-administration">
+		<put name="body" value="/messaging/viewThread.jsp" />
+	</definition>
+	
 </tiles-definitions>

@@ -187,8 +187,20 @@
 		<put name="body" value="/student/weeklyWorkLoad.jsp" />
 	</definition>
 	
-	<definition name="view-execution-course-foruns" extends="definition.student.masterPage">
+	<definition name="view-foruns" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewExecutionCourseForuns.jsp" />
+	</definition>
+	
+	<definition name="view-forum" extends="definition.student.masterPage">
+		<put name="body" value="/messaging/viewForum.jsp" />
+	</definition>
+	
+	<definition name="create-thread-and-message" extends="definition.student.masterPage">
+		<put name="body" value="/messaging/createThreadAndMessage.jsp" />
+	</definition>
+	
+	<definition name="view-thread" extends="definition.student.masterPage">
+		<put name="body" value="/messaging/viewThread.jsp" />
 	</definition>
 	
 </tiles-definitions>

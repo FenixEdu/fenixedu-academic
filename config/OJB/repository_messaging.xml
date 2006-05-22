@@ -13,25 +13,13 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum" table="FORUM">
-	
-        
-                 
-	
-    
-    
-    
+
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ConversationThread -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ConversationThread" table="CONVERSATION_THREAD">
-	    
-    
-	             
-    
-    
-        
  
 </class-descriptor>
 
@@ -39,20 +27,12 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ConversationMessage -->
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ConversationMessage" table="CONVERSATION_MESSAGE">
-	    
-                 
-    
-    
-    
         
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ForumBookmark -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.messaging.ForumSubscription -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ForumBookmark" table="FORUM_BOOKMARK">
-	
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ForumSubscription" table="FORUM_SUBSCRIPTION">
         
-    
-    
 </class-descriptor>

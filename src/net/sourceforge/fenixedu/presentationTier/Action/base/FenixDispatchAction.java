@@ -42,7 +42,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return super.execute(mapping, actionForm, request, response);
     }
 
-    protected IUserView getUserView(HttpServletRequest request) {
+    protected static IUserView getUserView(HttpServletRequest request) {
         return SessionUtils.getUserView(request);
     }
 

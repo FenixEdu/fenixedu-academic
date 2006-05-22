@@ -189,7 +189,6 @@ class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourcef
 	String reference;
 }
 
-
 class net.sourceforge.fenixedu.domain.homepage.Blog extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyHomepage;
 	String name;
@@ -351,7 +350,7 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
 }
     class net.sourceforge.fenixedu.domain.cms.Bin extends net.sourceforge.fenixedu.domain.cms.Content {
        }
-       
+    
     class net.sourceforge.fenixedu.domain.cms.website.WebsiteType extends net.sourceforge.fenixedu.domain.DomainObject
      {
       String name;
@@ -831,7 +830,7 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	YearMonthDay antiquityYearMonthDay;
 	Integer keyPerson;
 	Integer workingHours;
-
+	
 }
 
 
@@ -870,14 +869,14 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 		}
 	
 		class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
-            String createdBy;
-        	DateTime creationDateDateTime;
-            Integer keyExecutionPeriod;
-            Integer keyStudentCurricularPlan;
-            EnrollmentState enrollmentState;
+    String createdBy;
+	DateTime creationDateDateTime;
+    Integer keyExecutionPeriod;
+    Integer keyStudentCurricularPlan;
+    EnrollmentState enrollmentState;
             EnrollmentCondition enrolmentCondition;
-            EnrolmentEvaluationType enrolmentEvaluationType;
-        }
+    EnrolmentEvaluationType enrolmentEvaluationType;
+}
 
 	// Isto é da estrutura antiga, faz sentido ainda?
     class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
@@ -897,9 +896,9 @@ class net.sourceforge.fenixedu.domain.MarkSheet extends net.sourceforge.fenixedu
     Integer keyCurricularCourse;
     String checkSum;
     String reason;    
-    DateTime creationDateDateTime;
-    DateTime evaluationDateDateTime;
-    DateTime confirmationDateDateTime;
+	DateTime creationDateDateTime;
+	DateTime evaluationDateDateTime;
+	DateTime confirmationDateDateTime;
     MarkSheetType markSheetType;
     MarkSheetState markSheetState;
     Boolean submittedByTeacher;
@@ -1168,16 +1167,17 @@ class net.sourceforge.fenixedu.domain.messaging.Forum extends net.sourceforge.fe
 	String description;
 }
 
-class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum extends net.sourceforge.fenixedu.domain.messaging.Forum {
-   Integer keyExecutionCourse;
-}
+	class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum extends net.sourceforge.fenixedu.domain.messaging.Forum {
+	   Integer keyExecutionCourse;
+	}
 
-
-class net.sourceforge.fenixedu.domain.messaging.ForumBookmark extends net.sourceforge.fenixedu.domain.DomainObject {
-	Boolean receivePostsByEmail;
-    Integer keyPerson;
+class net.sourceforge.fenixedu.domain.messaging.ForumSubscription extends net.sourceforge.fenixedu.domain.DomainObject {
+    Boolean receivePostsByEmail;
+    Boolean favorite;
 	Integer keyForum;
+	Integer keyPerson;
 }
+
 
 class net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult extends net.sourceforge.fenixedu.domain.DomainObject {
     String p13;
@@ -1502,8 +1502,7 @@ class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fen
 		CardState cardState;
 		DateTime lastModifiedDate;
 		Integer keyModifiedBy;
-	}
-
+	}	
 	
   
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1580,7 +1579,6 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	HourMinuteSecond beginHourMinuteSecond;
 	HourMinuteSecond endHourMinuteSecond;
 }
-
 
 class net.sourceforge.fenixedu.domain.Mark extends net.sourceforge.fenixedu.domain.DomainObject {
     String publishedMark;
@@ -1668,7 +1666,7 @@ class net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter ex
     Integer keyWhoEmployee;
 	DateTime whenDateTime;
 }
-
+   
 class net.sourceforge.fenixedu.domain.NonAffiliatedTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
     String name;
     Integer keyInstitutionUnit;
@@ -2347,7 +2345,7 @@ class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sou
 
 class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyBranch;
-    Double classification;
+    Double  classification;
     Integer completedCourses;
     Integer keyDegreeCurricularPlan;
     Integer keyEmployee;
@@ -2525,8 +2523,8 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer costCenterCode;
 		Integer keyDepartment;	
 		Integer keyDegree;
-		YearMonthDay beginDateYearMonthDay;
-		YearMonthDay endDateYearMonthDay;
+	YearMonthDay beginDateYearMonthDay;
+	YearMonthDay endDateYearMonthDay;
 	}
 
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
@@ -2543,13 +2541,13 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		String area;
 		String fiscalCode;
 		String mobile;
-		YearMonthDay expirationDateOfDocumentIdYearMonthDay;
+	YearMonthDay expirationDateOfDocumentIdYearMonthDay;
 		String districtOfResidence;
 		String documentIdNumber;
 		Integer keyPais;
 		String profession;
 		String districtSubdivisionOfBirth;
-		YearMonthDay emissionDateOfDocumentIdYearMonthDay;
+	YearMonthDay emissionDateOfDocumentIdYearMonthDay;
 		String address;
 		Boolean availableWebSite;
 		String socialSecurityNumber;
@@ -2566,7 +2564,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Boolean availablePhoto;
 		String email;
 		String districtSubdivisionOfResidence;
-		YearMonthDay dateOfBirthYearMonthDay;
+	YearMonthDay dateOfBirthYearMonthDay;
 		String parishOfResidence;
 	    MaritalStatus maritalStatus;
 	    Gender gender;
@@ -2585,8 +2583,8 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType
 }	 
 
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType {
-		YearMonthDay beginDateYearMonthDay;
-		YearMonthDay endDateYearMonthDay;
+	YearMonthDay beginDateYearMonthDay;
+	YearMonthDay endDateYearMonthDay;
 		FunctionType functionType;
 		Integer keyUnit;
 		Integer keyParentInherentFunction;
@@ -4188,22 +4186,21 @@ relation ForumOwner {
 	net.sourceforge.fenixedu.domain.Person playsRole owner;
 }
 
-relation ForumBookmarkForum {
-	net.sourceforge.fenixedu.domain.messaging.ForumBookmark playsRole forumBookmarks {
-		multiplicity *;
-	}
-	
-	net.sourceforge.fenixedu.domain.messaging.Forum playsRole forum;
-}
-
-relation ForumBookmarkPerson {
-	net.sourceforge.fenixedu.domain.messaging.ForumBookmark playsRole forumBookmarks {
+relation ForumSubscriptionPerson {
+	net.sourceforge.fenixedu.domain.messaging.ForumSubscription playsRole forumSubscriptions {
 		multiplicity *;
 	}
 	
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
+relation ForumSubscriptionForum {
+	net.sourceforge.fenixedu.domain.messaging.ForumSubscription playsRole forumSubscriptions {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.messaging.Forum playsRole forum;
+}
 
 relation GaugingTestResultStudent {
     net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
@@ -4801,7 +4798,7 @@ relation MasterDegreeThesisDataVersionAssistentGuider {
 	}
 }
 
-	
+
 relation MetadataFromExecutionCourse {
     net.sourceforge.fenixedu.domain.onlineTests.Metadata playsRole metadatas {
         multiplicity *;
@@ -6392,6 +6389,20 @@ relation RootDomainObjectCurriculumModule {
 	}
 }
 
+relation RootDomainObjectConversationThread {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThreads {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectConversationMessage {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.messaging.ConversationMessage playsRole conversatioMessages {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectExtraWorkHistoric {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric playsRole extraWorkHistorics {
@@ -6504,16 +6515,9 @@ relation RootDomainObjectForum {
 	}
 }
 
-relation RootDomainObjectConversationThread {
+relation RootDomainObjectForumSubscription {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThreads {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectConversationMessage {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.messaging.ConversationMessage playsRole conversatioMessages {
+	net.sourceforge.fenixedu.domain.messaging.ForumSubscription playsRole forumSubscriptions {
 		multiplicity *;
 	}
 }

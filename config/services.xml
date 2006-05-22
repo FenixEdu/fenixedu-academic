@@ -200,18 +200,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>WriteThread</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.WriteThread</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>	
-	<service>
-		<name>WriteMessage</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.WriteMessage</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>		
-	<service>
 		<name>EditarTurno</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditarTurno</implementationClass>
 		<description />
@@ -9734,7 +9722,6 @@
 			<chain name="MarkSheetManagementAuthorization"/>
 		</filterChains>
 	</service>
-	
 	<service>
 		<name>SearchMarkSheets</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.SearchMarkSheets</implementationClass>
@@ -9808,4 +9795,36 @@
 		<filterChains>
 		</filterChains>
 	</service>
+	<service>
+		<name>CreateConversationThreadAndMessage</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.CreateConversationThreadAndMessage</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateConversationMessage</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.CreateConversationMessage</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>AddForumEmailSubscriber</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.AddForumEmailSubscriber</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>RemoveForumEmailSubscriber</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.RemoveForumEmailSubscriber</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>	
 </serviceDefinitions>

@@ -2206,10 +2206,14 @@
         
         <!-- Execution Course Forum Management -->
         <action path="/executionCourseForumManagement" parameter="method" scope="request" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ExecutionCourseForumManagementDispatchAction" 
-            validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <forward name="viewForuns" path="view-execution-course-foruns" />
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ExecutionCourseForumManagementDispatchAction"
+            validate="true">
+            <forward name="viewForuns" path="view-foruns" />
+   		    <forward name="viewForum" path="view-forum"/>
+		    <forward name="createThreadAndMessage" path="create-thread-and-message"/>
+		    <forward name="viewThread" path="view-thread"/>
         </action>
+        
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
@@ -2219,6 +2223,7 @@
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>    
     <message-resources parameter="resources.CmsResources" key="CMS_RESOURCES" null="false" />
+    <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

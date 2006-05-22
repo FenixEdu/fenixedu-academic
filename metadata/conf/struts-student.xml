@@ -790,7 +790,10 @@
   			scope="request"
   			parameter="method"
   			>
-  			<forward name="viewForuns" path="view-execution-course-foruns"/>
+  			<forward name="viewForuns" path="view-foruns"/>
+   		    <forward name="viewForum" path="view-forum"/>
+		    <forward name="createThreadAndMessage" path="create-thread-and-message"/>
+		    <forward name="viewThread" path="view-thread"/>
   		</action>
   		
 	</action-mappings>     
@@ -803,6 +806,7 @@
     <message-resources parameter="resources.StudentResources" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
     
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

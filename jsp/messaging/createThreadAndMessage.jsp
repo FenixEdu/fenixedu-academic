@@ -4,10 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%> 
 
-<html:errors/>
-
 <logic:present name="forum">
-	
+	<bean:define id="contextPrefix" name="contextPrefix" />
+		
 	<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.createThreadAndMessage.title"/></h2>
 	
 	<fr:view name="forum" layout="tabular" schema="forum.view-full">
@@ -17,17 +16,24 @@
 		</fr:layout>
 	</fr:view>
 	
+	<logic:messagesPresent message="true">
+		<html:messages id="messages" message="true" bundle="MESSAGING_RESOURCES">
+			<span class="error"><bean:write name="messages" /></span>
+		</html:messages>
+		<br/><br/>
+	</logic:messagesPresent>
+	
 	<bean:define id="forumId" name="forum" property="idInternal"/>
 	
-	<fr:create type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage" layout="tabular"
-           schema="conversationThreadAndMessage.create"
-           action="<%="/messaging/forunsManagement.do?method=viewForum&forumId="+forumId+"&goToLastPage=true" %>">
+	<fr:create id="createThreadAndMessage"
+			type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean" 
+			layout="tabular"
+           	schema="conversationThreadAndMessage.create"
+           	action="<%= contextPrefix + "method=createThreadAndMessage&forumId="+forumId+"&goToLastPage=true" %>">
            <fr:hidden slot="creator" name="person"/>
-           <fr:hidden slot="conversationThread.creator" name="person"/>
-           <fr:hidden slot="conversationThread.forum" name="forum"/>
-           <fr:destination name="cancel" path="<%="/messaging/forunsManagement.do?method=viewForum&forumId="+forumId%>"/>
-
-           <fr:destination name="exception" path="<%="/messaging/forunsManagement.do?method=viewForum&forumId="+forumId%>"/>
+           <fr:hidden slot="forum" name="forum"/>
+           <fr:destination name="cancel" path="<%= contextPrefix + "method=viewForum&forumId="+forumId%>"/>
+           <fr:destination name="exception" path="<%= contextPrefix + "method=viewForum&forumId="+forumId%>"/>
 	</fr:create>
 
 
