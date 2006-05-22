@@ -17,9 +17,8 @@ public class DailyBalance {
     private String comment;
     
     private WorkSchedule workSchedule;
-    private List<Clocking> clockingList;
-	private List<Leave> leaveList;
-    private List<MissingClocking> missingClockingList;
+//    private List<AssiduousnessRecord> clockingList;
+//	private List<Leave> leaveList;
 	
     public DailyBalance() {
         super();
@@ -29,9 +28,6 @@ public class DailyBalance {
     		this();
     		setDate(date);
     		setWorkSchedule(workSchedule);
-    		setClockingList(null);
-    		setLeaveList(null);
-    		setMissingClockingList(null);
     		setComment(null);
     		setIrregular(false);
     		setJustification(false);
@@ -42,32 +38,19 @@ public class DailyBalance {
     }
     
     
-	public List<Clocking> getClockingList() {
-		return clockingList;
-	}
+//	public List<AssiduousnessRecord> getClockingList() {
+//		return clockingList;
+//	}
 
-	// Assigns clockingList to Daily Balance's clockingList. If the list size's is odd sets the irregular (Anomalia) flag;
-	public void setClockingList(List<Clocking> clockingList) {
-		if (clockingList != null) {
-			if (isOdd(clockingList.size())) {
-				setIrregular(true);
-			}
-			this.clockingList = clockingList;
-		}
-	}
-
-    public List<MissingClocking> getMissingClockingList() {
-        return missingClockingList;
-    }
-    
-    // Assigns clockingList to Daily Balance's clockingList. If the list size's is odd sets the irregular (Anomalia) flag;
-    public void setMissingClockingList(List<MissingClocking> missingClockingList) {
-        if (missingClockingList != null) {
-            setMissingClocking(true);
-        }
-        this.missingClockingList = missingClockingList;
-    }
-
+//	// Assigns clockingList to Daily Balance's clockingList. If the list size's is odd sets the irregular (Anomalia) flag;
+//	public void setClockingList(List<AssiduousnessRecord> clockingList) {
+//		if (clockingList != null) {
+//			if (isOdd(clockingList.size())) {
+//				setIrregular(true);
+//			}
+//			this.clockingList = clockingList;
+//		}
+//	}
     
 	public String getComment() {
 		return comment;
@@ -117,19 +100,19 @@ public class DailyBalance {
         this.missingClocking = missingClocking;
     }
     
-	public List<Leave> getLeaveList() {
-		return leaveList;
-	}
-
-	// Assigns a List of leaves to LeaveList and if there are leaves in the list sets justification to true;
-	public void setLeaveList(List<Leave> leaveList) {
-		if (leaveList != null) {
-			if (leaveList.size() > 0) {
-				setJustification(true);
-			}
-			this.leaveList = leaveList;
-		}
-	}
+//	public List<Leave> getLeaveList() {
+//		return leaveList;
+//	}
+//
+//	// Assigns a List of leaves to LeaveList and if there are leaves in the list sets justification to true;
+//	public void setLeaveList(List<Leave> leaveList) {
+//		if (leaveList != null) {
+//			if (leaveList.size() > 0) {
+//				setJustification(true);
+//			}
+//			this.leaveList = leaveList;
+//		}
+//	}
 
 	public Duration getLunchBreak() {
 		return lunchBreak;
@@ -167,7 +150,6 @@ public class DailyBalance {
 		this.workSchedule = workSchedule;
 	}
     
-
     public Duration getNormalWorkPeriodBalance() {
         Duration normalWorkPeriodBalance = getWorkedOnNormalWorkPeriod().minus(getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
         Duration normalWorkPeriodAbsence = Duration.ZERO.minus(this.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
@@ -177,18 +159,16 @@ public class DailyBalance {
             return normalWorkPeriodAbsence;
         } else {
 //            System.out.println("wnwp" + getWorkedOnNormalWorkPeriod());
-//            System.out.println("wnwp" + getWorkedOnNormalWorkPeriod());
             return getWorkedOnNormalWorkPeriod().minus(getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
         }
     }
 	
-	// put this on Utils class
-    public boolean isOdd(int number) {
-    		if (number % 2 != 0) {
-    			return true;
-    		}
-    		return false;
-    }
-    
+//	// put this on Utils class
+//    public boolean isOdd(int number) {
+//    		if (number % 2 != 0) {
+//    			return true;
+//    		}
+//    		return false;
+//    }
     
 }

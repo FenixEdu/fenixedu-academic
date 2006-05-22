@@ -12,29 +12,28 @@ import org.joda.time.Interval;
 
 public class ClockingInterval {
 
-    private Clocking clockIn;
+    private AssiduousnessRecord clockIn;
+    private AssiduousnessRecord clockOut;
 
-    private Clocking clockOut;
-
-    public ClockingInterval(Clocking clockIn, Clocking clockOut) {
+    public ClockingInterval(AssiduousnessRecord clockIn, AssiduousnessRecord clockOut) {
         super();
         setClockIn(clockIn);
         setClockOut(clockOut);
     }
 
-    public Clocking getClockIn() {
+    public AssiduousnessRecord getClockIn() {
         return clockIn;
     }
 
-    public void setClockIn(Clocking newClockIn) {
+    public void setClockIn(AssiduousnessRecord newClockIn) {
         clockIn = newClockIn;
     }
 
-    public Clocking getClockOut() {
+    public AssiduousnessRecord getClockOut() {
         return clockOut;
     }
 
-    public void setClockOut(Clocking newClockOut) {
+    public void setClockOut(AssiduousnessRecord newClockOut) {
         clockOut = newClockOut;
     }
 

@@ -49,10 +49,10 @@ public class DateInterval {
     		return (containsDate(interval.getStartDate()) || containsDate(interval.getEndDate()));
     }
     
-    // Return the interval number of days
+    // Return the interval number of weeks
     public int numberOfWeeks() {
         Interval interval = new Interval(startDate.toDateMidnight(), endDate.toDateMidnight());
-        return interval.toPeriod(PeriodType.weeks()).getWeeks();
+        return (interval.toPeriod(PeriodType.weeks()).getWeeks() + 1);
     }
     
     

@@ -41,7 +41,7 @@ public class WorkSchedule extends WorkSchedule_Base {
     }
 
     // TODO ver se o funcionario trabalhou dentro dos periodos
-    public DailyBalance calculateWorkingPeriods(YearMonthDay day, List<Clocking> clockingList, Timeline timeline) {
+    public DailyBalance calculateWorkingPeriods(YearMonthDay day, List<AssiduousnessRecord> clockingList, Timeline timeline) {
             DailyBalance dailyBalance = new DailyBalance(day, this);
             Duration firstWorkPeriod = Duration.ZERO;
             Duration lastWorkPeriod = Duration.ZERO;
@@ -72,7 +72,7 @@ public class WorkSchedule extends WorkSchedule_Base {
                     System.out.println("funcionario nao foi almocar");
                     Duration workPeriod = timeline.calculateDurationAllIntervalsByAttributes(DomainConstants.WORKED_ATTRIBUTES);
 //                  dailyBalance.setNormalWorkPeriod1Balance(worked.minus)
-                    Clocking firstClocking = clockingList.get(0);
+                    AssiduousnessRecord firstClocking = clockingList.get(0);
                     
                     if (wsType.getMeal().getMealBreak().contains(firstClocking.getDate().toTimeOfDay(), false)) { // funcionario entrou no intervalo de almoco
                         System.out.println("funcionario entrou no intervalo de almoco");

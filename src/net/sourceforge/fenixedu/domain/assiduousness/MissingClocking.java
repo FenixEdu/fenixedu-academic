@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.joda.time.DateTime;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
@@ -33,10 +29,5 @@ public class MissingClocking extends MissingClocking_Base {
     public boolean occuredInDate(YearMonthDay date) {
         return (getDate().toYearMonthDay().isAfter(date) || getDate().toYearMonthDay().isEqual(date));
     }
-    
-    // Converts a Missing Clocking to Clocking - the clockingUnit is null
-    public Clocking toClocking() {
-        return new Clocking(getAssiduousness(), null, getDate());
-    }
-    
+        
 }
