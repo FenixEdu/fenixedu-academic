@@ -44,8 +44,8 @@
 	
 										<h:column rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}">
 											<h:outputLink value="showCompetenceCourse.faces" style="text-decoration:none">
-												<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.name}"/>
-												<h:outputText rendered="#{CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.nameEn}"/>
+												<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.name} (#{competenceCourse.acronym})"/>
+												<h:outputText rendered="#{CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.nameEn} (#{competenceCourse.acronym})"/>
 												<f:param name="action" value="ccm"/>
 												<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 												<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
