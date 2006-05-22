@@ -38,3 +38,4 @@ executeWithTempFile "Migrate Room To Space" migrateRoomToSpace.sql
 executeWithTempFile "Migrate Building To Space" migrateBuildingToSpace.sql
 execute "Fix Result Table" fixResultTable.sql
 executeWithTempFile "Add and populate missing fields in FinalDegreeWorkGroup Table" fixMissingColumns.sql
+execute "Creating Messaging Tables" CreateMessagingTables.sql

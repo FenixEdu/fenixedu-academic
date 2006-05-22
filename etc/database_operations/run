@@ -27,4 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Creating Messaging Tables" CreateMessagingTables.sql
+
