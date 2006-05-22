@@ -60,6 +60,16 @@ public class HtmlCheckBox extends HtmlInputComponent {
     }
 
     @Override
+    public String getValue() {
+        if (getUserValue() != null) {
+            return getUserValue();
+        }
+        else {
+            return String.valueOf(isChecked());
+        }
+    }
+
+    @Override
     public void setValue(String value) {
         setChecked(value != null);
     }
