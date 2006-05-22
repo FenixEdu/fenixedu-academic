@@ -34,9 +34,9 @@ import org.apache.commons.lang.StringUtils;
 public class Enrolment extends Enrolment_Base {
 
     private Integer accumulatedWeight;
-    static {
-        EnrolmentEvaluation.EnrolmentEnrolmentEvaluation.addListener(new EnrolmentEnrolmentEvaluationListener());
-    }
+//    static {
+//        EnrolmentEvaluation.EnrolmentEnrolmentEvaluation.addListener(new EnrolmentEnrolmentEvaluationListener());
+//    }
     
     public Enrolment() {
     	super();

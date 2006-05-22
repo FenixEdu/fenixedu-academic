@@ -149,7 +149,11 @@ public class Spreadsheet {
     protected static HSSFCell addColumn(final HSSFCellStyle cellStyle, final HSSFRow row, final Object cellValue) {
         final HSSFCell cell = row.createCell((short) (row.getLastCellNum() + 1));
         cell.setCellStyle(cellStyle);
-        cell.setCellValue(cellValue.toString());
+        if (cellValue != null) {
+        	cell.setCellValue(cellValue.toString());
+        } else {
+        	cell.setCellValue("");
+        }
         return cell;
     }
 

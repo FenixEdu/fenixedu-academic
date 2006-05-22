@@ -713,6 +713,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
+        String executionDegreeOIDString = (String) finalWorkForm.get("executionDegreeOID");
+        request.setAttribute("executionDegreeOID", Integer.valueOf(executionDegreeOIDString));
+        System.out.println("executionDegreeOIDString" + executionDegreeOIDString);
         String alteredField = (String) finalWorkForm.get("alteredField");
         String number = null;
 
@@ -788,6 +791,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 new Integer(degreeId));
 
         final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, infoExecutionDegree.getIdInternal());
+        request.setAttribute("executionDegree", executionDegree);
+        request.setAttribute("executionDegreeOID", executionDegree.getIdInternal());
         final Scheduleing scheduleing = executionDegree.getScheduling();
         final List branches = new ArrayList();
         for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
@@ -1032,7 +1037,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     	final String executionDegreeOIDString = request.getParameter("executionDegreeOID");
     	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(executionDegreeOIDString));
     	final ExecutionYear executionYear = executionDegree.getExecutionYear();
-    	final String yearString = executionYear.getNextYearsYearString();
+    	final String yearString = executionYear.getNextYearsYearString().replace('/', '_');
 
         try {
             response.setContentType("text/plain");
@@ -1062,6 +1067,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 		spreadsheet.setHeader("Nome Coorientador");
 		spreadsheet.setHeader("Percentagem Créditos Orientador");
 		spreadsheet.setHeader("Percentagem Créditos Coorientador");
+		spreadsheet.setHeader("Nome do Acompanhante");
+		spreadsheet.setHeader("Email do Acompanhante");
+		spreadsheet.setHeader("Telefone do Acompanhante");
+		spreadsheet.setHeader("Nome da empresa");
+		spreadsheet.setHeader("Morada da empresa");
 		spreadsheet.setHeader("Enquadramento");
 		spreadsheet.setHeader("Objectivos");
 		spreadsheet.setHeader("Descrição");
@@ -1105,8 +1115,25 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 				row.setCell("");
 				row.setCell("");				
 			}
-			row.setCell(proposal.getOrientatorsCreditsPercentage().toString());
-			row.setCell(proposal.getCoorientatorsCreditsPercentage().toString());
+			if (proposal.getOrientatorsCreditsPercentage() != null) {
+				row.setCell(proposal.getOrientatorsCreditsPercentage().toString());
+			} else {
+				row.setCell("");
+			}
+			if (proposal.getCoorientatorsCreditsPercentage() != null) {
+				row.setCell(proposal.getCoorientatorsCreditsPercentage().toString());
+			} else {
+				row.setCell("");
+			}
+			row.setCell(proposal.getCompanionName());
+			row.setCell(proposal.getCompanionMail());
+			if (proposal.getCompanionPhone() != null) {
+				row.setCell(proposal.getCompanionPhone().toString());
+			} else {
+				row.setCell("");
+			}
+			row.setCell(proposal.getCompanyName());
+			row.setCell(proposal.getCompanyAdress());
 			row.setCell(proposal.getFraming());
 			row.setCell(proposal.getObjectives());
 			row.setCell(proposal.getDescription());
@@ -1124,8 +1151,16 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 				branches.append(branch.getName());
 			}
 			row.setCell(branches.toString());
-			row.setCell(proposal.getMinimumNumberOfGroupElements().toString());
-			row.setCell(proposal.getMaximumNumberOfGroupElements().toString());
+			if (proposal.getMinimumNumberOfGroupElements() != null) {
+				row.setCell(proposal.getMinimumNumberOfGroupElements().toString());
+			} else {
+				row.setCell("");
+			}
+			if (proposal.getMaximumNumberOfGroupElements() != null) {
+				row.setCell(proposal.getMaximumNumberOfGroupElements().toString());
+			} else {
+				row.setCell("");
+			}
 			if (proposal.getDegreeType() == null) {
 				row.setCell(applicationResources.getMessage("label.both"));
 			} else {

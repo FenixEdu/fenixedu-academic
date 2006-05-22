@@ -43,10 +43,11 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
 
         Student student = Student.readByUsername(userView.getUtilizador());
 
-        int numberOfCompletedCourses = student
-                .countCompletedCoursesForActiveUndergraduateCurricularPlan();
-
+        int numberOfCompletedCourses = student.countCompletedCoursesForActiveUndergraduateCurricularPlan();
         Integer numberOfNecessaryCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
+        if (numberOfNecessaryCompletedCourses == null) {
+        	throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();
+        }
         if (numberOfCompletedCourses < numberOfNecessaryCompletedCourses.intValue()) {
             throw new InsufficientCompletedCoursesException(numberOfNecessaryCompletedCourses.toString());
         }
@@ -121,6 +122,30 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
         }
 
         public InsufficientCompletedCoursesException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+    }
+
+    public class NumberOfNecessaryCompletedCoursesNotSpecifiedException extends FenixServiceException {
+
+        public NumberOfNecessaryCompletedCoursesNotSpecifiedException() {
+            super();
+        }
+
+        public NumberOfNecessaryCompletedCoursesNotSpecifiedException(int errorType) {
+            super(errorType);
+        }
+
+        public NumberOfNecessaryCompletedCoursesNotSpecifiedException(String s) {
+            super(s);
+        }
+
+        public NumberOfNecessaryCompletedCoursesNotSpecifiedException(Throwable cause) {
+            super(cause);
+        }
+
+        public NumberOfNecessaryCompletedCoursesNotSpecifiedException(String message, Throwable cause) {
             super(message, cause);
         }
 
