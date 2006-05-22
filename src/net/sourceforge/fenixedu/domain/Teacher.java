@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -53,6 +54,25 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
 public class Teacher extends Teacher_Base {
+
+    public static final Comparator TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER = new Comparator<Teacher>() {
+
+        public int compare(Teacher teacher1, Teacher teacher2) {
+            final int teacherNumberCompare = teacher1.getTeacherNumber().compareTo(teacher2.getTeacherNumber());
+            
+            if (teacher1.getCategory() == null && teacher2.getCategory() == null) {
+                return teacherNumberCompare;
+            } else if (teacher1.getCategory() == null ) {
+                return 1;
+            } else if (teacher2.getCategory() == null) {
+                return -1;
+            } else {
+                final int categoryCompare = teacher1.getCategory().getShortName().compareTo(teacher2.getCategory().getShortName());
+                return categoryCompare == 0 ? teacherNumberCompare : categoryCompare;
+            }
+        }
+        
+    };
 
     public Teacher() {
         super();
