@@ -5,12 +5,10 @@
 
 <f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
 
- 	<h:outputText value="<ul class='treemenu'><li>" escape="false"/>
-		<h:outputLink rendered="#{empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" value="">
-			<h:outputText value="<strong>#{CompetenceCourseManagement.selectedDepartmentUnit.department.acronym}</strong>" escape="false"/>
-		</h:outputLink>
+ 	<h:outputText value="<ul class='treemenu'>" escape="false"/>
+		<h:outputText rendered="#{empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" value="<li><strong>#{CompetenceCourseManagement.selectedDepartmentUnit.department.acronym}</strong>" escape="false"/>
 		<h:outputLink rendered="#{!empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" value="#{CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" target="_blank">
-			<h:outputText value="<strong>#{CompetenceCourseManagement.selectedDepartmentUnit.department.acronym}</strong>" escape="false"/>
+			<h:outputText value="<li><strong>#{CompetenceCourseManagement.selectedDepartmentUnit.department.acronym}</strong>" escape="false"/>
 		</h:outputLink>
  	<h:outputText value="</li><li>" escape="false"/>
 		<h:outputLink value="../department/showDepartmentTeachers.faces">
