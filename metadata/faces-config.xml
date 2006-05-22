@@ -268,6 +268,12 @@
 	</managed-bean>
 
 	<managed-bean>
+		<managed-bean-name>DepartmentManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.publico.DepartmentManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
 		<managed-bean-name>studentCalendar</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.student.StudentCalendarBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
