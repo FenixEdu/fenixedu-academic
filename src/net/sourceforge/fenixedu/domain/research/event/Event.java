@@ -30,9 +30,24 @@ public class Event extends Event_Base {
 		setEventType(type);
 	}
 
+    /**
+     * This method is responsible for deleting the object and all its references, particularly
+     * EventParticipations and ProjectEventAssociations
+     */
     public void delete(){
         for (;!this.getEventParticipations().isEmpty(); getEventParticipations().get(0).delete());
+        for (;!this.getAssociatedProjects().isEmpty(); getAssociatedProjects().get(0).delete());
         removeRootDomainObject();
         deleteDomainObject();
+    }
+    
+    /**
+     * This method is responsible for checking if the object still has active connections
+     *if not, the object is deleted.
+     */
+    public void sweep(){
+        if (!(this.hasAnyAssociatedProjects() || this.hasAnyEventParticipations())){
+            delete();
+        }
     }
 }

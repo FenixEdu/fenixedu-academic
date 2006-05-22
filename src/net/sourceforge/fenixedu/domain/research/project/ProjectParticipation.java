@@ -20,8 +20,13 @@ public class ProjectParticipation extends ProjectParticipation_Base {
     
     
     public void delete(){
-        this.removeParty();
+        final Project project = this.getProject();
+        
         this.removeProject();
+        project.sweep();
+        
+        this.removeParty();
+        
         this.removeRootDomainObject();
         deleteDomainObject();
     }

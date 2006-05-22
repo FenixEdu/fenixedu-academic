@@ -15,9 +15,20 @@ public class Project extends Project_Base {
     }
     
     public void delete(){
-        for (;!this.getProjectParticipations().isEmpty(); getProjectParticipations().get(0).delete());
+        for (;!this.hasAnyProjectParticipations(); getProjectParticipations().get(0).delete());
+        for (;!this.hasAnyAssociatedEvents(); getAssociatedEvents().get(0).delete());
         removeRootDomainObject();
         deleteDomainObject();
+    }
+    
+    /**
+     * This method is responsible for checking if the object still has active connections
+     *if not, the object is deleted.
+     */
+    public void sweep(){
+        if (!(this.hasAnyAssociatedEvents() || this.hasAnyProjectParticipations())){
+            delete();
+        }
     }
     
     public Period getPeriod () {
