@@ -29,6 +29,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     //***************************************
     //                   DATA
     //***************************************
+    
     public ActionForward prepareEditData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -160,22 +161,28 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final IUserView userView = getUserView(request);
-        ProjectEventAssociationSimpleCreationBean simpleBean = (ProjectEventAssociationSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
         
-        if(simpleBean.getEvent() != null) {
-            // Criar a associação efectivamente quando já existe o evento escolhido
-            Integer oid = Integer.parseInt(request.getParameter("projectId"));
-            ServiceUtils.executeService(userView, "CreateProjectEventAssociation", new Object[] {simpleBean, oid });
-            return prepareEditEventAssociations(mapping, form, request, response);
+        if(RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectEventAssociationSimpleCreationBean){
+            ProjectEventAssociationSimpleCreationBean simpleBean = (ProjectEventAssociationSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+            if(simpleBean.getEvent() != null) {
+                // Criar a associação efectivamente quando já existe o evento escolhido
+                Integer oid = Integer.parseInt(request.getParameter("projectId"));
+                ServiceUtils.executeService(userView, "CreateProjectEventAssociation", new Object[] {simpleBean, oid });
+                return prepareEditEventAssociations(mapping, form, request, response);
+            }
+            else {
+                //Permitir a criação de um novo evento on-the-fly
+                ProjectEventAssociationFullCreationBean fullBean = new ProjectEventAssociationFullCreationBean();
+                fullBean.setEventName(new MultiLanguageString(simpleBean.getEventName()));
+                fullBean.setRole(simpleBean.getRole());
+                request.setAttribute("fullBean", fullBean);
+                return prepareEditEventAssociationsSimple(mapping, form, request, response);
+            }
         }
         else {
-            //Permitir a criação de um novo evento on-the-fly
-            ProjectEventAssociationFullCreationBean fullBean = new ProjectEventAssociationFullCreationBean();
-            fullBean.setEventName(new MultiLanguageString(simpleBean.getEventName()));
-            fullBean.setRole(simpleBean.getRole());
-            request.setAttribute("fullBean", fullBean);
+            request.setAttribute("fullBean", (ProjectEventAssociationFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject());
             return prepareEditEventAssociationsSimple(mapping, form, request, response);
-        }
+        }        
     }
     
     public ActionForward createEventAssociationFull(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -190,7 +197,17 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         return prepareEditEventAssociations(mapping, form, request, response);
     }       
     
-     
+    public ActionForward removeEventAssociation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        
+        final IUserView userView = getUserView(request);
+        Integer associationId = Integer.parseInt(request.getParameter("associationId"));
+        
+        ServiceUtils.executeService(userView, "DeleteProjectEventAssociation", new Object[] { associationId });
+        
+        return prepareEditEventAssociations(mapping, form, request, response);
+    }       
+
     //***************************************
     //                  UNITS
     //***************************************

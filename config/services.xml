@@ -9597,6 +9597,15 @@
 		</filterChains>
 	</service> 
 	<service>
+		<name>DeleteProjectEventAssociation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.project.DeleteProjectEventAssociation</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service> 
+	<service>
 		<name>CreateProjectEventAssociation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.project.CreateProjectEventAssociation</implementationClass>
 		<description />
@@ -9771,6 +9780,17 @@
         <filterChains>
         </filterChains>
     </service>
+	<service>
+        <name>SearchObjectsByMultiLanguageString</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchObjectsByMultiLanguageString</implementationClass>
+        <description>
+            Generic service to search all objects of a certain type that have a string property
+            that matches some user input.
+        </description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>    
 	<service>
 		<name>DeletePatent</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeletePatent</implementationClass>

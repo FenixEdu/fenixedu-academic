@@ -1,15 +1,16 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
+import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.ProjectParticipationType;
 
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-public class ProjectParticipationType2SqlProjectParticipationTypeConversion implements FieldConversion{
+public class ProjectEventAssociationType2SqlProjectEventAssociationTypeConversion implements FieldConversion{
 
     public Object javaToSql(Object source) throws ConversionException {
         if (source instanceof ProjectParticipationType) {
-            ProjectParticipationType s = (ProjectParticipationType) source;
+            ProjectEventAssociationRole s = (ProjectEventAssociationRole) source;
             return s.name();
         }
         return source;       
@@ -18,7 +19,7 @@ public class ProjectParticipationType2SqlProjectParticipationTypeConversion impl
     public Object sqlToJava(Object source) throws ConversionException {
         if (source instanceof String) {            
             String src = (String) source;            
-            return ProjectParticipationType.valueOf(src);
+            return ProjectEventAssociationRole.valueOf(src);
         }
         return source;        
     }

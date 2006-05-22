@@ -10,34 +10,47 @@
 	<bean:define id="projectName" name="selectedProject" property="title.content" />
 
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.superUseCaseTitle"/></em>
-		
+
+	<%-- TITLE --%>		
 	<h2/>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.useCaseTitle"/> 
-		<%= projectName %>
+	  	<html:link page="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>">
+			<%= projectName %>
+		</html:link>
 	</h2>
+	
+	<%-- LIST OF EXISTING PARTICIPATIONS --%>	
 	<logic:notEmpty name="participations">
-		<fr:edit id="participantsTable" name="participations" layout="tabular-editable" schema="projectParticipants.edit-role">
+		<fr:edit id="participantsTable" name="participations" layout="tabular-editable" schema="projectParticipants.edit-role"
+			action="<%= "/projects/editProject.do?method=prepareEditParticipants&projectId=" + projectId %>">
 			<fr:layout>
 				<fr:property name="link(remove)" value="<%= "/projects/editProject.do?method=removeParticipant&projectId=" + projectId %>"/>
 				<fr:property name="param(remove)" value="idInternal/participantId"/>
-				<fr:property name="key(remove)" value="researcher.project.projectsManagement.role.remove"/>
+				<fr:property name="key(remove)" value="researcher.project.editProject.participations.remove"/>
 				<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 			</fr:layout>
+			<fr:destination name="cancel" path="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>"/>	
 		</fr:edit>
 	</logic:notEmpty>
 	<br/>
 	
+	<%-- CREATION OF A NEW PARTICIPATION --%>
 	<h3/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewParticipant"/> </h3>
 	<logic:present name="simpleBean">
 		<fr:edit id="simpleBean" name="simpleBean" action="<%="/projects/editProject.do?method=createParticipantSimple&projectId="+projectId%>" schema="projectParticipation.simpleCreation">
 			<fr:destination name="invalid" path="<%="/projects/editProject.do?method=prepareEditParticipants&projectId="+projectId%>"/>	
+			<fr:destination name="cancel" path="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>"/>	
 		</fr:edit>
 	</logic:present>
 	<logic:present name="fullBean">
 		<fr:edit id="fullBean" name="fullBean" action="<%="/projects/editProject.do?method=createParticipantFull&projectId="+projectId%>" schema="projectParticipation.fullCreation">
 			<fr:destination name="invalid" path="<%="/projects/editProject.do?method=createParticipantSimple&projectId="+projectId%>"/>
+			<fr:destination name="cancel" path="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>"/>	
 		</fr:edit>
 	</logic:present>
   	<br/>
+	<html:link page="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>">
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.goBackToView" />
+	</html:link>
 </logic:present>
 <br/>

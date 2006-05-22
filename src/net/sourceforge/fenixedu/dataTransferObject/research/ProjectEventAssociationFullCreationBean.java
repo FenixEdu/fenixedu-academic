@@ -12,6 +12,10 @@ public class ProjectEventAssociationFullCreationBean implements Serializable {
     private MultiLanguageString eventName;
     private String eventType;
 
+    public ProjectEventAssociationFullCreationBean() {
+        eventType = EventType.getDefaultType();
+    }
+    
     public ProjectEventAssociationRole getRole() {
         return ProjectEventAssociationRole.valueOf(role);
     }
