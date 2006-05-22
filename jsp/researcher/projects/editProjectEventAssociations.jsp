@@ -7,43 +7,37 @@
 <logic:present role="RESEARCHER">		
 
 	<bean:define id="projectId" name="selectedProject" property="idInternal" />
+	<bean:define id="projectName" name="selectedProject" property="title.content" />
 
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.superUseCaseTitle"/></em>
 		
-	<h2/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.events.useCaseTitle"/> </h2>
-  	
-	<br/>
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.editEventsAssociationsExplanation"/>	
-	<br/>
-	
+	<h2/>
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.events.useCaseTitle"/> 
+		<%= projectName %>
+	</h2>  	
 	<logic:notEmpty name="eventAssociations">
-	<fr:edit id="associationsTable" name="eventAssociations" layout="tabular-editable" schema="projectEventAssociations.edit-role">
-		<fr:layout>
-			<fr:property name="link(remove)" value="<%= "/projects/editProject.do?method=removeEventAssociation&projectId=" + projectId %>"/>
-			<fr:property name="param(remove)" value="idInternal/oid"/>
-			<fr:property name="key(remove)" value="researcher.project.editProject.events.remove"/>
-			<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
-		</fr:layout>	
-	</fr:edit>
+		<fr:edit id="associationsTable" name="eventAssociations" layout="tabular-editable" schema="projectEventAssociations.edit-role">
+			<fr:layout>
+				<fr:property name="link(remove)" value="<%= "/projects/editProject.do?method=removeEventAssociation&projectId=" + projectId %>"/>
+				<fr:property name="param(remove)" value="idInternal/oid"/>
+				<fr:property name="key(remove)" value="researcher.project.editProject.events.remove"/>
+				<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
+			</fr:layout>	
+		</fr:edit>
 	</logic:notEmpty>
+	<br/>
 
-
+	<h3/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.events.addNewEventAssociation"/> </h3>
 	<logic:present name="simpleBean">
 		<fr:edit id="simpleBean" name="simpleBean" action="<%="/projects/editProject.do?method=createEventAssociationSimple&projectId="+projectId%>" schema="projectEventAssociation.simpleCreation">
 			<fr:destination name="invalid" path="<%="/projects/editProject.do?method=prepareEditEventAssociations&projectId="+projectId%>"/>			
 		</fr:edit>
 	</logic:present>
-	
 	<logic:present name="fullBean">
 		<fr:edit id="fullBean" name="fullBean" action="<%="/projects/editProject.do?method=createEventAssociationFull&projectId="+projectId%>" schema="projectEventAssociation.fullCreation">
 			<fr:destination name="invalid" path="<%="/projects/editProject.do?method=createEventAssociationSimple&projectId="+projectId%>"/>		
 		</fr:edit>
 	</logic:present>
-	
-  	
   	<br/>
-
-	
 </logic:present>
-		
 <br/>
