@@ -46,13 +46,15 @@ public class ComponentLifeCycle {
             this.formComponents = new ArrayList<HtmlFormComponent>();
             this.controllers = new ArrayList<HtmlController>();
             
-            collect(component);
-            
-            InputContext context = (InputContext) viewState.getContext();
-            collect(context.getForm().getSubmitButton());
-            collect(context.getForm().getCancelButton());
-
-            addHiddenComponents(viewState);
+            if (component != null) {
+                collect(component);
+                
+                InputContext context = (InputContext) viewState.getContext();
+                collect(context.getForm().getSubmitButton());
+                collect(context.getForm().getCancelButton());
+        
+                addHiddenComponents(viewState);
+            }
         }
 
         private void addHiddenComponents(IViewState viewState) {
@@ -164,7 +166,7 @@ public class ComponentLifeCycle {
                 component = viewState.getComponent();
             }
     
-            if (! viewState.skipUpdate()) { // EXPERIMENTAL
+            if (viewState.isVisible() && !viewState.skipUpdate()) { 
                 if (! viewState.skipValidation()) {
                     viewState.setValid(validateComponent(viewState, component, viewState.getMetaObject()));
                 }
@@ -181,7 +183,7 @@ public class ComponentLifeCycle {
 
         ViewDestination destination;
         try {
-            if (allValid && !anySkip) {
+            if (allValid && !anySkip) { 
                 updateDomain(viewStates);
             }
         } 
@@ -197,6 +199,13 @@ public class ComponentLifeCycle {
         ViewDestination destination = null;
         
         for (IViewState viewState : viewStates) {
+            // Invisible viewstates have no influence in the destination
+            // because they were not validated and no controller was run
+            // for them
+            if (! viewState.isVisible()) {
+                break;
+            }
+            
             if (viewState.skipUpdate()) {
                 destination = viewState.getCurrentDestination();
     
@@ -333,6 +342,10 @@ public class ComponentLifeCycle {
         MetaObject metaObject = viewState.getMetaObject();
         metaObject.setUser(viewState.getUser());
 
+        if (! viewState.isVisible()) {
+            return new HtmlText();
+        }
+        
         if (metaObject instanceof MetaSlot && viewState.getHiddenSlots().size() > 0) {
             viewState.setComponent(new HtmlText());
         }
@@ -370,6 +383,7 @@ public class ComponentLifeCycle {
         List<MetaObject> metaObjectsToCommit = new ArrayList<MetaObject>();
         MultipleMetaObject metaObjectCollection = MetaObjectFactory.createObjectCollection();
         
+        // TODO: check if should update viewstates that are not visible
         for (IViewState state : viewStates) {
             MetaObject metaObject = state.getMetaObject();
          

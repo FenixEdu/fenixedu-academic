@@ -64,6 +64,8 @@ public class ViewState implements IViewState {
     
     // Lifecycle properties
     
+    private boolean visible;
+    
     private boolean valid;
 
     private boolean skipUpdate;
@@ -110,6 +112,14 @@ public class ViewState implements IViewState {
 
     public void setComponent(HtmlComponent component) {
         this.component = component;
+    }
+
+    public boolean isVisible() {
+        return this.visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public void setValid(boolean isValid) {

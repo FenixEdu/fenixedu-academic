@@ -25,6 +25,10 @@ public interface IViewState extends Serializable {
 
     public void setComponent(HtmlComponent component);
 
+    public boolean isVisible();
+    
+    public void setVisible(boolean isVisible);
+    
     public void setValid(boolean isValid);
 
     public boolean skipUpdate();

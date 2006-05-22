@@ -54,7 +54,14 @@ public abstract class HtmlValidator extends HtmlComponent {
 
     public String getErrorMessage() {
         if (isKey()) {
-            return getResourceMessage(getMessage());
+            String errorMessage = getResourceMessage(getMessage());
+            
+            if (errorMessage != null) {
+                return errorMessage;
+            }
+            else {
+                return getMessage();
+            }
         }
         else {
             return getMessage();

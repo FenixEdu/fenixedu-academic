@@ -336,6 +336,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
         if (isPostBack()) {
             viewState = getViewState();
+            viewState.setVisible(isVisible());
 
             MetaObject metaObject = viewState.getMetaObject();
             
@@ -348,6 +349,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
         else {
             viewState = new ViewState(getId());
+            viewState.setVisible(isVisible());
 
             viewState.setLayout(getLayout());
             viewState.setProperties(getRenderProperties());

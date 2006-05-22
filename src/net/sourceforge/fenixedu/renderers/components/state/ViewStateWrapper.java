@@ -69,6 +69,14 @@ public class ViewStateWrapper implements IViewState {
         viewState.setComponent(component);
     }
 
+    public boolean isVisible() {
+        return this.viewState.isVisible();
+    }
+
+    public void setVisible(boolean isVisible) {
+        this.viewState.setVisible(isVisible);
+    }
+
     public void setValid(boolean isValid) {
         viewState.setValid(isValid);
     }
