@@ -23,7 +23,7 @@
 	
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
-	<h:outputText value="<br/><h1>#{publicDepartmentBundle['department.competence.courses']}</h1>" escape="false"/>
+	<h:outputText value="<br/><h1>#{publicDepartmentBundle['department.competence.courses']} #{publicDepartmentBundle['from.masculine']} #{CompetenceCourseManagement.selectedDepartmentUnit.department.acronym}</h1>" escape="false"/>
 
 	<h:form>
 
