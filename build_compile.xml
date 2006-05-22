@@ -664,6 +664,12 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<arg value="-d"/>
 			<arg value="${dml.definition.file.completed}"/>
 		</java>
+		<copy encoding="${encoding}" todir="${build.home.webinf.classes}">
+			<fileset dir="${src}" >
+				<include name="**/*.*"/>
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain,compile-renderers, write-all-properties, generate, base-compile">
