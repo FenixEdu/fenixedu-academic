@@ -58,7 +58,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 	        request.setAttribute("infoGroup", infoGroup);
 	
 	        String idInternal = (String) dynaActionForm.get("idInternal");
-	        if (idInternal == null || idInternal.equals("")) {
+	        if ((idInternal == null || idInternal.equals("")) && request.getAttribute("CalledFromSelect") == null) {
 	            selectExecutionDegree(mapping, form, request, response);
 	        }
         }
@@ -84,6 +84,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
             }
         }
 
+        request.setAttribute("CalledFromSelect", Boolean.TRUE);
         return prepareCandidacy(mapping, form, request, response);
     }
 
