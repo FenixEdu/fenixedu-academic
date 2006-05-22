@@ -55,7 +55,7 @@ public class RegisterCandidate extends Service {
         checkCandidateSituation(masterDegreeCandidate.getActiveCandidateSituation());
 
         // remove master degree candidate role
-        person.getPersonRoles().remove(person.getPersonRole(RoleType.MASTER_DEGREE_CANDIDATE));
+        person.removeRoleByType(RoleType.MASTER_DEGREE_CANDIDATE);
 
         // check if old student number is free
         checkOldStudentNumber(studentNumber, person);
