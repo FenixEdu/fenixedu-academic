@@ -169,7 +169,7 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         if (teacher == null) {
             addMessage(request, actionMessages, "error.noTeacher", String.valueOf(teacherNumber));
         } else if (!teacher.isResponsibleOrCoordinatorFor(degreeCurricularPlan, curricularCourse, executionPeriod)) {
-            addMessage(request, actionMessages, "error.teacherNotResponsibleOrNorCoordinator");
+            addMessage(request, actionMessages, "error.teacherNotResponsibleOrNotCoordinator");
         }
     }
 
