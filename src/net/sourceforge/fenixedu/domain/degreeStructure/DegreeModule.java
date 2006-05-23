@@ -45,6 +45,24 @@ public abstract class DegreeModule extends DegreeModule_Base {
         return result.toString();
     }
     
+    /**
+     * English version of the previous method ==> TODO: MultiLanguageString this!
+     * 
+     */
+    public String getOneFullNameEn() {
+        StringBuilder result = new StringBuilder();
+        
+        DegreeModule iter = this; 
+        result.append(iter.getNameEn());
+        iter = iter.getParentContexts().get(0).getParentCourseGroup();
+        
+        for (;iter.hasAnyParentContexts(); iter = iter.getParentContexts().get(0).getParentCourseGroup()) {
+            result.insert(0, iter.getNameEn() + " > ");
+        }
+        
+        return result.toString();
+    }
+    
     public void delete() {
         for (;!getParentContexts().isEmpty(); getParentContexts().get(0).delete());
         for (;!getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
