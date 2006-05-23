@@ -26,6 +26,10 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
     protected Project project;
     protected Integer projectID;
     protected List<Project> associatedProjects;
+    
+    public ProjectManagementBackingBean() {    
+        super();
+    }
 
     private String getBeginString() {
         return getBeginProjectDate() + " " + getBeginProjectHour();

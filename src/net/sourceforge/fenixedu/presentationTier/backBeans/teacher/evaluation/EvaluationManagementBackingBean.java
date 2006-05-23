@@ -140,7 +140,12 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     
     protected List<Attends> notSubmitedMarks;
     
-    
+    public EvaluationManagementBackingBean() {
+        /*
+         * HACK: it's necessary set the executionCourseID for struts menu
+         */
+        getAndHoldIntegerParameter("executionCourseID");
+    }
     
 	public Integer getExecutionCourseID() {
         if (this.executionCourseID == null) {
@@ -175,6 +180,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public void setExecutionCourseIdHidden(HtmlInputHidden executionCourseIdHidden) {
         if (executionCourseIdHidden != null) {
             this.executionCourseID = Integer.valueOf(executionCourseIdHidden.getValue().toString());
+            /*
+             * HACK: it's necessary set the executionCourseID for struts menu
+             */
+            setRequestAttribute("executionCourseID", executionCourseIdHidden.getValue());
         }
         this.executionCourseIdHidden = executionCourseIdHidden;
     }
