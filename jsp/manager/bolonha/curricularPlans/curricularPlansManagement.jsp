@@ -6,9 +6,10 @@
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
+	<f:loadBundle basename="resources/ManagerResources" var="managerBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="<h2>#{bolonhaBundle['curricularPlans']}</h2>" escape="false"/>
+	<h:outputText value="<h2>#{managerBundle['label.manager.bolonhaCurricularPlansManagement']}</h2>" escape="false"/>
  
 	<h:outputText value="<i>#{bolonhaBundle['no.curricularPlans']}</i>" escape="false" rendered="#{empty DegreeManagement.filteredBolonhaDegrees}"/>
 

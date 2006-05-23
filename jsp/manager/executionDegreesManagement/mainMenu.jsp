@@ -1,23 +1,30 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<div style="font-size: 1.20em;">
-	
-	<p><strong>&raquo; 
+<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
+
+<center>
+	<img alt=""  src="<%= request.getContextPath() %>/images/logo-fenix.gif" width="100" height="100"/>
+</center>
+
+<ul>
+
+	<li>
 		<html:link module="/manager" page="/index.do">
 			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.mainPage" />
 		</html:link>
-	</strong></p>
+	</li>
 	
-	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement"/></h3>
-	<p><strong>&raquo; 
-  	<html:link module="/manager" page="/degree/chooseDegreeType.faces">
-  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.createExecutionDegrees"/>
-  	</html:link>
-	</strong></p>
+	<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement"/></li>
+	<li>
+	  	<html:link module="/manager" page="/degree/chooseDegreeType.faces">
+	  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.createExecutionDegrees"/>
+	  	</html:link>
+	</li>
 	
-	<p><strong>&raquo; 
-  	<html:link module="/manager" page="/executionDegreesManagement.do?method=readDegreeCurricularPlans">
-  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.editExecutionDegrees"/>
-  	</html:link>
-	</strong></p>
-</div>
+	<li>
+	  	<html:link module="/manager" page="/executionDegreesManagement.do?method=readDegreeCurricularPlans">
+	  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.editExecutionDegrees"/>
+	  	</html:link>
+	</li>
+
+</ul>

@@ -8,6 +8,13 @@
 
 <ul>
 
+<br/>
+<li> 
+	<html:link module="/manager" page="/index.do">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.mainPage" />
+	</html:link>
+</li>
+
 <li class="navheader">Mensagens e Avisos</li>
 <li> 
 	<html:link module="/manager" page="/advisoriesManagement/listCurrentAdvisories.faces">
@@ -33,15 +40,20 @@
 </li>
 
 <br />
-<li class="navheader">Gestão de Execuções</li>
+<li class="navheader">Gestão da Estrutura de Ensino</li>
 <li> 
 		<html:link module="/manager" module="/manager" page="/readDegrees.do">
 			<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.readDegrees" />
 		</html:link>
 </li>
 <li> 
+	<html:link module="/manager" module="/manager" page="/competenceCourseManagement.do?method=prepare">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.competence.course.management" />
+	</html:link>
+</li>
+<li> 
 	  	<html:link module="/manager" module="/manager" page="/curricularPlans/chooseCurricularPlan.faces">
-	  		Consulta de Currículo
+		  	<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.oldCurricularPlans" />
 	  	</html:link>  
 </li>
 <li> 
@@ -50,14 +62,16 @@
 	  	</html:link>  
 </li>
 
+<br />
+<li class="navheader">Gestão de Execuções</li>
 <li> 
-	<html:link module="/manager" page="/executionDegreesManagementMainPage.do">
-		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement" />
+	<html:link module="/manager" module="/manager" page="/manageExecutionPeriods.do?method=prepare">
+		Periodos Execução
 	</html:link>
 </li>
 <li> 
-	<html:link module="/manager" module="/manager" page="/manageExecutionPeriods.do?method=prepare">
-		Gestão de Periodos Execução
+	<html:link module="/manager" page="/executionDegreesManagementMainPage.do">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement" />
 	</html:link>
 </li>
 <li> 
@@ -65,12 +79,6 @@
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement" />
 	</html:link>
 </li>
-<li> 
-	<html:link module="/manager" module="/manager" page="/competenceCourseManagement.do?method=prepare">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.competence.course.management" />
-	</html:link>
-</li>
-
 <li> 
 	<html:link module="/manager" module="/manager" page="/manageEnrolementPeriods.do?method=prepare">
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="title.manage.enrolement.period" />

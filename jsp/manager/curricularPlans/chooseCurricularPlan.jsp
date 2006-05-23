@@ -4,7 +4,10 @@
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/DegreeAdministrativeOfficeResources" var="bundle"/>
+	<f:loadBundle basename="resources/ManagerResources" var="managerBundle"/>
 
+	<h:outputText value="<h2>#{managerBundle['label.manager.oldCurricularPlans']}</h2>" escape="false"/>
+	<h:outputText value="<br/>" escape="false"/>
 	<h:form>
 
 		<h:outputText value="#{bundle['label.choose.year.execution']}" />

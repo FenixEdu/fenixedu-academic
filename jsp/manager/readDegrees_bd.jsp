@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degrees"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.readDegrees"/></h2>
 <ul style="list-style-type: square;">
 <li><html:link module="/manager" page="/insertDegree.do?method=prepareInsert"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.degree"/></html:link></li>
 </ul>
