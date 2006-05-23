@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.apache.commons.beanutils.BeanComparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Contract;
@@ -24,6 +24,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class Unit extends Unit_Base {
 
@@ -202,23 +204,27 @@ public class Unit extends Unit_Base {
     }
 
     public List<Unit> getScientificAreaUnits() {
-        List<Unit> result = new ArrayList<Unit>();
+        final SortedSet<Unit> result = new TreeSet<Unit>(Unit.UNIT_COMPARATOR_BY_NAME);
+
         for (Unit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.SCIENTIFIC_AREA)) {
                 result.add(unit);
             }
         }
-        return result;
+        
+        return new ArrayList<Unit>(result);
     }
 
     public List<Unit> getCompetenceCourseGroupUnits() {
-        List<Unit> result = new ArrayList<Unit>();
+        final SortedSet<Unit> result = new TreeSet<Unit>(Unit.UNIT_COMPARATOR_BY_NAME);
+        
         for (Unit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.COMPETENCE_COURSE_GROUP)) {
                 result.add(unit);
             }
         }
-        return result;
+        
+        return new ArrayList<Unit>(result);
     }
 
     public Double getScientificAreaUnitEctsCredits() {
