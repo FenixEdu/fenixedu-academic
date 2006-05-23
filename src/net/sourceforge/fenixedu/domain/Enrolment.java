@@ -687,4 +687,13 @@ public class Enrolment extends Enrolment_Base {
 		}
     	return result.last();
     }
+
+    public Attends getAttendsByExecutionCourse(ExecutionCourse executionCourse) {
+        for (Attends attends : this.getAttendsSet()) {
+            if (attends.getDisciplinaExecucao() == executionCourse) {
+                return attends;
+            }
+        }
+        return null;
+    }
 }
