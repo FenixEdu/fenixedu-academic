@@ -56,6 +56,7 @@
 	<h:outputFormat value="<p><h2 class='greytxt'>" escape="false"/>
 	<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.name}"/>
 	<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.nameEn}"/>
+	<h:outputText rendered="#{!empty CurricularCourseManagement.curricularCourse.acronym}" value=" (#{CurricularCourseManagement.curricularCourse.acronym})"/>
 	<h:outputFormat value="</p></h2>" escape="false"/>
 
 	<!-- LATERAL NAVIGATION -->
@@ -104,8 +105,8 @@
 	<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.parentContexts}" var="context">
 		<h:outputText value="<fieldset class='lfloat mbottom1'>" escape="false"/>
 		<h:outputText value="<p><label>#{publicDegreeInfoBundle['public.group']}:</label>" escape="false"/>
-		<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{context.parentCourseGroup.name}</p>" escape="false"/>
-		<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{context.parentCourseGroup.nameEn}</p>" escape="false"/>
+		<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{context.parentCourseGroup.oneFullName}</p>" escape="false"/>
+		<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{context.parentCourseGroup.oneFullNameEn}</p>" escape="false"/>
 
 		<h:outputText value="<p><label>#{publicDegreeInfoBundle['public.curricular.period']}:</label>" escape="false"/>
 		<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
