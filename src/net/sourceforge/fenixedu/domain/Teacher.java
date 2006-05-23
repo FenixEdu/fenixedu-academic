@@ -320,6 +320,10 @@ public class Teacher extends Teacher_Base {
             }
         });
     }
+    
+    public boolean hasProfessorshipForExecutionCourse(final ExecutionCourse executionCourse) {
+        return (getProfessorshipByExecutionCourse(executionCourse) != null);
+    }
 
     public List<Professorship> getDegreeProfessorshipsByExecutionPeriod(
             final ExecutionPeriod executionPeriod) {
