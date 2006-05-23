@@ -9746,6 +9746,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
+			<chain name="MarkSheetManagementAuthorization"/>
 		</filterChains>
 	</service>	
 	<service>
@@ -9754,8 +9755,18 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
+			<chain name="MarkSheetManagementAuthorization"/>
 		</filterChains>
 	</service>		
+	<service>
+		<name>CreateMarkSheetByTeacher</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.CreateMarkSheetByTeacher</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization"/>
+		</filterChains>
+	</service>
 	<service>
         <name>SearchObjects</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchObjects</implementationClass>
