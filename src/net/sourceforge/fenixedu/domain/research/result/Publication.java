@@ -163,8 +163,7 @@ public class Publication extends Publication_Base {
         setNumber(publicationDTO.getNumber());
         setNumberPages(publicationDTO.getNumberPages());
         setObservation(publicationDTO.getObservation());
-        setOriginalLanguage(publicationDTO.getOriginalLanguage());
-        setPublicationString(publicationDTO.getPublicationString());
+        setOriginalLanguage(publicationDTO.getOriginalLanguage());        
         setPublicationType(publicationDTO.getPublicationType());
         setScope(publicationDTO.getScope());
         setSerie(publicationDTO.getSerie());

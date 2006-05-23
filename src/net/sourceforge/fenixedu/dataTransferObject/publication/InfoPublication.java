@@ -149,9 +149,7 @@ public class InfoPublication extends PublicationDTO {
             publication.setNumber(infoPublication.getNumber());
             publication.setNumberPages(infoPublication.getNumberPages());
             publication.setObservation(infoPublication.getObservation());
-            publication.setOriginalLanguage(infoPublication.getOriginalLanguage());
-            publication.setPublicationString(infoPublication.getPublicationString());
-            
+            publication.setOriginalLanguage(infoPublication.getOriginalLanguage());          
             publication.setScope(infoPublication.getScope());
             publication.setSerie(infoPublication.getSerie());
             publication.setSubType(infoPublication.getSubType());
