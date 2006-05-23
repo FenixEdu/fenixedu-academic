@@ -34,7 +34,50 @@ import org.apache.log4j.Logger;
 public class EnumInputRenderer extends InputRenderer {
 
     private static Logger logger = Logger.getLogger(EnumInputRenderer.class);
+
+    private String defaultText;
+    private String bundle;
+    private boolean key;
     
+    public String getBundle() {
+        return this.bundle;
+    }
+
+    /**
+     * The bundle used if <code>key</code> is <code>true</code>
+     * 
+     * @property
+     */
+    public void setBundle(String bundle) {
+        this.bundle = bundle;
+    }
+
+    public String getDefaultText() {
+        return this.defaultText;
+    }
+
+    /**
+     * The text or key of the default menu title.
+     * 
+     * @property
+     */
+    public void setDefaultText(String defaultText) {
+        this.defaultText = defaultText;
+    }
+
+    public boolean isKey() {
+        return this.key;
+    }
+
+    /**
+     * Indicates the the default text is a key to a resource bundle.
+     *  
+     * @property
+     */
+    public void setKey(boolean key) {
+        this.key = key;
+    }
+
     // NOTE: duplicate code with EnumRenderer
     protected String getEnumDescription(Enum enumerate) {
         String description = RenderUtils.getResourceString("ENUMERATION_RESOURCES", enumerate.toString()); 
@@ -60,7 +103,7 @@ public class EnumInputRenderer extends InputRenderer {
                 
                 HtmlMenu menu = new HtmlMenu();
                 
-                String defaultOptionTitle = RenderUtils.getResourceString("renderers.menu.default.title");
+                String defaultOptionTitle = getDefaultTitle();
                 menu.createDefaultOption(defaultOptionTitle).setSelected(enumerate == null);
                 
                 Object[] constants = type.getEnumConstants();
@@ -80,6 +123,21 @@ public class EnumInputRenderer extends InputRenderer {
                 menu.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
                 
                 return menu;
+            }
+
+            // TODO: refactor this, probably mode to HtmlMenu, duplicate id=menu.getDefaultTitle
+            private String getDefaultTitle() {
+                if (getDefaultText() == null) {
+                    return RenderUtils.getResourceString("renderers.menu.default.title");
+                }
+                else {
+                    if (isKey()) {
+                        return RenderUtils.getResourceString(getBundle(), getDefaultText());
+                    }
+                    else {
+                        return getDefaultText();
+                    }
+                }
             }
             
         };

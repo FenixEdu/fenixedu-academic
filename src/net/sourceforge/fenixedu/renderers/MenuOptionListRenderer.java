@@ -48,6 +48,10 @@ public class MenuOptionListRenderer extends InputRenderer {
     
     private String sortBy;
     
+    private String defaultText;
+    private String bundle;
+    private boolean key;
+
     public String getFormat() {
         return this.format;
     }
@@ -120,6 +124,45 @@ public class MenuOptionListRenderer extends InputRenderer {
         this.sortBy = sortBy;
     }
 
+    public String getBundle() {
+        return this.bundle;
+    }
+
+    /**
+     * The bundle used if <code>key</code> is <code>true</code>
+     * 
+     * @property
+     */
+    public void setBundle(String bundle) {
+        this.bundle = bundle;
+    }
+
+    public String getDefaultText() {
+        return this.defaultText;
+    }
+
+    /**
+     * The text or key of the default menu title.
+     * 
+     * @property
+     */
+    public void setDefaultText(String defaultText) {
+        this.defaultText = defaultText;
+    }
+
+    public boolean isKey() {
+        return this.key;
+    }
+
+    /**
+     * Indicates the the default text is a key to a resource bundle.
+     *  
+     * @property
+     */
+    public void setKey(boolean key) {
+        this.key = key;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new MenuOptionLayout();
@@ -176,7 +219,7 @@ public class MenuOptionListRenderer extends InputRenderer {
         public HtmlComponent createComponent(Object object, Class type) {
             HtmlMenu menu = new HtmlMenu();
             
-            String defaultOptionTitle = RenderUtils.getResourceString("renderers.menu.default.title");
+            String defaultOptionTitle = getDefaultTitle();
             menu.createDefaultOption(defaultOptionTitle).setSelected(object == null);
             
             RenderKit kit = RenderKit.getInstance();
@@ -215,6 +258,21 @@ public class MenuOptionListRenderer extends InputRenderer {
             
             menu.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
             return menu;
+        }
+
+        // TODO: duplicate code, id=menu.getDefaultTitle
+        private String getDefaultTitle() {
+            if (getDefaultText() == null) {
+                return RenderUtils.getResourceString("renderers.menu.default.title");
+            }
+            else {
+                if (isKey()) {
+                    return RenderUtils.getResourceString(getBundle(), getDefaultText());
+                }
+                else {
+                    return getDefaultText();
+                }
+            }
         }
 
         protected String getObjectLabel(Object object) {
