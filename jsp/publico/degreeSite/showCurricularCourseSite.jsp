@@ -67,7 +67,10 @@
 
 <br/>
 <h2 class="greytxt">
-	<bean:write name="infoCurricularCourse" property="name" />
+	<bean:write name="infoCurricularCourse" property="name"/>
+	<logic:notEmpty name="infoCurricularCourse" property="acronym">
+		&nbsp;(<bean:write name="infoCurricularCourse" property="acronym"/>)
+	</logic:notEmpty>
 </h2>
 
 <!-- EXECUTION COURSES LINK  -->
@@ -141,7 +144,7 @@
 	<logic:notEmpty name="infoCurriculum" property="generalObjectives">
 		<logic:notEqual name="infoCurriculum" property="generalObjectives" value="">
 			<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.generalObjectives" />	</h2>
-			<p><bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></p>
+			<p style='margin-left: 25px;'><bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></p>
 		</logic:notEqual>
 	</logic:notEmpty>
 </logic:present>
@@ -150,7 +153,7 @@
 <logic:notEmpty name="infoCurriculum" property="operacionalObjectives">
 	<logic:notEqual name="infoCurriculum" property="operacionalObjectives" value="">
 		<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.operacionalObjectives" /></h2>
-		<p><bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/></p>
+		<p style='margin-left: 25px;'><bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/></p>
 	</logic:notEqual>
 </logic:notEmpty> 
 </logic:present>
@@ -159,7 +162,7 @@
 <logic:notEmpty name="infoCurriculum" property="program">
 	<logic:notEqual name="infoCurriculum" property="program" value="">
 		<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.program" /></h2>	
-		<p><bean:write name="infoCurriculum" property="program" filter="false" /></p>	
+		<p style='margin-left: 25px;'><bean:write name="infoCurriculum" property="program" filter="false" /></p>	
 	</logic:notEqual>
 </logic:notEmpty>
 </logic:present>
