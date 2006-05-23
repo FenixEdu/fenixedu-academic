@@ -77,15 +77,10 @@ public class ConversationThread extends ConversationThread_Base {
         getForum().checkIfPersonCanWrite(person);
     }
 
-    public ConversationMessage createConversationMessage(Person creator, String body,
-            boolean notifyEmailSubscribers) {
+    public ConversationMessage createConversationMessage(Person creator, String body) {
         checkIfPersonCanWrite(creator);
         ConversationMessage conversationMessage = new ConversationMessage(this, creator, body);
-
-        if (notifyEmailSubscribers) {
-            getForum().notifyEmailSubscribers(conversationMessage);
-        }
-
+        
         return conversationMessage;
     }
 
