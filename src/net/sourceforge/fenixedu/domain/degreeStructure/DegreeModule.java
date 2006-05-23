@@ -21,7 +21,31 @@ public abstract class DegreeModule extends DegreeModule_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public void delete() {
+    /**
+     * We need a method to return a full name of a course group - from it's parent course group to
+     * the degree curricular plan's root course group.
+     * 
+     * Given this is impossible, for there are many routes from the root course group to one
+     * particular course group, we choose (for now...) to get one possible full name, 
+     * always visiting the first element of every list of contexts on our way to the root course group.  
+     * 
+     * @return A string with one possible full name of this course group
+     */
+    public String getOneFullName() {
+        StringBuilder result = new StringBuilder();
+        
+        DegreeModule iter = this; 
+        result.append(iter.getName());
+        iter = iter.getParentContexts().get(0).getParentCourseGroup();
+        
+        for (;iter.hasAnyParentContexts(); iter = iter.getParentContexts().get(0).getParentCourseGroup()) {
+            result.insert(0, iter.getName() + " > ");
+        }
+        
+        return result.toString();
+    }
+    
+    public void delete() {
         for (;!getParentContexts().isEmpty(); getParentContexts().get(0).delete());
         for (;!getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
         for (;!getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().get(0).delete());
