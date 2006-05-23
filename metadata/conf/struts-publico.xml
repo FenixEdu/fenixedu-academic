@@ -318,6 +318,11 @@
      		<forward name="sucess" path="/executionCourseSite.jsp"/> 
    	</action>
 
+	<action path="/executionCourse" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ExecutionCourseDA">
+		<forward name="execution-course-first-page" path="execution-course-first-page"/> 
+   	</action>
+
 
 	  <!-- SALAS -->
       <action path="/prepareConsultRooms"

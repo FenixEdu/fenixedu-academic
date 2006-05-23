@@ -18,7 +18,15 @@
 	 	<put name="body" value="/commons/blank.jsp"/>
 		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
-	
+
+	<definition name="definition.public.executionCourse" page="/layout/publicExecutionCourse.jsp">
+		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
+		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+		<put name="main_navigation" value="/publico/executionCourse/mainNavigation.jsp" />
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="footer" value="/publico/degreeSite/footer.jsp" />
+	</definition>
+
 	<definition name="definition.publico.executionCourseSitePage1" 
 		controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.PublicTilesComponentController" 
 		page="/layout/istLayout.jsp" >

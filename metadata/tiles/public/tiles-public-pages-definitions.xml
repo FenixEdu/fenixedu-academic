@@ -170,5 +170,9 @@
 	</definition>
 	<definition name="not-found-homepage" extends="definition.public.homepage">
 		<put name="body" value="/publico/homepage/notFound.jsp"/>
-	</definition>	
+	</definition>
+
+	<definition name="execution-course-first-page" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/firstPage.jsp"/>
+	</definition>
 </tiles-definitions>
