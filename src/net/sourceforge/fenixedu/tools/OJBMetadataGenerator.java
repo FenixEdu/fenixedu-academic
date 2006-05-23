@@ -137,7 +137,7 @@ public class OJBMetadataGenerator {
                 fieldDescriptor.setAccess("readwrite");
 
                 try {
-                    String conversor = rbConversors.getString(slot.getType().trim());
+                    String conversor = rbConversors.getString(slot.getType()).trim();
                     fieldDescriptor.setFieldConversionClassName(conversor);
                 } catch (MissingResourceException e) {
                 }
