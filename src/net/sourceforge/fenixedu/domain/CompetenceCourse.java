@@ -1,15 +1,19 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
@@ -26,6 +30,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
 
+    public static final Comparator COMPETENCE_COURSE_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
+    
     private CompetenceCourseInformation recentCompetenceCourseInformation;
 
     protected CompetenceCourse() {
