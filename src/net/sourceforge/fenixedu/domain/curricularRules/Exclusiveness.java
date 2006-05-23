@@ -53,11 +53,11 @@ public class Exclusiveness extends Exclusiveness_Base {
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
         labelList.add(new GenericPair<Object, Boolean>("label.between", true));
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getDegreeModuleToApplyRule().getName(), false));
+        labelList.add(new GenericPair<Object, Boolean>(getDegreeModuleToApplyRule().getOneFullName(), false));
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
         labelList.add(new GenericPair<Object, Boolean>("label.and", true));
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getExclusiveDegreeModule().getName(), false));
+        labelList.add(new GenericPair<Object, Boolean>(getExclusiveDegreeModule().getOneFullName(), false));
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
         
         if (getContextCourseGroup() != null) {
