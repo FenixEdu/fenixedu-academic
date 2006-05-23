@@ -1,11 +1,17 @@
 package net.sourceforge.fenixedu.domain.research.event;
 
 public enum EventType {
-	SEMINAR,
-	CONFERENCE;
+	Seminar,
+	Conference,
+    Fair,
+    CulturalEvent,
+    Exhibition,
+    PoliticalEvent,
+    TradeFair,
+    Workshop;
 	
     public static String getDefaultType(){
-        return SEMINAR.getName();
+        return Seminar.getName();
     }
     
     public String getName() {

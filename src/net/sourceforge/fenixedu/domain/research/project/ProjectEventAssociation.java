@@ -26,8 +26,8 @@ public class ProjectEventAssociation extends ProjectEventAssociation_Base {
     }
     
     public enum ProjectEventAssociationRole {
-        Sponsor,
-        Presentation, 
+        Exhibitor,
+        Participant, 
     }
 
 }

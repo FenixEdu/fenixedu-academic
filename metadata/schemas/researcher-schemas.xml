@@ -176,6 +176,7 @@
 
 <schema name="projectEventAssociations.edit-role" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation">
 	<slot name="event.name" read-only="true"/>
+	<slot name="event.eventType" read-only="true"/>
 	<slot name="role"/>
 </schema>
 
