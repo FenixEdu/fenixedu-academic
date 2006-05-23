@@ -31,12 +31,6 @@
 			var="teacher" columnClasses="listClasses" headerClass="listClasses-header" style="width: 70%;">
 			<h:column>
 				<f:facet name="header">
-					<h:outputText value="#{bundle['label.teacher.number']}"></h:outputText>
-				</f:facet>
-				<h:outputText value="D#{teacher.teacherNumber}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">
 					<h:outputText value="#{bundle['label.teacher.name']}"></h:outputText>
 				</f:facet>
 				<h:outputLink rendered="#{!empty teacher.person.homepage && teacher.person.homepage.activated}" value="../../homepage/#{teacher.person.user.userUId}" target="_blank">
