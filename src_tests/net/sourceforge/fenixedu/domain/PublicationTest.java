@@ -181,8 +181,8 @@ public class PublicationTest extends DomainTestBase {
         existentPublication.setNumberPages(number_pages+1);
         existentPublication.setObservation(observation+1);
         existentPublication.setOriginalLanguage(language+1);
-        existentPublication.setPublicationString(publication_string+1);
-        existentPublication.setPublicationType(publication_type+1);
+        //existentPublication.setPublicationString(publication_string+1);
+        //existentPublication.setPublicationType(publication_type+1);
         existentPublication.setScope(scope+1);
         existentPublication.setSerie(serie+1);
         existentPublication.setSubType(subtype+1);
@@ -230,8 +230,8 @@ public class PublicationTest extends DomainTestBase {
         assertEquals(publication.getNumberPages(),number_pages);
         assertEquals(publication.getObservation(),observation);
         assertEquals(publication.getOriginalLanguage(),original_language);
-        assertEquals(publication.getPublicationString(),publication_string);
-        assertEquals(publication.getPublicationType(),publication_type);
+        //assertEquals(publication.getPublicationString(),publication_string);
+        //assertEquals(publication.getPublicationType(),publication_type);
         assertEquals(publication.getScope(),scope);
         assertEquals(publication.getSerie(),serie);
         assertEquals(publication.getSubType(),subtype);
