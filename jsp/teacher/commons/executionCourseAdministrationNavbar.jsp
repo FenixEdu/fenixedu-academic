@@ -85,7 +85,7 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/evaluation/evaluationIndex.faces" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/evaluationManagement.do?method=evaluationIndex" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.evaluation"/>
 			</html:link>
 		</li>
