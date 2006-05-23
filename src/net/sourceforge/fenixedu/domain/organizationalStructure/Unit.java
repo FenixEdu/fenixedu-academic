@@ -203,23 +203,12 @@ public class Unit extends Unit_Base {
         return contracts;
     }
 
+    // begin SCIENTIFIC AREA UNITS, COMPETENCE COURSE GROUP UNITS AND RELATED
     public List<Unit> getScientificAreaUnits() {
         final SortedSet<Unit> result = new TreeSet<Unit>(Unit.UNIT_COMPARATOR_BY_NAME);
 
         for (Unit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.SCIENTIFIC_AREA)) {
-                result.add(unit);
-            }
-        }
-        
-        return new ArrayList<Unit>(result);
-    }
-
-    public List<Unit> getCompetenceCourseGroupUnits() {
-        final SortedSet<Unit> result = new TreeSet<Unit>(Unit.UNIT_COMPARATOR_BY_NAME);
-        
-        for (Unit unit : this.getSubUnits()) {
-            if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.COMPETENCE_COURSE_GROUP)) {
                 result.add(unit);
             }
         }
@@ -252,6 +241,26 @@ public class Unit extends Unit_Base {
         return result;
     }
 
+    public List<Unit> getCompetenceCourseGroupUnits() {
+        final SortedSet<Unit> result = new TreeSet<Unit>(Unit.UNIT_COMPARATOR_BY_NAME);
+        
+        for (Unit unit : this.getSubUnits()) {
+            if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.COMPETENCE_COURSE_GROUP)) {
+                result.add(unit);
+            }
+        }
+        
+        return new ArrayList<Unit>(result);
+    }
+
+    @Override
+    public List<CompetenceCourse> getCompetenceCourses() {
+        final SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+        result.addAll(super.getCompetenceCourses());
+        return new ArrayList<CompetenceCourse>(result);
+    }
+    // end SCIENTIFIC AREA UNITS, COMPETENCE COURSE GROUP UNITS AND RELATED
+    
     public List<Teacher> getTeachers(Date begin, Date end) {
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = getWorkingEmployees(begin, end);
