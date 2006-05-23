@@ -25,7 +25,7 @@ public class InfoPersonWithAdvisories extends InfoPerson {
             Date currentDate = Calendar.getInstance().getTime();
             List<InfoAdvisory> list = new ArrayList<InfoAdvisory>();                       
             for (Advisory advisory : person.getAdvisories()) {
-                if(advisory.getExpires().after(currentDate)){
+                if(advisory.getExpires() == null || advisory.getExpires().after(currentDate)){
                     list.add(InfoAdvisory.newInfoFromDomain(advisory));
                 }
             }                       

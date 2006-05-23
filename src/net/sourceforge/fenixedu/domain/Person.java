@@ -388,7 +388,7 @@ public class Person extends Person_Base {
         Date currentDate = Calendar.getInstance().getTime();
         List<Advisory> result = new ArrayList<Advisory>();
         for (Advisory advisory : super.getAdvisories()) {
-            if (advisory.getExpires().after(currentDate)) {
+            if (advisory.getExpires() == null || advisory.getExpires().after(currentDate)) {
                 result.add(advisory);
             }
         }
