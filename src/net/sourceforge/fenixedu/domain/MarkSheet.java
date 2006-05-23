@@ -57,7 +57,7 @@ public class MarkSheet extends MarkSheet_Base {
     private void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod, Teacher responsibleTeacher) throws DomainException {
         if (! responsibleTeacher.isResponsibleOrCoordinatorFor(curricularCourse
                 .getDegreeCurricularPlan(), curricularCourse, executionPeriod)) {
-            throw new DomainException("error.markSheet.teacher.is.not.responsible.or.coordinator");
+            throw new DomainException("error.teacherNotResponsibleOrNotCoordinator");
         }
     }
     
@@ -76,8 +76,8 @@ public class MarkSheet extends MarkSheet_Base {
             } else {
                 throw new DomainException("error.evaluationDateNotInExamsPeriod.withEvaluationDateAndPeriodDates",
                         DateFormatUtil.format("dd/MM/yyyy", evaluationDate),
-                        DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getStart()),
-                        DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getEnd()));
+                        occupationPeriod.getStartYearMonthDay().toString("dd/MM/yyyy"),
+                        occupationPeriod.getEndYearMonthDay().toString("dd/MM/yyyy"));
             }
         }
     }
@@ -304,7 +304,7 @@ public class MarkSheet extends MarkSheet_Base {
             stringBuilder.append(getExecutionPeriod().getExecutionYear().getYear()).append(
                     getExecutionPeriod().getSemester());
             stringBuilder.append(getResponsibleTeacher().getTeacherNumber()).append(
-                    DateFormatUtil.format("yyyy/MM/dd", getEvaluationDate()));
+                    getEvaluationDateDateTime().toString("yyyy/MM/dd"));
             stringBuilder.append(getMarkSheetType().getName());
             for (EnrolmentEvaluation enrolmentEvaluation : getEnrolmentEvaluationsSortedByStudentNumber()) {
                 stringBuilder.append(enrolmentEvaluation.getCheckSum());
