@@ -8,7 +8,9 @@ public enum CompetenceCourseLevel {
     
     TECHNOLOGICAL,
     
-    SCIENTIFIC;
+    SCIENTIFIC,
+    
+    SPECIALIZATION;
     
     public String getName() {
         return name();

@@ -12,7 +12,9 @@ public enum BolonhaDegreeType {
     
     ADVANCED_STUDIES_DIPLOMA(CurricularPeriodType.YEAR,1,30),
     
-    ADVANCED_FORMATION_DIPLOMA(CurricularPeriodType.YEAR,1,30);
+    ADVANCED_FORMATION_DIPLOMA(CurricularPeriodType.YEAR,1,30),
+    
+    SPECIALIZATION_DEGREE(CurricularPeriodType.YEAR,1,30);
 
     private CurricularPeriodType curricularPeriodType;
     private int years;

@@ -154,6 +154,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         result.add(new SelectItem(BolonhaDegreeType.MASTER_DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.MASTER_DEGREE.getName())  + " (" + BolonhaDegreeType.MASTER_DEGREE.getYears() + " anos)"));
         result.add(new SelectItem(BolonhaDegreeType.ADVANCED_FORMATION_DIPLOMA.name(), enumerationBundle.getString(BolonhaDegreeType.ADVANCED_FORMATION_DIPLOMA.getName())  + " (" + BolonhaDegreeType.ADVANCED_FORMATION_DIPLOMA.getYears() + " ano)"));
         result.add(new SelectItem(BolonhaDegreeType.ADVANCED_STUDIES_DIPLOMA.name(), enumerationBundle.getString(BolonhaDegreeType.ADVANCED_STUDIES_DIPLOMA.getName())  + " (" + BolonhaDegreeType.ADVANCED_STUDIES_DIPLOMA.getYears() + " ano)"));
+        result.add(new SelectItem(BolonhaDegreeType.SPECIALIZATION_DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.SPECIALIZATION_DEGREE.getName())  + " (" + BolonhaDegreeType.SPECIALIZATION_DEGREE.getYears() + " ano)"));
         
         return result;
     }
