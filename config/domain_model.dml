@@ -968,8 +968,8 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 
 	class net.sourceforge.fenixedu.domain.Project extends net.sourceforge.fenixedu.domain.Evaluation {
 	    String name;
-	DateTime projectBeginDateTime;
-	DateTime projectEndDateTime;
+	    DateTime projectBeginDateTime;
+    	DateTime projectEndDateTime;
         String description;     
 	}
 
@@ -2698,7 +2698,6 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 	Integer year;
 	String format;
 	Integer keyType;
-	String publicationString;
 }
 
 	class net.sourceforge.fenixedu.domain.research.result.Product extends net.sourceforge.fenixedu.domain.research.result.Result {
