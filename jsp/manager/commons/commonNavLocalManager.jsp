@@ -150,7 +150,7 @@
 </li>
 
 <br />
-<li class="navheader">Gestão de Suporte</li>
+<li class="navheader">Gestão do Suporte</li>
 <li>
 	<html:link module="/manager" module="/manager" page="/manageGlossary.do?method=prepare">
 		Gestão de Glossário
@@ -164,6 +164,11 @@
 
 <br />
 <li class="navheader">Gestão de Objectos</li>
+<li> 
+	<html:link module="/manager" page="/manageCache.do?method=prepare">
+		Gestão da Cache
+	</html:link>
+</li>
 <li>
 	<html:link module="/manager"page="/domainObjectStringPropertyFormatter.do?method=prepare">
 		Formatação de Propriedades
@@ -172,12 +177,6 @@
 
 <br />
 <li class="navheader">Gestão do Sistema</li>
-<li> 
-
-	<html:link module="/manager" page="/manageCache.do?method=prepare">
-		Gestão da Cache
-	</html:link>
-</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorServices.do?method=monitor">
 		Monitorização de Serviços
@@ -198,33 +197,36 @@
 		Informações do Sistema
 	</html:link>
 </li>
-<li> 
-	<html:link module="/manager" module="/manager" page="/somePage.faces">
-		Java Server Faces Example
-	</html:link>
-</li>	
-<li> 
-	<html:link module="/manager" page="/someStrutsPage.do?method=showFirstPage">
-		Struts Example
-	</html:link>
-<li> 
-    <html:link module="/manager" page="/reloadStruts.do">
-        Reload Struts Configuration
-    </html:link>
-<li> 
+<li>
 	<html:link module="/manager" module="/manager" page="/changePasswordForward.do">
 		Kerberos Test
 	</html:link>
 </li>
 
 <br />
-<li class="navheader">Renderers</li>
+<li class="navheader">Frameworks</li>
 <li>
-    <html:link module="/manager" page="/renderers/reload.do">Reler configuração</html:link>
+	<html:link module="/manager" page="/someStrutsPage.do?method=showFirstPage">
+		Struts Example
+	</html:link>
 </li>
-<!-- FIXME: This is only temporary to show some examples of how renderers can be used -->
+<li> 
+    <html:link module="/manager" page="/reloadStruts.do">
+        Reload Struts Configuration
+    </html:link>
+</li>
+<li>&nbsp;</li> 
+<li> 
+	<html:link module="/manager" module="/manager" page="/somePage.faces">
+		Java Server Faces Example
+	</html:link>
+</li>
+<li>&nbsp;</li> 
 <li>
-    <html:link module="/manager" page="/renderers/index.do">Exemplos</html:link>
+    <html:link module="/manager" page="/renderers/index.do">Exemplos Renderers</html:link>
+</li>
+<li>
+    <html:link module="/manager" page="/renderers/reload.do">Reler Configuração Renderers</html:link>
 </li>
 
 </ul>
