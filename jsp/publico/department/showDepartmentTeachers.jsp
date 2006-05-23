@@ -40,9 +40,9 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">
-					<h:outputText value="#{bundle['label.teacher.category']}"></h:outputText>
+					<h:outputText value="#{bundle['label.teacher.category']}"/>
 				</f:facet>
-				<h:outputText value="#{teacher.category.shortName}" />
+				<h:outputText value="#{teacher.category.longName}"/>
 			</h:column>
 		</h:dataTable>
 	</h:form>
