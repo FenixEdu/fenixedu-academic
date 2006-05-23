@@ -1,6 +1,3 @@
-/*
- * Created on May 4, 2006
- */
 package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission;
 
 import java.util.ArrayList;
@@ -10,15 +7,13 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.MarkSheet;
+import net.sourceforge.fenixedu.domain.MarkSheetState;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class MarkSheetSearchResultBean {
     
     private int totalNumberOfStudents;
     private List<MarkSheet> markSheets;
-    
-    //TODO:
-    private boolean showTotalNumbers;
     
     public MarkSheetSearchResultBean() {
         markSheets = new ArrayList<MarkSheet>();  
@@ -50,6 +45,10 @@ public class MarkSheetSearchResultBean {
     public int getTotalNumberOfEnroledStudents() {
         int totalNumberOfEnroledStudents = 0;
         for (MarkSheet markSheet : getMarkSheets()) {
+            MarkSheetState markSheetState = markSheet.getMarkSheetState();
+            if (markSheetState == MarkSheetState.RECTIFICATION || markSheetState == MarkSheetState.RECTIFICATION_NOT_CONFIRMED) {
+                continue;
+            }
             totalNumberOfEnroledStudents += markSheet.getEnrolmentEvaluationsCount();            
         }
         return totalNumberOfEnroledStudents;

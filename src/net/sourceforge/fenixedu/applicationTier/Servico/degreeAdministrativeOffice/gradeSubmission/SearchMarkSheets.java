@@ -41,8 +41,7 @@ public class SearchMarkSheets extends Service {
             addToMap(result, sheet);
         }
 
-        // TODO: calculate values
-        
+        // calculate total numbers
         for (Entry<MarkSheetType, MarkSheetSearchResultBean> entry : result.entrySet()) {
             MarkSheetSearchResultBean searchResultBean = entry.getValue();
             searchResultBean.setTotalNumberOfStudents(curricularCourse.getEnrolmentsNotInAnyMarkSheet(
