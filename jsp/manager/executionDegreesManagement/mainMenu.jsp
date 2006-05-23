@@ -7,14 +7,14 @@
 </center>
 
 <ul>
-
+	<br/>
 	<li>
 		<html:link module="/manager" page="/index.do">
 			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.mainPage" />
 		</html:link>
 	</li>
 	
-	<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement"/></li>
+	<li class="navheader">Gestão de <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement"/></li>
 	<li>
 	  	<html:link module="/manager" page="/degree/chooseDegreeType.faces">
 	  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.createExecutionDegrees"/>
