@@ -41,6 +41,12 @@ margin-bottom: 0;
 			<f:param name="evaluationID" value="#{evaluationManagementBackingBean.finalEvaluation.idInternal}" />		
 			<h:outputFormat value="#{bundle['label.submit.listMarks']}" />
 		</h:commandLink>
+<%-- 
+		<h:outputText value="<b> | </b>" escape="false"/>
+		<h:outputLink value="#{evaluationManagementMenuBackingBean.contextPath}/teacher/markSheetManagement.do?method=prepareSubmitMarks&executionCourseID=#{evaluationManagementMenuBackingBean.executionCourseID}">
+			<h:outputText value="#{bundle['label.submit.listMarks']}"/>
+		</h:outputLink>
+--%>		
 		<h:outputText value="</li></ul>" escape="false"/>
 	</h:form>
 

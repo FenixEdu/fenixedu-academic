@@ -1,48 +1,23 @@
-<%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
-<%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
-<%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style> <!-- Import new CSS for this section: #navlateral  -->
 
-<h:outputText value="<ul><li class=\"navheader\">#{bundle['link.evaluation']}</li>" escape="false"/>
+<ul><li class="navheader"><bean:message key="link.evaluation"/></li></ul>
 
-<h:form>
-	<h:inputHidden binding="#{evaluationManagementMenuBackingBean.executionCourseIdHidden}" />
+<logic:present name="executionCourse">
+	<bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
+</logic:present>
+<logic:notPresent name="executionCourse">
+	<bean:define id="executionCourseID" name="executionCourseID" />
+</logic:notPresent>
 
-	<h:outputText value="<li>" escape="false"/>
-	<h:outputLink value="#{evaluationManagementMenuBackingBean.contextPath}/teacher/evaluation/onlineTestsIndex.faces?executionCourseID=#{evaluationManagementMenuBackingBean.executionCourseID}">
-		<h:outputText value="#{bundle['link.onlineTests']}"/>
-	</h:outputLink>
-	<h:outputText value="</li>" escape="false"/>
-
-	<h:outputText value="<li>" escape="false"/>
-	<h:outputLink value="#{evaluationManagementMenuBackingBean.contextPath}/teacher/evaluation/projectsIndex.faces?executionCourseID=#{evaluationManagementMenuBackingBean.executionCourseID}">
-		<h:outputText value="#{bundle['link.projects']}"/>		
-	</h:outputLink>
-	<h:outputText value="</li>" escape="false"/>
-	
-	<h:outputText value="<li>" escape="false"/>
-	<h:outputLink value="#{evaluationManagementMenuBackingBean.contextPath}/teacher/evaluation/writtenTestsIndex.faces?executionCourseID=#{evaluationManagementMenuBackingBean.executionCourseID}">
-		<h:outputText value="#{bundle['link.writtenTests']}"/>
-	</h:outputLink>
-	<h:outputText value="</li>" escape="false"/>
-
-	<h:outputText value="<li>" escape="false"/>
-	<h:outputLink value="#{evaluationManagementMenuBackingBean.contextPath}/teacher/evaluation/examsIndex.faces?executionCourseID=#{evaluationManagementMenuBackingBean.executionCourseID}">
-		<h:outputText value="#{bundle['link.exams']}"/>		
-	</h:outputLink>
-	<h:outputText value="</li>" escape="false"/>
-	
-	<h:outputText value="<li>" escape="false"/>
-	<h:outputLink value="#{evaluationManagementMenuBackingBean.contextPath}/teacher/evaluation/finalEvaluationIndex.faces?executionCourseID=#{evaluationManagementMenuBackingBean.executionCourseID}">
-		<h:outputText value="#{bundle['link.finalEvaluation']}"/>		
-	</h:outputLink>
-	<h:outputText value="</li>" escape="false"/>
-
-	<h:outputText value="<br/><li>" escape="false"/>
-	<h:outputLink value="#{evaluationManagementMenuBackingBean.contextPath}/teacher/teacherAdministrationViewer.do?method=instructions&objectCode=#{evaluationManagementMenuBackingBean.executionCourseID}">
-		<h:outputText value="#{bundle['link.manage.executionCourse']}"/>		
-	</h:outputLink>
-	<h:outputText value="</li></ul>" escape="false"/>
-
-</h:form>
+<ul>
+	<li><html:link page="/evaluation/onlineTestsIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.onlineTests"/></html:link></li>
+	<li><html:link page="/evaluation/projectsIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.projects"/></html:link></li>
+	<li><html:link page="/evaluation/writtenTestsIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.writtenTests"/></html:link></li>
+	<li><html:link page="/evaluation/examsIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.exams"/></html:link></li>
+	<li><html:link page="/evaluation/finalEvaluationIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.finalEvaluation"/></html:link><br/></li>
+	<li><html:link action="/teacherAdministrationViewer.do?method=instructions" paramId="objectCode" paramName="executionCourseID"><bean:message key="link.manage.executionCourse"/></html:link></li>
+</ul>

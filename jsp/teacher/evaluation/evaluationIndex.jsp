@@ -1,9 +1,5 @@
-<%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
-<%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
-<%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-
-<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
-	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
-	<h:outputText value="<h2>#{bundle['link.evaluation']}</h2>" escape="false" />
-</ft:tilesView>
+<h2><bean:message key="link.evaluation" /></h2>
