@@ -1036,6 +1036,17 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
+    public Set<Enrolment> getEnrolmentsNotInAnyMarkSheetForAllMarkSheetTypes(ExecutionPeriod executionPeriod) {
+        final Set<Enrolment> result = new HashSet<Enrolment>();
+        for (final MarkSheetType markSheetType : MarkSheetType.values()) {
+            // TODO: see this
+            if (markSheetType != MarkSheetType.SPECIAL_AUTHORIZATION) {
+                result.addAll(getEnrolmentsNotInAnyMarkSheet(markSheetType, executionPeriod));
+            }
+        }
+        return result;
+    }
+    
     public MarkSheet createMarkSheet(ExecutionPeriod executionPeriod,
             Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType, Boolean submittedByTeacher,
             Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
