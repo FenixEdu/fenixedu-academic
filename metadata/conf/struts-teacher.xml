@@ -874,7 +874,14 @@
 	   		<form-property name="year" type="java.lang.String"/>
 	   		<form-property name="optional" type="java.lang.String"/>
 		</form-bean>
-
+		
+		<form-bean name="markSheetManagementForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="method" type="java.lang.String"/>
+	   		<form-property name="executionCourseID" type="java.lang.Integer"/>
+		</form-bean>
+		
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -2212,6 +2219,27 @@
    		    <forward name="viewForum" path="view-forum"/>
 		    <forward name="createThreadAndMessage" path="create-thread-and-message"/>
 		    <forward name="viewThread" path="view-thread"/>
+        </action>
+        
+        <!-- =============== MarkSheet Management  ============== -->
+        
+        <action path="/evaluationManagement"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.MarkSheetTeacherManagementDispatchAction"
+        	input="/teacherAdministrationViewer.do?method=instructions&amp;page=0"
+        	parameter="method">
+        	<forward name="evaluationIndex" path="show.evaluationIndex"/>
+        </action>
+        
+        <action path="/markSheetManagement"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.MarkSheetTeacherManagementDispatchAction"
+        	input="/markSheetManagement.do?method=prepareSubmitMarks"
+        	parameter="method"
+        	scope="request"
+        	name="markSheetManagementForm">
+        	
+        	<forward name="mainPage" path="/evaluation/finalEvaluationIndex.faces"/>
+        	<forward name="gradeSubmission.step.one" path="show.markSheetManagement.gradeSubmission.step.one"/>
+        	<forward name="gradeSubmission.step.two" path="show.markSheetManagement.gradeSubmission.step.two"/>
         </action>
         
     </action-mappings>

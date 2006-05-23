@@ -541,5 +541,18 @@
 	<definition name="view-thread" extends="execution-course-administration">
 		<put name="body" value="/messaging/viewThread.jsp" />
 	</definition>
+
+	<!-- =================== MarkSheetManagement ============== -->
+	<definition name="show.evaluationIndex" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/evaluationIndex.jsp" />
+	</definition>
+		
+	<definition name="show.markSheetManagement.gradeSubmission.step.one" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/gradeSubmission/gradeSubmissionStepOne.jsp" />
+	</definition>
+	
+	<definition name="show.markSheetManagement.gradeSubmission.step.two" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/gradeSubmission/gradeSubmissionStepTwo.jsp" />
+	</definition>
 	
 </tiles-definitions>
