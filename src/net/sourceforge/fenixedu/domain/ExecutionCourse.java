@@ -14,6 +14,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
+import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -1001,7 +1002,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         curricularCourses.addAll(getAssociatedCurricularCoursesSet());
         return curricularCourses;
     }
-
+    
     public Set<CompetenceCourse> getCompetenceCourses() {
         final Set<CompetenceCourse> competenceCourses = new HashSet<CompetenceCourse>();
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
@@ -1011,6 +1012,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return competenceCourses;
+    }
+    
+    public List<CurricularCourse> getCurricularCoursesWithDegreeType() {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
+            Degree degree = curricularCourse.getDegree();
+            if (degree.getTipoCurso() == DegreeType.DEGREE
+                    || degree.getBolonhaDegreeType() == BolonhaDegreeType.DEGREE) {
+                result.add(curricularCourse);
+            }
+        }
+        return result;
     }
 
 }
