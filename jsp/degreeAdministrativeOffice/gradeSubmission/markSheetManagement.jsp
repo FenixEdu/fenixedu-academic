@@ -35,24 +35,25 @@
 
 <logic:present name="searchResult">
 
+	<strong><bean:write name="edit" property="curricularCourse.name"/></strong>
+	
+	<bean:define id="executionPeriodID" name="edit" property="executionPeriod.idInternal" />
+	<bean:define id="degreeID" name="edit" property="degree.idInternal" />
+	<bean:define id="degreeCurricularPlanID" name="edit" property="degreeCurricularPlan.idInternal" />
+	<bean:define id="curricularCourseID" name="edit" property="curricularCourse.idInternal" />
+	
+	<bean:define id="path">
+		 /createMarkSheet.do?method=prepareCreateMarkSheetFilled&epID=<%= executionPeriodID %>&dID=<%= degreeID %>&dcpID=<%= degreeCurricularPlanID %>&ccID=<%= curricularCourseID %>
+	</bean:define>
+	<html:link action="<%= path %>"><bean:message key="label.createMarkSheet"/></html:link>
+	<br/><br/>
+
 	<logic:empty name="searchResult">
 		<em><bean:message key="label.noMarkSheetsFound"/></em>
 	</logic:empty>
 	
 	<logic:notEmpty name="searchResult">
-	
-		<strong><bean:write name="edit" property="curricularCourse.name"/></strong>
-		
-		<bean:define id="executionPeriodID" name="edit" property="executionPeriod.idInternal" />
-		<bean:define id="degreeID" name="edit" property="degree.idInternal" />
-		<bean:define id="degreeCurricularPlanID" name="edit" property="degreeCurricularPlan.idInternal" />
-		<bean:define id="curricularCourseID" name="edit" property="curricularCourse.idInternal" />
-		
-		<bean:define id="path">
-			 /createMarkSheet.do?method=prepareCreateMarkSheetFilled&epID=<%= executionPeriodID %>&dID=<%= degreeID %>&dcpID=<%= degreeCurricularPlanID %>&ccID=<%= curricularCourseID %>
-		</bean:define>
-		<html:link action="<%= path %>"><bean:message key="label.createMarkSheet"/></html:link>
-		<br/><br/>
+
 		<bean:define id="url" name="url"/>
 		<table>
 			<logic:iterate id="entry" name="searchResult" >
