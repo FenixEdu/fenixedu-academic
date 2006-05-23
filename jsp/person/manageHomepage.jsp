@@ -52,11 +52,11 @@
 	
 	<p><strong><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/>:</strong></p>
 
-	<table class="tform01">
+	<table class="tstyle5 thlight thright">
 		<tr>
-			<td class="leftcol">
+			<th>
 				<bean:message key="label.homepage.name" bundle="HOMEPAGE_RESOURCES"/>:
-			</td>
+			</th>
 			<td colspan="3">
 				<html:text property="name" size="50"/>
 				<br />
@@ -65,9 +65,9 @@
 		</tr>
 		<logic:present name="UserView" property="person.employee.currentContract.workingUnit">
 			<tr>
-				<td class="leftcol">
+				<th>
 					<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
-				</td>
+				</th>
 				<td>
 					<html:checkbox property="showUnit" value="true"/>
 				</td>
@@ -82,9 +82,9 @@
 		<logic:present name="UserView" property="person.teacher">
 			<logic:present name="UserView" property="person.employee.currentContract">
 				<tr>
-					<td class="leftcol">
+					<th>
 						<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>
-					</td>
+					</th>
 					<td>
 						<html:checkbox property="showCategory" value="true"/>
 					</td>
@@ -95,9 +95,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="leftcol" rowspan="2">
+					<th rowspan="2">
 						<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>
-					</td>
+					</th>
 					<td rowspan="2">
 						<html:checkbox property="showResearchUnitHomepage" value="true"/>
 					</td>					
@@ -120,12 +120,12 @@
 		</logic:present>
 		<logic:notEmpty name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
 			<tr>
-				<td class="leftcol">
+				<th>
 					<bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:
-				</td>
-				<td class="leftcol">
+				</th>
+				<th>
 					<html:checkbox property="showActiveStudentCurricularPlans" value="true"/>
-				</td>
+				</th>
 				<td colspan="2">
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
@@ -167,12 +167,12 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="leftcol">
+				<th>
 					<bean:message key="label.homepage.showCurrentAttendingExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
-				</td>
-				<td class="leftcol">
+				</th>
+				<th>
 					<html:checkbox property="showCurrentAttendingExecutionCourses" value="true"/>
-				</td>
+				</th>
 				<td colspan="2">
 					<logic:iterate id="attend" name="UserView" property="person.currentAttends" length="1">
 						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
@@ -194,12 +194,12 @@
 		</logic:notEmpty>
 		<logic:notEmpty name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
 			<tr>
-				<td class="leftcol">
+				<th>
 					<bean:message key="label.homepage.showAlumniDegrees" bundle="HOMEPAGE_RESOURCES"/>:
-				</td>
-				<td class="leftcol">
+				</th>
+				<th>
 					<html:checkbox property="showAlumniDegrees" value="true"/>
-				</td>
+				</th>
 				<td colspan="2">
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
@@ -257,9 +257,9 @@
 	</tr>
 -->
 		<tr>
-			<td class="leftcol">
+			<th>
 				<bean:message key="label.homepage.showPhoto" bundle="HOMEPAGE_RESOURCES"/>:
-			</td>
+			</th>
 			<td>
 				<html:checkbox property="showPhoto" value="true"/>
 			</td>
@@ -269,9 +269,9 @@
 		</tr>
 
 		<tr>
-			<td class="leftcol">
+			<th>
 				<bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>:
-			</td>
+			</th>
 			<td style="vertical-align: center;">
 				<html:checkbox property="showEmail" value="true"/>
 			</td>
@@ -281,9 +281,9 @@
 		</tr>
 
 		<tr>
-			<td class="leftcol">
+			<th>
 				<bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>:
-			</td>
+			</th>
 			<td>
 				<html:checkbox property="showTelephone" value="true"/>
 			</td>
@@ -293,9 +293,9 @@
 		</tr>
 
 		<tr>
-			<td class="leftcol">
+			<th>
 				<bean:message key="label.homepage.showWorkTelephone" bundle="HOMEPAGE_RESOURCES"/>:
-			</td>
+			</th>
 			<td>
 				<html:checkbox property="showWorkTelephone" value="true"/>
 			</td>
@@ -305,9 +305,9 @@
 		</tr>
 
 		<tr>
-			<td class="leftcol">
+			<th>
 				<bean:message key="label.homepage.showMobileTelephone" bundle="HOMEPAGE_RESOURCES"/>:
-			</td>
+			</th>
 			<td>
 				<html:checkbox property="showMobileTelephone" value="true"/>
 			</td>
@@ -317,26 +317,26 @@
 		</tr>
 	
 		<tr>
-			<td class="leftcol">
+			<th>
 				<bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/>:
-			</td>
+			</th>
 			<td>
 				<html:checkbox property="showAlternativeHomepage" value="true"/>
 			</td>
-			<td colspan="2">
+			<th>
 				<bean:define id="url" type="java.lang.String" name="UserView" property="person.webAddress"/>
 				<html:link href="<%= url %>">
 					<bean:write name="UserView" property="person.webAddress"/>
 				</html:link>
-			</td>
+			</th>
 		</tr>
 	
 		<logic:present name="UserView" property="person.teacher">
 			<logic:present name="UserView" property="person.employee.currentContract">
 				<tr>
-					<td class="leftcol">
+					<th>
 						<bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
-					</td>
+					</th>
 					<td>
 						<html:checkbox property="showCurrentExecutionCourses" value="true"/>
 					</td>
@@ -360,8 +360,8 @@
 		</logic:present>
 	
 		<tr>
-			<td class="leftcol">
-			</td>
+			<th>
+			</th>
 			<td colspan="3">
 				<html:submit styleClass="mvert05">
 					<bean:message key="person.homepage.submit" bundle="HOMEPAGE_RESOURCES"/>
