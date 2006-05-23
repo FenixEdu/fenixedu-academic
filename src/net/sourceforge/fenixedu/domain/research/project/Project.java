@@ -15,8 +15,8 @@ public class Project extends Project_Base {
     }
     
     public void delete(){
-        for (;!this.hasAnyProjectParticipations(); getProjectParticipations().get(0).delete());
-        for (;!this.hasAnyAssociatedEvents(); getAssociatedEvents().get(0).delete());
+        for (;this.hasAnyProjectParticipations(); getProjectParticipations().get(0).delete());
+        for (;this.hasAnyAssociatedEvents(); getAssociatedEvents().get(0).delete());
         removeRootDomainObject();
         deleteDomainObject();
     }

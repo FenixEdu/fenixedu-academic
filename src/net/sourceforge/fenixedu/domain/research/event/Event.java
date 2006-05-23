@@ -35,8 +35,8 @@ public class Event extends Event_Base {
      * EventParticipations and ProjectEventAssociations
      */
     public void delete(){
-        for (;!this.getEventParticipations().isEmpty(); getEventParticipations().get(0).delete());
-        for (;!this.getAssociatedProjects().isEmpty(); getAssociatedProjects().get(0).delete());
+        for (;this.hasAnyEventParticipations(); getEventParticipations().get(0).delete());
+        for (;this.hasAnyAssociatedProjects(); getAssociatedProjects().get(0).delete());
         removeRootDomainObject();
         deleteDomainObject();
     }
