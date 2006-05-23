@@ -10,11 +10,11 @@
 
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.projectsManagement.superUseCaseTitle"/></em>
 		
-	<h2/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.data.useCasetitle"/> </h2>
+	<h2/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.data.useCaseTitle"/> </h2>
   	
 	<br/>
 
-	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProjectUseCase.editDataExplanation"/>
+	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.data.explanation"/>
   	
   	<br/>
 		
