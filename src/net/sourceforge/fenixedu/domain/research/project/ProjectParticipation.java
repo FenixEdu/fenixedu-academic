@@ -17,7 +17,7 @@ public class ProjectParticipation extends ProjectParticipation_Base {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     
     public void delete(){
         final Project project = this.getProject();

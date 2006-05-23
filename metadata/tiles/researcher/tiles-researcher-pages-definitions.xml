@@ -27,15 +27,22 @@
     <definition name="projects.editProjectEventAssociations" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/editProjectEventAssociations.jsp"></put>
     </definition>
-        <definition name="projects.associateEvent" extends="researcher.masterPage">
+    <definition name="projects.associateEvent" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/associateEvent.jsp"></put>
     </definition>
+    
+    <definition name="projects.editProjectParticipantUnits" extends="researcher.masterPage">
+        <put name="body" value="/researcher/projects/editProjectParticipantUnits.jsp"></put>
+    </definition>
+    
     <definition name="projects.viewProject" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/viewProject.jsp"></put>
     </definition>
     <definition name="projects.createProject" extends="researcher.masterPage">
         <put name="body" value="/researcher/projects/createProject.jsp"></put>
     </definition>
+    
+    
     
     <!-- interests definitions -->
     <definition name="interests.interestsManagement" extends="researcher.masterPage">

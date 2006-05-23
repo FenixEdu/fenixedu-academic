@@ -48,10 +48,11 @@
 	
 	<%-- UNITS --%>		
 	<h3/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.units"/> </h3>
-	<html:link page="/projects/editProject.do?method=manageAssociatedUnits">
+	<fr:view name="unitParticipations" layout="tabular" schema="projectUnitParticipation.summary"/>
+	<html:link page="<%="/projects/editProject.do?method=prepareEditParticipantUnits&projectId="+projectId%>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.editAssociatedUnits" />
 	</html:link>  <br/>
-		
+	
 	
 </logic:present>
 		

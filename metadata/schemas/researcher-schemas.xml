@@ -6,6 +6,10 @@
 	<slot name="title"/>
 </schema>
 
+
+
+
+
 <schema name="researcher.person.personalInfo" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="name"/>
 </schema>
@@ -64,12 +68,22 @@
 	<slot name="role"/>
 </schema>
 
+<schema name="projectUnitParticipation.summary" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
+	<slot name="party.name"/>
+	<slot name="role"/>
+</schema>
+
 <schema name="projectEventAssociation.event-summary" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation">
 	<slot name="event.name"/>
 	<slot name="role"/>
 </schema>
 
 <schema name="projectParticipants.edit-role" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
+	<slot name="party.name" read-only="true"/>
+	<slot name="role"/>
+</schema>
+
+<schema name="projectParticipantUnits.edit-role" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
 	<slot name="party.name" read-only="true"/>
 	<slot name="role"/>
 </schema>
@@ -130,6 +144,19 @@
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
+		<property name="minChars" value="5"/>
+	</slot>
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="projectUnitParticipation.creation" type="net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantUnitCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="unit" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="rawSlotName" value="unitName"/>
+		<property name="labelField" value="name"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
 		<property name="minChars" value="5"/>
 	</slot>
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>

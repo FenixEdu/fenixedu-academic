@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteProjectParticipant extends Service  {
 
-
     public void run(Integer participationId) throws ExcepcaoPersistencia, FenixServiceException {
         ProjectParticipation participation = rootDomainObject.readProjectParticipationByOID(participationId);
         if(participation == null){
@@ -15,5 +14,4 @@ public class DeleteProjectParticipant extends Service  {
         }
         participation.delete();   
     }
-    
 }

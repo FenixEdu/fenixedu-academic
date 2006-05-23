@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -33,6 +34,19 @@ public class ViewProjectDispatchAction extends FenixDispatchAction {
                     }
                 }
                 request.setAttribute("participations", participations);
+            }
+        }
+        
+        for( Project project : rootDomainObject.getProjects()) {
+            if (project.getIdInternal().equals(oid)) {
+                request.setAttribute("selectedProject", project);
+                List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();
+                for (ProjectParticipation participation : project.getProjectParticipations()) {
+                    if (participation.getParty() instanceof Unit) {
+                        unitParticipations.add(participation);                        
+                    }
+                }
+                request.setAttribute("unitParticipations", unitParticipations);
             }
         }
         
