@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.accessControl.AccessControlPredicate;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**

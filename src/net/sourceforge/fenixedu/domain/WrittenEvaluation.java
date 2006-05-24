@@ -193,8 +193,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
             final Room room = roomOccupation.getRoom();
             if (!rooms.contains(room)) {
                 roomOccupationsToDelete.add(roomOccupation);
-            } else {
-                final OccupationPeriod occupationPeriod = roomOccupation.getPeriod();
+            } else {                
                 roomOccupation.setDayOfWeek(dayOfWeek);
                 roomOccupation.setEndTimeDate(end);
                 roomOccupation.setStartTimeDate(beginning);

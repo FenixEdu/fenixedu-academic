@@ -27,8 +27,7 @@ public class JavaBibliographicReferences2SqlBibliographicReferencesFieldConversi
     }
     
     private final String NEW_LINE = "\r\n";
-    private final String ELEMENT_SEPARATOR = "||";
-    private final int MAX_NUMBER_OF_ELEMENTS = 7;    
+    private final String ELEMENT_SEPARATOR = "||";    
     
     private String write(final BibliographicReferences bibliographicReferences) {
         final StringBuilder stringBuilder = new StringBuilder();
