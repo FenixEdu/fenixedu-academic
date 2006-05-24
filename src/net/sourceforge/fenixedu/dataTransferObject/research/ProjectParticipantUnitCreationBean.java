@@ -12,6 +12,10 @@ public class ProjectParticipantUnitCreationBean implements Serializable {
     private String role;
     private String unitName;
 
+    public ProjectParticipantUnitCreationBean() {
+        role = ProjectParticipationType.getDefaultUnitRoleType().toString();
+    }
+    
     public ProjectParticipationType getRole() {
         return ProjectParticipationType.valueOf(role); 
     }

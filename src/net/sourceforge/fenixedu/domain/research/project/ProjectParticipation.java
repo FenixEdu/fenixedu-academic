@@ -2,16 +2,10 @@ package net.sourceforge.fenixedu.domain.research.project;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+/**
+ * Class representing the connection between Project and Party classified by a role
+ */
 public class ProjectParticipation extends ProjectParticipation_Base {
-    
-//    public  ProjectParticipation(Project project, Party party, ProjectParticipationType role) {
-//        super();
-//        setProject(project);
-//        setParty(party);
-//        setRole(role);
-//        setRootDomainObject(RootDomainObject.getInstance());
-//    }
-    
     
     public  ProjectParticipation() {
         super();
@@ -36,6 +30,13 @@ public class ProjectParticipation extends ProjectParticipation_Base {
         Speaker,
         Sponsor,
         Participant;
+        
+        public static ProjectParticipationType getDefaultUnitRoleType(){
+            return Sponsor;
+        }
+        
+        public static ProjectParticipationType getDefaultPersonRoleType(){
+            return Speaker;
+        }
     }
-
 }

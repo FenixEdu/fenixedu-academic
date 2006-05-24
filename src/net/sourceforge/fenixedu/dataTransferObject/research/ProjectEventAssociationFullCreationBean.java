@@ -13,7 +13,7 @@ public class ProjectEventAssociationFullCreationBean implements Serializable {
     private String eventType;
 
     public ProjectEventAssociationFullCreationBean() {
-        eventType = EventType.getDefaultType();
+        eventType = EventType.getDefaultType().toString();
     }
     
     public ProjectEventAssociationRole getRole() {

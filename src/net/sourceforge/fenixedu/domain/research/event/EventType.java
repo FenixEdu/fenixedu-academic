@@ -10,8 +10,8 @@ public enum EventType {
     TradeFair,
     Workshop;
 	
-    public static String getDefaultType(){
-        return Seminar.getName();
+    public static EventType getDefaultType(){
+        return Seminar;
     }
     
     public String getName() {
