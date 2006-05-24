@@ -174,9 +174,7 @@
 						<bean:define id="onChange">
 							this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';this.form.submit();
 						</bean:define>
-						<html:multibox property="selectedGroupProposals" onchange='<%= onChange.toString() %>'>
-							<bean:write name="groupProposal" property="idInternal"/>
-						</html:multibox>
+						<html:multibox property="selectedGroupProposals" onchange='<%= onChange.toString() %>'><bean:write name="groupProposal" property="idInternal"/></html:multibox>
 					</td>
 					<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
 						<a href="mailto:<%= emails %>"><bean:write name="groupProposal" property="orderOfPreference"/></a>
