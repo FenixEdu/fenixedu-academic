@@ -2123,6 +2123,7 @@
 	    	parameter="method" 
 	    	input="/finalWorkManagement.do?method=prepareFinalWorkInformation&amp;page=0"
 	    	name="finalWorkInformationForm" 
+	    	attribute="finalWorkInformationForm"
 	    	scope="request" 
 	    	validate="true">
 			<forward name="chooseDegreeForFinalWorkProposal" path="df.page.chooseDegreeForFinalWorkProposal"/>
@@ -2142,6 +2143,7 @@
 	    	parameter="method"
 	    	input="/finalWorkManagement.do?method=chooseDegree&amp;page=0"
 	    	name="finalWorkInformationForm"
+	    	attribute="finalWorkInformationForm"
 	    	scope="request"
 	    	validate="true">
 			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork$GroupAlreadyAttributed"
