@@ -42,7 +42,7 @@ import org.apache.struts.util.MessageResources;
  */
 public abstract class ForunsManagement extends FenixDispatchAction {
 
-    private static final Integer DEFAULT_PAGE_SIZE = 10;
+    private static final Integer DEFAULT_PAGE_SIZE = 20;
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
