@@ -67,7 +67,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         super.setOjbConcreteClass(getClass().getName());
     }
 
-    public DegreeCurricularPlan(Degree degree, String name, DegreeCurricularPlanState state,
+    protected DegreeCurricularPlan(Degree degree, String name, DegreeCurricularPlanState state,
             Date inicialDate, Date endDate, Integer degreeDuration,
             Integer minimalYearForOptionalCourses, Double neededCredits, MarkType markType,
             Integer numerusClausus, String annotation, GradeScale gradeScale) {
@@ -122,8 +122,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setAnotation(annotation);
     }
 
-    public DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale, Person creator,
-            CurricularPeriod curricularPeriod) {
+    protected DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale, Person creator, CurricularPeriod curricularPeriod) {
         this(degree);
 
         if (name == null) {
@@ -132,11 +131,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         super.setName(name);
         super.setGradeScale(gradeScale);
-
+        this.setRoot(new CourseGroup(name, name));
+        this.setState(DegreeCurricularPlanState.ACTIVE);
+        
         newStructureFieldsChange(CurricularStage.DRAFT, null);
-
-        CourseGroup dcpRoot = new CourseGroup(name, name);
-        this.setRoot(dcpRoot);
 
         if (curricularPeriod == null) {
             throw new DomainException("degreeCurricularPlan.curricularPeriod.not.null");

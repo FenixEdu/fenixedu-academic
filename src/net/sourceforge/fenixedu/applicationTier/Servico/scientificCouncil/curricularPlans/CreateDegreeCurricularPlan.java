@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateDegreeCurricularPlan extends Service {
@@ -29,9 +27,7 @@ public class CreateDegreeCurricularPlan extends Service {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
         }
 
-        // this is needed in the domain to give this role to the creator
-        final Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER);
-        degree.createDegreeCurricularPlan(name, gradeScale, creator, bolonhaRole);
+        degree.createBolonhaDegreeCurricularPlan(name, gradeScale, creator);
     }
 
 }

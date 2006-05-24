@@ -15,7 +15,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
+import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -208,22 +210,56 @@ public class Degree extends Degree_Base {
         return super.getGradeScale() != null ? super.getGradeScale() : getTipoCurso().getGradeScale();
     }
 
-    public void createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator,
-            Role bolonhaRole) {
-        for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlans()) {
-            if (dcp.getName().equalsIgnoreCase(name)) {
-                throw new DomainException("error.degreeCurricularPlan.existing.name.and.degree");
+    public void createPreBolonhaDegreeCurricularPlan(
+            String name, 
+            DegreeCurricularPlanState state, 
+            Date initialDate, 
+            Date endDate, 
+            Integer degreeDuration, 
+            Integer minimalYearForOptionalCourses, 
+            Double neededCredits, 
+            MarkType markType, 
+            Integer numerusClausus, 
+            String anotation, 
+            GradeScale gradeScale) {
+        if (!this.isBolonhaDegree()) {
+            for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlans()) {
+                if (dcp.getName().equalsIgnoreCase(name)) {
+                    throw new DomainException("DEGREE.degreeCurricularPlan.existing.name.and.degree");
+                }
             }
+            
+            new DegreeCurricularPlan(this, name,state,initialDate,endDate,degreeDuration, minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, anotation, gradeScale);
+        } else {
+            throw new DomainException("DEGREE.calling.pre.bolonha.method.to.bolonha.degree");
         }
+    }
+    
+    public void createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
+        if (this.isBolonhaDegree()) {
+            if (name == null) {
+                throw new DomainException("DEGREE.degree.curricular.plan.name.cannot.be.null");
+            }
+            for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlans()) {
+                if (dcp.getName().equalsIgnoreCase(name)) {
+                    throw new DomainException("DEGREE.degreeCurricularPlan.existing.name.and.degree");
+                }
+            }
 
-        if (!creator.hasPersonRoles(bolonhaRole)) {
-            creator.addPersonRoles(bolonhaRole);
+            if (creator == null) {
+                throw new DomainException("DEGREE.degree.curricular.plan.creator.cannot.be.null");
+            }
+            final Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER);
+            if (!creator.hasPersonRoles(bolonhaRole)) {
+                creator.addPersonRoles(bolonhaRole);
+            }
+
+            CurricularPeriod curricularPeriod = new CurricularPeriod(this.getBolonhaDegreeType().getCurricularPeriodType());
+
+            new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
+        } else {
+            throw new DomainException("DEGREE.calling.bolonha.method.to.non.bolonha.degree");
         }
-
-        CurricularPeriod curricularPeriod = new CurricularPeriod(this.getBolonhaDegreeType()
-                .getCurricularPeriodType());
-
-        new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
     }
 
     public boolean isBolonhaDegree() {
