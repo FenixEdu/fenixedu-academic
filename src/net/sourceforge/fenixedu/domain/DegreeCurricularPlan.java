@@ -42,9 +42,17 @@ import net.sourceforge.fenixedu.util.SituationName;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
+    public static final ComparatorChain DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_NAME_AND_DEGREE_TYPE = new ComparatorChain();
+
+    static {
+        DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("degree.degreeType.name"));
+        DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("name"));
+    }
+    
     public DegreeCurricularPlan() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
