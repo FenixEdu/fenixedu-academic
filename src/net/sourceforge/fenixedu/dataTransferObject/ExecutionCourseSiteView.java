@@ -4,12 +4,16 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+
 /**
  * @author João Mota
  * 
  *  
  */
 public class ExecutionCourseSiteView extends SiteView {
+
+	protected ExecutionCourse executionCourse = null;
 
     /**
      * @param commonComponent
@@ -50,5 +54,13 @@ public class ExecutionCourseSiteView extends SiteView {
 
         return resultado;
     }
+
+	public ExecutionCourse getExecutionCourse() {
+		return executionCourse;
+	}
+
+	public void setExecutionCourse(ExecutionCourse executionCourse) {
+		this.executionCourse = executionCourse;
+	}
 
 }

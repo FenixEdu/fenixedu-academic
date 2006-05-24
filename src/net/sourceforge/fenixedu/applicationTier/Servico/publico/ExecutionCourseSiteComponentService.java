@@ -44,6 +44,8 @@ public class ExecutionCourseSiteComponentService extends Service {
         commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
         bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent,
                 sectionIndex, curricularCourseId);
-        return new ExecutionCourseSiteView(commonComponent, bodyComponent);
+        final ExecutionCourseSiteView executionCourseSiteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
+        executionCourseSiteView.setExecutionCourse(site.getExecutionCourse());
+        return executionCourseSiteView;
     }
 }

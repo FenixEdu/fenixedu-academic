@@ -9,6 +9,11 @@
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="evaluations" name="component" property="evaluations"/>
 
+<logic:notEmpty name="siteView" property="executionCourse.comment">
+	*) <bean:write name="siteView" property="executionCourse.comment"/>
+</logic:notEmpty>
+
+
 <table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
 	<tr>
 		<th><bean:message key="label.online.test"/></th>
@@ -78,6 +83,9 @@
 			<tr>
 				<td>
 					<bean:message key="label.exam"/>: <bean:write name="evaluation" property="season"/>
+					<logic:notEmpty name="siteView" property="executionCourse.comment">
+						*
+					</logic:notEmpty>
 				</td>
 				<td>
 					<dt:format pattern="dd/MM/yyyy"><bean:write name="evaluation" property="dayDate.time"/></dt:format>
