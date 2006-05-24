@@ -20,15 +20,16 @@ public class StringRenderer extends OutputRenderer {
     
     private boolean escaped;
     
-    /**
-     * @return the escape
-     */
     public boolean isEscaped() {
         return this.escaped;
     }
 
     /**
-     * @param escape the escape to set
+     * Indicates that the string to be presented should be escaped.
+     * This means that any HTML characters will be replaced by the 
+     * corresponding entities.
+     * 
+     * @property
      */
     public void setEscaped(boolean escaped) {
         this.escaped = escaped;
