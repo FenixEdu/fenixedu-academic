@@ -33,7 +33,7 @@
 	<br/>
 	
 	<fr:edit id="edit-markSheet" name="edit" schema="markSheet.edit" layout="tabular" nested="true"/>
-	<html:submit onclick="this.form.method.value='updateMarkSheet';"><bean:message key="label.markSheet.update" /></html:submit>
+	<html:submit styleClass="inputbutton" onclick="this.form.method.value='updateMarkSheet';"><bean:message key="label.markSheet.update" /></html:submit>
 	<br/>
 	
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToEdit">
@@ -64,6 +64,6 @@
 	</logic:notEmpty>
 	<br/>
 	
-	<html:submit><bean:message key="label.markSheet.change" /></html:submit>
-	<html:cancel onclick="this.form.method.value='backSearchMarkSheet';"><bean:message key="label.back"/></html:cancel>
+	<html:submit styleClass="inputbutton"><bean:message key="label.markSheet.change" /></html:submit>
+	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message key="label.back"/></html:cancel>
 </fr:form>

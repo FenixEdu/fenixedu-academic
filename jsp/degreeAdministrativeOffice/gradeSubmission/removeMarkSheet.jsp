@@ -18,10 +18,10 @@
 	
 	<fr:view name="markSheet" schema="markSheet.view" layout="tabular" />
 	<br/><br/>
-	<bean:message key="label.markSheet.removeMarkSheet"/>
+	<span class="warning0"><bean:message key="label.markSheet.removeMarkSheet"/></span>
 	<br/><br/>	
-	<html:submit> <bean:message key="label.markSheet.yes"/> </html:submit>
-	<html:cancel onclick="this.form.method.value='prepareSearchMarkSheetFilled';">
+	<html:submit styleClass="inputbutton"><bean:message key="label.markSheet.yes"/> </html:submit>
+	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';">
 		<bean:message key="label.markSheet.no"/>
 	</html:cancel>
 	

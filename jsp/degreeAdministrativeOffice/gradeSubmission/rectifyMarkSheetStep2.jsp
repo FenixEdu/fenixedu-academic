@@ -3,8 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.util.EnrolmentEvaluationState"%>
-<%@page import="net.sourceforge.fenixedu.util.DateFormatUtil"%>
 <h2><bean:message key="label.rectifyMarkSheet"/></h2>
 
 <br/>
@@ -32,6 +30,6 @@
 
 	<fr:edit nested="true" name="rectifyBean" schema="markSheet.rectify.two" layout="tabular"/>			
 
-	<html:submit><bean:message key="label.actual.grade"/></html:submit>
-	<html:cancel onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.cancel"/></html:cancel>
+	<html:submit styleClass="inputbutton"><bean:message key="label.actual.grade"/></html:submit>
+	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.cancel"/></html:cancel>
 </fr:form>

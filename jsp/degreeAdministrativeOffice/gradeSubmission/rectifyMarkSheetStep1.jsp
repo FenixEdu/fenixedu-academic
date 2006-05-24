@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <%@page import="net.sourceforge.fenixedu.util.EnrolmentEvaluationState"%>
-<%@page import="net.sourceforge.fenixedu.util.DateFormatUtil"%>
 <h2><bean:message key="label.rectifyMarkSheet"/></h2>
 
 <br/>
@@ -45,7 +44,7 @@
 				</td>
 			</logic:messagesPresent>
 			<td>
-				<html:submit><bean:message key="label.continue"/></html:submit>
+				<html:submit styleClass="inputbutton"><bean:message key="label.continue"/></html:submit>
 			</td>				
 		</tr>
 	</table>
@@ -115,5 +114,5 @@
 		</logic:iterate>
 	</table>
 	<br />
-	<html:cancel onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
+	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
 </fr:form>

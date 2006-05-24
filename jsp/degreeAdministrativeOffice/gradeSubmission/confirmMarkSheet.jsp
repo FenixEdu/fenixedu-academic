@@ -15,7 +15,7 @@
 <bean:define id="checksum" value="<%= FenixDigestUtils.getPrettyCheckSum(mark.getCheckSum())%>"/>
 <bean:message key="label.checksum"/> : 	<bean:write name="checksum"/>
 <br /><br />
-<bean:message key="message.markSheet.confirm"/>
+<span class="warning0"><bean:message key="message.markSheet.confirm"/></span>
 <br />
 <br />
 <html:form action="/markSheetManagement.do">
@@ -29,6 +29,6 @@
 	<html:hidden property="ed"/>
 	<html:hidden property="mss" />
 	<html:hidden property="mst" />		
-	<html:submit><bean:message key="label.confirm"/></html:submit>
-	<html:cancel onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
+	<html:submit styleClass="inputbutton"><bean:message key="label.confirm"/></html:submit>
+	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
 </html:form>
