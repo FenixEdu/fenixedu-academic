@@ -2,13 +2,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
-</br>
-</br>
-<hr></hr>
-<h2><center><bean:message key="link.coordinator.degreeCurricularPlan.management"/></center></h2>
 
-<p>
+<br/>
+<hr/>
 <ul>
+	<li class="navheader">
+		<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
+	</li>
 	<li>
 		<html:link page="<%= "/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&amp;degreeCurricularPlanID=" + degreeCurricularPlanID%>">
 		    <bean:message key="link.coordinator.degreeCurricular.viewActive" />
@@ -20,4 +20,3 @@
 		</html:link>
 	</li>
 </ul>
-</p>

@@ -9,16 +9,14 @@
 	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegree" property="idInternal"/>
 	<bean:define id="infoDegreeID" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.idInternal"/>
 	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
-	
-	</br>
-	</br>
-	<hr></hr>
-	<h2><center><bean:message key="link.coordinator.degreeSite.management"/></center></h2>
-	
-	<p>
+
+	<br/>
+	<hr/>
 	<ul>
+		<li class="navheader">
+			<bean:message key="link.coordinator.degreeSite.management"/>
+		</li>
 		<li>
-			<b><bean:message key="link.coordinator.degreeSite.edit" /></b>
 			<ul>
 				<li>
 					<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
@@ -51,5 +49,5 @@
 			    <bean:message key="link.coordinator.degreeSite.viewSite" /></html:link>
 		</li>		
 	</ul>
-	</p>
+
 </logic:present>

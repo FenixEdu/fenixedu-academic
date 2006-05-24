@@ -9,13 +9,12 @@
 	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegree" property="idInternal"/>
 	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request"/>
 	
-	</br>
-	</br>
-	<hr></hr>
-	<h2><center><bean:message key="label.coordinator.studentInformation"/></center></h2>
-	
-	<p>
+	<br/>
+	<hr/>
 	<ul>
+		<li class="navheader">
+			<bean:message key="label.coordinator.studentInformation"/>
+		</li>
 		<li>
 			<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView&amp;executionDegreeId=" + infoExecutionDegreeID.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 			    <bean:message key="link.student.curriculum" /></html:link>
@@ -25,5 +24,5 @@
 			    <bean:message key="link.student.enrollment" /></html:link>
 		</li>		
 	</ul>
-	</p>
+
 </logic:present>
