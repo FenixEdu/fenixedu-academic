@@ -10,55 +10,56 @@ public class DateInterval {
 
     // TODO mudar para immutable
     private YearMonthDay startDate;
+
     private YearMonthDay endDate;
 
     public DateInterval(YearMonthDay startDate, YearMonthDay endDate) {
-    		setStartDate(startDate);
-    		setEndDate(endDate);
+        setStartDate(startDate);
+        setEndDate(endDate);
     }
-    
+
     public void setStartDate(YearMonthDay newStartDate) {
-    		startDate = newStartDate;
+        startDate = newStartDate;
     }
-    
+
     public void setEndDate(YearMonthDay newEndDate) {
-    		endDate = newEndDate;
+        endDate = newEndDate;
     }
-    
+
     public YearMonthDay getStartDate() {
-    		return startDate;
+        return startDate;
     }
 
     public YearMonthDay getEndDate() {
-		return endDate;
+        return endDate;
     }
 
     // Returns true if the DateInterval contains a generic DateTime;
     public boolean containsDate(DateTime date) {
-    		YearMonthDay yearMonthDayDate = date.toYearMonthDay();
-    		return containsDate(yearMonthDayDate);
+        YearMonthDay yearMonthDayDate = date.toYearMonthDay();
+        return containsDate(yearMonthDayDate);
     }
-    
+
     public boolean containsDate(YearMonthDay date) {
-    		return ((getStartDate().isEqual(date) || getStartDate().isBefore(date)) &&
-    				(getEndDate().isEqual(date) || getEndDate().isAfter(date)));
+
+        return ((getStartDate().isEqual(date) || getStartDate().isBefore(date)) && (getEndDate() == null
+                || getEndDate().isEqual(date) || getEndDate().isAfter(date)));
+
     }
 
     // Returns true if this DateInterval contains interval
     public boolean containsInterval(DateInterval interval) {
-    		return (containsDate(interval.getStartDate()) || containsDate(interval.getEndDate()));
+        return (containsDate(interval.getStartDate()) || containsDate(interval.getEndDate()));
     }
-    
+
     // Return the interval number of weeks
     public int numberOfWeeks() {
         Interval interval = new Interval(startDate.toDateMidnight(), endDate.toDateMidnight());
-        return (interval.toPeriod(PeriodType.weeks()).getWeeks() + 1);
+        return interval.toPeriod(PeriodType.weeks()).getWeeks() + 1;
     }
-    
-    
-    
+
     public String toString() {
-    		return new String(getStartDate().toString() + " - " + getEndDate().toString());
+        return new String(getStartDate().toString() + " - " + getEndDate().toString());
     }
-    
+
 }

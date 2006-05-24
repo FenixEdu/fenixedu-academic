@@ -10,11 +10,14 @@ public class Periodicity extends Periodicity_Base {
         setWorkWeekNumber(workWeekNumber);
     }
 
-    // If weekNumber is multiple of workWeekNumber then it occurs in that week...
-    public boolean occur(int weekNumber) {
-        return (weekNumber % getWorkWeekNumber() == 0);
+    public boolean occur(int weekNumber, int maxWorkWeek) {
+        int result = weekNumber % maxWorkWeek;
+        if (result == 0) {
+            result = maxWorkWeek;
+        }
+        return result == getWorkWeekNumber();
     }
-    
+
     public void delete() {
         if (canBeDeleted()) {
             removeRootDomainObject();

@@ -31,7 +31,7 @@ public class Meal extends Meal_Base {
     }
 
     public TimeInterval getMealBreak() {
-        return new TimeInterval(getBeginMealBreak(), getEndMealBreak());
+        return new TimeInterval(getBeginMealBreak(), getEndMealBreak(), false);
     }
 
     public boolean definedMealBreak() {
@@ -60,10 +60,13 @@ public class Meal extends Meal_Base {
     // Se funcionario almocar em mais do que 1 hora nao desconta nada
     // senao devolve o que falta para que a hora de almoco seja 1 hora.
     public Duration calculateMealDiscount(Duration lunchBreak) {
-        if (lunchBreak.isShorterThan(getMandatoryMealDiscount()) || lunchBreak.isEqual(getMandatoryMealDiscount())) {
+        if (lunchBreak.isShorterThan(getMandatoryMealDiscount())
+                || lunchBreak.isEqual(getMandatoryMealDiscount())) {
             System.out.println("almocou em menos de 1 hora");
-            System.out.println("desconto refeicao " + lunchBreak.minus(getMandatoryMealDiscount()).toPeriod().toString());
-            return lunchBreak.minus(getMandatoryMealDiscount());
+            System.out.println("desconto refeicao "
+                    + lunchBreak.minus(getMandatoryMealDiscount()).toPeriod().toString());
+            //TODO Mudámos a ordem da conta!!
+            return getMandatoryMealDiscount().minus(lunchBreak);
         } else {
             return Duration.ZERO;
         }

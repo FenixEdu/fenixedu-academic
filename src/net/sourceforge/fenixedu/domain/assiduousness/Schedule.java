@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -40,7 +39,7 @@ public class Schedule extends Schedule_Base {
     public DateInterval getValidInterval() {
         return new DateInterval(getBeginDate(), getEndDate());
     }
-    
+
     // Return true if the Schedule is valid in the interval
     public boolean isDefinedInInterval(DateInterval interval) {
         return getValidInterval().containsInterval(interval);
@@ -53,24 +52,31 @@ public class Schedule extends Schedule_Base {
 
     // Returns the valid interval week number of a given YearMonthDay date
     public int getValidIntervalWeekNumberOfDate(YearMonthDay date) {
-        return (new DateInterval(this.getValidInterval().getStartDate(), date)).numberOfWeeks();
+        return (new DateInterval(getBeginDate(), date)).numberOfWeeks() + 1;
     }
-    
+
     // Returns the Employee's work schedule for a particular date
     public WorkSchedule workScheduleWithDate(YearMonthDay date) {
-        Iterator<WorkSchedule> workSchedulesIt = getWorkSchedulesIterator();
         int weekNumber = getValidIntervalWeekNumberOfDate(date);
-        while (workSchedulesIt.hasNext()) {
-            WorkSchedule workSchedule = workSchedulesIt.next();
-            if (workSchedule.isDefinedInDate(date, weekNumber)) {
+        int maxWorkWeek = getMaximumWorkWeekNumber();
+        for (WorkSchedule workSchedule : getWorkSchedules()) {
+            if (workSchedule.isDefinedInDate(date, weekNumber, maxWorkWeek)) {
                 return workSchedule;
             }
         }
         return null;
     }
 
-    
-    
+    public int getMaximumWorkWeekNumber() {
+        int maxWorkWeek = 0;
+        for (WorkSchedule workSchedule : getWorkSchedules()) {
+            if (workSchedule.getPeriodicity().getWorkWeekNumber().intValue() > maxWorkWeek) {
+                maxWorkWeek = workSchedule.getPeriodicity().getWorkWeekNumber().intValue();
+            }
+        }
+        return maxWorkWeek;
+    }
+
     public void delete() {
         removeRootDomainObject();
         removeAssiduousness();

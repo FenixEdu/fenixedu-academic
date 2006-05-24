@@ -22,29 +22,26 @@ public class TimeInterval implements Serializable {
     public TimeInterval(TimeOfDay startTime, TimeOfDay endTime, Boolean nextDay) {
         setStartTime(startTime);
         setEndTime(endTime);
-        // this.setNextDay(nextDay);
-        // never trust the data from the user :D
-        if (startTime.isAfter(endTime)) {
-            setNextDay(true);
-        } else {
-            setNextDay(nextDay);
-        }
+        setNextDay(nextDay);
     }
 
-    public TimeInterval(TimeOfDay startTime, TimeOfDay endTime) {
-        if (startTime.isAfter(endTime)) {
-            setNextDay(true);
-        } else {
-            setNextDay(false);
-        }
-        setStartTime(startTime);
-        setEndTime(endTime);
-    }
+    // public TimeInterval(TimeOfDay startTime, TimeOfDay endTime) {
+    // if (startTime.isAfter(endTime)) {
+    // setNextDay(true);
+    // } else {
+    // setNextDay(false);
+    // }
+    // setStartTime(startTime);
+    // setEndTime(endTime);
+    // }
 
     public TimeInterval(TimeOfDay startTime, Duration duration) {
         setStartTime(startTime);
         setEndTime(startTime.plus(duration.toPeriod()));
-        if (duration.toPeriod().getHours() >= 24) {
+        DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
+        Duration maxDuration = new Duration(startTime.toDateTime(now).getMillis(), now.plusDays(1)
+                .getMillis());
+        if (duration.compareTo(maxDuration) > 0) {
             setNextDay(true);
         } else {
             setNextDay(false);
@@ -84,7 +81,7 @@ public class TimeInterval implements Serializable {
         DateTime startDate = getStartTime().toDateTimeToday();
         DateTime endDate = getEndTime().toDateTimeToday();
         if (getNextDay()) {
-            endDate.plusDays(1);
+            endDate = endDate.plusDays(1);
         }
         return new Duration(startDate, endDate);
     }
