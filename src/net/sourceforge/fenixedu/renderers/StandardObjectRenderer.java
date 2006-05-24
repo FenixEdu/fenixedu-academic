@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlot;
  * Example:
  * <table border="1">
  *  <tr>
- *      <td>Name</td>
+ *      <th>Name</th>
  *      <td>Jane Doe</td>
  *  </tr>
  *  <tr>
- *      <td>Age</td>
+ *      <th>Age</th>
  *      <td>20</td>
  *  </tr>
  *  <tr>
@@ -40,6 +40,8 @@ public class StandardObjectRenderer extends OutputRenderer {
 
     private String columnClasses;
 
+    private String labelTerminator;
+    
     public String getCaption() {
         return caption;
     }
@@ -81,6 +83,28 @@ public class StandardObjectRenderer extends OutputRenderer {
         this.rowClasses = rowClasses;
     }
 
+    public String getLabelTerminator() {
+        return this.labelTerminator;
+    }
+
+    /**
+     * Chooses the suffix to be added to each label. If the label already contains
+     * that suffix then nothing will be added.
+     * <p>
+     * For example <code>labelTerminator=":"</code> would generate rows like
+     * <table border="1">
+     *  <tr>
+     *      <th>Name:</th>
+     *      <td>Jane Doe</td>
+     *  </tr>
+     * </table>
+     * 
+     * @property
+     */
+    public void setLabelTerminator(String labelTerminator) {
+        this.labelTerminator = labelTerminator;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new ObjectTabularLayout(getContext().getMetaObject());
@@ -117,11 +141,28 @@ public class StandardObjectRenderer extends OutputRenderer {
         protected HtmlComponent getComponent(int rowIndex, int columnIndex) {
             if (columnIndex == 0) {
                 MetaSlot slot = this.object.getSlots().get(rowIndex);
-                return new HtmlText(slot.getLabel());
+                return new HtmlText(addLabelTerminator(slot.getLabel()));
             }
             else {
                 return renderSlot(this.object.getSlots().get(rowIndex));
             }
+        }
+
+        // duplicated code id=standard-renderer.label.addTerminator
+        protected String addLabelTerminator(String label) {
+            if (getLabelTerminator() == null) {
+                return label;
+            }
+            
+            if (label == null) {
+                return null;
+            }
+            
+            if (label.endsWith(getLabelTerminator())) {
+                return label;
+            }
+            
+            return label + getLabelTerminator();
         }
     }
 }

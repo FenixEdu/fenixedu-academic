@@ -27,17 +27,17 @@ import org.apache.log4j.Logger;
  * Example:
  * <table border="1">
  *  <tr>
- *      <td>Name</td>
+ *      <th>Name</th>
  *      <td><input type="text"/></td>
  *      <td>An empty name is not valid.</td>
  *  </tr>
  *  <tr>
- *      <td>Age</td>
+ *      <th>Age</th>
  *      <td><input type="text" value="20"/></td>
  *      <td></td>
  *  </tr>
  *  <tr>
- *      <td>Gender</td>
+ *      <th>Gender</th>
  *      <td>
  *          <select>
  *              <option>-- Please Select --</option>
@@ -59,6 +59,8 @@ public class StandardInputRenderer extends InputRenderer {
     private String validatorClasses;
     
     private boolean hideValidators;
+    
+    private String labelTerminator;
     
     public StandardInputRenderer() {
         super();
@@ -124,6 +126,20 @@ public class StandardInputRenderer extends InputRenderer {
         this.validatorClasses = validatorClasses;
     }
 
+    public String getLabelTerminator() {
+        return this.labelTerminator;
+    }
+    
+    /**
+     * Chooses the suffix to be added to each label. If the label already contains
+     * that suffix then nothing will be added. See {@link StandardObjectRenderer#setLabelTerminator(String)}.
+     *
+     * @property
+     */
+    public void setLabelTerminator(String labelTerminator) {
+        this.labelTerminator = labelTerminator;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new ObjectInputTabularLayout(getContext().getMetaObject());
@@ -175,7 +191,7 @@ public class StandardInputRenderer extends InputRenderer {
                 else {
                     HtmlLabel label = new HtmlLabel();
                     label.setFor(slot.getKey().toString());
-                    label.setText(slot.getLabel());
+                    label.setText(addLabelTerminator(slot.getLabel()));
                     
                     component = label;
                 }
@@ -228,6 +244,23 @@ public class StandardInputRenderer extends InputRenderer {
             }
 
             return component;
+        }
+        
+        // duplicated code id=standard-renderer.label.addTerminator
+        protected String addLabelTerminator(String label) {
+            if (getLabelTerminator() == null) {
+                return label;
+            }
+            
+            if (label == null) {
+                return null;
+            }
+            
+            if (label.endsWith(getLabelTerminator())) {
+                return label;
+            }
+            
+            return label + getLabelTerminator();
         }
     }
 
