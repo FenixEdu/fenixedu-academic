@@ -8,7 +8,15 @@
 <logic:present name="currentUnit">
 	<bean:define id="initialCurrentUnit" name="currentUnit" toScope="request"/>
 	<br/>
-	<bean:write name="initialCurrentUnit" property="name"/>
+	<logic:notEmpty name="initialCurrentUnit" property="webAddress">
+		<bean:define id="url" type="java.lang.String" name="initialCurrentUnit" property="webAddress"/>
+		<html:link href="<%= url %>">
+			<bean:write name="initialCurrentUnit" property="name"/>
+		</html:link>
+	</logic:notEmpty>
+	<logic:empty name="initialCurrentUnit" property="webAddress">
+		<bean:write name="initialCurrentUnit" property="name"/>
+	</logic:empty>	
 
 	<logic:iterate id="parentUnit" name="initialCurrentUnit" property="parentByOrganizationalStructureAccountabilityType">
 		<logic:notEmpty name="parentUnit" property="parentByOrganizationalStructureAccountabilityType">
