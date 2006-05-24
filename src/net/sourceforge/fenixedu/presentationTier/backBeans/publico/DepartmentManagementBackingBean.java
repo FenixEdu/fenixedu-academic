@@ -8,10 +8,11 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+
+import org.joda.time.DateTime;
 
 public class DepartmentManagementBackingBean extends FenixBackingBean {
 
@@ -30,8 +31,9 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
 
         Department department = getDepartment();
         if (department != null) {
-            ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-            result.addAll(department.getTeachers(currentExecutionYear.getBeginDate(), currentExecutionYear.getEndDate()));
+            DateTime today = new DateTime();
+            DateTime tomorrow = today.plusDays(1);
+            result.addAll(department.getTeachers(today.toDate(), tomorrow.toDate()));
         }
         
         return new ArrayList<Teacher>(result);
