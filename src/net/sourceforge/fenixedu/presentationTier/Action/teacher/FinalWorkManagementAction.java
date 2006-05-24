@@ -304,8 +304,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 					.createDynaActionFormClass(fbc2);
 			final DynaActionForm finalWorkAttributionForm = (DynaActionForm) dafc2
 					.newInstance();
-			finalWorkAttributionForm.set("selectedGroupProposals",
-					selectedProposals);
+			finalWorkAttributionForm.set("selectedGroupProposals", selectedProposals);
+			finalWorkForm.set("selectedGroupProposals", selectedProposals);
 			request.setAttribute("finalWorkAttributionForm",
 					finalWorkAttributionForm);
 
