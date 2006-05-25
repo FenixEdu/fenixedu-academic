@@ -8,7 +8,7 @@
 </html:messages>
 
 <html:form action="/executionDegreesManagement">
-	<html:hidden property="method" value=""/>
+	<html:hidden property="method" value="deleteExecutionDegrees"/>
 	
 	<div class='simpleblock4'>
 	<fieldset class='lfloat'>
@@ -29,10 +29,14 @@
 	
 	</fieldset>
 	</div>
-	<br/>
-	<logic:notEmpty name="executionDegrees">
+
+<span class="error"><html:errors/><br/></span>
+<br/>
+<logic:notEmpty name="executionDegrees">
+
 		<table cellpadding='0' border='0'>
 			<tr>
+				<td class="listClasses-header"></td>
 				<td class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.executionYear"/> </td>
 				<td class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.lessons"/>
@@ -56,6 +60,11 @@
 			</tr>
 			<logic:iterate id="executionDegree" name="executionDegrees">
 				<tr>
+					<td class="listClasses">
+						<html:multibox property="internalIds">
+							<bean:write name="executionDegree" property="idInternal"/>
+						</html:multibox>
+					</td>
 					<td class='listClasses'>
 						<bean:write name="executionDegree" property="executionYear.year" /> 
 					</td>
@@ -130,6 +139,14 @@
 				</tr>
 			</logic:iterate>
 		</table>
+
+		<bean:define id="onclick">
+			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.delete.execution.degrees"/>')
+		</bean:define>
+		<br/>			
+		<html:submit styleClass="inputbutton" onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.executionDegrees"/></html:submit>
+
 	</logic:notEmpty>
+
 
 </html:form>
