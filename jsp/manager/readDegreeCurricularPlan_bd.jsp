@@ -21,14 +21,15 @@
 <ul style="list-style-type: square;">
 	<li><html:link module="/manager" page="<%="/editDegreeCurricularPlan.do?method=prepareEdit&degreeId="  + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.degreeCurricularPlan"/></html:link></li>
 	<li><html:link module="/manager" page="<%="/insertCurricularCourse.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.curricularCourse"/></html:link></li>
-	<li><html:link module="/manager" page="<%="/insertExecutionDegree.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.executionDegree"/></html:link></li>
 	<li><html:link module="/manager" page="<%="/manageBranches.do?method=showBranches&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.branches.management"/></html:link></li>
-	<li><html:link module="/manager" page="<%="/managePrecedences.do?method=showMenu&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.precedences.management"/></html:link></li>
 	<li><html:link module="/manager" page="<%="/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups&degreeId=" + request.getParameter("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseGroups.management"/></html:link></li>
+	<li><html:link module="/manager" page="<%="/managePrecedences.do?method=showMenu&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.precedences.management"/></html:link></li>
+<%--	<li><html:link module="/manager" page="<%="/insertExecutionDegree.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.executionDegree"/></html:link></li>--%>
 </ul>
 
 <span class="error"><html:errors/></span>
 
+<br/>
 <h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourses"/></h3>
 
 <logic:empty name="curricularCoursesList">
@@ -83,6 +84,8 @@
 
 <br>
 
+
+<!-- 
 <br>
 <h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegrees"/></h3>
 
@@ -250,5 +253,7 @@
 
 		<html:submit onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.executionDegrees"/></html:submit>
 	</html:form> 
-</logic:notEmpty>	 	
+</logic:notEmpty>
+-->
+
 </logic:present>
