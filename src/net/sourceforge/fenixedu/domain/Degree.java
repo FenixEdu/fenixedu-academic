@@ -210,7 +210,7 @@ public class Degree extends Degree_Base {
         return super.getGradeScale() != null ? super.getGradeScale() : getTipoCurso().getGradeScale();
     }
 
-    public void createPreBolonhaDegreeCurricularPlan(
+    public DegreeCurricularPlan createPreBolonhaDegreeCurricularPlan(
             String name, 
             DegreeCurricularPlanState state, 
             Date initialDate, 
@@ -229,13 +229,13 @@ public class Degree extends Degree_Base {
                 }
             }
             
-            new DegreeCurricularPlan(this, name,state,initialDate,endDate,degreeDuration, minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, anotation, gradeScale);
+            return new DegreeCurricularPlan(this, name,state,initialDate,endDate,degreeDuration, minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, anotation, gradeScale);
         } else {
             throw new DomainException("DEGREE.calling.pre.bolonha.method.to.bolonha.degree");
         }
     }
     
-    public void createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
+    public DegreeCurricularPlan createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
         if (this.isBolonhaDegree()) {
             if (name == null) {
                 throw new DomainException("DEGREE.degree.curricular.plan.name.cannot.be.null");
@@ -256,7 +256,7 @@ public class Degree extends Degree_Base {
 
             CurricularPeriod curricularPeriod = new CurricularPeriod(this.getBolonhaDegreeType().getCurricularPeriodType());
 
-            new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
+            return new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
         } else {
             throw new DomainException("DEGREE.calling.bolonha.method.to.non.bolonha.degree");
         }
