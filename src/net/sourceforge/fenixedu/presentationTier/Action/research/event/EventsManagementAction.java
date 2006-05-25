@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.research;
+package net.sourceforge.fenixedu.presentationTier.Action.research.event;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

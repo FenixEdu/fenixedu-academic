@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.research;
+package net.sourceforge.fenixedu.presentationTier.Action.research.project;
 
 import java.util.ArrayList;
 import java.util.List;

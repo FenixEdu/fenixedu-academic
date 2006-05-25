@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.research;
+package net.sourceforge.fenixedu.presentationTier.Action.research.project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -212,8 +212,9 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 
 
 	// ***************************************
-	// UNITS
+	//                   UNITS
 	// ***************************************
+    
 	public ActionForward prepareEditParticipantUnits(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -240,8 +241,6 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 		return mapping.findForward("EditProjectParticipantUnits");
 	}
 
-
-
 	public ActionForward createParticipantUnit(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -259,7 +258,6 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 		return prepareEditParticipantUnits(mapping, form, request, response);
 	}
 
-
 	public ActionForward removeParticipantUnit(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -275,7 +273,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 	}
 
 	// ***************************************
-	// PRIVATE
+	//                  PRIVATE
 	// ***************************************
 
 	private void setAttributeSelectedProject(HttpServletRequest request) {
