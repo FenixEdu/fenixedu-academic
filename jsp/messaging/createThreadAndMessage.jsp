@@ -11,8 +11,7 @@
 	
 	<fr:view name="forum" layout="tabular" schema="forum.view-full">
 		<fr:layout name="tabular">
-	        <fr:property name="classes" value="style1"/>
-	        <fr:property name="columnClasses" value="listClasses,"/>
+			<fr:property name="classes" value="tstyle5 thlight thright"/>
 		</fr:layout>
 	</fr:view>
 	
@@ -27,9 +26,13 @@
 	
 	<fr:create id="createThreadAndMessage"
 			type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean" 
-			layout="tabular"
            	schema="conversationThreadAndMessage.create"
            	action="<%= contextPrefix + "method=createThreadAndMessage&forumId="+forumId+"&goToLastPage=true" %>">
+
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="thlight mtop05"/>
+			</fr:layout>           	
+
            <fr:hidden slot="creator" name="person"/>
            <fr:hidden slot="forum" name="forum"/>
            <fr:destination name="cancel" path="<%= contextPrefix + "method=viewForum&forumId="+forumId%>"/>

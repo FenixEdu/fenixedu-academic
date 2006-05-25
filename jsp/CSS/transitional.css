@@ -401,3 +401,6 @@ table.noborder tr td {
 padding: 0;
 margin: 0;
 }
+
+.width100 { width: 100%; }
+.width8em { width: 8em; } /*used in forums*/

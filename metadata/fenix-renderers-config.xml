@@ -45,12 +45,16 @@ Documentation:
     <!-- ouptut -->
   
     <!--@ The default presentation for every object. -->
-    <renderer type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer"/>
+    <renderer type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
+    	<property name="labelTerminator" value=":"/>
+    </renderer>
 
     <!--@ A tabular presentation for an object. This consist of a table were each row presents one
           of the object's slots. The slot's name is shown in the left column and the corresponding 
           value in the right column. -->
-    <renderer type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer"/>
+    <renderer type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
+    	<property name="labelTerminator" value=":"/>
+    </renderer>
   
     <!--@ The template layout is used when you specify the template attribute of a renderer's tag. It delegates
           the presentation of the object to a JSP that is extended with the <tt>fenix-template.tld</tt>. -->
@@ -81,7 +85,6 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer"/>
     
     <renderer type="java.lang.String" layout="escapedNewLineAware" class="net.sourceforge.fenixedu.presentationTier.renderers.NewlineAwareStringRenderer"/>
-       
     
     <renderer type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
     <renderer type="int" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
@@ -149,12 +152,16 @@ Documentation:
     <!-- input -->
 
     <!--@ The default layout for editing objects.  -->  
-    <renderer mode="input" type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
+    	<property name="labelTerminator" value=":"/>
+    </renderer>
 
     <!--@ Allows an object to be editing in a tabular way, that is, labels are presented in the left column of the table
           and slot editors are presented in the right column. Additionally validation errors messages are presented to the
           right of the editor. -->  
-    <renderer mode="input" type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
+    	<property name="labelTerminator" value=":"/>
+    </renderer>
     
     <!--@ This layout allows several slots to be edited without a specific organization. Each slot's editor e shown after the
           previous. You can shoose to present the slot's label or not. -->

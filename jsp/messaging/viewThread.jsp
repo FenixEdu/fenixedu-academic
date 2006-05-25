@@ -15,8 +15,15 @@
 		<logic:present name="person">
 			<logic:present name="messages">			
 				<bean:define id="conversationMessages" name="thread" property="conversationMessages" />
+					<em>Fórum <bean:write name="forum" property="name"/></em>
 					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.title"/></h2>
 					
+					<p class="mbottom0">
+					<html:link action="<%= contextPrefix + "method=viewForum&forumId="+ forumId %>">
+						Voltar ao fórum
+					</html:link>
+					</p>
+<!--					
 					<html:link action="<%= contextPrefix + "method=viewForum&forumId="+ forumId %>">
 						<bean:write name="forum" property="name"/>
 					</html:link>
@@ -25,14 +32,16 @@
 					
 					<br/><br/>		
 					
+					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.Messages"/></h2>
+-->
+
 					<fr:view name="thread" layout="tabular" schema="conversationThread.view-with-subject-creation-date-and-message-count">
 						<fr:layout>
-						    <fr:property name="classes" value="style1"/>
-				      		<fr:property name="columnClasses" value="listClasses,"/>
+						    <fr:property name="classes" value="tstyle5 thlight thright"/>
 						</fr:layout>
 					</fr:view>
-					
-					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.Messages"/></h2>
+
+
 
 					<logic:notEqual name="showReplyBox" value="true">
 						<logic:equal name="loggedPersonCanWrite" value="true">
@@ -41,12 +50,18 @@
 							</html:link>
 						</logic:equal>
 					</logic:notEqual>
-										
+
+
+
 					<logic:equal name="showReplyBox" value="true">						
 						<fr:create id="createMessage"
-								type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean" layout="tabular"
+								type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean"
 					           schema="conversationMessage.create"
 					           action="<%= contextPrefix + "method=createMessage&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false&goToLastPage=true" %>">
+					           
+					            <fr:layout name="tabular">
+        							<fr:property name="classes" value="thlight mtop1"/>
+							    </fr:layout>
 					
 								<fr:hidden slot="creator" name="person"/>
 								<fr:hidden slot="conversationThread" name="thread"/>
@@ -55,12 +70,13 @@
 								</logic:present>
 					           <fr:destination name="cancel" path="<%= contextPrefix + "method=viewThread&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false" %>"/>
 						</fr:create>
+						<br/>
 					</logic:equal>
 					
-					<br/><br/>
-				
+
+				    <p class="mbottom0">
 					<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>	
-					<strong><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/></strong>&nbsp;
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/>
 					<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
 						<logic:equal name="currentPageNumberString" value="<%=pageNumber.toString()%>">
 							<bean:write name="pageNumber"/>
@@ -71,29 +87,30 @@
 							</html:link>			
 						</logic:notEqual>
 					</logic:iterate>
-					<br/><br/>
+					</p>
 								
 					
 					<logic:iterate indexId="currentMessageId" id="conversationMessage" name="messages" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
 						<html:link linkName="<%=currentMessageId.toString()%>"/>
 						<fr:view name="conversationMessage" layout="tabular" schema="conversationMessage.view-with-author-creationDate-and-body">			
-						<fr:layout>
+							<fr:layout>
 								<fr:property name="style" value="width:100%"/>
-							    <fr:property name="classes" value="style1"/>
-					      		<fr:property name="columnClasses" value="listClasses,"/>
+							    <fr:property name="classes" value="tstyle4 thlight thright mbottom0"/>
+							    <fr:property name="columnClasses" value="width8em,"/>
 							</fr:layout>
 						</fr:view>
 						<logic:equal name="loggedPersonCanWrite" value="true">
 							<bean:define id="quotedMessageId" name="conversationMessage" property="idInternal" />
+							<p class="mtop05">
 							<html:link action="<%=contextPrefix.toString() + "method=prepareCreateMessage&showReplyBox=true&goToLastPage=true&threadId=" + threadId + "&forumId=" + forumId + "&quotedMessageId=" + quotedMessageId%>"> 
 								<bean:message key="messaging.viewThread.quote" bundle="MESSAGING_RESOURCES"/>
 							</html:link>
+							</p>
 						</logic:equal>
-						<br/>
-						<br/>
 					</logic:iterate>
-					
-					<strong><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/></strong>&nbsp;
+
+<!--
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/>
 					<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>
 					<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
 						<logic:equal name="currentPageNumberString" value="<%=pageNumber.toString()%>">
@@ -105,7 +122,8 @@
 							</html:link>			
 						</logic:notEqual>
 					</logic:iterate>
-					
+-->
+
 				</logic:present>
 		</logic:present>
 	</logic:present>
