@@ -127,29 +127,31 @@ public class OJBMetadataGenerator {
                 Slot slot = slots.next();
                 String slotName = slot.getName();
 
-                FieldDescriptor fieldDescriptor = new FieldDescriptor(classDescriptor, fieldID++);
-                fieldDescriptor.setColumnName(StringFormatter.convertToDBStyle(slotName));
-                // System.out.println(">> " + slot.getType());
-                // System.out.println("\t" +
-                // java2JdbcConversion.get(slot.getType()));
-                fieldDescriptor.setColumnType(rbJDBCTypes.getString(slot.getType()).trim());
+                if(classDescriptor.getFieldDescriptorByName(slotName) == null){
+                    FieldDescriptor fieldDescriptor = new FieldDescriptor(classDescriptor, fieldID++);
+                    fieldDescriptor.setColumnName(StringFormatter.convertToDBStyle(slotName));
+                    // System.out.println(">> " + slot.getType());
+                    // System.out.println("\t" +
+                    // java2JdbcConversion.get(slot.getType()));
+                    fieldDescriptor.setColumnType(rbJDBCTypes.getString(slot.getType()).trim());
 
-                fieldDescriptor.setAccess("readwrite");
+                    fieldDescriptor.setAccess("readwrite");
 
-                try {
-                    String conversor = rbConversors.getString(slot.getType()).trim();
-                    fieldDescriptor.setFieldConversionClassName(conversor);
-                } catch (MissingResourceException e) {
+                    try {
+                        String conversor = rbConversors.getString(slot.getType()).trim();
+                        fieldDescriptor.setFieldConversionClassName(conversor);
+                    } catch (MissingResourceException e) {
+                    }
+
+                    if (slotName.equals("idInternal")) {
+                        fieldDescriptor.setPrimaryKey(true);
+                        fieldDescriptor.setAutoIncrement(true);
+                    }
+                    PersistentField persistentField = new FenixPersistentField(persistentFieldClass,
+                            slotName);
+                    fieldDescriptor.setPersistentField(persistentField);
+                    classDescriptor.addFieldDescriptor(fieldDescriptor);
                 }
-
-                if (slotName.equals("idInternal")) {
-                    fieldDescriptor.setPrimaryKey(true);
-                    fieldDescriptor.setAutoIncrement(true);
-                }
-                PersistentField persistentField = new FenixPersistentField(persistentFieldClass,
-                        slotName);
-                fieldDescriptor.setPersistentField(persistentField);
-                classDescriptor.addFieldDescriptor(fieldDescriptor);
 
             }
 
