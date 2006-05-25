@@ -20,10 +20,13 @@ import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -195,17 +198,14 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         request.setAttribute("degreeTypes", degreeTypes);
     }
 
-    private void readAndSetDegreeCurricularPlans(HttpServletRequest request, final String degreeType) {
-        final BolonhaDegreeType bolonhaDegreeType = BolonhaDegreeType.valueOf(degreeType);
+    private void readAndSetDegreeCurricularPlans(HttpServletRequest request, final String degreeTypeName) {
         final List<LabelValueBean> degreeCurricularPlans = new ArrayList<LabelValueBean>();
-        for (final DegreeCurricularPlan degreeCurricularPlan : rootDomainObject
-                .getDegreeCurricularPlansSet()) {
-            if (degreeCurricularPlan.getDegree().isBolonhaDegree()
-                    && degreeCurricularPlan.getDegree().getBolonhaDegreeType() == bolonhaDegreeType) {
-                degreeCurricularPlans.add(new LabelValueBean(degreeCurricularPlan.getDegree()
-                        .getName()
-                        + " - " + degreeCurricularPlan.getName(), degreeCurricularPlan.getIdInternal()
-                        .toString()));
+        for (final DegreeCurricularPlan degreeCurricularPlan : rootDomainObject.getDegreeCurricularPlansSet()) {
+            if (degreeCurricularPlan.getDegree().getDegreeType().name().equals(degreeTypeName)) {
+                degreeCurricularPlans.add(
+                        new LabelValueBean(
+                                degreeCurricularPlan.getDegree().getName() + " > " + degreeCurricularPlan.getName(), 
+                                degreeCurricularPlan.getIdInternal().toString()));
             }
         }
         Collections.sort(degreeCurricularPlans, new BeanComparator("label"));
@@ -231,4 +231,29 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         saveMessages(request, actionMessages);
     }
 
+    public ActionForward deleteExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+        DynaActionForm deleteForm = (DynaActionForm) form;
+        List<Integer> executionDegreesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
+
+        try {
+            Object args[] = { executionDegreesIds };
+            List<String> undeletedExecutionDegreesYears = (List<String>) ServiceUtils.executeService(getUserView(request), "DeleteExecutionDegreesOfDegreeCurricularPlan", args);
+
+            if (!undeletedExecutionDegreesYears.isEmpty()) {
+                ActionErrors actionErrors = new ActionErrors();
+                for (String undeletedExecutionDegreesYear : undeletedExecutionDegreesYears) {
+                    // Create an ACTION_ERROR for each EXECUTION_DEGREE
+                    ActionError error = new ActionError("errors.invalid.delete.not.empty.execution.degree", undeletedExecutionDegreesYears);
+                    actionErrors.add("errors.invalid.delete.not.empty.execution.degree", error);
+                }
+                saveErrors(request, actionErrors);
+            }
+
+            return readExecutionDegrees(mapping, form, request, response);
+        
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+    }
+    
 }
