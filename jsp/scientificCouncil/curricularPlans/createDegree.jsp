@@ -36,7 +36,7 @@
 
 		<h:outputText value="<p><label><span class='required'>*</span> #{scouncilBundle['acronym']}:</label>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText id="acronym" value="#{DegreeManagement.acronym}" maxlength="6" size="6"/>
+			<h:inputText id="acronym" value="#{DegreeManagement.acronym}" maxlength="9" size="9"/>
 			<h:message for="acronym" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>

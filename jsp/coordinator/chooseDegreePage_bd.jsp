@@ -27,7 +27,11 @@
 
 		<tr>
 		   <td class="listClasses">
-				<bean:message bundle="ENUMERATION_RESOURCES" key="<%=((InfoDegreeCurricularPlanWithDegree) infoDegreeCurricularPlan).getInfoDegree().getTipoCurso().toString()%>" />&nbsp;<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
+				<bean:message bundle="ENUMERATION_RESOURCES" key="<%=((InfoDegreeCurricularPlanWithDegree) infoDegreeCurricularPlan).getInfoDegree().getTipoCurso().toString()%>" />
+				&nbsp;
+				<bean:message bundle="GLOBAL_RESOURCES" key="in"/>
+				&nbsp;
+				<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 		   </td>
 		   <td class="listClasses">
 				<html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
