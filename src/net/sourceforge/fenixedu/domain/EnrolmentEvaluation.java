@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
@@ -248,8 +250,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public void confirmSubmission(Employee employee, String observation) {
+    	confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, employee, observation);
+    }
+    
+    public void confirmSubmission(EnrolmentEvaluationState enrolmentEvaluationState, Employee employee, String observation) {
         
-        setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ); // TODO:
+        setEnrolmentEvaluationState(enrolmentEvaluationState); // TODO:
         setWhen(new Date());
         setEmployee(employee);
         setObservation(observation);
@@ -322,7 +328,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
             EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment,
                     getEnrolmentEvaluationType());
-            enrolmentEvaluation.confirmSubmission(employee, observation);
+            enrolmentEvaluation.confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, employee, observation);
             enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
 
         } else {
@@ -332,7 +338,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
                 EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment,
                         evaluationType);
                 enrolmentEvaluation.edit(responsibleFor, grade, evaluationAvailableDate, examDate);
-                enrolmentEvaluation.confirmSubmission(employee, observation);
+                enrolmentEvaluation.confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, employee, observation);
             }
 
             else
@@ -374,6 +380,16 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     
     public Student getStudent() {
         return this.getEnrolment().getStudentCurricularPlan().getStudent();
+    }
+    
+    public MarkSheet getRectificationMarkSheet() {
+    	if(!this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ)) {
+    		return null;
+    	}
+    	List<EnrolmentEvaluation> evaluations = this.getEnrolment().getRectifiedAndRectificationEvaluations(this.getMarkSheet().getMarkSheetType());
+    	int index = evaluations.indexOf(this);
+    	EnrolmentEvaluation rectificationEvaluation = evaluations.get(++index);
+    	return rectificationEvaluation.getMarkSheet();
     }
 
 }

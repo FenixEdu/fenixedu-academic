@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -34,9 +36,9 @@ import org.apache.commons.lang.StringUtils;
 public class Enrolment extends Enrolment_Base {
 
     private Integer accumulatedWeight;
-//    static {
-//        EnrolmentEvaluation.EnrolmentEnrolmentEvaluation.addListener(new EnrolmentEnrolmentEvaluationListener());
-//    }
+    /*static {
+        EnrolmentEvaluation.EnrolmentEnrolmentEvaluation.addListener(new EnrolmentEnrolmentEvaluationListener());
+    }*/
     
     public Enrolment() {
     	super();
@@ -687,7 +689,20 @@ public class Enrolment extends Enrolment_Base {
 		}
     	return result.last();
     }
-
+    
+    public List<EnrolmentEvaluation> getRectifiedAndRectificationEvaluations(MarkSheetType markSheetType){
+    	List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>();
+    	for (EnrolmentEvaluation evaluation : this.getEvaluationsSet()) {
+			if((evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ) || evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ))) { 
+				if(evaluation.getMarkSheet().getMarkSheetType().equals(markSheetType)) {
+					evaluations.add(evaluation);
+				}
+			}
+		}
+    	Collections.sort(evaluations, new BeanComparator("when"));
+    	return evaluations;
+    }
+    
     public Attends getAttendsByExecutionCourse(ExecutionCourse executionCourse) {
         for (Attends attends : this.getAttendsSet()) {
             if (attends.getDisciplinaExecucao() == executionCourse) {

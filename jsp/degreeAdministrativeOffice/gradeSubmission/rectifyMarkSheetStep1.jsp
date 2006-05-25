@@ -31,18 +31,28 @@
 
 	<strong><bean:message key="label.rectifyMarkSheet.chooseStudent"/></strong><br/><br/>
 	a) <bean:message key="label.rectifyMarkSheet.chooseStudent.studentNumber"/><br/><br/>
+
+
+	<fr:hasMessages for="step1">
+		<fr:messages>
+			<span class="error0"><fr:message/></span>
+		</fr:messages>
+	</fr:hasMessages>
+
+	<logic:messagesPresent message="true">
+		<html:messages id="messages" message="true">
+			<span class="error0"><bean:write name="messages" /></span>
+		</html:messages>
+	</logic:messagesPresent>
 	<table>
 		<tr>
 			<td>
-				<fr:edit nested="true" name="rectifyBean" schema="markSheet.rectify.one" />
+				<fr:edit id="step1" nested="true" name="rectifyBean" schema="markSheet.rectify.one" layout="tabular">
+					<fr:layout>
+						<fr:property name="hideValidators" value="true"/>
+					</fr:layout>
+				</fr:edit>
 			</td>
-			<logic:messagesPresent message="true">
-				<td>
-					<html:messages id="messages" message="true">
-						<span class="error0"><bean:write name="messages" /></span>
-					</html:messages>
-				</td>
-			</logic:messagesPresent>
 			<td>
 				<html:submit styleClass="inputbutton"><bean:message key="label.continue"/></html:submit>
 			</td>				

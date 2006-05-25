@@ -28,8 +28,11 @@
 	<bean:define id="evaluationID" name="rectifyBean" property="enrolmentEvaluation.idInternal" />
 	<html:hidden name="markSheetManagementForm" property="evaluationID" value="<%= evaluationID.toString() %>"  />
 
-	<fr:edit nested="true" name="rectifyBean" schema="markSheet.rectify.two" layout="tabular"/>			
+	<fr:edit id="step2" nested="true" name="rectifyBean" schema="markSheet.rectify.two" layout="tabular"/>			
 
-	<html:submit styleClass="inputbutton"><bean:message key="label.actual.grade"/></html:submit>
+	<br/>
+	<bean:message key="message.markSheet.confirm"/>
+	<br/><br/>
+	<html:submit styleClass="inputbutton"><bean:message key="label.rectify"/></html:submit>
 	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.cancel"/></html:cancel>
 </fr:form>

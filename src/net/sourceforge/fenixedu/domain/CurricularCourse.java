@@ -1055,15 +1055,19 @@ public class CurricularCourse extends CurricularCourse_Base {
                     markSheetType, MarkSheetState.NOT_CONFIRMED, submittedByTeacher, markSheetEnrolmentEvaluationBeans);
     }
 
-    public MarkSheet rectifyEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation, Date evaluationDate, String grade, String reason) {
+    public MarkSheet rectifyEnrolmentEvaluation(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation, Date evaluationDate, String grade, String reason) {
         
-        if (evaluationDate == null || grade == null || grade.length() == 0) {
+        if (markSheet == null || evaluationDate == null || grade == null || grade.length() == 0) {
             throw new DomainException("error.markSheet.invalid.arguments");
         }
-        final MarkSheet markSheet = enrolmentEvaluation.getMarkSheet();
-        if (markSheet == null) {
-            throw new DomainException("error.enrolmentEvaluation.doesnot.has.marksheet");
+
+        if(!markSheet.hasEnrolmentEvaluations(enrolmentEvaluation)) {
+        	throw new DomainException("error.no.student.in.markSheet");
         }
+        
+    	if(enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ)) {
+    		throw new DomainException("error.markSheet.student.alreadyRectified");
+    	}
 
         if (markSheet.isNotConfirmed()) {
             throw new DomainException("error.markSheet.must.be.confirmed");

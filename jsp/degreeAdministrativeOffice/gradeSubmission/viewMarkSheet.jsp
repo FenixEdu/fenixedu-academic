@@ -48,7 +48,7 @@
 				</td>
 				<td align="left">
 					<% if(enrolmentEvaluation.getEnrolmentEvaluationState() == net.sourceforge.fenixedu.util.EnrolmentEvaluationState.RECTIFIED_OBJ) { %>
-						<html:link action='<%= "/markSheetManagement.do?method=prepareViewRectificationMarkSheet"%>' paramId="eeID" paramName="enrolmentEvaluation" paramProperty="idInternal">
+						<html:link action='<%= "/markSheetManagement.do?method=prepareViewRectificationMarkSheet"%>' paramId="evaluationID" paramName="enrolmentEvaluation" paramProperty="idInternal">
 							<bean:message key="label.rectified"/>
 						</html:link>
 					<% } %>

@@ -267,14 +267,28 @@ public class MarkSheet extends MarkSheet_Base {
     }
 
     public void confirm(Employee employee) {
+    	if(employee == null) {
+    		throw new DomainException("error.markSheet.invalid.arguments");
+    	}
         if (isNotConfirmed()) {
+        	MarkSheetState markSheetState = null;
+        	EnrolmentEvaluationState enrolmentEvaluationState = null;
+        	if(this.getMarkSheetState() == MarkSheetState.NOT_CONFIRMED) {
+        		markSheetState = MarkSheetState.CONFIRMED;
+        		enrolmentEvaluationState = EnrolmentEvaluationState.FINAL_OBJ;
+        	} else {
+        		markSheetState = MarkSheetState.RECTIFICATION;
+        		enrolmentEvaluationState = EnrolmentEvaluationState.RECTIFICATION_OBJ;
+        	}
             setEmployee(employee);
             for (final EnrolmentEvaluation enrolmentEvaluation : this.getEnrolmentEvaluationsSet()) {
-                enrolmentEvaluation.confirmSubmission(employee, "");
+                enrolmentEvaluation.confirmSubmission(enrolmentEvaluationState, employee, "");
             }
             setConfirmationDate(new Date());
-            setMarkSheetState(hasMarkSheetState(MarkSheetState.NOT_CONFIRMED) ? MarkSheetState.CONFIRMED
-                    : MarkSheetState.RECTIFICATION);
+            setMarkSheetState(markSheetState);
+            
+        } else {
+        	throw new DomainException("error.markSheet.already.confirmed");
         }
     }
 

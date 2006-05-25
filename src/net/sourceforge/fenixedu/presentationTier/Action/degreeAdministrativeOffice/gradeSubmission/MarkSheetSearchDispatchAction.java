@@ -15,7 +15,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchResultBean;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetState;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -124,6 +126,34 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             stringBuilder.append("&mst=").append(searchBean.getMarkSheetType().getName());
         }
         return stringBuilder.toString();
+    }
+    
+    public ActionForward prepareViewRectificationMarkSheet(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        DynaActionForm form = (DynaActionForm) actionForm;
+        Integer evaluationID = (Integer) form.get("evaluationID");
+        EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(evaluationID);
+        MarkSheet markSheet = enrolmentEvaluation.getRectificationMarkSheet();
+        
+        request.setAttribute("markSheet", markSheet);
+        return mapping.findForward("viewMarkSheet");    	
+    }
+    
+    public ActionForward printMarkSheet(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)  {
+        DynaActionForm form = (DynaActionForm) actionForm;
+        Integer markSheetID = (Integer) form.get("msID");
+        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+        try {
+			ServiceUtils.executeService(getUserView(request), "PrintMarkSheet", new Object[] { markSheet });
+		} catch (FenixFilterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FenixServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return null;
     }
 
 }
