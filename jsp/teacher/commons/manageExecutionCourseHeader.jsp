@@ -11,14 +11,11 @@
 		<bean:write name="executionCourse" property="nome"/>
 	</h2>
 
+	(&nbsp;
 	<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
-		<small>
-			<em>
-				<bean:write name="degree" property="sigla"/>
-			</em>
-		</small>
-		<br/>
-	</logic:iterate> 
+			<em><bean:write name="degree" property="sigla"/>&nbsp;</em>
+	</logic:iterate>
+	)
        
 	<hr style='color:#ccc'/>
 

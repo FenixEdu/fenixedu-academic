@@ -10,10 +10,12 @@
 &nbsp;<bean:write name="component" property="executionCourse.nome"/></h2>
 
 	<logic:present  name="component" property="associatedDegrees">    
-		     <logic:iterate id="degree" name="component" property="degrees">
-				<small><em> <bean:write name="degree" property="sigla"/></em></small> <br/>
-		      </logic:iterate> 
-       </logic:present>    
+			(&nbsp;
+			<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
+					<em><bean:write name="degree" property="sigla"/>&nbsp;</em>
+			</logic:iterate>
+			)
+	</logic:present>    
        
        <hr style='color:#ccc'/>
 </logic:present>
