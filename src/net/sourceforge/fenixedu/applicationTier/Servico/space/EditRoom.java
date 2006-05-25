@@ -11,7 +11,7 @@ public class EditRoom extends Service {
     	final RoomInformation roomInformation = (RoomInformation) rootDomainObject.readSpaceInformationByOID(roomInformationID);
         if (asNewVersion.booleanValue()) {
         	final Room room = (Room) roomInformation.getSpace();
-        	room.edit(name);
+//        	room.edit(name);
         } else {
         	roomInformation.edit(name);
         }

@@ -8,7 +8,7 @@ public class CreateSpaceInformation extends Service {
 
     public void run(final Integer spaceInformationID) throws ExcepcaoPersistencia {
         final SpaceInformation spaceInformation = rootDomainObject.readSpaceInformationByOID(spaceInformationID);
-        spaceInformation.createNewSpaceInformation();
+//        spaceInformation.createNewSpaceInformation();
     }
 
 }

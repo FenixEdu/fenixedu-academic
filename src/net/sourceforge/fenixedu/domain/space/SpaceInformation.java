@@ -15,7 +15,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
         setOjbConcreteClass(this.getClass().getName());
     }
 
-    public abstract void createNewSpaceInformation();
+    //public abstract void createNewSpaceInformation();
 
     public void delete() {
         if (getSpace().getSpaceInformationsCount() == 1) {

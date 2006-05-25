@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.domain.DomainTestBase;
 public class SpaceInformationTest extends DomainTestBase {
 
     private class SpaceInformationImpl extends SpaceInformation {
-		@Override
-		public void createNewSpaceInformation() {
-		}
+//		@Override
+//		public void createNewSpaceInformation() {
+//		}
     }
 
     public void testSpaceInformationConstructor() {

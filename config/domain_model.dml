@@ -2177,7 +2177,6 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 	}
 
 	class net.sourceforge.fenixedu.domain.space.RoomInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
-/*
 		Integer blueprintNumber;
 		String identification;
 		String description;
@@ -2189,18 +2188,6 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 		Boolean securityQuality;
 		Boolean ageQuality;
 		String observations;
-*/
-		String name;
-		BigDecimal area;
-		Boolean hight;
-		Boolean illumination;
-		Boolean distanceFromSanitaryInstalations;
-		Boolean security;
-		Boolean age;
-		String observations;
-
-		Integer capacityForLessons;
-		Integer capacityForExams;
 	}
 
 

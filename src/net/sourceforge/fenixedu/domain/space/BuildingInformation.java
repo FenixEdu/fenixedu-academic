@@ -10,11 +10,11 @@ public class BuildingInformation extends BuildingInformation_Base {
         setName(buildingName);
     }
 
-    @Override
-    public void createNewSpaceInformation() {
-        final Building building = (Building) getSpace();
-        new BuildingInformation(building, getName());
-    }
+//    @Override
+//    public void createNewSpaceInformation() {
+//        final Building building = (Building) getSpace();
+//        new BuildingInformation(building, getName());
+//    }
 
     @Override
     public void setName(final String name) {
