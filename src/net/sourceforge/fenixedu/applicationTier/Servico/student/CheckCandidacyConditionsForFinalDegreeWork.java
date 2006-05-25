@@ -11,7 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -41,7 +43,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
             throw new OutOfCandidacyPeriodException(start + " - " + end);
         }
 
-        Student student = Student.readByUsername(userView.getUtilizador());
+        Student student = findStudent(userView.getPerson());
 
         int numberOfCompletedCourses = student.countCompletedCoursesForActiveUndergraduateCurricularPlan();
         Integer numberOfNecessaryCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
@@ -55,7 +57,15 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
         return true;
     }
 
-    public class CandidacyPeriodNotDefinedException extends FenixServiceException {
+    private Student findStudent(final Person person) {
+    	if (person != null) {
+    		final Student student = person.getStudentByType(DegreeType.DEGREE);
+    		return student == null ? person.getStudentByType(DegreeType.MASTER_DEGREE) : student;
+    	}
+    	return null;
+	}
+
+	public class CandidacyPeriodNotDefinedException extends FenixServiceException {
 
         public CandidacyPeriodNotDefinedException() {
             super();
