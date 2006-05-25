@@ -11,9 +11,7 @@
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
 		<p><em class="infoop4">
 		<bean:message bundle="ENUMERATION_RESOURCES" key="<%=((InfoExecutionDegree)infoExecutionDegree).getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString()%>" />
-		&nbsp;
 		<bean:message bundle="GLOBAL_RESOURCES" key="in"/>
-		&nbsp;
 		<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome" />&nbsp;&nbsp;>&nbsp;&nbsp;
 		<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.name" />
 		</em></p>
