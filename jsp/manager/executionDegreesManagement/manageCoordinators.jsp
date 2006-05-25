@@ -8,7 +8,7 @@
 </html:messages>
 
 <html:form action="/executionDegreesManagement">
-	<bean:define id="degreeType" name="executionDegree" property="degreeCurricularPlan.degree.bolonhaDegreeType.name" />
+	<bean:define id="degreeType" name="executionDegree" property="degreeCurricularPlan.degree.degreeType.name" />
 	<bean:define id="degreeCurricularPlanID" name="executionDegree" property="degreeCurricularPlan.idInternal" />
 	<bean:define id="executionDegreeID" name="executionDegree" property="idInternal" />
 
