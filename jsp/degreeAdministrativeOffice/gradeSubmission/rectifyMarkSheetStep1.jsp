@@ -85,24 +85,22 @@
 			<bean:define id="msID" name="msID"/>		
 			<tr>
 				<td>
-					<logic:notEqual name="evaluation" property="enrolmentEvaluationState" value="<%= EnrolmentEvaluationState.RECTIFIED_OBJ.toString() %>">
+					<% if(evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ) || evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ)){ %>
 						<html:link action='<%= "/rectifyMarkSheet.do?method=rectifyMarkSheetStepOneByEvaluation&evaluationID=" +  evaluationID + "&msID=" + msID  %>'>
 							<bean:write name="evaluation" property="enrolment.studentCurricularPlan.student.number"/>
 						</html:link>					
-					</logic:notEqual>
-					<logic:equal name="evaluation" property="enrolmentEvaluationState" value="<%= EnrolmentEvaluationState.RECTIFIED_OBJ.toString() %>">
+					<% } else { %>
 						<bean:write name="evaluation" property="enrolment.studentCurricularPlan.student.number"/>					
-					</logic:equal>
+					<% }  %>						
 				</td>
 				<td>
-					<logic:notEqual name="evaluation" property="enrolmentEvaluationState" value="<%= EnrolmentEvaluationState.RECTIFIED_OBJ.toString() %>">
+					<% if(evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ) || evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ)){ %>
 						<html:link action='<%= "/rectifyMarkSheet.do?method=rectifyMarkSheetStepOneByEvaluation&evaluationID=" +  evaluationID + "&msID=" + msID %>'>
 							<bean:write name="evaluation" property="enrolment.studentCurricularPlan.student.person.name"/>		
 						</html:link>										
-					</logic:notEqual>
-					<logic:equal name="evaluation" property="enrolmentEvaluationState" value="<%= EnrolmentEvaluationState.RECTIFIED_OBJ.toString() %>">
+					<% } else { %>
 						<bean:write name="evaluation" property="enrolment.studentCurricularPlan.student.person.name"/>		
-					</logic:equal>
+					<% }  %>						
 				</td>
 				<td>
 					<dt:format pattern="dd/MM/yyyy">
@@ -114,8 +112,8 @@
 				</td>
 				<td>				
 					<logic:equal name="evaluation" property="enrolmentEvaluationState" value="<%= EnrolmentEvaluationState.RECTIFIED_OBJ.toString() %>">
-						<html:link action="/createMarkSheet.do?method=rectifyMarkSheetStepOne" paramId="enrolmentID" paramName="evaluation" paramProperty="enrolment.idInternal">
-							<bean:message key="label.rectified" />		
+						<html:link action="/rectifyMarkSheet.do?method=showRectificationHistoric" paramId="evaluationID" paramName="evaluationID">
+							<bean:message key="label.markSheet.rectificationHistoric" />		
 						</html:link>										
 					</logic:equal>
 					&nbsp;
