@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.DateTime;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
 
@@ -254,9 +254,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
     
     public void confirmSubmission(EnrolmentEvaluationState enrolmentEvaluationState, Employee employee, String observation) {
+        if(enrolmentEvaluationState == EnrolmentEvaluationState.RECTIFICATION_OBJ) {
+            this.getEnrolment().alterEvaluationStateToRectified(this.getMarkSheet().getMarkSheetType());
+        }
         
         setEnrolmentEvaluationState(enrolmentEvaluationState); // TODO:
-        setWhen(new Date());
+        setWhenDateTime(new DateTime());
         setEmployee(employee);
         setObservation(observation);
 
@@ -386,7 +389,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     	if(!this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ)) {
     		return null;
     	}
-    	List<EnrolmentEvaluation> evaluations = this.getEnrolment().getRectifiedAndRectificationEvaluations(this.getMarkSheet().getMarkSheetType());
+    	List<EnrolmentEvaluation> evaluations = this.getEnrolment().getConfirmedEvaluations(this.getMarkSheet().getMarkSheetType());
     	int index = evaluations.indexOf(this);
     	EnrolmentEvaluation rectificationEvaluation = evaluations.get(++index);
     	return rectificationEvaluation.getMarkSheet();

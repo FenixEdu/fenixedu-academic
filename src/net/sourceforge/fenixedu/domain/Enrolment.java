@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -26,6 +25,7 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 /**
  * @author dcs-rjao
@@ -674,32 +674,24 @@ public class Enrolment extends Enrolment_Base {
         }
     }
     
-    public void alterFromRectifiedToFinalState(EnrolmentEvaluationType enrolmentEvaluationType) {
-    	final EnrolmentEvaluation enrolmentEvaluation = getLatestRectifiedEvaluation(enrolmentEvaluationType);
-    	enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
-    	enrolmentEvaluation.setWhen(new Date());
+    public void alterFromTemporaryToConfirmedState(EnrolmentEvaluationType enrolmentEvaluationType, MarkSheetType markSheetType) {
+    	final EnrolmentEvaluation enrolmentEvaluation = getConfirmedEnrolmentEvaluationByStateAndMarkSheetType(EnrolmentEvaluationState.TEMPORARY_OBJ, markSheetType);
+        if (enrolmentEvaluation != null) {
+            enrolmentEvaluation.setEnrolmentEvaluationState((enrolmentEvaluation.getMarkSheet().getMarkSheetState() == MarkSheetState.RECTIFICATION) ? EnrolmentEvaluationState.RECTIFICATION_OBJ : EnrolmentEvaluationState.FINAL_OBJ);
+            enrolmentEvaluation.setWhenDateTime(new DateTime());
+        }
     }
     
-    private EnrolmentEvaluation getLatestRectifiedEvaluation(EnrolmentEvaluationType enrolmentEvaluationType) {
-    	final SortedSet<EnrolmentEvaluation> result = new TreeSet<EnrolmentEvaluation>(new BeanComparator("when"));
-    	for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
-			if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(enrolmentEvaluationType) && enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ)) {
-				result.add(enrolmentEvaluation);
-			}
-		}
-    	return result.last();
-    }
     
-    public List<EnrolmentEvaluation> getRectifiedAndRectificationEvaluations(MarkSheetType markSheetType){
+    public List<EnrolmentEvaluation> getConfirmedEvaluations(MarkSheetType markSheetType){
     	List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>();
-    	for (EnrolmentEvaluation evaluation : this.getEvaluationsSet()) {
-			if((evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ) || evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ))) { 
-				if(evaluation.getMarkSheet().getMarkSheetType().equals(markSheetType)) {
-					evaluations.add(evaluation);
-				}
-			}
-		}
-    	Collections.sort(evaluations, new BeanComparator("when"));
+        for (EnrolmentEvaluation evaluation : this.getEvaluationsSet()) {
+            if(evaluation.hasMarkSheet() && evaluation.getMarkSheet().getMarkSheetType() == markSheetType && evaluation.getMarkSheet().isConfirmed()) {
+                evaluations.add(evaluation);
+            }
+        }
+
+        Collections.sort(evaluations, new BeanComparator("when"));
     	return evaluations;
     }
     
@@ -707,6 +699,23 @@ public class Enrolment extends Enrolment_Base {
         for (Attends attends : this.getAttendsSet()) {
             if (attends.getDisciplinaExecucao() == executionCourse) {
                 return attends;
+            }
+        }
+        return null;
+    }
+
+    public void alterEvaluationStateToRectified(MarkSheetType markSheetType) {
+        EnrolmentEvaluation enrolmentEvaluation = getConfirmedEnrolmentEvaluationByStateAndMarkSheetType(EnrolmentEvaluationState.TEMPORARY_OBJ, markSheetType);
+        if(enrolmentEvaluation != null) {
+            enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED_OBJ);
+        }
+    }
+    
+    protected EnrolmentEvaluation getConfirmedEnrolmentEvaluationByStateAndMarkSheetType(EnrolmentEvaluationState enrolmentEvaluationState, MarkSheetType markSheetType) {
+        for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluations()) {
+            if(enrolmentEvaluation.hasMarkSheet() && enrolmentEvaluation.getMarkSheet().isConfirmed() && enrolmentEvaluation.getMarkSheet().getMarkSheetType() == markSheetType 
+                    && enrolmentEvaluation.getEnrolmentEvaluationState().equals(enrolmentEvaluationState)) {
+                return enrolmentEvaluation;
             }
         }
         return null;

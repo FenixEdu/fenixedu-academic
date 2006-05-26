@@ -1065,16 +1065,18 @@ public class CurricularCourse extends CurricularCourse_Base {
         	throw new DomainException("error.no.student.in.markSheet");
         }
         
-    	if(enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ)) {
-    		throw new DomainException("error.markSheet.student.alreadyRectified");
+        if(!enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ) 
+                && !enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ)) {
+    		throw new DomainException("error.markSheet.student.alreadyRectified", enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().getNumber().toString());
     	}
 
         if (markSheet.isNotConfirmed()) {
             throw new DomainException("error.markSheet.must.be.confirmed");
         }
-        enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED_OBJ);
+        enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
         enrolmentEvaluation.setWhen(new Date());
         enrolmentEvaluation.generateCheckSum();
+        //TODO: is necessary?
         markSheet.generateCheckSum();
 
         MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade);

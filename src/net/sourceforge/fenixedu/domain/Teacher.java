@@ -893,10 +893,8 @@ public class Teacher extends Teacher_Base {
         return false;
     }
     
-    public boolean isResponsibleOrCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan,
-            CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
-
+    public boolean isResponsibleOrCoordinatorFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
         return isResponsibleFor(curricularCourse, executionPeriod)
-                || isCoordinatorFor(degreeCurricularPlan, executionPeriod.getExecutionYear());
+                || isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod.getExecutionYear());
     }
 }
