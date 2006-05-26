@@ -59,6 +59,8 @@ public class Degree extends Degree_Base {
         this();
         commonFieldsChange(name, nameEn, acronym, gradeScale);
         newStructureFieldsChange(bolonhaDegreeType, ectsCredits, prevailingScientificArea);
+        
+        new DegreeInfo(this);
     }
 
     private void commonFieldsChange(String name, String nameEn, String code, GradeScale gradeScale) {
