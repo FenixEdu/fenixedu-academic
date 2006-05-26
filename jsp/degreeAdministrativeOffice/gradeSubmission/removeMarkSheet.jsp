@@ -16,7 +16,14 @@
 	<html:hidden property="mss" />
 	<html:hidden property="mst" />
 	
-	<fr:view name="markSheet" schema="markSheet.view" layout="tabular" />
+	<h2><bean:message key="label.markSheet.remove"/></h2>
+	
+	<fr:view name="markSheet" schema="markSheet.view">
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="style1"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
+	</fr:view>
 	<br/><br/>
 	<span class="warning0"><bean:message key="label.markSheet.removeMarkSheet"/></span>
 	<br/><br/>	

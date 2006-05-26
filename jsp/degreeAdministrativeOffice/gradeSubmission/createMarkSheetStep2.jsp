@@ -10,11 +10,14 @@
 <h3><bean:message key="label.createMarkSheet.step.one"/> &gt; <u><bean:message key="label.createMarkSheet.step.two"/></u></h3>
 
 <fr:view name="edit" 
-		schema="markSheet.view.step2"
-		layout="tabular">
+		schema="markSheet.view.step2">
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="style1"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
 </fr:view>
 
-<br/>
+<br/><br/>
 
 <logic:messagesPresent message="true">
 	<ul>
@@ -43,10 +46,12 @@
 			 schema="markSheet.create.step.two" layout="tabular-editable">
 		<fr:layout>
 			<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
+			<fr:property name="classes" value="style1"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
 		</fr:layout>
 		<fr:destination name="invalid" path="/createMarkSheet.do?method=createMarkSheetStepTwoInvalid"/>
 	</fr:edit>
 	<br/>
-	<html:submit><bean:message key="label.markSheet.submit" /></html:submit>
-	<html:cancel onclick="this.form.method.value='backSearchMarkSheet';"><bean:message key="button.cancel"/></html:cancel>
+	<html:submit styleClass="inputbutton"><bean:message key="label.markSheet.submit" /></html:submit>
+	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message key="button.cancel"/></html:cancel>
 </fr:form>

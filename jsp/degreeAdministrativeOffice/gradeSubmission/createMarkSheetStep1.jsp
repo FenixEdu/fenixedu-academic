@@ -24,5 +24,8 @@
 	<fr:destination name="postBack" path="/createMarkSheet.do?method=prepareSearchMarkSheetPostBack"/>
 	<fr:destination name="invalid" path="/createMarkSheet.do?method=prepareSearchMarkSheetInvalid"/>
 	<fr:destination name="cancel" path="/createMarkSheet.do?method=backSearchMarkSheet"/>
-	<fr:layout name="tabular"/>
+	<fr:layout name="tabular" >
+			<fr:property name="classes" value="style1"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+	</fr:layout>
 </fr:edit>

@@ -19,7 +19,12 @@
 	<html:hidden property="mss" />
 	<html:hidden property="mst" />
 	
-	<fr:view name="markSheet" schema="markSheet.view" layout="tabular" />
+	<fr:view name="markSheet" schema="markSheet.view">
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="style1"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
+	</fr:view>
 
 	<br/>
 	<table>

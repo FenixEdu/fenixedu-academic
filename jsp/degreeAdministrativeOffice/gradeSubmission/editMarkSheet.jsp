@@ -28,11 +28,22 @@
 		<br/>
 	</logic:messagesPresent>
 	
-	<fr:view name="edit" schema="markSheet.view.edit" layout="tabular" />
+	<fr:view name="edit" schema="markSheet.view.edit">
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="style1"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
+	</fr:view>
 	<br/>
 	<br/>
 	
-	<fr:edit id="edit-markSheet" name="edit" schema="markSheet.edit" layout="tabular" nested="true"/>
+	<fr:edit id="edit-markSheet" name="edit" schema="markSheet.edit">
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="style1"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
+	</fr:edit>
+	
 	<html:submit styleClass="inputbutton" onclick="this.form.method.value='updateMarkSheet';"><bean:message key="label.markSheet.update" /></html:submit>
 	<br/>
 	
@@ -46,6 +57,8 @@
 	             nested="true">
 			<fr:layout>
 				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
+				<fr:property name="classes" value="style1"/>
+		        <fr:property name="columnClasses" value="listClasses,,"/>
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
@@ -59,6 +72,8 @@
 	             nested="true">
 			<fr:layout>
 				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
+				<fr:property name="classes" value="style1"/>
+		        <fr:property name="columnClasses" value="listClasses,,"/>
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
