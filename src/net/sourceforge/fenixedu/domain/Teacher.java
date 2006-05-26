@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
@@ -343,6 +344,20 @@ public class Teacher extends Teacher_Base {
             result.add(coordinator.getExecutionDegree().getDegreeCurricularPlan());
         }
         return new ArrayList<DegreeCurricularPlan>(result);
+    }
+
+    public List<DegreeCurricularPlan> getCoordinatedActiveDegreeCurricularPlans() {
+        final Set<DegreeCurricularPlan> temp = new HashSet<DegreeCurricularPlan>();
+        for (Coordinator coordinator : getCoordinators()) {
+            DegreeCurricularPlan degreeCurricularPlan = coordinator.getExecutionDegree().getDegreeCurricularPlan(); 
+            if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
+                temp.add(degreeCurricularPlan);
+            }
+        }
+        
+        List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>(temp);
+        Collections.sort(result,DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
+        return result;
     }
 
     public List<ExecutionDegree> getCoordinatedExecutionDegrees() {
