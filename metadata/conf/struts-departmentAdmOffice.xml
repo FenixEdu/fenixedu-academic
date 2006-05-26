@@ -185,6 +185,7 @@
 			<form-property name="attributedByTeacher" type="java.lang.String[]"/>
 			<form-property name="attributions" type="java.lang.String[]"/>
 			<form-property name="otherExecutionDegreeID" type="java.lang.String"/>
+			<form-property name="attributionByTeachers" type="java.lang.Boolean"/>
 		</form-bean>
 
 		<form-bean name="finalDegreeWorkCandidacyPeriod" 
@@ -207,6 +208,7 @@
 			<form-property name="minimumNumberOfStudents" type="java.lang.String"/>
 			<form-property name="maximumNumberOfStudents" type="java.lang.String"/>
 			<form-property name="maximumNumberOfProposalCandidaciesPerGroup" type="java.lang.String"/>
+			<form-property name="attributionByTeachers" type="java.lang.Boolean"/>
 		</form-bean>
 
 		<!-- SUBMIT FINAL WORK PROPOSAL -->
