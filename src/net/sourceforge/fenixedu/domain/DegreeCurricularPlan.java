@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -42,16 +43,47 @@ import net.sourceforge.fenixedu.util.SituationName;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
-    public static final ComparatorChain DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_NAME_AND_DEGREE_TYPE = new ComparatorChain();
+    /**
+     * This might look a strange comparator, but the idea is to show a list of degree curricular plans according to, in the following order:
+     * 1. It's degree type
+     * 2. Reverse order of ExecutionDegrees
+     * 3. It's degree code (in order to roughly order them by prebolonha/bolonha) OR reverse order of their own name
+     * 
+     * For an example, see the coordinator's portal.
+     */
+    public static final Comparator DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE = new Comparator<DegreeCurricularPlan>() {
 
-    static {
-        DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("degree.degreeType.name"));
-        DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("name"));
-    }
+        public int compare(DegreeCurricularPlan degreeCurricularPlan1, DegreeCurricularPlan degreeCurricularPlan2) {
+            final int degreeTypeCompare = degreeCurricularPlan1.getDegree().getDegreeType().toString().compareTo(degreeCurricularPlan2.getDegree().getDegreeType().toString());
+            if (degreeTypeCompare != 0) {
+                return degreeTypeCompare;
+            }
+
+            int finalCompare = degreeCurricularPlan1.getDegree().getSigla().compareTo(degreeCurricularPlan2.getDegree().getSigla());
+            if (finalCompare == 0) {
+                finalCompare = degreeCurricularPlan2.getName().compareTo(degreeCurricularPlan1.getName());
+            }
+            
+            ExecutionDegree mostRecentExecutionDegree1 = degreeCurricularPlan1.getMostRecentExecutionDegree();
+            ExecutionDegree mostRecentExecutionDegree2 = degreeCurricularPlan2.getMostRecentExecutionDegree();
+            
+            if (mostRecentExecutionDegree1 == null && mostRecentExecutionDegree2 == null) {
+                return finalCompare;
+            } else if (mostRecentExecutionDegree1 == null ) {
+                return 1;
+            } else if (mostRecentExecutionDegree2 == null) {
+                return -1;
+            } else {
+                final int executionDegreeCompare = mostRecentExecutionDegree2.compareTo(mostRecentExecutionDegree1);
+                
+                return executionDegreeCompare == 0 ? finalCompare : executionDegreeCompare;
+            }
+        }
+        
+    };
     
     public DegreeCurricularPlan() {
         super();
