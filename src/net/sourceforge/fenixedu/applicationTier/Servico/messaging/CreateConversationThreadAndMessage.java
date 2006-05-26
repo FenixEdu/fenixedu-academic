@@ -8,18 +8,19 @@ import net.sourceforge.fenixedu.domain.messaging.Forum;
 
 public class CreateConversationThreadAndMessage extends ForumService {
     public CreateConversationThreadAndMessage() {
-	super();
+        super();
     }
 
     public void run(CreateConversationThreadAndMessageBean createConversationThreadAndMessageBean) {
-	Forum forum = createConversationThreadAndMessageBean.getForum();
-	Person creator = createConversationThreadAndMessageBean.getCreator();
-	String subject = createConversationThreadAndMessageBean.getSubject();
-	String body = createConversationThreadAndMessageBean.getBody();
-	ConversationThread conversationThread = forum.createConversationThread(creator, subject);
+        Forum forum = createConversationThreadAndMessageBean.getForum();
+        Person creator = createConversationThreadAndMessageBean.getCreator();
+        String subject = createConversationThreadAndMessageBean.getSubject();
+        String body = createConversationThreadAndMessageBean.getBody();
+        ConversationThread conversationThread = forum.createConversationThread(creator, subject);
 
-	ConversationMessage conversationMessage =  conversationThread.createConversationMessage(creator, body);
-	super.sendNotifications(conversationMessage);
+        ConversationMessage conversationMessage = conversationThread.createConversationMessage(creator,
+                body);
+        super.sendNotifications(conversationMessage);
 
     }
 

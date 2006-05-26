@@ -62,12 +62,12 @@ public class ConversationThread extends ConversationThread_Base {
     public void delete() {
         for (; !getConversationMessages().isEmpty(); getConversationMessages().get(0).delete())
             ;
-        
+
         removeForum();
         removeRootDomainObject();
         super.deleteDomainObject();
     }
-    
+
     @Override
     public void removeForum() {
         super.setForum(null);
@@ -80,8 +80,30 @@ public class ConversationThread extends ConversationThread_Base {
     public ConversationMessage createConversationMessage(Person creator, String body) {
         checkIfPersonCanWrite(creator);
         ConversationMessage conversationMessage = new ConversationMessage(this, creator, body);
-        
+
         return conversationMessage;
+    }
+
+    public ConversationMessage getNextToLastConversationMessage() {
+        ConversationMessage lastConversationMessage = null;
+        ConversationMessage nextToLastConversationMessage = null;
+
+        for (ConversationMessage conversationMessage : getConversationMessages()) {
+            if (lastConversationMessage == null) {
+                lastConversationMessage = conversationMessage;
+            } else if (conversationMessage.getCreationDateDateTime().compareTo(
+                    lastConversationMessage.getCreationDateDateTime()) > 1) {
+                nextToLastConversationMessage = lastConversationMessage;
+                lastConversationMessage = conversationMessage;
+            } else if (nextToLastConversationMessage == null) {
+                nextToLastConversationMessage = conversationMessage;
+            } else if (conversationMessage.getCreationDateDateTime().compareTo(
+                    nextToLastConversationMessage.getCreationDateDateTime()) > 1) {
+                nextToLastConversationMessage = conversationMessage;
+            }
+        }
+
+        return nextToLastConversationMessage;
     }
 
 }
