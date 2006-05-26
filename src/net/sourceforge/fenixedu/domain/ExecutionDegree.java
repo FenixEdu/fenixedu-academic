@@ -121,7 +121,11 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         getPeriodExamsSecondSemester().setEnd(periodExamsSecondSemesterEnd);
     }
 
-	private void checkPeriodDates(Date periodLessonsFirstSemesterBegin,
+	public boolean isBolonha() {
+        return this.getDegreeCurricularPlan().isBolonha();
+    }
+    
+    private void checkPeriodDates(Date periodLessonsFirstSemesterBegin,
             Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,
             Date periodExamsFirstSemesterEnd, Date periodLessonsSecondSemesterBegin,
             Date periodLessonsSecondSemesterEnd, Date periodExamsSecondSemesterBegin,
