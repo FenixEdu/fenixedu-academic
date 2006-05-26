@@ -490,10 +490,11 @@
 				parameter="method"
 				name="markSheetManagementForm"
 				scope="request">
-       		<forward name="rectifyMarkSheetStep1" path="show.markSheetManagement.rectify.page.step1"/>       		
+       		<forward name="rectifyMarkSheetStep1" path="show.markSheetManagement.rectify.page.step1"/>
        		<forward name="rectifyMarkSheetStep2" path="show.markSheetManagement.rectify.page.step2"/>
-			<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>       	
-       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>			
+			<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>
+       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
+       		<forward name="showRectificationHistoric" path="show.markSheetManagement.showRectificationHistoric"/>
 		</action>		
 		
 		<action path="/editMarkSheet"

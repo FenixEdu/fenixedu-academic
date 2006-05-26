@@ -175,4 +175,8 @@
 		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/editMarkSheet.jsp"></put>
 	</definition>
 
+	<definition name="show.markSheetManagement.showRectificationHistoric" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/showRectificationHistoric.jsp"></put>
+	</definition>
+	
 </tiles-definitions>
