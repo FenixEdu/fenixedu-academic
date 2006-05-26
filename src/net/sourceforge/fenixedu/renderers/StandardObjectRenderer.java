@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlot;
  *      <td>20</td>
  *  </tr>
  *  <tr>
- *      <td>Gender</td>
+ *      <th>Gender</th>
  *      <td>Female</td>
  *  </tr>
  * </table>
