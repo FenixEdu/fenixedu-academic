@@ -7,15 +7,14 @@
 <bean:define id="component" name="siteView" property="commonComponent" />
 
 <h2><bean:message key="message.course.editing" />
-&nbsp;<bean:write name="component" property="executionCourse.nome"/></h2>
+<bean:write name="component" property="executionCourse.nome"/></h2>
 
-	<logic:present  name="component" property="associatedDegrees">    
-			(&nbsp;
-			<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
-					<em><bean:write name="degree" property="sigla"/>&nbsp;</em>
-			</logic:iterate>
-			)
-	</logic:present>    
-       
-       <hr style='color:#ccc'/>
+(&nbsp;
+	<logic:present name="component" property="associatedDegrees">    
+		     <logic:iterate id="degree" name="component" property="degrees">
+				<em> <bean:write name="degree" property="sigla"/>&nbsp;</em>
+		      </logic:iterate> 
+    </logic:present>    
+)       
+   <hr style='color:#ccc'/>
 </logic:present>

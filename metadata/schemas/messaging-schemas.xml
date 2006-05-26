@@ -3,7 +3,7 @@
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="forum.view-full" type="net.sourceforge.fenixedu.domain.messaging.Forum">
-	<slot name="name" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.Forum">
+	<slot name="name" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.name">
 		<property name="classes" value="bold"/>
 	</slot>
 	<slot name="description" layout="escapedNewLineAware" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
