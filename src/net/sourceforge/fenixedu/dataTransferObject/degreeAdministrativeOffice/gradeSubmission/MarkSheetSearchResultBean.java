@@ -8,7 +8,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetState;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class MarkSheetSearchResultBean {
     
@@ -24,11 +23,9 @@ public class MarkSheetSearchResultBean {
     }
     
     public Collection<MarkSheet> getMarkSheetsSortedByEvaluationDate() {
-        final String dateFormat = "dd/MM/yyyy";
         Collections.sort(getMarkSheets(), new Comparator<MarkSheet>() {
             public int compare(MarkSheet o1, MarkSheet o2) {
-                return DateFormatUtil.compareDates(dateFormat, o1.getEvaluationDateDateTime().toDate(),
-                        o2.getEvaluationDateDateTime().toDate()); 
+                return o1.getEvaluationDateDateTime().compareTo(o2.getEvaluationDateDateTime()); 
             }
         });
         return getMarkSheets();
