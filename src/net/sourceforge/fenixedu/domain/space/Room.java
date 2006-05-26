@@ -103,9 +103,9 @@ public class Room extends Room_Base {
 			}
 		}
 
-		public Room execute() {
-			return new Room(this);
-		}
+//		public Room execute() {
+//			return new Room(this);
+//		}
 	}
 
 	public class RoomFactoryEditor extends RoomFactory {
@@ -131,18 +131,18 @@ public class Room extends Room_Base {
         setOjbConcreteClass(this.getClass().getName());
     }
 
-    public Room(RoomFactoryCreator roomFactoryCreator) {
-    	this();
-
-    	final Space suroundingSpace = roomFactoryCreator.getSuroundingSpace();
-        if (suroundingSpace == null) {
-            throw new NullPointerException("error.surrounding.space");
-        }
-        setSuroundingSpace(suroundingSpace);
-
-        new RoomInformation(this, roomFactoryCreator);
-    }
-
+//    public Room(RoomFactoryCreator roomFactoryCreator) {
+//    	this();
+//
+//    	final Space suroundingSpace = roomFactoryCreator.getSuroundingSpace();
+//        if (suroundingSpace == null) {
+//            throw new NullPointerException("error.surrounding.space");
+//        }
+//        setSuroundingSpace(suroundingSpace);
+//
+//        new RoomInformation(this, roomFactoryCreator);
+//    }
+//
     @Override
     public RoomInformation getSpaceInformation() {
         return (RoomInformation) super.getSpaceInformation();

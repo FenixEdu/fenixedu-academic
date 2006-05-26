@@ -9,7 +9,7 @@ public class CreateRoom extends Service {
 
     public void run(final Integer suroundingSpaceID, final String name) throws ExcepcaoPersistencia {
         final Space space = rootDomainObject.readSpaceByOID(suroundingSpaceID);
-        DomainFactory.makeRoom(space, name);
+        //DomainFactory.makeRoom(space, name);
     }
 
 }
