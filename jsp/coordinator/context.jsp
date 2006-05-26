@@ -16,10 +16,12 @@
 		<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.name" />
 		</em></p>
 
-	<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
-		<bean:define id="candidates" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT %>" scope="session"/>
-		<strong><bean:message key="label.masterDegree.coordinator.candidates"/></strong>
-		<bean:write name="candidates" />
+	<logic:equal name="infoExecutionDegree" property="bolonha" value="false">
+		<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
+			<bean:define id="candidates" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT %>" scope="session"/>
+			<strong><bean:message key="label.masterDegree.coordinator.candidates"/></strong>
+			<bean:write name="candidates" />
+		</logic:equal>
 	</logic:equal>
 
 </logic:present>
