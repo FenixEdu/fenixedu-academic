@@ -31,7 +31,7 @@
 	<fr:edit id="step2" nested="true" name="rectifyBean" schema="markSheet.rectify.two" layout="tabular"/>			
 
 	<br/>
-	<bean:message key="message.markSheet.confirm"/>
+	<span class="warning0"><bean:message key="message.markSheet.rectify"/></span>
 	<br/><br/>
 	<html:submit styleClass="inputbutton"><bean:message key="label.rectify"/></html:submit>
 	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.cancel"/></html:cancel>
