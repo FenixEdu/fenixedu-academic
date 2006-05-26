@@ -137,8 +137,6 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         } catch (DomainException e) {
             addMessage(request, actionMessages, e.getMessage(), e.getArgs());
         }
-
-        
         return mapping.findForward("searchMarkSheetFilled");
     }    
 
@@ -165,15 +163,20 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         }
     }
 
-    protected void checkIfTeacherIsResponsibleOrCoordinator(DegreeCurricularPlan degreeCurricularPlan, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod, Integer teacherNumber, Teacher teacher, HttpServletRequest request, ActionMessages actionMessages) {
+    protected void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
+            ExecutionPeriod executionPeriod, Integer teacherNumber, Teacher teacher,
+            HttpServletRequest request, ActionMessages actionMessages) {
+     
         if (teacher == null) {
             addMessage(request, actionMessages, "error.noTeacher", String.valueOf(teacherNumber));
-        } else if (!teacher.isResponsibleOrCoordinatorFor(degreeCurricularPlan, curricularCourse, executionPeriod)) {
+        } else if (!teacher.isResponsibleOrCoordinatorFor(curricularCourse, executionPeriod)) {
             addMessage(request, actionMessages, "error.teacherNotResponsibleOrNotCoordinator");
         }
     }
 
-    public ActionForward backSearchMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward backSearchMarkSheet(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
         return mapping.findForward("searchMarkSheetFilled");
     }
 }

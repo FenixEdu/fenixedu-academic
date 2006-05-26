@@ -69,9 +69,9 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         createBean.setTeacher(teacher);
 
         ActionMessages actionMessages = createActionMessages();
-        checkIfTeacherIsResponsibleOrCoordinator(createBean.getDegreeCurricularPlan(), createBean
-                .getCurricularCourse(), createBean.getExecutionPeriod(), createBean.getTeacherNumber(),
-                teacher, request, actionMessages);
+        checkIfTeacherIsResponsibleOrCoordinator(createBean
+                .getCurricularCourse(), createBean.getExecutionPeriod(), createBean.getTeacherNumber(), teacher,
+                request, actionMessages);
         if (!actionMessages.isEmpty()) {
             createBean.setTeacherNumber(null);
         }
@@ -169,8 +169,6 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     	return rectifyMarkSheetStepOne(mapping, actionForm, request, response, rectifyBean, enrolmentEvaluation);
     }
     
-    
-    
     public ActionForward rectifyMarkSheetStepOneByStudentNumber(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
     	MarkSheetRectifyBean rectifyBean = (MarkSheetRectifyBean) RenderUtils.getViewState().getMetaObject().getObject();
@@ -205,7 +203,6 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     	
     	return mapping.findForward("rectifyMarkSheetStep2");
     }   
-    
 
     public ActionForward rectifyMarkSheetStepTwo(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
@@ -213,7 +210,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     	
         ActionMessages actionMessages = new ActionMessages();
         try {
-            MarkSheet rectificationMarkSheet = (MarkSheet) ServiceUtils.executeService(getUserView(request), "CreateRectificationMarkSheet", new Object[] {rectifyBean.getMarkSheet(), rectifyBean.getEnrolmentEvaluation(), rectifyBean.getNewGrade(), rectifyBean.getEvaluationDate(), rectifyBean.getReason()});
+            ServiceUtils.executeService(getUserView(request), "CreateRectificationMarkSheet", new Object[] {rectifyBean.getMarkSheet(), rectifyBean.getEnrolmentEvaluation(), rectifyBean.getNewGrade(), rectifyBean.getEvaluationDate(), rectifyBean.getReason()});
             return mapping.findForward("searchMarkSheet");
         } catch (NotAuthorizedFilterException e) {
             addMessage(request, actionMessages, "error.notAuthorized");
@@ -233,14 +230,29 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     	} else  {
     		return rectifyMarkSheetStepOneByEvaluation(mapping, actionForm, request, response);
     	}
-
-
     }
     
     public ActionForward prepareSearchMarkSheetFilled(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse   response) {
     	return mapping.findForward("searchMarkSheetFilled");
     }
+    
+    public ActionForward showRectificationHistoric(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse   response) {
+        
+        DynaActionForm form = (DynaActionForm) actionForm;        
+        Integer evaluationID = (Integer) form.get("evaluationID");
 
+        EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(evaluationID);
+        Enrolment enrolment = enrolmentEvaluation.getEnrolment();
+        
+        List<EnrolmentEvaluation> rectifiedAndRectificationEvaluations = enrolment.getConfirmedEvaluations(enrolmentEvaluation.getMarkSheet().getMarkSheetType());
+        if (!rectifiedAndRectificationEvaluations.isEmpty()) {
+            request.setAttribute("enrolmentEvaluation", rectifiedAndRectificationEvaluations.remove(0));
+            request.setAttribute("rectificationEvaluations", rectifiedAndRectificationEvaluations);
+        }
+        
+        return mapping.findForward("showRectificationHistoric");
+    }
 
 }
