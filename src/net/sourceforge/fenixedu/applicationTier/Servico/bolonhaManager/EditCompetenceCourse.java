@@ -22,13 +22,17 @@ public class EditCompetenceCourse extends Service {
     }
 
     public void run(Integer competenceCourseID, String name, String nameEn, String acronym,
-            Boolean basic, CompetenceCourseLevel competenceCourseLevel, CurricularStage curricularStage,
-            Boolean scientificCouncilEdit) throws ExcepcaoPersistencia, FenixServiceException {
-        
+            Boolean basic, CompetenceCourseLevel competenceCourseLevel, CurricularStage curricularStage)
+            throws ExcepcaoPersistencia, FenixServiceException {
+
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         checkIfCanEditCompetenceCourse(competenceCourse, name.trim(), nameEn.trim(), acronym.trim());
-        competenceCourse.edit(name, nameEn, acronym, basic, competenceCourseLevel, curricularStage,
-                scientificCouncilEdit);
+        competenceCourse.edit(name, nameEn, acronym, basic, competenceCourseLevel, curricularStage);
+    }
+    
+    public void run(Integer competenceCourseID, CurricularStage curricularStage) throws ExcepcaoPersistencia, FenixServiceException {
+        final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
+        competenceCourse.changeCurricularStage(curricularStage);
     }
     
     public void run(Integer competenceCourseID, String year, String title, String authors, String reference,

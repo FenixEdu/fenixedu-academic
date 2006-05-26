@@ -641,8 +641,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             if (isCompetenceCourseLevelValid()) {
                 final Object args[] = { getCompetenceCourseID(), getName(), getNameEn(), getAcronym(),
-                        getBasic(), getEnumCompetenceCourseLevel(), CurricularStage.valueOf(getStage()),
-                        Boolean.FALSE };
+                        getBasic(), getEnumCompetenceCourseLevel(), CurricularStage.valueOf(getStage()) };
                 ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
                 return "editCompetenceCourseMainPage";
                 
@@ -795,8 +794,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public String changeCompetenceCourseState() {
         try {
             CurricularStage changed = (getCompetenceCourse().getCurricularStage().equals(CurricularStage.PUBLISHED) ? CurricularStage.APPROVED : CurricularStage.PUBLISHED);
-            
-            final Object args[] = { getCompetenceCourseID(), getName(), getNameEn(), getAcronym(), getBasic(), changed, true };
+            final Object args[] = { getCompetenceCourseID(), changed };
             ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
             return "";
         } catch (FenixFilterException e) {

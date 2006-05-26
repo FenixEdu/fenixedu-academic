@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,8 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
@@ -27,6 +24,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.YearMonthDay;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
 
@@ -133,13 +133,18 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
     }
 
-    public void edit(String name, String nameEn, String acronym, Boolean basic, CompetenceCourseLevel competenceCourseLevel,
-            CurricularStage curricularStage, boolean scientificCouncilEdit) {
+    public void edit(String name, String nameEn, String acronym, Boolean basic,
+            CompetenceCourseLevel competenceCourseLevel, CurricularStage curricularStage) {
+        changeCurricularStage(curricularStage);
+        getRecentCompetenceCourseInformation().edit(name.trim(), nameEn.trim(), acronym.trim(), basic,
+                competenceCourseLevel);
+    }
+
+    public void changeCurricularStage(CurricularStage curricularStage) {
         if (curricularStage.equals(CurricularStage.APPROVED)) {
-            super.setCreationDate(Calendar.getInstance().getTime());
+            super.setCreationDateYearMonthDay(new YearMonthDay());
         }
         setCurricularStage(curricularStage);
-        getRecentCompetenceCourseInformation().edit(name.trim(), nameEn.trim(), acronym.trim(), basic, competenceCourseLevel);
     }
 
     private void checkIfCanEdit(boolean scientificCouncilEdit) {
