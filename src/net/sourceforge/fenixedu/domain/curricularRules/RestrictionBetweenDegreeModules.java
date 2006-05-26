@@ -67,7 +67,10 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
         labelList.add(new GenericPair<Object, Boolean>("label.module", true));
         labelList.add(new GenericPair<Object, Boolean>(": ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getPrecedenceDegreeModule().getName(), false));
+        
+        // getting full name only for course groups
+        String precedenceDegreeModule = (getPrecedenceDegreeModule().isLeaf()) ? getPrecedenceDegreeModule().getName() : getPrecedenceDegreeModule().getOneFullName();
+        labelList.add(new GenericPair<Object, Boolean>(precedenceDegreeModule, false));
         
         if (getMinimum().doubleValue() != 0.0) {
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
@@ -88,7 +91,7 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inContext", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getName(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
         }
         return labelList;
     }

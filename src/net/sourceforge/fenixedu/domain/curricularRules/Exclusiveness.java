@@ -53,18 +53,23 @@ public class Exclusiveness extends Exclusiveness_Base {
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
         labelList.add(new GenericPair<Object, Boolean>("label.between", true));
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getDegreeModuleToApplyRule().getOneFullName(), false));
+
+        // getting full name only for course groups
+        String degreeModuleToApplyRule = (getDegreeModuleToApplyRule().isLeaf()) ? getDegreeModuleToApplyRule().getName() : getDegreeModuleToApplyRule().getOneFullName();
+        String exclusiveDegreeModule = (getExclusiveDegreeModule().isLeaf()) ? getExclusiveDegreeModule().getName() : getExclusiveDegreeModule().getOneFullName();
+        
+        labelList.add(new GenericPair<Object, Boolean>(degreeModuleToApplyRule, false));    
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
         labelList.add(new GenericPair<Object, Boolean>("label.and", true));
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getExclusiveDegreeModule().getOneFullName(), false));
+        labelList.add(new GenericPair<Object, Boolean>(exclusiveDegreeModule, false));
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
         
         if (getContextCourseGroup() != null) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));            
-            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getName(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
         }
         return labelList;
     }

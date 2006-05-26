@@ -72,7 +72,7 @@ public class CreditsLimit extends CreditsLimit_Base {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));            
-            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getName(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
         }
 
         return labelList;

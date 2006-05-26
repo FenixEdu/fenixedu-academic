@@ -63,13 +63,16 @@ public class RestrictionDoneDegreeModule extends RestrictionDoneDegreeModule_Bas
         }
 
         labelList.add(new GenericPair<Object, Boolean>(": ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getPrecedenceDegreeModule().getName(), false));
+
+        // getting full name only for course groups
+        String precedenceDegreeModule = (getPrecedenceDegreeModule().isLeaf()) ? getPrecedenceDegreeModule().getName() : getPrecedenceDegreeModule().getOneFullName();
+        labelList.add(new GenericPair<Object, Boolean>(precedenceDegreeModule, false));
 
         if (getContextCourseGroup() != null) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inContext", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getName(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
         }
 
         if (!getCurricularPeriodOrder().equals(0)) {
