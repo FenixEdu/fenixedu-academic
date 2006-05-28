@@ -1,0 +1,22 @@
+<schema name="CampusFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Campus$CampusFactoryCreator">
+	<slot name="name"/>
+</schema>
+<schema name="BuildingFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator">
+	<slot name="name"/>
+</schema>
+<schema name="FloorFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Floor$FloorFactoryCreator">
+	<slot name="level"/>
+</schema>
+<schema name="RoomFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator">
+	<slot name="blueprintNumber"/>
+	<slot name="identification"/>
+	<slot name="description"/>
+	<slot name="classification"/>
+	<slot name="area"/>
+	<slot name="heightQuality"/>
+	<slot name="illuminationQuality"/>
+	<slot name="distanceFromSanitaryInstalationsQuality"/>
+	<slot name="securityQuality"/>
+	<slot name="ageQuality"/>
+	<slot name="observations"/>
+</schema>

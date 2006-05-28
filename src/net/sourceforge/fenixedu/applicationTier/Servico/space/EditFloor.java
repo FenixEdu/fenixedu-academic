@@ -11,9 +11,9 @@ public class EditFloor extends Service {
     	final FloorInformation floorInformation = (FloorInformation) rootDomainObject.readSpaceInformationByOID(floorInformationID);
         if (asNewVersion) {
         	final Floor floor = (Floor) floorInformation.getSpace();
-        	floor.edit(level);
-        } else {
-        	floorInformation.edit(level);
+//        	floor.edit(level);
+//        } else {
+//        	floorInformation.edit(level);
         }
     }
 

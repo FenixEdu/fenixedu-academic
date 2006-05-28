@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:message bundle="SPACE_RESOURCES" key="link.create.space"/>
 <br/>
@@ -20,22 +21,16 @@
 </html:form>
 <br/>
 
-<html:form action="/createSpace">
-	<html:hidden property="page" value="1"/>
 
-	<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Campus">
-		<html:hidden property="method" value="createCampus"/>
-
-		<html:text property="spaceName"/>
-	</logic:equal>
-	<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
-		<html:hidden property="method" value="createBuilding"/>
-
-		<html:text property="spaceName"/>
-	</logic:equal>
-	<br/>
-
-	<html:submit styleClass="inputbutton">
-		<bean:message bundle="SPACE_RESOURCES" key="label.button.create.space"/>
-	</html:submit>
-</html:form>
+<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Campus">
+	<fr:create type="net.sourceforge.fenixedu.domain.space.Campus$CampusFactoryCreator"
+			schema="CampusFactoryCreator"
+			action="/manageSpaces.do?method=executeFactoryMethod">
+	</fr:create>
+</logic:equal>
+<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
+	<fr:create type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator"
+			schema="BuildingFactoryCreator"
+			action="/manageSpaces.do?method=executeFactoryMethod">
+	</fr:create>
+</logic:equal>

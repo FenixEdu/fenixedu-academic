@@ -1,20 +1,15 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Building.BuildingFactory;
 
 public class BuildingInformation extends BuildingInformation_Base {
 
-    protected BuildingInformation(final Building building, final String buildingName) {
+    protected BuildingInformation(final Building building, final BuildingFactory buildingFactory) {
         super();
-        setSpace(building);
-        setName(buildingName);
+        super.setSpace(building);
+        setName(buildingFactory.getName());
     }
-
-//    @Override
-//    public void createNewSpaceInformation() {
-//        final Building building = (Building) getSpace();
-//        new BuildingInformation(building, getName());
-//    }
 
     @Override
     public void setName(final String name) {
@@ -30,16 +25,12 @@ public class BuildingInformation extends BuildingInformation_Base {
     }
 
     public void setSpace(final Building building) {
-        if (building == null) {
-            throw new NullPointerException("error.building.cannot.be.null");
-        } else if (getSpace() != null) {
+//        if (building == null) {
+//            throw new NullPointerException("error.building.cannot.be.null");
+//        } else if (getSpace() != null) {
             throw new DomainException("error.cannot.change.building");
-        }
-        super.setSpace(building);
-    }
-
-    public void edit(final String name) {
-    	setName(name);
+//        }
+//        super.setSpace(building);
     }
 
 }

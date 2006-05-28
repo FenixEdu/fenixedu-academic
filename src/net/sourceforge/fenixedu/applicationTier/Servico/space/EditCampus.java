@@ -11,9 +11,9 @@ public class EditCampus extends Service {
     	final CampusInformation campusInformation = (CampusInformation) rootDomainObject.readSpaceInformationByOID(campusInformationID);
         if (asNewVersion.booleanValue()) {
         	final Campus campus = (Campus) campusInformation.getSpace();
-        	campus.edit(name);
+//        	campus.edit(name);
         } else {
-        	campusInformation.edit(name);
+//        	campusInformation.edit(name);
         }
     }
 

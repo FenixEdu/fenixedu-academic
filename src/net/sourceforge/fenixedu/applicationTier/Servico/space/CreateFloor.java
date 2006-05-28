@@ -9,7 +9,7 @@ public class CreateFloor extends Service {
 
     public void run(final Integer suroundingSpaceID, final Integer level) throws ExcepcaoPersistencia {
         final Space space = rootDomainObject.readSpaceByOID(suroundingSpaceID);
-        DomainFactory.makeFloor(space, level);
+//        DomainFactory.makeFloor(space, level);
     }
 
 }

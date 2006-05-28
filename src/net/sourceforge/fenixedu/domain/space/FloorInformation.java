@@ -1,20 +1,15 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Floor.FloorFactory;
 
 public class FloorInformation extends FloorInformation_Base {
     
-    protected FloorInformation(final Floor floor, final Integer level) {
+    protected FloorInformation(final Floor floor, final FloorFactory floorFactory) {
         super();
-        setSpace(floor);
-        setLevel(level);
+        super.setSpace(floor);
+        setLevel(floorFactory.getLevel());
     }
-
-//    @Override
-//    public void createNewSpaceInformation() {
-//        final Floor floor = (Floor) getSpace();
-//        new FloorInformation(floor, getLevel());
-//    }
 
     @Override
     public void setSpace(final Space space) {
@@ -22,16 +17,12 @@ public class FloorInformation extends FloorInformation_Base {
     }
 
     public void setSpace(final Floor floor) {
-        if (floor == null) {
-            throw new NullPointerException("error.floor.cannot.be.null");
-        } else if (getSpace() != null) {
+//        if (floor == null) {
+//            throw new NullPointerException("error.floor.cannot.be.null");
+//        } else if (getSpace() != null) {
             throw new DomainException("error.cannot.change.floor");
-        }
-        super.setSpace(floor);
-    }
-
-    public void edit(final Integer level) {
-        setLevel(level);
+//        }
+//        super.setSpace(floor);
     }
 
 }

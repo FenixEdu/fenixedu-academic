@@ -2177,7 +2177,7 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 	}
 
 	class net.sourceforge.fenixedu.domain.space.RoomInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
-		Integer blueprintNumber;
+		String blueprintNumber;
 		String identification;
 		String description;
 		String classification;

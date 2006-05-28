@@ -1,19 +1,61 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.io.Serializable;
+import java.text.Collator;
+import java.util.Comparator;
+
+import net.sourceforge.fenixedu.applicationTier.FactoryExecutor;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 public class Campus extends Campus_Base {
+
+	public static Comparator<Campus> CAMPUS_COMPARATOR_BY_NAME = new BeanComparator("spaceInformation.name", Collator.getInstance());
+
+	public static abstract class CampusFactory implements Serializable, FactoryExecutor {
+		private String name;
+
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+	}
+
+	public static class CampusFactoryCreator extends CampusFactory {
+		public Campus execute() {
+			return new Campus(this);
+		}
+	}
+
+	public class CampusFactoryEditor extends CampusFactory {
+        private DomainReference<Campus> campusReference;
+
+		public Campus getCampus() {
+			return campusReference == null ? null : campusReference.getObject();
+		}
+		public void setCampus(Campus campus) {
+			if (campus != null) {
+				this.campusReference = new DomainReference<Campus>(campus);
+			}
+		}
+
+		public CampusInformation execute() {
+			return new CampusInformation(getCampus(), this);
+		}
+	}
 
     protected Campus() {
         super();
     }
 
-    public Campus(final String buildingName) {
+    public Campus(CampusFactory campusFactory) {
         this();
-        setRootDomainObject(RootDomainObject.getInstance());
-        new CampusInformation(this, buildingName);
+        new CampusInformation(this, campusFactory);
     }
 
     @Override
@@ -24,10 +66,6 @@ public class Campus extends Campus_Base {
     @Override
     public CampusInformation getSpaceInformation(final YearMonthDay when) {
         return (CampusInformation) super.getSpaceInformation(when);
-    }
-
-    public void edit(final String name) {
-    	new CampusInformation(this, name);
     }
 
 }

@@ -7,6 +7,7 @@
 	<!ENTITY researcher SYSTEM "researcher-schemas.xml">
 	<!ENTITY markSheet SYSTEM "markSheet-schemas.xml">
 	<!ENTITY messaging SYSTEM "messaging-schemas.xml">
+	<!ENTITY space SYSTEM "space-schemas.xml">
 ]>
 
 <schemas>
@@ -317,20 +318,6 @@
     </slot>
   </schema>
   
-<schema name="roomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation">
-    <slot name="name"/>
-    <slot name="area"/>
-    <slot name="hight"/>
-    <slot name="illumination"/>
-    <slot name="distribution"/>
-    <slot name="salubrityArea"/>
-    <slot name="security"/>
-    <slot name="vptoValue"/>
-    <slot name="index"/>
-    <slot name="tm"/>
-    <slot name="observations"/>
-  </schema>
-
 	<!-- Paulo Zenida and Dinis Martins - 2006-02-17 -->
 	<schema name="person.create-validated"
 		type="net.sourceforge.fenixedu.domain.Person">
@@ -492,4 +479,5 @@
 	&researcher;
 	&markSheet;
 	&messaging;
+	&space;
 </schemas>

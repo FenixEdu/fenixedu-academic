@@ -1,17 +1,26 @@
 package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 
-import java.util.Collection;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.space.OldBuilding;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.SpaceComparator;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
+import net.sourceforge.fenixedu.domain.space.Campus.CampusFactoryCreator;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.renderers.model.CreationMetaObject;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -22,12 +31,29 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     public ActionForward viewSpaces(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-        final Object[] args = { Space.class };
-        final Collection<Space> spaces = (Collection<Space>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
+    	final SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
+
+    	for (final Space space : rootDomainObject.getSpacesSet()) {
+    		if (!(space instanceof OldBuilding) && !(space instanceof OldRoom) && !space.hasSuroundingSpace()) {
+    			spaces.add(space);
+    		}
+    	}
+
         request.setAttribute("spaces", spaces);
         return mapping.findForward("ShowSpaces");
     }
+
+    private FactoryExecutor getFactoryObject() {
+    	return (FactoryExecutor) ((CreationMetaObject) RenderUtils.getViewState().getMetaObject()).getCreatedObject();
+    }
+
+    public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
+        final Object[] args = { getFactoryObject() };
+        executeService(request, "ExecuteFactoryMethod", args);
+    	return viewSpaces(mapping, form, request, response);
+    }
+
 
 	private Space getSpaceAndSetSelectedSpace(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 		final IUserView userView = getUserView(request);
@@ -73,18 +99,18 @@ public class ManageSpacesDA extends FenixDispatchAction {
         return mapping.findForward("ShowCreateSubSpaceForm");
     }
 
-    public ActionForward createCampus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String spaceName = (String) dynaActionForm.get("spaceName");
-
-        final Object[] args = { spaceName };
-        ServiceUtils.executeService(userView, "CreateCampus", args);
-
-        return mapping.findForward("ShowSpaces");
-    }
+//    public ActionForward createCampus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+//            HttpServletResponse response) throws Exception {
+//        final IUserView userView = getUserView(request);
+//
+//        final DynaActionForm dynaActionForm = (DynaActionForm) form;
+//        final String spaceName = (String) dynaActionForm.get("spaceName");
+//
+//        final Object[] args = { spaceName };
+//        ServiceUtils.executeService(userView, "CreateCampus", args);
+//
+//        return mapping.findForward("ShowSpaces");
+//    }
 
     public ActionForward createBuilding(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {

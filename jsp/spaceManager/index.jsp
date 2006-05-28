@@ -15,9 +15,9 @@
 
 <logic:present name="selectedSpace">
 	<bean:write name="selectedSpace" property="idInternal"/>
+	<br/>
+	<br/>
 </logic:present>
-<br/>
-<br/>
 
 <logic:present name="spaces">
 	<table>

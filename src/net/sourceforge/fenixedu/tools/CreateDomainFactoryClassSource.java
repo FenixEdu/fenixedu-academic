@@ -87,8 +87,8 @@ public class CreateDomainFactoryClassSource extends AbstractDomainPostprocessor 
                 }else{
                     argumentType = argumentType.substring(1); // remove "L"
                 }
-                                
-                argumentType = argumentType.replace('/', '.');
+
+                argumentType = argumentType.replace('/', '.').replace('$', '.');
                 generatedMethod.append(" " + argumentType + arrayBrackets + " arg" + i);
                 invokedArgsByConstructor.append(" arg" + i);
             }

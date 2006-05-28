@@ -15,6 +15,13 @@
 		<filterChains />
 	</service>
 	<service>
+		<name>ExecuteFactoryMethod</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>
+	<service>
 		<name>CheckIsAliveService</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService</implementationClass>
 		<description />

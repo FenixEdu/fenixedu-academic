@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 public class CreateCampus extends Service {
 
     public void run(final String name) {
-        DomainFactory.makeCampus(name);
+//        DomainFactory.makeCampus(name);
     }
 
 }

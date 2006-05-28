@@ -2,16 +2,22 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.Collator;
+import java.util.Comparator;
 
+import net.sourceforge.fenixedu.applicationTier.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 public class Room extends Room_Base {
 
-	public class RoomFactory implements Serializable {
-		private Integer blueprintNumber;
+	public static Comparator<Room> ROOM_COMPARATOR_BY_DESCRIPTION = new BeanComparator("spaceInformation.description", Collator.getInstance());
+
+	public static abstract class RoomFactory implements Serializable, FactoryExecutor {
+		private String blueprintNumber;
 		private String identification;
 		private String description;
 		private String classification;
@@ -35,10 +41,10 @@ public class Room extends Room_Base {
 		public void setArea(BigDecimal area) {
 			this.area = area;
 		}
-		public Integer getBlueprintNumber() {
+		public String getBlueprintNumber() {
 			return blueprintNumber;
 		}
-		public void setBlueprintNumber(Integer blueprintNumber) {
+		public void setBlueprintNumber(String blueprintNumber) {
 			this.blueprintNumber = blueprintNumber;
 		}
 		public String getClassification() {
@@ -91,7 +97,7 @@ public class Room extends Room_Base {
 		}
 	}
 
-	public class RoomFactoryCreator extends RoomFactory {
+	public static class RoomFactoryCreator extends RoomFactory {
         private DomainReference<Space> suroundingSpaceReference;
 
 		public Space getSuroundingSpace() {
@@ -103,9 +109,9 @@ public class Room extends Room_Base {
 			}
 		}
 
-//		public Room execute() {
-//			return new Room(this);
-//		}
+		public Room execute() {
+			return new Room(this);
+		}
 	}
 
 	public class RoomFactoryEditor extends RoomFactory {
@@ -131,18 +137,18 @@ public class Room extends Room_Base {
         setOjbConcreteClass(this.getClass().getName());
     }
 
-//    public Room(RoomFactoryCreator roomFactoryCreator) {
-//    	this();
-//
-//    	final Space suroundingSpace = roomFactoryCreator.getSuroundingSpace();
-//        if (suroundingSpace == null) {
-//            throw new NullPointerException("error.surrounding.space");
-//        }
-//        setSuroundingSpace(suroundingSpace);
-//
-//        new RoomInformation(this, roomFactoryCreator);
-//    }
-//
+    public Room(RoomFactoryCreator roomFactoryCreator) {
+    	this();
+
+    	final Space suroundingSpace = roomFactoryCreator.getSuroundingSpace();
+        if (suroundingSpace == null) {
+            throw new NullPointerException("error.surrounding.space");
+        }
+        setSuroundingSpace(suroundingSpace);
+
+        new RoomInformation(this, roomFactoryCreator);
+    }
+
     @Override
     public RoomInformation getSpaceInformation() {
         return (RoomInformation) super.getSpaceInformation();

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -27,8 +26,10 @@ public class DomainReference<T extends DomainObject> implements Serializable {
     transient T object;
 
     public DomainReference(T object) {
+    	this.object = object;
+    	this.type = object.getClass();
         this.className = object.getClass().getName();
-        this.oid = object.getIdInternal();
+        this.oid = object.getIdInternal();        
     }
 
     public Integer getOid() {
