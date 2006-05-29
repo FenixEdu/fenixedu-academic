@@ -68,7 +68,7 @@ public class Teacher extends Teacher_Base {
             } else if (teacher2.getCategory() == null) {
                 return -1;
             } else {
-                final int categoryCompare = teacher1.getCategory().getShortName().compareTo(teacher2.getCategory().getShortName());
+                final int categoryCompare = teacher1.getCategory().compareTo(teacher2.getCategory());
                 return categoryCompare == 0 ? teacherNumberCompare : categoryCompare;
             }
         }

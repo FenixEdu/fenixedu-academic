@@ -310,6 +310,7 @@ class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.f
 	String longName;
 	Boolean canBeExecutionCourseResponsible;
 	String shortName;
+	Integer weight;
 }
 
 class net.sourceforge.fenixedu.domain.messaging.ConversationThread extends net.sourceforge.fenixedu.domain.DomainObject {
