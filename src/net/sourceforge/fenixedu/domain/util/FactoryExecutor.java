@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.applicationTier;
+package net.sourceforge.fenixedu.domain.util;
 
 public interface FactoryExecutor {
 

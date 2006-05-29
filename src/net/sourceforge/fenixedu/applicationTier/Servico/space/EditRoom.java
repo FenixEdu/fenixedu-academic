@@ -13,7 +13,7 @@ public class EditRoom extends Service {
         	final Room room = (Room) roomInformation.getSpace();
 //        	room.edit(name);
         } else {
-        	roomInformation.edit(name);
+//        	roomInformation.edit(name);
         }
     }
 

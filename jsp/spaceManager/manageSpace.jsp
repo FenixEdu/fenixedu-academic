@@ -71,7 +71,7 @@
 				</html:link>
 			</td>
 			<td class="listClasses">
-				<html:link page="/manageSpaces.do?method=createSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+				<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 					<bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/>
 				</html:link>
 			</td>

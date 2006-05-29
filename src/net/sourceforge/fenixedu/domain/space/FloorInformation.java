@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Floor.FloorFactory;
+import net.sourceforge.fenixedu.domain.space.Floor.FloorFactoryEditor;
 
 public class FloorInformation extends FloorInformation_Base {
     
@@ -16,13 +17,20 @@ public class FloorInformation extends FloorInformation_Base {
         throw new DomainException("error.incompatible.space");
     }
 
-    public void setSpace(final Floor floor) {
-//        if (floor == null) {
-//            throw new NullPointerException("error.floor.cannot.be.null");
-//        } else if (getSpace() != null) {
-            throw new DomainException("error.cannot.change.floor");
-//        }
-//        super.setSpace(floor);
+    @Override
+	public Floor getSpace() {
+		return (Floor) super.getSpace();
+	}
+
+	public void setSpace(final Floor floor) {
+    	throw new DomainException("error.cannot.change.floor");
+    }
+
+    public FloorFactoryEditor getSpaceFactoryEditor() {
+    	final FloorFactoryEditor floorFactoryEditor = new FloorFactoryEditor();
+    	floorFactoryEditor.setSpace(getSpace());
+    	floorFactoryEditor.setLevel(getLevel());
+    	return floorFactoryEditor;
     }
 
 }

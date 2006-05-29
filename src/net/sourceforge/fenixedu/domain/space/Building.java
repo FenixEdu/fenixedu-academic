@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.text.Collator;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.applicationTier.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
@@ -48,17 +48,17 @@ public class Building extends Building_Base {
 
 		private DomainReference<Building> buildingReference;
 
-		public Building getBuilding() {
+		public Building getSpace() {
 			return buildingReference == null ? null : buildingReference.getObject();
 		}
-		public void setBuilding(Building building) {
+		public void setSpace(Building building) {
 			if (building != null) {
 				this.buildingReference = new DomainReference<Building>(building);
 			}
 		}
 
 		public BuildingInformation execute() {
-			return new BuildingInformation(getBuilding(), this);
+			return new BuildingInformation(getSpace(), this);
 		}
 
 	}

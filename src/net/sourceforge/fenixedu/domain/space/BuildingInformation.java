@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Building.BuildingFactory;
+import net.sourceforge.fenixedu.domain.space.Building.BuildingFactoryEditor;
 
 public class BuildingInformation extends BuildingInformation_Base {
 
@@ -25,12 +26,14 @@ public class BuildingInformation extends BuildingInformation_Base {
     }
 
     public void setSpace(final Building building) {
-//        if (building == null) {
-//            throw new NullPointerException("error.building.cannot.be.null");
-//        } else if (getSpace() != null) {
-            throw new DomainException("error.cannot.change.building");
-//        }
-//        super.setSpace(building);
+    	throw new DomainException("error.cannot.change.building");
+    }
+
+    public BuildingFactoryEditor getSpaceFactoryEditor() {
+    	final BuildingFactoryEditor buildingFactoryEditor = new BuildingFactoryEditor();
+    	buildingFactoryEditor.setSpace((Building) getSpace());
+    	buildingFactoryEditor.setName(getName());
+    	return buildingFactoryEditor;
     }
 
 }

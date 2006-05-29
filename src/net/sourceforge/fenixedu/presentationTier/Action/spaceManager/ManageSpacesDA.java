@@ -6,7 +6,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.FactoryExecutor;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceComparator;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.domain.space.Campus.CampusFactoryCreator;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.model.CreationMetaObject;
@@ -44,7 +44,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     private FactoryExecutor getFactoryObject() {
-    	return (FactoryExecutor) ((CreationMetaObject) RenderUtils.getViewState().getMetaObject()).getCreatedObject();
+    	//return (FactoryExecutor) ((CreationMetaObject) RenderUtils.getViewState().getMetaObject()).getCreatedObject();
+    	return (FactoryExecutor) RenderUtils.getViewState().getMetaObject().getObject();
     }
 
     public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -167,6 +168,19 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
         request.setAttribute("spaceInformationID", suroundingSpaceIDString);
         return manageSpace(mapping, form, request, response);
+    }
+
+    public ActionForward prepareCreateSpaceInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
+        final String spaceInformationIDString = request.getParameter("spaceInformationID");
+        final Integer spaceInformationID = Integer.valueOf(spaceInformationIDString);
+
+        final SpaceInformation spaceInformation = rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+        final FactoryExecutor factoryExecutor = spaceInformation.getSpaceFactoryEditor();
+
+        request.setAttribute("SpaceFactoryEditor", factoryExecutor);
+
+        return mapping.findForward("CreateSpaceInformation");
     }
 
     public ActionForward createSpaceInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,

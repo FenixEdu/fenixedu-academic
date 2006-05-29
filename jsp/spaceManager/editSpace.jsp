@@ -18,16 +18,16 @@
 	<br/>
 
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
-		<fr:edit name="selectedSpaceInformation" schema="campusInformation"/>
+		<fr:edit name="selectedSpaceInformation" schema="CampusInformation"/>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
-		<fr:edit name="selectedSpaceInformation" schema="buildingInformation"/>
+		<fr:edit name="selectedSpaceInformation" schema="BuildingInformation"/>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
-		<fr:edit name="selectedSpaceInformation" schema="floorInformation"/>
+		<fr:edit name="selectedSpaceInformation" schema="FloorInformation"/>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-		<fr:edit name="selectedSpaceInformation" schema="roomInformation"/>
+		<fr:edit name="selectedSpaceInformation" schema="RoomInformation"/>
 	</logic:equal>
 	<br/>
 	<br/>

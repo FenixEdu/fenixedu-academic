@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus.CampusFactory;
+import net.sourceforge.fenixedu.domain.space.Campus.CampusFactoryEditor;
 
 public class CampusInformation extends CampusInformation_Base {
 
@@ -25,16 +26,14 @@ public class CampusInformation extends CampusInformation_Base {
     }
 
     public void setSpace(final Campus campus) {
-//        if (campus == null) {
-//            throw new NullPointerException("error.campus.cannot.be.null");
-//        } else if (getSpace() != null) {
-            throw new DomainException("error.cannot.change.campus");
-//        }
-//        super.setSpace(campus);
+    	throw new DomainException("error.cannot.change.campus");
     }
 
-//    public void edit(final String name) {
-//    	setName(name);
-//    }
+    public CampusFactoryEditor getSpaceFactoryEditor() {
+    	final CampusFactoryEditor campusFactoryEditor = new CampusFactoryEditor();
+    	campusFactoryEditor.setSpace((Campus) getSpace());
+    	campusFactoryEditor.setName(getName());
+    	return campusFactoryEditor;
+    }
 
 }

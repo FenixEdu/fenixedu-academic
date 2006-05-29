@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Room.RoomFactory;
+import net.sourceforge.fenixedu.domain.space.Room.RoomFactoryEditor;
 
 public class RoomInformation extends RoomInformation_Base {
 
@@ -28,16 +29,24 @@ public class RoomInformation extends RoomInformation_Base {
     }
 
     public void setSpace(final Room room) {
-//        if (room == null) {
-//            throw new NullPointerException("error.room.cannot.be.null");
-//        } else if (getSpace() != null) {
-            throw new DomainException("error.cannot.change.room");
-//        }
-//        super.setSpace(room);
+    	throw new DomainException("error.cannot.change.room");
     }
 
-    public void edit(final String name) {
-//        setName(name);
+    public RoomFactoryEditor getSpaceFactoryEditor() {
+    	final RoomFactoryEditor roomFactoryEditor = new RoomFactoryEditor();
+    	roomFactoryEditor.setSpace((Room) getSpace());
+    	roomFactoryEditor.setBlueprintNumber(getBlueprintNumber());
+    	roomFactoryEditor.setIdentification(getIdentification());
+    	roomFactoryEditor.setDescription(getDescription());
+    	roomFactoryEditor.setClassification(getClassification());
+    	roomFactoryEditor.setArea(getArea());
+    	roomFactoryEditor.setHeightQuality(getHeightQuality());
+    	roomFactoryEditor.setIlluminationQuality(getIlluminationQuality());
+    	roomFactoryEditor.setDistanceFromSanitaryInstalationsQuality(getDistanceFromSanitaryInstalationsQuality());
+    	roomFactoryEditor.setSecurityQuality(getSecurityQuality());
+    	roomFactoryEditor.setAgeQuality(getAgeQuality());
+    	roomFactoryEditor.setObservations(getObservations());
+    	return roomFactoryEditor;
     }
 
 }

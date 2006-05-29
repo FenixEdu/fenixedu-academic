@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.applicationTier.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
@@ -114,20 +114,20 @@ public class Room extends Room_Base {
 		}
 	}
 
-	public class RoomFactoryEditor extends RoomFactory {
+	public static class RoomFactoryEditor extends RoomFactory {
         private DomainReference<Room> roomReference;
 
-		public Room getRoom() {
+		public Room getSpace() {
 			return roomReference == null ? null : roomReference.getObject();
 		}
-		public void setRoom(Room room) {
+		public void setSpace(Room room) {
 			if (room != null) {
 				this.roomReference = new DomainReference<Room>(room);
 			}
 		}
 
 		public RoomInformation execute() {
-			return new RoomInformation(getRoom(), this);
+			return new RoomInformation(getSpace(), this);
 		}
 	}
 

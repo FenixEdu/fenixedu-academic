@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.domain.space;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.applicationTier.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.Floor.FloorFactory;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
@@ -49,17 +49,17 @@ public class Floor extends Floor_Base {
 
 		private DomainReference<Floor> floorReference;
 
-		public Floor getFloor() {
+		public Floor getSpace() {
 			return floorReference == null ? null : floorReference.getObject();
 		}
-		public void setFloor(Floor floor) {
+		public void setSpace(Floor floor) {
 			if (floor != null) {
 				this.floorReference = new DomainReference<Floor>(floor);
 			}
 		}
 
 		public FloorInformation execute() {
-			return new FloorInformation(getFloor(), this);
+			return new FloorInformation(getSpace(), this);
 		}
 
 	}

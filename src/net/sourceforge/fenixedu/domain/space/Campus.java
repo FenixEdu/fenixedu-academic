@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.text.Collator;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.applicationTier.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
@@ -32,20 +32,20 @@ public class Campus extends Campus_Base {
 		}
 	}
 
-	public class CampusFactoryEditor extends CampusFactory {
+	public static class CampusFactoryEditor extends CampusFactory {
         private DomainReference<Campus> campusReference;
 
-		public Campus getCampus() {
+		public Campus getSpace() {
 			return campusReference == null ? null : campusReference.getObject();
 		}
-		public void setCampus(Campus campus) {
+		public void setSpace(Campus campus) {
 			if (campus != null) {
 				this.campusReference = new DomainReference<Campus>(campus);
 			}
 		}
 
 		public CampusInformation execute() {
-			return new CampusInformation(getCampus(), this);
+			return new CampusInformation(getSpace(), this);
 		}
 	}
 

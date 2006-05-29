@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.joda.time.YearMonthDay;
 
@@ -47,5 +48,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 	public void setValidFrom(final YearMonthDay validFrom) {
 		this.validFrom = validFrom;
 	}
+
+	public abstract FactoryExecutor getSpaceFactoryEditor();
 
 }
