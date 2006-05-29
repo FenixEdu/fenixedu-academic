@@ -211,6 +211,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 throw new DomainException("error.degreeCurricularPlan.existing.name.and.degree");
             }
         }
+        
+        this.getRoot().setName(name);
+        this.getRoot().setNameEn(name);
     }
 
     public boolean isBolonha() {

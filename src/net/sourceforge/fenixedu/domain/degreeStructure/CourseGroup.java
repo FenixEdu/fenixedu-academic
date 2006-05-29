@@ -50,9 +50,16 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public void edit(String name, String nameEn, Context context, ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+        // override, assure that root's name equals degree curricular plan name
+        if (this.isRoot()) {
+            setName(getParentDegreeCurricularPlan().getName());
+            setNameEn(getParentDegreeCurricularPlan().getName());
+        } else {
+            setName(StringFormatter.prettyPrint(name));
+            setNameEn(StringFormatter.prettyPrint(nameEn));
+        }
+        
         this.checkDuplicateBrotherNames(name, nameEn);
-        setName(StringFormatter.prettyPrint(name));
-        setNameEn(StringFormatter.prettyPrint(nameEn));
         
         if (!this.isRoot() && context != null) {
             context.edit(beginExecutionPeriod, endExecutionPeriod);            
