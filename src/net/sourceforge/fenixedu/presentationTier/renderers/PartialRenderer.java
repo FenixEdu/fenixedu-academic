@@ -114,7 +114,7 @@ public class PartialRenderer extends DateRenderer {
             }
 
             if (fieldType.equals(DateTimeFieldType.monthOfYear())) {
-                calendar.set(Calendar.MONTH, partial.get(DateTimeFieldType.monthOfYear()));
+                calendar.set(Calendar.MONTH, partial.get(DateTimeFieldType.monthOfYear()) - 1);
                 continue;
             }
             

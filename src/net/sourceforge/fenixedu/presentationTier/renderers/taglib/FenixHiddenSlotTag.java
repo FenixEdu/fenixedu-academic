@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.components.state.HiddenSlot;
+import net.sourceforge.fenixedu.renderers.converters.EnumConverter;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.taglib.HiddenSlotTag;
 
@@ -82,6 +83,10 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
             String objectValue = MetaObjectFactory.createObject(domainObject, null).getKey().toString();
             
             addHiddenSlot(slot, objectValue, usedConverterName);
+        }
+        else if (value instanceof Enum) {
+            String enumConverterName = EnumConverter.class.getName();
+            addHiddenSlot(slot, value, enumConverterName);
         }
         else {
             super.addHiddenSlot(slot, value, converterName);
