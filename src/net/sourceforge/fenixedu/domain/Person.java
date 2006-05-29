@@ -653,6 +653,7 @@ public class Person extends Person_Base {
             getAdvisories().clear();
             removeCms();
             removePais();
+            getUser().delete();
             RootDomainObject.getInstance().removePartys(this);
             removeRootDomainObject();
             deleteDomainObject();
@@ -697,9 +698,6 @@ public class Person extends Person_Base {
         if (getMasterDegreeCandidatesCount() > 0) {
             return false;
         }
-        if (getCreatedContentsCount() > 0) {
-            return false;
-        }
         if (getGuidesCount() > 0) {
             return false;
         }
@@ -707,9 +705,6 @@ public class Person extends Person_Base {
             return false;
         }
         if (getPersonAuthorshipsCount() > 0) {
-            return false;
-        }
-        if (getOwnedContentsCount() > 0) {
             return false;
         }
 
