@@ -68,6 +68,12 @@ public class Student extends Student_Base {
     }
 
     public void delete() {
+
+        for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
+            ;
+
+        removePerson();
+        removeStudentKind();
         removeRootDomainObject();
         super.deleteDomainObject();
     }
