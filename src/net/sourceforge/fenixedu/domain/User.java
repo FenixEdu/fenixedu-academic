@@ -69,4 +69,15 @@ public class User extends User_Base {
         }
         return cards;
     }
+
+    public void delete() {
+
+        for (; !getIdentifications().isEmpty(); getIdentifications().get(0).delete())
+            ;
+        
+        removePerson();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
+
 }

@@ -8,20 +8,26 @@ import java.util.List;
  */
 
 public abstract class Identification extends Identification_Base {
-    
+
     public Identification() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-        setOjbConcreteClass(getClass().getName());        
+        setOjbConcreteClass(getClass().getName());
     }
-    
-    public static List<Login> readAllLogins(){
+
+    public static List<Login> readAllLogins() {
         List<Login> logins = new ArrayList<Login>();
         for (Identification identification : RootDomainObject.getInstance().getIdentifications()) {
             if (identification instanceof Login) {
-                logins.add((Login)identification);
+                logins.add((Login) identification);
             }
-        }        
+        }
         return logins;
+    }
+
+    public void delete() {
+        removeUser();
+        removeRootDomainObject();
+        deleteDomainObject();
     }
 }
