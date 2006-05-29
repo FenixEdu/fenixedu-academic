@@ -80,36 +80,42 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         // According to Nota Informativa 55/03
         // if mealDuration is shorter than 15 minutes the whole day is subtracted from the normal work
         // period
-        if (dailyBalance.getLunchBreak().isShorterThan(getMeal().getMinimumMealBreakInterval())) {
-            // NormalWorkPeriodBalance will be - totalNormalWorkPeriodDuration
-            System.out.println("almoco e' menor q o tempo dado para almoco");
-            dailyBalance.setWorkedOnNormalWorkPeriod(Duration.ZERO);
-            if (definedFixedPeriod()) {
-                // FixedPeriod absence will be the whole fixed period duration
-                System.out.println("fixed period com tudo!");
-                dailyBalance.setFixedPeriodAbsence(((WorkPeriod) this.getFixedWorkPeriod())
-                        .getWorkPeriodDuration());
-                System.out.println(dailyBalance.getFixedPeriodAbsence().toPeriod().toString());
+        if (definedMeal()) {
+            if (dailyBalance.getLunchBreak().isShorterThan(getMeal().getMinimumMealBreakInterval())) {
+                // NormalWorkPeriodBalance will be - totalNormalWorkPeriodDuration
+                System.out.println("almoco e' menor q o tempo dado para almoco");
+                turnDayToAbsence(dailyBalance);
+            } else {
+                System.out.println("nwp: "
+                        + (dailyBalance.getWorkedOnNormalWorkPeriod()).toPeriod().toString());
+                System.out.println("saldo nwp antes: "
+                        + getNormalWorkPeriod().getWorkPeriodDuration().minus(
+                                (dailyBalance.getWorkedOnNormalWorkPeriod())).toPeriod().toString());
+                System.out.println("almoco" + dailyBalance.getLunchBreak().toPeriod().toString());
+                System.out.println("demorou mais de 15m a almocar");
+                Duration mealDiscount = ((Meal) getMeal()).calculateMealDiscount(dailyBalance
+                        .getLunchBreak());
+                System.out.println("descontar " + mealDiscount.toPeriod().toString());
+                // periodo normal menos desconto
+                dailyBalance.setWorkedOnNormalWorkPeriod(dailyBalance.getWorkedOnNormalWorkPeriod().minus(
+                        mealDiscount));
+                System.out.println("nwp: depois "
+                        + (dailyBalance.getWorkedOnNormalWorkPeriod()).toPeriod().toString());
             }
-        } else {
-            System.out.println("nwp: "
-                    + (dailyBalance.getWorkedOnNormalWorkPeriod()).toPeriod().toString());
-            System.out.println("saldo nwp antes: "
-                    + getNormalWorkPeriod().getWorkPeriodDuration().minus(
-                            (dailyBalance.getWorkedOnNormalWorkPeriod())).toPeriod().toString());
-            System.out.println("almoco" + dailyBalance.getLunchBreak().toPeriod().toString());
-            System.out.println("demorou mais de 15m a almocar");
-            Duration mealDiscount = ((Meal) getMeal()).calculateMealDiscount(dailyBalance
-                    .getLunchBreak());
-            System.out.println("descontar " + mealDiscount.toPeriod().toString());
-            // periodo normal menos desconto
-            dailyBalance.setWorkedOnNormalWorkPeriod(dailyBalance.getWorkedOnNormalWorkPeriod().minus(
-                    mealDiscount));
-            System.out.println("nwp: depois "
-                    + (dailyBalance.getWorkedOnNormalWorkPeriod()).toPeriod().toString());
         }
     }
 
+    // sets the working day to an absence day
+    public void turnDayToAbsence(DailyBalance dailyBalance) {
+        dailyBalance.setWorkedOnNormalWorkPeriod(Duration.ZERO);
+        if (definedFixedPeriod()) {
+            // FixedPeriod absence will be the whole fixed period duration
+            dailyBalance.setFixedPeriodAbsence(((WorkPeriod) this.getFixedWorkPeriod()).getWorkPeriodDuration());
+            System.out.println(dailyBalance.getFixedPeriodAbsence().toPeriod().toString());
+        }
+    }
+    
+    
     // TODO
     // Os funcionario so' podem trabalhar 5 horas seguidas
     // o tempo para alem dessas 5 horas nao e' contabilizado.

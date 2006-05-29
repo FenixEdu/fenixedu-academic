@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
@@ -43,25 +44,8 @@ public class Assiduousness extends Assiduousness_Base {
                 if (workSchedule != null) { // ha horario neste dia
                     System.out.println("horario:" + workSchedule.getWorkScheduleType().getAcronym());
                     dailyBalance.setWorkSchedule(workSchedule);
-//                    List<Clocking> clockingList = validClockingsWithDate(date);
-//                    List<Leave> leaveList = leavesWithDate(date);
-//                    List<MissingClocking> missingClockingList = missingClockingsWithDate(date);
-//                    if (clockingList.size() > 0) {
-//                        dailyBalance.setClockingList(clockingList);
-//                    }
-//                    if (leaveList.size() > 0) {
-//                        dailyBalance.setLeaveList(leaveList);
-//                    }
-//                    if (missingClockingList.size() > 0) {
-//                        dailyBalance.setMissingClockingList(missingClockingList); // see if this is
-//                        // really necessary
-//                        // addMissingClockingsToClockingList(clockingList, missingClockingList);
-//                    }
                     dailyBalance = calculateDailyBalance(date);
                     dailyBalanceList.add(dailyBalance);
-                } else { // nao ha horario neste dia => sabado ou domingo
-                    // neste caso devia ter info de DSC e DS?
-                    // TODO ver esta situacao
                 }
             }
         }
@@ -165,7 +149,6 @@ public class Assiduousness extends Assiduousness_Base {
         List<Leave> leaves = getLeaves(day, day);
         Collections.sort(leaves, new BeanComparator("date"));
 
-        Leave.plotListInTimeline(leaves, attributesIt, timeline);
         DateTime init = day.toDateTime(workSchedule.getWorkScheduleType().getWorkTime());
         DateTime end = day.toDateTime(workSchedule.getWorkScheduleType().getWorkEndTime());
         if (workSchedule.getWorkScheduleType().isNextDay()) {
@@ -178,14 +161,24 @@ public class Assiduousness extends Assiduousness_Base {
         // assiduousnessRecord.getDate().getSecondOfMinute()));
         // }
 
-        timeline.plotListInTimeline(clockings, attributesIt, day);
+        timeline.plotListInTimeline(clockings, leaves, attributesIt, day);
         timeline.print();
         DateTime firstClockingDate = null;
         if (clockings.size() != 0) {
             firstClockingDate = (clockings.iterator().next()).getDate();
         }
-        DailyBalance dailyBalance = workSchedule.calculateWorkingPeriods(day, firstClockingDate,
+        DateTime lastClockingDate = null;
+        if (clockings.size() != 0) {
+            lastClockingDate = (clockings.get(clockings.size() - 1)).getDate();
+        }
+        DailyBalance dailyBalance = workSchedule.calculateWorkingPeriods(day, firstClockingDate, lastClockingDate,
                 timeline);
+
+        List<Leave> balanceLeavesList = getBalanceLeaves(day, day);
+        if (balanceLeavesList.size() > 0) {
+            dailyBalance.discountBalanceLeaveInFixedPeriod(balanceLeavesList);
+        }
+        
         return dailyBalance;
     }
 
@@ -206,16 +199,6 @@ public class Assiduousness extends Assiduousness_Base {
     // }
     // }
 
-    public List<Clocking> getClockings() {
-        List<Clocking> clockingsList = new ArrayList<Clocking>();
-        for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
-            if (assiduousnessRecord instanceof Clocking) {
-                clockingsList.add((Clocking) assiduousnessRecord);
-            }
-        }
-        return clockingsList;
-    }
-
     public List<AssiduousnessRecord> getClockingsAndMissingClockings(DateTime beginDate, DateTime endDate) {
         Interval interval = new Interval(beginDate, endDate);
         List<AssiduousnessRecord> clockingsList = new ArrayList<AssiduousnessRecord>();
@@ -228,29 +211,29 @@ public class Assiduousness extends Assiduousness_Base {
         return clockingsList;
     }
 
-    public List<Clocking> getClockings(YearMonthDay beginDate, YearMonthDay endDate) {
-        DateInterval interval = new DateInterval(beginDate, endDate);
-        List<Clocking> clockingsList = new ArrayList<Clocking>();
-        for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
-            if (assiduousnessRecord instanceof Clocking
-                    && interval.containsDate(assiduousnessRecord.getDate())) {
-                clockingsList.add((Clocking) assiduousnessRecord);
-            }
-        }
-        return clockingsList;
-    }
+//    public List<Clocking> getClockings(YearMonthDay beginDate, YearMonthDay endDate) {
+//        DateInterval interval = new DateInterval(beginDate, endDate);
+//        List<Clocking> clockingsList = new ArrayList<Clocking>();
+//        for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
+//            if (assiduousnessRecord instanceof Clocking
+//                    && interval.containsDate(assiduousnessRecord.getDate())) {
+//                clockingsList.add((Clocking) assiduousnessRecord);
+//            }
+//        }
+//        return clockingsList;
+//    }
 
-    public List<MissingClocking> getMissingClockings(YearMonthDay beginDate, YearMonthDay endDate) {
-        DateInterval interval = new DateInterval(beginDate, endDate);
-        List<MissingClocking> missingClockingsList = new ArrayList<MissingClocking>();
-        for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
-            if (assiduousnessRecord instanceof MissingClocking
-                    && interval.containsDate(assiduousnessRecord.getDate())) {
-                missingClockingsList.add((MissingClocking) assiduousnessRecord);
-            }
-        }
-        return missingClockingsList;
-    }
+//    public List<MissingClocking> getMissingClockings(YearMonthDay beginDate, YearMonthDay endDate) {
+//        DateInterval interval = new DateInterval(beginDate, endDate);
+//        List<MissingClocking> missingClockingsList = new ArrayList<MissingClocking>();
+//        for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
+//            if (assiduousnessRecord instanceof MissingClocking
+//                    && interval.containsDate(assiduousnessRecord.getDate())) {
+//                missingClockingsList.add((MissingClocking) assiduousnessRecord);
+//            }
+//        }
+//        return missingClockingsList;
+//    }
 
     public List<Leave> getLeaves(YearMonthDay beginDate, YearMonthDay endDate) {
         DateInterval interval = new DateInterval(beginDate, endDate);
@@ -263,4 +246,20 @@ public class Assiduousness extends Assiduousness_Base {
         }
         return clockingsList;
     }
+    
+    // Returns all the Balance Leaves for a particular begin-end date
+    public List<Leave> getBalanceLeaves(YearMonthDay beginDate, YearMonthDay endDate) {
+        DateInterval interval = new DateInterval(beginDate, endDate);
+        List<Leave> balanceLeaveList = new ArrayList<Leave>();
+        for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
+            if (assiduousnessRecord instanceof Leave
+                    && interval.containsDate(assiduousnessRecord.getDate()) && 
+                            ((Leave)assiduousnessRecord).getJustificationMotive().getJustificationType() == JustificationType.BALANCE) {
+                balanceLeaveList.add((Leave) assiduousnessRecord);
+            }
+        }
+        return balanceLeaveList;
+    }
+    
+    
 }

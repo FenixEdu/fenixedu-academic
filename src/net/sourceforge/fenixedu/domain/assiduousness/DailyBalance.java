@@ -5,6 +5,8 @@ import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
+import java.util.List;
+
 public class DailyBalance {
 
     private YearMonthDay date;
@@ -27,12 +29,11 @@ public class DailyBalance {
 
     private WorkSchedule workSchedule;
 
-//    private List<Clocking> clockingList;
+    // duracao da compensacao
+    private Duration totalBalance;
+    
 
-//    private List<Leave> leaveList;
-//
-//    private List<MissingClocking> missingClockingList;
-
+    
     public DailyBalance() {
         super();
     }
@@ -51,35 +52,9 @@ public class DailyBalance {
         setFixedPeriodAbsence(Duration.ZERO);
         setWorkedOnNormalWorkPeriod(Duration.ZERO);
         setLunchBreak(Duration.ZERO);
+        
+        setTotalBalance(Duration.ZERO);
     }
-
-//    public List<Clocking> getClockingList() {
-//        return clockingList;
-//    }
-//
-//    // Assigns clockingList to Daily Balance's clockingList. If the list size's is odd sets the irregular
-//    // (Anomalia) flag;
-//    public void setClockingList(List<Clocking> clockingList) {
-//        if (clockingList != null) {
-//            if (isOdd(clockingList.size())) {
-//                setIrregular(true);
-//            }
-//            this.clockingList = clockingList;
-//        }
-//    }
-
-//    public List<MissingClocking> getMissingClockingList() {
-//        return missingClockingList;
-//    }
-//
-//    // Assigns clockingList to Daily Balance's clockingList. If the list size's is odd sets the irregular
-//    // (Anomalia) flag;
-//    public void setMissingClockingList(List<MissingClocking> missingClockingList) {
-//        if (missingClockingList != null) {
-//            setMissingClocking(true);
-//        }
-//        this.missingClockingList = missingClockingList;
-//    }
 
     public String getComment() {
         return comment;
@@ -128,22 +103,15 @@ public class DailyBalance {
     public void setMissingClocking(Boolean missingClocking) {
         this.missingClocking = missingClocking;
     }
+    
+    public void setTotalBalance(Duration totalBalance) {
+        this.totalBalance = totalBalance;
+    }
 
-//    public List<Leave> getLeaveList() {
-//        return leaveList;
-//    }
-//
-//    // Assigns a List of leaves to LeaveList and if there are leaves in the list sets justification to
-//    // true;
-//    public void setLeaveList(List<Leave> leaveList) {
-//        if (leaveList != null) {
-//            if (leaveList.size() > 0) {
-//                setJustification(true);
-//            }
-//            this.leaveList = leaveList;
-//        }
-//    }
-
+    public Duration getTotalBalance() {
+        return totalBalance;
+    }
+    
     public Duration getLunchBreak() {
         return lunchBreak;
     }
@@ -188,24 +156,29 @@ public class DailyBalance {
                 .getWorkPeriodDuration());
         Duration normalWorkPeriodAbsence = Duration.ZERO.minus(this.getWorkSchedule()
                 .getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
-        // System.out.println("absence: " + normalWorkPeriodAbsence.toPeriod().toString());
         if (normalWorkPeriodBalance.isShorterThan(normalWorkPeriodAbsence)) {
             System.out.println(normalWorkPeriodBalance.toPeriod().toString() + " e menor que "
                     + normalWorkPeriodAbsence.toPeriod().toString());
             return normalWorkPeriodAbsence;
         } else {
-            // System.out.println("wnwp" + getWorkedOnNormalWorkPeriod());
-            // System.out.println("wnwp" + getWorkedOnNormalWorkPeriod());
             return normalWorkPeriodBalance;
         }
     }
 
-//    // put this on Utils class
-//    public boolean isOdd(int number) {
-//        if (number % 2 != 0) {
-//            return true;
-//        }
-//        return false;
-//    }
-
+    
+    public void discountBalanceLeaveInFixedPeriod(List<Leave> balanceLeaveList) {
+        Duration balance = Duration.ZERO;
+        for (Leave balanceLeave: balanceLeaveList) {
+            balance = balance.plus(balanceLeave.getDuration());
+        }
+        Duration newFixedPeriodAbsence = getFixedPeriodAbsence().minus(balance);
+        if (newFixedPeriodAbsence.isShorterThan(Duration.ZERO)) {
+            setFixedPeriodAbsence(Duration.ZERO);
+        } else {
+            setFixedPeriodAbsence(newFixedPeriodAbsence);
+        }
+    }
+            
+    
+    
 }

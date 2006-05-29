@@ -55,14 +55,14 @@ public class Leave extends Leave_Base {
         return timePointList;
     }
     
-   	public static void plotListInTimeline(List<Leave> leaveList, Iterator<AttributeType> attributesIt, Timeline timeline) {
+    public static void plotListInTimeline(List<Leave> leaveList, Iterator<AttributeType> attributesIt, Timeline timeline) {
    		List<TimePoint> pointList = new ArrayList<TimePoint>();
    		for (Leave leave: leaveList) {
-            if (leave.getJustificationMotive().getJustificationType() == JustificationType.BALANCE) {
-                pointList.addAll(leave.toTimePoints(AttributeType.BALANCE));
-            } else {
-                pointList.addAll(leave.toTimePoints(attributesIt.next()));
-            }
+//            if (leave.getJustificationMotive().getJustificationType() == JustificationType.BALANCE) {
+//                pointList.addAll(leave.toTimePoints(AttributeType.BALANCE));
+//            } else {
+   		    AttributeType at = (AttributeType)attributesIt.next();
+   		    pointList.addAll(leave.toTimePoints(at));
    		}
    		timeline.plotList(pointList);
     }
