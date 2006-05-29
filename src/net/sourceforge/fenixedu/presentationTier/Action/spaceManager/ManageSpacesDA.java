@@ -44,7 +44,6 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
 
     private FactoryExecutor getFactoryObject() {
-    	//return (FactoryExecutor) ((CreationMetaObject) RenderUtils.getViewState().getMetaObject()).getCreatedObject();
     	return (FactoryExecutor) RenderUtils.getViewState().getMetaObject().getObject();
     }
 
@@ -54,7 +53,6 @@ public class ManageSpacesDA extends FenixDispatchAction {
         executeService(request, "ExecuteFactoryMethod", args);
     	return viewSpaces(mapping, form, request, response);
     }
-
 
 	private Space getSpaceAndSetSelectedSpace(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 		final IUserView userView = getUserView(request);
@@ -100,76 +98,6 @@ public class ManageSpacesDA extends FenixDispatchAction {
         return mapping.findForward("ShowCreateSubSpaceForm");
     }
 
-//    public ActionForward createCampus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-//            HttpServletResponse response) throws Exception {
-//        final IUserView userView = getUserView(request);
-//
-//        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-//        final String spaceName = (String) dynaActionForm.get("spaceName");
-//
-//        final Object[] args = { spaceName };
-//        ServiceUtils.executeService(userView, "CreateCampus", args);
-//
-//        return mapping.findForward("ShowSpaces");
-//    }
-
-    public ActionForward createBuilding(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String suroundingSpaceIDString = (String) dynaActionForm.get("suroundingSpaceID");
-        final Integer suroundingSpaceID = (suroundingSpaceIDString != null && suroundingSpaceIDString.length() > 0) ?
-        	Integer.valueOf(suroundingSpaceIDString) : null;
-        final String spaceName = (String) dynaActionForm.get("spaceName");
-
-        final Object[] args = { suroundingSpaceID, spaceName };
-        ServiceUtils.executeService(userView, "CreateBuilding", args);
-
-        if (suroundingSpaceIDString == null || suroundingSpaceIDString.length() == 0) {
-        	return mapping.findForward("ShowSpaces");
-        } else {
-        	request.setAttribute("spaceInformationID", suroundingSpaceIDString);
-        	return manageSpace(mapping, form, request, response);
-        }
-    }
-
-    public ActionForward createFloor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String suroundingSpaceIDString = (String) dynaActionForm.get("suroundingSpaceID");
-        final Integer suroundingSpaceID = (suroundingSpaceIDString != null && suroundingSpaceIDString.length() > 0) ?
-                Integer.valueOf(suroundingSpaceIDString) : null;
-        final String levelString = (String) dynaActionForm.get("level");
-        final Integer level = levelString != null && levelString.length() > 0 ?
-                Integer.valueOf(levelString) : null;
-
-        final Object[] args = { suroundingSpaceID, level };
-        ServiceUtils.executeService(userView, "CreateFloor", args);
-
-        request.setAttribute("spaceInformationID", suroundingSpaceIDString);
-        return manageSpace(mapping, form, request, response);
-    }
-
-    public ActionForward createRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String suroundingSpaceIDString = (String) dynaActionForm.get("suroundingSpaceID");
-        final Integer suroundingSpaceID = (suroundingSpaceIDString != null && suroundingSpaceIDString.length() > 0) ?
-            Integer.valueOf(suroundingSpaceIDString) : null;
-        final String spaceName = (String) dynaActionForm.get("spaceName");
-
-        final Object[] args = { suroundingSpaceID, spaceName };
-        ServiceUtils.executeService(userView, "CreateRoom", args);
-
-        request.setAttribute("spaceInformationID", suroundingSpaceIDString);
-        return manageSpace(mapping, form, request, response);
-    }
-
     public ActionForward prepareCreateSpaceInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
         final String spaceInformationIDString = request.getParameter("spaceInformationID");
@@ -181,28 +109,6 @@ public class ManageSpacesDA extends FenixDispatchAction {
         request.setAttribute("SpaceFactoryEditor", factoryExecutor);
 
         return mapping.findForward("CreateSpaceInformation");
-    }
-
-    public ActionForward createSpaceInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-
-        final String spaceInformationIDString = request.getParameter("spaceInformationID");
-        final Integer spaceInformationID = Integer.valueOf(spaceInformationIDString);
-
-        final Object[] args = { spaceInformationID };
-        ServiceUtils.executeService(userView, "CreateSpaceInformation", args);
-
-        final SpaceInformation oldSpaceInformation = (SpaceInformation)
-                readDomainObject(request, SpaceInformation.class, spaceInformationID);
-        final Space space = oldSpaceInformation.getSpace();
-        final SpaceInformation newSpaceInformation = space.getOrderedSpaceInformations().last();
-
-        request.setAttribute("selectedSpace", space);
-        request.setAttribute("selectedSpaceInformation", newSpaceInformation);
-        request.setAttribute("spaces", space.getContainedSpaces());
-
-        return mapping.findForward("ManageSpace");
     }
 
     public ActionForward deleteSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -250,76 +156,6 @@ public class ManageSpacesDA extends FenixDispatchAction {
         request.setAttribute("spaces", space.getContainedSpaces());
 
         return mapping.findForward("ManageSpace");
-    }
-
-    public ActionForward editCampus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String spaceInformationIDString = (String) dynaActionForm.get("spaceInformationID");
-        final Boolean asNewVersion = (Boolean) dynaActionForm.get("asNewVersion");
-        final Integer spaceInformationID = spaceInformationIDString != null && spaceInformationIDString.length() > 0 ?
-                Integer.valueOf(spaceInformationIDString) : null;
-        final String spaceName = (String) dynaActionForm.get("spaceName");
-
-        final Object[] args = { spaceInformationID, asNewVersion, spaceName };
-        ServiceUtils.executeService(userView, "EditCampus", args);
-
-        return manageSpace(mapping, form, request, response);
-    }
-
-    public ActionForward editBuilding(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String spaceInformationIDString = (String) dynaActionForm.get("spaceInformationID");
-        final Boolean asNewVersion = (Boolean) dynaActionForm.get("asNewVersion");
-        final Integer spaceInformationID = spaceInformationIDString != null && spaceInformationIDString.length() > 0 ?
-                Integer.valueOf(spaceInformationIDString) : null;
-        final String spaceName = (String) dynaActionForm.get("spaceName");
-
-        final Object[] args = { spaceInformationID, asNewVersion, spaceName };
-        ServiceUtils.executeService(userView, "EditBuilding", args);
-
-        return manageSpace(mapping, form, request, response);
-    }
-
-    public ActionForward editFloor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String spaceInformationIDString = (String) dynaActionForm.get("spaceInformationID");
-        final Boolean asNewVersion = (Boolean) dynaActionForm.get("asNewVersion");
-        final Integer spaceInformationID = spaceInformationIDString != null && spaceInformationIDString.length() > 0 ?
-                Integer.valueOf(spaceInformationIDString) : null;
-        final String levelString = (String) dynaActionForm.get("level");
-        final Integer level = levelString != null && levelString.length() > 0 ?
-                        Integer.valueOf(levelString) : null;
-
-        final Object[] args = { spaceInformationID, asNewVersion, level };
-        ServiceUtils.executeService(userView, "EditFloor", args);
-
-        return manageSpace(mapping, form, request, response);
-    }
-
-    public ActionForward editRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String spaceInformationIDString = (String) dynaActionForm.get("spaceInformationID");
-        final Boolean asNewVersion = (Boolean) dynaActionForm.get("asNewVersion");
-        final Integer spaceInformationID = spaceInformationIDString != null && spaceInformationIDString.length() > 0 ?
-                Integer.valueOf(spaceInformationIDString) : null;
-        final String spaceName = (String) dynaActionForm.get("spaceName");
-
-        final Object[] args = { spaceInformationID, asNewVersion, spaceName };
-        ServiceUtils.executeService(userView, "EditRoom", args);
-
-        return manageSpace(mapping, form, request, response);
     }
 
 }
