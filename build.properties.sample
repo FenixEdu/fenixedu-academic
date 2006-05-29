@@ -364,6 +364,7 @@ cms.mailer.username=xptze
 cms.mailer.password=xptze
 mail.smtp.host=localhost
 mail.smtp.name=localhost
+mailingList.host.name=lists.fenix.ist.utl.pt
 #
 #
 #----------------------------------------------
