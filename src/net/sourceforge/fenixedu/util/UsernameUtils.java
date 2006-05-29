@@ -5,9 +5,6 @@ package net.sourceforge.fenixedu.util;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -17,6 +14,7 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.StudentType;
 
 /**
  * 
@@ -28,16 +26,17 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public class UsernameUtils extends FenixUtil {
 
-	public static boolean shouldHaveUID(Person person) {
-		if(person.getUsername().matches("[A-Z]+[0-9]+")){
-			String letters = person.getUsername().replaceFirst("[0-9]+", "");
-			return (letters.equals("D") || letters.equals("F") || letters.equals("B") || letters.equals("M") || letters.equals("L") || letters.equals("P"));
-		} else {
-			return false;
-		}
-		
-	}
-	
+    public static boolean shouldHaveUID(Person person) {
+        if (person.getUsername().matches("[A-Z]+[0-9]+")) {
+            String letters = person.getUsername().replaceFirst("[0-9]+", "");
+            return (letters.equals("D") || letters.equals("F") || letters.equals("B")
+                    || letters.equals("M") || letters.equals("L") || letters.equals("P"));
+        } else {
+            return false;
+        }
+
+    }
+
     /**
      * This method is used to determine what should be the person's current
      * username. Note - this method is NOT resposible for actually removing the
@@ -61,35 +60,38 @@ public class UsernameUtils extends FenixUtil {
         }
 
     }
-    
+
     public static String updateIstUsername(Person person) {
         if (person.getIstUsername() == null) {
             String ist = "ist";
-            String istUsername = null; 
+            String istUsername = null;
             String username = person.getUsername().toUpperCase().trim();
-            
-            if(username.startsWith("D") && person.getTeacher() != null) {
+
+            if (username.startsWith("D") && person.getTeacher() != null) {
                 istUsername = ist + sumNumber(username.substring(1), 10000);
-            }else if(username.startsWith("F") && person.getEmployee() != null) {
+            } else if (username.startsWith("F") && person.getEmployee() != null) {
                 istUsername = ist + sumNumber(username.substring(1), 20000);
-            }else if(username.startsWith("B") && person.getGrantOwner() != null) {
+            } else if (username.startsWith("B") && person.getGrantOwner() != null) {
                 istUsername = ist + sumNumber(username.substring(1), 30000);
-            }else if(username.startsWith("M") && person.getStudentByType(DegreeType.MASTER_DEGREE) != null) {
+            } else if (username.startsWith("M")
+                    && person.getStudentByType(DegreeType.MASTER_DEGREE) != null) {
                 istUsername = ist + sumNumber(username.substring(1), 40000);
-            }else if(username.startsWith("L") && person.getStudentByType(DegreeType.DEGREE) != null) {
+            } else if (username.startsWith("L") && person.getStudentByType(DegreeType.DEGREE) != null) {
                 istUsername = ist + sumNumber(username.substring(1), 100000);
-            }else if(username.startsWith("C")) {
+            } else if (username.startsWith("C")) {
                 return person.getIstUsername();
-            }else if(username.startsWith("P")){
-            	if (RootDomainObject.getInstance().getUsers().size() == 1) {
-            		istUsername = ist + "0000001";
-            	} else {
-            		User user = Collections.max(RootDomainObject.getInstance().getUsers(), User.USER_UID_COMPARATOR);
-            		Integer maxIstNumber = Integer.valueOf(user.getUserUId().replaceFirst("[a-zA-Z]+", ""));
-            		istUsername = ist + (maxIstNumber + 1);
-            	}
+            } else if (username.startsWith("P")) {
+                if (RootDomainObject.getInstance().getUsers().size() == 1) {
+                    istUsername = ist + "0000001";
+                } else {
+                    User user = Collections.max(RootDomainObject.getInstance().getUsers(),
+                            User.USER_UID_COMPARATOR);
+                    Integer maxIstNumber = Integer.valueOf(user.getUserUId().replaceFirst("[a-zA-Z]+",
+                            ""));
+                    istUsername = ist + (maxIstNumber + 1);
+                }
             }
-            
+
             return istUsername;
         }
         return person.getIstUsername();
@@ -113,21 +115,38 @@ public class UsernameUtils extends FenixUtil {
             Student student = person.getStudentByType(DegreeType.DEGREE);
             return "L" + student.getNumber();
         } else if (roleType.equals(RoleType.STUDENT)) {
-            Student student = person.getStudentByType(DegreeType.MASTER_DEGREE);
+            Student student = person.getStudentByType(DegreeType.MASTER_DEGREE);            
             if (student != null) {
-                return "M" + student.getNumber();
+                StudentType studentType = student.getStudentKind().getStudentType();
+                if (studentType.equals(StudentType.NORMAL)) {
+                    return "M" + student.getNumber();
+                } else if (studentType.equals(StudentType.FOREIGN_STUDENT)) {
+                    return "I" + student.getNumber(); // International students
+                } else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
+                    return "A" + student.getNumber(); // Academy students
+                }
             }
+
             student = person.getStudentByType(DegreeType.DEGREE);
             if (student != null) {
-                return "L" + student.getNumber();
+                StudentType studentType = student.getStudentKind().getStudentType();
+                if (studentType.equals(StudentType.NORMAL)) {
+                    return "L" + student.getNumber();
+                } else if (studentType.equals(StudentType.FOREIGN_STUDENT)) {
+                    return "I" + student.getNumber();
+                } else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
+                    return "A" + student.getNumber();
+                }
             }
+
             throw new DomainException("error.person.addingInvalidRole", RoleType.STUDENT.getName());
 
         } else if (roleType.equals(RoleType.GRANT_OWNER)) {
             if (person.getGrantOwner() != null) {
                 return "B" + person.getGrantOwner().getNumber();
             }
-        } else if (roleType.equals(RoleType.PROJECTS_MANAGER) || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
+        } else if (roleType.equals(RoleType.PROJECTS_MANAGER)
+                || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
             return "G" + person.getIdInternal();
         } else if (roleType.equals(RoleType.ALUMNI)) {
             Student student = person.getStudentByType(DegreeType.DEGREE);
@@ -159,7 +178,6 @@ public class UsernameUtils extends FenixUtil {
         return null;
     }
 
-    
     private static String sumNumber(String number, Integer sum) {
         Integer num = Integer.valueOf(number);
         Integer result = num + sum;
