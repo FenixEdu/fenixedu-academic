@@ -58,7 +58,7 @@
 						<bean:write name="selectedSpaceInformation" property="level"/>
 					</logic:equal>
 					<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-						<bean:write name="selectedSpaceInformation" property="name"/>
+						<bean:write name="selectedSpaceInformation" property="description"/>
 					</logic:equal>
 				</html:link>
 			</td>
@@ -167,7 +167,7 @@
 							<bean:write name="space" property="spaceInformation.level"/>
 						</logic:equal>
 						<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-							<bean:write name="space" property="spaceInformation.name"/>
+							<bean:write name="space" property="spaceInformation.description"/>
 						</logic:equal>
 					</html:link>
 				</td>

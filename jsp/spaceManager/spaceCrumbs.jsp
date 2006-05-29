@@ -29,7 +29,7 @@
 		<bean:write name="currentSpace" property="spaceInformation.level"/>
 	</logic:equal>
 	<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-		<bean:write name="currentSpace" property="spaceInformation.name"/>
+		<bean:write name="currentSpace" property="spaceInformation.description"/>
 	</logic:equal>
 <% } else { %>
 	<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="currentSpace" paramProperty="spaceInformation.idInternal">
@@ -43,7 +43,7 @@
 			<bean:write name="currentSpace" property="spaceInformation.level"/>
 		</logic:equal>
 		<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-			<bean:write name="currentSpace" property="spaceInformation.name"/>
+			<bean:write name="currentSpace" property="spaceInformation.description"/>
 		</logic:equal>
 	</html:link>
 <% } %>

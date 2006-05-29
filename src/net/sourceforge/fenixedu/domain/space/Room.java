@@ -98,14 +98,14 @@ public class Room extends Room_Base {
 	}
 
 	public static class RoomFactoryCreator extends RoomFactory {
-        private DomainReference<Space> suroundingSpaceReference;
+        private DomainReference<Space> surroundingSpaceReference;
 
-		public Space getSuroundingSpace() {
-			return suroundingSpaceReference == null ? null : suroundingSpaceReference.getObject();
+		public Space getSurroundingSpace() {
+			return surroundingSpaceReference == null ? null : surroundingSpaceReference.getObject();
 		}
-		public void setSuroundingSpaceReference(Space suroundingSpace) {
-			if (suroundingSpace != null) {
-				this.suroundingSpaceReference = new DomainReference<Space>(suroundingSpace);
+		public void setSurroundingSpace(Space surroundingSpace) {
+			if (surroundingSpace != null) {
+				this.surroundingSpaceReference = new DomainReference<Space>(surroundingSpace);
 			}
 		}
 
@@ -140,7 +140,7 @@ public class Room extends Room_Base {
     public Room(RoomFactoryCreator roomFactoryCreator) {
     	this();
 
-    	final Space suroundingSpace = roomFactoryCreator.getSuroundingSpace();
+    	final Space suroundingSpace = roomFactoryCreator.getSurroundingSpace();
         if (suroundingSpace == null) {
             throw new NullPointerException("error.surrounding.space");
         }
