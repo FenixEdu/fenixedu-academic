@@ -9,23 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceComparator;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
-import net.sourceforge.fenixedu.domain.space.Campus.CampusFactoryCreator;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.renderers.model.CreationMetaObject;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 public class ManageSpacesDA extends FenixDispatchAction {
 
@@ -50,8 +46,22 @@ public class ManageSpacesDA extends FenixDispatchAction {
     public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
         final Object[] args = { getFactoryObject() };
-        executeService(request, "ExecuteFactoryMethod", args);
-    	return viewSpaces(mapping, form, request, response);
+        final Object serviceResult = executeService(request, "ExecuteFactoryMethod", args);
+
+        final Space space;
+        final SpaceInformation spaceInformation;
+        if (serviceResult instanceof Space) {
+        	space = (Space) serviceResult;
+        	spaceInformation = space.getSpaceInformation();
+        } else if (serviceResult instanceof SpaceInformation) {
+        	spaceInformation = (SpaceInformation) serviceResult;
+        	space = spaceInformation.getSpace();
+        } else {
+        	return viewSpaces(mapping, form, request, response);
+        }
+        request.setAttribute("selectedSpace", space);
+        request.setAttribute("selectedSpaceInformation", spaceInformation);
+        return mapping.findForward("ManageSpace");
     }
 
 	private Space getSpaceAndSetSelectedSpace(HttpServletRequest request) throws FenixFilterException, FenixServiceException {

@@ -5,8 +5,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <logic:present name="selectedSpaceInformation">
-	<bean:define id="selectedSpaceInformationIDString" type="java.lang.String"><bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>
-
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	<jsp:include page="spaceCrumbs.jsp"/>
 	<br/>
@@ -17,17 +15,19 @@
 	<br/>
 	<br/>
 
+	<bean:define id="url" type="java.lang.String">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>
+
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
-		<fr:edit name="selectedSpaceInformation" schema="CampusInformation"/>
+		<fr:edit name="selectedSpaceInformation" schema="CampusInformation" action="<%= url %>"/>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
-		<fr:edit name="selectedSpaceInformation" schema="BuildingInformation"/>
+		<fr:edit name="selectedSpaceInformation" schema="BuildingInformation" action="<%= url %>"/>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
-		<fr:edit name="selectedSpaceInformation" schema="FloorInformation"/>
+		<fr:edit name="selectedSpaceInformation" schema="FloorInformation" action="<%= url %>"/>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-		<fr:edit name="selectedSpaceInformation" schema="RoomInformation"/>
+		<fr:edit name="selectedSpaceInformation" schema="RoomInformation" action="<%= url %>"/>
 	</logic:equal>
 	<br/>
 	<br/>
