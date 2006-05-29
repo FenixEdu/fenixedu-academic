@@ -129,17 +129,35 @@ public class SafeHtmlConverter extends Converter {
             return true;
         }
 
-        List<String> forbiddenElements = Arrays.asList(new String[] { "script", "iframe", "img",
+        List<String> forbiddenElements = Arrays.asList(new String[] { "script", "iframe",
                 "element", "object", "applet", "form", "frame", "frameset", "link", "style" });
 
         Element element = (Element) child;
-        if (forbiddenElements.contains(element.getNodeName().toLowerCase())) {
+        String name = element.getNodeName().toLowerCase();
+
+        if (forbiddenElements.contains(name)) {
             return false;
         }
 
+        if (name.equals("img")) {
+            String source = element.getAttribute("src");
+                    
+            if (! isRelative(source)) {
+                return false;
+            }
+            
+            element.removeAttribute("longdesc");
+            element.removeAttribute("usemap");
+            element.removeAttribute("ismap");
+        }
+        
         return true;
     }
 
+    private boolean isRelative(String uri) {
+        return ! (uri.startsWith("http://") || uri.startsWith("ftp://") || uri.startsWith("mailto:"));
+    }
+    
     private boolean isThrustedAttribute(Node parent, Attr attribute) {
         String name = attribute.getName().toLowerCase();
         String value = attribute.getValue();
@@ -161,10 +179,8 @@ public class SafeHtmlConverter extends Converter {
             return false;
         }
 
-        if (name.equals("href")) { // protect links to private places of the application
-            if (value.startsWith("http://") || 
-                    value.startsWith("ftp://") ||
-                    value.startsWith("mailto:")) {
+        if (name.equals("href")) { 
+            if (! isRelative(value)) { // protect links to private places of the application
                 HttpServletRequest currentRequest = RenderersRequestProcessor.getCurrentRequest();
                 String serverName = currentRequest.getServerName();
                 

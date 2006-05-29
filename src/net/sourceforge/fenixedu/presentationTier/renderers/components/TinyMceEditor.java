@@ -7,9 +7,11 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.jsp.PageContext;
 
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.renderers.components.HtmlScript;
 import net.sourceforge.fenixedu.renderers.components.HtmlTextArea;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.log4j.Logger;
 
@@ -21,6 +23,8 @@ public class TinyMceEditor extends HtmlTextArea {
     public static final String CONFIG_PATH = "/javaScript/tiny_mce/config/";
 
     private String config;
+    private Integer width;
+    private Integer height;
     
     public String getConfig() {
         return this.config;
@@ -28,6 +32,22 @@ public class TinyMceEditor extends HtmlTextArea {
 
     public void setConfig(String config) {
         this.config = config;
+    }
+
+    public Integer getHeight() {
+        return this.height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getWidth() {
+        return this.width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
     }
 
     public TinyMceEditor() {
@@ -59,10 +79,22 @@ public class TinyMceEditor extends HtmlTextArea {
         StringBuilder builder = new StringBuilder();
         
         Properties properties = new Properties();
+
+        if (getHeight() != null) {
+            properties.setProperty("height", getHeight().toString());
+        }
+        
+        if (getWidth() != null) {
+            properties.setProperty("width", getWidth().toString());
+        }
+        
         loadConfig(context, properties);
         
         properties.setProperty("mode", "exact");
         properties.setProperty("elements", getId());
+        
+        Language language = LanguageUtils.getLanguage();
+        properties.setProperty("language", language.toString());
         
         builder.append("tinyMCE.init({\n");
         

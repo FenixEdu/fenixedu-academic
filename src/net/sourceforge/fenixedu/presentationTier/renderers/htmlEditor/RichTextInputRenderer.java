@@ -19,6 +19,9 @@ public class RichTextInputRenderer extends InputRenderer {
 
     private String config;
     
+    private Integer width;
+    private Integer height;
+    
     private Integer columns;
     private Integer rows;
     
@@ -72,6 +75,32 @@ public class RichTextInputRenderer extends InputRenderer {
         this.rows = rows;
     }
 
+    public Integer getHeight() {
+        return this.height;
+    }
+
+    /**
+     * Chooses the height in pixels of the rich text editor.
+     * 
+     * @property
+     */
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getWidth() {
+        return this.width;
+    }
+
+    /**
+     * Chooses the width in pixels of the rich text editor.
+     * 
+     * @property
+     */
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
     public boolean isSafe() {
         return this.safe;
     }
@@ -103,8 +132,11 @@ public class RichTextInputRenderer extends InputRenderer {
                 container.addChild(sourceScript);
 
                 TinyMceEditor editor = new TinyMceEditor(getConfig());
+                editor.setValue((String) object);
                 editor.setRows(getRows());
                 editor.setColumns(getColumns());
+                editor.setHeight(getHeight());
+                editor.setWidth(getWidth());
                 editor.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
                 container.addChild(editor);
 

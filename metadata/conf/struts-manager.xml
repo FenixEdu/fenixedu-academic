@@ -1906,9 +1906,7 @@
 		<forward name="insertNewRule" path="insertNewRule"/>
 	</action>
 
-    <action path="/reloadStruts" type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReloadStrutsAction">
-        <forward name="sucess" path="/index.do"/>
-    </action>
+    <action path="/reloadStruts" type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReloadStrutsAction"/>
 
     <!-- ========= Renderers ================ -->
     <action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">
