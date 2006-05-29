@@ -17,12 +17,6 @@
 			<bean:message key="link.coordinator.degreeSite.management"/>
 		</li>
 		<li>
-			<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;degreeID=" + infoDegreeID.toString() %>" target="_blank">
-			    <bean:message key="link.coordinator.degreeSite.viewSite" /></html:link>
-		</li>		
-
-
-		<li>
 			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;info=description&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 			    <bean:message key="label.description" />&nbsp;<bean:message key="label.degree" />
 			</html:link>
@@ -42,6 +36,11 @@
 			    <bean:message key="label.description" />&nbsp;<bean:message key="label.curricularPlan" /> 
 			</html:link>
 		</li>																	
+		<br/>
+		<li>
+			<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;degreeID=" + infoDegreeID.toString() %>" target="_blank">
+			    <bean:message key="link.coordinator.degreeSite.viewSite" /></html:link>
+		</li>		
 		<li>
 			<html:link page="<%= "/degreeSiteManagement.do?method=viewHistoric&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 			    <bean:message key="link.coordinator.degreeSite.historic" /></html:link>
