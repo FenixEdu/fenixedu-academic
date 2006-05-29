@@ -19,6 +19,8 @@ public enum IDDocumentType {
      
     OTHER,
     
+    MILITARY_IDENTITY_CARD,
+    
     EXTERNAL
     
 }
