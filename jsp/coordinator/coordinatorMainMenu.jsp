@@ -32,7 +32,7 @@
 		</li>
 		<logic:equal name="infoExecutionDegree" property="bolonha" value="true">
 			<li>
-				<html:link page="<%="/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+				<html:link page="<%="/degreeCurricularPlan/showDegreeCurricularPlanBolonha.faces?degreeCurricularPlanID=" + degreeCurricularPlanID + "&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false"%>">
 					<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
 				</html:link> 
 			</li>
