@@ -79,7 +79,7 @@ valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization  
 valueType net.sourceforge.fenixedu.util.State                                                   as State;
 valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState      as StudentCurricularPlanState;
 valueType net.sourceforge.fenixedu.util.StudentState                                            as StudentState;
-valueType net.sourceforge.fenixedu.util.StudentType                                             as StudentType;
+valueType net.sourceforge.fenixedu.domain.student.StudentType									as StudentType;
 valueType net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice					as StudentPersonalDataAuthorizationChoice;
 valueType net.sourceforge.fenixedu.util.TipoAula                                                as TipoAula;
 valueType net.sourceforge.fenixedu.util.TipoSala                                                as TipoSala; 

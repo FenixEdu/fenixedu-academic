@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.util.StudentType;
+import net.sourceforge.fenixedu.domain.student.StudentType;
 
 public class StudentKind extends StudentKind_Base {
 

@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.StudentType;
+import net.sourceforge.fenixedu.domain.student.StudentType;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -31,7 +31,7 @@ public class JavaStudentKind2SqlStudentKindFieldConversion implements FieldConve
     public Object sqlToJava(Object source) {
         if (source instanceof Integer) {
             Integer src = (Integer) source;
-            return new StudentType(src);
+            return StudentType.getStudentTypeByState(src);
         }
 
         return source;

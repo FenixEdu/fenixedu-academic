@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.util.StudentType;
+import net.sourceforge.fenixedu.domain.student.StudentType;
 
 /**
  * @author dcs-rjao

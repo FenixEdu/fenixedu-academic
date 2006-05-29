@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.StudentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.StudentState;
-import net.sourceforge.fenixedu.util.StudentType;
 
 public class StudentTest extends DomainTestBase {
 
@@ -25,7 +25,7 @@ public class StudentTest extends DomainTestBase {
 		person = new Person();
 		studentNumber = 49555;
 		studentKind = new StudentKind();
-		studentKind.setStudentType(new StudentType(StudentType.NORMAL));
+		studentKind.setStudentType(StudentType.NORMAL);
 		studentState = new StudentState(StudentState.INSCRITO);
 		payedTuition = true;
 		enrolmentForbidden = false;

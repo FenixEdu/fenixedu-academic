@@ -35,13 +35,13 @@ import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.StudentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.StudentState;
-import net.sourceforge.fenixedu.util.StudentType;
 
 public class RegisterCandidate extends Service {
 
@@ -176,7 +176,7 @@ public class RegisterCandidate extends Service {
             studentNumber = Student.generateStudentNumber(DegreeType.MASTER_DEGREE);
         }
 
-        StudentKind studentKind = StudentKind.readByStudentType(new StudentType(StudentType.NORMAL));
+        StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
         StudentState state = new StudentState(StudentState.INSCRITO);
         student = DomainFactory.makeStudent(person, studentNumber, studentKind, state, false, false,
                 EntryPhase.FIRST_PHASE_OBJ, DegreeType.MASTER_DEGREE);
