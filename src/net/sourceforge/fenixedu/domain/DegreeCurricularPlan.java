@@ -532,7 +532,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     @Override
     public List<CurricularCourse> getCurricularCourses() {
-        if (getDegree().isBolonhaDegree()) {
+        if (this.isBolonha()) {
             List<CurricularCourse> result = new ArrayList<CurricularCourse>();
             for (DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
                 result.add((CurricularCourse) degreeModule);
@@ -542,6 +542,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         } else {
             return super.getCurricularCourses();
         }
+    }
+
+    public List<CompetenceCourse> getCompetenceCourses() {
+        Set<CompetenceCourse> result = new HashSet<CompetenceCourse>();
+        if (this.isBolonha()) {
+            for (DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
+                result.add(((CurricularCourse) degreeModule).getCompetenceCourse());
+            }
+        } 
+        return new ArrayList<CompetenceCourse>(result);
     }
 
     public List<Branch> getCommonAreas() {
@@ -909,7 +919,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
         for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
                 .getDegreeCurricularPlans()) {
-            if (!degreeCurricularPlan.getDegree().isBolonhaDegree()) {
+            if (!degreeCurricularPlan.isBolonha()) {
                 if (degreeCurricularPlan.getDegree().getTipoCurso().equals(degreeType)
                         && degreeCurricularPlan.getState().equals(state)
                         && !degreeCurricularPlan.isBolonha()) {
