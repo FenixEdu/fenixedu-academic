@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Meal;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
+import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -317,30 +318,28 @@ public class Timeline {
     // Calculates the duration of a List<TimePoint>
     public Duration calculateDurationPointList(List<TimePoint> pointList) {
         Duration totalDuration = Duration.ZERO;
-        if (pointList.size() > 2) {
-            pointList = normalizeList(pointList);
-        }
+//        if (pointList.size() > 2) {
+//            pointList = normalizeList(pointList);
+//        }
         Iterator<TimePoint> pointListIt = pointList.iterator();
         while (pointListIt.hasNext()) {
             TimePoint point = pointListIt.next();
             if (pointListIt.hasNext()) {
                 TimePoint point2 = pointListIt.next();
-                System.out.println("calcular a duracao entre " + point + " e " + point2);
                 totalDuration = totalDuration.plus(new TimeInterval(point.getTime(), point2.getTime(),
                         point2.isNextDay()).getDuration());
             }
         }
-        System.out.println("total duration: " + totalDuration.toPeriod().toString());
         return totalDuration;
     }
 
-    // Returns a list with 2 points, the 1st and the last of pointList.
-    public List<TimePoint> normalizeList(List<TimePoint> pointList) {
-        List<TimePoint> normalizedPointList = new ArrayList<TimePoint>();
-        normalizedPointList.add(pointList.get(0));
-        normalizedPointList.add(pointList.get(pointList.size() - 1));
-        return normalizedPointList;
-    }
+//    // Returns a list with 2 points, the 1st and the last of pointList.
+//    public List<TimePoint> normalizeList(List<TimePoint> pointList) {
+//        List<TimePoint> normalizedPointList = new ArrayList<TimePoint>();
+//        normalizedPointList.add(pointList.get(0));
+//        normalizedPointList.add(pointList.get(pointList.size() - 1));
+//        return normalizedPointList;
+//    }
 
     // Calcula a duracao dos intervalos de atributo attributes cujo final seja ate timeOfDay
     // TODO verificar
@@ -429,9 +428,9 @@ public class Timeline {
     public Duration calculateFixedPeriod(AttributeType fixedPeriodAttribute) {
         List<TimePoint> pointList = new ArrayList<TimePoint>();
         for (TimePoint point : getTimePoints()) {
-            // checks if the point is a WORKED in the fixed period or is a BALANCE in the fixed period.
-            if (point.hasAttributes(fixedPeriodAttribute, DomainConstants.WORKED_ATTRIBUTES)
-                    || point.hasAttributes(fixedPeriodAttribute, AttributeType.BALANCE)) {
+            // checks if the point is a WORKED in the fixed period
+            if (point.hasAttributes(fixedPeriodAttribute, DomainConstants.WORKED_ATTRIBUTES)) {
+//                    || point.hasAttributes(fixedPeriodAttribute, AttributeType.BALANCE)) {
                 pointList.add(point);
             }
         }
@@ -651,9 +650,18 @@ public class Timeline {
 
     // Plots the pairs of clockings in the timeline
     // Converts pairs of clockings of the clockingList to clockingInterval and adds it to the pointList.
-    public void plotListInTimeline(List<AssiduousnessRecord> clockingList,
+    public void plotListInTimeline(List<AssiduousnessRecord> clockingList, List<Leave> leaveList,
             Iterator<AttributeType> attributesIt, YearMonthDay day) {
         List<TimePoint> pointList = new ArrayList<TimePoint>();
+
+        for (Leave leave: leaveList) {
+            System.out.println("leave " + leave.getDate().toString());
+            if (leave.getJustificationMotive().getJustificationType() != JustificationType.BALANCE) {
+//                TimePoint
+                pointList.addAll(leave.toTimePoints((AttributeType)attributesIt.next()));
+            }
+        }
+
         Iterator<AssiduousnessRecord> clockingIt = clockingList.iterator();
         while (clockingIt.hasNext()) {
             AssiduousnessRecord clockIn = clockingIt.next();
