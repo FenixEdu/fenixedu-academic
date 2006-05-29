@@ -1,16 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import java.util.Collections;
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * 
@@ -26,22 +21,14 @@ public class ReadDegreeInfoByDegreeCurricularPlanID extends Service {
             throw new FenixServiceException("error.invalidDegreeCurricularPlan");
         }
 
-        // Degree curricular plan
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(
-                        degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-        // Read degree information
-        List<DegreeInfo> degreeInfoList = degreeCurricularPlan.getDegree().getDegreeInfos();
-        InfoDegreeInfo infoDegreeInfo = null;
-
-        // Last information about this degree
-        if (degreeInfoList != null && !degreeInfoList.isEmpty()) {
-            DegreeInfo degreeInfo = (DegreeInfo) Collections.max(degreeInfoList, new BeanComparator(
-                    "lastModificationDate"));
-
-            infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfo);
+        DegreeInfo latestDegreeInfo = degreeCurricularPlan.getDegree().getLatestDegreeInfo();
+        if (latestDegreeInfo != null) {
+            return InfoDegreeInfo.newInfoFromDomain(latestDegreeInfo);
         }
 
-        return infoDegreeInfo;
+        return null;
     }
+    
 }
