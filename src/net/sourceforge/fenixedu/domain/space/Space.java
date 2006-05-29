@@ -5,6 +5,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
 
@@ -76,9 +77,13 @@ public abstract class Space extends Space_Base {
         @Override
         public void beforeAdd(Space space, SpaceInformation spaceInformation) {
         	if (space != null) {
+        		final YearMonthDay validUntil = new YearMonthDay();
         		for (final SpaceInformation otherSpaceInformation : space.getSpaceInformations()) {
-        			if (otherSpaceInformation.getValidUntil() == null) {
-        				otherSpaceInformation.setValidUntil(new YearMonthDay());
+        			final YearMonthDay otherValidUntil = otherSpaceInformation.getValidUntil();
+        			if (otherValidUntil == null) {
+        				otherSpaceInformation.setValidUntil(validUntil);
+        			} else if (otherSpaceInformation.getValidUntil().equals(validUntil)) {
+        				throw new DomainException("error.existing.space.information.for.current.day");
         			}
         		}
             }
