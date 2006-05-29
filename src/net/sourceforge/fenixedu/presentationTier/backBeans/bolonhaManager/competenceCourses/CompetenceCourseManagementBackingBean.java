@@ -108,19 +108,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<CompetenceCourse> getDepartmentCompetenceCourses(CurricularStage curricularStage) {
-        List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
-        if (getSelectedDepartmentUnit() != null) {
-            for (Unit scientificAreaUnit : getSelectedDepartmentUnit().getScientificAreaUnits()) {
-                for (Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
-                    for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
-                        if (competenceCourse.getCurricularStage().equals(curricularStage)) {
-                            result.add(competenceCourse);                        
-                        }
-                    }
-                }
-            }
+        Unit selectedDepartmentUnit = getSelectedDepartmentUnit();
+        if (selectedDepartmentUnit != null) {
+            return selectedDepartmentUnit.getDepartmentUnitCompetenceCourses(curricularStage);
         }
-        return result;
+        return new ArrayList<CompetenceCourse>();
     }
     
     public List<CompetenceCourse> getDepartmentCompetenceCourses() {

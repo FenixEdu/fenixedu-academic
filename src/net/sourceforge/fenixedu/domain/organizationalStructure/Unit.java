@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
@@ -436,5 +437,21 @@ public class Unit extends Unit_Base {
     		}
     	}
     	return result;
+    }
+
+    public List<CompetenceCourse> getDepartmentUnitCompetenceCourses(CurricularStage curricularStage) {
+        List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
+        if (isUnitDepartment(this)) {
+            for (Unit scientificAreaUnit : this.getScientificAreaUnits()) {
+                for (Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
+                    for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
+                        if (competenceCourse.getCurricularStage().equals(curricularStage)) {
+                            result.add(competenceCourse);                        
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
