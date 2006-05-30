@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetRectifyBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -44,6 +45,8 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 
         MarkSheetManagementCreateBean markSheetManagementCreateBean = new MarkSheetManagementCreateBean();
         markSheetManagementCreateBean.setExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
+        markSheetManagementCreateBean.setUrl("");
+        
         request.setAttribute("edit", markSheetManagementCreateBean);
 
         return mapping.findForward("createMarkSheetStep1");
@@ -54,8 +57,10 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 
         MarkSheetManagementCreateBean markSheetManagementCreateBean = new MarkSheetManagementCreateBean();
         fillMarkSheetBean(actionForm, request, markSheetManagementCreateBean);
+        markSheetManagementCreateBean.setUrl(buildUrl(markSheetManagementCreateBean, request));
+        
         request.setAttribute("edit", markSheetManagementCreateBean);
-
+        
         return mapping.findForward("createMarkSheetStep1");
     }
 
@@ -142,11 +147,15 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     
     public ActionForward prepareRectifyMarkSheet(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        
     	DynaActionForm form = (DynaActionForm) actionForm;
     	MarkSheet markSheet = rootDomainObject.readMarkSheetByOID((Integer) form.get("msID"));
+        
     	MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
+        fillMarkSheetBean(actionForm, request, rectifyBean);
+        rectifyBean.setUrl(buildUrl(rectifyBean, request));
+        
     	rectifyBean.setMarkSheet(markSheet);
-    	
     	request.setAttribute("rectifyBean", rectifyBean);
     	request.setAttribute("msID", (Integer) form.get("msID"));
     	
@@ -211,7 +220,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         ActionMessages actionMessages = new ActionMessages();
         try {
             ServiceUtils.executeService(getUserView(request), "CreateRectificationMarkSheet", new Object[] {rectifyBean.getMarkSheet(), rectifyBean.getEnrolmentEvaluation(), rectifyBean.getNewGrade(), rectifyBean.getEvaluationDate(), rectifyBean.getReason()});
-            return mapping.findForward("searchMarkSheet");
+            return mapping.findForward("searchMarkSheetFilled");
         } catch (NotAuthorizedFilterException e) {
             addMessage(request, actionMessages, "error.notAuthorized");
             return mapping.findForward("searchMarkSheet");
@@ -253,6 +262,37 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         }
         
         return mapping.findForward("showRectificationHistoric");
+    }
+    
+    private String buildUrl(MarkSheetManagementBaseBean createBean, HttpServletRequest request) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        
+        if (createBean.getExecutionPeriod() != null) {
+            stringBuilder.append("&epID=").append(createBean.getExecutionPeriod().getIdInternal());
+        }
+        if (createBean.getDegree() != null) {
+            stringBuilder.append("&dID=").append(createBean.getDegree().getIdInternal());    
+        }
+        if (createBean.getDegreeCurricularPlan() != null) {
+            stringBuilder.append("&dcpID=").append(createBean.getDegreeCurricularPlan().getIdInternal());
+        }
+        if (createBean.getCurricularCourse() != null) {
+            stringBuilder.append("&ccID=").append(createBean.getCurricularCourse().getIdInternal());
+        }
+        if(request.getParameter("tn") != null) {
+            stringBuilder.append("&tn=").append(request.getParameter("tn"));
+        }
+        if(request.getParameter("ed") != null) {
+            stringBuilder.append("&ed=").append(request.getParameter("ed"));
+        }
+        if (request.getParameter("mss") != null) {
+            stringBuilder.append("&mss=").append(request.getParameter("mss"));
+        }
+        if (request.getParameter("mst") != null) {
+            stringBuilder.append("&mst=").append(request.getParameter("mst"));
+        }
+        return stringBuilder.toString();
     }
 
 }

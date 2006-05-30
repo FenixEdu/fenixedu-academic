@@ -1,19 +1,20 @@
 package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 
-public class MarkSheetRectifyBean implements Serializable{
+public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
+    
 	private DomainReference<MarkSheet> markSheet;
+    private DomainReference<EnrolmentEvaluation> enrolmentEvaluation;
+    
 	private Integer studentNumber;
 	private String newGrade;
 	private Date evaluationDate;
 	private String reason;
-	private DomainReference<EnrolmentEvaluation> enrolmentEvaluation;
 	
     public MarkSheet getMarkSheet() {
         return (this.markSheet == null) ? null : this.markSheet.getObject();

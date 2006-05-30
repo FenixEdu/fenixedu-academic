@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gr
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.MarkSheet;
+import net.sourceforge.fenixedu.domain.MarkSheetState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -42,11 +43,12 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
         
         editBean.setTeacherNumber(markSheet.getResponsibleTeacher().getTeacherNumber());
-        editBean.setEvaluationDate(markSheet.getEvaluationDate());
+        editBean.setEvaluationDate(markSheet.getEvaluationDateDateTime().toDate());
         editBean.setMarkSheet(markSheet);
         editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(markSheet));
-        editBean.setEnrolmentEvaluationBeansToAppend(getEnrolmentEvaluationBeansToAppend(markSheet));    
-        
+        if (markSheet.getMarkSheetState() == MarkSheetState.NOT_CONFIRMED) {
+            editBean.setEnrolmentEvaluationBeansToAppend(getEnrolmentEvaluationBeansToAppend(markSheet));
+        }
         return mapping.findForward("editMarkSheet");
     }
 
@@ -94,7 +96,6 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
             FenixServiceException {
 
         MarkSheetManagementEditBean editBean = getMarkSheetManagementEditBean();
-        request.setAttribute("edit", editBean);
 
         ActionMessages actionMessages = createActionMessages();
         try {
@@ -109,6 +110,8 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         } catch (DomainException e) {
             addMessage(request, actionMessages, e.getMessage(), e.getArgs());
         }
+        
+        request.setAttribute("edit", editBean);
         return mapping.findForward("editMarkSheet");
     }
     
