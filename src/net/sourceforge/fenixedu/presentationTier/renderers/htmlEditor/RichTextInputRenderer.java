@@ -131,13 +131,19 @@ public class RichTextInputRenderer extends InputRenderer {
                 HtmlScript sourceScript = new HtmlScript("text/javascript", link.calculateUrl(), true);
                 container.addChild(sourceScript);
 
+                MetaSlotKey key = (MetaSlotKey) getInputContext().getMetaObject().getKey();
+
                 TinyMceEditor editor = new TinyMceEditor(getConfig());
                 editor.setValue((String) object);
                 editor.setRows(getRows());
                 editor.setColumns(getColumns());
                 editor.setHeight(getHeight());
                 editor.setWidth(getWidth());
-                editor.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
+                editor.setTargetSlot(key);
+                
+                editor.setName(key.toString());
+                editor.setId(editor.getName());
+                
                 container.addChild(editor);
 
                 if (isSafe()) {
