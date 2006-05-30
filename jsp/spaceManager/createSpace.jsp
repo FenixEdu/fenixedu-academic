@@ -9,10 +9,7 @@
 <br/>
 <br/>
 
-<html:form action="/createSpace">
-	<html:hidden property="page" value="0"/>
-	<html:hidden property="method" value="showCreateSpaceForm"/>
-
+<html:form action="/showCreateSpaceForm">
 	<html:select property="classname" onchange="this.form.submit()">
 		<html:option value=""/>
 		<html:option bundle="SPACE_RESOURCES" key="select.item.campus" value="net.sourceforge.fenixedu.domain.space.Campus"/>
@@ -22,13 +19,13 @@
 <br/>
 
 
-<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Campus">
+<logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Campus">
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Campus$CampusFactoryCreator"
 			schema="CampusFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 	</fr:create>
 </logic:equal>
-<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
+<logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator"
 			schema="BuildingFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">

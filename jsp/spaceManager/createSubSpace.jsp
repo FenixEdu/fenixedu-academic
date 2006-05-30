@@ -9,11 +9,11 @@
 <br/>
 <br/>
 
+<bean:define id="selectedSpace" name="selectedSpaceInformation" property="space"/>
 <bean:define id="suroundingSpaceID" type="java.lang.Integer" name="selectedSpace" property="idInternal"/>
 <bean:define id="suroundingSpaceInformationID" type="java.lang.Integer" name="selectedSpace" property="spaceInformation.idInternal"/>
 
-<html:form action="/createSpace">
-	<html:hidden property="page" value="0"/>
+<html:form action="/manageSpaces">
 	<html:hidden property="method" value="showCreateSubSpaceForm"/>
 	<html:hidden property="spaceInformationID" value="<%= suroundingSpaceInformationID.toString() %>"/>
 
@@ -26,21 +26,21 @@
 </html:form>
 <br/>
 
-<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
+<logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator"
 			schema="BuildingFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
 	</fr:create>
 </logic:equal>
-<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Floor">
+<logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Floor">
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Floor$FloorFactoryCreator"
 			schema="FloorFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
 	</fr:create>
 </logic:equal>
-<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Room">
+<logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Room">
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator"
 			schema="RoomFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">

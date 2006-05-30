@@ -7,7 +7,7 @@
 <br/>
 <br/>
 
-<html:link page="/manageSpaces.do?method=showCreateSpaceForm&page=0">
+<html:link page="/showCreateSpaceForm.do">
 	<bean:message bundle="SPACE_RESOURCES" key="link.create.space"/>
 </html:link>
 <br/>
