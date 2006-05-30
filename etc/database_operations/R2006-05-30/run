@@ -27,3 +27,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table Space Information" alterTableSpaceInformation.sql
+execute "Fix CMS Tables" fixCmsTables.sql
+execute "Alter Weight To Table Category" addWeightToTableCategory.sql
+execute "Add Rectification and Rectified Columns to EnrolmentEvaluation table" alterEnrolmentEvaluationTable.sql
