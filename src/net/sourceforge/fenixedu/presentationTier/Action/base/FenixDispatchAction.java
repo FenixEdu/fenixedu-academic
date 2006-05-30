@@ -120,33 +120,35 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected Integer getInteger(final DynaActionForm dynaActionForm, final String string) {
-    	final String value = dynaActionForm.getString(string);
-    	return value == null || value.length() == 0 ? null : Integer.valueOf(value);
+        	final String value = dynaActionForm.getString(string);
+        	return value == null || value.length() == 0 ? null : Integer.valueOf(value);
 	}
 
     public ActionForward processException(HttpServletRequest request, ActionForward input, Exception e) {
-	if (! (e instanceof DomainException)) {
-	    return null;
-	}
-	
-	DomainException domainException = (DomainException) e;
-	ActionMessages messages = getMessages(request);
-	
-	if (messages == null) {
-	    messages = new ActionMessages();
-	}
-	
-	messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(domainException.getKey(), domainException.getArgs()));
-	saveMessages(request, messages);
-	
-	IViewState viewState = RenderUtils.getViewState();
-	ViewDestination destination = viewState.getDestination("exception");
-	if (destination != null) {
-	    return destination.getActionForward();
-	}
-	else {
-	    return input;
-	}
+        	if (! (e instanceof DomainException)) {
+        	    return null;
+        	}
+        	
+        	DomainException domainException = (DomainException) e;
+        	ActionMessages messages = getMessages(request);
+        	
+        	if (messages == null) {
+        	    messages = new ActionMessages();
+        	}
+        	
+        	messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(domainException.getKey(), domainException.getArgs()));
+        	saveMessages(request, messages);
+        	
+        	IViewState viewState = RenderUtils.getViewState();
+        	ViewDestination destination = viewState.getDestination("exception");
+        	if (destination != null) {
+        	    return destination.getActionForward();
+        	}
+        	else {
+        	    // show exception in output to ease finding the problem when messages are not shown in page
+        	    e.printStackTrace(); 
+        	    return input;
+        	}
     }
 
 }

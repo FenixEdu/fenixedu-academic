@@ -157,7 +157,11 @@ public class DomainMetaObject implements MetaObject {
             return ServiceUtils.executeService(getUserView(), getService(), new Object[] { changes });
         } catch (DomainException e) {
             throw e;
-        } catch (Exception e) {
+        } 
+        catch (RuntimeException e) {
+            throw e;
+        }
+        catch (Exception e) {
             throw new DomainException("domain.metaobject.service.failed", e);
         }
     }

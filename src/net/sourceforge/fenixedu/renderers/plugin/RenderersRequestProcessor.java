@@ -70,23 +70,23 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
         }
         catch (Exception e) {
             if (action instanceof ExceptionHandler) {
-        	ExceptionHandler handler = (ExceptionHandler) action;
-        	
-        	// TODO: ensure that a view state is present when an exception occurs
-        	IViewState viewState = RenderUtils.getViewState(); 
-        	ViewDestination destination = viewState.getInputDestination();
-        	ActionForward input = destination.getActionForward();
-        	
-        	ActionForward forward = handler.processException(request, input, e);
-        	if (forward != null) {
-        	    return forward;
-        	}
-        	else {
-        	    return processException(request, response, e, form, mapping);
-        	}
+                	ExceptionHandler handler = (ExceptionHandler) action;
+                	
+                	// TODO: ensure that a view state is present when an exception occurs
+                	IViewState viewState = RenderUtils.getViewState(); 
+                	ViewDestination destination = viewState.getInputDestination();
+                	ActionForward input = destination.getActionForward();
+                	
+                	ActionForward forward = handler.processException(request, input, e);
+                	if (forward != null) {
+                	    return forward;
+                	}
+                	else {
+                	    return processException(request, response, e, form, mapping);
+                	}
             }
             else {
-        	return processException(request, response, e, form, mapping);
+                return processException(request, response, e, form, mapping);
             }
         }
     }
