@@ -86,26 +86,26 @@ padding-right: 10px;
 		<h:outputText value="<li>#{bolonhaBundle['theoreticalLesson']}: " escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.theoreticalHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{bolonhaBundle['problemsLesson']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.problemsHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="<li>#{bolonhaBundle['problemsLesson']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="#{competenceCourseLoad.problemsHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{bolonhaBundle['laboratorialLesson']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.laboratorialHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.laboratorialHours != 0.0}" value="<li>#{bolonhaBundle['laboratorialLesson']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.laboratorialHours != 0.0}" value="#{competenceCourseLoad.laboratorialHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{bolonhaBundle['seminary']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.seminaryHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.seminaryHours != 0.0}" value="<li>#{bolonhaBundle['seminary']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.seminaryHours != 0.0}" value="#{competenceCourseLoad.seminaryHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{bolonhaBundle['fieldWork']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.fieldWorkHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.fieldWorkHours != 0.0}" value="<li>#{bolonhaBundle['fieldWork']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.fieldWorkHours != 0.0}" value="#{competenceCourseLoad.fieldWorkHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{bolonhaBundle['trainingPeriod']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.trainingPeriodHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.trainingPeriodHours != 0.0}" value="<li>#{bolonhaBundle['trainingPeriod']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.trainingPeriodHours != 0.0}" value="#{competenceCourseLoad.trainingPeriodHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{bolonhaBundle['tutorialOrientation']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.tutorialOrientationHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.tutorialOrientationHours != 0.0}" value="<li>#{bolonhaBundle['tutorialOrientation']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.tutorialOrientationHours != 0.0}" value="#{competenceCourseLoad.tutorialOrientationHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{bolonhaBundle['autonomousWork']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.autonomousWorkHours} h/#{bolonhaBundle['lowerCase.semester']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="<li>#{bolonhaBundle['autonomousWork']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="#{competenceCourseLoad.autonomousWorkHours} h/#{bolonhaBundle['lowerCase.semester']}</li>" escape="false"/>
 
 		<h:outputText value="<li><strong>#{bolonhaBundle['ectsCredits']}: "escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.ectsCredits}</strong></li>" escape="false"/>

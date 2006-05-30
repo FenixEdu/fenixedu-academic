@@ -86,8 +86,8 @@ padding-right: 10px;
 		<h:outputText value="<li>#{bolonhaBundle['theoreticalLesson']}: " escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.theoreticalHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{bolonhaBundle['problemsLesson']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.problemsHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="<li>#{bolonhaBundle['problemsLesson']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="#{competenceCourseLoad.problemsHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>
 
 		<h:outputText value="<li>#{bolonhaBundle['laboratorialLesson']}: " escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.laboratorialHours} h/#{bolonhaBundle['lowerCase.week']}</li>" escape="false"/>

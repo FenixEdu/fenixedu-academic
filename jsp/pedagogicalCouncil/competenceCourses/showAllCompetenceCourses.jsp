@@ -86,8 +86,8 @@ padding-right: 10px;
 			<h:outputText value="<li>#{scouncilBundle['theoreticalLesson']}: " escape="false"/>
 			<h:outputText value="#{competenceCourseLoad.theoreticalHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
 	
-			<h:outputText value="<li>#{scouncilBundle['problemsLesson']}: " escape="false"/>
-			<h:outputText value="#{competenceCourseLoad.problemsHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+			<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="<li>#{scouncilBundle['problemsLesson']}: " escape="false"/>
+			<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="#{competenceCourseLoad.problemsHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
 	
 			<h:outputText value="<li>#{scouncilBundle['laboratorialLesson']}: " escape="false"/>
 			<h:outputText value="#{competenceCourseLoad.laboratorialHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>

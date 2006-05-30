@@ -86,26 +86,26 @@ padding-right: 10px;
 		<h:outputText value="<li>#{scouncilBundle['theoreticalLesson']}: " escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.theoreticalHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{scouncilBundle['problemsLesson']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.problemsHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="<li>#{scouncilBundle['problemsLesson']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="#{competenceCourseLoad.problemsHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{scouncilBundle['laboratorialLesson']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.laboratorialHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.laboratorialHours != 0.0}" value="<li>#{scouncilBundle['laboratorialLesson']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.laboratorialHours != 0.0}" value="#{competenceCourseLoad.laboratorialHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{scouncilBundle['seminary']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.seminaryHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.seminaryHours != 0.0}" value="<li>#{scouncilBundle['seminary']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.seminaryHours != 0.0}" value="#{competenceCourseLoad.seminaryHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{scouncilBundle['fieldWork']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.fieldWorkHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.fieldWorkHours != 0.0}" value="<li>#{scouncilBundle['fieldWork']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.fieldWorkHours != 0.0}" value="#{competenceCourseLoad.fieldWorkHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{scouncilBundle['trainingPeriod']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.trainingPeriodHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.trainingPeriodHours != 0.0}" value="<li>#{scouncilBundle['trainingPeriod']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.trainingPeriodHours != 0.0}" value="#{competenceCourseLoad.trainingPeriodHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{scouncilBundle['tutorialOrientation']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.tutorialOrientationHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.tutorialOrientationHours != 0.0}" value="<li>#{scouncilBundle['tutorialOrientation']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.tutorialOrientationHours != 0.0}" value="#{competenceCourseLoad.tutorialOrientationHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
 
-		<h:outputText value="<li>#{scouncilBundle['autonomousWork']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.autonomousWorkHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="<li>#{scouncilBundle['autonomousWork']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="#{competenceCourseLoad.autonomousWorkHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
 
 		<h:outputText value="<li><strong>#{scouncilBundle['ectsCredits']}: "escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.ectsCredits}</strong></li>" escape="false"/>
