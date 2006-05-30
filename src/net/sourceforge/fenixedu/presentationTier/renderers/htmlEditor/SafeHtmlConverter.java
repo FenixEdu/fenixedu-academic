@@ -1,19 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
 
 import org.w3c.dom.Attr;
@@ -23,54 +18,13 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
-import org.w3c.tidy.TidyMessage;
-import org.w3c.tidy.TidyMessageListener;
 
-public class SafeHtmlConverter extends Converter {
-
-    public static final String TIDY_PROPERTIES = "HtmlEditor-Tidy.properties";
+public class SafeHtmlConverter extends TidyConverter {
 
     @Override
-    public Object convert(Class type, Object value) {
-        String htmlText = (String) value;
-
-        if (htmlText == null) {
-            return null;
-        }
-
-        ByteArrayInputStream inStream = new ByteArrayInputStream(htmlText.getBytes());
-        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-
-        Tidy tidy = createTidyParser();
-
-        TidyErrorsListener errorListener = new TidyErrorsListener();
-        tidy.setMessageListener(errorListener);
-
-        Document document = tidy.parseDOM(inStream, null);
-
-        if (errorListener.isBogus()) {
-            throw new ConversionException("renderers.converter.safe.invalid");
-        }
-
+    protected void parseDocument(OutputStream outStream, Tidy tidy, Document document) {
         filterDocument(document);
         tidy.pprint(document, outStream);
-
-        return new String(outStream.toByteArray());
-    }
-
-    private Tidy createTidyParser() {
-        Tidy tidy = new Tidy();
-
-        Properties properties = new Properties();
-        try {
-            properties.load(getClass().getResourceAsStream(TIDY_PROPERTIES));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        tidy.setConfigurationFromProps(properties);
-
-        return tidy;
     }
 
     private void filterDocument(Node node) {
@@ -146,6 +100,10 @@ public class SafeHtmlConverter extends Converter {
                 return false;
             }
             
+            if (! source.contains("/emotions/")) {
+                return false;
+            }
+            
             element.removeAttribute("longdesc");
             element.removeAttribute("usemap");
             element.removeAttribute("ismap");
@@ -216,23 +174,5 @@ public class SafeHtmlConverter extends Converter {
         return true;
     }
 
-    class TidyErrorsListener implements TidyMessageListener {
-
-        boolean bogus;
-
-        public boolean isBogus() {
-            return this.bogus;
-        }
-
-        public void setBogus(boolean bogus) {
-            this.bogus = bogus;
-        }
-
-        public void messageReceived(TidyMessage message) {
-            if (message.getLevel().equals(TidyMessage.Level.ERROR)) {
-                setBogus(true);
-            }
-        }
-
-    }
+    
 }

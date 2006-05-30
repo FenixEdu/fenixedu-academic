@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.domain.Language;
@@ -19,6 +20,7 @@ public class TinyMceEditor extends HtmlTextArea {
 
     private static final Logger logger = Logger.getLogger(TinyMceEditor.class);
 
+    public static final String EDITOR_PATH = "/javaScript/tiny_mce/";
     public static final String CODE_PATH = "/javaScript/tiny_mce/tiny_mce.js";
     public static final String CONFIG_PATH = "/javaScript/tiny_mce/config/";
 
@@ -92,6 +94,8 @@ public class TinyMceEditor extends HtmlTextArea {
         
         properties.setProperty("mode", "exact");
         properties.setProperty("elements", getId());
+        properties.setProperty("relative_urls", "false");
+        properties.setProperty("remove_script_host", "true");
         
         Language language = LanguageUtils.getLanguage();
         properties.setProperty("language", language.toString());
