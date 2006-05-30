@@ -58,7 +58,10 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
             }
         }
 
-        return (studentCredits >= degreeCurricularPlan.getNeededCredits().doubleValue());
+        if(degreeCurricularPlan.getNeededCredits() != null){
+            return (studentCredits >= degreeCurricularPlan.getNeededCredits().doubleValue());    
+        }
+        return true;
     }
 
     public Date dateOfEndOfScholarship(StudentCurricularPlan studentCurricularPlan)
