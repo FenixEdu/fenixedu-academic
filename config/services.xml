@@ -9798,13 +9798,24 @@
         <name>SearchObjectsByMultiLanguageString</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchObjectsByMultiLanguageString</implementationClass>
         <description>
-            Generic service to search all objects of a certain type that have a string property
+            Generic service to search all objects of a certain type that have a multiLanguageString property
             that matches some user input.
         </description>
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
     </service>    
+	<service>
+        <name>SearchExternalUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits</implementationClass>
+        <description>
+            Generic service to search all external Units that have a string property
+            that matches some user input.
+        </description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>  
 	<service>
 		<name>DeletePatent</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeletePatent</implementationClass>

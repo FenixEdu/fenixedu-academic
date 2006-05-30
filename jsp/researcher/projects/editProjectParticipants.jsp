@@ -35,19 +35,52 @@
 	<br/>
 	
 	<%-- CREATION OF A NEW PARTICIPATION --%>
-	<h3/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewParticipant"/> </h3>
-	<logic:present name="simpleBean">
-		<fr:edit id="simpleBean" name="simpleBean" action="<%="/projects/editProject.do?method=createParticipantSimple&projectId="+projectId%>" schema="projectParticipation.simpleCreation">
-			<fr:destination name="invalid" path="<%="/projects/editProject.do?method=prepareEditParticipants&projectId="+projectId%>"/>	
-			<fr:destination name="cancel" path="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>"/>	
-		</fr:edit>
-	</logic:present>
-	<logic:present name="fullBean">
-		<fr:edit id="fullBean" name="fullBean" action="<%="/projects/editProject.do?method=createParticipantFull&projectId="+projectId%>" schema="projectParticipation.fullCreation">
-			<fr:destination name="invalid" path="<%="/projects/editProject.do?method=createParticipantSimple&projectId="+projectId%>"/>
-			<fr:destination name="cancel" path="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>"/>	
-		</fr:edit>
-	</logic:present>
+	
+	
+
+		<logic:notPresent name="external">
+			<h3>
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewParticipant"/>
+				<html:link page="<%="/projects/editProject.do?method=prepareEditParticipantsWithSimpleBean&external=false&projectId="+projectId%>">
+					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.internal" />
+				</html:link>				
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.or" />
+				<html:link page="<%="/projects/editProject.do?method=prepareEditParticipantsWithSimpleBean&external=true&projectId="+projectId%>">
+					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.external" />
+				</html:link>				
+			</h3>
+		</logic:notPresent>
+		<logic:present name="external">
+			<logic:equal name="external" value="false">
+				<h3>
+					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewInternalParticipant"/>
+				</h3>
+				<fr:edit id="simpleBean" name="simpleBean" action="<%="/projects/editProject.do?method=createParticipantInternalPerson&projectId="+projectId%>" schema="projectParticipation.internalPerson.creation">
+					<fr:destination name="invalid" path="<%="/projects/editProject.do?method=prepareEditParticipantsWithSimpleBean&external=false&projectId="+projectId%>"/>	
+					<fr:destination name="cancel" path="<%="/projects/editProject.do?method=prepareEditParticipants&projectId="+projectId%>"/>	
+				</fr:edit>
+			</logic:equal>
+			<logic:equal name="external" value="true">
+				<h3>
+					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.participants.addNewExternalParticipant"/>			
+				</h3>
+				<logic:present name="simpleBean">
+					<fr:edit id="simpleBean" name="simpleBean" action="<%="/projects/editProject.do?method=createParticipantExternalPerson&external=true&projectId="+projectId%>" schema="projectParticipation.externalPerson.simpleCreation">
+						<fr:destination name="invalid" path="<%="/projects/editProject.do?method=prepareEditParticipantsWithSimpleBean&external=true&projectId="+projectId%>"/>	
+						<fr:destination name="cancel" path="<%="/projects/editProject.do?method=prepareEditParticipants&projectId="+projectId%>"/>	
+					</fr:edit>						
+				</logic:present>
+				<logic:present name="fullBean">
+					<fr:edit id="fullBean" name="fullBean" action="<%="/projects/editProject.do?method=createParticipantExternalPerson&projectId="+projectId%>" schema="projectParticipation.externalPerson.fullCreation">
+						<fr:destination name="invalid" path="<%="/projects/editProject.do?method=prepareEditParticipantsWithFullBean&external=true&projectId="+projectId%>"/>
+						<fr:destination name="cancel" path="<%="/projects/editProject.do?method=prepareEditParticipants&projectId="+projectId%>"/>	
+					</fr:edit>
+				</logic:present>
+			</logic:equal>
+		</logic:present>
+
+
+	
   	<br/>
 	<html:link page="<%="/projects/viewProject.do?method=prepare&projectId="+projectId%>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.goBackToView" />

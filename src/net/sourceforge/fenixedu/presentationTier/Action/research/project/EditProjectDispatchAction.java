@@ -45,7 +45,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     //               PARTICIPANTS
     //***************************************
     
-    public ActionForward prepareEditParticipantsSimple(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward prepareEditParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
         final Integer oid = Integer.parseInt(request.getParameter("projectId"));
@@ -62,58 +62,92 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
                 request.setAttribute("participations", participations);
             }
         }  
+        
+
+        
+        
         return mapping.findForward("EditProjectParticipants");  
     }
     
-    public ActionForward prepareEditParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward prepareEditParticipantsWithSimpleBean(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        ActionForward forward = prepareEditParticipantsSimple(mapping, form, request, response);
+        
+        ActionForward forward = prepareEditParticipants(mapping, form, request, response);
         
         ProjectParticipantSimpleCreationBean simpleBean = new ProjectParticipantSimpleCreationBean();
         request.setAttribute("simpleBean", simpleBean);
         
+        mantainExternalStatus(request);
+        
         return forward;  
     }
-  
-    public ActionForward createParticipantSimple(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    
+    public ActionForward prepareEditParticipantsWithFullBean(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ActionForward forward = prepareEditParticipants(mapping, form, request, response);
+        
+        ProjectParticipantFullCreationBean fullBean = new ProjectParticipantFullCreationBean();
+        request.setAttribute("fullBean", fullBean);
+        
+        mantainExternalStatus(request);
+        
+        return forward;  
+    }
+
+    public ActionForward createParticipantInternalPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
         final IUserView userView = getUserView(request);
         
-        if(RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectParticipantSimpleCreationBean){        
+        ProjectParticipantSimpleCreationBean simpleBean = (ProjectParticipantSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+        
+        if(simpleBean.getPerson() != null) {
+            // Criar a participação efectivamente quando já existe a pessoa escolhida
+            Integer oid = Integer.parseInt(request.getParameter("projectId"));
+            ServiceUtils.executeService(userView, "CreateProjectParticipant", new Object[] {simpleBean, oid });
+            
+            mantainExternalStatus(request);
+            return prepareEditParticipants(mapping, form, request, response);
+        }
+        else {
+            //The application should never reach this point: the user may be
+            //creating an external person not on pourpose
+            throw new RuntimeException ();
+        }
+    }
+    
+    public ActionForward createParticipantExternalPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        final IUserView userView = getUserView(request);
+        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+        
+        if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectParticipantSimpleCreationBean) {
             ProjectParticipantSimpleCreationBean simpleBean = (ProjectParticipantSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
             
-            if(simpleBean.getPerson() != null) {
-                // Criar a participaï¿½ï¿½o efectivamente quando jï¿½ existe a pessoa escolhida
-                Integer oid = Integer.parseInt(request.getParameter("projectId"));
-                ServiceUtils.executeService(userView, "CreateProjectParticipant", new Object[] {simpleBean, oid });
-                return prepareEditParticipants(mapping, form, request, response);
+            if (simpleBean.getPerson() != null){
+                //Criação de uma participação com uma pessoa externa já existente
+                ServiceUtils.executeService(userView, "CreateProjectParticipant", new Object[] { simpleBean, oid });
             }
             else {
-                //Permitir a criaï¿½ï¿½o de uma pessoa externa
+                //Caso em que foi inserido o nome de uma pessoa externa não existente
+                //Passa-se ao modo de criação completa onde é também pedida a organização da pessoa
                 ProjectParticipantFullCreationBean fullBean = new ProjectParticipantFullCreationBean();
                 fullBean.setPersonName(simpleBean.getPersonName());
                 fullBean.setRole(simpleBean.getRole());
                 request.setAttribute("fullBean", fullBean);
-                return prepareEditParticipantsSimple(mapping, form, request, response);
+                
+                mantainExternalStatus(request);
+                
+                return prepareEditParticipants(mapping, form, request, response);                
             }
         }
-        else {
-            request.setAttribute("fullBean", (ProjectParticipantFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject());
-            return prepareEditParticipantsSimple(mapping, form, request, response);
+        else if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectParticipantFullCreationBean) {
+            //Criação de uma participação com o nome de uma pessoa não existente ainda no sistema e a sua organização
+            ProjectParticipantFullCreationBean fullBean = (ProjectParticipantFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+            ServiceUtils.executeService(userView, "CreateProjectParticipant", new Object[] { fullBean, oid });
         }
-    }
-    
-    public ActionForward createParticipantFull(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        
-        ProjectParticipantFullCreationBean fullBean = (ProjectParticipantFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
-        final IUserView userView = getUserView(request);
-        Integer oid = Integer.parseInt(request.getParameter("projectId"));
-        
-        ServiceUtils.executeService(userView, "CreateProjectParticipant", new Object[] { fullBean, oid });
-        
         return prepareEditParticipants(mapping, form, request, response);
     }    
     
@@ -285,4 +319,11 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 			}
 		}
 	}
+    
+    private void mantainExternalStatus(HttpServletRequest request) {
+        final String external = request.getParameter("external");
+        if (external != null) {
+            request.setAttribute("external", external);
+        }
+    }
 }

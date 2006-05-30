@@ -10,6 +10,7 @@ public class RequiredAutoCompleteSelectionValidator extends HtmlValidator {
     public RequiredAutoCompleteSelectionValidator(Validatable component) {
         super(component);
         
+        setKey(true);
         setMessage("renderers.validator.autoComplete.required");
     }
 

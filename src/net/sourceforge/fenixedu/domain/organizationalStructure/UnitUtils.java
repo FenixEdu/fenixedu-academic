@@ -18,7 +18,7 @@ public class UnitUtils {
 
     public static final String EXTERNAL_INSTITUTION_UNIT_NAME = getLabel("external.instituions.name");
 
-    public static List<Unit> readAllExternalInstitutionUnits() throws ExcepcaoPersistencia {
+    public static List<Unit> readAllExternalInstitutionUnits() {
         List<Unit> allUnits = Unit.readAllUnits();
         List<Unit> allExternalUnits = new ArrayList<Unit>();
 
