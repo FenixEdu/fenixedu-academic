@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
-<%@page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
+<%@ page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
 <h2><bean:message key="label.viewMarkSheet"/></h2>
 
 <html:form action="/markSheetManagement.do">
@@ -35,6 +35,7 @@
 			<td align="left"><bean:message key="label.grades"/></td>
 			<td align="left">&nbsp;</td>
 		</tr>
+		<bean:define id="url" name="url" />
 		<logic:iterate id="enrolmentEvaluation" name="markSheet" property="enrolmentEvaluationsSortedByStudentNumber" type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
 			<tr>
 				<td>
@@ -53,7 +54,7 @@
 				</td>
 				<td align="left">
 					<% if(enrolmentEvaluation.getEnrolmentEvaluationState() == net.sourceforge.fenixedu.util.EnrolmentEvaluationState.RECTIFIED_OBJ) { %>
-						<html:link action='<%= "/markSheetManagement.do?method=prepareViewRectificationMarkSheet"%>' paramId="evaluationID" paramName="enrolmentEvaluation" paramProperty="idInternal">
+						<html:link action='<%= "/markSheetManagement.do?method=prepareViewRectificationMarkSheet" + url %>' paramId="evaluationID" paramName="enrolmentEvaluation" paramProperty="idInternal">
 							<bean:message key="label.rectified"/>
 						</html:link>
 					<% } %>
