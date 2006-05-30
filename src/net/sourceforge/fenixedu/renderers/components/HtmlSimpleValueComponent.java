@@ -52,7 +52,7 @@ public abstract class HtmlSimpleValueComponent extends HtmlFormComponent {
     public HtmlTag getOwnTag(PageContext context) {
         HtmlTag tag = super.getOwnTag(context);
         
-        tag.setAttribute("value", this.value);
+        tag.setAttribute("value", HtmlText.escape(this.value));
         
         return tag;
     }

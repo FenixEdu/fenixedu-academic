@@ -87,7 +87,7 @@ public class HtmlMenuOption extends HtmlMenuEntry {
             tag.setAttribute("selected", "selected");
         }
         
-        tag.setAttribute("value", getValue() == null ? getText() : getValue());
+        tag.setAttribute("value", HtmlText.escape(getValue() == null ? getText() : getValue()));
         
         if (getBody() != null) {
             tag.addChild(getBody().getOwnTag(context));
