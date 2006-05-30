@@ -4183,14 +4183,6 @@ relation ForumConversationThread {
 	net.sourceforge.fenixedu.domain.messaging.Forum playsRole forum;
 }
 
-relation ForumOwner {
-	net.sourceforge.fenixedu.domain.messaging.Forum playsRole foruns {
-		multiplicity *;
-	}
-	
-	net.sourceforge.fenixedu.domain.Person playsRole owner;
-}
-
 relation ForumSubscriptionPerson {
 	net.sourceforge.fenixedu.domain.messaging.ForumSubscription playsRole forumSubscriptions {
 		multiplicity *;

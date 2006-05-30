@@ -18,7 +18,7 @@ import org.apache.commons.beanutils.PropertyUtils;
  */
 public class TransferDomainObjectProperty extends Service {
 
-    public void run(DomainObject srcObject, DomainObject dstObject, Class clazz, String slotName)
+    public void run(DomainObject srcObject, DomainObject dstObject, String slotName)
             throws ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         Object srcProperty = PropertyUtils.getSimpleProperty(srcObject, slotName);
         if (srcProperty != null && srcProperty instanceof Collection) {
