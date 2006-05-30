@@ -221,10 +221,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
     
     public void approve(ExecutionYear beginExecutionYear) {
-        if (beginExecutionYear == null) {
+        if (getCurricularStage() == CurricularStage.APPROVED) {
+            throw new DomainException("error.degreeCurricularPlan.already.approved");
+            
+        } else if (beginExecutionYear == null) {
             throw new DomainException("error.invalid.execution.year");
+            
         } else if (beginExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1)) == null) {
             throw new DomainException("error.invalid.execution.period");
+            
         }
         checkIfCurricularCoursesBelongToApprovedCompetenceCourses();
         initBeginExecutionPeriodForDegreeCurricularPlan(getRoot(), beginExecutionYear
@@ -233,19 +238,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private void checkIfCurricularCoursesBelongToApprovedCompetenceCourses() {
-        final List<String> approvedCompetenceCourses = new ArrayList<String>();
+        final List<String> notApprovedCompetenceCourses = new ArrayList<String>();
         for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
             final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
             if (!curricularCourse.isOptional() && !curricularCourse.getCompetenceCourse().isApproved()) {
-                approvedCompetenceCourses.add(curricularCourse.getCompetenceCourse().getDepartmentUnit()
+                notApprovedCompetenceCourses.add(curricularCourse.getCompetenceCourse().getDepartmentUnit()
                         .getName()
                         + " > " + curricularCourse.getCompetenceCourse().getName());
             }
         }
-        if (!approvedCompetenceCourses.isEmpty()) {
-            final String[] result = new String[approvedCompetenceCourses.size()];
+        if (!notApprovedCompetenceCourses.isEmpty()) {
+            final String[] result = new String[notApprovedCompetenceCourses.size()];
             throw new DomainException("error.not.all.competence.courses.are.approved",
-                    approvedCompetenceCourses.toArray(result));
+                    notApprovedCompetenceCourses.toArray(result));
         }
     }
 
