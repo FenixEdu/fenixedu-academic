@@ -58,8 +58,14 @@
 		<property name="size" value="12" />
 		<property name="maxLength" value="10" />
 	</slot>
-	<slot name="markSheetState" key="label.markSheetState" />
-	<slot name="markSheetType" key="label.markSheetType" />
+	<slot name="markSheetState" key="label.markSheetState">
+		<property name="defaultText" value="label.markSheet.all.masc"/>
+		<property name="key" value="true"/>
+	</slot>
+	<slot name="markSheetType" key="label.markSheetType">
+		<property name="defaultText" value="label.markSheet.all.masc"/>
+		<property name="key" value="true"/>
+	</slot>
 </schema>
 
 <schema name="markSheet.view"
