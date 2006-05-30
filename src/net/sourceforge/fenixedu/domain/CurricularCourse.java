@@ -1061,8 +1061,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
         enrolmentEvaluation.setWhenDateTime(new DateTime());
 
-        MarkSheetEnrolmentEvaluationBean evaluationBean = new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade);
-        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate, markSheet.getResponsibleTeacher(), markSheet.getMarkSheetType(), reason, evaluationBean);
+        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate, markSheet.getResponsibleTeacher(), markSheet.getMarkSheetType(), 
+                reason, new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade));
         
         //  Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
         rectificationMarkSheet.getEnrolmentEvaluations().get(0).setRectified(enrolmentEvaluation);
