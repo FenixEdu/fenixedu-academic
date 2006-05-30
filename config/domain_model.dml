@@ -605,34 +605,42 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 
 
 class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
-    String additionalInfoEn;
-    String historyEn;
-    Double markMax;
-    String additionalInfo;
-    String professionalExitsEn;
-    String professionalExits;
-    String linksEn;
-    String classificationsEn;
-    String descriptionEn;
-    String objectives;
-    String testIngressionEn;
-    String links;
-    String classifications;
-    String testIngression;
-    Integer driftsInitial;
-    String objectivesEn;
-    Double markMin;
-    Integer driftsFirst;
     String description;
-    Double markAverage;
-    Integer driftsSecond;
+    String objectives;
     String history;
-    Integer keyDegree;
-	DateTime lastModificationDateDateTime;
+    String professionalExits;
+    String additionalInfo;
+    String links;
+    
+    String descriptionEn;
+    String objectivesEn;
+    String historyEn;
+    String professionalExitsEn;
+    String additionalInfoEn;        
+    String linksEn;
+    
+    String testIngression;
+    String classifications;
+
+    String testIngressionEn;
+    String classificationsEn;
+
+    Integer driftsInitial;
+    Integer driftsFirst;
+    Integer driftsSecond;
+    Double markMin;    
+    Double markMax;
+    Double markAverage;
+
     String qualificationLevel;
-    String qualificationLevelEn;
     String recognitions;
+
+    String qualificationLevelEn;
     String recognitionsEn;    
+
+	DateTime lastModificationDateDateTime;
+
+	Integer keyDegree;
 }
 
 
