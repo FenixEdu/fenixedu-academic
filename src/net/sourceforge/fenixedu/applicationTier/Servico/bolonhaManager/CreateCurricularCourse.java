@@ -27,11 +27,7 @@ public class CreateCurricularCourse extends Service {
     public void run(CreateCurricularCourseArgs createCurricularCourseArgs) throws ExcepcaoPersistencia,
             FenixServiceException {
 
-        readDomainObjects(createCurricularCourseArgs.getDegreeCurricularPlanID(),
-                createCurricularCourseArgs.getParentCourseGroupID(), createCurricularCourseArgs
-                        .getYear(), createCurricularCourseArgs.getSemester(), createCurricularCourseArgs
-                        .getBeginExecutionPeriodID(), createCurricularCourseArgs
-                        .getEndExecutionPeriodID());
+        readDomainObjects(createCurricularCourseArgs);
 
         final CompetenceCourse competenceCourse = rootDomainObject
                 .readCompetenceCourseByOID(createCurricularCourseArgs.getCompetenceCourseID());
@@ -47,11 +43,7 @@ public class CreateCurricularCourse extends Service {
     public void run(CreateOptionalCurricularCourseArgs createOptionalCurricularCourseArgs)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        readDomainObjects(createOptionalCurricularCourseArgs.getDegreeCurricularPlanID(),
-                createOptionalCurricularCourseArgs.getParentCourseGroupID(),
-                createOptionalCurricularCourseArgs.getYear(), createOptionalCurricularCourseArgs
-                        .getSemester(), createOptionalCurricularCourseArgs.getBeginExecutionPeriodID(),
-                createOptionalCurricularCourseArgs.getEndExecutionPeriodID());
+        readDomainObjects(createOptionalCurricularCourseArgs);
 
         degreeCurricularPlan.createCurricularCourse(parentCourseGroup,
                 createOptionalCurricularCourseArgs.getName(), createOptionalCurricularCourseArgs
@@ -59,53 +51,111 @@ public class CreateCurricularCourse extends Service {
                 endExecutionPeriod);
     }
 
-    protected void readDomainObjects(Integer degreeCurricularPlanID, Integer parentCourseGroupID,
-            Integer year, Integer semester, Integer beginExecutionPeriodID, Integer endExecutionPeriodID)
+    protected void readDomainObjects(CurricularCourseArgs curricularCourseArgs)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(curricularCourseArgs.getDegreeCurricularPlanID());
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.noDegreeCurricularPlan");
         }
 
-        parentCourseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(parentCourseGroupID);
+        parentCourseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(curricularCourseArgs.getParentCourseGroupID());
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
 
-        final CurricularPeriod degreeCurricularPeriod = (CurricularPeriod) degreeCurricularPlan
-                .getDegreeStructure();
-        final CurricularPeriodInfoDTO curricularPeriodInfoYear = new CurricularPeriodInfoDTO(year,
-                CurricularPeriodType.YEAR);
-        final CurricularPeriodInfoDTO curricularPeriodInfoSemester = new CurricularPeriodInfoDTO(
-                semester, CurricularPeriodType.SEMESTER);
-        curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(curricularPeriodInfoYear,
-                curricularPeriodInfoSemester);
-        if (curricularPeriod == null) {
-            curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(curricularPeriodInfoYear,
-                    curricularPeriodInfoSemester);
+        final CurricularPeriod degreeCurricularPeriod = (CurricularPeriod) degreeCurricularPlan.getDegreeStructure();
+        
+        
+        // ********************************************************
+        /* TODO: Important - change this code (must be generic to support several curricularPeriodInfoDTOs,
+         *                   instead of year and semester)
+         * 
+         */
+        CurricularPeriodInfoDTO curricularPeriodInfoYear = null;
+        if (degreeCurricularPlan.getDegree().getBolonhaDegreeType().getYears() > 1) {
+            curricularPeriodInfoYear = new CurricularPeriodInfoDTO(curricularCourseArgs.getYear(), CurricularPeriodType.YEAR);
         }
+        final CurricularPeriodInfoDTO curricularPeriodInfoSemester = new CurricularPeriodInfoDTO(curricularCourseArgs.getSemester(), CurricularPeriodType.SEMESTER);
+        
+        if (curricularPeriodInfoYear != null) {
+            curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(curricularPeriodInfoYear, curricularPeriodInfoSemester);
+            if (curricularPeriod == null) {
+                curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(curricularPeriodInfoYear, curricularPeriodInfoSemester);
+            }
+        } else {
+            curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(curricularPeriodInfoSemester);
+            if (curricularPeriod == null) {
+                curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(curricularPeriodInfoSemester);
+            }
+        }
+        
+        // ********************************************************
 
-        if (beginExecutionPeriodID == null) {
+        beginExecutionPeriod = getBeginExecutionPeriod(curricularCourseArgs);
+        endExecutionPeriod = (curricularCourseArgs.getEndExecutionPeriodID() == null) ? null : 
+            rootDomainObject.readExecutionPeriodByOID(curricularCourseArgs.getEndExecutionPeriodID());
+    }
+
+    private ExecutionPeriod getBeginExecutionPeriod(CurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
+        if (curricularCourseArgs.getBeginExecutionPeriodID() == null) {
             final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
             final ExecutionYear nextExecutionYear = currentExecutionYear.getNextExecutionYear();
             if (nextExecutionYear == null) {
                 throw new FenixServiceException("error.no.next.execution.year");
             }
-            beginExecutionPeriod = nextExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
+            return nextExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
         } else {
-            beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
+            return rootDomainObject.readExecutionPeriodByOID(curricularCourseArgs.getBeginExecutionPeriodID());
         }
-
-        endExecutionPeriod = (endExecutionPeriodID == null) ? null : rootDomainObject
-                .readExecutionPeriodByOID(endExecutionPeriodID);
+    }
+    
+    private static class CurricularCourseArgs {
+        private Integer degreeCurricularPlanID, parentCourseGroupID, year, semester; 
+        private Integer beginExecutionPeriodID, endExecutionPeriodID;
+        
+        public Integer getBeginExecutionPeriodID() {
+            return beginExecutionPeriodID;
+        }
+        public void setBeginExecutionPeriodID(Integer beginExecutionPeriodID) {
+            this.beginExecutionPeriodID = beginExecutionPeriodID;
+        }
+        public Integer getDegreeCurricularPlanID() {
+            return degreeCurricularPlanID;
+        }
+        public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+            this.degreeCurricularPlanID = degreeCurricularPlanID;
+        }
+        public Integer getEndExecutionPeriodID() {
+            return endExecutionPeriodID;
+        }
+        public void setEndExecutionPeriodID(Integer endExecutionPeriodID) {
+            this.endExecutionPeriodID = endExecutionPeriodID;
+        }
+        public Integer getParentCourseGroupID() {
+            return parentCourseGroupID;
+        }
+        public void setParentCourseGroupID(Integer parentCourseGroupID) {
+            this.parentCourseGroupID = parentCourseGroupID;
+        }
+        public Integer getSemester() {
+            return semester;
+        }
+        public void setSemester(Integer semester) {
+            this.semester = semester;
+        }
+        public Integer getYear() {
+            return year;
+        }
+        public void setYear(Integer year) {
+            this.year = year;
+        }
     }
 
-    public static class CreateCurricularCourseArgs {
+    public static class CreateCurricularCourseArgs extends CurricularCourseArgs {
         private Double weight;
         private String prerequisites, prerequisitesEn;
-        private Integer competenceCourseID, parentCourseGroupID, year, semester, degreeCurricularPlanID,
-                beginExecutionPeriodID, endExecutionPeriodID;
+        private Integer competenceCourseID;
 
         public CreateCurricularCourseArgs(Double weight, String prerequisites, String prerequisitesEn,
                 Integer competenceCourseID, Integer parentCourseGroupID, Integer year, Integer semester,
@@ -124,91 +174,33 @@ public class CreateCurricularCourse extends Service {
             setEndExecutionPeriodID(endExecutionPeriodID);
         }
 
-        public Integer getBeginExecutionPeriodID() {
-            return beginExecutionPeriodID;
-        }
-
-        public void setBeginExecutionPeriodID(Integer beginExecutionPeriodID) {
-            this.beginExecutionPeriodID = beginExecutionPeriodID;
-        }
-
         public Integer getCompetenceCourseID() {
             return competenceCourseID;
         }
-
         public void setCompetenceCourseID(Integer competenceCourseID) {
             this.competenceCourseID = competenceCourseID;
         }
-
-        public Integer getDegreeCurricularPlanID() {
-            return degreeCurricularPlanID;
-        }
-
-        public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
-            this.degreeCurricularPlanID = degreeCurricularPlanID;
-        }
-
-        public Integer getEndExecutionPeriodID() {
-            return endExecutionPeriodID;
-        }
-
-        public void setEndExecutionPeriodID(Integer endExecutionPeriodID) {
-            this.endExecutionPeriodID = endExecutionPeriodID;
-        }
-
-        public Integer getParentCourseGroupID() {
-            return parentCourseGroupID;
-        }
-
-        public void setParentCourseGroupID(Integer parentCourseGroupID) {
-            this.parentCourseGroupID = parentCourseGroupID;
-        }
-
         public String getPrerequisites() {
             return prerequisites;
         }
-
         public void setPrerequisites(String prerequisites) {
             this.prerequisites = prerequisites;
         }
-
         public String getPrerequisitesEn() {
             return prerequisitesEn;
         }
-
         public void setPrerequisitesEn(String prerequisitesEn) {
             this.prerequisitesEn = prerequisitesEn;
         }
-
-        public Integer getSemester() {
-            return semester;
-        }
-
-        public void setSemester(Integer semester) {
-            this.semester = semester;
-        }
-
         public Double getWeight() {
             return weight;
         }
-
         public void setWeight(Double weight) {
             this.weight = weight;
         }
-
-        public Integer getYear() {
-            return year;
-        }
-
-        public void setYear(Integer year) {
-            this.year = year;
-        }
-
     }
 
-    public static class CreateOptionalCurricularCourseArgs {
-        private Integer degreeCurricularPlanID, parentCourseGroupID, year, semester,
-                beginExecutionPeriodID, endExecutionPeriodID;
+    public static class CreateOptionalCurricularCourseArgs extends CurricularCourseArgs {
         private String name, nameEn;
 
         public CreateOptionalCurricularCourseArgs(Integer degreeCurricularPlanID,
@@ -225,68 +217,17 @@ public class CreateCurricularCourse extends Service {
             setEndExecutionPeriodID(endExecutionPeriodID);
         }
 
-        public Integer getBeginExecutionPeriodID() {
-            return beginExecutionPeriodID;
-        }
-
-        public void setBeginExecutionPeriodID(Integer beginExecutionPeriodID) {
-            this.beginExecutionPeriodID = beginExecutionPeriodID;
-        }
-
-        public Integer getDegreeCurricularPlanID() {
-            return degreeCurricularPlanID;
-        }
-
-        public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
-            this.degreeCurricularPlanID = degreeCurricularPlanID;
-        }
-
-        public Integer getEndExecutionPeriodID() {
-            return endExecutionPeriodID;
-        }
-
-        public void setEndExecutionPeriodID(Integer endExecutionPeriodID) {
-            this.endExecutionPeriodID = endExecutionPeriodID;
-        }
-
         public String getName() {
             return name;
         }
-
         public void setName(String name) {
             this.name = name;
         }
-
         public String getNameEn() {
             return nameEn;
         }
-
         public void setNameEn(String nameEn) {
             this.nameEn = nameEn;
-        }
-
-        public Integer getParentCourseGroupID() {
-            return parentCourseGroupID;
-        }
-
-        public void setParentCourseGroupID(Integer parentCourseGroupID) {
-            this.parentCourseGroupID = parentCourseGroupID;
-        }
-
-        public Integer getSemester() {
-            return semester;
-        }
-
-        public void setSemester(Integer semester) {
-            this.semester = semester;
-        }
-
-        public Integer getYear() {
-            return year;
-        }
-
-        public void setYear(Integer year) {
-            this.year = year;
         }
     }
 }
