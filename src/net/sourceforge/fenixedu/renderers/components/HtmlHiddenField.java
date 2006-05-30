@@ -10,7 +10,7 @@ public class HtmlHiddenField extends HtmlTextInput {
        this();
        
        setName(name);
-       setValue(value);
+       setValue(HtmlText.escape(value));
     }
 
 }
