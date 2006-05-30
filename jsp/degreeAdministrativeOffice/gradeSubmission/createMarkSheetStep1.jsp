@@ -16,16 +16,20 @@
 	<br/>
 </logic:messagesPresent>
 
+<bean:define id="urlPath" name="edit" property="url" />
+
 <fr:edit id="edit"
 		 name="edit"
 		 type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean"
 		 schema="markSheet.create.step.one"
-		 action="/createMarkSheet.do?method=createMarkSheetStepOne">
+		 action='<%= "/createMarkSheet.do?method=createMarkSheetStepOne" + urlPath %>'>
 	<fr:destination name="postBack" path="/createMarkSheet.do?method=prepareSearchMarkSheetPostBack"/>
 	<fr:destination name="invalid" path="/createMarkSheet.do?method=prepareSearchMarkSheetInvalid"/>
-	<fr:destination name="cancel" path="/createMarkSheet.do?method=backSearchMarkSheet"/>
+	<fr:destination name="cancel" path='<%= "/createMarkSheet.do?method=backSearchMarkSheet" + urlPath %>'/>
 	<fr:layout name="tabular" >
 			<fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 	</fr:layout>
 </fr:edit>
+
+

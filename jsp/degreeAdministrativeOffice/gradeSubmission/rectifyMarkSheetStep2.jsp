@@ -25,6 +25,17 @@
 
 <fr:form action="/rectifyMarkSheet.do">
 	<html:hidden name="markSheetManagementForm" property="method" value="rectifyMarkSheetStepTwo" />
+	
+	<html:hidden name="markSheetManagementForm" property="epID" />
+	<html:hidden name="markSheetManagementForm" property="dID" />
+	<html:hidden name="markSheetManagementForm" property="dcpID" />
+	<html:hidden name="markSheetManagementForm" property="ccID"  />	
+	<html:hidden name="markSheetManagementForm" property="msID" />
+	<html:hidden name="markSheetManagementForm" property="tn" />
+	<html:hidden name="markSheetManagementForm" property="ed"/>
+	<html:hidden name="markSheetManagementForm" property="mss" />
+	<html:hidden name="markSheetManagementForm" property="mst" />
+	
 	<bean:define id="evaluationID" name="rectifyBean" property="enrolmentEvaluation.idInternal" />
 	<html:hidden name="markSheetManagementForm" property="evaluationID" value="<%= evaluationID.toString() %>"  />
 

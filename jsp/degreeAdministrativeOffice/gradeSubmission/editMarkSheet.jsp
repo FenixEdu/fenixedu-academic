@@ -34,18 +34,24 @@
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 		</fr:layout>
 	</fr:view>
-	<br/>
-	<br/>
 	
-	<fr:edit id="edit-markSheet" name="edit" schema="markSheet.edit">
-		<fr:layout name="tabular" >
-			<fr:property name="classes" value="style1"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
-		</fr:layout>
-	</fr:edit>
+	<logic:equal name="edit" property="markSheet.markSheetState.name" value="NOT_CONFIRMED">
+		<br/>
+		<br/>
+		<fr:edit id="edit-markSheet" name="edit" schema="markSheet.edit">
+			<fr:layout name="tabular" >
+				<fr:property name="classes" value="style1"/>
+		        <fr:property name="columnClasses" value="listClasses,,"/>
+			</fr:layout>
+		</fr:edit>
+		
+		<html:submit styleClass="inputbutton" onclick="this.form.method.value='updateMarkSheet';"><bean:message key="label.markSheet.update" /></html:submit>
+		<br/>
+	</logic:equal>
 	
-	<html:submit styleClass="inputbutton" onclick="this.form.method.value='updateMarkSheet';"><bean:message key="label.markSheet.update" /></html:submit>
-	<br/>
+	<logic:notEqual name="edit" property="markSheet.markSheetState.name" value="NOT_CONFIRMED">
+		<fr:edit id="edit-markSheet" name="edit" visible="false"/>
+	</logic:notEqual>
 	
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToEdit">
 		<br/><br/>

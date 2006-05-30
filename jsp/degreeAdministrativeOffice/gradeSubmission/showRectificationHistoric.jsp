@@ -40,24 +40,22 @@
 		  </tr>  
 	  </logic:iterate>
 	</table>
+	
+	<html:form action="/rectifyMarkSheet.do">
+		<html:hidden property="method" value="prepareRectifyMarkSheet" />
+		<html:hidden name="markSheetManagementForm" property="epID" />
+		<html:hidden name="markSheetManagementForm" property="dID" />
+		<html:hidden name="markSheetManagementForm" property="dcpID" />
+		<html:hidden name="markSheetManagementForm" property="ccID"  />			
+		<html:hidden name="markSheetManagementForm" property="tn" />
+		<html:hidden name="markSheetManagementForm" property="ed"/>
+		<html:hidden name="markSheetManagementForm" property="mss" />
+		<html:hidden name="markSheetManagementForm" property="mst" />
+		
+		<bean:define id="markSheetID" name="enrolmentEvaluation" property="markSheet.idInternal" />
+		<html:hidden property="msID" value="<%= markSheetID.toString() %>"/>
+		<br/>
+		<html:submit styleClass="inputbutton"><bean:message key="label.back"/></html:submit>
+	</html:form>
+	
 </logic:present>
-
-<%-- 
-
-	BACK BUTTON
-
-<fr:form action="/rectifyMarkSheet.do">
-	<html:hidden name="markSheetManagementForm" property="method" value="rectifyMarkSheetStepTwo" />
-	<bean:define id="evaluationID" name="rectifyBean" property="enrolmentEvaluation.idInternal" />
-	<html:hidden name="markSheetManagementForm" property="evaluationID" value="<%= evaluationID.toString() %>"  />
-
-	<fr:edit id="step2" nested="true" name="rectifyBean" schema="markSheet.rectify.two" layout="tabular"/>			
-
-	<br/>
-	<span class="warning0"><bean:message key="message.markSheet.rectify"/></span>
-	<br/><br/>
-	<html:submit styleClass="inputbutton"><bean:message key="label.rectify"/></html:submit>
-	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.cancel"/></html:cancel>
-</fr:form>
-
---%>

@@ -39,6 +39,15 @@
 <fr:form action="/createMarkSheet.do">
 
 	<html:hidden name="markSheetManagementForm" property="method" value="createMarkSheetStepTwo" />
+	<html:hidden name="markSheetManagementForm" property="epID" />
+	<html:hidden name="markSheetManagementForm" property="dID" />
+	<html:hidden name="markSheetManagementForm" property="dcpID" />
+	<html:hidden name="markSheetManagementForm" property="ccID"  />	
+	<html:hidden name="markSheetManagementForm" property="msID" />
+	<html:hidden name="markSheetManagementForm" property="tn" />
+	<html:hidden name="markSheetManagementForm" property="ed"/>
+	<html:hidden name="markSheetManagementForm" property="mss" />
+	<html:hidden name="markSheetManagementForm" property="mst" />
 
 	<fr:edit id="edit-invisible" name="edit" visible="false"/>
 

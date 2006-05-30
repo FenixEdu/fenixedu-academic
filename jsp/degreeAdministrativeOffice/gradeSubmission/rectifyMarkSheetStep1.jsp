@@ -79,6 +79,9 @@
 				&nbsp;
 			</th>					
 		</tr>
+		
+		<bean:define id="url" name="rectifyBean" property="url" />
+		
 		<logic:iterate id="evaluation" name="enrolmentEvaluations" type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation" >
 			<bean:define id="evaluationID" name="evaluation" property="idInternal"/>
 			<bean:define id="studentNumber" name="evaluation" property="enrolment.studentCurricularPlan.student.number"/>
@@ -86,7 +89,7 @@
 			<tr>
 				<td>
 					<% if(evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ) || evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ)){ %>
-						<html:link action='<%= "/rectifyMarkSheet.do?method=rectifyMarkSheetStepOneByEvaluation&evaluationID=" +  evaluationID + "&msID=" + msID  %>'>
+						<html:link action='<%= "/rectifyMarkSheet.do?method=rectifyMarkSheetStepOneByEvaluation&evaluationID=" +  evaluationID + "&msID=" + msID + url %>'>
 							<bean:write name="evaluation" property="enrolment.studentCurricularPlan.student.number"/>
 						</html:link>					
 					<% } else { %>
@@ -95,7 +98,7 @@
 				</td>
 				<td>
 					<% if(evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ) || evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ)){ %>
-						<html:link action='<%= "/rectifyMarkSheet.do?method=rectifyMarkSheetStepOneByEvaluation&evaluationID=" +  evaluationID + "&msID=" + msID %>'>
+						<html:link action='<%= "/rectifyMarkSheet.do?method=rectifyMarkSheetStepOneByEvaluation&evaluationID=" +  evaluationID + "&msID=" + msID + url %>'>
 							<bean:write name="evaluation" property="enrolment.studentCurricularPlan.student.person.name"/>		
 						</html:link>										
 					<% } else { %>
@@ -112,7 +115,7 @@
 				</td>
 				<td>				
 					<logic:equal name="evaluation" property="enrolmentEvaluationState" value="<%= EnrolmentEvaluationState.RECTIFIED_OBJ.toString() %>">
-						<html:link action="/rectifyMarkSheet.do?method=showRectificationHistoric" paramId="evaluationID" paramName="evaluationID">
+						<html:link action='<%= "/rectifyMarkSheet.do?method=showRectificationHistoric" + url %>' paramId="evaluationID" paramName="evaluationID">
 							<bean:message key="label.markSheet.rectificationHistoric" />		
 						</html:link>										
 					</logic:equal>
