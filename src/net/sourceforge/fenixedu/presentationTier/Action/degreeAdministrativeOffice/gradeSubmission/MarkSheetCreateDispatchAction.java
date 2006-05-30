@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetRectifyBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -57,7 +56,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 
         MarkSheetManagementCreateBean markSheetManagementCreateBean = new MarkSheetManagementCreateBean();
         fillMarkSheetBean(actionForm, request, markSheetManagementCreateBean);
-        markSheetManagementCreateBean.setUrl(buildUrl(markSheetManagementCreateBean, request));
+        markSheetManagementCreateBean.setUrl(buildUrl((DynaActionForm) actionForm));
         
         request.setAttribute("edit", markSheetManagementCreateBean);
         
@@ -153,7 +152,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         
     	MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
         fillMarkSheetBean(actionForm, request, rectifyBean);
-        rectifyBean.setUrl(buildUrl(rectifyBean, request));
+        rectifyBean.setUrl(buildUrl(form));
         
     	rectifyBean.setMarkSheet(markSheet);
     	request.setAttribute("rectifyBean", rectifyBean);
@@ -263,36 +262,4 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         
         return mapping.findForward("showRectificationHistoric");
     }
-    
-    private String buildUrl(MarkSheetManagementBaseBean createBean, HttpServletRequest request) {
-
-        StringBuilder stringBuilder = new StringBuilder();
-        
-        if (createBean.getExecutionPeriod() != null) {
-            stringBuilder.append("&epID=").append(createBean.getExecutionPeriod().getIdInternal());
-        }
-        if (createBean.getDegree() != null) {
-            stringBuilder.append("&dID=").append(createBean.getDegree().getIdInternal());    
-        }
-        if (createBean.getDegreeCurricularPlan() != null) {
-            stringBuilder.append("&dcpID=").append(createBean.getDegreeCurricularPlan().getIdInternal());
-        }
-        if (createBean.getCurricularCourse() != null) {
-            stringBuilder.append("&ccID=").append(createBean.getCurricularCourse().getIdInternal());
-        }
-        if(request.getParameter("tn") != null) {
-            stringBuilder.append("&tn=").append(request.getParameter("tn"));
-        }
-        if(request.getParameter("ed") != null) {
-            stringBuilder.append("&ed=").append(request.getParameter("ed"));
-        }
-        if (request.getParameter("mss") != null) {
-            stringBuilder.append("&mss=").append(request.getParameter("mss"));
-        }
-        if (request.getParameter("mst") != null) {
-            stringBuilder.append("&mst=").append(request.getParameter("mst"));
-        }
-        return stringBuilder.toString();
-    }
-
 }

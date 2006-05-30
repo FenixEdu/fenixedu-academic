@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -75,12 +74,16 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         return mapping.getInputForward();
     }
     
-    public ActionForward viewMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewMarkSheet(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
         MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
 
         request.setAttribute("markSheet", markSheet);
+        request.setAttribute("url", buildUrl(form));
+
         return mapping.findForward("viewMarkSheet");
     }
     
@@ -123,15 +126,18 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         return mapping.findForward("confirmMarkSheet");
     }
     
-    public ActionForward confirmMarkSheet(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward confirmMarkSheet(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
+        
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
         MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
         IUserView userView = getUserView(request);
         ActionMessages actionMessages = new ActionMessages();
         try {
-            ServiceUtils.executeService(userView, "ConfirmMarkSheet", new Object[] {markSheet, userView.getPerson().getEmployee()});
+            ServiceUtils.executeService(userView, "ConfirmMarkSheet", new Object[] { markSheet,
+                    userView.getPerson().getEmployee() });
         } catch (NotAuthorizedFilterException e) {
             addMessage(request, actionMessages, "error.notAuthorized");
         } catch (DomainException e) {
@@ -157,8 +163,8 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
                 addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriod");
             } else {
                 addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriodWithDates",
-                        DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getStart()),
-                        DateFormatUtil.format("dd/MM/yyyy", occupationPeriod.getEnd()));
+                        occupationPeriod.getStartYearMonthDay().toString("dd/MM/yyyy"),
+                        occupationPeriod.getEndYearMonthDay().toString("dd/MM/yyyy"));
             }
         }
     }
@@ -179,4 +185,35 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
             FenixServiceException {
         return mapping.findForward("searchMarkSheetFilled");
     }
+    
+    protected String buildUrl(DynaActionForm form) {
+        StringBuilder stringBuilder = new StringBuilder();
+        
+        if (form.get("epID") != null) {
+            stringBuilder.append("&epID=").append(form.get("epID"));
+        }
+        if (form.get("dID") != null) {
+            stringBuilder.append("&dID=").append(form.get("dID"));    
+        }
+        if (form.get("dcpID") != null) {
+            stringBuilder.append("&dcpID=").append(form.get("dcpID"));
+        }
+        if (form.get("ccID") != null) {
+            stringBuilder.append("&ccID=").append(form.get("ccID"));
+        }
+        if(form.get("tn") != null) {
+            stringBuilder.append("&tn=").append(form.get("tn"));
+        }
+        if(form.get("ed") != null) {
+            stringBuilder.append("&ed=").append(form.get("ed"));
+        }
+        if (form.get("mss") != null) {
+            stringBuilder.append("&mss=").append(form.get("mss"));
+        }
+        if (form.get("mst") != null) {
+            stringBuilder.append("&mst=").append(form.get("mst"));
+        }
+        return stringBuilder.toString();
+    }
+    
 }

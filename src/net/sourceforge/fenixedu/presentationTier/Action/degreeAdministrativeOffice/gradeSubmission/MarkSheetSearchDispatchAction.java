@@ -73,7 +73,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
             request.setAttribute("edit", searchBean);
             request.setAttribute("searchResult", result);
-            request.setAttribute("url", buildUrl(searchBean));
+            request.setAttribute("url", buildSearchUrl(searchBean));
 
         } catch (NotAuthorizedException e) {
             addMessage(request, actionMessages, "error.notAuthorized");
@@ -81,7 +81,6 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             addMessage(request, actionMessages, e.getMessage());
         }
         return mapping.getInputForward();
-
     }
     
     protected void fillMarkSheetSearchBean(ActionForm actionForm, HttpServletRequest request, MarkSheetManagementSearchBean markSheetBean) {
@@ -104,7 +103,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         }
     }
 
-    private String buildUrl(MarkSheetManagementSearchBean searchBean) {
+    private String buildSearchUrl(MarkSheetManagementSearchBean searchBean) {
 
         StringBuilder stringBuilder = new StringBuilder();
         
@@ -130,12 +129,15 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     
     public ActionForward prepareViewRectificationMarkSheet(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer evaluationID = (Integer) form.get("evaluationID");
         EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(evaluationID);
         MarkSheet markSheet = enrolmentEvaluation.getRectificationMarkSheet();
         
         request.setAttribute("markSheet", markSheet);
+        request.setAttribute("url", buildUrl(form));
+        
         return mapping.findForward("viewMarkSheet");    	
     }
     
