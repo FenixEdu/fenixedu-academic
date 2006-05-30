@@ -36,8 +36,7 @@ public class CreateMarkSheetByTeacher extends Service {
             markSheetsInformation = new HashMap<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>>();
 
         createMarkSheetEnrolmentEvaluationBeans(submissionBean, executionCourse, markSheetsInformation);
-        createMarkSheets(markSheetsInformation, executionCourse, teacher, submissionBean
-                .getEvaluationDate());
+        createMarkSheets(markSheetsInformation, executionCourse, teacher, submissionBean.getEvaluationDate());
     }
 
     private void createMarkSheetEnrolmentEvaluationBeans(
@@ -48,15 +47,12 @@ public class CreateMarkSheetByTeacher extends Service {
 
         Date nowDate = new Date();
         for (MarkSheetTeacherMarkBean markBean : submissionBean.getSelectedMarksToSubmit()) {
-            Attends attends = markBean.getAttends();
-            Enrolment enrolment = attends.getEnrolment();
-            CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-            String grade = getGrade(attends, markBean, markBean.getEvaluationDate(), nowDate);
+            
+            CurricularCourse curricularCourse = markBean.getAttends().getEnrolment().getCurricularCourse();
+            String grade = getGrade(markBean.getAttends(), markBean, markBean.getEvaluationDate(), nowDate);
 
-            MarkSheetEnrolmentEvaluationBean evaluationBean = new MarkSheetEnrolmentEvaluationBean(
-                    enrolment, markBean.getEvaluationDate(), grade);
             addMarkSheetEvaluationBeanToMap(markSheetsInformation, curricularCourse, executionCourse,
-                    evaluationBean);
+                    new MarkSheetEnrolmentEvaluationBean(markBean.getAttends().getEnrolment(), markBean.getEvaluationDate(), grade));
         }
     }
 
@@ -76,7 +72,7 @@ public class CreateMarkSheetByTeacher extends Service {
                         .getValue();
 
                 if (markSheetEnrolmentEvaluationBeans != null) {
-                    curricularCourse.createMarkSheet(executionCourse.getExecutionPeriod(),
+                    curricularCourse.createNormalMarkSheet(executionCourse.getExecutionPeriod(),
                             responsibleTeacher, evaluationDate, markSheetType, Boolean.TRUE,
                             markSheetEnrolmentEvaluationBeans);
                 }
@@ -100,10 +96,8 @@ public class CreateMarkSheetByTeacher extends Service {
         Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForMarkSheetType = getEvaluationBeansForMarkSheetType(
                 markSheetsInformation, curricularCourse);
 
-        MarkSheetType markSheetType = findMarkSheetType(executionCourse, markSheetEvaluationBean
-                .getEnrolment());
-        Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans = getEvaluationBeans(
-                evaluationBeansForMarkSheetType, markSheetType);
+        MarkSheetType markSheetType = findMarkSheetType(executionCourse, markSheetEvaluationBean.getEnrolment());
+        Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans = getEvaluationBeans(evaluationBeansForMarkSheetType, markSheetType);
 
         evaluationBeans.add(markSheetEvaluationBean);
     }
@@ -111,8 +105,8 @@ public class CreateMarkSheetByTeacher extends Service {
     private Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> getEvaluationBeansForMarkSheetType(
             Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
             CurricularCourse curricularCourse) {
-        Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForMarkSheetType = markSheetsInformation
-                .get(curricularCourse);
+        
+        Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForMarkSheetType = markSheetsInformation.get(curricularCourse);
         if (evaluationBeansForMarkSheetType == null) {
             evaluationBeansForMarkSheetType = new HashMap<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>();
             markSheetsInformation.put(curricularCourse, evaluationBeansForMarkSheetType);
@@ -123,8 +117,7 @@ public class CreateMarkSheetByTeacher extends Service {
     private Collection<MarkSheetEnrolmentEvaluationBean> getEvaluationBeans(
             Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForMarkSheetType,
             MarkSheetType markSheetType) {
-        Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans = evaluationBeansForMarkSheetType
-                .get(markSheetType);
+        Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans = evaluationBeansForMarkSheetType.get(markSheetType);
         if (evaluationBeans == null) {
             evaluationBeans = new ArrayList<MarkSheetEnrolmentEvaluationBean>();
             evaluationBeansForMarkSheetType.put(markSheetType, evaluationBeans);
@@ -135,7 +128,7 @@ public class CreateMarkSheetByTeacher extends Service {
     private MarkSheetType findMarkSheetType(ExecutionCourse executionCourse, Enrolment enrolment)
             throws InvalidArgumentsServiceException {
 
-        if (enrolment.isImprovementForExecutionCourse(executionCourse)) {
+        if (enrolment.isImprovementForExecutionCourse(executionCourse) && enrolment.hasAttendsFor(executionCourse.getExecutionPeriod())) {
             return MarkSheetType.IMPROVEMENT;
 
         } else {

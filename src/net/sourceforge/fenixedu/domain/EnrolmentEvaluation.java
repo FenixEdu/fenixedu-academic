@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
@@ -11,7 +10,6 @@ import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -254,8 +252,9 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
     
     public void confirmSubmission(EnrolmentEvaluationState enrolmentEvaluationState, Employee employee, String observation) {
-        if(enrolmentEvaluationState == EnrolmentEvaluationState.RECTIFICATION_OBJ) {
-            this.getEnrolment().alterEvaluationStateToRectified(this.getMarkSheet().getMarkSheetType());
+        
+        if(enrolmentEvaluationState == EnrolmentEvaluationState.RECTIFICATION_OBJ && hasRectified()) {
+            getRectified().setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED_OBJ);
         }
         
         setEnrolmentEvaluationState(enrolmentEvaluationState); // TODO:
@@ -290,6 +289,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         removeEmployee();
         removeEnrolment();
         removeMarkSheet();
+        removeRectification();
+        removeRectified();
 
         removeRootDomainObject();
         super.deleteDomainObject();
@@ -355,8 +356,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
     protected void generateCheckSum() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(DateFormatUtil.format("yyyy/MM/dd", getExamDate())).append(getGrade())
-                .append(getEnrolmentEvaluationType());
+        stringBuilder.append(getExamDateYearMonthDay().toString()).append(getGrade());
+        stringBuilder.append(getEnrolmentEvaluationType());
         stringBuilder.append(getEnrolment().getStudentCurricularPlan().getStudent().getNumber());
         setCheckSum(FenixDigestUtils.createDigest(stringBuilder.toString()));
     }
@@ -366,7 +367,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         checkNewEnrolmentEvaluationState(enrolmentEvaluationState);
         super.setEnrolmentEvaluationState(enrolmentEvaluationState);
         this.getEnrolment().calculateNewEnrolmentState(enrolmentEvaluationState);
-    }*/
+    }
 
     private void checkNewEnrolmentEvaluationState(EnrolmentEvaluationState enrolmentEvaluationState) {
         if (this.getEnrolmentEvaluationState() != null) {
@@ -375,6 +376,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
             }
         }
     }
+    */
 
     @Override
     public void setGrade(String grade) {
@@ -386,13 +388,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
     
     public MarkSheet getRectificationMarkSheet() {
-    	if(!this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ)) {
-    		return null;
-    	}
-    	List<EnrolmentEvaluation> evaluations = this.getEnrolment().getConfirmedEvaluations(this.getMarkSheet().getMarkSheetType());
-    	int index = evaluations.indexOf(this);
-    	EnrolmentEvaluation rectificationEvaluation = evaluations.get(++index);
-    	return rectificationEvaluation.getMarkSheet();
+        if (this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ) && hasRectification()) {
+            return getRectification().getMarkSheet();
+        } else {
+            return null;
+        }
     }
 
 }

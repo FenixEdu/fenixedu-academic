@@ -26,7 +26,7 @@ public class CreateMarkSheet extends Service {
 
                 });
 
-        markSheetManagementCreateBean.getCurricularCourse().createMarkSheet(
+        markSheetManagementCreateBean.getCurricularCourse().createNormalMarkSheet(
                 markSheetManagementCreateBean.getExecutionPeriod(),
                 markSheetManagementCreateBean.getTeacher(),
                 markSheetManagementCreateBean.getEvaluationDate(),

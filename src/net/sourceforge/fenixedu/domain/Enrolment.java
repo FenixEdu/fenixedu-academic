@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 
 /**
  * @author dcs-rjao
@@ -654,7 +653,7 @@ public class Enrolment extends Enrolment_Base {
             throw new DomainException("error.enrolment.invalid.enrolment.state");
         }
     }
-    
+    /*
     private static class EnrolmentEnrolmentEvaluationListener extends dml.runtime.RelationAdapter<EnrolmentEvaluation, Enrolment> {
         
         @Override
@@ -665,32 +664,27 @@ public class Enrolment extends Enrolment_Base {
         }
         
     }
-    
+    */
     public void calculateNewEnrolmentState(EnrolmentEvaluationState enrolmentEvaluationState) {
-        //TODO: anulled
-        if(enrolmentEvaluationState == EnrolmentEvaluationState.FINAL_OBJ || enrolmentEvaluationState == EnrolmentEvaluationState.RECTIFICATION_OBJ ) {
+        // TODO: anulled
+        if (enrolmentEvaluationState == EnrolmentEvaluationState.FINAL_OBJ
+                || enrolmentEvaluationState == EnrolmentEvaluationState.RECTIFICATION_OBJ) {
+            
             EnrolmentEvaluation enrolmentEvaluationFinal = getEnrolmentEvaluationFinal();
             this.setEnrollmentState(enrolmentEvaluationFinal.getEnrollmentStateByGrade());
         }
     }
     
-    public void alterFromTemporaryToConfirmedState(EnrolmentEvaluationType enrolmentEvaluationType, MarkSheetType markSheetType) {
-    	final EnrolmentEvaluation enrolmentEvaluation = getConfirmedEnrolmentEvaluationByStateAndMarkSheetType(EnrolmentEvaluationState.TEMPORARY_OBJ, markSheetType);
-        if (enrolmentEvaluation != null) {
-            enrolmentEvaluation.setEnrolmentEvaluationState((enrolmentEvaluation.getMarkSheet().getMarkSheetState() == MarkSheetState.RECTIFICATION) ? EnrolmentEvaluationState.RECTIFICATION_OBJ : EnrolmentEvaluationState.FINAL_OBJ);
-            enrolmentEvaluation.setWhenDateTime(new DateTime());
-        }
-    }
-    
-    
     public List<EnrolmentEvaluation> getConfirmedEvaluations(MarkSheetType markSheetType){
     	List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>();
         for (EnrolmentEvaluation evaluation : this.getEvaluationsSet()) {
-            if(evaluation.hasMarkSheet() && evaluation.getMarkSheet().getMarkSheetType() == markSheetType && evaluation.getMarkSheet().isConfirmed()) {
+            if (evaluation.hasMarkSheet()
+                    && evaluation.getMarkSheet().getMarkSheetType() == markSheetType
+                    && evaluation.getMarkSheet().isConfirmed()) {
+                
                 evaluations.add(evaluation);
             }
         }
-
         Collections.sort(evaluations, new BeanComparator("when"));
     	return evaluations;
     }
@@ -704,20 +698,12 @@ public class Enrolment extends Enrolment_Base {
         return null;
     }
 
-    public void alterEvaluationStateToRectified(MarkSheetType markSheetType) {
-        EnrolmentEvaluation enrolmentEvaluation = getConfirmedEnrolmentEvaluationByStateAndMarkSheetType(EnrolmentEvaluationState.TEMPORARY_OBJ, markSheetType);
-        if(enrolmentEvaluation != null) {
-            enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED_OBJ);
-        }
-    }
-    
-    protected EnrolmentEvaluation getConfirmedEnrolmentEvaluationByStateAndMarkSheetType(EnrolmentEvaluationState enrolmentEvaluationState, MarkSheetType markSheetType) {
-        for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluations()) {
-            if(enrolmentEvaluation.hasMarkSheet() && enrolmentEvaluation.getMarkSheet().isConfirmed() && enrolmentEvaluation.getMarkSheet().getMarkSheetType() == markSheetType 
-                    && enrolmentEvaluation.getEnrolmentEvaluationState().equals(enrolmentEvaluationState)) {
-                return enrolmentEvaluation;
+    public boolean hasAttendsFor(ExecutionPeriod executionPeriod) {
+        for(final Attends attends: this.getAttendsSet()){
+            if(attends.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod){
+                return true;
             }
         }
-        return null;
+        return false;
     }
 }

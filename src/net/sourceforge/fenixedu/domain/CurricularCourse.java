@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -28,7 +27,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -36,6 +34,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 public class CurricularCourse extends CurricularCourse_Base {
 
@@ -1012,9 +1011,10 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
     
     public Set<Enrolment> getEnrolmentsNotInAnyMarkSheet(MarkSheetType markSheetType, ExecutionPeriod executionPeriod) {
+
         final Set<Enrolment> result = new HashSet<Enrolment>();
-        
         for (final CurriculumModule curriculumModule : this.getCurriculumModulesSet()) {
+            
             if (curriculumModule instanceof Enrolment) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
                 
@@ -1023,12 +1023,8 @@ public class CurricularCourse extends CurricularCourse_Base {
                         result.add(enrolment);
                     }
                 } else if(markSheetType == MarkSheetType.IMPROVEMENT) {
-                    if(enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(markSheetType)) {
-                        for(final Attends attends: enrolment.getAttendsSet()){
-                            if(attends.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod){
-                                result.add(enrolment);
-                            }
-                        }
+                    if(enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(markSheetType) && enrolment.hasAttendsFor(executionPeriod)) {
+                            result.add(enrolment);
                     }
                 }
             }
@@ -1036,23 +1032,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
     
-    public Set<Enrolment> getEnrolmentsNotInAnyMarkSheetForAllMarkSheetTypes(ExecutionPeriod executionPeriod) {
-        final Set<Enrolment> result = new HashSet<Enrolment>();
-        for (final MarkSheetType markSheetType : MarkSheetType.values()) {
-            // TODO: see this
-            if (markSheetType != MarkSheetType.SPECIAL_AUTHORIZATION) {
-                result.addAll(getEnrolmentsNotInAnyMarkSheet(markSheetType, executionPeriod));
-            }
-        }
-        return result;
-    }
-    
-    public MarkSheet createMarkSheet(ExecutionPeriod executionPeriod,
-            Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType, Boolean submittedByTeacher,
-            Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
+    public MarkSheet createNormalMarkSheet(ExecutionPeriod executionPeriod, Teacher responsibleTeacher,
+            Date evaluationDate, MarkSheetType markSheetType, Boolean submittedByTeacher,
+            Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans) {
 
-            return new MarkSheet(this, executionPeriod, responsibleTeacher, evaluationDate,
-                    markSheetType, MarkSheetState.NOT_CONFIRMED, submittedByTeacher, markSheetEnrolmentEvaluationBeans);
+        return MarkSheet.createNormal(this, executionPeriod, responsibleTeacher,
+                evaluationDate, markSheetType, submittedByTeacher, evaluationBeans);
     }
 
     public MarkSheet rectifyEnrolmentEvaluation(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation, Date evaluationDate, String grade, String reason) {
@@ -1065,37 +1050,35 @@ public class CurricularCourse extends CurricularCourse_Base {
         	throw new DomainException("error.no.student.in.markSheet");
         }
         
-        if(!enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ) 
-                && !enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ)) {
-    		throw new DomainException("error.markSheet.student.alreadyRectified", enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().getNumber().toString());
-    	}
-
         if (markSheet.isNotConfirmed()) {
             throw new DomainException("error.markSheet.must.be.confirmed");
         }
-        enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-        enrolmentEvaluation.setWhen(new Date());
-        enrolmentEvaluation.generateCheckSum();
-        //TODO: is necessary?
-        markSheet.generateCheckSum();
 
-        MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade);
-        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate, markSheet.getResponsibleTeacher(), markSheet.getMarkSheetType(), Collections.singletonList(markSheetEnrolmentEvaluationBean));
-        rectificationMarkSheet.setReason(reason);
+        if (enrolmentEvaluation.hasRectification()) {
+            throw new DomainException("error.markSheet.student.alreadyRectified", enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().getNumber().toString());
+        }
         
+        enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+        enrolmentEvaluation.setWhenDateTime(new DateTime());
+
+        MarkSheetEnrolmentEvaluationBean evaluationBean = new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade);
+        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate, markSheet.getResponsibleTeacher(), markSheet.getMarkSheetType(), reason, evaluationBean);
+        
+        //  Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
+        rectificationMarkSheet.getEnrolmentEvaluations().get(0).setRectified(enrolmentEvaluation);
         return rectificationMarkSheet;
     }
     
-    public MarkSheet createRectificationMarkSheet(ExecutionPeriod executionPeriod,
- 		   Date evaluationDate, Teacher responsibleTeacher, MarkSheetType markSheetType, 
-             List<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans) {
-         
-         return new MarkSheet(this, executionPeriod, responsibleTeacher, evaluationDate,
-                 markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, Boolean.FALSE, markSheetEnrolmentEvaluationBeans);
+    public MarkSheet createRectificationMarkSheet(ExecutionPeriod executionPeriod, Date evaluationDate,
+            Teacher responsibleTeacher, MarkSheetType markSheetType, String reason,
+            MarkSheetEnrolmentEvaluationBean evaluationBean) {
+
+        return MarkSheet.createRectification(this, executionPeriod, responsibleTeacher,
+                evaluationDate, markSheetType, reason, evaluationBean);
     }
     
     public Collection<MarkSheet> searchMarkSheets(ExecutionPeriod executionPeriod, Teacher teacher, Date evaluationDate, MarkSheetState markSheetState, MarkSheetType markSheetType) {
-        String dateFormat = "dd/MM/yyyy";
+        DateTime searchEvaluationDate = new DateTime(evaluationDate);
         Collection<MarkSheet> result = new HashSet<MarkSheet>();
 
         for (final MarkSheet markSheet : this.getMarkSheetsSet()) {
@@ -1105,7 +1088,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (teacher != null && markSheet.getResponsibleTeacher() != teacher) {
                 continue;
             }
-            if (evaluationDate != null && DateFormatUtil.compareDates(dateFormat, markSheet.getEvaluationDateDateTime().toDate(), evaluationDate) != 0) {
+            if (evaluationDate != null && markSheet.getEvaluationDateDateTime().compareTo(searchEvaluationDate) != 0) {
                 continue;
             }
             if (markSheetState != null && markSheet.getMarkSheetState() != markSheetState) {

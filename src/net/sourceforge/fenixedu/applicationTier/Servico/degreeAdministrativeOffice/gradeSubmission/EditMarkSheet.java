@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -9,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementEditBean;
 import net.sourceforge.fenixedu.domain.MarkSheet;
+import net.sourceforge.fenixedu.domain.MarkSheetState;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -22,15 +24,40 @@ public class EditMarkSheet extends Service {
         if (markSheet == null) {
             throw new InvalidArgumentsServiceException("error.noMarkSheet");
         }
-        markSheet.edit(responsibleTeacher, evaluationDate);
+        markSheet.editNormal(responsibleTeacher, evaluationDate);
     }
 
     public void run(MarkSheetManagementEditBean markSheetManagementEditBean) throws FenixServiceException {
 
-        if (markSheetManagementEditBean.getMarkSheet() == null) {
+        MarkSheet markSheet = markSheetManagementEditBean.getMarkSheet();
+        if (markSheet == null) {
             throw new InvalidArgumentsServiceException("error.noMarkSheet");
         }
         
+        if (markSheet.getMarkSheetState() == MarkSheetState.NOT_CONFIRMED) {
+            editNormalMarkSheet(markSheetManagementEditBean);
+            
+        } else if (markSheet.getMarkSheetState() == MarkSheetState.RECTIFICATION_NOT_CONFIRMED) {
+            editRectificationMarkSheet(markSheetManagementEditBean);
+            
+        } else {
+            throw new InvalidArgumentsServiceException("error.invalid.markSheetType");
+        }
+    }
+
+    private void editRectificationMarkSheet(MarkSheetManagementEditBean markSheetManagementEditBean) {
+        
+        Collection<MarkSheetEnrolmentEvaluationBean> filteredEnrolmentEvaluationBeansToEditList =
+            getEnrolmentEvaluationsWithValidGrades(markSheetManagementEditBean.getEnrolmentEvaluationBeansToEdit());
+        
+        /*
+         * Rectification MarkSheet MUST have ONLY ONE EnrolmentEvaluation
+         */
+        Iterator<MarkSheetEnrolmentEvaluationBean> iterator = filteredEnrolmentEvaluationBeansToEditList.iterator();
+        markSheetManagementEditBean.getMarkSheet().editRectification(iterator.hasNext() ? iterator.next() : null);
+    }
+
+    private void editNormalMarkSheet(MarkSheetManagementEditBean markSheetManagementEditBean) {
         Collection<MarkSheetEnrolmentEvaluationBean> filteredEnrolmentEvaluationBeansToEditList =
                 getEnrolmentEvaluationsWithValidGrades(markSheetManagementEditBean.getEnrolmentEvaluationBeansToEdit());
         
@@ -40,7 +67,7 @@ public class EditMarkSheet extends Service {
         Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToRemoveList = CollectionUtils
                 .subtract(markSheetManagementEditBean.getEnrolmentEvaluationBeansToEdit(), filteredEnrolmentEvaluationBeansToEditList);
 
-        markSheetManagementEditBean.getMarkSheet().edit(filteredEnrolmentEvaluationBeansToEditList,
+        markSheetManagementEditBean.getMarkSheet().editNormal(filteredEnrolmentEvaluationBeansToEditList,
                 enrolmentEvaluationBeansToAppendList, enrolmentEvaluationBeansToRemoveList);
     }
 
