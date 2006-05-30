@@ -7,16 +7,19 @@ import net.sourceforge.fenixedu.renderers.InputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
+import net.sourceforge.fenixedu.renderers.components.HtmlImage;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlScript;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.HtmlTextInput;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -49,8 +52,6 @@ public class AutoCompleteInputRenderer extends InputRenderer {
     public static final String SERVLET_URI  = "/ajax/AutoCompleteServlet";
     public static final String TYPING_VALUE  = "custom";
     
-    private static final String SCRIPT_FLAG_KEY = AutoCompleteInputRenderer.class.getName() + "/scripts"; 
-    
     private String rawSlotName;
     
     private String labelField;
@@ -68,6 +69,9 @@ public class AutoCompleteInputRenderer extends InputRenderer {
     private String autoCompleteStyleClass;
     private String autoCompleteItemsStyleClass;
     private String textFieldStyleClass;
+    private String errorStyleClass;
+    
+    private boolean indicatorShown;
     
     public AutoCompleteInputRenderer() {
         super();
@@ -235,6 +239,19 @@ public class AutoCompleteInputRenderer extends InputRenderer {
         this.textFieldStyleClass = textFieldStyleClass;
     }
 
+    public String getErrorStyleClass() {
+        return this.errorStyleClass;
+    }
+
+    /**
+     * The html class of the error message.
+     * 
+     * @property
+     */
+    public void setErrorStyleClass(String errorStyleClass) {
+        this.errorStyleClass = errorStyleClass;
+    }
+
     public String getSize() {
         return this.size;
     }
@@ -259,6 +276,20 @@ public class AutoCompleteInputRenderer extends InputRenderer {
      */
     public void setMinChars(int minChars) {
         this.minChars = minChars;
+    }
+
+    public boolean isIndicatorShown() {
+        return this.indicatorShown;
+    }
+
+    /**
+     * When this property is set to <code>true</code> a progress indicator is shown
+     * during the comunication with the server. 
+     * 
+     * @property
+     */
+    public void setIndicatorShown(boolean indicatorShown) {
+        this.indicatorShown = indicatorShown;
     }
 
     @Override
@@ -300,12 +331,31 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                     textField.setController(new UpdateRawNameController(getRawSlotName()));
                 }
                 
+                HtmlLink link = new HtmlLink();
+                link.setModuleRelative(false);
+                link.setUrl("/images/autocomplete/spinner.gif");
+                
+                HtmlImage indicatorImage = new HtmlImage();
+                indicatorImage.setId(key.toString() + "_Indicator");
+                indicatorImage.setStyle("display: none;");
+                indicatorImage.setSource(link.calculateUrl());
+
+                if (isIndicatorShown()) {
+                    container.addChild(indicatorImage);
+                }
+
+                HtmlText errorMessage = new HtmlText(RenderUtils.getResourceString("fenix.renderers.autocomplete.error"));
+                errorMessage.setId(key.toString() + "_Error");
+                errorMessage.setClasses(getErrorStyleClass());
+                errorMessage.setStyle("display: none;");
+                container.addChild(errorMessage);
+                
                 HtmlBlockContainer resultsContainer = new HtmlBlockContainer();
                 resultsContainer.setId(key.toString() + "_div");
                 resultsContainer.setClasses(getAutoCompleteStyleClass());
                 container.addChild(resultsContainer);
                 
-                addFinalScript(container, textField.getId(), resultsContainer.getId());
+                addFinalScript(container, textField.getId(), resultsContainer.getId(), indicatorImage.getId());
                 
                 return container;
             }
@@ -336,7 +386,7 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                 container.addChild(script);
             }
 
-            private void addFinalScript(HtmlInlineContainer container, String textFieldId, String divId) {
+            private void addFinalScript(HtmlInlineContainer container, String textFieldId, String divId, String indicatorId) {
                 HtmlLink link = new HtmlLink();
                 link.setModuleRelative(false);
                 link.setContextRelative(true);
@@ -359,7 +409,9 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                 
                 String finalUri = link.calculateUrl();
                 String scriptText = "new Ajax.Autocompleter('" + textFieldId + "','" + divId + "','" + finalUri +
-                        "', {paramName: 'value', afterUpdateElement: autoCompleteUpdate, minChars: " + getMinChars() + "});";
+                        "', {paramName: 'value', afterUpdateElement: autoCompleteUpdate, minChars: " + getMinChars() +
+                        (isIndicatorShown() ? ", indicator: '" + indicatorId + "'" : "") + 
+                        ", onFailure: function (transport) { showAutoCompleteError('" + textFieldId + "'); }});";
                 
                 HtmlScript script = new HtmlScript();
                 script.setContentType("text/javascript");

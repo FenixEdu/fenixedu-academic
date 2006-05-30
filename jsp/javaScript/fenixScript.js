@@ -30,7 +30,7 @@ function autoCompleteClearValueFieldIfTextIsEmpty(autoCompleteFieldId)
 function autoCompleteKeyDownHandler(event, textFieldId) {
 	var textField     = document.getElementById(textFieldId);
 	var oldValueField = document.getElementById(textFieldId + '_OldValue');
-
+	
 	oldValueField.value = textField.value;
 }
 
@@ -52,9 +52,13 @@ function autoCompleteKeyUpHandler(event, textFieldId, customValue) {
 				if (! (textField.value == oldValueField.value)) {
 					hiddenField.value = customValue;
 					oldValueField.value = textField.value;
+					Element.hide(textFieldId + '_Error'); // hide error message
 				}
 				break;
 		}
 	}
 }
 
+function showAutoCompleteError(textFieldId) {
+	Element.show(textFieldId + '_Error');
+}
