@@ -991,8 +991,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         String studentNumber = request.getParameter("studentNumber");
-
         request.setAttribute("studentNumber", studentNumber);
+//        String degreeCurrucularPlanID = request.getParameter("degreeCurrucularPlanID");
+//        request.setAttribute("degreeCurrucularPlanID", Integer.valueOf(degreeCurrucularPlanID));
 
         return mapping.findForward("show-student-curricular-plan");
     }

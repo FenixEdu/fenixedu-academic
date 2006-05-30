@@ -6,10 +6,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
@@ -45,7 +48,12 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
 
         Student student = findStudent(userView.getPerson());
 
-        int numberOfCompletedCourses = student.countCompletedCoursesForActiveUndergraduateCurricularPlan();
+        //int numberOfCompletedCourses = student.countCompletedCoursesForActiveUndergraduateCurricularPlan();
+        final Set<Degree> degrees = new HashSet<Degree>();
+        for (final ExecutionDegree someExecutionDegree : scheduleing.getExecutionDegreesSet()) {
+        	degrees.add(someExecutionDegree.getDegreeCurricularPlan().getDegree());
+        }
+        final int numberOfCompletedCourses = student.getActiveStudentCurricularPlan().numberCompletedCoursesForSpecifiedDegrees(degrees);
         Integer numberOfNecessaryCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
         if (numberOfNecessaryCompletedCourses == null) {
         	throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();

@@ -1232,4 +1232,28 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return null;
     }
 
+    public int numberCompletedCoursesForSpecifiedDegrees(final Set<Degree> degrees) {
+    	int numberCompletedCourses = 0;
+    	for (final StudentCurricularPlan studentCurricularPlan : getStudent().getStudentCurricularPlansSet()) {
+    		for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+                if (enrolment.getCondition() != EnrollmentCondition.INVISIBLE
+                		&& enrolment.getEnrollmentState() == EnrollmentState.APROVED) {
+                	final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
+                	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+                	if (!PeriodState.CURRENT.equals(executionYear.getState())) {
+                		final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+                		final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+                		final Degree degree = degreeCurricularPlan.getDegree();
+                		final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+                		if (degrees.contains(degree) || (competenceCourse != null && competenceCourse.isAssociatedToAnyDegree(degrees))) {
+                			numberCompletedCourses++;
+                		}
+                	}
+                }
+    		}
+    	}
+    	System.out.println("result: " + numberCompletedCourses + " for student: " + getStudent().getNumber());
+    	return numberCompletedCourses;
+    }
+
 }

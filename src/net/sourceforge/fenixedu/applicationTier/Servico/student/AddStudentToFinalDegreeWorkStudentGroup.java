@@ -3,9 +3,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
@@ -42,8 +47,12 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
             throw new MaximumNumberOfStudentsReachedException(scheduleing.getMaximumNumberOfStudents()
                     .toString());
         } else {
-            int numberOfCompletedCourses = student
-                    .countCompletedCoursesForActiveUndergraduateCurricularPlan();
+            //int numberOfCompletedCourses = student.countCompletedCoursesForActiveUndergraduateCurricularPlan();
+            final Set<Degree> degrees = new HashSet<Degree>();
+            for (final ExecutionDegree someExecutionDegree : scheduleing.getExecutionDegreesSet()) {
+            	degrees.add(someExecutionDegree.getDegreeCurricularPlan().getDegree());
+            }
+            final int numberOfCompletedCourses = student.getActiveStudentCurricularPlan().numberCompletedCoursesForSpecifiedDegrees(degrees);
 
             if (numberOfCompletedCourses < scheduleing.getMinimumNumberOfCompletedCourses().intValue()) {
                 throw new MinimumNumberOfCompletedCoursesNotReachedException(scheduleing

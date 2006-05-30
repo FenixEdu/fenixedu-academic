@@ -576,4 +576,15 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return result;
     }
 
+	public boolean isAssociatedToAnyDegree(final Set<Degree> degrees) {
+		for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+    		final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+    		final Degree degree = degreeCurricularPlan.getDegree();
+    		if (degrees.contains(degree)) {
+    			return true;
+    		}
+		}
+		return false;
+	}
+
 }

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -232,4 +233,11 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
 		removeSecundaryBranch();
 		super.delete();
 	}
+
+	public int numberCompletedCoursesForSpecifiedDegrees(final Set<Degree> degrees) {
+		final int result = getStudent().countCompletedCoursesForActiveUndergraduateCurricularPlan();
+		System.out.println("result: " + result + " for student: " + getStudent().getNumber());
+		return result;
+	}
+
 }

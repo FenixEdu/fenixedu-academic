@@ -433,7 +433,7 @@
 						<td bgcolor="<%= bgColor %>" align="center">
 							<bean:define id="studentNumber" name="student" property="number"/>
 							<bean:define id="curriculumLink">
-								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
+								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID.toString() %>
 							</bean:define>
 							<html:link page='<%= curriculumLink.toString() %>'>
 								<bean:write name="student" property="infoPerson.username"/>
@@ -442,7 +442,7 @@
 						<td bgcolor="<%= bgColor %>" align="center">
 							<bean:define id="studentNumber" name="student" property="number"/>
 							<bean:define id="curriculumLink">
-								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
+								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID.toString() %>
 							</bean:define>
 							<html:link page='<%= curriculumLink.toString() %>'>
 								<bean:write name="student" property="infoPerson.nome"/>
@@ -479,7 +479,7 @@
 						<td bgcolor="<%= bgColor %>" align="center">
 							<bean:define id="studentNumber" name="student" property="number"/>
 							<bean:define id="curriculumLink">
-								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
+								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID.toString() %>
 							</bean:define>
 							<html:link page='<%= curriculumLink.toString() %>'>
 								<bean:write name="student" property="infoPerson.username"/>
@@ -488,7 +488,7 @@
 						<td bgcolor="<%= bgColor %>" align="center">
 							<bean:define id="studentNumber" name="student" property="number"/>
 							<bean:define id="curriculumLink">
-								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>
+								/manageFinalDegreeWork.do?method=getStudentCP&amp;page=0&amp;studentNumber=<%= studentNumber.toString() %>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID.toString() %>
 							</bean:define>
 							<html:link page='<%= curriculumLink.toString() %>'>
 								<bean:write name="student" property="infoPerson.nome"/>
