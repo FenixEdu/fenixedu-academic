@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.domain.Language;
@@ -106,7 +105,13 @@ public class TinyMceEditor extends HtmlTextArea {
         for (Object key : properties.keySet()) {
             Object value = properties.getProperty((String) key);
             
-            builder.append(String.valueOf(key) + ": '" + value + "'");
+            if (value.equals("true") || value.equals("false")) {
+                builder.append(String.valueOf(key) + ": " + value);    
+            }
+            else {
+                builder.append(String.valueOf(key) + ": '" + value + "'");    
+            }
+            
             if (index < properties.size()) {
                 builder.append(",\n");
             }

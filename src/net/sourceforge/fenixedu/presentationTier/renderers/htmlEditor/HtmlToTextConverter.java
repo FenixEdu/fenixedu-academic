@@ -147,10 +147,14 @@ public class HtmlToTextConverter extends TidyConverter {
     }
     
     private void parseList(Tidy tidy, Element element, boolean ordered, String indent) {
-        NodeList itemList = element.getElementsByTagName("li");
+        NodeList itemList = element.getChildNodes();
         for (int i = 0; i < itemList.getLength(); i++) {
             Node item = itemList.item(i);
          
+            if (item.getNodeType() != Node.ELEMENT_NODE || !item.getNodeName().equalsIgnoreCase("li")) {
+                continue;
+            }
+            
             addCodeText(indent + DEFAULT_INDENT);
             addText(ordered ? String.valueOf(i + 1) + ". " : "* ", indent);
             parseNodeChildren(tidy, item, indent + DEFAULT_INDENT);
