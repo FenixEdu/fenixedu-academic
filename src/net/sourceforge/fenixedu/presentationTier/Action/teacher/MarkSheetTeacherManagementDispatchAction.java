@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FinalMark;
+import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -129,9 +130,9 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     private Collection<Enrolment> getEnrolmentsNotInAnyMarkSheet(MarkSheetTeacherGradeSubmissionBean submissionBean) {
         Collection<Enrolment> enrolmentsNotInAnyMarkSheet = new HashSet<Enrolment>();
         for (CurricularCourse curricularCourse : submissionBean.getCurricularCourses()) {
-            enrolmentsNotInAnyMarkSheet.addAll(curricularCourse
-                    .getEnrolmentsNotInAnyMarkSheetForAllMarkSheetTypes(submissionBean
-                            .getExecutionCourse().getExecutionPeriod()));
+            enrolmentsNotInAnyMarkSheet.addAll(curricularCourse.getEnrolmentsNotInAnyMarkSheet(MarkSheetType.NORMAL, submissionBean.getExecutionCourse().getExecutionPeriod()));
+            enrolmentsNotInAnyMarkSheet.addAll(curricularCourse.getEnrolmentsNotInAnyMarkSheet(MarkSheetType.IMPROVEMENT, submissionBean.getExecutionCourse().getExecutionPeriod()));
+            enrolmentsNotInAnyMarkSheet.addAll(curricularCourse.getEnrolmentsNotInAnyMarkSheet(MarkSheetType.SPECIAL_SEASON, submissionBean.getExecutionCourse().getExecutionPeriod()));
         }
         return enrolmentsNotInAnyMarkSheet;
     }
