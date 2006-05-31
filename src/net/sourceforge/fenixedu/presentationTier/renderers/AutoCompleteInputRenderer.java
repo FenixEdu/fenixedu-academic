@@ -345,6 +345,7 @@ public class AutoCompleteInputRenderer extends InputRenderer {
 
                 HtmlImage indicatorImage = new HtmlImage();
                 indicatorImage.setSource(link.calculateUrl());
+                loadingContainer.addChild(indicatorImage);
 
                 if (isIndicatorShown()) {
                     container.addChild(loadingContainer);
