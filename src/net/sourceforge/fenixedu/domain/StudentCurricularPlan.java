@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -1232,6 +1233,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return null;
     }
 
+    public boolean approvedInAllCurricularCoursesUntilInclusiveCurricularYear(final CurricularYear curricularYear) {
+    	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+    	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
+    		final Collection<CurricularCourseScope> activeCurricularCourseScopes = curricularCourse.getActiveScopes();
+    		for (final CurricularCourseScope curricularCourseScope : activeCurricularCourseScopes) {
+    			if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() <= curricularYear.getYear().intValue()) {
+    				if (!isCurricularCourseApproved(curricularCourse)) {
+    					System.out.println("curricular course failed: " + curricularCourse.getName() + " " + curricularCourse.getCode());
+    					return false;
+    				}
+    			}
+    		}
+    	}
+    	return true;
+    }
+
     public int numberCompletedCoursesForSpecifiedDegrees(final Set<Degree> degrees) {
     	int numberCompletedCourses = 0;
     	for (final StudentCurricularPlan studentCurricularPlan : getStudent().getStudentCurricularPlansSet()) {
@@ -1252,7 +1269,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 }
     		}
     	}
-    	System.out.println("result: " + numberCompletedCourses + " for student: " + getStudent().getNumber());
     	return numberCompletedCourses;
     }
 

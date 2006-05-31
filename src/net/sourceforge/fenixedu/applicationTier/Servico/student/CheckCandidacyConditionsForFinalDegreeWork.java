@@ -12,10 +12,12 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -53,13 +55,27 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
         for (final ExecutionDegree someExecutionDegree : scheduleing.getExecutionDegreesSet()) {
         	degrees.add(someExecutionDegree.getDegreeCurricularPlan().getDegree());
         }
-        final int numberOfCompletedCourses = student.getActiveStudentCurricularPlan().numberCompletedCoursesForSpecifiedDegrees(degrees);
+        final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        final Degree degree = studentCurricularPlan.getDegreeCurricularPlan().getDegree();
         Integer numberOfNecessaryCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
-        if (numberOfNecessaryCompletedCourses == null) {
-        	throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();
-        }
-        if (numberOfCompletedCourses < numberOfNecessaryCompletedCourses.intValue()) {
-            throw new InsufficientCompletedCoursesException(numberOfNecessaryCompletedCourses.toString());
+        if (degree.getSigla().equalsIgnoreCase("LEEC") || degree.getSigla().equalsIgnoreCase("LEFT")) {
+            final int numberOfCompletedCourses = student.getActiveStudentCurricularPlan().numberCompletedCoursesForSpecifiedDegrees(degrees);
+            if (numberOfNecessaryCompletedCourses == null) {
+            	throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();
+            }
+            if (numberOfCompletedCourses < numberOfNecessaryCompletedCourses.intValue()) {
+                throw new InsufficientCompletedCoursesException(numberOfNecessaryCompletedCourses.toString());
+            }
+        } else {
+        	CurricularYear minCurricularYear = null;
+        	for (final CurricularYear curricularYear : rootDomainObject.getCurricularYearsSet()) {
+        		if (curricularYear.getYear().intValue() == 3) {
+        			minCurricularYear = curricularYear;
+        		}
+        	}
+        	if (!studentCurricularPlan.approvedInAllCurricularCoursesUntilInclusiveCurricularYear(minCurricularYear)) {
+        		throw new InsufficientCompletedCoursesException(numberOfNecessaryCompletedCourses.toString());
+        	}
         }
 
         return true;

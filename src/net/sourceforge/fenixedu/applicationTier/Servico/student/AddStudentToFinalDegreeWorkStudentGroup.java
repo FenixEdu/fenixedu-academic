@@ -8,10 +8,12 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
@@ -52,12 +54,27 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
             for (final ExecutionDegree someExecutionDegree : scheduleing.getExecutionDegreesSet()) {
             	degrees.add(someExecutionDegree.getDegreeCurricularPlan().getDegree());
             }
-            final int numberOfCompletedCourses = student.getActiveStudentCurricularPlan().numberCompletedCoursesForSpecifiedDegrees(degrees);
-
-            if (numberOfCompletedCourses < scheduleing.getMinimumNumberOfCompletedCourses().intValue()) {
-                throw new MinimumNumberOfCompletedCoursesNotReachedException(scheduleing
-                        .getMinimumNumberOfCompletedCourses().toString());
+            final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+            final Degree degree = studentCurricularPlan.getDegreeCurricularPlan().getDegree();
+            if (degree.getSigla().equalsIgnoreCase("LEEC") || degree.getSigla().equalsIgnoreCase("LEFT")) {
+            	final int numberOfCompletedCourses = studentCurricularPlan.numberCompletedCoursesForSpecifiedDegrees(degrees);
+                if (numberOfCompletedCourses < scheduleing.getMinimumNumberOfCompletedCourses().intValue()) {
+                    throw new MinimumNumberOfCompletedCoursesNotReachedException(scheduleing
+                            .getMinimumNumberOfCompletedCourses().toString());
+                }
+            } else {
+            	CurricularYear minCurricularYear = null;
+            	for (final CurricularYear curricularYear : rootDomainObject.getCurricularYearsSet()) {
+            		if (curricularYear.getYear().intValue() == 3) {
+            			minCurricularYear = curricularYear;
+            		}
+            	}
+            	if (!studentCurricularPlan.approvedInAllCurricularCoursesUntilInclusiveCurricularYear(minCurricularYear)) {
+                    throw new MinimumNumberOfCompletedCoursesNotReachedException(scheduleing
+                            .getMinimumNumberOfCompletedCourses().toString());
+            	}
             }
+
         }
 
         GroupStudent groupStudent = DomainFactory.makeGroupStudent();

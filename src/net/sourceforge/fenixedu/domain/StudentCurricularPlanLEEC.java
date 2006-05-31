@@ -235,9 +235,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
 	}
 
 	public int numberCompletedCoursesForSpecifiedDegrees(final Set<Degree> degrees) {
-		final int result = getStudent().countCompletedCoursesForActiveUndergraduateCurricularPlan();
-		System.out.println("result: " + result + " for student: " + getStudent().getNumber());
-		return result;
+		return getStudent().countCompletedCoursesForActiveUndergraduateCurricularPlan();
 	}
 
 }
