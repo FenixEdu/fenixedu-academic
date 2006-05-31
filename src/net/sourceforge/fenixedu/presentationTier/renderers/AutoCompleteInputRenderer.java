@@ -76,6 +76,7 @@ public class AutoCompleteInputRenderer extends InputRenderer {
     public AutoCompleteInputRenderer() {
         super();
         
+        setIndicatorShown(true);
         setMinChars(3);
     }
 
@@ -331,17 +332,22 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                     textField.setController(new UpdateRawNameController(getRawSlotName()));
                 }
                 
+                HtmlInlineContainer loadingContainer = new HtmlInlineContainer();
+                loadingContainer.setId(key.toString() + "_Indicator");
+                loadingContainer.setStyle("display: none;");
+
+                HtmlText loadingText = new HtmlText(RenderUtils.getResourceString("fenix.renderers.autocomplete.loading"));
+                loadingContainer.addChild(loadingText);
+                
                 HtmlLink link = new HtmlLink();
                 link.setModuleRelative(false);
                 link.setUrl("/images/autocomplete/spinner.gif");
-                
+
                 HtmlImage indicatorImage = new HtmlImage();
-                indicatorImage.setId(key.toString() + "_Indicator");
-                indicatorImage.setStyle("display: none;");
                 indicatorImage.setSource(link.calculateUrl());
 
                 if (isIndicatorShown()) {
-                    container.addChild(indicatorImage);
+                    container.addChild(loadingContainer);
                 }
 
                 HtmlText errorMessage = new HtmlText(RenderUtils.getResourceString("fenix.renderers.autocomplete.error"));
@@ -355,7 +361,7 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                 resultsContainer.setClasses(getAutoCompleteStyleClass());
                 container.addChild(resultsContainer);
                 
-                addFinalScript(container, textField.getId(), resultsContainer.getId(), indicatorImage.getId());
+                addFinalScript(container, textField.getId(), resultsContainer.getId(), loadingContainer.getId());
                 
                 return container;
             }
