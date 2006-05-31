@@ -132,58 +132,23 @@ public class WorkSchedule extends WorkSchedule_Base {
                             System.out.println("nwp: "
                                   + dailyBalance.getWorkedOnNormalWorkPeriod().toPeriod().toString());
 
+                            
                             // primeiro clocking e' antes do periodo de almoco;
                             // ver se o ultimo clocking e' depois do periodo de almoco
                         } else if (lastClockingDate != null && (wsType.getMeal().getMealBreak().contains(lastClockingDate.toTimeOfDay(), false) == false)) {
                             wsType.turnDayToAbsence(dailyBalance);
-//                            // desconta-se o dia
-//                            dailyBalance.setWorkedOnNormalWorkPeriod(Duration.ZERO);
-//                            if (wsType.definedFixedPeriod()) {
-//                                // FixedPeriod absence will be the whole fixed period duration
-//                                System.out.println("fixed period a zeros");
-//                                dailyBalance.setFixedPeriodAbsence(wsType.getFixedWorkPeriod().getWorkPeriodDuration());
-//                                System.out.println(dailyBalance.getFixedPeriodAbsence().toPeriod().toString());
-//                            }
-                        } else {
-                            System.out.println("saiu durante a hora de almoco e nao lhe e' descontado nada");
+                        } else { // ultimo clocking e' dentro do periodo de almoco
+                            // ver se e' dentro do final do intervalo de almoco menos o desconto obrigatorio
+                            if (wsType.getMeal().getEndOfMealBreakMinusDiscountInterval().contains(lastClockingDate.toTimeOfDay(), false)) { 
+                                // descontar periodo de tempo desde fim da refeicao menos periodo obrigatorio de refeicao ate' 'a ultima marcacao do funcionario
+                                workPeriod = workPeriod.minus((new TimeInterval(wsType.getMeal().getEndOfMealBreakMinusMealDiscount(), lastClockingDate.toTimeOfDay(), 
+                                        false)).getDurationMillis());
+                            }
                             dailyBalance.setWorkedOnNormalWorkPeriod(workPeriod);
                             wsType.calculateFixedPeriodDuration(dailyBalance, timeline);
                         }
                     }
                 }
-                
-//                // dailyBalance.setNormalWorkPeriod1Balance(worked.minus)
-//                if (firstClockingDate != null
-//                        && wsType.getMeal().getMealBreak().contains(firstClockingDate.toTimeOfDay(),
-//                                false)) {
-//                    // funcionario entrou no intervalo de almoco
-//                    System.out.println("funcionario entrou no intervalo de almoco");
-//                    // considera-se o periodo desde o inicio do intervalo de almoco + desconto
-//                    // obrigatorio de almoco
-//                    // se funcionario entrar nesse periodo de tempo e'-lhe descontado desde a entrada
-//                    // ate' (inicio do intervalo de almoco + desconto obrigatorio de almoco)
-//
-//                    TimeOfDay lunchEnd = wsType.getMeal().getLunchEnd();
-//                    TimeInterval lunchTime = new TimeInterval(wsType.getMeal().getBeginMealBreak(),
-//                            lunchEnd, false);
-//
-//                    if (lunchTime.contains(firstClockingDate.toTimeOfDay(), false)) {
-//                        workPeriod = workPeriod.minus(new TimeInterval(firstClockingDate.toTimeOfDay(),
-//                                lunchEnd, false).getDurationMillis());
-//                    }
-//                    
-//                    // TODO ver caso das pessoas com isencao de horario q picam na hora de almoco
-//                } else if (firstClockingDate != null
-//                        && firstClockingDate.toTimeOfDay().isBefore(
-//                                wsType.getMeal().getMealBreak().getStartTime())) {
-//                    workPeriod = workPeriod.minus(wsType.getMeal().getMandatoryMealDiscount());
-//                }
-//                dailyBalance.setWorkedOnNormalWorkPeriod(workPeriod);
-//                System.out.println("nwp: "
-//                        + dailyBalance.getWorkedOnNormalWorkPeriod().toPeriod().toString());
-//                wsType.calculateFixedPeriodDuration(dailyBalance, timeline);
-
-
             }
         } else { // meal nao esta definida - so ha 1 periodo de trabalho
             Duration worked = timeline
@@ -204,40 +169,6 @@ public class WorkSchedule extends WorkSchedule_Base {
         return dailyBalance;
     }
 
-    // // Returns the duration of normal period times the number of days per week the Employee has that
-    // schedule
-    // public Duration calculateWeekDuration() {
-    // return Duration.ZERO;
-    // // return new
-    // Duration(getWorkScheduleType().getNormalWorkPeriod().getTotalNormalWorkPeriodDuration().getMillis()
-    // * getWorkWeek().workDaysPerWeek());
-    // }
-
-    // // Returns true if the schedule is defined in the week day weekDay
-    // public boolean isDefinedInWeekDay(WeekDay weekDay) {
-    // return false;
-    // // return getWorkWeek().worksAt(weekDay);
-    // }
-
-    // // validates and creates the Valid From To Interval
-    // // TODO find a decent name for this... god it sucks!
-    // public static Interval createValidFromToInterval(Integer startYear, Integer startMonth, Integer
-    // startDay, Integer endYear, Integer endMonth, Integer endDay) {
-    // // data validade - usada como data nos TimeIntervals do horario
-    // DateTime startScheduleDate = new DateTime(startYear.intValue(), startMonth.intValue(),
-    // startDay.intValue(), 0, 0, 0, 0);
-    // // end day might not be defined
-    // DateTime endScheduleDate = null;
-    // if ((endYear != null) && (endMonth != null) && (endDay != null)) {
-    // System.out.println("dafa final def");
-    // endScheduleDate = new DateTime(endYear.intValue(), endMonth.intValue(), endDay.intValue(), 0, 0,
-    // 0, 0);
-    // } else {
-    // System.out.println("dafa final nao def");
-    // endScheduleDate = DomainConstants.FAR_FUTURE;
-    // }
-    // return new Interval(startScheduleDate, endScheduleDate);
-    // }
 
     public void delete() {
         if (canBeDeleted()) {

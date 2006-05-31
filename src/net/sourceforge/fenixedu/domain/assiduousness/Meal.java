@@ -65,7 +65,7 @@ public class Meal extends Meal_Base {
             System.out.println("almocou em menos de 1 hora");
             System.out.println("desconto refeicao "
                     + lunchBreak.minus(getMandatoryMealDiscount()).toPeriod().toString());
-            //TODO Mudámos a ordem da conta!!
+            //TODO Mudï¿½mos a ordem da conta!!
             return getMandatoryMealDiscount().minus(lunchBreak);
         } else {
             return Duration.ZERO;
@@ -81,6 +81,16 @@ public class Meal extends Meal_Base {
         return TimeInterval.countDurationFromClockings(clockingIn, clockingOut, this.getMealBreak());
     }
 
+    
+    public TimeOfDay getEndOfMealBreakMinusMealDiscount() {
+        return getMealBreak().getEndTime().toDateTimeToday().minus(getMandatoryMealDiscount()).toTimeOfDay();
+    }
+    
+    public TimeInterval getEndOfMealBreakMinusDiscountInterval() {
+        return new TimeInterval(getEndOfMealBreakMinusMealDiscount(), getEndMealBreak(), false);
+    }
+    
+    
     public void delete() {
         if (canBeDeleted()) {
             removeRootDomainObject();
@@ -91,4 +101,5 @@ public class Meal extends Meal_Base {
     public boolean canBeDeleted() {
         return !hasAnyWorkScheduleTypes();
     }
+    
 }
