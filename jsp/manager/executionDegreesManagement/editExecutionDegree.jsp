@@ -54,6 +54,10 @@
 	<html:text maxlength="10" size="10" property="periodExamsSecondSemesterBegin"/>&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" />&nbsp;<html:text maxlength="10" size="10" property="periodExamsSecondSemesterEnd"/>&nbsp;(dd/mm/yyyy)
 	</p>
 	
+	<p><label><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.examsSpecialSeason"/></label>
+	<html:text maxlength="10" size="10" property="periodExamsSpecialSeasonBegin"/>&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" />&nbsp;<html:text maxlength="10" size="10" property="periodExamsSpecialSeasonEnd"/>&nbsp;(dd/mm/yyyy)
+	</p>
+	
 	</fieldset>
 	</div>
 		

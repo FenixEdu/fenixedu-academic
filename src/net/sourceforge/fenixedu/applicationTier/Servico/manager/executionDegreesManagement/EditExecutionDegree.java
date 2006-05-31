@@ -15,10 +15,10 @@ public class EditExecutionDegree extends Service {
             Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,
             Date periodExamsFirstSemesterEnd, Date periodLessonsSecondSemesterBegin,
             Date periodLessonsSecondSemesterEnd, Date periodExamsSecondSemesterBegin,
-            Date periodExamsSecondSemesterEnd) throws FenixServiceException {
+            Date periodExamsSecondSemesterEnd, Date periodExamsSpecialSeasonBegin,
+            Date periodExamsSpecialSeasonEnd) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = rootDomainObject
-                .readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
         if (executionDegree == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }
@@ -36,6 +36,6 @@ public class EditExecutionDegree extends Service {
         executionDegree.edit(executionYear, campus, temporaryExamMap, periodLessonsFirstSemesterBegin,
                 periodLessonsFirstSemesterEnd, periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd,
                 periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd, periodExamsSecondSemesterBegin,
-                periodExamsSecondSemesterEnd);
+                periodExamsSecondSemesterEnd, periodExamsSpecialSeasonBegin, periodExamsSpecialSeasonEnd);
     }
 }

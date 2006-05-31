@@ -27,7 +27,8 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
             final Calendar lessonSeason1BeginDate, final Calendar lessonSeason1EndDate,
             final Calendar lessonSeason2BeginDate, final Calendar lessonSeason2EndDate,
             final Calendar examsSeason1BeginDate, final Calendar examsSeason1EndDate,
-            final Calendar examsSeason2BeginDate, final Calendar examsSeason2EndDate)
+            final Calendar examsSeason2BeginDate, final Calendar examsSeason2EndDate,
+            final Calendar examsSpecialSeasonBeginDate, final Calendar examsSpecialSeasonEndDate)
             throws ExcepcaoPersistencia {
 
         final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
@@ -37,6 +38,7 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
         final OccupationPeriod lessonSeason2 = createPeriod(lessonSeason2BeginDate, lessonSeason2EndDate);
         final OccupationPeriod examsSeason1 = createPeriod(examsSeason1BeginDate, examsSeason1EndDate);
         final OccupationPeriod examsSeason2 = createPeriod(examsSeason2BeginDate, examsSeason2EndDate);
+        final OccupationPeriod examsSpecialSeason = createPeriod(examsSpecialSeasonBeginDate, examsSpecialSeasonEndDate);
 
         final Set<Integer> allDegreeCurricularPlanIDs = new HashSet<Integer>();
         allDegreeCurricularPlanIDs.addAll(Arrays.asList(degreeCurricularPlansIDs));
@@ -48,7 +50,7 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
                 continue;
             }
             createExecutionDegree(executionYear, campus, degreeCurricularPlan, temporaryExamMap,
-                    examsSeason1, examsSeason2, lessonSeason1, lessonSeason2);
+                    examsSeason1, examsSeason2, examsSpecialSeason, lessonSeason1, lessonSeason2);
         }
     }
 
@@ -75,8 +77,8 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
 
     final ExecutionYear executionYear, Campus campus, DegreeCurricularPlan degreeCurricularPlan,
             Boolean temporaryExamMap, OccupationPeriod periodExamsSeason1,
-            OccupationPeriod periodExamsSeason2, OccupationPeriod periodLessonSeason1,
-            OccupationPeriod periodLessonSeason2) {
+            OccupationPeriod periodExamsSeason2, OccupationPeriod periodExamsSpecialSeason,
+            OccupationPeriod periodLessonSeason1, OccupationPeriod periodLessonSeason2) {
 
         final ExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
         executionDegree.setCampus(campus);
@@ -84,6 +86,7 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
         executionDegree.setExecutionYear(executionYear);
         executionDegree.setPeriodExamsFirstSemester(periodExamsSeason1);
         executionDegree.setPeriodExamsSecondSemester(periodExamsSeason2);
+        executionDegree.setPeriodExamsSpecialSeason(periodExamsSpecialSeason);
         executionDegree.setPeriodLessonsFirstSemester(periodLessonSeason1);
         executionDegree.setPeriodLessonsSecondSemester(periodLessonSeason2);
         executionDegree.setScheduling(null);

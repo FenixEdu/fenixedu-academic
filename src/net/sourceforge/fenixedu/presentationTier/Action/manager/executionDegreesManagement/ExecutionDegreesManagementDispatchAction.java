@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -136,21 +137,26 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             form.set("campusID", executionDegree.getCampus().getIdInternal());
             
             final String dateFormat = "dd/MM/yyyy";
-            form.set("periodLessonsFirstSemesterBegin", DateFormatUtil.format(dateFormat, executionDegree.getPeriodLessonsFirstSemester().getStart()));
-            form.set("periodLessonsFirstSemesterEnd", DateFormatUtil.format(dateFormat, executionDegree.getPeriodLessonsFirstSemester().getEnd()));
-            form.set("periodExamsFirstSemesterBegin", DateFormatUtil.format(dateFormat, executionDegree.getPeriodExamsFirstSemester().getStart()));
-            form.set("periodExamsFirstSemesterEnd", DateFormatUtil.format(dateFormat, executionDegree.getPeriodExamsFirstSemester().getEnd()));
-            form.set("periodLessonsSecondSemesterBegin", DateFormatUtil.format(dateFormat, executionDegree.getPeriodLessonsSecondSemester().getStart()));
-            form.set("periodLessonsSecondSemesterEnd", DateFormatUtil.format(dateFormat, executionDegree.getPeriodLessonsSecondSemester().getEnd()));
-            form.set("periodExamsSecondSemesterBegin", DateFormatUtil.format(dateFormat, executionDegree.getPeriodExamsSecondSemester().getStart()));
-            form.set("periodExamsSecondSemesterEnd", DateFormatUtil.format(dateFormat, executionDegree.getPeriodExamsSecondSemester().getEnd()));
-                        
+            form.set("periodLessonsFirstSemesterBegin", executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay().toString(dateFormat));
+            form.set("periodLessonsFirstSemesterEnd", executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDay().toString(dateFormat));
+            form.set("periodExamsFirstSemesterBegin", executionDegree.getPeriodExamsFirstSemester().getStartYearMonthDay().toString(dateFormat));
+            form.set("periodExamsFirstSemesterEnd", executionDegree.getPeriodExamsFirstSemester().getEndYearMonthDay().toString(dateFormat));
+            form.set("periodLessonsSecondSemesterBegin", executionDegree.getPeriodLessonsSecondSemester().getStartYearMonthDay().toString(dateFormat));
+            form.set("periodLessonsSecondSemesterEnd", executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDay().toString(dateFormat));
+            form.set("periodExamsSecondSemesterBegin", executionDegree.getPeriodExamsSecondSemester().getStartYearMonthDay().toString(dateFormat));
+            form.set("periodExamsSecondSemesterEnd", executionDegree.getPeriodExamsSecondSemester().getEndYearMonthDay().toString(dateFormat));
+            
+            // not all executionDegrees have special season period defined, but should!
+            if (executionDegree.getPeriodExamsSpecialSeason() != null) {
+                form.set("periodExamsSpecialSeasonBegin", executionDegree.getPeriodExamsSpecialSeason().getStartYearMonthDay().toString(dateFormat));
+                form.set("periodExamsSpecialSeasonEnd", executionDegree.getPeriodExamsSpecialSeason().getEndYearMonthDay().toString(dateFormat));
+            }
         }
         return mapping.findForward("editExecutionDegree");
     }
     
     public ActionForward editExecutionDegree(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         
         final DynaActionForm form = (DynaActionForm) actionForm;
         final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
@@ -168,24 +174,30 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             final Date periodLessonsSecondSemesterEnd = DateFormatUtil.parse(dateFormat, (String) form.get("periodLessonsSecondSemesterEnd"));
             final Date periodExamsSecondSemesterBegin = DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsSecondSemesterBegin"));
             final Date periodExamsSecondSemesterEnd = DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsSecondSemesterEnd"));
+            final Date periodExamsSpecialSeasonBegin = DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsSpecialSeasonBegin"));
+            final Date periodExamsSpecialSeasonEnd = DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsSpecialSeasonEnd"));
             
             ServiceUtils.executeService(getUserView(request), "EditBolonhaExecutionDegree",
                     new Object[] { executionDegreeID, executionYearID, campusID, temporaryExamMap,
                             periodLessonsFirstSemesterBegin, periodLessonsFirstSemesterEnd,
                             periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd,
                             periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd,
-                            periodExamsSecondSemesterBegin, periodExamsSecondSemesterEnd });
+                            periodExamsSecondSemesterBegin, periodExamsSecondSemesterEnd,
+                            periodExamsSpecialSeasonBegin, periodExamsSpecialSeasonEnd });
+            
+            return readExecutionDegrees(mapping, actionForm, request, response);
             
         } catch (final ParseException e) {
             addMessage(request, "error.executionDegrees.invalid.date.format");
-        } catch (final FenixFilterException e) {
+        } catch (final NotAuthorizedException e) {
             addMessage(request, "error.notAuthorized");
+            return readExecutionDegrees(mapping, actionForm, request, response);
         } catch (final FenixServiceException e) {
             addMessage(request, e.getMessage());
         } catch (final DomainException e) {
             addMessage(request, e.getMessage());
         }
-        return readExecutionDegrees(mapping, actionForm, request, response);                
+        return prepareEditExecutionDegree(mapping, actionForm, request, response);
     }
     
     private void readAndSetDegrees(HttpServletRequest request) {
@@ -243,7 +255,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
                 ActionErrors actionErrors = new ActionErrors();
                 for (String undeletedExecutionDegreesYear : undeletedExecutionDegreesYears) {
                     // Create an ACTION_ERROR for each EXECUTION_DEGREE
-                    ActionError error = new ActionError("errors.invalid.delete.not.empty.execution.degree", undeletedExecutionDegreesYears);
+                    ActionError error = new ActionError("errors.invalid.delete.not.empty.execution.degree", undeletedExecutionDegreesYear);
                     actionErrors.add("errors.invalid.delete.not.empty.execution.degree", error);
                 }
                 saveErrors(request, actionErrors);

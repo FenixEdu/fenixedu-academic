@@ -54,6 +54,9 @@
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.exams"/>
 					2º <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
 				</td>
+				<td class='listClasses-header'> 
+					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.examsSpecialSeason"/>					
+				</td>
 				<td class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.temporaryExamMap"/> </td>
 				<td class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.coordinator"/> </td>
 				<td class='listClasses-header'> </td>
@@ -107,6 +110,21 @@
 						<dt:format pattern="dd/MM/yyyy">
 							<bean:write name="periodExamsSecondSemester" property="end.time" />
 						</dt:format>
+					</td>
+					<td class='listClasses'>
+						<logic:notEmpty name="executionDegree" property="periodExamsSpecialSeason">
+							<bean:define id="periodExamsSpecialSeason" name="executionDegree" property="periodExamsSpecialSeason" />
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="periodExamsSpecialSeason" property="start.time" />
+							</dt:format>
+							<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="periodExamsSpecialSeason" property="end.time" />
+							</dt:format>
+						</logic:notEmpty>
+						<logic:empty name="executionDegree" property="periodExamsSpecialSeason">
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.noPeriodExamsSpecialSeason" />
+						</logic:empty>
 					</td>
 					<td class='listClasses'>
 						<logic:equal name="executionDegree" property="temporaryExamMap" value="true">

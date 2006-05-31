@@ -59,6 +59,12 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     private Integer examsSeason2EndDay;
     private Integer examsSeason2EndMonth;
     private Integer examsSeason2EndYear;
+    private Integer examsSpecialSeasonBeginDay;
+    private Integer examsSpecialSeasonBeginMonth;
+    private Integer examsSpecialSeasonBeginYear;
+    private Integer examsSpecialSeasonEndDay;
+    private Integer examsSpecialSeasonEndMonth;
+    private Integer examsSpecialSeasonEndYear;
 
     public CreateExecutionDegreesForExecutionYear() {
         super();
@@ -158,7 +164,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
             result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
         }
         if (result.size() > 0) {
-            setChoosenExecutionYearID((Integer) result.get(result.size() - 1).getValue());
+            setChoosenExecutionYearID(ExecutionYear.readCurrentExecutionYear().getIdInternal());
         }
         return result;
     }
@@ -204,12 +210,21 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
         Calendar examsSeason2EndDate = Calendar.getInstance();
         examsSeason2EndDate.set(getExamsSeason2EndYear(), getExamsSeason2EndMonth(),
                 getExamsSeason2EndDay());
+        
+        Calendar examsSpecialSeasonBeginDate = Calendar.getInstance();
+        examsSpecialSeasonBeginDate.set(getExamsSpecialSeasonBeginYear(), getExamsSpecialSeasonBeginMonth(),
+                getExamsSpecialSeasonBeginDay());
+
+        Calendar examsSpecialSeasonEndDate = Calendar.getInstance();
+        examsSpecialSeasonEndDate.set(getExamsSpecialSeasonEndYear(), getExamsSpecialSeasonEndMonth(),
+                getExamsSpecialSeasonEndDay());
 
         Object[] args = { getChoosenDegreeCurricularPlansIDs(),
                 getChoosenBolonhaDegreeCurricularPlansIDs(), getChoosenExecutionYearID(), getCampus(),
                 getTemporaryExamMap(), lessonSeason1BeginDate, lessonSeason1EndDate,
                 lessonSeason2BeginDate, lessonSeason2EndDate, examsSeason1BeginDate,
-                examsSeason1EndDate, examsSeason2BeginDate, examsSeason2EndDate };
+                examsSeason1EndDate, examsSeason2BeginDate, examsSeason2EndDate, 
+                examsSpecialSeasonBeginDate, examsSpecialSeasonEndDate };
 
         ServiceUtils.executeService(getUserView(), "CreateExecutionDegreesForExecutionYear", args);
 
@@ -459,6 +474,54 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
     public void setTemporaryExamMap(Boolean temporaryExamMap) {
         this.temporaryExamMap = temporaryExamMap;
+    }
+
+    public Integer getExamsSpecialSeasonBeginDay() {
+        return examsSpecialSeasonBeginDay;
+    }
+
+    public void setExamsSpecialSeasonBeginDay(Integer examsSpecialSeasonBeginDay) {
+        this.examsSpecialSeasonBeginDay = examsSpecialSeasonBeginDay;
+    }
+
+    public Integer getExamsSpecialSeasonBeginMonth() {
+        return examsSpecialSeasonBeginMonth;
+    }
+
+    public void setExamsSpecialSeasonBeginMonth(Integer examsSpecialSeasonBeginMonth) {
+        this.examsSpecialSeasonBeginMonth = examsSpecialSeasonBeginMonth;
+    }
+
+    public Integer getExamsSpecialSeasonBeginYear() {
+        return examsSpecialSeasonBeginYear;
+    }
+
+    public void setExamsSpecialSeasonBeginYear(Integer examsSpecialSeasonBeginYear) {
+        this.examsSpecialSeasonBeginYear = examsSpecialSeasonBeginYear;
+    }
+
+    public Integer getExamsSpecialSeasonEndDay() {
+        return examsSpecialSeasonEndDay;
+    }
+
+    public void setExamsSpecialSeasonEndDay(Integer examsSpecialSeasonEndDay) {
+        this.examsSpecialSeasonEndDay = examsSpecialSeasonEndDay;
+    }
+
+    public Integer getExamsSpecialSeasonEndMonth() {
+        return examsSpecialSeasonEndMonth;
+    }
+
+    public void setExamsSpecialSeasonEndMonth(Integer examsSpecialSeasonEndMonth) {
+        this.examsSpecialSeasonEndMonth = examsSpecialSeasonEndMonth;
+    }
+
+    public Integer getExamsSpecialSeasonEndYear() {
+        return examsSpecialSeasonEndYear;
+    }
+
+    public void setExamsSpecialSeasonEndYear(Integer examsSpecialSeasonEndYear) {
+        this.examsSpecialSeasonEndYear = examsSpecialSeasonEndYear;
     }
 
 }

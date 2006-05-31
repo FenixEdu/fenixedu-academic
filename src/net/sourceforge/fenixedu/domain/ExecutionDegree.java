@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.joda.time.YearMonthDay;
 
 /**
  * 
@@ -101,24 +102,28 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
             Date periodLessonsFirstSemesterBegin, Date periodLessonsFirstSemesterEnd,
             Date periodExamsFirstSemesterBegin, Date periodExamsFirstSemesterEnd,
             Date periodLessonsSecondSemesterBegin, Date periodLessonsSecondSemesterEnd,
-            Date periodExamsSecondSemesterBegin, Date periodExamsSecondSemesterEnd) {
+            Date periodExamsSecondSemesterBegin, Date periodExamsSecondSemesterEnd,
+            Date periodExamsSpecialSeasonBegin, Date periodExamsSpecialSeasonEnd) {
      
         checkPeriodDates(periodLessonsFirstSemesterBegin,
                 periodLessonsFirstSemesterEnd, periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd,
                 periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd, periodExamsSecondSemesterBegin,
-                periodExamsSecondSemesterEnd);
+                periodExamsSecondSemesterEnd, periodExamsSpecialSeasonBegin, periodExamsSpecialSeasonEnd);
         
         setExecutionYear(executionYear);
         setCampus(campus);
         setTemporaryExamMap(temporaryExamMap);
-        getPeriodLessonsFirstSemester().setStart(periodLessonsFirstSemesterBegin);
-        getPeriodLessonsFirstSemester().setEnd(periodLessonsFirstSemesterEnd);
-        getPeriodExamsFirstSemester().setStart(periodExamsFirstSemesterBegin);
-        getPeriodExamsFirstSemester().setEnd(periodExamsFirstSemesterEnd);
-        getPeriodLessonsSecondSemester().setStart(periodLessonsSecondSemesterBegin);
-        getPeriodLessonsSecondSemester().setEnd(periodLessonsSecondSemesterEnd);
-        getPeriodExamsSecondSemester().setStart(periodExamsSecondSemesterBegin);
-        getPeriodExamsSecondSemester().setEnd(periodExamsSecondSemesterEnd);
+        
+        getPeriodLessonsFirstSemester().setStartYearMonthDay(YearMonthDay.fromDateFields(periodLessonsFirstSemesterBegin));
+        getPeriodLessonsFirstSemester().setEndYearMonthDay(YearMonthDay.fromDateFields(periodLessonsFirstSemesterEnd));
+        getPeriodExamsFirstSemester().setStartYearMonthDay(YearMonthDay.fromDateFields(periodExamsFirstSemesterBegin));
+        getPeriodExamsFirstSemester().setEndYearMonthDay(YearMonthDay.fromDateFields(periodExamsFirstSemesterEnd));
+        getPeriodLessonsSecondSemester().setStartYearMonthDay(YearMonthDay.fromDateFields(periodLessonsSecondSemesterBegin));
+        getPeriodLessonsSecondSemester().setEndYearMonthDay(YearMonthDay.fromDateFields(periodLessonsSecondSemesterEnd));
+        getPeriodExamsSecondSemester().setStartYearMonthDay(YearMonthDay.fromDateFields(periodExamsSecondSemesterBegin));
+        getPeriodExamsSecondSemester().setEndYearMonthDay(YearMonthDay.fromDateFields(periodExamsSecondSemesterEnd));
+        getPeriodExamsSpecialSeason().setStartYearMonthDay(YearMonthDay.fromDateFields(periodExamsSpecialSeasonBegin));
+        getPeriodExamsSpecialSeason().setEndYearMonthDay(YearMonthDay.fromDateFields(periodExamsSpecialSeasonEnd));
     }
 
 	public boolean isBolonha() {
@@ -129,7 +134,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
             Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,
             Date periodExamsFirstSemesterEnd, Date periodLessonsSecondSemesterBegin,
             Date periodLessonsSecondSemesterEnd, Date periodExamsSecondSemesterBegin,
-            Date periodExamsSecondSemesterEnd) {
+            Date periodExamsSecondSemesterEnd, Date periodExamsSpecialSeasonBegin,
+            Date periodExamsSpecialSeasonEnd) {
         
         if (periodLessonsFirstSemesterBegin == null || periodLessonsFirstSemesterEnd == null
                 || periodLessonsFirstSemesterBegin.after(periodLessonsFirstSemesterEnd)) {
@@ -148,6 +154,11 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 
         if (periodExamsSecondSemesterBegin == null || periodExamsSecondSemesterEnd == null
                 || periodExamsSecondSemesterBegin.after(periodExamsSecondSemesterEnd)) {
+            throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
+        }
+        
+        if (periodExamsSpecialSeasonBegin == null || periodExamsSpecialSeasonEnd == null
+                || periodExamsSpecialSeasonBegin.after(periodExamsSpecialSeasonEnd)) {
             throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
         }
     }

@@ -140,6 +140,32 @@
 			<h:selectOneMenu value="#{createExecutionDegrees.examsSeason2EndYear}">
 				<f:selectItems value="#{createExecutionDegrees.years}" />
 			</h:selectOneMenu>	
+			
+			asdasdsa
+			<h:outputText value="<strong>Periodo Exames Época Especial:</strong>" escape="false" />
+			<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonBeginDay}">
+				<f:selectItems value="#{createExecutionDegrees.days}" />
+			</h:selectOneMenu>
+			<h:outputText value="/" />
+			<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonBeginMonth}">
+				<f:selectItems value="#{createExecutionDegrees.months}" />
+			</h:selectOneMenu>
+			<h:outputText value="/" />
+			<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonBeginYear}">
+				<f:selectItems value="#{createExecutionDegrees.years}" />
+			</h:selectOneMenu>
+			<h:outputText value=" a " />
+			<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonEndDay}">
+				<f:selectItems value="#{createExecutionDegrees.days}" />
+			</h:selectOneMenu>
+			<h:outputText value="/" />
+			<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonEndMonth}">
+				<f:selectItems value="#{createExecutionDegrees.months}" />
+			</h:selectOneMenu>
+			<h:outputText value="/" />
+			<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonEndYear}">
+				<f:selectItems value="#{createExecutionDegrees.years}" />
+			</h:selectOneMenu>
 		</h:panelGrid>
 		<p/>
 			
