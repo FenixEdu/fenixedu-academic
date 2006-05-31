@@ -203,7 +203,10 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
     }
     
     protected HtmlSimpleValueComponent getInputComponent() {
-        return new HtmlTextInput();
+        HtmlTextInput textInput = new HtmlTextInput();
+        textInput.setSize(getSize() == null ? null : String.valueOf(getSize()));
+        
+        return textInput;
     }
     
     @Override
