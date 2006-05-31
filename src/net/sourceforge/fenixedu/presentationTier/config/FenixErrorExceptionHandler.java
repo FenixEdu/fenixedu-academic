@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EmptyRequiredFieldServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.Globals;
@@ -67,7 +68,16 @@ public class FenixErrorExceptionHandler extends ExceptionHandler {
             error = new ActionError(ex.getMessage());
             property = error.getKey();
         } else {
-            error = new ActionError(ae.getKey(), ex.getMessage());
+        	String[] args = null;
+        	if (ex instanceof FenixServiceException) {
+        		final FenixServiceException fenixServiceException = (FenixServiceException) ex;
+        		args = fenixServiceException.getArgs();
+        	}
+        	if (args == null) {
+        		error = new ActionError(ae.getKey(), ex.getMessage());
+        	} else {
+        		error = new ActionError(ae.getKey(), args);
+        	}
             property = error.getKey();
         }
         request.setAttribute(Globals.EXCEPTION_KEY, ex);

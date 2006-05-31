@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
@@ -1233,12 +1232,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return null;
     }
 
-    public boolean approvedInAllCurricularCoursesUntilInclusiveCurricularYear(final CurricularYear curricularYear) {
+    public boolean approvedInAllCurricularCoursesUntilInclusiveCurricularYear(final Integer curricularYearInteger) {
     	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
     	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
     		final Collection<CurricularCourseScope> activeCurricularCourseScopes = curricularCourse.getActiveScopes();
     		for (final CurricularCourseScope curricularCourseScope : activeCurricularCourseScopes) {
-    			if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() <= curricularYear.getYear().intValue()) {
+    			final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
+    			final CurricularYear curricularYear = curricularSemester.getCurricularYear();
+    			if (curricularYearInteger == null || curricularYear.getYear().intValue() <= curricularYearInteger.intValue()) {
     				if (!isCurricularCourseApproved(curricularCourse)) {
     					System.out.println("curricular course failed: " + curricularCourse.getName() + " " + curricularCourse.getCode());
     					return false;

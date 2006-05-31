@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
 public class FenixServiceException extends Exception {
     private int errorType;
+    private String[] args;
 
     /**
      * @return
@@ -21,6 +22,11 @@ public class FenixServiceException extends Exception {
         super(s);
     }
 
+    public FenixServiceException(String s, String[] args) {
+        super(s);
+        this.args = args;
+    }
+
     public FenixServiceException(Throwable cause) {
         super(cause);
     }
@@ -36,6 +42,14 @@ public class FenixServiceException extends Exception {
         result += "]";
         return result;
     }
+
+	public String[] getArgs() {
+		return args;
+	}
+
+	public void setArgs(String[] args) {
+		this.args = args;
+	}
 
 }
 

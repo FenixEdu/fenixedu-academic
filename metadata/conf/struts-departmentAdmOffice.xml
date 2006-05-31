@@ -206,6 +206,7 @@
 			<form-property name="executionDegreeOID" type="java.lang.String"/>
 			<form-property name="minimumNumberOfCompletedCourses" type="java.lang.String"/>
 			<form-property name="maximumCurricularYearToCountCompletedCourses" type="java.lang.String"/>
+			<form-property name="minimumCompletedCurricularYear" type="java.lang.String"/>
 			<form-property name="minimumNumberOfStudents" type="java.lang.String"/>
 			<form-property name="maximumNumberOfStudents" type="java.lang.String"/>
 			<form-property name="maximumNumberOfProposalCandidaciesPerGroup" type="java.lang.String"/>

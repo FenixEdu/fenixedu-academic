@@ -3,15 +3,18 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
@@ -49,32 +52,61 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
             throw new MaximumNumberOfStudentsReachedException(scheduleing.getMaximumNumberOfStudents()
                     .toString());
         } else {
-            //int numberOfCompletedCourses = student.countCompletedCoursesForActiveUndergraduateCurricularPlan();
-            final Set<Degree> degrees = new HashSet<Degree>();
-            for (final ExecutionDegree someExecutionDegree : scheduleing.getExecutionDegreesSet()) {
-            	degrees.add(someExecutionDegree.getDegreeCurricularPlan().getDegree());
-            }
-            final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
-            final Degree degree = studentCurricularPlan.getDegreeCurricularPlan().getDegree();
-            if (degree.getSigla().equalsIgnoreCase("LEEC") || degree.getSigla().equalsIgnoreCase("LEFT")) {
-            	final int numberOfCompletedCourses = studentCurricularPlan.numberCompletedCoursesForSpecifiedDegrees(degrees);
-                if (numberOfCompletedCourses < scheduleing.getMinimumNumberOfCompletedCourses().intValue()) {
-                    throw new MinimumNumberOfCompletedCoursesNotReachedException(scheduleing
-                            .getMinimumNumberOfCompletedCourses().toString());
-                }
-            } else {
-            	CurricularYear minCurricularYear = null;
-            	for (final CurricularYear curricularYear : rootDomainObject.getCurricularYearsSet()) {
-            		if (curricularYear.getYear().intValue() == 3) {
-            			minCurricularYear = curricularYear;
-            		}
-            	}
-            	if (!studentCurricularPlan.approvedInAllCurricularCoursesUntilInclusiveCurricularYear(minCurricularYear)) {
-                    throw new MinimumNumberOfCompletedCoursesNotReachedException(scheduleing
-                            .getMinimumNumberOfCompletedCourses().toString());
-            	}
-            }
+        	final Integer maximumCurricularYearToCountCompletedCourses = scheduleing.getMaximumCurricularYearToCountCompletedCourses();
+        	final Integer minimumCompletedCurricularYear = scheduleing.getMinimumCompletedCurricularYear();
+        	final Integer minimumNumberOfCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
 
+        	final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+        	final Collection<CurricularCourseScope> degreesActiveCurricularCourseScopes = degreeCurricularPlan.getActiveCurricularCourseScopes();
+        	final StringBuilder notCompletedCurricularCourses = new StringBuilder();
+        	final Set<CurricularCourse> notCompletedCurricularCoursesForMinimumCurricularYear = new HashSet<CurricularCourse>();
+        	final Set<CurricularCourse> completedCurricularCourses = new HashSet<CurricularCourse>();
+        	//int numberCompletedCurricularCourses = 0;
+    		for (final CurricularCourseScope curricularCourseScope : degreesActiveCurricularCourseScopes) {
+    			final CurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+    			final boolean isCurricularCourseApproved = studentCurricularPlan.isCurricularCourseApproved(curricularCourse);
+
+    			final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
+    			final CurricularYear curricularYear = curricularSemester.getCurricularYear();
+
+    			if (minimumCompletedCurricularYear != null && curricularYear.getIdInternal().intValue() <= minimumCompletedCurricularYear.intValue()) {
+    				if (!isCurricularCourseApproved) {
+    					notCompletedCurricularCoursesForMinimumCurricularYear.add(curricularCourse);
+    				}
+    			}
+
+    			if (maximumCurricularYearToCountCompletedCourses == null || curricularYear.getYear().intValue() <= maximumCurricularYearToCountCompletedCourses.intValue()) {
+    				if (isCurricularCourseApproved) {
+    					completedCurricularCourses.add(curricularCourseScope.getCurricularCourse());
+    					//numberCompletedCurricularCourses++;
+    				} else {
+    					if (notCompletedCurricularCourses.length() > 0) {
+    						notCompletedCurricularCourses.append(", ");
+    					}
+    					notCompletedCurricularCourses.append(curricularCourseScope.getCurricularCourse().getName());
+    				}
+    			}
+    		}
+
+    		if (!notCompletedCurricularCoursesForMinimumCurricularYear.isEmpty()) {
+    			final StringBuilder stringBuilder = new StringBuilder();
+    			for (final CurricularCourse curricularCourse : notCompletedCurricularCoursesForMinimumCurricularYear) {
+    				if (stringBuilder.length() > 0) {
+    					stringBuilder.append(", ");
+    				}
+    				stringBuilder.append(curricularCourse.getName());
+    			}
+    			final String[] args = { minimumCompletedCurricularYear.toString(), stringBuilder.toString()};
+    			throw new NotCompletedCurricularYearException(null, args);
+    		}
+
+    		int numberCompletedCurricularCourses = completedCurricularCourses.size();
+    		if (numberCompletedCurricularCourses < minimumNumberOfCompletedCourses) {
+    			final int numberMissingCurricularCourses = minimumNumberOfCompletedCourses - numberCompletedCurricularCourses;
+    			final String[] args = { Integer.toString(numberMissingCurricularCourses), notCompletedCurricularCourses.toString()};
+    			throw new MinimumNumberOfCompletedCoursesNotReachedException(null, args);
+    		}
         }
 
         GroupStudent groupStudent = DomainFactory.makeGroupStudent();
@@ -149,25 +181,15 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
         }
     }
 
+    public class NotCompletedCurricularYearException extends FenixServiceException {
+        public NotCompletedCurricularYearException(String s, String[] args) {
+            super(s, args);
+        }
+    }
+
     public class MinimumNumberOfCompletedCoursesNotReachedException extends FenixServiceException {
-        public MinimumNumberOfCompletedCoursesNotReachedException() {
-            super();
-        }
-
-        public MinimumNumberOfCompletedCoursesNotReachedException(int errorType) {
-            super(errorType);
-        }
-
-        public MinimumNumberOfCompletedCoursesNotReachedException(String s) {
-            super(s);
-        }
-
-        public MinimumNumberOfCompletedCoursesNotReachedException(Throwable cause) {
-            super(cause);
-        }
-
-        public MinimumNumberOfCompletedCoursesNotReachedException(String message, Throwable cause) {
-            super(message, cause);
+        public MinimumNumberOfCompletedCoursesNotReachedException(String s, String[] args) {
+            super(s, args);
         }
     }
 

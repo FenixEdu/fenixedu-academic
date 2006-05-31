@@ -208,6 +208,14 @@
 		</tr>
 		<tr>
 			<td class="listClasses-header">
+				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumCompletedCurricularYear"/>
+			</td>
+			<td class="listClasses">
+				<html:text property="minimumCompletedCurricularYear" size="2"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses-header">
 				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumNumberOfStudents"/>
 			</td>
 			<td class="listClasses">
