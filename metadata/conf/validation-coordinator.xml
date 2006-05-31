@@ -228,6 +228,9 @@
 		<field property="minimumNumberOfCompletedCourses" depends="integer" page="1">
 			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumNumberOfCompletedCourses" resource="true"/>
 		</field>
+		<field property="maximumCurricularYearToCountCompletedCourses" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.maximumCurricularYearToCountCompletedCourses" resource="true"/>
+		</field>
 		<field property="minimumNumberOfStudents" depends="integer" page="1">
 			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumNumberOfStudents" resource="true"/>
 		</field>

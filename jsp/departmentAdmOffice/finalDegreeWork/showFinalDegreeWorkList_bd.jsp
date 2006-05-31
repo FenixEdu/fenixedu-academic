@@ -199,6 +199,14 @@
 		</tr>
 		<tr>
 			<td class="listClasses-header">
+				<bean:message key="finalDegreeWorkCandidacy.requirements.maximumCurricularYearToCountCompletedCourses"/>
+			</td>
+			<td class="listClasses">
+				<html:text property="maximumCurricularYearToCountCompletedCourses" size="2"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses-header">
 				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumNumberOfStudents"/>
 			</td>
 			<td class="listClasses">

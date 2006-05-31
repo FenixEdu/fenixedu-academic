@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
 
     public void run(Integer executionDegreeOID, Integer minimumNumberOfCompletedCourses,
+    		Integer maximumCurricularYearToCountCompletedCourses,
             Integer minimumNumberOfStudents, Integer maximumNumberOfStudents,
             Integer maximumNumberOfProposalCandidaciesPerGroup, Boolean attributionByTeachers) throws ExcepcaoPersistencia {
 
@@ -32,6 +33,7 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
 
                 scheduleing.addExecutionDegrees(executionDegree);
                 scheduleing.setMinimumNumberOfCompletedCourses(minimumNumberOfCompletedCourses);
+                scheduleing.setMaximumCurricularYearToCountCompletedCourses(maximumCurricularYearToCountCompletedCourses);
                 scheduleing.setMinimumNumberOfStudents(minimumNumberOfStudents);
                 scheduleing.setMaximumNumberOfStudents(maximumNumberOfStudents);
                 scheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(maximumNumberOfProposalCandidaciesPerGroup);

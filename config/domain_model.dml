@@ -2104,6 +2104,7 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing extends net.so
 	Integer minimumNumberOfStudents;
 	Integer maximumNumberOfProposalCandidaciesPerGroup;
 	Integer minimumNumberOfCompletedCourses;
+	Integer maximumCurricularYearToCountCompletedCourses;
 	Integer currentProposalNumber;
 	HourMinuteSecond startOfProposalPeriodTimeHourMinuteSecond;
 	YearMonthDay startOfProposalPeriodDateYearMonthDay;

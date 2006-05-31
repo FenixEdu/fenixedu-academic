@@ -27,6 +27,8 @@ public class InfoScheduleing extends InfoObject {
 
     private Integer minimumNumberOfCompletedCourses;
 
+    private Integer maximumCurricularYearToCountCompletedCourses;
+
     private Integer minimumNumberOfStudents;
 
     private Integer maximumNumberOfStudents;
@@ -200,5 +202,14 @@ public class InfoScheduleing extends InfoObject {
 
 	public void setAttributionByTeachers(Boolean attributionByTeachers) {
 		this.attributionByTeachers = attributionByTeachers;
+	}
+
+	public Integer getMaximumCurricularYearToCountCompletedCourses() {
+		return maximumCurricularYearToCountCompletedCourses;
+	}
+
+	public void setMaximumCurricularYearToCountCompletedCourses(
+			Integer maximumCurricularYearToCountCompletedCourses) {
+		this.maximumCurricularYearToCountCompletedCourses = maximumCurricularYearToCountCompletedCourses;
 	}
 }

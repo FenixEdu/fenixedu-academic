@@ -34,6 +34,8 @@ public class ReadFinalDegreeWorkProposalSubmisionPeriod extends Service {
                     infoScheduleing.setEndOfCandidacyPeriod(scheduleing.getEndOfCandidacyPeriod());
                     infoScheduleing.setMinimumNumberOfCompletedCourses(scheduleing
                             .getMinimumNumberOfCompletedCourses());
+                    infoScheduleing.setMaximumCurricularYearToCountCompletedCourses(
+                    		scheduleing.getMaximumCurricularYearToCountCompletedCourses());
                     infoScheduleing.setMinimumNumberOfStudents(scheduleing.getMinimumNumberOfStudents());
                     infoScheduleing.setMaximumNumberOfStudents(scheduleing.getMaximumNumberOfStudents());
                     infoScheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(scheduleing

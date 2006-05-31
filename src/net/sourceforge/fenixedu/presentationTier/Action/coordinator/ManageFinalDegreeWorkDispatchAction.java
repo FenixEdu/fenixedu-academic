@@ -242,6 +242,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                     finalDegreeWorkCandidacyRequirementsForm.set("minimumNumberOfCompletedCourses",
                             infoScheduleing.getMinimumNumberOfCompletedCourses().toString());
                 }
+                if (infoScheduleing.getMaximumCurricularYearToCountCompletedCourses() != null) {
+                    finalDegreeWorkCandidacyRequirementsForm.set("maximumCurricularYearToCountCompletedCourses",
+                            infoScheduleing.getMaximumCurricularYearToCountCompletedCourses().toString());
+                }
                 if (infoScheduleing.getMinimumNumberOfStudents() != null) {
                     finalDegreeWorkCandidacyRequirementsForm.set("minimumNumberOfStudents",
                             infoScheduleing.getMinimumNumberOfStudents().toString());
@@ -916,6 +920,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         String minimumNumberOfCompletedCoursesString = (String) finalDegreeWorkScheduleingForm
                 .get("minimumNumberOfCompletedCourses");
+        String maximumCurricularYearToCountCompletedCoursesString = (String) finalDegreeWorkScheduleingForm
+        		.get("maximumCurricularYearToCountCompletedCourses");
         String minimumNumberOfStudentsString = (String) finalDegreeWorkScheduleingForm
                 .get("minimumNumberOfStudents");
         String maximumNumberOfStudentsString = (String) finalDegreeWorkScheduleingForm
@@ -928,6 +934,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         if (minimumNumberOfCompletedCoursesString != null
                 && !minimumNumberOfCompletedCoursesString.equals("")) {
             minimumNumberOfCompletedCourses = new Integer(minimumNumberOfCompletedCoursesString);
+        }
+
+        Integer maximumCurricularYearToCountCompletedCourses = null;
+        if (maximumCurricularYearToCountCompletedCoursesString != null
+        		&& !maximumCurricularYearToCountCompletedCoursesString.equals("")) {
+        	maximumCurricularYearToCountCompletedCourses = Integer.valueOf(maximumCurricularYearToCountCompletedCoursesString);
         }
 
         Integer minimumNumberOfStudents = null;
@@ -951,6 +963,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         try {
             Object args[] = { executionDegreeOID, minimumNumberOfCompletedCourses,
+            		maximumCurricularYearToCountCompletedCourses,
                     minimumNumberOfStudents, maximumNumberOfStudents,
                     maximumNumberOfProposalCandidaciesPerGroup, attributionByTeachers };
             ServiceUtils.executeService(userView, "DefineFinalDegreeWorkCandidacyRequirements", args);

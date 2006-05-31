@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add column to scheduling table" alterTableFinalDegreeWorkScheduling.sql
