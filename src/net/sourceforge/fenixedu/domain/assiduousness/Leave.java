@@ -43,8 +43,8 @@ public class Leave extends Leave_Base {
 
     // Check if the Leave occured in a particular date
     public boolean occuredInDate(YearMonthDay date) {
-        return ((getDate().toYearMonthDay().isAfter(date) || getDate().toYearMonthDay().isEqual(date)) && (getEndDate()
-                .toYearMonthDay().isBefore(date) || getEndDate().toYearMonthDay().isEqual(date)));
+        return ((getDate().toYearMonthDay().isBefore(date) ||  getDate().toYearMonthDay().isEqual(date)) && (getEndDate()
+                .toYearMonthDay().isAfter(date) || getEndDate().toYearMonthDay().isEqual(date)));
     }
 
     // Converts a Leave interval to TimePoint
@@ -67,4 +67,16 @@ public class Leave extends Leave_Base {
    		timeline.plotList(pointList);
     }
 
+    // Returns true if the justification is for the day
+    public boolean justificationForDay(YearMonthDay day) {
+        Interval justificationInterval = new Interval(getDate(), getEndDate());
+        DateTime dayAtMidnight = day.toDateTimeAtMidnight();
+        if (justificationInterval.contains(dayAtMidnight)) {
+            return true;
+        }
+        return false;
+    }
+    
+    
+    
 }

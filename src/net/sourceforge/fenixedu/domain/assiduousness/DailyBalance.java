@@ -42,17 +42,13 @@ public class DailyBalance {
         this();
         setDate(date);
         setWorkSchedule(workSchedule);
-//        setClockingList(null);
-//        setLeaveList(null);
-//        setMissingClockingList(null);
-        setComment(null);
+        setComment(null); // necessario?
         setIrregular(false);
         setJustification(false);
         setOvertime(0);
         setFixedPeriodAbsence(Duration.ZERO);
         setWorkedOnNormalWorkPeriod(Duration.ZERO);
         setLunchBreak(Duration.ZERO);
-        
         setTotalBalance(Duration.ZERO);
     }
 

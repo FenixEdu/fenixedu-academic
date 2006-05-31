@@ -148,7 +148,7 @@ public class Assiduousness extends Assiduousness_Base {
 
         List<Leave> leaves = getLeaves(day, day);
         Collections.sort(leaves, new BeanComparator("date"));
-
+        
         DateTime init = day.toDateTime(workSchedule.getWorkScheduleType().getWorkTime());
         DateTime end = day.toDateTime(workSchedule.getWorkScheduleType().getWorkEndTime());
         if (workSchedule.getWorkScheduleType().isNextDay()) {
@@ -161,44 +161,44 @@ public class Assiduousness extends Assiduousness_Base {
         // assiduousnessRecord.getDate().getSecondOfMinute()));
         // }
 
-        timeline.plotListInTimeline(clockings, leaves, attributesIt, day);
-        timeline.print();
-        DateTime firstClockingDate = null;
-        if (clockings.size() != 0) {
+        DailyBalance dailyBalance = null;
+        if (clockings.size() > 0) {
+            timeline.plotListInTimeline(clockings, leaves, attributesIt, day);
+            timeline.print();
+            DateTime firstClockingDate = null;
             firstClockingDate = (clockings.iterator().next()).getDate();
-        }
-        DateTime lastClockingDate = null;
-        if (clockings.size() != 0) {
+            DateTime lastClockingDate = null;
             lastClockingDate = (clockings.get(clockings.size() - 1)).getDate();
-        }
-        DailyBalance dailyBalance = workSchedule.calculateWorkingPeriods(day, firstClockingDate, lastClockingDate,
+            dailyBalance = workSchedule.calculateWorkingPeriods(day, firstClockingDate, lastClockingDate,
                 timeline);
-
-        List<Leave> balanceLeavesList = getBalanceLeaves(day, day);
-        if (balanceLeavesList.size() > 0) {
-            dailyBalance.discountBalanceLeaveInFixedPeriod(balanceLeavesList);
+            List<Leave> balanceLeavesList = getBalanceLeaves(day, day); // descontar as compensacoes no periodo fixo
+            if (balanceLeavesList.size() > 0) {
+                dailyBalance.discountBalanceLeaveInFixedPeriod(balanceLeavesList);
+            }
+        } else { // nao ha marcacoes
+            System.out.println("nao ha marcacoes");
+            Leave occurrence = null;
+            if (leaves.size() > 0) { // ha leaves associadas ao dia
+                if ((leaves.get(0).getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE) && (leaves.get(0).justificationForDay(day))) {
+                    occurrence = leaves.get(0); // pode haver mais q 1 justificacao por dia?
+                }
+            } else { // nao ha leaves associadas ao dia, mas o dia esta dentro da duracao da leave
+                occurrence = getOccurrenceLeaveContainsDate(day);
+            }
+            if (occurrence != null) {
+                dailyBalance = new DailyBalance(day, workSchedule);
+                dailyBalance.setWorkedOnNormalWorkPeriod(workSchedule.getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
+                if (workSchedule.getWorkScheduleType().definedFixedPeriod()) {
+                    dailyBalance.setFixedPeriodAbsence(workSchedule.getWorkScheduleType().getFixedWorkPeriod().getWorkPeriodDuration());
+                }
+                dailyBalance.setJustification(true); // ver o tipo de justificacao
+                dailyBalance.setComment(occurrence.getJustificationMotive().getAcronym()); // observacao com o tipo de justificacao utilizada.
+            }
         }
-        
         return dailyBalance;
     }
 
-    // // Inserts missingClockings into ClockingList
-    // public void addMissingClockingsToClockingList(List<Clocking> clockingList,
-    // List<MissingClocking> missingClockingList) {
-    // for (MissingClocking missingClocking : missingClockingList) {
-    // int clockingListSize = clockingList.size();
-    // for (int i = 0; i < clockingListSize; i++) {
-    // Clocking clocking = (Clocking) clockingList.get(i);
-    // if (missingClocking.getDate().isBefore(clocking.getDate())) {
-    // clockingList.add(i, missingClocking.toClocking());
-    // break;
-    // }
-    // }
-    // // if we got here then the point must be inserted at the end of the clocking list.
-    // clockingList.add(missingClocking.toClocking());
-    // }
-    // }
-
+    
     public List<AssiduousnessRecord> getClockingsAndMissingClockings(DateTime beginDate, DateTime endDate) {
         Interval interval = new Interval(beginDate, endDate);
         List<AssiduousnessRecord> clockingsList = new ArrayList<AssiduousnessRecord>();
@@ -210,30 +210,6 @@ public class Assiduousness extends Assiduousness_Base {
         }
         return clockingsList;
     }
-
-//    public List<Clocking> getClockings(YearMonthDay beginDate, YearMonthDay endDate) {
-//        DateInterval interval = new DateInterval(beginDate, endDate);
-//        List<Clocking> clockingsList = new ArrayList<Clocking>();
-//        for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
-//            if (assiduousnessRecord instanceof Clocking
-//                    && interval.containsDate(assiduousnessRecord.getDate())) {
-//                clockingsList.add((Clocking) assiduousnessRecord);
-//            }
-//        }
-//        return clockingsList;
-//    }
-
-//    public List<MissingClocking> getMissingClockings(YearMonthDay beginDate, YearMonthDay endDate) {
-//        DateInterval interval = new DateInterval(beginDate, endDate);
-//        List<MissingClocking> missingClockingsList = new ArrayList<MissingClocking>();
-//        for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
-//            if (assiduousnessRecord instanceof MissingClocking
-//                    && interval.containsDate(assiduousnessRecord.getDate())) {
-//                missingClockingsList.add((MissingClocking) assiduousnessRecord);
-//            }
-//        }
-//        return missingClockingsList;
-//    }
 
     public List<Leave> getLeaves(YearMonthDay beginDate, YearMonthDay endDate) {
         DateInterval interval = new DateInterval(beginDate, endDate);
@@ -247,7 +223,7 @@ public class Assiduousness extends Assiduousness_Base {
         return clockingsList;
     }
     
-    // Returns all the Balance Leaves for a particular begin-end date
+    // Returns all the Balance Leaves (Compensacao) for a particular begin-end date
     public List<Leave> getBalanceLeaves(YearMonthDay beginDate, YearMonthDay endDate) {
         DateInterval interval = new DateInterval(beginDate, endDate);
         List<Leave> balanceLeaveList = new ArrayList<Leave>();
@@ -260,6 +236,20 @@ public class Assiduousness extends Assiduousness_Base {
         }
         return balanceLeaveList;
     }
-    
+
+    // Returns the leave for the date
+    public Leave getOccurrenceLeaveContainsDate(YearMonthDay date) {
+        Leave occurrence = null;
+        for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
+            if (assiduousnessRecord instanceof Leave) {
+                occurrence = (Leave)assiduousnessRecord;
+                if ((occurrence.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE) && (occurrence.occuredInDate(date))) {
+                    return occurrence;
+                }
+            }
+        }
+        return occurrence;
+    }
+
     
 }
