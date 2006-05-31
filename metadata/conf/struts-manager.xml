@@ -621,6 +621,8 @@
 			<form-property name="periodLessonsSecondSemesterEnd" type="java.lang.String" />
 			<form-property name="periodExamsSecondSemesterBegin" type="java.lang.String" />
 			<form-property name="periodExamsSecondSemesterEnd" type="java.lang.String" />
+			<form-property name="periodExamsSpecialSeasonBegin" type="java.lang.String" />
+			<form-property name="periodExamsSpecialSeasonEnd" type="java.lang.String" />
 		</form-bean>
 				
     </form-beans>
