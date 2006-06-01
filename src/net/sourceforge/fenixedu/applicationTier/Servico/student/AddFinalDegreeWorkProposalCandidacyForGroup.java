@@ -46,7 +46,7 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup extends Service {
             GroupProposal groupProposal = DomainFactory.makeGroupProposal();
             groupProposal.setFinalDegreeWorkProposal(proposal);
             groupProposal.setFinalDegreeDegreeWorkGroup(group);
-            groupProposal.setOrderOfPreference(new Integer(group.getGroupProposals().size() + 1));
+            groupProposal.setOrderOfPreference(Integer.valueOf(group.getGroupProposals().size()));
             return true;
         }
 
