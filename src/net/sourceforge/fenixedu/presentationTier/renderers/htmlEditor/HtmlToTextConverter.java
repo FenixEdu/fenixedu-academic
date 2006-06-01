@@ -173,7 +173,7 @@ public class HtmlToTextConverter extends TidyConverter {
             return;
         }
 
-        int indexStart = source.lastIndexOf("-");
+        int indexStart = source.lastIndexOf("smiley-") + "smiley-".length();
         int indexEnd = source.lastIndexOf(".");
         
         String smiley = source.substring(indexStart + 1, indexEnd);
