@@ -9,10 +9,9 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
-import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 
-import org.joda.time.Duration;
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -69,8 +68,11 @@ public class Leave extends Leave_Base {
 
     // Returns true if the justification is for the day
     public boolean justificationForDay(YearMonthDay day) {
-        Interval justificationInterval = new Interval(getDate(), getEndDate());
         DateTime dayAtMidnight = day.toDateTimeAtMidnight();
+        if(getDate().equals(getEndDate()) && dayAtMidnight.equals(getDate())){
+            return true;
+        }
+        Interval justificationInterval = new Interval(getDate(), getEndDate());        
         if (justificationInterval.contains(dayAtMidnight)) {
             return true;
         }
