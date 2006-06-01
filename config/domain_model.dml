@@ -550,6 +550,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	String nome;
 	String nameEn;
 	String sigla;
+	String code;
     DegreeType tipoCurso;
     BolonhaDegreeType bolonhaDegreeType;
     Integer keyUnit;
