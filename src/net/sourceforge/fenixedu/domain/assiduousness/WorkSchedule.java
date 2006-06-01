@@ -39,8 +39,8 @@ public class WorkSchedule extends WorkSchedule_Base {
     }
 
     // TODO ver se o funcionario trabalhou dentro dos periodos
-    public DailyBalance calculateWorkingPeriods(YearMonthDay day, DateTime firstClockingDate, DateTime lastClockingDate,
-            Timeline timeline) {
+    public DailyBalance calculateWorkingPeriods(YearMonthDay day, DateTime firstClockingDate,
+            DateTime lastClockingDate, Timeline timeline) {
         DailyBalance dailyBalance = new DailyBalance(day, this);
         Duration firstWorkPeriod = Duration.ZERO;
         Duration lastWorkPeriod = Duration.ZERO;
@@ -80,17 +80,20 @@ public class WorkSchedule extends WorkSchedule_Base {
                 // Fixed Periods if defined
                 wsType.calculateFixedPeriodDuration(dailyBalance, timeline);
                 wsType.checkMealDurationAccordingToRules(dailyBalance);
-            
+
             } else { // o funcionario nao foi almocar so fez 1 periodo de trabalho
                 System.out.println("funcionario nao foi almocar");
-                Duration workPeriod = timeline.calculateDurationAllIntervalsByAttributes(DomainConstants.WORKED_ATTRIBUTES);
+                Duration workPeriod = timeline
+                        .calculateDurationAllIntervalsByAttributes(DomainConstants.WORKED_ATTRIBUTES);
                 System.out.println("nwp: " + workPeriod);
-                
+
                 // caso dos horarios de isencao de horario
                 if (wsType.getMeal().getMinimumMealBreakInterval().isEqual(Duration.ZERO)) {
                     System.out.println("horario de isencao de horario");
+
                     
-                    if (firstClockingDate != null && wsType.getMeal().getMealBreak().contains(firstClockingDate.toTimeOfDay(),
+                    if (firstClockingDate != null
+                            && wsType.getMeal().getMealBreak().contains(firstClockingDate.toTimeOfDay(),
                                     false)) {
                         // funcionario entrou no intervalo de almoco
                         System.out.println("funcionario entrou no intervalo de almoco");
@@ -98,19 +101,25 @@ public class WorkSchedule extends WorkSchedule_Base {
                         // obrigatorio de almoco
                         // se funcionario entrar nesse periodo de tempo e'-lhe descontado desde a entrada
                         // ate' (inicio do intervalo de almoco + desconto obrigatorio de almoco)
-
                         TimeOfDay lunchEnd = wsType.getMeal().getLunchEnd();
                         TimeInterval lunchTime = new TimeInterval(wsType.getMeal().getBeginMealBreak(),
                                 lunchEnd, false);
                         if (lunchTime.contains(firstClockingDate.toTimeOfDay(), false)) {
-                            workPeriod = workPeriod.minus(new TimeInterval(firstClockingDate.toTimeOfDay(),
-                                    lunchEnd, false).getDurationMillis());
-                        }
+                            workPeriod = workPeriod.minus(new TimeInterval(firstClockingDate
+                                    .toTimeOfDay(), lunchEnd, false).getDurationMillis());
+                        }                        
+
+                    } else if (firstClockingDate != null
+                            && firstClockingDate.toTimeOfDay().isBefore(
+                                    wsType.getMeal().getBeginMealBreak())) {
+                        workPeriod = workPeriod.minus(wsType.getMeal().getMandatoryMealDiscount());
                     }
+                    dailyBalance.setWorkedOnNormalWorkPeriod(workPeriod);
 
                 } else { // caso dos horarios em q o minimo de intervalo de almoco e' tipicamente de 15minutos
                     if (firstClockingDate != null) {
-                        if (wsType.getMeal().getMealBreak().contains(firstClockingDate.toTimeOfDay(), false)) {
+                        if (wsType.getMeal().getMealBreak().contains(firstClockingDate.toTimeOfDay(),
+                                false)) {
                             // funcionario entrou no intervalo de almoco
                             System.out.println("funcionario entrou no intervalo de almoco");
                             // considera-se o periodo desde o inicio do intervalo de almoco + desconto
@@ -119,25 +128,26 @@ public class WorkSchedule extends WorkSchedule_Base {
                             // ate' (inicio do intervalo de almoco + desconto obrigatorio de almoco)
 
                             TimeOfDay lunchEnd = wsType.getMeal().getLunchEnd();
-                            TimeInterval lunchTime = new TimeInterval(wsType.getMeal().getBeginMealBreak(),
-                                    lunchEnd, false);
+                            TimeInterval lunchTime = new TimeInterval(wsType.getMeal()
+                                    .getBeginMealBreak(), lunchEnd, false);
 
                             if (lunchTime.contains(firstClockingDate.toTimeOfDay(), false)) {
-                                workPeriod = workPeriod.minus(new TimeInterval(firstClockingDate.toTimeOfDay(),
-                                        lunchEnd, false).getDurationMillis());
+                                workPeriod = workPeriod.minus(new TimeInterval(firstClockingDate
+                                        .toTimeOfDay(), lunchEnd, false).getDurationMillis());
                             }
                             // calcular o periodo fixo
                             wsType.calculateFixedPeriodDuration(dailyBalance, timeline);
                             dailyBalance.setWorkedOnNormalWorkPeriod(workPeriod);
                             System.out.println("nwp: "
-                                  + dailyBalance.getWorkedOnNormalWorkPeriod().toPeriod().toString());
+                                    + dailyBalance.getWorkedOnNormalWorkPeriod().toPeriod().toString());
 
-                            
                             // primeiro clocking e' antes do periodo de almoco;
                             // ver se o ultimo clocking e' depois do periodo de almoco
-                        } else if (lastClockingDate != null && (wsType.getMeal().getMealBreak().contains(lastClockingDate.toTimeOfDay(), false) == false)) {
+                        } else if (lastClockingDate != null
+                                && (wsType.getMeal().getMealBreak().contains(
+                                        lastClockingDate.toTimeOfDay(), false) == false)) {
                             wsType.turnDayToAbsence(dailyBalance);
-                        } else { // ultimo clocking e' dentro do periodo de almoco
+                        } else {
                             // ver se e' dentro do final do intervalo de almoco menos o desconto obrigatorio
                             if (wsType.getMeal().getEndOfMealBreakMinusDiscountInterval().contains(lastClockingDate.toTimeOfDay(), false)) { 
                                 // descontar periodo de tempo desde fim da refeicao menos periodo obrigatorio de refeicao ate' 'a ultima marcacao do funcionario
