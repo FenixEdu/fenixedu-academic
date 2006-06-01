@@ -221,7 +221,7 @@ public class HtmlToTextConverter extends TidyConverter {
             return;
         }
         
-        String text = HTMLEntities.unhtmlentities(htmlText);
+        String text = unescapeHtml(htmlText);
 
         String[] words = text.split("\\p{Space}+"); 
         for (int i = 0; i < words.length; i++) {
@@ -243,12 +243,23 @@ public class HtmlToTextConverter extends TidyConverter {
         }
     }
 
+    private String unescapeHtml(String htmlText) {
+        String text = htmlText;
+        
+        text = HTMLEntities.unhtmlentities(text);
+        text = HTMLEntities.unhtmlAmpersand(text);
+        text = HTMLEntities.unhtmlAngleBrackets(text);
+        text = HTMLEntities.unhtmlQuotes(text);
+        
+        return text;
+    }
+
     private void addCodeText(String htmlText) {
         if (htmlText == null) {
             return;
         }
         
-        String text = HTMLEntities.unhtmlentities(htmlText);
+        String text = unescapeHtml(htmlText);
         
         this.buffer.append(text);
         pos += text.length() + 1;
@@ -283,26 +294,5 @@ public class HtmlToTextConverter extends TidyConverter {
         }
         
         addLineBreak();
-    }
-    
-    public static void main(String[] a) {
-        HtmlToTextConverter c = new HtmlToTextConverter();
-        
-        System.out.print(c.convert(null, HTMLEntities.htmlentities( 
-                "<p>a<br></p><p>b</p>" +
-                "Isto é que não pá. <a href=\"http://www.google.com\">testing</a><br>\n" +
-                "<ol>\n"+
-                "  <li> pois é <ol><li>um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres <li>dois</ol>\n"+
-                "  <li> Isto é outro teste\n"+
-                "</ol>\n" +
-                "<hr>\n"+
-                "<blockquote>isto é um teste com bastante texto para fazer wrap desta coisa isto tem que crescer mais um bocado para fazer wrap</blockquote>" +
-                "<p>" +
-                "agora é código da classe <code>BlaBlabla</code>\n<hr>" +
-                "<pre>\n" +
-                "    ...\n" +
-                "    java() {\n" +
-                "      print();\n" +
-                "    }</pre><hr>")));
     }
 }
