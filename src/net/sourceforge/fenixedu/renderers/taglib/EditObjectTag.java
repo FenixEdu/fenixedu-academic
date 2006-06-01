@@ -167,7 +167,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
     }
 
     @Override
-    protected HtmlComponent renderObject(PresentationContext context, Object object) {
+    protected HtmlComponent renderObject(PresentationContext context, Object object) throws JspException {
         if (! isVisible()) {
             return null;
         }
@@ -176,7 +176,18 @@ public class EditObjectTag extends BaseRenderObjectTag {
             return retrieveComponent();
         } else {
             if (getSlot() == null) {
-                return RenderKit.getInstance().render(context, object);
+                if (getType() == null) {
+                    return RenderKit.getInstance().render(context, object);
+                }
+                else {
+                    try {
+                        Class type = Class.forName(getType());
+
+                        return RenderKit.getInstance().render(context, object, type);
+                    } catch (ClassNotFoundException e) {
+                        throw new JspException("could not get class named " + getType(), e);
+                    }
+                }
             }
             else {
                 MetaObject metaObject = context.getMetaObject();

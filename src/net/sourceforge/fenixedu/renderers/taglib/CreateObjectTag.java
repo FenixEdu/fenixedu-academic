@@ -22,7 +22,6 @@ public class CreateObjectTag extends EditObjectTag {
     
     private static final Logger logger = Logger.getLogger(CreateObjectTag.class);
     
-    private String type;
     private List<DefaultValue> defaultValues;
 
     public CreateObjectTag() {
@@ -31,19 +30,10 @@ public class CreateObjectTag extends EditObjectTag {
         this.defaultValues = new ArrayList<DefaultValue>();
     }
 
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     @Override
     public void release() {
         super.release();
         
-        this.type = null;
         this.defaultValues = new ArrayList<DefaultValue>();
     }
 

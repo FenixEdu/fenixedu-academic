@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.renderers.taglib;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
@@ -16,10 +17,19 @@ import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 public class ViewObjectTag extends BaseRenderObjectTag {
 
     @Override
-    protected HtmlComponent renderObject(PresentationContext context, Object object)  {
-        RenderKit kit = RenderKit.getInstance();
-        
-        return kit.render(context, object);
+    protected HtmlComponent renderObject(PresentationContext context, Object object) throws JspException  {
+        if (getType() == null) {
+            return RenderKit.getInstance().render(context, object);
+        }
+        else {
+            try {
+                Class type = Class.forName(getType());
+
+                return RenderKit.getInstance().render(context, object, type);
+            } catch (ClassNotFoundException e) {
+                throw new JspException("could not get class named " + getType(), e);
+            }
+        }
     }
 
     @Override

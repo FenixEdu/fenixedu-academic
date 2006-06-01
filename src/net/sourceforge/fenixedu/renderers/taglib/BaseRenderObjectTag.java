@@ -29,6 +29,8 @@ public abstract class BaseRenderObjectTag extends TagSupport {
 
     private String property;
 
+    private String type;
+    
     private String layout;
 
     private String schema;
@@ -48,6 +50,7 @@ public abstract class BaseRenderObjectTag extends TagSupport {
         this.name = null;
         this.scope = null;
         this.property = null;
+        this.type = null;
         this.layout = null;
         this.schema = null;
         this.properties = null;
@@ -75,6 +78,14 @@ public abstract class BaseRenderObjectTag extends TagSupport {
 
     public void setProperty(String property) {
         this.property = property;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getLayout() {
@@ -205,7 +216,7 @@ public abstract class BaseRenderObjectTag extends TagSupport {
     }
 
     protected boolean isNullAccepted() {
-        return false;
+        return getType() != null;
     }
 
     protected Collection sortCollection(Collection collection) {
@@ -219,7 +230,7 @@ public abstract class BaseRenderObjectTag extends TagSupport {
 
     protected abstract PresentationContext createPresentationContext(Object object, String layout, String schema, Properties properties);
 
-    protected abstract HtmlComponent renderObject(PresentationContext context, Object object);
+    protected abstract HtmlComponent renderObject(PresentationContext context, Object object) throws JspException;
     
     protected void drawComponent(PresentationContext context, HtmlComponent component) throws IOException, JspException {
         component.draw(pageContext);
