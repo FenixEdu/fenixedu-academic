@@ -65,7 +65,6 @@ public class Meal extends Meal_Base {
             System.out.println("almocou em menos de 1 hora");
             System.out.println("desconto refeicao "
                     + lunchBreak.minus(getMandatoryMealDiscount()).toPeriod().toString());
-            //TODO Mud�mos a ordem da conta!!
             return getMandatoryMealDiscount().minus(lunchBreak);
         } else {
             return Duration.ZERO;
