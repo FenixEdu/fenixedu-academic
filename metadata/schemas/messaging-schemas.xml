@@ -37,16 +37,20 @@
 		<property name="size" value="50"/>
 		<property name="maxlength" value="3"/>
    	</slot>
-   	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
- 		<property name="columns" value="60"/>
-   		<property name="rows" value="10"/>
+   	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body" layout="rich-text" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate-fun" />
    	</slot>
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationMessage.create" type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean">
-   	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-   		<property name="columns" value="60"/>
-   		<property name="rows" value="8"/>
+   	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body" layout="rich-text" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	   	<property name="safe" value="true" />
+	   	<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate-fun" />
    	</slot>
 </schema>
 
@@ -78,5 +82,5 @@
 	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.creationDate">
 		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
 	</slot>
-	<slot name="body" layout="escapedNewLineAware" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body"/>	
+	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body"/>	
 </schema>

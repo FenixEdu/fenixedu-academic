@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
+import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
@@ -108,12 +109,12 @@ public abstract class ForumService extends Service {
 
     private String getEmailFormattedBody(ConversationMessage conversationMessage) {
         ConversationThread conversationThread = conversationMessage.getConversationThread();
-        String emailBody = MessageFormat.format(GLOBAL_RESOURCES.getString("forum.email.body"),
+        String emailBodyAsText = HtmlToTextConverterUtil.convertToText(conversationMessage.getBody());
+        String emailFormattedBody = MessageFormat.format(GLOBAL_RESOURCES.getString("forum.email.body"),
                 conversationMessage.getCreator().getName(), conversationThread.getSubject(),
-                conversationMessage.getConversationThread().getForum().getName(), conversationMessage
-                        .getBody());
+                conversationMessage.getConversationThread().getForum().getName(), emailBodyAsText);
 
-        return emailBody;
+        return emailFormattedBody;
     }
 
 }

@@ -216,17 +216,17 @@ public abstract class ForunsManagement extends FenixDispatchAction {
             String author = message.getCreator().getName() + " (" + message.getCreator().getIstUsername()
                     + ")";
 
-            String quotationLeadingCharacter = resources.getMessage(this.getLocale(request),
-                    "messaging.viewThread.quotationTextLeadingCharacter");
-            String[] messageLines = message.getBody().split(System.getProperty("line.separator"));
-            StringBuffer quotationTextBuffer = new StringBuffer();
-            for (int i = 0; i < messageLines.length; i++) {
-                quotationTextBuffer.append(creatorIstUsername).append(quotationLeadingCharacter).append(
-                        messageLines[i]);
-            }
+//            String quotationLeadingCharacter = resources.getMessage(this.getLocale(request),
+//                    "messaging.viewThread.quotationTextLeadingCharacter");
+//            String[] messageLines = message.getBody().split(System.getProperty("line.separator"));
+//            StringBuffer quotationTextBuffer = new StringBuffer();
+//            for (int i = 0; i < messageLines.length; i++) {
+//                quotationTextBuffer.append(creatorIstUsername).append(quotationLeadingCharacter).append(
+//                        messageLines[i]);
+//            }
             
             quotationText = resources.getMessage(this.getLocale(request),
-                    "messaging.viewThread.quotationText", author, quotationTextBuffer.toString());
+                    "messaging.viewThread.quotationText", author, message.getBody());
 
         }
 
