@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
+import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -307,6 +308,16 @@ public class Enrolment extends Enrolment_Base {
     	return result;
     }
 
+    public List<EnrolmentEvaluation> getEnrolmentEvaluationsByEnrolmentEvaluationType(final EnrolmentEvaluationType evaluationType){
+    	List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
+    	for (EnrolmentEvaluation evaluation : getEvaluationsSet()) {
+			if(evaluation.getEnrolmentEvaluationType().equals(evaluationType)) {
+				result.add(evaluation);
+			}
+		}
+    	return result;
+    }
+
     public EnrolmentEvaluation submitEnrolmentEvaluation(
             EnrolmentEvaluationType enrolmentEvaluationType, Mark publishedMark, Employee employee,
             Person personResponsibleForGrade, Date evaluationDate, String observation) {
@@ -558,7 +569,13 @@ public class Enrolment extends Enrolment_Base {
     }
 
     public Boolean isFirstTime() {
-        return getNumberOfTotalEnrolmentsInThisCourse() == 1;
+    	List<Enrolment> enrollments = getStudentCurricularPlan().getActiveEnrolments(getCurricularCourse());
+    	for (Enrolment enrollment : enrollments) {
+    		if (enrollment.getExecutionPeriod().isBefore(this.getExecutionPeriod())) {
+    			return Boolean.FALSE;
+    		}
+    	}
+        return Boolean.TRUE;
     }
     
     public int getNumberOfTotalEnrolmentsInThisCourse(){

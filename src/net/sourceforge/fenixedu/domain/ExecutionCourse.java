@@ -444,17 +444,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             return (double) executionCourseStudentNumber / numShifts;
     }
 
-    public List<EnrolmentEvaluation> getActiveEnrollmentEvaluations() {
-        List<EnrolmentEvaluation> results = new ArrayList<EnrolmentEvaluation>();
+    public List<Enrolment> getActiveEnrollments() {
+	List<Enrolment> results = new ArrayList<Enrolment>();
 
-        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            List<EnrolmentEvaluation> evaluations = curricularCourse.getActiveEnrollmentEvaluations(this
-                    .getExecutionPeriod());
+	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
+	    List<Enrolment> enrollments = curricularCourse.getActiveEnrollments(this
+		    .getExecutionPeriod());
 
-            results.addAll(evaluations);
-        }
-
-        return results;
+	    results.addAll(enrollments);
+	}
+	return results;
     }
 
     public boolean areAllOptionalCurricularCoursesWithLessTenEnrolments() {

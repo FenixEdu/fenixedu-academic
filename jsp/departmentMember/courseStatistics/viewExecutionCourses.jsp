@@ -76,10 +76,10 @@ text-align: right;
 		<h:panelGrid columns="2" styleClass="search">
 			<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="leftColumn"/>
 			<fc:selectOneMenu
-				value="#{courseStatistics.executionYearId}"
-				valueChangeListener="#{courseStatistics.onExecutionYearChangeForExecutionCourses}"
+				value="#{courseStatistics.executionPeriodId}"
+				valueChangeListener="#{courseStatistics.onExecutionPeriodChangeForExecutionCourses}"
 				onchange="this.form.submit();">
-				<f:selectItems value="#{courseStatistics.executionYears}" />
+				<f:selectItems value="#{courseStatistics.executionPeriods}" />
 			</fc:selectOneMenu>
 		</h:panelGrid>
 

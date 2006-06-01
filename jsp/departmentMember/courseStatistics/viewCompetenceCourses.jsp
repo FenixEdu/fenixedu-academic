@@ -65,7 +65,6 @@ text-align: right;
 }
 </style>
 
-	
 	<h:outputText value="<h2>#{bundle['label.courseStatistics.competenceStatistics']}</h2>" escape="false" />
 	<h:outputText value="<h3>#{courseStatistics.department.realName}</h3>" escape="false" />
 
@@ -76,10 +75,10 @@ text-align: right;
 		<h:panelGrid columns="2" styleClass="search">
 			<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="leftColumn" />
 			<fc:selectOneMenu
-				value="#{courseStatistics.executionYearId}"
-				valueChangeListener="#{courseStatistics.onExecutionYearChangeForCompetenceCourses}"
+				value="#{courseStatistics.executionPeriodId}"
+				valueChangeListener="#{courseStatistics.onExecutionPeriodChangeForCompetenceCourses}"
 				onchange="this.form.submit();">
-				<f:selectItems value="#{courseStatistics.executionYears}" />
+				<f:selectItems value="#{courseStatistics.executionPeriods}" />
 			</fc:selectOneMenu>
 		</h:panelGrid>
 

@@ -12,28 +12,27 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
     public List<ExecutionCourseStatisticsDTO> run(Integer competenceCourseId, Integer degreeId,
-            Integer executionYearId) throws FenixServiceException, ExcepcaoPersistencia {
+            Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
         CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseId);
         Degree degree = rootDomainObject.readDegreeByOID(degreeId);
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
 
         List<CurricularCourse> curricularCourses = competenceCourse
                 .getAssociatedCurricularCoursesGroupedByDegree().get(degree);
 
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 
-        for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-            for (CurricularCourse course : curricularCourses) {
-                executionCourses.addAll(course.getExecutionCoursesByExecutionPeriod(executionPeriod));
-            }
+        //for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+        for (CurricularCourse course : curricularCourses) {
+            executionCourses.addAll(course.getExecutionCoursesByExecutionPeriod(executionPeriod));
         }
+        //}
 
         List<ExecutionCourseStatisticsDTO> results = new ArrayList<ExecutionCourseStatisticsDTO>();
 
@@ -49,7 +48,7 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
             executionCourseStatistics.setDegrees(getDegrees(executionCourse));
 
             createCourseStatistics(executionCourseStatistics, executionCourse
-                    .getActiveEnrollmentEvaluations());
+                    .getActiveEnrollments());
 
             results.add(executionCourseStatistics);
         }

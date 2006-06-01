@@ -420,10 +420,18 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return curricularCoursesMap;
     }
 
-    public List<EnrolmentEvaluation> getActiveEnrollmentEvaluations(ExecutionYear executionYear) {
-        List<EnrolmentEvaluation> results = new ArrayList<EnrolmentEvaluation>();
+    public List<Enrolment> getActiveEnrollments(ExecutionYear executionYear) {
+        List<Enrolment> results = new ArrayList<Enrolment>();
         for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-            results.addAll(curricularCourse.getActiveEnrollmentEvaluations(executionYear));
+            results.addAll(curricularCourse.getActiveEnrollments(executionYear));
+        }
+        return results;
+    }
+    
+    public List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod) {
+        List<Enrolment> results = new ArrayList<Enrolment>();
+        for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+            results.addAll(curricularCourse.getActiveEnrollments(executionPeriod));
         }
         return results;
     }
@@ -439,6 +447,16 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             }
         }
         return Boolean.FALSE;
+    }
+    
+    public boolean hasActiveScopesInExecutionPeriod(ExecutionPeriod executionPeriod) {
+        List<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
+        	for (CurricularCourse curricularCourse : curricularCourses) {
+        		if (curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod).size() > 0) {
+                    return true;
+                }
+        }
+        return false;
     }
 
     public Unit getDepartmentUnit() {

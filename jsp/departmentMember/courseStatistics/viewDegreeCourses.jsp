@@ -76,10 +76,10 @@ text-align: right;
 		<h:panelGrid columns="2" styleClass="search">
 			<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="leftColumn" />
 			<fc:selectOneMenu
-				value="#{courseStatistics.executionYearId}"
-				valueChangeListener="#{courseStatistics.onExecutionYearChangeForDegreeCourses}"
+				value="#{courseStatistics.executionPeriodId}"
+				valueChangeListener="#{courseStatistics.onExecutionPeriodChangeForDegreeCourses}"
 				onchange="this.form.submit();">
-				<f:selectItems value="#{courseStatistics.executionYears}" />
+				<f:selectItems value="#{courseStatistics.executionPeriods}" />
 			</fc:selectOneMenu>
 		</h:panelGrid>
 		
@@ -131,8 +131,8 @@ text-align: right;
 						value="#{courseStatistics.competenceCourse.idInternal}" />
 					<f:param id="degreeId" name="degreeId"
 						value="#{degreeCourse.idInternal}" />
-					<f:param id="executionYearId" name="executionYearId"
-						value="#{courseStatistics.executionYearId}" />
+					<f:param id="executionPeriodId" name="executionPeriodId"
+						value="#{courseStatistics.executionPeriodId}" />
 				</fc:commandLink>
 
 				<h:outputText value="</td>" escape="false" />

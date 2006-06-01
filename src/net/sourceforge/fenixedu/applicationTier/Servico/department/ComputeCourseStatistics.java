@@ -9,8 +9,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.department.CourseStatisticsDTO;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 
 /**
@@ -23,7 +26,7 @@ public abstract class ComputeCourseStatistics extends Service {
     }
 
     protected void createCourseStatistics(CourseStatisticsDTO courseStatistics,
-            List<EnrolmentEvaluation> evaluations) {
+            List<Enrolment> enrollments) {
         int firstEnrolledCount = 0;
         int firstApprovedCount = 0;
         List<IGrade> firstApprovedGrades = new ArrayList<IGrade>();
@@ -35,12 +38,18 @@ public abstract class ComputeCourseStatistics extends Service {
         int totalEnrolledCount = 0;
         int totalApprovedCount = 0;
         List<IGrade> totalApprovedGrades = new ArrayList<IGrade>();
+      
+        for (Enrolment enrollment : enrollments) {
+        	if(enrollment.isSpecialSeason()) {
+        		continue;
+        	}
 
-        for (EnrolmentEvaluation evaluation : evaluations) {
-            totalEnrolledCount++;
+        	totalEnrolledCount++;
 
-            if (evaluation.getEnrolment().isFirstTime()) {
+        	EnrolmentEvaluation evaluation = getBestEnrollmentEvaluation(enrollment);
+            if (enrollment.isFirstTime()) {
                 firstEnrolledCount++;
+             
                 if (evaluation.getEnrollmentStateByGrade().equals(EnrollmentState.APROVED)) {
                     firstApprovedCount++;
                     IGrade grade = evaluation.getGradeWrapper();
@@ -49,17 +58,17 @@ public abstract class ComputeCourseStatistics extends Service {
                     totalApprovedCount++;
                 }
             } else {
-                restEnrolledCount++;
-                if (evaluation.getEnrollmentStateByGrade().equals(EnrollmentState.APROVED)) {
-                    restApprovedCount++;
-                    IGrade grade = evaluation.getGradeWrapper();
-                    restApprovedGrades.add(grade);
-                    totalApprovedGrades.add(grade);
-                    totalApprovedCount++;
-                }
+	            restEnrolledCount++;
+	            if (evaluation.getEnrollmentStateByGrade().equals(EnrollmentState.APROVED)) {
+	                restApprovedCount++;
+	                IGrade grade = evaluation.getGradeWrapper();
+	                restApprovedGrades.add(grade);
+	                totalApprovedGrades.add(grade);
+	                totalApprovedCount++;
+	            }
             }
         }
-
+        
         IGrade firstApprovedAverage = calculateApprovedAverage(firstApprovedGrades);
         IGrade restApprovedAverage = calculateApprovedAverage(restApprovedGrades);
         IGrade totalApprovedAverage = calculateApprovedAverage(totalApprovedGrades);
@@ -75,7 +84,11 @@ public abstract class ComputeCourseStatistics extends Service {
         courseStatistics.setTotalEnrolledCount(totalEnrolledCount);
         courseStatistics.setTotalApprovedCount(totalApprovedCount);
         courseStatistics.setTotalApprovedAverage(totalApprovedAverage);
+
+        
     }
+    
+    protected GradeFactory gradeFactory = GradeFactory.getInstance();
 
     private IGrade calculateApprovedAverage(List<IGrade> approvedGrades) {
         if (approvedGrades.size() == 0)
@@ -84,5 +97,16 @@ public abstract class ComputeCourseStatistics extends Service {
         //TODO: should query by chain of responsability to know how to compute
         //      this should be changed
         return approvedGrades.get(0).getGradeType().average(approvedGrades);
+    }
+    
+    protected EnrolmentEvaluation getBestEnrollmentEvaluation(Enrolment enrollment) {
+    	EnrolmentEvaluation best = null;
+    	
+    	for(EnrolmentEvaluation evaluation : enrollment.getEvaluations()) {
+    		if(best == null || best.getGradeWrapper().compareTo(evaluation.getGradeWrapper()) > 0) {
+    			best = evaluation;
+    		}
+    	}
+    	return best;
     }
 }

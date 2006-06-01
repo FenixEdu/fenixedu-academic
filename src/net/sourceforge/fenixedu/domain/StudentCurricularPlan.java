@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
@@ -1126,13 +1127,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public List<Enrolment> getEnrolments(final CurricularCourse curricularCourse) {
         List<Enrolment> results = new ArrayList<Enrolment>();
 
-        for (Enrolment enrolment : this.getEnrolments()) {
-            if (enrolment.getCurricularCourse().equals(curricularCourse)) {
-                results.add(enrolment);
+        for (Enrolment enrollment : this.getEnrolments()) {
+            if (enrollment.getCurricularCourse().equals(curricularCourse)) {
+                results.add(enrollment);
             }
         }
 
         return results;
+    }
+
+    public List<Enrolment> getActiveEnrolments(final CurricularCourse curricularCourse) {
+        return (List<Enrolment>) CollectionUtils.select(getEnrolments(curricularCourse), new Predicate() {
+			public boolean evaluate(Object arg0) {
+				Enrolment enrollment = (Enrolment) arg0;
+
+				return !enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED) && !enrollment.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED);
+			}});
     }
 
     public int countEnrolmentsByCurricularCourse(final CurricularCourse curricularCourse) {

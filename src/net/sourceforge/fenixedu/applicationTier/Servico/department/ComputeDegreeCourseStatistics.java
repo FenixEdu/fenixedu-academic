@@ -9,32 +9,34 @@ import net.sourceforge.fenixedu.dataTransferObject.department.DegreeCourseStatis
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
 
-    public List<DegreeCourseStatisticsDTO> run(Integer competenceCourseId, Integer executionYearId)
+    public List<DegreeCourseStatisticsDTO> run(Integer competenceCourseId, Integer executionPeriodId)
             throws FenixServiceException, ExcepcaoPersistencia {
         CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseId);
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
         Map<Degree, List<CurricularCourse>> groupedCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree();
 
         List<DegreeCourseStatisticsDTO> results = new ArrayList<DegreeCourseStatisticsDTO>();
 
         for (Degree degree : groupedCourses.keySet()) {
-            List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>();
+            List<Enrolment> enrollments = new ArrayList<Enrolment>();
             List<CurricularCourse> curricularCourses = groupedCourses.get(degree);
 
             for (CurricularCourse curricularCourse : curricularCourses) {
-                evaluations.addAll(curricularCourse.getActiveEnrollmentEvaluations(executionYear));
+                enrollments.addAll(curricularCourse.getActiveEnrollments(executionPeriod));
             }
 
             DegreeCourseStatisticsDTO degreeCourseStatistics = new DegreeCourseStatisticsDTO();
             degreeCourseStatistics.setIdInternal(degree.getIdInternal());
             degreeCourseStatistics.setName(degree.getNome());
-            createCourseStatistics(degreeCourseStatistics, evaluations);
+            createCourseStatistics(degreeCourseStatistics, enrollments);
 
             results.add(degreeCourseStatistics);
         }

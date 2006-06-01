@@ -12,7 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.department.CompetenceCourseStatisticsDTO;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -24,14 +26,16 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
-    public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionYearID)
+    public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionPeriodID)
             throws FenixServiceException, ExcepcaoPersistencia {
         Department department = rootDomainObject.readDepartmentByOID(
                 departementID);
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+        
         List<CompetenceCourse> competenceCourses = department
-                .getCompetenceCoursesByExecutionYear(executionYear);
+                .getCompetenceCoursesByExecutionPeriod(executionPeriod);
+        
 
         List<CompetenceCourse> sortedCompetenceCourses = new ArrayList<CompetenceCourse>();
         sortedCompetenceCourses.addAll(competenceCourses);
@@ -41,13 +45,15 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
         List<CompetenceCourseStatisticsDTO> results = new ArrayList<CompetenceCourseStatisticsDTO>();
 
         for (CompetenceCourse competenceCourse : sortedCompetenceCourses) {
-            List<EnrolmentEvaluation> evaluations = competenceCourse
-                    .getActiveEnrollmentEvaluations(executionYear);
+            List<Enrolment> enrollments = competenceCourse
+                    .getActiveEnrollments(executionPeriod);
+            
+           
 
             CompetenceCourseStatisticsDTO competenceCourseStatistics = new CompetenceCourseStatisticsDTO();
             competenceCourseStatistics.setIdInternal(competenceCourse.getIdInternal());
             competenceCourseStatistics.setName(competenceCourse.getName());
-            createCourseStatistics(competenceCourseStatistics, evaluations);
+            createCourseStatistics(competenceCourseStatistics, enrollments);
 
             results.add(competenceCourseStatistics);
         }

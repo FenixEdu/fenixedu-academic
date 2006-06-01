@@ -194,6 +194,18 @@ public class Department extends Department_Base {
         }
         return competenceCoursesByExecutionYear;
     }
+    
+    public List<CompetenceCourse> getCompetenceCoursesByExecutionPeriod(ExecutionPeriod executionPeriod) {
+        List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
+        List<CompetenceCourse> competenceCoursesByExecutionPeriod = new ArrayList<CompetenceCourse>();
+        for (CompetenceCourse competenceCourse : competenceCourses) {
+            if (competenceCourse.hasActiveScopesInExecutionPeriod(executionPeriod)) {
+                competenceCoursesByExecutionPeriod.add(competenceCourse);
+            }
+
+        }
+        return competenceCoursesByExecutionPeriod;
+    }
 
     public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(
             ExecutionYear executionYear) {

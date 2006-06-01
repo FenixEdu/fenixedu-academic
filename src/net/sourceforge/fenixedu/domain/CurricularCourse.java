@@ -750,9 +750,9 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    private List<EnrolmentEvaluation> getActiveEnrollments(ExecutionPeriod executionPeriod,
+    private List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod,
             Student student) {
-        List<EnrolmentEvaluation> results = new ArrayList<EnrolmentEvaluation>();
+        List<Enrolment> results = new ArrayList<Enrolment>();
         for (final CurriculumModule curriculumModule : getCurriculumModules()) {
             Enrolment enrollment = (Enrolment) curriculumModule;
             boolean filters = true;
@@ -763,7 +763,7 @@ public class CurricularCourse extends CurricularCourse_Base {
                     || enrollment.getStudentCurricularPlan().getStudent().equals(student);
 
             if (filters) {
-                results.addAll(enrollment.getEvaluations());
+                results.add(enrollment);
             }
         }
         return results;
@@ -812,23 +812,31 @@ public class CurricularCourse extends CurricularCourse_Base {
         return null;
     }
 
-    public List<EnrolmentEvaluation> getActiveEnrollmentEvaluations(Student student) {
+    public List<Enrolment> getActiveEnrollments(Student student) {
         return getActiveEnrollments(null, student);
     }
 
-    public List<EnrolmentEvaluation> getActiveEnrollmentEvaluations() {
+    public List<Enrolment> getActiveEnrollments() {
         return getActiveEnrollments(null, null);
     }
 
-    public List<EnrolmentEvaluation> getActiveEnrollmentEvaluations(ExecutionPeriod executionPeriod) {
-        return getActiveEnrollments(executionPeriod, null);
+    public List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod) {
+    	List<Enrolment> enrollments = new ArrayList<Enrolment>();
+    	
+    	for(Enrolment enrollment : getEnrolmentsByExecutionPeriod(executionPeriod)) {
+    		if(!enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
+    			enrollments.add(enrollment);
+    		}
+    	}
+    	
+        return enrollments;
     }
 
-    public List<EnrolmentEvaluation> getActiveEnrollmentEvaluations(ExecutionYear executionYear) {
-        List<EnrolmentEvaluation> results = new ArrayList<EnrolmentEvaluation>();
+    public List<Enrolment> getActiveEnrollments(ExecutionYear executionYear) {
+        List<Enrolment> results = new ArrayList<Enrolment>();
 
         for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-            results.addAll(getActiveEnrollmentEvaluations(executionPeriod));
+            results.addAll(getActiveEnrollments(executionPeriod));
         }
 
         return results;
