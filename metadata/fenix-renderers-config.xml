@@ -45,7 +45,7 @@ Documentation:
     <!-- ouptut -->
   
     <!--@ The default presentation for every object. -->
-    <renderer type="java.lang.Class" layout="label" class="net.sourceforge.fenixedu.presentationTier.renderers.ClassAsLabelRenderer"/>
+    <renderer type="java.lang.Class" layout="label" class="net.sourceforge.fenixedu.renderers.ClassAsLabelRenderer"/>
 
     <!--@ The default presentation for every object. -->
     <renderer type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
