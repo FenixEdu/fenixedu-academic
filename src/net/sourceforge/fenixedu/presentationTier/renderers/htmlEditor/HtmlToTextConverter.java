@@ -96,32 +96,40 @@ public class HtmlToTextConverter extends TidyConverter {
 
             if (name.equals("p")) {
                 ensureBlankLine();
+                addCodeText(indent);
                 parseNodeChildren(tidy, element, indent);
                 ensureBlankLine();
+                addCodeText(indent);
             }
             else if (name.equals("blockquote")) {
                 ensureBlankLine();
                 addCodeText(indent + DEFAULT_INDENT);
                 parseNodeChildren(tidy, element, indent + DEFAULT_INDENT);
                 ensureBlankLine();
+                addCodeText(indent);
             }
             else if (name.equals("ul") || name.equals("ol")) {
                 ensureLineBreak();
                 parseList(tidy, element, name.equals("ol"), indent);
                 ensureLineBreak();
+                addCodeText(indent);
             }
             else if (name.equals("br")) {
                 addLineBreak();
+                addCodeText(indent);
             }
             else if (name.equals("hr")) {
                 ensureLineBreak();
                 addText("----------", indent);
                 ensureLineBreak();
+                addCodeText(indent);
             }
             else if (name.equals("pre")) {
                 ensureBlankLine();
+                addCodeText(indent);
                 addCodeText(getChildTextContent(tidy, element));
                 ensureBlankLine();
+                addCodeText(indent);
             }
             else if (name.equals("code")) {
                 addCodeText(getChildTextContent(tidy, element));
@@ -176,7 +184,7 @@ public class HtmlToTextConverter extends TidyConverter {
         int indexStart = source.lastIndexOf("smiley-") + "smiley-".length();
         int indexEnd = source.lastIndexOf(".");
         
-        String smiley = source.substring(indexStart + 1, indexEnd);
+        String smiley = source.substring(indexStart, indexEnd);
         String emoticon = EmoticonMap.getEmoticon(smiley);
         
         if (emoticon != null) {
@@ -220,7 +228,7 @@ public class HtmlToTextConverter extends TidyConverter {
         if (htmlText == null) {
             return;
         }
-        
+               
         String text = unescapeHtml(htmlText);
 
         String[] words = text.split("\\p{Space}+"); 
@@ -295,4 +303,28 @@ public class HtmlToTextConverter extends TidyConverter {
         
         addLineBreak();
     }
+    
+    public static void main(String[] a) {
+        HtmlToTextConverter c = new HtmlToTextConverter();
+        
+        System.out.print(c.convert(null, HTMLEntities.htmlentities( 
+                "<p>a<br></p><p>b</p>" +
+                "&lt;&quot;Isto é que não pá&quot;&gt;. <a href=\"http://www.google.com\">testing</a><br>\n" +
+                "<ol>\n"+
+                "  <li> pois é <ol><li>um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres <li>dois</ol>\n"+
+                "  <li> Isto é outro teste\n"+
+                "</ol>\n" +
+                "<hr>\n"+
+                "<blockquote>isto é um teste <p>com bastante texto</p> para fazer wrap desta coisa isto ldksjfslkdj flskdfj slakfjsalk lsdkfj slakfj salkjd lakfj " +
+                "<blockquote>tem que crescer mais um bocado para fazer wrap<br>asdasdsa</blockquote>asdsadsadds</blockquote>" +
+                "<hr>\n" +
+                "<p>" +
+                "agora é código da classe <code>BlaBlabla</code>\n<hr>" +
+                "<pre>\n" +
+                "    ...\n" +
+                "    java() {\n" +
+                "      print();\n" +
+                "    }</pre><hr>")));
+    }
+
 }
