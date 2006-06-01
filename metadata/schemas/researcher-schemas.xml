@@ -136,9 +136,10 @@
 
 <schema name="projectParticipation.internalPerson.creation" type="net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantSimpleCreationBean" bundle="RESEARCHER_RESOURCES">
 	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
-		<property name="size" value="50"/>
+		<property name="size" value="70"/>
 		<property name="rawSlotName" value="personName"/>
 		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
@@ -149,9 +150,11 @@
 
 <schema name="projectParticipation.externalPerson.simpleCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantSimpleCreationBean" bundle="RESEARCHER_RESOURCES">
 	<slot name="externalPerson" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
+		<property name="size" value="70"/>
 		<property name="rawSlotName" value="personName"/>
 		<property name="labelField" value="person.name"/>
+		<property name="format" value="${person.name} - ${person.externalPerson.institutionUnit.name}"/>
+		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=person.name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.ExternalPerson"/>				
@@ -166,6 +169,7 @@
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
 		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchExternalUnits"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
@@ -179,6 +183,7 @@
 		<property name="size" value="50"/>
 		<property name="rawSlotName" value="unitName"/>
 		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
@@ -198,6 +203,7 @@
 		<property name="size" value="50"/>
 		<property name="rawSlotName" value="eventName"/>
 		<property name="labelField" value="text"/>
+		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>				
