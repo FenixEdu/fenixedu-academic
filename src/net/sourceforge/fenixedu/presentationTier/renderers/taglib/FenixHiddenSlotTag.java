@@ -67,6 +67,10 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
     
     @Override
     protected void addHiddenSlot(String slot, Object value, String converterName) throws JspException {
+        if (value == null && converterName == null) {
+            return;
+        }
+        
         if (value instanceof Collection) {
             this.isCollection = true;
             
