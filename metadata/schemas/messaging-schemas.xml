@@ -35,7 +35,7 @@
 <schema bundle="MESSAGING_RESOURCES" name="conversationThreadAndMessage.create" type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean">
    	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
-		<property name="maxlength" value="3"/>
+		<property name="maxLength" value="255" />
    	</slot>
    	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body" layout="rich-text" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
    		<property name="safe" value="true" />
