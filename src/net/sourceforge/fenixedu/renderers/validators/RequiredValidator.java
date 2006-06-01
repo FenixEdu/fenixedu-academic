@@ -8,7 +8,6 @@ public class RequiredValidator extends HtmlValidator {
     public RequiredValidator(Validatable component) {
         super(component);
         
-        setKey(true);
         setMessage("renderers.validator.required");
     }
 

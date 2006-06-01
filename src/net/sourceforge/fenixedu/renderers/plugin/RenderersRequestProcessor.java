@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.renderers.plugin;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -13,6 +17,10 @@ import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+import org.apache.commons.fileupload.DefaultFileItemFactory;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -24,12 +32,54 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
     private static ThreadLocal<HttpServletRequest> currentRequest = new ThreadLocal<HttpServletRequest>();
     private static ThreadLocal<ServletContext>     currentContext = new ThreadLocal<ServletContext>();
     
+    private static ThreadLocal<Map<String, FileItem>> fileItems = new ThreadLocal<Map<String, FileItem>>();
+    
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        currentRequest.set(request);
+        HttpServletRequest newRequest = parseMultipartRequest(request);
+        
+        currentRequest.set(newRequest);
         currentContext.set(getServletContext());
         
         super.process(request, response);
+    }
+
+    private HttpServletRequest parseMultipartRequest(HttpServletRequest request) {
+        Hashtable<String, FileItem> itemsMap = getNewFileItemsMap();
+
+        if (FileUpload.isMultipartContent(request)) {
+            RenderersRequestWrapper wrapper = new RenderersRequestWrapper(request);
+            
+            try {
+                List fileItems = new FileUpload(new DefaultFileItemFactory()).parseRequest(request);
+                
+                for (Object object : fileItems) {
+                    FileItem item = (FileItem) object;
+                    
+                    if (! item.isFormField()) {
+                        itemsMap.put(item.getFieldName(), item);
+                    }
+                    else {
+                        wrapper.addParameter(item.getFieldName(), item.getString());
+                    }
+                }
+            } catch (FileUploadException e) {
+                e.printStackTrace();
+                return request;
+            }
+            
+            return wrapper;
+        }
+        else {
+            return request;
+        }
+    }
+
+    private Hashtable<String, FileItem> getNewFileItemsMap() {
+        Hashtable<String, FileItem> itemsMap = new Hashtable<String, FileItem>();
+        this.fileItems.set(itemsMap);
+        
+        return itemsMap;
     }
 
     public static HttpServletRequest getCurrentRequest() {
@@ -40,6 +90,14 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
         return currentContext.get();
     }
 
+    public static FileItem getFileItem(String fieldName) {
+        return fileItems.get().get(fieldName);
+    }
+    
+    public static Collection<FileItem> getAllFileItems() {
+        return fileItems.get().values();
+    }
+    
     @Override
     protected Action processActionCreate(HttpServletRequest request, HttpServletResponse response, ActionMapping mapping) throws IOException {
         Action action = super.processActionCreate(request, response, mapping);
@@ -53,13 +111,14 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
 
     @Override
     protected ActionForward processActionPerform(HttpServletRequest request, HttpServletResponse response, Action action, ActionForm form, ActionMapping mapping) throws IOException, ServletException {
+        HttpServletRequest initialRequest = this.currentRequest.get();
+        
         try {
-            if ((request.getParameterValues(LifeCycleConstants.VIEWSTATE_PARAM_NAME) != null || request.getParameterValues(LifeCycleConstants.VIEWSTATE_LIST_PARAM_NAME) != null) 
-                    && request.getAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME) == null) {
+            if (hasViewState(initialRequest)) {
      
-                request.setAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME, true);
+                setViewStateProcessed(request);
                 
-                ActionForward forward = ComponentLifeCycle.execute(request);
+                ActionForward forward = ComponentLifeCycle.execute(initialRequest);
                 if (forward != null) {
                     return forward;
                 }
@@ -91,6 +150,20 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
         }
     }
 
+    private boolean hasViewState(HttpServletRequest request) {
+        return viewStateNotProcessed(request) &&
+        
+                (request.getParameterValues(LifeCycleConstants.VIEWSTATE_PARAM_NAME) != null 
+                || request.getParameterValues(LifeCycleConstants.VIEWSTATE_LIST_PARAM_NAME) != null);
+    }
+
+    private boolean viewStateNotProcessed(HttpServletRequest request) {
+        return request.getAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME) == null;
+    }
+
+    private void setViewStateProcessed(HttpServletRequest request) {
+        request.setAttribute(LifeCycleConstants.PROCESSED_PARAM_NAME, true);
+    }
 }
 
 class VoidAction extends Action {

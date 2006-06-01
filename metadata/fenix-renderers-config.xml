@@ -45,6 +45,9 @@ Documentation:
     <!-- ouptut -->
   
     <!--@ The default presentation for every object. -->
+    <renderer type="java.lang.Class" layout="label" class="net.sourceforge.fenixedu.presentationTier.renderers.ClassAsLabelRenderer"/>
+
+    <!--@ The default presentation for every object. -->
     <renderer type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
     		<property name="labelTerminator" value=":"/>
     </renderer>
@@ -265,6 +268,8 @@ Documentation:
     <!--@ This layout allows you to construct a list of objects for input. The deletion if managed by the renderer the
           addition of objects to the list must be handled by an external action. -->
     <renderer mode="input" type="java.util.List" layout="external-add" class="net.sourceforge.fenixedu.renderers.ManageableListRenderer"/>
+
+    <renderer mode="input" type="java.io.InputStream" class="net.sourceforge.fenixedu.renderers.FileInputRenderer"/>
 
     <!--@ This layout is the default layout for creating objects. The input of a class is the same as creating a new object of the
           type represented by the class. This allows to reuse all the other layouts defined for the input mode, that is, we don't need

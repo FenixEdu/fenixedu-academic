@@ -14,8 +14,6 @@ public class MultiLanguageStringValidator extends HtmlValidator {
 
     public MultiLanguageStringValidator(Validatable component) {
         super(component);
-        
-        setKey(true);
     }
 
     @Override

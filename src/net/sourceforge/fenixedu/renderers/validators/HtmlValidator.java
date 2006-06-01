@@ -21,7 +21,8 @@ public abstract class HtmlValidator extends HtmlComponent {
         super();
         
         this.component = component;
-        this.valid = true; 
+        setValid(true);
+        setKey(true);
     }
 
     public boolean isValid() {

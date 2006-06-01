@@ -56,6 +56,8 @@ public class HtmlForm extends HtmlComponent implements Controllable {
             }
             
         });
+        
+        setEncoding(URL_ENCODED);
     }
 
     public String getAction() {

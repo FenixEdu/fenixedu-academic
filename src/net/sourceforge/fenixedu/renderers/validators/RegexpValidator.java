@@ -20,7 +20,6 @@ public class RegexpValidator extends HtmlValidator {
         setRegexp(regexp);
         
         // default messsage
-        setKey(true);
         setMessage("renderers.validator.regexp");
     }
 

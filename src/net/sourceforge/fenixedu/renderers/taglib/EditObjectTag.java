@@ -245,7 +245,6 @@ public class EditObjectTag extends BaseRenderObjectTag {
             form.setId(getId());
             form.setAction(getActionPath());
             form.setMethod(HtmlForm.POST);
-            form.setEncoding(HtmlForm.URL_ENCODED);
 
             form.setBody(component);
 
