@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
+import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
@@ -905,6 +906,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return masterDegreeThesisDataVersions;
+    }
+    
+    public List<CurricularCourse> getCurricularCourseByExecutionPeriodAndCurricularPeriod(ExecutionPeriod executionPeriod, CurricularPeriodInfoDTO ...curricularPeriodInfoDTOs) {
+        
+        CurricularPeriod curricularPeriod = getDegreeStructure().getCurricularPeriod(curricularPeriodInfoDTOs);
+        List<Context> contexts = curricularPeriod.getContextsWithCurricularCoursesByExecutionPeriod(executionPeriod);
+        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
+        for (Context context : contexts) {
+            curricularCourses.add((CurricularCourse) context.getChildDegreeModule());
+        }        
+        return curricularCourses;
     }
 
     // -------------------------------------------------------------

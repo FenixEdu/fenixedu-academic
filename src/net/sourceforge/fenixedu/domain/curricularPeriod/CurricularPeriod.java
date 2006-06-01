@@ -8,7 +8,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
 
@@ -18,7 +21,7 @@ import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
  * 
  * 
  */
-public class CurricularPeriod extends CurricularPeriod_Base implements Comparable<CurricularPeriod>{
+public class CurricularPeriod extends CurricularPeriod_Base implements Comparable<CurricularPeriod> {
 
     static {
         CurricularPeriodParentChilds.addListener(new CurricularPeriodParentChildsListener());
@@ -38,11 +41,11 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     }
 
-    public List<CurricularPeriod> getSortedChilds(){
+    public List<CurricularPeriod> getSortedChilds() {
         List<CurricularPeriod> sortedChilds = new ArrayList<CurricularPeriod>();
-        sortedChilds.addAll(getChilds());        
-        Collections.sort(sortedChilds);        
-        return sortedChilds;        
+        sortedChilds.addAll(getChilds());
+        Collections.sort(sortedChilds);
+        return sortedChilds;
     }
 
     public CurricularPeriod getChildByOrder(Integer order) {
@@ -59,7 +62,8 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     private CurricularPeriod findChild(CurricularPeriodType periodType, Integer order) {
 
         for (CurricularPeriod curricularPeriod : getChilds()) {
-            if (curricularPeriod.getOrder().equals(order) && curricularPeriod.getPeriodType() == periodType) {
+            if (curricularPeriod.getOrder().equals(order)
+                    && curricularPeriod.getPeriodType() == periodType) {
                 return curricularPeriod;
             }
         }
@@ -120,7 +124,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
         return resultOrder;
     }
-    
+
     private void validatePath(CurricularPeriodInfoDTO... curricularPeriodsPaths) {
 
         Arrays.sort(curricularPeriodsPaths, new Comparator<CurricularPeriodInfoDTO>() {
@@ -136,23 +140,23 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         });
     }
 
-    public void delete(){
-        
+    public void delete() {
+
         getContexts().clear();
         removeDegreeCurricularPlan();
-        
+
         for (CurricularPeriod child : getChilds()) {
             child.delete();
         }
         removeRootDomainObject();
         deleteDomainObject();
-        
+
     }
 
     public String getLabel() {
         return CurricularPeriodLabelFormatter.getLabel(this, false);
     }
-    
+
     public String getFullLabel() {
         return CurricularPeriodLabelFormatter.getFullLabel(this, false);
     }
@@ -173,15 +177,16 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     private Float collectParentsWeight(CurricularPeriod period) {
         Float result = Float.valueOf(0);
-        
+
         if (period.hasParent()) {
             result = period.getParent().getWeight() + collectParentsWeight(period.getParent());
         }
-        
+
         return result;
     }
 
-    private static class CurricularPeriodParentChildsListener extends dml.runtime.RelationAdapter<CurricularPeriod,CurricularPeriod> {
+    private static class CurricularPeriodParentChildsListener extends
+            dml.runtime.RelationAdapter<CurricularPeriod, CurricularPeriod> {
         @Override
         public void beforeAdd(CurricularPeriod parent, CurricularPeriod child) {
 
@@ -212,36 +217,48 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     public Integer getParentOrder() {
         if (this.getParent() != null) {
-            return this.getParent().getOrder();    
-        } 
+            return this.getParent().getOrder();
+        }
 
         return null;
     }
 
     public CurricularPeriod getNext() {
         List<CurricularPeriod> brothers = this.getParent().getSortedChilds();
-        
+
         for (Iterator<CurricularPeriod> iterator = brothers.iterator(); iterator.hasNext();) {
             CurricularPeriod brother = iterator.next();
-            
+
             if (brother.getOrder().equals(this.getOrder()) && iterator.hasNext()) {
                 return iterator.next();
             }
         }
         return null;
     }
-    
+
     public CurricularPeriod contains(CurricularPeriodType periodType, Integer order) {
-    	if(this.getPeriodType().equals(periodType) && this.getOrder().equals(order)) {
-    		return this;
-    	}
-    	for (CurricularPeriod curricularPeriod : getChilds()) {
-			CurricularPeriod period = curricularPeriod.contains(periodType, order);
-			if(period != null) {
-				return period;
-			}
-		}
-    	return null;
+        if (this.getPeriodType().equals(periodType) && this.getOrder().equals(order)) {
+            return this;
+        }
+        for (CurricularPeriod curricularPeriod : getChilds()) {
+            CurricularPeriod period = curricularPeriod.contains(periodType, order);
+            if (period != null) {
+                return period;
+            }
+        }
+        return null;
+    }
+
+    public List<Context> getContextsWithCurricularCoursesByExecutionPeriod(
+            ExecutionPeriod executionPeriod) {
+        
+        List<Context> contexts = new ArrayList<Context>();
+        for (Context context : getContextsSet()) {
+            if (context.getChildDegreeModule().isLeaf() && context.isValid(executionPeriod)) {
+                contexts.add(context);
+            }
+        }
+        return contexts;
     }
 
     @Deprecated
@@ -253,7 +270,4 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     public void setOrder(Integer order) {
         super.setChildOrder(order);
     }
-    
-    
-
 }
