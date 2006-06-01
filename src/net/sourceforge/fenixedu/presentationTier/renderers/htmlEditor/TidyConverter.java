@@ -22,7 +22,7 @@ public abstract class TidyConverter extends Converter {
     public Object convert(Class type, Object value) {
         String htmlText = (String) value;
 
-        if (htmlText == null) {
+        if (htmlText == null || htmlText.length() == 0) {
             return null;
         }
 
