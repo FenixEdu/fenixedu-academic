@@ -1027,12 +1027,12 @@ public class CurricularCourse extends CurricularCourse_Base {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
                 
                 if (enrolment.getExecutionPeriod() == executionPeriod && markSheetType.getEnrolmentEvaluationType() == enrolment.getEnrolmentEvaluationType()) {
-                    if (!enrolment.hasAssociatedMarkSheet(markSheetType)) {
+                    if (! enrolment.hasAssociatedMarkSheet(markSheetType)) {
                         result.add(enrolment);
                     }
                 } else if(markSheetType == MarkSheetType.IMPROVEMENT) {
                     if(enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(markSheetType) && enrolment.hasAttendsFor(executionPeriod)) {
-                            result.add(enrolment);
+                        result.add(enrolment);
                     }
                 }
             }
@@ -1085,9 +1085,9 @@ public class CurricularCourse extends CurricularCourse_Base {
                 evaluationDate, markSheetType, reason, evaluationBean);
     }
     
-    public Collection<MarkSheet> searchMarkSheets(ExecutionPeriod executionPeriod, Teacher teacher, Date evaluationDate, MarkSheetState markSheetState, MarkSheetType markSheetType) {
-        DateTime searchEvaluationDate = new DateTime(evaluationDate);
-        Collection<MarkSheet> result = new HashSet<MarkSheet>();
+    public Collection<MarkSheet> searchMarkSheets(ExecutionPeriod executionPeriod, Teacher teacher, DateTime evaluationDate, MarkSheetState markSheetState, MarkSheetType markSheetType) {
+
+        final Collection<MarkSheet> result = new HashSet<MarkSheet>();
 
         for (final MarkSheet markSheet : this.getMarkSheetsSet()) {
             if (executionPeriod != null && markSheet.getExecutionPeriod() != executionPeriod) {
@@ -1096,7 +1096,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (teacher != null && markSheet.getResponsibleTeacher() != teacher) {
                 continue;
             }
-            if (evaluationDate != null && markSheet.getEvaluationDateDateTime().compareTo(searchEvaluationDate) != 0) {
+            if (evaluationDate != null && markSheet.getEvaluationDateDateTime().compareTo(evaluationDate) != 0) {
                 continue;
             }
             if (markSheetState != null && markSheet.getMarkSheetState() != markSheetState) {
