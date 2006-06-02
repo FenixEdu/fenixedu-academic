@@ -55,7 +55,7 @@ public class FormTag extends ContextTag {
         formHead.append("action=\"" + path + "\" ");
         
         if (getEncoding() != null) {
-            formHead.append("encoding=\"" + getEncoding() + "\" ");
+            formHead.append("enctype=\"" + getEncoding() + "\" ");
         }
         
         formHead.append("method=\"POST\">\n");
