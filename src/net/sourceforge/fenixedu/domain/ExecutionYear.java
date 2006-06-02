@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.PeriodState;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -28,8 +29,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
         return CollectionUtils.select(getExecutionDegrees(), new Predicate() {
             public boolean evaluate(Object arg0) {
                 ExecutionDegree executionDegree = (ExecutionDegree) arg0;
-                return executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
-                        degreeType);
+                return executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso() == degreeType;
             }
         });
 

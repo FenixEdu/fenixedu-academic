@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -73,7 +74,7 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute("infoExecutionPeriod");
         Object[] arguments = { infoExecutionPeriod.getInfoExecutionYear(), null };
-        List executionDegrees = (List) executeService(
+        List<InfoExecutionDegree> executionDegrees = (List) executeService(
                 "ReadExecutionDegreesByExecutionYearAndDegreeType", request, arguments);
 
         ComparatorChain comparatorChain = new ComparatorChain();
