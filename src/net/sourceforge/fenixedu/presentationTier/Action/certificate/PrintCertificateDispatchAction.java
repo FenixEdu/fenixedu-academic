@@ -78,6 +78,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
             session.removeAttribute(SessionConstants.DISCRIMINATED_WITH_AVERAGE);
             session.removeAttribute(SessionConstants.FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE);
             session.removeAttribute(SessionConstants.DIPLOMA);
+            session.removeAttribute(SessionConstants.DEGREE_LETTER);
             session.removeAttribute(SessionConstants.DATE);
             session.removeAttribute("notString");
             InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) session
@@ -117,7 +118,8 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                             .setAttribute(SessionConstants.MATRICULA_ENROLMENT, certificate
                                     .toUpperCase());
                 if (certificate.equals("Duração do Degree")) {
-                    if (infoStudentCurricularPlan.getSpecialization().equals(Specialization.MASTER_DEGREE)) {
+                    if (infoStudentCurricularPlan.getSpecialization().equals(
+                            Specialization.MASTER_DEGREE)) {
                         certificate = new String("Matrícula");
                         session
                                 .setAttribute(SessionConstants.DURATION_DEGREE, certificate
@@ -262,13 +264,15 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                     certificate.toUpperCase());
                         }
                     } else {
-                        if (infoStudentCurricularPlan.getSpecialization().equals(Specialization.MASTER_DEGREE)) {
+                        if (infoStudentCurricularPlan.getSpecialization().equals(
+                                Specialization.MASTER_DEGREE)) {
                             if ((certificate.equals("Fim parte escolar simples"))
                                     || (certificate.equals("Fim parte escolar discriminada sem média"))
                                     || (certificate.equals("Fim parte escolar discriminada com média"))
                                     || (certificate.equals("Diploma"))
                                     || (certificate
-                                            .equals("Fim de curso de Mestrado discriminada com média"))) {
+                                            .equals("Fim de curso de Mestrado discriminada com média"))
+                                    || (certificate.equals("Carta de Curso"))) {
                                 InfoFinalResult infoFinalResult = null;
                                 try {
                                     Object args[] = { infoStudentCurricularPlan };
@@ -349,26 +353,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                                 .getYear();
                                     }
                                 }
-                                // Iterator iterator = enrolmentList.iterator();
-                                // int i = 0;
-                                // while(iterator.hasNext()) {
-                                // result = iterator.next();
-                                // infoEnrolmentEvaluation =
-                                // (InfoEnrolmentEvaluation)(((InfoEnrolment)
-                                // result).getInfoEvaluations().get(i));
-                                // // dataAux =
-                                // DateFormat.getDateInstance().format(infoEnrolmentEvaluation.getExamDate());
-                                // // if (conclusionDate.compareTo(dataAux) ==
-                                // -1){
-                                // // conclusionDate = dataAux;
-                                // // }
-                                // if (result instanceof
-                                // InfoEnrolmentInExtraCurricularCourse)
-                                // extraEnrolment.add(result);
-                                // else
-                                // normalEnrolment.add(result);
-                                // }
-                                //							
+
                                 Object argsAux[] = { infoStudentCurricularPlan.getIdInternal() };
                                 Date date = null;
                                 try {
@@ -401,7 +386,8 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                     session.setAttribute(SessionConstants.DIPLOMA, certificate
                                             .toUpperCase());
                                 if (certificate
-                                        .equals("Fim de curso de Mestrado discriminada com média"))
+                                        .equals("Fim de curso de Mestrado discriminada com média")
+                                        || certificate.equals("Carta de Curso"))
 
                                 {
                                     if (infoMasterDegreeProofVersion != null) {
@@ -413,11 +399,10 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                                 notString = " não ";
                                             }
                                             session.setAttribute("notString", notString);
-                                            session
-                                                    .setAttribute(
-                                                            SessionConstants.FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE,
-                                                            certificate.toUpperCase());
-                                            String dataFinal = DateFormat.getDateInstance().format(
+
+                                            Locale locale = new Locale("pt", "PT");
+                                            String dataFinal = DateFormat.getDateInstance(
+                                                    DateFormat.LONG, locale).format(
                                                     infoMasterDegreeProofVersion.getProofDate());
                                             session.setAttribute(SessionConstants.CONCLUSION_DATE,
                                                     dataFinal);
@@ -434,6 +419,18 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                         }
                                     }
                                 }
+                                if (certificate
+                                        .equals("Fim de curso de Mestrado discriminada com média")) {
+                                    session.setAttribute(
+                                            SessionConstants.FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE,
+                                            certificate.toUpperCase());
+                                }
+                                if (certificate.equals("Carta de Curso")) {
+                                    session.setAttribute(SessionConstants.DEGREE_LETTER, certificate
+                                            .toUpperCase());
+                                    return mapping.findForward("printDegreeLetter");
+                                }
+
                             } else {
                                 if ((certificate.equals("Fim de curso de Mestrado simples"))) {
                                     if (!infoMasterDegreeProofVersion.getFinalResult().equals(

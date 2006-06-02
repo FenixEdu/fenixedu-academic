@@ -1569,6 +1569,7 @@
             key="resources.Action.exceptions.NonExistingActionException"
             handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrintReady" path="/certificate/printCertificatePage.jsp"/> 
+	         <forward name="printDegreeLetter" path="/certificate/printDegreeLetter.jsp"/> 	         
 	         <forward name="insucesso" path="/chooseCertificateInfoAction.do?method=prepare"/> 
 	         
       </action>

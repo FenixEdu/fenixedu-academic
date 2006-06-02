@@ -289,6 +289,8 @@ public abstract class SessionConstants {
     public static final String FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE = "fimCursoDiscriminadaComMedia";
 
     public static final String DIPLOMA = "Diploma";
+    
+    public static final String DEGREE_LETTER = "cartaCurso";
 
     public static final String STUDENT_LIST = "student_list";
 

@@ -36,6 +36,8 @@ public class CertificateList extends FenixUtil {
 
     public static final int FIM_CURSO_DISCRIMINADA_COM_MEDIA = 12;
 
+    public static final int CARTA_DE_CURSO = 14;
+
     public static final CertificateList MATRICULA_TYPE = new CertificateList(MATRICULA);
 
     public static final CertificateList MATRICULA_INSCRICAO_TYPE = new CertificateList(
@@ -66,11 +68,13 @@ public class CertificateList extends FenixUtil {
     public static final CertificateList FIM_CURSO_DISCRIMINADA_COM_MEDIA_TYPE = new CertificateList(
             FIM_CURSO_DISCRIMINADA_COM_MEDIA);
 
+    public static final CertificateList CARTA_DE_CURSO_TYPE = new CertificateList(CARTA_DE_CURSO);
+
     public static final String MATRICULA_STRING = "Matrícula";
 
     public static final String MATRICULA_INSCRICAO_STRING = "Matrícula e Inscrição";
 
-    public static final String DURACAO_CURSO_STRING = "Duração do Degree";
+    public static final String DURACAO_CURSO_STRING = "Duração do Curso";
 
     public static final String INSCRICAO_STRING = "Inscrição";
 
@@ -89,6 +93,8 @@ public class CertificateList extends FenixUtil {
     public static final String FIM_CURSO_SIMPLES_STRING = "Fim de curso de Mestrado simples";
 
     public static final String FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING = "Fim de curso de Mestrado discriminada com média";
+    
+    public static final String CARTA_DE_CURSO_STRING = "Carta de Curso";
 
     public static final String DEFAULT = "[Escolha um Tipo de Documento]";
 
@@ -142,6 +148,7 @@ public class CertificateList extends FenixUtil {
         result.add(new LabelValueBean(CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING,
                 CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING));
         result.add(new LabelValueBean(CertificateList.DIPLOMA_STRING, CertificateList.DIPLOMA_STRING));
+        result.add(new LabelValueBean(CertificateList.CARTA_DE_CURSO_STRING, CertificateList.CARTA_DE_CURSO_STRING));
         return result;
     }
 
@@ -170,6 +177,8 @@ public class CertificateList extends FenixUtil {
             return CertificateList.FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING;
         if (type.intValue() == CertificateList.DIPLOMA)
             return CertificateList.DIPLOMA_STRING;
+        if (type.intValue() == CertificateList.CARTA_DE_CURSO)
+            return CertificateList.CARTA_DE_CURSO_STRING;
 
         return "ERRO!"; // Nunca e atingido
     }

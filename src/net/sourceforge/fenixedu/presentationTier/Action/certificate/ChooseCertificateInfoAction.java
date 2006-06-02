@@ -42,7 +42,7 @@ import org.apache.struts.actions.DispatchAction;
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- *  
+ * 
  */
 public class ChooseCertificateInfoAction extends DispatchAction {
 
@@ -58,16 +58,16 @@ public class ChooseCertificateInfoAction extends DispatchAction {
             session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-            
+
             List types = new ArrayList();
             types.add(DocumentType.CERTIFICATE);
 
-            //			 inputs
+            // inputs
             Object args[] = { GraduationType.MASTER_DEGREE, types };
 
             // output
             List getCertificateList = null;
-            //			certificateList = CertificateList.toArrayList();
+            // certificateList = CertificateList.toArrayList();
             try {
                 getCertificateList = (List) ServiceManagerServiceFactory.executeService(userView,
                         "ReadCertificateList", args);
@@ -102,7 +102,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-            //remove sessions variables
+            // remove sessions variables
             session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
             session.removeAttribute(SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION);
             session.removeAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY);
@@ -130,7 +130,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
             // output
             List infoStudentCurricularPlanList = null;
 
-            //get informations
+            // get informations
             try {
                 if (certificateString.equals("Matrícula")
                         || certificateString.equals("Matrícula e Inscrição")
@@ -181,7 +181,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 
         if (session != null) {
 
-            //remove sessions variables
+            // remove sessions variables
             session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
             session.removeAttribute(SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION);
             session.removeAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY);
@@ -208,7 +208,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
                 throw new NonExistingActionException("O aluno");
             }
 
-          int initialYear = infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInitialDate()
+            int initialYear = infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInitialDate()
                     .getYear() + 1900;
             String initialExecutionYear = initialYear + "/" + ++initialYear;
             request.setAttribute("initialExecutionYear", initialExecutionYear);
@@ -219,7 +219,8 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 
             try {
                 if (certificateString.equals("Fim de curso de Mestrado discriminada com média")
-                        || certificateString.equals("Fim de curso de Mestrado simples")) {
+                        || certificateString.equals("Fim de curso de Mestrado simples")
+                        || certificateString.equals("Carta de Curso")) {
                     Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
                     try {
                         infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) ServiceUtils
