@@ -235,7 +235,7 @@
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.CurricularCourse" />
 		<property name="eachLayout" value="values-dash" />
 		<property name="eachSchema" value="degreeCurricularPlan.and.curricularCourse" />
-		<property name="defaultText" value="label.markSheet.all"/>
+		<property name="defaultText" value="label.markSheet.all.fem"/>
 		<property name="key" value="true"/>
 	</slot>
 	
