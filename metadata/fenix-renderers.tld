@@ -395,6 +395,18 @@
     </attribute>
 
     <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        The Java type of the object. This attribute can be used to present the null value. If
+        you specify the type then even the null value will be presented has a value of the
+        given type.
+      </description>
+    </attribute>
+    
+    <attribute>
       <name>scope</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
