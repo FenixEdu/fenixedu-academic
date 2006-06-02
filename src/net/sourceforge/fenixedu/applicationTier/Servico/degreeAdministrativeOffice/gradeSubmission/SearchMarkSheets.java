@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
@@ -33,7 +35,7 @@ public class SearchMarkSheets extends Service {
         
         Collection<MarkSheet> markSheets = curricularCourse.searchMarkSheets(
                 searchBean.getExecutionPeriod(), searchBean.getTeacher(),
-                searchBean.getEvaluationDate(), searchBean.getMarkSheetState(),
+                new DateTime(searchBean.getEvaluationDate()), searchBean.getMarkSheetState(),
                 searchBean.getMarkSheetType());
         
         Map<MarkSheetType, MarkSheetSearchResultBean> result = new TreeMap<MarkSheetType, MarkSheetSearchResultBean>();
@@ -41,24 +43,32 @@ public class SearchMarkSheets extends Service {
             addToMap(result, sheet);
         }
 
-        // calculate total numbers
         for (Entry<MarkSheetType, MarkSheetSearchResultBean> entry : result.entrySet()) {
             MarkSheetSearchResultBean searchResultBean = entry.getValue();
-            searchResultBean.setTotalNumberOfStudents(curricularCourse.getEnrolmentsNotInAnyMarkSheet(
-                    entry.getKey(), searchBean.getExecutionPeriod()).size()
-                    + searchResultBean.getTotalNumberOfEnroledStudents());
+            searchResultBean.setTotalNumberOfStudents(
+                    getNumberOfStudentsNotEnrolled(searchBean, curricularCourse, entry) + 
+                    searchResultBean.getNumberOfEnroledStudents());
         }
         
         return result;
     }
 
+    private int getNumberOfStudentsNotEnrolled(MarkSheetManagementSearchBean searchBean, CurricularCourse curricularCourse, Entry<MarkSheetType, MarkSheetSearchResultBean> entry) {
+        int studentsNotEnrolled = curricularCourse.getEnrolmentsNotInAnyMarkSheet(entry.getKey(), searchBean.getExecutionPeriod()).size();
+        return studentsNotEnrolled;
+    }
+
     private void addToMap(Map<MarkSheetType, MarkSheetSearchResultBean> result, MarkSheet sheet) {
-        MarkSheetSearchResultBean markSheetSearchResultBean = result.get(sheet.getMarkSheetType());
+        getResultBeanForMarkSheetType(result, sheet.getMarkSheetType()).addMarkSheet(sheet);
+    }
+
+    private MarkSheetSearchResultBean getResultBeanForMarkSheetType(Map<MarkSheetType, MarkSheetSearchResultBean> result, MarkSheetType sheetType) {
+        MarkSheetSearchResultBean markSheetSearchResultBean = result.get(sheetType);
         if(markSheetSearchResultBean == null) {
             markSheetSearchResultBean = new MarkSheetSearchResultBean();
-            result.put(sheet.getMarkSheetType(), markSheetSearchResultBean);
+            result.put(sheetType, markSheetSearchResultBean);
         }
-        markSheetSearchResultBean.addMarkSheet(sheet);
+        return markSheetSearchResultBean;
     }
 
 }

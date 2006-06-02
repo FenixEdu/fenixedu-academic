@@ -39,16 +39,18 @@ public class MarkSheetSearchResultBean {
         getMarkSheets().add(markSheet);
     }
 
-    public int getTotalNumberOfEnroledStudents() {
-        int totalNumberOfEnroledStudents = 0;
+    public int getNumberOfEnroledStudents() {
+        int numberOfEnroledStudents = 0;
         for (MarkSheet markSheet : getMarkSheets()) {
-            MarkSheetState markSheetState = markSheet.getMarkSheetState();
-            if (markSheetState == MarkSheetState.RECTIFICATION || markSheetState == MarkSheetState.RECTIFICATION_NOT_CONFIRMED) {
-                continue;
+            if (! isRectificationMarkSheet(markSheet.getMarkSheetState())) {
+                numberOfEnroledStudents += markSheet.getEnrolmentEvaluationsCount();
             }
-            totalNumberOfEnroledStudents += markSheet.getEnrolmentEvaluationsCount();            
         }
-        return totalNumberOfEnroledStudents;
+        return numberOfEnroledStudents;
+    }
+
+    private boolean isRectificationMarkSheet(MarkSheetState markSheetState) {
+        return (markSheetState == MarkSheetState.RECTIFICATION || markSheetState == MarkSheetState.RECTIFICATION_NOT_CONFIRMED);
     }
 
     public int getTotalNumberOfStudents() {
