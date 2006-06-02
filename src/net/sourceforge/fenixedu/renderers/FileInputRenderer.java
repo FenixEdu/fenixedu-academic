@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.renderers;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlForm;
@@ -14,9 +13,9 @@ import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
+import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.fileupload.FileItem;
 
 /**
  * This renderer creates a file input field that allows the user to 
@@ -139,11 +138,11 @@ public class FileInputRenderer extends InputRenderer {
             HtmlSimpleValueComponent component = (HtmlSimpleValueComponent) getControlledComponent();
             String name = component.getName();
             
-            FileItem item = RenderersRequestProcessor.getFileItem(name);
-            if (item != null) { // if has file
-                setPropertyIgnoringErrors(object, this.fileNameSlot, item.getName());
-                setPropertyIgnoringErrors(object, this.fileSizeSlot, item.getSize());
-                setPropertyIgnoringErrors(object, this.fileContentTypeSlot, item.getContentType());
+            UploadedFile file = RenderersRequestProcessor.getUploadedFile(name);
+            if (file != null) { // if has file
+                setPropertyIgnoringErrors(object, this.fileNameSlot, file.getName());
+                setPropertyIgnoringErrors(object, this.fileSizeSlot, file.getSize());
+                setPropertyIgnoringErrors(object, this.fileContentTypeSlot, file.getContentType());
             }
         }
         
@@ -171,14 +170,14 @@ public class FileInputRenderer extends InputRenderer {
         @Override
         public Object convert(Class type, Object value) {
             String name = this.component.getName();
-            FileItem item = RenderersRequestProcessor.getFileItem(name);
+            UploadedFile file = RenderersRequestProcessor.getUploadedFile(name);
             
-            if (item == null) {
+            if (file == null) {
                 return null;
             }
             else {
                 try {
-                    return item.getInputStream();
+                    return file.getInputStream();
                 } catch (IOException e) {
                     throw new ConversionException("renderers.converter.file.obtain", e, true, null);
                 }

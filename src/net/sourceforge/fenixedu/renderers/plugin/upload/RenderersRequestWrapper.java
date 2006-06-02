@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.renderers.plugin;
+package net.sourceforge.fenixedu.renderers.plugin.upload;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -9,6 +9,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+/**
+ * Renderers wrapper round the request. This wrapper allows all elements
+ * of the framework to use {@link javax.servlet.ServletRequest#getParameter(java.lang.String)}
+ * and the like regardlessly of the request nature.
+ * 
+ * @author cfgi
+ */
 public class RenderersRequestWrapper extends HttpServletRequestWrapper {
 
     private Hashtable<String, List<String>> parameters;

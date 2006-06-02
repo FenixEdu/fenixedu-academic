@@ -3,10 +3,15 @@ package net.sourceforge.fenixedu.renderers.validators;
 import net.sourceforge.fenixedu.renderers.components.HtmlInputFile;
 import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
+import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
-import org.apache.commons.fileupload.FileItem;
-
+/**
+ * This validator can be used to validate uploaded files. It allows you to
+ * restrict the file maximum size, extension, and type.
+ * 
+ * @author cfgi
+ */
 public class FileValidator extends HtmlValidator {
 
     private boolean required;
@@ -112,26 +117,26 @@ public class FileValidator extends HtmlValidator {
 
     @Override
     public void performValidation() {
-        HtmlInputFile file = (HtmlInputFile) getComponent();
+        HtmlInputFile fileField = (HtmlInputFile) getComponent();
 
-        FileItem item = RenderersRequestProcessor.getFileItem(file.getName());
-        if (item == null || isRequired()) {
+        UploadedFile file = RenderersRequestProcessor.getUploadedFile(fileField.getName());
+        if (file == null && isRequired()) {
             setInvalid("renderers.validator.required");
             return;
         }
         
         if (getMaxSize() != null) {
-            long size = item.getSize();
+            long size = file.getSize();
             long maxSize = convertedMaxSize();
 
             if (size > maxSize) {
-                setInvalid("renderers.validator.file.size", maxSize, size);
+                setInvalid("renderers.validator.file.size", maxSize, getMaxSize());
                 return;
             }
         }
         
         if (getAcceptedExtensions() != null) {
-            String fileName = item.getFieldName();
+            String fileName = file.getName();
             int index = fileName.lastIndexOf(".");
             
             if (index != -1) {
@@ -149,8 +154,8 @@ public class FileValidator extends HtmlValidator {
         }
         
         if (getAcceptedTypes() != null) {
-            if (! matchesMimeType(item.getContentType())) {
-                setInvalid("renderers.validator.file.type", getAcceptedTypes(), item.getContentType());
+            if (! matchesMimeType(file.getContentType())) {
+                setInvalid("renderers.validator.file.type", getAcceptedTypes(), file.getContentType());
                 return;
             }
         }

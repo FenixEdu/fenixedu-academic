@@ -124,7 +124,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         	return value == null || value.length() == 0 ? null : Integer.valueOf(value);
 	}
 
-    public ActionForward processException(HttpServletRequest request, ActionForward input, Exception e) {
+    public ActionForward processException(HttpServletRequest request, ActionMapping mapping, ActionForward input, Exception e) {
         	if (! (e instanceof DomainException)) {
         	    return null;
         	}
