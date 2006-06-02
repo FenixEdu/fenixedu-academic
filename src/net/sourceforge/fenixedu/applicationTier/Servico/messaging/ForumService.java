@@ -5,14 +5,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
@@ -33,6 +30,38 @@ public abstract class ForumService extends Service {
 
     private static final ResourceBundle GLOBAL_RESOURCES = ResourceBundle.getBundle(
             "resources.GlobalResources", DEFAULT_LOCALE);
+
+    public static class EmailSenderThread extends Thread {
+        private String emailFrom;
+
+        private String emailFromAddress;
+
+        private String emailSubject;
+
+        private Set<String> toAddresses;
+
+        private Set<String> ccAddresses;
+
+        private Set<String> bccAddresses;
+
+        private String emailBody;
+
+        public EmailSenderThread(String emailFrom, String emailFromAddress, Set<String> toAddresses,
+                Set<String> ccAddresses, Set<String> bccAddresses, String emailSubject, String emailBody) {
+            this.emailFrom = emailFrom;
+            this.emailSubject = emailSubject;
+            this.emailFromAddress = emailFromAddress;
+            this.toAddresses = toAddresses;
+            this.ccAddresses = ccAddresses;
+            this.bccAddresses = bccAddresses;
+            this.emailBody = emailBody;
+        }
+
+        public void run() {
+            EmailSender.send(this.emailFrom, this.emailFromAddress, this.toAddresses, this.ccAddresses,
+                    this.bccAddresses, this.emailSubject, this.emailBody);
+        }
+    }
 
     protected void sendNotifications(ConversationMessage conversationMessage) {
         this.notifyEmailSubscribers(conversationMessage);
@@ -96,8 +125,12 @@ public abstract class ForumService extends Service {
         String emailFromAddress = GLOBAL_RESOURCES.getString("forum.email.fromAddress");
         String emailSubject = getEmailFormattedSubject(conversationMessage.getConversationThread());
         String emailBody = getEmailFormattedBody(conversationMessage);
-        EmailSender.send(emailFrom, emailFromAddress, new ArrayList<String>(), new ArrayList<String>(),
-                addressesToSend, emailSubject, emailBody);
+
+        EmailSenderThread emailSenderThread = new EmailSenderThread(emailFrom, emailFromAddress,
+                new HashSet<String>(), new HashSet<String>(), addressesToSend, emailSubject, emailBody);
+
+        emailSenderThread.start();
+
     }
 
     private String getEmailFormattedSubject(ConversationThread conversationThread) {
