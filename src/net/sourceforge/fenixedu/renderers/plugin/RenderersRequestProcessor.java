@@ -86,6 +86,10 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
         RenderersRequestProcessor.currentContext.set(getServletContext());
         
         super.process(request, response);
+        
+        RenderersRequestProcessor.currentRequest.set(null);
+        RenderersRequestProcessor.currentContext.set(null);
+        RenderersRequestProcessor.fileItems.set(null);
     }
 
     @Override
