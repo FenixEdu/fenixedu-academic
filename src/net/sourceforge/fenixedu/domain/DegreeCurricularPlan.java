@@ -48,44 +48,52 @@ import org.apache.commons.collections.Predicate;
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     /**
-     * This might look a strange comparator, but the idea is to show a list of degree curricular plans according to, in the following order:
-     * 1. It's degree type
-     * 2. Reverse order of ExecutionDegrees
-     * 3. It's degree code (in order to roughly order them by prebolonha/bolonha) OR reverse order of their own name
+     * This might look a strange comparator, but the idea is to show a list of
+     * degree curricular plans according to, in the following order: 1. It's
+     * degree type 2. Reverse order of ExecutionDegrees 3. It's degree code (in
+     * order to roughly order them by prebolonha/bolonha) OR reverse order of
+     * their own name
      * 
      * For an example, see the coordinator's portal.
      */
     public static final Comparator DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE = new Comparator<DegreeCurricularPlan>() {
 
-        public int compare(DegreeCurricularPlan degreeCurricularPlan1, DegreeCurricularPlan degreeCurricularPlan2) {
-            final int degreeTypeCompare = degreeCurricularPlan1.getDegree().getDegreeType().toString().compareTo(degreeCurricularPlan2.getDegree().getDegreeType().toString());
+        public int compare(DegreeCurricularPlan degreeCurricularPlan1,
+                DegreeCurricularPlan degreeCurricularPlan2) {
+            final int degreeTypeCompare = degreeCurricularPlan1.getDegree().getDegreeType().toString()
+                    .compareTo(degreeCurricularPlan2.getDegree().getDegreeType().toString());
             if (degreeTypeCompare != 0) {
                 return degreeTypeCompare;
             }
 
-            int finalCompare = degreeCurricularPlan1.getDegree().getSigla().compareTo(degreeCurricularPlan2.getDegree().getSigla());
+            int finalCompare = degreeCurricularPlan1.getDegree().getSigla().compareTo(
+                    degreeCurricularPlan2.getDegree().getSigla());
             if (finalCompare == 0) {
-                finalCompare = degreeCurricularPlan2.getName().compareTo(degreeCurricularPlan1.getName());
+                finalCompare = degreeCurricularPlan2.getName()
+                        .compareTo(degreeCurricularPlan1.getName());
             }
-            
-            ExecutionDegree mostRecentExecutionDegree1 = degreeCurricularPlan1.getMostRecentExecutionDegree();
-            ExecutionDegree mostRecentExecutionDegree2 = degreeCurricularPlan2.getMostRecentExecutionDegree();
-            
+
+            ExecutionDegree mostRecentExecutionDegree1 = degreeCurricularPlan1
+                    .getMostRecentExecutionDegree();
+            ExecutionDegree mostRecentExecutionDegree2 = degreeCurricularPlan2
+                    .getMostRecentExecutionDegree();
+
             if (mostRecentExecutionDegree1 == null && mostRecentExecutionDegree2 == null) {
                 return finalCompare;
-            } else if (mostRecentExecutionDegree1 == null ) {
+            } else if (mostRecentExecutionDegree1 == null) {
                 return 1;
             } else if (mostRecentExecutionDegree2 == null) {
                 return -1;
             } else {
-                final int executionDegreeCompare = mostRecentExecutionDegree2.compareTo(mostRecentExecutionDegree1);
-                
+                final int executionDegreeCompare = mostRecentExecutionDegree2
+                        .compareTo(mostRecentExecutionDegree1);
+
                 return executionDegreeCompare == 0 ? finalCompare : executionDegreeCompare;
             }
         }
-        
+
     };
-    
+
     public DegreeCurricularPlan() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
@@ -155,7 +163,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setAnotation(annotation);
     }
 
-    protected DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale, Person creator, CurricularPeriod curricularPeriod) {
+    protected DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale, Person creator,
+            CurricularPeriod curricularPeriod) {
         this(degree);
 
         if (name == null) {
@@ -166,7 +175,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         super.setGradeScale(gradeScale);
         this.setRoot(new CourseGroup(name, name));
         this.setState(DegreeCurricularPlanState.ACTIVE);
-        
+
         newStructureFieldsChange(CurricularStage.DRAFT, null);
 
         if (curricularPeriod == null) {
@@ -212,7 +221,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 throw new DomainException("error.degreeCurricularPlan.existing.name.and.degree");
             }
         }
-        
+
         this.getRoot().setName(name);
         this.getRoot().setNameEn(name);
     }
@@ -220,17 +229,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public boolean isBolonha() {
         return !getCurricularStage().equals(CurricularStage.OLD);
     }
-    
+
     public void approve(ExecutionYear beginExecutionYear) {
         if (getCurricularStage() == CurricularStage.APPROVED) {
             throw new DomainException("error.degreeCurricularPlan.already.approved");
-            
+
         } else if (beginExecutionYear == null) {
             throw new DomainException("error.invalid.execution.year");
-            
+
         } else if (beginExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1)) == null) {
             throw new DomainException("error.invalid.execution.period");
-            
+
         }
         checkIfCurricularCoursesBelongToApprovedCompetenceCourses();
         initBeginExecutionPeriodForDegreeCurricularPlan(getRoot(), beginExecutionYear
@@ -243,8 +252,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
             final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
             if (!curricularCourse.isOptional() && !curricularCourse.getCompetenceCourse().isApproved()) {
-                notApprovedCompetenceCourses.add(curricularCourse.getCompetenceCourse().getDepartmentUnit()
-                        .getName()
+                notApprovedCompetenceCourses.add(curricularCourse.getCompetenceCourse()
+                        .getDepartmentUnit().getName()
                         + " > " + curricularCourse.getCompetenceCourse().getName());
             }
         }
@@ -304,7 +313,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             return "";
         }
     }
-    
+
     public GradeScale getGradeScaleChain() {
         return super.getGradeScale() != null ? super.getGradeScale() : getDegree().getGradeScaleChain();
     }
@@ -328,12 +337,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public List<ExecutionDegree> getSortedExecutionDegrees() {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>(getExecutionDegrees());
-        
-        Collections.sort(result, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR);
-        
+
+        Collections.sort(result,
+                ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR);
+
         return result;
     }
-    
+
     public ExecutionDegree getExecutionDegreeByYear(ExecutionYear executionYear) {
         for (ExecutionDegree executionDegree : getExecutionDegrees()) {
             if (executionDegree.getExecutionYear().equals(executionYear)) {
@@ -342,15 +352,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return null;
     }
-    
+
     public ExecutionDegree getMostRecentExecutionDegree() {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         ExecutionDegree result = getExecutionDegreeByYear(currentExecutionYear);
-        
+
         if (result != null) {
             return result;
         }
-        
+
         for (final ExecutionDegree executionDegree : getSortedExecutionDegrees()) {
             if (result == null || result.isBefore(executionDegree)) {
                 result = executionDegree;
@@ -559,7 +569,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             for (DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
                 result.add(((CurricularCourse) degreeModule).getCompetenceCourse());
             }
-        } 
+        }
         return new ArrayList<CompetenceCourse>(result);
     }
 
@@ -758,18 +768,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public List<List<DegreeModule>> getDcpDegreeModulesIncludingFullPath(
             Class<? extends DegreeModule> clazz) {
-        
+
         final List<List<DegreeModule>> result = new ArrayList<List<DegreeModule>>();
         final List<DegreeModule> path = new ArrayList<DegreeModule>();
-        
+
         if (clazz.equals(CourseGroup.class)) {
             path.add(this.getRoot());
-            
+
             result.add(path);
         }
-        
+
         this.getRoot().collectChildDegreeModulesIncludingFullPath(clazz, result, path);
-        
+
         return result;
     }
 
@@ -906,17 +916,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return masterDegreeThesisDataVersions;
-    }
-    
-    public List<CurricularCourse> getCurricularCourseByExecutionPeriodAndCurricularPeriod(ExecutionPeriod executionPeriod, CurricularPeriodInfoDTO ...curricularPeriodInfoDTOs) {
-        
-        CurricularPeriod curricularPeriod = getDegreeStructure().getCurricularPeriod(curricularPeriodInfoDTOs);
-        List<Context> contexts = curricularPeriod.getContextsWithCurricularCoursesByExecutionPeriod(executionPeriod);
-        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
-        for (Context context : contexts) {
-            curricularCourses.add((CurricularCourse) context.getChildDegreeModule());
-        }        
-        return curricularCourses;
     }
 
     // -------------------------------------------------------------
