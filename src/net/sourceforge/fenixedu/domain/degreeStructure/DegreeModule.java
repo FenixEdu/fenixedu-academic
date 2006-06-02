@@ -36,13 +36,17 @@ public abstract class DegreeModule extends DegreeModule_Base {
         
         DegreeModule iter = this; 
         result.append(iter.getName());
-        iter = iter.getParentContexts().get(0).getParentCourseGroup();
-        
-        for (;iter.hasAnyParentContexts(); iter = iter.getParentContexts().get(0).getParentCourseGroup()) {
-            result.insert(0, iter.getName() + " > ");
+        if (iter.isRoot()) {
+            return result.toString();
+        } else {
+            iter = iter.getParentContexts().get(0).getParentCourseGroup();
+            
+            for (;iter.hasAnyParentContexts(); iter = iter.getParentContexts().get(0).getParentCourseGroup()) {
+                result.insert(0, iter.getName() + " > ");
+            }
+            
+            return result.toString();
         }
-        
-        return result.toString();
     }
     
     /**
