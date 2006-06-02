@@ -368,6 +368,16 @@ public class Teacher extends Teacher_Base {
         return result;
     }
 
+    public List<ExecutionDegree> getCoordinatedExecutionDegrees(DegreeCurricularPlan degreeCurricularPlan) {
+        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+        for (Coordinator coordinator : getCoordinators()) {
+            if (coordinator.getExecutionDegree().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+                result.add(coordinator.getExecutionDegree());    
+            }
+        }
+        return result;
+    }
+
     /***************************************************************************
      * OTHER METHODS *
      **************************************************************************/
