@@ -20,7 +20,7 @@
 			<td>
 				<html:select property="departmentID" onchange="this.form.method.value='showDepartmentCompetenceCourses';this.form.submit();">
 					<html:option value="null">&nbsp;</html:option>
-					<html:options collection="departments" property="idInternal" labelProperty="name"/>
+					<html:options collection="departments" property="idInternal" labelProperty="realName"/>
     			</html:select>
 			</td>
 		</tr>

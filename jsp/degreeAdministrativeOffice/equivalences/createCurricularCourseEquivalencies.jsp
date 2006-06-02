@@ -24,7 +24,7 @@
 			<td class="listClasses">
 				<html:select property="oldDegreeID" onchange="this.form.method.value='prepareCreate';this.form.submit();">
 					<html:option value=""/>
-					<html:options collection="infoDegrees" labelProperty="nome" property="idInternal"/>
+					<html:options collection="infoDegrees" labelProperty="name" property="idInternal"/>
 				</html:select>
 			</td>
 		</tr>
@@ -66,7 +66,7 @@
 			<td class="listClasses">
 				<html:select property="degreeID" disabled="true">
 					<html:option value=""/>
-					<html:options collection="infoDegrees" labelProperty="nome" property="idInternal"/>
+					<html:options collection="infoDegrees" labelProperty="name" property="idInternal"/>
 				</html:select>
 			</td>
 		</tr>

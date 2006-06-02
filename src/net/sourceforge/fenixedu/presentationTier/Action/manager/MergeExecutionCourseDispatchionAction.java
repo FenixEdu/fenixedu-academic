@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import java.text.Collator;
 import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -108,19 +112,17 @@ public class MergeExecutionCourseDispatchionAction extends DispatchAction {
             FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-        Object[] args = {};
-
-        List degrees = (List) ServiceUtils.executeService(userView, "ReadDegrees", args);
+        
+        SortedSet<Degree> degrees = new TreeSet(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE); 
+        degrees.addAll(RootDomainObject.getInstance().getDegrees()); 
+        
         List executionPeriods = (List) ServiceUtils.executeService(userView, "ReadAllExecutionPeriods",
-                args);
+                new Object[0]);
 
         ComparatorChain comparator = new ComparatorChain();
         comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
         comparator.addComparator(new BeanComparator("name"), true);
         Collections.sort(executionPeriods, comparator);
-
-        Collections.sort(degrees, new BeanComparator("sigla"));
 
         request.setAttribute("sourceDegrees", degrees);
         request.setAttribute("destinationDegrees", degrees);

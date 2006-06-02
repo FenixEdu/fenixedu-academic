@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
@@ -36,7 +37,7 @@ import org.apache.struts.util.MessageResources;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
@@ -45,11 +46,11 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 
         // TODO : find a way to refactor this code so it is shared with context
         // selection.
-        //        this implies changing the form value from index to executionPeriodOID
+        // this implies changing the form value from index to executionPeriodOID
         // etc.
-        //        The same should be done with the selection of the execution course
+        // The same should be done with the selection of the execution course
         // and
-        //        of the curricular year.
+        // of the curricular year.
 
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
 
@@ -81,7 +82,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 
         request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 
-        ////////////////////////////////////////////////////////////////////////////
+        // //////////////////////////////////////////////////////////////////////////
 
         /* Obtain a list of curricular years */
         List labelListOfCurricularYears = ContextUtils.getLabelListOfOptionalCurricularYears();
@@ -90,22 +91,20 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
         /* Obtain a list of degrees for the specified execution year */
         Object argsLerLicenciaturas[] = { selectedExecutionPeriod.getInfoExecutionYear() };
         List executionDegreeList = null;
-        try {
+        try {                                  
             executionDegreeList = (List) ServiceUtils.executeService(userView,
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
             /* Sort the list of degrees */
             Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
         } catch (FenixServiceException e) {
-
             e.printStackTrace();
         }
 
-        
         MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
         /* Generate a label list for the above list of degrees */
-        List labelListOfExecutionDegrees = ExecutionDegreesFormat
-                .buildExecutionDegreeLabelValueBean(executionDegreeList, messageResources);//ContextUtils.getLabelListOfExecutionDegrees(executionDegreeList);
+        List labelListOfExecutionDegrees = ExecutionDegreesFormat.buildExecutionDegreeLabelValueBean(
+                executionDegreeList, messageResources);// ContextUtils.getLabelListOfExecutionDegrees(executionDegreeList);
         request.setAttribute(SessionConstants.LIST_INFOEXECUTIONDEGREE, labelListOfExecutionDegrees);
 
         return mapping.findForward("ShowSearchForm");
@@ -164,9 +163,9 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
                 "SearchExecutionCourses", args);
 
         // if query result is a list then go to a page where they are listed
-        //		if (infoExecutionCourses == null
-        //			|| infoExecutionCourses.isEmpty()
-        //			|| infoExecutionCourses.size() > 1) {
+        // if (infoExecutionCourses == null
+        // || infoExecutionCourses.isEmpty()
+        // || infoExecutionCourses.size() > 1) {
 
         if (infoExecutionCourses != null) {
 
@@ -178,12 +177,12 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
         return prepareSearch(mapping, form, request, response);
         // if query result is a sigle item then go directly to the execution
         // course page
-        //		} else {
-        //			request.setAttribute(
-        //				SessionConstants.EXECUTION_COURSE,
-        //				infoExecutionCourses.get(0));
-        //			return mapping.findForward("ManageExecutionCourse");
-        //		}
+        // } else {
+        // request.setAttribute(
+        // SessionConstants.EXECUTION_COURSE,
+        // infoExecutionCourses.get(0));
+        // return mapping.findForward("ManageExecutionCourse");
+        // }
     }
 
     /**
@@ -228,7 +227,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 
         arranjeShifts(infoExecutionCourseOccupancy);
 
-        //		Collections.sort(infoExecutionCourseOccupancy.getInfoShifts(), new
+        // Collections.sort(infoExecutionCourseOccupancy.getInfoShifts(), new
         // ReverseComparator(new BeanComparator("percentage")));
 
         request.setAttribute("infoExecutionCourseOccupancy", infoExecutionCourseOccupancy);

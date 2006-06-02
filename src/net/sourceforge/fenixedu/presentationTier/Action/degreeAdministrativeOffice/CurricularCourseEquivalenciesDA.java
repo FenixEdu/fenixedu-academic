@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOff
 import java.text.Collator;
 import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEquivalence;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -120,11 +122,10 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
     }
 
 	private void setInfoDegrees(final HttpServletRequest request, final IUserView userView) 
-			throws FenixFilterException, FenixServiceException {
-    	final Object[] args = { DegreeType.DEGREE };
-    	final List<InfoDegree> infoDegrees = (List<InfoDegree>) ServiceUtils.executeService(userView, "ReadDegrees", args);
-    	sortInfoDegrees(infoDegrees);
-    	request.setAttribute("infoDegrees", infoDegrees);
+			throws FenixFilterException, FenixServiceException {    
+        SortedSet<Degree> degrees = new TreeSet(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE); 
+        degrees.addAll(Degree.readAllByDegreeType(DegreeType.DEGREE));    	
+    	request.setAttribute("infoDegrees", degrees);
 	}
 
     private void setInfoDegreeCurricularPlans(final HttpServletRequest request, final IUserView userView, final Integer degreeID, final String attributeName) 
@@ -149,14 +150,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 		return objectIDString != null && objectIDString.length() > 0 && StringUtils.isNumeric(objectIDString);
 	}
 
-	private void sortInfoDegrees(final List<InfoDegree> infoDegrees) {
-    	final ComparatorChain comparatorChain = new ComparatorChain();
-    	comparatorChain.addComparator(new BeanComparator("tipoCurso"));
-    	comparatorChain.addComparator(new BeanComparator("nome"));
-    	Collections.sort(infoDegrees, comparatorChain);
-	}
-
-	private void sortInfoDegreeCurricularPlans(final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans) {
+    private void sortInfoDegreeCurricularPlans(final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans) {
 		Collections.sort(infoDegreeCurricularPlans, new BeanComparator("name"));
 	}
 

@@ -1,19 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -27,19 +23,9 @@ public class ReadDegreesAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
-
-        try {
-            List degrees = null;
-
-            degrees = (List) ServiceUtils.executeService(userView, "ReadDegrees", null);
-
-            Collections.sort(degrees, new ComparatorByNameForInfoDegree());
-
-            request.setAttribute("degreesList", degrees);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+        final SortedSet<Degree> degrees = new TreeSet(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE); 
+        degrees.addAll(Degree.readOldDegrees()); 
+        request.setAttribute("degreesList", degrees);
         return mapping.findForward("readDegrees");
     }
 

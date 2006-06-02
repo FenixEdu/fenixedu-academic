@@ -21,7 +21,7 @@
 			<td class="listClasses">
 				<html:select property="degreeID" onchange="this.form.submit();">
 					<html:option value=""/>
-					<html:options collection="infoDegrees" labelProperty="nome" property="idInternal"/>
+					<html:options collection="infoDegrees" labelProperty="name" property="idInternal"/>
 				</html:select>
 			</td>
 		</tr>

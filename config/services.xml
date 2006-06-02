@@ -899,13 +899,7 @@
 		<filterChains>
 			<chain name="ManagerAuthorization" />
 		</filterChains>
-	</service>
-	<service>
-		<name>ReadDegrees</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegrees</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-	</service>
+	</service>	
 	<service>
 		<name>DeleteDegrees</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteDegrees</implementationClass>

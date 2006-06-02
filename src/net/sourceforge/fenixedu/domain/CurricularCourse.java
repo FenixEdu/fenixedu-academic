@@ -38,12 +38,15 @@ import org.joda.time.DateTime;
 
 public class CurricularCourse extends CurricularCourse_Base {
 
-	public static final Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME = new ComparatorChain();
-	static {
-		((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name"));
-		((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.nome"));
-		((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("name"));
-	}
+    public static final Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME = new ComparatorChain();
+    static {
+        ((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
+                .addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name"));
+        ((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
+                .addComparator(new BeanComparator("degreeCurricularPlan.degree.nome"));
+        ((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME)
+                .addComparator(new BeanComparator("name"));
+    }
 
     public static List<CurricularCourse> readCurricularCourses() {
         List<CurricularCourse> result = new ArrayList<CurricularCourse>();
@@ -126,7 +129,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public boolean isRoot() {
         return false;
     }
-    
+
     public boolean isBolonha() {
         return !(getCurricularStage() == CurricularStage.OLD);
     }
@@ -136,15 +139,16 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        // FIXME: in the future, a curricular course may be included in contexts of diferent curricular plans
+        // FIXME: in the future, a curricular course may be included in contexts
+        // of diferent curricular plans
         return getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan();
     }
-    
+
     @Override
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-        return (isBolonha()) ? this.getParentDegreeCurricularPlan() : super.getDegreeCurricularPlan();  
+        return (isBolonha()) ? this.getParentDegreeCurricularPlan() : super.getDegreeCurricularPlan();
     }
-    
+
     public Degree getDegree() {
         return getDegreeCurricularPlan().getDegree();
     }
@@ -750,8 +754,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    private List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod,
-            Student student) {
+    private List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod, Student student) {
         List<Enrolment> results = new ArrayList<Enrolment>();
         for (final CurriculumModule curriculumModule : getCurriculumModules()) {
             Enrolment enrollment = (Enrolment) curriculumModule;
@@ -821,14 +824,14 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod) {
-    	List<Enrolment> enrollments = new ArrayList<Enrolment>();
-    	
-    	for(Enrolment enrollment : getEnrolmentsByExecutionPeriod(executionPeriod)) {
-    		if(!enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
-    			enrollments.add(enrollment);
-    		}
-    	}
-    	
+        List<Enrolment> enrollments = new ArrayList<Enrolment>();
+
+        for (Enrolment enrollment : getEnrolmentsByExecutionPeriod(executionPeriod)) {
+            if (!enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
+                enrollments.add(enrollment);
+            }
+        }
+
         return enrollments;
     }
 
@@ -1017,21 +1020,25 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return curricularCourseScopes;
     }
-    
-    public Set<Enrolment> getEnrolmentsNotInAnyMarkSheet(MarkSheetType markSheetType, ExecutionPeriod executionPeriod) {
+
+    public Set<Enrolment> getEnrolmentsNotInAnyMarkSheet(MarkSheetType markSheetType,
+            ExecutionPeriod executionPeriod) {
 
         final Set<Enrolment> result = new HashSet<Enrolment>();
         for (final CurriculumModule curriculumModule : this.getCurriculumModulesSet()) {
-            
+
             if (curriculumModule instanceof Enrolment) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
-                
-                if (enrolment.getExecutionPeriod() == executionPeriod && markSheetType.getEnrolmentEvaluationType() == enrolment.getEnrolmentEvaluationType()) {
-                    if (! enrolment.hasAssociatedMarkSheet(markSheetType)) {
+
+                if (enrolment.getExecutionPeriod() == executionPeriod
+                        && markSheetType.getEnrolmentEvaluationType() == enrolment
+                                .getEnrolmentEvaluationType()) {
+                    if (!enrolment.hasAssociatedMarkSheet(markSheetType)) {
                         result.add(enrolment);
                     }
-                } else if(markSheetType == MarkSheetType.IMPROVEMENT) {
-                    if(enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(markSheetType) && enrolment.hasAttendsFor(executionPeriod)) {
+                } else if (markSheetType == MarkSheetType.IMPROVEMENT) {
+                    if (enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(markSheetType)
+                            && enrolment.hasAttendsFor(executionPeriod)) {
                         result.add(enrolment);
                     }
                 }
@@ -1039,53 +1046,58 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
-    
+
     public MarkSheet createNormalMarkSheet(ExecutionPeriod executionPeriod, Teacher responsibleTeacher,
             Date evaluationDate, MarkSheetType markSheetType, Boolean submittedByTeacher,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans) {
 
-        return MarkSheet.createNormal(this, executionPeriod, responsibleTeacher,
-                evaluationDate, markSheetType, submittedByTeacher, evaluationBeans);
+        return MarkSheet.createNormal(this, executionPeriod, responsibleTeacher, evaluationDate,
+                markSheetType, submittedByTeacher, evaluationBeans);
     }
 
-    public MarkSheet rectifyEnrolmentEvaluation(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation, Date evaluationDate, String grade, String reason) {
-        
+    public MarkSheet rectifyEnrolmentEvaluation(MarkSheet markSheet,
+            EnrolmentEvaluation enrolmentEvaluation, Date evaluationDate, String grade, String reason) {
+
         if (markSheet == null || evaluationDate == null || grade == null || grade.length() == 0) {
             throw new DomainException("error.markSheet.invalid.arguments");
         }
 
-        if(!markSheet.hasEnrolmentEvaluations(enrolmentEvaluation)) {
-        	throw new DomainException("error.no.student.in.markSheet");
+        if (!markSheet.hasEnrolmentEvaluations(enrolmentEvaluation)) {
+            throw new DomainException("error.no.student.in.markSheet");
         }
-        
+
         if (markSheet.isNotConfirmed()) {
             throw new DomainException("error.markSheet.must.be.confirmed");
         }
 
         if (enrolmentEvaluation.hasRectification()) {
-            throw new DomainException("error.markSheet.student.alreadyRectified", enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().getNumber().toString());
+            throw new DomainException("error.markSheet.student.alreadyRectified", enrolmentEvaluation
+                    .getEnrolment().getStudentCurricularPlan().getStudent().getNumber().toString());
         }
-        
+
         enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
         enrolmentEvaluation.setWhenDateTime(new DateTime());
 
-        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate, markSheet.getResponsibleTeacher(), markSheet.getMarkSheetType(), 
-                reason, new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade));
-        
-        //  Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
+        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(),
+                evaluationDate, markSheet.getResponsibleTeacher(), markSheet.getMarkSheetType(), reason,
+                new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate,
+                        grade));
+
+        // Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
         rectificationMarkSheet.getEnrolmentEvaluations().get(0).setRectified(enrolmentEvaluation);
         return rectificationMarkSheet;
     }
-    
+
     public MarkSheet createRectificationMarkSheet(ExecutionPeriod executionPeriod, Date evaluationDate,
             Teacher responsibleTeacher, MarkSheetType markSheetType, String reason,
             MarkSheetEnrolmentEvaluationBean evaluationBean) {
 
-        return MarkSheet.createRectification(this, executionPeriod, responsibleTeacher,
-                evaluationDate, markSheetType, reason, evaluationBean);
+        return MarkSheet.createRectification(this, executionPeriod, responsibleTeacher, evaluationDate,
+                markSheetType, reason, evaluationBean);
     }
-    
-    public Collection<MarkSheet> searchMarkSheets(ExecutionPeriod executionPeriod, Teacher teacher, DateTime evaluationDate, MarkSheetState markSheetState, MarkSheetType markSheetType) {
+
+    public Collection<MarkSheet> searchMarkSheets(ExecutionPeriod executionPeriod, Teacher teacher,
+            DateTime evaluationDate, MarkSheetState markSheetState, MarkSheetType markSheetType) {
 
         final Collection<MarkSheet> result = new HashSet<MarkSheet>();
 
@@ -1096,7 +1108,8 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (teacher != null && markSheet.getResponsibleTeacher() != teacher) {
                 continue;
             }
-            if (evaluationDate != null && markSheet.getEvaluationDateDateTime().compareTo(evaluationDate) != 0) {
+            if (evaluationDate != null
+                    && markSheet.getEvaluationDateDateTime().compareTo(evaluationDate) != 0) {
                 continue;
             }
             if (markSheetState != null && markSheet.getMarkSheetState() != markSheetState) {
@@ -1105,9 +1118,37 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (markSheetType != null && markSheet.getMarkSheetType() != markSheetType) {
                 continue;
             }
-            result.add(markSheet);            
+            result.add(markSheet);
         }
         return result;
     }
 
+    public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(Integer semester,
+            CurricularYear curricularYear, DegreeCurricularPlan degreeCurricularPlan,
+            final ExecutionPeriod executionPeriod) {
+        
+        if (degreeCurricularPlan == null || getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+            if (isBolonha()) {
+                for (Context context : getParentContexts()) {
+                    final CompetenceCourse competenceCourse = getCompetenceCourse();
+                    if (competenceCourse != null) {
+                        if (context.isValid(executionPeriod)
+                                && context.contains(semester, curricularYear.getYear(), competenceCourse
+                                        .getRegime())) {
+                            return true;
+                        }
+                    }
+                }
+            } else {
+                for (CurricularCourseScope curricularCourseScope : getScopes()) {
+                    if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
+                            && (curricularYear == null || curricularCourseScope.getCurricularSemester()
+                                    .getCurricularYear().equals(curricularYear))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
