@@ -345,7 +345,7 @@
 
 <p>
     All the inner contexts, that is, all the contexts from <tt>fr:edit</tt> or <tt>fr:create</tt> tags will be
-    groups and encoded togheter. Nevertheless this tag does not generate a form. It still need to be enclosed
+    grouped and encoded togheter. Nevertheless this tag does not generate a form. It still need to be enclosed
     in an external form like the one provided by <tt>html:form</tt> from <tt>struts-html</tt> taglib. 
 </p>
 
