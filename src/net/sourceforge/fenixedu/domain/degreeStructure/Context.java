@@ -123,5 +123,21 @@ public class Context extends Context_Base implements Comparable<Context> {
     public void setOrder(Integer order) {
         super.setChildOrder(order);
     }
+
+    public boolean contains(final Integer semester, final Integer curricularYear, final RegimeType regimeType) {
+        final int argumentOrder = (curricularYear.intValue() - 1) * 2 + semester.intValue();
+        final CurricularPeriod firstCurricularPeriod = getCurricularPeriod();
+        final int firstCurricularPeriodOrder = firstCurricularPeriod.getAbsoluteOrderOfChild();
+        final int duration;
+        if (regimeType == RegimeType.ANUAL) {
+            duration = 2;
+        } else if (regimeType == RegimeType.SEMESTRIAL) {
+            duration = 1;
+        } else {
+            throw new IllegalArgumentException("Unknown regimeType: " + regimeType);
+        }
+        final int lastCurricularPeriodOrder = firstCurricularPeriodOrder + duration - 1;
+        return firstCurricularPeriodOrder <= argumentOrder && argumentOrder <= lastCurricularPeriodOrder;
+    }
     
 }

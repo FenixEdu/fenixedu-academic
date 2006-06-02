@@ -8,10 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
 
@@ -249,18 +246,6 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         return null;
     }
 
-    public List<Context> getContextsWithCurricularCoursesByExecutionPeriod(
-            ExecutionPeriod executionPeriod) {
-        
-        List<Context> contexts = new ArrayList<Context>();
-        for (Context context : getContextsSet()) {
-            if (context.getChildDegreeModule().isLeaf() && context.isValid(executionPeriod)) {
-                contexts.add(context);
-            }
-        }
-        return contexts;
-    }
-
     @Deprecated
     public Integer getOrder() {
         return super.getChildOrder();
@@ -270,4 +255,16 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     public void setOrder(Integer order) {
         super.setChildOrder(order);
     }
+
+    public int getAbsoluteOrderOfChild() {
+        if (getChildOrder() == null) {
+            return 1;
+        } else {
+            final CurricularPeriod parentCurricularPeriod = getParent();
+            final int absoluteOrderOfParent = parentCurricularPeriod.getAbsoluteOrderOfChild();
+            final int numberOfBrothersAndSisters = parentCurricularPeriod.getChildsCount();
+            return (absoluteOrderOfParent - 1) * numberOfBrothersAndSisters + getChildOrder().intValue();
+        }
+    }
+
 }
