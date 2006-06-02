@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 import org.apache.commons.collections.Predicate;
 import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForward;
+import org.apache.struts.taglib.html.Constants;
 
 public class ComponentLifeCycle {
     private static final Logger logger = Logger.getLogger(ComponentLifeCycle.class);
@@ -129,12 +130,12 @@ public class ComponentLifeCycle {
     
     private static ComponentLifeCycle instance = new ComponentLifeCycle();
     
-    public static ActionForward execute(HttpServletRequest request) throws Exception {
-        return instance.doLifeCycle(request);
-    }
-    
     public static ComponentLifeCycle getInstance() {
         return ComponentLifeCycle.instance;
+    }
+    
+    public static ActionForward execute(HttpServletRequest request) throws Exception {
+        return instance.doLifeCycle(request);
     }
     
     public ActionForward doLifeCycle(HttpServletRequest request) throws Exception {
@@ -152,6 +153,12 @@ public class ComponentLifeCycle {
             viewState.setSkipUpdate(false);
             viewState.setSkipValidation(false);
             viewState.setCurrentDestination((ViewDestination) null);
+            
+            if (cancelRequested(editRequest)) {
+                doCancel(viewState);
+                anySkip = true;
+                break;
+            }
             
             ComponentCollector collector = null;
             
@@ -172,9 +179,9 @@ public class ComponentLifeCycle {
                 }
             }
             
-            if (viewState.isVisible() || (isHiddenSlot(viewState))) {
+            if (viewState.isVisible() || isHiddenSlot(viewState)) {
                 if (viewState.isValid()) {
-                    // updateMetaObject can get convert errors
+                    // updateMetaObject can get conversion errors
                     viewState.setValid(updateMetaObject(collector, editRequest, viewState));
                 }
             }
@@ -195,6 +202,24 @@ public class ComponentLifeCycle {
         }
 
         return buildForward(destination);
+    }
+
+    public static void doCancel(IViewState viewState) {
+        viewState.setSkipUpdate(true);
+        
+        ViewDestination destination = viewState.getDestination("cancel");
+        
+        if (destination == null) {
+            destination = viewState.getInputDestination();
+        }
+    
+        viewState.setCurrentDestination(destination);
+        viewState.invalidate();
+    }
+    
+    private boolean cancelRequested(EditRequest editRequest) {
+        return editRequest.getParameter(Constants.CANCEL_PROPERTY) != null 
+            || editRequest.getParameter(Constants.CANCEL_PROPERTY_X) != null;
     }
 
     private boolean isHiddenSlot(IViewState viewState) {

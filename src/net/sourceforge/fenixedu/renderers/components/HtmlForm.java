@@ -8,6 +8,7 @@ import javax.servlet.jsp.PageContext;
 import net.sourceforge.fenixedu.renderers.components.controllers.Controllable;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlSubmitButtonController;
+import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
@@ -43,16 +44,7 @@ public class HtmlForm extends HtmlComponent implements Controllable {
 
             @Override
             protected void buttonPressed(IViewState viewState, HtmlSubmitButton button) {
-                viewState.setSkipUpdate(true);
-                
-                ViewDestination destination = viewState.getDestination("cancel");
-                
-                if (destination == null) {
-                    destination = viewState.getInputDestination();
-                }
-            
-                viewState.setCurrentDestination(destination);
-                viewState.invalidate();
+                ComponentLifeCycle.doCancel(viewState);
             }
             
         });
