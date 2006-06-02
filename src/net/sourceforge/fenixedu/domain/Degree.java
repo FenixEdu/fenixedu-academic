@@ -24,12 +24,12 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class Degree extends Degree_Base {
 
-	public static final ComparatorChain DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE = new ComparatorChain();
+    public static final ComparatorChain DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE = new ComparatorChain();
 
-	static {
-		DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("degreeType.name"));
-		DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("nome"));
-	}
+    static {
+        DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("tipoCurso.name"));
+        DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("nome"));
+    }
 
     protected Degree() {
         super();
@@ -59,7 +59,7 @@ public class Degree extends Degree_Base {
         this();
         commonFieldsChange(name, nameEn, acronym, gradeScale);
         newStructureFieldsChange(bolonhaDegreeType, ectsCredits, prevailingScientificArea);
-        
+
         new DegreeInfo(this);
     }
 
@@ -70,7 +70,7 @@ public class Degree extends Degree_Base {
             throw new DomainException("degree.name.en.not.null");
         } else if (code == null) {
             throw new DomainException("degree.code.not.null");
-        } 
+        }
 
         this.setNome(name.trim());
         this.setNameEn(nameEn.trim());
@@ -78,7 +78,8 @@ public class Degree extends Degree_Base {
         this.setGradeScale(gradeScale);
     }
 
-    private void newStructureFieldsChange(BolonhaDegreeType bolonhaDegreeType, Double ectsCredits, String prevailingScientificArea) {
+    private void newStructureFieldsChange(BolonhaDegreeType bolonhaDegreeType, Double ectsCredits,
+            String prevailingScientificArea) {
         if (bolonhaDegreeType == null) {
             throw new DomainException("degree.degree.type.not.null");
         } else if (ectsCredits == null) {
@@ -90,9 +91,10 @@ public class Degree extends Degree_Base {
         this.setPrevailingScientificArea(prevailingScientificArea.trim());
     }
 
-    public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
+    public void edit(String name, String nameEn, String code, DegreeType degreeType,
+            GradeScale gradeScale) {
         commonFieldsChange(name, nameEn, code, gradeScale);
-        
+
         if (degreeType == null) {
             throw new DomainException("degree.degree.type.not.null");
         }
@@ -108,7 +110,7 @@ public class Degree extends Degree_Base {
         checkIfCanEdit(bolonhaDegreeType);
         commonFieldsChange(name, nameEn, acronym, gradeScale);
         newStructureFieldsChange(bolonhaDegreeType, ectsCredits, prevailingScientificArea);
-        
+
         if (!hasAnyDegreeInfos()) {
             new DegreeInfo(this);
         }
@@ -183,11 +185,19 @@ public class Degree extends Degree_Base {
         return (isBolonhaDegree()) ? getBolonhaDegreeType() : getTipoCurso();
     }
 
+    @Override
+    public void setBolonhaDegreeType(BolonhaDegreeType bolonhaDegreeType) {
+        super.setBolonhaDegreeType(bolonhaDegreeType);
+        final DegreeType degreeType = bolonhaDegreeType == null ? null : DegreeType.valueOf("BOLONHA_"
+                + bolonhaDegreeType.getName());
+        setTipoCurso(degreeType);
+    }
+
     public void setDegreeType(Enum degreeType) {
         if (degreeType instanceof BolonhaDegreeType) {
-            setBolonhaDegreeType((BolonhaDegreeType)degreeType);
+            setBolonhaDegreeType((BolonhaDegreeType) degreeType);
         } else {
-            setTipoCurso((DegreeType)degreeType);
+            setTipoCurso((DegreeType) degreeType);
         }
     }
 
@@ -212,32 +222,27 @@ public class Degree extends Degree_Base {
         return super.getGradeScale() != null ? super.getGradeScale() : getTipoCurso().getGradeScale();
     }
 
-    public DegreeCurricularPlan createPreBolonhaDegreeCurricularPlan(
-            String name, 
-            DegreeCurricularPlanState state, 
-            Date initialDate, 
-            Date endDate, 
-            Integer degreeDuration, 
-            Integer minimalYearForOptionalCourses, 
-            Double neededCredits, 
-            MarkType markType, 
-            Integer numerusClausus, 
-            String anotation, 
-            GradeScale gradeScale) {
+    public DegreeCurricularPlan createPreBolonhaDegreeCurricularPlan(String name,
+            DegreeCurricularPlanState state, Date initialDate, Date endDate, Integer degreeDuration,
+            Integer minimalYearForOptionalCourses, Double neededCredits, MarkType markType,
+            Integer numerusClausus, String anotation, GradeScale gradeScale) {
         if (!this.isBolonhaDegree()) {
             for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlans()) {
                 if (dcp.getName().equalsIgnoreCase(name)) {
                     throw new DomainException("DEGREE.degreeCurricularPlan.existing.name.and.degree");
                 }
             }
-            
-            return new DegreeCurricularPlan(this, name,state,initialDate,endDate,degreeDuration, minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, anotation, gradeScale);
+
+            return new DegreeCurricularPlan(this, name, state, initialDate, endDate, degreeDuration,
+                    minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, anotation,
+                    gradeScale);
         } else {
             throw new DomainException("DEGREE.calling.pre.bolonha.method.to.bolonha.degree");
         }
     }
-    
-    public DegreeCurricularPlan createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
+
+    public DegreeCurricularPlan createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale,
+            Person creator) {
         if (this.isBolonhaDegree()) {
             if (name == null) {
                 throw new DomainException("DEGREE.degree.curricular.plan.name.cannot.be.null");
@@ -256,7 +261,8 @@ public class Degree extends Degree_Base {
                 creator.addPersonRoles(bolonhaRole);
             }
 
-            CurricularPeriod curricularPeriod = new CurricularPeriod(this.getBolonhaDegreeType().getCurricularPeriodType());
+            CurricularPeriod curricularPeriod = new CurricularPeriod(this.getBolonhaDegreeType()
+                    .getCurricularPeriodType());
 
             return new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
         } else {
@@ -394,13 +400,14 @@ public class Degree extends Degree_Base {
     public DegreeCurricularPlan getMostRecentDegreeCurricularPlan() {
         ExecutionDegree mostRecentExecutionDegree = null;
         boolean mustGetByInitialDate = false;
-        
+
         for (final DegreeCurricularPlan degreeCurricularPlan : this.getActiveDegreeCurricularPlans()) {
             final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
-            if (mostRecentExecutionDegree == null) { 
+            if (mostRecentExecutionDegree == null) {
                 mostRecentExecutionDegree = executionDegree;
             } else {
-                if (mostRecentExecutionDegree.getExecutionYear().equals(executionDegree.getExecutionYear())) {
+                if (mostRecentExecutionDegree.getExecutionYear().equals(
+                        executionDegree.getExecutionYear())) {
                     mustGetByInitialDate = true;
                 } else if (mostRecentExecutionDegree.isBefore(executionDegree)) {
                     mustGetByInitialDate = false;
@@ -408,15 +415,16 @@ public class Degree extends Degree_Base {
                 }
             }
         }
-        
+
         if (mustGetByInitialDate) {
             // investigate dcps initial dates
             return getMostRecentDegreeCurricularPlanByInitialDate();
         } else {
-            return (mostRecentExecutionDegree != null) ? mostRecentExecutionDegree.getDegreeCurricularPlan() : null;    
+            return (mostRecentExecutionDegree != null) ? mostRecentExecutionDegree
+                    .getDegreeCurricularPlan() : null;
         }
     }
-    
+
     private DegreeCurricularPlan getMostRecentDegreeCurricularPlanByInitialDate() {
         DegreeCurricularPlan mostRecentDegreeCurricularPlan = null;
         for (final DegreeCurricularPlan degreeCurricularPlan : this.getActiveDegreeCurricularPlans()) {
@@ -428,12 +436,13 @@ public class Degree extends Degree_Base {
         }
         return mostRecentDegreeCurricularPlan;
     }
-    
+
     public List<DegreeCurricularPlan> getActiveDegreeCurricularPlans() {
         List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 
         for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
-            if (degreeCurricularPlan.getState() == null || degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
+            if (degreeCurricularPlan.getState() == null
+                    || degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
                 result.add(degreeCurricularPlan);
             }
         }
@@ -494,7 +503,7 @@ public class Degree extends Degree_Base {
 
     public List<Integer> buildFullCurricularYearList() {
         List<Integer> result = new ArrayList<Integer>();
-        
+
         if (this.isBolonhaDegree()) {
             for (int i = 1; i <= this.getBolonhaDegreeType().getYears(); i++) {
                 result.add(i);

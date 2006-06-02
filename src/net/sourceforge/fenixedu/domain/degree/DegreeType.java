@@ -14,7 +14,21 @@ import net.sourceforge.fenixedu.domain.GradeScale;
  */
 public enum DegreeType {
 
-    DEGREE(GradeScale.TYPE20), MASTER_DEGREE(GradeScale.TYPE5);
+    DEGREE(GradeScale.TYPE20),
+
+    MASTER_DEGREE(GradeScale.TYPE5),
+
+    BOLONHA_DEGREE(null),
+
+    BOLONHA_MASTER_DEGREE(null),
+
+    BOLONHA_INTEGRATED_MASTER_DEGREE(null),
+    
+    BOLONHA_ADVANCED_STUDIES_DIPLOMA(null),
+    
+    BOLONHA_ADVANCED_FORMATION_DIPLOMA(null),
+    
+    BOLONHA_SPECIALIZATION_DEGREE(null);
 
     private GradeScale gradeScale;
 
