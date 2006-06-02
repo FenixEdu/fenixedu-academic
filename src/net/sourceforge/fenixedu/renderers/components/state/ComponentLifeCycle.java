@@ -170,7 +170,9 @@ public class ComponentLifeCycle {
                 if (! viewState.skipValidation()) {
                     viewState.setValid(validateComponent(viewState, component, viewState.getMetaObject()));
                 }
-    
+            }
+            
+            if (viewState.isVisible() || (isHiddenSlot(viewState))) {
                 if (viewState.isValid()) {
                     // updateMetaObject can get convert errors
                     viewState.setValid(updateMetaObject(collector, editRequest, viewState));
@@ -193,6 +195,10 @@ public class ComponentLifeCycle {
         }
 
         return buildForward(destination);
+    }
+
+    private boolean isHiddenSlot(IViewState viewState) {
+        return viewState.getMetaObject() instanceof MetaSlot && viewState.getHiddenSlots().size() > 0;
     }
     
     private ViewDestination getDestination(List<IViewState> viewStates) {
@@ -346,7 +352,7 @@ public class ComponentLifeCycle {
             return new HtmlText();
         }
         
-        if (metaObject instanceof MetaSlot && viewState.getHiddenSlots().size() > 0) {
+        if (isHiddenSlot(viewState)) {
             viewState.setComponent(new HtmlText());
         }
         else {
