@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.converters.DateConverter;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.util.RequestUtils;
 import org.joda.time.DateTime;
@@ -28,6 +29,10 @@ import org.joda.time.DateTime;
 public class DateTimeInputRenderer extends InputRenderer {
 
     private String dateFormat;
+    
+    private String dateFormatText;
+    private String dateBundle;
+    private boolean dateKey;
     
     public String getDateFormat() {
         return this.dateFormat == null ? DateConverter.DEFAULT_FORMAT : dateFormat;
@@ -47,6 +52,49 @@ public class DateTimeInputRenderer extends InputRenderer {
         this.dateFormat = dateFormat;
     }
     
+    public String getDateFormatText() {
+        return this.dateFormatText;
+    }
+
+    /**
+     * By default the value of <code>dateFormat</code> is used to show to the user
+     * how to write the date. This property allows you to override that default.
+     * This means that the value of the property will be shown instead.
+     * 
+     * @property
+     */
+    public void setDateFormatText(String dateFormatText) {
+        this.dateFormatText = dateFormatText;
+    }
+
+    public String getDateBundle() {
+        return this.dateBundle;
+    }
+
+    /**
+     * When the value of the <code>dateFormatText</code> is a key this property indicates
+     * the name of the bundle where the key will be looked for.
+     * 
+     * @property
+     */
+     public void setDateBundle(String dateBundle) {
+        this.dateBundle = dateBundle;
+    }
+
+    public boolean isDateKey() {
+        return this.dateKey;
+    }
+
+    /**
+     * Indicates the the value of the <code>dateFormatText</code> property is 
+     * a key and not the text itself.
+     * 
+     * @property
+     */
+    public void setDateKey(boolean dateKey) {
+        this.dateKey = dateKey;
+    }
+
     private Locale getLocale() {
         HttpServletRequest request = getInputContext().getViewState().getRequest();
         return RequestUtils.getUserLocale(request, null);
@@ -81,7 +129,7 @@ public class DateTimeInputRenderer extends InputRenderer {
                 dateField.setName(key.toString() + "_date");
                 container.addChild(dateField);
                 
-                container.addChild(new HtmlText(getDateFormat()));
+                container.addChild(new HtmlText(getFormatLabel()));
                 
                 Locale locale = getLocale();
                 SimpleDateFormat dateFormat = new SimpleDateFormat(getDateFormat(), locale);
@@ -120,6 +168,19 @@ public class DateTimeInputRenderer extends InputRenderer {
                 return container;
             }
             
+            protected String getFormatLabel() {
+                if (isDateKey()) {
+                    return RenderUtils.getResourceString(getDateBundle(), getDateFormatText());
+                }
+                else {
+                    if (getDateFormatText() != null) {
+                        return getDateFormatText();
+                    }
+                    else {
+                        return getDateFormat();
+                    }
+                }
+            }
         };
     }
 

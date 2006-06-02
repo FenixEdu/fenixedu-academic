@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.converters.DateConverter;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.util.RequestUtils;
 
@@ -32,6 +33,10 @@ import org.apache.struts.util.RequestUtils;
 public class DateInputRenderer extends TextFieldRenderer {
 
     private String format;
+
+    private String formatText;
+    private String bundle;
+    private boolean key;
     
     /**
      * The format in which the date should be displayed. The format can
@@ -53,6 +58,49 @@ public class DateInputRenderer extends TextFieldRenderer {
 
     public boolean isFormatSet() {
         return this.format != null;
+    }
+
+    public String getFormatText() {
+        return this.formatText;
+    }
+
+    /**
+     * By default the value of <code>format</code> is used to show to the user
+     * how to write the date. This property allows you to override that default.
+     * This means that the value of the property will be shown instead.
+     * 
+     * @property
+     */
+    public void setFormatText(String formatText) {
+        this.formatText = formatText;
+    }
+
+    public String getBundle() {
+        return this.bundle;
+    }
+
+    /**
+     * When the value of the <code>formatText</code> is a key this property indicates
+     * the name of the bundle where the key will be looked for.
+     * 
+     * @property
+     */
+    public void setBundle(String bundle) {
+        this.bundle = bundle;
+    }
+
+    public boolean isKey() {
+        return this.key;
+    }
+
+    /**
+     * Indicates the the value of the <code>formatText</code> property is 
+     * a key and not the text itself.
+     * 
+     * @property
+     */
+    public void setKey(boolean key) {
+        this.key = key;
     }
 
     private Locale getLocale() {
@@ -77,9 +125,23 @@ public class DateInputRenderer extends TextFieldRenderer {
         
         HtmlContainer container = new HtmlInlineContainer();
         container.addChild(dateInput);
-        container.addChild(new HtmlText(getFormat()));
+        container.addChild(new HtmlText(getFormatLabel()));
         
         return container;
+    }
+
+    protected String getFormatLabel() {
+        if (isKey()) {
+            return RenderUtils.getResourceString(getBundle(), getFormatText());
+        }
+        else {
+            if (getFormatText() != null) {
+                return getFormatText();
+            }
+            else {
+                return getFormat();
+            }
+        }
     }
 
     protected Converter getDateConverter(SimpleDateFormat dateFormat) {
@@ -110,3 +172,4 @@ public class DateInputRenderer extends TextFieldRenderer {
     }
     
 }
+ 
