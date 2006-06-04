@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.util;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Iterator;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
