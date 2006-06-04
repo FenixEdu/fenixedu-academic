@@ -205,7 +205,8 @@ Documentation:
     <renderer mode="input" type="java.lang.Double" class="net.sourceforge.fenixedu.renderers.DoubleInputRenderer"/>
     <renderer mode="input" type="float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
     <renderer mode="input" type="java.lang.Float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
-	
+    <renderer mode="input" type="java.math.BigDecimal" class="net.sourceforge.fenixedu.renderers.BigDecimalInputRenderer"/>
+
     <!--@ The default input layout for a boolean is a checkbox. Check is <tt>true</tt>, unchecked is <tt>false</tt>.  -->
     <renderer mode="input" type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
     <!--@ The default input layout for a boolean is a checkbox. Check is <tt>true</tt>, unched is <tt>false</tt>.  -->

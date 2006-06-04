@@ -3,13 +3,6 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Building" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Floor" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Room" />
-
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceInformation" table="SPACE_INFORMATION">
@@ -17,87 +10,36 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.BuildingInformation" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.FloorInformation" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.RoomInformation" />
-
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Campus" table="SPACE">
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.CampusInformation" table="SPACE_INFORMATION">
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Building" table="SPACE">
 	 <extent-class class-ref="net.sourceforge.fenixedu.domain.space.OldBuilding" />
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.BuildingInformation" table="SPACE_INFORMATION">
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Floor" table="SPACE">
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.FloorInformation" table="SPACE_INFORMATION">
-	
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceOccupation" table="SPACE_OCCUPATION">
-	
-	
 </class-descriptor>			
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Room" table="SPACE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.OldRoom" />
-	
-	
-	
-	
-	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomInformation" table="SPACE_INFORMATION">
-	
-	
-	
-	
-	
+</class-descriptor>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomClassification" table="ROOM_CLASSIFICATION">
 </class-descriptor>

@@ -64,3 +64,7 @@
 	<slot name="ageQuality"/>
 	<slot name="observations"/>
 </schema>
+<schema name="RoomClassification" type="net.sourceforge.fenixedu.domain.space.RoomClassification">
+	<slot name="code"/>
+	<slot name="name"/>
+</schema>

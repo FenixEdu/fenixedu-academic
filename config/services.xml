@@ -9859,4 +9859,12 @@
 		<filterChains>
 		</filterChains>
 	</service>	
+	<service>
+		<name>DeleteRoomClassification</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteRoomClassification</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>	
 </serviceDefinitions>

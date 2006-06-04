@@ -2058,6 +2058,10 @@ class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.doma
     RoleType roleType;
 }
 
+class net.sourceforge.fenixedu.domain.space.RoomClassification extends net.sourceforge.fenixedu.domain.DomainObject {
+	String code;
+	MultiLanguageString name;
+}
 
 class net.sourceforge.fenixedu.domain.Seminaries.Seminary extends net.sourceforge.fenixedu.domain.DomainObject {
     Boolean hasTheme;
@@ -5157,6 +5161,13 @@ relation RoomLesson {
 }
 
 
+relation RoomRoomClassification {
+	net.sourceforge.fenixedu.domain.space.Room playsRole room {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.space.RoomClassification playsRole roomClassification;
+}
+
 
 relation RoomRoomOccupation {
 	net.sourceforge.fenixedu.domain.space.RoomOccupation playsRole roomOccupations {
@@ -7934,6 +7945,13 @@ relation RootDomainObjectResearchInterest {
 relation RootDomainObjectOldRoom {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.space.OldRoom playsRole oldRooms {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectOldRoomClassification {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.space.RoomClassification playsRole roomClassification {
 		multiplicity *;
 	}
 }

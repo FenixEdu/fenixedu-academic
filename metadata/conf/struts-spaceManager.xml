@@ -56,6 +56,13 @@
         		scope="request"
         		forward="show-create-space-form"
         		/>
+
+        <action path="/roomClassification"
+        		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.RoomClassificationDA"
+        		parameter="method"
+        		>
+       		<forward name="ViewRoomClassifications" path="room-classification-form"/>
+        </action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

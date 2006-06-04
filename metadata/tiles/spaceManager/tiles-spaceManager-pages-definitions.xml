@@ -22,4 +22,7 @@
     <definition name="show-space-information" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/viewSpaceInformation.jsp"></put>
     </definition>
+    <definition name="room-classification-form" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/roomClassification.jsp"></put>
+    </definition>
 </tiles-definitions>
