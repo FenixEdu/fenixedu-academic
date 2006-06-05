@@ -2,8 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
 <bean:define id="institutionUrl" type="java.lang.String">
 	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
@@ -52,10 +50,12 @@
 <!-- PROFESSIONAL STATUS SITE -->
 <h2 class="greytxt">
 	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.professionalStatus" />
+	<bean:write name="executionYear" property="year" />
 </h2>
 
-<em><span class="error0"><html:errors/></span></em>
-
+<logic:notPresent name="infoDegreeInfo">
+	<p><em><bean:message bundle="DEFAULT" key="error.public.DegreeInfoNotPresent"/></em></p>
+</logic:notPresent>
 <logic:present name="infoDegreeInfo">	
 	<!-- QUALIFICATION LEVEL -->
 	<logic:notEmpty name="infoDegreeInfo" property="qualificationLevel">

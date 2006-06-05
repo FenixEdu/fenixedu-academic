@@ -3,11 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
 <bean:define id="institutionUrl" type="java.lang.String">
 	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
 </bean:define>
+
 <div class="breadcumbs">
 	<a href="<%= institutionUrl %>">
 		<bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
@@ -50,14 +50,13 @@
 </h1>
 
 <h2 class="greytxt">
-	<bean:define id="executionPeriod" name="<%= SessionConstants.EXECUTION_PERIOD %>" scope="request" />
-	<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear" />
 	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.accessRequirements" />
 	<bean:write name="executionYear" property="year" />
 </h2>
 
-<em><span class="error0"><html:errors/></span></em>
-
+<logic:notPresent name="infoDegreeInfo">
+	<p><em><bean:message bundle="DEFAULT" key="error.public.DegreeInfoNotPresent"/></em></p>
+</logic:notPresent>
 <logic:present name="infoDegreeInfo">	
 	<!-- TEST REQUIREMENTS -->
 	<logic:notEmpty name="infoDegreeInfo" property="testIngression">

@@ -49,71 +49,41 @@
 	</logic:present>
 </h1>
 
-<em><span class="error0"><html:errors/></span></em>
-
-<logic:present name="infoExecutionDegrees">
-
-	<!-- CAMPUS -->
-  	<h2 class="greytxt">
-  		<bean:define id="campus" value=""/>
-  		<bean:size id="campusSize" name="infoExecutionDegrees"/>
-  		<logic:iterate id="executionDegree" name="infoExecutionDegrees" indexId="indexCampus" >
-			<bean:define id="campusName" name="executionDegree" property="infoCampus.name"/>
-  			<logic:notMatch name="campus" value="<%= campusName.toString()%>">
-				<bean:write name="campusName"/>
-		  		<bean:define id="campus" value="<%= campus.toString().concat(campusName.toString()) %>"/>	
-  			</logic:notMatch>
-		</logic:iterate>
+<!-- CAMPUS -->
+<logic:iterate id="campusIter" name="campus">
+ 	<h2 class="greytxt">
+		<bean:write name="campusIter" property="name"/>
 	</h2>
+</logic:iterate>	
 
-	<!-- COORDINATORS -->
-	<p><strong><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.coordinators"/></strong></p>
-	<bean:define id="coordinators" value=""/>
-	<bean:size id="executionDegreesSize" name="infoExecutionDegrees"/>
-	<logic:iterate id="infoExecutionDegree" name="infoExecutionDegrees" indexId="executionDegreesSize" >
-		<logic:iterate id="infoCoordinator" name="infoExecutionDegree" property="coordinatorsList">
- 				<logic:equal name="infoCoordinator" property="responsible" value="true">
-				<bean:define id="coordinatorName" name="infoCoordinator" property="infoTeacher.infoPerson.nome"/>
-				<logic:notMatch name="coordinators" value="<%= coordinatorName.toString()%>">
-					<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.title.coordinator"/>&nbsp; 
+<!-- COORDINATORS -->
+<logic:notEmpty name="responsibleCoordinatorsTeachers">
+	<p><strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.coordinators"/> <bean:write name="executionYear" property="year"/></strong></p>
+	<logic:iterate id="responsibleCoordinatorTeacher" name="responsibleCoordinatorsTeachers">
+		<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.title.coordinator"/>&nbsp; 
+
+			<logic:notEmpty name="responsibleCoordinatorTeacher" property="person.enderecoWeb">
+				<bean:define id="homepage" name="responsibleCoordinatorTeacher" property="person.enderecoWeb"/>
+				<a href=" <%= homepage %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nome"/></a>
+			</logic:notEmpty>		
 							
-					<logic:notEmpty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
-						<bean:define id="homepage" name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb"/>
-						<a href=" <%= homepage %>"><bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome"/></a>
-					</logic:notEmpty>		
+			<logic:empty name="responsibleCoordinatorTeacher" property="person.enderecoWeb">
+				<logic:notEmpty name="responsibleCoordinatorTeacher" property="person.email">
+					<bean:define id="email" name="responsibleCoordinatorTeacher" property="person.email"/>	
+						<a href="mailto: <%= email %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nome"/></a>											
+				</logic:notEmpty>						
+				<logic:empty name="responsibleCoordinatorTeacher" property="person.email">
+					<bean:write name="responsibleCoordinatorTeacher" property="person.nome"/>											
+				</logic:empty>						
+			</logic:empty>		
 							
-					<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
-						<logic:notEmpty name="infoCoordinator" property="infoTeacher.infoPerson.email">
-							<bean:define id="email" name="infoCoordinator" property="infoTeacher.infoPerson.email"/>	
-								<a href="mailto: <%= email %>"><bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome"/></a>											
-						</logic:notEmpty>						
-					</logic:empty>		
-							
-					<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
-						<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.email">
-							<bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome"/>											
-						</logic:empty>						
-					</logic:empty>	
-							
-					<logic:lessThan name="executionDegreesSize" value="executionDegreesSize" >
-						<br/>
-					</logic:lessThan>
-				
-					<bean:define id="coordinators" value="<%= coordinators.toString().concat(coordinatorName.toString()) %>"/>
-				</logic:notMatch>
-			</logic:equal>
-		 </logic:iterate>
+			<br/>
 	</logic:iterate>
+</logic:notEmpty>
 
-</logic:present>			
-
-
-<%--
-	<div class="degree_imageplacer">
-		IMAGEM REFERENTE ï¿? LICENCIATURA  width="250" height="150"
-	</div>
---%>
-
+<logic:notPresent name="infoDegreeInfo">
+	<p><em><bean:message bundle="DEFAULT" key="error.public.DegreeInfoNotPresent"/></em></p>
+</logic:notPresent>
 <logic:present name="infoDegreeInfo">
 	<logic:notEmpty name="infoDegreeInfo" property="description" >			 	
 		<!-- OVERVIEW -->

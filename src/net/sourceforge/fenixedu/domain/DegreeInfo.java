@@ -1,26 +1,62 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
-
 /**
  * @author Tania Pousao Created on 30/Out/2003
  */
 public class DegreeInfo extends DegreeInfo_Base {
 
-	public DegreeInfo() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-		setLastModificationDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-	}
-	
-	public DegreeInfo(Degree degree) {
-		this();
-		setDegree(degree);
+    protected DegreeInfo(Degree degree, ExecutionYear executionYear) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+		
+        setDegree(degree);
+        setExecutionYear(executionYear);
 	}
 
-	public void delete() {
-		removeDegree();
+    protected DegreeInfo(DegreeInfo degreeInfo, ExecutionYear executionYear) {
+	    this(degreeInfo.getDegree(), executionYear);
+        
+        setDescription(degreeInfo.getDescription());
+        setObjectives(degreeInfo.getObjectives());
+        setHistory(degreeInfo.getHistory());
+        setProfessionalExits(degreeInfo.getProfessionalExits());
+        setAdditionalInfo(degreeInfo.getAdditionalInfo());
+        setLinks(degreeInfo.getLinks());
+        
+        setDescriptionEn(degreeInfo.getDescriptionEn());
+        setObjectivesEn(degreeInfo.getObjectivesEn());
+        setHistoryEn(degreeInfo.getHistoryEn());
+        setProfessionalExitsEn(degreeInfo.getProfessionalExitsEn());
+        setAdditionalInfoEn(degreeInfo.getAdditionalInfoEn());
+        setLinksEn(degreeInfo.getLinksEn());
+        
+        setTestIngression(degreeInfo.getTestIngression());
+        setClassifications(degreeInfo.getClassifications());
+        
+        setTestIngressionEn(degreeInfo.getTestIngressionEn());
+        setClassificationsEn(degreeInfo.getClassificationsEn());
+        
+        setDriftsInitial(degreeInfo.getDriftsInitial());
+        setDriftsFirst(degreeInfo.getDriftsFirst());
+        setDriftsSecond(degreeInfo.getDriftsSecond());
+        setMarkMin(degreeInfo.getMarkMin());
+        setMarkMax(degreeInfo.getMarkMax());
+        setMarkAverage(degreeInfo.getMarkAverage());
+        
+        setQualificationLevel(degreeInfo.getQualificationLevel());
+        setRecognitions(degreeInfo.getRecognitions());
+
+        setQualificationLevelEn(degreeInfo.getQualificationLevelEn());
+        setRecognitionsEn(degreeInfo.getRecognitionsEn());
+    }
+
+    public void delete() {
+        removeRootDomainObject();
+        
+        removeDegree();
+        removeExecutionYear();
+        
 		deleteDomainObject();
 	}
+
 }

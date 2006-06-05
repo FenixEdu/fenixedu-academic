@@ -10,17 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
@@ -35,165 +36,83 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
-    public ActionForward showDescription(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
-        Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+    public ActionForward showDescription(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        prepareInfo(request);
 
-        Integer degreeId = getFromRequest("degreeID", request);
-        request.setAttribute("degreeID", degreeId);
+        return mapping.findForward("showDescription");
+    }
 
-        Integer index = getFromRequest("index", request);
-        request.setAttribute("index", index);
-        
-        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-        request.setAttribute("executionDegreeID", executionDegreeId);
-
+    private void prepareInfo(HttpServletRequest request) throws FenixActionException {
+        // inEnglish
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
         if (inEnglish == null) {
             inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
         }
         request.setAttribute("inEnglish", inEnglish);
-      
-        if (degreeId == null) {
-            // This was call by a coordinator, don't have a degreeId but a executionDegreeId
-            // Must executionDegree and obtain the correspondent degree
-            
-            InfoExecutionYear infoExecutionYear = null;
-            try {
-                final Object[] args = { executionDegreeId };
-                final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(null, "ReadExecutionDegreeByOID", args);
-                if (infoExecutionDegree == null 
-                        || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
-                        || infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null
-                        || infoExecutionDegree.getInfoExecutionYear() == null) {
-                    final ActionErrors errors = new ActionErrors();
-                    errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-                    saveErrors(request, errors);
-                    return new ActionForward(mapping.getInput());
-                }
-
-                degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
-                infoExecutionYear = infoExecutionDegree.getInfoExecutionYear();
-
-                RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
-                request.setAttribute("degreeID", degreeId);
-                request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal());
-            } catch (FenixServiceException e) {
-                final ActionErrors errors = new ActionErrors();
-                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-                saveErrors(request, errors);
-                return new ActionForward(mapping.getInput());
-            }
-
-            try {
-                final Object[] args2 = { infoExecutionYear };
-                final List<InfoExecutionPeriod> executionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(null, "ReadExecutionPeriodsByExecutionYear", args2);
-                if (executionPeriods == null || executionPeriods.size() <= 0) {
-                    final ActionErrors errors = new ActionErrors();
-                    errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-                }
-                Collections.sort(executionPeriods, new BeanComparator("endDate"));
-
-                InfoExecutionPeriod infoExecutionPeriod = ((InfoExecutionPeriod) executionPeriods.get(executionPeriods.size() - 1));
-                executionPeriodOId = infoExecutionPeriod.getIdInternal();
-                
-                request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-                request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
-                request.setAttribute("schoolYear", infoExecutionYear.getYear());
-            } catch (FenixServiceException e) {
-                final ActionErrors errors = new ActionErrors();
-                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-                saveErrors(request, errors);
-                return new ActionForward(mapping.getInput());
-            }
-        }
-
-        request.setAttribute("degree", rootDomainObject.readDegreeByOID(degreeId));        
         
-        final ActionErrors errors = new ActionErrors();
-        try {
-            final Object[] args = { degreeId };
-            final InfoDegreeInfo infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null, "ReadDegreeInfoByDegree", args);
-            infoDegreeInfo.prepareEnglishPresentation(getLocale(request));
-            request.setAttribute("infoDegreeInfo", infoDegreeInfo);
-        } catch (FenixServiceException e) {
-            errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
-            saveErrors(request, errors);
-        }
-
-        try {
-            final Object[] args1 = { executionPeriodOId, degreeId };
-            final List executionDegreeList = (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionDegreesByDegreeAndExecutionPeriod", args1);
-            request.setAttribute("infoExecutionDegrees", executionDegreeList);
-        } catch (FenixServiceException e) {
-            errors.add("impossibleDegreeSite", new ActionError("error.impossibleExecutionDegreeList"));
-            saveErrors(request, errors);
-        }
-
-        return mapping.findForward("showDescription");
-    }
-
-    public ActionForward showAccessRequirements(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+        // degree
         Integer degreeId = getFromRequest("degreeID", request);
+        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        if (degree == null) {
+            throw new FenixActionException();
+        }
         request.setAttribute("degreeID", degreeId);
-        request.setAttribute("degree", rootDomainObject.readDegreeByOID(degreeId));
+        request.setAttribute("degree", degree);
 
-        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-        request.setAttribute("executionDegreeID", executionDegreeId);
+        // execution year
+        ExecutionYear executionYearToShow = getExecutionYearToShow(request, degree);
+        request.setAttribute("executionYear", executionYearToShow);
 
-        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-        if (inEnglish == null) {
-            inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
-        }
-        request.setAttribute("inEnglish", inEnglish);        
+        // degree info
+        getDegreeInfoToShow(request, degree, executionYearToShow);
         
-        try {
-            final Object[] args = { degreeId };
-            final InfoDegreeInfo infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null, "ReadDegreeInfoByDegree", args);
-            infoDegreeInfo.prepareEnglishPresentation(getLocale(request));
-            request.setAttribute("infoDegreeInfo", infoDegreeInfo);
-        } catch (FenixServiceException e) {
-            final ActionErrors errors = new ActionErrors();
-            errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
-            saveErrors(request, errors);
-        }
-
-        return mapping.findForward("showAccessRequirements");
+        // campus and responsible coordinators
+        request.setAttribute("campus", degree.getCampus(executionYearToShow));
+        request.setAttribute("responsibleCoordinatorsTeachers", degree.getResponsibleCoordinatorsTeachers(executionYearToShow));
     }
     
-    public ActionForward showProfessionalStatus(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
-        Integer degreeId = getFromRequest("degreeID", request);
-        request.setAttribute("degreeID", degreeId);
-        request.setAttribute("degree", rootDomainObject.readDegreeByOID(degreeId));
-
-        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-        if (inEnglish == null) {
-            inEnglish = getLocale(request).getLanguage().equals(Locale.ENGLISH.getLanguage());
+    private ExecutionYear getExecutionYearToShow(HttpServletRequest request, Degree degree) throws FenixActionException {
+        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        if (executionDegreeId != null) {
+            // coordinator call
+            request.setAttribute("executionDegreeID", executionDegreeId);
+            
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+            if (executionDegree == null || !executionDegree.getDegreeCurricularPlan().getDegree().equals(degree)) {
+                throw new FenixActionException();
+            }
+            
+            return executionDegree.getExecutionYear();
+        } else {
+            return ExecutionYear.readCurrentExecutionYear();
         }
-        request.setAttribute("inEnglish", inEnglish);        
-        
-        try {
-            final Object[] args = { degreeId };
-            final InfoDegreeInfo infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null, "ReadDegreeInfoByDegree", args);
+    }
+
+    private DegreeInfo getDegreeInfoToShow(HttpServletRequest request, Degree degree, ExecutionYear executionYearToShow) throws FenixActionException {
+        DegreeInfo degreeInfoToShow = executionYearToShow.getDegreeInfo(degree);
+
+        if (degreeInfoToShow != null) {
+            final InfoDegreeInfo infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfoToShow);
             infoDegreeInfo.prepareEnglishPresentation(getLocale(request));
             request.setAttribute("infoDegreeInfo", infoDegreeInfo);
-        } catch (FenixServiceException e) {
-            final ActionErrors errors = new ActionErrors();
-            errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
-            saveErrors(request, errors);
         }
+        
+        return degreeInfoToShow;
+    }
 
+    public ActionForward showAccessRequirements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        prepareInfo(request);
+        
+        return mapping.findForward("showAccessRequirements");
+    }
+
+    public ActionForward showProfessionalStatus(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        prepareInfo(request);
+        
         return mapping.findForward("showProfessionalStatus");
     }
     
-    public ActionForward showCurricularPlan(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+    public ActionForward showCurricularPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
         request.setAttribute("degree", rootDomainObject.readDegreeByOID(degreeId));

@@ -642,6 +642,7 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
 	DateTime lastModificationDateDateTime;
 
 	Integer keyDegree;
+	Integer keyExecutionYear;
 }
 
 
@@ -3573,6 +3574,14 @@ relation DegreeDegreeCurricularPlan {
 
 relation DegreeDegreeInfo {
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+	net.sourceforge.fenixedu.domain.DegreeInfo playsRole degreeInfos {
+		multiplicity *;
+	}
+}
+
+
+relation DegreeInfoExecutionYear {
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 	net.sourceforge.fenixedu.domain.DegreeInfo playsRole degreeInfos {
 		multiplicity *;
 	}

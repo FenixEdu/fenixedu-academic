@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.DegreeInfo;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 /**
  * @author T�nia Pous�o Created on 30/Out/2003
@@ -41,7 +41,7 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
 
     private Double markAverage;
 
-    private Timestamp lastModificationDate;
+    private ExecutionYear executionYear;
     
     private String qualificationLevel;
     
@@ -89,7 +89,6 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
         this.markMin = markMin;
         this.markMax = markMax;
         this.markAverage = markAverage;
-        this.lastModificationDate = lastModificationDate;
     }
 
     public String getAdditionalInfo() {
@@ -148,16 +147,8 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
         this.infoDegree = infoDegree;
     }
 
-    public Timestamp getLastModificationDate() {
-        return lastModificationDate;
-    }
-
-    public void setLastModificationDate(Timestamp lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
-    }
-    
-    public void setLastModificationDate(Date lastModificationDate) {
-        this.lastModificationDate = new Timestamp(lastModificationDate.getTime());
+    public InfoExecutionYear getLastModificationDate() {
+        return InfoExecutionYear.newInfoFromDomain(executionYear);
     }
 
     public String getLinks() {
@@ -393,7 +384,6 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
             setDriftsSecond(degreeInfo.getDriftsSecond());
             setHistory(degreeInfo.getHistory());
             setHistoryEn(degreeInfo.getHistoryEn());
-            setLastModificationDate(degreeInfo.getLastModificationDate());
             setLinks(degreeInfo.getLinks());
             setLinksEn(degreeInfo.getLinksEn());
             setMarkAverage(degreeInfo.getMarkAverage());

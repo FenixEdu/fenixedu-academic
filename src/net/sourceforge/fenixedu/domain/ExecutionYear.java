@@ -155,4 +155,14 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     	final int yearPart2 = Integer.parseInt(getYear().substring(5, 9)) + 1;
     	return Integer.toString(yearPart1) + getYear().charAt(4) + Integer.toString(yearPart2);
     }
+
+    public DegreeInfo getDegreeInfo(Degree degree) {
+        for (final DegreeInfo degreeInfo : getDegreeInfos()) {
+            if (degreeInfo.getDegree().equals(degree)) {
+                return degreeInfo;
+            }
+        }
+        return null;
+    }
+    
 }

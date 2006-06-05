@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Create table room classification" createTableRoomClassification.sql
+execute "add Execution Year To Table DegreeInfo" addExecutionYearToTableDegreeInfo.sql

@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
@@ -50,8 +52,6 @@ public class Degree extends Degree_Base {
             throw new DomainException("degree.concrete.class.not.null");
         }
         this.setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
-
-        new DegreeInfo(this);
     }
 
     public Degree(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
@@ -59,8 +59,6 @@ public class Degree extends Degree_Base {
         this();
         commonFieldsChange(name, nameEn, acronym, gradeScale);
         newStructureFieldsChange(bolonhaDegreeType, ectsCredits, prevailingScientificArea);
-
-        new DegreeInfo(this);
     }
 
     private void commonFieldsChange(String name, String nameEn, String code, GradeScale gradeScale) {
@@ -99,10 +97,6 @@ public class Degree extends Degree_Base {
             throw new DomainException("degree.degree.type.not.null");
         }
         this.setTipoCurso(degreeType);
-
-        if (!hasAnyDegreeInfos()) {
-            new DegreeInfo(this);
-        }
     }
 
     public void edit(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
@@ -110,10 +104,6 @@ public class Degree extends Degree_Base {
         checkIfCanEdit(bolonhaDegreeType);
         commonFieldsChange(name, nameEn, acronym, gradeScale);
         newStructureFieldsChange(bolonhaDegreeType, ectsCredits, prevailingScientificArea);
-
-        if (!hasAnyDegreeInfos()) {
-            new DegreeInfo(this);
-        }
     }
 
     private void checkIfCanEdit(final BolonhaDegreeType bolonhaDegreeType) {
@@ -493,12 +483,43 @@ public class Degree extends Degree_Base {
         return result;
     }
 
-    public DegreeInfo getLatestDegreeInfo() {
-        if (!getDegreeInfos().isEmpty()) {
-            List<DegreeInfo> degreeInfos = new ArrayList<DegreeInfo>(getDegreeInfos());
-            return (DegreeInfo) Collections.max(degreeInfos, new BeanComparator("lastModificationDate"));
+    /**
+     * @return the most recent info of this degree.
+     */
+    public DegreeInfo getMostRecentDegreeInfo() {
+        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        DegreeInfo result = executionYear.getDegreeInfo(this);
+
+        if (result != null) {
+            return result;
         }
+
+        for (;executionYear != null; executionYear = executionYear.getPreviousExecutionYear()) {
+            result = executionYear.getDegreeInfo(this);
+            
+            if (result != null) {
+                return result;
+            }
+        }
+        
         return null;
+    }
+
+    public DegreeInfo createCurrentDegreeInfo() {
+        // first let's check if the current degree info exists already
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        DegreeInfo shouldBeThisOne = currentExecutionYear.getDegreeInfo(this);
+        if (shouldBeThisOne != null) {
+            return shouldBeThisOne;
+        } 
+
+        // ok, so let's create a new one based on the most recent one, if existing
+        DegreeInfo mostRecentDegreeInfo = this.getMostRecentDegreeInfo();
+        if (mostRecentDegreeInfo != null) {
+            return new DegreeInfo(mostRecentDegreeInfo, currentExecutionYear);
+        } else {
+            return new DegreeInfo(this, currentExecutionYear);
+        }
     }
 
     public List<Integer> buildFullCurricularYearList() {
@@ -520,4 +541,28 @@ public class Degree extends Degree_Base {
         return result;
     }
 
+    public Collection<Teacher> getResponsibleCoordinatorsTeachers(ExecutionYear executionYear) {
+        Set<Teacher> result = new HashSet<Teacher>();
+        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
+            final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+            if (executionDegree != null) {
+                for (final Coordinator coordinator : executionDegree.getResponsibleCoordinators()) {
+                    result.add(coordinator.getTeacher());    
+                }
+            }
+        }
+        return new ArrayList<Teacher>(result);
+    }
+    
+    public Collection<Campus> getCampus(ExecutionYear executionYear) {
+        Set<Campus> result = new HashSet<Campus>();
+        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
+            final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+            if (executionDegree != null && executionDegree.hasCampus()) {
+                result.add(executionDegree.getCampus());
+            }
+        }
+        return new ArrayList<Campus>(result);
+    }
+    
 }

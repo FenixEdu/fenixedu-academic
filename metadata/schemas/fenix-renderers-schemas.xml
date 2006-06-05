@@ -477,6 +477,160 @@
 		<slot name="event.eventType"/>
 	</schema>
 	
+	<schema name="degree.info.description" type="net.sourceforge.fenixedu.domain.DegreeInfo">
+		<slot name="description" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+		<slot name="descriptionEn" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+		<slot name="objectives" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+		<slot name="objectivesEn" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+		<slot name="history" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+		<slot name="historyEn" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+		<slot name="professionalExits" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>			
+		</slot>
+		<slot name="professionalExitsEn" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+		<slot name="additionalInfo" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="basic"/>
+			<property name="columns" value="75"/>
+		</slot>
+		<slot name="additionalInfoEn" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="basic"/>
+			<property name="columns" value="75"/>
+		</slot>
+		<slot name="links" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="basic"/>
+			<property name="columns" value="75"/>
+		</slot>
+		<slot name="linksEn" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="basic"/>
+			<property name="columns" value="75"/>
+		</slot>
+	</schema>
+
+	<schema name="degree.info.access" type="net.sourceforge.fenixedu.domain.DegreeInfo">
+		<slot name="testIngression" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="basic"/>
+			<property name="columns" value="75"/>
+		</slot>
+		<slot name="testIngressionEn" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="basic"/>
+			<property name="columns" value="75"/>
+		</slot>
+		<slot name="classifications" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="basic"/>
+			<property name="columns" value="75"/>
+		</slot>
+		<slot name="classificationsEn" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="basic"/>
+			<property name="columns" value="75"/>
+		</slot>
+		<slot name="driftsInitial" layout="rich-text">
+	        <property name="size" value="3"/>
+		</slot>
+		<slot name="driftsFirst" layout="rich-text">
+	        <property name="size" value="3"/>
+		</slot>
+		<slot name="driftsSecond" layout="rich-text">
+	        <property name="size" value="3"/>
+		</slot>
+		<slot name="markMin" layout="rich-text">
+	        <property name="size" value="3"/>
+		</slot>
+		<slot name="markMax" layout="rich-text">
+	        <property name="size" value="3"/>
+		</slot>
+		<slot name="markAverage" layout="rich-text">
+	        <property name="size" value="3"/>
+		</slot>
+	</schema>
+
+	<schema name="degree.info.professional.status" type="net.sourceforge.fenixedu.domain.DegreeInfo">
+		<slot name="qualificationLevel" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+		<slot name="qualificationLevelEn" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+		<slot name="recognitions" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+		<slot name="recognitionsEn" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+	</schema>
+
+	<schema name="degree.curricular.plan.description" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan">
+		<slot name="description" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+		<slot name="descriptionEn" layout="rich-text">
+			<property name="safe" value="true"/>
+			<property name="config" value="advanced"/>
+			<property name="columns" value="75"/>
+			<property name="rows" value="30"/>
+		</slot>
+	</schema>
+
 	&researcher;
 	&markSheet;
 	&messaging;

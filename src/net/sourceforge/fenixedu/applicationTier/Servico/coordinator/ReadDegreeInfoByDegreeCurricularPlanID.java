@@ -23,9 +23,9 @@ public class ReadDegreeInfoByDegreeCurricularPlanID extends Service {
 
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-        DegreeInfo latestDegreeInfo = degreeCurricularPlan.getDegree().getLatestDegreeInfo();
-        if (latestDegreeInfo != null) {
-            return InfoDegreeInfo.newInfoFromDomain(latestDegreeInfo);
+        DegreeInfo mostRecentDegreeInfo = degreeCurricularPlan.getDegree().getMostRecentDegreeInfo();
+        if (mostRecentDegreeInfo != null) {
+            return InfoDegreeInfo.newInfoFromDomain(mostRecentDegreeInfo);
         }
 
         return null;

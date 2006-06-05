@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadDegreeInfoByDegree extends Service {
@@ -18,7 +19,12 @@ public class ReadDegreeInfoByDegree extends Service {
             throw new FenixServiceException("error.impossibleDegreeSite");
         }
 
-        return InfoDegreeInfo.newInfoFromDomain(degree.getLatestDegreeInfo());
+        DegreeInfo mostRecentDegreeInfo = degree.getMostRecentDegreeInfo();
+        if (mostRecentDegreeInfo == null) {
+            throw new FenixServiceException();
+        }
+        
+        return InfoDegreeInfo.newInfoFromDomain(mostRecentDegreeInfo);
     }
 
 }
