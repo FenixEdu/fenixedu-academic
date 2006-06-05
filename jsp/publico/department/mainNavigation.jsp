@@ -5,12 +5,16 @@
 
 <f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
 
- 	<h:outputText value="<ul class='treemenu'><li><strong>" escape="false"/>
+ 	<h:outputText value="<ul class='treemenu'><li>" escape="false"/>
 		<h:outputText rendered="#{empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.acronym}" escape="false"/>
-		<h:outputLink rendered="#{!empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" value="#{CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" target="_blank">
+		<h:outputLink 
+				rendered="#{!empty CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" 
+				value="#{CompetenceCourseManagement.selectedDepartmentUnit.webAddress}" 
+				target="_blank"
+				title="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}">
 			<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.acronym}" escape="false"/>
 		</h:outputLink>
- 	<h:outputText value="</strong></li><li>" escape="false"/>
+ 	<h:outputText value="</li><li>" escape="false"/>
 		<h:outputLink value="../department/showDepartmentTeachers.faces">
 			<h:outputText value="#{publicDepartmentBundle['department.teachers']}"/>
 			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
