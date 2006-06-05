@@ -64,9 +64,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected Person getLoggedPerson(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-    	IUserView userView = SessionUtils.getUserView(request);
-		Person person  = (Person) ServiceManagerServiceFactory.executeService(userView,"ReadDomainPersonByUsername",new Object[] {userView.getUtilizador()});
-		return person;
+    	return getUserView(request).getPerson();
     }
 
     protected HttpSession getSession(HttpServletRequest request) throws InvalidSessionActionException {
