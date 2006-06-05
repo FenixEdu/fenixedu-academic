@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.jsp.PageContext;
 
@@ -137,12 +138,18 @@ public class HtmlTag {
         writer.write(indent);
         
         if (name != null) {
-            writer.write("<" + name);
-            
-            for (String attributeName : attributes.keySet()) {
-                String attributeValue = attributes.get(attributeName);
+            writer.write('<');
+            writer.write(name);
+
+            for (final Entry<String, String> attributeEntry : attributes.entrySet()) {
+            	final String attributeName = attributeEntry.getKey();
+            	final String attributeValue = attributeEntry.getValue();
                 if (attributeValue != null) {
-                    writer.write(" " + attributeName + "=\"" + attributeValue + "\"");
+                    writer.write(' ');
+                    writer.write(attributeName);
+                    writer.write("=\"");
+                    writer.write(attributeValue);
+                    writer.write('"');
                 }
             }
             
@@ -150,7 +157,7 @@ public class HtmlTag {
                 writer.write("/>");
             }
             else {
-                writer.write(">");
+                writer.write('>');
             }
         }
         
@@ -166,7 +173,9 @@ public class HtmlTag {
         
         if (! (this.children.size() == 0 && this.text == null)) {
             if (name != null) {
-                writer.write("</" + name + ">");
+                writer.write("</");
+                writer.write(name);
+                writer.write('>');
             }
         }
         
