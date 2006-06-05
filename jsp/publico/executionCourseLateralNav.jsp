@@ -47,13 +47,19 @@
 			<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" />
 		</logic:notPresent>		
 	</logic:notEmpty>
-	
+
+<%--
+background: url(<%= request.getContextPath() %>/images/rss_ico.gif) 10px 3px no-repeat; padding-left: 32px;
+style="<%=imageURL%>"
+<bean:message  key="label.rss"/>
+--%>
+
 	<li>
 		<bean:define id="imageURL" type="java.lang.String">
-			background: url(<%= request.getContextPath() %>/images/rss_ico.gif) 10px 3px no-repeat; padding-left: 32px;
+			background: url(<%= request.getContextPath() %>/images/rss_ico.gif) 4em 0.3em no-repeat; padding-left: 0em;
 		</bean:define>
-		<html:link page="<%= "/viewSite.do" + "?method=rss&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" style="<%=imageURL%>">
-			<bean:message  key="label.rss"/>
+		<html:link page="<%= "/viewSite.do" + "?method=rss&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>">
+			<img src="<%= request.getContextPath() %>/images/rss_ico.gif" alt="<bean:message  key="label.rss"/>" style="padding: 0.35em 0;" title="<bean:message  key="label.rss"/>"/>
 		</html:link>
 	</li>
 	

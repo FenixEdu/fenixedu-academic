@@ -65,8 +65,8 @@
 	</logic:notEmpty>	
 </h2>
 
-<br/>
-<h2 class="greytxt">
+
+<h2 class="greytxt" style="margin-top: 1.5em;">
 	<bean:write name="infoCurricularCourse" property="name"/>
 	<logic:notEmpty name="infoCurricularCourse" property="acronym">
 		&nbsp;(<bean:write name="infoCurricularCourse" property="acronym"/>)
@@ -107,13 +107,10 @@
 		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.scope" />	
 	</h2>
 	<logic:iterate id="infoCurricularCourseScope" name="infoCurricularCourse" property="infoScopes">
-		<fieldset style="margin-bottom: 1em; border: 0" >
 			<logic:notEmpty name="infoCurricularCourseScope" property="infoBranch.name">
 				<logic:notEqual name="infoCurricularCourseScope" property="infoBranch.name" value="">	
 					<p>
-						<label style="float: left; text-align: right; width: 10em;">
-							<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.group"/>:&nbsp;
-						</label>
+						<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.group"/>: 
 						<bean:write name="infoCurricularCourseScope" property="infoBranch.name"/>
 					</p>
 	 			</logic:notEqual>
@@ -122,9 +119,7 @@
 			<logic:notEmpty name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year">
 				<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" value="">
 					<p>
-						<label style="float: left; text-align: right; width: 10em;">
-							<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.curricular.period"/>:&nbsp;
-						</label>
+						<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.curricular.period"/>: 
 						<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>
 						<logic:notEmpty name="infoCurricularCourseScope" property="infoCurricularSemester.semester">
 							<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.semester" value="">	
@@ -134,8 +129,6 @@
 					</p>						
 				</logic:notEqual>
 			</logic:notEmpty>
-				
-		</fieldset>
 	</logic:iterate>
 </logic:present>
 
@@ -144,7 +137,7 @@
 	<logic:notEmpty name="infoCurriculum" property="generalObjectives">
 		<logic:notEqual name="infoCurriculum" property="generalObjectives" value="">
 			<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.generalObjectives" />	</h2>
-			<p style='margin-left: 25px;'><bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></p>
+			<p><bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></p>
 		</logic:notEqual>
 	</logic:notEmpty>
 </logic:present>
@@ -153,7 +146,7 @@
 <logic:notEmpty name="infoCurriculum" property="operacionalObjectives">
 	<logic:notEqual name="infoCurriculum" property="operacionalObjectives" value="">
 		<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.operacionalObjectives" /></h2>
-		<p style='margin-left: 25px;'><bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/></p>
+		<p><bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/></p>
 	</logic:notEqual>
 </logic:notEmpty> 
 </logic:present>
@@ -162,7 +155,7 @@
 <logic:notEmpty name="infoCurriculum" property="program">
 	<logic:notEqual name="infoCurriculum" property="program" value="">
 		<h2 class='arrow_bullet' />&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.program" /></h2>	
-		<p style='margin-left: 25px;'><bean:write name="infoCurriculum" property="program" filter="false" /></p>	
+		<p><bean:write name="infoCurriculum" property="program" filter="false" /></p>	
 	</logic:notEqual>
 </logic:notEmpty>
 </logic:present>

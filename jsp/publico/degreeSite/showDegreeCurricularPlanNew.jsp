@@ -93,6 +93,8 @@
 		</table>
 	</html:form> 
 	
+	<br/>
+	
 	<logic:present name="allActiveCurricularCourseScopes">
 	<logic:notEmpty name="allActiveCurricularCourseScopes">
 

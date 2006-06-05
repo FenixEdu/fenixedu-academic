@@ -38,16 +38,16 @@
 
 	<h:outputText value="<br/><h2 class='arrow_bullet'>#{bolonhaBundle['area']}</h2>" escape="false"/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
-		<h:outputText value="<p style='margin-left: 25px;'>#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.name}</p>" escape="false"/>
+		<h:outputText value="<p style='margin-left: 0px;'>#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.name}</p>" escape="false"/>
 	</fc:dataRepeater>
 
 	<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['activeCurricularPlans']}</h2>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
-		<h:outputText value="<p style='margin-left: 25px;'><i>#{bolonhaBundle['noCurricularCourses']}</i></p>" escape="false"/>
+		<h:outputText value="<p style='margin-left: 0px;'><i>#{bolonhaBundle['noCurricularCourses']}</i></p>" escape="false"/>
 	</h:panelGroup>
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
 		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}" var="curricularCourse">
-			<h:outputText value="<p style='margin-left: 25px;'>" escape="false"/>
+			<h:outputText value="<p style='margin-left: 0px;'>" escape="false"/>
 			<h:outputLink value="../showDegreeSite.do" >
 				<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name}"/>
 				<f:param name="method" value="showCurricularPlan"/>
@@ -67,53 +67,53 @@
 	</h:panelGroup>	
 
 	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}" value="<h2 class='arrow_bullet'>#{bolonhaBundle['competenceCourseLevel']}</h2>" escape="false"/>
-	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}" value="<p style='margin-left: 25px;'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.competenceCourseLevel]}</p>" escape="false"/>
+	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}" value="<p style='margin-left: 0px;'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.competenceCourseLevel]}</p>" escape="false"/>
 		
 	<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['type']}</h2>" escape="false"/>
-	<h:outputText rendered="#{CompetenceCourseManagement.competenceCourse.basic}" value="<p style='margin-left: 25px;'>#{bolonhaBundle['basic']}</p>" escape="false"/>
-	<h:outputText rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" value="<p style='margin-left: 25px;'>#{bolonhaBundle['nonBasic']}</p>" escape="false"/>
+	<h:outputText rendered="#{CompetenceCourseManagement.competenceCourse.basic}" value="<p style='margin-left: 0px;'>#{bolonhaBundle['basic']}</p>" escape="false"/>
+	<h:outputText rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" value="<p style='margin-left: 0px;'>#{bolonhaBundle['nonBasic']}</p>" escape="false"/>
 		
 	<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['regime']}</h2>" escape="false"/>
-	<h:outputText value="<p style='margin-left: 25px;'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.regime.name]}</p>" escape="false"/>
+	<h:outputText value="<p style='margin-left: 0px;'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.regime.name]}</p>" escape="false"/>
 
 	<!-- LESSON HOURS -->
 	<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['lessonHours']}</h2>" escape="false"/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
-		<h:outputText value="<p style='margin-top: 30px; margin-left: 25px;'><strong><em>#{competenceCourseLoad.order}º #{bolonhaBundle['semester']}</em></strong></p>" escape="false"
+		<h:outputText value="<p style='margin-top: 30px; margin-left: 0px;'><strong><em>#{competenceCourseLoad.order}º #{bolonhaBundle['semester']}</em></strong></p>" escape="false"
 			rendered="#{CompetenceCourseManagement.competenceCourse.regime.name == 'ANUAL' && numberOfElements == 2}"/>
 		
-		<h:outputText value="<p style='margin-left: 50px;'>#{bolonhaBundle['theoreticalLesson']}: " escape="false"/>
+		<h:outputText value="<p style='margin-left: 0px;'>#{bolonhaBundle['theoreticalLesson']}: " escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.theoreticalHours} h/#{bolonhaBundle['lowerCase.week']}</p>" escape="false"/>
 
-		<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="<p style='margin-left: 50px;'>#{bolonhaBundle['problemsLesson']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="<p style='margin-left: 0px;'>#{bolonhaBundle['problemsLesson']}: " escape="false"/>
 		<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="#{competenceCourseLoad.problemsHours} h/#{bolonhaBundle['lowerCase.week']}</p>" escape="false"/>
 
-		<h:outputText rendered="#{competenceCourseLoad.laboratorialHours != 0.0}" value="<p style='margin-left: 50px;'>#{bolonhaBundle['laboratorialLesson']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.laboratorialHours != 0.0}" value="<p style='margin-left: 0px;'>#{bolonhaBundle['laboratorialLesson']}: " escape="false"/>
 		<h:outputText rendered="#{competenceCourseLoad.laboratorialHours != 0.0}" value="#{competenceCourseLoad.laboratorialHours} h/#{bolonhaBundle['lowerCase.week']}</p>" escape="false"/>
 
-		<h:outputText rendered="#{competenceCourseLoad.seminaryHours != 0.0}" value="<p style='margin-left: 50px;'>#{bolonhaBundle['seminary']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.seminaryHours != 0.0}" value="<p style='margin-left: 0px;'>#{bolonhaBundle['seminary']}: " escape="false"/>
 		<h:outputText rendered="#{competenceCourseLoad.seminaryHours != 0.0}" value="#{competenceCourseLoad.seminaryHours} h/#{bolonhaBundle['lowerCase.week']}</p>" escape="false"/>
 
-		<h:outputText rendered="#{competenceCourseLoad.fieldWorkHours != 0.0}" value="<p style='margin-left: 50px;'>#{bolonhaBundle['fieldWork']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.fieldWorkHours != 0.0}" value="<p style='margin-left: 0px;'>#{bolonhaBundle['fieldWork']}: " escape="false"/>
 		<h:outputText rendered="#{competenceCourseLoad.fieldWorkHours != 0.0}" value="#{competenceCourseLoad.fieldWorkHours} h/#{bolonhaBundle['lowerCase.week']}</p>" escape="false"/>
 
-		<h:outputText rendered="#{competenceCourseLoad.trainingPeriodHours != 0.0}" value="<p style='margin-left: 50px;'>#{bolonhaBundle['trainingPeriod']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.trainingPeriodHours != 0.0}" value="<p style='margin-left: 0px;'>#{bolonhaBundle['trainingPeriod']}: " escape="false"/>
 		<h:outputText rendered="#{competenceCourseLoad.trainingPeriodHours != 0.0}" value="#{competenceCourseLoad.trainingPeriodHours} h/#{bolonhaBundle['lowerCase.week']}</p>" escape="false"/>
 
-		<h:outputText rendered="#{competenceCourseLoad.tutorialOrientationHours != 0.0}" value="<p style='margin-left: 50px;'>#{bolonhaBundle['tutorialOrientation']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.tutorialOrientationHours != 0.0}" value="<p style='margin-left: 0px;'>#{bolonhaBundle['tutorialOrientation']}: " escape="false"/>
 		<h:outputText rendered="#{competenceCourseLoad.tutorialOrientationHours != 0.0}" value="#{competenceCourseLoad.tutorialOrientationHours} h/#{bolonhaBundle['lowerCase.week']}</p>" escape="false"/>
 
-		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="<p style='margin-left: 50px;'>#{bolonhaBundle['autonomousWork']}: " escape="false"/>
+		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="<p style='margin-left: 0px;'>#{bolonhaBundle['autonomousWork']}: " escape="false"/>
 		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="#{competenceCourseLoad.autonomousWorkHours} h/#{bolonhaBundle['lowerCase.semester']}</p>" escape="false"/>
 
-		<h:outputText value="<p style='margin-left: 50px;'><strong>#{bolonhaBundle['ectsCredits']}: "escape="false"/>
+		<h:outputText value="<p style='margin-left: 0px;'><strong>#{bolonhaBundle['ectsCredits']}: "escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.ectsCredits}</strong></p>" escape="false"/>
 	</fc:dataRepeater>	
 
 	<!-- OBJECTIVES -->
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.objectives}">
 		<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['objectives']}</h2>" escape="false"/>
-		<h:outputText value="<p style='margin-left: 25px;'>" escape="false"/>
+		<h:outputText value="<p style='margin-left: 0px;'>" escape="false"/>
 		<fc:extendedOutputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.objectives}" linebreak="true"/>
 		<fc:extendedOutputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.objectivesEn}" linebreak="true"/>		
 		<h:outputText value="</p>" escape="false"/>
@@ -122,7 +122,7 @@
 	<!-- PROGRAM -->
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.program}">
 		<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['program']}</h2>" escape="false"/>
-		<h:outputText value="<p style='margin-left: 25px;'>" escape="false"/>
+		<h:outputText value="<p style='margin-left: 0px;'>" escape="false"/>
 		<fc:extendedOutputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.program}" linebreak="true"/>
 		<fc:extendedOutputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.programEn}" linebreak="true"/>		
 		<h:outputText value="</p>" escape="false"/>
@@ -131,7 +131,7 @@
 	<!-- EVALUATION METHOD -->
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.evaluationMethod}">
 		<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['evaluationMethod']}</h2>" escape="false"/>
-		<h:outputText value="<p style='margin-left: 25px;'>" escape="false"/>
+		<h:outputText value="<p style='margin-left: 0px;'>" escape="false"/>
 		<fc:extendedOutputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.evaluationMethod}" linebreak="true"/>
 		<fc:extendedOutputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.evaluationMethodEn}" linebreak="true"/>
 		<h:outputText value="</p>" escape="false"/>
@@ -140,65 +140,65 @@
 	
 	<!-- BIBLIOGRAPHIC REFERENCE -->
 	<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['bibliographicReference']}</h2>" escape="false"/>
-	<h:outputText value="<h2 class='greytxt' style='margin-top: 10px; margin-left: 25px;'>#{enumerationBundle['MAIN']}</h2>" escape="false"/>
+	<h:outputText value="<h2 class='greytxt' style='margin-top: 10px; margin-left: 0px;'>#{enumerationBundle['MAIN']}</h2>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.mainBibliographicReferences}">
-		<h:outputText value="<p style='margin-left: 50px;'><i>#{bolonhaBundle['noBibliographicReferences']}</i></p>" escape="false"/>
+		<h:outputText value="<p style='margin-left: 0px;'><i>#{bolonhaBundle['noBibliographicReferences']}</i></p>" escape="false"/>
 	</h:panelGroup>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.mainBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.mainBibliographicReferences}">
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'MAIN'}">
-			<h:outputText value="<fieldset class='lfloat mbottom1'>" escape="false"/>
-			<h:outputText value="<p>" escape="false"/>
+			<h:outputText value="<div class='lfloat mbottom2'>" escape="false"/>
+			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['title']}:</label>" escape="false"/>
 			<h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
 			<h:outputText rendered="#{bibliographicReference.url == 'http://'}" value="#{bibliographicReference.title}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 			
-			<h:outputText value="<p>" escape="false"/>
+			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['author']}:</label>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>			
 			
-			<h:outputText value="<p>" escape="false"/>
+			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['year']}:</label>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.year}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 
-			<h:outputText value="<p>" escape="false"/>			
+			<h:outputText value="<p class='mvert0'>" escape="false"/>			
 			<h:outputText value="<label>#{bolonhaBundle['reference']}:</label>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.reference}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
-			<h:outputText value="</fieldset>" escape="false"/>			
+			<h:outputText value="</div>" escape="false"/>			
 		</h:panelGroup>
 	</fc:dataRepeater>
 	
-	<h:outputText value="<h2 class='greytxt' style='margin-top: 10px; margin-left: 25px;'>#{enumerationBundle['SECONDARY']}</h2>" escape="false"/>
+	<h:outputText value="<h2 class='greytxt' style='margin-top: 10px; margin-left: 0px;'>#{enumerationBundle['SECONDARY']}</h2>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.secondaryBibliographicReferences}">
-		<h:outputText value="<p style='margin-left: 50px;'><i>#{bolonhaBundle['noBibliographicReferences']}</i></p>" escape="false"/>
+		<h:outputText value="<p style='margin-left: 0px;'><i>#{bolonhaBundle['noBibliographicReferences']}</i></p>" escape="false"/>
 	</h:panelGroup>	
 	<fc:dataRepeater value="#{CompetenceCourseManagement.secondaryBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.secondaryBibliographicReferences}">
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'SECONDARY'}">
-			<h:outputText value="<fieldset class='lfloat mbottom1'>" escape="false"/>
-			<h:outputText value="<p>" escape="false"/>
+			<h:outputText value="<div class='lfloat mbottom2'>" escape="false"/>
+			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['title']}:</label>" escape="false"/>
 			<h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
 			<h:outputText rendered="#{bibliographicReference.url == 'http://'}" value="#{bibliographicReference.title}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 			
-			<h:outputText value="<p>" escape="false"/>
+			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['author']}:</label>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>	
 			
-			<h:outputText value="<p>" escape="false"/>
+			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['year']}:</label>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.year}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 
-			<h:outputText value="<p>" escape="false"/>			
+			<h:outputText value="<p class='mvert0'>" escape="false"/>			
 			<h:outputText value="<label>#{bolonhaBundle['reference']}:</label>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.reference}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
-			<h:outputText value="</fieldset>" escape="false"/>			
+			<h:outputText value="</div>" escape="false"/>			
 		</h:panelGroup>
 	</fc:dataRepeater>
 

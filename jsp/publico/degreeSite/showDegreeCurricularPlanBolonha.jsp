@@ -52,7 +52,7 @@
 	</h:panelGroup>
 
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.executionDegrees}">
-		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<div style='margin-left: 25px;'>" escape="false"/>
 			<h:outputText value="<p>#{publicDegreeInfoBundle['public.degree.information.label.executionYear']}: " escape="false"/>
 			<h:selectOneMenu value="#{CurricularCourseManagement.executionYearID}" onchange="this.form.submit();">
 				<f:selectItems value="#{CurricularCourseManagement.executionYearItems}" />

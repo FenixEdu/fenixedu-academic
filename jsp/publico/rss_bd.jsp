@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <logic:present name="siteView"> 
+	<br/>
 	<h2><bean:message key="label.rss"/></h2>
 	<p><bean:message key="message.rss.1"/></p>
 
@@ -22,21 +23,15 @@
 	
 	<p>Copie os URL's para o leitor RSS.</p>	
 	
-	<style type="text/css">
-	table.asd tr td {
-	border-bottom: 1px solid #eee;
-	padding: 0.5em 1em;
-	}	
-	</style>
-	
 		<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
 		<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
 		<bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=context%></bean:define>
-	<table class="asd">
+	<table>
 		<tr>
-			<td><strong><bean:message key="label.announcements"/></strong></td><td><a href="<%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%></a></td>
-			<td><a href="<%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif"></td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><strong><bean:message key="label.announcements"/></strong></td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%></a></td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif"></td>
 		</tr>
 	</table>
 </logic:present>
