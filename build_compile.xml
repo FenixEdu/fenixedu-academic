@@ -132,25 +132,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter token="@db.alias@"
 							   property="db.alias"/>
 
-				<replacefilter token="@db.assiduousness.user@"
-								   property="db.assiduousness.user"/>
-				<replacefilter token="@db.assiduousness.pass@" 
-				    			   property="db.assiduousness.pass"/>
-				<replacefilter token="@db.assiduousness.name@" 
-								   property="db.assiduousness.name"/>
-				<replacefilter token="@db.assiduousness.alias@" 
-				    			   property="db.assiduousness.alias"/>
-				<replacefilter token="@db.assiduousness.platform@" 
-				    			   property="db.assiduousness.platform"/>
-				<replacefilter token="@db.assiduousness.driver@" 
-				    			   property="db.assiduousness.driver"/>
-				<replacefilter token="@db.assiduousness.protocol@" 
-				    			   property="db.assiduousness.protocol"/>
-				<replacefilter token="@db.assiduousness.subprotocol@" 
-				    			   property="db.assiduousness.subprotocol"/>
-				<replacefilter token="@db.assiduousness.validationQuery@" 
-				    			   property="db.assiduousness.validationQuery"/>
-
 				<replacefilter token="@db.personFilter.user@" 
 				    			   property="db.personFilter.user"/>
 				<replacefilter token="@db.personFilter.pass@" 
@@ -390,6 +371,28 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter token="@db.projectManagement.alias@"
 							   property="db.projectManagement.alias"/>
 			</replace>
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
+								 propertyFile="build.properties">
+							<include name="assiduousness.properties"/>
+			<replacefilter token="@db.assiduousness.user@"
+							   property="db.assiduousness.user"/>
+			<replacefilter token="@db.assiduousness.pass@" 
+			    			   property="db.assiduousness.pass"/>
+			<replacefilter token="@db.assiduousness.name@" 
+							   property="db.assiduousness.name"/>
+			<replacefilter token="@db.assiduousness.alias@" 
+			    			   property="db.assiduousness.alias"/>
+			<replacefilter token="@db.assiduousness.platform@" 
+			    			   property="db.assiduousness.platform"/>
+			<replacefilter token="@db.assiduousness.driver@" 
+			    			   property="db.assiduousness.driver"/>
+			<replacefilter token="@db.assiduousness.protocol@" 
+			    			   property="db.assiduousness.protocol"/>
+			<replacefilter token="@db.assiduousness.subprotocol@" 
+			    			   property="db.assiduousness.subprotocol"/>
+			<replacefilter token="@db.assiduousness.validationQuery@" 
+			    			   property="db.assiduousness.validationQuery"/>
+				</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}/resources"
 					 propertyFile="build.properties">
