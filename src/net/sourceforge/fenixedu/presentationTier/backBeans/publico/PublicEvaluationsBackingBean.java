@@ -69,9 +69,12 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 	public Integer getExecutionPeriodID() {
 		if (executionPeriodID == null || !contains(getExecutionPeriodSelectItems(), executionPeriodID)) {
 			executionPeriodID = getAndHoldIntegerParameter("executionPeriodID");
-			if (executionPeriodID == null) {
-				executionPeriodID = getMostRecentExecutionPeriod().getIdInternal();
-			}
+            if (executionPeriodID == null) {
+                ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+                ExecutionDegree currentExecutionDegree = getDegreeCurricularPlan().getExecutionDegreeByYear(currentExecutionPeriod.getExecutionYear());
+                
+                executionPeriodID = (currentExecutionDegree != null) ? currentExecutionPeriod.getIdInternal() : getMostRecentExecutionPeriod().getIdInternal(); 
+            }
 		}
 		return executionPeriodID;
 	}
