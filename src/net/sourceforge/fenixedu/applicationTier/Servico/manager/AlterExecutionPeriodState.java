@@ -21,11 +21,15 @@ public class AlterExecutionPeriodState extends Service {
 
         if (periodState.getStateCode().equals(PeriodState.CURRENT.getStateCode())) {
             // Deactivate the current
-            ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-            currentExecutionPeriod.setState(PeriodState.OPEN);
+            final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+            if (currentExecutionPeriod != null) {
+            	currentExecutionPeriod.setState(PeriodState.OPEN);
+            	currentExecutionPeriod.getExecutionYear().setState(PeriodState.OPEN);
+            }
         }
 
         executionPeriod.setState(periodState);
+        executionPeriod.getExecutionYear().setState(periodState);
     }
 
     public class InvalidExecutionPeriod extends FenixServiceException {

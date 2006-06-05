@@ -124,7 +124,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     public static ExecutionPeriod readActualExecutionPeriod() {
         for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
                 .getExecutionPeriodsSet()) {
-            if (executionPeriod.getState() == PeriodState.CURRENT) {
+            if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
                 return executionPeriod;
             }
         }
@@ -135,7 +135,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
         final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
         for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
                 .getExecutionPeriodsSet()) {
-            if (executionPeriod.getState() != PeriodState.CLOSED) {
+            if (executionPeriod.getState().equals(PeriodState.CLOSED)) {
                 result.add(executionPeriod);
             }
         }
@@ -146,7 +146,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
         final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
         for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
                 .getExecutionPeriodsSet()) {
-            if (executionPeriod.getState() != PeriodState.NOT_OPEN) {
+            if (executionPeriod.getState().equals(PeriodState.NOT_OPEN)) {
                 result.add(executionPeriod);
             }
         }
@@ -157,8 +157,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
         final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
         for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
                 .getExecutionPeriodsSet()) {
-            if (executionPeriod.getState() != PeriodState.NOT_OPEN
-                    && executionPeriod.getState() != PeriodState.CLOSED) {
+            if (executionPeriod.getState().equals(PeriodState.NOT_OPEN)
+                    && executionPeriod.getState().equals(PeriodState.CLOSED)) {
                 result.add(executionPeriod);
             }
         }
