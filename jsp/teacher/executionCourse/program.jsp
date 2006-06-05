@@ -4,12 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<p>
-	<span class="error">
-		<html:errors/>
-	</span>
-</p>
-
 <table width="100%">
 	<tr>
 		<td class="infoop">
@@ -17,6 +11,15 @@
 		</td>
 	</tr>
 </table>
+
+<p>
+	<span class="error">
+		<html:errors/>
+	</span>
+	<span class="info">
+		<html:messages id="info" message="true"/>
+	</span>
+</p>
 
 <logic:present name="executionCourse">
 

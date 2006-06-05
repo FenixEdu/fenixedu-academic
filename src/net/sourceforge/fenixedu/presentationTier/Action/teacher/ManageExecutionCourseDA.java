@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
@@ -19,10 +21,13 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 public class ManageExecutionCourseDA extends FenixDispatchAction {
@@ -62,7 +67,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+            HttpServletResponse response) throws FenixActionException {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String curriculumIDString = request.getParameter("curriculumID");
         final String program = dynaActionForm.getString("program");
@@ -80,7 +85,15 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final Object args[] = { executionCourse.getIdInternal(),
                 curriculum.getCurricularCourse().getIdInternal(), infoCurriculum,
                 userView.getUtilizador() };
-        ServiceManagerServiceFactory.executeService(userView, "EditProgram", args);
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "EditProgram", args);
+        } catch (NotAuthorizedFilterException e) {
+            ActionMessages messages = new ActionMessages();
+            messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
+            saveErrors(request, messages);
+        } catch (Exception e) {
+            throw new FenixActionException();
+        }
 
         return mapping.findForward("program");
     }
