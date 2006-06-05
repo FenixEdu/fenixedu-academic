@@ -841,7 +841,7 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	YearMonthDay antiquityYearMonthDay;
 	Integer keyPerson;
 	Integer workingHours;
-
+	Integer keyAssiduousness;
 }
 
 
@@ -2880,7 +2880,6 @@ class net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod extends
 
 class net.sourceforge.fenixedu.domain.assiduousness.Assiduousness extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyEmployee;
-	Integer keySchedule;
 }
 
 /*class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegimeHistory extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3014,7 +3013,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime extends 
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Card extends net.sourceforge.fenixedu.domain.DomainObject {
-       Integer cardID;
+       Integer cardId;
        CardType type;
 }
 
@@ -6046,11 +6045,11 @@ relation AdviseTeacherAdviseService {
 }
 
 // Assiduousness
- /*
+ 
 relation EmployeeAssiduousness {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
-}*/
+}
 
 relation AssiduousnessSchedule {
 	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedules {
@@ -6060,7 +6059,7 @@ relation AssiduousnessSchedule {
 }               
 
 relation ScheduleEmployee {
-	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole schedules {
+	net.sourceforge.fenixedu.domain.assiduousness.Schedule playsRole modifiedSchedules {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Employee playsRole modifiedBy;
