@@ -81,7 +81,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public BibliographicReferences getBibliographicReferences() {
-        return getRecentCompetenceCourseInformation().getBibliographicReferences();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getBibliographicReferences() : null;
     }
 
     public void createBibliographicReference(String year, String title, String authors, String reference,
@@ -238,40 +238,39 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
     
     public CompetenceCourseLevel getCompetenceCourseLevel() {
-        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-                .getCompetenceCourseLevel() : null;
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation() .getCompetenceCourseLevel() : null;
     }
 
     public List<CompetenceCourseLoad> getCompetenceCourseLoads() {
-        return getRecentCompetenceCourseInformation().getCompetenceCourseLoads();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getCompetenceCourseLoads() : null;
     }
     
     public int getCompetenceCourseLoadsCount() {
-        return getRecentCompetenceCourseInformation().getCompetenceCourseLoadsCount();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getCompetenceCourseLoadsCount() : 0;
     }
 
     public String getObjectives() {
-        return getRecentCompetenceCourseInformation().getObjectives();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getObjectives() : null;
     }
 
     public String getProgram() {
-        return getRecentCompetenceCourseInformation().getProgram();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getProgram() : null;
     }
 
     public String getEvaluationMethod() {
-        return getRecentCompetenceCourseInformation().getEvaluationMethod();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getEvaluationMethod() : null;
     }
 
     public String getObjectivesEn() {
-        return getRecentCompetenceCourseInformation().getObjectivesEn();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getObjectivesEn() : null;
     }
 
     public String getProgramEn() {
-        return getRecentCompetenceCourseInformation().getProgramEn();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getProgramEn() : null;
     }
 
     public String getEvaluationMethodEn() {
-        return getRecentCompetenceCourseInformation().getEvaluationMethodEn();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getEvaluationMethodEn() : null;
     }
 
     public double getTheoreticalHours() {
