@@ -1,0 +1,90 @@
+<schema name="show.clocking"
+	type="net.sourceforge.fenixedu.domain.assiduousness.Clocking">
+	<slot name="date" key="label.clockingDate" />
+	<slot name="clockUnit" schema="show.clockUnit" layout="values-dash" />
+</schema>
+
+<schema name="show.clockUnit"
+	type="net.sourceforge.fenixedu.domain.assiduousness.ClockUnit">
+	<slot name="acronym" key="label.clockUnit" />
+</schema>
+
+
+<schema name="show.leaves"
+	type="net.sourceforge.fenixedu.domain.assiduousness.Leave">
+	<slot name="date" key="label.beginDate" />
+	<slot name="partialEndDate" key="label.endDateOrDuration" />
+	<slot name="justificationMotive.description"
+		key="label.justification" />
+</schema>
+
+<schema name="choose.date"
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth">
+	<slot name="year"
+		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+	</slot>
+	<slot name="month" layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.util.Month" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+</schema>
+
+<schema name="show.schedule"
+	type="net.sourceforge.fenixedu.domain.assiduousness.Schedule">
+	<slot name="beginDate" key="label.beginDate" />
+	<slot name="workSchedules" key="label.assiduousness.schedule"
+		schema="show.workSchedule" layout="tabular-list">
+		<property name="subLayout" value="tabular" />
+		<property name="subSchema" value="show.workSchedule" />
+		<property name="columnClasses" value="tstyle6" />	
+	</slot>
+</schema>
+
+<schema name="show.workSchedule"
+	type="net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule">
+	<slot name="workScheduleType.acronym" key="label.acronym"/>
+	<!-- 	<slot name="periodicity.workWeekNumber" key="label.week" /> -->
+	<slot name="workWeek.days" key="label.days" />
+	<slot name="workScheduleType.normalWorkPeriod"
+		schema="show.WorkPeriod" layout="values" key="label.normalWorkPeriod" />
+	<slot name="workScheduleType.fixedWorkPeriod"
+		schema="show.WorkPeriod" layout="values" key="label.fixedWorkPeriod" />
+	<slot name="workScheduleType.meal" schema="show.MealBreak"
+		layout="values" key="label.mealPeriod" />
+</schema>
+
+<schema name="show.WorkPeriod"
+	type="net.sourceforge.fenixedu.domain.assiduousness.WorkPeriod">
+	<slot name="firstPeriod">
+		<property name="format" value="HH:mm " />
+	</slot>
+	<slot name="endFirstPeriod">
+		<property name="format" value="'-' HH:mm" />
+	</slot>
+	<slot name="secondPeriod">
+		<property name="format" value=" 'e' HH:mm " />
+	</slot>
+	<slot name="endSecondPeriod">
+		<property name="format" value="'-' HH:mm" />
+	</slot>
+</schema>
+
+<schema name="show.MealBreak"
+	type="net.sourceforge.fenixedu.domain.assiduousness.Meal">
+	<slot name="beginMealBreak">
+		<property name="format" value="HH:mm " />
+	</slot>
+	<slot name="endMealBreak">
+		<property name="format" value="'-' HH:mm " />
+	</slot>
+	<slot name="minimumMealBreakInterval">
+		<property name="format" value="'(min:' HH:mm" />
+	</slot>
+	<slot name="mandatoryMealDiscount">
+		<property name="format" value="' - obr: 'HH:mm)" />
+	</slot>
+</schema>

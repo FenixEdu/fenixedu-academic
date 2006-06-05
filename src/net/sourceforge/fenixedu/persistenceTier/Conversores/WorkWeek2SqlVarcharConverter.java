@@ -5,8 +5,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.EnumSet;
 
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
@@ -18,7 +20,7 @@ public class WorkWeek2SqlVarcharConverter implements FieldConversion {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
                 ObjectOutputStream dos = new ObjectOutputStream(baos);
-                dos.writeObject(source);
+                dos.writeObject(((WorkWeek) source).getDays());
             } catch (IOException e) {
                 return null;
             }
@@ -34,7 +36,7 @@ public class WorkWeek2SqlVarcharConverter implements FieldConversion {
             ByteArrayInputStream byteInputStream = new ByteArrayInputStream(workWeekByteArray);
             try {
                 ObjectInputStream stream = new ObjectInputStream(byteInputStream);
-                WorkWeek workWeek = (WorkWeek) stream.readObject();
+                WorkWeek workWeek = new WorkWeek((EnumSet<WeekDay>) stream.readObject());
                 return workWeek;
             } catch (IOException e) {
                 return null;

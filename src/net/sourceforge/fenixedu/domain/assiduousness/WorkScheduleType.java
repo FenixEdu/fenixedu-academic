@@ -97,8 +97,8 @@ public class WorkScheduleType extends WorkScheduleType_Base {
                         .getLunchBreak());
                 System.out.println("descontar " + mealDiscount.toPeriod().toString());
                 // periodo normal menos desconto
-                dailyBalance.setWorkedOnNormalWorkPeriod(dailyBalance.getWorkedOnNormalWorkPeriod().minus(
-                        mealDiscount));
+                dailyBalance.setWorkedOnNormalWorkPeriod(dailyBalance.getWorkedOnNormalWorkPeriod()
+                        .minus(mealDiscount));
                 System.out.println("nwp: depois "
                         + (dailyBalance.getWorkedOnNormalWorkPeriod()).toPeriod().toString());
             }
@@ -110,12 +110,12 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         dailyBalance.setWorkedOnNormalWorkPeriod(Duration.ZERO);
         if (definedFixedPeriod()) {
             // FixedPeriod absence will be the whole fixed period duration
-            dailyBalance.setFixedPeriodAbsence(((WorkPeriod) this.getFixedWorkPeriod()).getWorkPeriodDuration());
+            dailyBalance.setFixedPeriodAbsence(((WorkPeriod) this.getFixedWorkPeriod())
+                    .getWorkPeriodDuration());
             System.out.println(dailyBalance.getFixedPeriodAbsence().toPeriod().toString());
         }
     }
-    
-    
+
     // TODO
     // Os funcionario so' podem trabalhar 5 horas seguidas
     // o tempo para alem dessas 5 horas nao e' contabilizado.
@@ -251,10 +251,14 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         return getWorkTime().plus(getWorkTimeDuration().toPeriod());
     }
 
+    public TimeOfDay getEndClockingTime() {
+        return getClockingTime().plus(getClockingTimeDuration().toPeriod());
+    }
+
     public boolean isNextDay() {
         DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
         Duration maxDuration = new Duration(getWorkTime().toDateTime(now).getMillis(), now.plusDays(1)
                 .getMillis());
-        return (getWorkTimeDuration().compareTo(maxDuration) > 0);
+        return (getWorkTimeDuration().compareTo(maxDuration) >= 0);
     }
 }

@@ -107,6 +107,12 @@ border-collapse: collapse;
 margin: 1em 0;
 }
 
+.tstyle6 {
+border-collapse: collapse;
+margin: 1em 0;
+width: 100%;
+}
+
 .tstyle1a { }
 .tstyle1b { }
 .tstyle1c { }
@@ -119,8 +125,16 @@ padding: 0.5em;
 /*text-align: center;*/
 /*font-weight: normal;*/
 }
+
+.tstyle6 th {
+padding: 0.5em;
+/*text-align: center;*/
+/*font-weight: normal;*/
+width: 35%;
+}
+
 .tstyle1a th { border: 1px solid #cccccc; }
-.tstyle1b th { border: 1px solid #ccccc2; }
+.tstyle1b th, .tstyle6 th { border: 1px solid #ccccc2;}
 .tstyle1c th { border: 1px solid #c8cacc; }
 .tstyle2 th { border: none; border-bottom: 1px solid #ccc; }
 .tstyle3 th { padding: 0.5em 1em; border: 1px solid #ccc; }
@@ -128,7 +142,7 @@ padding: 0.5em;
 .tstyle5 th { padding: 0.3em; border: 1px solid #fff; }
 
 .tstyle1a th { background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x; }
-.tstyle1b th { background: #fafaf6 url(../../pics/back_32yellow.gif) left bottom repeat-x; }
+.tstyle1b th, .tstyle6 th { background: #fafaf6 url(../../pics/back_32yellow.gif) left bottom repeat-x;}
 .tstyle1c th { background: #f6f8fa url(../../pics/back_32blue.gif) left bottom repeat-x; }
 .tstyle3 th { background-color: #eee; }
 .tstyle2 th { background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x; }
@@ -144,6 +158,7 @@ padding: 0.5em;
 .tstyle3 td {border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle5 td { padding: 0.3em; border: 1px solid #fff; background: #f5f5f5; }
+.tstyle6 td { border: 1px solid #ccccc2; width: 65%;}
 
 .tpadding01 th, .tpadding01 td { padding: 0.5em 0.1em; }
 

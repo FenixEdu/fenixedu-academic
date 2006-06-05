@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="employee-index" extends="definition.employee.two-column">
+		<put name="body" value="/employee/welcomeScreen.jsp" />
+	</definition>
+	<definition name="show-employee-info" extends="definition.employee.two-column">
+		<put name="body" value="/employee/showEmployeeInfo.jsp" />
+	</definition>
+	<definition name="choose-date" extends="definition.employee.two-column">
+		<put name="body" value="/employee/chooseDate.jsp" />
+	</definition>
+	<definition name="show-clockings" extends="definition.employee.two-column">
+		<put name="body" value="/employee/showClockings.jsp" />
+	</definition>
+	<definition name="show-justifications" extends="definition.employee.two-column">
+		<put name="body" value="/employee/showJustifications.jsp" />
+	</definition>
+	<definition name="show-work-sheet" extends="definition.employee.two-column">
+		<put name="body" value="/employee/showWorkSheet.jsp" />
+	</definition>
+</tiles-definitions>

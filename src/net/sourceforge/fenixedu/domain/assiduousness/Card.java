@@ -13,7 +13,7 @@ public class Card extends Card_Base {
     public Card(Integer cardNumber, CardType cardType) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-        setCardID(cardNumber);
+        setCardId(cardNumber);
         setType(cardType);
     }
 
