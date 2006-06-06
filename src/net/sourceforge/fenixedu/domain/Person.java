@@ -1254,7 +1254,7 @@ public class Person extends Person_Base {
     }
 
     public SortedSet<Attends> getCurrentAttends() {
-    	final SortedSet<Attends> attends = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR);
+    	final SortedSet<Attends> attends = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
     	for (final Student student : getStudentsSet()) {
     		for (final Attends attend : student.getAssociatedAttendsSet()) {
     			final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();

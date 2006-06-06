@@ -6,6 +6,7 @@
 
 package net.sourceforge.fenixedu.domain;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,6 +19,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -50,6 +52,8 @@ public class Attends extends Attends_Base {
             }
         }
     };
+
+    public static final Comparator<Attends> ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME = new BeanComparator("disciplinaExecucao.nome", Collator.getInstance());
 
     public Attends() {
         super();
