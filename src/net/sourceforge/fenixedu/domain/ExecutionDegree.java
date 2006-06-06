@@ -33,60 +33,47 @@ import org.joda.time.YearMonthDay;
 public class ExecutionDegree extends ExecutionDegree_Base implements Comparable {
 
     public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME;
-
     public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR;
     static {
-        final Comparator degreeTypeComparator = new BeanComparator(
-                "degreeCurricularPlan.degree.tipoCurso");
+        final Comparator degreeTypeComparator = new BeanComparator("degreeCurricularPlan.degree.tipoCurso");
         final Comparator degreeNameComparator = new BeanComparator("degreeCurricularPlan.degree.nome");
         final Comparator executionYearComparator = new BeanComparator("executionYear.year");
-        EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME = new ComparatorChain();
-        ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME)
-                .addComparator(degreeTypeComparator);
-        ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME)
-                .addComparator(degreeNameComparator);
+    	EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME = new ComparatorChain();
+    	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME).addComparator(degreeTypeComparator);
+    	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME).addComparator(degreeNameComparator);
         EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR = new ComparatorChain();
-        ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR)
-                .addComparator(degreeTypeComparator);
-        ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR)
-                .addComparator(degreeNameComparator);
-        ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR)
-                .addComparator(executionYearComparator);
+        ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(degreeTypeComparator);
+        ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(degreeNameComparator);
+        ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(executionYearComparator);
     }
 
     public ExecutionDegree() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-    }
-
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+    
     public void delete() {
         if (canBeDeleted()) {
-            for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete())
-                ;
+            for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete());
             if (hasGratuityValues()) {
                 getGratuityValues().delete();
             }
 
-            OccupationPeriod occupationPeriodReference = getPeriodLessonsFirstSemester();
-            removePeriodLessonsFirstSemester();
-            occupationPeriodReference.deleteIfEmpty();
+            deletePeriodLessonsFirstSemester();
+            deletePeriodLessonsSecondSemester();
 
-            occupationPeriodReference = getPeriodLessonsSecondSemester();
-            removePeriodLessonsSecondSemester();
-            occupationPeriodReference.deleteIfEmpty();
-
-            occupationPeriodReference = getPeriodExamsFirstSemester();
-            removePeriodExamsFirstSemester();
-            occupationPeriodReference.deleteIfEmpty();
-
-            occupationPeriodReference = getPeriodExamsSecondSemester();
-            removePeriodExamsSecondSemester();
-            occupationPeriodReference.deleteIfEmpty();
-
+            deletePeriodExamsFirstSemester();
+            deletePeriodExamsSecondSemester();
+            deletePeriodExamsSpecialSeason();
+            
+            deletePeriodGradeSubmissionNormalSeasonFirstSemester();
+            deletePeriodGradeSubmissionNormalSeasonSecondSemester();
+            deletePeriodGradeSubmissionSpecialSeason();
+            
             removeExecutionYear();
             removeDegreeCurricularPlan();
             removeCampus();
-
+            
             removeRootDomainObject();
             deleteDomainObject();
         } else {
@@ -94,93 +81,139 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         }
     }
 
-    public boolean canBeDeleted() {
-        return (!hasAnySchoolClasses() && !hasAnyMasterDegreeCandidates() && !hasAnyGuides()
-                && !hasScheduling() && !hasAnyAssociatedFinalDegreeWorkGroups()
-                && getPeriodLessonsFirstSemester().getRoomOccupations().isEmpty()
-                && getPeriodLessonsSecondSemester().getRoomOccupations().isEmpty()
-                && getPeriodExamsFirstSemester().getRoomOccupations().isEmpty() && getPeriodExamsSecondSemester()
-                .getRoomOccupations().isEmpty());
+    private void deletePeriodGradeSubmissionSpecialSeason() {
+        OccupationPeriod occupationPeriodReference = getPeriodGradeSubmissionSpecialSeason();
+        if (occupationPeriodReference != null) {
+            removePeriodGradeSubmissionSpecialSeason();
+            occupationPeriodReference.deleteIfEmpty();
+        }
     }
 
+    private void deletePeriodGradeSubmissionNormalSeasonSecondSemester() {
+        OccupationPeriod occupationPeriodReference = getPeriodGradeSubmissionNormalSeasonSecondSemester();
+        if (occupationPeriodReference != null) {
+            removePeriodGradeSubmissionNormalSeasonSecondSemester();
+            occupationPeriodReference.deleteIfEmpty();
+        }
+    }
+
+    private void deletePeriodGradeSubmissionNormalSeasonFirstSemester() {
+        OccupationPeriod occupationPeriodReference = getPeriodGradeSubmissionNormalSeasonFirstSemester();
+        if (occupationPeriodReference != null) {
+            removePeriodGradeSubmissionNormalSeasonFirstSemester();
+            occupationPeriodReference.deleteIfEmpty();
+        }
+    }
+    
+    private void deletePeriodExamsSpecialSeason() {
+        OccupationPeriod occupationPeriodReference = getPeriodExamsSpecialSeason();
+        if (occupationPeriodReference != null) {
+            removePeriodExamsSpecialSeason();
+            occupationPeriodReference.deleteIfEmpty();
+        }
+    }
+
+    private void deletePeriodExamsSecondSemester() {
+        OccupationPeriod occupationPeriodReference = getPeriodExamsSecondSemester();
+        if (occupationPeriodReference != null) {
+            removePeriodExamsSecondSemester();
+            occupationPeriodReference.deleteIfEmpty();
+        }
+    }
+
+    private void deletePeriodExamsFirstSemester() {
+        OccupationPeriod occupationPeriodReference = getPeriodExamsFirstSemester();
+        if (occupationPeriodReference != null) {
+            removePeriodExamsFirstSemester();
+            occupationPeriodReference.deleteIfEmpty();
+        }
+    }
+
+    private void deletePeriodLessonsSecondSemester() {
+        OccupationPeriod occupationPeriodReference = getPeriodLessonsSecondSemester();
+        if (occupationPeriodReference != null) {
+            removePeriodLessonsSecondSemester();
+            occupationPeriodReference.deleteIfEmpty();
+        }
+    }
+
+    private void deletePeriodLessonsFirstSemester() {
+        OccupationPeriod occupationPeriodReference = getPeriodLessonsFirstSemester();
+        if (occupationPeriodReference != null) {
+            removePeriodLessonsFirstSemester();
+            occupationPeriodReference.deleteIfEmpty();
+        }
+    }
+    
+    public boolean canBeDeleted() {
+        return (!hasAnySchoolClasses()
+                && !hasAnyMasterDegreeCandidates()
+                && !hasAnyGuides()
+                && !hasScheduling()
+                && !hasAnyAssociatedFinalDegreeWorkGroups()
+                && getPeriodLessonsFirstSemester().getRoomOccupations().isEmpty()
+                && getPeriodLessonsSecondSemester().getRoomOccupations().isEmpty()
+                && getPeriodExamsFirstSemester().getRoomOccupations().isEmpty()
+                && getPeriodExamsSecondSemester().getRoomOccupations().isEmpty());        
+    }
+    
     public void edit(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap,
-            Date periodLessonsFirstSemesterBegin, Date periodLessonsFirstSemesterEnd,
-            Date periodExamsFirstSemesterBegin, Date periodExamsFirstSemesterEnd,
-            Date periodLessonsSecondSemesterBegin, Date periodLessonsSecondSemesterEnd,
-            Date periodExamsSecondSemesterBegin, Date periodExamsSecondSemesterEnd,
-            Date periodExamsSpecialSeasonBegin, Date periodExamsSpecialSeasonEnd) {
-
-        checkPeriodDates(periodLessonsFirstSemesterBegin, periodLessonsFirstSemesterEnd,
-                periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd,
-                periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd,
-                periodExamsSecondSemesterBegin, periodExamsSecondSemesterEnd,
-                periodExamsSpecialSeasonBegin, periodExamsSpecialSeasonEnd);
-
+            OccupationPeriod periodLessonsFirstSemester, OccupationPeriod periodExamsFirstSemester,
+            OccupationPeriod periodLessonsSecondSemester, OccupationPeriod periodExamsSecondSemester,
+            OccupationPeriod periodExamsSpecialSeason, OccupationPeriod gradeSubmissionNormalSeasonFirstSemester,
+            OccupationPeriod gradeSubmissionNormalSeasonSecondSemester, OccupationPeriod gradeSubmissionSpecialSeason) {
+      
         setExecutionYear(executionYear);
         setCampus(campus);
         setTemporaryExamMap(temporaryExamMap);
-
-        getPeriodLessonsFirstSemester().setStartYearMonthDay(
-                YearMonthDay.fromDateFields(periodLessonsFirstSemesterBegin));
-        getPeriodLessonsFirstSemester().setEndYearMonthDay(
-                YearMonthDay.fromDateFields(periodLessonsFirstSemesterEnd));
-        getPeriodExamsFirstSemester().setStartYearMonthDay(
-                YearMonthDay.fromDateFields(periodExamsFirstSemesterBegin));
-        getPeriodExamsFirstSemester().setEndYearMonthDay(
-                YearMonthDay.fromDateFields(periodExamsFirstSemesterEnd));
-        getPeriodLessonsSecondSemester().setStartYearMonthDay(
-                YearMonthDay.fromDateFields(periodLessonsSecondSemesterBegin));
-        getPeriodLessonsSecondSemester().setEndYearMonthDay(
-                YearMonthDay.fromDateFields(periodLessonsSecondSemesterEnd));
-        getPeriodExamsSecondSemester().setStartYearMonthDay(
-                YearMonthDay.fromDateFields(periodExamsSecondSemesterBegin));
-        getPeriodExamsSecondSemester().setEndYearMonthDay(
-                YearMonthDay.fromDateFields(periodExamsSecondSemesterEnd));
-        getPeriodExamsSpecialSeason().setStartYearMonthDay(
-                YearMonthDay.fromDateFields(periodExamsSpecialSeasonBegin));
-        getPeriodExamsSpecialSeason().setEndYearMonthDay(
-                YearMonthDay.fromDateFields(periodExamsSpecialSeasonEnd));
+        
+        if (periodLessonsFirstSemester != getPeriodLessonsFirstSemester()) {
+            deletePeriodLessonsFirstSemester();
+            setPeriodLessonsFirstSemester(periodLessonsFirstSemester);
+        }
+        
+        if (periodExamsFirstSemester != getPeriodExamsFirstSemester()) {
+            deletePeriodExamsFirstSemester();
+            setPeriodExamsFirstSemester(periodExamsFirstSemester);
+        }
+        
+        if (periodLessonsSecondSemester != getPeriodLessonsSecondSemester()) {
+            deletePeriodLessonsSecondSemester();
+            setPeriodLessonsSecondSemester(periodLessonsSecondSemester);
+        }
+        
+        if (periodExamsSecondSemester != getPeriodExamsSecondSemester()) {
+            deletePeriodExamsSecondSemester();
+            setPeriodExamsSecondSemester(periodExamsSecondSemester);
+        }
+        
+        if (periodExamsSpecialSeason != getPeriodExamsSpecialSeason()) {
+            deletePeriodExamsSpecialSeason();
+            setPeriodExamsSpecialSeason(periodExamsSpecialSeason);
+        }
+        
+        if (gradeSubmissionNormalSeasonFirstSemester != getPeriodGradeSubmissionNormalSeasonFirstSemester()) {
+            deletePeriodGradeSubmissionNormalSeasonFirstSemester();
+            setPeriodGradeSubmissionNormalSeasonFirstSemester(gradeSubmissionNormalSeasonFirstSemester);
+        }
+        
+        if (gradeSubmissionNormalSeasonSecondSemester != getPeriodGradeSubmissionNormalSeasonSecondSemester()) {
+            deletePeriodGradeSubmissionNormalSeasonSecondSemester();
+            setPeriodGradeSubmissionNormalSeasonSecondSemester(gradeSubmissionNormalSeasonSecondSemester);
+        }
+        
+        if (gradeSubmissionSpecialSeason != getPeriodGradeSubmissionSpecialSeason()) {
+            deletePeriodGradeSubmissionSpecialSeason();
+            setPeriodGradeSubmissionSpecialSeason(gradeSubmissionSpecialSeason);
+        }
     }
 
-    public boolean isBolonha() {
+	public boolean isBolonha() {
         return this.getDegreeCurricularPlan().isBolonha();
     }
 
-    private void checkPeriodDates(Date periodLessonsFirstSemesterBegin,
-            Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,
-            Date periodExamsFirstSemesterEnd, Date periodLessonsSecondSemesterBegin,
-            Date periodLessonsSecondSemesterEnd, Date periodExamsSecondSemesterBegin,
-            Date periodExamsSecondSemesterEnd, Date periodExamsSpecialSeasonBegin,
-            Date periodExamsSpecialSeasonEnd) {
-
-        if (periodLessonsFirstSemesterBegin == null || periodLessonsFirstSemesterEnd == null
-                || periodLessonsFirstSemesterBegin.after(periodLessonsFirstSemesterEnd)) {
-            throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
-        }
-
-        if (periodExamsFirstSemesterBegin == null || periodExamsFirstSemesterEnd == null
-                || periodExamsFirstSemesterBegin.after(periodExamsFirstSemesterEnd)) {
-            throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
-        }
-
-        if (periodLessonsSecondSemesterBegin == null || periodLessonsSecondSemesterEnd == null
-                || periodLessonsSecondSemesterBegin.after(periodLessonsSecondSemesterEnd)) {
-            throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
-        }
-
-        if (periodExamsSecondSemesterBegin == null || periodExamsSecondSemesterEnd == null
-                || periodExamsSecondSemesterBegin.after(periodExamsSecondSemesterEnd)) {
-            throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
-        }
-
-        if (periodExamsSpecialSeasonBegin == null || periodExamsSpecialSeasonEnd == null
-                || periodExamsSpecialSeasonBegin.after(periodExamsSpecialSeasonEnd)) {
-            throw new DomainException("error.executionDegree.beginPeriod.after.endPeriod");
-        }
-    }
-
     public int compareTo(Object object) {
-        final ExecutionDegree executionDegree = (ExecutionDegree) object;
+        final ExecutionDegree executionDegree = (ExecutionDegree) object; 
         final ExecutionYear executionYear = executionDegree.getExecutionYear();
 
         return getExecutionYear().compareTo(executionYear);
@@ -208,7 +241,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         return false;
     }
 
-    public Set<Shift> findAvailableShifts(final CurricularYear curricularYear,
+	public Set<Shift> findAvailableShifts(final CurricularYear curricularYear,
             final ExecutionPeriod executionPeriod) {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final Set<Shift> shifts = new HashSet<Shift>();               
@@ -225,38 +258,34 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         return shifts;
     }
 
-    public Set<SchoolClass> findSchoolClassesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
-        final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
-        for (final SchoolClass schoolClass : getSchoolClasses()) {
-            if (schoolClass.getExecutionPeriod() == executionPeriod) {
-                schoolClasses.add(schoolClass);
-            }
-        }
-        return schoolClasses;
-    }
+	public Set<SchoolClass> findSchoolClassesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+		final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
+		for (final SchoolClass schoolClass : getSchoolClasses()) {
+			if (schoolClass.getExecutionPeriod() == executionPeriod) {
+				schoolClasses.add(schoolClass);
+			}
+		}
+		return schoolClasses;
+	}
 
-    public Set<SchoolClass> findSchoolClassesByExecutionPeriodAndCurricularYear(
-            final ExecutionPeriod executionPeriod, final Integer curricularYear) {
-        final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
-        for (final SchoolClass schoolClass : getSchoolClasses()) {
-            if (schoolClass.getExecutionPeriod() == executionPeriod
-                    && schoolClass.getAnoCurricular().equals(curricularYear)) {
-                schoolClasses.add(schoolClass);
-            }
-        }
-        return schoolClasses;
-    }
+	public Set<SchoolClass> findSchoolClassesByExecutionPeriodAndCurricularYear(final ExecutionPeriod executionPeriod, final Integer curricularYear) {
+		final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
+		for (final SchoolClass schoolClass : getSchoolClasses()) {
+			if (schoolClass.getExecutionPeriod() == executionPeriod && schoolClass.getAnoCurricular().equals(curricularYear)) {
+				schoolClasses.add(schoolClass);
+			}
+		}
+		return schoolClasses;
+	}
 
-    public SchoolClass findSchoolClassesByExecutionPeriodAndName(final ExecutionPeriod executionPeriod,
-            final String name) {
-        for (final SchoolClass schoolClass : getSchoolClasses()) {
-            if (schoolClass.getExecutionPeriod() == executionPeriod
-                    && schoolClass.getNome().equals(name)) {
-                return schoolClass;
-            }
-        }
-        return null;
-    }
+	public SchoolClass findSchoolClassesByExecutionPeriodAndName(final ExecutionPeriod executionPeriod, final String name) {
+		for (final SchoolClass schoolClass : getSchoolClasses()) {
+			if (schoolClass.getExecutionPeriod() == executionPeriod && schoolClass.getNome().equals(name)) {
+				return schoolClass;
+			}
+		}
+		return null;
+	}
 
     public List<CandidateSituation> getCandidateSituationsInSituation(List<SituationName> situationNames) {
         List<CandidateSituation> result = new ArrayList<CandidateSituation>();
@@ -264,11 +293,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         for (MasterDegreeCandidate candidate : getMasterDegreeCandidates()) {
             for (CandidateSituation situation : candidate.getSituations()) {
 
-                if (situation.getValidation().getState() == null
-                        || situation.getValidation().getState() != State.ACTIVE) {
+                if (situation.getValidation().getState() == null || situation.getValidation().getState() != State.ACTIVE) {
                     continue;
                 }
-
+                
                 if (situationNames != null && !situationNames.contains(situation.getSituation())) {
                     continue;
                 }
@@ -276,23 +304,23 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
                 result.add(situation);
             }
         }
-
+        
         return result;
     }
-
-    public Coordinator getCoordinatorByTeacher(Teacher teacher) {
-        for (Coordinator coordinator : getCoordinatorsList()) {
-            if (coordinator.getTeacher().equals(teacher)) {
-                return coordinator;
-            }
-        }
-
-        return null;
-    }
-
+	
+	public Coordinator getCoordinatorByTeacher(Teacher teacher) {
+		for (Coordinator coordinator : getCoordinatorsList()) {
+			if (coordinator.getTeacher().equals(teacher)) {
+				return coordinator;
+			}
+		}
+        
+		return null;
+	}
+    
     public MasterDegreeCandidate getMasterDegreeCandidateBySpecializationAndCandidateNumber(
             Specialization specialization, Integer candidateNumber) {
-
+        
         for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
             if (masterDegreeCandidate.getSpecialization() == specialization
                     && masterDegreeCandidate.getCandidateNumber().equals(candidateNumber)) {
@@ -301,14 +329,12 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         }
         return null;
     }
-
+    
     public Integer generateCandidateNumberForSpecialization(Specialization specialization) {
         int maxCandidateNumber = 0;
         for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
-            if (masterDegreeCandidate.getSpecialization() == specialization
-                    && masterDegreeCandidate.getCandidateNumber() != null) {
-                maxCandidateNumber = Math.max(maxCandidateNumber, masterDegreeCandidate
-                        .getCandidateNumber());
+            if (masterDegreeCandidate.getSpecialization() == specialization && masterDegreeCandidate.getCandidateNumber() != null) {
+                maxCandidateNumber = Math.max(maxCandidateNumber, masterDegreeCandidate.getCandidateNumber());
             }
         }
         return Integer.valueOf(++maxCandidateNumber);
@@ -316,152 +342,149 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 
     public static List<ExecutionDegree> getAllByExecutionYear(String year) {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
+        
         if (year == null) {
             return result;
         }
-
+        
         for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
-            if (year.equals(executionDegree.getExecutionYear().getYear())) {
-                result.add(executionDegree);
+            if (! year.equals(executionDegree.getExecutionYear().getYear())) {
+                continue;
             }
+            
+            result.add(executionDegree);
         }
-
+        
         // sort by degreeCurricularPlan.idInternal descending
-        Collections.sort(result, new Comparator<ExecutionDegree>() {
+        Collections.sort(result, new Comparator<ExecutionDegree>() { 
 
             public int compare(ExecutionDegree o1, ExecutionDegree o2) {
                 Integer idInternal1 = o1.getDegreeCurricularPlan().getIdInternal();
                 Integer idInternal2 = o2.getDegreeCurricularPlan().getIdInternal();
-
-                return idInternal2.compareTo(idInternal1);
+                
+                return idInternal2.compareTo(idInternal1); 
             }
-
+            
         });
-
+        
         return result;
     }
 
-    public static List<ExecutionDegree> getAllByExecutionCourseAndTeacher(
-            ExecutionCourse executionCourse, Teacher teacher) {
+    public static List<ExecutionDegree> getAllByExecutionCourseAndTeacher(ExecutionCourse executionCourse, Teacher teacher) {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
+        
         for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
             boolean matchExecutionCourse = false;
-            for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan()
-                    .getCurricularCourses()) {
+            for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
                 if (curricularCourse.getAssociatedExecutionCourses().contains(executionCourse)) {
                     matchExecutionCourse = true;
                     break;
                 }
             }
-
-            if (!matchExecutionCourse) {
+            
+            if (! matchExecutionCourse) {
                 continue;
             }
-
+            
             // if teacher is not a coordinator of the executionDegree
             if (executionDegree.getCoordinatorByTeacher(teacher) == null) {
                 continue;
             }
-
+            
             result.add(executionDegree);
         }
-
+        
         return result;
     }
 
     public static List<ExecutionDegree> getAllCoordinatedByTeacher(Teacher teacher) {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
+        
         if (teacher == null) {
             return result;
         }
-
+        
         for (Coordinator coordinator : teacher.getCoordinators()) {
             result.add(coordinator.getExecutionDegree());
         }
-
+        
         Comparator<ExecutionDegree> degreNameComparator = new Comparator<ExecutionDegree>() {
 
             public int compare(ExecutionDegree o1, ExecutionDegree o2) {
                 String name1 = o1.getDegreeCurricularPlan().getDegree().getName();
                 String name2 = o2.getDegreeCurricularPlan().getDegree().getName();
-
+                
                 return String.CASE_INSENSITIVE_ORDER.compare(name1, name2);
             }
-
+            
         };
-
+        
         Comparator<ExecutionDegree> yearComparator = new Comparator<ExecutionDegree>() {
 
             public int compare(ExecutionDegree o1, ExecutionDegree o2) {
                 String year1 = o1.getExecutionYear().getYear();
                 String year2 = o2.getExecutionYear().getYear();
-
+                
                 return String.CASE_INSENSITIVE_ORDER.compare(year1, year2);
             }
-
+            
         };
-
-        // sort by degreeCurricularPlan.degree.nome ascending,
-        // executionYear.year descending
+        
+        // sort by degreeCurricularPlan.degree.nome ascending, executionYear.year descending
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(degreNameComparator, false);
         comparatorChain.addComparator(yearComparator, true);
-
+     
         Collections.sort(result, comparatorChain);
-
+        
         return result;
     }
 
-    public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(String year,
-            DegreeType typeOfCourse) {
+    public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(String year, DegreeType typeOfCourse) {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
+        
         if (year == null) {
             return result;
         }
-
+        
         if (typeOfCourse == null) {
             return result;
         }
-
+        
         for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
-            if (!year.equalsIgnoreCase(executionDegree.getExecutionYear().getYear())) {
+            if (! year.equalsIgnoreCase(executionDegree.getExecutionYear().getYear())) {
                 continue;
             }
-
-            if (!typeOfCourse.equals(executionDegree.getDegreeCurricularPlan().getDegree()
-                    .getTipoCurso())) {
+            
+            if (! typeOfCourse.equals(executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso())) {
                 continue;
             }
-
+            
             result.add(executionDegree);
         }
-
+        
         // sorty by degreeCurricularPlan.idInternal descending
         Collections.sort(result, new Comparator<ExecutionDegree>() {
 
             public int compare(ExecutionDegree o1, ExecutionDegree o2) {
                 Integer idInternal1 = o1.getDegreeCurricularPlan().getIdInternal();
                 Integer idInternal2 = o2.getDegreeCurricularPlan().getIdInternal();
-
+                
                 return idInternal2.compareTo(idInternal1);
             }
-
+            
         });
-
+        
         return result;
     }
 
     public static List<ExecutionDegree> getAllByDegreeAndExecutionYear(Degree degree, String year) {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
+        
         if (degree == null || year == null) {
             return result;
         }
-
+        
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
         if (executionYear == null) {
             return result;
@@ -472,39 +495,37 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
                 result.add(executionDegree);
             }
         }
-
+        
         return result;
     }
 
-    public static List<ExecutionDegree> getAllByDegreeAndCurricularStage(Degree degree,
-            CurricularStage stage) {
+    public static List<ExecutionDegree> getAllByDegreeAndCurricularStage(Degree degree, CurricularStage stage) {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
+        
         if (degree == null) {
             return result;
         }
-
+        
         if (stage == null) {
             return result;
         }
-
+        
         for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
-            if (!degree.equals(executionDegree.getDegreeCurricularPlan().getDegree())) {
+            if (! degree.equals(executionDegree.getDegreeCurricularPlan().getDegree())) {
                 continue;
             }
-
-            if (!stage.equals(executionDegree.getDegreeCurricularPlan().getCurricularStage())) {
+            
+            if (! stage.equals(executionDegree.getDegreeCurricularPlan().getCurricularStage())) {
                 continue;
             }
-
+            
             result.add(executionDegree);
         }
-
+        
         return result;
     }
 
-    public static ExecutionDegree getByDegreeCurricularPlanAndExecutionYear(
-            DegreeCurricularPlan degreeCurricularPlan, String executionYear) {
+    public static ExecutionDegree getByDegreeCurricularPlanAndExecutionYear(DegreeCurricularPlan degreeCurricularPlan, String executionYear) {
         if (degreeCurricularPlan == null) {
             return null;
         }
@@ -512,44 +533,41 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         if (executionYear == null) {
             return null;
         }
-
+        
         for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
             if (executionYear.equalsIgnoreCase(executionDegree.getExecutionYear().getYear())) {
                 return executionDegree;
             }
         }
-
+        
         return null;
     }
 
-    public static ExecutionDegree getByDegreeCurricularPlanNameAndExecutionYear(String degreeName,
-            ExecutionYear executionYear) {
+    public static ExecutionDegree getByDegreeCurricularPlanNameAndExecutionYear(String degreeName, ExecutionYear executionYear) {
         if (degreeName == null) {
             return null;
         }
-
+        
         if (executionYear == null) {
             return null;
         }
-
+        
         for (ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
             if (degreeName.equalsIgnoreCase(executionDegree.getDegreeCurricularPlan().getName())) {
                 return executionDegree;
             }
         }
-
+        
         return null;
     }
+    
 
-    public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionPeriod executionPeriod,
-            MarkSheetType markSheetType) {
-        OccupationPeriod occupationPeriod = getOccupationPeriodFor(executionPeriod, markSheetType);
-        return (evaluationDate != null && occupationPeriod != null && occupationPeriod
-                .containsDay(evaluationDate));
+    public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
+        OccupationPeriod occupationPeriod = getOccupationPeriodFor(executionPeriod, markSheetType);        
+        return (evaluationDate != null && occupationPeriod != null && occupationPeriod.containsDay(evaluationDate));
     }
-
-    public OccupationPeriod getOccupationPeriodFor(ExecutionPeriod executionPeriod,
-            MarkSheetType markSheetType) {
+    
+    public OccupationPeriod getOccupationPeriodFor(ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
         OccupationPeriod occupationPeriod = null;
         switch (markSheetType) {
         case NORMAL:
@@ -560,16 +578,16 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
                 occupationPeriod = this.getPeriodExamsSecondSemester();
             }
             break;
-
+            
         case SPECIAL_SEASON:
             occupationPeriod = this.getPeriodExamsSpecialSeason();
             break;
-
+            
         default:
-        }
+        }        
         return occupationPeriod;
     }
-
+    
     public List<Coordinator> getResponsibleCoordinators() {
         List<Coordinator> result = new ArrayList<Coordinator>();
         for (final Coordinator coordinator : getCoordinatorsList()) {
@@ -578,6 +596,21 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
             }
         }
         return result;
+    }
+    
+    public boolean isDateInFirstSemesterNormalSeasonOfGradeSubmission(YearMonthDay date) {
+        return (getPeriodGradeSubmissionNormalSeasonFirstSemester() != null 
+                && getPeriodGradeSubmissionNormalSeasonFirstSemester().containsDay(date));
+    }
+    
+    public boolean isDateInSecondSemesterNormalSeasonOfGradeSubmission(YearMonthDay date) {
+        return (getPeriodGradeSubmissionNormalSeasonSecondSemester() != null 
+                && getPeriodGradeSubmissionNormalSeasonSecondSemester().containsDay(date));
+    }
+    
+    public boolean isDateInSpecialSeasonOfGradeSubmission(YearMonthDay date) {
+        return (getPeriodGradeSubmissionSpecialSeason() != null 
+                && getPeriodGradeSubmissionSpecialSeason().containsDay(date));
     }
 
 }
