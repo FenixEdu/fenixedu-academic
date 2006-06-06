@@ -19,17 +19,33 @@ public class AddContextToCurricularCourse extends Service {
     public void run(CurricularCourse curricularCourse, CourseGroup courseGroup, Integer beginExecutionPeriodID,
             Integer endExecutionPeriodID, Integer year, Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
 
-        CurricularPeriod degreeCurricularPeriod = courseGroup.getParentDegreeCurricularPlan()
-                .getDegreeStructure();
-        CurricularPeriod curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(
-                new CurricularPeriodInfoDTO(year, CurricularPeriodType.YEAR),
-                new CurricularPeriodInfoDTO(semester, CurricularPeriodType.SEMESTER));
-
-        if (curricularPeriod == null) {
-            curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(new CurricularPeriodInfoDTO(
-                    year, CurricularPeriodType.YEAR), new CurricularPeriodInfoDTO(semester,
-                    CurricularPeriodType.SEMESTER));
+        CurricularPeriod degreeCurricularPeriod = courseGroup.getParentDegreeCurricularPlan().getDegreeStructure();
+        
+        // ********************************************************
+        /* TODO: Important - change this code (must be generic to support several curricularPeriodInfoDTOs,
+         *                   instead of year and semester)
+         * 
+         */
+        CurricularPeriod curricularPeriod = null;
+        CurricularPeriodInfoDTO curricularPeriodInfoYear = null;
+        if (courseGroup.getParentDegreeCurricularPlan().getDegree().getBolonhaDegreeType().getYears() > 1) {
+            curricularPeriodInfoYear = new CurricularPeriodInfoDTO(year, CurricularPeriodType.YEAR);
         }
+        final CurricularPeriodInfoDTO curricularPeriodInfoSemester = new CurricularPeriodInfoDTO(semester, CurricularPeriodType.SEMESTER);
+        
+        if (curricularPeriodInfoYear != null) {
+            curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(curricularPeriodInfoYear, curricularPeriodInfoSemester);
+            if (curricularPeriod == null) {
+                curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(curricularPeriodInfoYear, curricularPeriodInfoSemester);
+            }
+        } else {
+            curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(curricularPeriodInfoSemester);
+            if (curricularPeriod == null) {
+                curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(curricularPeriodInfoSemester);
+            }
+        }
+        
+        // ********************************************************
         
         final ExecutionPeriod beginExecutionPeriod = getBeginExecutionPeriod(beginExecutionPeriodID);
         final ExecutionPeriod endExecutionPeriod = getEndExecutionPeriod(endExecutionPeriodID);
