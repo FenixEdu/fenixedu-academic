@@ -269,6 +269,9 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public Integer getCurricularYearID() {
         if (curricularYearID == null && getContext(getContextID()) != null) {            
             curricularYearID = getContext(getContextID()).getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR);
+            if (curricularYearID == null) {
+                curricularYearID = Integer.valueOf(1);
+            }
         } else if (curricularYearID == null && getAndHoldIntegerParameter("curricularYearID") != null) {
             curricularYearID = getAndHoldIntegerParameter("curricularYearID");
         }
