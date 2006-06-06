@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -106,9 +107,10 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
             DegreeCurricularPlan degreeCurricularPlan, Integer semester, CurricularYear curricularYear,
             String name) {
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+        String normalizedName = (name != null) ? StringNormalizer.normalize(name).toLowerCase().replaceAll("%", ".*") : null; 
         for (ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
-            if (name == null || name.length() == 0
-                    || executionCourse.getNome().matches(name.replaceAll("%", ".*"))) {
+            String executionCourseName = StringNormalizer.normalize(executionCourse.getNome()).toLowerCase();            
+            if (normalizedName != null && executionCourseName.matches(normalizedName)) {
                 if (executionCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(semester,
                         curricularYear, degreeCurricularPlan)) {
                     result.add(executionCourse);

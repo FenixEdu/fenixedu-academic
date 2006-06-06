@@ -34,7 +34,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends 
 		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
 		
 		if(executionPeriod != null) {
-			List<ExecutionCourse> listDCDE = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan, infoExecutionPeriod.getSemester(), curricularYear, ""); 
+			List<ExecutionCourse> listDCDE = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan, infoExecutionPeriod.getSemester(), curricularYear, "%"); 
 			
 			Iterator iterator = listDCDE.iterator();
 			listInfoDE = new ArrayList();
