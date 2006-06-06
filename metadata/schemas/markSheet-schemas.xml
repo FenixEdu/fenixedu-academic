@@ -259,7 +259,7 @@
 <schema name="markSheet.teacher.gradeSubmission.step.two.view"
 		type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
 		
-	<slot name="curricularCourses">
+	<slot name="curricularCoursesAvailableToGradeSubmission" key="label.curricularCourses">
 		<property name="eachLayout" value="values-dash" />
 		<property name="eachSchema" value="degreeCurricularPlan.and.curricularCourse" />
 	</slot>

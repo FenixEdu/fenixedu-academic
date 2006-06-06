@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.ResourceBundle;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FinalMark;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
@@ -35,10 +37,6 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCourseDA {
-    
-    private ResourceBundle getResourceBundle(String bundleName) {
-        return ResourceBundle.getBundle(bundleName);
-    }
     
     private void addMessage(HttpServletRequest request, ActionMessages actionMessages, String keyMessage, String ... args) {
         actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(keyMessage, args));
@@ -60,10 +58,20 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     
     public ActionForward gradeSubmissionStepOne(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         
-        MarkSheetTeacherGradeSubmissionBean submissionBean = (MarkSheetTeacherGradeSubmissionBean) RenderUtils.getViewState().getMetaObject().getObject();       
-        submissionBean.setMarksToSubmit(getMarksToSubmit(submissionBean));
-        
+        MarkSheetTeacherGradeSubmissionBean submissionBean = (MarkSheetTeacherGradeSubmissionBean) RenderUtils.getViewState().getMetaObject().getObject();
         request.setAttribute("submissionBean", submissionBean);
+        
+        ActionMessages actionMessages = new ActionMessages();
+        
+        checkIfCanSubmitMarksToAnyCurricularCourse(submissionBean.getAllCurricularCourses(), submissionBean.getExecutionCourse().getExecutionPeriod().getExecutionYear(), request, actionMessages);
+        
+        Collection<MarkSheetTeacherMarkBean> marksToSubmit = getMarksToSubmit(submissionBean);
+        if (marksToSubmit.isEmpty()) {
+            addMessage(request, actionMessages, "error.teacher.gradeSubmission.noStudentsToSubmitMarks");
+            return mapping.findForward("gradeSubmission.step.one");
+        }
+            
+        submissionBean.setMarksToSubmit(marksToSubmit);
         return mapping.findForward("gradeSubmission.step.two");
     }
 
@@ -105,21 +113,16 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         for (Enrolment enrolment : getEnrolmentsNotInAnyMarkSheet(submissionBean)) {
             Attends attends = enrolment.getAttendsByExecutionCourse(submissionBean.getExecutionCourse());
             if (attends != null) {
-                String mark = getMark(attends);
-                String enrolmentEvaluationType = getEnrolmentEvaluationType(submissionBean, enrolment); 
-                boolean toSubmitMark = mark.length() != 0;
-                result.add(new MarkSheetTeacherMarkBean(attends, submissionBean.getEvaluationDate(), mark, enrolmentEvaluationType, toSubmitMark));
+                result.add(new MarkSheetTeacherMarkBean(attends, submissionBean.getEvaluationDate(),
+                        getMark(attends), getEnrolmentEvaluationType(submissionBean, enrolment), getMark(attends).length() != 0));
             }
         }
-
         return result;
     }
 
-    private String getEnrolmentEvaluationType(MarkSheetTeacherGradeSubmissionBean submissionBean, Enrolment enrolment) {
-        ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
-        return enumerationBundle.getString(enrolment.isImprovementForExecutionCourse(submissionBean.getExecutionCourse()) ? 
-                EnrolmentEvaluationType.IMPROVEMENT.name()
-                : enrolment.getEnrolmentEvaluationType().name());
+    private EnrolmentEvaluationType getEnrolmentEvaluationType(MarkSheetTeacherGradeSubmissionBean submissionBean, Enrolment enrolment) {
+        return enrolment.isImprovementForExecutionCourse(submissionBean.getExecutionCourse()) ? EnrolmentEvaluationType.IMPROVEMENT
+                : enrolment.getEnrolmentEvaluationType();
     }
 
     private String getMark(Attends attends) {
@@ -128,13 +131,64 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     private Collection<Enrolment> getEnrolmentsNotInAnyMarkSheet(MarkSheetTeacherGradeSubmissionBean submissionBean) {
+
         Collection<Enrolment> enrolmentsNotInAnyMarkSheet = new HashSet<Enrolment>();
-        for (CurricularCourse curricularCourse : submissionBean.getCurricularCourses()) {
-            enrolmentsNotInAnyMarkSheet.addAll(curricularCourse.getEnrolmentsNotInAnyMarkSheet(MarkSheetType.NORMAL, submissionBean.getExecutionCourse().getExecutionPeriod()));
-            enrolmentsNotInAnyMarkSheet.addAll(curricularCourse.getEnrolmentsNotInAnyMarkSheet(MarkSheetType.IMPROVEMENT, submissionBean.getExecutionCourse().getExecutionPeriod()));
-            enrolmentsNotInAnyMarkSheet.addAll(curricularCourse.getEnrolmentsNotInAnyMarkSheet(MarkSheetType.SPECIAL_SEASON, submissionBean.getExecutionCourse().getExecutionPeriod()));
+        for (CurricularCourse curricularCourse : submissionBean.getAllCurricularCourses()) {
+            
+            if (curricularCourse.isGradeSubmissionAvailableFor(submissionBean.getExecutionCourse().getExecutionPeriod().getExecutionYear(), MarkSheetType.NORMAL)) {
+                enrolmentsNotInAnyMarkSheet.addAll(curricularCourse.getEnrolmentsNotInAnyMarkSheet(MarkSheetType.NORMAL, submissionBean.getExecutionCourse().getExecutionPeriod()));
+            }
+            if (curricularCourse.isGradeSubmissionAvailableFor(submissionBean.getExecutionCourse().getExecutionPeriod().getExecutionYear(), MarkSheetType.IMPROVEMENT)) {
+                enrolmentsNotInAnyMarkSheet.addAll(curricularCourse.getEnrolmentsNotInAnyMarkSheet(MarkSheetType.IMPROVEMENT, submissionBean.getExecutionCourse().getExecutionPeriod()));
+            }
+            if (curricularCourse.isGradeSubmissionAvailableFor(submissionBean.getExecutionCourse().getExecutionPeriod().getExecutionYear(), MarkSheetType.SPECIAL_SEASON)) {
+                enrolmentsNotInAnyMarkSheet.addAll(curricularCourse.getEnrolmentsNotInAnyMarkSheet(MarkSheetType.SPECIAL_SEASON, submissionBean.getExecutionCourse().getExecutionPeriod()));
+            }
         }
         return enrolmentsNotInAnyMarkSheet;
     }
-       
+
+    private void checkIfCanSubmitMarksToAnyCurricularCourse(List<CurricularCourse> curricularCourses, ExecutionYear executionYear, HttpServletRequest request, ActionMessages actionMessages) {
+        String dateFormat = "dd/MM/yyyy";
+        for (CurricularCourse curricularCourse : curricularCourses) {
+            if (! curricularCourse.isGradeSubmissionAvailableFor(executionYear)) {
+                ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(executionYear);
+                addMessage(request, actionMessages, "error.teacher.gradeSubmission.invalid.date.for.curricularCourse", curricularCourse.getDegreeCurricularPlan().getName() + " > " + curricularCourse.getName());
+                addMessageGradeSubmissionNormalSeasonFirstSemester(request, actionMessages, dateFormat, executionDegree);
+                addMessageGradeSubmissionNormalSeasonSecondSemester(request, actionMessages, dateFormat, executionDegree);
+                addMessageGradeSubmissionSpecialSeason(request, actionMessages, dateFormat, executionDegree);
+            }
+        }
+    }
+
+    private void addMessageGradeSubmissionSpecialSeason(HttpServletRequest request, ActionMessages actionMessages, String dateFormat, ExecutionDegree executionDegree) {
+        if (executionDegree.getPeriodGradeSubmissionSpecialSeason() != null) {
+            addMessage(request, actionMessages, "error.teacher.gradeSubmission.specialSeason.dates", 
+                    executionDegree.getPeriodGradeSubmissionSpecialSeason().getStartYearMonthDay().toString(dateFormat),
+                    executionDegree.getPeriodGradeSubmissionSpecialSeason().getEndYearMonthDay().toString(dateFormat));
+        } else {
+            addMessage(request, actionMessages, "error.teacher.gradeSubmission.specialSeason.notDefined");
+        }
+    }
+
+    private void addMessageGradeSubmissionNormalSeasonSecondSemester(HttpServletRequest request, ActionMessages actionMessages, String dateFormat, ExecutionDegree executionDegree) {
+        if (executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester() != null) {
+            addMessage(request, actionMessages, "error.teacher.gradeSubmission.secondSemester.normalSeason.dates", 
+                    executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester().getStartYearMonthDay().toString(dateFormat),
+                    executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester().getEndYearMonthDay().toString(dateFormat));
+        } else {
+            addMessage(request, actionMessages, "error.teacher.gradeSubmission.secondSemester.normalSeason.notDefined");
+        }
+    }
+
+    private void addMessageGradeSubmissionNormalSeasonFirstSemester(HttpServletRequest request, ActionMessages actionMessages, String dateFormat, ExecutionDegree executionDegree) {
+        if (executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester() != null) {
+            addMessage(request, actionMessages, "error.teacher.gradeSubmission.firstSemester.normalSeason.dates", 
+                    executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester().getStartYearMonthDay().toString(dateFormat),
+                    executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester().getEndYearMonthDay().toString(dateFormat));
+        } else {
+            addMessage(request, actionMessages, "error.teacher.gradeSubmission.firstSemester.normalSeason.notDefined");
+        }
+    }
+    
 }

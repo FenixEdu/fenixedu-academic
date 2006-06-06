@@ -8,18 +8,19 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 
 public class MarkSheetTeacherMarkBean extends DataTranferObject {
 
     private DomainReference<Attends> attends;
-    private String enrolmentEvaluationType;
+    private EnrolmentEvaluationType enrolmentEvaluationType;
     private Date evaluationDate;
     private String grade;
     private boolean toSubmitMark;
     
     public MarkSheetTeacherMarkBean() {}
     
-    public MarkSheetTeacherMarkBean(Attends attends, Date evaluationDate, String grade, String enrolmentEvaluationType, boolean sendMark) {
+    public MarkSheetTeacherMarkBean(Attends attends, Date evaluationDate, String grade, EnrolmentEvaluationType enrolmentEvaluationType, boolean sendMark) {
         setAttends(attends);
         setEvaluationDate(evaluationDate);
         setGrade(grade);
@@ -59,11 +60,11 @@ public class MarkSheetTeacherMarkBean extends DataTranferObject {
         this.evaluationDate = evaluationDate;
     }
 
-    public String getEnrolmentEvaluationType() {
+    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
         return enrolmentEvaluationType;
     }
 
-    public void setEnrolmentEvaluationType(String enrolmentEvaluationType) {
+    public void setEnrolmentEvaluationType(EnrolmentEvaluationType enrolmentEvaluationType) {
         this.enrolmentEvaluationType = enrolmentEvaluationType;
     }
 }

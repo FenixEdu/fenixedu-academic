@@ -57,9 +57,8 @@ public class MarkSheetTeacherGradeSubmissionBean extends DataTranferObject {
         this.evaluationDate = evaluationDate;
     }
 
-    public List<CurricularCourse> getCurricularCourses() {
-        CurricularCourse selectedCourse = getSelectedCurricularCourse();
-        return (selectedCourse != null) ? Collections.singletonList(selectedCourse) : getExecutionCourse()
+    public List<CurricularCourse> getAllCurricularCourses() {
+        return (getSelectedCurricularCourse() != null) ? Collections.singletonList(getSelectedCurricularCourse()) : getExecutionCourse()
                 .getCurricularCoursesWithDegreeType();
     }
     
@@ -79,5 +78,15 @@ public class MarkSheetTeacherGradeSubmissionBean extends DataTranferObject {
 
     public void setResponsibleTeacher(Teacher responsibleTeacher) {
         this.responsibleTeacher = responsibleTeacher;
+    }
+    
+    public List<CurricularCourse> getCurricularCoursesAvailableToGradeSubmission() {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+        for (CurricularCourse curricularCourse : getAllCurricularCourses()) {
+            if (curricularCourse.isGradeSubmissionAvailableFor(getExecutionCourse().getExecutionPeriod().getExecutionYear())) {
+                result.add(curricularCourse);
+            }
+        }
+        return result;
     }
 }

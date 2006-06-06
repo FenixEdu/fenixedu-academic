@@ -5,8 +5,12 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Campus;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
+
+import org.joda.time.YearMonthDay;
 
 public class EditExecutionDegree extends Service {
 
@@ -16,7 +20,8 @@ public class EditExecutionDegree extends Service {
             Date periodExamsFirstSemesterEnd, Date periodLessonsSecondSemesterBegin,
             Date periodLessonsSecondSemesterEnd, Date periodExamsSecondSemesterBegin,
             Date periodExamsSecondSemesterEnd, Date periodExamsSpecialSeasonBegin,
-            Date periodExamsSpecialSeasonEnd) throws FenixServiceException {
+            Date periodExamsSpecialSeasonEnd, Date gradeSubmissionNormalSeason1EndDate, 
+            Date gradeSubmissionNormalSeason2EndDate, Date gradeSubmissionSpecialSeasonEndDate) throws FenixServiceException {
 
         final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
         if (executionDegree == null) {
@@ -32,10 +37,31 @@ public class EditExecutionDegree extends Service {
         if (campus == null) {
             throw new FenixServiceException("error.noCampus");
         }
+        
+        final OccupationPeriod periodLessonsFirstSemester = getOccupationPeriod(periodLessonsFirstSemesterBegin, periodLessonsFirstSemesterEnd);
+        final OccupationPeriod periodLessonsSecondSemester = getOccupationPeriod(periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd);
+        
+        final OccupationPeriod periodExamsFirstSemester = getOccupationPeriod(periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd);
+        final OccupationPeriod periodExamsSecondSemester = getOccupationPeriod(periodExamsSecondSemesterBegin, periodExamsSecondSemesterEnd);
+        final OccupationPeriod periodExamsSpecialSeason = getOccupationPeriod(periodExamsSpecialSeasonBegin, periodExamsSpecialSeasonEnd);
+        
+        final OccupationPeriod gradeSubmissionNormalSeason1 = getOccupationPeriod(periodExamsFirstSemesterBegin, gradeSubmissionNormalSeason1EndDate);
+        final OccupationPeriod gradeSubmissionNormalSeason2 = getOccupationPeriod(periodExamsSecondSemesterBegin, gradeSubmissionNormalSeason2EndDate);
+        final OccupationPeriod gradeSubmissionSpecialSeason = getOccupationPeriod(periodExamsSpecialSeasonBegin, gradeSubmissionSpecialSeasonEndDate);
 
-        executionDegree.edit(executionYear, campus, temporaryExamMap, periodLessonsFirstSemesterBegin,
-                periodLessonsFirstSemesterEnd, periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd,
-                periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd, periodExamsSecondSemesterBegin,
-                periodExamsSecondSemesterEnd, periodExamsSpecialSeasonBegin, periodExamsSpecialSeasonEnd);
+        executionDegree.edit(executionYear, campus, temporaryExamMap, periodLessonsFirstSemester,
+                periodExamsFirstSemester,periodLessonsSecondSemester, periodExamsSecondSemester,
+                periodExamsSpecialSeason, gradeSubmissionNormalSeason1, gradeSubmissionNormalSeason2,
+                gradeSubmissionSpecialSeason);
+    }
+    
+    private OccupationPeriod getOccupationPeriod(final Date startDate, final Date endDate) {
+        
+        OccupationPeriod occupationPeriod = OccupationPeriod.readFor(YearMonthDay.fromDateFields(startDate), YearMonthDay.fromDateFields(endDate));
+        if (occupationPeriod == null) {
+            occupationPeriod = DomainFactory.makeOccupationPeriod(startDate, endDate);
+            occupationPeriod.setNextPeriod(null);
+        }
+        return occupationPeriod;
     }
 }

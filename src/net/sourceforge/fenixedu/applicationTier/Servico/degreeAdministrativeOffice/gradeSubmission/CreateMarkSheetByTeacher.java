@@ -58,18 +58,20 @@ public class CreateMarkSheetByTeacher extends Service {
 
     private void createMarkSheets(
             Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
-            ExecutionCourse executionCourse, Teacher responsibleTeacher, Date evaluationDate) {
+            ExecutionCourse executionCourse, Teacher responsibleTeacher, Date evaluationDate) throws InvalidArgumentsServiceException {
 
-        for (Entry<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> curricularCourseEntry : markSheetsInformation
-                .entrySet()) {
+        for (Entry<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> curricularCourseEntry : markSheetsInformation.entrySet()) {
 
             CurricularCourse curricularCourse = curricularCourseEntry.getKey();
-            for (Entry<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> markSheetTypeEntry : curricularCourseEntry
-                    .getValue().entrySet()) {
+            
+            if (!curricularCourse.isGradeSubmissionAvailableFor(executionCourse.getExecutionPeriod().getExecutionYear())) {
+                throw new InvalidArgumentsServiceException("error.curricularCourse.is.not.available.toSubmit.grades");
+            }
+            
+            for (Entry<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> markSheetTypeEntry : curricularCourseEntry.getValue().entrySet()) {
 
                 MarkSheetType markSheetType = markSheetTypeEntry.getKey();
-                Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans = markSheetTypeEntry
-                        .getValue();
+                Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans = markSheetTypeEntry.getValue();
 
                 if (markSheetEnrolmentEvaluationBeans != null) {
                     curricularCourse.createNormalMarkSheet(executionCourse.getExecutionPeriod(),
@@ -146,8 +148,7 @@ public class CreateMarkSheetByTeacher extends Service {
         }
     }
 
-    private String getGrade(Attends attends, MarkSheetTeacherMarkBean markBean, Date evaluationDate,
-            Date nowDate) {
+    private String getGrade(Attends attends, MarkSheetTeacherMarkBean markBean, Date evaluationDate, Date nowDate) {
         String grade = "NA";
 
         FinalMark finalMark = attends.getFinalMark();
