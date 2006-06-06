@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
